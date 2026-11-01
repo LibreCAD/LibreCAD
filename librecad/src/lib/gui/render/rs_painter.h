@@ -29,6 +29,10 @@
 #define RS_PAINTER_H
 
 #include <QPainter>
+#include <QVector>
+
+#include <cstdint>
+#include <vector>
 
 #include "lc_coordinates_mapper.h"
 #include "lc_rect.h"
@@ -107,9 +111,21 @@ public:
      *  the viewport background.  Returns a default-constructed color if no
      *  renderer is attached (e.g. during headless tests). */
     RS_Color getBackgroundColor() const;
+    enum class DashSpace { Model, Screen };
     void updateDashOffset(const RS_Entity* e);
     void clearDashOffset() {m_currenPatternOffset = 0.0;}
-    double currentDashOffset() const {return m_currenPatternOffset;}
+    double currentDashOffset(DashSpace dashSpace = DashSpace::Model) const;
+    // Whether the pen setPen() last built carries a dash pattern.
+    bool penHasDashPattern() const {return m_lastUsedPen.style() == Qt::CustomDashLine;}
+    // The next setPen() rebuilds the dash pattern; the renderer calls it once per pass.
+    void invalidateDashPattern() {m_lastDashValid = false;}
+
+    /// Canonicalise group 49 runs in drawing units, starting with a dash.
+    /// Returns the offset from this pattern's origin to the DXF origin.
+    static QVector<qreal> canonicalDashPattern(const std::vector<double>& raw,
+                                               qreal* phaseOffset = nullptr);
+    /// Scale a table pattern for QPen and make its lengths strictly positive.
+    static QVector<qreal> dashPatternForQt(const QVector<qreal>& canonical, double k);
 
     void drawEntityArc(RS_Arc* arc);
     void drawEntityPolyline(const RS_Polyline *polyline);
@@ -200,7 +216,6 @@ public:
 //    void drawHandle(const RS_Vector& p, const RS_Color& c, int size=-1);
 
     RS_Pen getPen() const;
-    enum class DashSpace { Model, Screen };
     void setPen(const RS_Pen& pen);
     void setPen(const RS_Pen& pen, DashSpace dashSpace);
     void setPen(const RS_Color& color);
@@ -234,7 +249,6 @@ public:
     void setMinEllipseMinorRadius(double val);
     void setMinLineDrawingLen(double val);
     void setMinRenderableTextHeightInPx(int i);
-    void setDefaultWidthFactor(const double factor){ m_defaultWidthFactor = factor;}
     void updatePointsScreenSize(double pdSize);
 
     bool isTextLineNotRenderable(double wcsLineHeight) const;
@@ -433,6 +447,7 @@ protected:
     // What the dash pattern in m_lastUsedPen was built from, valid while it holds
     // that pattern. Compared exactly: a mismatch only rebuilds the pattern.
     bool m_lastDashValid = false;
+    std::uint16_t m_lastDashLineTypeId = 0;
     RS2::LineType m_lastDashLineType = RS2::SolidLine;
     double m_lastDashScreenWidth = 0.;
     double m_lastDashDeviceScale = 0.;
@@ -449,9 +464,8 @@ protected:
     bool m_circleRenderSameAsArcs = false;
 
     double m_minRenderableTextHeightInPx = 1;
-    double m_defaultWidthFactor = 1.0;
 
-    double m_currenPatternOffset = 0.0;
+    double m_currenPatternOffset = 0.0; // logical pixels along the rendered path
 
     int m_screenPointsSize = 0;
     int m_pointsMode = 0;

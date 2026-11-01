@@ -2656,6 +2656,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/lc_circletests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_arctests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarc_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_dimension_clipboard_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_polylineclosing_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_dimarrowtests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
@@ -2687,6 +2688,7 @@ if (BUILD_TESTS)
         librecad/src/lib/actions/tests/lc_modifiersinfo_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_round_tests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_trim_tests.cpp
+        librecad/src/actions/drawing/modify/tests/lc_actionmodifylinejointests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_move_tests.cpp
         librecad/src/actions/drawing/draw/curve/tests/lc_actiondrawdualtests.cpp
         librecad/src/actions/drawing/modify/tests/lc_action_modify_offset_tests.cpp
@@ -2789,6 +2791,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_export_commit_tests.cpp
         librecad/src/lib/filters/tests/lc_attribute_export_tests.cpp
         librecad/src/lib/filters/tests/dxf_closed_spline_tests.cpp
+        librecad/src/lib/filters/tests/lc_hatch_closed_spline_export_tests.cpp
         librecad/src/lib/filters/tests/jww_import_tests.cpp
         librecad/src/lib/filters/tests/byte_identity_harness.cpp
         librecad/src/lib/filters/tests/dxf_corpus_tests.cpp
@@ -2812,6 +2815,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/layer_widget/tests/lc_layerblockwidgets_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucsviewsselectiondocks_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp
@@ -2822,10 +2826,12 @@ if (BUILD_TESTS)
         librecad/src/ui/components/pen/tests/qg_widgetpen_tests.cpp
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
+        librecad/src/ui/dialogs/settings/options_drawing/tests/lc_dlgoptionsdrawingtests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp
         librecad/src/lib/gui/tests/lc_scrollmodel_tests.cpp
         librecad/src/lib/gui/tests/lc_graphicviewport_zoomauto_tests.cpp
         librecad/src/ui/view/tests/qg_graphicview_scroll_tests.cpp
@@ -3314,6 +3320,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_dxf_xdata_appid_tests.cpp
         librecad/src/lib/filters/tests/lc_hatch_angle_units_tests.cpp
         librecad/src/lib/filters/tests/lc_mpolygon_dxf_tests.cpp
+        librecad/src/lib/filters/tests/lc_hatch_closed_spline_export_tests.cpp
         librecad/src/lib/filters/tests/mleader_dxf_context_tests.cpp
     )
     add_executable(librecad_dxf_fast_tests
@@ -3485,7 +3492,8 @@ if (BUILD_TESTS)
         librecad_painter_tests
         librecad/src/lib/gui/tests/rs_painter_tests.cpp)
     target_sources(librecad_painter_tests PRIVATE
-        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp)
+        librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp
+        librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp)
     add_librecad_filter_micro_test(
         librecad_dock_layout_tests
         librecad/src/ui/main/tests/lc_docklayout_tests.cpp)
@@ -3495,6 +3503,18 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_dock_layout_tests PRIVATE
         LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
     add_dependencies(librecad_dock_layout_tests librecad_test_translations)
+    add_librecad_filter_micro_test(
+        librecad_dimension_clipboard_tests
+        librecad/src/lib/engine/document/entities/tests/lc_dimension_clipboard_tests.cpp)
+    target_sources(librecad_dimension_clipboard_tests PRIVATE
+        librecad/src/lib/engine/document/entities/tests/lc_dimarc_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
+        librecad/src/ui/main/tests/lc_docklayout_tests.cpp
+        ${LIBRECAD_RES})
+    set_target_properties(librecad_dimension_clipboard_tests PROPERTIES AUTORCC ON)
+    target_compile_definitions(librecad_dimension_clipboard_tests PRIVATE
+        LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
+    add_dependencies(librecad_dimension_clipboard_tests librecad_test_translations)
     add_librecad_filter_micro_test(
         librecad_printing_tests
         librecad/src/lib/printing/tests/lc_printingtests.cpp)
@@ -3791,6 +3811,12 @@ if (BUILD_TESTS)
             TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_dimension_clipboard_tests
+            COMMAND $<TARGET_FILE:librecad_dimension_clipboard_tests> "[clipboard]" --reporter compact)
+        set_tests_properties(librecad_dimension_clipboard_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+            LABELS dimension-clipboard TIMEOUT 120)
         add_test(NAME librecad_painter_tests
             COMMAND $<TARGET_FILE:librecad_painter_tests> --reporter compact)
         set_tests_properties(librecad_painter_tests PROPERTIES
@@ -3899,6 +3925,11 @@ target_compile_definitions(libdxfrw_json_dump PRIVATE DWGSUPPORT)
 
 if(BUILD_TESTS)
     find_package(Python3 COMPONENTS Interpreter QUIET)
+    if(Python3_Interpreter_FOUND)
+        add_test(NAME librecad_angle_translation_catalogs
+            COMMAND ${Python3_EXECUTABLE}
+                ${CMAKE_CURRENT_SOURCE_DIR}/scripts/test_angle_translation_catalogs.py)
+    endif()
     if(Python3_Interpreter_FOUND AND LIBRECAD_REGISTER_CROSS_READ_SMOKE)
         add_test(NAME libdxfrw_cross_read_smoke
             COMMAND ${Python3_EXECUTABLE}

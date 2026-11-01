@@ -39,190 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Frame</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Voer een naam in en druk op +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Opslaan</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Frame</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Opslaan</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">Parabool</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Punten op Spline</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Controlepunten</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="vanished">Splinepunten</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Gesloten</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">Indien geselecteerd worden splinepunten gebruikt</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">Splinepunten</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">Indien geselecteerd worden controlepunten gebruikt</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Controlepunten</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Punten op Spline</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Startpunt mag alleen in afstand of punttoestand worden ingesteld</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Aanmaken:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Rechthoek</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Breedte:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Hoogte:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Midden:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Ongeldige hoek</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Ongeldige straal</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Ongeldige waarde</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Invoegpunt specificeren</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Specificeer hoek</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Grootte opgeven (breedte, hoogte)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Geef hoekentype
-[St...rondgebeld]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Specificeer hoekafschuining lengte (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Geef hoekradius op</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Randen specificeren
-[Beiden]</translation>
     </message>
 </context>
 <context>
@@ -469,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Hoogte van de boog (de verdeling tussen akkoord en topboogpunt)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Hoogte:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Tegen de klok in</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Kies hoek uit de tekening</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Straling van de boog</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Met de klok mee</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Centrale hoek van de boog</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Lengte van de boog</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengte:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Kies straal van tekening</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Kies hoogte van tekening</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Kies lengte van tekening</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -747,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Selecteer entiteiten voor gebonden vak (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -805,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">radius=%1 is te klein voor geselecteerde punten
-afstand tussen punten=%2 is groter dan diameter= %3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Selecteer uit twee mogelijke cirkelcentra</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Eerste punt specificeren</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Tweede punt specificeren</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Cirkelcentrum selecteren</translation>
     </message>
 </context>
 <context>
@@ -1078,13 +803,6 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Cirkel, boog of ellips selecteren</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1128,10 +846,6 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Midden selecteren</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Geen centrum opgegeven.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1526,154 +1240,6 @@ afstand tussen punten=%2 is groter dan diameter= %3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Eerste punt opgeven</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Tweede punt specificeren
-of [aantal</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Tweede punt specificeren
-of [aantal]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Regelrichting specificeren
-[x...x...angle...p...afstand]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Lijnrichtingshoek specificeren
-of [x</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Randpuntenmodus opgeven
-[Geen start en allebei de afstand]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Specificeer vaste afstand tussen punten
-of[x</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Terug</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Afstand opgeven (%1)
-of [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Afstand opgeven (hoek %1 graden)
-of [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Aantal punten specificeren</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Tweede hoek opgeven</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Specificeer tweede raaklijn</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Eerste hoek opgeven</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Eerste raaklijn specificeren</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Geen geldig nummer. Probeer 1.9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Ongeldige waarde van afrondingsstraal</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige uitdrukking</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Nummer invoeren:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Afrondingsstraal invoeren:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Midden opgeven</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Aanmaken:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Midden:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Beginhoek:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Straal binnen:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Veelhoek</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Een raaklijn specificeren</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1917,29 +1483,6 @@ of [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige uitdrukking</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Eerste entiteit selecteren</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Selecteer tweede entiteit</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Alternatieve eindpunten</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Geef offsetwaarde</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2092,13 +1635,6 @@ of [x</translation>
 [Geen start en allebei de afstand]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">Specificeer vaste afstand tussen punten
-of[x</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2122,13 +1658,6 @@ of [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">Afstand opgeven (hoek %1 graden)
-of [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2287,11 +1816,6 @@ of [%2]</translation>
         <translation>Breedte opgeven</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>Grootte opgeven (breedte, hoogte)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>Specificeer referentiepunt [topl</translation>
@@ -2357,11 +1881,6 @@ of [%2]</translation>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>Hoogte opgeven</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>Beginpunt specificeren)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -3976,10 +3495,6 @@ of [%2]</translation>
         <translation>Waarschuwing</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Knip op raster</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Middenhandleiding knappen</translation>
@@ -4300,11 +3815,6 @@ of [%2]</translation>
         <translation>&amp; Niet selecteren</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Druk op Ctrl+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>Selectie omkeren</translation>
@@ -4410,12 +3920,6 @@ of [%2]</translation>
         <translation>&amp;Raster</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Druk op Ctrl+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>&amp;Draft</translation>
@@ -4426,12 +3930,6 @@ of [%2]</translation>
         <translation>&amp;Statusbalk</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Focus op &amp; Command Line</translation>
@@ -4440,26 +3938,6 @@ of [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Widget-opties</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Links</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Rechts</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Boven</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Onder</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Zwevend</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4535,12 +4013,6 @@ of [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>&amp;Selectiewijzer</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Druk op Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -4671,14 +4143,15 @@ of [%2]</translation>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Hoek: %1
-Aanvullend: %2
-Aanvullend: %3
-Alternatief: %4
+Complementaire hoek: %2
+Supplementaire hoek: %3
+Volledige omwenteling − hoek: %4
 Randpunt starten: (%5 , %6)
 Intersectiepunt:(%7, %8)
 Eindrandpunt: (%9 , %10)</translation>
@@ -4697,17 +4170,20 @@ Eindrandpunt: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="209"/>
         <source>Complementary:</source>
-        <translation>Aanvullende:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Complementaire hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="210"/>
         <source>Supplementary:</source>
-        <translation>Aanvullend:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementaire hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
-        <source>Alternative: </source>
-        <translation>Alternatief:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Volledige omwenteling − hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
@@ -4904,19 +4380,22 @@ Punt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
-        <translation>Aanvullende:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Complementaire hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
-        <translation>Aanvullend:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementaire hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
-        <source>Alternative: </source>
-        <translation>Alternatief:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Volledige omwenteling − hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
@@ -5247,10 +4726,6 @@ Punt: (%8 , %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Selecteer entiteiten om uit te lijnen (Toevoegen om te voltooien)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Selecteren en uitlijnen</translation>
@@ -5282,10 +4757,6 @@ Punt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Schaal:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Selecteer om uit te lijnen (in te vullen)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5968,22 +5439,6 @@ Punt: (%8 , %9)</translation>
         <translation type="unfinished">Afstand:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">Configuratierichting specificeren</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">Referentiepunt voor offsetrichting specificeren</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished">Selecteer contour</translation>
@@ -6276,13 +5731,6 @@ Punt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">Schaal onmiddellijk na selectie</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Geen entiteit geselecteerd!</translation>
     </message>
 </context>
 <context>
@@ -7259,18 +6707,6 @@ Punt: (%8 , %9)</translation>
         <translation>Kan het verstrekte bestand niet lezen - controleer of het bestaat en het is toegestaan om er uit te lezen.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Sneltoetsen mappings werden niet geïmporteerd.
-Mits bestand bestaat, bevat het echter geen LibreCAD sneltoetsen mapping.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Sneltoetsen mappings werden niet geïmporteerd.
-XML verwerkingsfout opgetreden tijdens bestandsverwerking.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Sneltoetsen mappings werden succesvol opgeslagen.</translation>
@@ -7279,12 +6715,6 @@ XML verwerkingsfout opgetreden tijdens bestandsverwerking.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Kan niet schrijven naar opgegeven bestand - controleer of het is toegestaan om te schrijven naar het.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Sneltoetsen mappings werden niet geïmporteerd.
-Er is een fout opgetreden tijdens XML-generatie.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8685,74 +8115,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Indien aangevinkt wordt de originele boog verwijderd</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Boog vervangen</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Laag waarop een cirkel moet worden geplaatst</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Actief</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Oorspronkelijk</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Actief</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Oorspronkelijk</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Origineel opgelost</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Kies offsetwaarde van tekening</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Pen toe te passen op aangemaakte cirkel</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Delta van cirkelstraal tot boogstraal</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Straalverschuiving:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9047,76 +8409,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Werkbalk: %1 (Aangepast)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Type</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Horizontale dimensie van kruis</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">X-waarde uit tekening kiezen</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Bepaalt hoe de afmetingen van kruis toe te passen</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Uitbreiding</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Totale lengte</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Percentage</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Y-waarde kiezen bij tekenen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Verticale afmeting van het kruis</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Rotatiehoek voor kruis rondom centrum</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Actie toevoegen of verwijderen</translation>
     </message>
 </context>
 <context>
@@ -9480,45 +8772,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">Dimensie ordenen</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Laag van dimensie</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Penattributen</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">Ordineren</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9580,11 +8833,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Basisafstand:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Stelt de afstand in tussen de dimensielijnen van een basisdimensie. Geef een afstand. Zie DIMBASELINE voor informatie over de uitgangswaarden. (DIMDLI systeemvariabele)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11233,10 +10481,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <source>Hatch Properties</source>
         <translation>Arceringseigens chappen</translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Eigenschappen?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11685,19 +10929,9 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>OPMERKING: Menu-toewijzing wordt genegeerd. Het is gereserveerd voor &apos;Pan&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>Menu-opdracht wordt genegeerd. Het is gereserveerd voor &apos;Select Contour&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>NOOT: Deze combinatie is gereserveerd voor het standaard contextmenu en kan het aanroepen ervan voorkomen!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>OPMERKING: Deze combinatie is gereserveerd voor Pan! Menu-toewijzing wordt genegeerd</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11758,10 +10992,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>UCS Details kolom</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Indien aangevinkt wordt type raster voor opgeslagen weergave getoond</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Pictogramkolom van rastertype</translation>
@@ -11770,18 +11000,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Pictogramkolom type</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Indien aangevinkt zal de kolom met details van het coördinatensysteem van het beeld getoond worden</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Tooltip met weergavedetails voor tabelitems</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Als dit is aangevinkt, wordt de kolom met details van het coördinatensysteem van de weergave weergegeven.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11824,10 +11042,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>Indien aangevinkt wordt de kolom met weergave details weergegeven in de tabel.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">VIew Details kolom</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Operaties</translation>
@@ -11843,17 +11057,9 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>Weergave herstellen met één klik op het tabelitem</translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Op dubbelklik op tabel item</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>Definieert welke actie moet worden uitgevoerd wanneer er dubbel wordt geklikt op een item in de tabel.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Bepaalt welke actie moet worden uitgevoerd op dubbelklik op het weergave-item van de tabel.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11881,10 +11087,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>Indien ingeschakeld, klikt u op het weergave-item. Anders moet het beeld expliciet worden hersteld.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Weergave herstellen bij één klik op tabel-item</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Indien getoond, zal tooltip met aanvullende informatie over weergave worden getoond voor tabel item.</translation>
@@ -11893,10 +11095,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Indien aangevinkt en tijdens het aanmaken bestaat de weergave met de ingevoerde naam al, zal deze worden bijgewerkt door een nieuwe positie. Anders is een unieke naam van nieuwe weergave vereist.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Indien geselecteerd wordt het bevestigingsvenster getoond bij het verwijderen van de weergave. Anders wordt het beeld stilletjes verwijderd.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12192,17 +11390,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>De naam is niet uniek. Vul een unieke naam in.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola controlepunten kunnen niet collineair zijn</translation>
     </message>
 </context>
 <context>
@@ -12618,13 +11805,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12706,17 +11886,9 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>Als сhecked, zal de tooltip met aanvullende informatie over UCS worden getoond voor tabel item.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Toolip met UCS details voor tabel items</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Pictogramkolom type</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Indien aangevinkt, wordt de kolom met details van UCS oorsprong en hoek weergegeven in de tabel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12732,10 +11904,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Bewerken</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Indien geselecteerd wordt het bevestigingsvenster getoond bij het verwijderen van de weergave. Anders wordt het beeld stilletjes verwijderd.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12756,10 +11924,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>Als dit is aangevinkt, wordt de kolom met het type raster voor de UCS weergegeven.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Als dit is geselecteerd, wordt een bevestigingsdialoogvenster weergegeven wanneer de weergave wordt verwijderd. Anders wordt de weergave zonder waarschuwing verwijderd.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12827,26 +11991,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>Definieert het aantal knipperingen van de UCS-markering voor het markeren van de UCS.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Bepaalt welke actie moet worden uitgevoerd op dubbelklik op het item van de tabel.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">UCS herstellen bij enkele klik op tabel-item</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Indien aangevinkt zal de kolom met pictogram voor het type UCS in de tabel getoond worden.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Indien aangevinkt wordt de kolom met het type raster voor UCS getoond</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Bepaalt hoe het weergavevenster van de tekening moet worden aangepast nadat UCS is toegepast</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>Op dubbelklik op tabel item</translation>
@@ -12902,10 +12046,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>UCS-markering</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">Definieert vertraging tussen UCS-markering knippert</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12919,10 +12059,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Vertraging knipperen:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">Definieert aantal knipperingen van UCS-markering voor UCS-markering</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13319,45 +12455,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Verschuiving:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Indien aangevinkt, wordt het ingebonden vakje voor de gehele selectie aangemaakt. Anders zal het voor individuele entiteiten worden gecreëerd.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Selectie als groep</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Kies offset van tekening</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Indien geselecteerd, worden alleen hoekpunten getekend voor gebonden vak. Anders worden randlijnen getrokken.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Alleen hoekpunten</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Indien geselecteerd wordt een aangrenzend vak als polylijn getekend</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13451,86 +12548,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">Kies offset van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Verticale verschuiving van het duplicaat van de oorspronkelijke entiteit</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Horizontale verschuiving van het duplicaat van de oorspronkelijke entiteit</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Pick offset door X van tekening</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Indien aangevinkt wordt duplicatie in de coördinaten van het origineel geplaatst</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">Plaats</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Pick offset door Y van tekening</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Te gebruiken pen voor het aanmaken van duplicaten</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Actief</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Oorspronkelijk</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Origineel opgelost</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Laag waarop het duplicaat geplaatst moet worden</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Actief</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Oorspronkelijk</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Verschuiving Y:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">Verschuiving X:</translation>
     </message>
 </context>
 <context>
@@ -13712,69 +12729,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Lichte Straal:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Waarde van de hoek voor grote straal</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Indien aangevinkt, mag hoek voor grote straal worden gespecificeerd</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Basishoek:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Tegen de klok in</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Grote acties uit tekenen kiezen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Indien aangevinkt wordt de grote radiushoek gespecificeerd door muis</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vrij</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Lengte van de grote straal van de ellips</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Kies kleine straal van tekening</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Majoor Straal:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Lengte van kleine straal van de ellips</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Met de klok mee</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13913,21 +12867,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Kies hoek van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Arc-opties</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Met de klok mee</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Tegen de klok in</translation>
     </message>
 </context>
 <context>
@@ -14490,11 +13429,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>Tekening exporteren...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>Geexporteerd: %1</translation>
@@ -14818,30 +13752,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <source>Eccentricity:</source>
         <translation>Excentriciteit:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Ongeldige hyperbola definitie</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Foci moet duidelijk zijn</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Ongeldige middencoördinaten</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Grote straal moet positief zijn</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Ongeldige rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Verhouding of kleine straal moet positief zijn</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -15013,10 +13923,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>Breedte:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Breedte van afbeelding</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Kies breedte van tekening</translation>
@@ -15027,21 +13933,9 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <translation>Hoogte:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Hoogte van afbeelding</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Kies hoogte van de tekening</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Schaal:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Schaalfactor</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15053,10 +13947,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Hoek:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15088,22 +13978,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <source>Select an image file</source>
         <translation>Selecteer een afbeeldingsbestand</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Grootte (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Grootte van afbeelding in beeldpunten</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Resolutie (dots per inch)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15116,21 +13990,6 @@ Weet u zeker dat u wijzigingen gaat verwerpen?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Indien aangevinkt, zal het punt altijd binnen geselecteerde entiteit zijn</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Snap op entiteit</translation>
     </message>
 </context>
 <context>
@@ -15508,14 +14367,6 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
         <translation>Scheidingsteken waarmee de interne naam van een laag in hiërarchische namen wordt gesplitst</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Laagniveaunaamscheiding</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Secundaire lagen</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15546,10 +14397,6 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Achtervoegsel van de laagnaam dat aangeeft dat de laag een alternatieve positielaag is.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Naam dupliceren</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15692,17 +14539,9 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
         <translation>Verschillende kleureninstellingen</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Kleuren</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Achtergrondkleur voor geselecteerde items in lagenboom.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Kleur voor scheidingslijnen in lagen boomweergave</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15741,10 +14580,6 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Achtergrondkleur van virtuele laag</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Threeview items scheidingsraster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15800,10 +14635,6 @@ De inhoud van een constructielaag hoort niet in de afdruk te verschijnen.</trans
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Alternatieve positielaag</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">raster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16293,118 +15124,6 @@ Geef een andere waarde op.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Indien aangevinkt wordt de lengte van de lijn gedefinieerd door de muispositie in plaats van de instelling</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vrij</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Kies snap afstand van tekening</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Verschuiving van tekenpunt van snijpunt</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Kies lengte van tekening</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Kies offset van tekening</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Indien geselecteerd wordt de oorspronkelijke entiteit gedeeld door het snijpunt.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Verdelen</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Verschuiving:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Afstand van het snijpunt van het gespecificeerde lijnafdrukpunt</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Bepaalt welk deel van de aangemaakte lijn naar het snijpunt wordt gekraakt</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Begin</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midden</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Einde</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Rasteraansluiting:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Regelafbreking:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lengte van de lijn</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Indien aangevinkt, is de hoek ten opzichte van de hoek van de geselecteerde entiteit</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengte:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Snappunt voor de positie van het snijpunt tussen aangemaakte lijn en bron-entiteit (binnen de oorspronkelijke lijn)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Vrij</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Afstand knippen:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Regelhoek</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16711,93 +15430,6 @@ Geef een andere waarde op.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Aantal te creëren bisectoren</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Grootte:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Eindeverschuiving:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Offset voor aangemaakte lijn vanaf snijpunt</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Knap punt voor aangemaakte regel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Begin</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midden</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Einde</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengte:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Vaste lengte van aangemaakte lijn</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Knap:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Kies lengte van tekening</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Kies offset van tekening</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Bepaalt of de aangemaakte lijn tot kruispunt moet worden gemaakt of een vaste lengte moet hebben</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">Naar intersectie</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Vaste lengte</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Indien aangevinkt zal de aangemaakte regel orthogonaal zijn naar de geselecteerde regel</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Orthogonaal</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Hoek tussen originele regel en aangemaakt</translation>
     </message>
 </context>
 <context>
@@ -17183,81 +15815,6 @@ Geef een andere waarde op.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Indien aangevinkt zal polyline worden aangemaakt in plaats van individuele regels</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Polyline aanmaken</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Beleid voor de lijn werd gekozen als tweede</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Extended/Trim</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Segment toevoegen</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Geen wijziging</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Lijn 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">Lijn 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Beleid voor het verbinden van lijn die eerst werd geselecteerd</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Bepaalt hoe pen moet worden toegepast op aangemaakte entiteiten</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Actieve pen</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Regel 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Lijn 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Beide lijnen</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Attributen:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Indien aangevinkt worden originele regels verwijderd</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Originelen verwijderen</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17639,85 +16196,6 @@ Geef een andere waarde op.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Bepaalt hoe punten aan de randen (begin-/eindpunten) moeten worden gecreëerd.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Geen</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Begin</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Einde</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Kies afstand van tekening</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Aantal aan te maken punten</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Randpunten:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Geeft aan of alle punten tussen begin-/eindpunten moeten passen dan wel of de lengte van de lijn wordt berekend op basis van het aantal punten en de afstand tussen punten.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Regel aanpassen</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Afstand tussen punten.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Indien aangevinkt, wordt een lijn van punten getekend met een bepaalde hoek</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Aantal punten:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Indien aangevinkt, wordt een bepaalde afstand tussen de punten gebruikt. Anders wordt de afstand berekend.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Vaste afstand</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Regelhoek</translation>
     </message>
 </context>
 <context>
@@ -21967,433 +20445,6 @@ Geef een andere waarde op.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Help</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">On-&amp;line documenten</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Gebruikershandleiding</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp; Commando&apos;s</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;Stijlbladen</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Wid&amp;gets</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp;Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">Fout bij verzenden</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">Functie &amp;verzoeken</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">Pagina &amp;verwijdert</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Doneren</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp; Regel</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Poin&amp;t</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Circle</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp; Arc</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poly&amp;gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin&amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellips</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polyline</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp; Andere</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp;Tekenen</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Ellipse</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Totaal</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Wijzigen</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp; Order</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp; Afmetingen</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp; Gereedschappen</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Selecteren</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Afwijken</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Bestand</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Recente bestanden</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Importeren</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Uitvoer</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Opties</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">Bewerken</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">Beel</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">Herstellen &amp; weergaven</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl&amp;ugins</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;Werkruimte</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Dokgebieden</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD-wid&amp;gets</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;Tekeningen</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Context</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Werkbalken</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Eigenschappen</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD-widgets</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD-werkbalken</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Selecteren</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Recent</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Wijzigen</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Meer wijzigen</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Tekenen</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Regel</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punt</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Cirkel</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Veelhoek</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polyline/Spline</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellips</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Andere</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Afmetingen toevoegen</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Uitlijnen</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Volgorde tekenen</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Lagen</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informatie</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Bewerken</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Opties</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">Benoemde weergaven</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Eigenschappen bewerken</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Algemeen wijzigen</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Regel wijzigen</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Lijn tekenen</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Cirkel tekenen</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Andere tekenen</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Cirkel wijzigen</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Arc wijzigen</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Polylijn wijzigen</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Spline wijzigen</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Splinepunten wijzigen</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Tekst wijzigen</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">MText wijzigen</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Blok bewerken</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Beschikking</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Werkbalken</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD-werkbalken</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp;Werkruimtes</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Ta&amp;b-modus</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;Window-modus</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Layout</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Afgerond</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Driehoekig</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Noord</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Zuid</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Oost</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">West</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp; Arrangeren</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Gemaximaliseerd</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp; Cascade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Tile</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Tegel &amp;Vertically</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Tegel &amp; Horizontaal</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -23009,21 +21060,6 @@ Geef een andere waarde op.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Verschuiving:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Kies offset van tekening</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23160,197 +21196,6 @@ Geef een andere waarde op.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Indien aangevinkt, worden de huidige attributen gebruikt voor gespiegelde entiteiten, anders - originele.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Indien niet gecontroleerd, zullen originele entiteiten worden verwijderd, anders zullen ze overleven.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Indien aangevinkt worden gespiegelde entiteiten op de huidige laag geplaatst, anders worden ze in originele lagen geplaatst.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Gebruiker huidige laag</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Indien gecontroleerd, worden de entiteiten zo nodig geschaald. Anders worden ze gewoon gepositioneerd en gedraaid.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Schaal</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Indien aangevinkt, worden de tussenpunten verwijderd. Indien niet gecontroleerd - de onderneming zal worden verdeeld in snijpunten.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Segmenten verwijderen</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Indien aangevinkt wordt het geselecteerde segment verwijderd. Anders zal het geselecteerde segment overleven en zullen de resterende segmenten worden verwijderd.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Geselecteerd verwijderen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Afstand knippen:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Snap punt van spatie naar regelafdrukpunt</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Regelafbreking:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Gapgrootte:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Punt voor spleet op de lijn</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vrij</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Aansluiting op opening:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Begin</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Midden</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Einde</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Vrij</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Begin</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Midden</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Einde</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Pick gap grootte van tekening</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Afstand tot breekpunt</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Kies snap afstand van tekening</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Grootte van het gat, indien niet vrij</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Als Cheched, de grootte van de kloof wordt bepaald door muis</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Indien aangevinkt, zal spiegel worden uitgevoerd door geselecteerde lijn entiteit.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Spiegelen naar geselecteerde regel</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Indien niet gecontroleerd, zullen originele entiteiten worden verwijderd, anders zullen ze overleven.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Indien aangevinkt, worden de huidige attributen gebruikt voor gespiegelde entiteiten, anders - originele.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Indien aangevinkt worden gespiegelde entiteiten op de huidige laag geplaatst, anders worden ze in originele lagen geplaatst.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Gebruiker huidige laag</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23396,234 +21241,6 @@ Geef een andere waarde op.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">Huidige laag gebruiken</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Draaiopties verplaatsen</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Indien aangevinkt moet de muis de vrije factor selecteren.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vrij</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Indien aangevinkt, zullen nieuwe enties op de huidige laag geplaatst worden, anders zullen ze in originele lagen liggen.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Huidige laag gebruiken</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Indien absoluut, referentiepunt zal worden gedraaid, maar entiteit zal alleen worden gedraaid door tweede hoek, anders hoeken zal somm up</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Absoluut</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Hoek om entiteit rond draaipunt te draaien</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Indien aangevinkt, zullen huidige attributen worden toegepast op aangemaakte entiteiten, othewise originelen zullen worden gebruikt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Indien aangevinkt, ligt de tweede rotatie rond het referentiepunt</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Twee keer draaien</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Hoek voor extra rotatie rond refrencepunt</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Draaiingshoek kiezen uit tekening</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Indien gecontroleerd, zullen originele entiteiten overleven, anders worden ze verwijderd.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Indien aangevinkt worden meerdere kopieën aangemaakt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Meerdere exemplaren</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Rotatiehoek:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Geeft aan of hoek wordt gedefinieerd door ingevoerde waarde of door muispositie</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Kies tweede rotatie hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal exemplaren</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Draaiopties verplaatsen</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Indien aangevinkt, zullen meerdere kopieën worden aangemaakt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Meerdere exemplaren</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Indien aangevinkt wordt dezelfde schaalfactor voor X- en Y-as toegepast.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Isotroop</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Indien gecontroleerd, zullen originele entiteiten overleven, anders worden ze verwijderd.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal exemplaren</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Indien aangevinkt, zullen huidige attributen worden toegepast op aangemaakte entiteiten, anders zullen originele worden gebruikt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Schaalfactor voor Y-as</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Schaalfactor:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Indien aangevinkt zullen aangemaakte entiteiten op de huidige laag geplaatst worden. Anders worden ze op originele lagen geplaatst.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Huidige laag gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Indien aangevinkt wordt de factor vrij geselecteerd met de muis. Anders zullen gespecificeerde waarden van factoren worden gebruikt.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vrij</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Schaalfactor voor X-as</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Indien gecontroleerd, zullen originele entiteiten overleven, anders worden ze verwijderd.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Origineel bewaren</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Indien aangevinkt zullen aangemaakte entiteiten op de huidige laag geplaatst worden. Anders worden ze in originele lagen geplaatst.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Huidige laag gebruiken</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal exemplaren</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Indien aangevinkt, zullen huidige attributen worden toegepast op aangemaakte entiteiten, owtherwise originelen zullen worden gebruikt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Indien gecontroleerd, zullen originele entiteiten overleven, anders worden ze verwijderd.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Indien aangevinkt, zullen meerdere kopieën worden aangemaakt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Meerdere exemplaren</translation>
     </message>
 </context>
 <context>
@@ -23939,14 +21556,6 @@ Geef een andere waarde op.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Beelden filteren op naam</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24382,45 +21991,6 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
         <source>Control Points</source>
         <translation>Controlepunten</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola controlepunten kunnen niet collineair zijn</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Indien geselecteerd, wordt de puntentiteit die als invoegpunt wordt gebruikt, verwijderd na de bewerking van de pasta. Anders zal het overleven.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Punt verwijderen</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Schaalfactor</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Schaalfactor voor geplakte entiteiten</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Rotatiehoek voor geplakte entiteiten</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24496,89 +22066,6 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Kies hoek van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Rotatiehoek voor geplakte entiteiten</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Spatiëring tussen entiteiten invoegpunten in rijen.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Arrayafstand door X uit tekening kiezen</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Schaalfactor</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Arrayhoek kiezen uit tekening</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Rotatiehoek voor array.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Array rijen nummer.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Arrayafstand door Y uit tekening kiezen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Indien aangevinkt, wordt dezelfde rotatiehoek gebruikt voor elke afzonderlijke pasta en hele array. Anders worden verschillende hoeken gebruikt.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Zelfde hoekjes</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Ruimte:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Array zuilen nummer.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Indien aangevinkt, worden arrays van kopieën gemaakt op plakken.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Array</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Array Hoek:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Schaalfactor voor geplakte entiteiten</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Spatiëring tussen invoegpunten van entiteiten in kolommen.</translation>
     </message>
 </context>
 <context>
@@ -25200,17 +22687,9 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
         <translation>Lijnbreedtenaam</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Kleuren</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Achtergrondkleur voor penelement dat momenteel in de tabel van de pen wordt bewerkt</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Kleur van rooster voor pennenlijst</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25232,10 +22711,6 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Volledige tabel rij is vet voor actieve pen</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Rasterkleur:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25328,17 +22803,9 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
         <translation>Natuurlijke naam, indien mogelijk</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Indien geselecteerd zullen extra berichten getoond worden als onderdeel van pengerelateerde bewerkingen</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Infobericht tonen als er geen entiteiten kunnen worden geselecteerd met pen</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Bij dubbelklikken op tabel-item</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25563,12 +23030,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 
 Let op: als u de pen opslaat via de editor zonder herstart, worden de huidige pennen van het palet opgeslagen in het nieuwe bestand en wordt de bestaande inhoud overschreven.</translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">De locatie van het penbestand is gewijzigd. Start de applicatie opnieuw op zodat het nieuwe penbestand wordt gebruikt.
-Houd er rekening mee dat als u een pen opslaat via de editor zonder opnieuw op te starten, de huidige pennen uit het palet in het nieuwe bestand worden opgeslagen, waardoor de bestaande inhoud ervan wordt overschreven.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25614,37 +23075,6 @@ Houd er rekening mee dat als u een pen opslaat via de editor zonder opnieuw op t
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Positie kiezen uit de tekening</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Aantal punten per raster Y-richting (aantal roosterrijen)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Aantal rijen:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Kolommen tellen:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Aantal punten door X-rasterrichting (aantal roosterzuilen)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Indien geselecteerd, zal het laatste punt van rooster worden aangepast according op de positie van het eerste punt, zodat rooster zal worden recht of vierhoek</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Laatste punt aanpassen aan eerste</translation>
     </message>
 </context>
 <context>
@@ -32911,10 +30341,6 @@ Houd er rekening mee dat als u een pen opslaat via de editor zonder opnieuw op t
         <translation>Diameter</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Omtrek</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33903,10 +31329,6 @@ p, li { white-space: pre-wrap; }
         <translation>Entiteitsinformatie</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Indien geselecteerd zal meer gedetailleerde informatie over lijnen en bogen die deel uitmaken van polyline getoond worden in het Intity Info-widget.&lt;br/&gt; Anders wordt alleen informatie over vertex/bulges weergegeven.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Indien geselecteerd, wordt meer gedetailleerde informatie over lijnen en bogen die deel uitmaken van een polylijn weergegeven in het widget Entiteitsinfo.&lt;br/&gt;Anders worden alleen gegevens over hoekpunten/bulten getoond.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -33955,205 +31377,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Punten markeren pen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Randen:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Indien aangevinkt, geeft u aan dat het snappunt moet worden verschoven door een straal van hoeken.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Snapaanpassing</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Lengte van schuine hoek voor Y-richting.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Bepaalt welke randen van de rechthoek moeten worden getekend (zodat het mogelijk is om slechts twee parallelle lijnen in plaats van rechthoek te creëren)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Verticaal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontaal</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Breedte van rechthoek</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Bepaalt hoe hoeken van rechthoek moeten worden getekend.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Recht</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rond</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Afschuining</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Indien aangevinkt, wordt de rechthoek gedraaid op een bepaalde hoek.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Basishoek:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Indien aangevinkt, bepaalt de opgegeven hoogte en breedte van de rechthoek afstand tussen de boogcentra voor afrondingshoeken. Anders definiëren deze waarden de buitengrootte van de rechthoek.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Grootte binnenkant</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lengte Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Indien aangevinkt zal rechthoek worden aangemaakt als polylijn in plaats van afzonderlijke segmenten.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Knap:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Hoogte:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Lengte van schuine hoek voor X-richting.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lengte X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Hoogte van rechthoek</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Straal van afgeronde hoeken.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Punt van rechthoek die zal worden geplaatst om invoegpunt.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Linksboven</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Boven</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Rechtsboven</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Links</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midden</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Rechts</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Linksonder</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Onder</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Rechtsonder</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Draaiingshoek kiezen uit tekening</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Kies straal van afgeronde hoeken van tekening.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Kies hoogte van rechthoek van tekening</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Kies breedte van rechthoek uit tekening</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Breedte:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Hoeken:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Kies lengte van schuine hoek voor X richting van tekening.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Kies lengte van schuine hoek voor Y richting van tekening.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Indien aangevinkt, wordt de hoek gespecificeerd door de muispositie. Anders zal de opgegeven waarde worden gebruikt.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vrij</translation>
     </message>
 </context>
 <context>
@@ -34523,153 +31746,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Bepaalt welke randen van de rechthoek moeten worden getekend (zodat het mogelijk is om slechts twee parallelle lijnen in plaats van rechthoek te creëren)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Verticaal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontaal</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Bepaalt welk punt van rechthoek in startpuntpositie moet worden geplaatst.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Hoek</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Middenverticaal</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Midden-Horizontaal</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midden</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Kies rechthoek rotatie hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Kies straal van afgeronde hoeken van tekening.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Hoeken:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Bepaalt welk punt van de rechthoek in de positie van het eindpunt moet worden geplaatst.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Kies de lengte van afschuining in X richting van tekening.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Randen:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Kies de lengte van de afschuining in Y richting van de tekening.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Starten:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lengte van de bocht in Y richting.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Indien aangevinkt, specificeert dat snappunten moeten worden verschoven door een straal van hoeken.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Snapaanpassing</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lengte X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Indien aangevinkt, kunt u de rotatiehoek voor rechthoek specificeren.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Basishoek:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Rechthoekige rotatiehoek.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Einde snap:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Bepaalt hoe hoeken van rechthoek moeten worden getekend.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Recht</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rond</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Afschuining</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Straal van afgeronde hoeken.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lengte Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Indien aangevinkt wordt de gehele rechthoek getekend als polylijn.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lengte van de afschuining in X richting.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34927,145 +32003,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Kies de lengte van de afschuining in Y richting van de tekening.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Binnenhoek van vierhoek.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Indien aangevinkt, wordt de binnenhoek van de kwadrant aan de opgegeven waarde bevestigd.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Vaste binnenhoek:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Basishoek van rechthoek.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lengte X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lengte van de afschuining in X richting.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Bepaalt hoe hoeken moeten worden getekend voor rechthoek.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Recht</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rond</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Afschuining</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Hoeken:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Indien aangevinkt, specificeert dat snappunten moeten worden verschoven door een straal van hoeken.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Verschuiving met raster</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lengte Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lengte van de bocht in Y richting.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Straal van afgeronde hoeken.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Indien aangevinkt zal de vorm als polylijn worden aangemaakt.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Kies innerlijke hoek van vierhoek van tekening.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Randen:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Kies straal van afgeronde hoeken van tekening.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Kies de lengte van afschuining in X richting van tekening.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Kies de lengte van de afschuining in Y richting van de tekening.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Bepaalt welke randen van de rechthoek moeten worden getekend (zodat het mogelijk is om slechts twee parallelle lijnen in plaats van rechthoek te creëren)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Verticaal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontaal</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Kies basishoek van rechthoek uit tekening</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Indien aangevinkt zal de rechthoek worden gedraaid naar de gespecificeerde basishoek. Anders wordt de basishoek gedefinieerd door hoek tussen eerste en tweede punt van de rechthoek.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Vaste basishoek:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Indien aangevinkt wordt een kwadrant gecreëerd in plaats van een rechthoek.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Kwartel</translation>
     </message>
 </context>
 <context>
@@ -35714,100 +32651,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Sorry, er is een netwerkfout opgetreden tijdens het controleren op een nieuwe versie.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Kan antwoord van de server niet verwerken</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Draaiopties verplaatsen</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Specificeert dat kopies van dit materiaal in de huidige of originele laag zullen worden geplaatst</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Huidige laag gebruiken</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">De secundaire hoek aanpassen zodat de som van hoeken (relatieve rotatiehoek) 0 is. Met een dergelijke instelling zal entiteit worden verplaatst, maar niet gedraaid.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Gespiegelde hoeken</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Kies primaire hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Bepaalt of huidige of originele tekenattributen worden toegepast</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Kies een secundaire hoek uit de tekening</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Hoek voor rotatie boven het absolute referentiepunt</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Indien aangevinkt, zullen meerdere kopieën worden aangemaakt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Meerdere exemplaren</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Aantal aan te maken kopieën</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Secundaire hoek:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Indien aangevinkt wordt dezelfde hoek gebruikt voor alle kopieën. Anders wordt het evenredig verhoogd met het kopieernummer.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Dezelfde secundaire hoek voor kopieën</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Indien gecontroleerd, zullen originele entiteiten overleven, anders worden ze verwijderd.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Primaire hoek:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Hoek om over het secundaire referentiepunt te draaien</translation>
     </message>
 </context>
 <context>
@@ -36802,141 +33645,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Begincirkelhoek:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Start hoek voor cirkel van waaruit teken zullen beginnen.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Verschuiving:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Verschuiving van tekenpunt naar snijpunt.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Kies afstand van tekening</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Afstand:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Afstand tussen teken.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Indien aangevinkt, wordt de geselecteerde entiteit gedeeld door kruispunten aanvinken.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Verdelen</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Tekenverschuiving van tekening kiezen</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Lengte van de teek.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Tikhoek kiezen uit tekening</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Rasteren aan/uit:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Tiklengte van tekening kiezen</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">PIck start cirkel hoek vanaf tekening</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Hoek tussen teken en geselecteerde entiteit.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Indien aangevinkt, is de tekenhoek gerelateerd aan de geselecteerde entiteit, anders is het absolute hoek.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Tiklengte:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Bepaalt welk tekenpunt moet worden geplaatst op het snijpunt met de geselecteerde entiteit.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Begin</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midden</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Einde</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Indien aangevinkt, wordt een bepaalde vaste afstand tussen teken gebruikt. Anders wordt de afstand berekend op basis van de lengte van de entiteit en het aantal teken.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Vast</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Aantal teken tussen de randen van de geselecteerde entiteit.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Devines hoe teken op entiteit randen moeten worden geplaatst.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Geen</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Rand-tick:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37256,57 +33964,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Bepaalt het aantal te genereren lijnsegmenten voor elke spline-fit spline-fit polyline</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Als het niet gecontroleerd wordt, wordt de originele spline verwijderd, anders zal het overleven.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Indien aangevinkt, zullen de huidige attributen worden gebruikt voor aangemaakte entiteiten, anders - originele.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Indien aangevinkt, zullen aangemaakte entiteiten op de huidige laag geplaatst worden, anders zullen ze in originele lagen geplaatst worden.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Huidige laag gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Indien aangevinkt, is het mogelijk om aangepaste hoeveelheid lijnsegmenten op te geven. Anders wordt de waarde van de instellingen voor de huidige tekening gebruikt.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Aangepaste segmenten tellen</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Indien aangevinkt zullen lijnsegmenten deel uitmaken van polyline. Anders zijn het individuele lijnen</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Naar Polyline</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37430,65 +34087,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Naar Polyline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Indien aangevinkt, zullen aangemaakte entiteiten op de huidige laag geplaatst worden, anders zullen ze in originele lagen geplaatst worden.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Gebruiker huidige laag</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Bedrag van de middenpunten van polyline segment dat zal worden toegevoegd aan spline.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Definieert de mate van de spline</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Als het niet gecontroleerd wordt, zal de originele polyline verwijderd worden, anders zal het overleven.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Mate:</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="vanished">Als aangevinkt worden de hoekpunten van de polylijn beschouwd als splinepunten en wordt een spline door punten gemaakt. Anders worden ze als controlepunten beschouwd en wordt een gewone spline gemaakt.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Middenpunten:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Indien aangevinkt, zullen de huidige attributen worden gebruikt voor aangemaakte entiteiten, anders - originele.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Indien aangevinkt, worden polyline vertexen beschouwd als spline punten en spline door punten zal worden gemaakt. Anders worden ze beschouwd als controlepunten en zal urine spline worden gecreëerd.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Vertexen zijn spline punten</translation>
     </message>
 </context>
 <context>
@@ -37892,69 +34490,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Mate gebruikt om spline bij benadering te benaderen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Indien ingeschakeld wordt symmetrische ster aangemaakt.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrisch</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Straal voor binnenranden.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Kies de buitenste straal van tekening</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Kies binnenste straal van tekening</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Aantal stralen.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Indien aangevinkt worden de buitenranden afgerond.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Straal buiten</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Indien aangevinkt worden de binnenranden afgerond.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Straal binnen</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Indien ingeschakeld wordt de ster als polylijn getekend.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Straal voor buitenstralen (randen).</translation>
     </message>
 </context>
 <context>
@@ -38845,14 +35380,6 @@ p, li { white-space: pre-wrap; }
         <translation>Instellingen</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Gebruikerscoördinaten op naam filteren</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;Geen naam&gt;</translation>
@@ -38953,33 +35480,6 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>A&amp;ll UCS verwijderen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formulier</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Hoek X-as van nieuw coördinatensysteem</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Geeft aan of X-Axis-hoek wordt gedefinieerd door de ingevoerde waarde of door de muispositie</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vrij</translation>
     </message>
 </context>
 <context>
@@ -39595,33 +36095,6 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Regelrelatieve hoekopties</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Ruimte:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Afstand tot originele polylijn</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Kopieën:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal exemplaren</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Spatie uit tekening kiezen</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39659,39 +36132,14 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>Nieuw Bestand wordt aangemaakt...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>Naamloos bestand %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>Bezig laatst geopend bestand te openen...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>Geopend bestand:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>Het openen is afgebroken</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>Er wordt afgedrukt...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>Het Programma wordt afgesloten...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -39704,19 +36152,9 @@ Waarschuwing: deze actie kan NIET ongedaan worden gemaakt!</translation>
         <translation>Nieuwe Tekening opgestart.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>Tekening wordt opgeslagen...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>Opgeslagen Tekening: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>Het Afdrukken is voltooid</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39731,11 +36169,6 @@ Please check the permissions.</source>
         <translation>Kan het volgend bestand niet openen
 %1
 Controleer de toegangsrechten.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>Automatisch opslaan tekening ...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -39798,11 +36231,6 @@ Controleer het bestaan en de rechten.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1067"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>Bestand &apos;%1&apos; bestaat niet. Openen afgebroken</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>Tekening opslaan: %1</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
@@ -39870,12 +36298,6 @@ Controleer het bestaan en de rechten.</translation>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>ontsnappen</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -39911,11 +36333,6 @@ Controleer het bestaan en de rechten.</translation>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>Naam van het blok</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>Blok aan het herbenoemen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40116,12 +36533,6 @@ Controleer het bestaan en de rechten.</translation>
         <translation>Commandogeschiedenis en uitvoer</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>ontsnappen</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
         <source>...</source>
         <translation>...</translation>
@@ -40296,81 +36707,6 @@ Controleer het bestaan en de rechten.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of arc</source>
-        <translation type="vanished">Laag van boog</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Penattributen</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">X Coördinaat van het boogcentrum</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y Coördinaat van het boogcentrum</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">Bepaalt of de boog omgekeerd is (met de klok mee)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Omgekeerd</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Midden (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Straling van de boog</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Beginhoek:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">Beginhoek van de boog</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">Eindhoek van de boog</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Eindhoek:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Midden (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40408,198 +36744,6 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Cirkel</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Straal van cirkel</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Midden (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">Y Coördinaat van het centrum van de cirkel</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Midden (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">X Coördinaat van het centrum van de cirkel</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Lineaire dimensie</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Laag van dimensie</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Penattributen</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">Rotatiehoek van de afmeting</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Afmetingen</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Laag van dimensie</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Penattributen</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellips</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of ellipse</source>
-        <translation type="vanished">Laag van ellips</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">Rotatiehoek voor de hoofdas van de ellips, graden</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">Bepaalt of de boog omgekeerd is</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Omgekeerd</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Midden (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">Eindhoek van de elliptische boog, graden</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y Coördinaat van het boogcentrum</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">Straal van de hoofdas van de ellips</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">in graden</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">Beginhoek(°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">Rotatie(°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">Straal van de kleine as van de ellips</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">Eindhoek(°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">Beginhoek van elliptische boog, graden</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="vanished">Majoor:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="vanished">Klein:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">X Coördinaat van het centrum van de ellips</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Midden (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
     </message>
 </context>
 <context>
@@ -40676,105 +36820,6 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">Afbeelding</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of image</source>
-        <translation type="vanished">Laag van afbeelding</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Hoogte:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="vanished">Breedte van afbeelding</translation>
-    </message>
-    <message>
-        <source>insert (y):</source>
-        <translation type="vanished">Invoegen (y):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X-coördinaat van het invoegpunt</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Resolutie (dots per inch)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">Pad naar afbeeldingsbestand</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Schaalfactor</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Grootte (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y-coördinaat van het invoegpunt</translation>
-    </message>
-    <message>
-        <source>path:</source>
-        <translation type="vanished">Pad:</translation>
-    </message>
-    <message>
-        <source>insert (x):</source>
-        <translation type="vanished">Invoegen (x):</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Schaal:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Grootte van afbeelding in beeldpunten</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Breedte:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">Hoogte van afbeelding</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="vanished">Selecteer een afbeeldingsbestand</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40797,167 +36842,9 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <translation>GUI Taal:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span-stijl=&quot;lettergrootte:large;lettertypegewicht:700;&quot;&gt;Welkom bij LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&gt; Kies de eenheid die u wilt gebruiken voor nieuwe tekeningen en uw voorkeurstaal voor Ui en Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;U kunt deze instellingen later wijzigen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Commando Taal:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">Invoegen</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of insert</source>
-        <translation type="vanished">Laag van invoeging</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="vanished">Punt y) invoegen:</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="vanished">Plaatsingspunt (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">Bedrag van de rijen voor kopieën</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">Spatiëring tussen kolommen</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">Schalenfactor op X-as</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X-coördinaat van het invoegpunt</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">Spatiëring tussen rijen</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">Bedrag van de kolommen voor kopieën</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">Schalenfactor op Y-as</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="vanished">Y-schaal:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="vanished">Rijen:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y-coördinaat van het invoegpunt</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="vanished">Rijafstand:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="vanished">Kolommen:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="vanished">Schaal X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="vanished">Kolomafstand:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Regel</translation>
-    </message>
-    <message>
-        <source>ID: </source>
-        <translation type="vanished">ID: </translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of line</source>
-        <translation type="vanished">Laag van lijn</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="vanished">Eindpunt (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">Eindpunt X-coördinaat</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">Eindpunt Y-coördinaat</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="vanished">Punt y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="vanished">Beginpunt (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">Beginpunt Y-coördinaat</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="vanished">Beginpunt (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">Beginpunt X-coördinaat</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
     </message>
 </context>
 <context>
@@ -41128,10 +37015,6 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <translation>Symbool invoegen</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Symbool invoegen</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Graad (°)</translation>
@@ -41180,10 +37063,6 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Pond (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41819,115 +37698,6 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Spiegel Opties</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal Kopieën</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Wis Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Bewaar Origineel</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Gebruik huidige &amp;attributen</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Gebruik huidige &amp;laag</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">....</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal Kopieën</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Wis Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Bewaar Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Meerdere Kopieën</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Gebruik huidige &amp;attributen</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Gebruik huidige &amp;laag</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Opties verplaatsen/kopiëren</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Verplaats/Roteer Opties</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal Kopieën</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Hoek (h):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Gebruik huidige &amp;attributen</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Gebruik huidige &amp;laag</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Wis Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Bewaar Origineel</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Meerdere exemplaren</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44944,10 +40714,6 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <translation>Relatieve nulmarkering</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Gedrag</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Type te tekenen raster</translation>
@@ -45436,38 +41202,6 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <translation>Tekeningen automatisch opslaan</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>~</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>_</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>__</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>lcauto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>autosaved</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>Voorvoegsel voor bestandsnaam automatisch opslaan:</translation>
@@ -45476,36 +41210,6 @@ Dit wijzigt recursief alle entiteiten van het Blok zelf.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>Backupbestandsnaam achtervoegsel:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>$$</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>back-up maken</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>.bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>.backup</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>.lcb</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -46003,287 +41707,6 @@ dus standaard stapwaarde vereist voor bakken</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Tekenvariabelen</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variabele</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Rubriek</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Waarde</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Annuleren</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punt</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of point</source>
-        <translation type="vanished">Laag van punt</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="vanished">Positie (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">Positie van punt door Y-coördinaat</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="vanished">Positie (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">Positie van punt door X-coördinaat</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of polyline</source>
-        <translation type="vanished">Laag van polylijn</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">Bepaalt of polylijn gesloten contour is</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Gesloten</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Rotatie Opties</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal kopieën</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Wis Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Bewaar Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&amp;Meerdere Kopieën:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Hoek (h):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Gebruik huidige &amp;attributen</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Gebruik huidige &amp;laag</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Rotatie Twee Opties</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal kopieën</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Wis Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Bewaar Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Meerdere Kopieën</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">Hoek (&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">Hoek (&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Gebruik huidige &amp;attributen</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Gebruik huidige &amp;laag</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Schaal Opties</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Aantal kopieën</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Gebruik huidige &amp;attributen</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Gebruik huidige &amp;laag</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Zoek de schaalverhoudingen rond het centrum door een referentiepunt en een doelpunt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Wis Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Bewaar Origineel</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Meerdere kopieën</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Schaal met dezelfde factor in zowel x- als y-richtingen</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Isotroop schalen</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Spline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Laag:</translation>
-    </message>
-    <message>
-        <source>Layer of spline</source>
-        <translation type="vanished">Laag van spline</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Mate:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">Bepaalt of spline gesloten contour definieert</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Gesloten</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">Mate gebruikt om spline bij benadering te benaderen</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46431,10 +41854,6 @@ dus standaard stapwaarde vereist voor bakken</translation>
         <translation>Pond (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>Vermenigvuldigen (×)</translation>
@@ -46478,10 +41897,6 @@ dus standaard stapwaarde vereist voor bakken</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Laag van tekst</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Schuine tekst</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -47089,10 +42504,6 @@ dus standaard stapwaarde vereist voor bakken</translation>
         <translation>Hoek:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Oblique:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Breedtefactor:</translation>
@@ -47610,21 +43021,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Ongeldige schaal opgegeven</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Papierschaalfactor groter dan de maximale afdrukverhouding</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Papierschaalfactor kleiner dan min-drukverhouding</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47691,58 +43087,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Wereld</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Knap</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">Vasthaken aan eindpunten</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">Vasthaken aan gelijkmatige punten van entiteit</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">Vasthaken aan middelpunten</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">Automatisch vasthaken aan snijpunten</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">Vasthaken aan dichtstbijzijnde punt op entiteit</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">Vasthaken aan punt op gegeven afstand van eindpunt</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">Handmatig vasthaken aan snijpunten</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">Vasthaken aan raster</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">Horizontaal beperken</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">Verticaal beperken</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">Relatief nulpunt verplaatsen</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">Relatief nulpunt vergrendelen</translation>
     </message>
 </context>
 <context>
@@ -47945,12 +43289,6 @@ Geef een andere waarde op.</translation>
         <translation>Lege lagen verwijderen</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Laag(s) zonder gevonden entiteiten, maar ze zijn gefilterd en niet zichtbaar.
-Filtermasker wissen en herhalen.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -48018,14 +43356,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Als Ja — entiteiten met pennen die op &quot;Door Laag bepaald&quot; staan, zien er op de nieuwe laag precies hetzelfde uit als op de vorige lagen en de waarde &quot;Door Laag bepaald&quot; wordt vervangen door de daadwerkelijke pennen.
 
 Als Nee — de waarden &quot;Door Laag bepaald&quot; blijven behouden en de pen van de doellaag bepaalt de pen voor dergelijke entiteiten.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">De waarde &quot;Op laag&quot; vervangen door de waarden van de bronlagen?
-Als u &quot;Ja&quot; kiest, worden entiteiten met &quot;Op laag&quot;-stijlen op de nieuwe laag weergegeven zoals op de vorige lagen, en de waarde &quot;Op laag&quot; wordt vervangen door de opgeloste stijlen.
-Als u &quot;Nee&quot; kiest, blijft de waarde &quot;Op laag&quot; behouden, en de stijl van de doel-laag bepaalt de stijl van deze entiteiten.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48644,37 +43974,9 @@ Wilt u het vervangen?</translation>
         <translation>Getagd afbeeldingsbestandsformaat</translation>
     </message>
     <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Oude tekenbeurs %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
         <source>dwg Drawing %1</source>
         <translation>dwg Tekening %1</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>DWG ondersteuning is niet compleet!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>Als dit bestand niet geopend kan worden, probeer dan een ouder DWG-formaat</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>of probeer een converter te vinden om het een DXF bestand te maken.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>Informatie</translation>
-    </message>
-    <message>
-        <source>DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF.</source>
-        <translation type="vanished">DWG-ondersteuning is niet compleet; als dit bestand niet opent, probeer een ouder DWG-formaat of converteer naar DXF.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -49936,23 +45238,6 @@ Wilt u het vervangen?</translation>
         <translation>Je moet eerst een afstand invoeren.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>cal</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>berekenen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>Calculatormodus: Aan</translation>
@@ -50211,11 +45496,6 @@ Wilt u het vervangen?</translation>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">criclebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51148,12 +46428,6 @@ Wilt u het vervangen?</translation>
         <translation>filet</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>schuif</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -51771,26 +47045,6 @@ Wilt u het vervangen?</translation>
         <translation>gebruik:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [opties] &lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- print alle dxf bestanden naar pdf bestanden met dezelfde namen.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o some.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- print alle dxf bestanden naar &apos;some.pdf&apos; bestand.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51866,16 +47120,6 @@ Wilt u het vervangen?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Papiergrootte (breedte x hoogte) in mm.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Uitvoerresolutie (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Uitvoerschaal. Bijvoorbeeld: 0,01 (voor 1:100 schaal).</translation>
@@ -51908,27 +47152,9 @@ Wilt u het vervangen?</translation>
         <translation>Doeluitvoermap.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation>DXF-uitvoerversie: r12, r14, r2000, r2004, r2007 (standaard), r2018.</translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation>Invoerbestand(en): %1.</translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Invoer DXF-bestand(s)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -52077,11 +47303,6 @@ Wilt u het vervangen?</translation>
         <translation>fout bij lezen van DXF/DWG bestandskop</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">fout bij lezen van DXF/DWG header dara</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -52128,10 +47349,6 @@ Wilt u het vervangen?</translation>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>fout bij lezen van DXF/DWG-code</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Opende dwg-bestandsversie %1.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52572,10 +47789,6 @@ Wilt u het vervangen?</translation>
         <translation>[Override]</translation>
     </message>
     <message>
-        <source>Draft</source>
-        <translation type="vanished">Concept</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="86"/>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
@@ -52583,10 +47796,6 @@ Wilt u het vervangen?</translation>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
-    <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Selecteer om blok aan te maken (in te vullen)</translation>
-    </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
@@ -52601,66 +47810,6 @@ Wilt u het vervangen?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Specificeer een referentiepunt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Te ontploffen container selecteren (Te voltooien)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Selecteren en exploderen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Geef een hoek op:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Geef een waarde op:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Geef het aantal kolommen op:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Geef het aantal rijen op:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Geef kolomafstand in:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Geef de ruimte tussen de rijen op:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Blok kan geen insert van zichzelf bevatten.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">heeft geneste insert van het huidige blok in:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Dit blok kan niet worden ingevoegd.</translation>
     </message>
 </context>
 <context>
@@ -52912,270 +48061,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Lengte van akkoord moet niet nul zijn</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Geen geldige booglengte</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Specificeer centerpunt</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Beginpunt opgeven</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatieve boog</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Lokaallengte opgeven (negatief voor alt-punt):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Ander boogpunt gebruiken</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Specificeer straal</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Specificeer begin hoek:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Eindhoek opgeven of [hoek/hoek]</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Specificeer ingesloten hoek:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Boog gegevens ongeldig.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Derde punt specificeren</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Specificeer tweede punt</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Startpunt opgeven of [centrum]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Specificeer basis element</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Andere boog</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternatieve boog</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Specificeer eind hoek</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Eindpunt specificeren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Specificeer middenpunt</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Punt op cirkel specificeren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Geen geldige Boog gegevens.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificeer eerste punt</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Specificeer tweede punt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Ongeldige boog gegevens</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificeer eerste punt</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Specificeer tweede punt</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Specificeer derde punt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Specificeer middenpunt cirkel</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Specificeer straal cirkel</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">radius=%1 is ongeldig (expressie)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">radius=%1 is ongeldig (negatief)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">radius=%1 is ongeldig (nul)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Geef de eerste regel op</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">De tweede regel specificeren</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">De derde regel specificeren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Geef het eerste punt op de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Geef het tweede punt op de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Selecteer het midden van de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Een lijn/arc/circle specificeren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Geef de eerste regel/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Specificeer de tweede lijn/arc/circle</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Selecteer het midden van de raakcirkel</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Geen gemeenschappelijke raakcirkel voor radius &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Een lijn/arc/circle specificeren</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Geef de andere lijn/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Geef een punt op de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Selecteer het midden van de raakcirkel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Selecteer het midden van de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Geef de eerste regel/arc/circle</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Geen gemeenschappelijke raakcirkel voor geselecteerde entiteiten</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Specificeer de tweede lijn/arc/circle</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Specificeer de derde lijn/arc/circle</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53370,125 +48255,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Selecteer om uit te komen (in te vullen)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Hatch onmiddellijk na selectie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Geef een hoek op:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Geef een waarde op:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Geef dpi:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificeer eerste punt</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Specificeer volgend punt of [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Specificeer volgend punt</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Kan de reeks regels niet sluiten: nog niet genoeg entiteiten gedefinieerd of reeds gesloten.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Kan niet ongedaan maken: Begin geschiedenis bereikt</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Kan niet opnieuw doen: einde geschiedenis bereikt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Specificeer een positie</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Alternatieve richting</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Geef een hoek op:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Geef een lengte op:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entiteiten worden aangemaakt</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Selecteer eerste lijn</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Selecteer tweede lijn</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Geef lengte op van de bissectrice:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Geef het aantal bissectrices:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Aantal sectorlijnen die niet binnen het bereik liggen:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Klik en sleep om Lijn te tekenen</translation>
     </message>
 </context>
 <context>
@@ -53521,74 +48290,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Cirkel, boog of ellips selecteren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entiteiten worden aangemaakt</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Geef een aantal op:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Specificeer Afstand &lt;%1&gt; of selecteer Element</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Specificeer Afstand &lt;%1&gt; of Selecteer Element of [%2]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Selecteer element</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Geef door punt</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entiteiten worden aangemaakt</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Geen geldig aantal. Probeer 1..99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Een hoek opgeven</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Eerste hoek opgeven</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Tweede hoek opgeven</translation>
     </message>
 </context>
 <context>
@@ -53630,29 +48331,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Selecteer basis element</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Specificeer hoek</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Lengte specificeren</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Specificeer een positie</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53690,17 +48368,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Invoegpunt specificeren</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Tekst invoeren:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53709,108 +48376,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Specificeer eerste punt</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Specificeer volgend Punt of [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Specificeer volgend Punt</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Kan lijn niet sluiten: Onvoldoende elementen opgegeven.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Kan niet ongedaan maken: Onvoldoende elementen gedefinieerd.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Voer het eindpunt x in</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Aantal polylijnen invoeren</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Voer een vergelijking in, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Voer het startpunt x in</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">De ingevoerde x is ongeldig.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">De opgegeven stapgrootte is ongeldig.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">De ingevoerde waarde x is ongeldig.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternatieve boog</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Geef eerste controlepunt</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Specificeer volgende controle punt of [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Geef volgende controlepunt</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Kan niet ongedaan maken: onvoldoende elementen gedefinieerd.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Specificeer invoerpunt</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Voer tekst in:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Tweede punt specificeren</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Te knippen selecteren (Te voltooien)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53829,10 +48395,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Rechts knippen na selectie</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Kies om te kopiëren (in te vullen)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53873,24 +48435,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">Referentiepunt plakken instellen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Niets om ongedaan te maken!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Niets om over te doen!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="148"/>
@@ -53913,25 +48457,27 @@ This block cannot be inserted.</source>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 </source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Hoek: %1
-Aanvullend: %2
-Aanvullend: %3
-Alternatief: %4</translation>
+Complementaire hoek: %2
+Supplementaire hoek: %3
+Volledige omwenteling − hoek: %4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="139"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Hoek: %1
-Aanvullend: %2
-Aanvullend: %3
-Alternatief: %4
+Complementaire hoek: %2
+Supplementaire hoek: %3
+Volledige omwenteling − hoek: %4
 Intersectie: (%5 , %6)
 Intersectie:@(%7, %8)</translation>
     </message>
@@ -53956,19 +48502,22 @@ Intersectie:@(%7, %8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Complementary:</source>
-        <translation>Aanvullende:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Complementaire hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
         <source>Supplementary:</source>
-        <translation>Aanvullend:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementaire hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
-        <source>Alternative: </source>
-        <translation>Alternatief:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Volledige omwenteling − hoek:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
@@ -54108,57 +48657,6 @@ Einde: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Afstand: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Punt over entiteit: (%6 , %7)
-Punt: (%8 , %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Specificeer een element</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Niet klikken op kindentiteiten in de container</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Relatief punt is op entiteit</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Informatie</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Afstand:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Van:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Aan:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Specificeer een afstandpunt</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54204,10 +48702,6 @@ Punt: (%8 , %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Selecteer om de totale lengte te meten (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Selecteer contour</translation>
@@ -54239,917 +48733,6 @@ Punt: (%8 , %9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Annuleren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Geef een hoek op:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Geef een waarde op:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Kan bestand &apos;%1&apos; niet openen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Selecteer om attributen te wijzigen (Te voltooien)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Attributen onmiddellijk na de selectie wijzigen</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Geselecteerde lijnen zijn parallel</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Geselecteerde lijnen zijn geen kinderen van dezelfde polylijn</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersectie:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punt 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punt 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Ongeldige entiteit geselecteerd (niet-trimbaar).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Ongeldige entiteit geselecteerd (niet-atomair).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Ongeldige entiteit geselecteerd (niet-trimbaar met eerste entiteit).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Selecteer eerste element</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Selecteer tweede eement</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Geef lengte 1 op:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Geef lengte 2 op:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Verdelen</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">Bij:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Het snijpunt mag niet het eindpunt van de entiteit zijn.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Specificeer te snijden element</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Specificeer snijpunt</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">De entiteit moet een lijn, boog, cirkel, ellips of interpolatie spline zijn.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Te verwijderen selecteren (Te voltooien)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Verwijder onmiddellijk na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Specificeer eerste breekpunt op een vrije vorm</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Specificeer tweede breekpunt op dezelfde vrije vorm</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Elementen bevinden zich niet in dezelfde vrije vorm.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Ouder van de tweede element is geen polylijn</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Ouder van de eerste instantie is geen vrije vorm</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Moeder van de tweede entiteit is nulptr</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Een van de gekozen entiteiten is nulptr</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Moeder van eerste entiteit is nulptr</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Eerste entiteit is nulptr</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Tweede entiteit is nulptr</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Selecteer entiteit om te verwijderen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Klik op entiteit om te wijzigen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Selecteer om tekst te ontploffen (Te voltooien)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Onmiddellijk na selectie exploderen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Spiegel</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Hoek (hoogte):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Regel van:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Regel naar:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Te spiegelen selecteren (Te voltooien)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Spiegelregel opgeven</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Verticaal spiegelen</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Horizontaal spiegelen</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Specificeer de eerste punt van de spiegellijn</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Specificeer de tweede punt van de spiegellijn</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Verschuiving</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Verschuiving kopiëren</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Een kopie maken</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Te verplaatsen selecteren (Te voltooien)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Onmiddellijk verplaatsen na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Specificeer doel punt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Verplaatsen met rotatie</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Bron:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Doel:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Verschuiving:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Selecteer om te verplaatsen en te roteren (Te voltooien)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Verplaatsen en direct roteren na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Specificeer doel punt</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Geef de rotatiehoek op:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Verschuiving</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Afstand:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Configuratierichting specificeren</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Referentiepunt voor offsetrichting specificeren</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)</source>
-        <translation type="vanished">Selecteer lijn, polylijn, cirkel, boog of ellips voor offset (Enter om te voltooien)</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Selecteer lijn, polylijn, cirkel of boog om offset te maken (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Verschuiving onmiddellijk na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Selecteer om de richting terug te draaien (in te vullen)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Onmiddellijk terugdraaien na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Rotatie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Bronpunt:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Doel:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Verschuiving:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referentiepunt:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Middenpunt:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Tweede hoek:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Draaien selecteren (Toe te voegen)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Onmiddellijk draaien na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Naar het midden van de selectie knippen</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Rotatiecentrum opgeven</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Geef doelpunt om naar te draaien</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Specificeer het streefpunt voor rotatie rond referentiepunt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Tweemaal draaien</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Midden 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Hoek 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Midden 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Hoek 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Selecteer voor twee assen rotatie (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Draai 2 as onmiddellijk na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Specificeer een absolute referentiepunt</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Specificeer een relatief referentiepunt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rond</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punt 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punt 2:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Specificeer tweede element</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Geef een straal:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Eerste entiteit opgeven of straal &lt;%1&gt; invoeren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Schaal</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Midden:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Bronpunt:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Doel:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Verschuiving:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Schaal met X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Schaal met Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Schaalcentrum opgeven</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Naar het midden van de selectie knippen</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Bronpunt opgeven</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Doelpunt specificeren</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Vrije aanpassing</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Te schalen selecteren (Te voltooien)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Schaal onmiddellijk na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Specificeer eerste hoekpunt</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Specificeer tweede hoekpunt</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Uitrekken</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Beginhoek:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Einde hoek:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referentiepunt:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Doel:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Verschuiving:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Specificeer een referentiepunt</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Specificeer doel punt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Selecteer eerste element om te trimmen</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Selecteer begrenzende element</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Trim 2</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Intersectie:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Intersectie 2:</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Selecteer tweede element om te trimmen</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Selecteer element om te trimmen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Geen entiteit gevonden.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Het gekozen Element kan niet getrimd worden.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Geen geldige expressie</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Selecteer lijn/arc om te trimmen OF voer lengtewaarde in:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen entiteit gevonden.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Kies entiteiten (Enter to Complete)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Direct bestellen na selectie</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Kies entiteit voor bestelling</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Element moet een vrije vorm zijn.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Toe te voegen punt is ongeldig.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Toe te voegen punt is niet op entiteit.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Geef aan vrije vorm om knooppunten toe te voegen</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Geef toe te voegen knooppunt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Element moet een vrije vorm zijn.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Klik ergens in de buurt van het begin of het einde van de bestaande vrije vorm.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Aantal polylijnen invoeren</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Geef de vrije vorm ergens in de buurt het begin-of eindpunt</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Kan geen nodes toevoegen in een gesloten polyline.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Kan niet ongedaan maken: nog niet genoeg entiteiten gedefinieerd.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entiteit moet een vrij vorm zijn.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Geef vrije vorm om knooppunt te verwijderen</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Geef de te verwijderen knoop punt</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Verwijderen punt is ongeldig.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Het verwijderen van punt is niet op entiteit.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Entiteit moet een vrij vorm zijn</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">De te verwijderen punt is niet op een element.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Geen polyline gevonden.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Ten minste twee segmenten van polyline moeten tussen geselecteerde punten liggen.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Geef vrije vorm  dat verwijderd moet worden tussen knooppunten</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Geef eerste knooppunt</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Geef tweede knooppunt</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Verwijderen punt is ongeldig.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Element moet een vrij vorm zijn</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Kies de originele vrije vorm</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Kies een element op de oorspronkelijke vrije vorm</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Entiteit kan geen gesloten polylijn zijn.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Polyline aangemaakt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Geen Element gevonden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Element dient een vrije vorm te zijn</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Eerste segment moet op geselecteerde polyline.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Het tweede segment moet op geselecteerde polylijn zijn en niet gelijk aan het eerste segment.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Geen vrij vorm om te knippen</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Geef eerste segment</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Geef tweede segment</translation>
     </message>
 </context>
 <context>
@@ -55226,113 +48809,11 @@ Punt: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Geen entiteit geselecteerd!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Element is niet enkelvoudig.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Te selecteren entiteit specificeren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Kies eerste punt van snijlijn</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Selecteer kruisende entiteit</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Selecteer kindentiteiten</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Kies tweede punt van snijlijn</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Geef entiteit op met de gewenste laag</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Te selecteren entiteit specificeren</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Selecteer contour</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Deselecteren</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Selecteren</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">entiteiten</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">die snijdt met doos</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">die zich binnen de doos bevinden</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Kies de tweede kant</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Selecteer kruising</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Deselecteer entiteiten</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Geselecteerde entiteiten</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Intersecten verbreken</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Klik en sleep voor het selectievenster</translation>
     </message>
 </context>
 <context>
@@ -55640,158 +49121,6 @@ Punt: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Arc-opties</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Tegen de klok in</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Met de klok mee</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Tangential Arc-opties</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Indien geselecteerd wordt een raakboog met gespecificeerde straal aangemaakt</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Straal van de raakboog</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Indien geselecteerd zal boog met gespecificeerde hoek worden aangemaakt</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Totale subtending hoek van de raakboog</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Kies radius vorm tekening</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Straal</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Hoek</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Afschuinopties</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Controleren om beide entiteiten aan de afschuining te trimmen</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Lengte 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lengte van de afschuining in X richting.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Kies eerste lengte vorm tekening</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Lengte 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lengte van de bocht in Y richting.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Kies tweede lengte vorm tekening</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Cirkelopties</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Straal van cirkel</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Kies straal van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Cirkeltangentiaal2 opties</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Straal van de raakcirkel om &lt;/p&gt;&lt;/body&gt;&lt;/html&gt; te tekenen</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Straal van de raakcirkel</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Kies straal van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="vanished">Lineaire maatopties</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Angle of dimension</source>
-        <translation type="vanished">Hoek van maat</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55928,849 +49257,6 @@ Punt: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Opties invoegen</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Schaalfactor:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Schaalfactor</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI van afbeelding</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Opties invoegen</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Factor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Schaalfactor</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Array:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Aantal kolommen</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Aantal rijen</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Rijafstand van tekening kiezen</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Kolomafstand van tekening kiezen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Ruimte:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Kolomruimte</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Rijafstand</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Bibliotheekopties invoegen</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Factor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Schaalfactor</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Lijnhoekopties</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Punt op aangemaakte lijn die in het invoegpunt zal worden geplaatst</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Lijnhoek</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengte:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lengte van de lijn</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Knippunt:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Regelhoek kiezen uit tekening</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Begin</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midden</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Einde</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">PIck lijn lengte vanaf tekening</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Indien geselecteerd, zal de lijn orhotogonaal zijn aan de as van hoeken basis. Anders - naar schermas</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Naar Hoekbasis</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Line Bisector Opties</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengte:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Lengte van de bisector</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Regellengte van tekening kiezen</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Aantal te creëren bisectoren</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Regelopties</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Vorm een gesloten contour van getrokken lijnen</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sluiten</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">De laatste lijntekening ongedaan maken</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Ongedaan maken</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">De laatste lijntekening opnieuw uitvoeren</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Opnieuw</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Regelopties</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Richting:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Maakt polyline aan vanuit lijnsegmenten</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Verticale lijn</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Lijn volgens gespecificeerde hoek</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Hoek</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Horizontale lijn</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Indien aangevinkt is de hoek ten opzichte van het vorige segment</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">De laatste lijntekening ongedaan maken</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Ongedaan maken</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Vorm een gesloten contour van getrokken lijnen</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sluiten</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">De laatste lijntekening opnieuw uitvoeren</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Opnieuw</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Regelhoek</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Regel naar willekeurig punt</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punt</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Lijn parallelle opties</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Afstand:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Afstand tot oorspronkelijke entiteit</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Kies afstand van tekening</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Aantal aan te maken parallellen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Lijn parallel door opties</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Indien aangevinkt worden er parallellen aan beide zijden van de entiteit aangemaakt</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrisch</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Aantal aan te maken parallellen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Veelhoekopties</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Aantal:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Aantal randen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Veelhoekopties</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Aantal:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Indien aangevinkt, worden de vertexen van de veelhoek afgerond.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Straal</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Indien aangevinkt, wordt de veelhoek getekend als polylijn. Anders worden individuele entiteiten gecreëerd.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Kies straal van tekening</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Aantal randen</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Afrondingsradius voor vertex bevel.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Indien geselecteerd zijn de referentiepunten voor vertexen van veelhoek. Anders zijn ze voor middelste punt van randen.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Vertex naar Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Regelrelatieve hoekopties</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Lijnhoek</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengte:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lengte van de lijn</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Kies lengte van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Tekstopties</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Tekst om in te voegen</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Verschuivingsopties wijzigen</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Afstand voor offset van oorspronkelijke entiteit</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Indien aangevinkt zullen aangemaakte entiteiten in de huidige laag geplaatst worden, anders zullen ze in originele lagen zitten.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Huidige laag gebruiken</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Aantal exemplaren.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Indien gecontroleerd, zullen originele entiteiten overleven, anders worden ze verwijderd.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Indien aangevinkt, zal de afstand van offset worden hersteld, anders wordt deze door de muis gedefinieerd.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Vaste afstand</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Indien aangevinkt, zullen huidige attributen worden toegepast op aangemaakte entiteiten, anders zullen originele worden gebruikt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Afstand van de tekening kiezen</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Indien aangevinkt, zullen meerdere kopieën worden aangemaakt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Meerdere exemplaren</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Draaiopties verplaatsen</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Indien aangevinkt, zullen huidige attributen worden toegepast op aangemaakte entiteiten, anders zullen originele worden gebruikt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Huidige attributen gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Indien aangevinkt, zullen meerdere kopieën worden aangemaakt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Meerdere exemplaren</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Indien aangevinkt, worden alle kopieën door dezelfde angle gedraaid. Anders is de hoek evenredig met het aantal exemplaren.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Dezelfde hoek voor kopieën</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Rotatiehoek.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Aantal exemplaren.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Indien aangevinkt wordt de rotatiehoek gedefinieerd door de muis. Anders wordt de opgegeven waarde gebruikt.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Vrij</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Indien aangevinkt, zullen aangemaakte entiteiten in de huidige laag worden geplaatst, anders zullen ze in originele lagen liggen.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Huidige laag gebruiken</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Indien gecontroleerd, zullen originele entiteiten overleven, anders worden ze verwijderd.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Originelen behouden</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Polylijnopties</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Verbindt uiteinden van de polylijn zodat gesloten contour wordt aangemaakt</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Sluiten</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Ongedaan maken van vorige vertex</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Ongedaan maken</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Segmenttype:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Bepaalt welk segment polyline moet worden gecreëerd</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Regel</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangential</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Raakcirkelradius</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Tanangle</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Hoek</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Tangentieel boog</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Tangentaalboog met vaste straal</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Tangental boog met vaste hoek</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Arc met hoek</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Straling van de boog</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Kies radius vorm tekening</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Booghoek</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Tegen de klok in</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Met de klok mee</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Afdrukvoorbeeldopties</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Landschapsoriëntatie</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Tekeninstellingen</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Schaal:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size: tekengrootte&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Afdrukschaal is vergrendeld naar de huidige waarde&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">vast</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Zwart/wit schakelen</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Landschap Oriëntatie van papier</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Portret Oriëntatie van papier</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Printschaal toepassen op lijnbreedte</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Pagina in het midden van de tekening</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Naar afdrukgebied zoomen</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Past op 1 pagina</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Indien ingeschakeld zal papierruimte de opgegeven hoeveelheid pagina&apos;s in kolommen en rijen bevatten</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Tegelafdruk</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Pagina&apos;s Rijen:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Bedrag van de kolommen</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Kolommen van pagina&apos;s:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Bedrag van de rijen bladzijden</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Bereken aantal pagina&apos;s die nodig zijn om de tekening te bevatten</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Ronde opties</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Controleer om beide randen te trimmen tot de afronding</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Straal:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Afrondingsstraal</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Kies straal van tekening</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56809,99 +49295,6 @@ Punt: (%8 , %9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Aantal gelijkwaardige divisiepunten</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Spline-opties</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Mate:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Spline&apos;s graad gebruikt voor onderlinge aanpassing tussen punten</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Indien geselecteerd wordt gesloten spline aangemaakt</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Gesloten</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Vorige punt ongedaan maken</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Ongedaan maken</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Tekstopties</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Hoek:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotatiehoek</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Kies hoek van tekening</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Opties voor het bedrag van de trim</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Afstand. Negatieve waarden voor het trimmen, positieve waarden voor het verlengen.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Totaal</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengte:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Afstand. Negatieve waarden voor het trimmen, positieve waarden voor het verlengen. Negatieve teken wordt genegeerd wanneer trimmen tot uiteindelijke totale lengte.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Kies lengte van tekening</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Indien aangevinkt, wordt trim/extensie uitgevoerd voor beide zijden van de lijn.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrisch</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">De ingang lengte wordt gebruikt als totale lengte na trimmen, in plaats van lengte toename</translation>
     </message>
 </context>
 </TS>

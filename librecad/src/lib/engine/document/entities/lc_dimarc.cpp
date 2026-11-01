@@ -88,6 +88,13 @@ RS_Entity* LC_DimArc::clone() const {
     return clone;
 }
 
+std::optional<double> LC_DimArc::getMeasuredValue() const {
+    if (!validMeasurementPoint(m_dimArcData.centre) || !std::isfinite(m_dimArcData.radius) || m_dimArcData.radius < 0.0 ||
+        !std::isfinite(m_dimArcData.arcLength) || m_dimArcData.arcLength < 0.0 ||
+        !validMeasurementPoint(m_dimArcData.startAngle) || !validMeasurementPoint(m_dimArcData.endAngle)) return std::nullopt;
+    return m_dimArcData.arcLength;
+}
+
 QString LC_DimArc::getMeasuredLabel() {
     RS_Graphic* currentGraphic = getGraphic();
 
@@ -379,6 +386,7 @@ void LC_DimArc::scale(const RS_Vector& center, const RS_Vector& factor) {
     RS_Dimension::scale(center, adjustedFactorVector);
     m_dimArcData.centre.scale(center, adjustedFactorVector);
     m_dimArcData.radius *= adjustedFactor;
+    m_dimArcData.arcLength *= std::abs(adjustedFactor);
     if (m_dimArcData.leaderPt1.valid) m_dimArcData.leaderPt1.scale(center, adjustedFactorVector);
     if (m_dimArcData.leaderPt2.valid) m_dimArcData.leaderPt2.scale(center, adjustedFactorVector);
     update();

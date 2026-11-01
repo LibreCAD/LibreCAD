@@ -39,190 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Frame</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">○</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">أدخل اسماً ثم اضغط +</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">أنقذ</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Frame</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">أنقذ</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">Parabola</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">النقاط على Spline</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">نقاط المراقبة</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="vanished">نقاط المنحنى</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">مغلق</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">إذا اختيرت، تُستخدم نقاط الترميز</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">النقاط الجانبية</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">إذا اختيرت نقاط المراقبة تستخدم</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">نقاط المراقبة</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">النقاط على Spline</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>نقطة البداية قد تحدد على بعد أو نقطة</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">المقرر إنشاؤه:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Rectangle</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">الزوجة:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">حسناً</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">المركز:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">زاوية غير صالحة</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">نصف قطر غير صالح</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">القيمة المتبقية</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">يرجى تحديد نقطة الإدراج</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">تحديد الزاوية</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">تحديد الحجم (المتوسط، الطول)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">تحديد نوع الزوايا
-♪ ♪</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">تحديد طول الكوابيس (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">تحديد نطاق الزاوية</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">تحديد طريقة الحواف
-♪ ♪</translation>
     </message>
 </context>
 <context>
@@ -469,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">ارتفاع القوس (الدجاجة بين الشورد ونقطة القطب العلوي)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">حسناً</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">على مدار الساعة</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">نصف قطر القوس</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Clockwise</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">الزاوية المركزية للقوس</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">طول القوس</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Length:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">اختر نصف قطرة من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">الطول من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">اختر الطول من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -747,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">اختيار كيانات للصناديق الملزمة (بعد الانتهاء)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -805,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">نصف قطري = %1 صغير جداً للنقاط المختارة
-المسافة بين النقاط = %2 أكبر من قطر %3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">اختيار من مركزين دائريين محتملين</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">حدد النقطة الأولى</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">حدد النقطة الثانية</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">اختر مركز الدائرة</translation>
     </message>
 </context>
 <context>
@@ -1078,13 +803,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">الدائرة المختارة أو القوس أو النسيج</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1128,10 +846,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>المركز المختار</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">لا يوجد مركز محدد.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1526,154 +1240,6 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">حدد النقطة الأولى</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">تحديد النقطة الثانية
-أو [العدد xx]]angle]p]edges]distance]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">تحديد النقطة الثانية
-أو [العدد]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">تحديد الاتجاه
-[x]]angle]p]distance]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">تحديد زاوية الاتجاه
-أو [x]y]p] number]edges]distance]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">طريقة تحديد نقاط الحافة
-[الوحدة الأولى]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">تحديد المسافة الثابتة بين النقاط
-أو [x]y]p] number]edges]</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">تحديد المسافة (%1)
-أو [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">العودة</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">نعم</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">تحديد المسافة (زاوية 1 كيلوغراما)
-أو [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">عدد النقاط المحددة</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">تحديد الزاوية الثانية</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">يُرجى التحديد</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">تحديد الزاوية الأولى</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">تَكَسّنْ أولاً</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">ليس رقم صحيح جرب 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">القيمة غير المستقرة لتقريب النطاقات</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">رقم الدخول:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">يدخلون في دائرة</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">المركز</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">المقرر إنشاؤه:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">المركز:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">نقطة البداية:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">نصف القطر الداخلي:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">تَكَسّنْ a سمينة</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1917,29 +1483,6 @@ or [%2]</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">الكيان الأول المختار</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">الكيان الثاني المختار</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">نقاط نهاية بديلة</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">القيمة المعايدة</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2092,13 +1635,6 @@ or [x|y|p|number|edges|distance]</source>
 [الوحدة الأولى]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">تحديد المسافة الثابتة بين النقاط
-أو [x]y]p] number]edges]</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2122,13 +1658,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">نعم</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">تحديد المسافة (زاوية 1 كيلوغراما)
-أو [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2287,11 +1816,6 @@ or [%2]</source>
         <translation>تحديد المواهب</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>تحديد الحجم (الطول، المتوسط)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>يرجى تحديد نقطة مرجعية [يُرجى توبلوفيرهلوت]</translation>
@@ -2357,11 +1881,6 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>تحديد الطول</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>تحديد نقطة البداية</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -4026,10 +3545,6 @@ or [%2]</source>
         <translation>Prompt</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">التقاط على الشبكة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>الدليل المتوسط</translation>
@@ -4300,11 +3815,6 @@ or [%2]</source>
         <translation>Deselect &apos; all</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Ctrl+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>عكس التحديد</translation>
@@ -4410,12 +3920,6 @@ or [%2]</source>
         <translation>شبكة</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>مسودّة</translation>
@@ -4426,12 +3930,6 @@ or [%2]</source>
         <translation>شريط الحالة</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Focus on &quot;Command Line</translation>
@@ -4440,26 +3938,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>خيارات واجهة المستخدم</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">يسار</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">الحق</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">القمة</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">الجزء السفلي</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">الطوابق</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4535,12 +4013,6 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>نقطة الاختيار</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -4669,21 +4141,23 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="209"/>
         <source>Complementary:</source>
-        <translation>استكمال:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>الزاوية المتممة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="55"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Angle: %1
-المكمل: ٪٢
-المبلغ التكميلي: 3 في المائة
-البديل: ٪4
+الزاوية المتممة: %2
+الزاوية المكملة: %3
+زاوية إكمال دورة كاملة: %4
 نقطة البداية: (%5, %6)
 نقطة التقاطع: (%7, %8)
 End Edge Point: (%9, %10)</translation>
@@ -4702,12 +4176,14 @@ End Edge Point: (%9, %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="210"/>
         <source>Supplementary:</source>
-        <translation>تكميلي:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>الزاوية المكملة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
-        <source>Alternative: </source>
-        <translation>البديل:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>زاوية إكمال دورة كاملة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
@@ -4904,19 +4380,22 @@ Point: (%8, %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
-        <translation>استكمال:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>الزاوية المتممة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
-        <translation>تكميلي:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>الزاوية المكملة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
-        <source>Alternative: </source>
-        <translation>البديل:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>زاوية إكمال دورة كاملة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
@@ -5247,10 +4726,6 @@ Point: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">اختيار الكيانات للمواءمة (الانتقال إلى الإنجاز)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>اختيار ومواءمة</translation>
@@ -5282,10 +4757,6 @@ Point: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Scale:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">اختيار للمواءمة (يتم بعد)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5968,22 +5439,6 @@ Point: (%8, %9)</translation>
         <translation type="unfinished">المسافة:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">تحديد اتجاه التعويض</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">تحديد نقطة مرجعية لتوجيه التعويض</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished">المهنة المختارة</translation>
@@ -6276,13 +5731,6 @@ Point: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">تغيير الحجم فور التحديد</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">لا يوجد كيان مختار!</translation>
     </message>
 </context>
 <context>
@@ -7259,18 +6707,6 @@ Point: (%8, %9)</translation>
         <translation>لا يُمكن قراءة الملف المُقدّم، رجاءً تحقق من وجوده، ويُسمح للقراءة منه.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">ولم تستورد خرائط الطرق القصيرة.
-ويوجد الملف المزود به، غير أنه لا يحتوي على رسم خرائط مختصرة للشركة.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">ولم تستورد خرائط الطرق القصيرة.
-وحدث خطأ في فرز الملفات.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>أُنقذت بنجاح عمليات المسح القصيرة.</translation>
@@ -7279,12 +6715,6 @@ XML parsing error occurred during file processing.</source>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>لا أستطيع الكتابة للملف من فضلك تأكد من أنه مسموح له بالكتابة إليه.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">ولم تستورد خرائط الطرق القصيرة.
-Some error occurred during XML generation.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8685,74 +8115,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">إذا تم فحصها، سيتم إزالة القوس الأصلي</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">يستعاض عن القوس</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">لاير التي تخلق دائرة</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">النشاط</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Original: ENGLISH</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">النشاط</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original: ENGLISH</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">الأصلية</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">القيمة المحسوبة من الرسم</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">بين:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">(بين) يقدم طلباً إلى الدائرة المُنشأة</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">لاير:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">دلتا من نطاق الدائرة إلى نصف قطر القطب الشمالي</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">إزاحة نصف القطر:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9047,76 +8409,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>شريط الأدوات: %1 (مخصص)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">النوع</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">البعد الأفقي للعبور</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">قيمة الخيار X من الرسم</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">تحديد كيفية تطبيق أبعاد الصليب</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">التمديد</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">المجموع</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">النسبة المئوية</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">قيمة الحرف Y من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">البُعد الفلكي للصليب</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">زاوية التناوب للعبور حول المركز</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">إضافة أو إزالة إجراء</translation>
     </message>
 </context>
 <context>
@@ -9480,45 +8772,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">البعد العادي</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">طبقة البُعد</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">الصفات</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">أمر</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">نعم</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9580,11 +8833,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Spacing:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">يحدد المباعدة بين خطوط البُعد الأساسية. أدخل مسافة وللاطلاع على معلومات عن أبعاد خط الأساس، انظر DIMBASELINE. (متغير نظام DIMDLI)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11233,10 +10481,6 @@ Are you sure you are going to discard changes?</source>
         <source>Hatch Properties</source>
         <translation>خصائص التظليل</translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">امتياز؟?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11685,19 +10929,9 @@ Are you sure you are going to discard changes?</source>
         <translation>ملاحظة: سيتم تجاهل مهمة منينو. إنها محجوزة لـ &quot;بان&quot;.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>سيتم تجاهل مهمة منو إنها محجوزة لـ &quot;المحافظة الكهربية&quot;.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>ملاحظة: هذه المجموعة محجوزة لقائمة السياقات الافتراضية وقد تمنع الاحتجاج بها!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>هذه التركيبة محجوزة لبان مهمّة (مينو) ستتجاهل</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11758,10 +10992,6 @@ Are you sure you are going to discard changes?</source>
         <translation>عمود التفاصيل</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">إذا تم فحصه، سيظهر نوع الشبكة من أجل توفير الرؤية</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>العمود الشائكي</translation>
@@ -11770,18 +11000,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>عمود رمزي</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">إذا تم فحص العمود مع تفاصيل نظام تنسيق المنظر سيظهر</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">تلميح مع تفاصيل العرض لعناصر الجدول</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">إذا تم تحديده، فسيتم عرض العمود الذي يحتوي على تفاصيل نظام إحداثيات العرض.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11824,10 +11042,6 @@ Are you sure you are going to discard changes?</source>
         <translation>وإذا تم فحص العمود مع عرض التفاصيل في الجدول.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">العمود التفصيلي</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>العمليات</translation>
@@ -11843,17 +11057,9 @@ Are you sure you are going to discard changes?</source>
         <translation>استعادة العرض بنقرة واحدة على عنصر الجدول</translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">على رقعة مزدوجة على طاولة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>يحدد الإجراء الذي يجب تنفيذه عند النقر المزدوج على عنصر العرض في الجدول.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">يحدد ما ينبغي القيام به من إجراءات على النقطتين التاليتين على ضوء بند الجدول.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11881,10 +11087,6 @@ Are you sure you are going to discard changes?</source>
         <translation>وإذا مُكِّن من ذلك، يُرجى النقر على بند جدول النظرة. وإلا، ينبغي إعادة النظر صراحة.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">إعادة النظر في نقر واحد حسب بند جدول الأعمال</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>وفي حالة العرض، ستُعرض أداة تتضمن معلومات إضافية عن وجهات النظر فيما يتعلق ببند الجدول.</translation>
@@ -11893,10 +11095,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>وإذا تم التحقق من وجهة النظر بالاسم المسجل بالفعل وأثناء إنشائها، سيجري استكمالها بموقع جديد. وخلافا لذلك، سيكون من الضروري وجود اسم فريد من الآراء الجديدة.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">وإذا اختيرت، سيظهر رقم الهاتف عند رفع هذا الرأي. وإلا، سيُحذف النظرة بصمت.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12192,17 +11390,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>الاسم ليس فريداً رجاءً إدخلْ اسمَ فريدَ.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">نقاط مراقبة البارابولا لا يمكن أن تكون شاملة</translation>
     </message>
 </context>
 <context>
@@ -12618,13 +11805,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12706,17 +11886,9 @@ Are you sure you are going to discard changes?</source>
         <translation>وفي حالة التقلبات، ستُعرض مجموعة الأدوات التي تتضمن معلومات إضافية عن النظام الموحد الموحد فيما يتعلق ببند الجدول.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">(أوتوليب) مع بيانات جامعة الدول العربية بشأن بنود الجداول</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>عمود رمزي</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">وإذا تم فحص العمود مع تفاصيل أصل وزاوية UCS سيظهر في الجدول</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12732,10 +11904,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>التحرير</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">وإذا اختيرت، سيظهر رقم الهاتف عند رفع هذا الرأي. وإلا، سيُحذف النظرة بصمت.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12756,10 +11924,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>إذا تم تحديده، فسيتم عرض العمود الذي يحتوي على نوع الشبكة لنظام الإحداثيات العالمي (UCS).</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">إذا تم تحديده، فسيتم عرض مربع حوار تأكيد عند إزالة العرض. وإلا، فسيتم إزالة العرض بصمت.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12827,26 +11991,6 @@ Are you sure you are going to discard changes?</source>
         <translation>يحدد عدد ومضات مؤشر نظام الإحداثيات العالمي (UCS) لتسليط الضوء عليه.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">يحدد الإجراءات التي ينبغي اتخاذها على النقر المزدوج في بند الجدول.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Restore UCS on single read by table item</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">وإذا تم فحصها، فإن العمود الذي يحتوي على أيقونة من نوع النظام الموحد سوف يُعرض في الجدول.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">إذا تم فحصه، سيظهر العمود الذي يحتوي على نوع الشبكة لدائرة الخدمات العامة</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">يحدد كيف يجب تعديل نافذة النظرة بعد تطبيق النظام</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>على رقعة مزدوجة على طاولة</translation>
@@ -12902,10 +12046,6 @@ Are you sure you are going to discard changes?</source>
         <translation>تسليط الضوء على نظام الإحداثيات العالمي (UCS)</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">يحدد التأخير بين الركائز المميزة للجامعة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12919,10 +12059,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>تأخير الوميض:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">تحديد كمية الرواسب من علامة UCS بالنسبة لدائرة الولايات المتحدة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13319,45 +12455,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">خارج:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">إذا تم فحصه، سيتم إنشاء صندوق مُقيد للاختيار بأكمله. وخلافا لذلك، سيتم إنشاءها لكيانات فردية.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">فريق الاختيار</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">تعادل من الرسم</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">إذا اختيرت، فقط نقاط الزاوية سَتَسْحبُ للصندوقِ المقيدِ. وإلا سترسم خطوط الحافة.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">النقاط الرئيسية فقط</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">إذا تم اختياره، يُسحب الصندوق المقيد كبوليلين</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13451,86 +12548,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">تعادل من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">التعويض الرأسي للازدواجية من الكيان الأصلي</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">التعويض الأفقي للازدواجية من الكيان الأصلي</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">بيك قابله X من الرسم</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">بين:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">إذا تم فحصها، سيتم وضع ازدواج في إحداثيات الأصلي</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">في المكان</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">بيك قابله Y من الرسم</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">لاير:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">طلب من وزارة الدفاع</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">النشاط</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original: ENGLISH</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">الأصلية</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">لاير الذي يجب وضعه</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">النشاط</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Original: ENGLISH</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">{\pos(192,230)}</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">الهدف العاشر:</translation>
     </message>
 </context>
 <context>
@@ -13712,69 +12729,6 @@ Are you sure you are going to discard changes?</source>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">(مينور راديوس)</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">قيمة الزاوية بالنسبة للأشعة الرئيسية</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">إذا تم فحصها، يمكن تحديد زاوية النطاق الرئيسي</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">في القاعدة:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">على مدار الساعة</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">اختيار الإجراءات الرئيسية</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">إذا تم فحص الزاويات الرئيسية يحددها الفأر</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">مجانا</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">طول الشلالات الرئيسية</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">اختر نصف قطرة من الرسم</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">الرائد (راديوس)</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">طول الشوائب</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Clockwise</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13913,21 +12867,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">زاوية من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">الخيارات القطبية</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Clockwise</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">على مدار الساعة</translation>
     </message>
 </context>
 <context>
@@ -14490,11 +13429,6 @@ Are you sure you are going to discard changes?</source>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>تصدير الرسم...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>المصدر: 1 في المائة</translation>
@@ -14818,30 +13752,6 @@ Are you sure you are going to discard changes?</source>
         <source>Eccentricity:</source>
         <translation>التركيز:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">تعريف غير صالح للقطع الزائد</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">يجب أن تكون البؤر متميزة</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">الإحداثيات المركزية الفاشلة</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">يجب أن يكون الشراع الرئيسي إيجابياً</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">زاوية التناوب غير المستقر</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">يجب أن تكون النسبة أو نصف النطاقات إيجابية</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -15013,10 +13923,6 @@ Are you sure you are going to discard changes?</source>
         <translation>الزوجة:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">زوجة الصورة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>قيمة البارود من الرسم</translation>
@@ -15027,21 +13933,9 @@ Are you sure you are going to discard changes?</source>
         <translation>حسناً</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">ارتفاع الصورة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>قيمة الطول من الرسم</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Scale:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">عامل التصعيد</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15053,10 +13947,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>انجل:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">زاوية التناوب</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15088,22 +13978,6 @@ Are you sure you are going to discard changes?</source>
         <source>Select an image file</source>
         <translation>اختيار ملف الصور</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">الحجم:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">حجم الصورة بالبكسل</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">القرار (الجرعة لكل بوصة)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15116,21 +13990,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">نعم</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">إذا تم فحص النقطة ستكون دائما داخل كيان مختار</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">التقاط على الكيان</translation>
     </message>
 </context>
 <context>
@@ -15508,14 +14367,6 @@ Are you sure you are going to discard changes?</source>
         <translation>الفاصل المستخدم لتقسيم الاسم الداخلي للطبقة إلى أسماء هرمية</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">الاسم من الرتبة المحلية</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Layer Suffixes</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15546,10 +14397,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>لاحقة اسم الطبقة التي تدل على أن الطبقة طبقة موضع بديل.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">الاسم المزدوج</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15692,17 +14539,9 @@ Are you sure you are going to discard changes?</source>
         <translation>إعدادات الألوان المختلفة</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">الألوان</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>لون خلفية العناصر المختارة في شجرة الطبقات.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">ملون لخطوط فصلية في مشهد شجرة الطبقات</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15741,10 +14580,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>لون خلفية الطبقة الافتراضية</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">شبكة فصلية</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15800,10 +14635,6 @@ Are you sure you are going to discard changes?</source>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>طبقة الموضع البديل</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">الشبكة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16293,118 +15124,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">إذا تم فحص طول الخط يتم تحديده بموقع الفأر بدلا من تحديده</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">مجانا</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">اختر المسافة من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">نقطة التقاطع</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">اختر الطول من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">تعادل من الرسم</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">وإذا تم فحص الكيان الأصلي، سيقسم حسب نقطة التقاطع.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Divide</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">خارج:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">المسافة بين نقطة التقاطع من نقطة معينة</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">يحدد أي جزء من الخط المُنشأ سيُقطع إلى نقطة التقاطع</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ابدأ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">الشرق الأوسط</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">النهاية</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">تحديد التقاط:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">خط سناب:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">طول الخط</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">إذا تم فحص الزوايا قريبة من زاوية كيان مختار</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Length:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">نقطة التقاط لموضع نقطة التقاطع بين الخط الذي تم إنشاؤه والكيان المصدر (داخل الخط الأصلي)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">مجانا</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">الاختصار:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">خط الخط</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16711,93 +15430,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">عدد المنصفات المراد إنشاؤها</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">الحجم:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">التعويض النهائي:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">مقتطفات من نقطة التقاطع</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">نقطة التقاط للخط الذي تم إنشاؤه</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ابدأ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">الشرق الأوسط</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">النهاية</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Length:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">طول الخط الثابت</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">اختر الطول من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">تعادل من الرسم</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">يحدد ما إذا كان ينبغي إنشاء خط للتقاطع أو ينبغي أن يكون طوله محددا</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">إلى التقاطع</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Length</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">إذا تم فحصه، سيكون الخط المُنشأ هُناك</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Orthogonal</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">بين الخط الأصلي وخلق واحد</translation>
     </message>
 </context>
 <context>
@@ -17183,81 +15815,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">إذا تم فحصها، سيتم إنشاء البوليلين بدلا من الخطوط الفردية</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">الإبداع</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">اختيرت سياسة الخط الثاني</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Extend/Trim</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">الجزء الثاني</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">لا تغيير</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">الخط 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">الخط 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">سياسة الانضمام إلى الخط الذي تم اختياره أولا</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">تحديد كيفية تطبيق قلم المحكمة على الكيانات المنشأة</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">القلم النشط</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">البند 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">البند 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">كلاهما</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">الخصائص:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">إذا تم فحص الخطوط الأصلية سيتم إزالتها</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">إزالة الأصول</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17639,85 +16196,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">(ب) مراقبة كيفية إنشاء نقاط على الحواف (نقاط البداية/النهاية).</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">لا</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">كلاهما</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ابدأ</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">النهاية</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">اختر المسافة من الرسم</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">عدد نقاط الإنشاء</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">نقطة الحضيض:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">يحدد ما إذا كان ينبغي أن تتناسب جميع النقاط بين نقطة البداية/النهاية أو ما إذا كان طول الخط محسوبا على أساس عدد النقاط والمسافة بين النقاط.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">الخط الفارغ</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">المسافة بين النقاط.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">إذا تم فحصها، سيتم رسم خط النقاط مع زاوية محددة</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">عدد النقاط:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">وإذا تم فحصها، ستستخدم مسافة محددة ثابتة بين النقاط. وإلا ستحسب المسافة.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">المختفين</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">خط الخط</translation>
     </message>
 </context>
 <context>
@@ -21967,433 +20445,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">المساعدة</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Online Docs</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">ويكي</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">مستخدم</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&quot; اللجان</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&quot; الصفائح النمطية</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">الأرامل</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">بشأن</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">المحفل</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">زوليب تشات</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&quot; Submit Error</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&quot; Request Feature</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&quot; القرارات الصفحة</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">المانحون</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&quot; لين</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Point</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&quot; الدائرة</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&quot; Arc</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Spline</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellipse</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&quot; بولندا</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">الموارد الأخرى</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">اسحب</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&quot; Elipse</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Other</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">تعديل</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&quot;</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&quot; الفوائد</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">المعلومات</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&quot; الأغبياء</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&quot; المنتخب</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dimension</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&quot; الملف</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">الأفلام الأخيرة</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">الواردات</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">الصادرات</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&quot; الخيارات</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&apos; 1`</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&quot; فيو</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&quot; Views Restore</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Plugins</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&quot; الفضاء الجوي</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">مناطق الرصيف</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD Widgets</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&quot; سحب</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">السياق</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Toolbars</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">الأرامل</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">عناصر CAD</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">أشرطة أدوات CAD</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">مختارة</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">حديثة</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">تعديل</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">تعديل أكثر</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Draw</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">الخط</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">النقطة</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">الدائرة</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polyline/Spline</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipse</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">أخرى</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">مضافا إليها</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Align</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">برمجة</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Layers</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">المعلومات</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Edit</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">الخيارات</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">الآراء</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">تحرير الخصائص</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">تعديل المواد</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">الخط المعدل</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">رسم خط</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">دراجة</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">رسوم أخرى</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">تعديل الدائرة</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">تعديل القوس</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">تعديل الخط المتعدد</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">تعديل الخط</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">تعديل النقاط الفرعية</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">النص المعدل</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">تعديل النص المتعدد</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">تحرير الكتلة</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">الأمر</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&quot; حواجز &quot;</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&quot; CAD Toolbars</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&quot; أماكن العمل</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">طراز Tab</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&quot; ويندو</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&quot; لا</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">مستديرة</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">الثلاثي</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">الشمال</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">الجنوب</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">الشرق</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">غربا</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&quot; غريب</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&quot;</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&quot; Cascade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&quot;</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Tile &apos; Viertically</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Tile &apos; Horizontally</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -23009,21 +21060,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">خارج:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">تعادل من الرسم</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23160,197 +21196,6 @@ Please specify a different value.</source>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">وإذا تم فحصها، ستستخدم المواصفات الحالية للكيانات المرفوضة، خلافا لذلك - الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">وإذا لم يتم التحقق، ستُزال الكيانات الأصلية، وإلا ستنجو.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع الكيانات المروية على الطبقة الحالية، وإلا ستوضع في طبقات أصلية.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">المستعمل</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">وإذا تم فحصها، سيتم تصفية الكيانات إذا لزم الأمر. و إلا سيكونون في موقعهم و متناوبين.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Scale</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">وإذا تم فحصها، ستُزال التسلسلات بين نقاط التقاطع. وإذا لم يتم التحقق من ذلك، سيقسم النسيج إلى نقاط متقاطعة.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">قطع الغيار</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">وإذا تم فحصها، سيتم إلغاء جزء منتقاة. وخلافا لذلك، سيبقى جزء مختار على قيد الحياة وستُحذف الأجزاء المتبقية.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">إزالة العنصر المحدد</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">الاختصار:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">نقطة اندفاع</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">خط سناب:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">حجم الفراغ:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">نقطة انطلاق للثغرة على الخط</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">مجانا</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">محاذاة الفراغ:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">ابدأ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">الشرق الأوسط</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">النهاية</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">مجانا</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">ابدأ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">الشرق الأوسط</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">النهاية</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">حجم الفجوة من السحب</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">المسافة من نقطة الانقطاع</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">اختر المسافة من الرسم</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">حجم الفجوة، إن لم تكن مجانية</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">إذا مضغ، حجم الفجوة يحدده الفأر</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">وإذا تم فحص المرآة، سيقوم بها كيان خطي مختار.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">المرآة إلى خط مختار</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">وإذا لم يتم التحقق، ستُزال الكيانات الأصلية، وإلا ستنجو.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">وإذا تم فحصها، ستستخدم المواصفات الحالية للكيانات المرفوضة، خلافا لذلك - الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع الكيانات المروية على الطبقة الحالية، وإلا ستوضع في طبقات أصلية.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">المستعمل</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23396,234 +21241,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">استخدام الطبقة الحالية</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">خيارات التناوب</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">وينبغي أن يتم الاختيار الحر للعامل بواسطة الفأر إذا تم فحصه.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">مجانا</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع أنواع جديدة على الطبقة الحالية، وإلا ستكون في طبقات أصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">استخدام الطبقة الحالية</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">وإذا كانت النقطة المرجعية مطلقة، فسوف تدور، لكن الكيان سيتناوب بزاوية ثانية فقط، وإلا فإن الزوايا ستلخص</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">مطلق</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Ngle to rot entity around rotation center point</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">وإذا تم فحص الصفات الحالية، ستطبق على الكيانات المنشأة، وستستخدم الخصائص الأصلية للملابس.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">إذا تم فحص التناوب الثاني حول النقطة المرجعية</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">تناوب مرتين</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">التناوب الإضافي حول نقطة التجديد</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">زاوية التناوب من الرسم</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">وإذا تم فحصها، ستنجو الكيانات الأصلية، وإلا سيتم إزالتها.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">وسيتم إعداد نسخ متعددة إذا تم فحصها.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">نسخ متعددة</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">خط التناوب:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">يحدد ما إذا كانت الزاوية معرَّفة بالقيمة المُدخلة أو بموقع الفأر</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">اختيار زاوية التناوب الثانية من الرسم</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">خيارات التناوب</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">وإذا تم فحصها، سيتم إعداد نسخ متعددة.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">نسخ متعددة</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">وإذا تم فحصه، سيطبق نفس عامل التصعيد للمحورين العاشر والعام.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Isotropic</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">وإذا تم فحصها، ستنجو الكيانات الأصلية، وإلا سيتم إزالتها.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">وإذا تم فحص الصفات الحالية ستطبق على الكيانات المنشأة، وإلا ستستخدم الخصائص الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">عامل جدول للمحور Y axis</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">عامل القياس:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع الكيانات المنشأة على الطبقة الحالية. وإلا ستوضع في طبقات أصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">استخدام الطبقة الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">وإذا تم فحصها، سيتم اختيار العامل بحرية بواسطة الفأر. وإلا، ستستخدم قيم محددة للعوامل.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">مجانا</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">عامل جدول المحور X</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">وإذا تم فحصها، ستنجو الكيانات الأصلية، وإلا سيتم إزالتها.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">احتفظ بالأصل</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع الكيانات المنشأة على الطبقة الحالية. وإلا ستوضع في طبقات أصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">استخدام الطبقة الحالية</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">وإذا تم فحص الصفات الحالية، ستطبق على الكيانات المنشأة، وستستخدم الصفات الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">وإذا تم فحصها، ستنجو الكيانات الأصلية، وإلا سيتم إزالتها.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">وإذا تم فحصها، سيتم إعداد نسخ متعددة.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">نسخ متعددة</translation>
     </message>
 </context>
 <context>
@@ -23939,14 +21556,6 @@ Please specify a different value.</source>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">عرض الآراء بالاسم</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">(فيلتر).</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24382,45 +21991,6 @@ Warning: this action can NOT be undone!</source>
         <source>Control Points</source>
         <translation>نقاط المراقبة</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">نقاط مراقبة البارابولا لا يمكن أن تكون شاملة</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">وإذا وقع الاختيار على الكيان الذي يستخدم كنقطة ادراج، تحذف بعد عملية المعجنات. وإلا ستنجو.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">نقطة الإزالة</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">عامل القياس</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">عامل الجدول بالنسبة للكيانات المرعية</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">زاوية التناوب بالنسبة للكيانات المرعية</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24496,89 +22066,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">زاوية من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">زاوية التناوب بالنسبة للكيانات المرعية</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">المباعدة بين الكيانات تُدرج نقاط متتالية.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">المباعدة بين الحرف X من الرسم</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">معامل القياس</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">زاوية صفيفة من الرسم</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">زاوية التناوب للصفوف.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">رقم (آري).</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">مباعدة للصفوف المتحركة</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">ويُستخدم نفس زاوية التناوب، إذا تم فحصها، لكل من العجينات والصفائف بأكملها. وإلا، تستخدم زوايا مختلفة.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">نفس الأنجليز</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Spacing:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">رقم الأعمدة.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">وإذا تم فحصها، ستُنشأ صفائف من النسخ على المراعي.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Array</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">زاوية المصفوفة:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">عامل الجدول بالنسبة للكيانات المرعية</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">المباعدة بين نقاط إدخال الكيانات في الأعمدة.</translation>
     </message>
 </context>
 <context>
@@ -25200,17 +22687,9 @@ Warning: this action can NOT be undone!</source>
         <translation>اسم الأرملة</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">الألوان</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>لون خلفية لعنصر القلم تم تحريره حالياً على طاولة القلم</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">لون شبكة لقائمة أقلام</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25232,10 +22711,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>طاولات كاملة جريئة للسجائر النشطة</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">(غريد كولور)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25328,17 +22803,9 @@ Warning: this action can NOT be undone!</source>
         <translation>الاسم الطبيعي حيثما أمكن</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">وفي حالة اختيار الرسائل الإضافية، ستظهر كجزء من العمليات المتصلة بالقلم</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>تُظهر رسالة معلومات إذا لم يتم اختيار أي كيان من قبل قلم المحكمة</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">على النقرة المزدوجة على طاولة البند</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25563,12 +23030,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 
 تجدر الإشارة إلى أنك إذا حفظت القلم عبر المحرر دون إعادة تشغيل، ستُحفظ الأقلام الحالية من لوحة الألوان في الملف الجديد وبالتالي سيتم استبدال محتواه الموجود.</translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">تم تغيير موقع ملف الأقلام، يرجى إعادة تشغيل التطبيق حتى يتم استخدام ملف الأقلام الجديد.
-يرجى ملاحظة أنه إذا قمت بحفظ القلم عبر المحرر دون إعادة التشغيل، فسيتم حفظ الأقلام الحالية من اللوحة في الملف الجديد، وبالتالي سيتم استبدال المحتوى الحالي فيه.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25614,37 +23075,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>اختيار الموقع من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">عدد النقاط حسب اتجاه &quot; لاتيسي &quot; (حساب الصفوف الصفراء)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">الكونت:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">الكولونز الكونت:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">عدد النقاط حسب اتجاه &quot; X lattice &quot; (حساب الأعمدة الصفراء)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">إذا تم اختيار النقطة الأخيرة من البطيخ سوف تُعدّل بحيث تُصبح نقطة البداية لذا ستُسترجع أو تُعادل</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">نقطة أخيرة</translation>
     </message>
 </context>
 <context>
@@ -32911,10 +30341,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>القياس</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">الدائرة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33903,10 +31329,6 @@ p, li { white-space: pre-wrap; }
         <translation>الكيان</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">◂ يُستَخدَمُ / /      BAR  وإذا اختيرت معلومات أكثر تفصيلاً عن الخطوط والقوس التي تشكل جزءاً من البوليلين، ستُعرض في نظام معلومات المعلومات الخاص بالهيئة. وخلافاً لذلك، لن يُعرض سوى معلومات عن اللافيكسات/المصابيح</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;إذا تم الاختيار، ستظهر معلومات أكثر تفصيلاً عن الخطوط والأقواس التي تشكّل خطاً متعدد الرؤوس في أداة معلومات الكيان.&lt;br/&gt;وإلا، ستظهر فقط المعلومات المتعلقة بالرؤوس/الانتفاخات.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -33955,205 +31377,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>النقاط تسلط الضوء على القلم</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">إدجز:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">إذا تم فحصها، يحدد أن نقطة الانقسام يجب أن تتحول من نطاق الزاوية.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">نوبة نوبة</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">&quot;مؤخرة الركن الخفي لـ &quot;ي.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">(لذلك من الممكن إنشاء خطين متوازيين فقط بدلا من التراجع)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">كلاهما</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">كتابي</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontal</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">أرملة الركود</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">يتحكم في كيفية سحب زوايا التراجع.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Straight</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">الجولة</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">وإذا تم فحصها، سيتم تناوب التراجع على زاوية محددة.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">في القاعدة:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">وإذا تم فحصها، يحدد طولها وخبرتها المقطعية المسافات بين مراكز القوس من أجل تقريب الزوايا. وإلا، تحدد هذه القيم الحجم الخارجي للتراجع.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">الحجم الداخلي</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">الطول Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">وإذا تم التحقق من ذلك، سيُنشأ التراجع كبوليلين بدلاً من فرادى القطاعات.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">حسناً</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">طول الركن الخفي للإتجاه العاشر.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">الطول X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">ارتفاع الركود</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">(راديوس) من زوايا محاصرة.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">نقطة الحكة الملتوية ستوضع لنقطة الإدراج.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">أعلى</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">القمة</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">اليمين الأعلى</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">يسار</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">الشرق الأوسط</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">الحق</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">العمود السفلي</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">الجزء السفلي</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">الحق</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">زاوية التناوب من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">اختر نصف قطرة الزوايا المتجمعة من الرسم.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">زاوية التناوب</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">ارتفاع التراجع من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">اختر باروكة من الرسم</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">الزوجة:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Corners:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">إخترْ طول زاويةِ الغطسِ للإتجاهِ X مِنْ الرسمِ.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">إخترْ طول زاويةِ الغطسِ للإتجاهِ Y مِنْ الرسمِ.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">إذا تم فحص الزوايا، سيحدد موقع الفأر. وإلا، ستستخدم قيمة محددة.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">مجانا</translation>
     </message>
 </context>
 <context>
@@ -34523,153 +31746,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">(لذلك من الممكن إنشاء خطين متوازيين فقط بدلا من التراجع)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">كلاهما</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">كتابي</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontal</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">يحدد نقطة التراجع التي ينبغي وضعها في نقطة البداية.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Corner</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">في منتصف العملية</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">منتصف الأفق</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">الشرق الأوسط</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">زاوية التناوب من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">اختر نصف قطرة الزوايا المتجمعة من الرسم.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Corners:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">يحدد نقطة التراجع التي ينبغي وضعها في نقطة النهاية.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">اختر طول الخنفساء في الاتجاه العاشر من الرسم.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">إدجز:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">اختر طول السائل في الاتجاه Y من الرسم.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">إبدأْ Snap:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">طول العشب في (ي).</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">إذا تم فحصها، يحدد أن نقاط الكسر يجب أن تتحول من نطاق الزاوية.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">نوبة نوبة</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">الطول X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">ويسمح، إذا تم فحصه، بتحديد زاوية التناوب للتراجع.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">في القاعدة:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">زاوية التناوب.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">نهاية الحلقة:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">يُحدّدُ كَمْ زاويةِ التراجعِ يَجِبُ أَنْ تَسْحبَ.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Straight</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">الجولة</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">(راديوس) من زوايا محاصرة.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">الطول Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">إذا تم فحصها، سيتم سحب الركاز بأكمله كبوليلين.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">طول الخنفساء في الإتجاه العاشر.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34927,145 +32003,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">اختر طول السائل في الاتجاه Y من الرسم.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">الزاوية الداخلية لأربعة.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">وإذا تم فحصها، ستحدد الزاوية الداخلية لأربعة أضعاف قيمتها المحددة.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">&quot;إنر أنجل&quot;</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">زاوية القاعدة.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">الطول X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">طول الخنفساء في الإتجاه العاشر.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">يُحددُ كَمْ الزوايا يَجِبُ أَنْ تَسْحبَ للتراجع.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Straight</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">الجولة</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Bevel</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Corners:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">إذا تم فحصها، يحدد أن نقاط الكسر يجب أن تتحول من نطاق الزاوية.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">نوبة نوبة</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">الطول Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">طول العشب في (ي).</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">(راديوس) من زوايا محاصرة.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">إذا تم فحصها، سيُنشأ الشكل كبوليلين.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">اختر زاوية الكوادر الداخلية من الرسم.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">إدجز:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">اختر نصف قطرة الزوايا المتجمعة من الرسم.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">اختر طول الخنفساء في الاتجاه العاشر من الرسم.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">اختر طول السائل في الاتجاه Y من الرسم.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">(لذلك من الممكن إنشاء خطين متوازيين فقط بدلا من التراجع)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">كلاهما</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">كتابي</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontal</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">زاوية القاعدة من الرسم</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">وإذا تم فحصها، سيتم تحويل التراجع إلى زاوية أساس محددة. وإلا، ستحدد زاوية القاعدة بزاوية بين نقطة التراجع الأولى والثانية.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">خط القاعدة الثابت:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">إذا تم فحصها، سيتم إنشاء أربع مرات بدلا من التراجع.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Quadrangle</translation>
     </message>
 </context>
 <context>
@@ -35714,100 +32651,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">آسف، وقع خطأ في الشبكة أثناء التحقق من النسخة الجديدة.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">غير قادر على الرد من الخادم</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">خيارات التناوب</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">يبيّن ما إذا كانت النسخ ستدرج في الطبقة الحالية أو الأصلية</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">استخدام الطبقة الحالية</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">مجرد زاوية ثانوية حتى يصل مجموع الزوايا (زاوية التناوب النسبية) إلى صفر. مع هذا الكيان الموضعي سيتم نقله ولكن ليس تناوبه.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">الزوايا معكوسة</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">اختر زاوية أولية من الرسم</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">يحدد ما إذا كانت خصائص الرسم الحالية أو الأصلية ستطبق</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">اختر زاوية ثانوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">التناوب على النقطة المرجعية المطلقة</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">وإذا تم فحصها، سيتم إعداد نسخ متعددة.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">نسخ متعددة</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">عدد النسخ المعدة</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">ثانوي:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">إذا تم فحص نفس الزاوية ستستخدم لجميع النسخ وخلافا لذلك، ستزداد تناسبيا مع رقم النسخ.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">نفس الزاوية الثانوية للنسخ</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">وإذا تم فحصها، ستنجو الكيانات الأصلية، وإلا سيتم إزالتها.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">النسيج الرئيسي:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">التناوب على النقطة المرجعية الثانوية</translation>
     </message>
 </context>
 <context>
@@ -36802,141 +33645,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">ابدأ السيرك</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">ابدأ من زاوية الدائرة التي ستبدأ منها الدقائق.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">خارج:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">نقطة التقاطع.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">اختر المسافة من الرسم</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">المسافة:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">المسافة بين الدقائق.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">وإذا تم فحصه، سيقسم كيان مختار إلى نقاط تقاطع يدغ.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Divide</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">ضربة نقيض من الرسم</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">طول الوقت.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">اختر زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">تيك دق:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">اختر طول السحب</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">(بيك) يبدأ زاوية الدائرة من الرسم</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">انغمس بين التدغدغ والكيان المختار.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">وإذا تم فحصها، فإن زاوية الدقائق ترتبط بكيان مختار، وإلا فهي زاوية مطلقة.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">طول العلامة:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">يحدد نقطة التقاطع التي ينبغي وضعها مع كيان منتق.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ابدأ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">الشرق الأوسط</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">النهاية</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">وإذا تم فحصها، ستستخدم مسافات محددة ثابتة بين الأقراص. وإلا، ستُحسب المسافة على أساس طول الكيان وتحسب دقاته.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">الوظائف الثابتة</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">عد للدغات بين حواف كيان مختار.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">الكونت:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">يُشغّلُ كَمْ دغدغة على حوافِ الكيانِ يَجِبُ أَنْ يُوضعَ.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">لا</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">كلاهما</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">إيدج تيك:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37256,57 +33964,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">يحدد عدد الأجزاء التي يتعين توليدها لكل خط من البوليينات المحتوية على عدة صفات</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">إذا لم يتم فحصه، سيتم إزالة التلميح الأصلي، وإلا سيبقى على قيد الحياة.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">وإذا تم فحصها، ستستخدم المواصفات الحالية للكيانات المُنشأة، خلافاً لذلك - الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع الكيانات المنشأة على الطبقة الحالية، وإلا ستوضع في طبقات أصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">استخدام الطبقة الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">ويمكن، إذا تم فحصها، تحديد الكمية العرفية من أجزاء السطر. وخلافا لذلك، ستُستخدم القيمة من البيئات للرسم الحالي.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">القطع العرفية</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">وإذا تم فحصها، ستكون أجزاء الخط جزءاً من البوليلين. وإلا، ستكون خطوط فردية</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">إلى Polyline</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37430,65 +34087,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">إلى Polyline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع الكيانات المنشأة على الطبقة الحالية، وإلا ستوضع في طبقات أصلية.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">المستعمل</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">عدد النقاط الوسطى لقطعة الخط المتعدد التي ستضاف إلى المنحنى.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">يحدد درجة التلميح</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">إذا لم يتم التحقق، سيتم إزالة البوليلين الأصلي، وإلا سيبقى على قيد الحياة.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">درجة:</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="vanished">إذا كان محدداً، تُعدّ رؤوس الخط المتعدد نقاط منحنى وسيتم إنشاء منحنى بالنقاط. وإلا تُعدّ نقاط تحكم وسيتم إنشاء منحنى عادي.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">نقاط الوسط:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">وإذا تم فحصها، ستستخدم المواصفات الحالية للكيانات المُنشأة، خلافاً لذلك - الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">وإذا تم فحصها، تُعتبر اللافقاريات المتعددة الألياف نقاطاً مائلة، وستُحدَّد نقطتان. وخلافا لذلك، يعتبرون بمثابة نقاط مراقبة، وسيُنشأ عن ذلك خط مائل.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">(فيرتيكس) نقاط متتالية</translation>
     </message>
 </context>
 <context>
@@ -37892,69 +34490,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>درجة اعتادت على التلميح التقريبي</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">إذا تم فحصه، سيُنشأ نجم متماثل.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">الرمز</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">(راديوس) للحواف الداخلية.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">العدد:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">اختر المدى الخارجي من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">إلتقطْ قطرةَ داخليةَ مِنْ الرسمِ</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">عدد الأشعة.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">إذا تم فحص الحواف الخارجية سيتم تقريبها.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Radiusخارجي</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">إذا تم فحص الحواف الداخلية سيتم تجميعها.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">نصف القطر الداخلي</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">إذا تم فحصه، النجمة سوف تسحب كبوليلين.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">نصف قطر الأشعة الخارجية (الحواف).</translation>
     </message>
 </context>
 <context>
@@ -38845,14 +35380,6 @@ p, li { white-space: pre-wrap; }
         <translation>الترتيبات</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">فرز الإحداثيات للمستعملين بالاسم</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">(فيلتر).</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>الاسم</translation>
@@ -38953,33 +35480,6 @@ Warning: this action can NOT be undone!</source>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Remove Alls</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">نظام التنسيق الجديد</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">يحدد ما إذا كانت زاوية المحور X تُعرَّف بالقيمة المُدخلة أو بموقع الفأر</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">مجانا</translation>
     </message>
 </context>
 <context>
@@ -39595,33 +36095,6 @@ Warning: this action can NOT be undone!</source>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">ألف - الخيارات المتصلة بالخط</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Spacing:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">المسافة من الخط المتعدد الأصلي</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">نسخ:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">اختراق المسافات من الرسم</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39659,39 +36132,14 @@ Warning: this action can NOT be undone!</source>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>إنشاء ملف جديد ...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>الوثيقة غير المسماة %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>فتح الملف الأخير ...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>الوثيقة المرفقة:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>الافتتاح</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>يطبع...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>الخروج من التطبيق ...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -39704,19 +36152,9 @@ Warning: this action can NOT be undone!</source>
         <translation>أنشاء رسم جديد.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>حفظ الرسم ...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>الرسم المنقذ: 1 في المائة</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>اكتملت الطباعة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39731,11 +36169,6 @@ Please check the permissions.</source>
         <translation>لا يمكن فتح الملف
 %1
 من فضلك تحقق من الأذن.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>حفظ تلقائي للرسم...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -39801,11 +36234,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1067"/>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
         <translation>ادفعي %1 لا وجود له الافتتاح</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>رسوم الادخار: 1 في المائة</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
@@ -39877,12 +36305,6 @@ Please check its existence and permissions.</source>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>الهروب</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -39918,11 +36340,6 @@ Please check its existence and permissions.</source>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>اسم المبنى</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>مستأجرة</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40123,12 +36540,6 @@ Please check its existence and permissions.</source>
         <translation>تاريخ القيادة والناتج</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>الهروب</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
         <source>...</source>
         <translation>...</translation>
@@ -40303,81 +36714,6 @@ Please check its existence and permissions.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Arc</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of arc</source>
-        <translation type="vanished">طبقة القوس</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">الصفات</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">تنسيق مركز القوس</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">تنسيق مركز القوس</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">يحدد ما إذا كان القوس معكوسا (على مدار الساعة)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">مكرر</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">المركز (ذ):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">نصف قطر القوس</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">ابدأ الأنجل</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">بداية زاوية القوس</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">نهاية زاوية القوس</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">النهاية:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">المركز (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40415,198 +36751,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">الدائرة</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Radius ofCirc</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">المركز (ذ):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">تنسيق مركز الدائرة</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">المركز (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">تنسيق مركز الدائرة</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">البعد الخطي</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">طبقة البُعد</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">الصفات</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">الزاوية:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">زاوية البُعد</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">البعد</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">طبقة البُعد</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">الصفات</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipse</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of ellipse</source>
-        <translation type="vanished">طبقة القطع الناقص</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">زاوية التناوب للمحور الرئيسي للهجاء، الدرجات</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">يحدد ما إذا كان القوس معكوسا</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">مكرر</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">المركز (ذ):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">نهاية زاوية النسيج، الدرجات</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">تنسيق مركز القوس</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">نصف قطر المحور الرئيسي للقطع الناقص</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">في الدرجات</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">ابدأ الأنجليه</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">التناوب (الدرجة):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">نصف قطر المحور الثانوي للقطع الناقص</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">الزاوية النهائية (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">إبدأ زاوية القوس الشائكي، الدرجات</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="vanished">الرائد:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="vanished">دقيقة:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">تنسيق مركز الشفاه</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">المركز (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
     </message>
 </context>
 <context>
@@ -40683,105 +36827,6 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">الصورة</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of image</source>
-        <translation type="vanished">طبقة الصورة</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">الزاوية:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">حسناً</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="vanished">زوجة الصورة</translation>
-    </message>
-    <message>
-        <source>insert (y):</source>
-        <translation type="vanished">إدراج (y):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">تنسيق نقطة الإدراج X</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">القرار (الجرعة لكل بوصة)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">الطريق إلى ملف الصور</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">عامل التصعيد</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">الحجم:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">زاوية التناوب</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y ينسق نقطة الإدخال</translation>
-    </message>
-    <message>
-        <source>path:</source>
-        <translation type="vanished">المسار:</translation>
-    </message>
-    <message>
-        <source>insert (x):</source>
-        <translation type="vanished">إدراج (x):</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">المقياس:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">حجم الصورة بالبكسل</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">الزوجة:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">ارتفاع الصورة</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="vanished">اختيار ملف الصور</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40804,167 +36849,9 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>لغة واجهة المستخدم:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">◂ يُذكر أن الرؤوس/الترتيبات المضغوطة &apos; spaner` &apos; span= &apos; font-size:large; font- weight:700; &gt;Welcome to LibreCAD/span/ thebr/&lt;. يرجى اختيار الوحدة التي ترغب في استخدامها للرسومات الجديدة ولهجتك المفضلة لليو والقيادة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>لغة القيادة:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">Insert</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of insert</source>
-        <translation type="vanished">طبقة الإدراج</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="vanished">نقطة الإرسال (ذ):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="vanished">نقطة الإرسال (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">عدد الصفوف للنسخ</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">زاوية التناوب</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">المباعدة بين الأعمدة</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">معامل التصعيد بالمحور X</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">تنسيق نقطة الإدراج X</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">المباعدة بين الصفوف</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">عدد الأعمدة للنسخ</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">معامل التصعيد</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="vanished">مقياس المحور الصادي:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="vanished">Rows:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">الزاوية:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y ينسق نقطة الإدخال</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="vanished">تباعد الصفوف:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="vanished">كولومنز:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="vanished">مقياس X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="vanished">كولومن Spacing:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">الخط</translation>
-    </message>
-    <message>
-        <source>ID: </source>
-        <translation type="vanished">المعرف: </translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of line</source>
-        <translation type="vanished">طبقة الخط</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="vanished">نقطة النهاية (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">نقطة النهاية x التنسيق</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">نقطة النهاية</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="vanished">نقطة النهاية (ذ):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="vanished">نقطة البداية (ذ):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">نقطة البداية ينسق</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="vanished">نقطة البداية (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">نقطة البداية</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
     </message>
 </context>
 <context>
@@ -41135,10 +37022,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>الرمز</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">الرمز</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>درجة (درجة)</translation>
@@ -41187,10 +37070,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>£ (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">يين )يون(</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41826,115 +37705,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">الخيارات المريرة</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">? Delete Original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Use current &apos;attributes</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Use current &apos;layer</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">? Delete Original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&quot; نسخ متعددة</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Use current &apos;attributes</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Use current &apos;layer</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">خيارات النقل/النسخ</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">خيارات النقل/التناوب</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">زاوية (أ):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Use current &apos;attributes</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Use current &apos;layer</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">? Delete Original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">نسخ متعددة</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44951,10 +40721,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>علامة الصفر النسبية</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">السلوك</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>نوع الشبكة التي سيتم سحبها</translation>
@@ -45443,38 +41209,6 @@ This recursively modifies all entities of the Block itself.</source>
         <translation>حفظ الرسومات تلقائيًا</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>♪</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>{\pos(192,230)}</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>__</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>lcauto..</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>السيارات</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>اسم ملف الأمان الآلي:</translation>
@@ -45483,36 +41217,6 @@ This recursively modifies all entities of the Block itself.</source>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>اسم الملف الخلفي</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>دولار</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>عودتك</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>_bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>(باك)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>المساندة</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>icb</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -46010,287 +41714,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">متغيرات الرسم</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">متغير</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">المدونة</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">القيمة</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">موافق(&amp;O)</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">إلغاء</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">النقطة</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of point</source>
-        <translation type="vanished">طبقة النقطة</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="vanished">المنصب:</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">تحديد نقطة من قبل Y</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="vanished">المنصب:</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">تنسيق موقف النقطة X</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of polyline</source>
-        <translation type="vanished">طبقة الخط المتعدد</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">تحديد ما إذا كان البوليلين مغلقا</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">مغلق</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">خيارات التناوب</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">? Delete Original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&quot; نسخ متعددة:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">زاوية (أ):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Use current &apos;attributes</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Use current &apos;layer</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">الخياران</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">? Delete Original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&quot; نسخ متعددة</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">زاوية (و أ):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">زاوية (و ب):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Use current &apos;attributes</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Use current &apos;layer</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">خيارات القياس</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">عدد النسخ</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Use current &apos;attributes</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Use current &apos;layer</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">◂ يُستَخدَمُ / /      BAR  البحث عن النسب حول المركز حسب نقطة مرجعية ونقطة هدف</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">? Delete Original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&quot; نسخ متعددة</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">قياس بنفس العامل في كل من الاتجاهين السيني والصادي</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">التحجيم المتساوي الأبعاد</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">نعم</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Spline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">الطبقة:</translation>
-    </message>
-    <message>
-        <source>Layer of spline</source>
-        <translation type="vanished">طبقة المنحنى</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometry</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">درجة:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">تحديد ما إذا كان التلميذ يعرّف الملتقى المغلقة</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">مغلق</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">درجة اعتادت على التلميح التقريبي</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Pen</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46438,10 +41861,6 @@ so default step value required for baking</source>
         <translation>£ (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">يين )يون(</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>الوقت (x)</translation>
@@ -46485,10 +41904,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>طبقة النص</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">الالتزام بالنص</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -47096,10 +42511,6 @@ so default step value required for baking</source>
         <translation>زاوية:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Oblique:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>عامل الزواج:</translation>
@@ -47617,21 +43028,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">الجدول غير المستوفى</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">عامل حجم الورق أكبر من النسبة القصوى للطباعة</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">عامل الجدول الورقي أقل من نسبة المطبوعات</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47698,58 +43094,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>العالم</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Snap</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">التقاط إلى نقاط النهاية</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">التقاط إلى نقاط متباعدة بالتساوي على الكيان</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">التقاط إلى نقاط المركز</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">التقاط تلقائي إلى نقاط التقاطع</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">التقاط إلى أقرب نقطة على الكيان</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">التقاط إلى نقطة على مسافة محددة من نقطة النهاية</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">التقاط يدوي إلى نقاط التقاطع</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">التقاط إلى الشبكة</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">تقييد أفقياً</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">تقييد عمودياً</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">تحريك الصفر النسبي</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">قفل الصفر النسبي</translation>
     </message>
 </context>
 <context>
@@ -47960,12 +43304,6 @@ Please specify a different value.</source>
         <translation>إزالة الطبقات الفارغة</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Layer(s) without entities found, yet they are filtered and not visible.
-تصفية القناع والتكرار.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -48033,14 +43371,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 إذا نعم — ستبدو الكيانات ذات أقلام &quot;حسب الطبقة&quot; في الطبقة الجديدة تماماً كما في الطبقات السابقة وسيتم استبدال قيمة &quot;حسب الطبقة&quot; بالأقلام الفعلية.
 
 إذا لا — تبقى قيم &quot;حسب الطبقة&quot; وبالتالي يحدد قلم الطبقة المستهدفة قلم هذه الكيانات.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">هل تريد استبدال قيمة &quot;حسب الطبقة&quot; بقيم الطبقات المصدر؟
-إذا كانت الإجابة بنعم، فستظهر الكائنات التي تحتوي على أقلام &quot;حسب الطبقة&quot; على الطبقة الجديدة تمامًا كما كانت على الطبقات السابقة، وسيتم استبدال قيمة &quot;حسب الطبقة&quot; بالأقلام التي تم حلها.
-إذا كانت الإجابة بلا، فستظل قيم &quot;حسب الطبقة&quot; كما هي، وبالتالي سيحدد قلم الطبقة الهدف القلم لهذه الكائنات.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48360,10 +43690,6 @@ Do you want to replace it?</source>
         <translation>طراز Image</translation>
     </message>
     <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">بورصة السحب القديمة()</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1003"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
@@ -48398,11 +43724,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>خطأ في قراءة ملف DXF/DWG</translation>
-    </message>
-    <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">خطأ قراءة DXF/DWG head dara</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
@@ -48451,10 +43772,6 @@ Do you want to replace it?</source>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>الخطأ في قراءة الرمز DXF/DWG</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">فتح ملف إصدار dwg 1%</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -50165,23 +45482,6 @@ Do you want to replace it?</source>
         <translation>يجب أن تقطع مسافة أولاً.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>عيار</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>الحساب</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>عيار</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>أسلوب المحاسبة:</translation>
@@ -50440,11 +45740,6 @@ Do you want to replace it?</source>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">الخلل(ج)</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51377,12 +46672,6 @@ Do you want to replace it?</source>
         <translation>الملاءة</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>♪</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -51970,26 +47259,6 @@ Do you want to replace it?</source>
         <translation>الاستخدام:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [الخيارات]</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">- طباعة جميع الملفات dxf لملفات pdf مع نفس الأسماء.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">- طباعة جميع الملفات dxf إلى &apos;ssome.pdf &apos; ملف.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -52065,16 +47334,6 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">حجم الورق (Width x Height) في مم.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">قرار بشأن النواتج.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>جدول النواتج E.g.: 0.01 (for 1:100 scale).</translation>
@@ -52107,27 +47366,9 @@ Do you want to replace it?</source>
         <translation>دليل النواتج المستهدفة.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation>إصدار إخراج DXF: r12, r14, r2000, r2004, r2007 (افتراضي), r2018.</translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation>ملف(ات) الإدخال: %1.</translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">?&quot;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">ملفات DXF المدخلة</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -52228,30 +47469,6 @@ Do you want to replace it?</source>
         <location filename="../src/lib/engine/document/patterns/rs_patternlist.cpp" line="93"/>
         <source>Hatch:: loading pattern failed: %1</source>
         <translation>فشل تحميل النمط: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>دعم الفريق العامل غير مكتمل!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>إذا فشل فتح هذا الملف، فحاول استخدام تنسيق DWG أقدم</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>أو محاولة للعثور على محول لجعله ملف DXF.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>المعلومات</translation>
-    </message>
-    <message>
-        <source>DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF.</source>
-        <translation type="vanished">دعم DWG غير مكتمل؛ إذا فشل فتح هذا الملف، جرّب تنسيق DWG أقدم أو قم بتحويله إلى DXF.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -52595,10 +47812,6 @@ Do you want to replace it?</source>
         <translation>[Override]</translation>
     </message>
     <message>
-        <source>Draft</source>
-        <translation type="vanished">مسودة</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="86"/>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
@@ -52606,10 +47819,6 @@ Do you want to replace it?</source>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
-    <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">اختيار لخلق كتلة (اكتمل بعد)</translation>
-    </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
@@ -52624,66 +47833,6 @@ Do you want to replace it?</source>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>حدد نقطة مرجعية</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">اختيار تفجير الحاويات (اكتمل بعد)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">اختيار وتفجير</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">حدد نقطة مرجعية</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ادخل الزاوية:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">عامل الدخول:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">الأعمدة:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">الصفوف:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">الجدول الزمني:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">المبارزة:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">القفل لا يمكن أن يحتوي على إضافة لنفسه.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">)أ( أضيفت القفل الحالي إلى:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">هذا المبنى لا يمكن ادخاله.</translation>
     </message>
 </context>
 <context>
@@ -52935,270 +48084,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">طول الشورد يجب أن يكون غير صفر</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">ليس طول وتر صالح</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">المركز</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">تحديد النطاقات</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">تحديد نقطة البداية</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">حدد زاوية بِدَايَة:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">تحديد زاوية النهاية أو [زاوية/زاوية]</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">القوس البديل</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">يشمل تحديد الزاوية:</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">يحدد طول الكيلوغرامات (محدد لنقطة الذروة):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">استخدام نقطة بديلة للرسم البياني</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">بيانات قوس غير صالحة.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">تحديد النقطة الثالثة</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">حدد النقطة الثانية</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">حدد نقطة البداية أو [مركز]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">حدد قاعدة كيان </translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">حدد زاوية نِهَايَة:</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">قوس بديل</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">حدد نقطة النهاية</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">قوس بديل</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">المركز</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">تحديد نقطة في الدائرة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">بيانات السيرك الفاشلة.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">حدد أول نقطة</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">حدد ثاني نقطة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">بيانات دائرة غير سليمة.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">حدد أول نقطة</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">حدد ثاني نقطة</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">حدد ثالث نقطة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">مركز الدائرة</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">تحديد نطاق الدائرة</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">radius=%1 باطل (الإكتئاب)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">radius=%1 باطل (غير مؤثر)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">radius=%1 باطل (zero)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">حدد الخط الأول</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">حدد الخط الثاني</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">حدد الخط الثالث</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">حدد النقطة الأولى على مماس الدائرة </translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">حدد النقطة الثانية على مماس الدائرة </translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">إختار مركز الدائرة الشيطانية</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">حدد خط/قوس/دائرة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">حدد أول خط/قوس/دائرة</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">حدد ثاني خط/قوس/دائرة</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">إختار مركز الدائرة الشيطانية</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">لا توجد دائرة سماوية مشتركة من أجل نصف قطر</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">حدد خط/قوس/دائرة</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">تحديد الخط/الغرف/الركن الآخر</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">حدد نقطة على مماس الدائرة </translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">إختار مركز الدائرة الشيطانية</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">إختار مركز الدائرة الشيطانية</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">حدد أول خط/قوس/دائرة</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">لا توجد دائرة سموية مشتركة لكيانات مختارة</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">حدد ثاني خط/قوس/دائرة</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">حدد ثالث خط/قوس/دائرة</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53393,125 +48278,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">يُختارون إلى الصيد (يتم بعد)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>هاتش مباشرة بعد الاختيار</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">تحديد النقطة المرجعية</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ادخل زاوية:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">عامل الدخول:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">ادخلي</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">تحديد النقطة الأولى</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">يحدد النقطة التالية أو [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">تحديد النقطة التالية</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Can not close sequence of lines: Not enough entities defined yet, or already closed.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">بداية التاريخ</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">لا يمكن إعادة العمل: تم التوصل إلى نهاية التاريخ</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">تحديد الموقف</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">الاتجاه البديل</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ادخل زاوية:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">أدخال الطول:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">اختر أول خط</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">ستنشأ كيانات</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">اختر ثاني خط</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">أدخل طول المنصّف:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">أدخل عدد المنصّفات:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">عدد القطاعات الخطية ليست في المدى:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">انقر واسحب لرسم خط</translation>
     </message>
 </context>
 <context>
@@ -53544,74 +48313,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>اِخْتار دائرة، قوس أو قطْع ناقص</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">حدد مسافة &lt;1٪&gt; أو حدد كيان أو [2٪]</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">ستنشأ كيانات</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">أدخال عدد:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">ليس عددا صحيحا. محاولة 1..99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">اختيار كيان</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">ستنشأ كيانات</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">التحديد من خلال نقطة</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">رقم:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">ليس عددا صحيحا. محاولة 1..99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">حدد زاوية</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">تحديد الزاوية الأولى</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">تحديد الزاوية الثانية</translation>
     </message>
 </context>
 <context>
@@ -53653,29 +48354,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">حدد قاعدة كيان </translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">تحديد الزاوية</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">تحديد المدة</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">تحديد الموقف</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53713,17 +48391,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">يرجى تحديد نقطة الإدراج</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">نص الدخول:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53732,108 +48399,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">تحديد النقطة الأولى</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">يحدد النقطة التالية أو [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">تحديد النقطة التالية</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Can not close sequence of lines: Not enough entities defined yet.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">لا يمكن التراجع: الكيانات المحددة إلى اﻵن غير كافية.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">أدخل النقطة النهائية X</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">عدد الشركات</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">أدخل معادلة، (و)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">أدخل نقطة البداية X</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">الدخان × باطل.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">حجم خطوته غير صحيح.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">القيمة (إكس) غير صحيحة.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">القوس البديل</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">تحديد نقطة المراقبة الأولى</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">تحديد نقطة المراقبة التالية أو [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">تحديد نقطة المراقبة التالية</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">لا يمكن التراجع: الكيانات المحددة إلى اﻵن غير كافية.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">النص:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">يرجى تحديد نقطة الإدراج</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">نص الدخول:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">تحديد النقطة الثانية</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">يُختار أن يُقطع (يكتمل بعد)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53852,10 +48418,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>الحق بعد الاختيار</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">يُختار للنسخ (يتم بعد)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53896,24 +48458,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">نقطة مرجعية للمراعي</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">لا شئ للتراجع!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">لا شئ للإعادة!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="148"/>
@@ -53936,25 +48480,27 @@ This block cannot be inserted.</source>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 </source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Angle: %1
-المكمل: ٪٢
-المبلغ التكميلي: 3 في المائة
-البديل: ٪4</translation>
+الزاوية المتممة: %2
+الزاوية المكملة: %3
+زاوية إكمال دورة كاملة: %4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="139"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Angle: %1
-المكمل: ٪٢
-المبلغ التكميلي: 3 في المائة
-البديل: ٪4
+الزاوية المتممة: %2
+الزاوية المكملة: %3
+زاوية إكمال دورة كاملة: %4
 Intersection: (%5, %6)
 Intersection :@(%7, %8)</translation>
     </message>
@@ -53979,19 +48525,22 @@ Intersection :@(%7, %8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Complementary:</source>
-        <translation>استكمال:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>الزاوية المتممة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
         <source>Supplementary:</source>
-        <translation>تكميلي:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>الزاوية المكملة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
-        <source>Alternative: </source>
-        <translation>البديل:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>زاوية إكمال دورة كاملة:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
@@ -54131,57 +48680,6 @@ Cartesian: (%2, %3)
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Distance: %1
-Cartesian: (%2, %3)
-القطب: (%4 ٪)
-Point On Entity: (%6, %7)
-Point: (%8, %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">حدد كيان</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">لا تقطعوا أمام كيانات الأطفال في الحاويات</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">النقطة النسبية هي الكيان</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">المعلومات</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">المسافة:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">من:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">إلى:</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">نقطة محددة</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54227,10 +48725,6 @@ Point: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">اختيار لقياس الطول الكلي (بعد إتمام)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>المهنة المختارة</translation>
@@ -54262,917 +48756,6 @@ Point: (%8, %9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>إلغاء</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">تحديد النقطة المرجعية</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">ادخل زاوية:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">عامل الدخول:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">لا يمكن فتح الملف &apos;٪1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">اختيار تعديل السمات (بعد إتمام)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">تعديل السمات فور اختيارها</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">خطوط مختارة متوازية</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">الخطوط المحددة ليست تابعة لنفس الخط المتعدد.</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">التقاطع:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">النقطة 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">النقطة 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">تم تحديد كائن غير صالح (لا يمكن تعديله).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">تم تحديد كائن غير صالح (ليس ذريًا).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">تم تحديد كائن غير صالح (لا يمكن تعديله مع الكائن الأول).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">اِخْتار أول كيان</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">اِخْتار ثاني كيان</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">أدخال الطول 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">أدخال الطول 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Divide</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">في:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يعُثَر على كيان</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">نقطة القطع قد لا تكون نقطة نهاية الكيان.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">حدد كيان للقطع</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">تحديد نقطة القطع</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">الكيان يجب أن يكون خط، قوس، دائرة، قطْع ناقص أو شريحة مستكملة.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">يُختار أن يحذف (يستكمل بعد)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">يحذف فورا بعد الاختيار</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">حدد أول نقطة قطع على متعدّد الخطوط</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">حدد ثاني نقطة قطع على نفس متعدّد الخطوط</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">الكيانات ليست على نفس متعدّد الخطوط.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">اصل الكيان الثاني ليس متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">اصل الكيان اﻷول ليس متعدّد خطوط</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">أب الكيان الثاني باطل</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">أحد الكائنات المحددة هو مؤشر فارغ.</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">والد أول كيان لاغبار</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">الكيان الأول باطل</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">الكيان الثاني باطل</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">اختر الكيان للحذف</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">اضغط على الكيان لتعديله</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">اختيار انفجار النص (اكتمل بعد)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">التفجير مباشرة بعد التحديد</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">المرآة</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">أنغل (النمل):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">الخط من:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">الخط:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">اختيار المرآة (اكتمل بعد)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">تحديد خط المرايا</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">تلفيق</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">القلب أفقيًا</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">حدد النقطة الأولى من خط المرآة</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">حدد النقطة الثانية من خط المرآة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">التخلص التدريجي</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">النسخ</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">تحديد النقطة المرجعية</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">إنشاء نسخة</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">اختيار للانتقال (اكتمل بعد)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">التحرك فورا بعد الاختيار</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">تحديد نقطة الهدف</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">الانتقال بالتناوب</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">المصدر:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">الهدف:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">خارج:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">تحديد النقطة المرجعية</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">اختيار التحرك والتناوب (بعد الانتهاء)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">التحرك والتناوب مباشرة بعد الاختيار</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">تحديد نقطة الهدف</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">أدخل زاوية الدوران:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Offset</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">المسافة:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">تحديد اتجاه التعويض</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">تحديد نقطة مرجعية لتوجيه التعويض</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)</source>
-        <translation type="vanished">اختر خطاً أو خطاً متعدداً أو دائرة أو قوساً أو قطعاً ناقصاً لإنشاء إزاحة (Enter للإكمال)</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">خط مختار، أو بوليلين، أو دائرة، أو قوس لخلق معادلة (بعد استكمال)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">بعد الاختيار مباشرة</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">اختيار العودة إلى الاتجاه (اكتمل بعد)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">العودة فورا بعد الاختيار</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">تحديد النقطة المرجعية</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">اختيار التناوب (بعد الانتهاء)</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">التناوب</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">المصدر:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">الهدف:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">خارج:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">النقطة المرجعية:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">نقطة المركز:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">الخط الثاني:</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">التناوب على الفور بعد الاختيار</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">التقاط لمركز التحديد</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">مركز التناوب</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">تحديد نقطة الهدف للتناوب</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">تحديد نقطة الهدف للتناوب حول النقطة المرجعية</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">تناوب مرتين</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">المركز 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Ngle 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">المركز 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">الغنم 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">اختيار التناوب على محورين (بعد الانتهاء)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">المحور 2 بعد الاختيار مباشرة</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">تحديد النقطة المرجعية المطلقة</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">تحديد النقطة المرجعية النسبية</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">الجولة</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">النقطة 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">النقطة 2:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">حدد ثاني كيان</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">نصف قطر الدخول:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">تحديد الكيان الأول أو الدخول إلى دائرة الأشعة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Scale</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">المركز:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">المصدر:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">الهدف:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">خارج:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">تغيير الحجم حسب X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">تغيير الحجم حسب Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">مركز تحديد النطاق</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">التقاط لمركز التحديد</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">نقطة المصدر</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">تحديد نقطة الهدف</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">لحظه مجانيه</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">يُختار إلى الحجم (يتم بعد)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">تغيير الحجم فور التحديد</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">تحديد الزاوية الأولى</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Stretch</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">بدء كورنر:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">إنتر كورنر:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">النقطة المرجعية:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">الهدف:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">خارج:</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">تحديد الزاوية الثانية</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">تحديد النقطة المرجعية</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">تحديد نقطة الهدف</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">اختيار أول كيان ثلاثي</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">تقليم الطرفين</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">التقاطع:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">التداخل 2:</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">اِخْتارَ الكيان الحدي</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Reect second trim entity</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">اِخْتار كيان للتقليم</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">لا يوجد كيان.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">الكيان المختار ليست كيان ذري أو لا يمكن تقليمه.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">لا تعبير صحيح</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">(أ) أن يكون خطاً مختاراً أو متراً إلى ثلاثية أو ذات قيمة مطولة:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">الكيانات المختارة (بعد استكمال)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">الأمر فور الاختيار</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">الكيان المختار</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">الكيان يجب أن يكون متعدّد خطوط.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">نقطة الإضافة باطلة.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">النقطة المضافة ليست على الكيان.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">حدد متعدّد خطوط لإضافة عُقد</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">تحديد إضافة نقطة العقد</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">الكيان يجب أن يكون متعدّد خطوط.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">انقر في مكان ما قرب بداية أو نهاية البوليلين الحالي.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">عدد الشركات</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">حدد متعدّد خطوط في مكان ما بالقرب من نقطة البداية أو النهاية</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">لا يمكن أرفاق عقد في متعدّد خطوط مغلق.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">لا يمكن التراجع: الكيانات المحددة إلى اﻵن غير كافية.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">الكيان يجب أن يكون متعدّد خطوط.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">تحديد البوليلين لحذف العقد</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">حددوا حذف نقطة النويد</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">نقطة الإنزال باطلة.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">النقطة المحذوفة ليست على الكيان.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">الكيان يجب أن يكون متعدّد خطوط.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">النقطة المحذوفة ليست على كيان.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">لا يوجد بوليلين.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">وينبغي أن يكون ما لا يقل عن جزأين من البوليلين بين نقاط مختارة.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">تحديد البوليلين للحذف بين العقدين</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">حدد العقد الأول</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">حدد العقد الثاني</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">نقطة الإنزال باطلة.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">الكيان يجب أن يكون متعدّد خطوط.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">اختار متعدّد الخطوط الأصلي</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">اختار واحد من القطاعات في متعدّد الخطوط الأصلي</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">الكيان لا يمكن أن يكون متعدّد خطوط مغلق.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Poly created</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">لم يُعثر على كيان.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">الكيان يجب أن يكون متعدّد خطوط.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">وينبغي أن يكون الجزء الأول على بوليلين منتقاة.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">وينبغي أن يكون الجزء الثاني على بوليلين منتقاة وليس مساوياً للجزء الأول.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">تحديد البوليلين إلى ثلاثة</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">يحدد الجزء الأول</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">يحدد الجزء الثاني</translation>
     </message>
 </context>
 <context>
@@ -55249,113 +48832,11 @@ Point: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">لا يوجد كيان مختار!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">الكيان يجب أن يكون كيان ذري.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">تحديد الكيان لاختياره</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">اختار أول نقطة تقاطع خط</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">الكيان المختار</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">كيانات الأطفال المختارة</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">اختار ثاني نقطة تقاطع خط</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">تحديد الكيان بالطبقة المرغوبة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">تحديد الكيان لاختياره</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">المهنة المختارة</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">De-Selecting</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">اختيار</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">الكيانات</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">الذي يتداخل مع الصندوق</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">هذا داخل الصندوق</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">اختر الحافة الثانية</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">الانتقاء</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">إلغاء تحديد الكيانات</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">الكيانات المختارة</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">التداخل بين الانتقاء</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">انقر وسحب من نافذة الاختيار</translation>
     </message>
 </context>
 <context>
@@ -55663,158 +49144,6 @@ Point: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">الخيارات القطبية</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">على مدار الساعة</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Clockwise</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">خيارات القطبية</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">إذا تم اختيار القوس الثأر مع نطاق محدد</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">نصف قطر القوس المماسي</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">إذا تم اختياره، سيتم إنشاء القوس مع زاوية محددة</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">مجموع الزاوية الفرعية للقوس الشيطاني</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">اختر شعاع رسم</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">أنغل</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">الخيارات البديلة</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">تحقق من كل من الكيانين إلى الخريف</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">الطول 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">طول الخنفساء في الإتجاه العاشر.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">خط الاستمارة الأولى</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">الجناح 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">طول العشب في (ي).</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">اختيار الشكل الثاني</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">الخيارات الدائرة</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Radius ofCirc</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">اختر نصف قطرة من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">خيارات المماس الدائري 2</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">◂ يُستَخدَمُ / /      BAR  Radius of the tangential cycle to draw/p&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Radius of tangential cycle</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">اختر نصف قطرة من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="vanished">خيارات القياس الخطي</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">الزاوية:</translation>
-    </message>
-    <message>
-        <source>Angle of dimension</source>
-        <translation type="vanished">زاوية القياس</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55951,849 +49280,6 @@ Point: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">خيارات الإدراج</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">خط التناوب</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">معامل القياس:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">إدارة شؤون الإعلام:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">معامل القياس</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">إدارة شؤون الإعلام</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">خيارات الإدراج</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">خط التناوب</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">المفاعل:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">معامل القياس</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">آري:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">عدد كولومنز</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">عدد الأرصفة</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">مباعدة التصفيق من الرسم</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">المباعدة بين السحب</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Spacing:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">المسافة بين الأعمدة</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">المسافة بين الصفوف</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">خيارات ملحقات المكتبة</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">خط التناوب</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">المفاعل:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">معامل القياس</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">خط الخيارات</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">نقطة على الخط المُنشأ الذي سيوضع في نقطة الإدراج</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">زاوية الخط</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Length:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">طول الخط</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">نقطة الالتقاء:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">زاوية الخط من الرسم</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">ابدأ</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">الشرق الأوسط</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">النهاية</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">طول خط السحب</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">وإذا اختيرت، سيكون الخط أوتوموغينيا إلى محور الزاوية. خلاف ذلك - لفحص محور</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">إلى أنجليز باسيس</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">خيارات قطاع الأعمال</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Length:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">طول القطاع</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">طول خط السحب</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">العدد:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">عدد المنصفات المراد إنشاؤها</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">الخيارات</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">تشكيلة مخزن مغلق من الخطوط</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">اقترب</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">فك الخط الأخير</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Undo</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">أعد آخر رسم</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Redo</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">الخيارات</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">التوجيه:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">ينشئ خطًا متعدد الأضلاع من مقاطع الخطوط</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">الخط الحرفي</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">نعم</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">خط بزاوية محددة</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">أنغل</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">الخط الأفقي</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">إذا تم فحصها، الزاوية قريبة من الجزء السابق</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">فك الخط الأخير</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Undo</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">تشكيلة مخزن مغلق من الخطوط</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">اقترب</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">أعد آخر رسم</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Redo</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">خط الخط</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">الخط إلى نقطة تعسفية</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">النقطة</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">الخيارات الموازية</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">المسافة:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">المسافة إلى الكيان الأصلي</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">اختر المسافة من الرسم</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">العدد:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">عدد الموازيات التي تخلق</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">خط مواز من خلال الخيارات</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">وإذا تم فحصها، ستقام موازيات على جانبي الكيانين</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">الرمز</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">العدد:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">عدد الموازيات التي تخلق</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">خيارات المضلع</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">العدد:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">عدد الحواف</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">خيارات المضلع</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">العدد:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">إذا تم فحصها، ستُجمع مناديل البوليجون.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">إذا تم فحصها، سيتم سحب البوليجون كبوليلين. وإلا، سيتم إنشاء فرادى الكيانات.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polyline</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">اختر نصف قطرة من الرسم</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">عدد الحواف</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">تقريب نصف قطره من أجل الغطس.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">وإذا ما اختيرت نقاط مرجعية لللافقاريات من البوليغون. عدا ذلك، هم لوسط نقطة الحواف.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">من الرأس إلى الرأس</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">ألف - الخيارات المتصلة بالخط</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">زاوية الخط</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Length:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">طول الخط</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">اختر الطول من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">الخيارات</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">النص:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">نص يدرج</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">زاوية التناوب</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">تعديل خيارات التوريد</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Distance for compensate from original entity</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع الكيانات المنشأة في الطبقة الحالية، وإلا ستكون في طبقات أصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">استخدام الطبقة الحالية</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">عدد النسخ.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">وإذا تم فحصها، ستنجو الكيانات الأصلية، وإلا سيتم إزالتها.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">وإذا تم فحصها، ستستخدم مسافات من التعويض، وإلا سيحددها الفأر.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">المختفين</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">وإذا تم فحص الصفات الحالية ستطبق على الكيانات المنشأة، وإلا ستستخدم الخصائص الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">اختر المسافة من الرسم</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">وإذا تم فحصها، سيتم إعداد نسخ متعددة.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">نسخ متعددة</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">خيارات التناوب</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">وإذا تم فحص الصفات الحالية ستطبق على الكيانات المنشأة، وإلا ستستخدم الخصائص الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">استخدام الخصائص الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">وإذا تم فحصها، سيتم إعداد نسخ متعددة.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">نسخ متعددة</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">إذا تم فحص كل النسخ سيتم تناوبها بنفس الغزل وإلا، ستكون الزاوية متناسبة مع عدد كل نسخة.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">نفس الزاوية للنسخ</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">زاوية التناوب.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">عدد النسخ.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">إذا تم فحص زاوية التناوب يحددها الفأر وإلا، تستخدم قيمة محددة.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">مجانا</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">وإذا تم فحصها، ستوضع الكيانات المنشأة في الطبقة الحالية، وإلا ستكون في الطبقات الأصلية.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">استخدام الطبقة الحالية</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">وإذا تم فحصها، ستنجو الكيانات الأصلية، وإلا سيتم إزالتها.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">ابقوا اصليين</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">الخيارات المتعددة</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">الحشرات تنتهي من البوليلين لذا تم إنشاء مخزن مغلق</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">اقترب</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">العصيان لللافت السابق</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Undo</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">النوع:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">تحديد الجزء الذي ينبغي إنشاءه من البوليلين</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">الخط</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangential</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">نصف قطر المماس</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">زاوية المماس</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">أنغل</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">الدائرة التنظيمية</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">قوس تانجينت مع نصف قطري ثابت</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">قوس تانجينت مع زاوية ثابتة</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">قوس بزاوية</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">نصف قطر القوس</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">اختر شعاع رسم</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">زاوية القوس</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">مكافحة كلوكوز</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Clockwise</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">خيارات العرض المطبوع</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">توجيه الغطاء الأرضي</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">إعدادات الرسم</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Scale:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">◂ يُذكر أن الرؤوس/الهيئات الفرعية هي: المقياس المطبعي: رسم الحجم/الحجم/الترتيبات/الترتيبات</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">◂ يُغلق على القيمة الحالية/القيمة الحالية/المجموعة/المجموعة</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">ثابتة</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">الضحك الأسود/الأسلوب الأبيض</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">تطبيق المطبوع Scale إلى خط الاستطلاع</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">توجيه الورق</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">توجيه الورق</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">الصفحة في مركز الرسم</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">زوم المنطقة المطبوعة</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">الصفحة</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">وإذا مُكنت من ذلك، سيشمل الحيز الورقي كمية محددة من الصفحات التي تُنظم في الأعمدة والأصفاد</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">مطبوعة ذات عجلات</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">الصفحات:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">عدد الصفحات</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">الصفحات:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">عدد الصفوف</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">حساب عدد الصفحات اللازمة لاحتواء الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">خيارات الجولة</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">تحقق من كل الحافة إلى الجولة</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trim</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">نصف قطري</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">اختر نصف قطرة من الرسم</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56832,99 +49318,6 @@ Point: (%8, %9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>عدد نقاط الانقسام المتوازنة</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">الخيارات الشاملة</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">درجة:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">درجة سبلين تستخدم للتقريب بين النقاط</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">إذا تم اختياره، تم وضع خط مقفل</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">مغلق</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">نقطة سابقة</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Undo</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">الخيارات</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">النص:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">انجل:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">زاوية التناوب</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">زاوية من الرسم</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">المبلغ</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">توقف القيم السلبية للثأر والقيم الإيجابية للتوسع.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">المجموع</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Length:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">توقف القيم السلبية للثأر والقيم الإيجابية للتوسع وتُتجاهل الإشارة السلبية عند التقريب إلى الطول الكلي النهائي.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">اختر الطول من الرسم</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">وإذا تم فحص الترم/التكثيف يتم على جانبي الخط.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">الرمز</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">ويُستخدم طول المدخلات كطول إجمالي بعد الترميم، بدلاً من زيادة الطول</translation>
     </message>
 </context>
 </TS>

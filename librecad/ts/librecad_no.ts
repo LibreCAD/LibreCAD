@@ -39,166 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Ramme</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="obsolete">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="obsolete">&lt;</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Lagre</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="obsolete">Ramme</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="obsolete">Lagre</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="obsolete">Parabel</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Punkter på splinen</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Kontrollpunkter</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Lukket</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="obsolete">Hvis valgt, brukes splinepunkter</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="obsolete">Splinepunkter</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="obsolete">Hvis valgt, brukes kontrollpunkter</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="obsolete">Kontrollpunkter</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="obsolete">Punkter på splinen</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Startpunkt kan bare angis i avstand- eller punktmodus</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Skal opprettes:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Rektangel</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Bredde:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Høyde:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Senter:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Ugyldig vinkel</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Ugyldig radius</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Ugyldig verdi</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Angi innsettingspunkt</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Angi vinkel</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Angi størrelse (bredde, høyde)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Angi hjørnetype
-[rett|avrundet|skrå]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Angi hjørneskrå lengde (x,y)</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Angi hjørneradius</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Angi kantmodus
-[begge|horisontal|vertikal]</translation>
     </message>
 </context>
 <context>
@@ -445,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Skjema</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Høyde på buen (avstanden mellom korde og toppunkt på buen)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Høyde:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Mot klokken</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Radius på bue</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Med klokken</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Sentralvinkel på buen</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Lengde på buen</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengde:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Velg radius fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Velg høyde fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Velg lengde fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -723,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Velg enheter for avgrensningsboks (Enter for å fullføre)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -781,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished">Velg sirkel, bue eller ellipse</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">radius=%1 er for liten for valgte punkter
-avstand mellom punkter=%2 er større enn diameter=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Velg fra to mulige sirkelsentre</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Angi første punkt</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Angi andre punkt</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Velg sirkelsenter</translation>
     </message>
 </context>
 <context>
@@ -1054,13 +803,6 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Velg sirkel, bue eller ellipse</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1104,10 +846,6 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Velg senter</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Ingen senter angitt.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1502,154 +1240,6 @@ avstand mellom punkter=%2 er større enn diameter=%3</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Angi første punkt</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Angi andre punkt
-eller [antall|x|y|vinkel|p|kanter|avstand]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Angi andre punkt
-eller [antall]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Angi linjeretning
-[x|y|vinkel|p|avstand]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Angi linjeretningsvinkel
-eller [x|y|p|antall|kanter|avstand]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Angi kantpunktsmodus
-[ingen|start|slutt|begge|avstand]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Angi fast avstand mellom punkter
-eller[x|y|p|antall|kanter]</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Angi avstand (%1)
-eller [%2]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Tilbake</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Angi avstand (vinkel %1 grader)
-eller [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Angi antall punkter</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Angi andre hjørne</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Angi andre tangent</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Angi første hjørne</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Angi første tangent</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Ikke et gyldig tall. Prøv 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Ugyldig verdi for avrundingsradius</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Skriv inn tall:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Skriv inn avrundingsradius:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Angi senter</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Skal opprettes:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Senter:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Startvinkel:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Indre radius:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Angi en tangent</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1893,29 +1483,6 @@ eller [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Velg første enhet</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Velg andre enhet</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Alternative endepunkter</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Skriv inn forskyvningsverdi</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2068,13 +1635,6 @@ eller [x|y|p|antall|kanter|avstand]</translation>
 [ingen|start|slutt|begge|avstand]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">Angi fast avstand mellom punkter
-eller[x|y|p|antall|kanter]</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2098,13 +1658,6 @@ eller [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">Angi avstand (vinkel %1 grader)
-eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2263,11 +1816,6 @@ eller [%2]</translation>
         <translation>Angi bredde</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>Angi størrelse (bredde, høyde)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>Angi referansepunkt [øvre venstre|øvre|øvre høyre|venstre|midt|høyre|nedre venstre|nedre|nedre høyre]</translation>
@@ -2333,11 +1881,6 @@ eller [%2]</translation>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>Angi høyde</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>Angi startpunkt)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -4037,10 +3580,6 @@ eller [%2]</translation>
         <translation>Prompt</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Fest til rutenett</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Manuell midtfeste</translation>
@@ -4306,11 +3845,6 @@ eller [%2]</translation>
         <translation>Fjern merking fra &amp;alle</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Ctrl+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>Inverter markering</translation>
@@ -4411,12 +3945,6 @@ eller [%2]</translation>
         <translation>Rutenett</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Ctrl+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>Utkast</translation>
@@ -4427,12 +3955,6 @@ eller [%2]</translation>
         <translation>Statuslinje</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Ctrl+I</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>Fokuser på kommandolinjen</translation>
@@ -4441,26 +3963,6 @@ eller [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Widgetalternativer</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Venstre</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Høyre</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Øverst</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Nederst</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Flytende</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4511,12 +4013,6 @@ eller [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="754"/>
         <source>&amp;Selection Pointer</source>
         <translation>&amp;Markør</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Ctrl+D</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
@@ -4645,21 +4141,23 @@ eller [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="209"/>
         <source>Complementary:</source>
-        <translation>Komplementær:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Komplementvinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="55"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Vinkel: %1
-Komplementær: %2
-Supplerende: %3
-Alternativ: %4
+Komplementvinkel: %2
+Supplementvinkel: %3
+Hel omdreining − vinkel: %4
 Startpunkt for kant: (%5 , %6)
 Skjæringspunkt: (%7, %8)
 Sluttpunkt for kant: (%9 , %10)</translation>
@@ -4678,12 +4176,14 @@ Sluttpunkt for kant: (%9 , %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="210"/>
         <source>Supplementary:</source>
-        <translation>Supplerende:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementvinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
-        <source>Alternative: </source>
-        <translation>Alternativ:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Hel omdreining − vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
@@ -4880,19 +4380,22 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
-        <translation>Komplementær:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Komplementvinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
-        <translation>Supplementær:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementvinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
-        <source>Alternative: </source>
-        <translation>Alternativ:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Hel omdreining − vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
@@ -5223,10 +4726,6 @@ Punkt: (%8 , %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Velg entitetene du vil justere (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Velg og juster</translation>
@@ -5258,10 +4757,6 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Skala:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Velg for å justere (trykk Enter for å fullføre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5944,22 +5439,6 @@ Punkt: (%8 , %9)</translation>
         <translation type="unfinished">Avstand:</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">Angi forskyvningsretning</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">Angi referansepunkt for forskyvningsretning</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished"></translation>
@@ -6252,13 +5731,6 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">Skaler umiddelbart etter valg</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Ingen enhet er valgt!</translation>
     </message>
 </context>
 <context>
@@ -7235,18 +6707,6 @@ Punkt: (%8 , %9)</translation>
         <translation>Kan ikke lese den angitte filen – vennligst sjekk at den finnes og at du har tillatelse til å lese den.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Snarveishandlingskart ble ikke importert.
-Den angitte filen finnes, men den inneholder ikke et LibreCAD-snarveishandlingskart.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Snarveismønstrene kunne ikke importeres. 
-En XML-parseringsfeil oppstod under filbehandlingen.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Snarveismønstrene ble lagret.</translation>
@@ -7255,12 +6715,6 @@ En XML-parseringsfeil oppstod under filbehandlingen.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Kan ikke skrive til den angitte filen – vennligst sjekk at du har tillatelse til å skrive til den.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Snarveismønstrene kunne ikke importeres. 
-En feil oppstod under XML-genereringen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8655,74 +8109,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Hvis dette er valgt, vil den opprinnelige buen bli fjernet</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Erstatt buen</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Lag der den opprettede sirkelen skal plasseres</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original, løst</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Velg forskyvningsverdi fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Penn:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Penn som skal brukes på den opprettede sirkelen</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Lag:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Forskjell mellom sirkelens radius og buenes radius</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Radiusforskyvning:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9017,69 +8403,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Verktøylinje: %1 (Egendefinert)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Type</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Horisontal dimensjon for kryss</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Velg X-verdi fra tegningen</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Definerer hvordan dimensjonene til et kryss skal brukes</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Utvidelse</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Total lengde</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Prosent</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Velg Y-verdi fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Vertikal dimensjon for krysset</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Rotasjonsvinkel for krysset rundt midten</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
     </message>
 </context>
 <context>
@@ -9443,41 +8766,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="obsolete">Ordinate-dimensjon</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensjonslag</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="obsolete">Ordinate</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="obsolete">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="obsolete">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9539,11 +8827,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Grunnlinjeavstand:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Angir avstanden mellom dimensjonslinjene i en grunnlinjedimensjon. Angi en avstand. For informasjon om grunnlinjedimensjoner, se DIMBASELINE. (DIMDLI-systemvariabelen)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11189,10 +10472,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <source>Hatch Properties</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Egenskaper?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11641,19 +10920,9 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <translation>MERK: Menyoppsett vil bli ignorert. Det er reservert for &apos;Panorering&apos;.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>MERK: Menyoppsett vil bli ignorert. Det er reservert for &apos;Velg kontur&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>MERK: Denne kombinasjonen er reservert for standard kontekstmeny og kan hindre at den vises!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>MERK: Denne kombinasjonen er reservert for &apos;Panorering&apos;! Menyoppsett vil bli ignorert.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11749,14 +11018,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Verktøytips med visningsdetaljer for tabellens elementer</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Hvis dette er valgt, vil kolonnen med detaljer om visningens koordinatsystem vises.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="85"/>
         <source>If checked, type of grid for saved view will be shown.</source>
         <translation>Hvis dette er valgt, vil typen rutenett for den lagrede visningen vises.</translation>
@@ -11782,17 +11043,9 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <translation>Hvis dette er valgt, vil kolonnen med visningsdetaljer vises i tabellen.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">Visningsdetalj-kolonne</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Operasjoner</translation>
-    </message>
-    <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Ved dobbeltklikk på tabellrad</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
@@ -11823,10 +11076,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="194"/>
         <source>If enabled, click on the view table item will restore view. Otherwise, view should be restored explicitly.</source>
         <translation>Hvis aktivert, vil et klikk på en visning i tabellen gjenopprette visningen. Ellers må visningen gjenopprettes manuelt.</translation>
-    </message>
-    <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Gjenopprett visning ved enkeltklikk på tabellrad</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
@@ -12132,17 +11381,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>Navnet er ikke unikt. Vennligst skriv inn et unikt navn.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="obsolete">Parabelens kontrollpunkter kan ikke være kollineære</translation>
     </message>
 </context>
 <context>
@@ -12558,13 +11796,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12696,10 +11927,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <translation>Hvis dette er valgt, vil kolonnen med rutenettypen for UCS-en vises.</translation>
     </message>
     <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Hvis dette er valgt, vil en bekreftelsesdialog vises når visningen slettes. Hvis ikke, vil visningen slettes uten varsel.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
         <source>Ask for confirmation before UCS removal</source>
         <translation>Spør om bekreftelse før UCS-en slettes</translation>
@@ -12763,10 +11990,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="249"/>
         <source>Defines amount of blinks of UCS marker for UCS highlighting.</source>
         <translation>Definerer antall blink av UCS-markøren for UCS-fremheving.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Gjenopprett UCS med et enkelt klikk på tabellraden</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
@@ -13223,45 +12446,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Forflytning:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Hvis dette er valgt, vil det opprettes en avgrensningsboks for hele utvalget. Hvis ikke, vil det opprettes for individuelle elementer.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Velg som gruppe</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Velg forskyvning fra tegningen</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Hvis valgt, vil bare hjørnepunkter bli tegnet for omrissboksen. Ellers vil kantlinjer bli tegnet.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Bare hjørnepunkter</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Hvis valgt, vil omrissboksen bli tegnet som en polylinje</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylinje</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13355,86 +12539,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Vertikal forskyvning av duplikat fra originalenhet</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Horisontal forskyvning av duplikat fra originalenhet</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Velg forskyvning langs X-aksen fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Penn:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Hvis dette er valgt, vil duplikaten plasseres i de samme koordinatene som originalen.</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">På samme sted</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Offset basert på Y-aksen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Lag:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Penn som skal brukes på den opprettede duplikaten.</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original (løst)</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Lag hvor duplikaten skal plasseres.</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Y-forskyvning:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">X-forskyvning:</translation>
     </message>
 </context>
 <context>
@@ -13616,69 +12720,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Mindre radius:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Verdi for vinkel for hovedradius</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Hvis avkrysset, kan vinkel for hovedradius angis</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Grunnvinkel:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Mot klokken</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Velg hovedhandlinger fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Hvis avkrysset, spesifiseres vinkelen for hovedradiusen med musen</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Fri</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Lengden på hovedradiusen til ellipsen</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Velg mindre radius fra tegningen</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Hovedradius:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Lengden på mindre radius til ellipsen</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Med klokken</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13817,21 +12858,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Buealternativer</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Med klokken</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Mot klokken</translation>
     </message>
 </context>
 <context>
@@ -14394,11 +13420,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>Eksporterer tegning...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>Eksportert: %1</translation>
@@ -14722,30 +13743,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <source>Eccentricity:</source>
         <translation>Eksentrisitet:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Ugyldig hyperbeldefinisjon</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Fokus må være forskjellige</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Ugyldige koordinater for sentrum</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Hovedradius må være positiv</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Ugyldig rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Forhold eller mindre radius må være positiv</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -14917,10 +13914,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <translation>Bredde:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Bredden på bildet</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Velg breddeverdi fra tegningen</translation>
@@ -14931,21 +13924,9 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <translation>Høyde:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Høyden på bildet</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Velg høydeverdi fra tegningen</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Skala:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Skaleringsfaktor</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -14957,10 +13938,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotasjonsvinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -14992,22 +13969,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <source>Select an image file</source>
         <translation>Velg en bildefil</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Størrelse (piksler):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Bildstørrelse i piksler</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Oppløsning (punkter per tomme)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15020,21 +13981,6 @@ Er du sikker på at du vil forkaste endringene?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Hvis dette er valgt, vil punktet alltid være inne i den valgte enheten</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Fest til enhet</translation>
     </message>
 </context>
 <context>
@@ -15412,14 +14358,6 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
         <translation>Separator som brukes til å dele det interne navnet på laget i hierarkiske navn</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Lagnavnseparator for lag</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Sekundære lag-suffikser</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15450,10 +14388,6 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Suffiks for lagnavn som angir at laget er for alternativ posisjon.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Dupliserende navn</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15596,17 +14530,9 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
         <translation>Diverse fargeinnstillinger</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Farger.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Bakgrunnsfarge for valgte elementer i lagtreet.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Farge for separatorlinjer i lagtrevisningen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15645,10 +14571,6 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Bakgrunnsfarge for virtuelle lag</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Separatorrutenett for elementer i trevisningen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15704,10 +14626,6 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Lag for alternativ posisjon</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">rutenett</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16197,118 +15115,6 @@ Vennligst angi en annen verdi.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Hvis dette er valgt, defineres linjelengden av museposisjonen i stedet for innstillingen</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Fri</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Velg avstand for festepunkt fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Avstand fra skjæringspunkt til snap-punkt på linjen</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Velg lengde fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Velg avstand fra tegningen</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Hvis merket av, vil den opprinnelige enheten bli delt ved skjæringspunktet.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Del</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Avstand fra skjæringspunkt til angitt snap-punkt på linjen</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Definerer hvilken del av den opprettede linjen som skal festes til skjæringspunktet</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midt</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Slutt</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Fest punkt for vinkel:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Linjefest:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Linjelengde</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Hvis merket av, vil vinkelen være relativ til vinkelen til det valgte objektet</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Relativ</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengde:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Festepunkt for posisjonen til skjæringspunktet mellom den opprettede linjen og kildeobjektet (innenfor den opprinnelige linjen)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Fri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Snappavstand:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Linjevinkel:</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16615,93 +15421,6 @@ Vennligst angi en annen verdi.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Antall halveringslinjer som skal opprettes</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Størrelse:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Sluttoffset:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Offset for opprettet linje fra skjæringspunkt</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Snappunkt for opprettet linje</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midten</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Slutt</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengde:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Fast lengde på den opprettede linjen</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Fest:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Velg lengde fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Velg forskyvning fra tegningen</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Definerer om den opprettede linjen skal opprettes til skjæringspunktet eller ha en fast lengde</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">Til skjæringspunkt</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Fast lengde</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Hvis dette er valgt, vil den opprettede linjen være vinkelrett på den valgte linjen.</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Vinkelrett</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Vinkelen mellom den opprinnelige linjen og den opprettede linjen.</translation>
     </message>
 </context>
 <context>
@@ -17087,81 +15806,6 @@ Vennligst angi en annen verdi.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Hvis dette er valgt, vil en polylinje bli opprettet i stedet for individuelle linjer.</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Opprett polylinje</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Retningslinje for den andre valgte linjen.</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Forleng/Kutt</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Legg til segment</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Ingen endring</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Linje 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">Linje 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Retningslinjer for å sette sammen linjer som ble valgt først</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Definerer hvordan pennen skal brukes på opprettede objekter</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Aktiv penn</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Linje 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Linje 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Begge linjene</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Attributter:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Hvis avkrysset, vil de opprinnelige linjene bli fjernet</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Fjern originaler</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17543,85 +16187,6 @@ Vennligst angi en annen verdi.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Kontrollerer hvordan punkter på kantene (start-/sluttpunkter) skal opprettes.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Ingen</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Begge</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Slutt</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Velg avstand fra tegningen</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Antall punkter som skal opprettes</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Kantpunkter:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Angir om alle punkter skal passe mellom start- og sluttpunktene på linjen, eller om linjelengden beregnes basert på antall punkter og avstanden mellom punktene.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Tilpass linje</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Avstand mellom punkter.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Hvis dette er valgt, vil linjen med punkter tegnes med den angitte vinkelen.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Antall punkter:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Hvis dette er valgt, vil en fast, angitt avstand mellom punktene brukes. Hvis ikke, vil avstanden beregnes.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Fast avstand</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Linjevinkel</translation>
     </message>
 </context>
 <context>
@@ -21871,433 +20436,6 @@ Vennligst angi en annen verdi.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Hjelp</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">Nett&amp;dokumentasjon</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Bruker&amp;håndbok</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Kommandoer</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;Stilark</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">&amp;Kontroller</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Om</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp;Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">&amp;Send inn feil</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">&amp;Foreslå funksjon</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">&amp;Utgivelser</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Doner</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Linje</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">&amp;Punkt</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Sirkel</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">&amp;Bue</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poly&amp;gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin&amp;e</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellip&amp;se</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polyline</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp;Annet</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">&amp;Tegn</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp;Ellipse</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">An&amp;net</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Endre</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Rekkefølge</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;Dimensjoner</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">&amp;Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Verktøy</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Velg</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime&amp;nsjon</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;Fil</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Siste filer</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Importer</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Eksporter</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">&amp;Alternativer</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp;Rediger</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Vis</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">&amp;Gjenopprett visninger</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">&amp;Tillegg</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;Arbeidsområde</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Dokkeringsområder</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD-&amp;komponenter</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;Tegninger</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Kontekst</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Verktøylinjer</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Widgets</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD-widgets</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD-verktøylinjer</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Velg</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Nylig</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Endre</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Endre mer</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Tegn</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linje</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylinje</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punkt</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Sirkel</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Bue</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polylinje/Spline</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipse</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Annet</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Legg til mål</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Juster</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Tegnerekkefølge</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Lag</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Rediger</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Alternativer</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">&amp;Navngitte visninger</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Rediger egenskaper</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Endre generisk</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Endre linje</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Tegn linje</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Tegn sirkel</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Tegn annet</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Endre sirkel</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Endre bue</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Endre polylinje</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Endre spline</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Endre splinepunkter</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Endre tekst</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">Endre M-tekst</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Rediger blokk</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Ordne</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Verktøylinjer</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD-verktøylinjer</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp;Arbeidsområder</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">&amp;Fanevisning</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;Vindusvisning</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Oppsett</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Avrundet</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Trekantet</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Nord</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Sør</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Øst</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">Vest</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp;Arranger</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Maksimert</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Kaskade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Flislegg</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Flislegg &amp;vertikalt</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Flislegg &amp;horisontalt</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -22913,21 +21051,6 @@ Vennligst angi en annen verdi.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Velg forskyvning fra tegning</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23064,197 +21187,6 @@ Vennligst angi en annen verdi.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Hvis dette er valgt, vil gjeldende attributter bli brukt for speilede objekter, ellers vil de originale bli brukt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Hvis dette ikke er valgt, vil de originale objektene bli fjernet, ellers vil de beholdes.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Hvis dette er valgt, vil speilede objekter bli plassert på gjeldende lag, ellers vil de bli plassert i de originale lagene.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Bruk gjeldende lag</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Hvis dette er valgt, vil objektene bli skalert om nødvendig. Ellers vil de bare bli plassert og rotert.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Skaler</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Hvis dette er valgt, vil segmenter mellom skjæringspunktene bli fjernet. Hvis ikke, vil objektet bli delt ved skjæringspunktene.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Fjern segmenter</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Hvis dette er valgt, vil det valgte segmentet bli fjernet. Hvis ikke, vil det valgte segmentet beholdes, og de resterende segmentene vil bli fjernet.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Fjern valgt</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Avstand for snapping:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Snapp gapets punkt til linjens snappunkt</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Linjesnapping:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Gapstørrelse:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Snappunkt for gapet på linjen</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Fri</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Fest gap til:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Midt</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Slutt</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Fritt</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Midt</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Slutt</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">Velg gapstørrelse fra tegningen</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Avstand fra festepunkt</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Velg avstand for snapping fra tegningen</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Størrelsen på mellomrommet, hvis det ikke er fritt</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Hvis avkrysset, bestemmes størrelsen på mellomrommet av musen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Hvis avkrysset, vil speilingen utføres ved hjelp av den valgte linjen</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Speil til valgt linje</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Hvis ikke avkrysset, vil de originale objektene bli fjernet, ellers vil de beholdes</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Hvis avkrysset, vil gjeldende attributter bli brukt for de speilede objektene, ellers vil de originale attributtene bli brukt</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Hvis dette er valgt, vil speilede objekter plasseres på det gjeldende laget, ellers vil de plasseres i de opprinnelige lagene.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Gjeldende lag</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23300,234 +21232,6 @@ Vennligst angi en annen verdi.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Flytt rotasjonsalternativer</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Hvis dette er valgt, vil faktoren velges fritt ved hjelp av musen.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Fritt</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Hvis dette er valgt, vil nye objekter plasseres på det gjeldende laget, ellers vil de være i de opprinnelige lagene.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Bruk gjeldende lag</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Hvis absolutt, vil referansepunktet roteres, men objektet vil bare roteres med den andre vinkelen, ellers vil vinklene legges sammen.</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Absolutt</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Vinkel for å rotere objektet rundt rotasjonssenteret</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Hvis dette er valgt, vil gjeldende attributter bli brukt på de opprettede objektene, ellers vil de opprinnelige bli brukt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Hvis dette er valgt, vil den andre rotasjonen være rundt referansepunktet.</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Roter to ganger</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Vinkel for ekstra rotasjon rundt referansepunktet</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Velg rotasjonsvinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Hvis dette er valgt, vil de opprinnelige objektene bli beholdt, ellers vil de bli fjernet.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Flere kopier vil bli opprettet hvis dette er valgt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Flere kopier</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Rotasjonsvinkel:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Angir om vinkelen defineres av den angitte verdien eller museposisjonen.</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Velg en annen rotasjonsvinkel fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Flytt rotasjonsalternativer</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Hvis dette er valgt, vil det opprettes flere kopier.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Flere kopier</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Hvis dette er valgt, vil den samme skaleringsfaktoren brukes for både X- og Y-aksen.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Isotropisk</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Hvis dette er valgt, vil de originale objektene beholdes, ellers vil de bli fjernet.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Hvis dette er valgt, vil de gjeldende attributtene bli brukt på de opprettede objektene, ellers vil de originale attributtene bli brukt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Skaleringsfaktor for Y-aksen</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Skaleringsfaktor:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Hvis dette er valgt, vil de opprettede objektene bli plassert i det gjeldende laget. Ellers vil de bli plassert i de originale lagene.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Bruk gjeldende lag</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Hvis dette er valgt, vil faktoren bli valgt fritt ved hjelp av musen. Hvis ikke, vil de angitte faktorverdiene bli brukt.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Fritt</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Skaleringsfaktor for X-aksen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Hvis dette er valgt, vil de originale elementene beholdes, ellers vil de bli fjernet.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Hvis dette er valgt, vil de opprettede elementene plasseres i det gjeldende laget. Hvis ikke, vil de plasseres i de originale lagene.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Bruk gjeldende lag</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Hvis dette er valgt, vil gjeldende attributter bli brukt på de opprettede objektene, ellers vil de opprinnelige bli brukt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Hvis dette er valgt, vil de opprinnelige objektene beholdes, ellers vil de bli fjernet.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Hvis dette er valgt, vil det bli opprettet flere kopier.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Flere kopier</translation>
     </message>
 </context>
 <context>
@@ -23843,14 +21547,6 @@ Vennligst angi en annen verdi.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Filtrerer visninger etter navn</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24286,45 +21982,6 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
         <source>Control Points</source>
         <translation>Kontrollpunkter</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabelens kontrollpunkter kan ikke være kollineære</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Hvis dette er valgt, vil punktentiteten som brukes som innsettingspunkt bli slettet etter limingen. Hvis ikke, vil den forbli.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Fjern punkt</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaleringsfaktor</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Skaleringsfaktor for limte entiteter</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Rotasjonsvinkel for limte entiteter</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24400,89 +22057,6 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Rotasjonsvinkel for limte entiteter</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Avstand mellom innsettingspunktene for entiteter i rader.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Velg avstand langs X-aksen for arrangementet.</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaleringsfaktor</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Velg vinkel for matrise fra tegningen</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Rotasjonsvinkel for matrise.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Antall rader i matrisen.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Velg avstand mellom elementer i matrisen langs Y-aksen fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Hvis dette er valgt, brukes samme rotasjonsvinkel for hvert element og hele matrisen. Hvis ikke, brukes forskjellige vinkler.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Samme vinkel</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Antall kolonner i matrisen.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Hvis dette er valgt, vil det opprettes kopier av objekter ved innliming.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Matrise</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Matrisevinkel:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Skaleringsfaktor for innlimte objekter</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Avstand mellom innsettingspunktene for objekter i kolonner.</translation>
     </message>
 </context>
 <context>
@@ -25104,17 +22678,9 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
         <translation>Linjebreddens navn</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Farger</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Bakgrunnsfarge for penn-elementet som redigeres i penn-tabellen</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Farge på rutenettet for pennlisten</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25136,10 +22702,6 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Hele tabellraden er fet for den aktive pennen</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Rutfarge:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25232,17 +22794,9 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
         <translation>Naturlig navn der det er mulig</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Hvis valgt, vil tilleggsmeldinger vises som en del av pennrelaterte operasjoner</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Vis infomelding hvis ingen elementer kan velges med pennen</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Ved dobbeltklikk på tabellrad</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25465,12 +23019,6 @@ Advarsel: Denne handlingen kan ikke angres!</translation>
 Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Plasseringen av pennfilen er endret. Start programmet på nytt slik at den nye pennfilen brukes.
-Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å starte på nytt, vil de gjeldende pennene fra paletten bli lagret i den nye filen, og dermed vil det eksisterende innholdet bli overskrevet.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25516,37 +23064,6 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Velg posisjon fra tegningen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Antall punkter i Y-retningen (antall rader)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Antall rader:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Antall kolonner:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Antall punkter i X-retningen (antall kolonner)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Hvis valgt, vil det siste punktet i rutenettet bli justert i henhold til posisjonen til det første punktet, slik at rutenettet blir et rektangel eller en firkant</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Juster det siste punktet til det første</translation>
     </message>
 </context>
 <context>
@@ -32813,10 +30330,6 @@ Vær oppmerksom på at hvis du lagrer en penn via redigeringsprogrammet uten å 
         <translation>Diameter</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Omkrets</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33801,10 +31314,6 @@ p, li { white-space: pre-wrap; }
         <translation>Objektinformasjon</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Hvis valgt, vil mer detaljert informasjon om linjer og buer som er en del av polylinjen, vises i widgeten Objektinformasjon.&lt;br/&gt;Ellers vil bare informasjon om hjørnepunkter/buler vises.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
@@ -33853,205 +31362,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Fremhev markørpenn.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Kanter:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Hvis dette er valgt, angir det at festepunktet skal forskyves med hjørneradiusen.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Festeskift</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Lengden på avrundet hjørne for Y-retningen.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definer hvilke kanter av rektangelet som skal tegnes (slik at det er mulig å lage bare to parallelle linjer i stedet for et rektangel).</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Begge</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horisontal</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Rektangelets bredde</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Kontrollerer hvordan hjørnene på rektangelet skal tegnes.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Rett</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Avrundet</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Fasettert</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Hvis avkrysset, vil rektangelet roteres med den angitte vinkelen.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Grunnvinkel:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Hvis dette er valgt, vil den angitte høyden og bredden på rektangelet definere avstanden mellom sentrene på buene for å runde hjørnene. Hvis ikke, vil disse verdiene definere den ytre størrelsen på rektangelet.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Indre størrelse</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lengde Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Hvis dette er valgt, vil rektangelet bli opprettet som en polylinje i stedet for individuelle segmenter.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylinje</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Festepunkt:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Høyde:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Lengde på avrundet hjørne i X-retningen.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lengde X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Høyde på rektangel</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Radius for avrundede hjørner.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Punkt på rektangelet som skal plasseres ved innsettingspunktet.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Øverst til venstre</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Øverst</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Øverst til høyre</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Venstre</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midten</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Høyre</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Nederst til venstre</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Nederst</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Nederst til høyre</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Velg rotasjonsvinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Velg radius for avrundede hjørner fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Velg høyden på rektangelet fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Velg bredden på rektangelet fra tegningen</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Bredde:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Hjørner:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Velg lengden på avrundingshjørnet for X-retningen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Velg lengden på avrundingshjørnet for Y-retningen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Hvis dette er valgt, vil vinkelen bli bestemt av museposisjonen. Hvis ikke, vil den angitte verdien bli brukt.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Fri</translation>
     </message>
 </context>
 <context>
@@ -34421,153 +31731,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definerer hvilke kanter av rektangelet som skal tegnes (slik at det er mulig å lage bare to parallelle linjer i stedet for et rektangel).</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Begge</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horisontal</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Definerer hvilket punkt av rektangelet som skal plasseres i startpunktposisjonen.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Hjørne</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Midt-vertikal</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Midt-horisontal</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midt</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Velg rektangelrotasjonsvinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Velg radius for avrundede hjørner fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Hjørner:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Definerer hvilket punkt på rektangelet som skal plasseres i sluttpunktposisjonen.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Velg lengden på avfasningen i X-retningen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Kanter:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Velg lengden på avfasningen i Y-retningen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Startpunkt:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lengde på avfasningen i Y-retningen.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Hvis avkrysset, angir at festepunktene skal forskyves med hjørneradiusen.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Festepunktforskyvning</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lengde X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Hvis avkrysset, tillater det å spesifisere rotasjonsvinkelen for rektangelet.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Grunnvinkel:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Rektangelrotasjonsvinkel.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Avslutt snap:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Definerer hvordan hjørnene på rektangelet skal tegnes.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Rett</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Avrundet</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Faset</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Radius for avrundede hjørner.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lengde Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Hvis avkrysset, vil hele rektangelet tegnes som en polylinje.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylinje</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lengde på fas i X-retning.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34825,145 +31988,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Velg lengden på avfasningen i Y-retningen fra tegningen.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Skjema</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Indre vinkel på firkant.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Hvis dette er valgt, vil den indre vinkelen på firkanten være fastsatt til den angitte verdien.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Fast indre vinkel:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Grunnvinkel for rektangel.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Lengde X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lengde på avfasning i X-retning.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Definerer hvordan hjørnene skal tegnes for rektangel.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Rett</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Avrundet</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Fas</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Hjørner:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Hvis dette er valgt, vil det angi at festepunktene skal forskyves med hjørneradiusen.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Festeforskyvning</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Lengde Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lengden på fasen i Y-retningen.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Radius for avrundede hjørner.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Hvis dette er valgt, vil formen bli opprettet som en polylinje.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylinje</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Velg den indre vinkelen til firkanten fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Kanter:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Velg radiusen til de avrundede hjørnene fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Velg lengden på avfasningen i X-retningen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Velg lengden på avfasningen i Y-retningen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definerer hvilke kanter av rektangelet som skal tegnes (slik at det er mulig å lage bare to parallelle linjer i stedet for et rektangel).</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Begge</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horisontal</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Velg basisvinkelen til rektangelet fra tegningen.</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Hvis dette er valgt, vil rektangelet bli rotert til den angitte basisvinkelen. Ellers vil basisvinkelen bli definert av vinkelen mellom det første og andre punktet i rektangelet.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Fast basisvinkel:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Hvis dette er valgt, vil det opprettes en firkant i stedet for et rektangel.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Firkant</translation>
     </message>
 </context>
 <context>
@@ -35612,100 +32636,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Beklager, det oppstod en nettverksfeil under kontrollen for ny versjon.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Kunne ikke analysere svaret fra serveren</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Flytt rotasjonsalternativer</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Angir om kopier skal settes inn i gjeldende eller originale lag.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Bruk gjeldende lag</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Juster den sekundære vinkelen slik at summen av vinklene (relativ rotasjonsvinkel) er 0. Med denne innstillingen vil objektet flyttes, men ikke roteres.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Vinkler speilet</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Velg primærvinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Angir om gjeldende eller originale tegneattributter skal brukes</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Velg sekundærvinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Vinkel for rotasjon over et absolutt referansepunkt</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Hvis dette er valgt, vil flere kopier bli opprettet.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Flere kopier</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Antall kopier som skal opprettes</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Sekundærvinkel:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Hvis dette er valgt, vil samme vinkel bli brukt for alle kopier. Hvis ikke, vil den økes proporsjonalt med kopinummeret.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Samme sekundærvinkel for kopier</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Hvis dette er valgt, vil de originale elementene beholdes, ellers vil de bli fjernet.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Primærvinkel:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Vinkel for rotasjon rundt det sekundære referansepunktet</translation>
     </message>
 </context>
 <context>
@@ -36700,141 +33630,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Startvinkel for sirkel:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Startvinkel for sirkel hvor markørene skal begynne.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Forskyvning:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Forskyvning av markørpunkt til skjæringspunkt.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Velg avstand fra tegningen</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Avstand mellom merker.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Hvis dette er valgt, vil det valgte elementet bli delt ved hjelp av merkepunktene.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Del</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Velg merkeavstand fra tegningen</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Lengde på merket.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Velg merkevinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Merkjustering:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Velg merkelengde fra tegningen</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">Velg startvinkel for sirkelen i tegningen.</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Vinkel mellom merket og det valgte elementet.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Hvis dette er valgt, vil vinkelen for merket være relatert til det valgte elementet. Hvis ikke, vil det være en absolutt vinkel.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Relativ</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Merkelengde:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Definerer hvilket punkt på merket som skal plasseres ved skjæringspunktet med det valgte elementet.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midt</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Slutt</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Hvis dette er valgt, vil den angitte faste avstanden mellom merkene bli brukt. Hvis ikke, vil avstanden bli beregnet basert på elementets lengde og antall merker.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Fast</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Antall markeringer mellom kantene på det valgte objektet.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Antall:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Definerer hvordan markeringene på objektets kanter skal plasseres.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Ingen</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Begge</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Kantmarkering:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37154,57 +33949,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Skjema</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Definerer antall linjesegmenter som skal genereres for hver spline-tilpasset polylinje.</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Hvis dette ikke er valgt, vil den opprinnelige splinen bli fjernet, ellers vil den beholdes.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Hvis dette er valgt, vil gjeldende attributter bli brukt for de opprettede objektene, ellers vil de opprinnelige attributtene bli brukt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Hvis dette er valgt, vil de opprettede objektene bli plassert på gjeldende lag, ellers vil de bli plassert i de opprinnelige lagene.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Bruk gjeldende lag</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Hvis dette er valgt, kan du angi et tilpasset antall linjesegmenter. Ellers vil verdien fra innstillingene for gjeldende tegning bli brukt.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Tilpasset antall segmenter</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Hvis dette er valgt, vil linjesegmentene være en del av en polylinje. Ellers vil de være individuelle linjer.</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Til polylinje</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37328,61 +34072,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Til polylinje</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Hvis dette er valgt, vil de opprettede objektene plasseres på det gjeldende laget. Hvis ikke, vil de plasseres i de opprinnelige lagene.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Bruk gjeldende lag</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Antall mellompunkter på polylinje-segmentet som skal legges til splinen.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Definerer graden til splinen</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Hvis dette ikke er valgt, vil den opprinnelige polylinjen bli fjernet. Hvis valgt, vil den beholdes.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Grad:</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold originaler</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Mellompunkter:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Hvis dette er valgt, vil gjeldende attributter bli brukt for de opprettede objektene. Hvis ikke, vil de opprinnelige attributtene bli brukt.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Hvis dette er valgt, vil polylinjehjørnene bli behandlet som splinepunkter, og en spline vil bli opprettet basert på disse punktene. Hvis ikke, vil de bli behandlet som kontrollpunkter, og en vanlig spline vil bli opprettet.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Hjørnene er splinepunkter</translation>
     </message>
 </context>
 <context>
@@ -37786,69 +34475,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Grad brukt for å tilnærme splinen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Skjema</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Hvis dette er valgt, vil en symmetrisk stjerne bli opprettet.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrisk</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Radius for de indre kantene.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Antall:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Velg den ytre radiusen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Velg den indre radiusen fra tegningen.</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Antall stråler.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Hvis dette er valgt, vil de ytre kantene bli avrundet.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Ytre radius</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Hvis dette er valgt, vil de indre kantene være avrundet.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">Indre radius</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Hvis dette er valgt, vil stjernen bli tegnet som en polylinje.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylinje</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Radius for de ytre strålene (kantene).</translation>
     </message>
 </context>
 <context>
@@ -38739,14 +35365,6 @@ p, li { white-space: pre-wrap; }
         <translation>Innstillinger</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Filtrer brukerkoordinater etter navn</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt;Uten navn&gt;</translation>
@@ -38846,33 +35464,6 @@ Advarsel: Denne handlingen kan IKKE angres!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>Fjern &amp;alle UCS-er</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Form</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Vinkel X-aksen til det nye koordinatsystemet</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegningen</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Angir om X-akse-vinkelen er definert av den angitte verdien eller museposisjonen</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Fri</translation>
     </message>
 </context>
 <context>
@@ -39488,33 +36079,6 @@ Advarsel: Denne handlingen kan IKKE angres!</translation>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Linjerelativ vinkelalternativer</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Avstand fra den opprinnelige polylinjen</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Kopier:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Velg avstand fra tegningen</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39552,11 +36116,6 @@ Advarsel: Denne handlingen kan IKKE angres!</translation>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>Oppretter ny fil...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>Uten navn-dokument %1</translation>
@@ -39565,21 +36124,6 @@ Advarsel: Denne handlingen kan IKKE angres!</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>Dokument lastet inn:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>Åpning avbrutt</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>Skriver ut...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>Avslutter programmet...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -39592,19 +36136,9 @@ Advarsel: Denne handlingen kan IKKE angres!</translation>
         <translation>Ny tegning opprettet.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>Lagrer tegning...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>Lagret tegning: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>Utskrift fullført</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39619,11 +36153,6 @@ Please check the permissions.</source>
         <translation>Kan ikke åpne filen
 %1
 Vennligst sjekk tillatelsene.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>Lagrer tegning automatisk...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -39691,16 +36220,6 @@ Vennligst sjekk om den finnes og om du har tillatelse.</translation>
         <translation>Filen &apos;%1&apos; finnes ikke. Åpning avbrutt</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>Åpner nylig fil...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>Lagrer tegning: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
         <source>Save cancelled</source>
         <translation>Lagring avbrutt</translation>
@@ -39766,12 +36285,6 @@ Vennligst sjekk om den finnes og om du har tillatelse.</translation>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -39807,11 +36320,6 @@ Vennligst sjekk om den finnes og om du har tillatelse.</translation>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>Navnet på blokken</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>Gir nytt navn til blokk</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40012,12 +36520,6 @@ Vennligst sjekk om den finnes og om du har tillatelse.</translation>
         <translation>Kommando-historikk og -utdata</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>avbryt</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
         <source>...</source>
         <translation>...</translation>
@@ -40192,57 +36694,6 @@ Vennligst sjekk om den finnes og om du har tillatelse.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Bue</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="obsolete">X-koordinat for buens senter</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="obsolete">Angir om buen skal være omvendt (med klokken)</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="obsolete">Startvinkel:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radius:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="obsolete">Startvinkel for buen</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="obsolete">Sluttvinkel for buen</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="obsolete">Sluttvinkel:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Senter (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40280,162 +36731,6 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Penn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Sirkel</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Radius:</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">Y-koordinat for sirkelens senter</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Senter (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="obsolete">X-koordinat for sirkelens senter</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Lineær dimensjon</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensjonslag</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="obsolete">Rotasjonsvinkel for dimensjon</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="obsolete">Dimensjonslag</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="obsolete">Ellipse</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="obsolete">Rotasjonsvinkel for ellipsehovedaksen, i grader</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="obsolete">Definerer om buen er reversert</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Sluttvinkel for elliptisk bue, grader</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="obsolete">Radius for ellipsehovedaksen</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="obsolete">i grader</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="obsolete">Startvinkel (°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="obsolete">Rotasjon (°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="obsolete">Radius for ellipsebifaksen</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="obsolete">Sluttvinkel (°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="obsolete">Startvinkel for elliptisk bue, grader</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="obsolete">Hovedakse:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="obsolete">Mindre:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="obsolete">X-koordinat for ellipsens senter</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="obsolete">Senter (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
     </message>
 </context>
 <context>
@@ -40512,81 +36807,6 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="obsolete">Bilde</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="obsolete">Høyde:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="obsolete">Bredden på bildet</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="obsolete">Oppløsning (punkter per tomme)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="obsolete">Sti til bildefil</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="obsolete">Skaleringsfaktor</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="obsolete">Størrelse (piksler):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="obsolete">Skala:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="obsolete">Bildstørrelse i piksler</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="obsolete">DPI</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="obsolete">Bredde:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="obsolete">Høyden på bildet</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="obsolete">Velg en bildefil</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40609,147 +36829,9 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <translation>GUI-språk:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Velkommen til LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Vennligst velg enheten du vil bruke for nye tegninger og ditt foretrukne språk for brukergrensesnittet og kommandoer.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Du kan endre disse innstillingene senere.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Kommando-språk:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="obsolete">Sett inn</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="obsolete">Innsettingspunkt (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="obsolete">Innsettingspunkt (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="obsolete">Antall rader for kopier</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="obsolete">Rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="obsolete">Avstand mellom kolonnene</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="obsolete">Skaleringsfaktor for X-aksen</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="obsolete">Avstand mellom rader</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="obsolete">Antall kolonner for kopier</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="obsolete">Skaleringsfaktor for Y-aksen</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="obsolete">Skaler Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="obsolete">Rader:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="obsolete">Radavstand:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="obsolete">Kolonner:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="obsolete">Skaler X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="obsolete">Kolonneavstand:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Linje</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="obsolete">Sluttpunkt (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="obsolete">X-koordinat for endepunkt</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="obsolete">Y-koordinat for endepunkt</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="obsolete">Endepunkt (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="obsolete">Startpunkt (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="obsolete">Y-koordinat for startpunkt</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="obsolete">Startpunkt (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="obsolete">X-koordinat for startpunkt</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
     </message>
 </context>
 <context>
@@ -40920,10 +37002,6 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <translation>Sett inn symbol</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Symbolinnsetting</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Grad (°)</translation>
@@ -40972,10 +37050,6 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Pund (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41611,115 +37685,6 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Penn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Speilingsalternativer</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Slett original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Behold original</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Bruk gjeldende lag</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Slett original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Behold original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">Flere kopier</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Bruk gjeldende attributter</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Bruk gjeldende &amp;lag</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Flytt-/kopieringsalternativer</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Flytt-/roteringsalternativer</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Vinkel (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Bruk gjeldende &amp;attributter</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Bruk gjeldende &amp;lag</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Slett original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Behold original</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Flere kopier</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Ctrl+S</translation>
     </message>
 </context>
 <context>
@@ -44736,10 +40701,6 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <translation>Relativ nullpunktsmarkør</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Oppførsel</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Type rutenett som skal tegnes</translation>
@@ -45228,38 +41189,6 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <translation>Automatisk lagring av tegninger</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>~</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>translation 1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>translation 2</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>translation 3</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>translation 4</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>Prefiks for automatisk lagret filnavn:</translation>
@@ -45268,36 +41197,6 @@ Dette endrer rekursivt alle elementene i selve blokken.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>Suffiks for sikkerhetskopifilnavn:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>translation 7</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>_backup</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>_bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>.bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>.backup</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>.lcb</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -45787,251 +41686,6 @@ so default step value required for baking</source>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Code</source>
-        <translation type="obsolete">Kode</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="obsolete">Verdi</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">Avbryt</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Punkt</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="obsolete">Posisjon (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="obsolete">Punktets posisjon etter Y-koordinat</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="obsolete">Posisjon (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="obsolete">Punktets posisjon basert på X-koordinat</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="obsolete">Angir om polylinjen er en lukket kontur</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Lukket</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Rotasjonsalternativer</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Slett original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Behold original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&amp;Flere kopier:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Vinkel (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Bruk gjeldende &amp;attributter</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Bruk gjeldende &amp;lag</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Roter to alternativer</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Slett original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Behold original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Flere kopier</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">Vinkel (&amp;a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">Vinkel (&amp;b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Bruk gjeldende &amp;attributter</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Bruk gjeldende &amp;lag</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Skaleringsalternativer</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Antall kopier</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Bruk gjeldende &amp;attributter</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Bruk gjeldende &amp;lag</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Finn skaleringsforholdene rundt sentrum ved hjelp av et referansepunkt og et målpunkt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">&amp;Slett original</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">&amp;Behold original</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Flere kopier</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Skaler med samme faktor i både x- og y-retning</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Isotropisk skalering</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="obsolete">Spline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="obsolete">Lag:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="obsolete">Geometri</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="obsolete">Grad:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="obsolete">Definerer om splinen definerer en lukket kontur</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="obsolete">Lukket</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="obsolete">Grad brukt for å tilnærme splinen</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="obsolete">Penn</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46179,10 +41833,6 @@ so default step value required for baking</source>
         <translation>Pund (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>Ganger (×)</translation>
@@ -46226,10 +41876,6 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Tekstens lag</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Tekstens helling</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -46837,10 +42483,6 @@ so default step value required for baking</source>
         <translation>Vinkel:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Skråstil:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Breddefaktor:</translation>
@@ -47358,21 +43000,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Ugyldig skala angitt</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Papirskala større enn maksimalt utskriftsforhold</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Papirskala mindre enn minimums utskriftsforhold</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47439,10 +43066,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Verden</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Fest</translation>
     </message>
 </context>
 <context>
@@ -47645,12 +43268,6 @@ Vennligst angi en annen verdi.</translation>
         <translation>Fjern tomme lag</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Lag uten entiteter ble funnet, men de er filtrert og ikke synlige.
-Vennligst fjern filtermasken og prøv igjen.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -47712,14 +43329,6 @@ If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly 
 
 If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Vil du erstatte verdien «Etter lag» med kilde-lagverdiene?
-Hvis Ja – entiteter med «Etter lag»-penner vil vises på det nye laget nøyaktig som på de forrige lagene, og verdien «Etter lag» vil bli erstattet med de oppløste pennene.
-Hvis Nei – verdiene «Etter lag» forblir, og pennen til mållaget vil definere pennen for slike entiteter.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48037,10 +43646,6 @@ Vil du erstatte den?</translation>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="799"/>
         <source>Tagged Image File Format</source>
         <translation>Tagget bildefilformat</translation>
-    </message>
-    <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Gammelt tegneutvekslingsformat %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="471"/>
@@ -49271,23 +44876,6 @@ Vil du erstatte den?</translation>
         <translation>Du må først angi en avstand.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>regn</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>beregne</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>regn</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>Kalkulatormodus: På</translation>
@@ -49546,11 +45134,6 @@ Vil du erstatte den?</translation>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpunkt</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">sirkelvedbue</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -50483,12 +46066,6 @@ Vil du erstatte den?</translation>
         <translation>fillet</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>fase</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -51076,26 +46653,6 @@ Vil du erstatte den?</translation>
         <translation>bruk:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [alternativer] &lt;dxf-filer&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">– skriv ut alle DXF-filene til PDF-filer med samme navn.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o noen.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">– skriv ut alle DXF-filene til filen &apos;noen.pdf&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -51171,16 +46728,6 @@ Vil du erstatte den?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Papirstørrelse (bredde x høyde) i mm.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Utdataoppløsning (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Utdata-skala. F.eks.: 0,01 (for 1:100-skala).</translation>
@@ -51213,27 +46760,9 @@ Vil du erstatte den?</translation>
         <translation>Målmappe for utdata.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf_filer&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Inndata-DXF-fil(er)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -51676,26 +47205,6 @@ Vil du erstatte den?</translation>
         <translation>translation 5</translation>
     </message>
     <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>DWG-støtte er ikke fullført!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>Hvis denne filen ikke åpnes, kan du prøve et eldre DWG-format.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>Eller prøv å finne en konverter for å gjøre den om til en DXF-fil.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>Informasjon</translation>
-    </message>
-    <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
         <source>Error</source>
         <comment>fileImport</comment>
@@ -51767,11 +47276,6 @@ Vil du erstatte den?</translation>
         <translation>Feil ved lesing av DXF/DWG-filhode</translation>
     </message>
     <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">Feil ved lesing av DXF/DWG-headerdata</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
@@ -51818,10 +47322,6 @@ Vil du erstatte den?</translation>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>Feil ved lesing av DXF/DWG-kode</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">Åpnet DWG-filversjon %1.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -52270,10 +47770,6 @@ Vil du erstatte den?</translation>
 <context>
     <name>RS_ActionBlocksCreate</name>
     <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Velg for å opprette blokk (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
         <translation>Velg kontur</translation>
@@ -52287,66 +47783,6 @@ Vil du erstatte den?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Angi referansepunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Velg for å eksplodere beholderen (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Velg og eksploder</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ikke et gyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angi referansepunkt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Angi vinkel:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Angi faktor:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Angi antall kolonner:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Angi antall rader:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Angi kolonneavstand:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Angi radeavstand:</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Blokken kan ikke inneholde en innsetting av seg selv.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">har en nestet innsetting av gjeldende blokk i:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Denne blokken kan ikke settes inn.</translation>
     </message>
 </context>
 <context>
@@ -52598,270 +48034,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Lengden på korden må være forskjellig fra null</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Ugyldig kordelengde</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Angi senter</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Angi radius</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Angi startpunkt</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Angi startvinkel:</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Angi sluttvinkel eller [vinkel/buelengde]</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternativ bue</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Angi inkludert vinkel:</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Angi buelengde (negativ verdi for alternativt punkt):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Bruk alternativt buepunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Ugyldige bue-data.</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Angi andre punkt</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Angi tredje punkt</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Angi startpunkt eller [senter]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Angi baseobjekt</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Angi sluttvinkel</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Alternativ bue</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Angi sluttpunkt</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternativ bue</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Angi senter</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Angi punkt på sirkelen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Ugyldige sirkeldata.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Angi første punkt</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Angi andre punkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Ugyldige sirkeldata.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Angi første punkt</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Angi andre punkt</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Angi tredje punkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Angi sirkelens sentrum</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Angi sirkelens radius</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">radius=%1 er ugyldig (uttrykk)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">radius=%1 er ugyldig (negativ)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">radius=%1 er ugyldig (null)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Angi den første linjen</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Angi den andre linjen</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Angi den tredje linjen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Angi det første punktet på den tangerende sirkelen</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Angi det andre punktet på den tangerende sirkelen</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Velg sentrum av den tangerende sirkelen</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Angi en linje/bue/sirkel</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Angi den første linjen/buen/sirkelen</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Angi den andre linjen/buen/sirkelen</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Velg sentrum for den tangenterende sirkelen</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Ingen felles tangenterende sirkel for radius &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Angi en linje/bue/sirkel</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Angi en annen linje/bue/sirkel</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Angi et punkt på den tangenterende sirkelen</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Velg sentrum for den tangenterende sirkelen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Velg sentrum for den tangenterende sirkelen</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Angi den første linjen/buen/sirkelen</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Ingen felles tangenterende sirkel for de valgte objektene</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Angi den andre linjen/buen/sirkelen</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Angi den tredje linjen/buen/sirkelen</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53056,125 +48228,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Velg område for mønsterfylling (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Utfør mønsterfylling umiddelbart etter valg</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angi referansepunkt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Angi vinkel:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Angi faktor:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">Angi DPI:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Angi første punkt</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Angi neste punkt eller [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Angi neste punkt</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Kan ikke lukke linjesekvens: Ikke nok punkter definert ennå, eller allerede lukket.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Kan ikke angre: Begynnelsen av historikken er nådd</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Kan ikke gjøre om: Slutten av historikken er nådd</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Angi posisjon</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Alternativ retning</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Angi vinkel:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Angi lengde:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">antall objekter vil bli opprettet</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Velg første linje</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Velg andre linje</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Angi lengden på halveringslinjen:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Angi antall halveringslinjer:</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Antall sektorlinjer utenfor området:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Klikk og dra for å tegne en linje</translation>
     </message>
 </context>
 <context>
@@ -53207,74 +48263,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Velg sirkel, bue eller ellipse</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">følgende enheter vil bli opprettet</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Angi avstand &lt;%1&gt; eller velg enhet eller [%2]</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Skriv inn et tall:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Ugyldig tall. Prøv 1..99</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">entiteter vil bli opprettet</translation>
-    </message>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Velg entitet</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Angi punkt</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Antall:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Ugyldig tall. Prøv 1..99</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Angi et hjørnepunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Angi første hjørnepunkt</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Angi andre hjørne</translation>
     </message>
 </context>
 <context>
@@ -53316,29 +48304,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ikke et gyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Velg basisenhet</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Angi posisjon</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Angi vinkel</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Angi lengde</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53376,17 +48341,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Angi innsettingspunkt</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Skriv inn tekst:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53395,108 +48349,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Angi første punkt</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternativ bue</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Angi neste punkt eller [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Angi neste punkt</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Kan ikke lukke en linjesekvens: Ikke nok enheter definert ennå.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Kan ikke angre: Ikke nok enheter definert ennå.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Skriv inn endepunktets x-verdi</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Skriv inn antall polylinjer</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Angi en ligning, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Angi startpunkt x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">Den angitte x-verdien er ugyldig.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Den angitte stegstørrelsen er ugyldig.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Den angitte x-verdien er ugyldig.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Angi det første kontrollpunktet</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Angi neste kontrollpunkt eller [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Angi neste kontrollpunkt</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Kan ikke angre: Ikke nok enheter definert ennå.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Angi innsettingspunkt</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Skriv inn tekst:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Angi andre punkt</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Velg for å klippe (trykk Enter for å fullføre)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53515,10 +48368,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Klipp rett etter valg</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Velg for å kopiere (trykk Enter for å fullføre)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53559,49 +48408,33 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="obsolete">Angi referansepunkt for innliming</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Ingenting å angre!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Ingenting å gjøre om!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="96"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 </source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Vinkel: %1
-Komplementær: %2
-Supplerende: %3
-Alternativ: %4</translation>
+Komplementvinkel: %2
+Supplementvinkel: %3
+Hel omdreining − vinkel: %4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="139"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Vinkel: %1
-Komplementær: %2
-Supplerende: %3
-Alternativ: %4
+Komplementvinkel: %2
+Supplementvinkel: %3
+Hel omdreining − vinkel: %4
 Skjæringspunkt: (%5 , %6)
 Skjæringspunkt: @(%7, %8)</translation>
     </message>
@@ -53647,19 +48480,22 @@ Skjæringspunkt: @(%7, %8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Complementary:</source>
-        <translation>Komplementær:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Komplementvinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
         <source>Supplementary:</source>
-        <translation>Supplerende:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementvinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
-        <source>Alternative: </source>
-        <translation>Alternativ:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Hel omdreining − vinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
@@ -53794,57 +48630,6 @@ Slutt: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Avstand: %1
-Kartesisk: (%2 , %3)
-Polar: (%4 &lt; %5)
-Punkt på objekt: (%6 , %7)
-Punkt: (%8 , %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Angi objekt</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Ikke fest til underordnede objekter i beholderen</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Relativt punkt er på objekt</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Angi punkt</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Fra:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Til:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -53890,10 +48675,6 @@ Punkt: (%8 , %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Velg for å måle total lengde (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Velg kontur</translation>
@@ -53925,906 +48706,6 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angi referansepunkt</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Angi vinkel:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Angi faktor:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Kan ikke åpne filen &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Velg for å endre attributter (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Endre attributter umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Valgte linjer er parallelle</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Valgte linjer er ikke underobjekter av samme polylinje</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Beskjær</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Skjæringspunkt:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punkt 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punkt 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Ugyldig objekt valgt (kan ikke beskjæres).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Ugyldig enhet valgt (ikke-atomisk).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Ugyldig enhet valgt (kan ikke trimmes med den første enheten).</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Dette er ikke et gyldig uttrykk.</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Velg den første enheten.</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Velg den andre enheten.</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Angi lengde 1:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Angi lengde 2:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Del</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">Ved:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Klippepunktet kan ikke være endepunktet til en enhet.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">Angi enheten som skal klippes.</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Angi klippepunktet.</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Enheten må være en linje, bue, sirkel, ellipse eller interpoleringskurve.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Velg elementet som skal slettes (trykk Enter for å fullføre).</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Slett elementet umiddelbart etter at det er valgt.</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg konturen.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Angi det første bruddpunktet på en polylinje.</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Angi det andre bruddpunktet på samme polylinje.</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Enhetene er ikke i samme polylinje.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Foreldreenheten til den andre enheten er ikke en polylinje</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Foreldreenheten til den første enheten er ikke en polylinje</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Foreldreenheten til den andre enheten er null</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">En av de valgte enhetene er null</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Foreldreenheten til den første enheten er null</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Første enhet er null</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Andre enhet er null</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Klikk på en enhet for å redigere</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Velg for å dele opp tekst (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Del opp umiddelbart etter valg</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Speil</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Vinkel (alternativ):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Linje fra:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Linje til:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Velg for å speile (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Angi speillinje</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">Speil vertikalt</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Speil horisontalt</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Angi det første punktet på speillinjen</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Angi det andre punktet på speillinjen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Flytteforskyvning</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Kopiereforskyvning</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angi referansepunkt</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Opprett en kopi</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Velg for å flytte (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Flytt umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Angi målpunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angi referansepunkt</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Velg for å flytte og rotere (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Flytt og roter umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Angi målpunkt</translation>
-    </message>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Flytting med rotasjon</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Kilde:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Mål:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Forskyvning:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Angi rotasjonsvinkel:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Forskyvning</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Angi forskyvningsretning</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Angi referansepunkt for forskyvningsretning</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Velg linje, polylinje, sirkel eller bue for å opprette forskyvning (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Forskyv umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Velg for å reversere retningen (trykk Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Angre umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angi referansepunkt</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Velg for å rotere (Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Rotasjon</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Kildepunkt:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Målpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Forskyvning:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referansepunkt:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Senterpunkt:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Andre vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Roter umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Fest til sentrum av utvalg</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Angi rotasjonssenter</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Angi målpunkt å rotere til</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Angi målpunkt for rotasjon rundt referansepunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Roterer to ganger</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Senter 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Vinkel 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Senter 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Vinkel 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Velg for rotasjon rundt to akser (Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">Roter 2 akser umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Angi absolutt referansepunkt</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Angi relativ referansepunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Avrund</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punkt 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punkt 2:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Angi andre enhet</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Skriv inn radius:</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Angi første enhet eller skriv inn radius &lt;%1&gt;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Skaler</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Senter:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Kildepunkt:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Målpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Forskyvning:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Skaler etter X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Skaler etter Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Angi skaleringssenter</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Fest til sentrum av utvalg</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Angi kildepunkt</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Angi målpunkt</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Fri feste</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Velg for å skalere (Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Skaler umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Strekk</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Start hjørne:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">Slutt hjørne:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Referansepunkt:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Målpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Forskyvning:</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Angi første hjørne</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Angi andre hjørne</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Angi referansepunkt</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Angi målpunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Beskjær</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Beskjær to</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Skjæring:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Skjæring 2:</translation>
-    </message>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Velg første beskjæringsenhet</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Velg begrensende enhet</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Velg andre beskjæringsenhet</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Velg enhet å beskjære</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Den valgte enheten er ikke en atomisk enhet eller kan ikke beskjæres.</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ugyldig uttrykk</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Velg linje/bue å beskjære ELLER skriv inn lengdeverdi:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Velg enheter (Enter for å fullføre)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Ordne umiddelbart etter valg</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Velg enhet for rekkefølge</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Enheten må være en flerlinje.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Å legge til punkt er ugyldig.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Punktet som legges til ligger ikke på enheten.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Angi flerlinje for å legge til noder</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Angi punkt for node som legges til</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Enheten må være en flerlinje.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">Klikk et sted nær begynnelsen eller slutten av eksisterende flerlinje.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Skriv inn antall flerlinjer</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Angi flerlinjen et sted nær begynnelsen eller sluttpunktet</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Kan ikke legge til noder i en lukket flerlinje.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Kan ikke angre: Ikke nok enheter definert ennå.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Enheten må være en flerlinje.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Angi flerlinje for å slette node</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Angi punkt for node som slettes</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Å slette punkt er ugyldig.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Punktet som slettes ligger ikke på enheten.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Enheten må være en flerlinje.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Punktet som slettes ligger ikke på enheten.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Ingen flerlinje funnet.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Minst to segmenter av flerlinjen bør være mellom valgte punkter.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Angi flerlinje for å slette mellom to noder</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Angi første node</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Angi andre node</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Å slette punkt er ugyldig.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Enheten må være en flerlinje.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Velg den opprinnelige flerlinjen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Velg ett av segmentene på den opprinnelige flerlinjen</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Enheten kan ikke være en lukket flerlinje.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Flerlinje opprettet</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Ingen enhet funnet.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Enheten må være en flerlinje.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Første segment bør være på valgt flerlinje.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Andre segment bør være på valgt flerlinje og ikke lik det første.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Angi flerlinje for å beskjære</translation>
-    </message>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Angi første segment</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Angi andre segment</translation>
     </message>
 </context>
 <context>
@@ -54901,113 +48782,11 @@ Punkt: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="obsolete">Ingen enhet er valgt!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Enheten må være en atomisk enhet.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Angi enhet å velge</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Velg første punkt på skjæringslinje</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Velg skjærende enhet</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Velg underenheter</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Velg andre punkt på skjæringslinje</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Angi enhet med ønsket lag</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Angi enhet å velge</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Velg kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">Avvelger</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Velger</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">enheter</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">som skjærer med boks</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">som er innenfor boks</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Velg andre kant</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Velg skjærende</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Avvelg enheter</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Velg enheter</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">Avvelg skjærende</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Klikk og dra for utvalgsvinduet</translation>
     </message>
 </context>
 <context>
@@ -55315,150 +49094,6 @@ Punkt: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Buealternativer</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Mot klokken</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Med klokken</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Alternativer for tangentbue</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Hvis valgt, opprettes tangentbue med spesifisert radius</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Radius på tangentbuen</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Hvis valgt, opprettes bue med spesifisert vinkel</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Total underliggende vinkel på tangentbuen</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Velg radius fra tegning</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Vinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Avfasingsalternativer</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Merk av for å beskjære begge enheter til avfasning</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Beskjær</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Lengde 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Lengde på avfasning i X-retning.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Velg første lengde fra tegning</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Lengde 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Lengde på avfasning i Y-retning.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Velg andre lengde fra tegning</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Sirkelalternativer</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Radius på sirkel</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Velg radius fra tegning</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Sirkel tangent 2 alternativer</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius på den tangente sirkelen som skal tegnes&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Radius på tangent sirkel</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Velg radius fra tegning</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Vinkel:</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55595,849 +49230,6 @@ Punkt: (%8 , %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Innsettingsalternativer</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Skaleringsfaktor:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaleringsfaktor</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI for bilde</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Innsettingsalternativer</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaleringsfaktor</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Array:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Antall kolonner</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Antall rader</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Velg radavstand fra tegning</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Velg kolonneavstand fra tegning</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Kolonneavstand</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Radavstand</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Bibliotekinnsettingsalternativer</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skaleringsfaktor</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Linjevinkelalternativer</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Punkt på opprettet linje som plasseres i innsettingspunktet</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Linjevinkel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengde:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lengde på linje</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Festepunkt:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Velg linjevinkel fra tegning</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Midtpunkt</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Slutt</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">Velg linjelengde fra tegning</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Hvis valgt, vil linjen være rettvinklet mot aksen til vinkelgrunnlaget. Ellers - mot skjermaksen</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Til vinkelgrunnlag</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Halveringslinjealternativer</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengde:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Lengde på halveringslinje</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Velg linjelengde fra tegning</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Antall:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Antall halveringslinjer som skal opprettes</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Linjealternativer</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Form en lukket kontur fra tegnede linjer</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Lukk</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Angre siste linjetegning</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Angre</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Gjenopprett siste linjetegning</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Gjenopprett</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Linjealternativer</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Retning:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Oppretter flerlinje fra linjesegmenter</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Flerlinje</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Vertikal linje</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Linje etter spesifisert vinkel</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Vinkel</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Horisontal linje</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Hvis merket, er vinkelen relativ til forrige segment</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Angre siste linjetegning</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Angre</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Form en lukket kontur fra tegnede linjer</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Lukk</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Gjenopprett siste linjetegning</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Gjenopprett</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Linjevinkel</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Linje til vilkårlig punkt</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punkt</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Parallellinjealternativer</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Avstand:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Avstand til opprinnelig enhet</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Velg avstand fra tegning</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Antall:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Antall paralleller som skal opprettes</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Parallellinje gjennom alternativer</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Hvis merket, opprettes paralleller på begge sider av enheten</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrisk</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Antall:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Antall paralleller som skal opprettes</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Polygonalternativer</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Antall:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Antall kanter</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Polygonalternativer</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Antall:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Hvis merket, avrundes toppunktene på polygonet.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Hvis merket, tegnes polygonet som flerlinje. Ellers opprettes individuelle enheter.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Flerlinje</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Velg radius fra tegning</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Antall kanter</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Avrundingsradius for toppunktavfasning.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Hvis valgt, er referansepunktene for toppunktene på polygonet. Ellers er de for midtpunkt på kantene.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Toppunkt til toppunkt</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Relativ vinkel for linjealternativer</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Linjevinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengde:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Lengde på linje</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Velg lengde fra tegning</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Tekstalternativer</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Tekst å sette inn</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Alternativer for endring av forskyvning</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Avstand for forskyvning fra opprinnelig enhet</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Hvis merket, plasseres opprettede enheter i nåværende lag, ellers i opprinnelige lag.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Bruk nåværende lag</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Antall kopier.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Hvis merket, beholdes opprinnelige enheter, ellers fjernes de.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold opprinnelige</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Hvis merket, brukes faste verdier for forskyvningsavstand, ellers defineres den med mus.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Fast avstand</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Hvis merket, brukes nåværende attributter på opprettede enheter, ellers brukes opprinnelige.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk nåværende attributter</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Velg avstand fra tegningen</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Hvis merket, opprettes flere kopier.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Flere kopier</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Flytt/roter-alternativer</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Hvis merket, brukes nåværende attributter på opprettede enheter, ellers brukes opprinnelige.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Bruk nåværende attributter</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Hvis merket, opprettes flere kopier.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Flere kopier</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Hvis merket, roteres alle kopier med samme vinkel. Ellers vil vinkelen være proporsjonal med antall for hver kopi.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Samme vinkel for kopier</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Rotasjonsvinkel.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Antall kopier.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Hvis merket, defineres rotasjonsvinkel med mus. Ellers brukes spesifisert verdi.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Fri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Hvis merket, plasseres opprettede enheter i nåværende lag, ellers i opprinnelige lag.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Bruk nåværende lag</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Hvis merket, beholdes opprinnelige enheter, ellers fjernes de.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Behold opprinnelige</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Flerlinjealternativer</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Kobler ender av flerlinjen slik at lukket kontur opprettes</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Lukk</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Angre forrige toppunkt</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Angre</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Segmenttype:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Definerer hvilket segment av flerlinjen som skal opprettes</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linje</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangent</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Tangent radius</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Tangent vinkel</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Vinkel</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Tangentbue</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Tangentbue med fast radius</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Tangentbue med fast vinkel</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Bue med vinkel</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Radius på bue</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Velg radius fra tegning</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Vinkel på bue</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Mot klokken</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Med klokken</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Alternativer for forhåndsvisning før utskrift</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Landskapsorientering</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Tegningsinnstillinger</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Skala:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;utskriftstørrelse : tegningstørrelse&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Utskriftsskala er låst til gjeldende verdi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">fast</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Bytt svart/hvitt-modus</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Bruk utskriftsskala på linjebredde</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Landskapsorientering av papir</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Portrettorientering av papir</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Side i sentrum av tegning</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Zoom til utskriftsområde</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Tilpass til 1 side</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Hvis aktivert, vil papirplass inkludere spesifisert antall sider organisert i kolonner og rader</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Flislagt utskrift</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Siderader::</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Antall kolonner på sider</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Sidekolonner:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Antall rader på sider</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Beregn antall sider som trengs for å inneholde tegningen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Avrundingsalternativer</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Merk av for å beskjære begge kanter til avrunding</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Beskjær</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Avrundingsradius</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Velg radius fra tegning</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56476,99 +49268,6 @@ Punkt: (%8 , %9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Antall likeavstandspunkter for deling</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Spline-alternativer</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Grad:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Spline-grad brukt for tilnærming mellom punkter</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Hvis valgt, opprettes lukket spline</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Lukket</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Angre forrige punkt</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Angre</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Tekstalternativer</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Tekst:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Vinkel:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Rotasjonsvinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Velg vinkel fra tegning</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Alternativer for beskjæringsmengde</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Avstand. Negative verdier for beskjæring, positive verdier for forlengelse.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Total</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Lengde:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Avstand. Negative verdier for beskjæring, positive verdier for forlengelse. Negativt tegn ignoreres ved beskjæring til endelig totallengde.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Velg lengde fra tegning</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Hvis merket, utføres beskjæring/forlengelse på begge sider av linjen.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrisk</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Inngangslengden brukes som totallengde etter beskjæring, i stedet for lengdeøkning</translation>
     </message>
 </context>
 </TS>

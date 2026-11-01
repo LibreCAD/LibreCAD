@@ -324,6 +324,17 @@ void LC_DimOrdinate::adjustExtensionLineIfFixLength([[maybe_unused]] RS_Line* ex
     }*/
 }
 
+std::optional<double> LC_DimOrdinate::getMeasuredValue() const {
+    if (!validMeasurementPoint(m_dimGenericData.definitionPoint) || !validMeasurementPoint(m_dimOrdinateData.featurePoint) ||
+        !std::isfinite(m_dimGenericData.horizontalAxisDirection)) return std::nullopt;
+    RS_Vector featurePoint = m_dimOrdinateData.featurePoint;
+    if (LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection)) {
+        featurePoint.rotate(m_dimGenericData.definitionPoint, -m_dimGenericData.horizontalAxisDirection);
+    }
+    const RS_Vector delta = featurePoint - m_dimGenericData.definitionPoint;
+    return finiteMeasurement(m_dimOrdinateData.ordinateForX ? delta.x : delta.y);
+}
+
 QString LC_DimOrdinate::getMeasuredLabel() {
     const bool xAxisRotatedInUCS = LC_LineMath::isMeaningfulAngle(m_dimGenericData.horizontalAxisDirection);
 

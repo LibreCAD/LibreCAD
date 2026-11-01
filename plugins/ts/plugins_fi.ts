@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>Napsauta asetuksia muuttaaksesi niitä, hyväksy ja aloita kohdistus.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Jos valintaruutu &apos;Säilytä alkuperäiset objektit&apos; on valittu, Kohdista-toiminto kopioi valitut objektit sen sijaan, että se siirtäisi niitä.
-Jos valintaruutu &apos;Määritä tukipisteet ensin&apos; on valittu, Kohdista-toiminto pyytää kohdistuspisteitä seuraavassa järjestyksessä: ensin tukipiste, sitten toinen tukipiste, sitten ensimmäinen kohdepiste ja lopuksi toinen kohdepiste.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>Ensimmäinen tukipiste:</translation>

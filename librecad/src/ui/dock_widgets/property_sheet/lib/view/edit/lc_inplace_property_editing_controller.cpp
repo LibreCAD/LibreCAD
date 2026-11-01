@@ -98,6 +98,13 @@ bool LC_InplacePropertyEditingController::stopInplaceEdit(const bool doDeleteLat
     if (m_inplaceEditor == nullptr) {
         return false;
     }
+    // A standard text menu is owned by the editor. Deleting the editor while
+    // its popup is activating an action also deletes the menu mid-dispatch.
+    if (doDeleteLater && m_inplaceEditor->property("_lc_copyable_readonly").toBool()) {
+        for (const QObject* popup = QApplication::activePopupWidget(); popup != nullptr; popup = popup->parent()) {
+            if (popup == m_inplaceEditor) return false;
+        }
+    }
     if (m_inplaceEditorRetainCount > 0) {
         return false;
     }

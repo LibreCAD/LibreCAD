@@ -140,19 +140,17 @@ void LC_PrintViewportRenderer::setPenForPrintingEntity(RS_Painter *painter, RS_E
         pen.setColor(m_colorForeground);
     }
 
-    if (pen.getLineType() != RS2::SolidLine){
-        pen.setDashOffset(patternOffset * m_defaultWidthFactor);
-    }
+    pen.setDashOffset(patternOffset);
 
     if (e->getFlag(RS2::FlagTransparent)) {
         pen.setColor(m_colorBackground);
     }
 
-    m_lastPaintedPattern = pen.getLineType() != RS2::SolidLine;
     painter->setPen(pen);
 #ifdef DEBUG_RENDERING
     setPenTime += setPenTimer.nsecsElapsed();
 #endif
+    m_lastPaintedPattern = painter->penHasDashPattern();
 }
 
 

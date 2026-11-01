@@ -40,15 +40,6 @@
         <translation>Līdzināt</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">Ja opcija &quot;Saglabāt sākotnējos objektus&quot; ir atzīmēta, tad funkcija &quot;Izlīdzināt&quot; kopēs, nevis pārvietos atlasītos objektus.
-Ja opcija &quot;Vispirms norādīt bāzes punktus&quot; ir atzīmēta, tad funkcija &quot;Izlīdzināt&quot; lūgs norādīt izlīdzināšanas punktus šādā secībā: pirmā bāze, otrā bāze, pirmā mērķa vieta, otrā mērķa vieta.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>pirmais bāzes punkts:</translation>

@@ -150,6 +150,7 @@ public:
 
     RS2::PaperFormat getPaperFormat(bool* landscape) const;
     void setPaperFormat(RS2::PaperFormat format, bool landscape);
+    void setPaperLandscape(bool landscape);
 
     double getPaperScale() const;
     void setPaperScale(double s) const;

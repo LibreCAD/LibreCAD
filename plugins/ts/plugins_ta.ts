@@ -71,15 +71,6 @@ Ok to accept and start alignment.</source>
         <translation>அமைப்புகளை அமைக்க/நீக்க விருப்பங்களில் கிளிக் செய்யவும், மேலும் சீரமைப்பை ஏற்கவும் தொடங்கவும் &apos;சரி&apos; என்பதைக் கிளிக் செய்யவும்.</translation>
     </message>
     <message>
-        <source>If &apos;Keep original objects&apos; is checked,
-Align will copy rather than move the selected objects.
-If &apos;Specify base points first&apos; is checked,
-Align will prompt for the alignment points in the order
-first base, second base, first target, second target.</source>
-        <translation type="vanished">&apos;அசல் பொருட்களை அப்படியே வைத்திரு&apos; என்பதை நீங்கள் சரிபார்த்தால், சீரமைப்பு தேர்ந்தெடுக்கப்பட்ட பொருட்களை நகர்த்துவதற்கு பதிலாக நகலெடுக்கும்.
-&apos;முதலில் அடிப்படை புள்ளிகளைக் குறிப்பிடவும்&apos; என்பதை நீங்கள் சரிபார்த்தால், சீரமைப்பு சீரமைப்பு புள்ளிகளை பின்வரும் வரிசையில் கேட்கும்: முதலில் அடிப்படை, இரண்டாவது அடிப்படை, முதல் இலக்கு, இரண்டாவது இலக்கு.</translation>
-    </message>
-    <message>
         <location filename="../align/align.cpp" line="79"/>
         <source>first base point:</source>
         <translation>முதல் அடிப்படை புள்ளி:</translation>

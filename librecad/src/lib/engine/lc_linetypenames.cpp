@@ -149,6 +149,19 @@ RS2::LineType LC_LineTypeNames::nameToLineType(const QString &name) {
 }
 
 /**
+ * Whether a name is a spelling nameToLineType() recognises, including the two
+ * SolidLine spellings.
+ */
+bool LC_LineTypeNames::isKnownName(const QString &name) {
+  const QString uName = name.toUpper();
+  // The two SolidLine spellings are the ones nameToLineType() lists.
+  if (uName == "CONTINUOUS" || uName == "ACAD_ISO01W100") {
+    return true;
+  }
+  return nameToLineType(name) != RS2::SolidLine;
+}
+
+/**
  * Converts a RS_LineType into a name for a line type.
  */
 QString LC_LineTypeNames::lineTypeToName(RS2::LineType lineType) {

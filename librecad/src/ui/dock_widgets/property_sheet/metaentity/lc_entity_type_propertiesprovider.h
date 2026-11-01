@@ -34,6 +34,7 @@
 #include "lc_property_int.h"
 #include "lc_property_int_spinbox_view.h"
 #include "lc_property_qstring.h"
+#include "lc_property_qstring_lineedit_view.h"
 #include "lc_property_qstring_font_combobox_view.h"
 #include "lc_property_qstring_list_combobox_view.h"
 #include "lc_property_rsvector.h"
@@ -207,7 +208,7 @@ protected:
 
     template <typename EntityClass>
     void addReadOnlyString(const LC_Property::Names& names, std::function<QString(EntityClass*)> funValue, const QList<RS_Entity*>& list,
-                           LC_PropertyContainer* cont);
+                           LC_PropertyContainer* cont, bool copyable = false);
 
     LC_PropertyContainer* createGeometrySection(LC_PropertyContainer* container) const;
     LC_PropertyContainer* createTextContainer(LC_PropertyContainer* container) const;
@@ -318,11 +319,17 @@ void LC_EntityTypePropertiesProvider::addBoolean(const LC_Property::Names& names
 
 template <typename EntityClass>
 void LC_EntityTypePropertiesProvider::addReadOnlyString(const LC_Property::Names& names, std::function<QString(EntityClass*)> funValue,
-                                                        const QList<RS_Entity*>& list, LC_PropertyContainer* cont) {
-    add<EntityClass>(names, [this, funValue](const LC_Property::Names& n, EntityClass* e, LC_PropertyContainer* container,
+                                                        const QList<RS_Entity*>& list, LC_PropertyContainer* cont, const bool copyable) {
+    add<EntityClass>(names, [this, funValue, copyable](const LC_Property::Names& n, EntityClass* e, LC_PropertyContainer* container,
                                              QList<LC_PropertyAtomic*>* props) -> void {
         const QString value = funValue(e);
-        createReadonlyStringProperty(n, props, container, value);
+        auto* property = createReadonlyStringProperty(n, props, container, value);
+        if (copyable) {
+            LC_PropertyViewDescriptor descriptor(LC_PropertyQStringLineEditView::VIEW_NAME);
+            descriptor[LC_PropertyQStringLineEditView::ATTR_COPYABLE_READ_ONLY] = true;
+            descriptor[LC_PropertyQStringLineEditView::ATTR_PLACEHOLDER] = tr("Unavailable");
+            property->setViewDescriptor(descriptor);
+        }
     }, list, cont);
 }
 

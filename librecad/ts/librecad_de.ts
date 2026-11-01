@@ -39,190 +39,11 @@
     </message>
 </context>
 <context>
-    <name>CustomToolbarCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Rahmen</translation>
-    </message>
-    <message>
-        <source>&gt;</source>
-        <translation type="vanished">&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;</source>
-        <translation type="vanished">&lt;</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <translation type="vanished">+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <translation type="vanished">-</translation>
-    </message>
-    <message>
-        <source>input a name and then press +</source>
-        <translation type="vanished">Namen eingeben und dann + drücken</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Speichern</translation>
-    </message>
-</context>
-<context>
-    <name>CustomWidgetCreator</name>
-    <message>
-        <source>Frame</source>
-        <translation type="vanished">Rahmen</translation>
-    </message>
-    <message>
-        <source>-&gt;</source>
-        <translation type="vanished">-&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;-</source>
-        <translation type="vanished">&lt;-</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation type="vanished">Speichern</translation>
-    </message>
-</context>
-<context>
-    <name>DlgParabola</name>
-    <message>
-        <source>Parabola</source>
-        <translation type="vanished">Parabel</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Punkte auf Spline</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Kontrollpunkte</translation>
-    </message>
-</context>
-<context>
-    <name>DlgSplinePoints</name>
-    <message>
-        <source>SplinePoints</source>
-        <translation type="vanished">Spline-Punkte</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Geschlossen</translation>
-    </message>
-    <message>
-        <source>If selected, spline points are used</source>
-        <translation type="vanished">Bei Auswahl werden Spline-Punkte verwendet</translation>
-    </message>
-    <message>
-        <source>Spline Points</source>
-        <translation type="vanished">Spline Punkte</translation>
-    </message>
-    <message>
-        <source>If selected, control points are used</source>
-        <translation type="vanished">Bei Auswahl werden Kontrollpunkte verwendet</translation>
-    </message>
-    <message>
-        <source>Control Points</source>
-        <translation type="vanished">Kontrollpunkte</translation>
-    </message>
-    <message>
-        <source>Points on Spline</source>
-        <translation type="vanished">Punkte auf Spline</translation>
-    </message>
-</context>
-<context>
     <name>LC_AbstractActionDrawLine</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_abstractactiondrawline.cpp" line="64"/>
         <source>Start point may set in distance or point state only</source>
         <translation>Startpunkt kann nur in Abstand oder Punktzustand eingestellt werden</translation>
-    </message>
-</context>
-<context>
-    <name>LC_AbstractActionDrawRectangle</name>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Zu erstellen:</translation>
-    </message>
-    <message>
-        <source>Rectangle</source>
-        <translation type="vanished">Rechteck</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Breite:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Höhe:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Zentrum:</translation>
-    </message>
-    <message>
-        <source>Invalid Angle</source>
-        <translation type="vanished">Invalider Winkel</translation>
-    </message>
-    <message>
-        <source>Invalid radius</source>
-        <translation type="vanished">Invalider Radius</translation>
-    </message>
-    <message>
-        <source>Invalid value</source>
-        <translation type="vanished">Invaliditätswert</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Einführpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Winkel angeben</translation>
-    </message>
-    <message>
-        <source>Specify size (width, height)</source>
-        <translation type="vanished">Größe angeben (Breite, Höhe)</translation>
-    </message>
-    <message>
-        <source>Specify corners type
-[str|round|bevels]</source>
-        <translation type="vanished">Art der Ecken angeben
-[str|round|bevels]</translation>
-    </message>
-    <message>
-        <source>Specify corner bevel length (x,y)</source>
-        <translation type="vanished">Eckschrägenlänge (x,y) angeben</translation>
-    </message>
-    <message>
-        <source>Specify corner radius</source>
-        <translation type="vanished">Eckradius angeben</translation>
-    </message>
-    <message>
-        <source>Specify edges mode
-[both|hor|vert]</source>
-        <translation type="vanished">Kantenmodus angeben
-(beide)</translation>
     </message>
 </context>
 <context>
@@ -469,73 +290,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawArc2POptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Height of the arc (the distanсe between chord and top arc point)</source>
-        <translation type="vanished">Höhe des Lichtbogens (destanсe zwischen Akkord und oberem Lichtbogenpunkt)</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Höhe:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Gegen den Uhrzeigersinn</translation>
-    </message>
-    <message>
-        <source>Pick angle from the drawing</source>
-        <translation type="vanished">Pickwinkel aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Radius des Lichtbogens</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Uhrzeit</translation>
-    </message>
-    <message>
-        <source>Central angle of the arc</source>
-        <translation type="vanished">Zentralwinkel des Bogens</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Length of the arc</source>
-        <translation type="vanished">Länge des Lichtbogens</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Länge:</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Wählen Sie Radius von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick height from drawing</source>
-        <translation type="vanished">Pickhöhe aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Picklänge aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawArc2PointsAngle</name>
     <message>
         <location filename="../src/actions/drawing/draw/arc/lc_action_draw_arc_2points_angle.cpp" line="58"/>
@@ -747,10 +501,6 @@ This block cannot be inserted.</source>
 <context>
     <name>LC_ActionDrawBoundingBox</name>
     <message>
-        <source>Select entities for bounding box (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie die Einheiten für das gebundene Feld (Enter to complete)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_bounding_box.cpp" line="162"/>
         <source>Select entities for bounding box</source>
         <translation type="unfinished"></translation>
@@ -805,31 +555,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/misc/lc_action_draw_center_mark.cpp" line="397"/>
         <source>Select circle, arc or ellipse</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawCircle2PR</name>
-    <message>
-        <source>radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</source>
-        <translation type="vanished">Radius=%1 ist zu klein für die gewählten Punkte
-Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation>
-    </message>
-    <message>
-        <source>Select from two possible circle centers</source>
-        <translation type="vanished">Einen der beiden möglichen Mittelpunkte auswählen</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Ersten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zweiten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Select circle center</source>
-        <translation type="vanished">Mittelpunkt auswählen</translation>
     </message>
 </context>
 <context>
@@ -1078,13 +803,6 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawCross</name>
-    <message>
-        <source>Select circle, arc or ellipse</source>
-        <translation type="vanished">Wählen Sie Kreis, Bogen oder Ellipse</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawDimBaseline</name>
     <message>
         <location filename="../src/actions/drawing/draw/dimensions/lc_actiondrawdimbaseline.cpp" line="416"/>
@@ -1128,10 +846,6 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="63"/>
         <source>Select Center</source>
         <translation>Wählen Sie das Zentrum</translation>
-    </message>
-    <message>
-        <source>No center specified.</source>
-        <translation type="vanished">Kein Zentrum angegeben.</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawdual.cpp" line="68"/>
@@ -1526,154 +1240,6 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawLinePoints</name>
-    <message>
-        <source>Specify First Point</source>
-        <translation type="vanished">Erster Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number|x|y|angle|p|edges|distance]</source>
-        <translation type="vanished">Zweiter Punkt angeben
-oder [number|x|y|angle|p|edges|abstand]</translation>
-    </message>
-    <message>
-        <source>Specify Second Point
-or [number]</source>
-        <translation type="vanished">Zweiter Punkt angeben
-oder [Nummer]</translation>
-    </message>
-    <message>
-        <source>Specify line direction
-[x|y|angle|p|distance]</source>
-        <translation type="vanished">Zeilenrichtung angeben
-[x|y|angle|p|entfernung]</translation>
-    </message>
-    <message>
-        <source>Specify line direction angle
-or [x|y|p|number|edges|distance]</source>
-        <translation type="vanished">Zeilenrichtungswinkel angeben
-oder [x|y|p|number|edges|fern]</translation>
-    </message>
-    <message>
-        <source>Specify edge points mode
-[none|start|end|both|distance]</source>
-        <translation type="vanished">Randpunkte Modus angeben
-[none|start]end|both|abstand]</translation>
-    </message>
-    <message>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="vanished">Fester Abstand zwischen Punkten
-oder[x|y|p|number|edges]</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Specify distance (%1)
-or [%2]</source>
-        <translation type="vanished">Entfernung angeben (%1)
-oder [%2]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="vanished">Zurück</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="vanished">Entfernung angeben (Winkel %1 deg)
-oder [%2]</translation>
-    </message>
-    <message>
-        <source>Specify points count</source>
-        <translation type="vanished">Punktzahl angeben</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygon4</name>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zweite Ecke angeben</translation>
-    </message>
-    <message>
-        <source>Specify second tangent</source>
-        <translation type="vanished">Zweite Tangente angeben</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Erste Ecke angeben</translation>
-    </message>
-    <message>
-        <source>Specify first tangent</source>
-        <translation type="vanished">Geben Sie erste Tangente an</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonBase</name>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="vanished">Keine gültige Nummer. Versuch 1..9999</translation>
-    </message>
-    <message>
-        <source>Invalid value of rounding radius</source>
-        <translation type="vanished">Ungültiger Wert des Rundungsradius</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Kein gültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Nummer eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter rounding radius:</source>
-        <translation type="vanished">Umrundungsradius eingeben:</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zentrum angeben</translation>
-    </message>
-    <message>
-        <source>To be created:</source>
-        <translation type="vanished">Zu erstellen:</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Zentrum:</translation>
-    </message>
-    <message>
-        <source>Start angle:</source>
-        <translation type="vanished">Startwinkel:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius Inner:</source>
-        <translation type="vanished">Inner:</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionDrawLinePolygonCenTan</name>
-    <message>
-        <source>Specify a tangent</source>
-        <translation type="vanished">Tangente angeben</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawLinePolygonCenterCorner</name>
     <message>
         <location filename="../src/actions/drawing/draw/polygon/lc_action_draw_polygon_center_corner.cpp" line="41"/>
@@ -1917,29 +1483,6 @@ oder [%2]</translation>
     </message>
 </context>
 <context>
-    <name>LC_ActionDrawMidLine</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Kein gültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Wählen Sie erste Einheit</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Wählen Sie die zweite Instanz</translation>
-    </message>
-    <message>
-        <source>Alternate endpoints</source>
-        <translation type="vanished">Alternative Endpunkte</translation>
-    </message>
-    <message>
-        <source>Enter offset value</source>
-        <translation type="vanished">Offsetwert eingeben</translation>
-    </message>
-</context>
-<context>
     <name>LC_ActionDrawParabola4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_actiondrawparabola4points.cpp" line="190"/>
@@ -2092,13 +1635,6 @@ oder [x|y|p|number|edges|fern]</translation>
 [none|start]end|both|abstand]</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
-        <source>Specify fixed distance between points
-or[x|y|p|number|edges]</source>
-        <translation type="unfinished">Fester Abstand zwischen Punkten
-oder[x|y|p|number|edges]</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -2122,13 +1658,6 @@ oder [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
-        <source>Specify  distance (angle %1 deg)
-or [%2]</source>
-        <translation type="unfinished">Entfernung angeben (Winkel %1 deg)
-oder [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -2287,11 +1816,6 @@ oder [%2]</translation>
         <translation>Breite angeben</translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
-        <source>Specify size (width, height))</source>
-        <translation>Größe angeben (Breite, Höhe)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>Referenzpunkt [topl|top|topr|left|middleifyrightifybottoml|bottomifybottomr]</translation>
@@ -2357,11 +1881,6 @@ oder [%2]</translation>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>Höhe angeben</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
-        <source>Specify start point)</source>
-        <translation>Startpunkt angeben)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -3791,10 +3310,6 @@ oder [%2]</translation>
         <translation>Prompt</translation>
     </message>
     <message>
-        <source>Snap on grid</source>
-        <translation type="vanished">Snap auf Gitter</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="449"/>
         <source>Snap Middle Manual</source>
         <translation>Snap Middle Handbuch</translation>
@@ -4110,11 +3625,6 @@ oder [%2]</translation>
         <translation>&amp;Nichts auswählen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="910"/>
-        <source>Ctrl+K</source>
-        <translation>Strg+K</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="745"/>
         <source>Invert Selection</source>
         <translation>Auswahl umkehren</translation>
@@ -4230,12 +3740,6 @@ oder [%2]</translation>
         <translation>&amp;Raster</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="927"/>
-        <source>Ctrl+G</source>
-        <comment>Toggle Grid</comment>
-        <translation>Strg+G</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="603"/>
         <source>&amp;Draft</source>
         <translation>&amp;Entwurf</translation>
@@ -4246,12 +3750,6 @@ oder [%2]</translation>
         <translation>&amp;Statuszeile</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="930"/>
-        <source>Ctrl+I</source>
-        <comment>Hide Statusbar</comment>
-        <translation>Strg+I</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="715"/>
         <source>Focus on &amp;Command Line</source>
         <translation>&amp;Fokus auf Befehlszeile</translation>
@@ -4260,26 +3758,6 @@ oder [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="655"/>
         <source>Widget Options</source>
         <translation>Widget Optionen</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Links</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Rechts</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Oben</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Unten</translation>
-    </message>
-    <message>
-        <source>Floating</source>
-        <translation type="vanished">Schwebend</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="658"/>
@@ -4532,12 +4010,6 @@ oder [%2]</translation>
         <translation>&amp;Auswahl-Zeiger</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="929"/>
-        <source>Ctrl+D</source>
-        <comment>Toggle Draft Mode</comment>
-        <translation>Strg+D</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="194"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
         <translation>Pol&amp;ygon (Zentrum,Tangente)</translation>
@@ -4671,14 +4143,15 @@ oder [%2]</translation>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Start Edge Point: (%5 , %6)
 Intersection Point :(%7, %8)
 End Edge Point: (%9 , %10)</source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Winkel: %1
-Ergänzung: %2
-Zusatz: %3
-Alternative: %4
+Komplementwinkel: %2
+Supplementwinkel: %3
+Vollwinkel − Winkel: %4
 Start Edge Point: (%5, %6)
 Abschnitt :(%7, %8)
 End Edge Point: (%9, %10)</translation>
@@ -4697,17 +4170,20 @@ End Edge Point: (%9, %10)</translation>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="209"/>
         <source>Complementary:</source>
-        <translation>Ergänzung:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Komplementwinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="210"/>
         <source>Supplementary:</source>
-        <translation>Ergänzung:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementwinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
-        <source>Alternative: </source>
-        <translation>Alternative:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Vollwinkel − Winkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
@@ -4904,19 +4380,22 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="161"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="319"/>
         <source>Complementary:</source>
-        <translation>Ergänzung:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Komplementwinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="162"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="320"/>
         <source>Supplementary:</source>
-        <translation>Ergänzung:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementwinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="163"/>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
-        <source>Alternative: </source>
-        <translation>Alternative:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Vollwinkel − Winkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>
@@ -5247,10 +4726,6 @@ Punkt: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select entities to align (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie Einheiten aus, um auszurichten (Enter zu beenden)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align.cpp" line="277"/>
         <source>Select and align</source>
         <translation>Wählen und Ausrichten</translation>
@@ -5282,10 +4757,6 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="120"/>
         <source>Scale:</source>
         <translation>Waage:</translation>
-    </message>
-    <message>
-        <source>Select to align (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie aus, um auszurichten (Enter zu beenden)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_align_ref.cpp" line="244"/>
@@ -5968,22 +5439,6 @@ Punkt: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="237"/>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="244"/>
-        <source>Specify direction of offset</source>
-        <translation type="unfinished">Richtung des Versatz angeben</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="240"/>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="unfinished">Bezugspunkt für die Richtung des Offsets</translation>
-    </message>
-    <message>
-        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="253"/>
-        <source>Select line, polyline, ellipse, circle or arc to create offset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
         <source>Select contour</source>
         <translation type="unfinished">Wählen Sie die Kontur</translation>
@@ -6276,13 +5731,6 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_scale.cpp" line="430"/>
         <source>Scale immediately after selection</source>
         <translation type="unfinished">Waage sofort nach Auswahl</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ActionModifySelectionBase</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Keine Entität ausgewählt!</translation>
     </message>
 </context>
 <context>
@@ -7259,18 +6707,6 @@ Punkt: (%8, %9)</translation>
         <translation>Kann nicht lesen bereitgestellte Datei - bitte überprüfen, ob es existiert und es ist erlaubt, von ihr zu lesen.</translation>
     </message>
     <message>
-        <source>Shortcuts mappings were not imported.
- Provided file does exists, however it does not contain LibreCAD shortcuts mapping.</source>
-        <translation type="vanished">Shortcuts Mappings wurden nicht importiert.
-Sofern die Datei existiert, enthält sie jedoch keine LibreCAD Shortcuts Mapping.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-XML parsing error occurred during file processing.</source>
-        <translation type="vanished">Shortcuts Mappings wurden nicht importiert.
-Bei der Dateiverarbeitung trat ein XML-Parasing-Fehler auf.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="206"/>
         <source>Shortcuts mappings were saved successfully.</source>
         <translation>Shortcuts Mappings wurden erfolgreich gespeichert.</translation>
@@ -7279,12 +6715,6 @@ Bei der Dateiverarbeitung trat ein XML-Parasing-Fehler auf.</translation>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="210"/>
         <source>Can&apos;t write to provided file - please check that it is allowed to write to it.</source>
         <translation>Kann nicht schreiben, um bereitgestellte Datei - bitte überprüfen, ob es erlaubt ist, darauf zu schreiben.</translation>
-    </message>
-    <message>
-        <source>Shortcuts mappings were not imported. 
-Some error occurred during XML generation.</source>
-        <translation type="vanished">Shortcuts Mappings wurden nicht importiert.
-Einige Fehler traten während der XML-Generierung auf.</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/shortcuts/lc_actionsshortcutsdialog.cpp" line="189"/>
@@ -8685,74 +8115,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     </message>
 </context>
 <context>
-    <name>LC_CircleByArcOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, original arc will be removed</source>
-        <translation type="vanished">Wird geprüft, wird der ursprüngliche Lichtbogen entfernt</translation>
-    </message>
-    <message>
-        <source>Replace arc</source>
-        <translation type="vanished">Ersatzbogen</translation>
-    </message>
-    <message>
-        <source>Layer to which created circle should be placed</source>
-        <translation type="vanished">Ebene, auf die erstellte Kreis sollte platziert werden</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original aufgelöst</translation>
-    </message>
-    <message>
-        <source>Pick offset value from drawing</source>
-        <translation type="vanished">Pick-Offset-Wert aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created circle</source>
-        <translation type="vanished">Stift für erstellten Kreis anzuwenden</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Delta of circle&apos;s radius to arc&apos;s radius</source>
-        <translation type="vanished">Delta des Kreisradius zu Bogenradius</translation>
-    </message>
-    <message>
-        <source>Radius Shift:</source>
-        <translation type="vanished">Radiusversatz:</translation>
-    </message>
-</context>
-<context>
     <name>LC_CircleByArcOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/circle/lc_circle_by_arc_options_filler.cpp" line="32"/>
@@ -9047,76 +8409,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/components/creators/lc_creatorinvoker.cpp" line="144"/>
         <source>Toolbar: %1 (Custom)</source>
         <translation>Toolbar: %1 (Kunde)</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CrossOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Type</source>
-        <translation type="vanished">Typ</translation>
-    </message>
-    <message>
-        <source>Horizontal dimension of cross</source>
-        <translation type="vanished">Horizontale Dimension des Kreuzes</translation>
-    </message>
-    <message>
-        <source>Pick X value from drawing</source>
-        <translation type="vanished">Wählen Sie X Wert aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Defines how to apply dimensions of cross</source>
-        <translation type="vanished">Definiert, wie die Abmessungen des Kreuzes anzuwenden</translation>
-    </message>
-    <message>
-        <source>Extension</source>
-        <translation type="vanished">Erweiterung</translation>
-    </message>
-    <message>
-        <source>Total Length</source>
-        <translation type="vanished">Gesamtlänge</translation>
-    </message>
-    <message>
-        <source>Percent</source>
-        <translation type="vanished">Prozent</translation>
-    </message>
-    <message>
-        <source>Pick Y value from drawing</source>
-        <translation type="vanished">Wählen Sie Y Wert aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Vertical dimension of the cross</source>
-        <translation type="vanished">Vertikale Dimension des Kreuzes</translation>
-    </message>
-    <message>
-        <source>Rotation angle for cross around center</source>
-        <translation type="vanished">Drehwinkel für Kreuz um die Mitte</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-</context>
-<context>
-    <name>LC_CustomToolbar</name>
-    <message>
-        <source>Add or Remove Action</source>
-        <translation type="vanished">Aktion hinzufügen oder entfernen</translation>
     </message>
 </context>
 <context>
@@ -9480,45 +8772,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgDimOrdinate</name>
-    <message>
-        <source>Ordinate Dimension</source>
-        <translation type="vanished">Orginat Dimension</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Ebene der Dimension</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Pen-Attribute</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Ordinate</source>
-        <translation type="vanished">Orinat</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgDimStyleManager</name>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="14"/>
@@ -9580,11 +8833,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="162"/>
         <source>Baseline spacing:</source>
         <translation>Baseline Abstand:</translation>
-    </message>
-    <message>
-        <source>Sets the spacing between the dimension lines of a baseline dimension. Enter a distance. For information about baseline dimensions, see DIMBASELINE. (DIMDLI system variable)
-</source>
-        <translation type="vanished">Setzt den Abstand zwischen den Dimensionslinien einer Grundlinie. Betreten Sie eine Distanz. Informationen Ã1⁄4ber Basismaße siehe DIMBASELINE. (DIMDLI Systemvariable)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/dimstyles/dimstyle_manager/lc_dlgdimstylemanager.ui" line="191"/>
@@ -11233,10 +10481,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <source>Hatch Properties</source>
         <translation>Schraffur-Eigenschaften</translation>
     </message>
-    <message>
-        <source>Properties?</source>
-        <translation type="vanished">Eigenschaften?</translation>
-    </message>
 </context>
 <context>
     <name>LC_DlgIconsSetup</name>
@@ -11685,19 +10929,9 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>HINWEIS: Menüzuweisung wird ignoriert. Es ist für &apos;Pan&apos; reserviert.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="240"/>
-        <source>NNOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
-        <translation>NNOTE: Menüzuweisung wird ignoriert. Es ist reserviert für &apos;Select Contour&apos;.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>HINWEIS: Diese Kombination ist für das Standard-Kontext-Menü reserviert und kann einen Aufruf davon verhindern!</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="246"/>
-        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored</source>
-        <translation>HINWEIS: Diese Kombination ist für Pan reserviert! Menüzuweisung wird ignoriert</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -11758,10 +10992,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>UCS Details Spalte</translation>
     </message>
     <message>
-        <source>If checked, type of grid for saved view will be shown</source>
-        <translation type="vanished">Wenn überprüft, wird die Art des Rasters für die gespeicherte Ansicht angezeigt</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="88"/>
         <source>Grid Type icon column</source>
         <translation>Symbolspalte für Grid Type</translation>
@@ -11770,18 +11000,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="58"/>
         <source>Type icon column</source>
         <translation>Typ Icon Spalte</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show</source>
-        <translation type="vanished">Bei der Überprüfung wird die Spalte mit Details des Koordinatensystems der Ansicht angezeigt</translation>
-    </message>
-    <message>
-        <source>Tooltip with view details for table items</source>
-        <translation type="vanished">Tooltip mit Ansichtsdetails für Tabellenelemente</translation>
-    </message>
-    <message>
-        <source>If checked, the column with details of view&apos;s coordinate system will be show.</source>
-        <translation type="vanished">Wenn diese Option aktiviert ist, wird die Spalte mit den Details des Koordinatensystems der Ansicht angezeigt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="75"/>
@@ -11824,10 +11042,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Bei der Prüfung wird die Spalte mit Ansichtsdetails in der Tabelle angezeigt.</translation>
     </message>
     <message>
-        <source>VIew Details column</source>
-        <translation type="vanished">VIew Details Spalte</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="141"/>
         <source>Operations</source>
         <translation>Operationen</translation>
@@ -11843,17 +11057,9 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Ansicht bei einfachem Klick auf Tabelleneintrag wiederherstellen</translation>
     </message>
     <message>
-        <source>On double-click on table item</source>
-        <translation type="vanished">Auf Doppelklick auf den Tischartikel</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="154"/>
         <source>Defines which action should be performed on double click on view item of the table.</source>
         <translation>Definiert, welche Aktion beim Doppelklick auf ein Ansichtselement in der Tabelle ausgeführt werden soll.</translation>
-    </message>
-    <message>
-        <source>Defines which action should be performed on double click on view item of the table. </source>
-        <translation type="vanished">Definiert, welche Aktion auf Doppelklick ausgeführt werden sollte, um den Punkt der Tabelle anzuzeigen.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="158"/>
@@ -11881,10 +11087,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Wenn aktiviert, klicken Sie auf die Ansicht Tabelle Element wird die Ansicht wiederherstellen. Ansonsten sollte die Ansicht explizit wiederhergestellt werden.</translation>
     </message>
     <message>
-        <source>Restore view on single click by table item</source>
-        <translation type="vanished">Restore Ansicht auf einzelne Klick per Tabelle</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="95"/>
         <source>If show, tooltip with additional information about view will be shown for table item.</source>
         <translation>Wenn Sie zeigen, wird Tooltip mit zusätzlichen Informationen über die Ansicht für Tischartikel angezeigt.</translation>
@@ -11893,10 +11095,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="36"/>
         <source>If checked and during creation the view with entered name already exists, it will be updated by new position. Otherwise, unique name of new view will be required.</source>
         <translation>Wenn es überprüft wird und während der Erstellung die Ansicht mit eingetragenem Namen bereits existiert, wird diese durch neue Position aktualisiert. Andernfalls wird ein einzigartiger Name der neuen Ansicht benötigt.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Wenn Sie ausgewählt werden, wird das Bestätigungsdialog beim Entfernen der Ansicht angezeigt. Ansonsten wird die Ansicht still entfernt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_dlgnamedviewslistoptions.ui" line="29"/>
@@ -12192,17 +11390,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dialogs/creators/lc_dlg_new_widget.cpp" line="70"/>
         <source>Name is not unique. Please enter unique name.</source>
         <translation>Der Name ist nicht einzigartig. Bitte geben Sie einen einzigartigen Namen ein.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DlgParabola</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola-Kontrollpunkte können nicht kollinear sein</translation>
     </message>
 </context>
 <context>
@@ -12618,13 +11805,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DlgSplinePoints</name>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
     <name>LC_DlgTolerance</name>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_tolerance.ui" line="14"/>
@@ -12706,17 +11886,9 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Wenn сhecked, wird der Tooltip mit zusätzlichen Informationen über UCS für Tischartikel angezeigt.</translation>
     </message>
     <message>
-        <source>Toolip with UCS details for table items</source>
-        <translation type="vanished">Toolip mit UCS-Details für Tischartikel</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="39"/>
         <source>Type icon column</source>
         <translation>Typ Icon Spalte</translation>
-    </message>
-    <message>
-        <source>If checked, column with details of UCS origin and angle will be shown in the table</source>
-        <translation type="vanished">Wenn überprüft, Spalte mit Details UCS Herkunft und Winkel wird in der Tabelle angezeigt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="49"/>
@@ -12732,10 +11904,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="89"/>
         <source>Editing</source>
         <translation>Bearbeitung</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently. </source>
-        <translation type="vanished">Wenn Sie ausgewählt werden, wird das Bestätigungsdialog beim Entfernen der Ansicht angezeigt. Ansonsten wird die Ansicht still entfernt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="29"/>
@@ -12756,10 +11924,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="56"/>
         <source>If checked, the column with type of grid for UCS will be shown.</source>
         <translation>Wenn aktiviert, wird die Spalte mit dem Typ des Rasters für den UCS angezeigt.</translation>
-    </message>
-    <message>
-        <source>If selected, confirmation dialog will be shown on removal of the view. Otherwise, view will be removed silently.</source>
-        <translation type="vanished">Wenn ausgewählt, wird ein Bestätigungsdialog angezeigt, wenn die Ansicht entfernt wird. Andernfalls wird die Ansicht ohne weitere Meldung entfernt.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="98"/>
@@ -12827,26 +11991,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Definiert die Anzahl der Blinks des UCS-Markers für die UCS-Hervorhebung.</translation>
     </message>
     <message>
-        <source>Defines which action should be performed on double click on the item of the table. </source>
-        <translation type="vanished">Definiert, welche Aktion auf Doppelklick auf den Punkt der Tabelle durchgeführt werden soll.</translation>
-    </message>
-    <message>
-        <source>Restore UCS on single click by table item</source>
-        <translation type="vanished">Wiederherstellen von UCS auf Einzelklick durch Tabelle</translation>
-    </message>
-    <message>
-        <source>If checked, the column with icon for type of UCS will be shown in the table. </source>
-        <translation type="vanished">Wenn überprüft, wird die Spalte mit Symbol für Typ UCS in der Tabelle angezeigt.</translation>
-    </message>
-    <message>
-        <source>If checked, the column with type of grid for UCS will be shown</source>
-        <translation type="vanished">Wird geprüft, wird die Spalte mit Netztyp für UCS angezeigt</translation>
-    </message>
-    <message>
-        <source>Defines how drawing&apos;s view window should be adjusted after UCS is applied</source>
-        <translation type="vanished">Definiert, wie das Sichtfenster der Zeichnung angepasst werden sollte, nachdem UCS angewendet wird</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="197"/>
         <source>On double-click on table item</source>
         <translation>Auf Doppelklick auf den Tischartikel</translation>
@@ -12902,10 +12046,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>UCS-Hervorhebung</translation>
     </message>
     <message>
-        <source>Defines delay between UCS marker blinks</source>
-        <translation type="vanished">Definiert Verzögerung zwischen UCS Marker blinks</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="216"/>
         <source> ms</source>
         <translation>ms</translation>
@@ -12919,10 +12059,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="242"/>
         <source>Blink Delay:</source>
         <translation>Blinkverzögerung:</translation>
-    </message>
-    <message>
-        <source>Defines amount of blinks of UCS marker for UCS highlighting</source>
-        <translation type="vanished">Definiert die Menge der blinks von UCS-Marker für UCS-Highlighting</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_dlgucslistoptions.ui" line="252"/>
@@ -13319,45 +12455,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     </message>
 </context>
 <context>
-    <name>LC_DrawBoundingBoxOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>If checked, bounding box for the entire selection will be created. Otherwise, it will be created for individual entities. </source>
-        <translation type="vanished">Wenn Sie geprüft werden, wird die Begrenzungsbox für die gesamte Auswahl erstellt. Andernfalls wird sie für einzelne Einheiten erstellt.</translation>
-    </message>
-    <message>
-        <source>Selection As Group</source>
-        <translation type="vanished">Auswahl als Gruppe</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pick Offset aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>If selected, only corner points will be drawn for bounding box. Otherwise, edge lines will be drawn.</source>
-        <translation type="vanished">Wenn Sie ausgewählt werden, werden nur Eckpunkte zur Begrenzungsbox gezogen. Ansonsten werden Randlinien gezogen.</translation>
-    </message>
-    <message>
-        <source>Corner points only</source>
-        <translation type="vanished">Eckpunkte nur</translation>
-    </message>
-    <message>
-        <source>If selected, bounding box is drawn as polyline</source>
-        <translation type="vanished">Bei Auswahl wird die Begrenzungsbox als Polyline gezeichnet</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-</context>
-<context>
     <name>LC_DrawBoundingBoxOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_filler.cpp" line="30"/>
@@ -13451,86 +12548,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/action_options/misc/lc_draw_bounding_box_options_widget.ui" line="93"/>
         <source>Pick offset from drawing</source>
         <translation type="unfinished">Pick Offset aus Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>LC_DuplicateOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Vertical offset of duplicate from original entity</source>
-        <translation type="vanished">Vertikaler Versatz von Duplikat von Originalität</translation>
-    </message>
-    <message>
-        <source>Horizontal offset of duplicate from original entity</source>
-        <translation type="vanished">Horizontaler Versatz von Duplikat von Originalität</translation>
-    </message>
-    <message>
-        <source>Pick offset by X from drawing</source>
-        <translation type="vanished">Pick Offset von X aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pen:</source>
-        <translation type="vanished">Pen:</translation>
-    </message>
-    <message>
-        <source>If checked, duplicate will be positioned in original&apos;s coordinates</source>
-        <translation type="vanished">Wenn überprüft, wird Duplikat in Original-Koordinaten positioniert</translation>
-    </message>
-    <message>
-        <source>In Place</source>
-        <translation type="vanished">An der gleichen Stelle</translation>
-    </message>
-    <message>
-        <source>Pick offset by Y from drawing</source>
-        <translation type="vanished">Pick Offset von Y aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Pen to apply to created duplicate</source>
-        <translation type="vanished">Stift für erstellte Duplikate</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>pen</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Original Resolved</source>
-        <comment>pen</comment>
-        <translation type="vanished">Original aufgelöst</translation>
-    </message>
-    <message>
-        <source>Layer to which duplicate should be placed</source>
-        <translation type="vanished">Ebene, auf die Duplikat platziert werden sollte</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <comment>layer</comment>
-        <translation type="vanished">Aktiv</translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <comment>layer</comment>
-        <translation type="vanished">Original</translation>
-    </message>
-    <message>
-        <source>Offset Y:</source>
-        <translation type="vanished">Y-Offset:</translation>
-    </message>
-    <message>
-        <source>Offset X:</source>
-        <translation type="vanished">X-Offset:</translation>
     </message>
 </context>
 <context>
@@ -13712,69 +12729,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
     </message>
 </context>
 <context>
-    <name>LC_Ellipse1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Minor Radius:</source>
-        <translation type="vanished">Kleiner Radius:</translation>
-    </message>
-    <message>
-        <source>Value of angle for major radius</source>
-        <translation type="vanished">Winkelwert für großen Radius</translation>
-    </message>
-    <message>
-        <source>If checked, angle for major radius may be specified</source>
-        <translation type="vanished">Wenn überprüft, kann der Winkel für den Hauptradius angegeben werden</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Basiswinkel:</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Gegen den Uhrzeigersinn</translation>
-    </message>
-    <message>
-        <source>Pick major actions from drawing</source>
-        <translation type="vanished">Wählen Sie wichtige Aktionen aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>If checked, major radius angle is specified by mouse</source>
-        <translation type="vanished">Wenn überprüft, wird der große Radiuswinkel durch Maus angegeben</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Kostenlos</translation>
-    </message>
-    <message>
-        <source>Length of major radius of ellipse</source>
-        <translation type="vanished">Länge des Hauptradius der Ellipse</translation>
-    </message>
-    <message>
-        <source>Pick minor radius from drawing</source>
-        <translation type="vanished">Wählen Sie kleinere Radius von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Major Radius:</source>
-        <translation type="vanished">Hauptradius:</translation>
-    </message>
-    <message>
-        <source>Length of minor radius of ellipse</source>
-        <translation type="vanished">Länge des kleinen Radius der Ellipse</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Uhrzeit</translation>
-    </message>
-</context>
-<context>
     <name>LC_Ellipse1PointOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1_point_options_filler.cpp" line="31"/>
@@ -13913,21 +12867,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/action_options/ellipse/lc_ellipse_1point_options_widget.ui" line="199"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Pickwinkel aus Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>LC_EllipseArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Arc Optionen</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Uhrzeit</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Gegen den Uhrzeigersinn</translation>
     </message>
 </context>
 <context>
@@ -14490,11 +13429,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
 <context>
     <name>LC_ExportToImageService</name>
     <message>
-        <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="52"/>
-        <source>Exporting drawing...</source>
-        <translation>Ausführende Zeichnung...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="59"/>
         <source>Exported: %1</source>
         <translation>Ausfuhr: %1</translation>
@@ -14818,30 +13752,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <source>Eccentricity:</source>
         <translation>Schwerpunkte:</translation>
     </message>
-    <message>
-        <source>Invalid hyperbola definition</source>
-        <translation type="vanished">Invalide Hyperbeldefinition</translation>
-    </message>
-    <message>
-        <source>Foci must be distinct</source>
-        <translation type="vanished">Foci muss deutlich sein</translation>
-    </message>
-    <message>
-        <source>Invalid center coordinates</source>
-        <translation type="vanished">Invalide Mittenkoordinaten</translation>
-    </message>
-    <message>
-        <source>Major radius must be positive</source>
-        <translation type="vanished">Großer Radius muss positiv sein</translation>
-    </message>
-    <message>
-        <source>Invalid rotation angle</source>
-        <translation type="vanished">Invalider Drehwinkel</translation>
-    </message>
-    <message>
-        <source>Ratio or minor radius must be positive</source>
-        <translation type="vanished">Verhältnis oder kleiner Radius muss positiv sein</translation>
-    </message>
 </context>
 <context>
     <name>LC_ImageOptionsFiller</name>
@@ -15013,10 +13923,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Breite:</translation>
     </message>
     <message>
-        <source>Width of image</source>
-        <translation type="vanished">Breite des Bildes</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="138"/>
         <source>Pick width value from drawing</source>
         <translation>Pick Breite Wert aus Zeichnung</translation>
@@ -15027,21 +13933,9 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Höhe:</translation>
     </message>
     <message>
-        <source>Height of image</source>
-        <translation type="vanished">Bildhöhe</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="219"/>
         <source>Pick height value from the drawing</source>
         <translation>Pick Höhenwert aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Waage:</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Skalierungsfaktor</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="77"/>
@@ -15053,10 +13947,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="152"/>
         <source>Angle:</source>
         <translation>Angle:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Drehwinkel</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_image.ui" line="198"/>
@@ -15088,22 +13978,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <source>Select an image file</source>
         <translation>Wählen Sie eine Bilddatei</translation>
     </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Größe (px):</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Bildgröße in Pixeln</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Auflösung (Punkte pro Zoll)</translation>
-    </message>
 </context>
 <context>
     <name>LC_IndexedPropertiesProviderBase</name>
@@ -15116,21 +13990,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_indexed_propertiesprovider_base.h" line="132"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>LC_InfoDist2Options</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, the point will be always inside selected entity</source>
-        <translation type="vanished">Wenn überprüft, wird der Punkt immer innerhalb ausgewählter Einheit</translation>
-    </message>
-    <message>
-        <source>Snap On Entity</source>
-        <translation type="vanished">Snap on Entity</translation>
     </message>
 </context>
 <context>
@@ -15508,14 +14367,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Trennzeichen, mit dem der interne Name einer Ebene in hierarchische Namen aufgeteilt wird</translation>
     </message>
     <message>
-        <source>Layer Level Name Separator</source>
-        <translation type="vanished">Ebenen-Name Separator</translation>
-    </message>
-    <message>
-        <source>Secondary Layer Suffixes</source>
-        <translation type="vanished">Suffixen der Sekundärschicht</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="188"/>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="799"/>
         <source>Dimensional</source>
@@ -15546,10 +14397,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="247"/>
         <source>Suffix of layer&apos;s name that defines that layer is for alternative position.</source>
         <translation>Suffix des Ebenennamens, das die Ebene als Ebene für alternative Position kennzeichnet.</translation>
-    </message>
-    <message>
-        <source>Duplicating Name</source>
-        <translation type="vanished">Name des Duplikats</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="61"/>
@@ -15692,17 +14539,9 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <translation>Verschiedene Farbeinstellungen</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Farben</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="470"/>
         <source>Background color for selected items in layers tree.</source>
         <translation>Hintergrundfarbe für ausgewählte Elemente im Ebenenbaum.</translation>
-    </message>
-    <message>
-        <source>Color for separator lines in layers tree view</source>
-        <translation type="vanished">Farbe für Trennlinien in Schichten Baumansicht</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="420"/>
@@ -15741,10 +14580,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="581"/>
         <source>Virtual layer background color</source>
         <translation>Hintergrundfarbe virtueller Ebenen</translation>
-    </message>
-    <message>
-        <source>Threeview items separator grid</source>
-        <translation type="vanished">Dreiseitige Elemente Trenngitter</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.ui" line="503"/>
@@ -15800,10 +14635,6 @@ Sind Sie sicher, dass Sie Änderungen verwerfen werden?</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="71"/>
         <source>Alternative Position Layer</source>
         <translation>Ebene für alternative Position</translation>
-    </message>
-    <message>
-        <source>grid</source>
-        <translation type="vanished">gitter</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreeoptionsdialog.cpp" line="103"/>
@@ -16293,118 +15124,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineAngleRelOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, the length of line is defined by mouse position instead of setting</source>
-        <translation type="vanished">Wenn überprüft, wird die Länge der Linie durch die Mausposition definiert, anstatt die Einstellung</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Kostenlos</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Schnappabstand von Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point from intersection point</source>
-        <translation type="vanished">Versatz von Zecken-Schnapppunkt vom Schnittpunkt</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Picklänge aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pick Offset aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>If checked, original entity will be divided by intersection point.</source>
-        <translation type="vanished">Wird überprüft, wird die ursprüngliche Einheit durch Schnittpunkt geteilt.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Teil</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Distance of intersection point from specified line snap point</source>
-        <translation type="vanished">Abstand des Schnittpunktes von dem angegebenen Linienrastpunkt</translation>
-    </message>
-    <message>
-        <source>Defines which part of created line will be snapped to intersection point</source>
-        <translation type="vanished">Definiert, welcher Teil der erstellten Linie wird zum Schnittpunkt geschnappt</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mittel</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Ende</translation>
-    </message>
-    <message>
-        <source>Tick Snap:</source>
-        <translation type="vanished">Ausrichtung an Raster:</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Ausrichtung an Linie:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Länge der Linie</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to angle of selected entity</source>
-        <translation type="vanished">Wenn überprüft, ist Winkel relativ zum Winkel der ausgewählten Einheit</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Länge:</translation>
-    </message>
-    <message>
-        <source>Snap point for position of intersection point between created line and source entity (within original line)</source>
-        <translation type="vanished">Snap-Punkt für die Position des Schnittpunktes zwischen erstellter Linie und Quelleinheit (innerhalb der ursprünglichen Linie)</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>linesnap</comment>
-        <translation type="vanished">Kostenlos</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Snap Entfernung:</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Winkel der Linie</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineAngleRelOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_line_angle_rel_options_filler.cpp" line="32"/>
@@ -16711,93 +15430,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
         <location filename="../src/ui/action_options/line/lc_line_bisector_options_widget.ui" line="103"/>
         <source>Number of bisectors to create</source>
         <translation type="unfinished">Anzahl Winkelhalbierende</translation>
-    </message>
-</context>
-<context>
-    <name>LC_LineFromPointToLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Size:</source>
-        <translation type="vanished">Größe:</translation>
-    </message>
-    <message>
-        <source>End offset:</source>
-        <translation type="vanished">Endversatz:</translation>
-    </message>
-    <message>
-        <source>Offset for created line from intersection point</source>
-        <translation type="vanished">Offset für erstellte Linie vom Schnittpunkt</translation>
-    </message>
-    <message>
-        <source>Snap point for created line</source>
-        <translation type="vanished">Snap-Punkt für erstellte Linie</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mittel</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Ende</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Länge:</translation>
-    </message>
-    <message>
-        <source>Fixed length of created line</source>
-        <translation type="vanished">Länge der erstellten Linie</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Picklänge aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pick Offset aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Defines whether created line should be created to intersection point or should have fixed length</source>
-        <translation type="vanished">Definiert, ob erstellte Linie zu Schnittpunkt erstellt werden sollte oder sollte feste Länge haben</translation>
-    </message>
-    <message>
-        <source>To Intersection</source>
-        <translation type="vanished">Zu Abschnitt</translation>
-    </message>
-    <message>
-        <source>Fixed Length</source>
-        <translation type="vanished">Feste Länge</translation>
-    </message>
-    <message>
-        <source>If checked, created line will be orthogonal to selected line</source>
-        <translation type="vanished">Wenn überprüft, erstellte Zeile orthogonal zu ausgewählten Zeile</translation>
-    </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="vanished">Orthogonal</translation>
-    </message>
-    <message>
-        <source>Angle between original line and created one</source>
-        <translation type="vanished">Winkel zwischen original Linie und erstellt ein</translation>
     </message>
 </context>
 <context>
@@ -17183,81 +15815,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
     </message>
 </context>
 <context>
-    <name>LC_LineJoinOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, polyline will be created instead of individual lines</source>
-        <translation type="vanished">Wenn überprüft, wird Polyline statt einzelner Linien erstellt</translation>
-    </message>
-    <message>
-        <source>Create Polyline</source>
-        <translation type="vanished">Polyline erstellen</translation>
-    </message>
-    <message>
-        <source>Policy for the line was selected second</source>
-        <translation type="vanished">Richtlinie für die Zeile wurde selektiert</translation>
-    </message>
-    <message>
-        <source>Extend/Trim</source>
-        <translation type="vanished">Extent/Trim</translation>
-    </message>
-    <message>
-        <source>Add segment</source>
-        <translation type="vanished">Segment hinzufügen</translation>
-    </message>
-    <message>
-        <source>No change</source>
-        <translation type="vanished">Keine Veränderung</translation>
-    </message>
-    <message>
-        <source>Line 1:</source>
-        <translation type="vanished">Linie 1:</translation>
-    </message>
-    <message>
-        <source>Line 2:</source>
-        <translation type="vanished">Linie 2:</translation>
-    </message>
-    <message>
-        <source>Policy for joining line that was selected first</source>
-        <translation type="vanished">Richtlinie zum Fügen von Zeile, die zuerst ausgewählt wurde</translation>
-    </message>
-    <message>
-        <source>Defines how pen should be applied to created entities</source>
-        <translation type="vanished">Definiert, wie Stift auf erstellte Einheiten angewendet werden sollte</translation>
-    </message>
-    <message>
-        <source>Active Pen</source>
-        <translation type="vanished">Aktiver Stift</translation>
-    </message>
-    <message>
-        <source>Line 1</source>
-        <translation type="vanished">Zeile 1</translation>
-    </message>
-    <message>
-        <source>Line 2</source>
-        <translation type="vanished">Linie 2</translation>
-    </message>
-    <message>
-        <source>Both lines</source>
-        <translation type="vanished">Beide Linien</translation>
-    </message>
-    <message>
-        <source>Attributes:</source>
-        <translation type="vanished">Attribute:</translation>
-    </message>
-    <message>
-        <source>If checked, original lines will be removed</source>
-        <translation type="vanished">Wird geprüft, werden die ursprünglichen Zeilen entfernt</translation>
-    </message>
-    <message>
-        <source>Remove originals</source>
-        <translation type="vanished">Originale entfernen</translation>
-    </message>
-</context>
-<context>
     <name>LC_LineJoinOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_line_join_options_filler.cpp" line="35"/>
@@ -17639,85 +16196,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
         <location filename="../src/ui/action_options/line/lc_line_parallel_through_options_widget.ui" line="121"/>
         <source>Within</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_LinePointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Controls how points on the edges (start/end points) should be created.</source>
-        <translation type="vanished">Kontrolliert, wie Punkte an den Kanten (Start-/Endpunkte) erstellt werden sollen.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Keine</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Ende</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Entfernung von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Number of points to create</source>
-        <translation type="vanished">Anzahl der zu erstellenden Punkte</translation>
-    </message>
-    <message>
-        <source>Edge Points:</source>
-        <translation type="vanished">Randpunkte:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</source>
-        <translation type="vanished">Gibt an, ob alle Punkte zwischen Start-/Endpunkt der Linie passen oder ob die Länge der Linie anhand der Anzahl der Punkte und der Entfernung zwischen Punkten berechnet wird.</translation>
-    </message>
-    <message>
-        <source>Fit Line</source>
-        <translation type="vanished">Passende Linie</translation>
-    </message>
-    <message>
-        <source>Distance between points.</source>
-        <translation type="vanished">Abstand zwischen Punkten.</translation>
-    </message>
-    <message>
-        <source>If checked, line of points will be drawn with specified angle</source>
-        <translation type="vanished">Wird geprüft, wird die Punktlinie mit vorgegebenem Winkel gezeichnet</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Number of points:</source>
-        <translation type="vanished">Anzahl der Punkte:</translation>
-    </message>
-    <message>
-        <source>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</source>
-        <translation type="vanished">Wird geprüft, wird ein fester vorgegebener Abstand zwischen Punkten verwendet. Andernfalls wird der Abstand berechnet.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Behobene Entfernung</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Winkel der Linie</translation>
     </message>
 </context>
 <context>
@@ -21967,433 +20445,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MenuFactory</name>
-    <message>
-        <source>&amp;Help</source>
-        <translation type="vanished">&amp;Help</translation>
-    </message>
-    <message>
-        <source>On&amp;line Docs</source>
-        <translation type="vanished">&amp;Online-Dokumentation</translation>
-    </message>
-    <message>
-        <source>&amp;Wiki</source>
-        <translation type="vanished">&amp;Wiki</translation>
-    </message>
-    <message>
-        <source>User&apos;s &amp;Manual</source>
-        <translation type="vanished">Benutzerhandbuch</translation>
-    </message>
-    <message>
-        <source>&amp;Commands</source>
-        <translation type="vanished">&amp;Commands</translation>
-    </message>
-    <message>
-        <source>&amp;Style Sheets</source>
-        <translation type="vanished">&amp;Style Blätter</translation>
-    </message>
-    <message>
-        <source>Wid&amp;gets</source>
-        <translation type="vanished">Wid&amp;gets</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation type="vanished">Über uns</translation>
-    </message>
-    <message>
-        <source>&amp;Forum</source>
-        <translation type="vanished">&amp;Forum</translation>
-    </message>
-    <message>
-        <source>Zulip &amp;Chat</source>
-        <translation type="vanished">Zulip &amp; Chat</translation>
-    </message>
-    <message>
-        <source>&amp;Submit Error</source>
-        <translation type="vanished">und Fehler melden</translation>
-    </message>
-    <message>
-        <source>&amp;Request Feature</source>
-        <translation type="vanished">Funktion anfordern</translation>
-    </message>
-    <message>
-        <source>&amp;Releases Page</source>
-        <translation type="vanished">Seite nicht gefunden</translation>
-    </message>
-    <message>
-        <source>&amp;Donate</source>
-        <translation type="vanished">&amp;Spenden</translation>
-    </message>
-    <message>
-        <source>&amp;Line</source>
-        <translation type="vanished">&amp;Linie</translation>
-    </message>
-    <message>
-        <source>Poin&amp;t</source>
-        <translation type="vanished">Geflügel</translation>
-    </message>
-    <message>
-        <source>&amp;Circle</source>
-        <translation type="vanished">&amp;Circle</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="vanished">und Bogen</translation>
-    </message>
-    <message>
-        <source>Poly&amp;gon</source>
-        <translation type="vanished">Poly&amp;gon</translation>
-    </message>
-    <message>
-        <source>Splin&amp;e</source>
-        <translation type="vanished">Splin&amp;E</translation>
-    </message>
-    <message>
-        <source>Ellip&amp;se</source>
-        <translation type="vanished">Ellip&amp;S</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="vanished">&amp;Polylin</translation>
-    </message>
-    <message>
-        <source>&amp;Other</source>
-        <translation type="vanished">&amp; weiter</translation>
-    </message>
-    <message>
-        <source>&amp;Draw</source>
-        <translation type="vanished">und</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse</source>
-        <translation type="vanished">&amp; Ellipse</translation>
-    </message>
-    <message>
-        <source>Ot&amp;her</source>
-        <translation type="vanished">Vgl</translation>
-    </message>
-    <message>
-        <source>&amp;Modify</source>
-        <translation type="vanished">&amp;Modifikation</translation>
-    </message>
-    <message>
-        <source>&amp;Order</source>
-        <translation type="vanished">&amp;Ordner</translation>
-    </message>
-    <message>
-        <source>&amp;Dimensions</source>
-        <translation type="vanished">&amp;Maßnahmen</translation>
-    </message>
-    <message>
-        <source>&amp;Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>&amp;Tools</source>
-        <translation type="vanished">&amp;Tools</translation>
-    </message>
-    <message>
-        <source>&amp;Select</source>
-        <translation type="vanished">&amp;Auswählen</translation>
-    </message>
-    <message>
-        <source>Dime&amp;nsion</source>
-        <translation type="vanished">Dime&amp;nction</translation>
-    </message>
-    <message>
-        <source>&amp;File</source>
-        <translation type="vanished">&amp;File</translation>
-    </message>
-    <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Letzte Dateien</translation>
-    </message>
-    <message>
-        <source>Import</source>
-        <translation type="vanished">Einfuhr</translation>
-    </message>
-    <message>
-        <source>Export</source>
-        <translation type="vanished">Ausfuhr</translation>
-    </message>
-    <message>
-        <source>&amp;Options</source>
-        <translation type="vanished">und Optionen</translation>
-    </message>
-    <message>
-        <source>&amp;Edit</source>
-        <translation type="vanished">&amp; Bearbeiten</translation>
-    </message>
-    <message>
-        <source>&amp;View</source>
-        <translation type="vanished">&amp;Ansicht</translation>
-    </message>
-    <message>
-        <source>&amp;Views Restore</source>
-        <translation type="vanished">Ansichten wiederherstellen</translation>
-    </message>
-    <message>
-        <source>Pl&amp;ugins</source>
-        <translation type="vanished">Pl&amp;uges</translation>
-    </message>
-    <message>
-        <source>&amp;Workspace</source>
-        <translation type="vanished">&amp;Workspace</translation>
-    </message>
-    <message>
-        <source>Dock Areas</source>
-        <translation type="vanished">Dockbereiche</translation>
-    </message>
-    <message>
-        <source>CAD Wid&amp;gets</source>
-        <translation type="vanished">CAD-Widgets</translation>
-    </message>
-    <message>
-        <source>&amp;Drawings</source>
-        <translation type="vanished">&amp;Drawings</translation>
-    </message>
-    <message>
-        <source>Context</source>
-        <translation type="vanished">Kontext</translation>
-    </message>
-    <message>
-        <source>Toolbars</source>
-        <translation type="vanished">Werkzeugmaschinen</translation>
-    </message>
-    <message>
-        <source>Widgets</source>
-        <translation type="vanished">Widgets</translation>
-    </message>
-    <message>
-        <source>CAD Widgets</source>
-        <translation type="vanished">CAD-Widgets</translation>
-    </message>
-    <message>
-        <source>CAD Toolbars</source>
-        <translation type="vanished">CAD-Tools</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation type="vanished">Wählen</translation>
-    </message>
-    <message>
-        <source>Recent</source>
-        <translation type="vanished">Vor kurzem</translation>
-    </message>
-    <message>
-        <source>Modify</source>
-        <translation type="vanished">Änderung</translation>
-    </message>
-    <message>
-        <source>Modify More</source>
-        <translation type="vanished">Mehr ändern</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="vanished">Zeichnung</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linie</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punkt</translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Kreis</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Bogen</translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="vanished">Polygon</translation>
-    </message>
-    <message>
-        <source>Polyline/Spline</source>
-        <translation type="vanished">Polylin/Spline</translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipsen</translation>
-    </message>
-    <message>
-        <source>Other</source>
-        <translation type="vanished">Sonstige</translation>
-    </message>
-    <message>
-        <source>Add Dimensions</source>
-        <translation type="vanished">Abmessungen hinzufügen</translation>
-    </message>
-    <message>
-        <source>Align</source>
-        <translation type="vanished">Ausrichtung</translation>
-    </message>
-    <message>
-        <source>Draw Order</source>
-        <translation type="vanished">Zeichnungsauftrag</translation>
-    </message>
-    <message>
-        <source>Layers</source>
-        <translation type="vanished">Ebenen</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="vanished">Bearbeiten</translation>
-    </message>
-    <message>
-        <source>Options</source>
-        <translation type="vanished">Optionen</translation>
-    </message>
-    <message>
-        <source>&amp;Named Views</source>
-        <translation type="vanished">Benannte Ansichten</translation>
-    </message>
-    <message>
-        <source>Edit Properties</source>
-        <translation type="vanished">Eigenschaften bearbeiten</translation>
-    </message>
-    <message>
-        <source>Modify Generic</source>
-        <translation type="vanished">Generika ändern</translation>
-    </message>
-    <message>
-        <source>Modify Line</source>
-        <translation type="vanished">Änderung der Linie</translation>
-    </message>
-    <message>
-        <source>Draw Line</source>
-        <translation type="vanished">Zuglinie</translation>
-    </message>
-    <message>
-        <source>Draw Circle</source>
-        <translation type="vanished">Kreis zeichnen</translation>
-    </message>
-    <message>
-        <source>Draw Other</source>
-        <translation type="vanished">Sonstiges</translation>
-    </message>
-    <message>
-        <source>Modify Circle</source>
-        <translation type="vanished">Kreis ändern</translation>
-    </message>
-    <message>
-        <source>Modify Arc</source>
-        <translation type="vanished">Arc ändern</translation>
-    </message>
-    <message>
-        <source>Modify Polyline</source>
-        <translation type="vanished">Polyline ändern</translation>
-    </message>
-    <message>
-        <source>Modify Spline</source>
-        <translation type="vanished">Spline ändern</translation>
-    </message>
-    <message>
-        <source>Modify Spline Points</source>
-        <translation type="vanished">Spline-Punkte ändern</translation>
-    </message>
-    <message>
-        <source>Modify Text</source>
-        <translation type="vanished">Text ändern</translation>
-    </message>
-    <message>
-        <source>Modify MText</source>
-        <translation type="vanished">MText ändern</translation>
-    </message>
-    <message>
-        <source>Edit Block</source>
-        <translation type="vanished">Zurück zur Übersicht</translation>
-    </message>
-    <message>
-        <source>Order</source>
-        <translation type="vanished">Ordnung</translation>
-    </message>
-    <message>
-        <source>&amp;Toolbars</source>
-        <translation type="vanished">&amp;Toolbars</translation>
-    </message>
-    <message>
-        <source>&amp;CAD Toolbars</source>
-        <translation type="vanished">&amp;CAD-Tools</translation>
-    </message>
-    <message>
-        <source>&amp;Workspaces</source>
-        <translation type="vanished">&amp;Workspaces</translation>
-    </message>
-    <message>
-        <source>Ta&amp;b mode</source>
-        <translation type="vanished">Ta&amp;b-Modus</translation>
-    </message>
-    <message>
-        <source>&amp;Window mode</source>
-        <translation type="vanished">&amp;Window Modus</translation>
-    </message>
-    <message>
-        <source>&amp;Layout</source>
-        <translation type="vanished">&amp;Layout</translation>
-    </message>
-    <message>
-        <source>Rounded</source>
-        <translation type="vanished">Rund</translation>
-    </message>
-    <message>
-        <source>Triangular</source>
-        <translation type="vanished">Dreieck</translation>
-    </message>
-    <message>
-        <source>North</source>
-        <translation type="vanished">Nord</translation>
-    </message>
-    <message>
-        <source>South</source>
-        <translation type="vanished">Süd</translation>
-    </message>
-    <message>
-        <source>East</source>
-        <translation type="vanished">Ost</translation>
-    </message>
-    <message>
-        <source>West</source>
-        <translation type="vanished">West</translation>
-    </message>
-    <message>
-        <source>&amp;Arrange</source>
-        <translation type="vanished">&amp; Anordnen</translation>
-    </message>
-    <message>
-        <source>&amp;Maximized</source>
-        <translation type="vanished">&amp;Maximal</translation>
-    </message>
-    <message>
-        <source>&amp;Cascade</source>
-        <translation type="vanished">&amp;Cascade</translation>
-    </message>
-    <message>
-        <source>&amp;Tile</source>
-        <translation type="vanished">&amp;Kacheln</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Vertically</source>
-        <translation type="vanished">Fliessen &amp;Vertikal</translation>
-    </message>
-    <message>
-        <source>Tile &amp;Horizontally</source>
-        <translation type="vanished">Fliesen &amp;Horizontal</translation>
-    </message>
-</context>
-<context>
     <name>LC_MenuFactoryBase</name>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_base.cpp" line="55"/>
@@ -23009,21 +21060,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
     </message>
 </context>
 <context>
-    <name>LC_MidLineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Pick offset from drawing</source>
-        <translation type="vanished">Pick Offset aus Zeichnung</translation>
-    </message>
-</context>
-<context>
     <name>LC_MirrorOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_filler.cpp" line="31"/>
@@ -23160,197 +21196,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
     </message>
 </context>
 <context>
-    <name>LC_ModifyAlignRefOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute für gespiegelte Einheiten verwendet, andernfalls - Originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Wenn nicht überprüft, werden Original-Einheiten entfernt, sonst werden sie überleben.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Wenn überprüft, werden Spiegeleinheiten auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Benutzer aktuelle Ebene</translation>
-    </message>
-    <message>
-        <source>If checked, entities will be scaled if necessary. Otherwise, they will be just positioned and rotated.</source>
-        <translation type="vanished">Falls überprüft, werden die Einheiten nach Bedarf skaliert. Ansonsten werden sie einfach positioniert und gedreht.</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Skala</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyBreakDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </source>
-        <translation type="vanished">Wenn überprüft, werden Abtrennungen zwischen Kreuzungspunkten entfernt. Wenn nicht überprüft - die Entitiy wird in Schnittpunkte geteilt.</translation>
-    </message>
-    <message>
-        <source>Remove Segments</source>
-        <translation type="vanished">Segmente entfernen</translation>
-    </message>
-    <message>
-        <source>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </source>
-        <translation type="vanished">Wenn überprüft, wird ausgewähltes Segment entfernt. Ansonsten wird das ausgewählte Segment überleben und die restlichen Segmente werden entfernt.</translation>
-    </message>
-    <message>
-        <source>Remove Selected</source>
-        <translation type="vanished">Ausgewählt entfernen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyGapOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Snap Distance:</source>
-        <translation type="vanished">Snap Entfernung:</translation>
-    </message>
-    <message>
-        <source>Snap point of gap to line snap point</source>
-        <translation type="vanished">Schnapppunkt des Spaltes zur Linie Schnapppunkt</translation>
-    </message>
-    <message>
-        <source>Line Snap:</source>
-        <translation type="vanished">Linien-Rasterausrichtung:</translation>
-    </message>
-    <message>
-        <source>Gap Size:</source>
-        <translation type="vanished">Größe:</translation>
-    </message>
-    <message>
-        <source>Snap point for gap on the line</source>
-        <translation type="vanished">Rastpunkt für Lücke auf der Linie</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Kostenlos</translation>
-    </message>
-    <message>
-        <source>Gap Snap:</source>
-        <translation type="vanished">Abstands-Rasterausrichtung:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>gap</comment>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>gap</comment>
-        <translation type="vanished">Mittel</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>gap</comment>
-        <translation type="vanished">Ende</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <comment>snap</comment>
-        <translation type="vanished">Kostenlos</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <comment>snap</comment>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <comment>snap</comment>
-        <translation type="vanished">Mittel</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <comment>snap</comment>
-        <translation type="vanished">Ende</translation>
-    </message>
-    <message>
-        <source>PIck gap size from drawing</source>
-        <translation type="vanished">PIck Lückengröße aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Distance from snap point</source>
-        <translation type="vanished">Entfernung von Schnapppunkt</translation>
-    </message>
-    <message>
-        <source>Pick snap distance from drawing</source>
-        <translation type="vanished">Schnappabstand von Zeichnung</translation>
-    </message>
-    <message>
-        <source>Size of the gap, if not free</source>
-        <translation type="vanished">Größe der Lücke, wenn nicht frei</translation>
-    </message>
-    <message>
-        <source>If cheched, the size of the gap is determined by mouse</source>
-        <translation type="vanished">Wird gechelt, wird die Größe der Lücke durch Maus bestimmt</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyMirrorOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, mirror will be performed by selected line entity.</source>
-        <translation type="vanished">Wenn überprüft, wird Spiegel durch ausgewählte Zeileneinheit ausgeführt.</translation>
-    </message>
-    <message>
-        <source>Mirror to selected line</source>
-        <translation type="vanished">Spiegel zur ausgewählten Linie</translation>
-    </message>
-    <message>
-        <source>If unchecked, original entities will be removed, otherwise they will survive.</source>
-        <translation type="vanished">Wenn nicht überprüft, werden Original-Einheiten entfernt, sonst werden sie überleben.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute für gespiegelte Einheiten verwendet, andernfalls - Originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Wenn überprüft, werden Spiegeleinheiten auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Benutzer aktuelle Ebene</translation>
-    </message>
-</context>
-<context>
     <name>LC_ModifyMirrorOptionsWidget</name>
     <message>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="14"/>
@@ -23396,234 +21241,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
         <location filename="../src/ui/action_options/modify/lc_mirror_options_widget.ui" line="85"/>
         <source>User Current Layer</source>
         <translation type="unfinished">Aktuelle Ebene verwenden</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Optionen verschieben</translation>
-    </message>
-    <message>
-        <source>Free selection of factor should be performed by mouse if checked.</source>
-        <translation type="vanished">Freie Auswahl des Faktors sollte mit der Maus durchgeführt werden, wenn überprüft.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Kostenlos</translation>
-    </message>
-    <message>
-        <source>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Wenn überprüft, werden neue Enties auf der aktuellen Schicht platziert, sonst werden sie in ursprünglichen Schichten.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktuelle Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>If absolute, reference point will be rotated but entity will be rotated by second angle only, otherwise angles will summ up</source>
-        <translation type="vanished">Wenn absolut, Referenzpunkt wird gedreht, aber Einheit wird nur um den zweiten Winkel gedreht, ansonsten Winkel summiert sich</translation>
-    </message>
-    <message>
-        <source>Absolute</source>
-        <translation type="vanished">Absolut</translation>
-    </message>
-    <message>
-        <source>Angle to rotate entity around rotation center point</source>
-        <translation type="vanished">Winkel, um die Einheit um Drehpunkt drehen</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, othewise original ones will be used. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute auf erstellte Einheiten angewendet, othewise Originale werden verwendet.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, second rotation is around reference point</source>
-        <translation type="vanished">Wenn überprüft, ist die zweite Drehung um Referenzpunkt</translation>
-    </message>
-    <message>
-        <source>Rotate twice</source>
-        <translation type="vanished">Zweimal drehen</translation>
-    </message>
-    <message>
-        <source>Angle for additional rotation around refrence point</source>
-        <translation type="vanished">Winkel für zusätzliche Drehung um Refrence Punkt</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Drehwinkel der Zeichnung</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will be survive, otherwise they will be removed.</source>
-        <translation type="vanished">Wenn sie überprüft werden, werden Original-Einheiten überleben, sonst werden sie entfernt.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>Multiple copies will be created if checked.</source>
-        <translation type="vanished">Mehrere Kopien werden erstellt, wenn überprüft.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mehrere Kopien</translation>
-    </message>
-    <message>
-        <source>Rotation Angle:</source>
-        <translation type="vanished">Drehwinkel:</translation>
-    </message>
-    <message>
-        <source>Specifies whether angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Gibt an, ob der Winkel durch eingegebenen Wert oder durch Mausposition definiert wird</translation>
-    </message>
-    <message>
-        <source>Pick second rotation angle from drawing</source>
-        <translation type="vanished">Wählen Sie den zweiten Drehwinkel aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl der Exemplare</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyScaleOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Optionen verschieben</translation>
-    </message>
-    <message>
-        <source>Y:</source>
-        <translation type="vanished">Y:</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created.</source>
-        <translation type="vanished">Wenn überprüft, werden mehrere Kopien erstellt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mehrere Kopien</translation>
-    </message>
-    <message>
-        <source>X:</source>
-        <translation type="vanished">X:</translation>
-    </message>
-    <message>
-        <source>If checked, the same scaling factor for X and Y axis will be applied.</source>
-        <translation type="vanished">Wenn überprüft, wird der gleiche Skalierungsfaktor für X und Y-Achse angewendet.</translation>
-    </message>
-    <message>
-        <source>Isotropic</source>
-        <translation type="vanished">Isotrop</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Wenn sie überprüft werden, werden Original-Entitäten überleben, sonst werden sie entfernt.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl der Exemplare</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute auf erstellte Einheiten angewendet, sonst werden Originale verwendet.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Scale factor for Y axis</source>
-        <translation type="vanished">Skalenfaktor für Y-Achse</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Skalenfaktor:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed to original layers. </source>
-        <translation type="vanished">Wenn überprüft, erstellte Entitäten werden auf aktuelle Ebene platziert. Ansonsten werden sie auf ursprüngliche Schichten gelegt.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktuelle Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, factor will be freely selected by mouse. Otherwise, specified values of factors will be used.</source>
-        <translation type="vanished">Wenn überprüft, wird der Faktor frei durch Maus ausgewählt. Andernfalls werden bestimmte Werte von Faktoren verwendet.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Kostenlos</translation>
-    </message>
-    <message>
-        <source>Scale factor for X axis</source>
-        <translation type="vanished">Skalenfaktor für X-Achse</translation>
-    </message>
-</context>
-<context>
-    <name>LC_ModifyStretchOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Wenn sie überprüft werden, werden Original-Entitäten überleben, sonst werden sie entfernt.</translation>
-    </message>
-    <message>
-        <source>Keep originals</source>
-        <translation type="vanished">Originale halten</translation>
-    </message>
-</context>
-<context>
-    <name>LC_MoveOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </source>
-        <translation type="vanished">Wenn überprüft, erstellte Entitäten werden auf aktuelle Ebene platziert. Ansonsten werden sie in Originalschichten gelegt.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktuelle Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl der Exemplare</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute auf erstellte Entitäten angewendet, werden im Übrigen Originale verwendet.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed.</source>
-        <translation type="vanished">Wenn sie überprüft werden, werden Original-Entitäten überleben, sonst werden sie entfernt.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Wenn überprüft, werden mehrere Kopien erstellt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mehrere Kopien</translation>
     </message>
 </context>
 <context>
@@ -23939,14 +21556,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="81"/>
         <source>...</source>
         <translation>...</translation>
-    </message>
-    <message>
-        <source>Filtering views by name</source>
-        <translation type="vanished">Blicke nach Namen filtern</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/views_list/lc_namedviewslistwidget.ui" line="55"/>
@@ -24382,45 +21991,6 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <source>Control Points</source>
         <translation>Kontrollpunkte</translation>
     </message>
-    <message>
-        <source>Parabola control points cannot be collinear</source>
-        <translation type="vanished">Parabola-Kontrollpunkte können nicht kollinear sein</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteToPointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>If selected, the point entity used as insertion point will be deleted after paste operation. Otherwise, it will survive.</source>
-        <translation type="vanished">Wenn ausgewählt, wird die als Insertionsstelle verwendete Punkteinheit nach dem Pastenbetrieb gelöscht. Sonst wird es überleben.</translation>
-    </message>
-    <message>
-        <source>Remove point</source>
-        <translation type="vanished">Entfernen von Punkt</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skalenfaktor</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Skalenfaktor für vergangene Unternehmen</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Drehwinkel für vergangene Einheiten</translation>
-    </message>
 </context>
 <context>
     <name>LC_PasteToPointsOptionsFiller</name>
@@ -24496,89 +22066,6 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <location filename="../src/ui/action_options/edit/lc_paste_to_points_options_widget.ui" line="143"/>
         <source>Pick angle from drawing</source>
         <translation type="unfinished">Pickwinkel aus Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PasteTransformOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Rotation angle for pasted entities</source>
-        <translation type="vanished">Drehwinkel für vergangene Einheiten</translation>
-    </message>
-    <message>
-        <source>Spacing between entities insertion points in rows. </source>
-        <translation type="vanished">Spazieren zwischen Entitäten Insertionsstellen in Zeilen.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by X from drawing</source>
-        <translation type="vanished">Wählen Sie Array-Abstand von X aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skalenfaktor</translation>
-    </message>
-    <message>
-        <source>Pick array angle from drawing</source>
-        <translation type="vanished">Wählen Sie den Arraywinkel aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Rotation angle for array.</source>
-        <translation type="vanished">Drehwinkel für Array.</translation>
-    </message>
-    <message>
-        <source>Array rows number.</source>
-        <translation type="vanished">Array Zeilennummer.</translation>
-    </message>
-    <message>
-        <source>Pick array spacing by Y from drawing</source>
-        <translation type="vanished">Auswählen von Array-Abständen von Y aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </source>
-        <translation type="vanished">Bei der Überprüfung wird für jede einzelne Paste und ganze Array der gleiche Drehwinkel verwendet. Ansonsten werden verschiedene Winkel verwendet.</translation>
-    </message>
-    <message>
-        <source>Same Angles</source>
-        <translation type="vanished">Gleiche Winkel</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Raum:</translation>
-    </message>
-    <message>
-        <source>Array columns number.</source>
-        <translation type="vanished">Array Spaltennummer.</translation>
-    </message>
-    <message>
-        <source>If checked, arrays of copies will be created on paste.</source>
-        <translation type="vanished">Wenn Sie geprüft werden, werden Kopien auf Paste erstellt.</translation>
-    </message>
-    <message>
-        <source>Array</source>
-        <translation type="vanished">Array</translation>
-    </message>
-    <message>
-        <source>Array Angle:</source>
-        <translation type="vanished">Array-Winkel:</translation>
-    </message>
-    <message>
-        <source>Scale factor for pasted entities</source>
-        <translation type="vanished">Skalenfaktor für vergangene Unternehmen</translation>
-    </message>
-    <message>
-        <source>Spacing between insertion points of entities in columns.</source>
-        <translation type="vanished">Zwischen Einfügungsstellen von Einheiten in Spalten.</translation>
     </message>
 </context>
 <context>
@@ -25200,17 +22687,9 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <translation>Name der Linie</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="vanished">Farben</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="66"/>
         <source>Background color for pen element currently edited in pen&apos;s table</source>
         <translation>Hintergrundfarbe für Stift-Element derzeit in der Stift-Tabelle bearbeitet</translation>
-    </message>
-    <message>
-        <source>Color of grid for pens list</source>
-        <translation type="vanished">Farbe des Gitters für Stifte Liste</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="32"/>
@@ -25232,10 +22711,6 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="79"/>
         <source>Entire table row is bold for active pen</source>
         <translation>Gesamte Tischzeile ist fett für aktiven Stift</translation>
-    </message>
-    <message>
-        <source>Grid Color:</source>
-        <translation type="vanished">Grid Farbe:</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="96"/>
@@ -25328,17 +22803,9 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <translation>Natürlicher Name, soweit möglich</translation>
     </message>
     <message>
-        <source>If selected, additional messages will be show as part of pen related operations</source>
-        <translation type="vanished">Wenn Sie ausgewählt werden, werden zusätzliche Meldungen im Rahmen von Pen-bezogene Operationen angezeigt</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="280"/>
         <source>Show info message if no entities may be selected by pen</source>
         <translation>Zeige Info-Nachricht, wenn keine Entitäten durch Stift ausgewählt werden können</translation>
-    </message>
-    <message>
-        <source>On double click on table item</source>
-        <translation type="vanished">Auf Doppelklick auf den Tischartikel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_penpaletteoptionsdialog.ui" line="162"/>
@@ -25563,12 +23030,6 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
 
 Bitte beachten Sie: Wenn Sie den Stift über den Editor ohne Neustart speichern, werden die aktuellen Stifte aus der Palette in der neuen Datei gespeichert und der vorhandene Inhalt überschrieben.</translation>
     </message>
-    <message>
-        <source>Location of pens file is changed, please restart the application so new pens file will be used.
-Please note that if you&apos;ll save pen via editor without restart, current pens from palette will be saved in the new file and therefore existing content of it will be overridden.</source>
-        <translation type="vanished">Der Speicherort der Stiftdatei wurde geändert. Bitte starten Sie die Anwendung neu, damit die neue Stiftdatei verwendet wird.
-Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart die aktuellen Stifte aus der Palette in der neuen Datei gespeichert werden, wodurch der vorhandene Inhalt überschrieben wird.</translation>
-    </message>
 </context>
 <context>
     <name>LC_PointPickButton</name>
@@ -25614,37 +23075,6 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_point.ui" line="103"/>
         <source>Pick position from the drawing</source>
         <translation>Pick-Position aus der Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>LC_PointsLatticeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Number of points by lattice Y direction (count of lattice rows)</source>
-        <translation type="vanished">Anzahl der Punkte durch Gitter Y-Richtung (Gegenzähl von Gitterzeilen)</translation>
-    </message>
-    <message>
-        <source>Rows Count:</source>
-        <translation type="vanished">Anzahl der Zeilen:</translation>
-    </message>
-    <message>
-        <source>Columns Count:</source>
-        <translation type="vanished">Anzahl der Spalten:</translation>
-    </message>
-    <message>
-        <source>Number of points by X lattice direction (count of lattice columns)</source>
-        <translation type="vanished">Anzahl der Punkte durch X-Gitterrichtung (Gegenzähl der Gittersäulen)</translation>
-    </message>
-    <message>
-        <source>If selected, last point of lattice will be adjusted accoriding to position of first point, so lattice will be rect or quadrangle</source>
-        <translation type="vanished">Wenn Sie ausgewählt werden, wird der letzte Punkt des Gitters entsprechend der Position des ersten Punktes angepasst, so wird das Gitter gleich oder quadratisch sein</translation>
-    </message>
-    <message>
-        <source>Adjust last point to first</source>
-        <translation type="vanished">Letzter Punkt zuerst anpassen</translation>
     </message>
 </context>
 <context>
@@ -32911,10 +30341,6 @@ Beachten Sie, dass beim Speichern eines Stifts über den Editor ohne Neustart di
         <translation>Durchmesser</translation>
     </message>
     <message>
-        <source>Circumference</source>
-        <translation type="vanished">Kumulierung</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="615"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="633"/>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="740"/>
@@ -33903,10 +31329,6 @@ p, li { white-space: pre-wrap; }
         <translation>Informationen zum Eintritt</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be show in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;head/&gt;&lt;body&gt;&gt; Falls ausgewählt, werden ausführlichere Informationen über Linien und Bögen, die Teil der Polylinie sind, in Entity Info widget.&lt;br/&gt; Ansonsten werden nur Informationen über Vertexe/Bulges angezeigt.&lt;/p&gt;/body&gt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui" line="81"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If selected, more detailed information about lines and arcs that are part of polyline will be shown in Entity Info widget.&lt;br/&gt;Otherwise, only information about vertexes/bulges will be displayed.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Wenn aktiviert, werden im Entitätsinformations-Widget detailliertere Informationen zu Linien und Bögen, die Teil einer Polylinie sind, angezeigt.&lt;br/&gt;Andernfalls werden nur Informationen zu Stützpunkten/Auswölbungen angezeigt.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
@@ -33955,205 +31377,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp" line="44"/>
         <source>Points highlight pen</source>
         <translation>Punkte markieren Stift</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle1PointOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Kanten:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap point should be shifted by radius of corners.</source>
-        <translation type="vanished">Wenn überprüft, gibt an, dass der Schnapppunkt um den Radius der Ecken verschoben werden sollte.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Snap-Shift</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for Y direction. </source>
-        <translation type="vanished">Länge der Schräge Ecke für Y Richtung.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definiert, welche Kanten des Rechtecks gezogen werden sollen (so ist es möglich, nur zwei parallele Linien anstelle des Rechtecks zu erstellen)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontal</translation>
-    </message>
-    <message>
-        <source>Width of rectangle</source>
-        <translation type="vanished">Breite des Rechtecks</translation>
-    </message>
-    <message>
-        <source>Controls how corners of rectangle should be drawn.</source>
-        <translation type="vanished">Kontrolliert, wie Ecken des Rechtecks gezogen werden sollten.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Gerade</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rund</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Art</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated on specified angle.</source>
-        <translation type="vanished">Wird überprüft, wird das Rechteck auf vorgegebenem Winkel gedreht.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Basiswinkel:</translation>
-    </message>
-    <message>
-        <source>If checked, specified height and width of rectangle defines distance between centers of arcs for rounding corners. Otherwise, these values defines outer size of the rectangle.</source>
-        <translation type="vanished">Wenn überprüft, definiert vorgegebene Höhe und Breite des Rechtecks den Abstand zwischen den Mittelpunkten der Bögen für Rundungsecken. Andernfalls definieren diese Werte die äußere Größe des Rechtecks.</translation>
-    </message>
-    <message>
-        <source>Size inner</source>
-        <translation type="vanished">Größe innen</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Länge Y:</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be created as polyline instead of individual segments.</source>
-        <translation type="vanished">Wenn überprüft, wird Rechteck als Polylinie anstelle einzelner Segmente erstellt.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-    <message>
-        <source>Snap:</source>
-        <translation type="vanished">Snap:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Höhe:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Length of bevel corner for X direction. </source>
-        <translation type="vanished">Länge der Schräge Ecke für X Richtung.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Länge X:</translation>
-    </message>
-    <message>
-        <source>Height of rectangle</source>
-        <translation type="vanished">Höhe des Rechtecks</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Radius von abgerundeten Ecken.</translation>
-    </message>
-    <message>
-        <source>Point of rectangle wich will be placed to insertion point.</source>
-        <translation type="vanished">Punkt des Rechtecks, der zum Einsteckpunkt platziert wird.</translation>
-    </message>
-    <message>
-        <source>Top-left</source>
-        <translation type="vanished">Top-links</translation>
-    </message>
-    <message>
-        <source>Top</source>
-        <translation type="vanished">Top</translation>
-    </message>
-    <message>
-        <source>Top-right</source>
-        <translation type="vanished">Top-right</translation>
-    </message>
-    <message>
-        <source>Left</source>
-        <translation type="vanished">Links</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mittel</translation>
-    </message>
-    <message>
-        <source>Right</source>
-        <translation type="vanished">Richtig</translation>
-    </message>
-    <message>
-        <source>Bottom-left</source>
-        <translation type="vanished">Unten links</translation>
-    </message>
-    <message>
-        <source>Bottom</source>
-        <translation type="vanished">Boden</translation>
-    </message>
-    <message>
-        <source>Bottom-right</source>
-        <translation type="vanished">Unten rechts</translation>
-    </message>
-    <message>
-        <source>Pick rotation angle from drawing</source>
-        <translation type="vanished">Drehwinkel der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Wählen Sie Radius von abgerundeten Ecken aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Drehwinkel</translation>
-    </message>
-    <message>
-        <source>Pick height of rectangle from drawing</source>
-        <translation type="vanished">Pickhöhe des Rechtecks aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick width of rectangle from drawing</source>
-        <translation type="vanished">Breite des Rechtecks aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Breite:</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Corners:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for X direction from drawing.</source>
-        <translation type="vanished">Pick Länge der Schräge Ecke für X Richtung aus Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel corner for Y direction from drawing.</source>
-        <translation type="vanished">Wählen Sie die Länge der Schräge Ecke für Y Richtung aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>If checked, angle will be specified by mouse position. Otherwise, specified value will be used.</source>
-        <translation type="vanished">Wenn überprüft, wird der Winkel durch die Mausposition angegeben. Ansonsten wird der angegebene Wert verwendet.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Kostenlos</translation>
     </message>
 </context>
 <context>
@@ -34523,153 +31746,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_Rectangle2PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definiert, welche Kanten des Rechtecks gezogen werden sollen (so ist es möglich, nur zwei parallele Linien anstelle des Rechtecks zu erstellen)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontal</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into start point position.</source>
-        <translation type="vanished">Definiert, welcher Punkt des Rechtecks sollte in die Startpunktposition gesetzt werden.</translation>
-    </message>
-    <message>
-        <source>Corner</source>
-        <translation type="vanished">Corner</translation>
-    </message>
-    <message>
-        <source>Mid-Vertical</source>
-        <translation type="vanished">Mittenvertikal</translation>
-    </message>
-    <message>
-        <source>Mid-Horizontal</source>
-        <translation type="vanished">Mittel-Horizontal</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mittel</translation>
-    </message>
-    <message>
-        <source>Pick rectangle rotation angle from drawing</source>
-        <translation type="vanished">Wählen Sie Rechteck-Drehwinkel aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing. </source>
-        <translation type="vanished">Wählen Sie Radius von abgerundeten Ecken aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Corners:</translation>
-    </message>
-    <message>
-        <source>Defines which point of rectangle should be placed into end point position. </source>
-        <translation type="vanished">Definiert, welcher Punkt des Rechtecks sollte in die Endpunktposition gesetzt werden.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Wählen Sie die Länge der Schräge in X-Richtung aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Kanten:</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing. </source>
-        <translation type="vanished">Wählen Sie die Länge der Schräge in Y Richtung aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Start Snap:</source>
-        <translation type="vanished">Starten Sie Snap:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Länge der Schräge in Y-Richtung.</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Wenn überprüft, gibt an, dass Schnapppunkte um den Radius der Ecken verschoben werden sollten.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Snap-Shift</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Länge X:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, allows to specify rotation angle for rectangle.</source>
-        <translation type="vanished">Wenn überprüft, können Sie den Drehwinkel für das Rechteck angeben.</translation>
-    </message>
-    <message>
-        <source>Base Angle:</source>
-        <translation type="vanished">Basiswinkel:</translation>
-    </message>
-    <message>
-        <source>Rectangle rotation angle.</source>
-        <translation type="vanished">Rechteck-Drehwinkel.</translation>
-    </message>
-    <message>
-        <source>End Snap:</source>
-        <translation type="vanished">Endpunkt-Ausrichtung:</translation>
-    </message>
-    <message>
-        <source>Defines how corners of rectangle should be drawn. </source>
-        <translation type="vanished">Definiert, wie Ecken des Rechtecks gezogen werden sollten.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Gerade</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rund</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Art</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners. </source>
-        <translation type="vanished">Radius von abgerundeten Ecken.</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Länge Y:</translation>
-    </message>
-    <message>
-        <source>If checked, the entire rectangle will be drawn as polyline.</source>
-        <translation type="vanished">Bei der Prüfung wird das gesamte Rechteck als Polyline gezeichnet.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Länge der Schräge in X-Richtung.</translation>
-    </message>
-</context>
-<context>
     <name>LC_Rectangle2PointsOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_filler.cpp" line="36"/>
@@ -34927,145 +32003,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/rect/lc_rectangle_2points_options_widget.ui" line="361"/>
         <source>Pick length of bevel in Y direction from drawing. </source>
         <translation type="unfinished">Wählen Sie die Länge der Schräge in Y Richtung aus der Zeichnung.</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rectangle3PointsOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Inner angle of quadrangle.</source>
-        <translation type="vanished">Innenwinkel des Vierecks.</translation>
-    </message>
-    <message>
-        <source>If checked, inner angle of quadrangle will be fixed to specified value.</source>
-        <translation type="vanished">Wird geprüft, wird der innere Winkel des Vierecks auf den angegebenen Wert festgelegt.</translation>
-    </message>
-    <message>
-        <source>Fixed Inner Angle:</source>
-        <translation type="vanished">Fester Innenwinkel:</translation>
-    </message>
-    <message>
-        <source>Base angle of rectangle. </source>
-        <translation type="vanished">Grundwinkel des Rechtecks.</translation>
-    </message>
-    <message>
-        <source>Length X:</source>
-        <translation type="vanished">Länge X:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Länge der Schräge in X-Richtung.</translation>
-    </message>
-    <message>
-        <source>Defines how corners should be drawn for rectangle. </source>
-        <translation type="vanished">Definiert, wie Ecken für Rechteck gezogen werden sollten.</translation>
-    </message>
-    <message>
-        <source>Straight</source>
-        <translation type="vanished">Gerade</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rund</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="vanished">Art</translation>
-    </message>
-    <message>
-        <source>Corners:</source>
-        <translation type="vanished">Corners:</translation>
-    </message>
-    <message>
-        <source>If checked, specifies that snap points should be shifted by radius of corners.</source>
-        <translation type="vanished">Wenn überprüft, gibt an, dass Schnapppunkte um den Radius der Ecken verschoben werden sollten.</translation>
-    </message>
-    <message>
-        <source>Snap shift</source>
-        <translation type="vanished">Snap-Shift</translation>
-    </message>
-    <message>
-        <source>Length Y:</source>
-        <translation type="vanished">Länge Y:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Länge der Schräge in Y-Richtung.</translation>
-    </message>
-    <message>
-        <source>Radius of rounded corners.</source>
-        <translation type="vanished">Radius von abgerundeten Ecken.</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>If checked, the shape will be created as polyline. </source>
-        <translation type="vanished">Wenn überprüft, wird die Form als Polyline erstellt.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-    <message>
-        <source>Pick inner angle of quadrangle from drawing.</source>
-        <translation type="vanished">Wählen Sie den inneren Winkel des Quadrats aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Edges:</source>
-        <translation type="vanished">Kanten:</translation>
-    </message>
-    <message>
-        <source>Pick radius of rounded corners from drawing.</source>
-        <translation type="vanished">Wählen Sie Radius von abgerundeten Ecken aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in X direction from drawing.</source>
-        <translation type="vanished">Wählen Sie die Länge der Schräge in X-Richtung aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Pick length of bevel in Y direction from drawing.</source>
-        <translation type="vanished">Wählen Sie die Länge der Schräge in Y Richtung aus der Zeichnung.</translation>
-    </message>
-    <message>
-        <source>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</source>
-        <translation type="vanished">Definiert, welche Kanten des Rechtecks gezogen werden sollen (so ist es möglich, nur zwei parallele Linien anstelle des Rechtecks zu erstellen)</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="vanished">Vertikal</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="vanished">Horizontal</translation>
-    </message>
-    <message>
-        <source>Pick base angle of rectangle from drawing</source>
-        <translation type="vanished">Grundwinkel des Rechtecks aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>If checked, rectangle will be rotated to specified base angle.  Otherwise, base angle will be defined by angle between first and second points of rectangle.</source>
-        <translation type="vanished">Wird überprüft, wird das Rechteck auf den vorgegebenen Grundwinkel gedreht. Ansonsten wird der Grundwinkel durch Winkel zwischen ersten und zweiten Rechteckpunkten definiert.</translation>
-    </message>
-    <message>
-        <source>Fixed Base Angle:</source>
-        <translation type="vanished">Fester Basiswinkel:</translation>
-    </message>
-    <message>
-        <source>If checked, quadrangle will be created instead of rectangle.</source>
-        <translation type="vanished">Wenn überprüft, wird das Quadrat anstelle des Rechtecks erstellt.</translation>
-    </message>
-    <message>
-        <source>Quadrangle</source>
-        <translation type="vanished">Rechteck</translation>
     </message>
 </context>
 <context>
@@ -35714,100 +32651,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>LC_ReleaseChecker</name>
-    <message>
-        <source>Sorry, some network error occurred during checking for new version.</source>
-        <translation type="vanished">Tut mir leid, einige Netzwerkfehler bei der Überprüfung auf neue Version.</translation>
-    </message>
-    <message>
-        <source>Unable to parse response from the server</source>
-        <translation type="vanished">Unfähig, die Antwort vom Server auszugleichen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_Rotate2Options</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Optionen verschieben</translation>
-    </message>
-    <message>
-        <source>Specifies whetether copies will be inserted to current or original layer</source>
-        <translation type="vanished">Gibt an, ob die Papiere in die aktuelle oder ursprüngliche Schicht eingefügt werden</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktuelle Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</source>
-        <translation type="vanished">Stellt den Sekundärwinkel so ein, dass die Summe der Winkel (relativer Drehwinkel) 0 ist. Mit dieser Einstellungseinrichtung wird bewegt, aber nicht gedreht.</translation>
-    </message>
-    <message>
-        <source>Angles mirrored</source>
-        <translation type="vanished">Winkel gespiegelt</translation>
-    </message>
-    <message>
-        <source>Pick primary angle from drawing</source>
-        <translation type="vanished">Hauptwinkel der Zeichnung wählen</translation>
-    </message>
-    <message>
-        <source>Defines whether current or original drawing attributes will be applied</source>
-        <translation type="vanished">Definiert, ob aktuelle oder originelle Zeichenattribute angewendet werden</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Pick secondary angle from drawing</source>
-        <translation type="vanished">Pick sekundärer Winkel aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Angle for rotation over absolute reference point</source>
-        <translation type="vanished">Drehwinkel über absoluten Bezugspunkt</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Wenn überprüft, werden mehrere Kopien erstellt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mehrere Kopien</translation>
-    </message>
-    <message>
-        <source>Number of copies to create</source>
-        <translation type="vanished">Anzahl der zu erstellenden Kopien</translation>
-    </message>
-    <message>
-        <source>Secondary Angle:</source>
-        <translation type="vanished">Sekundärwinkel:</translation>
-    </message>
-    <message>
-        <source>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </source>
-        <translation type="vanished">Wenn überprüft, wird der gleiche Winkel für alle Kopien verwendet. Ansonsten wird sie proportional zur Kopiernummer erhöht.</translation>
-    </message>
-    <message>
-        <source>Same secondary angle for copies</source>
-        <translation type="vanished">Gleicher Sekundärwinkel für Kopien</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Wenn sie überprüft werden, werden Original-Entitäten überleben, sonst werden sie entfernt.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>Primary Angle:</source>
-        <translation type="vanished">Primärwinkel:</translation>
-    </message>
-    <message>
-        <source>Angle to rotate over secondary reference point</source>
-        <translation type="vanished">Drehen über den zweiten Bezugspunkt</translation>
     </message>
 </context>
 <context>
@@ -36802,141 +33645,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SliceDivideOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Start Circle Angle:</source>
-        <translation type="vanished">Start Kreiswinkel:</translation>
-    </message>
-    <message>
-        <source>Start angle for circle from which ticks will start. </source>
-        <translation type="vanished">Startwinkel für Kreis, von dem Zecken beginnen.</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Offset of tick snap point to intersection point. </source>
-        <translation type="vanished">Versatz von Zecken-Schnapppunkt zu Schnittpunkt.</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Entfernung von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Entfernung:</translation>
-    </message>
-    <message>
-        <source>Distance between ticks.</source>
-        <translation type="vanished">Abstand zwischen Zecken.</translation>
-    </message>
-    <message>
-        <source>If checked, selected entity will be divided by tick intersection points. </source>
-        <translation type="vanished">Wenn überprüft, wird ausgewählte Einheit durch Tick-Kreuzungspunkte geteilt.</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Teil</translation>
-    </message>
-    <message>
-        <source>Pick tick offset from drawing</source>
-        <translation type="vanished">Pick-Zick versetzt von Zeichnung</translation>
-    </message>
-    <message>
-        <source>Length of tick.</source>
-        <translation type="vanished">Länge der Zecken.</translation>
-    </message>
-    <message>
-        <source>Pick tick angle from drawing</source>
-        <translation type="vanished">Pick tick Winkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Tick snap:</source>
-        <translation type="vanished">Tick Snap:</translation>
-    </message>
-    <message>
-        <source>Pick tick length from drawing</source>
-        <translation type="vanished">Pick tick Länge aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>PIck start circle angle from drawing</source>
-        <translation type="vanished">PIck Start Kreiswinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Angle between tick and selected entity.</source>
-        <translation type="vanished">Wechseln Sie zwischen Tick und ausgewähltem Entity.</translation>
-    </message>
-    <message>
-        <source>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</source>
-        <translation type="vanished">Wird geprüft, ist der Zeckenwinkel mit der ausgewählten Einheit verbunden, ansonsten ist er absoluter Winkel.</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Tick Length:</source>
-        <translation type="vanished">Länge:</translation>
-    </message>
-    <message>
-        <source>Defines which point of tick should be placed to intersection point with selected entity.</source>
-        <translation type="vanished">Definiert, welcher Punkt des Zeckens auf den Schnittpunkt mit der ausgewählten Einheit gesetzt werden sollte.</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mittel</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Ende</translation>
-    </message>
-    <message>
-        <source>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </source>
-        <translation type="vanished">Wird geprüft, wird ein vorgegebener Abstand zwischen Zecken verwendet. Andernfalls wird der Abstand auf der Grundlage der Entity-Länge und Zeckenzahl berechnet.</translation>
-    </message>
-    <message>
-        <source>Fixed </source>
-        <translation type="vanished">Behoben</translation>
-    </message>
-    <message>
-        <source>Count of ticks between edges of selected entity.</source>
-        <translation type="vanished">Anzahl der Zecken zwischen den Kanten der ausgewählten Einheit.</translation>
-    </message>
-    <message>
-        <source>Count:</source>
-        <translation type="vanished">Anzahl:</translation>
-    </message>
-    <message>
-        <source>Devines how ticks on entity edges should be placed. </source>
-        <translation type="vanished">Entscheidet, wie Zecken an Entity Kanten platziert werden sollten.</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="vanished">Keine</translation>
-    </message>
-    <message>
-        <source>Both</source>
-        <translation type="vanished">Beide</translation>
-    </message>
-    <message>
-        <source>Edge Tick:</source>
-        <translation type="vanished">Kantenmarkierung:</translation>
-    </message>
-</context>
-<context>
     <name>LC_SliceDivideOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/line/lc_slice_divide_options_filler.cpp" line="34"/>
@@ -37256,57 +33964,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>LC_SplineExplodeOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Defines the number of line segments to be generated for each spline-fit spline-fit polyline</source>
-        <translation type="vanished">Definiert die Anzahl der zu erzeugenden Liniensegmente für jede spline-fit-Spline-fit-Polyline</translation>
-    </message>
-    <message>
-        <source>If unchecked, original spline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Wenn unkontrolliert, ursprüngliche Spline entfernt werden, sonst wird es überleben.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute für erstellte Einheiten verwendet, andernfalls - Originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Wenn überprüft, erstellte Einheiten werden auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktuelle Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, it is possible to specify custom amount of line segments. Otherwise, the value from settings for current drawing will be used.</source>
-        <translation type="vanished">Bei der Überprüfung ist es möglich, benutzerdefinierte Mengen von Liniensegmenten anzugeben. Ansonsten wird der Wert aus den Einstellungen für die aktuelle Zeichnung verwendet.</translation>
-    </message>
-    <message>
-        <source>Custom Segments Count</source>
-        <translation type="vanished">Kundenspezifische Segmente</translation>
-    </message>
-    <message>
-        <source>If checked, line segments will be part of polyline. Otherwise, they will be individual lines</source>
-        <translation type="vanished">Wenn überprüft, werden Liniensegmente Teil der Polylinie sein. Andernfalls werden sie einzelne Linien sein</translation>
-    </message>
-    <message>
-        <source>To Polyline</source>
-        <translation type="vanished">Zu Polyline</translation>
-    </message>
-</context>
-<context>
     <name>LC_SplineExplodeOptionsFiller</name>
     <message>
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_filler.cpp" line="33"/>
@@ -37430,65 +34087,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/action_options/spline/lc_spline_explode_options_widget.ui" line="96"/>
         <source>To Polyline</source>
         <translation type="unfinished">Zu Polyline</translation>
-    </message>
-</context>
-<context>
-    <name>LC_SplineFromPolylineOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed on current layer, otherwise they will be placed into original layers.</source>
-        <translation type="vanished">Wenn überprüft, erstellte Einheiten werden auf der aktuellen Schicht platziert, sonst werden sie in Originalschichten platziert.</translation>
-    </message>
-    <message>
-        <source>User Current Layer</source>
-        <translation type="vanished">Benutzer aktuelle Ebene</translation>
-    </message>
-    <message>
-        <source>Amount of middle points of polyline segment that will be added to spline. </source>
-        <translation type="vanished">Anzahl der mittleren Punkte des Polyline-Segments, die zu Spline hinzugefügt werden.</translation>
-    </message>
-    <message>
-        <source>Defines degree of the spline</source>
-        <translation type="vanished">Definiert den Grad der Spline</translation>
-    </message>
-    <message>
-        <source>If unchecked, original polyline will be removed, otherwise it will survive.</source>
-        <translation type="vanished">Wenn nicht überprüft, wird ursprüngliche Polylinie entfernt, sonst wird es überleben.</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Grad:</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and ordinary spline will be created.</source>
-        <translation type="vanished">Wenn aktiviert, werden die Polylinien-Stützpunkte als Spline-Punkte behandelt und ein Spline durch Punkte erstellt. Andernfalls werden sie als Kontrollpunkte behandelt und ein gewöhnlicher Spline erstellt.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>Mid points:</source>
-        <translation type="vanished">Mittelpunkte:</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be used for created entities, otherwise - original ones. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute für erstellte Einheiten verwendet, andernfalls - Originale.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, polyline vertexes are considered as spline points and spline by points will be created. Otherwise, they are considered as control points and orinary spline will be created.</source>
-        <translation type="vanished">Wenn überprüft, werden Polyline-Schriften als Spline-Punkte betrachtet und Spline durch Punkte erstellt. Ansonsten werden sie als Kontrollpunkte betrachtet und die orinäre Spline wird erstellt.</translation>
-    </message>
-    <message>
-        <source>Vertexes are spline points</source>
-        <translation type="vanished">Vertexs sind Spline-Punkte</translation>
     </message>
 </context>
 <context>
@@ -37745,10 +34343,6 @@ p, li { white-space: pre-wrap; }
 <context>
     <name>LC_SplinePropertiesEditingWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="vanished">Formular</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="14"/>
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="17"/>
         <source>Spline Properties Editor</source>
@@ -37896,69 +34490,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/dialogs/entity/lc_propertieseditingwidget_spline.ui" line="83"/>
         <source>Degree used to approximate spline</source>
         <translation>Grad verwendet, um Spline anzunähern</translation>
-    </message>
-</context>
-<context>
-    <name>LC_StarOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>If checked, symmetric star will be created.</source>
-        <translation type="vanished">Wenn überprüft, wird symmetrischer Stern erstellt.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrie</translation>
-    </message>
-    <message>
-        <source>Radius for inner edges.</source>
-        <translation type="vanished">Radius für Innenkanten.</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Anzahl:</translation>
-    </message>
-    <message>
-        <source>Pick outer radius from drawing</source>
-        <translation type="vanished">Wählen Sie den äußeren Radius aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick inner radius from drawing</source>
-        <translation type="vanished">Wählen Sie den inneren Radius aus der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Number of rays.</source>
-        <translation type="vanished">Anzahl der Strahlen.</translation>
-    </message>
-    <message>
-        <source>If checked, outer edges will be rounded. </source>
-        <translation type="vanished">Bei der Prüfung werden die Außenkanten abgerundet.</translation>
-    </message>
-    <message>
-        <source>Radius Outer</source>
-        <translation type="vanished">Ausverkauft</translation>
-    </message>
-    <message>
-        <source>If checked, inner edges will be rounded. </source>
-        <translation type="vanished">Bei der Prüfung werden Innenkanten abgerundet.</translation>
-    </message>
-    <message>
-        <source>Radius Inner</source>
-        <translation type="vanished">In den Warenkorb</translation>
-    </message>
-    <message>
-        <source>If checked, the star will be drawn as polyline. </source>
-        <translation type="vanished">Wenn überprüft, wird der Stern als Polyline gezeichnet.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-    <message>
-        <source>Radius for outer rays (edges).</source>
-        <translation type="vanished">Radius für äußere Strahlen (Größe).</translation>
     </message>
 </context>
 <context>
@@ -38849,14 +35380,6 @@ p, li { white-space: pre-wrap; }
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <source>Filtering user coordinates by name</source>
-        <translation type="vanished">Benutzerkoordinaten nach Namen filtern</translation>
-    </message>
-    <message>
-        <source>Filter...</source>
-        <translation type="vanished">Filter...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="230"/>
         <source>&lt;No name&gt;</source>
         <translation>&lt; Kein Name &gt;</translation>
@@ -38957,33 +35480,6 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <location filename="../src/ui/dock_widgets/ucs_list/lc_ucslistwidget.cpp" line="581"/>
         <source>Remove A&amp;ll UCSs</source>
         <translation>A&amp;ll UCS entfernen</translation>
-    </message>
-</context>
-<context>
-    <name>LC_UCSSetOptions</name>
-    <message>
-        <source>Form</source>
-        <translation type="vanished">Formblatt</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Angle X-axis of new coordinate system</source>
-        <translation type="vanished">Winkel X-Achse des neuen Koordinatensystems</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Specifies whether X-Axis angle is defined by entered value or by mouse position</source>
-        <translation type="vanished">Gibt an, ob der X-Axis-Winkel durch eingegebenen Wert oder durch Mausposition definiert ist</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Kostenlos</translation>
     </message>
 </context>
 <context>
@@ -39599,33 +36095,6 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
     </message>
 </context>
 <context>
-    <name>PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Bezugswinkel Optionen für die Linie</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Abstand:</translation>
-    </message>
-    <message>
-        <source>Distance from original polyline</source>
-        <translation type="vanished">Abstand von ursprünglicher Polylinie</translation>
-    </message>
-    <message>
-        <source>Copies:</source>
-        <translation type="vanished">Kopien:</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl der Exemplare</translation>
-    </message>
-    <message>
-        <source>Pick spacing from drawing</source>
-        <translation type="vanished">Abstand von der Zeichnung</translation>
-    </message>
-</context>
-<context>
     <name>QC_ActionGetEnt</name>
     <message>
         <location filename="../src/plugins/intern/qc_actiongetent.cpp" line="38"/>
@@ -39663,39 +36132,14 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
 <context>
     <name>QC_ApplicationWindow</name>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="839"/>
-        <source>Creating new file...</source>
-        <translation>Erstelle neue Datei...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="775"/>
         <source>unnamed document %1</source>
         <translation>Unbenanntes Dokument %1</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1867"/>
-        <source>Opening recent file...</source>
-        <translation>Kürzlich benutzte Dateien...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1140"/>
         <source>Loaded document: </source>
         <translation>Geladenes Dokument: </translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1068"/>
-        <source>Opening aborted</source>
-        <translation>Öffnen abgebrochen</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1398"/>
-        <source>Printing...</source>
-        <translation>Drucken...</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1501"/>
-        <source>Exiting application...</source>
-        <translation>Anwendung beenden...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="232"/>
@@ -39708,19 +36152,9 @@ Warnung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
         <translation>Neue Zeichnung erstellt.</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing...</source>
-        <translation>Speichere Zeichnung...</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="276"/>
         <source>Saved drawing: %1</source>
         <translation>Gespeicherte Zeichnung: %1</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1402"/>
-        <source>Printing complete</source>
-        <translation>Drucken abgeschlossen</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="771"/>
@@ -39735,11 +36169,6 @@ Please check the permissions.</source>
         <translation>Kann Datei
 %1
 nicht &#xa0;öffnen, bitte Berechtigungen prüfen.</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1230"/>
-        <source>Auto-saving drawing...</source>
-        <translation>automatisches Speichern der Zeichnung...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1240"/>
@@ -39807,11 +36236,6 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
         <translation>Datei &apos;%1&apos; existiert nicht. Öffnen abgebrochen</translation>
     </message>
     <message>
-        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="265"/>
-        <source>Saving drawing: %1</source>
-        <translation>Zeichnung speichern: %1</translation>
-    </message>
-    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="271"/>
         <source>Save cancelled</source>
         <translation>Speichern abbrechen</translation>
@@ -39877,12 +36301,6 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
         <source>Spacebar: temporarily set snapping mode to free snapping</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../src/ui/qg_actionhandler.cpp" line="196"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
-    </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
@@ -39918,11 +36336,6 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.ui" line="69"/>
         <source>Name of the block</source>
         <translation>Name des Blocks</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="77"/>
-        <source>Renaming Block</source>
-        <translation>Block umbenennen</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
@@ -40123,12 +36536,6 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
         <translation>Befehlsverlauf und Ausgabe</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="260"/>
-        <source>escape</source>
-        <comment>escape, go back from action steps</comment>
-        <translation>Beenden</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.ui" line="54"/>
         <source>...</source>
         <translation>...</translation>
@@ -40303,81 +36710,6 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgArc</name>
-    <message>
-        <source>Arc</source>
-        <translation type="vanished">Bogen</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of arc</source>
-        <translation type="vanished">Ebene des Bogens</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Pen-Attribute</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>X Coordinate of arc&apos;s center</source>
-        <translation type="vanished">X Koordinaten des Bogenzentrums</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y Koordinaten des Bogenzentrums</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed (clockwise)</source>
-        <translation type="vanished">Definiert, ob Lichtbogen umgekehrt ist (Uhrzeigersinn)</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Reversiert</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Zentrum (y):</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Radius des Lichtbogens</translation>
-    </message>
-    <message>
-        <source>Start Angle:</source>
-        <translation type="vanished">Starten Sie Angle:</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Starting angle of arc</source>
-        <translation type="vanished">Startwinkel des Bogens</translation>
-    </message>
-    <message>
-        <source>End angle of arc</source>
-        <translation type="vanished">Endwinkel des Bogens</translation>
-    </message>
-    <message>
-        <source>End Angle:</source>
-        <translation type="vanished">Endwinkel:</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Zentrum (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgAttributes</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.ui" line="26"/>
@@ -40415,198 +36747,6 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_attributes.cpp" line="61"/>
         <source>Pen</source>
         <translation>Bleistift</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgCircle</name>
-    <message>
-        <source>Circle</source>
-        <translation type="vanished">Kreis</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Kreisradius</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Zentrum (y):</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of circle&apos;s center</source>
-        <translation type="vanished">Y Koordinaten der Kreismitte</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Zentrum (x):</translation>
-    </message>
-    <message>
-        <source>X Coordinate of circle&apos;s center</source>
-        <translation type="vanished">X Koordinaten der Kreismitte</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimLinear</name>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="vanished">Lineare Dimension</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Ebene der Dimension</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Pen-Attribute</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Rotation angle of dimension</source>
-        <translation type="vanished">Drehwinkel der Dimension</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgDimension</name>
-    <message>
-        <source>Dimension</source>
-        <translation type="vanished">Abmessungen</translation>
-    </message>
-    <message>
-        <source>Layer of dimension</source>
-        <translation type="vanished">Ebene der Dimension</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Pen attributes</source>
-        <translation type="vanished">Pen-Attribute</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgEllipse</name>
-    <message>
-        <source>Ellipse</source>
-        <translation type="vanished">Ellipsen</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of ellipse</source>
-        <translation type="vanished">Ebene der Ellipse</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Rotation angle for the major axis of ellipse, degrees</source>
-        <translation type="vanished">Drehwinkel für die Hauptachse der Ellipse, Grad</translation>
-    </message>
-    <message>
-        <source>Defines whether arc is reversed</source>
-        <translation type="vanished">Definiert, ob der Bogen umgekehrt ist</translation>
-    </message>
-    <message>
-        <source>Reversed</source>
-        <translation type="vanished">Reversiert</translation>
-    </message>
-    <message>
-        <source>Center (y):</source>
-        <translation type="vanished">Zentrum (y):</translation>
-    </message>
-    <message>
-        <source>End angle of elliptic arc, degrees</source>
-        <translation type="vanished">Endwinkel elliptischen Bogens, Grad</translation>
-    </message>
-    <message>
-        <source>Y Coordinate of arc&apos;s center</source>
-        <translation type="vanished">Y Koordinaten des Bogenzentrums</translation>
-    </message>
-    <message>
-        <source>Radius of major axis of ellipse</source>
-        <translation type="vanished">Radius der Hauptachse der Ellipse</translation>
-    </message>
-    <message>
-        <source>in degrees</source>
-        <translation type="vanished">in grad</translation>
-    </message>
-    <message>
-        <source>Start Angle(°):</source>
-        <translation type="vanished">Startwinkel(°):</translation>
-    </message>
-    <message>
-        <source>Rotation(°):</source>
-        <translation type="vanished">Rotation(°):</translation>
-    </message>
-    <message>
-        <source>Radius of minor axis of the ellipse</source>
-        <translation type="vanished">Radius kleinerer Achse der Ellipse</translation>
-    </message>
-    <message>
-        <source>End Angle(°):</source>
-        <translation type="vanished">Endwinkel(°):</translation>
-    </message>
-    <message>
-        <source>Start angle of elliptic arc, degrees</source>
-        <translation type="vanished">Startwinkel elliptische Bogen, Grad</translation>
-    </message>
-    <message>
-        <source>Major:</source>
-        <translation type="vanished">Major:</translation>
-    </message>
-    <message>
-        <source>Minor:</source>
-        <translation type="vanished">Minor:</translation>
-    </message>
-    <message>
-        <source>X Coordinate of ellipse&apos;s center</source>
-        <translation type="vanished">X Koordinaten der Ellipsenmitte</translation>
-    </message>
-    <message>
-        <source>Center (x):</source>
-        <translation type="vanished">Zentrum (x):</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
     </message>
 </context>
 <context>
@@ -40683,105 +36823,6 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgImage</name>
-    <message>
-        <source>Image</source>
-        <translation type="vanished">Bild</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of image</source>
-        <translation type="vanished">Ebene des Bildes</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Height:</source>
-        <translation type="vanished">Höhe:</translation>
-    </message>
-    <message>
-        <source>Width of image</source>
-        <translation type="vanished">Breite des Bildes</translation>
-    </message>
-    <message>
-        <source>insert (y):</source>
-        <translation type="vanished">Einfügepunkt (y):</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X Koordinaten des Einführpunktes</translation>
-    </message>
-    <message>
-        <source>Resolution (dots per inch)</source>
-        <translation type="vanished">Auflösung (Punkte pro Zoll)</translation>
-    </message>
-    <message>
-        <source>Path to image file</source>
-        <translation type="vanished">Pfad zur Bilddatei</translation>
-    </message>
-    <message>
-        <source>Scaling factor</source>
-        <translation type="vanished">Skalierungsfaktor</translation>
-    </message>
-    <message>
-        <source>Size (px):</source>
-        <translation type="vanished">Größe (px):</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Drehwinkel</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y-Koordinate des Einführpunktes</translation>
-    </message>
-    <message>
-        <source>path:</source>
-        <translation type="vanished">Pfad:</translation>
-    </message>
-    <message>
-        <source>insert (x):</source>
-        <translation type="vanished">Einfügepunkt (x):</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Maßstab:</translation>
-    </message>
-    <message>
-        <source>Size of image in pixels</source>
-        <translation type="vanished">Bildgröße in Pixeln</translation>
-    </message>
-    <message>
-        <source>DPI</source>
-        <translation type="vanished">DPI</translation>
-    </message>
-    <message>
-        <source>Width:</source>
-        <translation type="vanished">Breite:</translation>
-    </message>
-    <message>
-        <source>Height of image</source>
-        <translation type="vanished">Bildhöhe</translation>
-    </message>
-    <message>
-        <source>Select an image file</source>
-        <translation type="vanished">Wählen Sie eine Bilddatei</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgInitial</name>
     <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="32"/>
@@ -40804,167 +36845,9 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
         <translation>GUI Sprache:</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;Welcome to LibreCAD&lt;/span&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Please choose the unit you want to use for new drawings and your preferred language for Ui and Command.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can changes these settings later.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;head/&gt;&gt;body&gt;p align=&quot;center&quot;&gt;span style=&quot; font-size:large; fontweight:700;&quot;&gt;Welcom to LibreCAD&lt;/span&gt;br/&gt;/&gt;/p&gt;&gt; Bitte wählen Sie die gewünschte Einheit für neue Zeichnungen und Ihre bevorzugte Sprache für Ui und Command.&lt;br/&gt;/p&gt;&gt;&gt;p&gt;Sie können diese Einstellungen später ändern.&lt;/p&gt;/body&gt;/html&gt;</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/main/qg_dlginitial.ui" line="187"/>
         <source>Command Language:</source>
         <translation>Kommando Sprache:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgInsert</name>
-    <message>
-        <source>Insert</source>
-        <translation type="vanished">Einfügen</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of insert</source>
-        <translation type="vanished">Ebene des Einfügepunkts</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Insertion point (y):</source>
-        <translation type="vanished">Einsatzpunkt (y):</translation>
-    </message>
-    <message>
-        <source>Insertion point (x):</source>
-        <translation type="vanished">Einsatzpunkt (x):</translation>
-    </message>
-    <message>
-        <source>Amount of rows for copies</source>
-        <translation type="vanished">Anzahl der Zeilen für Kopien</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Drehwinkel</translation>
-    </message>
-    <message>
-        <source>Spacing between columns</source>
-        <translation type="vanished">Spaltung zwischen Spalten</translation>
-    </message>
-    <message>
-        <source>Scaling factor by X axis</source>
-        <translation type="vanished">Skalierungsfaktor um X-Achse</translation>
-    </message>
-    <message>
-        <source>X coordinate of insertion point</source>
-        <translation type="vanished">X Koordinaten des Einführpunktes</translation>
-    </message>
-    <message>
-        <source>Spacing between rows</source>
-        <translation type="vanished">Spazieren zwischen Zeilen</translation>
-    </message>
-    <message>
-        <source>Amount of columns for copies</source>
-        <translation type="vanished">Anzahl der Spalten für Kopien</translation>
-    </message>
-    <message>
-        <source>Scaling factor by Y axis</source>
-        <translation type="vanished">Skalierungsfaktor nach Y-Achse</translation>
-    </message>
-    <message>
-        <source>Scale Y:</source>
-        <translation type="vanished">Waage Y:</translation>
-    </message>
-    <message>
-        <source>Rows:</source>
-        <translation type="vanished">Zeilen:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Y coordinate of insertion point</source>
-        <translation type="vanished">Y-Koordinate des Einführpunktes</translation>
-    </message>
-    <message>
-        <source>Row Spacing:</source>
-        <translation type="vanished">Zeilenabstand:</translation>
-    </message>
-    <message>
-        <source>Columns:</source>
-        <translation type="vanished">Spalte:</translation>
-    </message>
-    <message>
-        <source>Scale X:</source>
-        <translation type="vanished">Skala X:</translation>
-    </message>
-    <message>
-        <source>Column Spacing:</source>
-        <translation type="vanished">Spaltenabstand:</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgLine</name>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linie</translation>
-    </message>
-    <message>
-        <source>ID: </source>
-        <translation type="vanished">ID: </translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of line</source>
-        <translation type="vanished">Ebene der Linie</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>End point (x):</source>
-        <translation type="vanished">Endpunkt (x):</translation>
-    </message>
-    <message>
-        <source>Ending point X coordinate</source>
-        <translation type="vanished">Endpunkt X Koordinaten</translation>
-    </message>
-    <message>
-        <source>Ending point Y coordinate</source>
-        <translation type="vanished">Endpunkt Y-Koordinate</translation>
-    </message>
-    <message>
-        <source>End point (y):</source>
-        <translation type="vanished">Endpunkt (y):</translation>
-    </message>
-    <message>
-        <source>Start point (y):</source>
-        <translation type="vanished">Startpunkt (y):</translation>
-    </message>
-    <message>
-        <source>Starting point Y coordinate</source>
-        <translation type="vanished">Ausgangspunkt Y-Koordinate</translation>
-    </message>
-    <message>
-        <source>Start point (x):</source>
-        <translation type="vanished">Startpunkt (x):</translation>
-    </message>
-    <message>
-        <source>Starting point X coordinate</source>
-        <translation type="vanished">Startpunkt X Koordinaten</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
     </message>
 </context>
 <context>
@@ -41135,10 +37018,6 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
         <translation>Symbol einfügen</translation>
     </message>
     <message>
-        <source>Symbol insertion</source>
-        <translation type="vanished">Einfügen von Zeichen</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="881"/>
         <source>Degree (°)</source>
         <translation>Grad (°)</translation>
@@ -41187,10 +37066,6 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="929"/>
         <source>Pound (£)</source>
         <translation>Pfund (£)</translation>
-    </message>
-    <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="872"/>
@@ -41826,115 +37701,6 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.cpp" line="250"/>
         <source>Pen</source>
         <translation>Bleistift</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMirror</name>
-    <message>
-        <source>Mirroring Options</source>
-        <translation type="vanished">Optionen für Spiegeln</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl Kopien</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Original &amp;löschen</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original &amp;beibehalten</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Aktuelle &amp;Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuelle &amp;Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMove</name>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl Kopien</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Original &amp;löschen</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original &amp;beibehalten</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Mehrere Kopien</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Aktuelle &amp;Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuelle &amp;Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Move/Copy Options</source>
-        <translation type="vanished">Optionen Verschieben/Kopieren</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgMoveRotate</name>
-    <message>
-        <source>Move/Rotate Options</source>
-        <translation type="vanished">Optionen für Verschieben/Rotieren</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl Kopien</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Winkel (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Aktuelle &amp;Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuelle &amp;Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Original &amp;löschen</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original &amp;beibehalten</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mehrere Kopien</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Ctrl+S</source>
-        <translation type="vanished">Strg+S</translation>
     </message>
 </context>
 <context>
@@ -44951,10 +40717,6 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
         <translation>Relativ Null Marker</translation>
     </message>
     <message>
-        <source>Behavior</source>
-        <translation type="vanished">Verhalten</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="1021"/>
         <source>Type of grid to be drawn</source>
         <translation>Art des zu ziehenden Gitters</translation>
@@ -45443,38 +41205,6 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
         <translation>Auto-Save Zeichnungen</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4935"/>
-        <source>#</source>
-        <translation>#</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4940"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5009"/>
-        <source>~</source>
-        <translation>~</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4945"/>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5019"/>
-        <source>_</source>
-        <translation>- Ja</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4950"/>
-        <source>__</source>
-        <translation>..</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4955"/>
-        <source>lcauto_</source>
-        <translation>lcauto</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4960"/>
-        <source>autosaved_</source>
-        <translation>autosaved</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="4984"/>
         <source>Auto-save file name prefix:</source>
         <translation>Auto-save Dateiname prefix:</translation>
@@ -45483,36 +41213,6 @@ Dies verändert alle Elemente des Block rekursiv.</translation>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5001"/>
         <source>Backup file name suffix:</source>
         <translation>Sicherungsdateiname suffix:</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5014"/>
-        <source>$$</source>
-        <translation>$$</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5024"/>
-        <source>_backup</source>
-        <translation>- zurück nach oben</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5029"/>
-        <source>_bak</source>
-        <translation>ich will nicht</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5034"/>
-        <source>.bak</source>
-        <translation>.bak</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5039"/>
-        <source>.backup</source>
-        <translation>.backup</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5044"/>
-        <source>.lcb</source>
-        <translation>.lcb</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
@@ -46010,287 +41710,6 @@ so Standardschrittwert zum Backen erforderlich</translation>
     </message>
 </context>
 <context>
-    <name>QG_DlgOptionsVariables</name>
-    <message>
-        <source>Drawing Variables</source>
-        <translation type="vanished">Zeichnungsvariablen</translation>
-    </message>
-    <message>
-        <source>Variable</source>
-        <translation type="vanished">Variable</translation>
-    </message>
-    <message>
-        <source>Code</source>
-        <translation type="vanished">Code</translation>
-    </message>
-    <message>
-        <source>Value</source>
-        <translation type="vanished">Wert</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="vanished">&amp;OK</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="vanished">Alt+O</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="vanished">Abbrechen</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="vanished">Esc</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPoint</name>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punkt</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of point</source>
-        <translation type="vanished">Ebene des Punktes</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Position (y):</source>
-        <translation type="vanished">Position (y):</translation>
-    </message>
-    <message>
-        <source>Position of point by Y coordinate</source>
-        <translation type="vanished">Position des Punktes nach Y-Koordinate</translation>
-    </message>
-    <message>
-        <source>Position (x):</source>
-        <translation type="vanished">Position (x):</translation>
-    </message>
-    <message>
-        <source>Position of point by X coordinate</source>
-        <translation type="vanished">Position des Punktes durch X-Koordinate</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of polyline</source>
-        <translation type="vanished">Ebene der Polylinie</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Defines whether polyline is closed contour</source>
-        <translation type="vanished">Definiert, ob Polyline geschlossene Kontur ist</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Geschlossen</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate</name>
-    <message>
-        <source>Rotation Options</source>
-        <translation type="vanished">Optionen für Rotieren</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl Kopien</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Original &amp;löschen</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original &amp;beibehalten</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies:</source>
-        <translation type="vanished">&amp;Mehrere Kopien:</translation>
-    </message>
-    <message>
-        <source>&amp;Angle (a):</source>
-        <translation type="vanished">&amp;Winkel (a):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Aktuelle &amp;Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuelle &amp;Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgRotate2</name>
-    <message>
-        <source>Rotate Two Options</source>
-        <translation type="vanished">Optionen für Rotieren Zwei</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl Kopien</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Original &amp;löschen</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original &amp;beibehalten</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Mehrere Kopien</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;a):</source>
-        <translation type="vanished">&amp;Winkel (a):</translation>
-    </message>
-    <message>
-        <source>Angle (&amp;b):</source>
-        <translation type="vanished">&amp;Winkel (b):</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Aktuelle &amp;Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuelle &amp;Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgScale</name>
-    <message>
-        <source>Scaling Options</source>
-        <translation type="vanished">Optionen für Skalieren</translation>
-    </message>
-    <message>
-        <source>Number of copies</source>
-        <translation type="vanished">Anzahl Kopien</translation>
-    </message>
-    <message>
-        <source>Use current &amp;attributes</source>
-        <translation type="vanished">Aktuelle &amp;Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Use current &amp;layer</source>
-        <translation type="vanished">Aktuelle &amp;Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Find the scaling ratios around the center by a reference point and a target point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;head/&gt;&lt;body&gt;&gt; Finden Sie die Skalierungsverhältnisse um die Mitte um einen Referenzpunkt und einen Zielpunkt.&lt;/p&gt;/body&gt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Original</source>
-        <translation type="vanished">Original &amp;löschen</translation>
-    </message>
-    <message>
-        <source>&amp;Keep Original</source>
-        <translation type="vanished">Original &amp;beibehalten</translation>
-    </message>
-    <message>
-        <source>&amp;Multiple Copies</source>
-        <translation type="vanished">&amp;Mehrere Kopien</translation>
-    </message>
-    <message>
-        <source>...</source>
-        <translation type="vanished">...</translation>
-    </message>
-    <message>
-        <source>Scale by the same factor at both x- and y- directions</source>
-        <translation type="vanished">Skaliere x- und y-Richtungen mit dem selben Faktor</translation>
-    </message>
-    <message>
-        <source>Isotropic Scaling</source>
-        <translation type="vanished">Isotropisch Skalieren</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DlgSpline</name>
-    <message>
-        <source>Spline</source>
-        <translation type="vanished">Spline</translation>
-    </message>
-    <message>
-        <source>Layer:</source>
-        <translation type="vanished">Ebene:</translation>
-    </message>
-    <message>
-        <source>Layer of spline</source>
-        <translation type="vanished">Ebene des Splines</translation>
-    </message>
-    <message>
-        <source>Geometry</source>
-        <translation type="vanished">Geometrie</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Grad:</translation>
-    </message>
-    <message>
-        <source>Defines whether spline defines closed contour</source>
-        <translation type="vanished">Definiert, ob Spline die geschlossene Kontur definiert</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Geschlossen</translation>
-    </message>
-    <message>
-        <source>Degree used to approximate spline</source>
-        <translation type="vanished">Grad verwendet, um Spline anzunähern</translation>
-    </message>
-    <message>
-        <source>Pen</source>
-        <translation type="vanished">Bleistift</translation>
-    </message>
-</context>
-<context>
     <name>QG_DlgText</name>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="20"/>
@@ -46438,10 +41857,6 @@ so Standardschrittwert zum Backen erforderlich</translation>
         <translation>Pfund (£)</translation>
     </message>
     <message>
-        <source>Yen (¥)</source>
-        <translation type="vanished">Yen (¥)</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1007"/>
         <source>Times (×)</source>
         <translation>Mal (×)</translation>
@@ -46485,10 +41900,6 @@ so Standardschrittwert zum Backen erforderlich</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
         <source>Layer of text</source>
         <translation>Ebene des Textes</translation>
-    </message>
-    <message>
-        <source>Obligue of text</source>
-        <translation type="vanished">Textobligue</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="261"/>
@@ -47096,10 +42507,6 @@ so Standardschrittwert zum Backen erforderlich</translation>
         <translation>Winkel:</translation>
     </message>
     <message>
-        <source>Oblique:</source>
-        <translation type="vanished">Schrägstellen:</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="317"/>
         <source>Width factor:</source>
         <translation>Breitenfaktor:</translation>
@@ -47617,21 +43024,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Invalid scale provided</source>
-        <translation type="vanished">Invalide Waage</translation>
-    </message>
-    <message>
-        <source>Paper scale factor larger than max print ratio</source>
-        <translation type="vanished">Papierwaagenfaktor größer als max Druckverhältnis</translation>
-    </message>
-    <message>
-        <source>Paper scale factor smaller than min print ratio</source>
-        <translation type="vanished">Papierwaagenfaktor kleiner als min Druckverhältnis</translation>
-    </message>
-</context>
-<context>
     <name>QG_RecentFiles</name>
     <message>
         <location filename="../src/ui/main/support/qg_recentfiles.cpp" line="183"/>
@@ -47698,58 +43090,6 @@ p, li { white-space: pre-wrap; }
         <location filename="../src/ui/components/toolbars/qg_snaptoolbar.cpp" line="227"/>
         <source>World</source>
         <translation>Welt</translation>
-    </message>
-    <message>
-        <source>Snap</source>
-        <translation type="vanished">Schnapper</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="vanished">An Endpunkten einrasten</translation>
-    </message>
-    <message>
-        <source>Snap to equidistant points of entity</source>
-        <translation type="vanished">An gleichmäßig verteilten Punkten einrasten</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="vanished">An Mittelpunkten einrasten</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="vanished">An Schnittpunkten automatisch einrasten</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="vanished">Am nächsten Punkt auf Entität einrasten</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="vanished">An Punkt mit vorgegebenem Abstand zum Endpunkt einrasten</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="vanished">An Schnittpunkten manuell einrasten</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="vanished">Am Raster einrasten</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="vanished">Horizontal beschränken</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="vanished">Vertikal beschränken</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="vanished">Relativen Nullpunkt verschieben</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="vanished">Relativen Nullpunkt sperren</translation>
     </message>
 </context>
 <context>
@@ -47952,12 +43292,6 @@ Bitte geben Sie einen anderen Wert an.</translation>
         <translation>Leere Ebenen entfernen</translation>
     </message>
     <message>
-        <source>Layer(s) without entities found, yet they are filtered and not visible.
-Clear filtering mask and repeat.</source>
-        <translation type="vanished">Schicht(en) ohne gefundene Entitäten, aber sie sind gefiltert und nicht sichtbar.
-Filtermaske löschen und wiederholen.</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="963"/>
         <source>Layer(s) without entities found, yet they are filtered and not visible.
 
@@ -48025,14 +43359,6 @@ If No - &quot;By Layer&quot; values remains and so pen of target layer will defi
 Ja: Objekte mit Stiften &quot;wie Ebene&quot; sehen auf der neuen Ebene genauso aus wie auf den bisherigen Ebenen, und der Wert &quot;wie Ebene&quot; wird durch die aufgelösten Stifte ersetzt.
 
 Nein: Die Werte &quot;wie Ebene&quot; bleiben erhalten, sodass der Stift der Zielebene den Stift dieser Objekte bestimmt.</translation>
-    </message>
-    <message>
-        <source>Replace &quot;By Layer&quot; value to source layers values?
-If Yes - entities with &quot;By Layer&quot; pens will look on new layer exactly as on previous layers and &quot;By Layer&quot; value will be replaced by resolved pens.
-If No - &quot;By Layer&quot; values remains and so pen of target layer will define pen for such entities.</source>
-        <translation type="vanished">Soll der Wert &quot;Nach Layer&quot; durch die Werte der Quell-Layer ersetzt werden?
-Wenn Ja - werden die Entitäten mit den Stiften &quot;Nach Layer&quot; im neuen Layer genau so aussehen wie in den vorherigen Layern, und der Wert &quot;Nach Layer&quot; wird durch die aufgelösten Stifte ersetzt.
-Wenn Nein - bleiben die Werte &quot;Nach Layer&quot; erhalten, und der Stift des Ziel-Layers bestimmt den Stift für diese Entitäten.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1805"/>
@@ -48675,10 +44001,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>Tagged Image File Format</translation>
     </message>
     <message>
-        <source>Old Drawing Exchange %1</source>
-        <translation type="vanished">Altes Zeichnungsformat %1</translation>
-    </message>
-    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1003"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
@@ -48713,11 +44035,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>fehler beim Lesen von DXF/DWG-Dateikopf</translation>
-    </message>
-    <message>
-        <source>error reading DXF/DWG header dara</source>
-        <comment>RS_FilterDXFRW</comment>
-        <translation type="vanished">fehler beim Lesen von DXF/DWG Header Dara</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1024"/>
@@ -48766,10 +44083,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
         <translation>fehler beim Lesen von DXF/DWG-Code</translation>
-    </message>
-    <message>
-        <source>Opened dwg file version %1.</source>
-        <translation type="vanished">DWG Datei Version %1 geöffnet.</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1022"/>
@@ -48902,30 +44215,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <location filename="../src/lib/engine/document/container/rs_entitycontainer.cpp" line="1499"/>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
         <translation>Schraffur nicht möglich, wegen einer Lücke=%1 zwischen (%2, %3) und (%4, %5)</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="85"/>
-        <source>DWG support is not complete!</source>
-        <translation>DWG-Unterstützung ist nicht komplett!</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="87"/>
-        <source>If this file fails to open try an older DWG format</source>
-        <translation>Wenn diese Datei nicht zu öffnen, versuchen Sie ein älteres DWG-Format</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="88"/>
-        <source>or try to find a converter to make it a DXF file.</source>
-        <translation>oder versuchen Sie, einen Konverter zu finden, um es eine DXF-Datei zu machen.</translation>
-    </message>
-    <message>
-        <location filename="../src/lib/fileio/rs_fileio.cpp" line="91"/>
-        <source>Information</source>
-        <translation>Informationen</translation>
-    </message>
-    <message>
-        <source>DWG support is not complete; if this file fails to open try an older DWG format or convert it to DXF.</source>
-        <translation type="vanished">DWG-Unterstützung ist nicht vollständig; wenn diese Datei nicht geöffnet werden kann, versuchen Sie ein älteres DWG-Format oder konvertieren Sie es in DXF.</translation>
     </message>
     <message>
         <location filename="../src/lib/fileio/rs_fileio.cpp" line="104"/>
@@ -50202,23 +45491,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>Bitte zuerst einen Abstand eingeben.</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="275"/>
-        <source>cal </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>kalk</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="276"/>
-        <source>calculate </source>
-        <comment>command to trigger cli calculator</comment>
-        <translation>berechnung</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="311"/>
-        <source>cal</source>
-        <translation>cal</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandedit.cpp" line="317"/>
         <source>Calculator mode: On</source>
         <translation>Calculator Modus: Ein</translation>
@@ -50477,11 +45749,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <source>mpoint</source>
         <comment>draw middle of points</comment>
         <translation>mpoint</translation>
-    </message>
-    <message>
-        <source>criclebyarc</source>
-        <comment>draw circle by arc</comment>
-        <translation type="vanished">riclebyarc</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="218"/>
@@ -51414,12 +46681,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>filet</translation>
     </message>
     <message>
-        <location filename="../src/cmd/lc_commandItems.h" line="799"/>
-        <source>bevel</source>
-        <comment>modify - fillet</comment>
-        <translation>art</translation>
-    </message>
-    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -52013,26 +47274,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>verwendung:</translation>
     </message>
     <message>
-        <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="vanished">[options] [optionen] &lt;dxf files&gt;</translation>
-    </message>
-    <message>
-        <source> *.dxf</source>
-        <translation type="vanished">*</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="vanished">-- drucken sie alle dxf dateien auf pdf-dateien mit den gleichen namen.</translation>
-    </message>
-    <message>
-        <source> -o some.pdf *.dxf</source>
-        <translation type="vanished">-o some.pdf *.dxf</translation>
-    </message>
-    <message>
-        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
-        <translation type="vanished">-- drucken sie alle dxf dateien auf &apos;some.pdf&apos; datei.</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="86"/>
         <source> [options] &lt;%1_files&gt;</source>
         <translation type="unfinished"></translation>
@@ -52108,16 +47349,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Paper size (Width x Height) in mm.</source>
-        <comment>WxH</comment>
-        <translation type="vanished">Papiergröße (Width x Height) in mm.</translation>
-    </message>
-    <message>
-        <source>Output resolution (DPI).</source>
-        <comment>integer</comment>
-        <translation type="vanished">Ausgabeauflösung (DPI).</translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="129"/>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
         <translation>Ausgangsskala. Z.B.: 0,01 (für 1:100 Skala).</translation>
@@ -52150,27 +47381,9 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>Zielausgabeverzeichnis.</translation>
     </message>
     <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="177"/>
-        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2018.</source>
-        <translation>DXF-Ausgabeversion: r12, r14, r2000, r2004, r2007 (Standard), r2018.</translation>
-    </message>
-    <message>
-        <location filename="../src/main/console_dxf2dwg.cpp" line="183"/>
-        <source>DWG output version: r2000 (default), r2004, r2010, r2013, r2018.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
         <source>Input %1 file(s).</source>
         <translation>Eingabe %1 Datei(en).</translation>
-    </message>
-    <message>
-        <source>&lt;dxf_files&gt;</source>
-        <translation type="vanished">&lt;dxf dateien&gt;</translation>
-    </message>
-    <message>
-        <source>Input DXF file(s)</source>
-        <translation type="vanished">Eingabe DXF Datei(en)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/command_line/qg_commandwidget.cpp" line="56"/>
@@ -52579,10 +47792,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <translation>[Override] (Override)</translation>
     </message>
     <message>
-        <source>Draft</source>
-        <translation type="vanished">Entwurf</translation>
-    </message>
-    <message>
         <location filename="../src/ui/qg_actionhandler.cpp" line="86"/>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
@@ -52590,10 +47799,6 @@ Wollen Sie die Datei überschreiben?</translation>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
-    <message>
-        <source>Select to create block (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie, um Block zu erstellen (Enter zu komplettieren)</translation>
-    </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
@@ -52608,66 +47813,6 @@ Wollen Sie die Datei überschreiben?</translation>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="111"/>
         <source>Specify reference point</source>
         <translation>Referenzpunkt angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Select to explode container (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie, um Container zu explodieren (Enter zu komplettieren)</translation>
-    </message>
-    <message>
-        <source>Select and explode</source>
-        <translation type="vanished">Wählen und explodieren</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Winkel eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Faktor eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter columns:</source>
-        <translation type="vanished">Spalten eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter rows:</source>
-        <translation type="vanished">Reihen eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter column spacing:</source>
-        <translation type="vanished">Spaltenabstand eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter row spacing:</source>
-        <translation type="vanished">Reihenabstand eingeben:</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referenzpunkt eingeben</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Block cannot contain an insert of itself.</source>
-        <translation type="vanished">Block kann keinen Einsatz von sich selbst enthalten.</translation>
-    </message>
-    <message>
-        <source> has nested insert of current block in:
-</source>
-        <translation type="vanished">hat den einsatz des stromblocks in:</translation>
-    </message>
-    <message>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="vanished">Dieser Block kann nicht eingefügt werden.</translation>
     </message>
 </context>
 <context>
@@ -52919,270 +48064,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Not a valid chord length</source>
-        <translation type="vanished">Ungültige Sehnenlänge</translation>
-    </message>
-    <message>
-        <source>Specify start point</source>
-        <translation type="vanished">Startpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify end angle or [angle/chordlen]</source>
-        <translation type="vanished">Endwinkel oder [angle/chordlen]</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternativer Bogen</translation>
-    </message>
-    <message>
-        <source>Specify included angle:</source>
-        <translation type="vanished">Eingeschlossenen Winkel angeben:</translation>
-    </message>
-    <message>
-        <source>Specify chord length (negative for alt point):</source>
-        <translation type="vanished">Akkordlänge angeben (negativ für Höhenpunkt):</translation>
-    </message>
-    <message>
-        <source>Use alternative arc point</source>
-        <translation type="vanished">Alternativer Lichtbogenpunkt</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zentrum angeben</translation>
-    </message>
-    <message>
-        <source>Length of chord should be non-zero</source>
-        <translation type="vanished">Länge des Akkords sollte nicht-Null sein</translation>
-    </message>
-    <message>
-        <source>Specify radius</source>
-        <translation type="vanished">Radius angeben</translation>
-    </message>
-    <message>
-        <source>Specify start angle:</source>
-        <translation type="vanished">Startwinkel eingeben:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArc3P</name>
-    <message>
-        <source>Invalid arc data.</source>
-        <translation type="vanished">Ungültige Kreisbogen Daten.</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">3. Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zweiten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [center]</source>
-        <translation type="vanished">Startpunkt angeben oder [zentrum]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawArcTangential</name>
-    <message>
-        <source>Specify base entity</source>
-        <translation type="vanished">Basisobjekt angeben</translation>
-    </message>
-    <message>
-        <source>Alternate arc</source>
-        <translation type="vanished">Lichtbogen</translation>
-    </message>
-    <message>
-        <source>Alternate Arc</source>
-        <translation type="vanished">Alternativer tangentialer Bogen</translation>
-    </message>
-    <message>
-        <source>Specify end angle</source>
-        <translation type="vanished">Endwinkel angeben</translation>
-    </message>
-    <message>
-        <source>Specify end point</source>
-        <translation type="vanished">Endpunkt angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle</name>
-    <message>
-        <source>Specify center</source>
-        <translation type="vanished">Zentrum angeben</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Specify point on circle</source>
-        <translation type="vanished">Punkt im Kreis angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Invalid Circle data.</source>
-        <translation type="vanished">Ungültige Kreisdaten.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Ersten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zweiten Punkt angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Invalid circle data.</source>
-        <translation type="vanished">Ungültige Kreisdaten.</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Ersten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zweiten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify third point</source>
-        <translation type="vanished">Dritten Punkt angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleCR</name>
-    <message>
-        <source>Specify circle center</source>
-        <translation type="vanished">Kreiszentrum angeben</translation>
-    </message>
-    <message>
-        <source>Specify circle radius</source>
-        <translation type="vanished">Kreisradius angeben</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (expression)</source>
-        <translation type="vanished">radius=%1 ist ungültig (ausdruck)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (negative)</source>
-        <translation type="vanished">radius=%1 ist ungültig (negativ)</translation>
-    </message>
-    <message>
-        <source>radius=%1 is invalid (zero)</source>
-        <translation type="vanished">radius=%1 ist ungültig (null)</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleInscribe</name>
-    <message>
-        <source>Specify the first line</source>
-        <translation type="vanished">Erste Linie auswählen</translation>
-    </message>
-    <message>
-        <source>Specify the second line</source>
-        <translation type="vanished">Zweite Linie angeben</translation>
-    </message>
-    <message>
-        <source>Specify the third line</source>
-        <translation type="vanished">Dritte Linie auswählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan1_2P</name>
-    <message>
-        <source>Specify the first point on the tangent circle</source>
-        <translation type="vanished">Ersten Punkt auf tangentem Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Specify the second point on the tangent circle</source>
-        <translation type="vanished">Zweiten Punkt auf tangentem Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Mittelpunkt des tangenten Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Eine Linie/Bogen/Kreis auswählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2</name>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Erste Linie/Bogen/Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Zweite Linie/Bogen/Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Mittelpunkt des tangenten Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="vanished">Kein gewöhnlicher Tangentialkreis für Radius &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan2_1P</name>
-    <message>
-        <source>Specify a line/arc/circle</source>
-        <translation type="vanished">Eine Linie/Bogen/Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Specify the another line/arc/circle</source>
-        <translation type="vanished">Geben Sie die andere Zeile/arc/circle an</translation>
-    </message>
-    <message>
-        <source>Specify a point on the tangent circle</source>
-        <translation type="vanished">Einen Punkt auf dem tangentialen Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Mittelpunkt des tangentialen Kreis auswählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawCircleTan3</name>
-    <message>
-        <source>Select the center of the tangent circle</source>
-        <translation type="vanished">Mittelpunkt des tangentialen Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Specify the first line/arc/circle</source>
-        <translation type="vanished">Erste Linie/Bogen/Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>No common tangential circle for selected entities</source>
-        <translation type="vanished">Kein gewöhnlicher Tangentialkreis für ausgewählte Einheiten</translation>
-    </message>
-    <message>
-        <source>Specify the second line/arc/circle</source>
-        <translation type="vanished">Zweite Linie/Bogen/Kreis auswählen</translation>
-    </message>
-    <message>
-        <source>Specify the third line/arc/circle</source>
-        <translation type="vanished">Dritte Linie/Bogen/Kreis auswählen</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawEllipse4Points</name>
     <message>
         <location filename="../src/actions/drawing/draw/ellipse/rs_actiondrawellipse4points.cpp" line="282"/>
@@ -53377,125 +48258,9 @@ This block cannot be inserted.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to hatch (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie auf Luke (Enter zu beenden)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="185"/>
         <source>Hatch immediately after selection</source>
         <translation>Hatch sofort nach Auswahl</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawImage</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referenzpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Winkel eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Faktor eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter dpi:</source>
-        <translation type="vanished">DPI eingeben:</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLine</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Ersten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Nächsten Punkt angeben oder [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Nächsten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation type="vanished">Kann Liniensequenz nicht schließen. Nicht genügend Objekte ausgewählt oder bereits geschlossen.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Begin of history reached</source>
-        <translation type="vanished">Cannot undo: Beginn der Geschichte erreicht</translation>
-    </message>
-    <message>
-        <source>Cannot redo: End of history reached</source>
-        <translation type="vanished">Cannot redo: Ende der Geschichte erreicht</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Winkel angeben:</translation>
-    </message>
-    <message>
-        <source>Enter length:</source>
-        <translation type="vanished">Länge eingeben:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Position angeben</translation>
-    </message>
-    <message>
-        <source>Alternate Direction</source>
-        <translation type="vanished">Alternative Richtung</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source>Select first line</source>
-        <translation type="vanished">Erste Linie wählen</translation>
-    </message>
-    <message>
-        <source>Select second line</source>
-        <translation type="vanished">Zweite Linie wählen</translation>
-    </message>
-    <message>
-        <source>Enter bisector length:</source>
-        <translation type="vanished">Länge der Winkelhalbierenden eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter number of bisectors:</source>
-        <translation type="vanished">Anzahl Winkelhalbierende eingeben:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">organisationen werden erstellt</translation>
-    </message>
-    <message>
-        <source>Number sector lines not in range: </source>
-        <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="vanished">Anzahl Sektorlinien außerhalb des Bereichs: </translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineFree</name>
-    <message>
-        <source>Click and drag to draw a line</source>
-        <translation type="vanished">Klicken und ziehn um Freihandlinien zu zeichnen</translation>
     </message>
 </context>
 <context>
@@ -53528,74 +48293,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlineorthtan.cpp" line="260"/>
         <source>Select circle, arc or ellipse</source>
         <translation>Kreis, Bogen oder Ellipse auswählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallel</name>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Keine gültige Anzahl. Versuchen Sie 1..99</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="vanished">Anzahl eingeben:</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">organisationen werden erstellt</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
-        <translation type="vanished">Abstand &lt;%1&gt; angeben oder Objekt wählen oder [%2]</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Anzahl:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..99</source>
-        <translation type="vanished">Keine gültige Anzahl. Versuchen Sie 1..99</translation>
-    </message>
-    <message>
-        <source>Select entity</source>
-        <translation type="vanished">Objekt auswählen</translation>
-    </message>
-    <message>
-        <source> entities will be created</source>
-        <translation type="vanished">organisationen werden erstellt</translation>
-    </message>
-    <message>
-        <source>Specify through point</source>
-        <translation type="vanished">Durch Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="vanished">Eine Ecke auswählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Erste Ecke auswählen</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zweite Ecke auswählen</translation>
     </message>
 </context>
 <context>
@@ -53637,29 +48334,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLineRelAngle</name>
-    <message>
-        <source>Select base entity</source>
-        <translation type="vanished">Basisobjekt wählen</translation>
-    </message>
-    <message>
-        <source>Specify position</source>
-        <translation type="vanished">Position angeben</translation>
-    </message>
-    <message>
-        <source>Specify angle</source>
-        <translation type="vanished">Winkel angeben</translation>
-    </message>
-    <message>
-        <source>Specify length</source>
-        <translation type="vanished">Länge angeben</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineTangent1</name>
     <message>
         <location filename="../src/actions/drawing/draw/line/rs_actiondrawlinetangent1.cpp" line="199"/>
@@ -53697,17 +48371,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawMText</name>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Einfügepunkt angeben</translation>
-    </message>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Text eingeben:</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawPoint</name>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_point.cpp" line="88"/>
@@ -53716,108 +48379,7 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Specify first point</source>
-        <translation type="vanished">Ersten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="vanished">Nächsten Punkt angeben oder [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="vanished">Nächsten Punkt angeben</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="vanished">Kann Liniensequenz nicht schliessen: Noch nicht genug Objekte definiert.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Rückgängig nicht möglich: Noch nicht genug Objekte definiert.</translation>
-    </message>
-    <message>
-        <source>Enter the end point x</source>
-        <translation type="vanished">Betreten Sie den Endpunkt x</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Anzahl der Polylinien eingeben</translation>
-    </message>
-    <message>
-        <source>Enter an equation, f(x)</source>
-        <translation type="vanished">Geben Sie eine Gleichung ein, f(x)</translation>
-    </message>
-    <message>
-        <source>x</source>
-        <translation type="vanished">x</translation>
-    </message>
-    <message>
-        <source>Enter the start point x</source>
-        <translation type="vanished">Geben Sie den Startpunkt x</translation>
-    </message>
-    <message>
-        <source>The entered x is invalid.</source>
-        <translation type="vanished">Die eingegebene x ist ungültig.</translation>
-    </message>
-    <message>
-        <source>The step size entered is invalid.</source>
-        <translation type="vanished">Die eingegebene Schrittgröße ist ungültig.</translation>
-    </message>
-    <message>
-        <source>The value x entered is invalid.</source>
-        <translation type="vanished">Der eingegebene Wert x ist ungültig.</translation>
-    </message>
-    <message>
-        <source>Alternative Arc</source>
-        <translation type="vanished">Alternativer Polylinienbogen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawSpline</name>
-    <message>
-        <source>Specify first control point</source>
-        <translation type="vanished">Ersten Kontrollpunkt bestimmen</translation>
-    </message>
-    <message>
-        <source>Specify next control point or [%1]</source>
-        <translation type="vanished">Nächsten Kontrollpunkt bestimmen oder [%1]</translation>
-    </message>
-    <message>
-        <source>Specify next control point</source>
-        <translation type="vanished">Nächsten Kontrollpunkt bestimmen</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Rückgängig nicht möglich: Noch nicht genug Objekte definiert.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawText</name>
-    <message>
-        <source>Enter text:</source>
-        <translation type="vanished">Text eingeben:</translation>
-    </message>
-    <message>
-        <source>Specify insertion point</source>
-        <translation type="vanished">Einfügepunkt angeben</translation>
-    </message>
-    <message>
-        <source>Text: </source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Specify second point</source>
-        <translation type="vanished">Zweiten Punkt angeben</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionEditCopyPaste</name>
-    <message>
-        <source>Select to cut (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie zum Schneiden (Enter zum Vervollständigen)</translation>
-    </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="175"/>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
@@ -53836,10 +48398,6 @@ This block cannot be inserted.</source>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="180"/>
         <source>Cut right after selection</source>
         <translation>Nach der Auswahl schneiden</translation>
-    </message>
-    <message>
-        <source>Select to copy (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie zum Kopieren (Enter zum Vervollständigen)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/edit/lc_action_edit_copy_cut.cpp" line="174"/>
@@ -53880,24 +48438,6 @@ This block cannot be inserted.</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Set paste reference point</source>
-        <translation type="vanished">Referenzpunkt der Paste</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionEditUndo</name>
-    <message>
-        <source>Nothing to undo!</source>
-        <translation type="vanished">Nichts Rückgängig zu machen!</translation>
-    </message>
-    <message>
-        <source>Nothing to redo!</source>
-        <translation type="vanished">Nichts Wiederherzustellen!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoAngle</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="148"/>
@@ -53920,25 +48460,27 @@ This block cannot be inserted.</source>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 </source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Winkel: %1
-Ergänzung: %2
-Zusatz: %3
-Alternative: %4</translation>
+Komplementwinkel: %2
+Supplementwinkel: %3
+Vollwinkel − Winkel: %4</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="139"/>
         <source>Angle: %1
 Complementary: %2
 Supplementary: %3
-Alternative: %4
+Explementary angle: %4
 Intersection: (%5 , %6)
 Intersection :@(%7, %8)</source>
+        <extracomment>%2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.</extracomment>
         <translation>Winkel: %1
-Ergänzung: %2
-Zusatz: %3
-Alternative: %4
+Komplementwinkel: %2
+Supplementwinkel: %3
+Vollwinkel − Winkel: %4
 Abschnitt: (%5, %6)
 Abschnitt :@(%7, %8)</translation>
     </message>
@@ -53963,19 +48505,22 @@ Abschnitt :@(%7, %8)</translation>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="273"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="290"/>
         <source>Complementary:</source>
-        <translation>Ergänzung:</translation>
+        <extracomment>Complementary angle: right angle minus the measured angle (pi/2 - angle).</extracomment>
+        <translation>Komplementwinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
         <source>Supplementary:</source>
-        <translation>Ergänzung:</translation>
+        <extracomment>Supplementary angle: straight angle minus the measured angle (pi - angle).</extracomment>
+        <translation>Supplementwinkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="274"/>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="291"/>
-        <source>Alternative: </source>
-        <translation>Alternative:</translation>
+        <source>Explementary angle: </source>
+        <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
+        <translation>Vollwinkel − Winkel:</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoangle.cpp" line="275"/>
@@ -54115,57 +48660,6 @@ Ende: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance: %1
-Cartesian: (%2 , %3)
-Polar: (%4 &lt; %5)
-Point On Entity: (%6 , %7)
-Point: (%8 , %9)</source>
-        <translation type="vanished">Entfernung: %1
-Cartesisch: (%2, %3)
-Polar: (%4 &lt; %5)
-(%6, %7)
-Punkt: (%8, %9)</translation>
-    </message>
-    <message>
-        <source>Specify entity</source>
-        <translation type="vanished">Objekt wählen</translation>
-    </message>
-    <message>
-        <source>Do not snap to child entities in container</source>
-        <translation type="vanished">Nicht auf Kindereinrichtungen in Containern schnappen</translation>
-    </message>
-    <message>
-        <source>Relative point is on entity</source>
-        <translation type="vanished">Relativer Punkt ist das Unternehmen</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation type="vanished">Info</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Entfernung:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>From:</source>
-        <translation type="vanished">Von:</translation>
-    </message>
-    <message>
-        <source>To:</source>
-        <translation type="vanished">Zu</translation>
-    </message>
-    <message>
-        <source>Specify point</source>
-        <translation type="vanished">Punkt angeben</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoInside</name>
     <message>
         <location filename="../src/actions/drawing/info/rs_actioninfoinside.cpp" line="57"/>
@@ -54211,10 +48705,6 @@ Punkt: (%8, %9)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select to measure total length (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie, um die Gesamtlänge zu messen (Enter zu komplettieren)</translation>
-    </message>
-    <message>
         <location filename="../src/actions/drawing/info/rs_actioninfototallength.cpp" line="74"/>
         <source>Select contour</source>
         <translation>Wählen Sie die Kontur</translation>
@@ -54246,917 +48736,6 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/lib/actions/rs_actioninterface.cpp" line="640"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLibraryInsert</name>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referenzpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Enter angle:</source>
-        <translation type="vanished">Winkel eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter factor:</source>
-        <translation type="vanished">Faktor eingeben:</translation>
-    </message>
-    <message>
-        <source>Cannot open file &apos;%1&apos;</source>
-        <translation type="vanished">Kann Datei &apos;%1&apos; nicht öffnen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Select to modify attributes (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie Attribute zu ändern (Enter zu beenden)</translation>
-    </message>
-    <message>
-        <source>Modify attributes immediately after selecting</source>
-        <translation type="vanished">Attribute sofort nach Auswahl ändern</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Select first entity</source>
-        <translation type="vanished">Erstes Objekt wählen</translation>
-    </message>
-    <message>
-        <source>Selected lines are parallel</source>
-        <translation type="vanished">Ausgewählte Linien sind parallel</translation>
-    </message>
-    <message>
-        <source>Selected lines are not children of the same polyline</source>
-        <translation type="vanished">Ausgewählte Linien sind keine Kinder derselben Polylinie</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trimm</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Abschnitt:</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punkt 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punkt 2:</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable).</source>
-        <translation type="vanished">Invalidität ausgewählt (nicht abrufbar).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-atomic).</source>
-        <translation type="vanished">Invalidität ausgewählt (nicht-atomisch).</translation>
-    </message>
-    <message>
-        <source>Invalid entity selected (non-trimmable with first entity).</source>
-        <translation type="vanished">Invalide Einheit ausgewählt (nicht mit der ersten Einheit abrufbar).</translation>
-    </message>
-    <message>
-        <source>Select second entity</source>
-        <translation type="vanished">Zweites Objekt wählen</translation>
-    </message>
-    <message>
-        <source>Enter length 1:</source>
-        <translation type="vanished">Länge 1 eingeben:</translation>
-    </message>
-    <message>
-        <source>Enter length 2:</source>
-        <translation type="vanished">Länge 2 eingeben:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyCut</name>
-    <message>
-        <source>Divide</source>
-        <translation type="vanished">Teil</translation>
-    </message>
-    <message>
-        <source>At:</source>
-        <translation type="vanished">Bei:</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Cutting point may not be entity&apos;s endpoint.</source>
-        <translation type="vanished">Schneidpunkt darf nicht der Endpunkt der Einheit sein.</translation>
-    </message>
-    <message>
-        <source>Specify entity to cut</source>
-        <translation type="vanished">abzuschneidendes Objekt wählen</translation>
-    </message>
-    <message>
-        <source>Specify cutting point</source>
-        <translation type="vanished">Schnittpunkt auswählen</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="vanished">Objekt muss eine Linie, Bogen, Kreis, Ellipse oder Spline Interpolation sein.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Select to delete (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie zum Löschen (Enter zum Vervollständigen)</translation>
-    </message>
-    <message>
-        <source>Delete immediately after selection</source>
-        <translation type="vanished">Löschen sofort nach Auswahl</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Specify first break point on a polyline</source>
-        <translation type="vanished">Erste Bruchstelle auf Polylinie angeben</translation>
-    </message>
-    <message>
-        <source>Specify second break point on the same polyline</source>
-        <translation type="vanished">Zweite Bruchstelle auf Polylinie angeben</translation>
-    </message>
-    <message>
-        <source>Entities not in the same polyline.</source>
-        <translation type="vanished">Objekte nicht in der gleichen Polylinie.</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is not a polyline</source>
-        <translation type="vanished">Zweites Objekt nicht in Polylinie</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is not a polyline</source>
-        <translation type="vanished">Erstes Objekt nicht in Polylinie</translation>
-    </message>
-    <message>
-        <source>Parent of second entity is nullptr</source>
-        <translation type="vanished">Vorgänger des zweiten Objekts ist nullptr</translation>
-    </message>
-    <message>
-        <source>One of the chosen entities is nullptr</source>
-        <translation type="vanished">Eines der ausgewählten Objekte ist nullptr</translation>
-    </message>
-    <message>
-        <source>Parent of first entity is nullptr</source>
-        <translation type="vanished">Vorgänger des ersten Objekts ist nullptr</translation>
-    </message>
-    <message>
-        <source>First entity is nullptr</source>
-        <translation type="vanished">Erstes Objekt ist nullptr</translation>
-    </message>
-    <message>
-        <source>Second entity is nullptr</source>
-        <translation type="vanished">Zweites Objekt ist nullptr</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyDeleteQuick</name>
-    <message>
-        <source>Pick entity to delete</source>
-        <translation type="vanished">Zu löschende Entität auswählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyEntity</name>
-    <message>
-        <source>Click on entity to modify</source>
-        <translation type="vanished">Klicken Sie auf Entity, um zu ändern</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Select to explode text (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie, um Text zu explodieren (Enter zu beenden)</translation>
-    </message>
-    <message>
-        <source>Explode immediately after selection</source>
-        <translation type="vanished">Entdecken Sie sofort nach der Auswahl</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="vanished">Spiegel</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Angle (alt):</source>
-        <translation type="vanished">Winkel (alt):</translation>
-    </message>
-    <message>
-        <source>Line From:</source>
-        <translation type="vanished">Aus Richtung:</translation>
-    </message>
-    <message>
-        <source>Line To:</source>
-        <translation type="vanished">Zeile zu:</translation>
-    </message>
-    <message>
-        <source>Select to mirror (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie zum Spiegel (Enter zum Vervollständigen)</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-    <message>
-        <source>Specify mirror line</source>
-        <translation type="vanished">Spiegellinie angeben</translation>
-    </message>
-    <message>
-        <source>Flip Vertically</source>
-        <translation type="vanished">In den Warenkorb</translation>
-    </message>
-    <message>
-        <source>Flip Horizontally</source>
-        <translation type="vanished">Horizontal kippen</translation>
-    </message>
-    <message>
-        <source>Specify first point of mirror line</source>
-        <translation type="vanished">Ersten Punkt der Spiegelachse angeben</translation>
-    </message>
-    <message>
-        <source>Specify second point of mirror line</source>
-        <translation type="vanished">Zweiten Punkt der Spiegelachse angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMove</name>
-    <message>
-        <source>Moving Offset</source>
-        <translation type="vanished">Verschiebeversatz</translation>
-    </message>
-    <message>
-        <source>Copy Offset</source>
-        <translation type="vanished">Kopie Offset</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referenzpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Create a Copy</source>
-        <translation type="vanished">Erstellen eines Kopierens</translation>
-    </message>
-    <message>
-        <source>Select to move (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie, um zu bewegen (Enter zu beenden)</translation>
-    </message>
-    <message>
-        <source>Move immediately after selection</source>
-        <translation type="vanished">Sofort nach Auswahl verschieben</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zielpunkt angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referenzpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Moving with rotation</source>
-        <translation type="vanished">Bewegen mit Rotation</translation>
-    </message>
-    <message>
-        <source>Source:</source>
-        <translation type="vanished">Quelle:</translation>
-    </message>
-    <message>
-        <source>Target:</source>
-        <translation type="vanished">Ziel:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zielpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Enter rotation angle:</source>
-        <translation type="vanished">Rotationswinkel eingeben:</translation>
-    </message>
-    <message>
-        <source>Select to move and rotate  (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie, um zu bewegen und zu drehen (Enter zu beenden)</translation>
-    </message>
-    <message>
-        <source>Move and rotate immediately after selection</source>
-        <translation type="vanished">Nach der Auswahl sofort verschieben und drehen</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyOffset</name>
-    <message>
-        <source>Offset</source>
-        <translation type="vanished">Offset</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Entfernung:</translation>
-    </message>
-    <message>
-        <source>Specify direction of offset</source>
-        <translation type="vanished">Richtung des Versatz angeben</translation>
-    </message>
-    <message>
-        <source>Specify reference point for direction of offset</source>
-        <translation type="vanished">Bezugspunkt für die Richtung des Offsets</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle, arc or ellipse to create offset (Enter to complete)</source>
-        <translation type="vanished">Linie, Polylinie, Kreis, Bogen oder Ellipse zum Erstellen eines Versatzes auswählen (Eingabe zum Beenden)</translation>
-    </message>
-    <message>
-        <source>Select line, polyline, circle or arc to create offset (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie Zeile, Polylinie, Kreis oder Bogen, um Offset zu erstellen (Enter to complete)</translation>
-    </message>
-    <message>
-        <source>Offset immediately after selection</source>
-        <translation type="vanished">Sofort nach Auswahl</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRevertDirection</name>
-    <message>
-        <source>Select to revert direction (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie, um Richtung umzukehren (Enter zu komplettieren)</translation>
-    </message>
-    <message>
-        <source>Revert immediately after selection</source>
-        <translation type="vanished">Revertieren sofort nach Auswahl</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate</name>
-    <message>
-        <source>Rotation</source>
-        <translation type="vanished">Rotation</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Angle:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Quelle Point:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Zielpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Bezug:</translation>
-    </message>
-    <message>
-        <source>Center Point:</source>
-        <translation type="vanished">Mittelpunkt:</translation>
-    </message>
-    <message>
-        <source>Second Angle:</source>
-        <translation type="vanished">Zweiter Winkel:</translation>
-    </message>
-    <message>
-        <source>Select to rotate (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie zum Drehen (Enter zu beenden)</translation>
-    </message>
-    <message>
-        <source>Rotate immediately after selection</source>
-        <translation type="vanished">Drehen sofort nach Auswahl</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referenzpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Snap zum Zentrum der Auswahl</translation>
-    </message>
-    <message>
-        <source>Specify rotation center</source>
-        <translation type="vanished">Mittelpunkt der Drehung angeben</translation>
-    </message>
-    <message>
-        <source>Specify target point to rotate to</source>
-        <translation type="vanished">Zielpunkt der Drehung angeben</translation>
-    </message>
-    <message>
-        <source>Specify target point for rotation around reference point</source>
-        <translation type="vanished">Zielpunkt für Rotation um Referenzpunkt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotating Twice</source>
-        <translation type="vanished">Rotierende Twice</translation>
-    </message>
-    <message>
-        <source>Center 1:</source>
-        <translation type="vanished">Zentrum 1:</translation>
-    </message>
-    <message>
-        <source>Angle 1:</source>
-        <translation type="vanished">Winkel 1:</translation>
-    </message>
-    <message>
-        <source>Center 2:</source>
-        <translation type="vanished">Zentrum 2:</translation>
-    </message>
-    <message>
-        <source>Angle 2:</source>
-        <translation type="vanished">Winkel 2:</translation>
-    </message>
-    <message>
-        <source>Select for two axis rotation  (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie für zwei Achsendrehung (Enter zu komplettieren)</translation>
-    </message>
-    <message>
-        <source>Rotate 2 Axis immediately after selection</source>
-        <translation type="vanished">2 Achsen sofort nach Auswahl drehen</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-    <message>
-        <source>Specify absolute reference point</source>
-        <translation type="vanished">Absoluten Referenzpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify relative reference point</source>
-        <translation type="vanished">Relativen Referenzpunkt angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyRound</name>
-    <message>
-        <source>Round</source>
-        <translation type="vanished">Rund</translation>
-    </message>
-    <message>
-        <source>Point 1:</source>
-        <translation type="vanished">Punkt 1:</translation>
-    </message>
-    <message>
-        <source>Point 2:</source>
-        <translation type="vanished">Punkt 2:</translation>
-    </message>
-    <message>
-        <source>Specify second entity</source>
-        <translation type="vanished">Zweites Objekt wählen</translation>
-    </message>
-    <message>
-        <source>Enter radius:</source>
-        <translation type="vanished">Radius eingeben:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-    <message>
-        <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="vanished">Geben Sie erste Einheit an oder geben Sie Radius &lt;%1&gt; ein</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="vanished">Skala</translation>
-    </message>
-    <message>
-        <source>Center:</source>
-        <translation type="vanished">Zentrum:</translation>
-    </message>
-    <message>
-        <source>Source Point:</source>
-        <translation type="vanished">Quelle Point:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Zielpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Scale by X:</source>
-        <translation type="vanished">Skala nach X:</translation>
-    </message>
-    <message>
-        <source>Scale by Y:</source>
-        <translation type="vanished">Waage nach Y:</translation>
-    </message>
-    <message>
-        <source>Specify scale center</source>
-        <translation type="vanished">Skalenzentrum angeben</translation>
-    </message>
-    <message>
-        <source>Snap to center of selection</source>
-        <translation type="vanished">Snap zum Zentrum der Auswahl</translation>
-    </message>
-    <message>
-        <source>Specify source point</source>
-        <translation type="vanished">Quellenangabe</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zielpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Free snap</source>
-        <translation type="vanished">Kostenloser Schnapper</translation>
-    </message>
-    <message>
-        <source>Select to scale  (Enter to complete)</source>
-        <translation type="vanished">Wählen Sie nach Maß (Enter zum Vervollständigen)</translation>
-    </message>
-    <message>
-        <source>Scale immediately after selection</source>
-        <translation type="vanished">Waage sofort nach Auswahl</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="vanished">Erste Ecke angeben</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="vanished">Dehnung</translation>
-    </message>
-    <message>
-        <source>Start Corner:</source>
-        <translation type="vanished">Start-Ecke:</translation>
-    </message>
-    <message>
-        <source>End Corner:</source>
-        <translation type="vanished">End-Ecke:</translation>
-    </message>
-    <message>
-        <source>Reference Point:</source>
-        <translation type="vanished">Bezug:</translation>
-    </message>
-    <message>
-        <source>Target Point:</source>
-        <translation type="vanished">Zielpunkt:</translation>
-    </message>
-    <message>
-        <source>Offset:</source>
-        <translation type="vanished">Offset:</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="vanished">Zweite Ecke angeben</translation>
-    </message>
-    <message>
-        <source>Specify reference point</source>
-        <translation type="vanished">Referenzpunkt angeben</translation>
-    </message>
-    <message>
-        <source>Specify target point</source>
-        <translation type="vanished">Zielpunkt angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrim</name>
-    <message>
-        <source>Select first trim entity</source>
-        <translation type="vanished">Erstes zu trimmendes Objekt wählen</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trimm</translation>
-    </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="vanished">Trimm zwei</translation>
-    </message>
-    <message>
-        <source>Intersection:</source>
-        <translation type="vanished">Abschnitt:</translation>
-    </message>
-    <message>
-        <source>Intersection 2:</source>
-        <translation type="vanished">Abschnitt 2:</translation>
-    </message>
-    <message>
-        <source>Select limiting entity</source>
-        <translation type="vanished">Begrenzendes Objekt wählen</translation>
-    </message>
-    <message>
-        <source>Select second trim entity</source>
-        <translation type="vanished">Zweites zu trimmendes Objekt wählen</translation>
-    </message>
-    <message>
-        <source>Select entity to trim</source>
-        <translation type="vanished">Zu trimmendes Objekt wählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>No entity found.</source>
-        <translation type="vanished">Keine Entität gefunden.</translation>
-    </message>
-    <message>
-        <source>The chosen Entity is not an atomic entity or cannot be trimmed.</source>
-        <translation type="vanished">Das gewählte Objekt ist kein atomares Objekt oder kann nicht getrimmt werden.</translation>
-    </message>
-    <message>
-        <source>Select line/arc to trim OR enter length value:</source>
-        <translation type="vanished">Wählen Sie Zeile/Arz zum Trimmen oder geben Sie den Längenwert ein:</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="vanished">Ungültiger Ausdruck</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOrder</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Choose entities (Enter to Complete)</source>
-        <translation type="vanished">Entitäten auswählen (Enter to Complete)</translation>
-    </message>
-    <message>
-        <source>Order immediately after selection</source>
-        <translation type="vanished">Sofort nach Auswahl bestellen</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-    <message>
-        <source>Choose entity for order</source>
-        <translation type="vanished">Objekt zum Verschieben auswählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAdd</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Objekt muss eine Polylinie sein.</translation>
-    </message>
-    <message>
-        <source>Adding point is invalid.</source>
-        <translation type="vanished">Punkt ist ungültig.</translation>
-    </message>
-    <message>
-        <source>Adding point is not on entity.</source>
-        <translation type="vanished">Punkt liegt nicht auf dem Objekt.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to add nodes</source>
-        <translation type="vanished">Bestimme die Polylinie, um Punkte hinzuzufügen</translation>
-    </message>
-    <message>
-        <source>Specify adding node&apos;s point</source>
-        <translation type="vanished">Bestimme die Lage des neuen Punktes</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineAppend</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Objekt muss eine Polylinie sein.</translation>
-    </message>
-    <message>
-        <source>Click somewhere near the beginning or end of existing polyline.</source>
-        <translation type="vanished">In der Nähe vom Anfang oder Ende einer vorhandenen Polylinie klicken.</translation>
-    </message>
-    <message>
-        <source>Enter number of polylines</source>
-        <translation type="vanished">Anzahl der Polylinien eingeben</translation>
-    </message>
-    <message>
-        <source>Specify the polyline somewhere near the beginning or end point</source>
-        <translation type="vanished">Die Polylinie nahe bei ihrem Anfangs- oder Endpunkt bestimmen</translation>
-    </message>
-    <message>
-        <source>Can not append nodes in a closed polyline.</source>
-        <translation type="vanished">Einer geschlossenen Polylinie kann kein Knoten angehängt werden.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="vanished">Rückgängig nicht möglich: Noch nicht genug Objekte definiert.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDel</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Objekt muss eine Polylinie sein.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete node</source>
-        <translation type="vanished">Bestimme Polylinie um Knoten zu löschen</translation>
-    </message>
-    <message>
-        <source>Specify deleting node&apos;s point</source>
-        <translation type="vanished">Bestimme zu löschenden Knotenpunkt</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Der zu löschende Punkt ist ungültig.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Der zu löschende Punkt gehört zu keinem Objekt.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineDelBetween</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Objekt muss eine Polylinie sein.</translation>
-    </message>
-    <message>
-        <source>Deleting point is not on entity.</source>
-        <translation type="vanished">Der zu löschende Punkt gehört zu keinem Objekt.</translation>
-    </message>
-    <message>
-        <source>No polyline found.</source>
-        <translation type="vanished">Keine Polylinie gefunden.</translation>
-    </message>
-    <message>
-        <source>At least two segments of polyline should be between selected points.</source>
-        <translation type="vanished">Zwischen ausgewählten Punkten sollten mindestens zwei Segmente von Polyline liegen.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to delete between two nodes</source>
-        <translation type="vanished">Polylinie bestimmen, aus der ein Segment zu löschen ist</translation>
-    </message>
-    <message>
-        <source>Specify first node</source>
-        <translation type="vanished">Ersten Knoten bestimmen</translation>
-    </message>
-    <message>
-        <source>Specify second node</source>
-        <translation type="vanished">Zweiten Knoten bestimmen</translation>
-    </message>
-    <message>
-        <source>Deleting point is invalid.</source>
-        <translation type="vanished">Der zu löschende Punkt ist ungültig.</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineEquidistant</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Objekt muss eine Polylinie sein.</translation>
-    </message>
-    <message>
-        <source>Choose the original polyline</source>
-        <translation type="vanished">Wählen sie die ursprüngliche Polylinie</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineSegment</name>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Choose one of the segments on the original polyline</source>
-        <translation type="vanished">Ein vorhandenes Segment der zu erstellenden Polylinie wählen</translation>
-    </message>
-    <message>
-        <source>Entity can not be a closed polyline.</source>
-        <translation type="vanished">Objekt kann keine geschlossene Polylinie sein.</translation>
-    </message>
-    <message>
-        <source>Polyline created</source>
-        <translation type="vanished">Polylinie erstellt</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionPolylineTrim</name>
-    <message>
-        <source>Specify first segment</source>
-        <translation type="vanished">Erstes Segment wählen</translation>
-    </message>
-    <message>
-        <source>Specify second segment</source>
-        <translation type="vanished">Zweites Segment wählen</translation>
-    </message>
-    <message>
-        <source>No Entity found.</source>
-        <translation type="vanished">Kein Objekt gefunden.</translation>
-    </message>
-    <message>
-        <source>Entity must be a polyline.</source>
-        <translation type="vanished">Objekt muss eine Polylinie sein.</translation>
-    </message>
-    <message>
-        <source>First segment should be on selected polyline.</source>
-        <translation type="vanished">Erstes Segment sollte auf ausgewählter Polylinie sein.</translation>
-    </message>
-    <message>
-        <source>Second segment should be on selected polyline and not equal to first one.</source>
-        <translation type="vanished">Das zweite Segment sollte auf einer ausgewählten Polylinie liegen und nicht gleich der ersten.</translation>
-    </message>
-    <message>
-        <source>Specify polyline to trim</source>
-        <translation type="vanished">Polylinie zum Trimmen bestimmen</translation>
     </message>
 </context>
 <context>
@@ -55233,113 +48812,11 @@ Punkt: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelect</name>
-    <message>
-        <source>No entity selected!</source>
-        <translation type="vanished">Keine Entität ausgewählt!</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectBase</name>
     <message>
         <location filename="../src/lib/actions/rs_actionselectbase.h" line="51"/>
         <source> (Enter or CTRL+LMB click to complete)</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectContour</name>
-    <message>
-        <source>Entity must be an Atomic Entity.</source>
-        <translation type="vanished">Objekt muss atomar sein.</translation>
-    </message>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Entity angeben, um auszuwählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Choose first point of intersection line</source>
-        <translation type="vanished">Anfangspunkt der Schnittlinie auswählen</translation>
-    </message>
-    <message>
-        <source>Select intersecting entity</source>
-        <translation type="vanished">Wählen Sie schneidende Einheit</translation>
-    </message>
-    <message>
-        <source>Select child entities</source>
-        <translation type="vanished">Entitäten für Kinder</translation>
-    </message>
-    <message>
-        <source>Choose second point of intersection line</source>
-        <translation type="vanished">Endpunkt der Schnittlinie auswählen</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>Specify entity with desired layer</source>
-        <translation type="vanished">Einheit mit gewünschter Schicht angeben</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Specify entity to select</source>
-        <translation type="vanished">Entity angeben, um auszuwählen</translation>
-    </message>
-    <message>
-        <source>Select contour</source>
-        <translation type="vanished">Wählen Sie die Kontur</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>De-Selecting</source>
-        <translation type="vanished">De-Selecting</translation>
-    </message>
-    <message>
-        <source>Selecting</source>
-        <translation type="vanished">Auswahl</translation>
-    </message>
-    <message>
-        <source> entities </source>
-        <translation type="vanished">unternehmen</translation>
-    </message>
-    <message>
-        <source>that intersect with box</source>
-        <translation type="vanished">die sich kreuzen</translation>
-    </message>
-    <message>
-        <source>that are within box</source>
-        <translation type="vanished">die in box sind</translation>
-    </message>
-    <message>
-        <source>Choose second edge</source>
-        <translation type="vanished">Zweite Ecke auswählen</translation>
-    </message>
-    <message>
-        <source>Select Intersecting</source>
-        <translation type="vanished">Intersecing auswählen</translation>
-    </message>
-    <message>
-        <source>De-select entities</source>
-        <translation type="vanished">Entscheidende Stellen</translation>
-    </message>
-    <message>
-        <source>Select entities</source>
-        <translation type="vanished">Unternehmen</translation>
-    </message>
-    <message>
-        <source>De-select intersecting</source>
-        <translation type="vanished">De-select Schnitt</translation>
-    </message>
-    <message>
-        <source>Click and drag for the selection window</source>
-        <translation type="vanished">Klicken und ziehen für den Auswahlbereich</translation>
     </message>
 </context>
 <context>
@@ -55647,158 +49124,6 @@ Punkt: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="vanished">Bogenoptionen</translation>
-    </message>
-    <message>
-        <source>Counterclockwise</source>
-        <translation type="vanished">Gegenuhrzeigersinn</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Uhrzeigersinn</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ArcTangentialOptions</name>
-    <message>
-        <source>Tangential Arc Options</source>
-        <translation type="vanished">Optionen für tangentiale Bögen</translation>
-    </message>
-    <message>
-        <source>If selected, tangental arc with specified radius will be created</source>
-        <translation type="vanished">Wenn ausgewählt, wird Tangentalbogen mit vorgegebenem Radius erstellt</translation>
-    </message>
-    <message>
-        <source>Radius of the tangential arc</source>
-        <translation type="vanished">Radius des tangentialen Bogen</translation>
-    </message>
-    <message>
-        <source>If selected, arc with specified angle will be created</source>
-        <translation type="vanished">Wenn Sie ausgewählt werden, wird Bogen mit vorgegebenem Winkel erstellt</translation>
-    </message>
-    <message>
-        <source>Total subtending angle of the tangential arc</source>
-        <translation type="vanished">Mittelpunkswinkel des tangentialen Kreisbogen</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Blattradius Form Zeichnung</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="vanished">Winkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="vanished">Optionen Abschrägen</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="vanished">Beide Objekte zur Abschrägung trimmen</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trimmen</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="vanished">Länge 1:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in X direction.</source>
-        <translation type="vanished">Länge der Schräge in X-Richtung.</translation>
-    </message>
-    <message>
-        <source>Pick first length form drawing</source>
-        <translation type="vanished">Erste Länge Form Zeichnung</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="vanished">Länge 2:</translation>
-    </message>
-    <message>
-        <source>Length of bevel in Y direction. </source>
-        <translation type="vanished">Länge der Schräge in Y-Richtung.</translation>
-    </message>
-    <message>
-        <source>Pick second length form drawing</source>
-        <translation type="vanished">Pick zweite Länge Form Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="vanished">Kreis Optionen</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of circle</source>
-        <translation type="vanished">Kreisradius</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Wählen Sie Radius von der Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_CircleTan2Options</name>
-    <message>
-        <source>Circle Tangential2 Options</source>
-        <translation type="vanished">Optionen tangentialer Kreis</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius des zu zeichnenden tangentialen Kreis&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of tangential circle</source>
-        <translation type="vanished">Radius des tangentialen Kreis</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Wählen Sie Radius von der Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="vanished">Optionen für lineare Bemaßung</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Angle of dimension</source>
-        <translation type="vanished">Winkel der Bemaßung</translation>
-    </message>
-</context>
-<context>
     <name>Ui_DimOptions</name>
     <message>
         <location filename="../src/ui/action_options/dimensions/qg_dimoptions.ui" line="32"/>
@@ -55935,849 +49260,6 @@ Punkt: (%8, %9)</translation>
     </message>
 </context>
 <context>
-    <name>Ui_ImageOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Optionen eingefügtes Objekt</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotationswinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Scale Factor:</source>
-        <translation type="vanished">Skalenfaktor:</translation>
-    </message>
-    <message>
-        <source>DPI:</source>
-        <translation type="vanished">DPI:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skalierfaktor</translation>
-    </message>
-    <message>
-        <source>DPI of Image</source>
-        <translation type="vanished">DPI des Bildes</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="vanished">Optionen eingefügtes Objekt</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotationswinkel</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skalierfaktor</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="vanished">Array:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="vanished">Anzahl Spalten</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="vanished">Anzahl Reihen</translation>
-    </message>
-    <message>
-        <source>Pick row spacing from drawing</source>
-        <translation type="vanished">Zeilenabstand von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick column spacing from drawing</source>
-        <translation type="vanished">Spaltenabstand von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="vanished">Abstand:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="vanished">Spaltenabstand</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="vanished">Reihenabstand</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LibraryInsertOptions</name>
-    <message>
-        <source>Library Insert Options</source>
-        <translation type="vanished">Bibliothek Einfügeoptionen</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="vanished">Rotationswinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="vanished">Faktor:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="vanished">Skalierfaktor</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineAngleOptions</name>
-    <message>
-        <source>Line Angle Options</source>
-        <translation type="vanished">Optionen für Linien mit Winkel</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Point on created line that will be placed into insertion point</source>
-        <translation type="vanished">Punkt auf erstellte Linie, die in den Einführpunkt gelegt wird</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Linienwinkel</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Länge:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Länge der Linie</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="vanished">Fangpunkt:</translation>
-    </message>
-    <message>
-        <source>Pick line angle from drawing</source>
-        <translation type="vanished">Abholwinkel von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="vanished">Start</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="vanished">Mitte</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="vanished">Ende</translation>
-    </message>
-    <message>
-        <source>PIck line length from drawing</source>
-        <translation type="vanished">PIck-Linienlänge aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>If selected, line will be orhotogonal to axis of angles basis. Otherwise - to screen axis</source>
-        <translation type="vanished">Wenn ausgewählt, wird die Linie orhotogonal zu der Achse der Winkelbasis. Ansonsten - zur Bildschirmachse</translation>
-    </message>
-    <message>
-        <source>To Angles Basis</source>
-        <translation type="vanished">Angles Basis</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="vanished">Optionen für Winkelhalbierende</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Länge:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="vanished">Länge der Winkelhalbierenden</translation>
-    </message>
-    <message>
-        <source>Pick line length from drawing</source>
-        <translation type="vanished">Pick Line Länge von Zeichnung</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Anzahl:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="vanished">Anzahl Winkelhalbierende</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Optionen für Linien</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Erzeuge geschlossene Kontur aus gezeichneten Linien</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Schließen</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Letzte Linie rückgängig machen</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Rückgängig</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Wiederhole letzte Zeichenfunktion</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Wiederherstellen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineOptionsRel</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="vanished">Zeilenoptionen</translation>
-    </message>
-    <message>
-        <source>Direction:</source>
-        <translation type="vanished">Richtung:</translation>
-    </message>
-    <message>
-        <source>Creates polyline from line segments</source>
-        <translation type="vanished">Erzeugt Polyline aus Liniensegmenten</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Vertical line</source>
-        <translation type="vanished">Vertikale Linie</translation>
-    </message>
-    <message>
-        <source>Y</source>
-        <translation type="vanished">Y</translation>
-    </message>
-    <message>
-        <source>Line by specified angle</source>
-        <translation type="vanished">Zeile nach vorgegebenem Winkel</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Winkel</translation>
-    </message>
-    <message>
-        <source>Horizontal line</source>
-        <translation type="vanished">Horizontale Linie</translation>
-    </message>
-    <message>
-        <source>X</source>
-        <translation type="vanished">X</translation>
-    </message>
-    <message>
-        <source>If checked, angle is relative to previous segment</source>
-        <extracomment>Angle is relative to previous segment</extracomment>
-        <translation type="vanished">Wenn überprüft, ist Winkel relativ zu vorherigen Segment</translation>
-    </message>
-    <message>
-        <source>Rel</source>
-        <translation type="vanished">Rel</translation>
-    </message>
-    <message>
-        <source>Undo the last line drawing</source>
-        <translation type="vanished">Undo die letzte Linie Zeichnung</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Und</translation>
-    </message>
-    <message>
-        <source>Form a closed contour from lines drawn</source>
-        <translation type="vanished">Form einer geschlossenen Kontur aus gezogenen Linien</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Schließen</translation>
-    </message>
-    <message>
-        <source>Redo the last line drawing</source>
-        <translation type="vanished">Redo die letzte Linie Zeichnung</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="vanished">Rot</translation>
-    </message>
-    <message>
-        <source>Angle of line</source>
-        <translation type="vanished">Winkel der Linie</translation>
-    </message>
-    <message>
-        <source>Line to arbitrary point</source>
-        <translation type="vanished">Linie zu beliebigen Punkt</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="vanished">Punkt</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="vanished">Optionen für Parallelen</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="vanished">Abstand:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="vanished">Abstand zum originalen Objekt</translation>
-    </message>
-    <message>
-        <source>Pick distance from drawing</source>
-        <translation type="vanished">Entfernung von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Anzahl:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Anzahl Parallelen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="vanished">Optionen für Parallelen durch Punkte</translation>
-    </message>
-    <message>
-        <source>If checked, parallels will be created on both sides of entity</source>
-        <translation type="vanished">Wenn überprüft, werden Parallelen auf beiden Seiten der Einheit erstellt</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrie</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Anzahl:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="vanished">Anzahl Parallelen</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Optionen für Polygone</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Anzahl:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Anzahl Ecken</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="vanished">Optionen für Polygone</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="vanished">Anzahl:</translation>
-    </message>
-    <message>
-        <source>If checked, vertexes of polygon will be rounded. </source>
-        <translation type="vanished">Wenn überprüft, werden die Vertexe des Polygons abgerundet.</translation>
-    </message>
-    <message>
-        <source>Radius</source>
-        <translation type="vanished">Radius</translation>
-    </message>
-    <message>
-        <source>If checked, the polygon will be drawn as polyline. Otherwise, individual entities will be created. </source>
-        <translation type="vanished">Bei Prüfung wird das Polygon als Polyline gezeichnet. Andernfalls werden einzelne Wesen erstellt.</translation>
-    </message>
-    <message>
-        <source>Polyline</source>
-        <translation type="vanished">Polylin</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Wählen Sie Radius von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="vanished">Anzahl Ecken</translation>
-    </message>
-    <message>
-        <source>Rounding radius for vertex bevel.</source>
-        <translation type="vanished">Rundungsradius für Scheitelschräge.</translation>
-    </message>
-    <message>
-        <source>If selected, reference points are for vertexes of polygon. Otherwise, they are for middle point of edges. </source>
-        <translation type="vanished">Wenn ausgewählt, sind Referenzpunkte für Scheitelpunkte von Polygon. Ansonsten sind sie für den mittleren Punkt der Kanten.</translation>
-    </message>
-    <message>
-        <source>Vertex to Vertex</source>
-        <translation type="vanished">Vertex nach Vertex</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="vanished">Bezugswinkel Optionen für die Linie</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="vanished">Linienwinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Länge:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="vanished">Länge der Linie</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Picklänge aus Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Optionen für Text</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Text to insert</source>
-        <translation type="vanished">Text zum Einfügen</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Drehwinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_ModifyOffsetOptions</name>
-    <message>
-        <source>Modify Offset Options</source>
-        <translation type="vanished">Versatzoptionen ändern</translation>
-    </message>
-    <message>
-        <source>Distance for offset from original entity</source>
-        <translation type="vanished">Abstand zum ursprünglichen Unternehmen</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</source>
-        <translation type="vanished">Wenn überprüft, erstellte Einheiten werden in die aktuelle Schicht gelegt, sonst werden sie in Originalschichten.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktuelle Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Anzahl der Exemplare.</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Wenn sie überprüft werden, werden Original-Entitäten überleben, sonst werden sie entfernt.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-    <message>
-        <source>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</source>
-        <translation type="vanished">Wenn überprüft, werden die Entfernungskorrekturen des Offsets verwendet, sonst wird es durch die Maus definiert.</translation>
-    </message>
-    <message>
-        <source>Fixed Distance</source>
-        <translation type="vanished">Behobene Entfernung</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute auf erstellte Einheiten angewendet, sonst werden Originale verwendet.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>Pick distance from the drawing</source>
-        <translation type="vanished">Entfernung von der Zeichnung</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Wenn überprüft, werden mehrere Kopien erstellt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mehrere Kopien</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_MoveRotateOptions</name>
-    <message>
-        <source>Move Rotate Options</source>
-        <translation type="vanished">Optionen für Verschieben / Rotieren</translation>
-    </message>
-    <message>
-        <source>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </source>
-        <translation type="vanished">Wenn überprüft, werden aktuelle Attribute auf erstellte Einheiten angewendet, sonst werden Originale verwendet.</translation>
-    </message>
-    <message>
-        <source>Use Current Attributes</source>
-        <translation type="vanished">Aktuelle Attribute verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, multiple copies will be created. </source>
-        <translation type="vanished">Wenn überprüft, werden mehrere Kopien erstellt.</translation>
-    </message>
-    <message>
-        <source>Multiple Copies</source>
-        <translation type="vanished">Mehrere Kopien</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </source>
-        <translation type="vanished">Wenn überprüft, werden alle Kopien um den gleichen Winkel gedreht. Ansonsten ist der Winkel proportional zur Anzahl der einzelnen Exemplare.</translation>
-    </message>
-    <message>
-        <source>Same angle for copies</source>
-        <translation type="vanished">Gleicher Winkel für Kopien</translation>
-    </message>
-    <message>
-        <source>Rotation angle. </source>
-        <translation type="vanished">Drehwinkel.</translation>
-    </message>
-    <message>
-        <source>Number of copies.</source>
-        <translation type="vanished">Anzahl der Exemplare.</translation>
-    </message>
-    <message>
-        <source>If checked, rotation angle is defined by mouse. Otherwise, specified value is used.</source>
-        <translation type="vanished">Wird überprüft, wird der Drehwinkel durch die Maus definiert. Ansonsten wird der angegebene Wert verwendet.</translation>
-    </message>
-    <message>
-        <source>Free</source>
-        <translation type="vanished">Kostenlos</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </source>
-        <translation type="vanished">Wenn überprüft, erstellte Einheiten werden in die aktuelle Schicht gelegt, sonst wird die in ursprünglichen Schichten.</translation>
-    </message>
-    <message>
-        <source>Use Current Layer</source>
-        <translation type="vanished">Aktuelle Ebene verwenden</translation>
-    </message>
-    <message>
-        <source>If checked, original entities will survive, otherwise they will be removed. </source>
-        <translation type="vanished">Wenn sie überprüft werden, werden Original-Entitäten überleben, sonst werden sie entfernt.</translation>
-    </message>
-    <message>
-        <source>Keep Originals</source>
-        <translation type="vanished">Halten Sie Originale</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PolylineOptions</name>
-    <message>
-        <source>Polyline Options</source>
-        <translation type="vanished">Optionen Polylinie</translation>
-    </message>
-    <message>
-        <source>Connects ends of the polyline so closed contour is created</source>
-        <translation type="vanished">Verbindet die Enden der Polylinie so geschlossene Kontur entsteht</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="vanished">Schließen</translation>
-    </message>
-    <message>
-        <source>Undo for previous vertex</source>
-        <translation type="vanished">Undo für den vorherigen Scheitel</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Rückgängig</translation>
-    </message>
-    <message>
-        <source>Segment Type:</source>
-        <translation type="vanished">Segmenttyp:</translation>
-    </message>
-    <message>
-        <source>Defines which segment of polyline should be created</source>
-        <translation type="vanished">Definiert, welches Segment von Polyline erstellt werden sollte</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="vanished">Linie</translation>
-    </message>
-    <message>
-        <source>Tangential</source>
-        <translation type="vanished">Tangential</translation>
-    </message>
-    <message>
-        <source>Tan Radius</source>
-        <translation type="vanished">Tangentenradius:</translation>
-    </message>
-    <message>
-        <source>Tan Angle</source>
-        <translation type="vanished">Angemeldet</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="vanished">Winkel</translation>
-    </message>
-    <message>
-        <source>Tangential arc</source>
-        <translation type="vanished">Tangentialbogen</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed radius</source>
-        <translation type="vanished">Tangentalbogen mit festem Radius</translation>
-    </message>
-    <message>
-        <source>Tangental arc with fixed angle</source>
-        <translation type="vanished">Tangentalbogen mit festem Winkel</translation>
-    </message>
-    <message>
-        <source>Arc with angle</source>
-        <translation type="vanished">Bogen mit Winkel</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Radius of arc</source>
-        <translation type="vanished">Radius des Lichtbogens</translation>
-    </message>
-    <message>
-        <source>Pick radius form drawing</source>
-        <translation type="vanished">Blattradius Form Zeichnung</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Angle of arc</source>
-        <translation type="vanished">Winkel des Bogens</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="vanished">Gegenuhrzeigersinn</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="vanished">Uhrzeigersinn</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="vanished">Druckvorschau Optionen</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation</source>
-        <translation type="vanished">Landschaftsorientierung</translation>
-    </message>
-    <message>
-        <source>Drawing Settings</source>
-        <translation type="vanished">Zeichnungseinstellungen</translation>
-    </message>
-    <message>
-        <source>Scale:</source>
-        <translation type="vanished">Waage:</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;head/&gt;&gt;body&gt;p&gt;print size : zeichnungsgröße&lt;/p&gt;/body&gt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Print Scale is locked to the current value&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Druckmaßstab ist auf den aktuellen Wert beschränkt&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
-        <source>fixed</source>
-        <translation type="vanished">fixiert</translation>
-    </message>
-    <message>
-        <source>Toggle Black / White mode</source>
-        <translation type="vanished">Schwarz/Weiss Modus umschalten</translation>
-    </message>
-    <message>
-        <source>Landscape Orientation of paper</source>
-        <translation type="vanished">Landschaft Orientierung von Papier</translation>
-    </message>
-    <message>
-        <source>Portrait Orientation of paper</source>
-        <translation type="vanished">Porträt Orientierung des Papiers</translation>
-    </message>
-    <message>
-        <source>Apply Print Scale to line width</source>
-        <translation type="vanished">Druckskala auf Linienbreite anwenden</translation>
-    </message>
-    <message>
-        <source>Page in center of drawing</source>
-        <translation type="vanished">Seite im Zentrum der Zeichnung</translation>
-    </message>
-    <message>
-        <source>Zoom to Print Area</source>
-        <translation type="vanished">Zum Drucken Bereich vergrößern</translation>
-    </message>
-    <message>
-        <source>Fit to 1 Page</source>
-        <translation type="vanished">Passend für 1 Seite</translation>
-    </message>
-    <message>
-        <source>If enabled, paper space will include specified amount of pages organized in columns and rows</source>
-        <translation type="vanished">Wenn aktiviert, wird der Papierraum die angegebene Anzahl der in Spalten und Zeilen organisierten Seiten enthalten</translation>
-    </message>
-    <message>
-        <source>Tiled Print</source>
-        <translation type="vanished">Fliesendruck</translation>
-    </message>
-    <message>
-        <source>Pages Rows::</source>
-        <translation type="vanished">Seiten:</translation>
-    </message>
-    <message>
-        <source>Amount of pages columns</source>
-        <translation type="vanished">Anzahl der Seitenspalten</translation>
-    </message>
-    <message>
-        <source>Pages Columns:</source>
-        <translation type="vanished">Seiten Spalten:</translation>
-    </message>
-    <message>
-        <source>Amount of pages rows</source>
-        <translation type="vanished">Anzahl der Seitenzeilen</translation>
-    </message>
-    <message>
-        <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="vanished">Berechnen Sie die Anzahl der Seiten, die für die Zeichnung benötigt werden</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="vanished">Optionen für Ecken runden</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="vanished">Beide Objekte zur Rundung trimmen</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="vanished">Trimmen</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="vanished">Radius:</translation>
-    </message>
-    <message>
-        <source>Rounding radius</source>
-        <translation type="vanished">Rundungsradius</translation>
-    </message>
-    <message>
-        <source>Pick radius from drawing</source>
-        <translation type="vanished">Wählen Sie Radius von der Zeichnung</translation>
-    </message>
-</context>
-<context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <location filename="../src/ui/action_options/snap/qg_snapdistoptions.ui" line="32"/>
@@ -56816,99 +49298,6 @@ Punkt: (%8, %9)</translation>
         <location filename="../src/ui/action_options/snap/qg_snapmiddleoptions.ui" line="81"/>
         <source>Number of equidistant division points</source>
         <translation>Anzahl abstandsgleicher Unterteilungspunkte</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_SplineOptions</name>
-    <message>
-        <source>Spline Options</source>
-        <translation type="vanished">Spline Optionen</translation>
-    </message>
-    <message>
-        <source>Degree:</source>
-        <translation type="vanished">Grad:</translation>
-    </message>
-    <message>
-        <source>Spline&apos;s degree used for approximation between points</source>
-        <translation type="vanished">Spline-Abschluss zur Annäherung zwischen Punkten</translation>
-    </message>
-    <message>
-        <source>If selected, closed spline is created</source>
-        <translation type="vanished">Wenn ausgewählt, wird geschlossen Spline erstellt</translation>
-    </message>
-    <message>
-        <source>Closed</source>
-        <translation type="vanished">Geschlossen</translation>
-    </message>
-    <message>
-        <source>Undo previous point</source>
-        <translation type="vanished">Vorheriger Punkt</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="vanished">Rückgängig</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="vanished">Optionen für Text</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Text:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="vanished">Winkel:</translation>
-    </message>
-    <message>
-        <source>Rotation angle</source>
-        <translation type="vanished">Drehwinkel</translation>
-    </message>
-    <message>
-        <source>Pick angle from drawing</source>
-        <translation type="vanished">Pickwinkel aus Zeichnung</translation>
-    </message>
-</context>
-<context>
-    <name>Ui_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="vanished">Optionen für Trimmen um Betrag</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="vanished">Abstand. Negativer Wert für verkürzen, positiver Wert für verlängern.</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation type="vanished">Insgesamt</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="vanished">Länge:</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="vanished">Abstand. Negative Werte zum Trimmer, positive zum Verlängern. Minuszeichen wird beim Trimmen auf absolute Gesamtlänge ignoriert.</translation>
-    </message>
-    <message>
-        <source>Pick length from drawing</source>
-        <translation type="vanished">Picklänge aus Zeichnung</translation>
-    </message>
-    <message>
-        <source>If checked, trim/extension is performed for both sides of line.</source>
-        <translation type="vanished">Wird überprüft, wird für beide Seiten der Linie Trimm/Extension durchgeführt.</translation>
-    </message>
-    <message>
-        <source>Symmetric</source>
-        <translation type="vanished">Symmetrie</translation>
-    </message>
-    <message>
-        <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="vanished">Die eingegebene Länge wird als absolute Gesamtlänge nach dem Trimmen benutzt, nicht als Längenänderung</translation>
     </message>
 </context>
 </TS>

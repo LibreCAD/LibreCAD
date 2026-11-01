@@ -27,6 +27,8 @@
 
 #include <algorithm>
 #include <cmath>
+#include <limits>
+#include <utility>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
@@ -207,6 +209,77 @@ namespace {
 // RVT_PORT changed from RS_PainterQt::RS_PainterQt( const QPaintDevice* pd)
 RS_Painter::RS_Painter(QPaintDevice* pd)
     : QPainter{pd}, m_cachedDpmm{getDpmm()} {
+}
+
+QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw, qreal* phaseOffset) {
+    if (phaseOffset != nullptr)
+        *phaseOffset = 0.0;
+    if (raw.empty())
+        return {};
+    // Runs of one state, in drawing units. A zero element takes the state the
+    // previous one left open, so the alternation survives DOT-like records.
+    std::vector<std::pair<bool, double>> runs; // dash, length
+    bool nextIsDash = true;
+    for (const double value : raw) {
+        if (!std::isfinite(value))
+            return {};
+        const bool isDash = value > 0.0 || (value == 0.0 && nextIsDash);
+        nextIsDash = !isDash;
+        const double length = std::abs(value);
+        if (!runs.empty() && runs.back().first == isDash)
+            runs.back().second += length;
+        else
+            runs.push_back({isDash, length});
+    }
+    // The list is cyclic: a run shared by both ends is one run. Retain the
+    // origin's position in that run before merging it for Qt.
+    const bool wraps = runs.size() > 1 && runs.front().first == runs.back().first;
+    const bool startsWithDash = runs.front().first;
+    const double leadingRun = runs.front().second;
+    const double trailingRun = runs.back().second;
+    if (wraps) {
+        runs.front().second += runs.back().second;
+        runs.pop_back();
+    }
+    // No dash or no gap means nothing Qt can draw.
+    if (runs.size() < 2)
+        return {};
+    // Rotate to start with a dash; the states alternate, so one step suffices.
+    const std::size_t first = runs.front().first ? 0 : 1;
+    double period = 0.0;
+    QVector<qreal> result;
+    result.reserve(static_cast<int>(runs.size()));
+    for (std::size_t i = 0; i < runs.size(); ++i) {
+        const auto& run = runs[(first + i) % runs.size()];
+        result.push_back(run.second);
+        period += run.second;
+    }
+    if (!std::isfinite(period) || period <= 0.0)
+        return {};
+    // Keep the DXF pattern's origin when rotation or a repeated end run moved
+    // it inside the Qt pattern's first dash/gap.
+    if (phaseOffset != nullptr)
+        *phaseOffset = startsWithDash ? (wraps ? trailingRun : 0.0) : period - leadingRun;
+    return result;
+}
+
+QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, const double k) {
+    // The single place where the painter scales a table pattern.
+    QVector<qreal> pattern = canonical;
+    for (qreal& dash : pattern)
+        dash *= k;
+    if (pattern.size() % 2 != 0)
+        return {};
+    // QPen requires strictly positive dash and gap lengths. A zero group 49
+    // element is a dot; with the pen cap it becomes a point at this tiny length.
+    const qreal dotLength = std::numeric_limits<qreal>::epsilon();
+    for (qreal& dash : pattern) {
+        if (dash == 0.0)
+            dash = dotLength;
+        if (!std::isfinite(dash) || dash <= 0.0)
+            return {};
+    }
+    return pattern;
 }
 
 /**
@@ -1340,17 +1413,33 @@ void RS_Painter::drawSplinePointsUI(const std::vector<RS_Vector> &uiControlPoint
 void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
     QPainterPath path;
     path.moveTo(toGuiPointF(polyline->getStartpoint()));
+    // A child that starts where the path ended continues the same subpath, so
+    // the dash phase runs through the join. The dash phase is the only reason
+    // to join subpaths: a solid pen keeps one subpath per segment, with its
+    // caps and joins. The comparison is in GUI pixels, the space
+    // currentPosition() lives in, with a tolerance below raster detail.
+    static constexpr double uiJoinTolerance = 1e-3;
+    auto continuesPath = [&path](const QPointF& start) {
+        const QPointF end = path.currentPosition();
+        return std::abs(end.x() - start.x()) <= uiJoinTolerance
+            && std::abs(end.y() - start.y()) <= uiJoinTolerance;
+    };
 
+    bool startNewSubpath = false;
     for (RS_Entity* entity : *polyline) {
         switch (entity->rtti()) {
             case RS2::EntityLine: {
-                path.moveTo(toGuiPointF(entity->getStartpoint()));
+                const QPointF start = toGuiPointF(entity->getStartpoint());
+                if (startNewSubpath || !penHasDashPattern() || !continuesPath(start))
+                    path.moveTo(start);
                 path.lineTo(toGuiPointF(entity->getEndpoint()));
+                startNewSubpath = false;
                 break;
             }
             case RS2::EntityArc: {
                 auto* arc = static_cast<RS_Arc*>(entity);
                 drawArcEntity(arc, path);
+                startNewSubpath = true;
                 break;
             }
             // well, actually this is just for fonts.. better to have separate entity for this. fixme - change latter
@@ -1371,6 +1460,7 @@ void RS_Painter::drawEntityPolyline(const RS_Polyline* polyline) {
                 else {
                     drawEllipseUI(uiCenter, {uiMajorRadius, uiMinorRadius}, toWorldAngleDegrees(data.angleDegrees));
                 }
+                startNewSubpath = true;
                 break;
             }
             default: LC_ERR << "Polyline may contain lines/arcs only: found rtti() =" << entity->rtti();
@@ -1574,6 +1664,15 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
     pColor.setAlphaF(pen.getAlpha());
     RS2::LineType lineType = pen.getLineType();
     Qt::PenStyle style = rsToQtLineType(lineType);
+    // A named pen may draw dashes from the drawing's line type table; without
+    // a renderer or outside model space the enum decides, as it always did.
+    const std::uint16_t lineTypeId = pen.getLineTypeId();
+    const QVector<qreal>* tablePattern = nullptr;
+    qreal tablePhaseOffset = 0.0;
+    if (lineTypeId != 0 && m_renderer != nullptr && dashSpace == DashSpace::Model)
+        tablePattern = m_renderer->resolveDashPattern(pen, &tablePhaseOffset);
+    if (tablePattern != nullptr)
+        style = Qt::CustomDashLine;
 
     double screenWidth = pen.getScreenWidth();
     if (style == Qt::CustomDashLine) {
@@ -1583,24 +1682,26 @@ void RS_Painter::setPen(const RS_Pen& pen, const DashSpace dashSpace) {
         if (m_viewport && screenWidth == 0.0)
             deviceScale *= getDevicePixelRatio();
         const double k = dashPatternScale(screenWidth, deviceScale);
-        // Rebuild when the line type, width or viewport scale changes.
-        if (!m_lastDashValid || m_lastDashLineType != lineType
+        // Rebuild when the spelled identity, line type, width or viewport scale changes.
+        if (!m_lastDashValid || m_lastDashLineTypeId != lineTypeId
+            || m_lastDashLineType != lineType
             || m_lastDashScreenWidth != screenWidth || m_lastDashDeviceScale != deviceScale) {
-            QVector<qreal> dashPattern = rsToQDashPattern(lineType, k);
+            QVector<qreal> dashPattern = tablePattern != nullptr
+                ? dashPatternForQt(*tablePattern, k) : rsToQDashPattern(lineType, k);
             if (dashPattern.isEmpty()) {
                 style = Qt::SolidLine;
             }
             else {
                 m_lastUsedPen.setDashPattern(dashPattern); // also sets Qt::CustomDashLine
                 m_lastDashValid = true;
+                m_lastDashLineTypeId = lineTypeId;
                 m_lastDashLineType = lineType;
                 m_lastDashScreenWidth = screenWidth;
                 m_lastDashDeviceScale = deviceScale;
             }
         }
         if (style == Qt::CustomDashLine) {
-            // fixme - how this is related to RS_AtomicEntity::updateDashOffset??? Will we set dash offset twice?
-            m_lastUsedPen.setDashOffset(pen.dashOffset() * k);
+            m_lastUsedPen.setDashOffset((pen.dashOffset() + tablePhaseOffset) * k);
         }
     }
     if (style != Qt::CustomDashLine && m_lastUsedPen.style() != style) {
@@ -1802,15 +1903,35 @@ void RS_Painter::setMinRenderableTextHeightInPx(const int i) {
     m_minRenderableTextHeightInPx = i;
 }
 
-void RS_Painter::updateDashOffset(const RS_Entity* e) {
-    // Adjust dash offset
-    if (m_lpen.getLineType() == RS2::SolidLine /*|| view.getGraphic() == nullptr*/) {
-        return;
-    }
+double RS_Painter::currentDashOffset(const DashSpace dashSpace) const {
+    const double scale = dashSpace == DashSpace::Model && m_viewport
+        ? std::abs(toGuiDX(1.0)) : getDpmmCached();
+    return scale > 0.0 ? m_currenPatternOffset / scale : 0.0;
+}
 
-    // factor from model space to GUI
-    const double toMm = m_defaultWidthFactor;
-    m_currenPatternOffset -= e->getLength() * toMm;
+void RS_Painter::updateDashOffset(const RS_Entity* e) {
+    if (!penHasDashPattern()) return;
+
+    // Track the rendered length in logical pixels so model and screen patterns can share it.
+    double length = e->getLength() * std::abs(toGuiDX(1.0));
+    if (m_viewPortFactor.x != m_viewPortFactor.y) {
+        if (const auto* line = dynamic_cast<const RS_Line*>(e)) {
+            const QPointF delta = toGuiPointF(line->getEndpoint()) - toGuiPointF(line->getStartpoint());
+            length = std::hypot(delta.x(), delta.y());
+        } else if (const auto* spline = dynamic_cast<const LC_SplinePoints*>(e)) {
+            const auto& data = spline->getData();
+            if (!data.controlPoints.empty()) {
+                std::vector<RS_Vector> points;
+                points.reserve(data.controlPoints.size());
+                std::transform(data.controlPoints.cbegin(), data.controlPoints.cend(), std::back_inserter(points),
+                               [this](const RS_Vector& point) { return toGui(point); });
+                QPainterPath path(QPointF(points.front().x, points.front().y));
+                addSplinePointsToPath(points, data.closed, path);
+                length = path.length();
+            }
+        }
+    }
+    m_currenPatternOffset += length;
 }
 
 int RS_Painter::determinePointScreenSize(const double pdsize) const {

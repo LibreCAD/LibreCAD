@@ -25,7 +25,6 @@
 #include <QDir>
 #include <QLibrary>
 #include <QMenuBar>
-#include <QMessageBox>
 #include <QPluginLoader>
 #include <QToolTip>
 
@@ -56,7 +55,7 @@ void LC_PluginInvoker::loadPlugins(){
         for (const QString &fileName: pluginsDir.entryList(QDir::Files)) {
             // Only library files are plugin candidates: a build tree's
             // cmake_install.cmake or a stray file would otherwise fail to
-            // load and raise the "Info" box below.
+            // load and produce a misleading command-line message.
             if (!QLibrary::isLibrary(fileName)) {
                 continue;
             }
@@ -110,7 +109,8 @@ void LC_PluginInvoker::loadPlugins(){
                     }
                 }
             } else {
-                QMessageBox::information(m_appWindow, "Info", pluginLoader.errorString());
+                m_appWindow->commandMessage(
+                    tr("Could not load plugin %1: %2").arg(fileName, pluginLoader.errorString()));
                 RS_DEBUG->print("QC_ApplicationWindow::loadPlugin: %s", pluginLoader.errorString().toLatin1().data());
             }
         }

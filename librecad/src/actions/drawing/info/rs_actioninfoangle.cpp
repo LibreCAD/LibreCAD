@@ -93,7 +93,8 @@ void RS_ActionInfoAngle::doTrigger() {
                 QString altStr = formatAngleRaw(alt);
 
                 commandMessage("---");
-                const QString& msgTemplate = tr("Angle: %1\nComplementary: %2\nSupplementary: %3\nAlternative: %4\n");
+                //: %2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.
+                const QString& msgTemplate = tr("Angle: %1\nComplementary: %2\nSupplementary: %3\nExplementary angle: %4\n");
                 const QString& msg = msgTemplate.arg(strAngle, complimenatryStr, supplimentaryStr, altStr);
 
                 commandMessage(msg);
@@ -136,8 +137,9 @@ void RS_ActionInfoAngle::doTrigger() {
                     QString intersectRelX = formatLinear(intersectRel.x);
                     QString intersectRelY = formatLinear(intersectRel.y);
 
+                    //: %2 completes a right angle with %1; %3 a straight angle; %4 a full turn. Preserve the numbered placeholders.
                     const QString& msgTemplate = tr(
-                        "Angle: %1\nComplementary: %2\nSupplementary: %3\nAlternative: %4\nIntersection: (%5 , %6)\nIntersection :@(%7, %8)");
+                        "Angle: %1\nComplementary: %2\nSupplementary: %3\nExplementary angle: %4\nIntersection: (%5 , %6)\nIntersection :@(%7, %8)");
                     const QString& msg = msgTemplate.arg(str, complimenatryStr, supplimentaryStr, altStr, intersectX, intersectY,
                                                          intersectRelX, intersectRelY);
                     commandMessage("---");
@@ -270,8 +272,13 @@ void RS_ActionInfoAngle::updateInfoCursor1(const RS_Line* line) const {
         double uscsAngle = toUCSBasisAngle(wcsLineAngle);
         RS_Math::calculateAngles(uscsAngle, angleComplementary, angleSupplementary, alt);
 
-        msgStart().string(tr("Angle Info")).rawAngle(tr("Angle:"), uscsAngle).rawAngle(tr("Complementary:"), angleComplementary).
-                   rawAngle(tr("Supplementary:"), angleSupplementary).rawAngle(tr("Alternative: "), alt).
+        msgStart().string(tr("Angle Info")).rawAngle(tr("Angle:"), uscsAngle)
+                   //: Complementary angle: right angle minus the measured angle (pi/2 - angle).
+                   .rawAngle(tr("Complementary:"), angleComplementary)
+                   //: Supplementary angle: straight angle minus the measured angle (pi - angle).
+                   .rawAngle(tr("Supplementary:"), angleSupplementary)
+                   //: Completes one full turn with the measured angle (2*pi - angle).
+                   .rawAngle(tr("Explementary angle: "), alt).
                    vector(tr("Line From:"), line->getStartpoint()).vector(tr("Line To:"), line->getEndpoint()).
                    wcsAngle(tr("Line Angle 1:"), line->getAngle1()).wcsAngle(tr("Line Angle 2:"), line->getAngle2()).
                    toInfoCursorZone2(true);
@@ -287,8 +294,13 @@ void RS_ActionInfoAngle::updateInfoCursor2(const RS_Vector& mouse, const RS_Vect
         double angleComplementary, angleSupplementary, angleAlt;
         RS_Math::calculateAngles(angle, angleComplementary, angleSupplementary, angleAlt);
 
-        msgStart().string(tr("Angle Info")).rawAngle(tr("Angle:"), angle).rawAngle(tr("Complementary:"), angleComplementary).
-                   rawAngle(tr("Supplementary:"), angleSupplementary).rawAngle(tr("Alternative: "), angleAlt).
+        msgStart().string(tr("Angle Info")).rawAngle(tr("Angle:"), angle)
+                   //: Complementary angle: right angle minus the measured angle (pi/2 - angle).
+                   .rawAngle(tr("Complementary:"), angleComplementary)
+                   //: Supplementary angle: straight angle minus the measured angle (pi - angle).
+                   .rawAngle(tr("Supplementary:"), angleSupplementary)
+                   //: Completes one full turn with the measured angle (2*pi - angle).
+                   .rawAngle(tr("Explementary angle: "), angleAlt).
                    vector(tr("Intersection:"), intersection).wcsAngle(tr("Line 1 Angle:"), angle1).wcsAngle(tr("Line 2 Angle:"), angle2).
                    toInfoCursorZone2(true);
     }
