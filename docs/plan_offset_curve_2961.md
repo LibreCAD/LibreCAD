@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W302; chronological evidence follows): implementation slices
+Current status (W305; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,10 +35,10 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The exact PR head is `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; its latest
-non-roadmap change is the offset-test whitespace fix. The 2026-11-02 22:37 UTC
-exact-head poll reports Text Foundations ON/OFF, Headless ON/OFF, DWG/DXF fast
-and Windows x64/ARM64, CodeQL Analyze, and both push-triggered and PR Pixi on
-all five platforms passed. Continuous Build Windows ARM64 passed; native macOS
+non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 22:54
+UTC exact-head poll, Text Foundations ON/OFF, Headless ON/OFF, DWG/DXF fast and
+Windows x64/ARM64, CodeQL Analyze, both push-triggered and PR Pixi on all five
+platforms, and continuous Build Windows ARM64 had passed. Native macOS
 packaging remains in progress (`41525564465`, job `125552606579`). Linux, Linux
 AArch64, Snap, Windows x64 packaging, and the CodeQL Security scan were skipped
 by workflow configuration. These are exact-head results; do not carry forward
@@ -11789,3 +11789,38 @@ preview/commit captures with an actual Qt-DPR measurement and a genuine
 stale-peer mutation during worker execution; do not count this locked-layer
 probe as either result. Keep external viewport, deployment/runtime, review, and
 final integration gates open.
+
+## 260. W305 Durable Content Render and Exact-Head Poll
+
+With the user logged in to the remote desktop, used LibreCAD's `File > Export >
+Export as image` on the unchanged W281 baseline. The file picker did not expose
+its format selector to accessibility input; the resulting export is XPM at
+`/private/tmp/offset-W304-baseline.xpm`, 2080x400 pixels, SHA256
+`9930ee145aef30efe8f9b5b9cb80c5613644ac7771c49ff64ae0e7aefba7cce3`. This is a
+durable drawing-content render only. It is not a full application screenshot,
+matched preview/commit pair, or display/Qt-DPR measurement. LibreCAD returned
+to `Current Action: Default` with no entity selected. No explicit CAD Save was
+issued; W193 and W281 remain byte-identical at SHA256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+At the 22:54 UTC exact-head poll, PR #3193 still pointed to
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; all other required checks had
+passed, while native `BuildMacOS` remained `in_progress` (run `41525564465`, job
+`125552606579`). Configured skip lanes remain Linux, Linux AArch64, Snap,
+Windows x64 packaging, and Security scan. Keep the accumulated roadmap-only
+commits unpushed until this exact-head macOS job reaches a terminal result.
+
+| W305 item | Result |
+|---|---|
+| Durable content-only render | PASS; XPM 2080x400 at `/private/tmp/offset-W304-baseline.xpm`, SHA256 recorded above |
+| Full-window preview/commit screenshots and measured Qt DPR | OPEN; this export is content-only and does not measure DPR |
+| Drawing state / fixture integrity | PASS; app idle at Default, no selection, no explicit CAD Save, both fixture hashes unchanged |
+| Physical stale-peer worker reply / independent W171 viewport | OPEN |
+| Exact-head CI | All other required checks PASS; native `BuildMacOS` still in progress; configured skips noted above |
+| Signed/deployed runtime, human review, final R integration | OPEN |
+
+This documentation receipt is a local checkpoint. After roadmap validation,
+commit it locally, continue polling the exact PR head, and keep the roadmap
+commits unpushed until `BuildMacOS` terminates. Continue the remaining physical,
+external-viewer, deployment/runtime, review, and final integration gates as
+separate acceptance items.
