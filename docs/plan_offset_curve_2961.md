@@ -11477,3 +11477,64 @@ Next: refresh the PR checks by exact head, confirm the new native macOS package
 executes the FreeType member-minimum audit, and investigate any failure from
 the new source. Keep remaining physical, release, review, and integration gates
 open until their direct acceptance evidence exists.
+
+## 254. W296 Current-Head CI and Remote-Desktop Session Check
+
+Revalidated PR #3193 at 20:01 UTC. The PR is open and draft at exact head
+`04a863fd32dd7ea2b0b2ea0aa561b91a598f959b`; the local branch matches the PR
+head and was clean before this roadmap receipt. No product-code change was
+made.
+
+Current-head checks: both Text Foundations headless jobs and
+`VerifyDwgDxfFast` passed. Pixi run `41510774612` passed Ubuntu ARM and
+Windows; its other three lanes remain in progress. Duplicate run `41510765447`
+passed Ubuntu ARM; its other four lanes remain in progress. CodeQL Analyze,
+native macOS packaging, native Windows ARM64 build, and Windows x64/ARM64
+DWG/DXF verification also remain in progress. Continuous build Linux/x64 and
+the configured security/packaging lanes are skipped by workflow policy.
+Results from earlier heads are not counted.
+
+The user reports that the remote desktop is running and logged in. The local
+macOS Aqua session exists and the LibreCAD test-copy process is alive, but the
+native CUA bridge still reports a locked Mac and exposes no app. AppleScript
+sees the test process with zero windows; a local screen capture shows the
+macOS lock screen. This is evidence that this automation endpoint is not
+attached to an interactive unlocked desktop, not a request for the user to log
+in again. No visible offset interaction was performed and no GUI acceptance
+gate is closed by this check.
+
+| W296 item | Result |
+|---|---|
+| Exact PR head | `04a863fd32dd7ea2b0b2ea0aa561b91a598f959b`; OPEN, draft |
+| Worktree before roadmap receipt | Clean; branch matched exact PR head |
+| Roadmap/refusal validation after receipt | PASS; 99/99 tests, 93 obligations, zero pending declarations or mismatches |
+| `git diff --check` | PASS |
+| Headless ON/OFF | PASS |
+| `VerifyDwgDxfFast` | PASS |
+| Pixi run `41510774612` | Ubuntu ARM and Windows PASS; three lanes IN PROGRESS |
+| Pixi run `41510765447` | Ubuntu ARM PASS; four lanes IN PROGRESS |
+| CodeQL Analyze, macOS package, Windows ARM64 build | IN PROGRESS |
+| Windows x64/ARM64 DWG/DXF verification | IN PROGRESS |
+| Configured workflow skips | SKIPPED by policy |
+| CUA / local GUI | CUA reports locked; local capture shows lock screen; visible tests OPEN |
+| Preview/commit parity, held-drag cancellation, stale-peer UI, retained screenshot/DPR | OPEN |
+| External FreeCAD viewport, macOS 14.4 runtime, signing/deployment, human review, final R integration | OPEN |
+
+At 20:42 UTC, the PR-triggered Pixi run passed all five platforms; Text
+Foundations ON/OFF, CodeQL Analyze, fast DWG/DXF, Windows ARM64 DWG/DXF, and
+native Windows ARM64 packaging also passed. The remaining active checks are
+Windows x64 DWG/DXF, native macOS packaging, and a push-triggered Pixi run for
+macOS-15 Intel. The duplicate push run uses the same exact source SHA, and the
+same Pixi lane already passed in the pull-request run. A prior macOS build on
+an older head ran for 2h14m before a later push canceled it; the current macOS
+packaging step has already been active for over an hour. The W296 commit changes
+only this roadmap, so waiting for all three runs and then pushing would still
+start another complete validation cycle.
+
+Decision: push W296 now so the implementation plan is present on PR #3193.
+Concurrency will cancel the obsolete-head runs; retain their completed results
+as evidence for unchanged source only, not as checks for the new PR head. Then
+poll the new exact-head runs to terminal status and update this roadmap and the
+PR status comment with those results. Keep GUI and release gates open until
+their direct acceptance evidence exists; do not ask the user to log in again
+based on the bridge mismatch.
