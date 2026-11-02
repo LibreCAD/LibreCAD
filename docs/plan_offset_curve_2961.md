@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W271; chronological evidence follows): planned product
+Current status (W272; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -33,19 +33,29 @@ synchronous file/stream/byte filter imports. No additional product-code gap
 has been identified in the latest audit. W267 adds a regression through the
 public `RS_FileIO` auto-detection route, so the public dispatcher is now covered
 beside the direct filter file/stream/byte APIs. Its exact local Release result
-is recorded below. W269's separately compiled Qt plugin fixture is committed
-and pushed; latest pushed PR head is
-`ec5da99d89e26b1d851a44bbb75a05a60d123906`. On that head, Headless ON/OFF,
-Text Foundations, all five Pixi targets, DWG/DXF Linux, and CodeQL pass. Only
-DWG/DXF Windows x64/ARM64 bounded test steps remain active on run
-`41378239643`; Security scan is skipped by repository policy. Local W271 commit
-`a9c30e4d8` resets `stderr` state in the diagnostic-capture test helper. The
-same-seed full CMake Release application suite now passes all 5,169 cases
-(5,094 passed, 75 skipped; 10,346,368 assertions passed); the focused legacy
-R13/R14 matrix passes 10,434 assertions. The separately compiled external
-plugin CTest passes 1/1 and the full offset validation Node suite exits 0. The
-current W271 source/plan commits are local pending terminal CI on the previous
-pushed head. The prior product-source PR head
+is recorded below. W269's separately compiled Qt plugin fixture and W271's
+stderr-capture regression fix are pushed. Product-source commit
+`a9c30e4d8` contains the W271 test fix; roadmap receipt
+`0f46af52180e792591614ef42aaaaae3b8e5151e` is the current PR head. A fresh
+exact-worktree qmake6 app/worker build now passes, the supported macOS packager
+and its negative-control smoke tests pass in ad-hoc mode, and the qmake-built
+worker passes its external process suite after app-bundle relocation.
+Developer ID signing/notarization, older-macOS compatibility of the static
+FreeType objects, and visible rendering remain open. The exact-seed full
+CMake Release application suite passes all 5,169 cases (5,094 passed, 75 skipped;
+10,346,368 assertions passed); the focused legacy R13/R14 matrix passes 10,434
+assertions. External plugin CTest passes 1/1, the complete offset validation
+Node suite exits 0, and the roadmap/refusal suite passes 99/99 (93 obligations,
+zero pending declarations or H6 mismatches). Headless ON/OFF and PR-run Pixi
+macOS-latest, Ubuntu x64/ARM64, and Windows checks pass on the current PR head;
+PR-run macOS Intel, DWG/DXF, and CodeQL remain pending. The duplicate
+branch-push Pixi run, including macOS Intel, passes. No prior-head statuses are
+inherited. Security scan is skipped by repository policy. Physical
+stale-peer/preview/DPR evidence,
+visible FreeCAD viewport, deployed/cross-platform W0-W2 acceptance, human PR
+review, and final R integration remain open. The latest source-side visible
+GUI attempt is still blocked because CUA reports the Mac locked.
+The prior product-source PR head
 `e123fea6f3960aea562da32a4bbc2b7de1c76002`, required Headless ON/OFF, Text
 Foundations, CodeQL, DWG/DXF Linux and Windows x64/ARM64, and all five-platform
 Pixi checks pass; Security scan is skipped by repository policy. The DWG/DXF
@@ -10438,6 +10448,93 @@ probes are removed; this roadmap update is the only pending worktree change.
 | Exact-seed ASan replay | No ASan memory report; R13 plus unrelated persistence assertion stop replay |
 | Exact-head CI | Linux DWG/DXF, Headless ON/OFF, Text Foundations, five Pixi targets PASS; Windows x64/ARM64 and CodeQL IN PROGRESS |
 | Visible stale-peer/preview screenshots, DPR, FreeCAD viewport | OPEN; CUA reports Mac locked |
+| Deployed/cross-platform W0-W2, human review, final R integration | OPEN |
+
+## 230. W272 Exact-Head Status Refresh
+
+This local status refresh records verification on current pushed PR head
+`0f46af52180e792591614ef42aaaaae3b8e5151e`. The W271 source commit `a9c30e4d8`
+and its roadmap receipt `0f46af521` are already pushed; no new commit has been
+created for W272. Headless ON/OFF and four PR-run Pixi platforms passed on this
+exact head. PR-run macOS Intel, DWG/DXF, and CodeQL remain pending; the duplicate
+branch-push Pixi run passed all five platforms. Security scan is skipped by
+repository policy. Recheck exact-head CI before reporting it complete.
+
+W271 validation remains applicable to product source: exact Release shuffle
+seed `28590880` passed 5,169 cases / 10,346,368 assertions with zero failures;
+the focused legacy R13/R14 matrix passed 1/10,434; external plugin CTest passed
+1/1; full Node validation exited 0; and roadmap/refusal validation passed
+99/99.
+
+A fresh out-of-source qmake6 build was configured at
+`/private/tmp/offset-w272-qmake` from the exact worktree at PR head
+`0f46af52180e792591614ef42aaaaae3b8e5151e`, with qmake 3.1 / Qt 6.12.0,
+AppleClang arm64 and macOS SDK 27.0. `qmake6 -o Makefile .../librecad.pro`
+and `make -j4` both exited 0 and built the full app plus the bundled
+`LibreCADOffsetWorker`. Before deployment, their SHA256 values were
+`b93b45baea8dd514ed522c7d9ad42c1e8ff7b2e302bf91eaddf7aa383666e200` (app)
+and `abaa18ad0fcf49a53ab764698a130483df8840669ec6362d4574c7f2abeb895e`
+(worker).
+
+`macdeployqt` was then run on this temporary bundle with the worker supplied
+through `-executable`. It rewrote the app and worker to bundle-local
+`@loader_path/../Frameworks` Qt dependencies; the deployed worker has no direct
+Homebrew framework dependency. A `ditto` copy was moved to
+`/private/tmp/offset-w272-relocated/LibreCAD.app`. The CMake external-process
+test target was rebuilt with `LIBRECAD_OFFSET_EXTERNAL_TEST_HELPER` pointing to
+that copied worker. With `DYLD_LIBRARY_PATH` and `DYLD_FALLBACK_LIBRARY_PATH`
+unset, the `[lc-offsetcurve]` process suite passed four test cases with zero
+failures/errors. The retained JUnit report records 2,251 assertion checks;
+report SHA256 `e51d1c83366346485da30c3921262de796f22c8b230ea20d94f1f9bd2be5482d`,
+log SHA256 `b5fa31f578067289ff17fab445183d38c6fee1e32fe14980013e83b7dc224360`.
+The relocated app and worker executable hashes are
+`22d92eb0bd2a2ff3dc49c7ff42850a7ce3b495678a42a22a63054c4fa0d96b20` and
+`a58c91583a31ff749649adc13373c0e5df2ff739b31b6d25fd964c750ed42f1d`.
+
+The first package-script attempt correctly rejected `ttf2lff` because this
+developer qmake build had linked Homebrew's dynamic FreeType. Rebuilding that
+utility against the repository's checksum-pinned static FreeType setup removed
+the external dylib. A fresh bundle copy then passed
+`scripts/package-osx-app.sh --skip-deploy --mode adhoc --architectures arm64`;
+the verifier found 70 Mach-O files, no external dependency, and a valid ad-hoc
+signature. `scripts/test-osx-package.sh` passed, including its copied path with
+spaces, post-sign mutation rejection, missing-architecture rejection, and
+external-dependency rejection. The finalized app, worker, and `ttf2lff` SHA256
+values are respectively
+`561508c60f00ff85f6dce78e286b6105b82a85514e728702c3ca284c1f7f8cd3`,
+`51e2050e4ef6a8190a3c6c2cac80204d8100fd970ee12c21529e6bc683863b34`, and
+`bab924ef712779dda75e2293ade466d9ed663bd413af7479b4c4e77bcf3c9ebc`.
+The packaged `ttf2lff --help` also runs with both DYLD fallback variables
+unset. Repointing the external-process test to this finalized helper and
+running with the same clean environment passed 4 cases / 2,252 assertions.
+The package verifier report SHA256 is
+`c87ddf538fdd8be22aaafd057fec9e8c2ea2207b264362c5639d0cbe5947c873`; its
+manifest SHA256 is
+`84f5010b21022aa56f44ae967a6640a10a4da2b7ca8a0faf8667e4ff1dffe598`.
+
+This is successful local ad-hoc package qualification, not a signed release:
+there is no Developer ID identity or notarization. The static FreeType archive
+built on this host reports macOS 27.0 object minimums while `ttf2lff` links
+with a 14.4 minimum; the package verifier does not validate this compatibility
+boundary, so older-macOS runtime compatibility remains open. The earlier
+headless `dxf2png` invocation exited before rendering because the deployed
+bundle contains Cocoa but no offscreen plugin; no image-rendering pass is
+claimed. The approved-app GUI attempt remains unavailable because CUA still
+reports the Mac locked. No product-source changes were made for W272.
+
+| W272 item | Result |
+|---|---|
+| W271 source fix `a9c30e4d8` and plan receipt `0f46af521` on PR #3193 | PASS; both pushed; current PR head is the plan receipt |
+| W271 local validation | PASS; full app, legacy matrix, plugin CTest, Node suite, roadmap/refusal suite |
+| Exact-worktree qmake6 full app and worker build | PASS; Qt 6.12.0 / macOS arm64; hashes recorded above |
+| Relocated qmake6 worker external process suite | PASS; 4 cases, 2,251 JUnit assertion checks; no DYLD fallback paths |
+| macOS package finalization and package-script smoke tests | PASS locally; 70 Mach-O files, relocated copy and negative controls; ad-hoc only |
+| Developer ID signing and notarization | OPEN; no team identity available |
+| Static FreeType / `ttf2lff` minimum-OS compatibility | OPEN; archive objects report 27.0 vs linked target 14.4 |
+| Finalized-bundle worker suite and `ttf2lff --help` | PASS; 4 cases / 2,252 assertions, no DYLD fallback paths |
+| qmake app offscreen render | NOT QUALIFIED; offscreen platform plugin absent; no rendering claim |
+| Current-head CI at `0f46af521` | PARTIAL; Headless and four PR-run Pixi platforms pass; macOS Intel, DWG/DXF, CodeQL pending; branch-push Pixi passes |
+| Physical stale-peer/preview/DPR and visible FreeCAD viewport | OPEN; CUA reports Mac locked |
 | Deployed/cross-platform W0-W2, human review, final R integration | OPEN |
 
 ## 229. W271 Full-App Diagnostic Capture Fix
