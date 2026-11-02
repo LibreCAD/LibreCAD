@@ -11312,3 +11312,50 @@ not be pushed until the active macOS retry and native package job are terminal.
 
 Next: poll the macOS retry and native package job to terminal results, then
 push the accumulated roadmap commits and inspect all checks on the new head.
+
+## 250. W292 Exact-Head CI and Local Roadmap Validation
+
+Polled PR #3193 at exact source head
+`b580e5a208a0555c6005f5289660b1409d20eadb` at 19:12 UTC. Analyze/CodeQL,
+headless ON/OFF, `VerifyDwgDxfFast`, Windows x64/ARM64 DWG/DXF, and native
+Windows ARM64 packaging passed. Pixi run `41489520533` passed all five
+platforms. In run `41489534178`, Windows, macOS-15 Intel, Ubuntu ARM, and Ubuntu
+x64 passed; the targeted macOS-latest setup retry remains pending in its build
+step. Native `BuildMacOS` packaging is also pending. Configured skip lanes
+remain skipped. No older-head results are carried forward.
+
+On the current local roadmap commit `333fc1ae7`, the refusal-inventory suite
+passed 94/94, the roadmap inventory parser passed 5/5, and `git diff --check`
+passed. These validate the implementation inventory and documentation parser;
+they do not substitute for application runtime or GUI acceptance. The worktree
+has no source-code delta; five roadmap-only commits were already local before
+this receipt. W292 adds a sixth roadmap-only commit. Do not push them until both
+exact-head jobs are terminal because pushing cancels active workflows.
+
+The user confirms the remote desktop is running and logged in. Resetting and
+reconnecting CUA still reports the Mac locked and exposes no native apps, so the
+bridge is not attached to that visible session. No GUI interaction or new
+visual evidence was obtained; no further login request is warranted.
+
+| W292 item | Result |
+|---|---|
+| Exact PR source head | `b580e5a208a0555c6005f5289660b1409d20eadb` |
+| Headless ON/OFF, Analyze/CodeQL | PASS |
+| DWG/DXF fast, Windows x64 and ARM64, native Windows ARM64 | PASS |
+| Pixi duplicate run `41489520533` | PASS; all five platforms |
+| Pixi run `41489534178` | Four platforms PASS; macOS-latest retry PENDING |
+| Native macOS packaging | PENDING |
+| Configured skip lanes | SKIPPED |
+| Local refusal inventory / roadmap parser | PASS; 94/94 and 5/5 |
+| Roadmap diff check | PASS |
+| CUA / remote desktop | User reports logged in; reset bridge still reports locked |
+| Product-code slices | No missing implementation slice found in latest audit |
+| Visible preview/commit and cancellation, physical stale-peer, retained screenshot/DPR | OPEN |
+| Independent W171 external viewport, macOS 14.4/signing/deployment, W0-W2 | OPEN |
+| Human review and final R integration | OPEN |
+
+Next: poll the macOS-latest retry and native macOS package to terminal status.
+Then push the accumulated roadmap-only commits, update this PR's status comment,
+and inspect checks on the resulting exact head. Continue to leave GUI, external
+viewport, package deployment, human review, and final integration gates open
+until direct evidence closes them.
