@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W285; chronological evidence follows): implementation slices
+Current status (W286; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,11 +36,11 @@ integration rather than an unimplemented declared feature slice.
 
 The latest implementation-bearing PR source remains
 `f1dfd93ad579a615b302e53a292e84dc31c6156e`. The current PR head is
-`571e468c5baf8714f064429289f317589da34b57`. At the 2026-11-02 17:10 UTC
+`bddab2f015aa8dfda4a08c95c4902b88bcc82d2e`. At the 2026-11-02 17:13 UTC
 exact-head poll, Headless ON/OFF, Analyze, macOS and Windows ARM64 packaging,
 bounded DWG/DXF, and surfaced Pixi checks were pending. Linux, Linux AArch64,
 Snap, Windows x64 packaging, and Security scan were skipped. Do not carry
-forward results from `8177f81be` or older heads. The worktree
+forward results from `571e468c5` or older heads. The worktree
 qmake6 app/worker build and local ad-hoc package/relocation smoke tests pass;
 these do not establish Developer ID signing, notarization, or execution on
 macOS 14.4. PR #3193 remains open, draft, and review-required.
@@ -3325,10 +3325,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   W275 qualifies the local universal FreeType/package target. On current PR head
   `8177f81be3282a0a040d94fe8b73e7d6cdc0786a`, W284 records Headless ON/OFF
   passes at 17:04 UTC. W285's current PR head is
-  `571e468c5baf8714f064429289f317589da34b57`; at 17:10 UTC its Headless
-  ON/OFF, Analyze, packaging, bounded DWG/DXF, and surfaced Pixi jobs were
-  pending, while Linux, Linux AArch64, Snap, Windows x64 packaging, and Security
-  scan were skipped. Remaining acceptance is terminal exact-head CI, deployed-package
+  `571e468c5baf8714f064429289f317589da34b57`; W285 records its 17:10 UTC
+  status. Current PR head `bddab2f015aa8dfda4a08c95c4902b88bcc82d2e` had
+  Headless ON/OFF, Analyze, packaging, bounded DWG/DXF, and surfaced Pixi jobs
+  pending at 17:13 UTC; Linux, Linux AArch64, Snap, Windows x64 packaging, and
+  Security scan were skipped. Remaining acceptance is terminal exact-head CI, deployed-package
   and declared macOS 14.4 runtime evidence, and physical GUI interaction.
 - [ ] E/U/G/F/O/T: implementation and current-source format/interoperability
   matrices are present; W171/W172 and W177/W179 record independent DWG/DXF
@@ -3337,7 +3338,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   outstanding integrated acceptance is visible CAD interaction and any concrete
   defect found there, not a presumed missing implementation phase.
 - [ ] R: current PR head is
-  `571e468c5baf8714f064429289f317589da34b57`. At 17:10 UTC Headless ON/OFF,
+  `bddab2f015aa8dfda4a08c95c4902b88bcc82d2e`. At 17:13 UTC Headless ON/OFF,
   Analyze, macOS/Windows ARM64 packaging, bounded DWG/DXF, and surfaced Pixi
   were pending; Linux, Linux AArch64, Snap, Windows x64 packaging, and Security
   scan were skipped. Do not carry forward results from previous heads.
@@ -3352,7 +3353,7 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   independent W171 GUI viewport, deployed-package/minimum-OS runtime, required
   human review, and final integrated closeout remain open.
 
-**Next concrete action:** let the `571e468c5` exact-head workflows reach
+**Next concrete action:** let the `bddab2f01` exact-head workflows reach
 terminal results; do not carry forward older-head checks. If a check
 exposes a concrete defect, fix it in a
 scoped slice, test, commit, update this roadmap, and push. Continue seeking
@@ -11090,3 +11091,25 @@ Poll workflows for exact head `571e468c5`; update this status only from those
 results. Keep preview/commit parity and all other acceptance gates open.
 Pushing this W285 roadmap update creates another exact head requiring a fresh
 workflow check.
+
+## 244. W286 W285-Head CI Poll
+
+After pushing W285 as `bddab2f015aa8dfda4a08c95c4902b88bcc82d2e`, polled the
+new exact PR head at 17:13 UTC. Headless ON/OFF, Analyze, macOS and Windows
+ARM64 packaging, bounded DWG/DXF fast and Windows x64/ARM64, and surfaced Pixi
+jobs were pending. Linux, Linux AArch64, Snap, Windows x64 packaging, and
+Security scan were skipped. No result from `571e468c5` or earlier was carried
+forward. A fresh CUA check still reported the remote Mac locked despite the
+user's report of an active, logged-in remote desktop.
+
+| W286 item | Result |
+|---|---|
+| Exact PR head | `bddab2f015aa8dfda4a08c95c4902b88bcc82d2e` |
+| Headless, Analyze, packaging, DWG/DXF, Pixi | PENDING at 17:13 UTC |
+| Linux, Linux AArch64, Snap, Windows x64 package, Security scan | SKIPPED by workflow |
+| CUA remote desktop | Still reports locked; GUI gates remain open |
+
+Next: refresh the exact-head check state after workflows progress. Resume visible
+preview checks only when the automation surface can see the logged-in desktop.
+Keep the remaining external, deployment, human-review, and final integration
+gates open until there is direct evidence.
