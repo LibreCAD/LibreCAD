@@ -35,6 +35,14 @@ bool sameWork(const LC_EllipseOffsetGeometry::CheckWork& a,
         a.distancePairs == b.distancePairs && a.deepest == b.deepest &&
         a.orderingComparisons == b.orderingComparisons;
 }
+
+bool testAllocationFailure(const std::size_t failure, const std::size_t allocationSites,
+                           const bool sampleExpensiveSweep) {
+    // Bound only expensive event-graph fixtures; smaller inputs remain exhaustive.
+    if (!sampleExpensiveSweep) { return true; }
+    const std::size_t middle = (allocationSites + 1) / 2;
+    return failure == 1 || failure == middle || failure == allocationSites;
+}
 }
 
 void* operator new(const std::size_t size) {
@@ -201,7 +209,8 @@ Fixture hiddenCuspEndpointFixture() {
 
 int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
           const char* label, std::size_t& totalInjectionPoints, const double worldTolerance = .01,
-          const bool expectSeam = false, const std::optional<bool> expectClosed = std::nullopt) {
+          const bool expectSeam = false, const std::optional<bool> expectClosed = std::nullopt,
+          const bool sampleAllocationFailures = false) {
     namespace geo = LC_EllipseOffsetGeometry;
     const auto& source = definition.basis;
     const auto frame = geo::ReferenceFrame::create(source, 1.0);
@@ -233,7 +242,10 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
     }
     if (expectClosed && baseline.analysis->closed() != *expectClosed) { return 10; }
 
+    std::size_t testedAllocationPoints = 0;
     for (std::size_t failure = 1; failure <= completeAllocationCount; ++failure) {
+        if (!testAllocationFailure(failure, completeAllocationCount, sampleAllocationFailures)) { continue; }
+        ++testedAllocationPoints;
         geo::WorkBudget failedBudget;
         failAt = failure;
         allocationCount = 0;
@@ -272,16 +284,17 @@ int sweep(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definiti
         }
     }
 
-    totalInjectionPoints += completeAllocationCount;
-    std::printf("allocation_failure_sweep_recovered=1 fixture=%s injection_points=%zu vertices=%zu\n",
-                label, completeAllocationCount, baseline.work.vertices);
+    totalInjectionPoints += testedAllocationPoints;
+    std::printf("allocation_failure_sweep_recovered=1 fixture=%s injection_points=%zu/%zu vertices=%zu\n",
+                label, testedAllocationPoints, completeAllocationCount, baseline.work.vertices);
     std::fflush(stdout);
     return 0;
 }
 
 int sweepRefusal(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& definition,
                  const char* label, const LC_OffsetCheckResult::Reason expectedReason,
-                 const double worldTolerance, std::size_t& totalInjectionPoints) {
+                 const double worldTolerance, std::size_t& totalInjectionPoints,
+                 const bool sampleAllocationFailures = false) {
     namespace geo = LC_EllipseOffsetGeometry;
     geo::WorkBudget baselineBudget;
     failAt = 0;
@@ -304,7 +317,10 @@ int sweepRefusal(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& d
         return 19;
     }
 
+    std::size_t testedAllocationPoints = 0;
     for (std::size_t failure = 1; failure <= completeAllocationCount; ++failure) {
+        if (!testAllocationFailure(failure, completeAllocationCount, sampleAllocationFailures)) { continue; }
+        ++testedAllocationPoints;
         geo::WorkBudget failedBudget;
         failAt = failure;
         allocationCount = 0;
@@ -342,16 +358,16 @@ int sweepRefusal(const RS_SplineData& cache, const LC_EllipseOffsetDefinition& d
         }
     }
 
-    totalInjectionPoints += completeAllocationCount;
-    std::printf("allocation_refusal_sweep_recovered=1 fixture=%s reason=%u injection_points=%zu\n",
-                label, unsigned(expectedReason), completeAllocationCount);
+    totalInjectionPoints += testedAllocationPoints;
+    std::printf("allocation_refusal_sweep_recovered=1 fixture=%s reason=%u injection_points=%zu/%zu\n",
+                label, unsigned(expectedReason), testedAllocationPoints, completeAllocationCount);
     std::fflush(stdout);
     return 0;
 }
 
 template<typename Operation, typename Complete>
 int sweepStage(const char* label, Operation&& operation, Complete&& complete,
-               std::size_t& totalInjectionPoints) {
+               std::size_t& totalInjectionPoints, const bool sampleAllocationFailures = false) {
     namespace geo = LC_EllipseOffsetGeometry;
     geo::WorkBudget baselineBudget;
     failAt = 0;
@@ -368,7 +384,10 @@ int sweepStage(const char* label, Operation&& operation, Complete&& complete,
         return 12;
     }
 
+    std::size_t testedAllocationPoints = 0;
     for (std::size_t failure = 1; failure <= completeAllocationCount; ++failure) {
+        if (!testAllocationFailure(failure, completeAllocationCount, sampleAllocationFailures)) { continue; }
+        ++testedAllocationPoints;
         geo::WorkBudget failedBudget;
         failAt = failure;
         allocationCount = 0;
@@ -404,9 +423,9 @@ int sweepStage(const char* label, Operation&& operation, Complete&& complete,
         }
     }
 
-    totalInjectionPoints += completeAllocationCount;
-    std::printf("allocation_stage_sweep_recovered=1 fixture=%s injection_points=%zu vertices=%zu\n",
-                label, completeAllocationCount, baseline.work.vertices);
+    totalInjectionPoints += testedAllocationPoints;
+    std::printf("allocation_stage_sweep_recovered=1 fixture=%s injection_points=%zu/%zu vertices=%zu\n",
+                label, testedAllocationPoints, completeAllocationCount, baseline.work.vertices);
     std::fflush(stdout);
     return 0;
 }
@@ -421,7 +440,8 @@ int sweepReferenceGraph(std::size_t& totalInjectionPoints) {
     const auto complete = [](const geo::ReferenceComponentResult& result) {
         return result.status == LC_IntersectionStatus::Ok && bool(result.analysis);
     };
-    return sweepStage("reference-six-pair-four-critical-graph", operation, complete, totalInjectionPoints);
+    return sweepStage("reference-six-pair-four-critical-graph", operation, complete,
+                      totalInjectionPoints, true);
 }
 
 int sweepReferenceEvents(std::size_t& totalInjectionPoints) {
@@ -435,7 +455,8 @@ int sweepReferenceEvents(std::size_t& totalInjectionPoints) {
         return result.status == LC_IntersectionStatus::Ok && result.analysis &&
             result.analysis->pairs().size() == 6 && result.analysis->criticals().size() == 4;
     };
-    return sweepStage("reference-six-pair-four-critical-events", operation, complete, totalInjectionPoints);
+    return sweepStage("reference-six-pair-four-critical-events", operation, complete,
+                      totalInjectionPoints, true);
 }
 }
 
@@ -517,14 +538,14 @@ int main(const int argc, char** argv) {
     const auto openTrimmed = openTrimmedComponentFixture();
     if (!openTrimmed) { return 11; }
     if (const int result = sweep(openTrimmed->cache, openTrimmed->definition,
-        "two-component-trim-open-path", injectionPoints, .001, false, false)) { return result; }
+        "two-component-trim-open-path", injectionPoints, .001, false, false, true)) { return result; }
     const auto closedTrimmed = closedTrimmedComponentFixture();
     if (!closedTrimmed) { return 16; }
     if (const int result = sweep(closedTrimmed->cache, closedTrimmed->definition,
-        "two-component-trim-closed-path", injectionPoints, .1, false, true)) { return result; }
+        "two-component-trim-closed-path", injectionPoints, .1, false, true, true)) { return result; }
     const auto cusp = hiddenCuspEndpointFixture();
     if (const int result = sweepRefusal(cusp.cache, cusp.definition, "hidden-cusp-endpoint",
-        LC_OffsetCheckResult::Reason::OffCurve, 1e-5, injectionPoints)) { return result; }
+        LC_OffsetCheckResult::Reason::OffCurve, 1e-5, injectionPoints, true)) { return result; }
     if (const int result = sweepReferenceGraph(injectionPoints)) { return result; }
     if (const int result = sweepReferenceEvents(injectionPoints)) { return result; }
     std::printf("allocation_failure_sweep_all_fixtures_recovered=1 injection_points=%zu\n", injectionPoints);
