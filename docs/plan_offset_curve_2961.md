@@ -11694,9 +11694,11 @@ Snap, Windows x64 packaging, and Security scan lanes were skipped.
 | Exact-head CI | PASS except native macOS packaging still in progress; configured skips noted above |
 | Signed/deployed package, macOS 14.4, W0-W2, human review, final R integration | OPEN |
 
-Next: validate and commit this roadmap receipt locally. Keep accumulated
-roadmap-only commits unpushed until exact-head native macOS packaging reaches a
-terminal result, then push them and inspect checks for the resulting exact
-head. Continue with durable screenshot/DPR, stale-peer, independent viewport,
-release/runtime, review, and final integration gates; do not infer their
-completion from this visible interaction.
+W302 was validated and committed locally as `c0c6b6726`. The existing PR status
+comment remains at W301: the GitHub connector rejected its update with HTTP 403
+(`Resource not accessible by integration`), and no replacement comment was
+posted. Keep accumulated roadmap-only commits unpushed until exact-head native
+macOS packaging reaches a terminal result, then push them and inspect checks
+for the resulting exact head. Continue with durable screenshot/DPR, stale-peer,
+independent viewport, release/runtime, review, and final integration gates; do
+not infer their completion from this visible interaction.
