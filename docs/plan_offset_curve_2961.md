@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W301; chronological evidence follows): implementation slices
+Current status (W302; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,36 +35,34 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The exact PR head is `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; its latest
-non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 22:25
-UTC exact-head poll, Text Foundations ON/OFF, DWG/DXF fast and Windows x64/
-ARM64, CodeQL Analyze, and both push-triggered and PR Pixi on all five
-platforms passed. The Continuous Build passed Windows ARM64, with native
-macOS packaging still running. Linux, Linux AArch64, Snap, Windows x64 packaging, and the CodeQL
-Security scan were skipped by workflow configuration. These are exact-head
-results; do not carry forward results from older heads. The local qmake6
-app/worker build and ad-hoc package/relocation smoke tests pass; these do not
-establish Developer ID signing, notarization, or execution on macOS 14.4. PR
-#3193 remains open, draft, and review-required. The roadmap-only status updates
-remain local and queued until the active exact-head native macOS packaging check
-terminates.
+non-roadmap change is the offset-test whitespace fix. The 2026-11-02 22:37 UTC
+exact-head poll reports Text Foundations ON/OFF, Headless ON/OFF, DWG/DXF fast
+and Windows x64/ARM64, CodeQL Analyze, and both push-triggered and PR Pixi on
+all five platforms passed. Continuous Build Windows ARM64 passed; native macOS
+packaging remains in progress (`41525564465`, job `125552606579`). Linux, Linux
+AArch64, Snap, Windows x64 packaging, and the CodeQL Security scan were skipped
+by workflow configuration. These are exact-head results; do not carry forward
+results from older heads. The local qmake6 app/worker build and ad-hoc
+package/relocation smoke tests pass; these do not establish Developer ID
+signing, notarization, or execution on macOS 14.4. PR #3193 remains open, draft,
+and review-required. The roadmap-only status updates remain local and queued
+until the active exact-head native macOS packaging check terminates.
 
-The user reports that the remote desktop is running and logged in. CUA's latest
-snapshot nevertheless reports the Mac locked and exposes no native apps, so GUI
-interaction through this control channel is unavailable. W282 rechecked the W193
-baseline on the disposable W281 copy: two additional contours appeared after
-the two-copy offset commit, and one Undo restored the baseline without saving.
-W283 retried FreeCAD's fused-shape import of the original W193 DXF; FreeCAD quit
-before showing a viewport. W284 reached the Offset direction prompt on the
-disposable copy, but the captured frame did not reliably distinguish preview
-geometry from selected source geometry. Escape returned LibreCAD to Default;
-this is not preview/commit parity evidence. Both the original fixture and
-disposable copy still have SHA256
-`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`; no Save
-was issued. Display DPR and retained LibreCAD screenshot evidence are still
-unavailable. FreeCAD 1.1.4 exited after import confirmation; Inkscape's W171
-rendering was incomplete, so independent W171 contour review remains open.
-Other open gates are physical stale-peer interaction, signed and deployed-
-package/full W0-W2 acceptance, required human review, and final R integration.
+W302 supersedes the earlier CUA-lock reports: the approved
+`org.librecad.librecad.pr3193visible` app was responsive in the user's logged-in
+remote desktop. The disposable W281 drawing showed the live red offset preview,
+the corresponding committed contour at the same direction, and successful
+Escape during a pointer drag while the drag call was still pending. Undo and
+Escape restored the visible baseline; no Save command was issued. W193 and W281
+remain byte-identical at SHA256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`. The
+in-session screenshots are visible in the validation conversation but are not
+durable files; their 1920x1080 pixel dimensions do not measure Qt display DPR.
+Durable screenshot/DPR evidence, physical stale-peer behavior, and an
+independent W171 GUI viewport remain open. FreeCAD 1.1.4 previously exited
+after import confirmation, and Inkscape's W171 rendering was incomplete. Other
+open gates are signed and deployed-package/full W0-W2 acceptance, required
+human review, and final R integration.
 The branch contains current `origin/master` (`998e61dc0`) as an ancestor. Do not
 carry forward CI from prior heads: the W284 results refer only to
 `8177f81be3282a0a040d94fe8b73e7d6cdc0786a`; the latest W285 poll refers only to
@@ -3342,26 +3340,24 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   outstanding integrated acceptance is visible CAD interaction and any concrete
   defect found there, not a presumed missing implementation phase.
 - [ ] R: current PR head is
-  `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. W298 records Text Foundations
-  ON/OFF and the Pixi/DWG-DXF results above; DWG/DXF Windows, CodeQL Analyze,
-  Pixi macOS/Windows, and native macOS/Windows ARM64 builds are not terminal.
+  `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. W302 records visible
+  preview/commit and pointer-drag cancellation; all exact-head checks are
+  terminal and successful except native macOS packaging, which remains active.
   Do not carry forward results from previous heads. Local CMake, qmake6, ASan,
-  version, fixture, and external-reader receipts are recorded above. W298 now
-  visibly distinguishes the live red offset preview from white source geometry
-  and verifies Escape during held-click cancellation. A matched preview/commit
-  pair with durable screenshot and display-DPR, true pointer-drag cancellation,
-  physical stale-peer, independent W171 GUI viewport, deployed-package/minimum-OS
-  runtime, required human review, and final integrated closeout remain open.
+  version, fixture, and external-reader receipts are recorded above. Durable
+  screenshots and Qt display-DPR, physical stale-peer, independent W171 GUI
+  viewport, deployed-package/minimum-OS runtime, required human review, and
+  final integrated closeout remain open.
 
-**Next concrete action:** poll the remaining exact-head runs
-`41525564465` and `41525564493` to terminal results; the current-head Text
-Foundations, DWG/DXF, CodeQL, and push-triggered Pixi runs are already terminal
-and successful. Do not carry forward older-head checks. If either remaining
-check exposes a concrete defect, fix it in a scoped slice, test, commit, update
-this roadmap, and push. W298 GUI evidence and the W299 status-summary sync are
-committed locally; keep both unpushed until these two checks finish. Continue
-seeking matched preview/commit evidence and Qt display-DPR, true pointer-drag
-cancellation, physical stale-peer acceptance, an independent W171 viewport,
+**Next concrete action:** poll exact-head Continuous Build run
+`41525564465` to terminal status. Do not carry forward older-head checks. If it
+exposes a concrete defect, fix it in a scoped slice, test, commit, update this
+roadmap, and push. W298 GUI evidence, the W299 status-summary sync, W300 header
+correction, W301 macOS CI progress, and the pending W302 receipt are local;
+keep them unpushed until the active macOS packaging check finishes. The visible
+preview/commit and pointer-drag cancellation observations are now closed for
+the disposable fixture; continue seeking durable screenshot/DPR evidence,
+physical stale-peer acceptance, an independent W171 viewport,
 deployed-package/minimum-OS runtime, and human review.
 Do not claim whole-plan completion until these mandatory rows and final R
 integration are resolved. Current
@@ -11639,3 +11635,68 @@ disposable drawing. Continue polling exact-head CI without pushing a new
 roadmap-only revision while these runs are active. Keep all independent
 viewport, runtime, deployment, review and final integration gates open until
 their own evidence exists.
+
+## 257. W302 Remote-Desktop Preview, Commit, and Drag Cancellation
+
+The user's remote desktop was already logged in, and CUA could reach the
+approved `org.librecad.librecad.pr3193visible` test copy. Opened the disposable
+`/private/tmp/offset-W193-multi-entity-W281.dxf`; its visible baseline contains
+three nested contours in each of two groups. The unchanged W193 source and W281
+copy both hash to
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+With Offset active, selected one outer-left source, kept distance at 0.5, and
+captured the live red offset contour against the white source contours while a
+pointer-drag request was pending. In a single-copy pass, a click at the same
+direction endpoint committed the matching offset contour; the preview and
+commit frames are visible consecutively in the validation conversation. This
+is visual comparison, not a pixel-difference test, and the app's selection
+highlight differs after commit. A separate default two-copy pass produced two
+additional contours; one Undo restored the baseline.
+
+For cancellation, began a long pointer drag from the Offset direction prompt,
+confirmed the CUA drag request was still pending, then sent Escape before it
+settled. The action returned to Default and the canvas showed the original
+baseline with no committed offset. In a separate drag, the red preview was
+captured while the drag request was pending; that request settled during the
+screenshot capture, and Escape then returned the canvas to baseline. No explicit Save was
+issued; the visible geometry was restored, the original W193 and disposable
+W281 files remain hash-identical, and the Offset distance (0.5) and Multiple
+Copies defaults (enabled, 2) were restored. The UI briefly reported
+"Auto-saved drawing" during an attempted deselection; no source/drawing file
+change was observed.
+
+Screenshots were displayed in-session but not exported as durable artifacts.
+Their captured pixel dimensions were 1920x1080; Qt/device DPR was not measured.
+Physical stale-peer interaction, durable screenshot/DPR, independent W171 GUI
+viewport, signed/deployed package and macOS 14.4/W0-W2 acceptance, human review,
+and final R integration remain open.
+
+The exact PR head remains
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 22:37 UTC poll, Headless
+ON/OFF, Text Foundations ON/OFF, DWG/DXF fast and both Windows lanes, CodeQL
+Analyze, and PR/push Pixi on all five platforms passed. Windows ARM64
+Continuous Build passed; native macOS packaging was still in progress
+(`41525564465`, job `125552606579`). Workflow-configured Linux, Linux AArch64,
+Snap, Windows x64 packaging, and Security scan lanes were skipped.
+
+| W302 item | Result |
+|---|---|
+| Approved test copy / logged-in remote desktop | PASS; visible and responsive |
+| Live preview and corresponding commit | PASS by in-session visual comparison; same source, distance, and direction; no durable pair or pixel diff |
+| Pointer-drag cancellation | PASS; Escape sent while CUA drag was pending; baseline visible afterward |
+| Two-copy commit / one-step Undo | PASS; two contours appeared and Undo restored baseline |
+| Source and disposable file integrity | PASS; W193 and W281 hashes unchanged; no explicit Save |
+| Offset settings | RESTORED; distance 0.5, Multiple Copies enabled with count 2 |
+| Local roadmap/refusal validation | PASS; 99/99 tests, 93 obligations, zero pending declarations or production mismatches |
+| Screenshot/DPR | OPEN; session images only, Qt/device DPR not measured |
+| Physical stale-peer / independent W171 GUI viewport | OPEN |
+| Exact-head CI | PASS except native macOS packaging still in progress; configured skips noted above |
+| Signed/deployed package, macOS 14.4, W0-W2, human review, final R integration | OPEN |
+
+Next: validate and commit this roadmap receipt locally. Keep accumulated
+roadmap-only commits unpushed until exact-head native macOS packaging reaches a
+terminal result, then push them and inspect checks for the resulting exact
+head. Continue with durable screenshot/DPR, stale-peer, independent viewport,
+release/runtime, review, and final integration gates; do not infer their
+completion from this visible interaction.
