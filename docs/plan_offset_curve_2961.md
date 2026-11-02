@@ -11702,3 +11702,41 @@ macOS packaging reaches a terminal result, then push them and inspect checks
 for the resulting exact head. Continue with durable screenshot/DPR, stale-peer,
 independent viewport, release/runtime, review, and final integration gates; do
 not infer their completion from this visible interaction.
+
+## 258. W303 Independent Viewport Retry and Exact-Head CI
+
+With the user's remote desktop awake and logged in, retried the independent
+W171 viewport check in FreeCAD 1.1.4 using the read-only ODA-converted fixture
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`.
+FreeCAD's DXF import dialog reported approximately 233 geometric entities. The
+`Individual Part shapes` import mode was selected, but FreeCAD quit during the
+import before opening a document viewport. The earlier `Fused Part shapes`
+attempt had also quit before a viewport. No drawing was saved or edited. This
+does not establish a rendering defect in LibreCAD; the independent viewer gate
+remains open because this fixture/viewer combination cannot produce visual
+evidence in the available environment.
+
+At the 22:42 UTC exact-head poll, PR #3193 still pointed to
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. All required exact-head checks were
+terminal-success except native `BuildMacOS`, which remained in progress in
+Actions run `41525564465`, job `125552606579`. Configured skip lanes remain
+Linux, Linux AArch64, Snap, Windows x64 packaging, and Security scan. Do not
+push the local roadmap-only commits until the active native macOS job reaches a
+terminal result.
+
+| W303 item | Result |
+|---|---|
+| Logged-in remote desktop / read-only fixture open | PASS |
+| FreeCAD individual-shape import | FAIL TO RENDER; FreeCAD quit before a viewport appeared |
+| Drawing/file modifications | NONE; no save or edit performed |
+| Independent W171 viewport evidence | OPEN; viewer did not produce a viewport |
+| Exact-head CI | PASS except native `BuildMacOS` remains in progress; configured skips noted above |
+| Local roadmap/refusal validation | PASS; 99/99, 93 obligations, zero pending declarations or production mismatches; `git diff --check` clean |
+| Durable screenshot/DPR, stale-peer, signed/deployed runtime, human review, final R integration | OPEN |
+
+Next: commit this evidence slice and keep polling the exact PR head. If
+`BuildMacOS` completes, push the accumulated
+roadmap-only commits and inspect checks for the new exact head. Leave the
+independent viewport gate open unless a viewer actually presents the geometry;
+continue the durable screenshot/DPR, stale-peer, runtime/deployment, review,
+and final integration work as separate gates.
