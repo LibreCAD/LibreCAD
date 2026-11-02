@@ -10822,3 +10822,41 @@ testing and retained screenshot/DPR collection. The W275 source commits and this
 roadmap receipt are still local; wait for the existing pushed-head workflows to
 finish before pushing, then inspect every required check on the new exact PR
 head.
+
+## 237. W279 Independent Viewer Import Recheck
+
+With the remote desktop available, retried independent inspection of the W193
+DXF. FreeCAD 1.1.4 presented its DXF import dialog and reported approximately
+90 geometric entities. Importing with the recommended Individual Part Shapes
+mode caused FreeCAD to quit before a document viewport appeared. This is an
+importer/application failure, not a visual pass or evidence that LibreCAD's
+geometry is wrong.
+
+Inkscape's DXF importer accepted the same file with Read from file scaling, but
+reported that `$PDMODE` was ignored and warned that an object with an extra
+parameter might display incorrectly. After Zoom Drawing, the viewport showed
+two oval outlines and a vertical line rather than the two groups of three
+nested ellipses visible in LibreCAD. Because the import emitted warnings and
+the displayed contour set was incomplete, Inkscape does not qualify as the
+independent W171 visual review. No drawing was saved. The fixture SHA256
+remains `05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+| W279 item | Result |
+|---|---|
+| FreeCAD individual-shape import | FAIL TO RENDER; application quit after import confirmation, no viewport |
+| Inkscape DXF parse | PARTIAL; importer warning for `$PDMODE` and extra-parameter object |
+| Inkscape visible geometry | INCOMPLETE; two ovals and a vertical line, not the six-contour baseline |
+| Independent external visual acceptance | OPEN; neither viewer produced a reliable complete rendering |
+| Source fixture integrity / save | PASS; SHA256 unchanged; no Save command |
+| LibreCAD baseline and offset interaction | PASS as recorded in W278; remains unsaved |
+| Held preview / committed geometry parity | OPEN; no distinguishable preview contour or retained comparison |
+| Physical stale-peer behavior | OPEN |
+| Retained screenshot / Qt display-DPR | OPEN; observations were inline only |
+| Deployed macOS 14.4 runtime, signing/notarization, W0-W2 | OPEN |
+| Exact-head CI, human review, final R integration | OPEN |
+
+Next: obtain a reliable independent viewer or an external geometry inventory
+that can distinguish all expected curves. Keep preview/commit parity, stale-peer
+interaction, durable screenshot/DPR, deployed-package checks, review, and final
+integration open until their direct evidence is available. Do not save the
+temporary viewer documents or alter the W193 source fixture.
