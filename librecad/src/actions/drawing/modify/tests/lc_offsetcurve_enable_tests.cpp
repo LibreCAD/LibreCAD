@@ -531,4 +531,3 @@ TEST_CASE("Offset completion assembles native diagnostics before cleanup and pre
     CHECK(f.context.messages[1] == "Offset copies kept plain: 1 (sources: 1). 1: the accumulated offset is exactly zero");
     CHECK_FALSE(f.action->hasPending()); CHECK(f.action->isFinished());
 }
-

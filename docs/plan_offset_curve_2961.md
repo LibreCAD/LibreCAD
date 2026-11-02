@@ -11538,3 +11538,41 @@ poll the new exact-head runs to terminal status and update this roadmap and the
 PR status comment with those results. Keep GUI and release gates open until
 their direct acceptance evidence exists; do not ask the user to log in again
 based on the bridge mismatch.
+
+## 255. W297 PR-Diff Whitespace Correction
+
+On exact PR head `0ca7b26fcea94b491c68eab6c3ff102c439b6968`, a full diff check
+against `origin/master` found one extra blank line at EOF in
+`librecad/src/actions/drawing/modify/tests/lc_offsetcurve_enable_tests.cpp`.
+Removed only that trailing blank line; test code and behavior are unchanged.
+
+Validation on the combined local W297 change: `git diff --check origin/master`
+passes. The roadmap/refusal suite passed 99/99 on the parent head, including 93
+obligations, zero pending declarations and zero production mismatches; because
+W297 only removes an EOF blank line and adds this receipt, those results are
+unchanged but are not claimed as a rerun. The worktree's new exact-head CI must
+be evaluated after push; parent-head runs `41521860946`, `41521860978`,
+`41521861379`, `41521854236`, and `41521860939` were still in progress at the
+last pre-push check and will not qualify the new SHA.
+
+Direct CUA attachment to the previously approved LibreCAD test copy again
+reports the automation Mac locked. The user confirms their remote desktop is
+already logged in; this is recorded as an automation-session mismatch, not a
+request for another login. Visible preview/commit parity, held-drag
+cancellation, physical stale-peer behavior, retained screenshot/display-DPR,
+and independent W171 viewport review remain open. So do macOS 14.4 runtime,
+signing/deployment, deployed W0-W2, human review, and final R integration.
+
+| W297 item | Result |
+|---|---|
+| Source diff check against `origin/master` | PASS after removing the EOF blank line |
+| Test-code semantics | Unchanged |
+| Roadmap/refusal suite | Parent-head PASS 99/99; not rerun for whitespace-only W297 |
+| Exact-head CI | Parent runs active pre-push; new SHA must be polled independently |
+| Visible GUI and external viewport gates | OPEN |
+| macOS runtime/signing, deployed W0-W2, review and final R | OPEN |
+
+Next: validate this receipt, commit and push the W297 slice once, then poll all
+new exact-head checks to terminal status and update this roadmap and the PR
+status comment. Keep every visual, runtime, deployment, review and integration
+gate open until direct evidence closes it.
