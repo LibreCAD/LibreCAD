@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W289; chronological evidence follows): implementation slices
+Current status (W290; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,17 +36,14 @@ integration rather than an unimplemented declared feature slice.
 
 The latest non-roadmap code/build change on the PR branch is
 `76f02c2ec2f149124291bc2ccd1e9924a82b6fcd`; the current PR head is
-`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 18:04 UTC
-exact-head poll, Headless ON/OFF passed. Pixi run `41489534178` passed on
-Ubuntu ARM, Ubuntu x64, and Windows; macOS-15 Intel remains active. Its
-macOS-latest job failed before the build during `setup-pixi`, with HTTP 500 and
-a missing `/Users/runner/.pixi/bin/pixi`. Duplicate Pixi run `41489520533`
-passed Ubuntu ARM, Ubuntu x64, Windows, and macOS-latest; macOS-15 Intel remains
-active. `VerifyDwgDxfFast`, Windows ARM64 DWG/DXF, and Windows ARM64 packaging
-passed. Analyze, native macOS packaging, and Windows x64 DWG/DXF remain active.
-Linux, Linux AArch64, Snap, Windows x64 packaging, and Security scan were
-skipped. These are exact-head results; do not carry forward results from older
-heads. The worktree
+`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 18:22 UTC
+exact-head poll, Headless ON/OFF, `VerifyDwgDxfFast`, Windows x64/ARM64 DWG/DXF,
+and Windows ARM64 packaging passed. Both Pixi matrices passed all platforms
+except the initial `macos-latest` setup failure in run `41489534178`; its
+`macos-latest` retry is now in progress. Analyze and native macOS packaging
+remain active. Linux, Linux AArch64, Snap, Windows x64 packaging, and Security
+scan were skipped. These are exact-head results; do not carry forward results
+from older heads. The worktree
 qmake6 app/worker build and local ad-hoc package/relocation smoke tests pass;
 these do not establish Developer ID signing, notarization, or execution on
 macOS 14.4. PR #3193 remains open, draft, and review-required.
@@ -11244,3 +11241,40 @@ Next: wait for the macOS-15 Intel, native macOS, Windows x64, Analyze, and
 remaining duplicate-run jobs to reach terminal status. Rerun the setup failure
 when permitted, then push the local roadmap commits and inspect all checks on
 the resulting exact PR head.
+
+## 248. W290 Exact-Head CI and Setup Retry
+
+Polled exact PR head
+`b580e5a208a0555c6005f5289660b1409d20eadb` at 18:22 UTC. Headless ON/OFF,
+`VerifyDwgDxfFast`, `VerifyDwgDxfWindows` x64 and ARM64, and native
+`BuildWindowsARM64` passed. Native `BuildMacOS` and Analyze remain in progress.
+
+Pixi duplicate run `41489520533` passed all five platforms. In run
+`41489534178`, Windows, macOS-15 Intel, Ubuntu ARM, and Ubuntu x64 passed; its
+initial macOS-latest job failed during setup with HTTP 500 and a missing Pixi
+executable. Once that workflow was terminal, the setup-failed macOS-latest job
+was rerun; the retry is in progress, while the other platform jobs on the rerun
+are successful. No old-head statuses are carried forward. Configured skip lanes
+remain skipped.
+
+The user's remote desktop remains reported as logged in, but CUA still reports
+the Mac locked. No new GUI or external-viewer evidence was gathered. The
+roadmap commits after W286 remain local until the active retry, Analyze, and
+macOS packaging finish; pushing now would cancel active workflow work.
+
+| W290 item | Result |
+|---|---|
+| Exact PR head | `b580e5a208a0555c6005f5289660b1409d20eadb` |
+| Headless ON/OFF | PASS |
+| DWG/DXF fast, Windows x64 and ARM64 | PASS |
+| Native Windows ARM64 packaging | PASS |
+| Native macOS packaging and Analyze | IN PROGRESS |
+| Pixi run `41489520533` | PASS; all five platforms |
+| Pixi run `41489534178` | Four platforms PASS; macOS-latest setup retry IN PROGRESS after first-attempt HTTP 500 |
+| Configured skip lanes | SKIPPED |
+| Remote desktop / native CUA | User reports logged in; CUA still reports locked |
+| GUI preview/commit, external W171 viewport, signed/deployed W0-W2, human review, R integration | OPEN |
+
+Next: poll the active retry, Analyze, and native macOS package jobs to terminal
+status. Then retry any remaining infrastructure-only failure if permitted,
+push the local roadmap commits, and inspect all checks for the new exact PR head.
