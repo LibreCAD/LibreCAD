@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W300; chronological evidence follows): implementation slices
+Current status (W301; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,18 +35,18 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The exact PR head is `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; its latest
-non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 22:17
+non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 22:25
 UTC exact-head poll, Text Foundations ON/OFF, DWG/DXF fast and Windows x64/
-ARM64, CodeQL Analyze, and push-triggered Pixi on all five platforms passed.
-The PR Pixi run passed four platforms, with macOS-15 Intel still running; the
-Continuous Build passed Windows ARM64, with native macOS packaging still
-running. Linux, Linux AArch64, Snap, Windows x64 packaging, and the CodeQL
+ARM64, CodeQL Analyze, and both push-triggered and PR Pixi on all five
+platforms passed. The Continuous Build passed Windows ARM64, with native
+macOS packaging still running. Linux, Linux AArch64, Snap, Windows x64 packaging, and the CodeQL
 Security scan were skipped by workflow configuration. These are exact-head
 results; do not carry forward results from older heads. The local qmake6
 app/worker build and ad-hoc package/relocation smoke tests pass; these do not
 establish Developer ID signing, notarization, or execution on macOS 14.4. PR
-#3193 remains open, draft, and review-required. Roadmap-only commits W298
-through W300 are local and not yet pushed.
+#3193 remains open, draft, and review-required. The roadmap-only status updates
+remain local and queued until the active exact-head native macOS packaging check
+terminates.
 
 The user reports that the remote desktop is running and logged in. CUA's latest
 snapshot nevertheless reports the Mac locked and exposes no native apps, so GUI
