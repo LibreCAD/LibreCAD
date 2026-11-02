@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W288; chronological evidence follows): implementation slices
+Current status (W289; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,14 +36,14 @@ integration rather than an unimplemented declared feature slice.
 
 The latest non-roadmap code/build change on the PR branch is
 `76f02c2ec2f149124291bc2ccd1e9924a82b6fcd`; the current PR head is
-`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 17:51 UTC
+`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 18:04 UTC
 exact-head poll, Headless ON/OFF passed. Pixi run `41489534178` passed on
-Ubuntu ARM and Ubuntu x64; Windows and macOS-15 Intel remain active. Its
-macOS-latest Pixi job failed before the build during `setup-pixi`, with HTTP
-500 and a missing `/Users/runner/.pixi/bin/pixi`. Duplicate Pixi run
-`41489520533` passed Ubuntu ARM; its Windows, macOS-latest, macOS-15 Intel,
-and Ubuntu x64 jobs remain active. Analyze, native macOS and Windows ARM64
-packaging, and bounded DWG/DXF fast plus Windows x64/ARM64 remain active.
+Ubuntu ARM, Ubuntu x64, and Windows; macOS-15 Intel remains active. Its
+macOS-latest job failed before the build during `setup-pixi`, with HTTP 500 and
+a missing `/Users/runner/.pixi/bin/pixi`. Duplicate Pixi run `41489520533`
+passed Ubuntu ARM, Ubuntu x64, Windows, and macOS-latest; macOS-15 Intel remains
+active. `VerifyDwgDxfFast`, Windows ARM64 DWG/DXF, and Windows ARM64 packaging
+passed. Analyze, native macOS packaging, and Windows x64 DWG/DXF remain active.
 Linux, Linux AArch64, Snap, Windows x64 packaging, and Security scan were
 skipped. These are exact-head results; do not carry forward results from older
 heads. The worktree
@@ -11203,3 +11203,44 @@ terminal because a push cancels in-progress runs.
 Next: allow the active exact-head jobs to finish; then inspect the terminal run,
 retry the infrastructure-failed macOS setup job if GitHub permits, push the
 roadmap receipt, and rerun exact-head checks for the new documentation head.
+
+## 247. W289 Exact-Head CI Refresh
+
+Polled PR #3193 at exact head
+`b580e5a208a0555c6005f5289660b1409d20eadb` at 18:04 UTC. Headless ON/OFF
+passed. `VerifyDwgDxfFast`, `VerifyDwgDxfWindows` ARM64, and native
+`BuildWindowsARM64` passed. Windows x64 DWG/DXF, native macOS packaging, and
+Analyze remain in progress.
+
+Pixi run `41489534178` passed Ubuntu ARM, Ubuntu x64, and Windows; macOS-15
+Intel remains in progress. Its macOS-latest job failed before build because
+`prefix-dev/setup-pixi@v0.8.1` received HTTP 500 and cleanup found no
+`/Users/runner/.pixi/bin/pixi`. Duplicate run `41489520533` passed Ubuntu ARM,
+Ubuntu x64, Windows, and macOS-latest; macOS-15 Intel remains in progress.
+Configured Linux, Linux AArch64, Snap, Windows x64 packaging, and Security
+scan lanes are skipped. No results from older heads are carried forward.
+
+The user reports that the remote desktop is logged in, while CUA still reports
+the Mac locked. No new visible GUI, independent W171 viewport, deployed-package,
+human-review, or final integration evidence was obtained. This is a
+roadmap-only local checkpoint; wait for all active old-head workflows to finish
+before pushing because a push cancels them.
+
+| W289 item | Result |
+|---|---|
+| Exact PR head | `b580e5a208a0555c6005f5289660b1409d20eadb` |
+| Headless ON/OFF | PASS |
+| `VerifyDwgDxfFast` | PASS |
+| `VerifyDwgDxfWindows` ARM64 | PASS |
+| Native `BuildWindowsARM64` | PASS |
+| `VerifyDwgDxfWindows` x64, native `BuildMacOS`, Analyze | IN PROGRESS |
+| Pixi run `41489534178` | Ubuntu ARM/x64 and Windows PASS; macOS-15 Intel IN PROGRESS; macOS-latest setup HTTP 500 failure |
+| Duplicate Pixi run `41489520533` | Ubuntu ARM/x64, Windows, macOS-latest PASS; macOS-15 Intel IN PROGRESS |
+| Configured skip lanes | SKIPPED |
+| Remote desktop / native CUA | User reports logged in; CUA still reports locked |
+| Physical preview, independent W171 viewport, signed/deployed W0-W2, review, R integration | OPEN |
+
+Next: wait for the macOS-15 Intel, native macOS, Windows x64, Analyze, and
+remaining duplicate-run jobs to reach terminal status. Rerun the setup failure
+when permitted, then push the local roadmap commits and inspect all checks on
+the resulting exact PR head.
