@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W275; chronological evidence follows): implementation slices
+Current status (W276; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 locally qualified. This includes the shipped native geometry worker, Modify
 Offset creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -46,11 +46,13 @@ package/relocation smoke tests pass; this does not establish Developer ID
 signing, notarization, or execution on macOS 14.4.
 
 The remote desktop is awake, logged in, and reachable. The approved LibreCAD
-test copy visibly shows both groups of three W193 ellipse contours; the image
-was displayed during W275 but not retained as a file, and display DPR was not
-measured. FreeCAD 1.1.4 recognized about 90 entities, then exited after import
-confirmation in both Draft and fused-shape modes; no FreeCAD viewport/render
-pass is claimed. The source fixture SHA256 remains
+test copy visibly shows both groups of three W193 ellipse contours. A real
+two-copy offset then added two visible contours to one group, and one Undo
+restored its original three contours. The screenshots were displayed inline
+but not retained as files; display DPR was not measured. FreeCAD 1.1.4
+recognized about 90 entities, then exited after import confirmation in both
+Draft and fused-shape modes; no FreeCAD viewport/render pass is claimed. The
+source fixture SHA256 remains
 `05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` and its
 modification time is unchanged. Still open are physical stale-peer interaction,
 a distinct held-drag/preview/commit parity capture, retained screenshot/DPR
@@ -58,9 +60,9 @@ evidence, independent W171 external visual contour review, deployed-package and
 full W0-W2 acceptance, required human review, and final R integration. The
 branch contains current `origin/master` (`998e61dc0`) as an ancestor. Exact-head
 CI, UI evidence, and remaining external gates are updated in W275 below; no
-prior-head CI is carried forward. The W274 roadmap-only commit and W275 source
-and plan commits each require exact-head CI before results can be carried
-forward.
+prior-head CI is carried forward. The W274 roadmap-only commit, W275 source and
+plan commits, and W276 plan receipt each require exact-head CI before results
+can be carried forward.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -3335,17 +3337,18 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   upcoming roadmap receipt. Local CMake, qmake6, ASan, version, fixture, and
   external-reader receipts are recorded above. The logged-in desktop is
   available: LibreCAD W193 geometry is visible, but its screenshot/DPR record
-  and physical stale-peer and held-drag/preview/commit interaction remain open.
+  and physical stale-peer and held-drag/preview/commit parity remain open. W276
+  records a physical two-copy offset followed by one-step Undo on the test copy.
   FreeCAD exited twice on W193 import confirmation, so its GUI viewport gate is
   still open. Deployed-package/minimum-OS runtime, third-party caller acceptance,
   human review, and final integrated closeout also remain open.
 
 **Next concrete action:** wait for the already-running `e5577ae1c` PR workflows
-to reach terminal results, then push source commit `76f02c2ec` together with
-this roadmap receipt and require fresh CI on that exact head. The logged-in
-desktop is available: retain a LibreCAD viewport screenshot and measure DPR,
-exercise physical stale-peer and held-drag/preview/commit parity, and investigate
-the repeatable FreeCAD exit without treating a headless import as viewport proof.
+to reach terminal results, then push source commit `76f02c2ec` and the W275/W276
+roadmap receipts, requiring fresh CI on that exact head. The logged-in desktop
+is available: retain a LibreCAD viewport screenshot and measure DPR, exercise
+physical stale-peer and held-drag/preview/commit parity, and investigate the
+repeatable FreeCAD exit without treating a headless import as viewport proof.
 Separately close outside-caller/deployed-package and human-review gates. Do not
 claim whole-plan completion until these mandatory rows and final R integration
 are resolved. Current
@@ -10698,3 +10701,38 @@ separately, push both commits, and qualify the resulting head. Continue with
 retained LibreCAD screenshot/DPR and physical interaction checks; investigate
 the repeatable FreeCAD exit, but keep outside-viewer acceptance open until an
 independent viewport actually displays the contours.
+
+## 234. W276 Physical Multi-Copy Offset and Undo
+
+With the remote Mac awake and logged in, used the approved LibreCAD PR test copy
+and the unmodified W193 DXF. The Modify > Offset action exposed Fixed Distance
+0.5, Keep Originals, Multiple Copies 2, and Editable Offset Curve. Selected one
+visible right-hand ellipse and completed the offset on the outward side. The
+viewport showed two additional contours. Pressing Escape returned the tool to
+the default action; one Undo removed the new contours and restored the original
+three-contour group. No Save command was issued. Rechecking the input file
+confirmed its original hash and modification time.
+
+This is physical GUI evidence that the configured multi-copy operation commits
+and is reverted by one Undo. It does not compare a separately captured in-flight
+preview with committed geometry, test held-drag cancellation, or test a stale
+peer/document revision. Screenshots were available inline during the session
+only; no retained image file or Qt display-DPR measurement was produced. The
+W193 FreeCAD attempts exited after confirmation in both Draft and fused-shape
+modes, so independent external visual acceptance remains open.
+
+| W276 item | Result |
+|---|---|
+| LibreCAD W193 baseline visible | PASS; two groups of three ellipses |
+| Multi-copy offset commit | PASS; two additional contours visibly added |
+| One-step Undo | PASS; original three-contour group restored |
+| Input DXF integrity | PASS; SHA256 and modification time unchanged |
+| Saved test drawing | NONE; no Save command issued |
+| Preview-to-commit pixel/geometry parity and held-drag cancellation | OPEN |
+| Physical stale-peer interaction | OPEN |
+| Retained screenshot and display-DPR | OPEN; screenshots were inline only |
+| FreeCAD independent viewport | OPEN; app exited after import confirmation |
+
+No new product changes resulted from W276. Continue with retained GUI evidence
+and the remaining physical acceptance gates while the pushed `e5577ae1c` CI
+finishes; do not push commits during those active lanes.
