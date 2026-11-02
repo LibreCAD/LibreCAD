@@ -11783,7 +11783,8 @@ terminal result. Keep the accumulated local roadmap commits unpushed.
 | Exact-head CI | All other required checks PASS; native `BuildMacOS` still in progress; configured skips noted above |
 | External W171 viewport, signed/deployed runtime, human review, final R | OPEN |
 
-Next: continue polling the live native macOS job. Pursue retained matched
+This receipt was committed locally as `b376e9f59`. Continue polling the live
+native macOS job. Pursue retained matched
 preview/commit captures with an actual Qt-DPR measurement and a genuine
 stale-peer mutation during worker execution; do not count this locked-layer
 probe as either result. Keep external viewport, deployment/runtime, review, and
