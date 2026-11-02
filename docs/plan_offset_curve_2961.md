@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W305; chronological evidence follows): implementation slices
+Current status (W306; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,7 +35,7 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The exact PR head is `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; its latest
-non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 22:54
+non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 23:08
 UTC exact-head poll, Text Foundations ON/OFF, Headless ON/OFF, DWG/DXF fast and
 Windows x64/ARM64, CodeQL Analyze, both push-triggered and PR Pixi on all five
 platforms, and continuous Build Windows ARM64 had passed. Native macOS
@@ -59,8 +59,9 @@ remain byte-identical at SHA256
 in-session screenshots are visible in the validation conversation but are not
 durable files; their 1920x1080 pixel dimensions do not measure Qt display DPR.
 Durable screenshot/DPR evidence, physical stale-peer behavior, and an
-independent W171 GUI viewport remain open. FreeCAD 1.1.4 previously exited
-after import confirmation, and Inkscape's W171 rendering was incomplete. Other
+independent W171 GUI viewport remain open. FreeCAD 1.1.4 exits before a viewport
+for this DXF under multiple import modes; Inkscape displays a two-node path
+whose stroke overwhelms its bounds and is not fidelity evidence. Other
 open gates are signed and deployed-package/full W0-W2 acceptance, required
 human review, and final R integration.
 The branch contains current `origin/master` (`998e61dc0`) as an ancestor. Do not
@@ -11824,3 +11825,45 @@ polling the exact PR head, and keep the roadmap commits unpushed until
 `BuildMacOS` terminates. Continue the remaining physical, external-viewer,
 deployment/runtime, review, and final integration gates as separate acceptance
 items.
+
+## 261. W306 Inkscape and FreeCAD Viewport Retry
+
+With the remote desktop logged in, rechecked the unchanged W171-derived
+AC1032/R2018 DXF at
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`
+(SHA256 `b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`).
+Inkscape 1.4.2 opens it, but the Layers and Objects panel shows only `path5`;
+the selected path is reported as two nodes with bounds 1.006 by 2.200 px and a
+1.00 px stroke. At 25,600% that stroke dominates the viewport, rendering a
+capsule-like trace rather than a useful view of the expected narrow spline
+contour. Page/drawing zoom changes did not improve the view. Attempts to alter
+the stroke width were ineffective; the DXF was not edited or saved.
+
+Also reopened the same file in FreeCAD 1.1.4. Its import dialog reported about
+233 geometric entities. The Editable Draft objects mode was selected, but
+FreeCAD quit before presenting a document viewport, as it had with the earlier
+Individual Part shapes and Fused Part shapes modes. No file was saved. The
+independent W171 viewport/fidelity gate remains open; neither application's
+failed or incomplete display is evidence of a LibreCAD rendering defect.
+
+At the 23:08 UTC exact-head poll, PR #3193 remained at
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. Native `BuildMacOS` remained
+`in_progress` in run `41525564465`, job `125552606579`, with Build and packaging
+still active. All other required checks remained passed; configured skips are
+Linux, Linux AArch64, Snap, Windows x64 packaging, and Security scan. Keep the
+local roadmap commits unpushed until this exact-head check reaches a terminal
+result.
+
+| W306 item | Result |
+|---|---|
+| Inkscape W171 viewport | INCOMPLETE; two-node import and oversized stroke do not establish contour fidelity |
+| FreeCAD W171 viewport | FAIL TO RENDER; app quit before viewport in Editable Draft objects mode |
+| Fixture integrity | PASS; converted DXF hash unchanged, no file saved |
+| Exact-head CI | All other required checks PASS; native `BuildMacOS` remains in progress; configured skips noted above |
+| Physical stale-peer, durable full-window screenshots/Qt DPR, deployment/runtime, review and final R integration | OPEN |
+
+This is a local documentation checkpoint only. Continue seeking an independent
+viewer that can render the actual spline geometry, retained preview/commit and
+Qt-DPR evidence, and a genuine stale-peer interaction. Continue polling native
+macOS packaging before pushing the accumulated roadmap commits; leave signing,
+deployment, human review and final integration open until directly verified.
