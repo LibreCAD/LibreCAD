@@ -64,8 +64,10 @@ class ExportDiagnostics {
 public:
     ExportDiagnostics() {
         if (!file || std::fflush(stderr) != 0) return;
+        std::clearerr(stderr);
         saved = duplicate(descriptor(stderr));
         active = saved >= 0 && replace(descriptor(file), descriptor(stderr)) >= 0;
+        if (active) std::clearerr(stderr);
     }
     ~ExportDiagnostics() {
         if (active) { std::fflush(stderr); replace(saved, descriptor(stderr)); }
