@@ -3327,14 +3327,15 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   plugin caller, and local relocated-helper checks. W266 records cross-platform
   DWG/DXF, worker, fault-recovery, and installed-helper passes on its exact head;
   W275 qualifies the local universal FreeType/package target. On current PR head
-  `8177f81be3282a0a040d94fe8b73e7d6cdc0786a`, W284 records Headless ON/OFF
-  passes at 17:04 UTC. W285's current PR head is
-  `571e468c5baf8714f064429289f317589da34b57`; W285 records its 17:10 UTC
-  status. Current PR head `bddab2f015aa8dfda4a08c95c4902b88bcc82d2e` had
-  Headless ON/OFF, Analyze, packaging, bounded DWG/DXF, and surfaced Pixi jobs
-  pending at 17:13 UTC; Linux, Linux AArch64, Snap, Windows x64 packaging, and
-  Security scan were skipped. Remaining acceptance is terminal exact-head CI, deployed-package
-  and declared macOS 14.4 runtime evidence, and physical GUI interaction.
+  `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`, W298 records Text Foundations
+  ON/OFF passes. At 22:14 UTC, PR Pixi run `41525564493` had four platform
+  passes and macOS-15 Intel active; push Pixi run `41525553038` passed all five
+  platforms. DWG/DXF fast and both Windows lanes passed; CodeQL Analyze passed.
+  Continuous Build Windows ARM64 packaging passed, while native macOS packaging
+  remained active; the configured non-target lanes were skipped. No failure was
+  observed; previous-head results are not substituted. Remaining acceptance is
+  terminal exact-head CI, deployed-package and declared macOS 14.4 runtime
+  evidence, and physical GUI interaction.
 - [ ] E/U/G/F/O/T: implementation and current-source format/interoperability
   matrices are present; W171/W172 and W177/W179 record independent DWG/DXF
   checks, with the ACadSharp AC1021 pre-entity limitation kept distinct. The
@@ -3342,29 +3343,29 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   outstanding integrated acceptance is visible CAD interaction and any concrete
   defect found there, not a presumed missing implementation phase.
 - [ ] R: current PR head is
-  `bddab2f015aa8dfda4a08c95c4902b88bcc82d2e`. At 17:13 UTC Headless ON/OFF,
-  Analyze, macOS/Windows ARM64 packaging, bounded DWG/DXF, and surfaced Pixi
-  were pending; Linux, Linux AArch64, Snap, Windows x64 packaging, and Security
-  scan were skipped. Do not carry forward results from previous heads.
-  Local CMake, qmake6, ASan, version, fixture, and external-reader receipts are
-  recorded above. W282 visibly verifies the two-copy offset commit and one-step
-  Undo on the disposable W193 copy. Its drag frame did not establish visible
-  preview/commit parity. W284 reached the direction prompt but could not
-  distinguish preview from selected geometry; Escape canceled and no file was
-  saved. Preview/commit parity remains unverified. W283's FreeCAD fused-shape
-  retry quit before a viewport; this is not a geometry verdict. Physical
-  stale-peer, durable screenshot/DPR,
-  independent W171 GUI viewport, deployed-package/minimum-OS runtime, required
-  human review, and final integrated closeout remain open.
+  `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. W298 records Text Foundations
+  ON/OFF and the Pixi/DWG-DXF results above; DWG/DXF Windows, CodeQL Analyze,
+  Pixi macOS/Windows, and native macOS/Windows ARM64 builds are not terminal.
+  Do not carry forward results from previous heads. Local CMake, qmake6, ASan,
+  version, fixture, and external-reader receipts are recorded above. W298 now
+  visibly distinguishes the live red offset preview from white source geometry
+  and verifies Escape during held-click cancellation. A matched preview/commit
+  pair with durable screenshot and display-DPR, true pointer-drag cancellation,
+  physical stale-peer, independent W171 GUI viewport, deployed-package/minimum-OS
+  runtime, required human review, and final integrated closeout remain open.
 
-**Next concrete action:** let the `bddab2f01` exact-head workflows reach
-terminal results; do not carry forward older-head checks. If a check
-exposes a concrete defect, fix it in a
-scoped slice, test, commit, update this roadmap, and push. Continue seeking
-durable LibreCAD preview/commit evidence and Qt display-DPR, physical stale-peer
-acceptance, an independent W171 viewport, deployed-package/minimum-OS runtime,
-and human review. Do not claim whole-plan completion until these mandatory rows
-and final R integration are resolved. Current
+**Next concrete action:** poll the remaining exact-head runs
+`41525564465` and `41525564493` to terminal results; the current-head Text
+Foundations, DWG/DXF, CodeQL, and push-triggered Pixi runs are already terminal
+and successful. Do not carry forward older-head checks. If either remaining
+check exposes a concrete defect, fix it in a scoped slice, test, commit, update
+this roadmap, and push. W298 GUI evidence and the W299 status-summary sync are
+committed locally; keep both unpushed until these two checks finish. Continue
+seeking matched preview/commit evidence and Qt display-DPR, true pointer-drag
+cancellation, physical stale-peer acceptance, an independent W171 viewport,
+deployed-package/minimum-OS runtime, and human review.
+Do not claim whole-plan completion until these mandatory rows and final R
+integration are resolved. Current
 AC1021 DWG output has passed direct semantic inspection with LibreDWG; the pinned
 ACadSharp `ComprLen` exception remains a tool-specific limitation and must not
 be represented as a LibreCAD failure or as direct ACadSharp acceptance.
