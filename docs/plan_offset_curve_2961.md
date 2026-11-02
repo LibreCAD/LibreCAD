@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W272; chronological evidence follows): planned product
+Current status (W273; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -36,12 +36,16 @@ beside the direct filter file/stream/byte APIs. Its exact local Release result
 is recorded below. W269's separately compiled Qt plugin fixture and W271's
 stderr-capture regression fix are pushed. Product-source commit
 `a9c30e4d8` contains the W271 test fix; roadmap receipt
-`0f46af52180e792591614ef42aaaaae3b8e5151e` is the current PR head. A fresh
+`0f46af52180e792591614ef42aaaaae3b8e5151e` is the last pushed PR head. A fresh
 exact-worktree qmake6 app/worker build now passes, the supported macOS packager
 and its negative-control smoke tests pass in ad-hoc mode, and the qmake-built
 worker passes its external process suite after app-bundle relocation.
 Developer ID signing/notarization, older-macOS compatibility of the static
-FreeType objects, and visible rendering remain open. The exact-seed full
+FreeType objects, and visible rendering remain open. Local commit `d8a58cf65`
+bounds the pathological exhaustive fault loops in the cache-check test without
+changing production code; its roadmap receipt follows this entry. The old
+exact-head DWG/DXF workflow had remained in its composite test step for over an
+hour, so those results are not being carried to the new source. The exact-seed full
 CMake Release application suite passes all 5,169 cases (5,094 passed, 75 skipped;
 10,346,368 assertions passed); the focused legacy R13/R14 matrix passes 10,434
 assertions. External plugin CTest passes 1/1, the complete offset validation
@@ -10449,6 +10453,47 @@ probes are removed; this roadmap update is the only pending worktree change.
 | Exact-head CI | Linux DWG/DXF, Headless ON/OFF, Text Foundations, five Pixi targets PASS; Windows x64/ARM64 and CodeQL IN PROGRESS |
 | Visible stale-peer/preview screenshots, DPR, FreeCAD viewport | OPEN; CUA reports Mac locked |
 | Deployed/cross-platform W0-W2, human review, final R integration | OPEN |
+
+## 231. W273 Bound Expensive Cache-Check Fault Sweeps
+
+Committed test-only CI fix `d8a58cf65` (`test: bound expensive offset
+allocation sweeps`). On the last pushed head `0f46af521`, the DWG/DXF workflow's
+composite test step remained active for more than an hour after build. Its live
+step log was unavailable. Local execution isolated the cost to
+`librecad_offset_cache_check_failure_tests`: the test exhaustively retried the
+certified reference-event analysis at every allocation site for trimmed,
+cusp-refusal, and event-graph fixtures. A CPU sample showed the repeated work
+inside `CacheTopologyBuilder` / `ReferenceEventBuilder`; this is the likely
+cause of the hosted delay, not a product-code deadlock.
+
+The fault-injection test now remains exhaustive for its bounded line, cubic,
+bounds, local-topology, and whole-circle fixtures. The expensive trimmed-open,
+trimmed-closed, hidden-cusp, reference-component, and reference-event cases
+inject at the first, middle, and final observed allocation sites, and still
+assert refusal/work-budget behavior and successful recovery after each fault.
+Their original fitting tolerances are unchanged. The prior exhaustive loops
+covered 29,117 allocation sites; the new run checks 1,463 sites, including all
+1,448 sites in the bounded fixtures and 15 sampled sites across the five
+expensive fixtures.
+
+The exact cache-check executable rebuilt and passed locally in 39.287 seconds.
+The matching full CTest set passed 26/26 in 29.85 seconds, and the direct
+post-CTest sync-API selector passed 299 assertions, the creation-worker
+selector passed 398 assertions, and the cache-trim allocation sweep completed
+successfully. `git diff --check` passed. The prior exact-head remote run remains
+non-terminal and is superseded by this test fix; all required remote checks
+must pass on the new pushed head before CI is called complete. No production
+code changed.
+
+| W273 item | Result |
+|---|---|
+| Bounded-fixture allocation failure coverage | PASS; all 1,448 allocation sites exhaustive |
+| Expensive event-graph fixture coverage | PASS; early/middle/final fault and recovery at all five fixtures |
+| `librecad_offset_cache_check_failure_tests` | PASS; 1,463 injected sites, 39.287 seconds |
+| Matching CTest suite | PASS; 26/26, 29.85 seconds |
+| Direct sync-API and creation-worker selectors | PASS; 299 and 398 assertions |
+| Exact-head remote CI | PENDING on the new source/roadmap commits; old head was still in the DWG/DXF test step |
+| Product geometry/runtime behavior | Unchanged; test-only change |
 
 ## 230. W272 Exact-Head Status Refresh
 
