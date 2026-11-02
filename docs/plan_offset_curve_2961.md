@@ -11862,8 +11862,9 @@ result.
 | Exact-head CI | All other required checks PASS; native `BuildMacOS` remains in progress; configured skips noted above |
 | Physical stale-peer, durable full-window screenshots/Qt DPR, deployment/runtime, review and final R integration | OPEN |
 
-This is a local documentation checkpoint only. Continue seeking an independent
-viewer that can render the actual spline geometry, retained preview/commit and
-Qt-DPR evidence, and a genuine stale-peer interaction. Continue polling native
-macOS packaging before pushing the accumulated roadmap commits; leave signing,
-deployment, human review and final integration open until directly verified.
+This receipt was committed locally as `a9db765be`. Continue seeking an
+independent viewer that can render the actual spline geometry, retained
+preview/commit and Qt-DPR evidence, and a genuine stale-peer interaction.
+Continue polling native macOS packaging before pushing the accumulated roadmap
+commits; leave signing, deployment, human review and final integration open
+until directly verified.
