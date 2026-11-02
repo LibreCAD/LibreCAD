@@ -11734,9 +11734,9 @@ terminal result.
 | Local roadmap/refusal validation | PASS; 99/99, 93 obligations, zero pending declarations or production mismatches; `git diff --check` clean |
 | Durable screenshot/DPR, stale-peer, signed/deployed runtime, human review, final R integration | OPEN |
 
-Next: commit this evidence slice and keep polling the exact PR head. If
-`BuildMacOS` completes, push the accumulated
-roadmap-only commits and inspect checks for the new exact head. Leave the
+This evidence slice was committed locally as `4e01a10c1`. Keep polling the
+exact PR head. If `BuildMacOS` completes, push the accumulated roadmap-only
+commits and inspect checks for the new exact head. Leave the
 independent viewport gate open unless a viewer actually presents the geometry;
 continue the durable screenshot/DPR, stale-peer, runtime/deployment, review,
 and final integration work as separate gates.
