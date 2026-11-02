@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W286; chronological evidence follows): implementation slices
+Current status (W287; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -34,20 +34,25 @@ compiled Qt plugin caller. The latest implementation audit found no additional
 product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
-The latest implementation-bearing PR source remains
-`f1dfd93ad579a615b302e53a292e84dc31c6156e`. The current PR head is
-`bddab2f015aa8dfda4a08c95c4902b88bcc82d2e`. At the 2026-11-02 17:13 UTC
-exact-head poll, Headless ON/OFF, Analyze, macOS and Windows ARM64 packaging,
-bounded DWG/DXF, and surfaced Pixi checks were pending. Linux, Linux AArch64,
-Snap, Windows x64 packaging, and Security scan were skipped. Do not carry
-forward results from `571e468c5` or older heads. The worktree
+The latest non-roadmap code/build change on the PR branch is
+`76f02c2ec2f149124291bc2ccd1e9924a82b6fcd`; the current PR head is
+`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 17:43 UTC
+exact-head poll, Headless ON/OFF passed. In Pixi run `41489534178`, Ubuntu
+ARM passed; Windows, macOS-15 Intel, and Ubuntu x64 remain active. The
+macOS-latest Pixi job failed before the build during `setup-pixi`, with HTTP
+500 and a missing `/Users/runner/.pixi/bin/pixi`. Duplicate Pixi run
+`41489520533` still has all five platform jobs active. Analyze, native macOS
+and Windows ARM64 packaging, and bounded DWG/DXF fast plus Windows x64/ARM64
+remain active. Linux, Linux AArch64, Snap, Windows x64 packaging, and Security
+scan were skipped. These are exact-head results; do not carry forward results
+from older heads. The worktree
 qmake6 app/worker build and local ad-hoc package/relocation smoke tests pass;
 these do not establish Developer ID signing, notarization, or execution on
 macOS 14.4. PR #3193 remains open, draft, and review-required.
 
 The user reports that the remote desktop is running and logged in. CUA reached
-the visible app during W284, but subsequent screenshot requests report the Mac
-locked; current GUI interaction through CUA is unavailable. W282 rechecked the W193
+the visible app during W284, but the current desktop snapshot still reports the
+Mac locked; GUI interaction through CUA is unavailable. W282 rechecked the W193
 baseline on the disposable W281 copy: two additional contours appeared after
 the two-copy offset commit, and one Undo restored the baseline without saving.
 W283 retried FreeCAD's fused-shape import of the original W193 DXF; FreeCAD quit
@@ -11113,3 +11118,49 @@ Next: refresh the exact-head check state after workflows progress. Resume visibl
 preview checks only when the automation surface can see the logged-in desktop.
 Keep the remaining external, deployment, human-review, and final integration
 gates open until there is direct evidence.
+
+## 245. W287 Exact-Head CI Refresh
+
+Repolled PR #3193 at exact head
+`b580e5a208a0555c6005f5289660b1409d20eadb` at 17:43 UTC. Headless ON/OFF
+passed. In Pixi run `41489534178`, Ubuntu ARM passed; Windows, macOS-15 Intel,
+and Ubuntu x64 remain in progress. Its macOS-latest job failed before build:
+`prefix-dev/setup-pixi@v0.8.1` received HTTP 500 and cleanup reported the
+missing `/Users/runner/.pixi/bin/pixi`. The duplicate Pixi run `41489520533`
+still has all five platform jobs in progress. Analyze, native macOS and
+Windows ARM64 packaging, and bounded DWG/DXF fast and Windows x64/ARM64 checks
+remain in progress. Configured Linux, Linux AArch64, Snap, Windows x64 package,
+and Security scan lanes are skipped. No results from older heads are carried
+forward. GitHub reports the failed workflow cannot be retried until its run is
+terminal.
+
+The user reports that their remote-desktop session is active and logged in;
+the fresh CUA state nevertheless reports the Mac locked and exposes no native
+apps. The GUI preview-parity gate remains unverified. The existing PR status
+comment was refreshed with this CI state. After this roadmap update, the
+refusal/inventory suite passed 94/94 and the roadmap parser passed 5/5 (99 total,
+zero pending declarations or production mismatches); `git diff --check` passed.
+No product source changed. Worktree HEAD remains
+`b580e5a208a0555c6005f5289660b1409d20eadb` before this roadmap-only local
+checkpoint.
+
+| W287 item | Result |
+|---|---|
+| Exact PR head | `b580e5a208a0555c6005f5289660b1409d20eadb` |
+| Headless ON/OFF | PASS |
+| Pixi Ubuntu ARM, run `41489534178` | PASS |
+| Pixi macOS-latest, run `41489534178` | FAIL before build; setup HTTP 500, missing Pixi executable |
+| Pixi Windows, macOS-15 Intel, Ubuntu x64, run `41489534178` | IN PROGRESS |
+| Duplicate Pixi run `41489520533` | All five platform jobs IN PROGRESS |
+| Analyze, native macOS/Windows ARM64 packaging, DWG/DXF fast and Windows x64/ARM64 | IN PROGRESS |
+| Configured skip lanes | SKIPPED |
+| Remote desktop / native CUA | User reports logged in; CUA still reports locked |
+| Roadmap parser/refusal validation | PASS; 99/99 combined, 0 pending declarations, 0 production mismatches |
+| Preview/commit parity and other acceptance gates | OPEN; no new GUI or external-review evidence |
+| PR status comment | Updated with exact-head state |
+
+Next: wait for the active exact-head workflows to reach terminal status before
+retrying the setup failure or pushing this roadmap checkpoint; a push would
+cancel in-progress workflows. Keep GUI, independent W171 review, deployed
+minimum-OS/package qualification, required human review, and final R integration
+open until each has direct evidence.
