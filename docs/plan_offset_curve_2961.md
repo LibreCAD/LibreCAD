@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W280; chronological evidence follows): implementation slices
+Current status (W282; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,31 +35,32 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The current pushed PR head is
-`e3e35f7805c00394c9435ecf03d08a32da2baf6e`. Exact-head Headless ON/OFF, Linux
-x64/ARM64 Pixi, macOS-latest and macOS-15 Intel Pixi, Windows Pixi, CodeQL,
-Linux bounded DWG/DXF, Windows x64/ARM64 bounded DWG/DXF, and Windows ARM64
-packaging checks pass. The native `BuildMacOS` packaging job remains in
-progress; its result is not inferred from the passing Pixi jobs. The Security
-scan is skipped by repository policy. The worktree qmake6 app/worker build and
-local ad-hoc package/relocation smoke tests pass; these do not establish
-Developer ID signing, notarization, or execution on macOS 14.4.
+`f1dfd93ad579a615b302e53a292e84dc31c6156e`. At the 2026-11-02 16:39 UTC
+check, Headless ON/OFF pass; Analyze, native macOS packaging, Windows ARM64,
+bounded DWG/DXF, and Pixi checks are pending. Security scan and platform jobs
+marked skipping remain skipped; no result is carried forward from earlier
+heads. The worktree qmake6 app/worker build and local ad-hoc package/relocation
+smoke tests pass; these do not establish Developer ID signing, notarization, or
+execution on macOS 14.4.
 
-The remote desktop is awake, logged in, and reachable. W280 rechecked the W193
-baseline and multi-copy interaction: two contours appeared after release, and
-Escape plus one Undo restored the baseline without saving. The held-click/drag
-frames did not distinguish preview geometry from the selected source, so
-preview/commit parity remains open, not a product-defect finding. The fixture
-SHA256 remains
+The remote desktop is awake, logged in, and reachable. W282 rechecked the W193
+baseline on the disposable W281 copy: two additional contours appeared after
+the two-copy offset commit, and one Undo restored the baseline without saving.
+The held drag did not distinguish preview geometry from the selected source,
+so preview/commit parity remains open, not a product-defect finding. Both the
+original fixture and disposable copy retain SHA256
 `05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`; its
-modification time is unchanged. Display DPR and retained LibreCAD screenshot
-evidence are still unavailable. FreeCAD 1.1.4 exited after import confirmation;
-Inkscape's W171 rendering was incomplete, so independent W171 contour review
-remains open. Other open gates are physical stale-peer interaction, signed and
-deployed-package/full W0-W2 acceptance, required human review, and final R
-integration. The branch contains current `origin/master` (`998e61dc0`) as an
-ancestor. Do not carry forward CI from prior heads: exact-head results above
-refer only to `e3e35f7805c00394c9435ecf03d08a32da2baf6e`; after this roadmap-only
-commit is pushed, rerun and inspect checks for its new exact head.
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`; the
+original fixture modification time is unchanged. Display DPR and retained
+LibreCAD screenshot evidence are still unavailable. FreeCAD 1.1.4 exited after
+import confirmation; Inkscape's W171 rendering was incomplete, so independent
+W171 contour review remains open. Other open gates are physical stale-peer
+interaction, signed and deployed-package/full W0-W2 acceptance, required human
+review, and final R integration. The branch contains current `origin/master`
+(`998e61dc0`) as an ancestor. Do not carry forward CI from prior heads: exact-
+head results above refer only to `f1dfd93ad579a615b302e53a292e84dc31c6156e`;
+after this roadmap-only commit is pushed, rerun and inspect checks for its new
+exact head.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -10937,3 +10938,42 @@ Next: push this roadmap-only checkpoint without carrying forward CI from
 macOS job remains active unusually long, continue treating it as pending until
 GitHub reports a terminal result. Do not save or close the modified-marker
 test document; preserve the verified source fixture.
+
+## 240. W282 Logged-In Offset Commit/Undo Recheck
+
+The user confirmed the remote desktop was running and already logged in. In the
+approved LibreCAD test app, the disposable W281 copy showed the W193 baseline
+as two groups of three nested ellipses. Offset was configured for fixed
+distance 0.5, Keep Originals, two multiple copies, and Editable Offset Curve.
+Selected the innermost contour in the left group and used the direction prompt.
+After ending the repeat action, two additional contours were visibly present
+in that group. One Undo restored the original three-contour group; the window
+title no longer showed a modified marker. No Save command was issued.
+
+An in-progress drag frame showed the selected source but no distinct preview
+contour. Therefore this recheck verifies the visible multi-copy commit and
+one-step restoration, but does not establish preview/commit geometry parity or
+held-drag cancellation. The CUA interaction completed through a direction click
+rather than a retained passive-hover frame, so the preview gate remains open.
+The original W193 fixture and the disposable W281 copy both still hash to
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+| W282 item | Result |
+|---|---|
+| Logged-in LibreCAD baseline | PASS; six contours visible in two groups |
+| Two-copy offset result | PASS; two additional contours visible in left group after ending the action |
+| One-step Undo | PASS; original three-contour group restored |
+| In-progress preview distinguishable from selected source | OPEN; no separate preview contour identified |
+| Preview-to-commit parity / held-drag cancellation | OPEN; no retained comparable preview frame |
+| Source and disposable DXF integrity | PASS; both SHA256 values unchanged; no Save command |
+| Roadmap/refusal validation | PASS; 99/99 tests, 93 obligations, zero pending declarations or production mismatches |
+| Physical stale-peer interaction | OPEN |
+| Retained viewport screenshot / display DPR | OPEN |
+| Exact-head f1 CI | Headless ON/OFF pass; other surfaced required checks pending at 16:39 UTC |
+| Human review, signed/deployed macOS package, full W0-W2 and final R integration | OPEN |
+
+Next: keep preview parity open until a durable preview frame and corresponding
+geometry inventory can be compared. Continue physical stale-peer validation,
+retained screenshot/DPR collection, deployed-package checks, human review, and
+final integration. The roadmap-only W282 checkpoint must be validated and
+pushed separately; inspect CI anew on that exact head.
