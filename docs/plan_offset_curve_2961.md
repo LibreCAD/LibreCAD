@@ -10860,3 +10860,41 @@ that can distinguish all expected curves. Keep preview/commit parity, stale-peer
 interaction, durable screenshot/DPR, deployed-package checks, review, and final
 integration open until their direct evidence is available. Do not save the
 temporary viewer documents or alter the W193 source fixture.
+
+## 238. W280 Logged-In Held-Pointer Preview Recheck
+
+The user confirmed the remote desktop was already logged in. Reopened the
+approved LibreCAD test copy with the W193 fixture and verified the baseline as
+two groups of three nested ellipses. Offset remained configured for fixed
+distance 0.5, Keep Originals, two copies, and Editable Offset Curve. Captured
+the canvas during a five-second held click and during a longer pointer drag.
+The frames showed the selected source but no separate offset contour that could
+be identified as preview geometry. Releasing the gestures produced the two
+additional contours; Escape ended the action and one Undo restored the baseline.
+The CUA interface exposes click and drag but no passive pointer-move operation,
+so these observations do not prove preview/commit parity or a rendering defect.
+No Save command was issued. Rechecked fixture SHA256:
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+| W280 item | Result |
+|---|---|
+| Logged-in LibreCAD baseline | PASS; six contours visible, two groups of three |
+| Preview during held click / drag | OPEN; selected source visible, no distinct preview contour captured |
+| Two-copy result after release | PASS; two additional contours appeared |
+| Escape and one-step Undo | PASS; baseline restored; no Save command |
+| W193 source fixture integrity | PASS; SHA256 unchanged |
+| Preview-to-commit geometry parity | OPEN; CUA cannot provide a passive hover without releasing a gesture |
+| Physical stale-peer behavior | OPEN |
+| Retained screenshot / Qt display-DPR | OPEN |
+| Independent visual acceptance | OPEN; FreeCAD quit and Inkscape import remained incomplete per W279 |
+| macOS 14.4 runtime, signing/notarization, deployed W0-W2 | OPEN |
+| Exact-head CI, human review, final R integration | OPEN |
+
+Next: close preview parity with a retained preview frame and exact output
+inventory, or a UI automation path that can move the pointer without releasing
+the offset gesture. Do not label the current observation a product defect.
+Wait for all existing pushed-head workflows to finish before pushing local
+roadmap receipts; then run and inspect all checks on the resulting exact PR
+head. The focused roadmap parser/refusal suites pass 99/99; inventory reports
+93 obligations, zero pending declarations, and zero production mismatches.
+`git diff --check` passes.
