@@ -9,10 +9,16 @@ set -euxo pipefail
 # static library with the optional dependencies disabled (no libpng, harfbuzz,
 # brotli, bzip2 or external zlib) - this avoids pulling in further thin dylibs.
 #
-# Usage: build-universal-freetype-macos.sh <install-prefix>
+# Usage: build-universal-freetype-macos.sh <install-prefix> [deployment-target]
 # Then point the build at it with FREETYPE_DIR=<install-prefix>.
 
 PREFIX="${1:?usage: $0 <install-prefix>}"
+DEPLOYMENT_TARGET="${2:-${MACOSX_DEPLOYMENT_TARGET:-14.4}}"
+if [[ ! "$DEPLOYMENT_TARGET" =~ ^[0-9]+(\.[0-9]+){1,2}$ ]]; then
+    echo "invalid macOS deployment target: $DEPLOYMENT_TARGET" >&2
+    exit 2
+fi
+export MACOSX_DEPLOYMENT_TARGET="$DEPLOYMENT_TARGET"
 FT_VER="${FREETYPE_VERSION:-2.13.3}"
 # This code is linked into ttf2lff, which ships inside the released DMG, and the
 # download URL redirects to volunteer mirrors - so verify the bytes, not just the
@@ -33,10 +39,10 @@ cd "freetype-${FT_VER}"
 ./configure --prefix="$PREFIX" \
     --enable-static --disable-shared \
     --without-harfbuzz --without-png --without-brotli --without-bzip2 --without-zlib \
-    CFLAGS="-arch arm64 -arch x86_64" \
-    LDFLAGS="-arch arm64 -arch x86_64"
+    CFLAGS="-arch arm64 -arch x86_64 -mmacosx-version-min=$DEPLOYMENT_TARGET" \
+    LDFLAGS="-arch arm64 -arch x86_64 -mmacosx-version-min=$DEPLOYMENT_TARGET"
 make -j"$(sysctl -n hw.ncpu)"
 make install
 
-echo "Built universal Freetype at $PREFIX"
+echo "Built universal Freetype at $PREFIX for macOS $DEPLOYMENT_TARGET+"
 lipo -info "$PREFIX/lib/libfreetype.a"
