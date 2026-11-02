@@ -24,46 +24,30 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W265; chronological evidence follows): planned product
+Current status (W266; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
 staged GUI drawing/template imports, and bounded worker validation for public
 synchronous file/stream/byte filter imports. No additional product-code gap
-has been identified in the latest audit. W218's exact product-source head
-`71ecf102b36017d57bd30db39d0de630ac11bb75` passed Headless ON/OFF, CodeQL,
-DWG/DXF Linux and Windows x64/ARM64, and all five-platform Pixi checks. Exact
-head CI is re-run after pushed test/acceptance receipts; its live state is
-tracked in the PR checks and latest PR comment. W263/W264 close the W171 numeric
+has been identified in the latest audit. On exact PR head
+`e123fea6f3960aea562da32a4bbc2b7de1c76002`, required Headless ON/OFF, Text
+Foundations, CodeQL, DWG/DXF Linux and Windows x64/ARM64, and all five-platform
+Pixi checks pass; Security scan is skipped by repository policy. The DWG/DXF
+jobs pass CTest 25/25, synchronous-import and creation-worker selectors,
+allocation-failure recovery, and installed relocated-helper smoke tests on all
+three platforms. W266's complete validation-tool suite passes 412/412; its
+roadmap/refusal suite passes 99/99 with 93 obligations, zero pending
+declarations, and no H6 production mismatches. W263/W264 close the W171 numeric
 expected-contour fidelity check across both curve degrees and all 24 DWG matrix
-rows using an independent FreeCAD kernel; visible FreeCAD viewport and DPR
-evidence remain open. W265 reruns the full validation-tool suite successfully
-and the combined roadmap/refusal gates pass 99/99, with 93 obligations, zero
-pending declarations, and no H6 production mismatches. At the W265 CI snapshot
-(2026-11-01 20:59 UTC; PR head `a81f227a5db73e65efcf8544d2d1d277e48bdb23`),
-Headless ON/OFF and Text Foundations pass. DWG/DXF Linux and Windows x64/ARM64
-are still building; CodeQL and current-run Pixi jobs are pending. A duplicate
-macOS-latest Pixi job from an earlier run passed. Security scan is skipped by
-policy. The W265 app-control retry is still blocked because CUA reports the Mac
-locked despite the user's approval of the rebuilt test app. At the W264 CI
-snapshot (2026-11-01; PR head
-`f095a12a7b92bbfe6ecd4f6bed748e8499e240b3`), Headless ON/OFF are pending,
-Text Foundations and CodeQL are running, DWG/DXF and Pixi are pending, and
-Security scan is skipped by policy. The W264 roadmap/refusal suite passes
-99/99. At the W263 CI snapshot (2026-11-01; PR head
-`516334bc3884972197a4d34eee786dd9b5c5b11e`), Headless ON/OFF and Text
-Foundations passed; CodeQL and DWG/DXF verification were running, Pixi was
-running or queued, and Security scan was skipped by policy. The W263
-roadmap/refusal suite passes 99/99. At the W262 CI snapshot (2026-11-01; PR head
-`f40c3fdc8a18638c412ee840e6a4b7c58b07bc88`), Headless ON/OFF passed; CodeQL,
-DWG/DXF verification, and five-platform Pixi checks were still running.
-Security scan was skipped by policy. The W261 roadmap/refusal suite passes
-99/99. At the W260 CI snapshot
-(2026-11-01 19:48 UTC; PR head
-`e9fe078f4e31eb6917d4dfe3cf1be9e8204b6960`), Headless ON/OFF and Text
-Foundations passed while CodeQL, DWG/DXF verification, and five-platform Pixi
-builds were in progress (Security scan skipped by policy). The W260
-roadmap/refusal suite passes 99/99.
+rows using an independent FreeCAD kernel. Still open are visible physical
+stale-peer and preview/commit acceptance, visible FreeCAD viewport/DPR evidence,
+deployed-package and outside-caller acceptance not exercised by CI, human PR
+review, and final R integration. The user reapproved the rebuilt test app, but
+CUA continues to report the Mac locked; no visible-app interaction occurred.
+Exact-head receipts and hashes are recorded in W266 below and the latest PR
+comment. A roadmap-only commit triggers a fresh CI run; its exact-head status
+must be checked rather than inherited from this checkpoint.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -522,9 +506,9 @@ candidate except the explicitly proposed native-worker tags.
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105/W108/W109/W115/W116 sweep every observed allocation failure over line, forward/reversed two-span cubic, forward/reversed whole-circle seam, both open and closed components of a producer-generated two-component trimmed path, and hidden-cusp endpoint refusal with bounded ledger and same-budget retry; W120 runs all standalone fault fixtures in one Release pass; W122 and W155 close the local topology/test inventory; remote platform/final gates remain | `[lc-offsetcurve][geometry][cache-topology-chain]`, standalone cache-check allocation-fault target |
-| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and initial deadline/authority policy implemented; current in-repo caller/fallback/import ownership inventory recorded; external public low-level API use and platform/deployment gates remain | operation/cap/deadline/call-site table |
-| W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; W154 adds component-only installed-helper execution to Linux/Windows CI; local macOS staged/relocated client passes; W213 Windows x64 and ARM64 installed-helper checks pass | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit and scoped action faults and geometry-entry timeout receipts qualified locally; W81 adds Linux/Windows CMake worker CI; W82 removes PR path filtering and W83 adds scoped feature-branch push triggering; W213 Windows x64 and ARM64 pass; import, GUI, deployment and final gates remain open | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining integration and runner regression |
+| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and current in-repo caller/fallback/import ownership inventory implemented; W266 Linux and Windows x64/ARM64 worker/import lanes pass. External low-level API consumers and signed/deployed-package acceptance remain unverified. | operation/cap/deadline/call-site table |
+| W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; W266 passes installed relocated-helper smoke on Linux and Windows x64/ARM64; local macOS staged/relocated client and qmake6 bundle smoke pass. Final packaged-release acceptance remains open. | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit, scoped action faults, geometry-entry timeout and bounded synchronous import receipts are qualified; W266 passes Linux and Windows x64/ARM64 CTest, sync API, creation-worker, fault-sweep and installed-helper checks. Physical GUI interaction, outside-caller/deployed-package acceptance and final R integration remain open. | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining physical/deployment acceptance |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; W128 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; W129 current-source dispatch review and focused Release/ASan coverage found no gap; separately gated legacy DXF test remains unavailable in this configuration; remote/final R acceptance remains | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; W131 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | native edit/grip/transform TUs |
@@ -3315,83 +3299,35 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   W120 Release and W152 ASan fault sweeps cover 29,117 injection/recovery points, and
   the audited implementation/test files are unchanged from that source pin. No new
   local defect was found. Remote platform execution and final R acceptance remain open.
-- [ ] W0-W2: typed/cached Produce, creation/repeat and local native Trim GUI routing and scoped action faults are qualified;
-  a fresh macOS qmake6 full-app/bundle build, adjacent-helper worker smoke and paired
-  cache/creation Release-ASan checks are qualified in W55-W57; asynchronous Trim test
-  synchronization is corrected and requalified in W58-W61. W79 adds successful full CMake
-  installation plus installed-directory worker-client and creation/repeat routing tests.
-  W154 adds a component-only staged helper/client smoke to Linux/Windows CI.
-  The local macOS staged/relocated client lane passes, while remote results are pending.
-  W156 routes public synchronous `fileImport`, `fileImportStream` and
-  `fileImportBytes` through deferred parsing and bounded sibling-worker validation,
-  sharing import-budget state with XREF child filters and restoring deferred INSERT
-  expansion. The caller remains synchronous through a bounded nested event loop;
-  GUI open/templates retain their asynchronous staged session. Current-source
-  Release and focused ASan direct-API selectors, broad Release format lanes, and
-  qmake6 builds of both changed filter objects pass locally. W178 now adds a fresh
-  current-source qmake6 full application/helper bundle build and a bundled sibling-
-  worker client smoke (17 cases / 3,775 assertions). Finish Windows/native
-  cross-platform failure coverage, deployed-helper acceptance, and final
-  caller/adoption/failure acceptance. W170 passes the targeted local Debug,
-  Release and ASan worker fixture suites. W171/W172 freshly qualify current-source
-  DWG/DXF matrices with LibreDWG and ACadSharp. On code-equivalent head
-  `c0438532b`, Windows ARM64 job `123816799173` passed all bounded tests and
-  relocated-worker checks. The old workflow `40979668978` was canceled before
-  Linux/x64 completed. Product source `7bd61bd24` remains under DWG/DXF workflow
-  `40998099806`; W180 records all three platform tests active after successful
-  builds. The W176-W180 roadmap-only commits are now on PR head
-  `498a5deee690187a50ad776ad2e5df63fc51f1c5`; exact-head DWG/DXF dispatch
-  `41003855350` is now active on the current head, and exact-head Pixi
-  `41003830885` is active. The older DWG/DXF run was canceled during its test
-  step by the concurrency handoff. Its partial logs show CTest 23/23 and
-  `[sync-api]` / `[creation-worker]` passes (219 / 318 assertions) on all
-  platforms, but no terminal workflow result. Prior Pixi runs `40979669043` and
-  `40998099821` passed all five platforms. The CTest
-  selector includes source identity. W175 aligns the
-  Linux bounded lane with the Windows Release configuration without reducing
-  the exhaustive test set; the next exact-head run must verify it. W177/W179
-  independently convert all 34 current-source DXF matrix rows through ODA; see
-  the detailed reader classifications below. Reuse the
-  qualified geometry-entry
-  W157 extends the DWG/DXF matrix to build and execute `[sync-api]` on Linux and
-  Windows x64/ARM64; the prior code-equivalent ARM64 job passed, while the new
-  exact-head Linux/x64/ARM64 run remains active. Reuse the qualified
-  geometry-entry timeout/helper/client/reply
-  modules; do not redo them as absent. Keep Node runner scope separate.
-- [ ] E/U/G/F/O/T: requalify and integrate the existing entity, UI, creation,
-  DXF/DWG, source and trim implementation with any new worker/publication changes.
-  W171/W172 close fresh current-source external semantic-reader matrices for the
-  direct DWG and DXF writer paths; ACadSharp's AC1021 pre-entity exception is
-  recorded separately. Visible CAD interaction, full platform/package coverage,
-  and final integrated acceptance remain open.
-- [ ] R: finish current-source Release/ASan/qmake6/failure/version/visible rows,
-  including Windows, visible GUI acceptance and remaining platform/package acceptance;
-  W178 closes the fresh macOS qmake6 app/helper build row, but not these remaining gates. W79
-  now covers a complete staged macOS CMake install. W149-W151 record broad local
-  Release results and classify the five randomized alias assertions as the same
-  inherited behavior on a fresh `origin/master` build; do not attribute them to
-  the offset changes. W170 adds targeted current-source Debug/Release/ASan worker
-  fixtures and a full 6,381-case headless Release pass; W171/W172 add fresh
-  current-source cross-reader DWG/DXF matrix results; W177/W179 route all 34
-  current-source DXF rows through ODA, and W178 adds a fresh current-source
-  qmake6 app/helper build. The c043 workflow
-  `40979668978` passed Windows ARM64 and was canceled before Linux/x64 completed;
-  product-head DWG/DXF workflow `40998099806` was canceled in its test step
-  after all builds succeeded. Its partial logs report CTest 23/23, `[sync-api]`
-  219 assertions, and `[creation-worker]` 318 assertions on all platforms; the
-  cache/fault and relocated-helper lane did not finish everywhere. Current
-  PR-head exact DWG/DXF run `41003855350` and Pixi `41003830885` are active.
-  Prior Pixi runs `40998099821` and `40979669043` passed on all five platforms. CodeQL
-  `40973686197` passed on the preceding
-  product-equivalent head `4df7229ca`; this test-only follow-up did not trigger a
-  new CodeQL run. Review scoped commits, preserve reproducible evidence and close
-  every required gap.
+- [ ] W0-W2: implementation and local integration are complete. W266 exact-head
+  CI now passes the DWG/DXF Linux and Windows x64/ARM64 lanes, including CTest
+  25/25, `[sync-api]` (219 assertions per platform), `[creation-worker]` (14
+  cases), allocation-failure recovery (29,117 Linux and 66,594 Windows injection
+  points), and installed relocated-helper smoke (17 cases per platform). All
+  five Pixi targets, Headless ON/OFF, Text Foundations, and CodeQL also pass.
+  Remaining W0-W2 acceptance is limited to outside-caller/deployed-package
+  evidence and physical GUI interaction; do not repeat the passed platform CI.
+- [ ] E/U/G/F/O/T: implementation and current-source format/interoperability
+  matrices are present; W171/W172 and W177/W179 record independent DWG/DXF
+  checks, with the ACadSharp AC1021 pre-entity limitation kept distinct. The
+  outstanding integrated acceptance is visible CAD interaction and any concrete
+  defect discovered there, not a presumed missing implementation phase.
+- [ ] R: required exact-head automated CI is green at `e123fea6f3960aea562da32a4bbc2b7de1c76002`.
+  Local CMake, qmake6, ASan, version, fixture and external-reader receipts are
+  recorded above. Remaining rows are visible stale-peer and preview/commit
+  interaction, visible FreeCAD viewport/DPR, signed/deployed-package and
+  outside-caller acceptance where applicable, human review, and final integrated
+  closeout. The desktop is currently inaccessible because CUA reports it locked;
+  the user's reapproval of the rebuilt app does not satisfy those rows.
 
-**Next concrete action on implementation resume:** follow all checks on the
-current PR head through completion; address any Windows/Linux worker, direct-
-import, or staged-helper failure; then close remaining W0-W2 deployment and
-failure gates, requalify E/U/G/F/O/T on the exact source, and complete R's
-visible-GUI, external-CAD, platform/package and final closeout rows. Current
+**Next concrete action on implementation resume:** the W266 CI set is complete
+and green; do not wait on or infer results from the superseded W265 runs. Update
+and commit this roadmap receipt, push it to PR #3193, then track the new exact-head
+CI that the documentation commit triggers. When desktop control is available,
+complete the physical stale-peer and preview/commit checks plus visible FreeCAD
+viewport/DPR review; separately close outside-caller/deployed-package and human
+review gates. Do not claim whole-plan completion until these mandatory rows and
+final R integration are resolved. Current
 AC1021 DWG output has passed direct semantic inspection with LibreDWG; the pinned
 ACadSharp `ComprLen` exception remains a tool-specific limitation and must not
 be represented as a LibreCAD failure or as direct ACadSharp acceptance.
@@ -10267,3 +10203,54 @@ applies to the exact head above; any documentation commit will trigger fresh CI.
 | DWG/DXF Linux and Windows x64/ARM64 | IN PROGRESS; build steps, no failures reported |
 | CodeQL and current-run Pixi | PENDING; no failures reported |
 | Visible stale-peer/preview/FreeCAD GUI, deployed cross-platform W0-W2, reviewer approval, final R integration | OPEN |
+
+## 224. W266 Exact-Head CI Completion and Roadmap Refresh
+
+All W266 results below qualify exact product-source PR head
+`e123fea6f3960aea562da32a4bbc2b7de1c76002` (base
+`998e61dc0b994d3ecf3b5e6b529123c556dc3494`). The complete local validation-tool
+suite passed 412/412 with Node `v26.12.0`; the focused refusal-inventory and
+roadmap-parser suite passed 99/99, reporting 93 obligations, zero pending
+declarations, and zero H6 production mismatches. Full-suite log:
+`/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026/W266-full-node-validation.log`,
+SHA256 `75f8739c80819e7fee57a5808a9d6afc8aafd34cc18f8978eb833d58f6370c4f`.
+
+The exact-head GitHub Actions checks are green: Headless ON/OFF (run
+`41349729869`), Text Foundations, CodeQL (`41349729859`), all five PR Pixi
+targets (`41349729892`), and DWG/DXF Linux plus Windows x64/ARM64
+(`41349729911`). The duplicate branch-push Pixi matrix (`41349724737`) also
+passed. The DWG/DXF jobs each ran CTest 25/25 and `[sync-api]` with 219
+assertions. Linux `[creation-worker]` passed 399 assertions / 14 cases; Windows
+x64 and ARM64 passed 398 assertions / 14 cases. Allocation-failure sweeps
+recovered across 29,117 injection points on Linux and 66,594 on each Windows
+architecture. Installed relocated-helper tests passed 3,553 assertions / 17
+cases on Linux, 3,923 / 17 on Windows x64, and 4,033 / 17 on Windows ARM64.
+Security scan remains skipped by repository policy.
+
+Retained platform logs:
+
+| Platform | Log | SHA256 |
+|---|---|---|
+| Linux | `/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026/W266-dwg-dxf-linux-job.log` | `92c07fcc72df2a5449ed038c60eb0946c3bccbb4013dcf45d2979436ea869499` |
+| Windows ARM64 | `/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026/W266-dwg-dxf-windows-arm-job.log` | `99f84496a868f3439208f2c6f81e1fc23670f76a9320c5d610e8c558169790b1` |
+| Windows x64 | `/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026/W266-dwg-dxf-windows-x64-job.log` | `40fa0f8a40c8f04c10d0d707edea024ab86f511dae21c92625c49d9cbf932104` |
+
+The user reapproved the rebuilt test app. CUA's fresh surface inventory still
+reports no native applications and says the Mac is locked, so no GUI interaction
+was possible. This is not a test failure, but visible stale-peer/preview/commit
+and FreeCAD viewport/DPR evidence remain open. Deployed-package and outside-
+caller acceptance, human PR review, and final R integration also remain open;
+CI success does not close those gates. No product source or drawing was changed
+for this receipt. This roadmap-only change triggers fresh exact-head CI, whose
+results must be checked on the new commit rather than inherited from W266.
+
+| W266 check | Result |
+|---|---|
+| Complete local validation-tool Node suite | PASS; 412/412, zero failed/cancelled/skipped |
+| Roadmap/refusal suite | PASS; 99/99; 93 obligations, zero pending, zero H6 mismatches |
+| Headless ON/OFF, Text Foundations, CodeQL | PASS |
+| DWG/DXF Linux, Windows x64, Windows ARM64 | PASS; per-platform CTest, sync API, creation worker, fault sweep and relocated helper detailed above |
+| Pixi platform matrix | PASS; all five targets on PR and duplicate push runs |
+| Reapproved test app / native UI | Approval received; UI BLOCKED because CUA reports the Mac locked |
+| Visible GUI and FreeCAD viewport/DPR | OPEN |
+| Deployed package, outside-caller acceptance, human review, final R integration | OPEN |
