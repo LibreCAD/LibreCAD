@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-02 23:25 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W308; chronological evidence follows): implementation slices
+Updated: 2026-11-02 23:31 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W309; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,18 +35,18 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The exact PR head is `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; its latest
-non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 23:08
-UTC exact-head poll, Text Foundations ON/OFF, Headless ON/OFF, DWG/DXF fast and
-Windows x64/ARM64, CodeQL Analyze, both push-triggered and PR Pixi on all five
-platforms, and continuous Build Windows ARM64 had passed. Native macOS
-packaging remains in progress (`41525564465`, job `125552606579`). Linux, Linux
-AArch64, Snap, Windows x64 packaging, and the CodeQL Security scan were skipped
-by workflow configuration. These are exact-head results; do not carry forward
-results from older heads. The local qmake6 app/worker build and ad-hoc
-package/relocation smoke tests pass; these do not establish Developer ID
-signing, notarization, or execution on macOS 14.4. PR #3193 remains open, draft,
-and review-required. The roadmap-only status updates remain local and queued
-until the active exact-head native macOS packaging check terminates.
+non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 23:31
+UTC exact-head poll, Text Foundations ON/OFF, DWG/DXF fast and Windows
+x64/ARM64, CodeQL Analyze, Pixi on all five platforms, and continuous Build
+Windows ARM64 had passed. Native macOS packaging remains in progress
+(`41525564465`, job `125552606579`). Linux, Linux AArch64, Snap, Windows x64
+packaging, and the CodeQL Security scan were skipped by workflow configuration.
+These are exact-head results; do not carry forward results from older heads.
+The local qmake6 app/worker build and ad-hoc package/relocation smoke tests
+pass; these do not establish Developer ID signing, notarization, or execution
+on macOS 14.4. PR #3193 remains open, draft, and review-required. The
+roadmap-only status updates remain local and queued until the active exact-head
+native macOS packaging check terminates.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -11921,3 +11921,46 @@ roadmap queue until native macOS packaging reaches a terminal result.
 The CUA native-app bridge still reports the Mac locked. No GUI interaction or
 drawing save occurred in this poll. The remote-desktop lock-state correction
 and remaining physical acceptance gates remain as recorded in W307 above.
+
+## 264. W309 Exact-Head CI and Remote-Desktop Recheck
+
+At 23:31 UTC, PR #3193 remained open and draft at exact source head
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e` (`mergeable: true`). Exact-head
+workflow jobs passed: Text Foundations Headless ON/OFF; `VerifyDwgDxfFast` and
+Windows x64/ARM64 DWG/DXF verification; CodeQL Analyze; all five Pixi platform
+jobs; and continuous Build Windows ARM64. The CodeQL Security scan was skipped
+by policy. In continuous run `41525564465`, native `BuildMacOS` job
+`125552606579` remained `in_progress` at Build and packaging; no terminal result
+is claimed. The Actions page showed the compiler log advancing through about
+line 5,097, with warnings but no observed build failure. Keep the 16
+roadmap-only commits already queued before W309, plus this checkpoint, local
+until this job terminates, since a new head cancels the active run.
+
+The user reports the Remote Desktop session is running and already logged in.
+A fresh full-display capture on the Mac host nevertheless showed the
+`DongxuMac` account lock screen, and the native CUA bridge continued to report
+the host locked. This establishes a mismatch between the remote session the
+user sees and the console surface used for automation; it does not establish
+that the user's separate remote view is locked. No CAD interaction or save was
+performed. Visible GUI acceptance, stale-peer behavior, durable screenshots
+and DPR, independent W171 external viewport, signed/deployed W0-W2, required
+review, and final R integration remain open.
+
+| W309 item | Result |
+|---|---|
+| Exact PR source head | `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e` |
+| Headless ON/OFF; DWG/DXF fast and Windows x64/ARM64 | PASS |
+| CodeQL Analyze | PASS; Security scan SKIPPED by policy |
+| Pixi platforms | PASS; all five |
+| Continuous Windows ARM64 | PASS |
+| Native macOS package | IN PROGRESS; only active required job |
+| Other configured continuous/package lanes | SKIPPED |
+| Pre-W309 roadmap queue | 16 commits, still unpushed pending macOS terminal result |
+| Roadmap parser/refusal validation | PASS; 99/99, 93 obligations, zero pending or mismatches |
+| Remote Desktop / native CUA | User reports logged in; fresh host capture and CUA show lock screen |
+| GUI, external viewport, deployment/runtime, reviewer, final R | OPEN |
+
+Next: poll the exact macOS job to terminal status. Then push the queued roadmap
+commits, refresh the PR status comment, and inspect checks for the new exact
+head. Continue to treat the GUI and external/deployed acceptance items as open
+until direct evidence closes them.
