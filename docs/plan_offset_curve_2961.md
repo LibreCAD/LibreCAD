@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W274; chronological evidence follows): implementation slices
+Current status (W275; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 locally qualified. This includes the shipped native geometry worker, Modify
 Offset creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -33,29 +33,34 @@ filter imports. The public `RS_FileIO` auto-detection route and separately
 compiled Qt plugin caller are also covered. No additional product-code gap was
 identified in the latest implementation audit.
 
-The latest fully CI-qualified product/test head is
-`83e70ae3a3b4adc13d36a5422d665cb4b0881c0e`; it includes the W273 test-only fix
-that bounds expensive allocation-fault sweeps. Exact-head required CI is green:
-Headless ON/OFF, DWG/DXF Linux and Windows x64/ARM64, CodeQL, and Pixi on macOS
-Intel/arm64, Ubuntu x64/arm64, and Windows. The duplicate branch-push Pixi
-matrix also passed. Security scan is skipped by repository policy. The exact
-worktree qmake6 app/worker build and local ad-hoc package/relocation smoke tests
-pass; this does not establish Developer ID signing or notarization. Static
-FreeType object minimum-OS compatibility remains unresolved.
+The latest pushed PR head is `e5577ae1cfa11cfaddffd07843d38c43d6c6a2bd`;
+its Headless ON/OFF lanes passed, while CodeQL, DWG/DXF, and Pixi checks were
+still running at the W275 snapshot. The last fully CI-qualified product/test
+head is `83e70ae3a3b4adc13d36a5422d665cb4b0881c0e`; its exact-head required CI
+passed. Security scan is skipped by repository policy. W275 adds source commit
+`76f02c2ec` locally, aligning the universal static FreeType objects with the
+macOS 14.4 target used by packaging; the W275 object-minimum and build checks
+pass, but this source commit and its roadmap receipt are not yet pushed or
+CI-qualified. The exact worktree qmake6 app/worker build and local ad-hoc
+package/relocation smoke tests pass; this does not establish Developer ID
+signing, notarization, or execution on macOS 14.4.
 
-The remote desktop is now reachable. The approved LibreCAD test copy visibly
-shows the six W193 ellipse contours; this observation is not a retained
-screenshot or display-DPR record. A keyboard-driven FreeCAD 1.1.4 import attempt
-recognized about 90 entities but returned to its start page after confirmation,
-without a geometry viewport; no FreeCAD GUI rendering pass is claimed. Still
-open are physical stale-peer interaction, a distinct held-drag/preview/commit
-parity capture, durable screenshot/DPR evidence, independent W171 external
-visual contour review, signed/deployed package and full W0-W2 acceptance,
-required human review, and final R integration. The branch contains current
-`origin/master` (`998e61dc0`) as an ancestor. Exact-head CI, UI evidence, and
-remaining external gates are updated in W274 below; no prior-head CI is carried
-forward. The W274 roadmap-only commit will create a new PR head and must receive
-its own exact-head CI check.
+The remote desktop is awake, logged in, and reachable. The approved LibreCAD
+test copy visibly shows both groups of three W193 ellipse contours; the image
+was displayed during W275 but not retained as a file, and display DPR was not
+measured. FreeCAD 1.1.4 recognized about 90 entities, then exited after import
+confirmation in both Draft and fused-shape modes; no FreeCAD viewport/render
+pass is claimed. The source fixture SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` and its
+modification time is unchanged. Still open are physical stale-peer interaction,
+a distinct held-drag/preview/commit parity capture, retained screenshot/DPR
+evidence, independent W171 external visual contour review, deployed-package and
+full W0-W2 acceptance, required human review, and final R integration. The
+branch contains current `origin/master` (`998e61dc0`) as an ancestor. Exact-head
+CI, UI evidence, and remaining external gates are updated in W275 below; no
+prior-head CI is carried forward. The W274 roadmap-only commit and W275 source
+and plan commits each require exact-head CI before results can be carried
+forward.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -3308,37 +3313,42 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   the audited implementation/test files are unchanged from that source pin. No new
   local defect was found. Remote platform execution and final R acceptance remain open.
 - [ ] W0-W2: implementation and local integration are complete. W266 exact-head
-  CI now passes the DWG/DXF Linux and Windows x64/ARM64 lanes, including CTest
+  CI passed the DWG/DXF Linux and Windows x64/ARM64 lanes, including CTest
   25/25, `[sync-api]` (219 assertions per platform), `[creation-worker]` (14
   cases), allocation-failure recovery (29,117 Linux and 66,594 Windows injection
   points), and installed relocated-helper smoke (17 cases per platform). All
-  five Pixi targets, Headless ON/OFF, Text Foundations, and CodeQL also pass.
-  W267 adds a passing public `RS_FileIO` auto-detect import regression beside
-  direct filter APIs. Remaining W0-W2 acceptance is separately compiled
-  third-party plugin/deployed-package evidence and physical GUI interaction; do
-  not repeat the passed platform CI.
+  five Pixi targets, Headless ON/OFF, Text Foundations, and CodeQL also passed
+  on qualified prior heads. W267 adds a passing public `RS_FileIO` auto-detect
+  import regression beside direct filter APIs. W275 locally aligns the static
+  universal FreeType objects with the 14.4 package target. Remaining acceptance
+  is separately compiled third-party plugin/deployed-package evidence, execution
+  on the declared minimum macOS, and physical GUI interaction; rerun and inspect
+  all required lanes on the pushed W275 head.
 - [ ] E/U/G/F/O/T: implementation and current-source format/interoperability
   matrices are present; W171/W172 and W177/W179 record independent DWG/DXF
   checks, with the ACadSharp AC1021 pre-entity limitation kept distinct. The
   outstanding integrated acceptance is visible CAD interaction and any concrete
   defect discovered there, not a presumed missing implementation phase.
-- [ ] R: required exact-head automated CI is green at `e123fea6f3960aea562da32a4bbc2b7de1c76002`.
-  Local CMake, qmake6, ASan, version, fixture and external-reader receipts are
-  recorded above. Remaining rows are visible stale-peer and preview/commit
-  interaction, visible FreeCAD viewport/DPR, signed/deployed-package and
-  outside-caller acceptance where applicable, human review, and final integrated
-  closeout. The desktop is currently inaccessible because CUA reports it locked;
-  the user's reapproval of the rebuilt app does not satisfy those rows.
+- [ ] R: the current PR head `e5577ae1cfa11cfaddffd07843d38c43d6c6a2bd` had
+  Headless ON/OFF green, with CodeQL, DWG/DXF, and Pixi still in progress at the
+  W275 snapshot. Do not carry that status to local commit `76f02c2ec` or the
+  upcoming roadmap receipt. Local CMake, qmake6, ASan, version, fixture, and
+  external-reader receipts are recorded above. The logged-in desktop is
+  available: LibreCAD W193 geometry is visible, but its screenshot/DPR record
+  and physical stale-peer and held-drag/preview/commit interaction remain open.
+  FreeCAD exited twice on W193 import confirmation, so its GUI viewport gate is
+  still open. Deployed-package/minimum-OS runtime, third-party caller acceptance,
+  human review, and final integrated closeout also remain open.
 
-**Next concrete action on implementation resume:** finish the roadmap checkpoint
-for test commit `abf32b4d8`, then push it with that commit after the active
-`e116e4b71` exact-head CI reaches a terminal result, avoiding cancellation of
-its platform lanes. Track the fresh exact-head CI for the test and plan commits.
-When desktop control is available,
-complete the physical stale-peer and preview/commit checks plus visible FreeCAD
-viewport/DPR review; separately close outside-caller/deployed-package and human
-review gates. Do not claim whole-plan completion until these mandatory rows and
-final R integration are resolved. Current
+**Next concrete action:** wait for the already-running `e5577ae1c` PR workflows
+to reach terminal results, then push source commit `76f02c2ec` together with
+this roadmap receipt and require fresh CI on that exact head. The logged-in
+desktop is available: retain a LibreCAD viewport screenshot and measure DPR,
+exercise physical stale-peer and held-drag/preview/commit parity, and investigate
+the repeatable FreeCAD exit without treating a headless import as viewport proof.
+Separately close outside-caller/deployed-package and human-review gates. Do not
+claim whole-plan completion until these mandatory rows and final R integration
+are resolved. Current
 AC1021 DWG output has passed direct semantic inspection with LibreDWG; the pinned
 ACadSharp `ComprLen` exception remains a tool-specific limitation and must not
 be represented as a LibreCAD failure or as direct ACadSharp acceptance.
@@ -10634,3 +10644,57 @@ pass. No FreeCAD drawing was saved.
 The W274 roadmap-only commit is a new PR head; the green checks above qualify
 the recorded implementation head, not this documentation commit. Verify the
 new exact-head workflow before carrying CI status forward.
+
+## 233. W275 Static FreeType Deployment Target and Logged-In GUI Check
+
+W275 fixes the concrete package mismatch recorded in W272. The universal
+FreeType archive is built with `MACOSX_DEPLOYMENT_TARGET=14.4`, matching the
+universal `ttf2lff` package target, and the packaging workflow now passes the
+same target to both the static-library build and `build-osx.sh`. The build
+script accepts an optional dotted deployment target (defaulting to the
+environment or 14.4), rejects malformed values before downloading/building,
+and supplies the minimum-version flag for both architectures.
+
+Built FreeType 2.13.3 into `/private/tmp/offset-w275-freetype`. The archive is
+universal (`arm64` and `x86_64`); inspecting every object with `otool -l` reports
+minimum OS 14.4 for both architectures. `bash -n`, ShellCheck, invalid-target
+refusal, the workflow's focused `actionlint` check, and `git diff --check` pass.
+This verifies object compatibility metadata and build wiring, not actual
+execution on macOS 14.4, Developer ID signing, or notarization.
+
+The source slice is committed locally as `76f02c2ec` (`build: align macOS
+FreeType deployment target`); it is not pushed or CI-qualified yet. At this
+checkpoint PR head `e5577ae1cfa11cfaddffd07843d38c43d6c6a2bd` has Headless
+ON/OFF green, with CodeQL, DWG/DXF, and Pixi still in progress. The source and
+this plan receipt must be pushed only after those runs reach terminal results,
+then all required checks must be inspected on the new exact head.
+
+The desktop is confirmed awake, logged in, and accessible. In the approved
+LibreCAD test copy, the W193 DXF visibly renders two groups of three nested
+ellipses. The image was shown during this turn but not retained as a screenshot
+file; Qt display DPR remains unmeasured. The source fixture hash is
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`, and its
+modification time is unchanged. FreeCAD 1.1.4 reports about 90 entities and
+exits after confirmation in both its default Draft and fused-Part-shape import
+modes; neither attempt produced a viewport. Do not count this as independent
+visual acceptance.
+
+| W275 item | Result |
+|---|---|
+| Static universal FreeType architecture | PASS; arm64 + x86_64 |
+| Static archive minimum OS | PASS; 14.4 in both architecture slices |
+| Script syntax, ShellCheck, invalid-target refusal | PASS |
+| Workflow actionlint and diff whitespace check | PASS with documented pre-existing warning exclusions |
+| Source commit `76f02c2ec` | COMMITTED LOCALLY; not pushed or CI-qualified |
+| Current pushed head `e5577ae1c` checks | Headless ON/OFF PASS; CodeQL, DWG/DXF, Pixi IN PROGRESS at snapshot |
+| LibreCAD W193 viewport | PASS; six contours in two groups; source fixture unchanged |
+| Retained screenshot / display DPR | OPEN; image was inline only, DPR not measured |
+| FreeCAD W193 viewport | OPEN; app exited after both import-mode confirmations |
+| macOS 14.4 runtime, signing/notarization, complete deployed W0-W2 | OPEN |
+| Physical stale-peer, held-drag/preview/commit, human review, final R | OPEN |
+
+Next: wait for exact-head `e5577ae1c` CI to finish, commit this receipt
+separately, push both commits, and qualify the resulting head. Continue with
+retained LibreCAD screenshot/DPR and physical interaction checks; investigate
+the repeatable FreeCAD exit, but keep outside-viewer acceptance open until an
+independent viewport actually displays the contours.
