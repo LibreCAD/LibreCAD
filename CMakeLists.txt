@@ -3569,6 +3569,35 @@ if (BUILD_TESTS)
         librecad_offset_adapter_tests
         librecad/src/lib/filters/tests/lc_offsetcurve_adapter_tests.cpp)
     add_dependencies(librecad_offset_adapter_tests librecad_offset_test_helper)
+    add_library(librecad_offset_external_import_plugin MODULE
+        librecad/src/plugins/tests/external/offsetcurve_import_plugin.cpp)
+    set_target_properties(librecad_offset_external_import_plugin PROPERTIES
+        AUTOMOC ON
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+    target_include_directories(librecad_offset_external_import_plugin PRIVATE
+        librecad/src/plugins)
+    target_link_libraries(librecad_offset_external_import_plugin PRIVATE
+        Qt6::Core
+        Qt6::Widgets
+    )
+    target_compile_features(librecad_offset_external_import_plugin PRIVATE cxx_std_17)
+
+    add_librecad_filter_micro_test(
+        librecad_offset_external_plugin_tests
+        librecad/src/plugins/tests/doc_plugin_offsetcurve_tests.cpp)
+    target_compile_definitions(librecad_offset_external_plugin_tests PRIVATE
+        LC_OFFSETCURVE_EXTERNAL_PLUGIN_PATH="$<TARGET_FILE:librecad_offset_external_import_plugin>"
+    )
+    add_dependencies(librecad_offset_external_plugin_tests
+        librecad_offset_external_import_plugin
+        librecad_offset_test_helper)
+    target_compile_definitions(librecad_tests PRIVATE
+        LC_OFFSETCURVE_EXTERNAL_PLUGIN_PATH="$<TARGET_FILE:librecad_offset_external_import_plugin>"
+    )
+    add_dependencies(librecad_tests librecad_offset_external_import_plugin)
+
     add_librecad_filter_micro_test(
         librecad_offset_worker_probe_tests
         librecad/src/lib/engine/document/entities/tests/lc_offsetworkerprobe_tests.cpp)
@@ -4224,6 +4253,13 @@ if (BUILD_TESTS)
             TIMEOUT 120)
     endif()
     if (LIBRECAD_REGISTER_INTEGRATION_TESTS)
+        add_test(NAME librecad_offset_external_plugin_tests
+            COMMAND $<TARGET_FILE:librecad_offset_external_plugin_tests>
+                "[plugins][offsetcurve][block-import][external]" --reporter compact)
+        set_tests_properties(librecad_offset_external_plugin_tests PROPERTIES
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen"
+            TIMEOUT 120)
         add_test(NAME librecad_console_import_tests
             COMMAND $<TARGET_FILE:librecad_console_command_utils_tests>
                 "[console][import]" --reporter compact)

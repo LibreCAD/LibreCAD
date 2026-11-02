@@ -21,6 +21,7 @@
 #include <QElapsedTimer>
 #include <QEventLoop>
 #include <QHash>
+#include <QPluginLoader>
 #include <QPointF>
 #include <QThread>
 #include <QTimer>
@@ -31,6 +32,7 @@
 #include "lc_actiontestsupport.h"
 #include "lc_offsetcurve.h"
 #include "lc_offsetimportsession.h"
+#include "qc_plugininterface.h"
 #include "rs_block.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
@@ -461,6 +463,39 @@ TEST_CASE("Plugin asynchronous block import stages DXF before preserving its nat
         if (native != nullptr) {
             foundNativeOffset = true;
             CHECK(native->getParent() == block);
+            CHECK(native->hasEditableDefinition());
+        }
+    }
+    CHECK(foundNativeOffset);
+}
+
+TEST_CASE("Separately compiled plugin imports a native offset block through the public async API",
+          "[plugins][offsetcurve][block-import][external]") {
+    QPluginLoader loader(QString::fromUtf8(LC_OFFSETCURVE_EXTERNAL_PLUGIN_PATH));
+    Drawing drawing;
+    REQUIRE(drawing.qtReady);
+    QObject* instance = loader.instance();
+    INFO(loader.errorString().toStdString());
+    REQUIRE(instance != nullptr);
+    auto* plugin = qobject_cast<QC_PluginInterface*>(instance);
+    REQUIRE(plugin != nullptr);
+
+    const int blocksBefore = drawing.graphic.getBlockList()->count();
+    plugin->execComm(drawing.dpi.get(), nullptr, nativeOffsetFixture());
+
+    CHECK_FALSE(instance->property("finished").toBool());
+    REQUIRE(waitFor([&] { return instance->property("finished").toBool(); }));
+    CHECK(instance->property("error").toString().isEmpty());
+    const QString name = instance->property("blockName").toString();
+    REQUIRE_FALSE(name.isEmpty());
+    CHECK(drawing.graphic.getBlockList()->count() == blocksBefore + 1);
+    auto* block = drawing.graphic.findBlock(name);
+    REQUIRE(block != nullptr);
+    bool foundNativeOffset = false;
+    for (int i = 0; i < block->count(); ++i) {
+        const auto* native = dynamic_cast<LC_OffsetCurve*>(block->entityAt(i));
+        if (native != nullptr) {
+            foundNativeOffset = true;
             CHECK(native->hasEditableDefinition());
         }
     }
