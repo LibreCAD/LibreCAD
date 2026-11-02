@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W269; chronological evidence follows): planned product
+Current status (W271; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -33,11 +33,19 @@ synchronous file/stream/byte filter imports. No additional product-code gap
 has been identified in the latest audit. W267 adds a regression through the
 public `RS_FileIO` auto-detection route, so the public dispatcher is now covered
 beside the direct filter file/stream/byte APIs. Its exact local Release result
-is recorded below. The latest pushed PR head is
-`e116e4b719523c10354aabb9e79ac49dd1893f05`; Headless ON/OFF pass, while Analyze,
-DWG/DXF and Pixi are still running (runs `41373580804`, `41373579958`,
-`41373579967` / `41373575274`). Do not supersede those exact-head runs until
-they finish. The preceding product-source PR head
+is recorded below. W269's separately compiled Qt plugin fixture is committed
+and pushed; latest pushed PR head is
+`ec5da99d89e26b1d851a44bbb75a05a60d123906`. On that head, Headless ON/OFF,
+Text Foundations, all five Pixi targets, DWG/DXF Linux, and CodeQL pass. Only
+DWG/DXF Windows x64/ARM64 bounded test steps remain active on run
+`41378239643`; Security scan is skipped by repository policy. Local W271 commit
+`a9c30e4d8` resets `stderr` state in the diagnostic-capture test helper. The
+same-seed full CMake Release application suite now passes all 5,169 cases
+(5,094 passed, 75 skipped; 10,346,368 assertions passed); the focused legacy
+R13/R14 matrix passes 10,434 assertions. The separately compiled external
+plugin CTest passes 1/1 and the full offset validation Node suite exits 0. The
+current W271 source/plan commits are local pending terminal CI on the previous
+pushed head. The prior product-source PR head
 `e123fea6f3960aea562da32a4bbc2b7de1c76002`, required Headless ON/OFF, Text
 Foundations, CodeQL, DWG/DXF Linux and Windows x64/ARM64, and all five-platform
 Pixi checks pass; Security scan is skipped by repository policy. The DWG/DXF
@@ -10384,3 +10392,90 @@ does not cover this new target; fresh exact-head checks are required after push.
 | CTest integration registration | PASS; 1/1 on the local Release tree with `LIBRECAD_REGISTER_INTEGRATION_TESTS=ON` |
 | PR exact-head CI for W269 | PENDING; current pushed head predates this slice |
 | Signed/deployed bundle, physical GUI/DPR, human review and final R integration | OPEN |
+
+## 228. W270 Current-Head Requalification and Diagnostic-Capture Audit
+
+Rebuilt the CMake Release `librecad_tests` target from the exact worktree after
+removing all temporary diagnostic instrumentation. The focused legacy R13/R14
+DWG refusal matrix passed 1 case / 10,434 assertions. Rebuilt and ran the
+separately compiled external Qt plugin integration target; CTest passed
+`librecad_offset_external_plugin_tests` (1/1). The complete offset validation
+Node suite exited 0. `git diff --check` passed and no temporary source changes
+remain.
+
+The full CMake Release application suite replays an order-sensitive refusal
+diagnostic failure at exact shuffle seed `28590880`: the test reaches the R13
+case but its captured diagnostic string has no unresolved required DICTIONARY
+target line. The failure occurs after 928 cases in the `--abortx 1` replay; the
+full run recorded 5,169 cases with 5,093 passed, 1 failed, and 75 skipped. The
+focused legacy matrix passes. An ASan replay of the same seed stopped on this
+R13 assertion and a separate persistence-fixture assertion after 928 cases,
+with no AddressSanitizer memory report. A focused instrumented run captures
+file-export entry/exit, the logger sentinel, and the expected required-target
+warning for both absent and existing output targets. The corresponding full
+suite replay captures only blank lines at the failing assertion. This narrows
+the discrepancy to order-dependent diagnostic capture/state; it does not prove
+the exporter behavior is correct under that full-suite path. The assertion is
+not weakened, and no speculative product change was made. Logs:
+`/private/tmp/offset-w269-full-app-seed28590880-release-junit.xml`,
+`/private/tmp/offset-w269-full-app-seed28590880-asan-two-failures.log`, and
+`/private/tmp/offset-w269-legacy-stage-trace-focused2.log`.
+
+At exact PR head `ec5da99d89e26b1d851a44bbb75a05a60d123906`, Headless ON/OFF,
+Text Foundations, all five Pixi targets, and DWG/DXF Linux pass. Windows x64
+and ARM64 bounded test steps remain active on run `41378239643`; CodeQL remains
+active on run `41378239673`. Security scan is skipped by repository policy.
+CUA still reports the Mac locked after user approval of the rebuilt visible
+test copy, so no new physical GUI evidence was collected. The temporary source
+probes are removed; this roadmap update is the only pending worktree change.
+
+| W270 check | Result |
+|---|---|
+| Release legacy R13/R14 refusal matrix | PASS; 1 case / 10,434 assertions |
+| Release external-plugin CTest | PASS; 1/1 after target rebuild |
+| Full offset validation Node suite | PASS; exit 0 |
+| Full app exact-seed Release suite | OPEN; reproducible R13 refusal-diagnostic assertion, 5,169 total cases |
+| Exact-seed ASan replay | No ASan memory report; R13 plus unrelated persistence assertion stop replay |
+| Exact-head CI | Linux DWG/DXF, Headless ON/OFF, Text Foundations, five Pixi targets PASS; Windows x64/ARM64 and CodeQL IN PROGRESS |
+| Visible stale-peer/preview screenshots, DPR, FreeCAD viewport | OPEN; CUA reports Mac locked |
+| Deployed/cross-platform W0-W2, human review, final R integration | OPEN |
+
+## 229. W271 Full-App Diagnostic Capture Fix
+
+Committed `a9c30e4d8` (`test: reset stderr before capturing export
+diagnostics`). `ExportDiagnostics` now clears the `stderr` stream error state
+after its initial flush and after redirecting the descriptor. This makes its
+nested capture reliable after randomized test-order I/O and preserves the
+assertion that the export actually reports the unresolved required DWG
+DICTIONARY target; the assertion was not weakened and exporter behavior was
+not changed.
+
+The exact previously failing Release seed `28590880` now runs to completion
+with `--abortx 1`: 5,169 cases, 5,094 passed, 75 skipped, and 10,346,368
+assertions passed with zero failed. Before the helper fix, the same seed stopped
+at the R13 diagnostic assertion after 928 cases. The focused R13/R14 matrix
+also passes 1 case / 10,434 assertions. The complete offset validation Node
+suite exits 0. The separately compiled external Qt plugin test target was
+rebuilt and CTest passed 1/1. Roadmap/refusal validation passed 99/99 (93
+obligations, zero pending declarations, zero H6 mismatches). `git diff
+--check` passed.
+
+The source/test commit is local and not yet pushed while the prior exact-head
+Windows DWG/DXF lanes finish. At pushed head
+`ec5da99d89e26b1d851a44bbb75a05a60d123906`, Headless ON/OFF, Text Foundations,
+CodeQL, all five Pixi targets, and DWG/DXF Linux pass; Windows x64 and ARM64
+remain active on run `41378239643`. Security scan is skipped by policy. The
+plan receipt is a separate local change that follows this source/test commit.
+The physical GUI and deployed/review gates remain open: CUA still reports the
+Mac locked despite approval of the rebuilt test app.
+
+| W271 check | Result |
+|---|---|
+| Exact-seed full Release app suite `28590880` | PASS; 5,169 cases, 5,094 passed, 75 skipped; 10,346,368 assertions, zero failed |
+| Focused legacy R13/R14 refusal matrix | PASS; 1 case / 10,434 assertions |
+| External plugin CTest | PASS; 1/1 |
+| Full offset validation Node suite | PASS; exit 0 |
+| Roadmap/refusal suite | PASS; 99/99; 93 obligations, zero pending, zero H6 mismatches |
+| Prior pushed-head CI | Linux DWG/DXF, CodeQL, Headless ON/OFF, Text Foundations, five Pixi targets PASS; Windows x64/ARM64 IN PROGRESS |
+| Visible stale-peer/preview/DPR and FreeCAD GUI | OPEN; host remains locked to CUA |
+| Deployed/cross-platform W0-W2, human review, final R integration | OPEN |
