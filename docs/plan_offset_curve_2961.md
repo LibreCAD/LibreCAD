@@ -11359,3 +11359,41 @@ Then push the accumulated roadmap-only commits, update this PR's status comment,
 and inspect checks on the resulting exact head. Continue to leave GUI, external
 viewport, package deployment, human review, and final integration gates open
 until direct evidence closes them.
+
+## 251. W293 Pixi Retry Completion
+
+Polled exact PR source head
+`b580e5a208a0555c6005f5289660b1409d20eadb` at 19:14 UTC. The targeted
+macOS-latest retry in Pixi run `41489534178` completed successfully. Together
+with the duplicate Pixi run `41489520533`, all five platform lanes now have
+successful evidence. Analyze/CodeQL, headless ON/OFF, `VerifyDwgDxfFast`,
+Windows x64/ARM64 DWG/DXF, and native Windows ARM64 packaging are also passed.
+Native `BuildMacOS` packaging is the only active required check on this exact
+head; configured skip lanes remain skipped.
+
+No product-code change was made. W292's 94/94 refusal inventory, 5/5 roadmap
+parser, and diff check passed. The W287-W292 roadmap-only commits remain local;
+do not push until native `BuildMacOS` reaches a terminal result because the
+workflow cancels in-progress jobs on a new head. CUA was reset after the user
+confirmed the remote desktop is logged in, but native-app enumeration still
+reports the Mac locked; the visible GUI and external acceptance gates remain
+open.
+
+| W293 item | Result |
+|---|---|
+| Exact PR source head | `b580e5a208a0555c6005f5289660b1409d20eadb` |
+| Pixi run `41489534178` | PASS; all five platforms, including setup retry |
+| Duplicate Pixi run `41489520533` | PASS; all five platforms |
+| Analyze/CodeQL, headless ON/OFF, DWG/DXF fast and Windows x64/ARM64 | PASS |
+| Native Windows ARM64 packaging | PASS |
+| Native macOS packaging | IN PROGRESS; only active required check |
+| Configured skip lanes | SKIPPED |
+| Local tests recorded in W292 | PASS; 94/94 and 5/5 |
+| Source-code changes | None |
+| CUA / remote desktop | User reports logged in; bridge still reports locked |
+| Visible GUI, external viewport, signed/deployed package, human review, final R | OPEN |
+
+Next: wait for native `BuildMacOS` to finish. If it passes, push the six local
+roadmap commits, refresh the PR status comment, and verify checks on the new
+exact head. If it fails, inspect the bounded job logs and classify the failure
+before deciding on a retry.
