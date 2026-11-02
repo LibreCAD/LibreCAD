@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W276; chronological evidence follows): implementation slices
+Current status (W277; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 locally qualified. This includes the shipped native geometry worker, Modify
 Offset creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -49,7 +49,9 @@ The remote desktop is awake, logged in, and reachable. The approved LibreCAD
 test copy visibly shows both groups of three W193 ellipse contours. A real
 two-copy offset then added two visible contours to one group, and one Undo
 restored its original three contours. The screenshots were displayed inline
-but not retained as files; display DPR was not measured. FreeCAD 1.1.4
+but not retained as files; a held-pointer sampling attempt did not distinguish
+preview geometry from the selected source, so preview/commit parity is still
+unproven. Display DPR was not measured. FreeCAD 1.1.4
 recognized about 90 entities, then exited after import confirmation in both
 Draft and fused-shape modes; no FreeCAD viewport/render pass is claimed. The
 source fixture SHA256 remains
@@ -61,8 +63,8 @@ full W0-W2 acceptance, required human review, and final R integration. The
 branch contains current `origin/master` (`998e61dc0`) as an ancestor. Exact-head
 CI, UI evidence, and remaining external gates are updated in W275 below; no
 prior-head CI is carried forward. The W274 roadmap-only commit, W275 source and
-plan commits, and W276 plan receipt each require exact-head CI before results
-can be carried forward.
+plan commits, and W276/W277 plan receipts each require exact-head CI before
+results can be carried forward.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -3338,13 +3340,14 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   external-reader receipts are recorded above. The logged-in desktop is
   available: LibreCAD W193 geometry is visible, but its screenshot/DPR record
   and physical stale-peer and held-drag/preview/commit parity remain open. W276
-  records a physical two-copy offset followed by one-step Undo on the test copy.
+  records a physical two-copy offset followed by one-step Undo on the test copy;
+  W277's held-pointer capture did not establish preview/commit parity.
   FreeCAD exited twice on W193 import confirmation, so its GUI viewport gate is
   still open. Deployed-package/minimum-OS runtime, third-party caller acceptance,
   human review, and final integrated closeout also remain open.
 
 **Next concrete action:** wait for the already-running `e5577ae1c` PR workflows
-to reach terminal results, then push source commit `76f02c2ec` and the W275/W276
+to reach terminal results, then push source commit `76f02c2ec` and the W275-W277
 roadmap receipts, requiring fresh CI on that exact head. The logged-in desktop
 is available: retain a LibreCAD viewport screenshot and measure DPR, exercise
 physical stale-peer and held-drag/preview/commit parity, and investigate the
@@ -10736,3 +10739,36 @@ modes, so independent external visual acceptance remains open.
 No new product changes resulted from W276. Continue with retained GUI evidence
 and the remaining physical acceptance gates while the pushed `e5577ae1c` CI
 finishes; do not push commits during those active lanes.
+
+## 235. W277 Held-Pointer Preview Sampling
+
+Repeated the physical W193 two-copy offset interaction in LibreCAD and sampled
+the viewport while a 3-second left-button hold was in progress at the outside
+placement point. Also observed the viewport after release while the Offset
+action remained active. The in-progress image showed the selected red source
+ellipse and the original three contours, but no additional preview contour
+could be identified confidently. After Escape returned the action to Default,
+two extra contours were visible. One Undo restored the original three-contour
+group. The W193 file hash and modification time remain unchanged; no Save
+command was issued.
+
+This verifies the temporary commit and its one-step Undo again, but does not
+prove whether the preview was absent, visually coincident, or obscured by
+selection styling. Therefore preview/commit parity and held-drag cancellation
+remain open; do not convert an ambiguous screenshot into PASS evidence. The
+inline images are not retained evidence, and display DPR is still unmeasured.
+
+| W277 item | Result |
+|---|---|
+| In-flight held-pointer screenshot | PARTIAL; selected source visible, separate preview geometry not distinguishable |
+| Offset result after exiting the action | PASS; two additional contours visible |
+| One-step Undo | PASS; baseline restored |
+| Source DXF integrity / Save | PASS; hash and timestamp unchanged; no Save command |
+| Preview-to-commit geometry parity | OPEN; image comparison inconclusive |
+| Held-drag cancellation and stale-peer behavior | OPEN |
+| Retained screenshot / display DPR | OPEN |
+
+Next: do not infer a renderer defect from this ambiguous capture. Use a retained
+before/preview/after image set or an exact geometry inventory to close parity;
+then test Escape during a true held drag and stale-peer refusal. Keep all test
+changes unsaved and recheck the source fixture hash afterward.
