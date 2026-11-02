@@ -11819,8 +11819,8 @@ commits unpushed until this exact-head macOS job reaches a terminal result.
 | Exact-head CI | All other required checks PASS; native `BuildMacOS` still in progress; configured skips noted above |
 | Signed/deployed runtime, human review, final R integration | OPEN |
 
-This documentation receipt is a local checkpoint. After roadmap validation,
-commit it locally, continue polling the exact PR head, and keep the roadmap
-commits unpushed until `BuildMacOS` terminates. Continue the remaining physical,
-external-viewer, deployment/runtime, review, and final integration gates as
-separate acceptance items.
+This documentation receipt was committed locally as `a5713fa2b`. Continue
+polling the exact PR head, and keep the roadmap commits unpushed until
+`BuildMacOS` terminates. Continue the remaining physical, external-viewer,
+deployment/runtime, review, and final integration gates as separate acceptance
+items.
