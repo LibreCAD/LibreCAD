@@ -11576,3 +11576,66 @@ Next: validate this receipt, commit and push the W297 slice once, then poll all
 new exact-head checks to terminal status and update this roadmap and the PR
 status comment. Keep every visual, runtime, deployment, review and integration
 gate open until direct evidence closes it.
+
+## 256. W298 Logged-In Live Preview Check
+
+The user confirmed that their remote desktop is running and already logged
+in. The approved test-copy app `org.librecad.librecad.pr3193visible` was
+reachable through CUA, showing LibreCAD 2.2.2.6-alpha with the disposable
+`/private/tmp/offset-W193-multi-entity-W281.dxf` open. No login or preference
+change was needed.
+
+With Offset active, one ellipse was selected and the direction prompt reached.
+A held click on the outside direction produced a frame in which the offset
+preview was red and visibly distinct from the white source contours. Releasing
+the click produced offset geometry; Escape and Undo returned the disposable
+view to its baseline. A separate completed-click check also showed the
+committed offset contours. No Save command was issued. Both the source and
+disposable DXFs still hash to
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+The CUA preview and baseline frames are visible in the validation conversation,
+but were not exported as durable image files and display DPR was not measured.
+The capture used multiple copies, and the preview and committed frames were not
+retained as a matched pair; therefore strict preview/commit parity remains
+open. A second direction-prompt attempt held the mouse button while Escape was
+sent before release; the command returned to Default and the canvas returned
+to its source-only baseline. This verifies held-click cancellation, but not a
+pointer drag cancelled while in motion. True held-drag cancellation, physical
+stale-peer behavior, independent W171 viewport review, deployed-package/runtime
+checks, human review and final R integration also remain open.
+
+Polled the exact PR head `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e` at
+21:49 UTC. Text Foundations ON/OFF passed. The PR and push Pixi runs both
+passed Ubuntu ARM and Ubuntu latest; their other three lanes remain in
+progress. DWG/DXF fast passed, while Windows x64 and ARM64 are still
+building/configuring with tests pending. CodeQL Analyze and Continuous Build
+macOS/Windows ARM64 jobs remain active. No current-head failure was observed;
+older-head results are not substituted.
+After this receipt was drafted, the local roadmap/refusal validation completed
+99/99 tests with 93 obligations, zero pending declarations and zero production
+mismatches. `git diff --check` passed for the receipt.
+
+| W298 item | Result |
+|---|---|
+| User-reported remote desktop / approved test app | PASS; app visible and responsive, no login prompt |
+| Live direction preview distinct from source | PASS; red preview visible against white source contours |
+| Offset commit and cleanup | PASS; committed geometry observed, Escape/Undo restored baseline |
+| Escape during held mouse input | PASS; held-click cancelled before release and baseline restored |
+| Source and disposable DXF integrity | PASS; both SHA256 values unchanged; no Save command |
+| Matched preview/commit parity and true held-drag cancellation | OPEN; no retained matched pair or pointer-drag cancellation evidence |
+| Durable screenshot and display DPR | OPEN; frames visible in conversation only; DPR not measured |
+| Physical stale-peer and external W171 viewport | OPEN |
+| Exact-head Text Foundations | PASS; ON/OFF |
+| Exact-head Pixi | Ubuntu ARM and Ubuntu latest PASS in PR and push runs; three lanes per run IN PROGRESS |
+| Exact-head DWG/DXF | Fast PASS; Windows x64/ARM64 builds IN PROGRESS, tests pending |
+| Exact-head CodeQL / Continuous Build | Analyze and macOS/Windows ARM64 builds IN PROGRESS |
+| Local roadmap/refusal validation | PASS; 99/99, 93 obligations, zero pending declarations/mismatches |
+| Runtime/signing/deployment, W0-W2, review and final R integration | OPEN |
+
+Next: capture a durable matched preview/commit pair with measured display DPR,
+then exercise pointer-drag cancellation and the physical stale-peer case on the
+disposable drawing. Continue polling exact-head CI without pushing a new
+roadmap-only revision while these runs are active. Keep all independent
+viewport, runtime, deployment, review and final integration gates open until
+their own evidence exists.
