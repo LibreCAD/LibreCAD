@@ -24,13 +24,20 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W266; chronological evidence follows): planned product
+Current status (W267; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
 staged GUI drawing/template imports, and bounded worker validation for public
 synchronous file/stream/byte filter imports. No additional product-code gap
-has been identified in the latest audit. On exact PR head
+has been identified in the latest audit. W267 adds a regression through the
+public `RS_FileIO` auto-detection route, so the public dispatcher is now covered
+beside the direct filter file/stream/byte APIs. Its exact local Release result
+is recorded below. The latest pushed PR head is
+`e116e4b719523c10354aabb9e79ac49dd1893f05`; Headless ON/OFF pass, while Analyze,
+DWG/DXF and Pixi are still running (runs `41373580804`, `41373579958`,
+`41373579967` / `41373575274`). Do not supersede those exact-head runs until
+they finish. The preceding product-source PR head
 `e123fea6f3960aea562da32a4bbc2b7de1c76002`, required Headless ON/OFF, Text
 Foundations, CodeQL, DWG/DXF Linux and Windows x64/ARM64, and all five-platform
 Pixi checks pass; Security scan is skipped by repository policy. The DWG/DXF
@@ -506,9 +513,9 @@ candidate except the explicitly proposed native-worker tags.
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105/W108/W109/W115/W116 sweep every observed allocation failure over line, forward/reversed two-span cubic, forward/reversed whole-circle seam, both open and closed components of a producer-generated two-component trimmed path, and hidden-cusp endpoint refusal with bounded ledger and same-budget retry; W120 runs all standalone fault fixtures in one Release pass; W122 and W155 close the local topology/test inventory; remote platform/final gates remain | `[lc-offsetcurve][geometry][cache-topology-chain]`, standalone cache-check allocation-fault target |
-| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and current in-repo caller/fallback/import ownership inventory implemented; W266 Linux and Windows x64/ARM64 worker/import lanes pass. External low-level API consumers and signed/deployed-package acceptance remain unverified. | operation/cap/deadline/call-site table |
+| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and current in-repo caller/fallback/import ownership inventory implemented; W266 Linux and Windows x64/ARM64 worker/import lanes pass. W267 covers the public `RS_FileIO` auto-detect import route locally. Separately compiled external plugins and signed/deployed-package acceptance remain unverified. | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; W266 passes installed relocated-helper smoke on Linux and Windows x64/ARM64; local macOS staged/relocated client and qmake6 bundle smoke pass. Final packaged-release acceptance remains open. | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit, scoped action faults, geometry-entry timeout and bounded synchronous import receipts are qualified; W266 passes Linux and Windows x64/ARM64 CTest, sync API, creation-worker, fault-sweep and installed-helper checks. Physical GUI interaction, outside-caller/deployed-package acceptance and final R integration remain open. | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining physical/deployment acceptance |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit, scoped action faults, geometry-entry timeout and bounded synchronous import receipts are qualified; W266 passes Linux and Windows x64/ARM64 CTest, sync API, creation-worker, fault-sweep and installed-helper checks. W267 adds public `RS_FileIO` import dispatch coverage. Physical GUI interaction, separately compiled external-plugin/deployed-package acceptance and final R integration remain open. | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining physical/deployment acceptance |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; W128 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; W129 current-source dispatch review and focused Release/ASan coverage found no gap; separately gated legacy DXF test remains unavailable in this configuration; remote/final R acceptance remains | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; W131 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | native edit/grip/transform TUs |
@@ -3305,8 +3312,10 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   cases), allocation-failure recovery (29,117 Linux and 66,594 Windows injection
   points), and installed relocated-helper smoke (17 cases per platform). All
   five Pixi targets, Headless ON/OFF, Text Foundations, and CodeQL also pass.
-  Remaining W0-W2 acceptance is limited to outside-caller/deployed-package
-  evidence and physical GUI interaction; do not repeat the passed platform CI.
+  W267 adds a passing public `RS_FileIO` auto-detect import regression beside
+  direct filter APIs. Remaining W0-W2 acceptance is separately compiled
+  third-party plugin/deployed-package evidence and physical GUI interaction; do
+  not repeat the passed platform CI.
 - [ ] E/U/G/F/O/T: implementation and current-source format/interoperability
   matrices are present; W171/W172 and W177/W179 record independent DWG/DXF
   checks, with the ACadSharp AC1021 pre-entity limitation kept distinct. The
@@ -3320,10 +3329,11 @@ plan checkpoints belong only to `codex/offset-2961-native-worker`.
   closeout. The desktop is currently inaccessible because CUA reports it locked;
   the user's reapproval of the rebuilt app does not satisfy those rows.
 
-**Next concrete action on implementation resume:** the W266 CI set is complete
-and green; do not wait on or infer results from the superseded W265 runs. Update
-and commit this roadmap receipt, push it to PR #3193, then track the new exact-head
-CI that the documentation commit triggers. When desktop control is available,
+**Next concrete action on implementation resume:** finish the roadmap checkpoint
+for test commit `abf32b4d8`, then push it with that commit after the active
+`e116e4b71` exact-head CI reaches a terminal result, avoiding cancellation of
+its platform lanes. Track the fresh exact-head CI for the test and plan commits.
+When desktop control is available,
 complete the physical stale-peer and preview/commit checks plus visible FreeCAD
 viewport/DPR review; separately close outside-caller/deployed-package and human
 review gates. Do not claim whole-plan completion until these mandatory rows and
@@ -10254,3 +10264,47 @@ results must be checked on the new commit rather than inherited from W266.
 | Reapproved test app / native UI | Approval received; UI BLOCKED because CUA reports the Mac locked |
 | Visible GUI and FreeCAD viewport/DPR | OPEN |
 | Deployed package, outside-caller acceptance, human review, final R integration | OPEN |
+
+## 225. W267 Public RS_FileIO Worker-Import Dispatch
+
+The W266 `[sync-api]` selector exercised the public `RS_FilterDXFRW` file,
+stream and byte methods, but did not exercise the ordinary application-facing
+`RS_FileIO::fileImport` dispatcher. Added an `rs-fileio` variant to that same
+selector. It passes `FormatUnknown`, forcing the public router to detect the DXF
+and select its import filter, then verifies the imported native offset entity,
+control points, knots, weights, layer, color, source handle, foreign XDATA and
+unknown owned metadata through the existing assertions. Degrees 1 and 3 both
+pass; this demonstrates that the public in-process dispatch reaches the bounded
+worker-backed native import path.
+
+An initial probe passed `FormatDXFRW2018`, which `RS_FilterDXFRW::canImport`
+intentionally does not admit as an import type. That is an export-version enum,
+not the normal DXF import selector; no product-code defect was found. The final
+regression uses the public API's default-detection contract instead of weakening
+format admission.
+
+On the current local test commit `abf32b4d8`, the CMake Release target
+`librecad_offset_adapter_tests` rebuilt successfully from the exact worktree.
+`QT_QPA_PLATFORM=offscreen .../librecad_offset_adapter_tests "[sync-api]"`
+passed one test case / 299 assertions. `git diff --check` passed. Logs:
+
+| W267 artifact | SHA256 |
+|---|---|
+| `W267-public-rsfileio-build.log` | `421b85921e3d5be345789c1e348658243d549580b9bbc22f07429b2f876606c4` |
+| `W267-public-rsfileio-sync-api.log` | `f6f7d7b4d4963ad7f1328029caedcc7d30b4237247aa29a6c4ac67bdacad4abf` |
+
+The source/test commit is local and is not yet pushed. The current pushed PR
+head `e116e4b71` still has its exact-head CI in progress; pushing now would
+supersede that evidence. The test proves public `RS_FileIO` routing within the
+current process; it does not prove a separately compiled third-party plugin or
+a signed/deployed installation. Visible GUI/DPR acceptance remains blocked by
+CUA reporting the Mac locked. A plan-only checkpoint commit follows this test
+commit; both will be pushed together after the active run terminates.
+
+| W267 check | Result |
+|---|---|
+| Public RS_FileIO file-format auto-detection and worker-backed import | PASS; degrees 1 and 3 |
+| Direct filter sync API regression | PASS; file, stream, byte and RS_FileIO routes; 299 assertions total |
+| Release adapter target build | PASS; current worktree source |
+| Separately compiled external plugin / signed package | OPEN |
+| Visible stale-peer, preview/commit and FreeCAD viewport/DPR | OPEN; Mac locked |
