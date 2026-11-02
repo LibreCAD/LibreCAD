@@ -1188,7 +1188,7 @@ TEST_CASE("polylines and splines drawn on a construction layer are caught along 
           "[snap][catch]") {
     ActionFixture<SnapperProbe> f;
     REQUIRE(f.m_graphic.getActiveLayer()->setConstruction(true));
-    // their segments take the active layer
+    // both take the active layer, and their segments follow it
     auto* polyline = new RS_Polyline(&f.m_graphic);
     polyline->addVertex(RS_Vector{0.0, 0.0});
     polyline->addVertex(RS_Vector{100.0, 0.0});
