@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W268; chronological evidence follows): planned product
+Current status (W269; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -49,14 +49,19 @@ declarations, and no H6 production mismatches. W263/W264 close the W171 numeric
 expected-contour fidelity check across both curve degrees and all 24 DWG matrix
 rows using an independent FreeCAD kernel. W268 verifies a visible offset commit
 and one-step Undo in the approved LibreCAD test app, with the W193 source DXF
-unchanged. Still open are physical stale-peer interaction, durable transient
-preview/commit parity evidence and display-DPR capture, a visible FreeCAD
-viewport, deployed-package and outside-caller acceptance not exercised by CI,
-human PR review, and final R integration. FreeCAD recognized the W193 DXF but
-exited after import confirmation; a compact-fixture retry was interrupted when
-the Mac locked. Exact-head receipts and hashes are recorded below and in the
-latest PR comment. A roadmap-only commit triggers a fresh CI run; its exact-head
-status must be checked rather than inherited from this checkpoint.
+unchanged. W269 adds an independently compiled Qt plugin fixture that loads
+through `QPluginLoader` and exercises the public asynchronous block-import API;
+the focused CTest passes locally, and the DWG/DXF workflow now builds and runs
+it on Linux and Windows. That addition is not present on the current pushed
+`e116e4b71` head, so its exact-head CI is pending the next push. Still open are
+physical stale-peer interaction, durable transient preview/commit parity and
+display-DPR capture, a visible FreeCAD viewport, signed/deployed-package
+acceptance, human PR review, and final R integration. FreeCAD recognized the
+W193 DXF but exited after import confirmation; a compact-fixture retry was
+interrupted when the Mac locked. Exact-head receipts and hashes are recorded
+below and in the latest PR comment. A roadmap-only commit triggers a fresh CI
+run; its exact-head status must be checked rather than inherited from this
+checkpoint.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -515,9 +520,9 @@ candidate except the explicitly proposed native-worker tags.
 | B | Immutable occurrence/edge-side terminals and issuer lifetime | A-cache | candidate `9bf0546b6`; W97 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | geometry terminal/occurrence case inventory |
 | C-search | Exhaustive certified cuts, owned independent laps, bounded equivalent-state memoization | B | candidate `b6814fb3a`; W98 current-source review and focused Release/ASan requalification found no gap; W155 confirms unchanged audited source and current full-geometry selector; final R acceptance remains | `lc_offsetpathsearch_tests.cpp`, public cut-search cases |
 | C-check | Full public checker, directed coverage, incidence, seam/closure and typed refusal | C-search | candidate `d4a0b081a`; W100 charges the final proof-publication slot; W103/W105/W108/W109/W115/W116 sweep every observed allocation failure over line, forward/reversed two-span cubic, forward/reversed whole-circle seam, both open and closed components of a producer-generated two-component trimmed path, and hidden-cusp endpoint refusal with bounded ledger and same-budget retry; W120 runs all standalone fault fixtures in one Release pass; W122 and W155 close the local topology/test inventory; remote platform/final gates remain | `[lc-offsetcurve][geometry][cache-topology-chain]`, standalone cache-check allocation-fault target |
-| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and current in-repo caller/fallback/import ownership inventory implemented; W266 Linux and Windows x64/ARM64 worker/import lanes pass. W267 covers the public `RS_FileIO` auto-detect import route locally. Separately compiled external plugins and signed/deployed-package acceptance remain unverified. | operation/cap/deadline/call-site table |
+| W0 | Separate validation runner from product runtime; freeze native-worker schema, caps, deadlines and ownership | C-check | wire/request/reply and current in-repo caller/fallback/import ownership inventory implemented; W266 Linux and Windows x64/ARM64 worker/import lanes pass. W267 covers the public `RS_FileIO` auto-detect route. W269 adds a separately compiled plugin module test through the public async API and registers it in the DWG/DXF CI lane; the new exact-head run is pending. Signed/deployed-package acceptance remains unverified. | operation/cap/deadline/call-site table |
 | W1 | Bounded headless geometry helper and parent transport, registered/packaged in both builds | W0 | helper/client and both build registrations qualified; W266 passes installed relocated-helper smoke on Linux and Windows x64/ARM64; local macOS staged/relocated client and qmake6 bundle smoke pass. Final packaged-release acceptance remains open. | `[lc-offsetcurve][worker-protocol]`, `[worker-kernel]`, `[worker-process]`, `[worker-client]` |
-| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit, scoped action faults, geometry-entry timeout and bounded synchronous import receipts are qualified; W266 passes Linux and Windows x64/ARM64 CTest, sync API, creation-worker, fault-sweep and installed-helper checks. W267 adds public `RS_FileIO` import dispatch coverage. Physical GUI interaction, separately compiled external-plugin/deployed-package acceptance and final R integration remain open. | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining physical/deployment acceptance |
+| W2 | Deadline/cancel/crash/reap, validated result, UI caller adoption and timeout regression | W1 | fault/edit, dialog/sheet/grip/Update, creation/repeat, native Trim preview/commit, scoped action faults, geometry-entry timeout and bounded synchronous import receipts are qualified; W266 passes Linux and Windows x64/ARM64 CTest, sync API, creation-worker, fault-sweep and installed-helper checks. W267 adds public `RS_FileIO` import dispatch; W269 adds separately compiled external-plugin invocation to CTest/CI, pending exact-head remote results. Physical GUI interaction, signed/deployed-package acceptance and final R integration remain open. | `[lc-offsetcurve][worker-client]`, `[worker-fault]`, `[worker-geometry-timeout]`, `[edit][preparation]`, `[creation-worker]`; remaining physical/deployment acceptance |
 | E1 | Guarded entity/factories, RTTI, stamp, clone, downgrade and transforms | C-check | candidate `92758859c` and later fixes; W128 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | `[lc-offsetcurve][native]`, `[entity-coverage]` |
 | U1 | Type/INSERT/selection/SVG/menu/info dispatch and safe properties | E1 | candidate `49c9b328b`, `f0fb28fab`; W129 current-source dispatch review and focused Release/ASan coverage found no gap; separately gated legacy DXF test remains unavailable in this configuration; remote/final R acceptance remains | native type/name/dispatch TUs, `[entity-coverage]` |
 | E2 | Cached grips/snaps, through proposal and transactional mutators | E1 | candidate `4300c1031`, `47e14c74b`; W131 current-source review and focused Release/ASan requalification found no gap; remote/final R acceptance remains | native edit/grip/transform TUs |
@@ -10349,3 +10354,33 @@ head-specific runs reach a terminal state.
 | FreeCAD compact W171 retry | BLOCKED; Mac locked before file selection completed |
 | Exact pushed head `e116e4b71` CI | Text Foundations PASS; DWG/DXF, CodeQL, Pixi IN PROGRESS |
 | Separately compiled external plugin / signed package, human review, final R integration | OPEN |
+
+## 227. W269 Separately Compiled Plugin Caller
+
+Added a Qt plugin module in a distinct CMake `MODULE` target. The fixture
+includes only the public `Document_Interface` and `QC_PluginInterface` headers
+plus Qt, and does not link LibreCAD implementation libraries. The plugin is
+loaded with `QPluginLoader`, queried through `QC_PluginInterface`, and invokes
+`addBlockFromDiskAsync` on the supplied host interface. The real
+`Doc_plugin_interface` host imports the AC1032 native-offset DXF fixture; the
+test verifies callback success, block publication, and an editable
+`LC_OffsetCurve` in the imported block. This closes the prior same-process-only
+caller gap for the async plugin contract. It does not qualify a signed release
+bundle or an independently distributed installation.
+
+The focused CMake Release module and plugin test target build successfully.
+The new selector passed in the aggregate `librecad_tests` binary (1 case / 11
+assertions); the complete plugin block-import selector passed in the dedicated
+test binary (7 cases / 49 assertions). CTest discovers and passes
+`librecad_offset_external_plugin_tests` (1/1) when the integration lane is
+enabled. The `dwg-dxf-verify` workflow now builds this test on Linux, Windows
+x64, and Windows ARM64. PR head `e116e4b71` predates W269 and its in-progress CI
+does not cover this new target; fresh exact-head checks are required after push.
+
+| W269 artifact | SHA256 / result |
+|---|---|
+| Dedicated plugin import selector | PASS; 7 cases / 49 assertions; `/private/tmp/W269-external-plugin-tests.log`; `fdfe08dd3af89c3ef43e52c13f172fb8d22d9eaf61879336dc4517b0c7784112` |
+| Aggregate `librecad_tests` external-plugin selector | PASS; 1 case / 11 assertions; `/private/tmp/W269-external-plugin-aggregate.log`; `c4c4855441cb3e5f6d12d9d24ffced6808b88f97b97ee1035052e8e755b40cb5` |
+| CTest integration registration | PASS; 1/1 on the local Release tree with `LIBRECAD_REGISTER_INTEGRATION_TESTS=ON` |
+| PR exact-head CI for W269 | PENDING; current pushed head predates this slice |
+| Signed/deployed bundle, physical GUI/DPR, human review and final R integration | OPEN |
