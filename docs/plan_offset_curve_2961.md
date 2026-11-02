@@ -11443,3 +11443,37 @@ Next: let the old-head native macOS packaging finish, then push all local
 roadmap and source commits together and rerun checks on the resulting exact
 head. Separately, obtain an actual macOS 14.4 runtime and signed/deployed bundle
 before closing those compatibility and release gates.
+
+## 253. W295 Push of FreeType Guard and Roadmap Receipts
+
+Pushed the accumulated roadmap and source commits to PR #3193 at 19:29 UTC.
+The current PR head is `dd6013b1165aea3b03f7274ffef0c4c8afd04394`; the PR
+remains open and draft with review required. The FreeType deployment-target
+guard is now part of the PR. Its source change was locally validated before
+push as recorded in W294; none of the new PR-head CI results are available yet.
+
+Fresh headless, Text Foundations, CodeQL, DWG/DXF, Continuous build, and Pixi
+checks have been created for this head. At the 19:30 UTC poll, all required
+checks were pending or queued; Security scan is skipped by policy. The old-head
+Continuous build run `41489534587` still reported in progress at that poll, so
+its status does not qualify the new head and must not be used as evidence for
+the guard. Current exact-head check handles are in `gh pr checks 3193`; poll
+those handles until terminal results.
+
+| W295 item | Result |
+|---|---|
+| Pushed source and roadmap through W294 | PASS; current head `dd6013b1165aea3b03f7274ffef0c4c8afd04394` |
+| PR state | OPEN, draft, review required |
+| Local FreeType guard build and consumer checks | PASS; see W294 |
+| New-head headless, Text Foundations, CodeQL | PENDING at 19:30 UTC |
+| New-head DWG/DXF and Continuous build | PENDING at 19:30 UTC |
+| New-head Pixi runs | PENDING/QUEUED at 19:30 UTC |
+| Old-head Continuous build `41489534587` | Still IN PROGRESS; not applicable to current head |
+| Configured Security scan | SKIPPED by policy |
+| GUI preview/commit, stale-peer, retained screenshot/DPR, external viewport | OPEN |
+| macOS 14.4 runtime, signed/deployed W0-W2, human review, final R integration | OPEN |
+
+Next: refresh the PR checks by exact head, confirm the new native macOS package
+executes the FreeType member-minimum audit, and investigate any failure from
+the new source. Keep remaining physical, release, review, and integration gates
+open until their direct acceptance evidence exists.
