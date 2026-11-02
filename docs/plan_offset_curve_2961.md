@@ -11740,3 +11740,51 @@ commits and inspect checks for the new exact head. Leave the
 independent viewport gate open unless a viewer actually presents the geometry;
 continue the durable screenshot/DPR, stale-peer, runtime/deployment, review,
 and final integration work as separate gates.
+
+## 259. W304 Physical Locked-Layer Probe and Display Inventory
+
+Used the approved LibreCAD test copy with the disposable W281 drawing on the
+source-only baseline. Temporarily invoked `Lock all`, started Offset, and
+clicked the outer-left ellipse. The geometry remained visually unselected and
+the prompt stayed at `Select entities to offset`; no offset was committed.
+Escape canceled the action and `Unlock all` restored the editable baseline.
+
+A second probe selected that ellipse in Offset, then invoked `Lock all` before
+specifying a direction. The layer-toolbar action canceled Offset and returned
+the application to Default before any commit. This is evidence for locked-layer
+selection exclusion and action cancellation on that toolbar operation, but it
+does **not** exercise a stale worker reply or a peer mutating the source during
+commit. Physical stale-peer acceptance remains open. No Save was issued, and
+both W193 and W281 still hash to
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+The CUA viewport capture was 1920x1080. Read-only `system_profiler
+SPDisplaysDataType` reports the mirrored working display at 1920x1080, UI
+Looks like 1920x1080 at 75 Hz, with a separate built-in Retina display
+(3456x2234) mirrored. This records host display facts only; the app's Qt
+`devicePixelRatio` was not directly measured. The screenshot remains visible
+only in the conversation and has not been retained as a file.
+
+At the 22:49 UTC exact-head poll, PR #3193 remained at
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; native `BuildMacOS` was still
+`in_progress` (run `41525564465`, job `125552606579`). Its available log tail
+had no entries newer than 22:43:14 UTC and ended while compiling generated
+property-view MOC sources. This is a live job with stale log output, not a
+terminal result. Keep the accumulated local roadmap commits unpushed.
+
+| W304 item | Result |
+|---|---|
+| Locked source selection | PASS; source remained unselected and Offset stayed at its selection prompt |
+| Lock-state change after Offset selection | INCONCLUSIVE FOR STALE-PEER; toolbar operation canceled Offset before commit |
+| Drawing mutation / source integrity | NONE; no Save, both fixture hashes unchanged |
+| Host display inventory | PASS; mirrored 1920x1080 working display recorded |
+| Qt DPR / durable screenshot | OPEN; DPR not directly measured and capture is conversation-only |
+| Physical stale-peer worker reply | OPEN; no in-flight stale commit was demonstrated |
+| Exact-head CI | All other required checks PASS; native `BuildMacOS` still in progress; configured skips noted above |
+| External W171 viewport, signed/deployed runtime, human review, final R | OPEN |
+
+Next: continue polling the live native macOS job. Pursue retained matched
+preview/commit captures with an actual Qt-DPR measurement and a genuine
+stale-peer mutation during worker execution; do not count this locked-layer
+probe as either result. Keep external viewport, deployment/runtime, review, and
+final integration gates open.
