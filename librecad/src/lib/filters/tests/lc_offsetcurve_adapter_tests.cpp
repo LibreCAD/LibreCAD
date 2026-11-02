@@ -24,6 +24,7 @@
 #include "lc_filtertestsupport.h"
 #include "lc_offsetcurve.h"
 #include "libdxfrw.h"
+#include "rs_fileio.h"
 #include "rs_ellipse.h"
 #include "rs_layer.h"
 #include "rs_line.h"
@@ -303,11 +304,12 @@ TEST_CASE("synchronous file, stream, and byte filter imports adopt DXF carriers 
         const auto file = out.file(std::to_string(degree) + ".dxf");
         writeBytes(file, bytes);
 
-        for (const auto api : {"file", "stream", "bytes"}) {
+        for (const auto api : {"file", "stream", "bytes", "rs-fileio"}) {
             CAPTURE(api);
             Drawing drawing;
             RS_FilterDXFRW filter;
             bool imported = false;
+            bool errorReported = false;
             if (std::string(api) == "file") {
                 imported = filter.fileImport(drawing.graphic,
                     QString::fromStdString(file.string()), RS2::FormatDXFRW2018);
@@ -315,12 +317,21 @@ TEST_CASE("synchronous file, stream, and byte filter imports adopt DXF carriers 
                 std::istringstream input(bytes);
                 imported = filter.fileImportStream(drawing.graphic,
                     QString::fromStdString(file.string()), RS2::FormatDXFRW2018, input);
-            } else {
+            } else if (std::string(api) == "bytes") {
                 imported = filter.fileImportBytes(drawing.graphic,
                     QString::fromStdString(file.string()), RS2::FormatDXFRW2018,
                     QByteArray(bytes.data(), int(bytes.size())));
+            } else {
+                imported = RS_FileIO::instance()->fileImport(
+                    drawing.graphic, QString::fromStdString(file.string()),
+                    RS2::FormatUnknown,
+                    [&](bool, const QString &) {
+                        errorReported = true;
+                        return false;
+                    });
             }
             REQUIRE(imported);
+            CHECK_FALSE(errorReported);
             auto &native = onlyNative(drawing.graphic);
             CHECK(native.getData().degree == degree);
             REQUIRE(native.getData().controlPoints.size() == c.controls.size());
