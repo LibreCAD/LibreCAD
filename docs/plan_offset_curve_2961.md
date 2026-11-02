@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W290; chronological evidence follows): implementation slices
+Current status (W291; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,14 +36,15 @@ integration rather than an unimplemented declared feature slice.
 
 The latest non-roadmap code/build change on the PR branch is
 `76f02c2ec2f149124291bc2ccd1e9924a82b6fcd`; the current PR head is
-`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 18:22 UTC
-exact-head poll, Headless ON/OFF, `VerifyDwgDxfFast`, Windows x64/ARM64 DWG/DXF,
-and Windows ARM64 packaging passed. Both Pixi matrices passed all platforms
-except the initial `macos-latest` setup failure in run `41489534178`; its
-`macos-latest` retry is now in progress. Analyze and native macOS packaging
-remain active. Linux, Linux AArch64, Snap, Windows x64 packaging, and Security
-scan were skipped. These are exact-head results; do not carry forward results
-from older heads. The worktree
+`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 18:37 UTC
+exact-head poll, Headless ON/OFF, CodeQL/Analyze, `VerifyDwgDxfFast`, Windows
+x64/ARM64 DWG/DXF, and Windows ARM64 packaging passed. Pixi run `41489520533`
+passed all five platforms. In run `41489534178`, all platforms except
+macOS-latest passed; the original macOS-latest setup failure is retried and
+that job remains in progress. Native macOS packaging remains in progress.
+Linux, Linux AArch64, Snap, Windows x64 packaging, and Security scan were
+skipped. These are exact-head results; do not carry forward results from older
+heads. The worktree
 qmake6 app/worker build and local ad-hoc package/relocation smoke tests pass;
 these do not establish Developer ID signing, notarization, or execution on
 macOS 14.4. PR #3193 remains open, draft, and review-required.
@@ -11278,3 +11279,36 @@ macOS packaging finish; pushing now would cancel active workflow work.
 Next: poll the active retry, Analyze, and native macOS package jobs to terminal
 status. Then retry any remaining infrastructure-only failure if permitted,
 push the local roadmap commits, and inspect all checks for the new exact PR head.
+
+## 249. W291 Exact-Head CI Refresh
+
+Polled PR #3193 at exact head
+`b580e5a208a0555c6005f5289660b1409d20eadb` at 18:37 UTC. Headless ON/OFF and
+CodeQL/Analyze passed. `VerifyDwgDxfFast`, Windows x64 and ARM64 DWG/DXF, and
+native `BuildWindowsARM64` passed. Native `BuildMacOS` remains in progress.
+
+Pixi run `41489520533` passed all five platforms. In run `41489534178`, the
+Ubuntu ARM/x64, Windows, and macOS-15 Intel jobs passed. Its initial macOS-latest
+setup failed with HTTP 500 and a missing Pixi executable; the targeted retry
+has completed setup and remains in the build/check step. No prior-head status
+is carried forward. Configured skip lanes remain skipped.
+
+CUA still reports the Mac locked despite the user's active remote-desktop
+session, so physical GUI gates remain open. There is no new product-code gap
+from the implementation audit. This roadmap-only checkpoint is local and must
+not be pushed until the active macOS retry and native package job are terminal.
+
+| W291 item | Result |
+|---|---|
+| Exact PR head | `b580e5a208a0555c6005f5289660b1409d20eadb` |
+| Headless ON/OFF and CodeQL/Analyze | PASS |
+| DWG/DXF fast, Windows x64/ARM64, Windows ARM64 package | PASS |
+| Pixi run `41489520533` | PASS; all five platforms |
+| Pixi run `41489534178` | Four platforms PASS; macOS-latest retry IN PROGRESS |
+| Native macOS package | IN PROGRESS |
+| Configured skip lanes | SKIPPED |
+| CUA / physical GUI | User reports remote desktop logged in; CUA still reports locked |
+| Preview/commit, external visual, signed/deployed W0-W2, human review, R integration | OPEN |
+
+Next: poll the macOS retry and native package job to terminal results, then
+push the accumulated roadmap commits and inspect all checks on the new head.
