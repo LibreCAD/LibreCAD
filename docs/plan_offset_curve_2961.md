@@ -24,47 +24,42 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W277; chronological evidence follows): implementation slices
+Current status (W280; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
-locally qualified. This includes the shipped native geometry worker, Modify
-Offset creation/repeat, native Trim preview/commit, staged GUI drawing/template
-imports, and bounded worker validation for public synchronous file/stream/byte
-filter imports. The public `RS_FileIO` auto-detection route and separately
-compiled Qt plugin caller are also covered. No additional product-code gap was
-identified in the latest implementation audit.
+qualified. This includes the shipped native geometry worker, Modify Offset
+creation/repeat, native Trim preview/commit, staged GUI drawing/template
+imports, bounded worker validation for public synchronous file/stream/byte
+filter imports, the public `RS_FileIO` auto-detection route, and a separately
+compiled Qt plugin caller. The latest implementation audit found no additional
+product-code gap; remaining work is acceptance, external validation, review and
+integration rather than an unimplemented declared feature slice.
 
-The latest pushed PR head is `e5577ae1cfa11cfaddffd07843d38c43d6c6a2bd`;
-its Headless ON/OFF lanes passed, while CodeQL, DWG/DXF, and Pixi checks were
-still running at the W275 snapshot. The last fully CI-qualified product/test
-head is `83e70ae3a3b4adc13d36a5422d665cb4b0881c0e`; its exact-head required CI
-passed. Security scan is skipped by repository policy. W275 adds source commit
-`76f02c2ec` locally, aligning the universal static FreeType objects with the
-macOS 14.4 target used by packaging; the W275 object-minimum and build checks
-pass, but this source commit and its roadmap receipt are not yet pushed or
-CI-qualified. The exact worktree qmake6 app/worker build and local ad-hoc
-package/relocation smoke tests pass; this does not establish Developer ID
-signing, notarization, or execution on macOS 14.4.
+The current pushed PR head is
+`e3e35f7805c00394c9435ecf03d08a32da2baf6e`. Exact-head Headless ON/OFF, Linux
+x64/ARM64 Pixi, macOS-latest and macOS-15 Intel Pixi, Windows Pixi, CodeQL,
+Linux bounded DWG/DXF, Windows x64/ARM64 bounded DWG/DXF, and Windows ARM64
+packaging checks pass. The native `BuildMacOS` packaging job remains in
+progress; its result is not inferred from the passing Pixi jobs. The Security
+scan is skipped by repository policy. The worktree qmake6 app/worker build and
+local ad-hoc package/relocation smoke tests pass; these do not establish
+Developer ID signing, notarization, or execution on macOS 14.4.
 
-The remote desktop is awake, logged in, and reachable. The approved LibreCAD
-test copy visibly shows both groups of three W193 ellipse contours. A real
-two-copy offset then added two visible contours to one group, and one Undo
-restored its original three contours. The screenshots were displayed inline
-but not retained as files; a held-pointer sampling attempt did not distinguish
-preview geometry from the selected source, so preview/commit parity is still
-unproven. Display DPR was not measured. FreeCAD 1.1.4
-recognized about 90 entities, then exited after import confirmation in both
-Draft and fused-shape modes; no FreeCAD viewport/render pass is claimed. The
-source fixture SHA256 remains
-`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` and its
-modification time is unchanged. Still open are physical stale-peer interaction,
-a distinct held-drag/preview/commit parity capture, retained screenshot/DPR
-evidence, independent W171 external visual contour review, deployed-package and
-full W0-W2 acceptance, required human review, and final R integration. The
-branch contains current `origin/master` (`998e61dc0`) as an ancestor. Exact-head
-CI, UI evidence, and remaining external gates are updated in W275 below; no
-prior-head CI is carried forward. The W274 roadmap-only commit, W275 source and
-plan commits, and W276/W277 plan receipts each require exact-head CI before
-results can be carried forward.
+The remote desktop is awake, logged in, and reachable. W280 rechecked the W193
+baseline and multi-copy interaction: two contours appeared after release, and
+Escape plus one Undo restored the baseline without saving. The held-click/drag
+frames did not distinguish preview geometry from the selected source, so
+preview/commit parity remains open, not a product-defect finding. The fixture
+SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`; its
+modification time is unchanged. Display DPR and retained LibreCAD screenshot
+evidence are still unavailable. FreeCAD 1.1.4 exited after import confirmation;
+Inkscape's W171 rendering was incomplete, so independent W171 contour review
+remains open. Other open gates are physical stale-peer interaction, signed and
+deployed-package/full W0-W2 acceptance, required human review, and final R
+integration. The branch contains current `origin/master` (`998e61dc0`) as an
+ancestor. Do not carry forward CI from prior heads: exact-head results above
+refer only to `e3e35f7805c00394c9435ecf03d08a32da2baf6e`; after this roadmap-only
+commit is pushed, rerun and inspect checks for its new exact head.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -10898,3 +10893,47 @@ roadmap receipts; then run and inspect all checks on the resulting exact PR
 head. The focused roadmap parser/refusal suites pass 99/99; inventory reports
 93 obligations, zero pending declarations, and zero production mismatches.
 `git diff --check` passes.
+
+## 239. W281 Current-State Roadmap and Exact-Head Audit
+
+Reconciled the roadmap's opening status with the W280 receipt and actual PR
+state. The source/implementation head before this documentation-only slice is
+`e3e35f7805c00394c9435ecf03d08a32da2baf6e`; PR #3193 is open, draft, and
+requires review. At the 2026-11-02 16:34 UTC check, all surfaced exact-head
+checks passed except native `BuildMacOS` packaging, which was still running in
+its build/package step (started 15:19 UTC). Passing macOS Pixi jobs are not a
+substitute for that native packaging result. Security scan is skipped by
+repository policy.
+
+The logged-in test app was visible at the W193 baseline in Default with Undo
+disabled; its window title still displayed an unsaved marker. The on-disk W193
+fixture hash remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d` and mtime
+`2026-10-30 11:42:53 EDT`. No save, close, or new drawing operation was issued.
+This verifies the source fixture remains untouched but does not claim the
+application's in-memory modified marker was cleared.
+
+The focused roadmap parser/refusal suites pass 99/99: 93 obligations, zero
+pending declarations, and zero production mismatches. `git diff --check` passes.
+The updated roadmap summary corrects stale W277/e5577 references; it does not
+close GUI preview parity, physical stale-peer, retained screenshot/DPR,
+independent W171 visual review, macOS 14.4 runtime/signing/notarization,
+deployed W0-W2, human review, or final R integration.
+
+| W281 item | Result |
+|---|---|
+| Current implementation summary vs. chronological ledger | PASS; opening status now names W280 and exact pushed source head |
+| Exact PR head before roadmap slice | `e3e35f7805c00394c9435ecf03d08a32da2baf6e` |
+| Exact-head CI | PASS except native `BuildMacOS` still in progress; no result inherited from older heads |
+| Roadmap parser/refusal suite | PASS; 99/99, 93 obligations, 0 pending, 0 production mismatches |
+| W193 file hash and mtime | PASS; unchanged; no save or close issued |
+| In-memory drawing modified marker | OPEN; visible title includes `*`, no claim that document is clean |
+| Preview/commit parity and physical stale-peer | OPEN; no newly obtained evidence |
+| PR review and final integration | OPEN; draft/review required |
+| New roadmap-only head CI | PENDING until pushed and inspected independently |
+
+Next: push this roadmap-only checkpoint without carrying forward CI from
+`e3e35f7`; inspect every check on the resulting exact head. If the native
+macOS job remains active unusually long, continue treating it as pending until
+GitHub reports a terminal result. Do not save or close the modified-marker
+test document; preserve the verified source fixture.
