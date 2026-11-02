@@ -57,6 +57,16 @@ constexpr double kPi = M_PI;
 constexpr double kTwoPi = 2.0 * M_PI;
 constexpr double kHalfPi = M_PI / 2.0;
 
+// An extremum nearer than this to an end of an arc gets no split. A split
+// nearer than the round-off of a join's angle (a few 1e-15) would only add a
+// piece whose ends differ by rounding. Beyond sqrt(u) = 1.05e-8 one is
+// needed: up to there sin() of an arc's angle is exactly 1 at an extremum, so
+// the end vertex's y is the extremum's y to the bit, but further out the
+// vertex can sit a rounding step short of it, and without a split no piece
+// covers the y values in between. The margin is well above the first bound
+// and 11 times below the second. Elliptic arcs use the same value.
+constexpr double kSplitMargin = 1.0 / 1073741824.0; // 2^-30
+
 // An invalid vector holds (0, 0), so its coordinates alone would pass as a point.
 bool isFiniteV(const RS_Vector& v) {
     return v.valid && std::isfinite(v.x) && std::isfinite(v.y);
@@ -300,16 +310,19 @@ void appendArcPieces(const RS_Arc& arc,
     if (sweep <= 0.0) return;
 
     // Walk counter-clockwise from a1 by angular length sweep. Collect splits
-    // at pi/2 + k*pi strictly inside (y-extremum angles).
+    // at pi/2 + k*pi strictly inside (y-extremum angles). An arc has at most
+    // two of them, and k = 0 and 1 reach both residues mod 2*pi. A larger |k|
+    // reaches the same angle again with different round-off (in pi/2 + k*pi
+    // and in the subtraction of a1), and std::unique, which compares with ==,
+    // keeps such near-copies as splits of their own.
     std::vector<double> splits;
     splits.push_back(0.0);
-    for (int k = -4; k <= 8; ++k) {
-        const double t = kHalfPi + k * kPi; // in some rotation
+    for (int k = 0; k <= 1; ++k) {
+        const double t = kHalfPi + k * kPi;
         // We want parameter u in [0, sweep] s.t. a1 + u = t (mod 2*pi).
         double u = std::fmod(t - a1, kTwoPi);
         if (u < 0) u += kTwoPi;
-        if (u > 8.0 * kU * std::max(1.0, std::abs(u)) &&
-            u < sweep - 8.0 * kU * std::max(1.0, std::abs(sweep))) {
+        if (u > kSplitMargin && u < sweep - kSplitMargin) {
             splits.push_back(u);
         }
     }
@@ -399,15 +412,18 @@ void appendEllipsePieces(const RS_Ellipse& ell,
     const RS_Vector& vALo = ell.isReversed() ? vb : va;
     const RS_Vector& vAHi = ell.isReversed() ? va : vb;
 
-    // Collect split parameters at t = alpha + k*pi strictly inside sweep.
+    // Collect split parameters at t = alpha + k*pi strictly inside sweep. As
+    // for an arc, k = 0 and 1 reach every extremum once. A wider range reaches
+    // the same one again with different round-off, and the near-copy can
+    // become a piece of its own, a few ULPs of |c.y| + R tall, which the
+    // crossing count then adds to its neighbours'.
     std::vector<double> splits;
     splits.push_back(0.0);
-    for (int k = -4; k <= 8; ++k) {
+    for (int k = 0; k <= 1; ++k) {
         const double t = alpha + k * kPi;
         double u = std::fmod(t - a1, kTwoPi);
         if (u < 0) u += kTwoPi;
-        if (u > 8.0 * kU * std::max(1.0, std::abs(u)) &&
-            u < sweep - 8.0 * kU * std::max(1.0, std::abs(sweep))) {
+        if (u > kSplitMargin && u < sweep - kSplitMargin) {
             splits.push_back(u);
         }
     }

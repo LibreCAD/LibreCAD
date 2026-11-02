@@ -20,11 +20,15 @@
 // y-monotone pieces for every supported atomic entity, scale-invariant one-eps
 // band, and the union-find welder.
 
+#include <algorithm>
 #include <array>
 #include <cfloat>
 #include <cmath>
+#include <iomanip>
 #include <memory>
 #include <random>
+#include <sstream>
+#include <string>
 #include <vector>
 
 #include <catch2/catch_approx.hpp>
@@ -614,4 +618,282 @@ TEST_CASE("A reversed hyperbola edge with an interior extremum keeps its pieces"
     CHECK_FALSE(oddParity(outside, {g0.get()}));
     CHECK(oddParity(inside, {g1.get()}));
     CHECK_FALSE(oddParity(outside, {g1.get()}));
+}
+
+namespace {
+
+// How many of the two y-extremum angles ext and ext + pi lie strictly inside
+// an arc that starts at a1 and turns counter-clockwise by sweep. The ends
+// drawArcSpan makes are either exactly on an extremum or at least 1e-3 from
+// one, so the 1e-6 here only tells those two cases apart.
+int extremaInside(double ext, double a1, double sweep) {
+    int inside = 0;
+    for (int j = 0; j < 2; ++j) {
+        double offset = std::fmod(ext + j * M_PI - a1, 2.0 * M_PI);
+        if (offset < 0.0) {
+            offset += 2.0 * M_PI;
+        }
+        if (offset > 1.0e-6 && offset < sweep - 1.0e-6) {
+            ++inside;
+        }
+    }
+    return inside;
+}
+
+// Distance of angle a from the nearest extremum angle ext + j * pi.
+double distanceToExtremum(double ext, double a) {
+    double d = std::fmod(a - ext, M_PI);
+    if (d < 0.0) {
+        d += M_PI;
+    }
+    return std::min(d, M_PI - d);
+}
+
+struct ArcSpan {
+    double lo;      // where the counter-clockwise walk starts
+    double hi;      // where it stops
+};
+
+// A counter-clockwise span whose ends are either random, or exactly on an
+// extremum (as when two arcs meet there). Ends are never closer than 1e-3 to
+// an extremum unless they are on it.
+ArcSpan drawArcSpan(std::mt19937_64& rng, double ext, int mode) {
+    std::uniform_real_distribution<double> angle(0.0, 2.0 * M_PI);
+    std::uniform_real_distribution<double> length(0.2, 2.0 * M_PI - 0.2);
+    std::uniform_int_distribution<int> turns(-2, 4);
+    const auto offTheExtremum = [&](auto draw) {
+        for (;;) {
+            const double a = draw();
+            if (distanceToExtremum(ext, a) > 1.0e-3) {
+                return a;
+            }
+        }
+    };
+    ArcSpan span{};
+    if (mode == 1) {
+        span.lo = ext + turns(rng) * M_PI;
+        span.hi = offTheExtremum([&] { return span.lo + length(rng); });
+    } else if (mode == 2) {
+        span.hi = ext + turns(rng) * M_PI;
+        span.lo = offTheExtremum([&] { return span.hi - length(rng); });
+    } else {
+        span.lo = offTheExtremum([&] { return angle(rng); });
+        span.hi = offTheExtremum([&] { return span.lo + length(rng); });
+    }
+    return span;
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An elliptic arc breaks at each y-extremum once, and not at a join on one",
+          "[lc-hatchfix][classifier]") {
+    // The x of a piece is found from y, so a piece must not turn back in y.
+    // A turning point inside the arc splits it in two. An arc that starts or
+    // ends exactly on one has none, and must not get an extra piece a few
+    // ULPs tall from rounding in the angle of the extremum.
+    std::size_t wrongCount = 0;
+    std::size_t slivers = 0;
+    std::string firstWrong;
+    const auto check = [&](const std::string& label, double cx, double cy, double a, double phi, double q,
+                           double lo, double hi, bool reversed) {
+        const RS_Vector majorP = RS_Vector::polar(a, phi);
+        // y(t) = cy + My cos t + Ny sin t with N = q * (-My, Mx), so the
+        // extremum angles are atan2(Ny, My) + j * pi.
+        const double ext = std::atan2(q * majorP.x, majorP.y);
+        RS_Ellipse ellipse(nullptr, RS_EllipseData{RS_Vector(cx, cy), majorP, q, reversed ? hi : lo,
+                                                   reversed ? lo : hi, reversed});
+
+        const double a1 = reversed ? ellipse.getAngle2() : ellipse.getAngle1();
+        const int expected = extremaInside(ext, a1, std::abs(ellipse.getAngleLength())) + 1;
+        std::vector<MonoPiece> pieces;
+        LC_LoopUtils::appendMonotonePieces(ellipse, ellipse.getStartpoint(), ellipse.getEndpoint(), pieces);
+
+        if (static_cast<int>(pieces.size()) != expected) {
+            ++wrongCount;
+            if (firstWrong.empty()) {
+                std::ostringstream text;
+                text << std::setprecision(17) << label << ": centre (" << cx << ", " << cy << "), major axis "
+                     << a << " at angle " << phi << ", ratio " << q << ", reversed " << reversed << ", angles "
+                     << ellipse.getAngle1() << " to " << ellipse.getAngle2() << ": expected " << expected
+                     << " pieces, got " << pieces.size();
+                firstWrong = text.str();
+            }
+        }
+        for (const MonoPiece& p : pieces) {
+            if (p.yhi - p.ylo < 1.0e-9 * a) {
+                ++slivers;
+            }
+        }
+    };
+
+    // An arc that starts about 13.65 rad from the origin of angles, on an
+    // extremum: its start angle is only known to one ULP of 13.65, which is
+    // more than the 8 u of an angle near 1.
+    check("fixed case", 99.042544366455758, -82.982055145611184, 36.65566971576704, 5.5905282667820657,
+          0.59901017160483483, 13.654095527617988, 15.082715184616426, false);
+
+    std::mt19937_64 rng(20261103);
+    std::uniform_real_distribution<double> position(-1000.0, 1000.0);
+    std::uniform_real_distribution<double> major(1.0, 50.0);
+    std::uniform_real_distribution<double> direction(0.0, 2.0 * M_PI);
+    std::uniform_real_distribution<double> ratio(0.3, 0.95);
+    std::uniform_int_distribution<int> mode(0, 2);
+    std::uniform_int_distribution<int> flip(0, 1);
+    for (int run = 0; run < 6000; ++run) {
+        const double cx = position(rng);
+        const double cy = position(rng);
+        const double a = major(rng);
+        const double phi = direction(rng);
+        const double q = ratio(rng);
+        const bool reversed = flip(rng) != 0;
+        const RS_Vector majorP = RS_Vector::polar(a, phi);
+        const double ext = std::atan2(q * majorP.x, majorP.y);
+        const ArcSpan span = drawArcSpan(rng, ext, mode(rng));
+        check("run " + std::to_string(run), cx, cy, a, phi, q, span.lo, span.hi, reversed);
+    }
+    INFO("first wrong piece count: " << firstWrong);
+    CHECK(wrongCount == 0u);
+    CHECK(slivers == 0u);
+}
+
+namespace {
+
+// A cap is an arc through a y-extremum that starts or ends a short angle
+// delta past it, closed by a chord. The loop's highest (or lowest) y is the
+// extremum, and the pieces must reach it: if the extremum gets no split, the
+// piece ends at the vertex, short of the extremum, and for the y values in
+// between no piece is crossed, so the cap is outside there.
+enum class CapSide {
+    TopEnd,         // ends delta past the top
+    TopStart,       // starts delta before the top
+    BottomEnd,      // ends delta past the bottom
+    BottomStart     // starts delta before the bottom
+};
+
+const char* capSideName(CapSide side) {
+    switch (side) {
+    case CapSide::TopEnd:
+        return "top, ends past it";
+    case CapSide::TopStart:
+        return "top, starts before it";
+    case CapSide::BottomEnd:
+        return "bottom, ends past it";
+    case CapSide::BottomStart:
+        return "bottom, starts before it";
+    }
+    return "";
+}
+
+struct CapScan {
+    std::size_t tested = 0;
+    std::size_t short_ = 0;
+    std::string firstShort;
+};
+
+void scanCap(CapScan& scan, CapSide side, const RS_Vector& centre, double r, double delta) {
+    const bool top = side == CapSide::TopEnd || side == CapSide::TopStart;
+    const bool nearEnd = side == CapSide::TopEnd || side == CapSide::BottomEnd;
+    const double extremumAngle = top ? M_PI / 2.0 : 3.0 * M_PI / 2.0;
+    const double a1 = nearEnd ? extremumAngle - 1.0 : extremumAngle - delta;
+    const double a2 = nearEnd ? extremumAngle + delta : extremumAngle + 1.0;
+    const double extremum = top ? centre.y + r : centre.y - r;
+
+    auto* curve = new RS_Arc(nullptr, RS_ArcData{centre, r, a1, a2, false});
+    const RS_Vector start = curve->getStartpoint();
+    const RS_Vector end = curve->getEndpoint();
+    auto loop = std::make_shared<RS_EntityContainer>(nullptr);
+    loop->addEntity(curve);
+    loop->addEntity(new RS_Line(loop.get(), end, start));
+    const auto geometry = LoopGeometry::fromChain(*loop, {start, end});
+
+    double reached = top ? -HUGE_VAL : HUGE_VAL;
+    for (const MonoPiece& piece : geometry->pieces()) {
+        reached = top ? std::max(reached, piece.yhi) : std::min(reached, piece.ylo);
+    }
+    ++scan.tested;
+    if (reached != extremum) {
+        ++scan.short_;
+        if (scan.firstShort.empty()) {
+            std::ostringstream text;
+            text << std::setprecision(17) << capSideName(side) << ", centre (" << centre.x << ", "
+                 << centre.y << "), r " << r << ", delta " << delta << ": the pieces reach y = " << reached
+                 << ", the extremum is at " << extremum;
+            scan.firstShort = text.str();
+        }
+    }
+}
+
+} // namespace
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("An arc ending just past a y-extremum has pieces up to the extremum",
+          "[lc-hatchfix][classifier]") {
+    // delta runs from far below the margin under which an extremum gets no
+    // split to well above it. Frames with the extremum at or below y = 0 are
+    // there because the end vertex's y is then known to far more digits than
+    // r, and a vertex that is one rounding step short of the extremum leaves
+    // many doubles uncovered.
+    struct Frame {
+        double cx, cy, r;
+    };
+    const std::array<Frame, 6> frames{{{0.0, 0.0, 1.0}, {0.0, 0.0, 50.0}, {3.0, 0.5, 25.0},
+                                       {-7.0, 3.0, 3.0}, {0.0, -1.0, 1.0}, {0.0, -30.0, 50.0}}};
+    const std::array<double, 8> deltas{1.2e-8, 1.4e-8, 2.0e-8, 2.9e-8, 3.1e-8, 5.0e-8, 1.0e-6, 1.0e-4};
+    const std::array<CapSide, 4> sides{CapSide::TopEnd, CapSide::TopStart, CapSide::BottomEnd,
+                                       CapSide::BottomStart};
+
+    CapScan scan;
+    for (const Frame& f : frames) {
+        for (const double delta : deltas) {
+            for (const CapSide side : sides) {
+                scanCap(scan, side, RS_Vector(f.cx, f.cy), f.r, delta);
+            }
+        }
+    }
+
+    // Random frames, with the extremum anywhere from far below y = 0 to far
+    // above it, and delta on both sides of 1.05e-8, where sin() stops being
+    // exactly 1 at an extremum.
+    std::mt19937_64 rng(20261104);
+    std::uniform_real_distribution<double> logRadius(0.0, std::log(1.0e4));
+    std::uniform_real_distribution<double> height(-2.0, 3.0);
+    std::uniform_real_distribution<double> offset(-100.0, 100.0);
+    std::uniform_real_distribution<double> logDelta(std::log(1.0e-10), std::log(6.0e-8));
+    std::uniform_int_distribution<int> sideOf(0, 3);
+    const int randomRuns = 6000;
+    for (int run = 0; run < randomRuns; ++run) {
+        const double r = std::exp(logRadius(rng));
+        const double cy = height(rng) * r;
+        const double cx = offset(rng);
+        const double delta = std::exp(logDelta(rng));
+        const CapSide side = sides[static_cast<std::size_t>(sideOf(rng))];
+        scanCap(scan, side, RS_Vector(cx, cy), r, delta);
+    }
+
+    INFO("first cap that falls short: " << scan.firstShort);
+    CHECK(scan.tested == frames.size() * deltas.size() * sides.size() + static_cast<std::size_t>(randomRuns));
+    CHECK(scan.short_ == 0u);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+TEST_CASE("A cap ending 1.4e-8 rad past a top at y = 0 is inside just above its end vertex",
+          "[lc-hatchfix][classifier]") {
+    // The circle segment of radius 1 centred at (0, -1) between the angles
+    // pi/2 - 1 and pi/2 + 1.4e-8, closed by a chord. Its end vertex is a
+    // rounding step below the top, and a point on the centre line one double
+    // above that vertex is inside the segment.
+    const RS_Vector centre(0.0, -1.0);
+    auto* arc = new RS_Arc(nullptr, RS_ArcData{centre, 1.0, M_PI / 2.0 - 1.0, M_PI / 2.0 + 1.4e-8, false});
+    const RS_Vector start = arc->getStartpoint();
+    const RS_Vector end = arc->getEndpoint();
+    auto loop = std::make_shared<RS_EntityContainer>(nullptr);
+    loop->addEntity(arc);
+    loop->addEntity(new RS_Line(loop.get(), end, start));
+    const auto geometry = LoopGeometry::fromChain(*loop, {start, end});
+
+    const double aboveEnd = std::nextafter(end.y, 0.0);
+    REQUIRE(aboveEnd > end.y);
+    REQUIRE(aboveEnd < 0.0);
+    CHECK(oddParity(RS_Vector(0.0, aboveEnd), {geometry.get()}));
 }
