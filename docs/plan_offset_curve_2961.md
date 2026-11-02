@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W306; chronological evidence follows): implementation slices
+Updated: 2026-11-02 23:19 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W307; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -48,9 +48,8 @@ signing, notarization, or execution on macOS 14.4. PR #3193 remains open, draft,
 and review-required. The roadmap-only status updates remain local and queued
 until the active exact-head native macOS packaging check terminates.
 
-W302 supersedes the earlier CUA-lock reports: the approved
-`org.librecad.librecad.pr3193visible` app was responsive in the user's logged-in
-remote desktop. The disposable W281 drawing showed the live red offset preview,
+W302 records an earlier successful visit through the user's remote desktop:
+the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
 the corresponding committed contour at the same direction, and successful
 Escape during a pointer drag while the drag call was still pending. Undo and
 Escape restored the visible baseline; no Save command was issued. W193 and W281
@@ -11868,3 +11867,40 @@ preview/commit and Qt-DPR evidence, and a genuine stale-peer interaction.
 Continue polling native macOS packaging before pushing the accumulated roadmap
 commits; leave signing, deployment, human review and final integration open
 until directly verified.
+
+## 262. W307 Remote Desktop Lock-State Recheck
+
+The remote Screen Sharing services and the `dli` console session are present,
+and the isolated LibreCAD test-copy process is still running. However, a fresh
+full-display capture shows the macOS account lock screen. The CUA native-app
+bridge also reports the Mac locked and cannot attach. Activating LibreCAD and
+querying its `CGWindow` entry exposed a retained app-window image, but a full
+screen capture disproved that image as live desktop evidence. Do not treat the
+cached window pixels or attempted menu/key events as a completed GUI check.
+
+No drawing was saved. The app's command state after the locked-session probe
+is unverified and must be returned to Default with Escape after the desktop is
+unlocked. The user has the remote desktop open; Screen Sharing authentication
+does not itself demonstrate that the macOS graphical session has been
+unlocked. Physical stale-peer behavior, durable matched preview/commit images
+and Qt DPR, and the independent W171 viewport remain open.
+
+At 23:19 UTC, exact-head run `41525564465` / job `125552606579` remained
+`in_progress` at Build and packaging for PR head
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. The latest exact-head poll at
+23:08 UTC had the other required checks passing; configured skips remain
+Linux, Linux AArch64, Snap, Windows x64 packaging, and Security scan. Keep the
+accumulated local roadmap commits unpushed until this native macOS job is
+terminal, then inspect checks on the new exact head. Signed/deployed package
+and macOS 14.4 runtime, required human review, and final R integration remain
+open.
+
+| W307 item | Result |
+|---|---|
+| Screen Sharing process / console account | PASS; session and remote-management processes exist |
+| Current macOS desktop | LOCKED; full-display capture shows account lock screen |
+| LibreCAD window pixels | NOT ACCEPTANCE; per-window capture is stale while the desktop is locked |
+| Drawing integrity | No CAD Save issued; app command state needs Escape/reset after unlock |
+| GUI acceptance / stale-peer / screenshots and DPR / W171 viewport | OPEN |
+| Exact-head CI | Native macOS packaging still active; other required checks last verified passing at 23:08 UTC |
+| Deployment/runtime, human review, final R integration | OPEN |
