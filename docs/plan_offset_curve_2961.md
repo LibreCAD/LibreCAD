@@ -10308,3 +10308,42 @@ commit; both will be pushed together after the active run terminates.
 | Release adapter target build | PASS; current worktree source |
 | Separately compiled external plugin / signed package | OPEN |
 | Visible stale-peer, preview/commit and FreeCAD viewport/DPR | OPEN; Mac locked |
+
+## 226. W268 Reapproved Visible LibreCAD Commit/Undo Check
+
+After the user reapproved `/private/tmp/LibreCAD-PR3193-visible.app`, CUA
+connected to the rebuilt LibreCAD test app. The existing W193 DXF was opened
+read-only. The first visible operation had completed an offset commit: two new
+curves were visible alongside the original six ellipse contours. A single Undo
+removed the generated curves, cleared the selection, returned LibreCAD to the
+command prompt, and restored the original six-contour view. The fixture SHA256
+before and after the interaction is
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+No drawing was saved and no product source changed.
+
+This proves a physical GUI commit followed by one-step Undo for the W193
+fixture. It does not prove transient preview/committed-geometry pixel parity:
+the held-click did not preserve a verified pre-commit preview frame, and no
+durable screenshot or display-DPR measurement was retained. Physical stale-peer
+interaction was not exercised. FreeCAD 1.1.4 again recognized the W193 DXF and
+offered its individual-shape import, but exited immediately after confirmation
+before a viewport appeared. A retry with the smaller two-entity W171-derived
+R2018 DXF was interrupted when CUA reported the Mac locked; it did not reach a
+rendered viewport. Do not count either FreeCAD attempt as a rendering result.
+
+At 2026-11-02 01:57 UTC, exact pushed PR head `e116e4b71` still had its
+DWG/DXF, CodeQL, and current-run Pixi workflows in progress; Text Foundations
+had passed. The local W267 test and plan commits remain unpushed until those
+head-specific runs reach a terminal state.
+
+| W268 check | Result |
+|---|---|
+| Reapproved rebuilt LibreCAD test app | PASS; connected and responsive |
+| Visible offset commit and one-step Undo | PASS; two generated curves removed; original six contours restored |
+| W193 source drawing integrity | PASS; SHA256 unchanged; no save |
+| Durable preview/commit parity screenshot and display-DPR | OPEN; no verified pre-commit frame or retained screenshot |
+| Physical stale-peer interaction | OPEN; not exercised |
+| FreeCAD W193 import | OPEN; import recognized, app exited after confirmation |
+| FreeCAD compact W171 retry | BLOCKED; Mac locked before file selection completed |
+| Exact pushed head `e116e4b71` CI | Text Foundations PASS; DWG/DXF, CodeQL, Pixi IN PROGRESS |
+| Separately compiled external plugin / signed package, human review, final R integration | OPEN |
