@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-02 23:19 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W307; chronological evidence follows): implementation slices
+Updated: 2026-11-02 23:25 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W308; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -11904,3 +11904,20 @@ open.
 | GUI acceptance / stale-peer / screenshots and DPR / W171 viewport | OPEN |
 | Exact-head CI | Native macOS packaging still active; other required checks last verified passing at 23:08 UTC |
 | Deployment/runtime, human review, final R integration | OPEN |
+
+## 263. W308 macOS Build Progress Poll
+
+At 23:25 UTC, exact-head Actions run `41525564465` / job `125552606579` was
+still live at `Build and packaging`. The job API confirms the active step, and
+the Actions log advanced from approximately line 2,211 to line 3,573 while
+compiling the application. The visible output contains repeated
+`-Wmissing-field-initializers` warnings in `lc_dwgadvancedmetadata.h`; no
+failure or terminal result was present in the observed output. This is active
+compile progress, not evidence of a successful package. Windows ARM64 remains
+successful; the other exact-head checks were last independently observed as
+18 successful and 6 configured skips on the PR page. Do not push the local
+roadmap queue until native macOS packaging reaches a terminal result.
+
+The CUA native-app bridge still reports the Mac locked. No GUI interaction or
+drawing save occurred in this poll. The remote-desktop lock-state correction
+and remaining physical acceptance gates remain as recorded in W307 above.
