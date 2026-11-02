@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-01. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W267; chronological evidence follows): planned product
+Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W268; chronological evidence follows): planned product
 implementation slices A-core through T3 and the local A-core through C-check
 audit are present and locally qualified. This includes the shipped native
 geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
@@ -47,14 +47,16 @@ three platforms. W266's complete validation-tool suite passes 412/412; its
 roadmap/refusal suite passes 99/99 with 93 obligations, zero pending
 declarations, and no H6 production mismatches. W263/W264 close the W171 numeric
 expected-contour fidelity check across both curve degrees and all 24 DWG matrix
-rows using an independent FreeCAD kernel. Still open are visible physical
-stale-peer and preview/commit acceptance, visible FreeCAD viewport/DPR evidence,
-deployed-package and outside-caller acceptance not exercised by CI, human PR
-review, and final R integration. The user reapproved the rebuilt test app, but
-CUA continues to report the Mac locked; no visible-app interaction occurred.
-Exact-head receipts and hashes are recorded in W266 below and the latest PR
-comment. A roadmap-only commit triggers a fresh CI run; its exact-head status
-must be checked rather than inherited from this checkpoint.
+rows using an independent FreeCAD kernel. W268 verifies a visible offset commit
+and one-step Undo in the approved LibreCAD test app, with the W193 source DXF
+unchanged. Still open are physical stale-peer interaction, durable transient
+preview/commit parity evidence and display-DPR capture, a visible FreeCAD
+viewport, deployed-package and outside-caller acceptance not exercised by CI,
+human PR review, and final R integration. FreeCAD recognized the W193 DXF but
+exited after import confirmation; a compact-fixture retry was interrupted when
+the Mac locked. Exact-head receipts and hashes are recorded below and in the
+latest PR comment. A roadmap-only commit triggers a fresh CI run; its exact-head
+status must be checked rather than inherited from this checkpoint.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
