@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W287; chronological evidence follows): implementation slices
+Current status (W288; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,16 +36,17 @@ integration rather than an unimplemented declared feature slice.
 
 The latest non-roadmap code/build change on the PR branch is
 `76f02c2ec2f149124291bc2ccd1e9924a82b6fcd`; the current PR head is
-`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 17:43 UTC
-exact-head poll, Headless ON/OFF passed. In Pixi run `41489534178`, Ubuntu
-ARM passed; Windows, macOS-15 Intel, and Ubuntu x64 remain active. The
+`b580e5a208a0555c6005f5289660b1409d20eadb`. At the 2026-11-02 17:51 UTC
+exact-head poll, Headless ON/OFF passed. Pixi run `41489534178` passed on
+Ubuntu ARM and Ubuntu x64; Windows and macOS-15 Intel remain active. Its
 macOS-latest Pixi job failed before the build during `setup-pixi`, with HTTP
 500 and a missing `/Users/runner/.pixi/bin/pixi`. Duplicate Pixi run
-`41489520533` still has all five platform jobs active. Analyze, native macOS
-and Windows ARM64 packaging, and bounded DWG/DXF fast plus Windows x64/ARM64
-remain active. Linux, Linux AArch64, Snap, Windows x64 packaging, and Security
-scan were skipped. These are exact-head results; do not carry forward results
-from older heads. The worktree
+`41489520533` passed Ubuntu ARM; its Windows, macOS-latest, macOS-15 Intel,
+and Ubuntu x64 jobs remain active. Analyze, native macOS and Windows ARM64
+packaging, and bounded DWG/DXF fast plus Windows x64/ARM64 remain active.
+Linux, Linux AArch64, Snap, Windows x64 packaging, and Security scan were
+skipped. These are exact-head results; do not carry forward results from older
+heads. The worktree
 qmake6 app/worker build and local ad-hoc package/relocation smoke tests pass;
 these do not establish Developer ID signing, notarization, or execution on
 macOS 14.4. PR #3193 remains open, draft, and review-required.
@@ -11164,3 +11165,41 @@ retrying the setup failure or pushing this roadmap checkpoint; a push would
 cancel in-progress workflows. Keep GUI, independent W171 review, deployed
 minimum-OS/package qualification, required human review, and final R integration
 open until each has direct evidence.
+
+## 246. W288 Exact-Head CI Refresh
+
+Polled PR #3193 at exact head
+`b580e5a208a0555c6005f5289660b1409d20eadb` at 17:51 UTC. Headless ON/OFF
+passed. In Pixi run `41489534178`, Ubuntu ARM and Ubuntu x64 passed; Windows
+and macOS-15 Intel remain in the build/check step. The macOS-latest job failed
+before building because `prefix-dev/setup-pixi@v0.8.1` received HTTP 500 and
+cleanup found no `/Users/runner/.pixi/bin/pixi`. In duplicate run
+`41489520533`, Ubuntu ARM passed; Windows, macOS-latest, macOS-15 Intel, and
+Ubuntu x64 remain in the build/check step. Analyze, native macOS and Windows
+ARM64 packaging, and bounded DWG/DXF fast plus Windows x64/ARM64 remain in
+progress. Configured skip lanes remain skipped. No results from older heads are
+carried forward.
+
+The source worktree remains unchanged from W287. The user's logged-in
+remote-desktop report is unchanged; CUA still reports the Mac locked. Preview
+parity and the other physical/external/review gates remain open. This is a
+roadmap-only local commit; do not push until the old-head workflows are
+terminal because a push cancels in-progress runs.
+
+| W288 item | Result |
+|---|---|
+| Exact PR head | `b580e5a208a0555c6005f5289660b1409d20eadb` |
+| Headless ON/OFF | PASS |
+| Pixi Ubuntu ARM and Ubuntu x64, run `41489534178` | PASS |
+| Pixi macOS-latest, run `41489534178` | FAIL before build; setup HTTP 500, missing Pixi executable |
+| Pixi Windows and macOS-15 Intel, run `41489534178` | IN PROGRESS |
+| Duplicate Pixi run `41489520533` | Ubuntu ARM PASS; other four jobs IN PROGRESS |
+| Analyze, native macOS/Windows ARM64 packaging, DWG/DXF fast and Windows x64/ARM64 | IN PROGRESS |
+| Configured skip lanes | SKIPPED |
+| Remote desktop / native CUA | User reports logged in; CUA still reports locked |
+| Product-code slices | No missing implementation slice found in the latest audit |
+| Remaining GUI, independent review, signing/deployment, human review, integration | OPEN |
+
+Next: allow the active exact-head jobs to finish; then inspect the terminal run,
+retry the infrastructure-failed macOS setup job if GitHub permits, push the
+roadmap receipt, and rerun exact-head checks for the new documentation head.
