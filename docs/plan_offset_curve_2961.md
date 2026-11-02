@@ -11397,3 +11397,49 @@ Next: wait for native `BuildMacOS` to finish. If it passes, push the six local
 roadmap commits, refresh the PR status comment, and verify checks on the new
 exact head. If it fails, inspect the bounded job logs and classify the failure
 before deciding on a retry.
+
+## 252. W294 FreeType Minimum-OS Guard
+
+Committed `cc36b9692` (`fix: enforce FreeType macOS deployment target`). The
+universal FreeType builder now defaults explicitly to the app's macOS 14.4
+baseline instead of inheriting an arbitrary `MACOSX_DEPLOYMENT_TARGET`; an
+intentional alternate target remains available as its second argument. After
+building, it inspects every reported `LC_BUILD_VERSION` minimum for both
+arm64 and x86_64 archive slices and fails if an object targets a newer OS.
+This protects against a final `ttf2lff` executable load command masking a
+newer static-library object target.
+
+Rebuilt pinned FreeType 2.13.3 with the hostile inherited environment
+`MACOSX_DEPLOYMENT_TARGET=27.0` and no explicit target. The script passed its
+checksum, built a universal archive, and verified arm64 and x86_64 member
+minimums at 14.4. The previous W272 archive, whose members report 27.0, was
+rejected by the same version comparison for both architectures. Linked a
+universal `ttf2lff` against the new archive; `--help` exited 0 and its arm64 and
+x86_64 load commands both report minimum OS 14.4. Temporary artifact hashes:
+archive `8d29aee92949b1c4ea956d4f3725fe8d9ee4a6e3531e64263814eb4931747a35`,
+`ttf2lff` `210ffeeaefa1be887b48c9d978d0e5035e247c31d710eebc71bd73bd7d17cc56`.
+`bash -n scripts/build-universal-freetype-macos.sh` and `git diff --check`
+passed. These checks close the static FreeType archive-target mismatch; they
+do not prove runtime behavior on macOS 14.4 or constitute a signed release.
+
+The previous exact PR source head remains `b580e5a208a0555c6005f5289660b1409d20eadb`.
+Its Pixi retry passed; native macOS packaging remains in progress. The new
+source commit and roadmap receipts remain local until that workflow is
+terminal. No other PR checks are attributed to `cc36b9692` yet.
+
+| W294 item | Result |
+|---|---|
+| FreeType build with inherited target 27.0 and no explicit argument | PASS; builder selected 14.4 |
+| FreeType archive member minimums | PASS; arm64 and x86_64 <= 14.4 |
+| Previous 27.0 archive negative check | PASS; both architectures rejected against 14.4 |
+| Universal `ttf2lff` linked with guarded archive | PASS; `--help`, arm64/x86_64 minos 14.4 |
+| Shell syntax / whitespace validation | PASS |
+| Source commit | `cc36b9692`, local only |
+| Old exact-head native macOS packaging | IN PROGRESS |
+| Runtime on macOS 14.4, Developer ID/notarization, deployed W0-W2 | OPEN |
+| Visible GUI, external viewport/DPR, human review, final R integration | OPEN |
+
+Next: let the old-head native macOS packaging finish, then push all local
+roadmap and source commits together and rerun checks on the resulting exact
+head. Separately, obtain an actual macOS 14.4 runtime and signed/deployed bundle
+before closing those compatibility and release gates.
