@@ -24,66 +24,38 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-02. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W273; chronological evidence follows): planned product
-implementation slices A-core through T3 and the local A-core through C-check
-audit are present and locally qualified. This includes the shipped native
-geometry worker, Modify Offset creation/repeat, native Trim preview/commit,
-staged GUI drawing/template imports, and bounded worker validation for public
-synchronous file/stream/byte filter imports. No additional product-code gap
-has been identified in the latest audit. W267 adds a regression through the
-public `RS_FileIO` auto-detection route, so the public dispatcher is now covered
-beside the direct filter file/stream/byte APIs. Its exact local Release result
-is recorded below. W269's separately compiled Qt plugin fixture and W271's
-stderr-capture regression fix are pushed. Product-source commit
-`a9c30e4d8` contains the W271 test fix; roadmap receipt
-`0f46af52180e792591614ef42aaaaae3b8e5151e` is the last pushed PR head. A fresh
-exact-worktree qmake6 app/worker build now passes, the supported macOS packager
-and its negative-control smoke tests pass in ad-hoc mode, and the qmake-built
-worker passes its external process suite after app-bundle relocation.
-Developer ID signing/notarization, older-macOS compatibility of the static
-FreeType objects, and visible rendering remain open. Local commit `d8a58cf65`
-bounds the pathological exhaustive fault loops in the cache-check test without
-changing production code; its roadmap receipt follows this entry. The old
-exact-head DWG/DXF workflow had remained in its composite test step for over an
-hour, so those results are not being carried to the new source. The exact-seed full
-CMake Release application suite passes all 5,169 cases (5,094 passed, 75 skipped;
-10,346,368 assertions passed); the focused legacy R13/R14 matrix passes 10,434
-assertions. External plugin CTest passes 1/1, the complete offset validation
-Node suite exits 0, and the roadmap/refusal suite passes 99/99 (93 obligations,
-zero pending declarations or H6 mismatches). Headless ON/OFF and PR-run Pixi
-macOS-latest, Ubuntu x64/ARM64, and Windows checks pass on the current PR head;
-PR-run macOS Intel, DWG/DXF, and CodeQL remain pending. The duplicate
-branch-push Pixi run, including macOS Intel, passes. No prior-head statuses are
-inherited. Security scan is skipped by repository policy. Physical
-stale-peer/preview/DPR evidence,
-visible FreeCAD viewport, deployed/cross-platform W0-W2 acceptance, human PR
-review, and final R integration remain open. The latest source-side visible
-GUI attempt is still blocked because CUA reports the Mac locked.
-The prior product-source PR head
-`e123fea6f3960aea562da32a4bbc2b7de1c76002`, required Headless ON/OFF, Text
-Foundations, CodeQL, DWG/DXF Linux and Windows x64/ARM64, and all five-platform
-Pixi checks pass; Security scan is skipped by repository policy. The DWG/DXF
-jobs pass CTest 25/25, synchronous-import and creation-worker selectors,
-allocation-failure recovery, and installed relocated-helper smoke tests on all
-three platforms. W266's complete validation-tool suite passes 412/412; its
-roadmap/refusal suite passes 99/99 with 93 obligations, zero pending
-declarations, and no H6 production mismatches. W263/W264 close the W171 numeric
-expected-contour fidelity check across both curve degrees and all 24 DWG matrix
-rows using an independent FreeCAD kernel. W268 verifies a visible offset commit
-and one-step Undo in the approved LibreCAD test app, with the W193 source DXF
-unchanged. W269 adds an independently compiled Qt plugin fixture that loads
-through `QPluginLoader` and exercises the public asynchronous block-import API;
-the focused CTest passes locally, and the DWG/DXF workflow now builds and runs
-it on Linux and Windows. That addition is not present on the current pushed
-`e116e4b71` head, so its exact-head CI is pending the next push. Still open are
-physical stale-peer interaction, durable transient preview/commit parity and
-display-DPR capture, a visible FreeCAD viewport, signed/deployed-package
-acceptance, human PR review, and final R integration. FreeCAD recognized the
-W193 DXF but exited after import confirmation; a compact-fixture retry was
-interrupted when the Mac locked. Exact-head receipts and hashes are recorded
-below and in the latest PR comment. A roadmap-only commit triggers a fresh CI
-run; its exact-head status must be checked rather than inherited from this
-checkpoint.
+Current status (W274; chronological evidence follows): implementation slices
+A-core through T3 and the local A-core through C-check audit are present and
+locally qualified. This includes the shipped native geometry worker, Modify
+Offset creation/repeat, native Trim preview/commit, staged GUI drawing/template
+imports, and bounded worker validation for public synchronous file/stream/byte
+filter imports. The public `RS_FileIO` auto-detection route and separately
+compiled Qt plugin caller are also covered. No additional product-code gap was
+identified in the latest implementation audit.
+
+The latest fully CI-qualified product/test head is
+`83e70ae3a3b4adc13d36a5422d665cb4b0881c0e`; it includes the W273 test-only fix
+that bounds expensive allocation-fault sweeps. Exact-head required CI is green:
+Headless ON/OFF, DWG/DXF Linux and Windows x64/ARM64, CodeQL, and Pixi on macOS
+Intel/arm64, Ubuntu x64/arm64, and Windows. The duplicate branch-push Pixi
+matrix also passed. Security scan is skipped by repository policy. The exact
+worktree qmake6 app/worker build and local ad-hoc package/relocation smoke tests
+pass; this does not establish Developer ID signing or notarization. Static
+FreeType object minimum-OS compatibility remains unresolved.
+
+The remote desktop is now reachable. The approved LibreCAD test copy visibly
+shows the six W193 ellipse contours; this observation is not a retained
+screenshot or display-DPR record. A keyboard-driven FreeCAD 1.1.4 import attempt
+recognized about 90 entities but returned to its start page after confirmation,
+without a geometry viewport; no FreeCAD GUI rendering pass is claimed. Still
+open are physical stale-peer interaction, a distinct held-drag/preview/commit
+parity capture, durable screenshot/DPR evidence, independent W171 external
+visual contour review, signed/deployed package and full W0-W2 acceptance,
+required human review, and final R integration. The branch contains current
+`origin/master` (`998e61dc0`) as an ancestor. Exact-head CI, UI evidence, and
+remaining external gates are updated in W274 below; no prior-head CI is carried
+forward. The W274 roadmap-only commit will create a new PR head and must receive
+its own exact-head CI check.
 
 W253 records the approved FreeCAD first-run setup and a second, keyboard-driven
 attempt to import the W171-derived DXF. The import dialog recognized about 233
@@ -10621,3 +10593,44 @@ Mac locked despite approval of the rebuilt test app.
 | Prior pushed-head CI | Linux DWG/DXF, CodeQL, Headless ON/OFF, Text Foundations, five Pixi targets PASS; Windows x64/ARM64 IN PROGRESS |
 | Visible stale-peer/preview/DPR and FreeCAD GUI | OPEN; host remains locked to CUA |
 | Deployed/cross-platform W0-W2, human review, final R integration | OPEN |
+
+## 232. W274 Current PR Head, CI, and Unlocked Desktop Recheck
+
+Re-read the current branch, roadmap, and PR #3193 state rather than carrying
+forward the earlier locked-desktop or pending-CI notes. The validation snapshot
+was a clean worktree at pushed head `83e70ae3a3b4adc13d36a5422d665cb4b0881c0e`;
+the PR is open, draft, mergeable, and review-required. Current `origin/master`
+(`998e61dc0b994d3ecf3b5e6b529123c556dc3494`) is an ancestor of the branch.
+
+GitHub reports all required checks green on this exact head: Headless ON/OFF;
+DWG/DXF Linux, Windows x64, and Windows ARM64; CodeQL analysis; and all five
+Pixi targets (macOS arm64, macOS Intel, Ubuntu x64, Ubuntu ARM64, Windows). Both
+PR and branch-push Pixi runs passed. The security scan is skipped by workflow
+policy. This supersedes the stale W273 line above that still listed macOS Intel,
+DWG/DXF, and CodeQL as pending; no previous-head status is used.
+
+The remote desktop is awake and CUA can inspect the approved applications. The
+LibreCAD test copy visibly displays both three-contour groups from the W193
+fixture. No fixture edit or save was made during this recheck. The observed
+image is inline only: it was not retained as a durable screenshot and Qt display
+DPR was not measured. In FreeCAD 1.1.4, the W193 DXF open path reports about 90
+geometric entities; after keyboard confirmation the application returns to its
+start page, with no document viewport visible. This is not a FreeCAD rendering
+pass. No FreeCAD drawing was saved.
+
+| W274 item | Result |
+|---|---|
+| Worktree and pushed head | PASS; clean at `83e70ae3a3b4adc13d36a5422d665cb4b0881c0e` |
+| PR state | OPEN, draft, mergeable; review required |
+| Current `origin/master` ancestry | PASS; `998e61dc0` is an ancestor |
+| Exact-head required GitHub CI | PASS; Headless ON/OFF, DWG/DXF Linux + Windows x64/ARM64, CodeQL, five Pixi targets |
+| LibreCAD W193 visible geometry | PASS; six contours displayed in two groups; fixture not saved |
+| Durable screenshot / Qt display-DPR | OPEN; screenshot not retained; DPR not measured |
+| Physical stale-peer and distinct held-drag preview/commit parity | OPEN; not established in this session |
+| FreeCAD W193 viewport | OPEN; about 90 entities recognized, start page shown after confirmation |
+| Developer ID signing/notarization and static FreeType OS-minimum compatibility | OPEN |
+| Full deployed W0-W2 acceptance, human PR review, final R integration | OPEN |
+
+The W274 roadmap-only commit is a new PR head; the green checks above qualify
+the recorded implementation head, not this documentation commit. Verify the
+new exact-head workflow before carrying CI status forward.
