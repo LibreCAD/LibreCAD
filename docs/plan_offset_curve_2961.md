@@ -10772,3 +10772,53 @@ Next: do not infer a renderer defect from this ambiguous capture. Use a retained
 before/preview/after image set or an exact geometry inventory to close parity;
 then test Escape during a true held drag and stale-peer refusal. Keep all test
 changes unsaved and recheck the source fixture hash afterward.
+
+## 236. W278 Logged-In Held-Drag Cancellation and Static FreeType Consumer Build
+
+The user confirmed the remote desktop is running and already logged in. Reused
+the approved LibreCAD test copy and W193 DXF. The initial viewport showed the
+two groups of three nested ellipses. With Offset configured for fixed distance
+0.5, Keep Originals, two multiple copies, and Editable Offset Curve, sampled a
+drag toward the outside of the right-hand ellipse. The held-pointer screenshot
+showed the highlighted source but no distinct offset preview that could be
+compared against the committed result. On release, two offset contours were
+visible; Escape ended the active action and one Undo restored the original
+three-contour group. A separate drag was cancelled by sending Escape while the
+drag call was still active; the action returned to Default and the viewport
+remained at the original six contours. No Save command was issued. The fixture
+SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`, with
+mtime `2026-10-30 11:42:53 EDT`.
+
+Completed the pending `ttf2lff` consumer validation against the universal
+static FreeType archive from W275. CMake selected
+`/private/tmp/offset-w275-freetype/lib/libfreetype.a`; the `ttf2lff` target
+built successfully. `lipo -info` reports arm64 and x86_64. `otool -L` shows
+only the system `libc++` and `libSystem` dependencies, confirming FreeType was
+linked statically. `otool -l` reports minimum OS 14.4 for both executable
+slices. This closes the local package-consumer architecture/linkage check, but
+does not prove execution on macOS 14.4, signing, or notarization.
+
+| W278 item | Result |
+|---|---|
+| W193 baseline / fixture integrity | PASS; six contours visible; SHA256 and mtime unchanged |
+| Multi-copy offset after pointer release | PASS; two extra contours visible; one Undo restored baseline |
+| Escape during active drag | PASS; action returned to Default and no offset geometry remained |
+| Held-pointer preview distinguishable from source | OPEN; highlighted source visible, no separate preview contour identified |
+| Preview-to-commit geometry parity | OPEN; no retained before/preview/after comparison |
+| Save command / modified source fixture | NONE; no Save command; source hash unchanged |
+| Universal static FreeType selected by CMake | PASS; archive path confirmed in CMakeCache |
+| `ttf2lff` build and architecture | PASS; target builds as arm64 + x86_64 |
+| `ttf2lff` linkage and minimum OS | PASS; no dynamic FreeType dependency; minos 14.4 in both slices |
+| Physical stale-peer behavior | OPEN |
+| Retained viewport screenshot / Qt display-DPR | OPEN |
+| FreeCAD independent viewport | OPEN; prior import attempts exited after confirmation |
+| macOS 14.4 runtime, signing/notarization, complete deployed W0-W2 | OPEN |
+| Exact-head CI, human review, final R integration | OPEN |
+
+Next: preserve the preview-parity gate as open until a durable before/preview/
+after capture or exact geometry inventory proves equivalence. Continue stale-peer
+testing and retained screenshot/DPR collection. The W275 source commits and this
+roadmap receipt are still local; wait for the existing pushed-head workflows to
+finish before pushing, then inspect every required check on the new exact PR
+head.
