@@ -1009,8 +1009,8 @@ atau [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Sembunyikan semua lapisan</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sembunyikan semua lapisan kecuali lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ atau [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Sembunyikan semua lapisan</translation>
+        <source>Hide all layers except current</source>
+        <translation>Sembunyikan semua lapisan kecuali lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ atau [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Bekukan Semua Lapisan</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Se&amp;mbunyikan semua lapisan kecuali lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8475,8 +8475,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Sembunyikan semua lapisan</translation>
+        <source>Hide all layers except current</source>
+        <translation>Sembunyikan semua lapisan kecuali lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
@@ -8520,8 +8520,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Bekukan Semua Lapisan</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sembunyikan semua lapisan kecuali lapisan saat ini</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>

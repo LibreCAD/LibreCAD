@@ -1317,8 +1317,8 @@ sau [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Ascundeți toate straturile</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Ascunde toate &amp;straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ sau [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Ascundeți toate straturile</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ascunde toate straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ sau [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Înghețați toate straturile</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Asc&amp;unde toate straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8477,8 +8477,8 @@ Conținutul unui strat de construcție nu ar trebui să apară în imprimare.</t
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Ascunderea tuturor straturilor</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ascunde toate straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8502,8 +8502,8 @@ Conținutul unui strat de construcție nu ar trebui să apară în imprimare.</t
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Ascunderea tuturor straturilor</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>As&amp;cunde toate straturile cu excepția celui curent</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

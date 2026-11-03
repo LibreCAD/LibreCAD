@@ -1317,8 +1317,8 @@ of [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Verberg alle lagen</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige &amp;verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ of [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Verberg alle lagen</translation>
+        <source>Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ of [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Alle lagen bevriezen</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige &amp;verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8474,8 +8474,8 @@ De inhoud van een constructielaag mag niet in de afdruk verschijnen.</translatio
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Verberg alle Lagen</translation>
+        <source>Hide all layers except current</source>
+        <translation>Alle lagen behalve de huidige verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8499,8 +8499,8 @@ De inhoud van een constructielaag mag niet in de afdruk verschijnen.</translatio
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>Ver&amp;grendel alle Lagen</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Alle lagen behalve de huidige verbergen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

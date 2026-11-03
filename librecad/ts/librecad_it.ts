@@ -1321,8 +1321,8 @@ o [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Nascondi tutti i livelli</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Nascondi tutti i livelli tranne quello corrente</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2015,8 +2015,8 @@ o [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Nascondi tutti i livelli</translation>
+        <source>Hide all layers except current</source>
+        <translation>Nascondi tutti i livelli tranne quello corrente</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2208,8 +2208,8 @@ o [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Blocca tutti i livelli</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Nascondi tutti i livelli tranne quello corrente</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8482,8 +8482,8 @@ Il contenuto di un livello di costruzione non dovrebbe apparire in stampa.</tran
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Nascondi tutti i livelli</translation>
+        <source>Hide all layers except current</source>
+        <translation>Nascondi tutti i livelli tranne quello corrente</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8507,8 +8507,8 @@ Il contenuto di un livello di costruzione non dovrebbe apparire in stampa.</tran
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Congela tutti i livelli</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Nascondi tutti i livelli tranne quello corrente</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

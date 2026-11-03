@@ -1317,8 +1317,8 @@ eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Skjul alle lag</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Sk&amp;jul alle lag unntatt det gjeldende</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Skjul alle lag</translation>
+        <source>Hide all layers except current</source>
+        <translation>Skjul alle lag unntatt det gjeldende</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Frys alle lag</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Sk&amp;jul alle lag unntatt det gjeldende</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8473,8 +8473,8 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Skjul alle lag</translation>
+        <source>Hide all layers except current</source>
+        <translation>Skjul alle lag unntatt det gjeldende</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8498,8 +8498,8 @@ Innholdet i et konstruksjonslag skal ikke vises i utskrift.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>Frys alle lag</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Sk&amp;jul alle lag unntatt det gjeldende</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

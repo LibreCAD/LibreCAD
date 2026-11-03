@@ -1084,8 +1084,8 @@ ose [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Fshih të gjitha plastet</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Fshih të gjitha shtresat përveç asaj aktuale</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ ose [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Fshih të gjitha shtresat</translation>
+        <source>Hide all layers except current</source>
+        <translation>Fshih të gjitha shtresat përveç asaj aktuale</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ ose [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Ngrij të gjitha shtresat</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Fshih të gjitha shtresat përveç asaj aktuale</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8476,8 +8476,8 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Fsheh të gjitha shtresat</translation>
+        <source>Hide all layers except current</source>
+        <translation>Fshih të gjitha shtresat përveç asaj aktuale</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
@@ -8521,8 +8521,8 @@ Brendësia e një shtrese konstruktive nuk duhet të shfaqet në printim.</trans
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Fikso të gjitha shtresat</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Fshih të gjitha shtresat përveç asaj aktuale</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>

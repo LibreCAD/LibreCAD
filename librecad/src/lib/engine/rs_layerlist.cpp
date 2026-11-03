@@ -424,14 +424,16 @@ void RS_LayerList::fireLayerToggled(){
 }
 
 /**
- * Freezes or defreezes all layers.
+ * Freezes or defreezes all layers that the Layer List dock lists; its filter
+ * leaves the other layers as they are. The active layer is never frozen:
+ * frozen, it would be replaced by a layer the filter left visible.
  *
  * @param freeze true: freeze, false: defreeze
  */
 void RS_LayerList::freezeAll(bool freeze) {
 
     for (unsigned l=0; l<count(); l++) {
-        if (at(l)->isVisibleInLayerList()) {
+        if (at(l)->isVisibleInLayerList() && !(freeze && at(l) == activeLayer)) {
              at(l)->freeze(freeze);
          }
     }

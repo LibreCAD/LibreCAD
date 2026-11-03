@@ -1317,8 +1317,8 @@ vai [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Slēpt visus slāņus</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Slēpt visus slāņus, izņemot pašreizējo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ vai [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Slēpt visus slāņus</translation>
+        <source>Hide all layers except current</source>
+        <translation>Slēpt visus slāņus, izņemot pašreizējo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ vai [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Iesaldēt visus slāņus</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>S&amp;lēpt visus slāņus, izņemot pašreizējo</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8478,8 +8478,8 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Slēpt visus slāņus</translation>
+        <source>Hide all layers except current</source>
+        <translation>Slēpt visus slāņus, izņemot pašreizējo</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8503,8 +8503,8 @@ Konstruēšanas slāņa saturam nevajadzētu parādīties izdrukā.</translation
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Sasaldēt visus slāņus</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Slēpt visus slāņus, izņemot pašreizējo</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

@@ -1317,8 +1317,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>ה&amp;סתר את כל השכבות</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>הס&amp;תר את כל השכבות מלבד הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>הסתר את כל השכבות</translation>
+        <source>Hide all layers except current</source>
+        <translation>הסתר את כל השכבות מלבד הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;הקפא כל השכבות</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>הס&amp;תר את כל השכבות מלבד הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8468,8 +8468,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>הסתר את כל השכבות</translation>
+        <source>Hide all layers except current</source>
+        <translation>הסתר את כל השכבות מלבד הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8493,8 +8493,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>הקפאת כל השכבות</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>הס&amp;תר את כל השכבות מלבד הנוכחית</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

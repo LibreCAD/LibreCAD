@@ -1317,8 +1317,8 @@ eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Dölj alla lager</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Dölj alla lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Dölj alla lager</translation>
+        <source>Hide all layers except current</source>
+        <translation>Dölj alla lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ eller [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Frys alla lager</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>D&amp;ölj alla lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8472,8 +8472,8 @@ Innehållet i ett konstruktionslager ska inte visas i utskriften.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Dölj alla lager</translation>
+        <source>Hide all layers except current</source>
+        <translation>Dölj alla lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8497,8 +8497,8 @@ Innehållet i ett konstruktionslager ska inte visas i utskriften.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>Frys alla lager</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Dölj alla lager utom det aktuella</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

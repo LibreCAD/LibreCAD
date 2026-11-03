@@ -13,6 +13,7 @@
 #include "lc_actiondrawrectangle3points.h"
 #include "lc_actionmodifylinejoin.h"
 #include "lc_hyperbola.h"
+#include "lc_layertreewidget.h"
 #include "lc_widgetoptionsdialog.h"
 #include "picfile.h"
 #include "qc_applicationwindow.h"
@@ -1052,6 +1053,102 @@ private slots:
         dismissMessage.start(10);
         dialog.processFile(&document);
         QCOMPARE(graphic.count(), lineCount);
+    }
+    // Issue #3228: since 2.2.1.6 the current layer is never hidden, and "Hide
+    // all layers" now says "except current". With the Layer List filtered, the
+    // current layer was still hidden and a layer the filter left visible was
+    // made current instead.
+    void hideAllLayersKeepsCurrent_data()
+    {
+        QTest::addColumn<bool>("filtered");
+        QTest::newRow("every layer listed") << false;
+        QTest::newRow("list filtered to Wall*") << true;
+    }
+
+    void hideAllLayersKeepsCurrent()
+    {
+        QFETCH(bool, filtered);
+        RS_Graphic graphic;
+        graphic.newDoc();
+        RS_Layer* zero = graphic.findLayer("0");
+        QVERIFY(zero != nullptr);
+        auto* doors = new RS_Layer("Doors");
+        auto* wall1 = new RS_Layer("Wall1");
+        auto* wall2 = new RS_Layer("Wall2");
+        for (RS_Layer* layer : {doors, wall1, wall2})
+            graphic.addLayer(layer);
+        graphic.activateLayer(wall1);
+        QCOMPARE(graphic.getActiveLayer(), wall1);
+        if (filtered) {
+            zero->visibleInLayerList(false);
+            doors->visibleInLayerList(false);
+        }
+
+        graphic.freezeAllLayers(true);
+        QCOMPARE(graphic.getActiveLayer(), wall1);
+        QVERIFY(!wall1->isFrozen());
+        QVERIFY(wall2->isFrozen());
+        // a layer the filter does not list is left as it is
+        QCOMPARE(doors->isFrozen(), !filtered);
+        QCOMPARE(zero->isFrozen(), !filtered);
+
+        graphic.freezeAllLayers(false);
+        for (const RS_Layer* layer : {zero, doors, wall1, wall2})
+            QVERIFY(!layer->isFrozen());
+        QCOMPARE(graphic.getActiveLayer(), wall1);
+    }
+
+    // The same in the Layer Tree, whose filter either highlights the matching
+    // layers or shows only those.
+    void hideAllLayersInTreeKeepsCurrent_data()
+    {
+        QTest::addColumn<QString>("filter");
+        QTest::addColumn<bool>("highlight");
+        QTest::newRow("no filter") << QString() << true;
+        QTest::newRow("highlighting Wall") << QString("Wall") << true;
+        QTest::newRow("showing Wall only") << QString("Wall") << false;
+    }
+
+    void hideAllLayersInTreeKeepsCurrent()
+    {
+        QFETCH(QString, filter);
+        QFETCH(bool, highlight);
+        RS_Graphic graphic;
+        graphic.newDoc();
+        RS_Layer* zero = graphic.findLayer("0");
+        QVERIFY(zero != nullptr);
+        auto* doors = new RS_Layer("Doors");
+        auto* wall1 = new RS_Layer("Wall1");
+        auto* wall2 = new RS_Layer("Wall2");
+        for (RS_Layer* layer : {doors, wall1, wall2})
+            graphic.addLayer(layer);
+        graphic.activateLayer(wall1);
+        RS_StaticGraphicView view(100, 100, nullptr);
+        view.setContainer(&graphic);
+        LC_LayerTreeWidget tree(nullptr, nullptr);
+        tree.setLayerList(graphic.getLayerList());
+        tree.set_view(&view);
+        tree.set_document(&graphic);
+        auto* filterEdit = tree.findChild<QLineEdit*>();
+        QCheckBox* highlightMode = nullptr;
+        for (QCheckBox* box : tree.findChildren<QCheckBox*>()) {
+            if (box->text() == "Highlight Mode")
+                highlightMode = box;
+        }
+        QVERIFY(filterEdit != nullptr);
+        QVERIFY(highlightMode != nullptr);
+        if (highlightMode->isChecked() != highlight)
+            highlightMode->click();
+        filterEdit->setText(filter);
+
+        tree.hideAllLayers();
+        QCOMPARE(graphic.getActiveLayer(), wall1);
+        QVERIFY(!wall1->isFrozen());
+        QVERIFY(wall2->isFrozen());
+        // a layer the filter takes out of the tree is left as it is
+        const bool listed = highlight || filter.isEmpty();
+        QCOMPARE(doors->isFrozen(), listed);
+        QCOMPARE(zero->isFrozen(), listed);
     }
 };
 

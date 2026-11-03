@@ -1317,8 +1317,8 @@ veya [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Tüm katmanları gizle</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Geçerli katman &amp;hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ veya [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Tüm katmanları gizle</translation>
+        <source>Hide all layers except current</source>
+        <translation>Geçerli katman hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ veya [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>Tüm Katmanları &amp;Dondur</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Geçerli katman &amp;hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8486,8 +8486,8 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Tüm katmanları gizle</translation>
+        <source>Hide all layers except current</source>
+        <translation>Geçerli katman hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8511,8 +8511,8 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>Tüm Katmanları &amp;Dondur</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Geçerli katman &amp;hariç tüm katmanları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

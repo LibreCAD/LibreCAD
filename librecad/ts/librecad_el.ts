@@ -1317,8 +1317,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Απόκρυψη όλων των στρωμάτων</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Απόκρυψη όλων των &amp;στρώσεων εκτός της τρέχουσας</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Απόκρυψη όλων των στρωμάτων</translation>
+        <source>Hide all layers except current</source>
+        <translation>Απόκρυψη όλων των στρωμάτων εκτός του τρέχοντος</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Πάγωμα όλων των στρωμάτων</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Απόκρυψη όλων των &amp;στρωμάτων εκτός του τρέχοντος</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8489,8 +8489,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Απόκρυψη όλων των στρώσεων</translation>
+        <source>Hide all layers except current</source>
+        <translation>Απόκρυψη όλων των στρώσεων εκτός της τρέχουσας</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8514,8 +8514,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Απόκρυψη όλων των στρώσεων</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Απόκρυψη όλων των στρώσεων εκτός της τρέχουσας</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

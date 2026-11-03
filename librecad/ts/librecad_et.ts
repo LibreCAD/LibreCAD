@@ -1317,8 +1317,8 @@ või [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Peida kõik kiled</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Peida kõik kihid peale aktiivse</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ või [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Kõikide kilede peitmine</translation>
+        <source>Hide all layers except current</source>
+        <translation>Peida kõik kiled peale aktiivse</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ või [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Külmuta kõik kiled</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Peida kõik kiled peale &amp;aktiivse</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8471,8 +8471,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Kõikide kilede peitmine</translation>
+        <source>Hide all layers except current</source>
+        <translation>Peida kõik kihid peale aktiivse</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8496,8 +8496,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Külmuta kõik kiled</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Peida kõik kihid peale &amp;aktiivse</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>
