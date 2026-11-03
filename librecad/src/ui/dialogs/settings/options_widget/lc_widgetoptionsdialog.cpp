@@ -40,7 +40,7 @@
 LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
     : LC_Dialog(parent, "WidgetOptions"){
     setupUi(this);
-    connect(stylesheet_button,&QPushButton::released, this, &LC_WidgetOptionsDialog::chooseStyleSheet);
+    connect(stylesheet_button, &QToolButton::clicked, this, &LC_WidgetOptionsDialog::chooseStyleSheet);
 
     connect(pbMain, &QToolButton::clicked, this, &LC_WidgetOptionsDialog::onpbMainClicked);
     connect(pbAccent, &QToolButton::clicked, this, &LC_WidgetOptionsDialog::onpbAccentClicked);
@@ -61,9 +61,9 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
         }
 
         QString sheet_path = LC_GET_STR("StyleSheet", "");
-        if (!sheet_path.isEmpty() && QFile::exists(sheet_path)) {
-            stylesheet_field->setText(sheet_path);
-        }
+        stylesheet_field->setText(sheet_path);
+        // on unless switched off, so a style sheet saved before this checkbox existed stays applied
+        stylesheet_checkbox->setChecked(LC_GET_BOOL("AllowStyleSheet", true));
 
         // bool allow_theme = LC_GET_BOOL("AllowTheme", false);
         // theme_checkbox->setChecked(allow_theme);
@@ -342,8 +342,10 @@ void LC_WidgetOptionsDialog::accept() {
         const auto& appWindow = QC_ApplicationWindow::getAppWindow(); // fixme - avoid static?
 
         const QString sheet_path = stylesheet_field->text();
+        const bool allow_sheet = stylesheet_checkbox->isChecked();
         LC_SET("StyleSheet", sheet_path);
-        if (appWindow->loadStyleSheet(sheet_path)) {
+        LC_SET("AllowStyleSheet", allow_sheet);
+        if (appWindow->loadStyleSheet(allow_sheet ? sheet_path : QString())) {
            // nothing to do
         }
 
@@ -464,5 +466,6 @@ void LC_WidgetOptionsDialog::chooseStyleSheet(){
     const QString path = QFileDialog::getOpenFileName(this);
     if (!path.isEmpty()){
         stylesheet_field->setText(QDir::toNativeSeparators(path));
+        stylesheet_checkbox->setChecked(true);
     }
 }

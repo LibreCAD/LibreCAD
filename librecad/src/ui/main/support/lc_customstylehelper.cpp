@@ -37,7 +37,7 @@ void LC_CustomStyleHelper::loadFromSettings() {
         }
 
         const QString sheet_path = LC_GET_STR("StyleSheet", "");
-        if (loadStyleSheet(sheet_path)) {
+        if (LC_GET_BOOL("AllowStyleSheet", true) && loadStyleSheet(sheet_path)) {
             m_styleSheetPath = sheet_path;
         }
     }
