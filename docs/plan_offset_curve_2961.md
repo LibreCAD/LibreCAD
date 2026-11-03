@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 04:54 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W345; chronological evidence follows): implementation slices
+Updated: 2026-11-03 07:45 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W346; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,16 +35,16 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The current PR head is
-`abc38b0650a27bab0d08d0c3b68b4dd1840a562f`, including the pushed W341 runtime
-smoke and W344 roadmap commits; the local branch is synchronized with origin.
+`951cf2270071826dd7af832afa0c5bc8a8a1757d`, including the pushed W341 runtime
+smoke and W344/W345 roadmap commits; the local branch is synchronized with origin.
 The latest product-source commit remains `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
 Git history confirms `d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier
 documentation checkpoint, not the product head.
-At 04:54 UTC, exact-head checks for `abc38b065` show 18 in progress and 5
-skipped; no new-head check has posted a terminal result yet. Continuous
-macOS packaging is starting at Checkout, before the W341 smoke can run. The old
-head's 19 passing checks and 7 skips apply only to `b587c1095`; do not carry
-them forward. The local
+At 07:39 UTC, exact-head CI for `951cf2270` has 19 passing checks, 7 configured
+skips, and zero failures. This includes the W341 universal macOS DMG
+mount-and-launch smoke on `macos-14`; its Build and packaging step succeeded
+and the artifact uploaded. This does not establish Developer ID signing,
+notarization, or minimum macOS 14.4 execution. The local
 `librecad_offset_creation_action_tests` target passes all 90 cases and 90,340
 assertions, including the focused stale-peer case's 39 assertions. Roadmap
 parser and refusal inventory validation pass 5/5 and 94/94; `git diff --check`
@@ -13121,3 +13121,32 @@ old head `b587c1095` succeeded, but does not validate W341 and is not substitute
 for new-head results. CUA still reports the Mac locked after the user's Remote
 Desktop login confirmation; no GUI input was sent. Physical interaction,
 independent viewport, signing/deployment, review, and R integration remain open.
+
+## 301. W346 Exact-Head Mounted-DMG Runtime Qualification
+
+On PR head `951cf2270071826dd7af832afa0c5bc8a8a1757d`, Continuous Build run
+`41580915749` and BuildMacOS job `125735535589` completed successfully at
+07:39 UTC. The Build and packaging step, which contains
+`scripts/test-osx-dmg-runtime.sh --dmg "$DMG_NAME"`, passed; the macOS artifact
+uploaded as artifact `13213180214`. Because this run step uses Bash with `-e`,
+the successful combined step establishes that the mounted-DMG helper exited
+zero. This is the first exact-head CI execution of W341; it is stronger than
+the local smoke against an older app copy. It qualifies an ad-hoc-signed
+universal package on `macos-14`, not Developer ID/notarized deployment or
+execution on the minimum macOS 14.4 release.
+
+The exact PR head has 19 successful checks, 7 configured skips, and zero
+failures. Headless ON/OFF, DWG/DXF fast and Windows x64/ARM64, Windows ARM64
+packaging, CodeQL, and the Pixi matrix all pass. The roadmap parser passes 5/5;
+the refusal inventory passes 94/94 with 93 obligations, zero pending
+declarations, and zero production mismatches. Shell syntax, ShellCheck,
+actionlint, and `git diff --check` pass. No product-source change was made in
+W346.
+
+Remaining gates are physical GUI preview/commit and stale-peer evidence, a
+useful independent W171 viewport, signed/deployed-package and minimum-OS
+acceptance, required human review, and final R integration. The user continues
+to report an active logged-in Remote Desktop; the CUA bridge still reports the
+Mac locked and exposes no native apps, so no GUI input was sent. Keep these
+gates open; do not convert the successful package smoke into a claim that all
+plan acceptance is complete.
