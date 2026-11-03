@@ -138,6 +138,7 @@ RS_Entity* RS_Leader::doAddVertex(const RS_Vector& v) {
         pen.setWidth(RS2::WidthByBlock);
         pen.setColor(RS_Color(RS2::FlagByBlock));
         line->setPen(pen);
+        line->setLayer(nullptr); // the leader's, as for the arrow head
         RS_EntityContainer::addEntity(line);
         entity = line;
     }
