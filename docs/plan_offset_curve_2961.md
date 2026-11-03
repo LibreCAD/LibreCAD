@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 04:49 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W343; chronological evidence follows): implementation slices
+Updated: 2026-11-03 04:51 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W344; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -34,13 +34,14 @@ compiled Qt plugin caller. The latest implementation audit found no additional
 product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
-The PR head remains `b587c1095fa93ed4486c984a03d5ad3a746e6d64`. The latest
-non-documentation commit is `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; every
-later commit through the current PR head changes documentation only. Git
-history confirms `d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier
+The PR head remains `b587c1095fa93ed4486c984a03d5ad3a746e6d64`. The local
+branch extends it with W341 tooling/evidence commit
+`7a24fd798bab53fcb3196e1fac48ad48a435dbbc`; it is not pushed yet. The latest
+product-source commit remains `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
+Git history confirms `d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier
 documentation checkpoint, not the product head.
-At 04:49 UTC, exact-head CI has 18 passing checks, 1 pending, 6 skipped, and
-zero failures. Both Headless modes, the DWG/DXF fast check and both Windows
+At 04:51 UTC, exact-head CI has 19 passing checks, 7 skipped, and zero failures.
+Both Headless modes, the DWG/DXF fast check and both Windows
 DWG/DXF lanes, Windows ARM64 packaging, all four Ubuntu Pixi jobs, both Windows
 Pixi jobs, all four macOS Pixi jobs, and CodeQL pass. Only Continuous macOS
 packaging remains active. These
@@ -13080,3 +13081,26 @@ failures. The in-progress BuildMacOS job is still at Build and packaging; it
 uses the pre-W341 workflow and cannot validate the new mounted-DMG runtime
 smoke. Keep W341/W342 changes local until this exact-head job terminates, then
 commit/push and validate the new exact head. No product source changed here.
+
+## 299. W344 Exact-Head macOS Completion and Commit
+
+The pre-W341 exact-head Continuous macOS packaging job (run `41567004131`, job
+`125690814214`) completed successfully at 04:51:35 UTC on PR head
+`b587c1095fa93ed4486c984a03d5ad3a746e6d64`. The current PR head now has 19
+successful checks, 7 configured skips, and no failures. This job used the
+pre-W341 workflow, so it does not exercise the newly added mounted-DMG launch
+smoke.
+
+After that job terminated, the W341 runtime-smoke slice and accumulated W329-W343
+roadmap/evidence updates were committed locally as
+`7a24fd798bab53fcb3196e1fac48ad48a435dbbc` (`Add mounted macOS DMG startup
+smoke`). The change adds `scripts/test-osx-dmg-runtime.sh` to the universal-DMG
+macOS workflow, retaining the W335 baseline screenshot and current roadmap.
+Local validation passes: the DMG launch smoke passed on the available macOS
+host; its empty-DMG failure/cleanup path passed; `bash -n`, ShellCheck,
+actionlint, roadmap parser 5/5, refusal inventory 94/94 (93 obligations, zero
+pending declarations or production mismatches), and `git diff --check` all
+pass. The commit remains local until this W344 plan receipt is committed; then
+push both commits and require exact-new-head CI, specifically the W341 step.
+The user reports the Remote Desktop is logged in, but CUA still reports the Mac
+locked; visible interaction evidence remains open.
