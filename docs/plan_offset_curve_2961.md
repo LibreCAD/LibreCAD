@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 02:23 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W326; chronological evidence follows): implementation slices
+Updated: 2026-11-03 02:28 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W327; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -51,7 +51,10 @@ ad-hoc package/relocation smoke tests pass; these do not establish Developer ID
 signing, notarization, or execution on macOS 14.4. PR #3193 remains open,
 draft, and review-required. The user's Remote Desktop was accessible during
 W326, then the native CUA bridge reported the Mac surface relocked after
-FreeCAD exited. No successful independent viewport evidence is claimed.
+FreeCAD exited; it remains locked at W327. Neither the FreeCAD nor BRL-CAD
+attempt produced successful independent viewport evidence. The local branch
+has 18 roadmap-only commits not yet pushed; preserve them until the active
+exact-head macOS packaging job terminates.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
