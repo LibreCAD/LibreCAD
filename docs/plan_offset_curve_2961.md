@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 16:50 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W351; chronological evidence follows): implementation slices
+Updated: 2026-11-03 16:58 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W352; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -34,8 +34,8 @@ compiled Qt plugin caller. The latest implementation audit found no additional
 product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
-At the start of W351, the pushed PR head was W350
-`c851369f4bae2e115d18215f8cc35c527bb9026e`; W350 is a roadmap-only commit, and
+At the start of W352, the pushed PR head was W351
+`9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
 the latest product-source commit remains
 `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. Git history confirms
 `d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier documentation
@@ -68,10 +68,12 @@ through the approved test copy; W350 records a follow-up drag/Escape probe after
 the Remote Desktop became reachable again. Neither closes physical stale-peer
 acceptance. W335 captured the test-copy LibreCAD
 window directly through CoreGraphics without input, which is baseline rendering
-only, not interaction acceptance. Neither the FreeCAD, BRL-CAD, W331
-ezdxf/Matplotlib, nor W342 LibreDWG attempt produced useful independent W171
-viewport evidence. W349 and W350 are pushed. W351 reconciles the W350 push and
-its newly started exact-head checks; it is documentation-only.
+only, not interaction acceptance. W352 now archives a useful independent
+ezdxf/Matplotlib viewport of the ODA-converted W171 AC1032 DXF; this validates
+that single converted SPLINE only, not the original DWG conversion or complete
+DWG rendering. Earlier FreeCAD, BRL-CAD, W331, and W342 attempts remain limited
+as detailed below. W349-W351 are pushed. W352 records the new viewport artifact
+and W351-head CI status.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -13368,6 +13370,40 @@ the inventory contained 93 unique obligations, zero pending declarations and
 zero production mismatches, and its diff check was clean. W351 changes no product
 code. The W350 drag/Escape probe and its evidence limits are recorded above.
 Human review, physical stale-peer acceptance, durable matched screenshots and
-app-window DPR, a useful independent W171 viewport, Developer ID/notarization,
+app-window DPR, direct native-DWG rendering, Developer ID/notarization,
 exact-minimum macOS 14.4 execution, and final R integration remain external or
 unverified gates; no plan item is represented as satisfying those gates.
+
+## 307. W352 Independent W171 DXF Viewport
+
+The exact ODA-converted W171 AC1032 DXF at
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`
+was parsed with ezdxf 1.4.5. The input SHA256 remains
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`. Its
+modelspace contains exactly one degree-3 SPLINE with four control points; the
+control points run from `(1.25, 0)` to approximately `(1.249937501, 0.012499792)`.
+ezdxf sampled 65 points at flattening tolerance `1e-8`; its document audit had
+zero errors and zero fixes, and the Matplotlib render emitted no warnings.
+
+The durable two-panel image is
+[`w352-w171-independent-viewport.png`](offset-curve-evidence/w352-w171-independent-viewport.png)
+(2100 x 1200, SHA256
+`081a5f1b1fc4ebcf98c111dfc832b64890341d2fe4d3fc5f12aa603867eb2a7f`). The left
+panel preserves true scale; the right panel explicitly stretches X deviation
+1000x to make the curve's small deviation from vertical visible. This closes
+the useful independent viewport gate for the ODA-converted DXF's one modelspace
+SPLINE. It does not establish direct native-DWG rendering, ODA conversion
+fidelity against the original binary, or visual support for other entity types.
+
+At 16:59 UTC, exact W351-head CI had Headless ON/OFF passed. C++ analysis, fast
+and Windows DWG/DXF verification, Windows ARM64, BuildMacOS, and Pixi jobs were
+pending; BuildLinux, BuildLinuxAarch64, BuildSnap, BuildWindows64, and Security
+scan were configured skips. No failures were reported. These are W351 results,
+not evidence for the forthcoming W352 documentation/artifact head.
+
+The LibreCAD test-copy UI became disabled through CUA during the subsequent
+capture-tool attempt. No further input was sent, and the drawing and preferences
+remain unchanged. Durable preview/commit screenshots, app-window DPR, and
+physical stale-peer acceptance therefore remain open, as do Developer ID and
+notarization, exact-minimum macOS 14.4 execution, human review, and final R
+integration.
