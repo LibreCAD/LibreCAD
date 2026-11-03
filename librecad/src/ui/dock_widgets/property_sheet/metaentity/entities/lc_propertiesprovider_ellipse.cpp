@@ -124,7 +124,7 @@ void LC_PropertiesProviderEllipse::doCreateSingleEntityCommands(LC_PropertyConta
         {
             tr("Creation of line tangental to ellipse"),
             {RS2::ActionDrawLineTangent1, tr("Tangent (P,C)"), tr("Create line tangental to ellipse")},
-            {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangental for two entitiers")}
+            {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangental for two entities")}
         },
         {
             tr("Creation of line with relative angle"),

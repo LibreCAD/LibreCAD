@@ -394,8 +394,8 @@ class LC_MatchDescriptorDimBase : public LC_MatchDescriptorBase {
         if (entityType == RS2::EntityDimArc) {
             entity->addIntEnumDS("dimTextArcLen", [](const LC_DimStyle* ds) -> int {
                 return ds->arc()->arcSymbolPosition();
-            }, tr("Arc length symbol"), tr("Specifies placement of the arch length dimension symbol (DIMARCSYM variable)"), {
-                {tr("Preceeding dimension text"), LC_DimStyle::Arc::BEFORE},
+            }, tr("Arc length symbol"), tr("Specifies placement of the arc length dimension symbol (DIMARCSYM variable)"), {
+                {tr("Preceding dimension text"), LC_DimStyle::Arc::BEFORE},
                 {tr("Above dimension text"), LC_DimStyle::Arc::ABOVE},
                 {tr("None"), LC_DimStyle::Arc::NONE}
             });
@@ -504,7 +504,7 @@ class LC_MatchDescriptorDimBase : public LC_MatchDescriptorBase {
             entity->addIntEnumDS("textInside", [](const LC_DimStyle* ds) -> bool {
                 return ds->text()->extLinesRelativePlacement();
             }, tr("Text inside"), tr("Sets position of dimension text inside extension lines (DIMTIX variable)"), {
-                {tr("Place bettween if has room"), LC_DimStyle::Text::PLACE_BETWEEN_IF_SUFFICIENT_ROOM},
+                {tr("Place between if has room"), LC_DimStyle::Text::PLACE_BETWEEN_IF_SUFFICIENT_ROOM},
                 {tr("Always inside"), LC_DimStyle::Text::PLACE_ALWAYS_INSIDE}
             });
         }
@@ -964,7 +964,7 @@ class LC_MatchDescriptorDimBase : public LC_MatchDescriptorBase {
                                      return inchesSuppress;
                                  }, tr("Alt tolerance suppress zero inches"),
                                  tr(
-                                     "Sets suppression of zero inches for alterate units tolerance values in dimension (DIMALTTZ variable)"));
+                                     "Sets suppression of zero inches for alternate units tolerance values in dimension (DIMALTTZ variable)"));
         }
     }
 

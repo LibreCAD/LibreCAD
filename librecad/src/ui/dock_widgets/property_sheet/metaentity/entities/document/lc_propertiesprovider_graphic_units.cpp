@@ -112,7 +112,7 @@ void LC_PropertiesProviderGraphicUnits::createLinearPrecision(LC_PropertyContain
     const LC_Property::Names names = {
         "unitsLinearPrecision",
         tr("Linear precision"),
-        tr("Precision of linear units units used in drawing")
+        tr("Precision of linear units used in drawing")
     };
     addDirectEnum<LC_PropertyEnumValueType, RS_Graphic>(cont, names, enumDescriptor, funGet, funSet, graphic);
 }
@@ -134,8 +134,8 @@ void LC_PropertiesProviderGraphicUnits::createDrawingUnit(LC_PropertyContainer* 
 void LC_PropertiesProviderGraphicUnits::createAnglesBasisIncreaseDirection(RS_Graphic* graphic, LC_PropertyContainer* const cont) const {
     const LC_Property::Names names = {
         "unitsBaseAngleDir",
-        tr("Angles clockwize"),
-        tr("Direction of angles. If counterclockwize, 90 degrees is north, for clockwise - 90 degrees is south")
+        tr("Angles clockwise"),
+        tr("Direction of angles. If counterclockwise, 90 degrees is north, for clockwise - 90 degrees is south")
     };
 
     auto funGet = [](const RS_Graphic* e) -> bool {

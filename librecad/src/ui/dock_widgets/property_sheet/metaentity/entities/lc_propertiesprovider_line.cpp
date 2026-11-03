@@ -96,7 +96,7 @@ void LC_PropertiesProviderLine::doCreateSingleEntityCommands(LC_PropertyContaine
     const std::list<CommandLinkInfo> commands1 = {
         {
             tr("Length and lines join"),
-            {RS2::ActionModifyTrimAmount, tr("Lengthen"), tr("Create parallel line through point")},
+            {RS2::ActionModifyTrimAmount, tr("Lengthen"), tr("Lengthen or shorten the line by a given distance")},
             {RS2::ActionModifyLineJoin, tr("Line Join"), tr("Join two lines")}
         },
         {
@@ -142,28 +142,28 @@ void LC_PropertiesProviderLine::doCreateSingleEntityCommands(LC_PropertyContaine
         },
         {
             tr("Creating orthogonal or relative angle lines"),
-            {RS2::ActionDrawLineOrthogonal, tr("Orthogonal"), tr("Create line orhtogonal to this line")},
-            {RS2::ActionDrawLineRelAngle, tr("Relative Angle"), tr("Create line with related angle to this line")}
+            {RS2::ActionDrawLineOrthogonal, tr("Orthogonal"), tr("Create line orthogonal to this line")},
+            {RS2::ActionDrawLineRelAngle, tr("Relative Angle"), tr("Create line with relative angle to this line")}
         },
         {
-            tr("Creation line from point or tangental orthogonal"),
+            tr("Creation of line from point or tangental orthogonal"),
             {RS2::ActionDrawLineFromPointToLine, tr("Line from Point"), tr("Create line from point to this line")},
             {RS2::ActionDrawLineOrthTan, tr("Tangent Ort"), tr("Create orthogonal line that is tangental to other entity")}
         },
         {
             tr("Creation of circle tangental to line"),
-            {RS2::ActionDrawCircleTangental1Entity2Points, tr("Tangential Circle (2 P)"), tr("Create circle tangental 2 points")},
-            {RS2::ActionDrawCircleTangental2Entities1Point, tr("Tangential Circle (2 E, 1 P)"), tr("Create circle tangental by 2 entitites and 1 point")}
+            {RS2::ActionDrawCircleTangental1Entity2Points, tr("Tangential Circle (2 P)"), tr("Create circle tangental by 2 points")},
+            {RS2::ActionDrawCircleTangental2Entities1Point, tr("Tangential Circle (2 E, 1 P)"), tr("Create circle tangental by 2 entities and 1 point")}
         },
         {
             tr("Creation of circle tangental to line"),
             {RS2::ActionDrawCircleTan3Entities, tr("Tangential Circle (3 E)"), tr("Create circle tangental to 3 entities")},
-            {RS2::ActionDrawCircleTan2EntitiesRadius, tr("Tangential Cicle (2 E, R)"), tr("Create circle tangental by 2 entities and radius")}
+            {RS2::ActionDrawCircleTan2EntitiesRadius, tr("Tangential Circle (2 E, R)"), tr("Create circle tangental by 2 entities and radius")}
         },
         {
             tr("Creation of ellipse or bounding box"),
-            {RS2::ActionDrawEllipseInscribe, tr("Ellipse inscribed"), tr("Create elipse inscribed")},
-            {RS2::ActionDrawBoundingBox, tr("Bounding box"), tr("Create of bounding box for line")}
+            {RS2::ActionDrawEllipseInscribe, tr("Ellipse inscribed"), tr("Create ellipse inscribed")},
+            {RS2::ActionDrawBoundingBox, tr("Bounding box"), tr("Create bounding box for line")}
         },
         {
             tr("Modification of line with bevel or fillet"),
@@ -173,7 +173,7 @@ void LC_PropertiesProviderLine::doCreateSingleEntityCommands(LC_PropertyContaine
         {
             tr("Dividing line"),
             {RS2::ActionDrawSliceDivideLine, tr("Slice/Divide"), tr("Slice or divide a line")},
-            {RS2::ActionModifyBreakDivide, tr("Break/Divide"), tr("Break or divide the line by intesection points")}
+            {RS2::ActionModifyBreakDivide, tr("Break/Divide"), tr("Break or divide the line by intersection points")}
         },
         {tr("Center line"),
             {RS2::ActionDrawCenterLine, tr("Centerline"), tr("Create center line between two lines")},

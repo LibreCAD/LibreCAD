@@ -696,7 +696,7 @@ void LC_PropertiesProviderDimBase::createTextSection(LC_PropertyContainer* conta
         static LC_EnumDescriptor dimarcsymPolicyDescriptor = {
             "DIMARCSYMPolicy",
             {
-                {LC_DimStyle::Arc::BEFORE, tr("Preceeding dimension text")},
+                {LC_DimStyle::Arc::BEFORE, tr("Preceding dimension text")},
                 {LC_DimStyle::Arc::ABOVE, tr("Above dimension text")},
                 {LC_DimStyle::Arc::NONE, tr("None")}
             }
@@ -705,7 +705,7 @@ void LC_PropertiesProviderDimBase::createTextSection(LC_PropertyContainer* conta
         addEnum_DS({
                        "dimTextArcLen",
                        tr("Arc length symbol"),
-                       tr("Specifies placement of the arch length dimension symbol (DIMARCSYM variable)")
+                       tr("Specifies placement of the arc length dimension symbol (DIMARCSYM variable)")
                    }, &dimarcsymPolicyDescriptor, [](const LC_DimStyle* ds) -> LC_PropertyEnumValueType {
                        return ds->arc()->arcSymbolPosition();
                    }, [](const LC_PropertyEnumValueType& v, const LC_DimStyle* ds) -> void {
@@ -869,7 +869,7 @@ void LC_PropertiesProviderDimBase::createFitSection(LC_PropertyContainer* contai
         static LC_EnumDescriptor dimtixDescriptor = {
             "dimtix",
             {
-                {LC_DimStyle::Text::PLACE_BETWEEN_IF_SUFFICIENT_ROOM, tr("Place bettween if has room")},
+                {LC_DimStyle::Text::PLACE_BETWEEN_IF_SUFFICIENT_ROOM, tr("Place between if has room")},
                 {LC_DimStyle::Text::PLACE_ALWAYS_INSIDE, tr("Always inside")}
             }
         };
@@ -1590,7 +1590,7 @@ void LC_PropertiesProviderDimBase::createTolerancesSection(LC_PropertyContainer*
         addBoolean_DS({
                           "dimTolAltSuppressZeroInch",
                           tr("Alt tolerance suppress zero inches"),
-                          tr("Sets suppression of zero inches for alterate units tolerance values in dimension (DIMALTTZ variable)")
+                          tr("Sets suppression of zero inches for alternate units tolerance values in dimension (DIMALTTZ variable)")
                       }, [](const LC_DimStyle* ds) -> bool {
                           const auto zerosSuppression = ds->zerosSuppression();
                           return zerosSuppression->isAltTolSuppressZeroInches();

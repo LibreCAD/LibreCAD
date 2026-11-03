@@ -57,7 +57,7 @@ void LC_PropertiesProviderPolyline::doCreateEntitySpecificProperties(LC_Property
         const int initialIndex = polylineVertexIndex;
 
         createIndexAndPointProperties(contGeometry, polyline, {"vertexIdx", tr("Vertex Index"), tr("Index of current vertex of polyline")},
-                                      {"vertexValue", tr("Vertex"), tr("Index of current vertex of polyline")}, vertexesCount, initialIndex,
+                                      {"vertexValue", tr("Vertex"), tr("Vertex of polyline with given index")}, vertexesCount, initialIndex,
                                       [polyline](const int newValue) -> RS_Vector {
                                           const RS_Vector wcsVector = polyline->getVertex(newValue - 1);
                                           return wcsVector;
@@ -117,8 +117,8 @@ void LC_PropertiesProviderPolyline::doCreateSingleEntityCommands(LC_PropertyCont
         },
         {
             tr("Parallel polyline and changing direction"),
-            {RS2::ActionPolylineEquidistant, tr("Equidistant"), tr("Creates equidistnat polyline")},
-            {RS2::ActionModifyRevertDirection, tr("Revert direction"), tr("Reverst direction of polyline, swapping start and end points")}
+            {RS2::ActionPolylineEquidistant, tr("Equidistant"), tr("Creates equidistant polyline")},
+            {RS2::ActionModifyRevertDirection, tr("Revert direction"), tr("Revert direction of polyline, swapping start and end points")}
         },
         {tr("Creation of bounding box or spline"),
             {RS2::ActionDrawBoundingBox, tr("Bounding box"), tr("Creation of bounding box for polyline")},
