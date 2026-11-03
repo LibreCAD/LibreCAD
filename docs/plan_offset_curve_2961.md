@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 01:41 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W320; chronological evidence follows): implementation slices
+Updated: 2026-11-03 02:23 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W326; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -49,9 +49,9 @@ not a separate check entry. Results apply only to this exact head; do not carry
 forward results from older heads. The local qmake6 app/worker build and
 ad-hoc package/relocation smoke tests pass; these do not establish Developer ID
 signing, notarization, or execution on macOS 14.4. PR #3193 remains open,
-draft, and review-required. The user confirms their Remote Desktop session is
-logged in; the native CUA bridge still reports a locked Mac surface, so no new
-visible GUI evidence is claimed.
+draft, and review-required. The user's Remote Desktop was accessible during
+W326, then the native CUA bridge reported the Mac surface relocked after
+FreeCAD exited. No successful independent viewport evidence is claimed.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -8407,6 +8407,50 @@ probes remain unverified GUI behavior, not product failures or passes. Remaining
 GUI refusal/interaction coverage, external-CAD rendering of the W171-derived
 files, durable screenshot/DPR, deployed-package qualification, W0-W2 platform
 acceptance, reviewer approval, and final R integration remain open.
+
+## 281. W326 Reduced W171 Viewer Retry
+
+The user confirmed the remote desktop was already running and logged in. CUA
+confirmed that the approved LibreCAD test copy was responsive on the disposable
+W281/W193 baseline. I briefly invoked Offset, selected the outer ellipse, then
+canceled the action before specifying a direction; no geometry was committed
+and no drawing was saved.
+
+To reduce unrelated DXF content, extracted only the SPLINE entity body from the
+unchanged ODA-converted W171 DXF into
+`/private/tmp/offset-W171-single-spline-AC1032.dxf` (SHA256
+`0e5d04b3d05ccb558deb8151b4b5e075bc25e710a105810991a4fd92ffa39d88`). FreeCAD
+1.1.4's importer recognized approximately 11 geometric items. Both `Individual
+Part shapes` and `Editable Draft objects` imports caused FreeCAD to exit before
+presenting a viewport. This stripped derivative therefore adds no visual
+fidelity evidence and does not indicate a defect in LibreCAD or the original
+DXF. The original ODA DXF remains unchanged at SHA256
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`. The CUA
+bridge subsequently reported the remote desktop relocked.
+
+At 02:23 UTC, exact-head diagnostics for PR head
+`d183479630b43ae55b032a160d7403dbf3a848ed` still showed Continuous Build
+macOS run `41550587186`, job `125637540627`, in Build and packaging. It began
+at 00:11 UTC; Windows ARM64 and all other applicable checks are successful,
+while configured lanes remain skipped. Do not cancel or replace this run, and
+keep the 15 local roadmap-only commits unpushed until it terminates.
+
+| W326 item | Result |
+|---|---|
+| User-reported logged-in remote desktop / approved test app | PASS; initially visible and responsive; session later relocked |
+| Offset action cleanup | PASS; canceled before direction/commit; no Save |
+| Reduced W171 DXF creation | PASS; one SPLINE entity body; source DXF unchanged |
+| FreeCAD individual-shape import | FAIL TO RENDER; app exited before viewport |
+| FreeCAD editable-Draft import | FAIL TO RENDER; app exited before viewport |
+| Independent W171 viewport/fidelity | OPEN; no useful visual evidence |
+| Original ODA fixture integrity | PASS; SHA256 unchanged |
+| Exact-head CI | macOS packaging still in progress; all other applicable checks successful; configured skips unchanged |
+| Physical stale-peer, durable screenshots/Qt DPR, signed/deployed W0-W2, review and final R | OPEN |
+
+This retry is not a product-code failure and does not close the viewer gate.
+Continue with independent viewport alternatives, physical stale-peer and
+retained GUI/DPR evidence when the desktop is available. Preserve the current
+macOS run and local-only roadmap queue until its terminal result.
 
 ## 173. W215 Full CMake Release and PR-Head Requalification
 
