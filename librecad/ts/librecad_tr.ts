@@ -13170,248 +13170,248 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
         <source>Geometry</source>
-        <translation type="unfinished">Geometri</translation>
+        <translation>Geometri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="60"/>
         <source>Geometrical properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrik özellikler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="65"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="65"/>
         <source>Text properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin özellikleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="70"/>
         <source>Calculated</source>
-        <translation type="unfinished"></translation>
+        <translation>Hesaplanan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="70"/>
         <source>Calculated properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Hesaplanan özellikler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="75"/>
         <source>Single Entity Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Tek Varlık İşlemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="75"/>
         <source>Action commands applicable to single edited entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenlenen tek varlığa uygulanabilen işlem komutları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="80"/>
         <source>Selected Set Actions</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili Küme İşlemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="80"/>
         <source>Action commands applicable for ALL selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili TÜM varlıklara uygulanabilen işlem komutları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="88"/>
         <source>Moving or rotating operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Taşıma veya döndürme işlemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="89"/>
         <source>Move / Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Taşı / Kopyala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="89"/>
         <source>Move selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili varlıkları taşı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="90"/>
         <source>Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Döndür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="90"/>
         <source>Rotate of selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili varlıkları döndür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="93"/>
         <source>Duplicating or mirroring</source>
-        <translation type="unfinished"></translation>
+        <translation>Çoğaltma veya aynalama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="94"/>
         <source>Duplicate</source>
-        <translation type="unfinished">Duplicate</translation>
+        <translation>Çoğalt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="94"/>
         <source>Duplicate selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi çoğalt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror</source>
-        <translation type="unfinished">Ayna</translation>
+        <translation>Aynala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="95"/>
         <source>Mirror selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi aynala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="98"/>
         <source>Scaling and stretching</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçekleme ve esnetme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="99"/>
         <source>Scale</source>
-        <translation type="unfinished">Scale</translation>
+        <translation>Ölçekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="99"/>
         <source>Selection scaling</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi ölçekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
         <source>Stretch</source>
-        <translation type="unfinished">Çığ</translation>
+        <translation>Esnet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
         <source>Strech selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi esnet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="103"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="108"/>
         <source>Aligning selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi hizalama</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="104"/>
         <source>Align</source>
-        <translation type="unfinished">Align</translation>
+        <translation>Hizala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="104"/>
         <source>Align selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi hizala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="105"/>
         <source>Align ref</source>
-        <translation type="unfinished"></translation>
+        <translation>Referansla hizala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="105"/>
         <source>Align selection by reference points</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi referans noktalarına göre hizala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="109"/>
         <source>Move rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Taşı ve döndür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="109"/>
         <source>Move and rotate selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi taşı ve döndür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="110"/>
         <source>Rotate two</source>
-        <translation type="unfinished"></translation>
+        <translation>İki kez döndür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="110"/>
         <source>Rotate selection two times</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçimi iki kez döndür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="161"/>
         <source>General</source>
-        <translation type="unfinished">General</translation>
+        <translation>Genel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="161"/>
         <source>General properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel özellikler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer</source>
-        <translation type="unfinished">Katman</translation>
+        <translation>Katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="168"/>
         <source>Layer of entity</source>
-        <translation type="unfinished">Varlık Katmanı</translation>
+        <translation>Varlığın katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="204"/>
         <source>Select all</source>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="205"/>
         <source>Select all entities in layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmandaki tüm varlıkları seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="205"/>
         <source>Unselect All</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm seçimi kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="206"/>
         <source>Unselect all entities in layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmandaki tüm varlıkların seçimini kaldır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="207"/>
         <source>Selection of layer&apos;s entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman varlıklarının seçimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="210"/>
         <source>Color</source>
-        <translation type="unfinished">Renkli Renk</translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="210"/>
         <source>Color of entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlığın rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
         <source>Line Type</source>
-        <translation type="unfinished">Çizgi Tipi</translation>
+        <translation>Çizgi Türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="227"/>
         <source>Type of entity pen line</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık kaleminin çizgi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Line Width</source>
-        <translation type="unfinished">Line Genişlik</translation>
+        <translation>Çizgi Kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="245"/>
         <source>Width of entity pen line</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlık kaleminin çizgi kalınlığı</translation>
     </message>
 </context>
 <context>
@@ -24109,465 +24109,465 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="34"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="34"/>
         <source>Center point of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın merkez noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
         <source>Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="40"/>
         <source>Radius of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter</source>
-        <translation type="unfinished">1</translation>
+        <translation>Çap</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="46"/>
         <source>Diameter of arc</source>
-        <translation type="unfinished">Türlü</translation>
+        <translation>Yayın çapı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
         <source>Is Reversed</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters mi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="52"/>
         <source>Clockwise direction if reversed, counterclockwise otherwise</source>
-        <translation type="unfinished"></translation>
+        <translation>Ters çevrildiyse saat yönünde, aksi halde saat yönünün tersine</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="59"/>
         <source>Start Angle</source>
-        <translation type="unfinished">Başlangıç</translation>
+        <translation>Başlangıç Açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="59"/>
         <source>Start angle of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın başlangıç açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End Angle</source>
-        <translation type="unfinished">Sonunda</translation>
+        <translation>Bitiş Açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="65"/>
         <source>End angle of arc</source>
-        <translation type="unfinished">Saçın son açısı</translation>
+        <translation>Yayın bitiş açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
         <source>Start Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="73"/>
         <source>Start point of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın başlangıç noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="77"/>
         <source>End Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="77"/>
         <source>End point of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın bitiş noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
-        <translation type="unfinished">Arc Uzunluk</translation>
+        <translation>Yay Uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Total angle of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın toplam açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
         <source>Circumference</source>
         <comment>arc</comment>
-        <translation type="unfinished">Circumference</translation>
+        <translation>Çevre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
         <source>Total linear length of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın toplam doğrusal uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
         <source>Chord Length</source>
-        <translation type="unfinished">Akor Uzunluğu</translation>
+        <translation>Kiriş Uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="94"/>
         <source>Distance between end points of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın uç noktaları arasındaki mesafe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="100"/>
         <source>Sagitta</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehim</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="100"/>
         <source>Height of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın yüksekliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge</source>
-        <translation type="unfinished">Bulge</translation>
+        <translation>Şişkinlik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="106"/>
         <source>Bulge of arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayın şişkinliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="131"/>
         <source>Tangental Arc (start)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Yay (başlangıç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="132"/>
         <source>Create tangental arc in start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç noktasında teğet yay oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="132"/>
         <source>Tangental Arc (end)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Yay (bitiş)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="133"/>
         <source>Create tangental arc in end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş noktasında teğet yay oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="134"/>
         <source>Create tangental arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet yay oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="137"/>
         <source>Concentric arcs creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Eş merkezli yay oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation>Öteleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="138"/>
         <source>Create parallel arc via offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ötelemeyle paralel yay oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="139"/>
         <source>Parallel (Point)</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralel (Nokta)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="139"/>
         <source>Create parallel arc by point</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktadan paralel yay oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="142"/>
         <source>Arc trimming or dividing</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay kırpma veya bölme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="143"/>
         <source>Divide arc in specified point</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayı belirtilen noktada böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="144"/>
         <source>Trim the arc by other entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayı başka bir varlıkla kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="147"/>
         <source>Creation of circle tangental to arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yaya teğet çember oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="148"/>
         <source>Tangent Circle (2 P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 N)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="148"/>
         <source>Create tangental circle by 2 points</source>
-        <translation type="unfinished"></translation>
+        <translation>2 noktadan teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
         <source>Tangent Circle (2 E, 1 P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 V, 1 N)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
         <source>Create tangental circle by 2 entitites and 1 point</source>
-        <translation type="unfinished"></translation>
+        <translation>2 varlık ve 1 noktadan teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="152"/>
         <source>Creation of circle tangental</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet çember oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
         <source>Tangent Circle (3 E)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (3 V)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
         <source>Create tangental circle by 3 entities</source>
-        <translation type="unfinished"></translation>
+        <translation>3 varlığa teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
         <source>Tangent Circle (2 E, R)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 V, Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
         <source>Create tangental circle by 2 points and radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 nokta ve yarıçapla teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="157"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="162"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="167"/>
         <source>Creation of line tangental to circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çembere teğet çizgi oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Teğet (P,C)</translation>
+        <translation>Teğet (N,Ç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
         <source>Create line tangental to arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yaya teğet çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Teğet (C,C)</translation>
+        <translation>Teğet (Ç,Ç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="159"/>
         <source>Create line tangental for two circles/arcs</source>
-        <translation type="unfinished"></translation>
+        <translation>İki çembere/yaya teğet çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Dik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Create line orthogonal to arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yaya dik çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Tangent Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Dik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Create arc tangental line orthogonal to line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiye dik, yaya teğet çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
         <source>Relative angle</source>
-        <translation type="unfinished">Göreceli açı</translation>
+        <translation>Göreceli açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
         <source>Create line with relative angle to arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yaya göreceli açıyla çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="169"/>
         <source>Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlatma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="169"/>
         <source>Create fillet for arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay için yuvarlatma oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="172"/>
         <source>Dividing arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayı bölme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
         <source>Slice/Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dilimle/Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="173"/>
         <source>Slice or divide an arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayı dilimle veya böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation>Kes/Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
         <source>Break or divide the arc by intesection points</source>
-        <translation type="unfinished"></translation>
+        <translation>Yayı kesişim noktalarından kes veya böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
         <source>Creation of ellipse or bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation>Elips veya sınır kutusu oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
         <source>Ellipse inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>İç teğet elips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
         <source>Create elipse inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>İç teğet elips oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="179"/>
         <source>Bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınır kutusu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="179"/>
         <source>Create bounding box for arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay için sınır kutusu oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="182"/>
         <source>Creation of dimension, diametric or radial</source>
-        <translation type="unfinished"></translation>
+        <translation>Çap veya yarıçap ölçüsü oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="183"/>
         <source>Dim Diametric</source>
-        <translation type="unfinished"></translation>
+        <translation>Çap Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="183"/>
         <source>Create of diametric dimension for arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay için çap ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
         <source>Dim Radial</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
         <source>Create of radial dimension for arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay için yarıçap ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="187"/>
         <source>Creation of dimension, angular or ordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı veya koordinat ölçüsü oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
         <source>Dim Ordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
         <source>Create of ordinate dimension for arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay için koordinat ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
         <source>Dim Arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
         <source>Create of arc dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="199"/>
         <source>Center marks and circle creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez işaretleri ve çember oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="200"/>
         <source>Center mark</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez işareti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="200"/>
         <source>Create center mark for selected circles and arcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili çemberler ve yaylar için merkez işareti oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="201"/>
         <source>Circle by arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Yaydan çember</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="201"/>
         <source>Create circles by selected arcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili yaylardan çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="204"/>
         <source>Reverting direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönü ters çevirme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="205"/>
         <source>Revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönü ters çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="205"/>
         <source>Change direction of arcs by swapping start and end points</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç ve bitiş noktalarını değiştirerek yayların yönünü ters çevir</translation>
     </message>
 </context>
 <context>
@@ -24608,335 +24608,335 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="31"/>
         <source>Center</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="31"/>
         <source>Center point of circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çemberin merkez noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="37"/>
         <source>Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="37"/>
         <source>Radius of circle</source>
-        <translation type="unfinished">Radius of Circle</translation>
+        <translation>Çemberin yarıçapı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
         <source>Diameter</source>
-        <translation type="unfinished">1</translation>
+        <translation>Çap</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="43"/>
         <source>Diameter of circle</source>
-        <translation type="unfinished">Circle of Circle</translation>
+        <translation>Çemberin çapı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="49"/>
         <source>Circumference</source>
         <comment>circle</comment>
-        <translation type="unfinished">Circumference</translation>
+        <translation>Çevre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="49"/>
         <source>Circumference of circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çemberin çevresi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="56"/>
         <source>Area</source>
-        <translation type="unfinished">Alan Alanı</translation>
+        <translation>Alan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="56"/>
         <source>Area of circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çemberin alanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="72"/>
         <source>Concentric circles creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Eş merkezli çember oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
         <source>Offset</source>
-        <translation type="unfinished">Offset</translation>
+        <translation>Öteleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="73"/>
         <source>Create parallel circle via offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ötelemeyle paralel çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="74"/>
         <source>Parallel (Point)</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralel (Nokta)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="74"/>
         <source>Create parallel circle by point</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktadan paralel çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="77"/>
         <source>Circle trimming or dividing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çember kırpma veya bölme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="78"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="78"/>
         <source>Divide circle in specified point</source>
-        <translation type="unfinished"></translation>
+        <translation>Çemberi belirtilen noktada böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="79"/>
         <source>Trim circle by other entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Çemberi başka bir varlıkla kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="82"/>
         <source>Creation of circle tangental to circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çembere teğet çember oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="83"/>
         <source>Tangent Circle (2 P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 N)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="83"/>
         <source>Create tangental circle 2 points</source>
-        <translation type="unfinished"></translation>
+        <translation>2 noktadan teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
         <source>Tangent Circle (2 E, 1 P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 V, 1 N)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
         <source>Create tangental circle by 2 entitites and 1 point</source>
-        <translation type="unfinished"></translation>
+        <translation>2 varlık ve 1 noktadan teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="87"/>
         <source>Creation of circle tangental</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet çember oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="88"/>
         <source>Tangent Circle (3 E)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (3 V)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="88"/>
         <source>Create tangental circle by 3 entities</source>
-        <translation type="unfinished"></translation>
+        <translation>3 varlığa teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
         <source>Tangent Circle (2 E, R)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 V, Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
         <source>Create tangental circle by 2 points and radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 nokta ve yarıçapla teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="92"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="97"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="107"/>
         <source>Creation of line tangental to circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çembere teğet çizgi oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Teğet (P,C)</translation>
+        <translation>Teğet (N,Ç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="93"/>
         <source>Create line tangental to circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çembere teğet çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Teğet (C,C)</translation>
+        <translation>Teğet (Ç,Ç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Create line tangental to two circles</source>
-        <translation type="unfinished"></translation>
+        <translation>İki çembere teğet çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="98"/>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Dik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="98"/>
         <source>Create line orthogonal to circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çembere dik çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="99"/>
         <source>Tangent Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Dik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="99"/>
         <source>Create tangental orthogonal line to line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiye dik teğet çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="102"/>
         <source>Dividing circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çemberi bölme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="103"/>
         <source>Slice/Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dilimle/Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="103"/>
         <source>Slice or divide a circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çemberi dilimle veya böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation>Kes/Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
         <source>Break or divide the circle by intesection points</source>
-        <translation type="unfinished"></translation>
+        <translation>Çemberi kesişim noktalarından kes veya böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
         <source>Relative</source>
-        <translation type="unfinished">Relative</translation>
+        <translation>Göreceli</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
         <source>Create line with relative angle to circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çembere göreceli açıyla çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="109"/>
         <source>Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>Yuvarlatma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="109"/>
         <source>Create fillet for circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çember için yuvarlatma oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="112"/>
         <source>Creation of ellipse or bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation>Elips veya sınır kutusu oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
         <source>Ellipse inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>İç teğet elips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
         <source>Create elipse inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>İç teğet elips oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="114"/>
         <source>Bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınır kutusu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="114"/>
         <source>Create bounding box for circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çember için sınır kutusu oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="117"/>
         <source>Creation of dimension, diametric or radial</source>
-        <translation type="unfinished"></translation>
+        <translation>Çap veya yarıçap ölçüsü oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="118"/>
         <source>Dim Diametric</source>
-        <translation type="unfinished"></translation>
+        <translation>Çap Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="118"/>
         <source>Create diametric dimension for circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çember için çap ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="119"/>
         <source>Dim Radial</source>
-        <translation type="unfinished"></translation>
+        <translation>Yarıçap Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="119"/>
         <source>Create radial dimension for circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çember için yarıçap ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="122"/>
         <source>Creation of dimension, angular or ordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı veya koordinat ölçüsü oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="123"/>
         <source>Dim Ordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="123"/>
         <source>Create ordinate dimension for circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çember için koordinat ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Leader</source>
-        <translation type="unfinished">Lider</translation>
+        <translation>Açıklama Çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="124"/>
         <source>Create leader for circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Çember için açıklama çizgisi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="135"/>
         <source>Center marks creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez işareti oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="136"/>
         <source>Center mark</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez işareti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="136"/>
         <source>Create center mark for selected circles, ellipses and arcs</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili çemberler, elipsler ve yaylar için merkez işareti oluştur</translation>
     </message>
 </context>
 <context>
@@ -26969,198 +26969,198 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active Layer</source>
-        <translation type="unfinished">Etkin Katman</translation>
+        <translation>Etkin Katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="60"/>
         <source>Active layer properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katman özellikleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
         <source>Name</source>
-        <translation type="unfinished">Ad</translation>
+        <translation>Ad</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="78"/>
         <source>Currently active layer of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Belgenin şu an etkin olan katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
         <source>Color</source>
-        <translation type="unfinished">Renk</translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="101"/>
         <source>Color of active layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katmanın rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line Width</source>
-        <translation type="unfinished">Çizgi Kalınlığı</translation>
+        <translation>Çizgi Kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="122"/>
         <source>Line width for active layer&apos;s pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katman kaleminin çizgi kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Line Type</source>
-        <translation type="unfinished">Çizgi Tipi</translation>
+        <translation>Çizgi Türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="144"/>
         <source>Type of line for active layer&apos;s pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katman kaleminin çizgi türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="167"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="183"/>
         <source>Normal</source>
-        <translation type="unfinished">Normal</translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="171"/>
         <source>Dimensional</source>
-        <translation type="unfinished">Ölçü</translation>
+        <translation>Ölçülendirme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="175"/>
         <source>Alternative position</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif konum</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="179"/>
         <source>Informational</source>
-        <translation type="unfinished">Bilgi</translation>
+        <translation>Bilgilendirme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
         <source>Type</source>
-        <translation type="unfinished">Tür</translation>
+        <translation>Tür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="186"/>
         <source>Type of the currently active layer of the document</source>
-        <translation type="unfinished"></translation>
+        <translation>Belgenin şu an etkin olan katmanının türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="200"/>
         <source>Visible layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Görünür katman</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="200"/>
         <source>Defines whether active layer is visible or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katmanın görünür olup olmadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="214"/>
         <source>Locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Kilitli</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="214"/>
         <source>Defines whether active layer is locked or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katmanın kilitli olup olmadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="228"/>
         <source>Printable layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırılabilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="228"/>
         <source>Defines whether active layer is printable or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katmanın yazdırılabilir olup olmadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="243"/>
         <source>Construction layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapı katmanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="243"/>
         <source>Defines whether active layer is construction or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katmanın yapı katmanı olup olmadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="265"/>
         <source>Add layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman ekle...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="265"/>
         <source>Invokes creation of the layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman oluşturmayı başlatır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="266"/>
         <source>Remove layer...</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmanı kaldır...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="267"/>
         <source>Invokes removal of the layer from the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmanı çizimden kaldırmayı başlatır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="268"/>
         <source>Layers list commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman listesi komutları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation type="unfinished">Tüm katmanların kilidini aç</translation>
+        <translation>Tüm kilitleri aç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>All layers will be unlocked</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm katmanların kilidi açılır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="304"/>
         <source>Lock other layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğerlerini kilitle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="304"/>
         <source>All layers except active one will be locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katman dışındaki tüm katmanlar kilitlenir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="305"/>
         <source>Layers locking commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman kilitleme komutları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation type="unfinished">Tüm katmanları göster</translation>
+        <translation>Tümünü göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>All layers become visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Tüm katmanlar görünür olur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="342"/>
         <source>Hide other layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğerlerini gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="342"/>
         <source>All layers except active one will be hidden</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katman dışındaki tüm katmanlar gizlenir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="343"/>
         <source>Layers visibility commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Katman görünürlüğü komutları</translation>
     </message>
 </context>
 <context>
@@ -28149,454 +28149,454 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="35"/>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="35"/>
         <source>Start point of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizginin başlangıç noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="41"/>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="41"/>
         <source>End point of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizginin bitiş noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="49"/>
         <source>Length of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizginin uzunluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
         <source>Angle 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="55"/>
         <source>Angle from 0.0 to first point of line</source>
-        <translation type="unfinished"></translation>
+        <translation>0.0&apos;dan çizginin ilk noktasına açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="61"/>
         <source>Angle 2</source>
-        <translation type="unfinished">2</translation>
+        <translation>Açı 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="61"/>
         <source>Angle from 0.0 to second point of line</source>
-        <translation type="unfinished"></translation>
+        <translation>0.0&apos;dan çizginin ikinci noktasına açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="77"/>
         <source>Delta</source>
-        <translation type="unfinished">Delta</translation>
+        <translation>Delta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="77"/>
         <source>Distance between start and end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç ve bitiş noktaları arasındaki mesafe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="88"/>
         <source>Middle Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta Nokta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="88"/>
         <source>Middle point of line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizginin orta noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="98"/>
         <source>Length and lines join</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk ve çizgi birleştirme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
         <source>Lengthen</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="140"/>
         <source>Create parallel line through point</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktadan geçen paralel çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
-        <translation type="unfinished">Line Katıl</translation>
+        <translation>Çizgi Birleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Join two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>İki çizgiyi birleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="103"/>
         <source>Trimming two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>İki çizgiyi kırpma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="104"/>
         <source>Trim line by limiting entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiyi sınırlayan varlıkla kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim Two</source>
-        <translation type="unfinished">RS_ActionModifyTrim: İkinci Kesme</translation>
+        <translation>İkili Kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="105"/>
         <source>Trim two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>İki çizgiyi kırp</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="108"/>
         <source>Cutting and gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Kesme ve boşluk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="109"/>
         <source>Divide line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiyi böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Line Gap</source>
-        <translation type="unfinished">Çizgi Aralığı</translation>
+        <translation>Çizgi Boşluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="110"/>
         <source>Break the line by gap</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiyi boşlukla kes</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="132"/>
         <source>Tangental Arc (start)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Yay (başlangıç)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="133"/>
         <source>Create tangental arc in start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç noktasında teğet yay oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="134"/>
         <source>Tangental Arc (end)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Yay (bitiş)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="134"/>
         <source>Create tangental arc in end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitiş noktasında teğet yay oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="135"/>
         <source>Creation of tangental arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet yay oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="139"/>
         <source>Creation of parallels or bisector lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralel veya açıortay çizgi oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="140"/>
         <source>Parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>Paralel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
         <source>Bisector</source>
-        <translation type="unfinished">Açıortay</translation>
+        <translation>Açıortay</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="141"/>
         <source>Create bisector between lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiler arasında açıortay oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="144"/>
         <source>Creating orthogonal or relative angle lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Dik veya göreceli açılı çizgi oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Dik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
         <source>Create line orhtogonal to this line</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu çizgiye dik çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
         <source>Relative Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreceli Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
         <source>Create line with related angle to this line</source>
-        <translation type="unfinished"></translation>
+        <translation>Bu çizgiye göreceli açıyla çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
         <source>Creation line from point or tangental orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktadan çizgi veya teğet dik çizgi oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
         <source>Line from Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktadan Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
         <source>Create line from point to this line</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktadan bu çizgiye çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="151"/>
         <source>Tangent Ort</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Dik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="151"/>
         <source>Create orthogonal line that is tangental to other entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Başka bir varlığa teğet olan dik çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="154"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="159"/>
         <source>Creation of circle tangental to line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiye teğet çember oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
         <source>Tangential Circle (2 P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 N)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
         <source>Create circle tangental 2 points</source>
-        <translation type="unfinished"></translation>
+        <translation>2 noktadan teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
         <source>Tangential Circle (2 E, 1 P)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 V, 1 N)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
         <source>Create circle tangental by 2 entitites and 1 point</source>
-        <translation type="unfinished"></translation>
+        <translation>2 varlık ve 1 noktadan teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="160"/>
         <source>Tangential Circle (3 E)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (3 V)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="160"/>
         <source>Create circle tangental to 3 entities</source>
-        <translation type="unfinished"></translation>
+        <translation>3 varlığa teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
         <source>Tangential Cicle (2 E, R)</source>
-        <translation type="unfinished"></translation>
+        <translation>Teğet Çember (2 V, Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
         <source>Create circle tangental by 2 entities and radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 varlık ve yarıçapla teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="164"/>
         <source>Creation of ellipse or bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation>Elips veya sınır kutusu oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
         <source>Ellipse inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>İç teğet elips</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
         <source>Create elipse inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>İç teğet elips oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
         <source>Bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınır kutusu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
         <source>Create of bounding box for line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi için sınır kutusu oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="169"/>
         <source>Modification of line with bevel or fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiyi pah veya yuvarlatmayla değiştirme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Bevel</source>
-        <translation type="unfinished">Bevel</translation>
+        <translation>Pah</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="170"/>
         <source>Create a bevel</source>
-        <translation type="unfinished"></translation>
+        <translation>Pah oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Round</source>
-        <translation type="unfinished">Yuvarlak</translation>
+        <translation>Yuvarlat</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="171"/>
         <source>Create rounding between line and other entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi ile başka bir varlık arasında yuvarlatma oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="174"/>
         <source>Dividing line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiyi bölme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
         <source>Slice/Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dilimle/Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="175"/>
         <source>Slice or divide a line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiyi dilimle veya böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
-        <translation type="unfinished">Break/Divide</translation>
+        <translation>Kes/Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break or divide the line by intesection points</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiyi kesişim noktalarından kes veya böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
         <source>Center line</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Centerline</source>
-        <translation type="unfinished">Merkez</translation>
+        <translation>Merkez çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="179"/>
         <source>Create center line between two lines</source>
-        <translation type="unfinished"></translation>
+        <translation>İki çizgi arasında merkez çizgisi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
         <source>Radiant</source>
-        <translation type="unfinished"></translation>
+        <translation>Işınsal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="180"/>
         <source>Create radiant line from center point</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez noktasından ışınsal çizgi oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="183"/>
         <source>Creation of dimension, aligned or linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Hizalı veya doğrusal ölçü oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
         <source>Dim Aligned</source>
-        <translation type="unfinished"></translation>
+        <translation>Hizalı Ölçü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="184"/>
         <source>Create aligned dimension for line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi için hizalı ölçü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="185"/>
         <source>Dim Linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrusal Ölçü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="185"/>
         <source>Create linear dimension for line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi için doğrusal ölçü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="188"/>
         <source>Creation of dimension, angular or ordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı veya koordinat ölçüsü oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="189"/>
         <source>Dim Angular</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="189"/>
         <source>Create angular dimension for line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi için açı ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="190"/>
         <source>Dim Ordinate</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat Ölçüsü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="190"/>
         <source>Create ordinate dimension for line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi için koordinat ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="202"/>
         <source>Reverting direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönü ters çevirme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="203"/>
         <source>Revert direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Yönü ters çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="203"/>
         <source>Change direction of line by swapping start and end points</source>
-        <translation type="unfinished"></translation>
+        <translation>Başlangıç ve bitiş noktalarını değiştirerek çizginin yönünü ters çevir</translation>
     </message>
 </context>
 <context>
