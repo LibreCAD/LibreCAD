@@ -12380,3 +12380,30 @@ the still-open screenshot/DPR and independent-viewer gates. Keep the local
 roadmap queue unpushed until the active exact-head macOS check terminates; then
 push and inspect CI on the new exact head. Signed/deployed W0-W2 acceptance,
 human review, and final R integration remain open as well.
+
+## 277. W322 Post-W321 Commit and PR Sync
+
+The W321 roadmap-only receipt is committed locally as `d12f456d7`, bringing
+W311-W321 to eleven unpushed documentation commits. Its focused validation
+passed 99/99 with no skips, 93 unique obligations, zero pending declarations
+or production mismatches, parser 5/5, and `git diff --check`. The test DXF
+hash was rechecked after GUI interaction and remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+The existing PR status comment `6591045544` was edited and verified at 01:58
+UTC to supersede the stale W320 lock-state report with the W321 visible GUI
+result, local validation, and remaining gates. The visible PR Checks panel
+shows 25 entries on exact code head
+`d183479630b43ae55b032a160d7403dbf3a848ed`: 18 successful, 1 in progress, 6
+skipped, no failures. Continuous Build macOS (`41550587186` / `125637540627`)
+is still active; do not cancel or replace it. The status screenshot was
+captured after the edit but is not retained as a separate local artifact.
+
+This receipt supersedes W321's instruction to run validation, commit W321, and
+update the PR comment; all three are complete. Next: continue polling the same
+macOS job. Once it terminates, update the roadmap with its exact result, run
+the focused validators, commit that receipt, push the eleven-commit
+documentation queue, and inspect checks on the resulting exact head. Keep
+physical stale-peer behavior, durable screenshot/Qt DPR, independent W171
+visual fidelity, signed/deployed W0-W2 acceptance, approving review, and final
+R integration open until direct evidence closes them.
