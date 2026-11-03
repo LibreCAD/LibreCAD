@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 01:02 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W314; chronological evidence follows): implementation slices
+Updated: 2026-11-03 01:06 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W315; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,11 +36,11 @@ integration rather than an unimplemented declared feature slice.
 
 The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
 non-roadmap change is the offset-test whitespace fix at product head
-`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:02 UTC
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:06 UTC
 exact-head poll, the PR Checks page showed 14 successful, 4 in progress, and 6
 skipped entries, with no failures. In progress: CodeQL Analyze, Continuous
-Build macOS, DWG/DXF Windows ARM64, and macOS-15 Intel Pixi on the push
-trigger. Skipped: CodeQL Security scan, conditional Linux, Linux AArch64,
+Build macOS, DWG/DXF Windows x64, and macOS-15 Intel Pixi on the push trigger.
+DWG/DXF Windows ARM64 has passed. Skipped: CodeQL Security scan, conditional Linux, Linux AArch64,
 Snap, Windows x64 packaging, and the separately reported conditional
 `PackageWindowsMsix` job. This corrects W311's earlier statement that MSIX was
 not a separate check entry. Results apply only to this exact head; do not carry
@@ -12155,3 +12155,36 @@ Next: validate and commit this W314 receipt locally, keep polling the same
 four active workflow jobs, then push the accumulated roadmap-only commits only
 after those jobs terminate. Inspect checks for the resulting new PR head and
 refresh the existing status comment; retain all open acceptance gates above.
+
+## 270. W315 DWG/DXF Architecture-Label Correction
+
+At 01:06 UTC the exact-head DWG/DXF workflow reports `VerifyDwgDxfFast`
+successful, the Windows ARM64 job successful, and the Windows x64 job in
+progress. This corrects W314's per-architecture wording and the 01:04 PR
+comment, which incorrectly said x64 passed and ARM64 remained active. The
+overall exact-head total remains 24 entries: 14 successful, 4 in progress, and
+6 skipped, with no failures. Other active jobs are CodeQL Analyze, Continuous
+Build macOS, and push-triggered macOS-15 Intel Pixi. No older-head result is
+substituted.
+
+W314 is committed locally as `60643992d`; the prior local roadmap commits are
+W311 `84e198905`, W312 `0a6556c6b`, and W313 `58ac13b9d`. The plan file and
+PR status comment must now be corrected to state that Windows ARM64 passed and
+x64 is still running. Product code remains unchanged from
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
+
+The user's Remote Desktop is reported running and logged in, but native CUA
+still cannot attach to LibreCAD because its Mac surface reports locked. No new
+visual or drawing-save evidence is claimed. The remaining GUI, screenshot/DPR,
+external W171 viewport, deployed W0-W2, review, and final R gates stay open.
+
+The W315 roadmap/refusal validation passed 99/99 in 119.9 seconds with no
+skips, 93 unique obligations, zero pending declarations, and zero production
+mismatches; parser cases passed 5/5 and `git diff --check` passed. The W315
+correction changes only the roadmap. Product source is unchanged from
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
+
+Next: commit this correction and update the existing PR status comment with the
+verified architecture mapping. Keep all local roadmap commits unpushed until
+the four exact-head jobs terminate; then inspect the new exact-head CI and
+refresh the comment with its results.
