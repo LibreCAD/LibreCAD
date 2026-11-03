@@ -14,6 +14,7 @@
 #include "lc_actionmodifylinejoin.h"
 #include "lc_hyperbola.h"
 #include "lc_layertreewidget.h"
+#include "lc_widgetoptionsdialog.h"
 #include "picfile.h"
 #include "qc_applicationwindow.h"
 #include "qg_dlghatch.h"
@@ -143,6 +144,41 @@ class LC_StaticAnalysisTests : public QObject {
     Q_OBJECT
 
     QTemporaryDir directory;
+
+    // Widget Options is modal: the dialog is changed from a timer, then OK or Cancel is pressed.
+    template <typename Change>
+    void widgetOptions(const Change& change, const bool ok = true)
+    {
+        QTimer answer;
+        connect(&answer, &QTimer::timeout, [&] {
+            for (QWidget* widget : QApplication::topLevelWidgets()) {
+                auto* dialog = qobject_cast<LC_WidgetOptionsDialog*>(widget);
+                if (dialog == nullptr || !dialog->isVisible()) continue;
+                answer.stop();
+                change(dialog);
+                if (ok) dialog->accept();
+                else dialog->reject();
+            }
+        });
+        answer.start(10);
+        QC_ApplicationWindow::getAppWindow()->widgetOptionsDialog();
+    }
+
+    QString writeStyleSheet(const QString& name, const QByteArray& content)
+    {
+        const QString file = directory.filePath(name);
+        QFile sheet(file);
+        if (!sheet.open(QIODevice::WriteOnly) || sheet.write(content) != content.size()) return QString();
+        return file;
+    }
+
+    static void clearStyleSheetSettings()
+    {
+        QSettings settings;
+        settings.remove("Widgets/StyleSheet");
+        settings.remove("Widgets/AllowStyleSheet");
+        qApp->setStyleSheet(QString());
+    }
 
 private slots:
     void initTestCase()
@@ -856,6 +892,137 @@ private slots:
             QCOMPARE(graphic.getPaperSize().x, step == Type ? 1.5 : 2.5);
             QCOMPARE(graphic.getPaperSize().y, step == Type ? 1.0 : 1.25);
             QVERIFY(std::abs(graphic.getMarginLeft() - 10.0) < 1e-3);
+        }
+    }
+
+    // Issue #2297: "Style Sheet" is a checkbox like "Style", on unless saved off (a profile
+    // from before the checkbox has its sheet applied). Widget Options showed the saved path
+    // only if its file existed, so for a drive that is not mounted OK saved an empty one.
+    void widgetOptionsShowSavedStyleSheet()
+    {
+        const auto restore = qScopeGuard(&clearStyleSheetSettings);
+        const QString missing = directory.filePath("not mounted/missing.qss");
+        QSettings settings;
+        settings.setValue("Widgets/StyleSheet", missing);
+        widgetOptions([&](LC_WidgetOptionsDialog* dialog) {
+            QCOMPARE(dialog->stylesheet_field->text(), missing);
+            QVERIFY(dialog->stylesheet_checkbox->isChecked());
+        });
+        QCOMPARE(settings.value("Widgets/StyleSheet").toString(), missing);
+        QVERIFY(settings.value("Widgets/AllowStyleSheet").toBool());
+
+        settings.setValue("Widgets/AllowStyleSheet", 0);
+        widgetOptions([&](LC_WidgetOptionsDialog* dialog) {
+            QCOMPARE(dialog->stylesheet_field->text(), missing);
+            QVERIFY(!dialog->stylesheet_checkbox->isChecked());
+        });
+        QCOMPARE(settings.value("Widgets/StyleSheet").toString(), missing);
+        QVERIFY(!settings.value("Widgets/AllowStyleSheet").toBool());
+
+        // nothing saved is on too, so a path typed in is applied as before
+        settings.remove("Widgets/StyleSheet");
+        settings.remove("Widgets/AllowStyleSheet");
+        widgetOptions([](LC_WidgetOptionsDialog* dialog) {
+            QVERIFY(dialog->stylesheet_field->text().isEmpty());
+            QVERIFY(dialog->stylesheet_checkbox->isChecked());
+        }, false);
+    }
+
+    // Unticking removes the sheet at once and keeps the path, Ctrl+T does not bring it
+    // back, ticking applies it again, Cancel changes nothing, and the folder button
+    // ticks the box with the file it picked.
+    void widgetOptionsSwitchStyleSheet()
+    {
+        const auto restore = qScopeGuard(&clearStyleSheetSettings);
+        const QByteArray content = "QToolTip { color: red; }";
+        const QString sheet = writeStyleSheet("widget.qss", content);
+        QVERIFY(!sheet.isEmpty());
+        QSettings settings;
+        settings.setValue("Widgets/StyleSheet", sheet);
+        widgetOptions([](LC_WidgetOptionsDialog*) {});
+        QCOMPARE(qApp->styleSheet(), QString::fromLatin1(content));
+
+        widgetOptions([](LC_WidgetOptionsDialog* dialog) { dialog->stylesheet_checkbox->setChecked(false); });
+        QVERIFY(qApp->styleSheet().isEmpty());
+        QCOMPARE(settings.value("Widgets/StyleSheet").toString(), sheet);
+        QVERIFY(!settings.value("Widgets/AllowStyleSheet").toBool());
+        QC_ApplicationWindow::getAppWindow()->reloadStyleSheet();
+        QVERIFY(qApp->styleSheet().isEmpty());
+
+        widgetOptions([](LC_WidgetOptionsDialog* dialog) { dialog->stylesheet_checkbox->setChecked(true); }, false);
+        QVERIFY(qApp->styleSheet().isEmpty());
+        widgetOptions([](LC_WidgetOptionsDialog* dialog) { dialog->stylesheet_checkbox->setChecked(true); });
+        QCOMPARE(qApp->styleSheet(), QString::fromLatin1(content));
+
+        // CTest runs this target with QT_QPA_PLATFORM=offscreen, so the picker is a
+        // QWidget dialog that the timer can drive.
+        widgetOptions([&](LC_WidgetOptionsDialog* dialog) {
+            dialog->stylesheet_checkbox->setChecked(false);
+            dialog->stylesheet_field->clear();
+            // selectFile() leaves the name alone while the field has the focus, so type it;
+            // a dialog that does not accept it is rejected instead of hanging the test.
+            int attempts = 0;
+            QTimer pick;
+            connect(&pick, &QTimer::timeout, [&] {
+                for (QWidget* widget : QApplication::topLevelWidgets()) {
+                    auto* files = qobject_cast<QFileDialog*>(widget);
+                    if (files == nullptr || !files->isVisible()) continue;
+                    if (auto* name = files->findChild<QLineEdit*>("fileNameEdit")) name->setText(sheet);
+                    if (++attempts < 100) static_cast<QDialog*>(files)->accept();
+                    else files->reject();
+                }
+            });
+            pick.start(10);
+            dialog->stylesheet_button->click();
+            QVERIFY(dialog->stylesheet_checkbox->isChecked());
+            QCOMPARE(QDir::fromNativeSeparators(dialog->stylesheet_field->text()), sheet);
+        });
+    }
+
+    // At start-up the sheet is applied if its box is ticked or was never saved.
+    void startupStyleSheet_data()
+    {
+        QTest::addColumn<bool>("saved");
+        QTest::addColumn<QVariant>("allow");
+        QTest::addColumn<bool>("applied");
+        QTest::newRow("path, flag never saved") << true << QVariant() << true;
+        QTest::newRow("path, flag on") << true << QVariant(1) << true;
+        QTest::newRow("path, flag off") << true << QVariant(0) << false;
+        QTest::newRow("nothing saved") << false << QVariant() << false;
+    }
+
+    void startupStyleSheet()
+    {
+        QFETCH(bool, saved);
+        QFETCH(QVariant, allow);
+        QFETCH(bool, applied);
+        const auto restore = qScopeGuard(&clearStyleSheetSettings);
+        const QByteArray content = "QToolTip { color: blue; }";
+        const QString sheet = writeStyleSheet("startup.qss", content);
+        QVERIFY(!sheet.isEmpty());
+        QSettings settings;
+        if (saved) settings.setValue("Widgets/StyleSheet", sheet);
+        if (allow.isValid()) settings.setValue("Widgets/AllowStyleSheet", allow);
+        const bool disabled = allow.isValid() && !allow.toBool();
+        if (disabled)
+        {
+            // Reinitialize after a sheet was loaded to make sure disabling it clears both
+            // the application sheet and the path used by Ctrl+T.
+            qApp->setStyleSheet(QString());
+            settings.setValue("Widgets/AllowStyleSheet", 1);
+            QC_ApplicationWindow::getAppWindow()->initSettings();
+            QCOMPARE(qApp->styleSheet(), QString::fromLatin1(content));
+            settings.setValue("Widgets/AllowStyleSheet", 0);
+        }
+        else
+            qApp->setStyleSheet(QString());
+
+        QC_ApplicationWindow::getAppWindow()->initSettings();
+        QCOMPARE(qApp->styleSheet(), applied ? QString::fromLatin1(content) : QString());
+        if (disabled)
+        {
+            QC_ApplicationWindow::getAppWindow()->reloadStyleSheet();
+            QVERIFY(qApp->styleSheet().isEmpty());
         }
     }
 
