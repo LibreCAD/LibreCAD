@@ -12338,3 +12338,45 @@ the receipt, update the existing PR status comment, and keep the accumulated
 roadmap-only queue local until the remaining macOS check terminates. Then push
 and inspect checks on the new exact head. GUI, external viewport, deployed
 package/platform, review, and final integration gates remain open.
+
+## 276. W321 Live Offset GUI Check and RDP Access
+
+At 01:56 UTC, the user confirmed that the remote desktop session is running and
+already logged in. The native CUA bridge can now see and control the approved
+LibreCAD test copy; earlier locked-screen reports were stale and should not be
+used to request another login. The current LibreCAD test copy opened
+`/private/tmp/offset-W193-multi-entity-W281.dxf`, showing the baseline of two
+groups of three nested ellipses. Its on-disk SHA-256 remained
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+The visible Offset command showed distance 0.5, Keep Originals on, Multiple
+Copies on with count 2, and Editable Offset Curve on. After selecting the
+outer ellipse in the left group, the direction prompt showed a distinct red
+preview contour outside the source. Confirming the direction created two
+additional contours; Escape ended the command. One Undo restored the six
+baseline contours, confirming the copies were one undo step. No Save command
+was issued and the source DXF hash remained unchanged. This is live visible
+evidence for preview, repeated creation, command cancellation, and undo.
+
+The CUA capture was not saved as a durable matched screenshot artifact, and Qt
+device-pixel ratio was not measured; the screenshot surface was 1920x982 px,
+which is not a DPR measurement. FreeCAD 1.1.4 was reachable but remained on its
+Start page; its Open actions were disabled in the accessible UI, so the exact
+W171-derived ODA DXF could not be rendered there. Independent CAD viewport
+fidelity remains unverified. Physical stale-peer behavior is also open.
+
+The last exact-PR-head summary, at 01:52 UTC, remains 18 successful, 1 in
+progress, 6 skipped, and no failures for
+`d183479630b43ae55b032a160d7403dbf3a848ed`. A browser refresh at 01:56 still
+shows Continuous Build macOS (`125637540627`, run `41550587186`) in progress;
+do not cancel or replace it. Product code remains unchanged at
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
+
+This receipt supersedes the W320 note that CUA still reported the Mac locked.
+The ten local W311-W320 commits remain documentation-only and unpushed. Next:
+run the focused roadmap/refusal and parser checks, commit this W321 receipt,
+and update the existing PR status comment with both the fresh GUI evidence and
+the still-open screenshot/DPR and independent-viewer gates. Keep the local
+roadmap queue unpushed until the active exact-head macOS check terminates; then
+push and inspect CI on the new exact head. Signed/deployed W0-W2 acceptance,
+human review, and final R integration remain open as well.
