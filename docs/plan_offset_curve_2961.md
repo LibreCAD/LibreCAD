@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 13:13 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W348; chronological evidence follows): implementation slices
+Updated: 2026-11-03 16:42 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W349; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,7 +35,7 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The current PR head is
-`503cdab89d56f7fa08f8ac60b11463b9fb4cdf1e`; W347 is a roadmap-only commit, and
+`57f5e9993c89bfe983072debee4f3937f1cea633`; W348 is a roadmap-only commit, and
 the latest product-source commit remains
 `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. Git history confirms
 `d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier documentation
@@ -46,26 +46,33 @@ its Build and packaging step invoked the W341 mounted-DMG runtime smoke, then
 uploaded artifact `13232319103`. This qualifies the ad-hoc universal package on
 `macos-14`, not Developer ID signing, notarization, or actual execution on
 minimum macOS 14.4. Source-identical prior head `985328c12` also passed 19
-checks with 7 configured skips. The local
+checks with 7 configured skips. Exact-head CI for `57f5e9993` completed at
+16:36:54 UTC with 19 passing checks, 7 configured skips and zero failures.
+BuildMacOS run `41642584330` built an ad-hoc universal arm64/x86_64 package on
+the `macos-14` runner with deployment target 14.4, invoked the mounted-DMG
+runtime smoke and package checks, and uploaded artifact `13249743257`. This is
+not Developer ID signing/notarization or proof of execution on the exact minimum
+macOS 14.4 system. The local
 `librecad_offset_creation_action_tests` target passes all 90 cases and 90,340
 assertions, including the focused stale-peer case's 39 assertions. Roadmap
-parser and refusal inventory validation pass 5/5 and 94/94; `git diff --check`
-is clean, revalidated at W342. W335 retains a direct per-window baseline
+parser and refusal inventory validation previously passed 5/5 and 94/94; W349
+revalidates them after its final receipt edits. W335 retains a direct per-window baseline
 screenshot of the test-copy W193 drawing and a Qt 6.12 screen DPR probe of 1.0
 on the same 1920x1080 display. W348 now records in-session visible preview and
 matching commit states, but no retained screenshot pair or app-window DPR
 measurement; it does not establish physical GUI stale-peer behavior. The local
 qmake6 app/worker build and ad-hoc package/relocation smoke tests pass; these do not
 establish Developer ID signing, notarization, or execution on macOS 14.4. PR
-#3193 remains open, draft, and review-required. The logged-in Remote Desktop is
-now reachable through CUA and the approved test copy; W348 records the visible
-interaction. W335 captured the test-copy LibreCAD
+#3193 remains open, draft, and review-required. W348 records the visible
+interaction through the approved test copy while the Remote Desktop was awake;
+a later CUA attempt found the Mac locked, so no additional GUI evidence was
+collected. W335 captured the test-copy LibreCAD
 window directly through CoreGraphics without input, which is baseline rendering
 only, not interaction acceptance. Neither the FreeCAD, BRL-CAD, W331
 ezdxf/Matplotlib, nor W342 LibreDWG attempt produced useful independent W171
-viewport evidence. The repository is clean after pushed W347; W348 is a local
-roadmap receipt only while exact-head CI remains active. Commit and push W348
-only after that run terminates, then inspect the resulting exact head.
+viewport evidence. W348 is pushed; W349 is a local roadmap receipt reconciling
+the completed exact-head CI. Commit and push W349 after final local plan
+validation, refresh the PR status comment, then inspect the resulting exact head.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -13193,5 +13200,119 @@ issuecomment-6591045544 records W348 and replaces the stale CUA lock report.
 Keep open: durable matched preview/commit screenshots and app-window DPR;
 verified held-drag cancellation; physical stale-peer GUI behavior; a useful
 independent W171 GUI viewport; Developer ID/notarized and minimum macOS 14.4
-acceptance; human review; and final R integration. Commit and push this W348
-roadmap receipt, then check CI only on the resulting exact PR head.
+acceptance; human review; and final R integration. W348 was committed and
+pushed as `57f5e9993`; W349 tracks the resulting exact-head CI below.
+
+## 304. W349 W348-Push Reconciliation
+
+W348 plan commit `57f5e9993c89bfe983072debee4f3937f1cea633` was pushed to PR
+#3193. The current product-source commit remains
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; W348 changes only the roadmap. The
+immediately prior exact head `503cdab89d56f7fa08f8ac60b11463b9fb4cdf1e` passed
+19 checks with 7 configured skips and zero failures, including W341's mounted-
+DMG smoke and uploaded artifact `13232319103`.
+
+New exact-head CI for `57f5e9993` started at 13:14 UTC. At 13:19 UTC,
+Headless ON/OFF had passed; DWG/DXF, Pixi, CodeQL, Windows ARM64 packaging and
+macOS packaging jobs were active, with other jobs queued. Seven configured jobs
+were skipped and no failures were reported. The PR status comment at
+issuecomment-6591045544 reflects W348, the pushed head, prior-head CI, and the
+open acceptance gates. Local W349 validation passed: roadmap parser 5/5,
+refusal inventory 94/94 (93 unique obligations, zero pending declarations or
+production mismatches), and `git diff --check`.
+
+At 13:32 UTC the two Headless jobs remained successful and seven configured jobs
+remained skipped. DWG/DXF build lanes, macOS/Windows ARM64 packaging, Pixi matrix,
+and CodeQL checks were still active; GitHub reported no failures.
+
+At 13:39 UTC, `VerifyDwgDxfFast` and Pixi `ubuntu-24.04-arm` had also passed.
+Headless ON/OFF remained successful. macOS packaging, Windows ARM64 packaging,
+both Windows DWG/DXF builds, remaining Pixi jobs and CodeQL were still running;
+five jobs appeared as skipped in the current PR-check listing and no failures
+were reported.
+
+At 13:51 UTC a second Pixi `ubuntu-latest` job had passed as well. BuildMacOS,
+BuildWindowsARM64, both Windows DWG/DXF lanes, Pixi macOS and Windows lanes, and
+CodeQL remained active; the successful checks and five configured skips were
+unchanged, with no failures reported.
+
+At 13:55 UTC, Pixi `macos-latest` also passed. Universal macOS packaging,
+Windows ARM64 packaging, both Windows DWG/DXF lanes, Pixi `macos-15-intel` and
+`windows-latest`, and CodeQL remained active; no failures were reported.
+
+At 13:57 UTC, Pixi `windows-latest` passed, and the Windows ARM64 build had
+advanced from compilation to installer packaging. Universal macOS packaging,
+both Windows DWG/DXF lanes, Pixi `macos-15-intel`, and CodeQL remained active;
+no failures were reported.
+
+At 13:59 UTC the second Pixi `windows-latest` result passed too. The remaining
+active workflow steps were unchanged; no failures were reported.
+
+At 14:02 UTC, CodeQL and C++ analysis had passed. Universal macOS packaging,
+Windows ARM64 packaging, both Windows DWG/DXF builds, and Pixi macOS jobs remained
+active; no failures were reported.
+
+At 14:04 UTC, BuildWindowsARM64 passed and its conditionally disabled MSIX lane
+was skipped. BuildMacOS, both Windows DWG/DXF builds, and Pixi macOS jobs were
+still active, with no failures reported.
+
+At 14:06 UTC, the second Pixi `macos-latest` result passed. The Windows ARM64
+DWG/DXF test lane had started, while the x64 lane remained in configure/build;
+BuildMacOS was still packaging. No failures were reported.
+
+At 14:10 UTC the Windows ARM64 DWG/DXF lane passed. The Windows x64 DWG/DXF
+lane, universal macOS package, and Intel macOS Pixi builds remained active; all
+completed checks were successful or configured skips, with no failures.
+
+At 14:25 UTC one Pixi `macos-15-intel` lane had passed. The Windows x64 lane
+was executing its bounded DWG/DXF tests; BuildMacOS and the duplicate Intel Pixi
+job remained active. No failures were reported.
+
+At 14:27 UTC the Windows x64 DWG/DXF lane passed. Only BuildMacOS and the
+duplicate Pixi `macos-15-intel` check remained active; every completed check was
+successful or skipped by configuration, with no failures.
+
+At 14:31 UTC the duplicate Pixi `macos-15-intel` job passed. BuildMacOS was the
+sole active check; all others were successful or skipped by configuration, and
+no failures were reported.
+
+At 14:49 UTC BuildMacOS remained the sole active check. All other PR checks had
+completed successfully or were skipped by configuration; the universal package
+job had not reported a failure.
+
+At 16:09 UTC, BuildMacOS was still the sole active check, now just beyond the
+duration of the prior source-identical macOS packaging run. GitHub continued to
+report it in progress, not failed; every other exact-head check remained green or
+an expected configured skip.
+
+At 16:36:54 UTC, BuildMacOS run `41642584330` completed successfully. The exact
+PR head `57f5e9993c89bfe983072debee4f3937f1cea633` finished with 19 passing
+checks, 7 configured skips and zero failures. The successful `macos-14` job used
+deployment target 14.4 and ad-hoc signing for the universal arm64/x86_64 build;
+its successful Build and packaging step invoked
+`scripts/test-osx-dmg-runtime.sh` and `scripts/test-osx-package.sh`. Artifact
+`macOSAssets` (`13249743257`, 158,058,667 bytes) was uploaded. This does not
+close Developer ID/notarization or exact-minimum-system acceptance.
+
+After the W349 receipt edits, `node --test
+scripts/offset-curve-validation/test-roadmap-inventory-parser.js
+scripts/offset-curve-validation/test-refusal-inventory.js` passed 99/99 with no
+skips. Its inventory reports 93 unique obligations, zero pending declarations
+and zero production mismatches; `git diff --check` passed.
+
+The approved test-copy GUI was reachable after the user confirmed the remote
+desktop was awake. On the unchanged temporary W193/W281 fixture, the native
+Offset command selected an ellipse; Escape during a timed side-click press
+returned Current Action to Default and no offset copy appeared. This is evidence
+for Escape handling during a held click only: the pointer did not move while the
+button was held, so it does not verify held-drag cancellation or stale-peer
+behavior. The source fixture hashes remained unchanged. No drawing or preference
+changes were saved.
+
+Keep open: durable matched preview/commit screenshots and app-window DPR;
+verified held-drag cancellation; physical stale-peer GUI behavior; a useful
+independent W171 GUI viewport; Developer ID/notarized and minimum macOS 14.4
+acceptance; human review; and final R integration. W348 was committed and
+pushed as `57f5e9993`; W349 records its successful exact-head CI and final local
+validation. Commit/push W349, refresh issuecomment-6591045544, and inspect the
+resulting PR head.
