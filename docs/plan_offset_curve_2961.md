@@ -13476,3 +13476,33 @@ push W354, refresh PR status, and require new exact-head CI before carrying any
 status forward. Developer ID/notarized deployment, exact-minimum macOS 14.4
 runtime acceptance, human review, and final R integration remain external
 gates.
+
+## 310. W355 Documentation-Push And CI Provenance Reconciliation
+
+W354 is a roadmap-only commit; it changes no product source. Inspection of
+`.github/workflows/build-all.yml` confirms the PR trigger is path-filtered to
+packaging/workflow files, so pushing this documentation receipt does not start
+a replacement BuildMacOS run and does not cancel the existing one through that
+workflow's concurrency group. Push the documentation update without waiting on
+the long product build, but keep its CI result precisely labeled: run
+`41696525784` is attached to source head
+`1aa7ddbfb0b0e415620f7307180244e5d7f1c1d6`, not the later docs-only commit.
+Because product files are unchanged, it is source-equivalent evidence, not an
+exact-new-Git-head result.
+
+At 21:42 UTC, that run still had 18 successful checks, BuildMacOS in its
+Build-and-packaging step (started 18:46 UTC), six configured skips, three
+duplicate push-triggered DWG/DXF jobs cancelled, and zero failures. The run
+status and active step were confirmed from the Actions API; diagnostic log
+retrieval returned HTTP 502 and does not establish additional build progress.
+Keep exact-head versus source-equivalent CI distinct in the next status receipt.
+
+The GitHub integration rejected a W354 status-comment attempt with HTTP 403
+(resource not accessible to the integration). A branch push can publish the
+roadmap commit to PR #3193, but the status comment must remain identified as
+unrefreshed unless a permitted comment path becomes available. This does not
+block code/test work; the PR stays open, draft, and review-required. Remaining
+acceptance includes a retained matched preview/commit screenshot pair and Qt
+app-window DPR, reproducible pointer-drag cancellation and physical stale-peer
+behavior, Developer ID/notarized deployment, exact-minimum macOS 14.4 runtime,
+human review, and final R integration.
