@@ -36,7 +36,7 @@ integration rather than an unimplemented declared feature slice.
 
 The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
 non-roadmap change is the offset-test whitespace fix at product head
-`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:41 UTC
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 02:23 UTC
 exact-head poll, the PR Checks page showed 25 entries: 18 successful, 1 in
 progress, and 6 skipped, with no failures. Only Continuous Build macOS remains
 active; CodeQL Analyze has completed successfully. DWG/DXF Windows x64 has
@@ -12561,7 +12561,8 @@ No, without saving. The W193 six-contour disposable baseline is restored in
 LibreCAD with its original in-memory unsaved marker; neither fixture was
 saved or modified on disk.
 
-The PR comment `6591045544` was verified to contain the W324 update. On exact
+The PR comment `6591045544` was verified to contain the W325 update at
+02:16:36 UTC. On exact
 PR head `d183479630b43ae55b032a160d7403dbf3a848ed`, current check diagnostics
 still show Continuous Build `BuildMacOS` (`41550587186` / `125637540627`)
 in progress; all other applicable checks report success, with configured
