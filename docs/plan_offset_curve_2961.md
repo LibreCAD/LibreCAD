@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 01:38 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W319; chronological evidence follows): implementation slices
+Updated: 2026-11-03 01:41 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W320; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,11 +36,12 @@ integration rather than an unimplemented declared feature slice.
 
 The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
 non-roadmap change is the offset-test whitespace fix at product head
-`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:38 UTC
-exact-head poll, the PR Checks page still showed 16 successful, 2 in progress,
-and 6 skipped entries, with no failures. In progress: CodeQL Analyze and
-Continuous Build macOS. DWG/DXF Windows x64 has passed; DWG/DXF fast and
-Windows ARM64 passed earlier. Both Pixi runs pass all five platforms. Skipped: CodeQL
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:41 UTC
+exact-head poll, the PR Checks page showed 25 entries: 18 successful, 1 in
+progress, and 6 skipped, with no failures. Only Continuous Build macOS remains
+active; CodeQL Analyze has completed successfully. DWG/DXF Windows x64 has
+passed; DWG/DXF fast and Windows ARM64 passed earlier. Both Pixi runs pass all
+five platforms. Skipped: CodeQL
 Security scan, conditional Linux, Linux AArch64,
 Snap, Windows x64 packaging, and the separately reported conditional
 `PackageWindowsMsix` job. This corrects W311's earlier statement that MSIX was
@@ -12307,3 +12308,33 @@ checks terminate, then push the queue, inspect the resulting new-head CI, and
 refresh the existing PR status comment. Physical stale-peer behavior, durable
 matched screenshots/Qt DPR, independent W171 viewport/fidelity, signed/deployed
 W0-W2 acceptance, approving review, and final R integration remain open.
+
+## 275. W320 CodeQL Completion
+
+W319's roadmap-only chronology correction is committed locally as
+`8ee8070ed`. Its final document validation passed 99/99 roadmap/refusal tests,
+no skips, 93 unique obligations, zero pending declarations or production
+mismatches, parser 5/5, and `git diff --check`. The W311-W319 documentation queue
+contains nine commits and leaves product code unchanged at
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
+
+At 01:41 UTC, diagnostics for exact PR head
+`d183479630b43ae55b032a160d7403dbf3a848ed` report 25 entries: 18 successful,
+1 in progress, and 6 skipped, with no failures. CodeQL Analyze
+(`125637053301`) is now successful; only Continuous Build macOS
+(`125637540627`) remains active. DWG/DXF fast and Windows x64/ARM64, both
+five-platform Pixi runs, Text Foundations ON/OFF, Continuous Build Windows
+ARM64, and CodeQL Analyze passed. The six skips remain CodeQL Security scan,
+conditional Linux, Linux AArch64, Snap, Windows x64 packaging, and the
+conditional `PackageWindowsMsix` job. These results apply only to the exact
+head above.
+
+The user confirms the Remote Desktop session is running and logged in; the
+native CUA bridge still reports the Mac locked, so this does not provide a new
+visible LibreCAD check. No interaction or drawing save is claimed.
+
+Next: rerun the roadmap/refusal and parser checks for this W320 update, commit
+the receipt, update the existing PR status comment, and keep the accumulated
+roadmap-only queue local until the remaining macOS check terminates. Then push
+and inspect checks on the new exact head. GUI, external viewport, deployed
+package/platform, review, and final integration gates remain open.
