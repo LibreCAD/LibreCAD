@@ -2780,6 +2780,7 @@ if (BUILD_TESTS)
         librecad/src/lib/engine/document/entities/tests/rs_hatch_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_hatchmovetests.cpp
         librecad/src/lib/engine/document/entities/tests/rs_image_tests.cpp
+        librecad/src/lib/engine/document/entities/tests/lc_splinelayertests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_insert_transform_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_entitytype_coverage_tests.cpp
         librecad/src/lib/engine/document/entities/tests/lc_textbidi_tests.cpp
@@ -2967,6 +2968,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp
         librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
         librecad/src/ui/dialogs/settings/options_drawing/tests/lc_dlgoptionsdrawingtests.cpp
+        librecad/src/ui/dialogs/settings/options_widget/tests/lc_stylesheetoptiontests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreemodel_tests.cpp
         librecad/src/plugins/tests/qc_actiongetselect_tests.cpp

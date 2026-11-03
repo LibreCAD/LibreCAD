@@ -3857,7 +3857,8 @@ static void updateExplodedChildrenRecursively(const RS_EntityContainer* ec, cons
 
     clone->update();
 
-    if (clone->isContainer()) {
+    // the lines update() has just built for a spline follow it
+    if (clone->isContainer() && clone->rtti() != RS2::EntitySpline) {
         const auto subContainer = static_cast<RS_EntityContainer*>(clone);
         // fixme - sand - while we can't iterate just by children and go deeper???
         for (RS_Entity* en : lc::LC_ContainerTraverser{*subContainer, rl}.entities()) {
@@ -3890,7 +3891,8 @@ bool RS_Modification::explode(const QList<RS_Entity*>& entitiesList, LC_Document
                 case RS2::EntityMText:
                 case RS2::EntityText:
                 case RS2::EntityHatch:
-                case RS2::EntityPolyline: {
+                case RS2::EntityPolyline:
+                case RS2::EntitySpline: { // its lines have no pen of their own
                     resolveLevel = RS2::ResolveAll;
                     resolveLayer = true;
                     resolvePen = true;

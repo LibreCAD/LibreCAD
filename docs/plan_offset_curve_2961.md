@@ -23,16 +23,18 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 16:58 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W352; chronological evidence follows): implementation slices
+Updated: 2026-11-03 18:41 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W353; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
 imports, bounded worker validation for public synchronous file/stream/byte
 filter imports, the public `RS_FileIO` auto-detection route, and a separately
-compiled Qt plugin caller. The latest implementation audit found no additional
-product-code gap; remaining work is acceptance, external validation, review and
-integration rather than an unimplemented declared feature slice.
+compiled Qt plugin caller. W353 synchronizes the PR with current `origin/master`
+through `b98d840a1d8fc4b9974d8897c92938bf55368d6c`; the latest implementation
+audit found no additional product-code gap. Remaining work is acceptance,
+external validation, review and integration rather than an unimplemented
+declared feature slice.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -13407,3 +13409,38 @@ remain unchanged. Durable preview/commit screenshots, app-window DPR, and
 physical stale-peer acceptance therefore remain open, as do Developer ID and
 notarization, exact-minimum macOS 14.4 execution, human review, and final R
 integration.
+
+## 308. W353 Current-Master Synchronization and Regression Checks
+
+At the start of W353 the pushed PR head was
+`86070b768ea78d829f109030b423cedd6c3f29fe`, based on common ancestor
+`998e61dc0b994d3ecf3b5e6b529123c556dc3494`. Current `origin/master` had advanced
+to `b98d840a1d8fc4b9974d8897c92938bf55368d6c`, containing commits
+`7fa89cf03` (spline/leader layer and pen inheritance) and `b98d840a1` (Widget
+Options style-sheet toggle). The merge-tree preview was conflict-free; both
+commits are merged without rewriting feature history. The PR's existing checks
+are for the pre-merge head and must not be counted as validation of W353.
+
+On the merged source, CMake configured in isolated
+`/private/tmp/LibreCAD-offset-merge-build` with `BUILD_TESTS=ON`, and
+`cmake --build /private/tmp/LibreCAD-offset-merge-build --target librecad_tests
+-j 8` succeeded. Focused regression runs passed: spline/leader layer behavior,
+4 cases and 542 assertions; saved Widget Options stylesheet, 1 case and 20
+assertions; startup stylesheet application, 2 cases and 29 assertions. The
+`[lc-offsetcurve]` suite passed 1,029 cases and 3,921,224 assertions, with one
+skipped case. Roadmap/refusal validation passed 99/99 with 93 obligations, zero
+pending declarations and zero production mismatches. The staged merge diff
+passed `git diff --cached --check` before this receipt was added.
+
+At 18:41 UTC, the pre-merge PR head still had 18 passing checks, the BuildMacOS
+job in progress, six configured skips, and no failures. This status is
+historical only. Commit and push the W353 merge with this receipt, then require
+fresh exact-head checks before transferring any CI result to the merged head.
+
+CUA was reset and freshly queried; it still reports no native apps and a locked
+Mac. Read-only shell inspection shows the `dli` console session and the approved
+LibreCAD test-copy process are present, but this does not establish an
+interactable desktop. No GUI input was sent. Physical stale-peer behavior,
+durable matched preview/commit screenshots and app-window DPR, Developer
+ID/notarized deployment and minimum macOS 14.4 acceptance, human review, and
+final R integration remain open.

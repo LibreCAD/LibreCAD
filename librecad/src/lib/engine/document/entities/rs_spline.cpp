@@ -42,6 +42,7 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
+#include "rs_pen.h"
 
 namespace {
 constexpr double g_knotTolerance = 5e-6;
@@ -736,11 +737,16 @@ void RS_Spline::update() {
   }
   std::vector<RS_Vector> points;
   fillDisplayPoints(points);
-  for (size_t i = 0; i + 1 < points.size(); ++i) {
-      addEntity(new RS_Line(this, points[i], points[i + 1]));
-  }
   if (isClosed() && points.size() > 1) {
-      addEntity(new RS_Line(this, points.back(), points.front()));
+      points.push_back(points.front());
+  }
+  for (size_t i = 0; i + 1 < points.size(); ++i) {
+      // A new entity takes the current layer and pen. Cleared, so that the
+      // line follows the spline's, whatever is current when it is rebuilt.
+      auto *line = new RS_Line(this, points[i], points[i + 1]);
+      line->setLayer(nullptr);
+      line->setPen(RS_Pen(RS2::FlagInvalid));
+      addEntity(line);
   }
 }
 
