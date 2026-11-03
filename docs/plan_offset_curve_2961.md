@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 00:54 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W312; chronological evidence follows): implementation slices
+Updated: 2026-11-03 01:01 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W313; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,11 +36,11 @@ integration rather than an unimplemented declared feature slice.
 
 The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
 non-roadmap change is the offset-test whitespace fix at product head
-`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 00:54 UTC
-exact-head poll, the PR Checks page showed 12 successful, 6 in progress, and 6
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:01 UTC
+exact-head poll, the PR Checks page showed 13 successful, 5 in progress, and 6
 skipped entries, with no failures. In progress: CodeQL Analyze, Continuous
-Build macOS, DWG/DXF Windows x64/ARM64, and macOS-15 Intel Pixi on both push and
-PR triggers. Skipped: CodeQL Security scan, conditional Linux, Linux AArch64,
+Build macOS, DWG/DXF Windows x64/ARM64, and macOS-15 Intel Pixi on the push
+trigger. Skipped: CodeQL Security scan, conditional Linux, Linux AArch64,
 Snap, Windows x64 packaging, and the separately reported conditional
 `PackageWindowsMsix` job. This corrects W311's earlier statement that MSIX was
 not a separate check entry. Results apply only to this exact head; do not carry
@@ -12086,3 +12086,39 @@ Next: poll the same exact-head workflow runs. Once terminal, commit and push the
 queued roadmap-only updates, then inspect the new exact head and refresh the PR
 status comment. Keep the visible-GUI, deployment/runtime, human-review, and
 final integration gates open until their evidence is direct.
+
+## 268. W313 Post-Commit Roadmap Receipt
+
+W312 is committed locally as `0a6556c6b`, following local W311 commit
+`84e198905`. Both are documentation-only changes to this roadmap; the local
+branch is two commits ahead of PR head `d183479630b43ae55b032a160d7403dbf3a848ed`.
+The existing PR status comment was refreshed at 00:56 UTC to identify both
+commits and the corrected 24-entry check accounting.
+
+At 01:01 UTC, the exact-head PR Checks page and workflow APIs agree on 24
+entries: 13 successful, 5 in progress, and 6 skipped, with no failures. The
+active jobs are CodeQL Analyze, Continuous Build macOS, DWG/DXF Windows
+x64/ARM64, and push-triggered macOS-15 Intel Pixi. All five PR-triggered Pixi
+platforms, four push-triggered Pixi platforms, DWG/DXF fast, both Headless
+modes, and Windows ARM64 packaging passed. The six skipped entries include the distinct
+`PackageWindowsMsix` job. Do not push the local roadmap queue until these
+exact-head jobs finish.
+
+The W312 post-edit roadmap/refusal suite passed 99/99 in 48.7 seconds. The full
+suite was rerun against this W313 file and passed 99/99 in 106.0 seconds, with
+no skips, 93 unique obligations, zero pending declarations, and zero production
+mismatches; parser cases passed 5/5 and whitespace validation passed. This W313
+update changes only the roadmap status and remains local. Product implementation
+is unchanged from `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
+
+Remote Desktop is reported running and logged in, while the native CUA bridge
+still reports the Mac locked on app attachment. No new visible drawing check,
+edit, or save is claimed. Physical stale-peer behavior, retained screenshots
+and Qt DPR, independent W171 GUI viewport, signed/deployed W0-W2 acceptance,
+approving review, and final R integration remain open.
+
+Next: commit this W313 roadmap receipt after local validation; continue polling
+the exact-head workflows and push all queued roadmap-only commits only after
+they terminate. Then inspect checks for that new exact head and update the PR
+comment. Keep all remaining user-visible, deployment, review, and integration
+gates open until directly verified.
