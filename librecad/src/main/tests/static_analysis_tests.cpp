@@ -1002,9 +1002,27 @@ private slots:
         QSettings settings;
         if (saved) settings.setValue("Widgets/StyleSheet", sheet);
         if (allow.isValid()) settings.setValue("Widgets/AllowStyleSheet", allow);
-        qApp->setStyleSheet(QString());
+        const bool disabled = allow.isValid() && !allow.toBool();
+        if (disabled)
+        {
+            // Reinitialize after a sheet was loaded to make sure disabling it clears both
+            // the application sheet and the path used by Ctrl+T.
+            qApp->setStyleSheet(QString());
+            settings.setValue("Widgets/AllowStyleSheet", 1);
+            QC_ApplicationWindow::getAppWindow()->initSettings();
+            QCOMPARE(qApp->styleSheet(), QString::fromLatin1(content));
+            settings.setValue("Widgets/AllowStyleSheet", 0);
+        }
+        else
+            qApp->setStyleSheet(QString());
+
         QC_ApplicationWindow::getAppWindow()->initSettings();
         QCOMPARE(qApp->styleSheet(), applied ? QString::fromLatin1(content) : QString());
+        if (disabled)
+        {
+            QC_ApplicationWindow::getAppWindow()->reloadStyleSheet();
+            QVERIFY(qApp->styleSheet().isEmpty());
+        }
     }
 
     void picBoxFieldCount()

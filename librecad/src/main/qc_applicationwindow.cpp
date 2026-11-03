@@ -1473,8 +1473,16 @@ void QC_ApplicationWindow::initSettings()
 
     QString sheet_path = settings.value("StyleSheet", "").toString();
     // on unless switched off, so a style sheet saved before the checkbox existed stays applied
-    if (settings.value("AllowStyleSheet", true).toBool() && loadStyleSheet(sheet_path))
-        style_sheet_path = sheet_path;
+    if (settings.value("AllowStyleSheet", true).toBool())
+    {
+        if (loadStyleSheet(sheet_path))
+            style_sheet_path = sheet_path;
+    }
+    else
+    {
+        qApp->setStyleSheet(QString());
+        style_sheet_path.clear();
+    }
     settings.endGroup();
 
     a_map["ViewDraft"]->setChecked(settings.value("Appearance/DraftMode", 0).toBool());
