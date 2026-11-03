@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 01:14 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W316; chronological evidence follows): implementation slices
+Updated: 2026-11-03 01:19 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W317; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,11 +36,12 @@ integration rather than an unimplemented declared feature slice.
 
 The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
 non-roadmap change is the offset-test whitespace fix at product head
-`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:14 UTC
-exact-head poll, the PR Checks page showed 14 successful, 4 in progress, and 6
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:19 UTC
+exact-head poll, the PR Checks page showed 15 successful, 3 in progress, and 6
 skipped entries, with no failures. In progress: CodeQL Analyze, Continuous
-Build macOS, DWG/DXF Windows x64, and macOS-15 Intel Pixi on the push trigger.
-DWG/DXF Windows ARM64 has passed. Skipped: CodeQL Security scan, conditional Linux, Linux AArch64,
+Build macOS, and DWG/DXF Windows x64. Both Pixi runs now pass all five
+platforms; DWG/DXF fast and Windows ARM64 also passed. Skipped: CodeQL Security
+scan, conditional Linux, Linux AArch64,
 Snap, Windows x64 packaging, and the separately reported conditional
 `PackageWindowsMsix` job. This corrects W311's earlier statement that MSIX was
 not a separate check entry. Results apply only to this exact head; do not carry
@@ -12215,7 +12216,39 @@ interaction or drawing save is claimed. Physical stale-peer behavior, durable
 screenshots/Qt DPR, independent W171 GUI viewport, signed/deployed W0-W2
 acceptance, human review, and final R integration remain open.
 
-Next: poll the same four exact-head jobs. Keep W311-W316 roadmap-only commits
+Next: poll the same three exact-head jobs. Keep W311-W317 roadmap-only commits
 local until all active checks terminate; then push the queue, inspect checks on
 the new exact head, and refresh the PR status comment. Preserve the open GUI,
 deployment, review, and integration gates until direct evidence closes them.
+
+## 272. W317 Exact-Head Pixi Completion
+
+W316 is committed locally as `21062543e`, following roadmap-only commits W311
+through W315. The existing PR status comment was refreshed at 01:17 UTC with
+the correct DWG/DXF architecture mapping and W316 validation.
+
+At 01:19 UTC, the exact-head check total is 24 entries: 15 successful, 3 in
+progress, and 6 skipped, with no failures. The push-triggered macOS-15 Intel
+Pixi job completed successfully, so both push and PR Pixi runs now pass all
+five platforms. Remaining active checks are CodeQL Analyze, Continuous Build
+macOS, and DWG/DXF Windows x64. DWG/DXF fast and Windows ARM64 passed; Windows
+x64 remains active. Six skips include the distinct `PackageWindowsMsix` entry.
+All results are scoped to PR head
+`d183479630b43ae55b032a160d7403dbf3a848ed`.
+
+W316's full roadmap/refusal validation passed 99/99 in 116.0 seconds, no skips;
+93 obligations, zero pending declarations, and zero production mismatches;
+parser cases passed 5/5 and `git diff --check` passed. Product source remains
+unchanged from `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
+
+The user confirms Remote Desktop is running and logged in, but native CUA still
+reports the Mac locked while attaching to LibreCAD; no new visible interaction
+or drawing save is claimed. Physical stale-peer behavior, durable screenshots
+and Qt DPR, independent W171 GUI viewport, signed/deployed W0-W2 acceptance,
+approving review, and final R integration remain open.
+
+Next: validate and commit this W317 status receipt, update the existing PR
+comment, and poll the three remaining exact-head checks. Push the accumulated
+roadmap-only queue only after they terminate; then inspect CI for the resulting
+new head. Keep GUI, deployment/runtime, review, and final integration gates open
+until direct evidence closes them.
