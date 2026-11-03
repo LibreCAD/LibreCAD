@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 10:18 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W347; chronological evidence follows): implementation slices
+Updated: 2026-11-03 13:13 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W348; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -35,38 +35,37 @@ product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
 The current PR head is
-`985328c12c17b951394908e8daed8c13edf4b3fe`, including the pushed W341 runtime
-smoke and W344-W346 roadmap commits; the local branch is synchronized with origin.
-The latest product-source commit remains `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
-Git history confirms `d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier
-documentation checkpoint, not the product head.
-At 10:15 UTC, exact-head CI for `985328c12` has 19 passing checks, 7 configured
-skips, and zero failures. The same source-identical head `951cf2270` also passed
-all checks. These runs include the W341 universal macOS DMG mount-and-launch
-smoke on `macos-14`; Build and packaging succeeded and the artifact uploaded.
-This does not establish Developer ID signing, notarization, or minimum macOS
-14.4 execution. The local
+`503cdab89d56f7fa08f8ac60b11463b9fb4cdf1e`; W347 is a roadmap-only commit, and
+the latest product-source commit remains
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. Git history confirms
+`d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier documentation
+checkpoint, not the product head.
+At 13:10 UTC, exact-head CI for `503cdab89` completed with 19 passing checks,
+7 configured skips, and zero failures. BuildMacOS run `41618321172` succeeded;
+its Build and packaging step invoked the W341 mounted-DMG runtime smoke, then
+uploaded artifact `13232319103`. This qualifies the ad-hoc universal package on
+`macos-14`, not Developer ID signing, notarization, or actual execution on
+minimum macOS 14.4. Source-identical prior head `985328c12` also passed 19
+checks with 7 configured skips. The local
 `librecad_offset_creation_action_tests` target passes all 90 cases and 90,340
 assertions, including the focused stale-peer case's 39 assertions. Roadmap
 parser and refusal inventory validation pass 5/5 and 94/94; `git diff --check`
 is clean, revalidated at W342. W335 retains a direct per-window baseline
 screenshot of the test-copy W193 drawing and a Qt 6.12 screen DPR probe of 1.0
-on the same 1920x1080
-display. This is not an app-window DPR measurement or a preview/commit pair.
-It does not establish physical GUI stale-peer behavior. The local qmake6
-app/worker build and ad-hoc package/relocation smoke tests pass; these do not
+on the same 1920x1080 display. W348 now records in-session visible preview and
+matching commit states, but no retained screenshot pair or app-window DPR
+measurement; it does not establish physical GUI stale-peer behavior. The local
+qmake6 app/worker build and ad-hoc package/relocation smoke tests pass; these do not
 establish Developer ID signing, notarization, or execution on macOS 14.4. PR
-#3193 remains open, draft, and review-required. The user reports Remote Desktop
-is running and logged in, while CUA reports locked and lists no native apps;
-no input was sent after this report. W335 captured the test-copy LibreCAD
+#3193 remains open, draft, and review-required. The logged-in Remote Desktop is
+now reachable through CUA and the approved test copy; W348 records the visible
+interaction. W335 captured the test-copy LibreCAD
 window directly through CoreGraphics without input, which is baseline rendering
 only, not interaction acceptance. Neither the FreeCAD, BRL-CAD, W331
 ezdxf/Matplotlib, nor W342 LibreDWG attempt produced useful independent W171
-viewport evidence. The repository matched `b587c1095` before these local
-W329-W342 roadmap edits.
-Keep the edits local while exact-head CI is active;
-commit and push only after those runs terminate, then inspect the resulting
-exact head.
+viewport evidence. The repository is clean after pushed W347; W348 is a local
+roadmap receipt only while exact-head CI remains active. Commit and push W348
+only after that run terminates, then inspect the resulting exact head.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -13159,3 +13158,40 @@ locked even though the user reports an active logged-in Remote Desktop. The
 updated next action is to resolve that control-path mismatch without repeating
 login/unlock requests, while keeping unavailable acceptance evidence explicitly
 open. Do not restart completed implementation slices without a concrete defect.
+
+## 303. W348 Remote-Desktop GUI Recheck
+
+The approved
+`org.librecad.librecad.pr3193visible` test copy was reachable through the user's
+logged-in Remote Desktop. The W193-derived test drawing visibly rendered. With
+Offset active, the selected ellipse showed a red live preview; clicking the
+same side and direction produced the corresponding committed contour at the
+same view. The test used the disposable
+`/private/tmp/offset-W193-multi-entity-W281.dxf`. The source and W281 fixture
+both remain SHA256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`. No Save
+was issued; the drawing was closed with No. No display or tool-option setting
+was changed; opening the file may update the app's recent-file list.
+
+Escape was sent while a CUA pointer-drag operation was pending, and the tool
+returned to the default action. Event timing did not prove Escape was processed
+before pointer release, and no before/after entity-count comparison was
+retained. Do not count this as true held-drag cancellation or physical
+stale-peer acceptance. The preview and committed states were visible in the
+validation conversation, but were not saved as durable screenshot files; the
+Qt app-window DPR was not measured. The independent W171 viewport remains
+unqualified.
+
+At 13:10 UTC, exact PR head `503cdab89d56f7fa08f8ac60b11463b9fb4cdf1e` had 19
+passing checks, 7 configured skips, and zero failures. BuildMacOS run
+`41618321172` passed, including the mounted-DMG runtime smoke in Build and
+packaging; artifact `13232319103` uploaded. The roadmap parser passed 5/5 and
+the refusal inventory passed 94/94 (93 unique obligations; zero pending
+declarations or production mismatches). The PR status comment at
+issuecomment-6591045544 records W348 and replaces the stale CUA lock report.
+
+Keep open: durable matched preview/commit screenshots and app-window DPR;
+verified held-drag cancellation; physical stale-peer GUI behavior; a useful
+independent W171 GUI viewport; Developer ID/notarized and minimum macOS 14.4
+acceptance; human review; and final R integration. Commit and push this W348
+roadmap receipt, then check CI only on the resulting exact PR head.
