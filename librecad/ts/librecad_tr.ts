@@ -27070,7 +27070,7 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="228"/>
         <source>Printable layer</source>
-        <translation>Yazdırılabilir katman</translation>
+        <translation>Yazdırılabilir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="228"/>
@@ -27115,7 +27115,7 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
         <source>Unlock all layers</source>
-        <translation>Tüm katmanların kilidini aç</translation>
+        <translation>Tüm kilitleri aç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="303"/>
@@ -27125,7 +27125,7 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="304"/>
         <source>Lock other layers</source>
-        <translation>Diğer katmanları kilitle</translation>
+        <translation>Diğerlerini kilitle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="304"/>
@@ -27140,7 +27140,7 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
         <source>Show all layers</source>
-        <translation>Tüm katmanları göster</translation>
+        <translation>Tümünü göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="341"/>
@@ -27150,7 +27150,7 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="342"/>
         <source>Hide other layers</source>
-        <translation>Diğer katmanları gizle</translation>
+        <translation>Diğerlerini gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_layer.cpp" line="342"/>
