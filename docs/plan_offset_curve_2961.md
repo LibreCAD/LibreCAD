@@ -65,7 +65,8 @@ durable files; their 1920x1080 pixel dimensions do not measure Qt display DPR.
 Durable screenshot/DPR evidence, physical stale-peer behavior, and an
 independent W171 GUI viewport remain open. FreeCAD 1.1.4 exits before a viewport
 for this DXF under multiple import modes; Inkscape displays a two-node path
-whose stroke overwhelms its bounds and is not fidelity evidence. Other
+whose stroke overwhelms its bounds; BRL-CAD's importer reduces the SPLINE to a
+degenerate line-only sketch. None is W171 visual-fidelity evidence. Other
 open gates are signed and deployed-package/full W0-W2 acceptance, required
 human review, and final R integration.
 The branch contains current `origin/master` (`998e61dc0`) as an ancestor. Do not
@@ -8451,6 +8452,33 @@ This retry is not a product-code failure and does not close the viewer gate.
 Continue with independent viewport alternatives, physical stale-peer and
 retained GUI/DPR evidence when the desktop is available. Preserve the current
 macOS run and local-only roadmap queue until its terminal result.
+
+## 282. W327 BRL-CAD Converter Probe
+
+The installed BRL-CAD 7.24.0 `dxf-g` binary initially could not load its
+bundled libraries because its absolute install prefix is absent. A temporary
+symlink under `/private/tmp` supplied the bundle's library directory without
+changing the app or system install. The converter accepted the reduced W171
+DXF and reported one SPLINE, but `mged -c ... 'l sketch.1'` showed the imported
+2D sketch had only two vertices and repeated zero-length line segments. A
+headless `rt` pass consequently reported zero ray intersections. This is an
+importer/viewer limitation, not evidence about LibreCAD's exported curve; the
+original ODA DXF remains unchanged. The desktop is currently locked, so the
+BRL-CAD GUI could not be used to attempt a wireframe view.
+
+| W327 item | Result |
+|---|---|
+| BRL-CAD bundled CLI startup | PASS after temporary library-path symlink; no app/system files changed |
+| DXF spline import | INADEQUATE; output sketch has two vertices and degenerate zero-length segments |
+| Headless ray trace | NO VIEW; zero solid/ray intersections for the wireframe sketch |
+| Independent W171 viewport/fidelity | OPEN; BRL-CAD result is not usable visual evidence |
+| Original fixture integrity | PASS; unchanged |
+| Desktop availability | BLOCKED; CUA reports the Mac locked |
+
+Keep the W171 viewport gate open and do not infer a product defect from this
+converter result. Continue with a viewer that preserves the spline and presents
+its actual geometry, plus the separate stale-peer, screenshot/DPR,
+deployment/runtime, review, and integration gates.
 
 ## 173. W215 Full CMake Release and PR-Head Requalification
 
