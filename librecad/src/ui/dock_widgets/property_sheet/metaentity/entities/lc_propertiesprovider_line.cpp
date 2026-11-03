@@ -129,10 +129,10 @@ void LC_PropertiesProviderLine::doCreateSingleEntityCommands(LC_PropertyContaine
                 break;
         }
     };
-    LC_PropertyProviderUtils::createSingleEntityCommand<RS_Line>(container, "lineActTanStart", tr("Tangential Arc (start)"),
-                                                                   tr("Create tangential arc in start point"),
-                                                                   tr("Tangential Arc (end)"), tr("Create tangential arc in end point"),line,
-                                                                   clickHandler, tr("Creation of tangential arc"));
+    LC_PropertyProviderUtils::createSingleEntityCommand<RS_Line>(container, "lineActTanStart", tr("Tangental Arc (start)"),
+                                                                   tr("Create tangental arc in start point"),
+                                                                   tr("Tangental Arc (end)"), tr("Create tangental arc in end point"),line,
+                                                                   clickHandler, tr("Creation of tangental arc"));
 
     const std::list<CommandLinkInfo> commands2 = {
         {
@@ -146,19 +146,19 @@ void LC_PropertiesProviderLine::doCreateSingleEntityCommands(LC_PropertyContaine
             {RS2::ActionDrawLineRelAngle, tr("Relative Angle"), tr("Create line with relative angle to this line")}
         },
         {
-            tr("Creation of line from point or tangential orthogonal"),
+            tr("Creation of line from point or tangental orthogonal"),
             {RS2::ActionDrawLineFromPointToLine, tr("Line from Point"), tr("Create line from point to this line")},
-            {RS2::ActionDrawLineOrthTan, tr("Tangent Ort"), tr("Create orthogonal line that is tangential to other entity")}
+            {RS2::ActionDrawLineOrthTan, tr("Tangent Ort"), tr("Create orthogonal line that is tangental to other entity")}
         },
         {
-            tr("Creation of circle tangential to line"),
-            {RS2::ActionDrawCircleTangental1Entity2Points, tr("Tangential Circle (2 P)"), tr("Create circle tangential by 2 points")},
-            {RS2::ActionDrawCircleTangental2Entities1Point, tr("Tangential Circle (2 E, 1 P)"), tr("Create circle tangential by 2 entities and 1 point")}
+            tr("Creation of circle tangental to line"),
+            {RS2::ActionDrawCircleTangental1Entity2Points, tr("Tangential Circle (2 P)"), tr("Create circle tangental by 2 points")},
+            {RS2::ActionDrawCircleTangental2Entities1Point, tr("Tangential Circle (2 E, 1 P)"), tr("Create circle tangental by 2 entities and 1 point")}
         },
         {
-            tr("Creation of circle tangential to line"),
-            {RS2::ActionDrawCircleTan3Entities, tr("Tangential Circle (3 E)"), tr("Create circle tangential to 3 entities")},
-            {RS2::ActionDrawCircleTan2EntitiesRadius, tr("Tangential Circle (2 E, R)"), tr("Create circle tangential by 2 entities and radius")}
+            tr("Creation of circle tangental to line"),
+            {RS2::ActionDrawCircleTan3Entities, tr("Tangential Circle (3 E)"), tr("Create circle tangental to 3 entities")},
+            {RS2::ActionDrawCircleTan2EntitiesRadius, tr("Tangential Circle (2 E, R)"), tr("Create circle tangental by 2 entities and radius")}
         },
         {
             tr("Creation of ellipse or bounding box"),

@@ -119,12 +119,12 @@ void LC_PropertiesProviderEllipse::doCreateSingleEntityCommands(LC_PropertyConta
         {
             tr("Creation of orthogonal lines"),
             {RS2::ActionDrawLineOrthogonal, tr("Orthogonal"), tr("Create line orthogonal to ellipse")},
-            {RS2::ActionDrawLineOrthTan, tr("Tangent Orthogonal"), tr("Create tangential orthogonal line to line")},
+            {RS2::ActionDrawLineOrthTan, tr("Tangent Orthogonal"), tr("Create tangental orthogonal line to line")},
         },
         {
-            tr("Creation of line tangential to ellipse"),
-            {RS2::ActionDrawLineTangent1, tr("Tangent (P,C)"), tr("Create line tangential to ellipse")},
-            {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangential for two entities")}
+            tr("Creation of line tangental to ellipse"),
+            {RS2::ActionDrawLineTangent1, tr("Tangent (P,C)"), tr("Create line tangental to ellipse")},
+            {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangental for two entities")}
         },
         {
             tr("Creation of line with relative angle or fillet"),

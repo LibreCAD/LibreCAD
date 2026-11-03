@@ -84,7 +84,7 @@
       </sizepolicy>
      </property>
      <property name="toolTip">
-      <string>If selected, tangential arc with specified radius will be created</string>
+      <string>If selected, tangental arc with specified radius will be created</string>
      </property>
      <property name="text">
       <string extracomment="Draw Tangential Arc by the given radius">Radius</string>

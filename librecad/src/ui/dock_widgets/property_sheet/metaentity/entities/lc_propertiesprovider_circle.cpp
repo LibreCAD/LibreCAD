@@ -79,24 +79,24 @@ void LC_PropertiesProviderCircle::doCreateSingleEntityCommands(LC_PropertyContai
             {RS2::ActionModifyTrim, tr("Trim"), tr("Trim circle by other entity")}
         },
         {
-            tr("Creation of circle tangential to circle"),
-            {RS2::ActionDrawCircleTangental1Entity2Points, tr("Tangent Circle (2 P)"), tr("Create tangential circle by 2 points")},
-            {RS2::ActionDrawCircleTangental2Entities1Point, tr("Tangent Circle (2 E, 1 P)"), tr("Create tangential circle by 2 entities and 1 point")}
+            tr("Creation of circle tangental to circle"),
+            {RS2::ActionDrawCircleTangental1Entity2Points, tr("Tangent Circle (2 P)"), tr("Create tangental circle by 2 points")},
+            {RS2::ActionDrawCircleTangental2Entities1Point, tr("Tangent Circle (2 E, 1 P)"), tr("Create tangental circle by 2 entities and 1 point")}
         },
         {
-            tr("Creation of circle tangential"),
-            {RS2::ActionDrawCircleTan3Entities, tr("Tangent Circle (3 E)"), tr("Create tangential circle by 3 entities")},
-            {RS2::ActionDrawCircleTan2EntitiesRadius, tr("Tangent Circle (2 E, R)"), tr("Create tangential circle by 2 entities and radius")}
+            tr("Creation of circle tangental"),
+            {RS2::ActionDrawCircleTan3Entities, tr("Tangent Circle (3 E)"), tr("Create tangental circle by 3 entities")},
+            {RS2::ActionDrawCircleTan2EntitiesRadius, tr("Tangent Circle (2 E, R)"), tr("Create tangental circle by 2 entities and radius")}
         },
         {
-            tr("Creation of line tangential to circle"),
-            {RS2::ActionDrawLineTangent1, tr("Tangent (P,C)"), tr("Create line tangential to circle")},
-            {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangential to two circles")}
+            tr("Creation of line tangental to circle"),
+            {RS2::ActionDrawLineTangent1, tr("Tangent (P,C)"), tr("Create line tangental to circle")},
+            {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangental to two circles")}
         },
         {
             tr("Creation of orthogonal lines"),
             {RS2::ActionDrawLineOrthogonal, tr("Orthogonal"), tr("Create line orthogonal to circle")},
-            {RS2::ActionDrawLineOrthTan, tr("Tangent Orthogonal"), tr("Create tangential orthogonal line to line")},
+            {RS2::ActionDrawLineOrthTan, tr("Tangent Orthogonal"), tr("Create tangental orthogonal line to line")},
         },
         {
             tr("Dividing circle"),

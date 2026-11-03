@@ -33,7 +33,7 @@ void LC_PolylineOptionsFiller::fillToolOptionsContainer(LC_PropertyContainer* co
         "modeDescriptor",
         {
             {LC_ActionDrawPolyline::SegmentMode::Line, tr("Line")},
-            {LC_ActionDrawPolyline::SegmentMode::Tangential, tr("Arc tangential")},
+            {LC_ActionDrawPolyline::SegmentMode::Tangential, tr("Arc tangental")},
             {LC_ActionDrawPolyline::SegmentMode::TangentalArcFixedRadius, tr("Arc radius")},
             {LC_ActionDrawPolyline::SegmentMode::TangentalArcFixedAngle, tr("Arc angle")},
             {LC_ActionDrawPolyline::SegmentMode::ArcFixedAngle, tr("Arc")}
