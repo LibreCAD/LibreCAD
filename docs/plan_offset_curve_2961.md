@@ -13471,37 +13471,41 @@ At 20:38 UTC, the exact pushed head remained
 `1aa7ddbfb0b0e415620f7307180244e5d7f1c1d6`. Eighteen checks had succeeded,
 BuildMacOS was still compiling/packaging, six jobs were configured skips, three
 duplicate push-triggered DWG/DXF jobs were cancelled, and no failures were
-reported. Keep this head stable until its macOS job completes; then commit and
-push W354, refresh PR status, and require new exact-head CI before carrying any
-status forward. Developer ID/notarized deployment, exact-minimum macOS 14.4
-runtime acceptance, human review, and final R integration remain external
-gates.
+reported. W354 initially held its documentation push for that active run; its
+completion and the eventual push are reconciled below. Developer ID/notarized
+deployment, exact-minimum macOS 14.4 runtime acceptance, human review, and final
+R integration remain external gates.
 
 ## 310. W355 Documentation-Push And CI Provenance Reconciliation
 
-W354 is a roadmap-only commit; it changes no product source. Inspection of
-`.github/workflows/build-all.yml` confirms the PR trigger is path-filtered to
-packaging/workflow files, so pushing this documentation receipt does not start
-a replacement BuildMacOS run and does not cancel the existing one through that
-workflow's concurrency group. Push the documentation update without waiting on
-the long product build, but keep its CI result precisely labeled: run
-`41696525784` is attached to source head
-`1aa7ddbfb0b0e415620f7307180244e5d7f1c1d6`, not the later docs-only commit.
-Because product files are unchanged, it is source-equivalent evidence, not an
-exact-new-Git-head result.
+The prior assumption about path filtering was wrong. Although
+`.github/workflows/build-all.yml` lists packaging/workflow paths under
+`pull_request.paths`, GitHub evaluates that filter over the PR's changed-file
+set, not only the latest commit. Earlier commits in this PR already change
+matching paths, so the W354/W355 documentation-only push did start a fresh set
+of checks for the new head. Do not infer that docs-only commits avoid PR CI.
 
-At 21:42 UTC, that run still had 18 successful checks, BuildMacOS in its
-Build-and-packaging step (started 18:46 UTC), six configured skips, three
-duplicate push-triggered DWG/DXF jobs cancelled, and zero failures. The run
-status and active step were confirmed from the Actions API; diagnostic log
-retrieval returned HTTP 502 and does not establish additional build progress.
-Keep exact-head versus source-equivalent CI distinct in the next status receipt.
+The previous Continuous build, run `41696525784`, completed successfully at
+21:42:41 UTC on source head
+`1aa7ddbfb0b0e415620f7307180244e5d7f1c1d6`; its BuildMacOS and BuildWindowsARM64
+jobs passed, while six packaging/platform jobs were configured skips. It
+completed before the W354/W355 push and was not cancelled. Since those commits
+change only this roadmap, the completed build is useful source-equivalent
+evidence, but is not a check on the later Git head.
 
-The GitHub integration rejected a W354 status-comment attempt with HTTP 403
-(resource not accessible to the integration). A branch push can publish the
-roadmap commit to PR #3193, but the status comment must remain identified as
-unrefreshed unless a permitted comment path becomes available. This does not
-block code/test work; the PR stays open, draft, and review-required. Remaining
+The documentation push produced exact-head SHA
+`d9d739b10097502c8e104d3d9e68a5a188c53fd3` and current workflows including
+Continuous build `41724501720`, DWG/DXF `41724501741`, PR Pixi `41724501744`,
+Headless `41724501902`, CodeQL `41724501837`, and a duplicate push-triggered
+Pixi run `41724493796`. At 21:45 UTC, diagnostics showed 18 checks in progress,
+five configured skips, zero failures, and no completed successes. These are
+the d9 head's statuses; any subsequent documentation push starts another PR
+check set and must not inherit them as exact-head results.
+
+The GitHub integration rejected the W354 status-comment attempt with HTTP 403
+(resource not accessible to the integration). The pushed roadmap documents the
+probe, but no fresh top-level PR status comment was posted. This does not block
+code/test work; the PR remains open, draft, and review-required. Remaining
 acceptance includes a retained matched preview/commit screenshot pair and Qt
 app-window DPR, reproducible pointer-drag cancellation and physical stale-peer
 behavior, Developer ID/notarized deployment, exact-minimum macOS 14.4 runtime,
