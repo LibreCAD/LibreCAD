@@ -953,8 +953,8 @@ private slots:
         widgetOptions([](LC_WidgetOptionsDialog* dialog) { dialog->stylesheet_checkbox->setChecked(true); });
         QCOMPARE(qApp->styleSheet(), QString::fromLatin1(content));
 
-        // The tests answer dialogs from a timer, which cannot reach a native one.
-        QCoreApplication::setAttribute(Qt::AA_DontUseNativeDialogs);
+        // CTest runs this target with QT_QPA_PLATFORM=offscreen, so the picker is a
+        // QWidget dialog that the timer can drive.
         widgetOptions([&](LC_WidgetOptionsDialog* dialog) {
             dialog->stylesheet_checkbox->setChecked(false);
             dialog->stylesheet_field->clear();
