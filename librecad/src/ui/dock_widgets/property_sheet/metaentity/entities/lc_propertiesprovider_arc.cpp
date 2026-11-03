@@ -82,13 +82,13 @@ void LC_PropertiesProviderArc::doCreateCalculatedProperties(LC_PropertyContainer
         return e->getEndpoint();
     }, nullptr, list, container);
 
-    addReadOnlyString<RS_Arc>({"arcLength", tr("Arc Length"), tr("Total angle of arc")}, [this](const RS_Arc* e)-> QString {
+    addReadOnlyString<RS_Arc>({"angleLength", tr("Angle Length"), tr("Total angle of arc")}, [this](const RS_Arc* e)-> QString {
         const double angleRad = e->getAngleLength();
         QString value = formatRawAngle(angleRad);
         return value;
     }, list, container);
 
-    addReadOnlyString<RS_Arc>({"circumference", tr("Circumference", "arc"), tr("Total linear length of arc")},
+    addReadOnlyString<RS_Arc>({"arcLength", tr("Arc Length"), tr("Total linear length of arc")},
                               [this](const RS_Arc* e)-> QString {
                                   const double len = e->getLength();
                                   QString value = formatLinear(len);
@@ -150,12 +150,12 @@ void LC_PropertiesProviderArc::doCreateSingleEntityCommands(LC_PropertyContainer
         {
             tr("Creation of circle tangental to arc"),
             {RS2::ActionDrawCircleTangental1Entity2Points, tr("Tangent Circle (2 P)"), tr("Create tangental circle by 2 points")},
-            {RS2::ActionDrawCircleTangental2Entities1Point, tr("Tangent Circle (2 E, 1 P)"), tr("Create tangental circle by 2 entitites and 1 point")}
+            {RS2::ActionDrawCircleTangental2Entities1Point, tr("Tangent Circle (2 E, 1 P)"), tr("Create tangental circle by 2 entities and 1 point")}
         },
         {
             tr("Creation of circle tangental"),
             {RS2::ActionDrawCircleTan3Entities, tr("Tangent Circle (3 E)"), tr("Create tangental circle by 3 entities")},
-            {RS2::ActionDrawCircleTan2EntitiesRadius, tr("Tangent Circle (2 E, R)"), tr("Create tangental circle by 2 points and radius")}
+            {RS2::ActionDrawCircleTan2EntitiesRadius, tr("Tangent Circle (2 E, R)"), tr("Create tangental circle by 2 entities and radius")}
         },
         {
             tr("Creation of line tangental to circle"),
@@ -163,34 +163,34 @@ void LC_PropertiesProviderArc::doCreateSingleEntityCommands(LC_PropertyContainer
             {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangental for two circles/arcs")}
         },
         {
-            tr("Creation of line tangental to circle"),
+            tr("Creation of orthogonal lines"),
             {RS2::ActionDrawLineOrthogonal, tr("Orthogonal"), tr("Create line orthogonal to arc")},
             {RS2::ActionDrawLineOrthTan, tr("Tangent Orthogonal"), tr("Create arc tangental line orthogonal to line")},
         },
         {
-            tr("Creation of line tangental to circle"),
+            tr("Creation of line with relative angle or fillet"),
             {RS2::ActionDrawLineRelAngle, tr("Relative angle"), tr("Create line with relative angle to arc")},
             {RS2::ActionModifyRound, tr("Fillet"), tr("Create fillet for arc")},
         },
         {
             tr("Dividing arc"),
             {RS2::ActionDrawSliceDivideCircle, tr("Slice/Divide"), tr("Slice or divide an arc")},
-            {RS2::ActionModifyBreakDivide, tr("Break/Divide"), tr("Break or divide the arc by intesection points")}
+            {RS2::ActionModifyBreakDivide, tr("Break/Divide"), tr("Break or divide the arc by intersection points")}
         },
         {
             tr("Creation of ellipse or bounding box"),
-            {RS2::ActionDrawEllipseInscribe, tr("Ellipse inscribed"), tr("Create elipse inscribed")},
+            {RS2::ActionDrawEllipseInscribe, tr("Ellipse inscribed"), tr("Create ellipse inscribed")},
             {RS2::ActionDrawBoundingBox, tr("Bounding box"), tr("Create bounding box for arc")}
         },
         {
             tr("Creation of dimension, diametric or radial"),
-            {RS2::ActionDimDiametric, tr("Dim Diametric"), tr("Create of diametric dimension for arc")},
-            {RS2::ActionDimRadial, tr("Dim Radial"), tr("Create of radial dimension for arc")}
+            {RS2::ActionDimDiametric, tr("Dim Diametric"), tr("Create diametric dimension for arc")},
+            {RS2::ActionDimRadial, tr("Dim Radial"), tr("Create radial dimension for arc")}
         },
         {
-            tr("Creation of dimension, angular or ordinate"),
-            {RS2::ActionDimOrdinate, tr("Dim Ordinate"), tr("Create of ordinate dimension for arc")},
-            {RS2::ActionDimArc, tr("Dim Arc"), tr("Create of arc dimension")},
+            tr("Creation of dimension, ordinate or arc"),
+            {RS2::ActionDimOrdinate, tr("Dim Ordinate"), tr("Create ordinate dimension for arc")},
+            {RS2::ActionDimArc, tr("Dim Arc"), tr("Create arc dimension")},
         }
     };
     createEntityContextCommands<RS_Arc>(commands, cont, arc, "arcCommands2");

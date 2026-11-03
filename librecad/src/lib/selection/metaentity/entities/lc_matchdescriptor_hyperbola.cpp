@@ -40,7 +40,7 @@ void LC_MatchDescriptorHyperbola::init(QMap<RS2::EntityType, LC_EntityMatchDescr
     }, tr("Focus 1 X"), tr("X coordinate for first focus point"));
     entity->addVectorY("focus1Y", [](const LC_Hyperbola* e) {
         return e->getFocus1();
-    }, tr("Focus 1 Y"), tr("Y coordinate for second focus point"));
+    }, tr("Focus 1 Y"), tr("Y coordinate for first focus point"));
 
     entity->addVectorX("focus2X", [](const LC_Hyperbola* e) {
         return e->getFocus2();

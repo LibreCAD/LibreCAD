@@ -109,7 +109,7 @@ void LC_PropertiesProviderGraphicGrid::createGridType(LC_PropertyContainer* cont
         m_widget->refill();
     };
 
-    const LC_Property::Names names = {"gridType", tr("Grid Type"), tr("Defines which time of grid should be drawn")};
+    const LC_Property::Names names = {"gridType", tr("Grid Type"), tr("Defines which type of grid should be drawn")};
     if (showGrid) {
         addDirectEnum<LC_PropertyEnumValueType, RS_Graphic>(cont, names, &enumDescriptor, funGet, funSet, graphic);
     }
