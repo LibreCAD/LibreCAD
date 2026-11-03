@@ -12444,3 +12444,56 @@ documentation queue only after the job terminates; inspect checks on the
 resulting exact head. Physical stale-peer behavior, durable matched
 screenshots/Qt DPR, independent W171 visual fidelity, signed/deployed W0-W2,
 review approval, and final R integration remain open.
+
+## 279. W324 Single-Copy Visible Offset Recheck
+
+The user's remote desktop session is running and logged in, and the approved
+isolated LibreCAD test app is controllable. On the disposable
+`/private/tmp/offset-W193-multi-entity-W281.dxf`, the six-contour baseline was
+visible. Started Offset with fixed distance 0.5 and originals retained,
+temporarily disabled Multiple Copies, selected the outer-left ellipse, and
+observed a distinct red outward preview at the direction prompt. Clicking
+outside the source committed one additional contour. Escape returned to
+Default, and one Undo restored the six-contour baseline with Undo disabled.
+No Save command was issued; the source hash remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+Restarting Offset verified the normal options were restored: fixed distance
+0.5, Multiple Copies enabled with count 2, Keep Originals enabled, and Editable
+Offset Curve enabled. The action was canceled without another edit. CUA
+screenshots of the baseline, direction preview, and committed contour were
+observed in-session but not retained as image files; Qt/device DPR remains
+unmeasured. The active-preview Escape, multi-copy, and held-drag results from
+W302/W321 remain the separate prior evidence. This recheck does not exercise a
+stale worker reply or peer mutation.
+
+The refreshed exact-head Checks panel remains at 25 entries: 18 successful, 1
+in progress, 6 skipped, with no failures, for
+`d183479630b43ae55b032a160d7403dbf3a848ed`. The sole active result is
+Continuous Build macOS (`41550587186`, job `125637540627`), still in Build and
+packaging after about 1h58m. Do not cancel or replace it, and keep the local
+roadmap-only queue unpushed until this run terminates. For this receipt,
+`node --test scripts/offset-curve-validation/test-refusal-inventory.js` passes
+94/94 with zero skips; the inventory reports 93 unique obligations, zero
+pending declarations, and no production mismatches. The independent roadmap
+parser passes 5/5, and `git diff --check` is clean. Combined discovery is 99
+tests with zero skips.
+
+| W324 item | Result |
+|---|---|
+| Logged-in remote desktop / approved test copy | PASS; app visible and responsive |
+| Single-copy outward preview and commit | PASS; red preview observed, one contour committed |
+| Undo and final app state | PASS; one Undo restored six contours; action Default, no selection |
+| Source integrity / save | PASS; hash unchanged; no Save issued |
+| Offset option restoration | PASS; 0.5 distance, two copies, Keep Originals and Editable enabled |
+| Durable matched screenshots / Qt DPR | OPEN; session captures only, DPR unmeasured |
+| Physical stale-peer behavior / independent W171 viewport | OPEN |
+| Exact-head CI | 18 successful, 1 active macOS, 6 skipped, no failures |
+| Signed/deployed W0-W2, approving review, final R integration | OPEN |
+
+Next: validate and commit this roadmap receipt, refresh the existing PR status
+comment, and continue polling the same macOS job. After it reaches a terminal
+result, push the accumulated documentation-only commits and inspect the new
+exact-head checks. Continue the genuine stale-peer, retained screenshot/DPR,
+independent W171 visual, deployment/runtime, review, and final integration
+gates without substituting automated or prior-head results.
