@@ -12497,3 +12497,31 @@ result, push the accumulated documentation-only commits and inspect the new
 exact-head checks. Continue the genuine stale-peer, retained screenshot/DPR,
 independent W171 visual, deployment/runtime, review, and final integration
 gates without substituting automated or prior-head results.
+
+## 280. W325 Logged-In Desktop and W171 Viewport Retry
+
+The user clarified that the remote desktop is already running and logged in.
+The CUA bridge confirms an active session and can control the approved isolated
+LibreCAD app; no unlock or login action was needed. At 02:13 UTC, reopened the
+W171-derived ODA-converted R2018 DXF at
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`
+in LibreCAD 2.2.2.6-alpha. The first view was Layout1, which showed only a
+vertical trace. Switching to Model space and selecting that trace identifies
+one `Offset Curve`; Auto Zoom still shows a nearly vertical line rather than a
+recognizable contour. This remains inconclusive/unsuccessful independent
+visual-fidelity evidence, not a render pass or a product-defect finding. The
+DXF's SHA256 remains
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`.
+Auto Zoom dirtied only the imported drawing's view state; it was closed with
+No, without saving. The W193 six-contour disposable baseline is restored in
+LibreCAD with its original in-memory unsaved marker; neither fixture was
+saved or modified on disk.
+
+The PR comment `6591045544` was verified to contain the W324 update. On exact
+PR head `d183479630b43ae55b032a160d7403dbf3a848ed`, current check diagnostics
+still show Continuous Build `BuildMacOS` (`41550587186` / `125637540627`)
+in progress; all other applicable checks report success, with configured
+lanes skipped and no failure. Do not push the local roadmap queue until this
+same macOS run terminates. Durable screenshots/Qt DPR, physical stale-peer
+behavior, independent W171 viewport/fidelity, signed/deployed W0-W2
+acceptance, reviewer approval, and final R integration remain open.
