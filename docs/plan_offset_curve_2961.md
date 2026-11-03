@@ -11964,3 +11964,43 @@ Next: poll the exact macOS job to terminal status. Then push the queued roadmap
 commits, refresh the PR status comment, and inspect checks for the new exact
 head. Continue to treat the GUI and external/deployed acceptance items as open
 until direct evidence closes them.
+
+## 265. W310 Terminal macOS CI and Roadmap Push
+
+At 00:05 UTC on 2026-11-03, the exact pre-push product head
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e` completed its remaining native
+macOS build-and-packaging job successfully: universal arm64/x86_64 build,
+package verification, fallback DMG creation, and artifact upload all passed.
+The other exact-head workflows also completed successfully: Text Foundations
+ON/OFF, fast plus Windows x64/ARM64 DWG/DXF verification, CodeQL Analyze, all
+five Pixi platforms, and Continuous Build Windows ARM64. CodeQL Security scan
+and the configured continuous Linux, Linux AArch64, Snap, Windows x64, and
+MSIX packaging lanes were skipped; no result is inferred for those lanes.
+
+The 17 queued commits were pushed to PR #3193 as roadmap-only history; the
+changed-file set is only `docs/plan_offset_curve_2961.md`. New branch head is
+`7d50224638e5980ff91b21838fb50c1c69d1f915`. The PR remains open, draft, and
+mergeable; exact-head workflows for this new documentation head must be
+checked independently rather than inheriting the prior head's results.
+
+The user confirms they are already logged in through Remote Desktop. The
+browser control session is responsive, but the native-app bridge still returns
+the Mac-locked error for `/private/tmp/LibreCAD-PR3193-visible.app`; it no
+longer resolves the app by its former short name. Do not ask the user to log
+in again or claim a new visible GUI check. Treat this as a mismatch between
+the user's remote desktop and the native automation surface. No drawing was
+opened, changed, or saved in this recheck.
+
+| W310 item | Result |
+|---|---|
+| Exact pre-push CI, including universal macOS packaging | PASS; all configured required jobs completed successfully |
+| Roadmap queue | PASS; 17 commits pushed, plan-file-only changes |
+| New exact PR head | `7d50224638e5980ff91b21838fb50c1c69d1f915`; checks pending independent poll |
+| Remote Desktop | User confirms logged in |
+| Native CUA / visible GUI gate | UNAVAILABLE; bridge still reports host locked; no new GUI evidence |
+| External W171 viewport, stale-peer behavior, durable screenshots/DPR, signed deployment/runtime, review, final R integration | OPEN |
+
+Next: refresh and inspect exact-head checks on `7d50224638e5980ff91b21838fb50c1c69d1f915`,
+then update the existing PR status comment. Continue with visible GUI and
+external/deployment gates only when directly verifiable; preserve the stated
+limitations and leave human review and final R integration open.
