@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 16:47 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W350; chronological evidence follows): implementation slices
+Updated: 2026-11-03 16:50 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W351; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -34,8 +34,8 @@ compiled Qt plugin caller. The latest implementation audit found no additional
 product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
-At the start of W350, the pushed PR head was W349
-`d3dea1cae251a640b32f7c9ebf6ec62c2239879c`; W349 is a roadmap-only commit, and
+At the start of W351, the pushed PR head was W350
+`c851369f4bae2e115d18215f8cc35c527bb9026e`; W350 is a roadmap-only commit, and
 the latest product-source commit remains
 `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. Git history confirms
 `d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier documentation
@@ -70,9 +70,8 @@ acceptance. W335 captured the test-copy LibreCAD
 window directly through CoreGraphics without input, which is baseline rendering
 only, not interaction acceptance. Neither the FreeCAD, BRL-CAD, W331
 ezdxf/Matplotlib, nor W342 LibreDWG attempt produced useful independent W171
-viewport evidence. W349 is pushed. W350 is a local roadmap receipt for the
-follow-up GUI probe and W349-head CI status; validate, commit and push it, refresh
-the PR status comment, then inspect the resulting exact head.
+viewport evidence. W349 and W350 are pushed. W351 reconciles the W350 push and
+its newly started exact-head checks; it is documentation-only.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -13346,7 +13345,29 @@ physical stale-peer acceptance result. Keep those gates open. App-window DPR,
 independent useful W171 viewport, Developer ID/notarization, exact-minimum
 macOS 14.4 execution, human review, and final R integration also remain open.
 
-W350 is a roadmap-only reconciliation. Validate the final inventory and diff,
-commit and push the receipt, refresh issuecomment-6591045544, and inspect the
-resulting PR head. Do not claim W349-head CI completion unless GitHub reports its
-checks complete.
+W350 was committed as `c851369f4bae2e115d18215f8cc35c527bb9026e` and pushed.
+The PR status comment was refreshed. At 16:49 UTC, GitHub showed Analyze and
+Headless ON/OFF pending and Security scan skipped; the new exact-head run was
+still starting, with no failures reported. Do not claim W350-head CI completion
+unless GitHub reports all required checks complete.
+
+## 306. W351 W350-Push Reconciliation
+
+W351 reconciles W350's completed commit/push step. At the start of this receipt,
+PR #3193 was open, draft and review-required at W350 head
+`c851369f4bae2e115d18215f8cc35c527bb9026e`; W350 changed only the roadmap and
+the latest product-source commit remained
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. The W350 exact-head workflows had
+started at 16:48 UTC. At 16:49 UTC, the visible required checks were pending and
+Security scan was a configured skip. The status comment
+issuecomment-6591045544 had been refreshed with the W350 head and provisional
+GUI evidence.
+
+W350's local roadmap/refusal-inventory validation passed 99/99 with no skips;
+the inventory contained 93 unique obligations, zero pending declarations and
+zero production mismatches, and its diff check was clean. W351 changes no product
+code. The W350 drag/Escape probe and its evidence limits are recorded above.
+Human review, physical stale-peer acceptance, durable matched screenshots and
+app-window DPR, a useful independent W171 viewport, Developer ID/notarization,
+exact-minimum macOS 14.4 execution, and final R integration remain external or
+unverified gates; no plan item is represented as satisfying those gates.
