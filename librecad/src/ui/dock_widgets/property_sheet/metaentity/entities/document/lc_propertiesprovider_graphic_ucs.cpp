@@ -173,7 +173,7 @@ void LC_PropertiesProviderGraphicUCS::createUCSOperations(LC_PropertyContainer* 
         }
     };
     createSingleEntityCommand<RS_Graphic>(cont, "ucsOps", tr("By ordinate dimension"),
-                                          tr("Set ucs that corresponds to selected ordinate dimension"),
+                                          tr("Set UCS that corresponds to selected ordinate dimension"),
                                           isUCS ? tr("Rename UCS...") : "",
                                           isUCS ? tr("Renames UCS (ones with empty names are temporary and are not saved)") : "",
                                           graphic, clickHandler, tr("UCS-related commands"));

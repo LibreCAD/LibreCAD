@@ -44,7 +44,7 @@ void LC_MatchDescriptorMText::init(QMap<RS2::EntityType, LC_EntityMatchDescripto
 
     entity->addFontStringList("style", [](const RS_MText* e) -> QString {
         return e->getStyle();
-    }, tr("Style"), tr("Name of the text style)"));
+    }, tr("Style"), tr("Name of the text style"));
 
     entity->addLength("height", [](const RS_MText* e) {
         return e->getHeight();

@@ -117,7 +117,7 @@ void LC_PropertiesProviderEllipse::doCreateSingleEntityCommands(LC_PropertyConta
     const auto ellipse = static_cast<RS_Ellipse*>(entity);
     const std::list<CommandLinkInfo> commands = {
         {
-            tr("Creation of line tangental to ellipse"),
+            tr("Creation of orthogonal lines"),
             {RS2::ActionDrawLineOrthogonal, tr("Orthogonal"), tr("Create line orthogonal to ellipse")},
             {RS2::ActionDrawLineOrthTan, tr("Tangent Orthogonal"), tr("Create tangental orthogonal line to line")},
         },
@@ -127,7 +127,7 @@ void LC_PropertiesProviderEllipse::doCreateSingleEntityCommands(LC_PropertyConta
             {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangental for two entities")}
         },
         {
-            tr("Creation of line with relative angle"),
+            tr("Creation of line with relative angle or fillet"),
             {RS2::ActionDrawLineAngleRel, tr("Relative"), tr("Create line with relative angle to ellipse")},
             {RS2::ActionModifyRound, tr("Fillet"), tr("Create fillet for ellipse")},
         },

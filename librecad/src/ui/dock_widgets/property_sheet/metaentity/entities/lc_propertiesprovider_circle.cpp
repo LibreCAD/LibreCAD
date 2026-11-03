@@ -94,7 +94,7 @@ void LC_PropertiesProviderCircle::doCreateSingleEntityCommands(LC_PropertyContai
             {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangental to two circles")}
         },
         {
-            tr("Creation of line tangental to circle"),
+            tr("Creation of orthogonal lines"),
             {RS2::ActionDrawLineOrthogonal, tr("Orthogonal"), tr("Create line orthogonal to circle")},
             {RS2::ActionDrawLineOrthTan, tr("Tangent Orthogonal"), tr("Create tangental orthogonal line to line")},
         },
@@ -104,7 +104,7 @@ void LC_PropertiesProviderCircle::doCreateSingleEntityCommands(LC_PropertyContai
             {RS2::ActionModifyBreakDivide, tr("Break/Divide"), tr("Break or divide the circle by intersection points")}
         },
         {
-            tr("Creation of line tangental to circle"),
+            tr("Creation of line with relative angle or fillet"),
             {RS2::ActionDrawLineAngleRel, tr("Relative"), tr("Create line with relative angle to circle")},
             {RS2::ActionModifyRound, tr("Fillet"), tr("Create fillet for circle")},
         },
@@ -119,7 +119,7 @@ void LC_PropertiesProviderCircle::doCreateSingleEntityCommands(LC_PropertyContai
             {RS2::ActionDimRadial, tr("Dim Radial"), tr("Create radial dimension for circle")}
         },
         {
-            tr("Creation of dimension, angular or ordinate"),
+            tr("Creation of ordinate dimension or leader"),
             {RS2::ActionDimOrdinate, tr("Dim Ordinate"), tr("Create ordinate dimension for circle")},
             {RS2::ActionDimLeader, tr("Leader"), tr("Create leader for circle")},
         }

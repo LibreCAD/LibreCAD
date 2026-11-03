@@ -163,12 +163,12 @@ void LC_PropertiesProviderArc::doCreateSingleEntityCommands(LC_PropertyContainer
             {RS2::ActionDrawLineTangent2, tr("Tangent (C,C)"), tr("Create line tangental for two circles/arcs")}
         },
         {
-            tr("Creation of line tangental to circle"),
+            tr("Creation of orthogonal lines"),
             {RS2::ActionDrawLineOrthogonal, tr("Orthogonal"), tr("Create line orthogonal to arc")},
             {RS2::ActionDrawLineOrthTan, tr("Tangent Orthogonal"), tr("Create arc tangental line orthogonal to line")},
         },
         {
-            tr("Creation of line tangental to circle"),
+            tr("Creation of line with relative angle or fillet"),
             {RS2::ActionDrawLineRelAngle, tr("Relative angle"), tr("Create line with relative angle to arc")},
             {RS2::ActionModifyRound, tr("Fillet"), tr("Create fillet for arc")},
         },
@@ -188,7 +188,7 @@ void LC_PropertiesProviderArc::doCreateSingleEntityCommands(LC_PropertyContainer
             {RS2::ActionDimRadial, tr("Dim Radial"), tr("Create radial dimension for arc")}
         },
         {
-            tr("Creation of dimension, angular or ordinate"),
+            tr("Creation of dimension, ordinate or arc"),
             {RS2::ActionDimOrdinate, tr("Dim Ordinate"), tr("Create ordinate dimension for arc")},
             {RS2::ActionDimArc, tr("Dim Arc"), tr("Create arc dimension")},
         }

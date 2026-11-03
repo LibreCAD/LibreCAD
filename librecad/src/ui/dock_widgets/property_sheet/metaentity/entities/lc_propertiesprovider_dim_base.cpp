@@ -124,7 +124,7 @@ void LC_PropertiesProviderDimBase::createMiscSection(LC_PropertyContainer* conta
         auto clickHandler = []([[maybe_unused]] RS_Dimension* entity, [[maybe_unused]]const int linkIndex) {
             QC_ApplicationWindow::getAppWindow()->changeDrawingOptions(3);
         };
-        LC_PropertyProviderUtils::createSingleEntityCommand<RS_Dimension>(cont, "propertyName", tr("Manage styles.."),
+        LC_PropertyProviderUtils::createSingleEntityCommand<RS_Dimension>(cont, "propertyName", tr("Manage styles..."),
                                                                        tr("Invokes dimension styles management UI"), "",
                                                                        "", nullptr,
                                                                        clickHandler, tr("Dimension styles management"));
@@ -233,7 +233,7 @@ void LC_PropertiesProviderDimBase::createLinesAndArrowsSection(LC_PropertyContai
     const auto cont = createSection(container, {
                                         SECTION_DIM_LINES_AND_ARROWS,
                                         tr("Lines and Arrows"),
-                                        tr("Dimensions lines and arrows setup")
+                                        tr("Dimension lines and arrows setup")
                                     });
 
     auto funPositiveDoubleSpin = []([[maybe_unused]] RS_Dimension* dimension, LC_PropertyViewDescriptor& descriptor)-> bool {
@@ -331,7 +331,7 @@ void LC_PropertiesProviderDimBase::createLinesAndArrowsSection(LC_PropertyContai
                 {LC_DimStyle::Radial::DRAW_NOTHING, tr("None")}
             }
         };
-        addEnum_DS({"dimCenterMark", tr("Center mark"), tr("Specified type of center mark on dimension (DIMCEN variable)")},
+        addEnum_DS({"dimCenterMark", tr("Center mark"), tr("Specifies type of center mark on dimension (DIMCEN variable)")},
                    &dimjustPolicyDescriptor, [](const LC_DimStyle* ds) -> LC_PropertyEnumValueType {
                        return ds->radial()->drawingMode();
                    }, [](const LC_PropertyEnumValueType& v, const LC_DimStyle* ds) -> void {
@@ -583,7 +583,7 @@ void LC_PropertiesProviderDimBase::createTextSection(LC_PropertyContainer* conta
                     text->setExplicitBackgroundFillColor(color);
                 }, list, cont);
 
-    addColor_DS({"dimTextColor", tr("Text color"), tr("Specifies the color of the dimension of the text (DIMCLRT variable)")},
+    addColor_DS({"dimTextColor", tr("Text color"), tr("Specifies the color of the dimension text (DIMCLRT variable)")},
                 [](const LC_DimStyle* ds) -> RS_Color {
                     const auto text = ds->text();
                     return text->color();
@@ -638,7 +638,7 @@ void LC_PropertiesProviderDimBase::createTextSection(LC_PropertyContainer* conta
                 {LC_DimStyle::Text::ABOVE_ALIGN_EXT_TWO, tr("Over second ext line")}
             }
         };
-        addEnum_DS({"dimTextHor", tr("Text pos hor"), tr("Specified horizontal dimension text position (DIMJUST variable)")},
+        addEnum_DS({"dimTextHor", tr("Text pos hor"), tr("Specifies horizontal dimension text position (DIMJUST variable)")},
                    &dimjustPolicyDescriptor, [](const LC_DimStyle* ds) -> LC_PropertyEnumValueType {
                        return ds->text()->horizontalPositioning();
                    }, [](const LC_PropertyEnumValueType& v, const LC_DimStyle* ds) -> void {
@@ -656,7 +656,7 @@ void LC_PropertiesProviderDimBase::createTextSection(LC_PropertyContainer* conta
         }
     };
 
-    addEnum_DS({"dimTextVert", tr("Text pos vert"), tr("Specified vertical dimension text position (DIMTAD variable)")},
+    addEnum_DS({"dimTextVert", tr("Text pos vert"), tr("Specifies vertical dimension text position (DIMTAD variable)")},
                &dimtadPolicyDescriptor, [](const LC_DimStyle* ds) -> LC_PropertyEnumValueType {
                    return ds->text()->verticalPositioning();
                }, [](const LC_PropertyEnumValueType& v, const LC_DimStyle* ds) -> void {
@@ -743,7 +743,7 @@ void LC_PropertiesProviderDimBase::createTextSection(LC_PropertyContainer* conta
     addString<RS_Dimension>({
                                 "dimTextOverride",
                                 tr("Text override"),
-                                tr("Specified the text string of dimension (overrides Measurement string)")
+                                tr("Specifies the text string of dimension (overrides Measurement string)")
                             }, [](const RS_Dimension* e) -> QString {
                                 return e->getText();
                             }, [](const QString& v, RS_Dimension* e) -> void {

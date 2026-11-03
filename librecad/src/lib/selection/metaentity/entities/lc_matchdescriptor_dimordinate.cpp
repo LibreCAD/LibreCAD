@@ -68,7 +68,7 @@ void LC_MatchDescriptorDimOrdinate::init(QMap<RS2::EntityType, LC_EntityMatchDes
 
     entity->addAngle("hdir", [](const LC_DimOrdinate* e) {
         return e->getHDir();
-    }, tr("Horizontal"), tr("Andle of horizontal direction for this dimension"));
+    }, tr("Horizontal"), tr("Angle of horizontal direction for this dimension"));
 
     map.insert(RS2::EntityDimOrdinate, entity);
 }
