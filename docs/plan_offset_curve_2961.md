@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-02 23:31 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W309; chronological evidence follows): implementation slices
+Updated: 2026-11-03 00:27 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W310; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -34,19 +34,21 @@ compiled Qt plugin caller. The latest implementation audit found no additional
 product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
-The exact PR head is `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; its latest
-non-roadmap change is the offset-test whitespace fix. At the 2026-11-02 23:31
-UTC exact-head poll, Text Foundations ON/OFF, DWG/DXF fast and Windows
-x64/ARM64, CodeQL Analyze, Pixi on all five platforms, and continuous Build
-Windows ARM64 had passed. Native macOS packaging remains in progress
-(`41525564465`, job `125552606579`). Linux, Linux AArch64, Snap, Windows x64
-packaging, and the CodeQL Security scan were skipped by workflow configuration.
-These are exact-head results; do not carry forward results from older heads.
-The local qmake6 app/worker build and ad-hoc package/relocation smoke tests
-pass; these do not establish Developer ID signing, notarization, or execution
-on macOS 14.4. PR #3193 remains open, draft, and review-required. The
-roadmap-only status updates remain local and queued until the active exact-head
-native macOS packaging check terminates.
+The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
+non-roadmap change is the offset-test whitespace fix at product head
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 00:27 UTC
+exact-head poll, Text Foundations ON/OFF had passed; CodeQL Analyze, DWG/DXF
+fast and Windows x64/ARM64, all five Pixi platforms, and Continuous Build
+macOS/Windows ARM64 remained in progress. Five check entries were skipped by
+workflow policy/configuration: CodeQL Security scan and conditional Linux,
+Linux AArch64, Snap, and Windows x64 packaging. MSIX is a conditional step
+inside the ARM64 packaging job, not a separate check entry. Results below apply
+only to this exact head; do not carry forward results from older heads. The local qmake6
+app/worker build and ad-hoc package/relocation smoke tests pass; these do not
+establish Developer ID signing, notarization, or execution on macOS 14.4. PR
+#3193 remains open, draft, and review-required. The user confirms their Remote
+Desktop session is logged in; the native CUA bridge cannot reach that session
+and reports a locked Mac surface, so no new visible GUI evidence is claimed.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -12004,3 +12006,43 @@ Next: refresh and inspect exact-head checks on `7d50224638e5980ff91b21838fb50c1c
 then update the existing PR status comment. Continue with visible GUI and
 external/deployment gates only when directly verifiable; preserve the stated
 limitations and leave human review and final R integration open.
+
+## 266. W311 Current-Head Summary and CI Recheck
+
+At 00:32 UTC on 2026-11-03, corrected the roadmap opening summary to reflect
+W310 and exact PR head `d183479630b43ae55b032a160d7403dbf3a848ed`, rather than
+the superseded W309 product head. The PR Checks page and workflow APIs agree:
+Text Foundations Headless ON/OFF passed; 16 checks remain in progress across
+CodeQL Analyze, Continuous macOS/Windows ARM64, DWG/DXF fast and Windows
+x64/ARM64, and the five-platform Pixi PR/push runs; five check entries are
+skipped by policy/configuration. No failure is reported. The conditional MSIX
+packaging step is not a separate check entry, so no MSIX artifact pass is
+claimed. These results apply only to this exact head.
+
+Local roadmap parser/refusal validation passed 99/99 tests. Its inventory
+reports 93 unique obligations, zero pending declarations, and zero production
+mismatches; `git diff --check` passes. This is a roadmap-only edit; product
+source remains at `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
+
+The user confirms their Remote Desktop session is logged in. The native CUA
+bridge still exposes only a locked Mac surface; treat that as an automation
+surface mismatch, not evidence that the user's remote session is locked. No
+new visible GUI interaction, drawing edit, or save is claimed. The existing PR
+status comment records the 00:18 snapshot; refresh it after these exact-head
+workflows terminate. Hold the W311 commit from push until then so the active
+checks are not canceled.
+
+| W311 item | Result |
+|---|---|
+| Roadmap opening summary | PASS; synchronized to W310 and current exact head |
+| Exact-head checks | 2 PASS, 16 IN PROGRESS, 5 SKIPPED; no failure reported |
+| Local parser/refusal inventory | PASS; 99/99 tests, 93 obligations, zero pending/mismatches |
+| Whitespace validation | PASS; `git diff --check` |
+| Product source | Unchanged from `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e` |
+| Remote Desktop / native GUI | User reports logged in; CUA surface unavailable; no new GUI evidence |
+| External viewport, stale-peer, durable screenshots/DPR, deployment/runtime, review, final R | OPEN |
+
+Next: poll the exact-head workflows to terminal status, then commit and push this
+roadmap slice and refresh the existing PR status comment. Continue only with
+direct evidence for the remaining GUI, external-viewer, deployment, review,
+and integration gates.
