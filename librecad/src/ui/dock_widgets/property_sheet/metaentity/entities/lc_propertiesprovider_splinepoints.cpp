@@ -112,7 +112,7 @@ void LC_PropertiesProviderSplinePoints::doCreateSingleEntityCommands(LC_Property
         },
         {
             tr("Tangent and bounding box"),
-            {RS2::ActionDrawLineTangent1, tr("Tangent (P,C)"), tr("Create tangental line in given position of spline")},
+            {RS2::ActionDrawLineTangent1, tr("Tangent (P,C)"), tr("Create tangential line in given position of spline")},
             {RS2::ActionDrawBoundingBox, tr("Bounding box"), tr("Create bounding box around spline")}
         }
     };

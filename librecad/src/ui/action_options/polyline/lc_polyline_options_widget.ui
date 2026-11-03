@@ -117,7 +117,7 @@
    <item>
     <widget class="QToolButton" name="tbTanRadius">
      <property name="toolTip">
-      <string>Tangental arc with fixed radius</string>
+      <string>Tangential arc with fixed radius</string>
      </property>
      <property name="text">
       <string/>
@@ -137,7 +137,7 @@
    <item>
     <widget class="QToolButton" name="tbTanAngle">
      <property name="toolTip">
-      <string>Tangental arc with fixed angle</string>
+      <string>Tangential arc with fixed angle</string>
      </property>
      <property name="text">
       <string/>
