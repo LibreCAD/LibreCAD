@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 16:42 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W349; chronological evidence follows): implementation slices
+Updated: 2026-11-03 16:47 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W350; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -34,8 +34,8 @@ compiled Qt plugin caller. The latest implementation audit found no additional
 product-code gap; remaining work is acceptance, external validation, review and
 integration rather than an unimplemented declared feature slice.
 
-The current PR head is
-`57f5e9993c89bfe983072debee4f3937f1cea633`; W348 is a roadmap-only commit, and
+At the start of W350, the pushed PR head was W349
+`d3dea1cae251a640b32f7c9ebf6ec62c2239879c`; W349 is a roadmap-only commit, and
 the latest product-source commit remains
 `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. Git history confirms
 `d183479630b43ae55b032a160d7403dbf3a848ed` is an earlier documentation
@@ -63,16 +63,16 @@ matching commit states, but no retained screenshot pair or app-window DPR
 measurement; it does not establish physical GUI stale-peer behavior. The local
 qmake6 app/worker build and ad-hoc package/relocation smoke tests pass; these do not
 establish Developer ID signing, notarization, or execution on macOS 14.4. PR
-#3193 remains open, draft, and review-required. W348 records the visible
-interaction through the approved test copy while the Remote Desktop was awake;
-a later CUA attempt found the Mac locked, so no additional GUI evidence was
-collected. W335 captured the test-copy LibreCAD
+#3193 remains open, draft, and review-required. W348 records visible interaction
+through the approved test copy; W350 records a follow-up drag/Escape probe after
+the Remote Desktop became reachable again. Neither closes physical stale-peer
+acceptance. W335 captured the test-copy LibreCAD
 window directly through CoreGraphics without input, which is baseline rendering
 only, not interaction acceptance. Neither the FreeCAD, BRL-CAD, W331
 ezdxf/Matplotlib, nor W342 LibreDWG attempt produced useful independent W171
-viewport evidence. W348 is pushed; W349 is a local roadmap receipt reconciling
-the completed exact-head CI. Commit and push W349 after final local plan
-validation, refresh the PR status comment, then inspect the resulting exact head.
+viewport evidence. W349 is pushed. W350 is a local roadmap receipt for the
+follow-up GUI probe and W349-head CI status; validate, commit and push it, refresh
+the PR status comment, then inspect the resulting exact head.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -13314,5 +13314,39 @@ verified held-drag cancellation; physical stale-peer GUI behavior; a useful
 independent W171 GUI viewport; Developer ID/notarized and minimum macOS 14.4
 acceptance; human review; and final R integration. W348 was committed and
 pushed as `57f5e9993`; W349 records its successful exact-head CI and final local
-validation. Commit/push W349, refresh issuecomment-6591045544, and inspect the
-resulting PR head.
+validation. W349 was pushed as `d3dea1cae`; its new exact-head checks were still
+pending or queued at 16:46 UTC, with configured skips and no failures reported.
+W350 records the follow-up UI probe below; commit/push it, refresh
+issuecomment-6591045544, and inspect the resulting PR head.
+
+## 305. W350 W349-Head And Drag-Cancel Reconciliation
+
+At the start of W350, PR #3193 was open, draft, and review-required at pushed
+head `d3dea1cae251a640b32f7c9ebf6ec62c2239879c`. W349 changed only the roadmap;
+product source remains `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. W348 exact-head
+CI was green as recorded above. The new W349-head checks were pending or queued
+when queried at 16:46 UTC; five configured jobs were skipped and no failures
+were reported. These results are distinct from W348's completed 19-pass CI.
+
+The user confirmed the Remote Desktop was available. In the approved
+`org.librecad.librecad.pr3193visible` test copy, the unchanged W193/W281 fixture
+was loaded and Offset selected an ellipse, reaching the direction prompt. A real
+CUA drag from the outside-side point to a nearby point was started, then Escape
+was issued 80 ms after drag start while the drag promise remained in flight. The
+action returned to Default; the canvas showed the same three concentric ellipse
+contours, and both Undo and Save remained disabled. The fixture hash remained
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`; no drawing
+or preferences were saved.
+
+This is stronger than the prior stationary held-click probe and shows no visible
+edit was recorded after the attempted drag cancellation. CUA does not expose the
+native mouse-up timestamp, and no durable matched screenshots were retained, so
+this remains provisional evidence rather than a reproducible held-drag or
+physical stale-peer acceptance result. Keep those gates open. App-window DPR,
+independent useful W171 viewport, Developer ID/notarization, exact-minimum
+macOS 14.4 execution, human review, and final R integration also remain open.
+
+W350 is a roadmap-only reconciliation. Validate the final inventory and diff,
+commit and push the receipt, refresh issuecomment-6591045544, and inspect the
+resulting PR head. Do not claim W349-head CI completion unless GitHub reports its
+checks complete.
