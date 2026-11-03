@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 01:19 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W317; chronological evidence follows): implementation slices
+Updated: 2026-11-03 01:22 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W318; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,12 +36,12 @@ integration rather than an unimplemented declared feature slice.
 
 The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
 non-roadmap change is the offset-test whitespace fix at product head
-`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:19 UTC
-exact-head poll, the PR Checks page showed 15 successful, 3 in progress, and 6
-skipped entries, with no failures. In progress: CodeQL Analyze, Continuous
-Build macOS, and DWG/DXF Windows x64. Both Pixi runs now pass all five
-platforms; DWG/DXF fast and Windows ARM64 also passed. Skipped: CodeQL Security
-scan, conditional Linux, Linux AArch64,
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:22 UTC
+exact-head poll, the PR Checks page showed 16 successful, 2 in progress, and 6
+skipped entries, with no failures. In progress: CodeQL Analyze and Continuous
+Build macOS. DWG/DXF Windows x64 has now passed; DWG/DXF fast and Windows
+ARM64 passed earlier. Both Pixi runs pass all five platforms. Skipped: CodeQL
+Security scan, conditional Linux, Linux AArch64,
 Snap, Windows x64 packaging, and the separately reported conditional
 `PackageWindowsMsix` job. This corrects W311's earlier statement that MSIX was
 not a separate check entry. Results apply only to this exact head; do not carry
@@ -11360,6 +11360,37 @@ and inspect checks on the resulting exact head. Continue to leave GUI, external
 viewport, package deployment, human review, and final integration gates open
 until direct evidence closes them.
 
+## 273. W318 Windows x64 CI Completion
+
+W317's roadmap-only receipt is committed locally as `48e0e7619`, after W311
+through W316. The full roadmap/refusal validation passed 99/99 with no skips,
+93 unique obligations, zero pending declarations and zero production
+mismatches; parser checks passed 5/5, and `git diff --check` passed.
+
+At 01:22 UTC, the PR Checks page for exact head
+`d183479630b43ae55b032a160d7403dbf3a848ed` showed 24 entries: 16 successful,
+2 in progress, and 6 skipped, with no failures. DWG/DXF Windows x64 has
+completed successfully, joining DWG/DXF fast and Windows ARM64. Both PR and
+push Pixi runs pass all five platforms. Text Foundations ON/OFF and Windows
+ARM64 Continuous Build passed. Remaining active checks are CodeQL Analyze and
+Continuous Build macOS. The six skips include CodeQL Security scan, conditional
+Linux, Linux AArch64, Snap, Windows x64 packaging, and the separate conditional
+`PackageWindowsMsix` job. Results apply only to the exact head above.
+
+The W317 status comment was not updated through the GitHub API because the
+connected integration returned 403; the browser edit path is available and
+will be used after this receipt is committed. The user confirms Remote Desktop
+is running and logged in. CUA can see the GitHub browser but still reports the
+native Mac locked and lists no native apps, so no fresh LibreCAD interaction
+or drawing save is claimed. Physical stale-peer behavior, durable matched
+screenshots/Qt DPR, independent W171 viewport/fidelity, signed/deployed W0-W2
+acceptance, approving review, and final R integration remain open.
+
+Next: run the focused roadmap/refusal and parser checks on W318, commit this
+receipt, update the existing PR status comment in the browser, and poll the
+same CodeQL and macOS build checks. Keep the roadmap queue local until both
+terminate; then push and inspect the checks for the new exact head.
+
 ## 251. W293 Pixi Retry Completion
 
 Polled exact PR source head
@@ -12185,10 +12216,10 @@ mismatches; parser cases passed 5/5 and `git diff --check` passed. The W315
 correction changes only the roadmap. Product source is unchanged from
 `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`.
 
-Next: commit this correction and update the existing PR status comment with the
-verified architecture mapping. Keep all local roadmap commits unpushed until
-the four exact-head jobs terminate; then inspect the new exact-head CI and
-refresh the comment with its results.
+Next: validate and commit W318, sync the existing PR status comment, and poll
+the two remaining exact-head jobs. Keep the local roadmap queue unpushed until
+those jobs terminate; then inspect CI on the resulting exact head and refresh
+the comment. Preserve the open GUI, deployment, review, and integration gates.
 
 ## 271. W316 Post-W315 Commit and PR Sync
 
