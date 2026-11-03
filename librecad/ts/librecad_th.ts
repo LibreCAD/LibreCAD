@@ -1317,8 +1317,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;ซ่อนชั้นงานทั้งหมด</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>ซ่อนทุกเลเยอร์&amp;ยกเว้นเลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>ซ่อนชั้นงานทั้งหมด</translation>
+        <source>Hide all layers except current</source>
+        <translation>ซ่อนทุกชั้นงานยกเว้นชั้นงานปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;แช่แข็งชั้นงานทั้งหมด</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>ซ่อนทุกชั้นงาน&amp;ยกเว้นชั้นงานปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8473,8 +8473,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>ซ่อนเลเยอร์ทั้งหมด</translation>
+        <source>Hide all layers except current</source>
+        <translation>ซ่อนทุกเลเยอร์ยกเว้นเลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8498,8 +8498,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;ล็อคเลเยอร์ทั้งหมด</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;ซ่อนทุกเลเยอร์ยกเว้นเลเยอร์ปัจจุบัน</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

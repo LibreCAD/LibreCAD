@@ -1317,8 +1317,8 @@ o [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Ocultar totes les capes</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Oculta totes les capes excepte l'actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ o [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Ocultar totes les capes</translation>
+        <source>Hide all layers except current</source>
+        <translation>Oculta totes les capes excepte l'actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ o [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Congelar totes les capes</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Oculta totes les capes excepte l'actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8488,8 +8488,8 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Oculta totes les capes</translation>
+        <source>Hide all layers except current</source>
+        <translation>Oculta totes les capes excepte l'actual</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8513,8 +8513,8 @@ El contingut d&apos;una capa de construcció no hauria d&apos;aparèixer en la s
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Congela totes les capes</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Oculta totes les capes excepte l'actual</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

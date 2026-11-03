@@ -1330,8 +1330,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>全レイヤー非表示(&amp;H)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2024,8 +2024,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>すべてのレイヤーを非表示</translation>
+        <source>Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2217,8 +2217,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>すべてのレイヤーを凍結(&amp;F)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8527,8 +8527,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>すべてのレイヤーを非表示</translation>
+        <source>Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8552,8 +8552,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>全レイヤーを凍結(&amp;F)</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>現在のレイヤー以外を非表示(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

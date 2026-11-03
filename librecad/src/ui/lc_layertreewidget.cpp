@@ -190,7 +190,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/invisible.svg"));
     but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Hide all layers"));
+    but->setToolTip(tr("Hide all layers except current"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::hideAllLayers);
     layButtons->addWidget(but);
 
@@ -760,7 +760,7 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
         }
         contextMenu->addAction(tr("&Freeze Others Layers"), this, &LC_LayerTreeWidget::hideOtherThanSelectedLayers, 0);
         contextMenu->addAction(tr("&Defreeze All Layers"), this, &LC_LayerTreeWidget::showAllLayers, 0);
-        contextMenu->addAction(tr("&Freeze All Layers"), this, &LC_LayerTreeWidget::hideAllLayers, 0);
+        contextMenu->addAction(tr("&Hide all layers except current"), this, &LC_LayerTreeWidget::hideAllLayers, 0);
         contextMenu->addAction(tr("&Unlock All Layers"), this, &LC_LayerTreeWidget::unlockAllLayers, 0);
         contextMenu->addAction(tr("&Lock All Layers"), this, &LC_LayerTreeWidget::lockAllLayers, 0);
         contextMenu->addAction(tr("Enable &Printing All Layers"), this, &LC_LayerTreeWidget::printAllLayers, 0);

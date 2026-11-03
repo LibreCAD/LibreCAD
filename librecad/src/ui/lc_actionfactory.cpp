@@ -1013,7 +1013,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("LayersDefreezeAll");
     a_map["LayersDefreezeAll"] = action;
 
-    action = new QAction(tr("&Hide all layers"), agm->layer);
+    action = new QAction(tr("&Hide all layers except current"), agm->layer);
     action->setIcon(QIcon(":/ui/hiddenblock.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersFreezeAll()));

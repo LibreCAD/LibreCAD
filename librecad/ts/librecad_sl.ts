@@ -1317,8 +1317,8 @@ ali [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Skrij vse plasti</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Skrij vse plasti razen trenutne</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ ali [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Skrij vse plasti</translation>
+        <source>Hide all layers except current</source>
+        <translation>Skrij vse plasti razen trenutne</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ ali [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Zamrzni vse plasti</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Skrij vse plasti razen trenutne</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8475,8 +8475,8 @@ Vsebina konstrukcijskega sloja se ne sme pojavljati v tiskanem izhodu.</translat
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Skrij vse plasti</translation>
+        <source>Hide all layers except current</source>
+        <translation>Skrij vse plasti razen trenutne</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8500,8 +8500,8 @@ Vsebina konstrukcijskega sloja se ne sme pojavljati v tiskanem izhodu.</translat
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Zamrzni vse plasti</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Skrij vse plasti razen trenutne</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

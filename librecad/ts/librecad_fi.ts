@@ -1009,8 +1009,8 @@ tai [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Piilota kaikki geruzat</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Piilota kaikki &amp;tasot paitsi nykyinen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ tai [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Piilota kaikki geruzat</translation>
+        <source>Hide all layers except current</source>
+        <translation>Piilota kaikki tasot paitsi nykyinen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ tai [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Jäädytä kaikki geruzat</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>P&amp;iilota kaikki tasot paitsi nykyinen</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8472,8 +8472,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Piilota kaikki kerrokset</translation>
+        <source>Hide all layers except current</source>
+        <translation>Piilota kaikki tasot paitsi nykyinen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
@@ -8517,8 +8517,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Jäätä kaikki kerrokset</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Piilota kaikki &amp;tasot paitsi nykyinen</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="563"/>

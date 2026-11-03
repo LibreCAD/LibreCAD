@@ -1317,8 +1317,8 @@ ou [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Ocultar todas as capas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Ocultar &amp;todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ ou [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Ocultar todas as capas</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ocultar todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ ou [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Congelar todas as capas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Ocultar &amp;todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8478,8 +8478,8 @@ Os contidos dunha Capa de Construción non deberan aparecer na impresión.</tran
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Agochar tódalas capas</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ocultar todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8503,8 +8503,8 @@ Os contidos dunha Capa de Construción non deberan aparecer na impresión.</tran
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Conxelar tódalas capas</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Ocultar &amp;todas as capas agás a actual</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

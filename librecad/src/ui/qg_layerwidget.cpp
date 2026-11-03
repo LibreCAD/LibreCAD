@@ -231,7 +231,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/invisible.svg"));
     but->setMinimumSize(minButSize);
-    but->setToolTip(tr("Hide all layers"));
+    but->setToolTip(tr("Hide all layers except current"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersFreezeAll);
     layButtons->addWidget(but);
     // unlock all layers:
@@ -558,7 +558,7 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
         // Actions for all layers:
         contextMenu->addAction( tr("&Defreeze all Layers"), actionHandler,
                                  SLOT(slotLayersDefreezeAll()), 0);
-        contextMenu->addAction( tr("&Freeze all Layers"), actionHandler,
+        contextMenu->addAction( tr("&Hide all layers except current"), actionHandler,
                                  SLOT(slotLayersFreezeAll()), 0);
         contextMenu->addAction( tr("&Unlock all Layers"), actionHandler,
                                  SLOT(slotLayersUnlockAll()), 0);

@@ -1317,8 +1317,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;அனைத்து அடுக்குகளையும் மறை</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>தற்போதையதைத் தவிர அனைத்து அடுக்குகளையும் &amp;மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>அனைத்து அடுக்குகளையும் மறை</translation>
+        <source>Hide all layers except current</source>
+        <translation>தற்போதையதைத் தவிர அனைத்து அடுக்குகளையும் மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ or [%2]</source>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;அனைத்து அடுக்குகளையும் உறைய வை</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>தற்போதையதைத் தவி&amp;ர அனைத்து அடுக்குகளையும் மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8477,8 +8477,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>அனைத்து அடுக்குகளையும் மறை</translation>
+        <source>Hide all layers except current</source>
+        <translation>தற்போதையதைத் தவிர அனைத்து அடுக்குகளையும் மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8502,8 +8502,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>அனைத்து அடுக்குகளையும் &amp;உறை</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>தற்போதையதைத் தவி&amp;ர அனைத்து அடுக்குகளையும் மறை</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

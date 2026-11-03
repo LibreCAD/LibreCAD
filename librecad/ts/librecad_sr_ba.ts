@@ -1085,8 +1085,8 @@ ili [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1007"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Sakrij sve slojeve</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sakrij sve slojeve osim trenutnog</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1014"/>
@@ -2003,8 +2003,8 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Сакриј све слојеве</translation>
+        <source>Hide all layers except current</source>
+        <translation>Сакриј све слојеве осим тренутног</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2196,8 +2196,8 @@ Sadržaj konstrukcionog sloja ne bi trebalo da se pojavljuje u štampanoj verzij
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="760"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Zamrzni sve slojeve</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Sakrij sve slojeve osim trenutnog</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="761"/>
@@ -8459,8 +8459,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Сакриј све слојеве</translation>
+        <source>Hide all layers except current</source>
+        <translation>Сакриј све слојеве осим тренутног</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="241"/>
@@ -8509,8 +8509,8 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="558"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Замрзни све слојеве</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Сакриј све слојеве осим тренутног</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="560"/>

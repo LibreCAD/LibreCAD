@@ -1317,8 +1317,8 @@ lub [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Ukryj wszystkie warstwy</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>&amp;Ukryj wszystkie warstwy oprócz bieżącej</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ lub [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Ukryj wszystkie warstwy</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ukryj wszystkie warstwy oprócz bieżącej</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ lub [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Zamroź wszystkie warstwy</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Uk&amp;ryj wszystkie warstwy oprócz bieżącej</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8475,8 +8475,8 @@ Zawartość warstwy konstrukcyjnej nie powinna być wyświetlana w wydruku.</tra
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Ukryj wszystkie warstwy</translation>
+        <source>Hide all layers except current</source>
+        <translation>Ukryj wszystkie warstwy oprócz bieżącej</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8500,8 +8500,8 @@ Zawartość warstwy konstrukcyjnej nie powinna być wyświetlana w wydruku.</tra
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Blokuj wszystkie Warstwy</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>U&amp;kryj wszystkie warstwy oprócz bieżącej</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

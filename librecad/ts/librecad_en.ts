@@ -993,7 +993,7 @@ or [%2]</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <source>&amp;Hide all layers</source>
+   <source>&amp;Hide all layers except current</source>
    <translation type="unfinished"/>
   </message>
   <message>
@@ -1545,7 +1545,7 @@ or [%2]</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <source>Hide all layers</source>
+   <source>Hide all layers except current</source>
    <translation type="unfinished"/>
   </message>
   <message>
@@ -1697,7 +1697,7 @@ or [%2]</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <source>&amp;Freeze All Layers</source>
+   <source>&amp;Hide all layers except current</source>
    <translation type="unfinished"/>
   </message>
   <message>
@@ -6740,7 +6740,7 @@ The contents of a Construction Layer should not appear in printout.</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <source>Hide all layers</source>
+   <source>Hide all layers except current</source>
    <translation type="unfinished"/>
   </message>
   <message>
@@ -6760,7 +6760,7 @@ The contents of a Construction Layer should not appear in printout.</source>
    <translation type="unfinished"/>
   </message>
   <message>
-   <source>&amp;Freeze all Layers</source>
+   <source>&amp;Hide all layers except current</source>
    <translation type="unfinished"/>
   </message>
   <message>

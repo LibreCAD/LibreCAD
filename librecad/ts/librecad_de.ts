@@ -1317,8 +1317,8 @@ oder [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>Alle Layer aussc&amp;halten</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle Ebe&amp;nen außer der aktuellen ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ oder [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Alle Ebenen ausblenden</translation>
+        <source>Hide all layers except current</source>
+        <translation>Alle Ebenen außer der aktuellen ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ oder [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Alle Ebenen einfrieren</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle Ebe&amp;nen außer der aktuellen ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8481,8 +8481,8 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Alle Ebenen verbergen</translation>
+        <source>Hide all layers except current</source>
+        <translation>Alle Ebenen außer der aktuellen ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8506,8 +8506,8 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>Alle Ebenen &amp;einfrieren</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Alle Ebe&amp;nen außer der aktuellen ausschalten</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>

@@ -1317,8 +1317,8 @@ vagy [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1016"/>
-        <source>&amp;Hide all layers</source>
-        <translation>&amp;Az összes réteg elrejtése</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Az összes réteg &amp;elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1023"/>
@@ -2011,8 +2011,8 @@ vagy [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="193"/>
-        <source>Hide all layers</source>
-        <translation>Összes réteg elrejtése</translation>
+        <source>Hide all layers except current</source>
+        <translation>Az összes réteg elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="201"/>
@@ -2204,8 +2204,8 @@ vagy [%2]</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="763"/>
-        <source>&amp;Freeze All Layers</source>
-        <translation>&amp;Összes réteg fagyasztása</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>A&amp;z összes réteg elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_layertreewidget.cpp" line="764"/>
@@ -8486,8 +8486,8 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="234"/>
-        <source>Hide all layers</source>
-        <translation>Összes fólia elrejtése</translation>
+        <source>Hide all layers except current</source>
+        <translation>Az összes réteg elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="255"/>
@@ -8511,8 +8511,8 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="561"/>
-        <source>&amp;Freeze all Layers</source>
-        <translation>Minden fólia &amp;lezárása</translation>
+        <source>&amp;Hide all layers except current</source>
+        <translation>Az összes réteg &amp;elrejtése az aktuális kivételével</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_layerwidget.cpp" line="582"/>
