@@ -12407,3 +12407,40 @@ documentation queue, and inspect checks on the resulting exact head. Keep
 physical stale-peer behavior, durable screenshot/Qt DPR, independent W171
 visual fidelity, signed/deployed W0-W2 acceptance, approving review, and final
 R integration open until direct evidence closes them.
+
+## 278. W323 FreeCAD Retry and W322 Checkpoint
+
+W322 is committed locally as `38a15ad94`, bringing W311-W322 to twelve
+documentation-only commits ahead of the remote PR branch. Its focused
+roadmap/refusal and parser validation passed 99/99 and 5/5 respectively, with
+zero skips, pending declarations, or production mismatches; `git diff --check`
+is clean.
+
+At 02:02 UTC, the logged-in remote desktop remained available. LibreCAD still
+shows the six-contour W281 baseline with the unsaved in-memory marker; no Save
+was issued, and the fixture hash remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`. The W321
+PR status comment's FreeCAD detail is now superseded by this retry: the Open
+File control opened the exact recent file
+`/private/tmp/offset-W200-oda-output/offset-matrix-write-dwg-R2018-d3_actual.dxf`.
+FreeCAD's DXF import dialog identified approximately 233 geometric entities
+with `Editable Draft objects` selected. Confirming the import caused FreeCAD
+1.1.4 to quit before a viewport appeared. No preferences were changed and no
+drawing was saved. The independent W171 visual review therefore remains
+unverified; do not claim a render pass.
+
+The exact PR code head remains
+`d183479630b43ae55b032a160d7403dbf3a848ed`. The latest visible Checks panel
+still shows 25 entries: 18 successful, 1 in progress, 6 skipped, no failures.
+Continuous Build macOS (`41550587186` / `125637540627`) remains in its build
+and packaging step after 1h53m; the live output is compiler warnings and build
+commands, not a reported failure. Keep the run intact.
+
+This receipt supersedes W322's next-step queue count of eleven and its earlier
+FreeCAD Start-page-only wording. Next: rerun the focused plan validators,
+commit this status receipt, edit the existing PR comment to include the retry
+and twelve local commits, then keep polling the same macOS job. Push the
+documentation queue only after the job terminates; inspect checks on the
+resulting exact head. Physical stale-peer behavior, durable matched
+screenshots/Qt DPR, independent W171 visual fidelity, signed/deployed W0-W2,
+review approval, and final R integration remain open.
