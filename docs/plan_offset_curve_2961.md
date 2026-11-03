@@ -13444,3 +13444,35 @@ interactable desktop. No GUI input was sent. Physical stale-peer behavior,
 durable matched preview/commit screenshots and app-window DPR, Developer
 ID/notarized deployment and minimum macOS 14.4 acceptance, human review, and
 final R integration remain open.
+
+## 309. W354 Remote-Desktop Reconnection And Direction-Click Cancellation
+
+The user confirmed the logged-in remote desktop was ready. The approved
+`/private/tmp/LibreCAD-PR3193-visible.app` test copy became interactable through
+CUA and displayed the unchanged W193/W281 fixture at its original three
+concentric ellipses. The fixture SHA256 remains
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+
+The Offset action selected the outer ellipse and reached “Specify direction of
+offset.” A 1.5-second direction click was held while the state was observed;
+Escape cancelled the action. LibreCAD returned to Default, the canvas showed
+the original three contours, and Undo remained disabled. No Save command was
+issued. This verifies only cancellation during a stationary held direction
+click. It does not establish live-preview rendering, a matched preview/commit
+pair, pointer-drag cancellation, or physical stale-peer behavior; no durable
+screenshot pair or Qt app-window DPR receipt was produced.
+
+After adding this receipt, the roadmap/refusal-inventory validation passed
+99/99 with 93 unique obligations, zero pending declarations, and zero
+production mismatches. `git diff --check` passed. This receipt changes no
+product code.
+
+At 20:38 UTC, the exact pushed head remained
+`1aa7ddbfb0b0e415620f7307180244e5d7f1c1d6`. Eighteen checks had succeeded,
+BuildMacOS was still compiling/packaging, six jobs were configured skips, three
+duplicate push-triggered DWG/DXF jobs were cancelled, and no failures were
+reported. Keep this head stable until its macOS job completes; then commit and
+push W354, refresh PR status, and require new exact-head CI before carrying any
+status forward. Developer ID/notarized deployment, exact-minimum macOS 14.4
+runtime acceptance, human review, and final R integration remain external
+gates.
