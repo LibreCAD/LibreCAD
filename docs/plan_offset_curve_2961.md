@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 02:28 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W327; chronological evidence follows): implementation slices
+Updated: 2026-11-03 02:32 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W328; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,25 +36,21 @@ integration rather than an unimplemented declared feature slice.
 
 The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
 non-roadmap change is the offset-test whitespace fix at product head
-`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 02:23 UTC
-exact-head poll, the PR Checks page showed 25 entries: 18 successful, 1 in
-progress, and 6 skipped, with no failures. Only Continuous Build macOS remains
-active; CodeQL Analyze has completed successfully. DWG/DXF Windows x64 has
-passed; DWG/DXF fast and Windows ARM64 passed earlier. Both Pixi runs pass all
-five platforms. Skipped: CodeQL
-Security scan, conditional Linux, Linux AArch64,
-Snap, Windows x64 packaging, and the separately reported conditional
-`PackageWindowsMsix` job. This corrects W311's earlier statement that MSIX was
-not a separate check entry. Results apply only to this exact head; do not carry
-forward results from older heads. The local qmake6 app/worker build and
-ad-hoc package/relocation smoke tests pass; these do not establish Developer ID
-signing, notarization, or execution on macOS 14.4. PR #3193 remains open,
-draft, and review-required. The user's Remote Desktop was accessible during
-W326, then the native CUA bridge reported the Mac surface relocked after
-FreeCAD exited; it remains locked at W327. Neither the FreeCAD nor BRL-CAD
-attempt produced successful independent viewport evidence. The local branch
-has 18 roadmap-only commits not yet pushed; preserve them until the active
-exact-head macOS packaging job terminates.
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 02:32 UTC
+exact-head poll, all 26 listed checks were terminal: 19 successful, 7 skipped,
+no failures or in-progress jobs. `BuildMacOS` passed after 2h19m45s. Skipped:
+CodeQL Security scan, conditional Linux, Linux AArch64, Snap, Windows x64
+packaging, `PackageWindowsMsix`, and UpdateAssets. Results apply only to this
+exact head; do not carry forward results from older heads. The local qmake6
+app/worker build and ad-hoc package/relocation smoke tests pass; these do not
+establish Developer ID signing, notarization, or execution on macOS 14.4. PR
+#3193 remains open, draft, and review-required. The user reports that Remote
+Desktop is running and logged in, but the native CUA bridge currently returns
+no native apps and reports the Mac locked; no new visible GUI check was
+possible in this poll. Neither the FreeCAD nor BRL-CAD attempt produced
+successful independent viewport evidence. The local branch has 19 roadmap-only
+commits not yet pushed; after the pending receipt/reordering commit, push the
+20-commit documentation queue and inspect checks on its new exact head.
 
 W302 records an earlier successful visit through the user's remote desktop:
 the approved `org.librecad.librecad.pr3193visible` app showed the live red offset preview,
@@ -8412,77 +8408,6 @@ GUI refusal/interaction coverage, external-CAD rendering of the W171-derived
 files, durable screenshot/DPR, deployed-package qualification, W0-W2 platform
 acceptance, reviewer approval, and final R integration remain open.
 
-## 281. W326 Reduced W171 Viewer Retry
-
-The user confirmed the remote desktop was already running and logged in. CUA
-confirmed that the approved LibreCAD test copy was responsive on the disposable
-W281/W193 baseline. I briefly invoked Offset, selected the outer ellipse, then
-canceled the action before specifying a direction; no geometry was committed
-and no drawing was saved.
-
-To reduce unrelated DXF content, extracted only the SPLINE entity body from the
-unchanged ODA-converted W171 DXF into
-`/private/tmp/offset-W171-single-spline-AC1032.dxf` (SHA256
-`0e5d04b3d05ccb558deb8151b4b5e075bc25e710a105810991a4fd92ffa39d88`). FreeCAD
-1.1.4's importer recognized approximately 11 geometric items. Both `Individual
-Part shapes` and `Editable Draft objects` imports caused FreeCAD to exit before
-presenting a viewport. This stripped derivative therefore adds no visual
-fidelity evidence and does not indicate a defect in LibreCAD or the original
-DXF. The original ODA DXF remains unchanged at SHA256
-`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`. The CUA
-bridge subsequently reported the remote desktop relocked.
-
-At 02:23 UTC, exact-head diagnostics for PR head
-`d183479630b43ae55b032a160d7403dbf3a848ed` still showed Continuous Build
-macOS run `41550587186`, job `125637540627`, in Build and packaging. It began
-at 00:11 UTC; Windows ARM64 and all other applicable checks are successful,
-while configured lanes remain skipped. Do not cancel or replace this run, and
-keep the 15 local roadmap-only commits unpushed until it terminates.
-
-| W326 item | Result |
-|---|---|
-| User-reported logged-in remote desktop / approved test app | PASS; initially visible and responsive; session later relocked |
-| Offset action cleanup | PASS; canceled before direction/commit; no Save |
-| Reduced W171 DXF creation | PASS; one SPLINE entity body; source DXF unchanged |
-| FreeCAD individual-shape import | FAIL TO RENDER; app exited before viewport |
-| FreeCAD editable-Draft import | FAIL TO RENDER; app exited before viewport |
-| Independent W171 viewport/fidelity | OPEN; no useful visual evidence |
-| Original ODA fixture integrity | PASS; SHA256 unchanged |
-| Exact-head CI | macOS packaging still in progress; all other applicable checks successful; configured skips unchanged |
-| Physical stale-peer, durable screenshots/Qt DPR, signed/deployed W0-W2, review and final R | OPEN |
-
-This retry is not a product-code failure and does not close the viewer gate.
-Continue with independent viewport alternatives, physical stale-peer and
-retained GUI/DPR evidence when the desktop is available. Preserve the current
-macOS run and local-only roadmap queue until its terminal result.
-
-## 282. W327 BRL-CAD Converter Probe
-
-The installed BRL-CAD 7.24.0 `dxf-g` binary initially could not load its
-bundled libraries because its absolute install prefix is absent. A temporary
-symlink under `/private/tmp` supplied the bundle's library directory without
-changing the app or system install. The converter accepted the reduced W171
-DXF and reported one SPLINE, but `mged -c ... 'l sketch.1'` showed the imported
-2D sketch had only two vertices and repeated zero-length line segments. A
-headless `rt` pass consequently reported zero ray intersections. This is an
-importer/viewer limitation, not evidence about LibreCAD's exported curve; the
-original ODA DXF remains unchanged. The desktop is currently locked, so the
-BRL-CAD GUI could not be used to attempt a wireframe view.
-
-| W327 item | Result |
-|---|---|
-| BRL-CAD bundled CLI startup | PASS after temporary library-path symlink; no app/system files changed |
-| DXF spline import | INADEQUATE; output sketch has two vertices and degenerate zero-length segments |
-| Headless ray trace | NO VIEW; zero solid/ray intersections for the wireframe sketch |
-| Independent W171 viewport/fidelity | OPEN; BRL-CAD result is not usable visual evidence |
-| Original fixture integrity | PASS; unchanged |
-| Desktop availability | BLOCKED; CUA reports the Mac locked |
-
-Keep the W171 viewport gate open and do not infer a product defect from this
-converter result. Continue with a viewer that preserves the spline and presents
-its actual geometry, plus the separate stale-peer, screenshot/DPR,
-deployment/runtime, review, and integration gates.
-
 ## 173. W215 Full CMake Release and PR-Head Requalification
 
 The worktree has no product-source changes relative to tested product head
@@ -12601,3 +12526,111 @@ lanes skipped and no failure. Do not push the local roadmap queue until this
 same macOS run terminates. Durable screenshots/Qt DPR, physical stale-peer
 behavior, independent W171 viewport/fidelity, signed/deployed W0-W2
 acceptance, reviewer approval, and final R integration remain open.
+
+## 281. W326 Reduced W171 Viewer Retry
+
+The user confirmed the remote desktop was already running and logged in. CUA
+confirmed that the approved LibreCAD test copy was responsive on the disposable
+W281/W193 baseline. I briefly invoked Offset, selected the outer ellipse, then
+canceled before specifying a direction; no geometry was committed and no
+drawing was saved.
+
+To reduce unrelated DXF content, extracted only the SPLINE entity body from
+the unchanged ODA-converted W171 DXF into
+`/private/tmp/offset-W171-single-spline-AC1032.dxf` (SHA256
+`0e5d04b3d05ccb558deb8151b4b5e075bc25e710a105810991a4fd92ffa39d88`). FreeCAD
+1.1.4's importer recognized approximately 11 geometric items. Both `Individual
+Part shapes` and `Editable Draft objects` imports caused FreeCAD to exit before
+presenting a viewport. This derivative adds no visual-fidelity evidence and
+does not indicate a defect in LibreCAD or the original DXF. The original ODA
+DXF remains unchanged at SHA256
+`b696b00f19d19f70fad13e6472c9d8149e4e33a75c0f6f5e5f8b6476dd53bf46`. The CUA
+bridge subsequently reported the remote desktop relocked.
+
+At 02:23 UTC, exact-head diagnostics for PR head
+`d183479630b43ae55b032a160d7403dbf3a848ed` still showed Continuous Build
+macOS run `41550587186`, job `125637540627`, in Build and packaging. It began
+at 00:11 UTC; Windows ARM64 and all other applicable checks were successful,
+while configured lanes remained skipped. The local roadmap-only queue was kept
+unpushed pending this run's terminal result.
+
+| W326 item | Result |
+|---|---|
+| User-reported logged-in remote desktop / approved test app | PASS; initially visible and responsive; session later relocked |
+| Offset action cleanup | PASS; canceled before direction/commit; no Save |
+| Reduced W171 DXF creation | PASS; one SPLINE entity body; source DXF unchanged |
+| FreeCAD individual-shape import | FAIL TO RENDER; app exited before viewport |
+| FreeCAD editable-Draft import | FAIL TO RENDER; app exited before viewport |
+| Independent W171 viewport/fidelity | OPEN; no useful visual evidence |
+| Original fixture integrity | PASS; SHA256 unchanged |
+| Exact-head CI | macOS packaging was still in progress; other applicable checks successful |
+| Physical stale-peer, durable screenshots/Qt DPR, signed/deployed W0-W2, review and final R | OPEN |
+
+This retry is not a product-code failure and does not close the viewer gate.
+Continue with independent viewport alternatives, physical stale-peer and
+retained GUI/DPR evidence when the desktop is available. Preserve the active
+macOS run and local-only roadmap queue until its terminal result.
+
+## 282. W327 BRL-CAD Converter Probe
+
+The installed BRL-CAD 7.24.0 `dxf-g` binary initially could not load its
+bundled libraries because its absolute install prefix is absent. A temporary
+symlink under `/private/tmp` supplied the bundle's library directory without
+changing the app or system install. The converter accepted the reduced W171
+DXF and reported one SPLINE, but `mged -c ... 'l sketch.1'` showed the imported
+2D sketch had only two vertices and repeated zero-length line segments. A
+headless `rt` pass consequently reported zero ray intersections. This is an
+importer/viewer limitation, not evidence about LibreCAD's exported curve; the
+original ODA DXF remains unchanged. The desktop was locked during this probe,
+so the BRL-CAD GUI could not be used to attempt a wireframe view.
+
+| W327 item | Result |
+|---|---|
+| BRL-CAD bundled CLI startup | PASS after temporary library-path symlink; no app/system files changed |
+| DXF spline import | INADEQUATE; output sketch has two vertices and degenerate zero-length segments |
+| Headless ray trace | NO VIEW; zero solid/ray intersections for the wireframe sketch |
+| Independent W171 viewport/fidelity | OPEN; BRL-CAD result is not usable visual evidence |
+| Original fixture integrity | PASS; unchanged |
+| Desktop availability | BLOCKED at probe time; CUA reported the Mac locked |
+
+Keep the W171 viewport gate open and do not infer a product defect from this
+converter result. Continue with a viewer that preserves the spline and
+presents its actual geometry, plus the separate stale-peer, screenshot/DPR,
+deployment/runtime, review, and integration gates.
+
+## 283. W328 Remote Desktop Status and Exact-Head CI Completion
+
+The user again confirmed that Remote Desktop is running and already logged in.
+The current native CUA inventory nevertheless returns no native apps and
+reports, “The Mac is locked”; therefore this turn could not perform or claim a
+new visible CAD check. This records an automation-bridge discrepancy, not a
+claim that the user's remote session is logged out.
+
+The exact PR head remains
+`d183479630b43ae55b032a160d7403dbf3a848ed`. A fresh `gh pr checks` poll at
+02:32 UTC shows 26 terminal entries: 19 pass, 7 skip, zero failures, and zero
+in progress. In particular, macOS Build (`41550587186` / `125637540627`) now
+passes. The seven skips are Linux, Linux AArch64, Snap, Windows x64 packaging,
+MSIX, Security scan, and UpdateAssets. PR state is still open and draft.
+
+This receipt also repairs chronology: the earlier W326/W327 notes had been
+inserted before section 173 rather than after W325. They are now in the
+document's chronological tail; no evidence was discarded. Before this receipt,
+the local branch was 19 commits ahead of origin and the roadmap edit was
+uncommitted. After validating and committing this repair, push the resulting
+20 roadmap-only commits without force, refresh the existing PR status comment,
+and inspect CI on the newly pushed exact head. Do not treat the old head's
+successful checks as validation for a different SHA.
+
+| W328 item | Result |
+|---|---|
+| User-reported Remote Desktop | Logged in per user; automation bridge still reports locked |
+| Fresh visible CAD validation | NOT RUN; native surface unavailable through CUA |
+| Exact PR-head CI | PASS; 19 successful, 7 skipped, 0 failed, 0 in progress |
+| PR status | OPEN, draft, review required |
+| Chronological W326/W327 record | RESTORED at roadmap tail |
+| Physical stale-peer, retained screenshots/Qt DPR, independent W171 viewport | OPEN |
+| Signed/deployed W0-W2, review approval, final R integration | OPEN |
+
+No product code changed in this checkpoint. Keep all acceptance gates above
+open until their direct validation is complete.
