@@ -235,6 +235,8 @@ jobs:
             --architectures=arm64,x86_64 \
             --output="$DMG_NAME"
 
+          scripts/test-osx-dmg-runtime.sh --dmg "$DMG_NAME"
+
           scripts/test-osx-package.sh \
             --app LibreCAD.app \
             --architectures arm64,x86_64
