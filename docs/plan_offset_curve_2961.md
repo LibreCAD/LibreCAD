@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 01:06 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W315; chronological evidence follows): implementation slices
+Updated: 2026-11-03 01:14 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W316; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -36,7 +36,7 @@ integration rather than an unimplemented declared feature slice.
 
 The PR head is `d183479630b43ae55b032a160d7403dbf3a848ed`; its latest
 non-roadmap change is the offset-test whitespace fix at product head
-`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:06 UTC
+`823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. At the 2026-11-03 01:14 UTC
 exact-head poll, the PR Checks page showed 14 successful, 4 in progress, and 6
 skipped entries, with no failures. In progress: CodeQL Analyze, Continuous
 Build macOS, DWG/DXF Windows x64, and macOS-15 Intel Pixi on the push trigger.
@@ -12188,3 +12188,34 @@ Next: commit this correction and update the existing PR status comment with the
 verified architecture mapping. Keep all local roadmap commits unpushed until
 the four exact-head jobs terminate; then inspect the new exact-head CI and
 refresh the comment with its results.
+
+## 271. W316 Post-W315 Commit and PR Sync
+
+W315 was committed locally as `93bf9bf4d`, after W311-W314. The five local
+commits are documentation-only changes to this roadmap; product code remains
+unchanged from `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. W315 validation
+passed 99/99 with no skips, 93 obligations, zero pending declarations and zero
+production mismatches; parser cases passed 5/5 and `git diff --check` passed.
+The full suite was rerun on this W316 file: 99/99 passed in 116.0 seconds,
+with no skips, 93 obligations, zero pending declarations and zero production
+mismatches. Parser cases again passed 5/5 and the post-edit `git diff --check`
+is clean.
+
+The existing PR status comment was corrected at 01:09 UTC: DWG/DXF Windows
+ARM64 passed and Windows x64 remains active. At the 01:14 UTC poll, the same
+exact-head totals remain 14 successful, 4 in progress, and 6 skipped, with no
+failures. Active jobs are CodeQL Analyze, Continuous Build macOS, DWG/DXF
+Windows x64, and push-triggered macOS-15 Intel Pixi. `PackageWindowsMsix` is a
+separate skipped entry. These results apply only to PR head
+`d183479630b43ae55b032a160d7403dbf3a848ed`.
+
+The user reports Remote Desktop running and logged in, but native CUA still
+cannot attach to LibreCAD because the Mac surface reports locked. No new GUI
+interaction or drawing save is claimed. Physical stale-peer behavior, durable
+screenshots/Qt DPR, independent W171 GUI viewport, signed/deployed W0-W2
+acceptance, human review, and final R integration remain open.
+
+Next: poll the same four exact-head jobs. Keep W311-W316 roadmap-only commits
+local until all active checks terminate; then push the queue, inspect checks on
+the new exact head, and refresh the PR status comment. Preserve the open GUI,
+deployment, review, and integration gates until direct evidence closes them.
