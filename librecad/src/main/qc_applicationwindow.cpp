@@ -1472,7 +1472,8 @@ void QC_ApplicationWindow::initSettings()
     }
 
     QString sheet_path = settings.value("StyleSheet", "").toString();
-    if (loadStyleSheet(sheet_path))
+    // on unless switched off, so a style sheet saved before the checkbox existed stays applied
+    if (settings.value("AllowStyleSheet", true).toBool() && loadStyleSheet(sheet_path))
         style_sheet_path = sheet_path;
     settings.endGroup();
 
@@ -3932,9 +3933,8 @@ void QC_ApplicationWindow::widgetOptionsDialog()
         }
     }
 
-    QString sheet_path = settings.value("StyleSheet", "").toString();
-    if (!sheet_path.isEmpty() && QFile::exists(sheet_path))
-        dlg.stylesheet_field->setText(sheet_path);
+    dlg.stylesheet_field->setText(settings.value("StyleSheet", "").toString());
+    dlg.stylesheet_checkbox->setChecked(settings.value("AllowStyleSheet", true).toBool());
 
     int allow_theme = settings.value("AllowTheme", 0).toInt();
     dlg.theme_checkbox->setChecked(allow_theme);
@@ -3969,8 +3969,15 @@ void QC_ApplicationWindow::widgetOptionsDialog()
         }
 
         QString sheet_path = dlg.stylesheet_field->text();
+        int allow_sheet = dlg.stylesheet_checkbox->isChecked();
         settings.setValue("StyleSheet", sheet_path);
-        if (loadStyleSheet(sheet_path))
+        settings.setValue("AllowStyleSheet", allow_sheet);
+        if (!allow_sheet)
+        {
+            qApp->setStyleSheet(QString());
+            style_sheet_path.clear();
+        }
+        else if (loadStyleSheet(sheet_path))
             style_sheet_path = sheet_path;
 
         int allow_theme = dlg.theme_checkbox->isChecked();

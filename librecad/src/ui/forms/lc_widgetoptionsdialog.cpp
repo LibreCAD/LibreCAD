@@ -30,7 +30,7 @@ LC_WidgetOptionsDialog::LC_WidgetOptionsDialog(QWidget* parent)
 {
     setupUi(this);
 
-    connect(stylesheet_button, SIGNAL(released()),
+    connect(stylesheet_button, SIGNAL(clicked()),
             this, SLOT(chooseStyleSheet()));
 }
 
@@ -40,5 +40,6 @@ void LC_WidgetOptionsDialog::chooseStyleSheet()
     if (!path.isEmpty())
     {
         stylesheet_field->setText(QDir::toNativeSeparators(path));
+        stylesheet_checkbox->setChecked(true);
     }
 }
