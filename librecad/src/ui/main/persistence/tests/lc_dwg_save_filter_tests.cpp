@@ -15,6 +15,7 @@
 #include "lc_documentsstorage.h"
 #include "lc_filedialogservice.h"
 #include "lc_settingguard.h"
+#include "qg_filedialog.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
 #include "rs_settings.h"
@@ -108,9 +109,98 @@ void requireSaveFilterAnswered(const SaveFilterObservation& seen) {
     REQUIRE_FALSE(seen.timedOut);
     REQUIRE_FALSE(seen.missingFilter);
 }
+
+struct OpenFilterObservation {
+    bool opened = false;
+    bool timedOut = false;
+    bool missingFilter = false;
+    QString initialFilter;
+    QString selectedFilter;
+    QStringList filters;
+};
+
+template<typename Operation>
+auto answerOpenFilterDialog(OpenFilterObservation& seen, const QString& path,
+                            const QString& filter, Operation operation) {
+    QTimer poll, timeout;
+    timeout.setSingleShot(true);
+    QObject::connect(&poll, &QTimer::timeout, &poll, [&] {
+        if (seen.opened) return;
+        auto* dialog = qobject_cast<QFileDialog*>(QApplication::activeModalWidget());
+        if (!dialog || dialog->acceptMode() != QFileDialog::AcceptOpen) return;
+        seen.opened = true;
+        seen.filters = dialog->nameFilters();
+        seen.initialFilter = dialog->selectedNameFilter();
+        if (!filter.isEmpty()) {
+            if (!seen.filters.contains(filter)) {
+                seen.missingFilter = true;
+                dialog->reject();
+                return;
+            }
+            dialog->selectNameFilter(filter);
+        }
+        seen.selectedFilter = dialog->selectedNameFilter();
+        dialog->selectFile(path);
+        static_cast<QDialog*>(dialog)->accept();
+    });
+    QObject::connect(&timeout, &QTimer::timeout, &timeout, [&] {
+        seen.timedOut = true;
+        if (auto* dialog = qobject_cast<QDialog*>(QApplication::activeModalWidget())) dialog->reject();
+    });
+    poll.start(1);
+    timeout.start(5000);
+    auto result = operation();
+    poll.stop(); timeout.stop();
+    return result;
+}
+
+void requireOpenFilterAnswered(const OpenFilterObservation& seen) {
+    REQUIRE(seen.opened);
+    REQUIRE_FALSE(seen.timedOut);
+    REQUIRE_FALSE(seen.missingFilter);
+}
 }
 
 #ifdef DWGSUPPORT
+TEST_CASE("Open defaults expose DXF and DWG and infer DWG from the selected path",
+          "[gui][documentsstorage][open][dwg-open-filters]") {
+    ensureApp();
+    REQUIRE(qobject_cast<QApplication*>(QCoreApplication::instance()));
+    SettingGuard qt(RS_SETTINGS, "Defaults", "UseQtFileOpenDialog");
+    SettingGuard folder(RS_SETTINGS, "Paths", "Open");
+    SettingGuard remembered(RS_SETTINGS, "Paths", "OpenFilter");
+    QTemporaryDir dir; REQUIRE(dir.isValid());
+    folder.set(dir.path());
+
+    const auto path = dir.filePath(QStringLiteral("sample.DWG"));
+    QFile fixture(path);
+    REQUIRE(fixture.open(QIODevice::WriteOnly));
+    REQUIRE(fixture.write("AC1032") == 6);
+    fixture.close();
+
+    const QString combinedFilter = QStringLiteral("Drawing Exchange (*.dxf *.dwg)");
+    for (bool useQtFileDialog : {false, true}) {
+        CAPTURE(useQtFileDialog);
+        qt.set(useQtFileDialog);
+        remembered.set(QStringLiteral("Drawing Exchange (*.dxf)"));
+
+        OpenFilterObservation seen;
+        RS2::FormatType type = RS2::FormatUnknown;
+        const auto opened = answerOpenFilterDialog(seen, path, combinedFilter, [&] {
+            QG_FileDialog dialog;
+            return dialog.getOpenFile(&type);
+        });
+        requireOpenFilterAnswered(seen);
+        CHECK(seen.initialFilter == combinedFilter);
+        CHECK(seen.selectedFilter == combinedFilter);
+        CHECK(seen.filters.count(combinedFilter) == 1);
+        CHECK(opened == QDir::toNativeSeparators(path));
+        CHECK(type == RS2::FormatDWG);
+        CHECK(RS_SETTINGS->readStrSingle("Paths", "OpenFilter", {}) == combinedFilter);
+        CHECK(RS_SETTINGS->readStrSingle("Paths", "Open", {}) == dir.path());
+    }
+}
+
 TEST_CASE("Actual Save As offers every DWG writer version and writes the selected signature",
           "[gui][documentsstorage][save][dwg-save-filters]") {
     ensureApp();
