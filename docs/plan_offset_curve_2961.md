@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-03 18:41 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W353; chronological evidence follows): implementation slices
+Updated: 2026-11-04 03:24 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W360; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit are present and
 qualified. This includes the shipped native geometry worker, Modify Offset
 creation/repeat, native Trim preview/commit, staged GUI drawing/template
@@ -13630,3 +13630,24 @@ behavior, direct native-DWG viewport validation, signed/deployed and minimum
 macOS runtime, human review, or final R integration. Keep each gate open. The
 roadmap-only receipt requires its focused validator tests and fresh
 exact-head CI inspection after commit/push.
+
+## 315. W360 User-Confirmed Desktop And Fresh Selection Attempt
+
+The user confirmed the remote desktop was ready. The approved visible test
+copy remained open on `/private/tmp/offset-W193-W358-clean.dxf`; both groups
+of three nested ellipse-like curves were visible. A fresh click on a visible
+curve produced no accessibility-tree change and the selection count remained
+zero. The drawing display itself remained unchanged. No preview, commit,
+geometry delta, or save was performed. This is another inconclusive selection
+probe, not an acceptance pass and not evidence of a product defect.
+
+The latest exact-head CI query for `64abd36711afd36a074e8716234fa12f1268734a`
+showed Text foundations succeeded; CodeQL, Continuous build, and DWG/DXF
+verification were still in progress; Pixi Builds was queued. This receipt
+does not close retained matched preview/commit screenshots and app-window DPR,
+reproducible held-drag cancellation, physical stale-peer behavior, direct
+native-DWG viewport validation, signed/deployed and minimum-macOS runtime,
+human review, or final R integration. Keep these gates open. The focused
+roadmap/refusal validators pass 99/99 (93 obligations, zero pending
+declarations, zero production mismatches); `git diff --check` passes. Inspect
+CI again against the pushed receipt head.
