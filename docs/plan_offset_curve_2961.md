@@ -14180,3 +14180,26 @@ that event-order evidence and does not close the held-drag acceptance gate.
 PR #3193 remains open, draft, and review-required. Re-run the roadmap parser,
 refusal/inventory suite, and `git diff --check`, then publish this receipt and
 requalify the new exact PR head.
+
+## 331. W376 Direct AC1032 DWG Viewport Check
+
+In the approved test-only LibreCAD app, opening
+`/private/tmp/offset-3193-dwg-visual/out/offset-curves.dwg` succeeded. The
+command history identified the input as DWG `AC1032/R2018`, and the viewport
+visibly rendered six ellipse contours arranged as two groups of three. The
+Modelspace tab was also selected and showed the contours. This is direct
+native-DWG import/render evidence; it is not a save/reopen or round-trip check.
+No Save command was issued. Selecting Modelspace marked the disposable drawing
+modified, so the asterisk is session state only and must not be mistaken for a
+saved change to the fixture. The UI screenshot was observed in-session but not
+retained as a file, and app-window DPR was unavailable.
+
+The direct AC1032 visual-import gate is now partially satisfied for this one
+fixture and LibreCAD build. Durable matched preview/commit screenshots and DPR,
+held-drag cancellation timing, physical stale-peer behavior,
+Developer ID/notarization and minimum-macOS/deployed acceptance, approving
+review, and final R integration remain open. PR #3193 remains open, draft, and
+review-required. After this receipt, the roadmap parser passed 5/5 and
+refusal/inventory passed 94/94 (93 obligations, zero pending declarations or
+production mismatches); `git diff --check` passed. Exact-head CI must be
+rechecked after pushing the checkpoint.
