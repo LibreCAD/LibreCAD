@@ -13659,8 +13659,10 @@ approved visible test copy, the clean W193/W358 DXF remained open with both
 groups of three nested ellipse-like contours. The earlier W359/W360 selection
 attempts had not established that the Selection Pointer was active. This time
 the Selection Pointer was explicitly activated before selecting a contour;
-the property selector identified the source as an ellipse, resolving the
-earlier tool-state ambiguity.
+the property selector reported `Offset Curve (1)`. The selected source was
+therefore an existing editable offset curve, not a base ellipse, resolving the
+earlier tool-state ambiguity but not qualifying plain-ellipse editable-offset
+creation.
 
 The Modify > Offset action displayed Editable Offset Curve, Multiple Copies
 (2), and Fixed Distance (0.5), with Keep Originals, Use Current Attributes,
@@ -13676,9 +13678,10 @@ No explicit Save command was issued. The window showed an unsaved marker, so
 this receipt does not claim the on-disk fixture was unchanged; the interaction
 was performed on the disposable `/private/tmp/offset-W193-W358-clean.dxf`
 test copy. The UI observation confirms source selection, offset preview,
-commit, editable-entity classification, and undo/redo for this ellipse/two-copy
-case. It is not a retained matched preview/commit screenshot artifact, does not
-include a measured geometry delta or Qt app-window DPR, and does not exercise
+commit, editable-entity classification, and undo/redo for this existing
+Offset-Curve/two-copy case. It is not a retained matched preview/commit
+screenshot artifact, includes no measured geometry delta or Qt app-window DPR,
+and does not exercise
 held-drag cancellation, physical stale-peer behavior, native DWG display,
 signed/deployed packaging, or minimum macOS 14.4 runtime. Keep those acceptance
 gates open, along with human review and final R integration.
@@ -13719,3 +13722,39 @@ PR #3193 remains open, draft, review-required, and not ready to merge; durable
 matched preview/commit screenshots and DPR, physical stale-peer interaction,
 direct DWG display, signing/deployment and macOS 14.4 acceptance, human review,
 and final R integration remain open.
+
+## 318. W363 Desktop Drag Recheck And Baseline Restoration
+
+After the user confirmed the remote desktop was ready, the approved LibreCAD
+test copy was visible on `/private/tmp/offset-W193-W358-clean.dxf`. The
+Selection Pointer selected the left outer `Offset Curve (1)`. Starting Offset
+from the command line showed Editable Offset Curve enabled, two copies, fixed
+distance 0.5, Keep Originals, Use Current Attributes, and Use Current Layer.
+Selecting the source and pressing Return advanced to the direction prompt. A
+sampled drag from the source toward the exterior still showed the selected
+source but no distinct offset preview. In two attempts, Escape was sent while
+the drag request was pending; after the drag completed, an additional outer
+contour was visible, showing that the UI automation's drag had already
+committed before Escape took effect. One Undo after each attempt restored the
+six-contour baseline. Final accessibility state was `Current Action: Default`
+and `No Selection`; no Save command was issued.
+
+The on-disk clean fixture SHA256 after the attempts is
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`, matching
+its recorded original hash. This establishes the test copy's bytes at this
+check, not the in-memory state or autosave contents. No screenshot was retained
+as a durable artifact and Qt app-window DPR remains unknown. Treat W363 as a
+reproducible limitation of this CUA drag/cancellation path, not a product
+defect or a successful cancellation/preview-parity test.
+
+At the latest PR-page observation for W362 head
+`a4a566316117d637008038cf2f91ab45676f999f`, 18 checks were in progress, five
+configured checks were skipped, and no failure was reported. These counts are
+time-specific; recheck the exact head after this roadmap receipt is committed
+and pushed. The focused roadmap/refusal validators must pass 99/99 and
+`git diff --check` must pass for this documentation-only receipt. PR #3193
+remains open, draft, review-required, and not ready to merge. Retained matched
+preview/commit screenshots and DPR, a usable held-drag cancellation path,
+physical stale-peer behavior, direct native-DWG visual validation,
+signed/deployed and macOS 14.4 acceptance, approving review, and final R
+integration remain open.
