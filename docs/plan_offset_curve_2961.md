@@ -13651,3 +13651,39 @@ human review, or final R integration. Keep these gates open. The focused
 roadmap/refusal validators pass 99/99 (93 obligations, zero pending
 declarations, zero production mismatches); `git diff --check` passes. Inspect
 CI again against the pushed receipt head.
+
+## 316. W361 Explicit Selection, Two-Copy Offset, And Undo/Redo
+
+The user confirmed the remote Mac desktop was visible and awake. On the
+approved visible test copy, the clean W193/W358 DXF remained open with both
+groups of three nested ellipse-like contours. The earlier W359/W360 selection
+attempts had not established that the Selection Pointer was active. This time
+the Selection Pointer was explicitly activated before selecting a contour;
+the property selector identified the source as an ellipse, resolving the
+earlier tool-state ambiguity.
+
+The Modify > Offset action displayed Editable Offset Curve, Multiple Copies
+(2), and Fixed Distance (0.5), with Keep Originals, Use Current Attributes,
+and Use Current Layer enabled. After the ellipse was selected, moving/clicking
+on the offset side displayed a red preview; confirming the side committed the
+operation. The property selector then reported `Offset Curve (2)`, consistent
+with two editable output entities. Undo visibly restored the original three
+contours, Redo restored the two offset outputs, and a second Undo returned the
+canvas to the original contours. The final accessibility state reported
+`No Selection` and `Current Action: Default`.
+
+No explicit Save command was issued. The window showed an unsaved marker, so
+this receipt does not claim the on-disk fixture was unchanged; the interaction
+was performed on the disposable `/private/tmp/offset-W193-W358-clean.dxf`
+test copy. The UI observation confirms source selection, offset preview,
+commit, editable-entity classification, and undo/redo for this ellipse/two-copy
+case. It is not a retained matched preview/commit screenshot artifact, does not
+include a measured geometry delta or Qt app-window DPR, and does not exercise
+held-drag cancellation, physical stale-peer behavior, native DWG display,
+signed/deployed packaging, or minimum macOS 14.4 runtime. Keep those acceptance
+gates open, along with human review and final R integration.
+
+This receipt updates documentation only. Run the focused roadmap/refusal
+inventory validators and `git diff --check`, commit and push it, then inspect
+checks against the resulting exact head; do not transfer check results from
+W360 or earlier commits.
