@@ -13758,3 +13758,35 @@ preview/commit screenshots and DPR, a usable held-drag cancellation path,
 physical stale-peer behavior, direct native-DWG visual validation,
 signed/deployed and macOS 14.4 acceptance, approving review, and final R
 integration remain open.
+
+## 319. W364 Plain-Ellipse Editable Offset GUI Validation
+
+On the approved visible LibreCAD test copy, the left inner source was selected
+and the property selector identified it as `Ellipse (1)`, distinguishing this
+case from W361's already-editable `Offset Curve (1)`. The Offset command was
+started from the command line with Editable Offset Curve enabled, two copies,
+fixed distance 0.5, Keep Originals, Use Current Attributes, and Use Current
+Layer enabled. A red two-copy preview appeared on the outside of the selected
+ellipse; confirming the side committed the result, and the property selector
+reported `Offset Curve (2)`. Undo restored the visible six-contour baseline.
+The final UI returned to `Current Action: Default` with no selection.
+
+No Save command was issued. The disposable DXF remained byte-identical to its
+recorded original SHA-256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`.
+The window retained an unsaved marker and autosave history, so this receipt
+does not claim autosave-state immutability. UI frames were inspected live but
+not retained as matched artifacts, and the Qt app-window DPR was not measured.
+This validates plain-ellipse editable output creation, visible preview,
+two-copy commit, and undo restoration; it does not validate a held-drag preview
+or cancellation, stale-peer behavior, or native-DWG rendering.
+
+At exact PR head `402d40391b59f5dc888287f0ff1ab3485a7d60e8`, the latest
+check-run poll showed 23 checks: 16 in progress, five skipped, two successful
+Headless checks, and no reported failures. Recheck exact-head CI after this
+plan receipt is committed and pushed. Run the focused roadmap/refusal
+validators and `git diff --check` before committing. PR #3193 remains open,
+draft, review-required, and not ready to merge. Retained matched screenshots
+and DPR, usable held-drag cancellation, physical stale-peer behavior, direct
+native-DWG visual validation, signed/deployed and macOS 14.4 acceptance,
+approving review, and final R integration remain open.
