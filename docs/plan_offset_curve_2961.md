@@ -13531,11 +13531,41 @@ The focused current-source Release suite result, captured immediately before
 this recheck, is 1,029 passed, 1 skipped, and 3,924,959 assertions. The PR page
 showed exact head `d374e6642d27149db0f8872eee757d3cdc9fa525` with 19 successful
 checks, 7 configured skips, and zero failures. A W356 status comment was posted
-as issue comment `6620952512`; it must be amended to replace its earlier
-"test copy untouched" wording with this interaction result. The roadmap
-refusal/inventory validator then passed all 94 tests with zero failures or
-skips; it still accounts for 93 obligations, zero pending declarations, and
-zero production mismatches. These results do
-not close the retained screenshot/DPR pair, reproducible held-drag cancellation,
-physical stale-peer behavior, direct DWG viewport, signed/deployed and minimum
-macOS runtime, human review, or final R integration gates.
+as issue comment `6620952512`; that comment was subsequently amended to replace
+its earlier "test copy untouched" wording with this interaction result. The
+roadmap refusal/inventory validator then passed all 94 tests with zero failures
+or skips; it still accounts for 93 obligations, zero pending declarations, and
+zero production mismatches. These results do not close the retained
+screenshot/DPR pair, reproducible held-drag cancellation, physical stale-peer
+behavior, direct DWG viewport, signed/deployed and minimum macOS runtime, human
+review, or final R integration gates.
+
+## 312. W357 Second Unlocked Desktop Selection Attempt
+
+After the user confirmed the remote session was logged in, CUA reattached to
+the visible `LibreCAD-PR3193-visible` test copy. The W193/W281 derivative DXF
+remained open, and the application showed Offset mode with editable ellipse
+offsets enabled, fixed distance 0.5, and two copies. Several clicks on visible
+ellipse contours left the selected-entity count at zero; no preview or commit
+was observed. Escape returned the command state to Default. A later idle
+canvas click displayed "Choose second edge"; Escape canceled that prompt and
+returned to idle. No Save command was issued. Because the document already had
+an unsaved marker, this attempt does not establish that the underlying file was
+unchanged.
+
+This is an inconclusive GUI control/selection attempt, not a passing offset
+acceptance test and not evidence of a product defect. It does not supply the
+retained matched preview/commit screenshots, an observed geometry delta, or
+the required app-window DPR evidence. Keep those gates open and obtain a
+reproducible selection path before attributing the failure to offset behavior.
+The application was left in Default/idle command state.
+
+The previously posted PR status comment `6620952512` was updated after roadmap
+receipt commit `1796c5817b751629dd8bd2d73aa19e61f9f793f2`; its check counts are
+for that exact head only. This W357 roadmap update creates a new commit and
+therefore requires a fresh exact-head check/status inspection. Do not carry
+forward the earlier counts. After the W357 edit, the focused refusal-inventory
+and parser tests passed 99/99 with no skips or failures; the inventory reports
+93 obligations, zero pending declarations, and zero production mismatches.
+`git diff --check` also passed. This is roadmap/validator validation only; it
+does not constitute a new product test result.
