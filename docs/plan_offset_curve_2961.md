@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 18:43 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W370; chronological evidence follows): implementation slices
+Updated: 2026-11-04 19:32 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W371; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -38,20 +38,21 @@ fixture's direct DWG display check; broader acceptance remains open. Product
 commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is pushed. W368 merges current
 `origin/master` `ae1e3b8152a18334109fd93393dcc8dd5e436c3c` as
 `694a453921b2853dc4e0c810184b8e20a487784f`; the new tip is an ancestor of the
-branch. W370 records exact PR head
-`e4acf6275895b2cb9dd32d8f5b7e04320452a03b`. Its qmake6 application/worker
+branch. W370 requalifies product/source head
+`e4acf6275895b2cb9dd32d8f5b7e04320452a03b`; W371 records exact PR head
+`efbbac33138d0f4efa7016b0fbdba987578b40f7`. Its qmake6 application/worker
 build, qmake-helper external-process suite, CMake test suite, roadmap parser,
-and refusal inventory pass. At 18:43 UTC, exact-head Text Foundations and the
-Linux DWG/DXF lane passed; Windows x64/ARM64 DWG/DXF tests, macOS packaging,
-CodeQL analysis, and Intel macOS Pixi were still running. Other reported Pixi
-platforms and the Windows ARM64 build passed. PR #3193 remains open, draft,
-mergeable, and review-required, with no approving review. CUA continues to
-report the controlled Mac as locked despite the user's remote-desktop session
-being logged in; W370 makes no new visible-interaction claim. Outstanding
-acceptance remains external visual fidelity, retained matched preview/commit
-screenshots and app-window DPR, held-drag cancellation, physical stale-peer
-behavior, signed/deployed and minimum-macOS acceptance, review approval, and
-final R integration.
+and refusal inventory pass. W371 directly cross-checks the unconverted AC1032
+DWG spline geometry through LibreDWG and SciPy; radial deviation from its
+analytic arc is below `2e-15`, but this is not visual acceptance. At 19:31 UTC,
+exact-head CI had seven successful checks, eleven in progress, five configured
+skips, and zero failures. PR #3193 remains open and draft; an approving review
+is still required. CUA continues to report the controlled Mac as locked
+despite the user's remote-desktop session being logged in; no new visible
+interaction was performed. Outstanding acceptance remains external visual
+fidelity, retained matched preview/commit screenshots and app-window DPR,
+held-drag cancellation, physical stale-peer behavior, signed/deployed and
+minimum-macOS acceptance, review approval, and final R integration.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -14007,3 +14008,43 @@ app-window DPR; reproducible held-drag cancellation; physical stale-peer GUI
 behavior; useful independent W171 visual fidelity beyond converted-DXF
 rendering; Developer ID/notarization and actual minimum-macOS runtime; full
 deployed W0-W2 qualification; approving human review; and final R integration.
+
+## 326. W371 Direct DWG Geometry Cross-Check and CI Refresh
+
+LibreDWG 0.14 read the original, unconverted AC1032 fixture
+`/private/tmp/offset-W171-current-dwg/offset-matrix-write-dwg-R2018-d3_actual.dwg`
+(SHA-256
+`aed066088fab728aff6224481accdd9900ce0b08e2e63c96dd729d28a2838842`). Its
+owned degree-3 SPLINE contains four controls and eight clamped knots. SciPy
+1.18.1 evaluated 10,001 points from LibreDWG's parsed native-DWG control data;
+against the independent analytic radius-1.25 arc, maximum radial error was
+`1.7763568394002505e-15`, with monotone angle from 0 to
+`0.010000000000001348`. This is a direct-source semantic geometry cross-check,
+independent of the ODA-converted DXF. It is not a rendered native-DWG viewport
+or independent CAD visual review, so those acceptance items remain open.
+
+At 19:31 UTC, the exact PR head was
+`efbbac33138d0f4efa7016b0fbdba987578b40f7`. Seven checks had succeeded: both
+Text Foundations jobs, three Pixi push jobs (Windows, Ubuntu, Ubuntu ARM64),
+and two Pixi pull-request jobs (Ubuntu, Ubuntu ARM64). Eleven remained in
+progress: two Pixi push macOS jobs, three DWG/DXF lanes, three pull-request
+Pixi jobs (Windows and both macOS jobs), CodeQL analysis, and the macOS and
+Windows ARM64 continuous builds. Five checks were skipped: the repository-
+policy Security scan and four configured continuous-build platforms. No check
+was queued or failed in this snapshot. Recheck after terminal results and
+after publishing this checkpoint.
+
+The user reports the remote desktop is logged in, but a fresh native CUA state
+query still reports the controlled Mac locked and exposes no LibreCAD app. No
+GUI input or save was attempted. The W370 PR comment was updated through the
+authenticated browser UI; this new CI snapshot supersedes its earlier
+in-progress count. After this receipt, the roadmap parser passed 5/5,
+refusal/inventory passed 94/94 (93 obligations, zero pending declarations or
+production mismatches), and `git diff --check` passed.
+
+Still open: durable matched visible preview/commit screenshots and measured
+app-window DPR; reproducible held-drag cancellation; physical stale-peer GUI
+behavior; useful independent visual fidelity beyond converted-DXF rendering;
+Developer ID/notarization, exact-minimum macOS runtime, and deployed W0-W2
+qualification; approving human review; and final R integration. This semantic
+DWG check does not close any of those gates or complete the roadmap.
