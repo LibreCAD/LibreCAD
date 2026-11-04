@@ -14231,3 +14231,33 @@ matched screenshots/DPR, reproducible held-drag cancellation, physical
 stale-peer behavior, independent visual review, signed/deployed and
 minimum-macOS acceptance, approving review, and final R integration remain
 open. PR #3193 remains open, draft, and review-required.
+
+## 333. W378 Exact-Head CI and PR Update Retry (2026-11-04)
+
+The worktree is clean at PR head
+`c03cca3df3c17718f6e4c5dfbee86f9920568f58`. Exact-head check diagnostics report
+Headless ON and OFF successful; 15 checks in progress; 3 queued; and 5 skipped
+(the repository-policy Security scan and four configured continuous-build
+platforms). The active checks include CodeQL analysis, macOS and Windows ARM64
+continuous builds, DWG/DXF fast and Windows x64/ARM64 verification, and Pixi
+builds. No failure is reported. These active/queued checks are not passes and
+no earlier-head result is inherited.
+
+The PR status comment could not be updated through the GitHub connector (HTTP
+403, resource not accessible by integration); the local `gh` authentication
+token is invalid, and the browser-control bridge timed out before a safe UI
+edit could be submitted. No comment update was published. A fresh native-app
+inventory still reports the Mac locked despite the user's report that the
+remote desktop is logged in, so no new visible GUI evidence was collected.
+Reattempt comment publication and visible acceptance only when those controls
+are available; do not treat the connector/UI failure as product validation.
+
+The previous W377 receipt remains accurate for its `10ee443` source pin, but
+does not describe the current `c03cca3` head. This checkpoint records the
+current exact-head state and publication blockers. The roadmap parser,
+refusal/inventory suite, and `git diff --check` must be rerun before commit;
+then push this checkpoint and qualify the resulting exact PR head. Remaining
+acceptance gates are unchanged: durable matched preview/commit screenshots
+with measured app-window DPR, reproducible held-drag cancellation, physical
+stale-peer behavior, independent visual fidelity, signed/deployed and
+minimum-macOS acceptance, approving review, and final R integration.
