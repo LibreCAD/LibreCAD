@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 17:28 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W367; chronological evidence follows): implementation slices
+Updated: 2026-11-04 17:36 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W368; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -35,14 +35,16 @@ now default to the combined DXF/DWG filter despite a persisted DXF-only choice,
 and infer DWG from the selected path. The AC1032 offset acceptance fixture was
 opened and visibly rendered through the rebuilt GUI. This closes only that
 fixture's direct DWG display check; broader acceptance remains open. Product
-commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is local and not yet pushed.
-The branch's common ancestor with `origin/master` is `b98d840a1d8fc4b9974d8897c92938bf55368d6c`, while current `origin/master` is
-`ae1e3b8152a18334109fd93393dcc8dd5e436c3c`; review and synchronization to that
-newer tip remain pending. PR #3193 remains open, draft, and review-required.
-Recheck exact-head CI after pushing. Outstanding work is external visual
-fidelity, retained matched preview/commit screenshots and DPR, held-drag
-cancellation, physical stale-peer behavior, signed/deployed and minimum-macOS
-acceptance, review approval, upstream synchronization, and final R integration.
+commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is local. W368 merges current
+`origin/master` `ae1e3b8152a18334109fd93393dcc8dd5e436c3c` as
+`694a453921b2853dc4e0c810184b8e20a487784f`; the new tip is an ancestor of the
+branch. The push attempt failed because `github.com` did not resolve, so the
+remote PR head is still `c2b762162`. PR #3193 remains open, draft, and
+review-required. Recheck exact-head CI after pushing. Outstanding work is
+external visual fidelity, retained matched preview/commit screenshots and DPR,
+held-drag cancellation, physical stale-peer behavior, signed/deployed and
+minimum-macOS acceptance, review approval, remote branch synchronization, and
+final R integration.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -13902,3 +13904,31 @@ matched preview/commit screenshots with measured app-window DPR, reproducible
 held-drag cancellation, physical stale-peer behavior, signed/deployed and
 minimum-macOS acceptance, human review, upstream synchronization, and final R
 integration.
+
+## 323. W368 Current Upstream Synchronization
+
+The local `origin/master` delta since common ancestor
+`b98d840a1d8fc4b9974d8897c92938bf55368d6c` contained two commits: a Turkish
+translation refresh and the property-sheet wording/arc-length correction with
+its new arc-property test. Review found no offset-curve implementation change;
+the arc patch corrects the semantic labels for angle versus linear length and
+adds a targeted property-sheet regression. The CMake Release
+`librecad_tests` target rebuilt successfully after the merge, and
+`[gui][properties][arc]` passed 10 assertions in one case. The upstream merge
+commit is `694a453921b2853dc4e0c810184b8e20a487784f`; current
+`origin/master` `ae1e3b8152a18334109fd93393dcc8dd5e436c3c` is now an ancestor.
+
+Pushing the product, roadmap, and merge commits was attempted but failed before
+transmission because this environment could not resolve `github.com`. The
+remote PR head therefore remains `c2b762162`; no new exact-head CI result is
+available. Do not describe the merge or W367 fix as published until a later
+push succeeds, and recheck all PR checks against the resulting exact head.
+The final W368 roadmap parser passed 5/5; the refusal/inventory suite passed
+94/94 with 93 unique obligations, zero pending declarations, and zero
+production mismatches; `git diff --check` passed. Commit this receipt, then
+retry a non-force push when network resolution is available.
+
+Remaining gates include publishing and exact-head CI, external visual fidelity,
+durable matched preview/commit screenshots with app-window DPR, held-drag
+cancellation, physical stale-peer behavior, signed/deployed and minimum-macOS
+acceptance, human review, and final R integration.
