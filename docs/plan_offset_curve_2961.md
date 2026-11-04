@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 21:34 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W374; chronological evidence follows): implementation slices
+Updated: 2026-11-04 22:00 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W376; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -33,8 +33,11 @@ auto-detection route, and separately compiled Qt plugin caller are present.
 W367 fixes a newly reproduced DWG Open dialog gap: both Qt and native dialogs
 now default to the combined DXF/DWG filter despite a persisted DXF-only choice,
 and infer DWG from the selected path. The AC1032 offset acceptance fixture was
-opened and visibly rendered through the rebuilt GUI. This closes only that
-fixture's direct DWG display check; broader acceptance remains open. Product
+opened and visibly rendered through the rebuilt GUI. W376 confirms the command
+history reported `AC1032/R2018` and the viewport showed six ellipse contours in
+two groups of three. This closes only that fixture/build's direct DWG
+import/display check; it is not save/reopen validation. No screenshot was
+retained and app-window DPR remains unmeasured. Product
 commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is pushed. W368 merges current
 `origin/master` `ae1e3b8152a18334109fd93393dcc8dd5e436c3c` as
 `694a453921b2853dc4e0c810184b8e20a487784f`; the new tip is an ancestor of the
@@ -49,15 +52,16 @@ the committed editable copies before Escape, then one Undo restored the six
 source contours. A separate drag/Escape returned to Default with the source
 contours, but no distinct preview frame was captured and input ordering was
 not observable; neither attempt qualifies cancellation. The disposable DXF
-SHA256 still matches its recorded baseline, with no Save issued. W373's latest
-exact-head check snapshot is two successful, eleven in progress, five queued,
-five skipped, and zero failed. PR #3193 remains open and draft; an approving
-review is still required. W374 is a roadmap-only commit, so its checks must be
-qualified separately. Remaining acceptance includes retained matched
-preview/commit screenshots and app-window DPR, reproducible held-drag
-cancellation, physical stale-peer behavior, independent visual fidelity,
-signed/deployed and minimum-macOS acceptance, review approval, and final R
-integration.
+SHA256 still matches its recorded baseline, with no Save issued. At 22:00 UTC,
+diagnostics for exact PR head `f0a48b61d2db5ac32e807143efcd708860b337ce`
+report one successful check (Headless ON), 14 in progress, three queued, five
+skipped, and zero failures. No prior-head result is inherited. PR #3193 remains
+open and draft; an approving review is still required. W376 is a roadmap-only
+commit, so its checks must be qualified separately. Remaining acceptance
+includes retained matched preview/commit screenshots and app-window DPR,
+reproducible held-drag cancellation, physical stale-peer behavior, independent
+visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
+and final R integration.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
