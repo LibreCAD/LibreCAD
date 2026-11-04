@@ -3381,25 +3381,25 @@ to `codex/offset-2961-native-worker`.
   ASan, version, fixture, and external-reader receipts are recorded above.
   W335 retains a W193 baseline screenshot and Qt 6.12 QScreen DPR 1.0 on the
   1920x1080 display, but not LibreCAD's actual window DPR or matched
-  preview/commit and held-drag screenshots. The user reports an active logged-in
-  Remote Desktop; CUA still reports the Mac locked and exposes no native apps,
-  so no GUI input was sent. Physical stale-peer interaction, a useful
+  preview/commit and held-drag screenshots. W361 subsequently established a
+  controllable logged-in desktop and verified an ellipse/two-copy interaction.
+  Physical stale-peer interaction, a useful
   independent W171 GUI viewport, Developer ID/notarized deployment and
   minimum-OS execution, required human review, and final integrated closeout
   remain open.
 
-**Next concrete action:** obtain a supported UI-control path to the user's
-already logged-in Remote Desktop and capture the remaining matched
-preview/commit, held-drag, app-window DPR, and physical stale-peer evidence. Do
-not ask the user to repeat login/unlock; the CUA bridge still reports the Mac
-locked despite the user's session confirmation. If the bridge remains
-unavailable, keep those gates open and do not substitute baseline screenshots
-or automated events. In parallel, obtain authorized Developer ID
-signing/notarization and minimum-macOS runtime qualification, and secure the
-required human review. Do not reopen completed product-code slices without a
-concrete defect. Final R integration follows these acceptance gates. Do not
-claim whole-plan completion until the mandatory acceptance rows and final R
-integration are resolved.
+**Next concrete action:** use the now-controllable approved LibreCAD test copy
+to capture a retained, matched live-preview/commit pair and the actual Qt
+application-window DPR. W362 samples an in-flight pointer drag and cancels it
+with Escape, but the sampled frame shows only the selected source and no
+distinct offset preview; it is not a preview-parity or held-preview pass. Keep
+physical stale-peer interaction and direct native-DWG viewport validation
+separate from the existing automated stale-peer test and DXF viewport work.
+In parallel, obtain authorized Developer ID signing/notarization and
+minimum-macOS 14.4 runtime qualification, and secure the required human review.
+Do not reopen completed product-code slices without a concrete defect. Final R
+integration follows these acceptance gates. Do not claim whole-plan completion
+until the mandatory acceptance rows and final R integration are resolved.
 
 ### Supplemental Implementation History
 
@@ -13687,3 +13687,35 @@ This receipt updates documentation only. Run the focused roadmap/refusal
 inventory validators and `git diff --check`, commit and push it, then inspect
 checks against the resulting exact head; do not transfer check results from
 W360 or earlier commits.
+
+## 317. W362 In-Flight Pointer-Drag Cancellation Sample
+
+The approved LibreCAD test copy remained controllable on the disposable
+`/private/tmp/offset-W193-W358-clean.dxf`. The Selection Pointer selected the
+outer left `Offset Curve (1)`. The Offset action was started with Editable
+Offset Curve enabled, two copies, and fixed distance 0.5. During the direction
+prompt, a pointer drag from the exterior side toward the right was still in
+flight when a screenshot was sampled (`drag completed before sample: false`).
+That frame showed the selected source in red but no distinct offset preview.
+Escape was sent before the drag completed; afterward accessibility reported
+`Enter Command`, `Current Action: Default`, and `No Selection`, and the canvas
+showed the baseline six contours with no visible added copies. This is a
+bounded in-session cancellation sample, not reproducible live-preview or
+preview/commit-parity evidence. Screenshots were observed but not saved as a
+durable matched artifact; no app-window DPR was obtained.
+
+No Save command was issued. The test window had an unsaved marker and an
+autosave history, so disk-fixture immutability is not claimed. The attempt does
+not qualify physical stale-peer behavior or direct native-DWG viewport
+rendering.
+
+On exact PR head `025dfb9826ff64f523059cabb4afc5eff9f5eafe`, Headless ON/OFF
+passed. CodeQL analysis, Pixi Builds, DWG/DXF verification, and Continuous
+build remained active at the latest poll; five configured lanes were skipped
+and no failure was reported. Do not substitute prior-head results. The
+roadmap/refusal validators and `git diff --check` must be rerun after this
+receipt, followed by a push, PR-status refresh, and exact-head CI inspection.
+PR #3193 remains open, draft, review-required, and not ready to merge; durable
+matched preview/commit screenshots and DPR, physical stale-peer interaction,
+direct DWG display, signing/deployment and macOS 14.4 acceptance, human review,
+and final R integration remain open.
