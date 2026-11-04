@@ -22,8 +22,9 @@
 // made current, so what the user drew went to a layer they had not chosen (the issue: draw a
 // parallel on a construction layer that is hidden so that its own entities are out of the way).
 // Now hiding a layer never changes the current one, a hidden layer is made current as any other,
-// and what is drawn on it is hidden with it. A drawing's saved current layer is restored as it was
-// saved.
+// and what is drawn on it is hidden with it. A locked layer is not made current, since what is
+// drawn would change it; the current layer stays current when it is locked, and a drawing's
+// saved current layer is restored as it was saved.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -128,6 +129,8 @@ public:
     }
 };
 
+const QString lockedMessage = QStringLiteral("Layer \"Doors\" is locked: unlock it to make it the current layer.");
+
 } // namespace
 
 TEST_CASE("A hidden layer is made current and stays hidden", "[layers][active][3229]") {
@@ -231,6 +234,45 @@ TEST_CASE("A parallel drawn with a hidden current layer goes to that layer", "[l
     CHECK(wall->isVisible());
 }
 
+TEST_CASE("A locked layer is not made current", "[layers][active][3229]") {
+    Layers f;
+    f.m_graphic.toggleLayerLock(f.m_doors);
+    REQUIRE(f.m_doors->isLocked());
+    CommandMessages command;
+
+    SECTION("by its pointer") {
+        CHECK_FALSE(f.m_graphic.activateLayer(f.m_doors, true));
+        CHECK(command.m_messages.isEmpty());
+    }
+    SECTION("by its name") {
+        CHECK_FALSE(f.m_graphic.activateLayer(QStringLiteral("Doors"), true));
+        CHECK(command.m_messages.isEmpty());
+    }
+    SECTION("as the user chooses it, who is told why") {
+        CHECK_FALSE(f.m_graphic.activateChosenLayer(f.m_doors));
+        CHECK(command.m_messages == QStringList{lockedMessage});
+    }
+    SECTION("with the cslayer command, which says why") {
+        LayersCommand cslayer(&f.m_context, RS2::ActionLayersActivateCmd);
+        cslayer.doProcessCommand(0, QStringLiteral("Doors"));
+        CHECK(command.m_messages == QStringList{lockedMessage});
+    }
+    SECTION("while it is hidden too") {
+        f.m_doors->freeze(true);
+        CHECK_FALSE(f.m_graphic.activateChosenLayer(f.m_doors));
+        CHECK(command.m_messages == QStringList{lockedMessage});
+    }
+
+    CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+    CHECK(f.m_doors->isLocked());
+    CHECK(f.m_activations.m_activated.isEmpty());
+
+    // unlocked, it is made current
+    f.m_graphic.toggleLayerLock(f.m_doors);
+    CHECK(f.m_graphic.activateChosenLayer(f.m_doors));
+    CHECK(f.m_graphic.getActiveLayer() == f.m_doors);
+}
+
 TEST_CASE("The cslayer command says when there is no such layer", "[layers][active][3229]") {
     Layers f;
     CommandMessages command;
@@ -248,6 +290,29 @@ TEST_CASE("A layer that is not in the drawing is not made current", "[layers][ac
     CHECK_FALSE(f.m_graphic.activateLayer(nullptr, true));
     CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
     CHECK(f.m_activations.m_activated.isEmpty());
+}
+
+TEST_CASE("The current layer stays current when it is locked", "[layers][active][3229]") {
+    Layers f;
+    CommandMessages command;
+
+    SECTION("by its lock icon") {
+        f.m_graphic.toggleLayerLock(f.m_walls);
+    }
+    SECTION("with every other layer") {
+        f.m_graphic.lockAllLayers(true);
+        CHECK_FALSE(f.m_graphic.activateLayer(f.m_doors, true));
+    }
+
+    REQUIRE(f.m_walls->isLocked());
+    CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+    // activated again (as editing its pen in the pen palette or the property sheet does, to tell
+    // the listeners), it stays current
+    CHECK(f.m_graphic.activateLayer(f.m_walls, true));
+    CHECK(f.m_graphic.activateChosenLayer(f.m_walls));
+    CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+    CHECK(f.m_activations.m_activated == QList<RS_Layer*>{f.m_walls, f.m_walls});
+    CHECK(command.m_messages.isEmpty());
 }
 
 TEST_CASE("Removing the current layer makes a layer current that can be, shown ones first", "[layers][active][3229]") {

@@ -18,7 +18,8 @@
 **********************************************************************/
 
 // Issue #3229, in the docks: clicking the name of a hidden layer in the Layer List or the Layer
-// Tree makes it the current layer, which the dock shows as current while the layer stays hidden.
+// Tree makes it the current layer, which the dock shows as current while the layer stays hidden;
+// clicking the name of a locked layer leaves the current layer and says why on the command line.
 // The status bar names the current layer with "hidden" or "locked" when it is, whatever changed it.
 
 #include <catch2/catch_test_macros.hpp>
@@ -106,6 +107,8 @@ QModelIndex treeNameIndex(const LC_LayerTreeModel& model, const RS_Layer* layer)
     return {};
 }
 
+const QString lockedMessage = QStringLiteral("Layer \"Doors\" is locked: unlock it to make it the current layer.");
+
 } // namespace
 
 TEST_CASE("Clicking a hidden layer in the Layer List makes it current, still hidden", "[gui][layers][active][3229]") {
@@ -132,7 +135,26 @@ TEST_CASE("Clicking a hidden layer in the Layer List makes it current, still hid
     CHECK(command.m_messages.isEmpty());
 }
 
-TEST_CASE("Clicking a hidden layer in the Layer Tree makes it current, still hidden", "[gui][layers][active][3229]") {
+TEST_CASE("Clicking a locked layer in the Layer List keeps the current layer and says why", "[gui][layers][active][3229]") {
+    Drawing d;
+    LC_ActionGroupManager actions(nullptr);
+    QG_LayerWidget widget(&actions, nullptr, nullptr);
+    widget.setGraphicView(&d.m_view);
+    auto* table = widget.findChild<QTableView*>();
+    REQUIRE(table != nullptr);
+    auto* model = dynamic_cast<QG_LayerModel*>(table->model());
+    REQUIRE(model != nullptr);
+    CommandMessages command;
+
+    widget.slotActivated(model->getIndex(d.m_doors));
+
+    CHECK(d.m_graphic.getActiveLayer() == d.m_walls);
+    CHECK(model->getActiveLayer() == d.m_walls);
+    CHECK(d.m_doors->isLocked());
+    CHECK(command.m_messages == QStringList{lockedMessage});
+}
+
+TEST_CASE("Clicking a hidden or locked layer in the Layer Tree", "[gui][layers][active][3229]") {
     Drawing d;
     LC_LayerTreeWidget widget(nullptr, nullptr);
     widget.setGraphicView(&d.m_view);
@@ -142,17 +164,29 @@ TEST_CASE("Clicking a hidden layer in the Layer Tree makes it current, still hid
     REQUIRE(model != nullptr);
     CommandMessages command;
 
-    const QModelIndex name = treeNameIndex(*model, d.m_construction);
-    REQUIRE(name.isValid());
-    widget.slotTreeClicked(name);
-    CHECK(d.m_graphic.getActiveLayer() == d.m_construction);
-    CHECK(d.m_construction->isFrozen());
-    // the tree is rebuilt for the activation: look the row up again
-    const QModelIndex shown = treeNameIndex(*model, d.m_construction);
-    REQUIRE(shown.isValid());
-    CHECK(model->getItemForIndex(shown)->isActiveLayer());
-    CHECK(model->data(shown, Qt::FontRole).value<QFont>().bold());
-    CHECK(command.m_messages.isEmpty());
+    SECTION("makes a hidden one current, still hidden") {
+        const QModelIndex name = treeNameIndex(*model, d.m_construction);
+        REQUIRE(name.isValid());
+        widget.slotTreeClicked(name);
+        CHECK(d.m_graphic.getActiveLayer() == d.m_construction);
+        CHECK(d.m_construction->isFrozen());
+        // the tree is rebuilt for the activation: look the row up again
+        const QModelIndex shown = treeNameIndex(*model, d.m_construction);
+        REQUIRE(shown.isValid());
+        CHECK(model->getItemForIndex(shown)->isActiveLayer());
+        CHECK(model->data(shown, Qt::FontRole).value<QFont>().bold());
+        CHECK(command.m_messages.isEmpty());
+    }
+    SECTION("keeps the current layer for a locked one, and says why") {
+        const QModelIndex name = treeNameIndex(*model, d.m_doors);
+        REQUIRE(name.isValid());
+        widget.slotTreeClicked(name);
+        CHECK(d.m_graphic.getActiveLayer() == d.m_walls);
+        const QModelIndex walls = treeNameIndex(*model, d.m_walls);
+        REQUIRE(walls.isValid());
+        CHECK(model->getItemForIndex(walls)->isActiveLayer());
+        CHECK(command.m_messages == QStringList{lockedMessage});
+    }
 }
 
 TEST_CASE("The status bar names the current layer, and says when it is hidden or locked", "[gui][layers][active][3229]") {

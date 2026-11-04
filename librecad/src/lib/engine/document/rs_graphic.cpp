@@ -135,11 +135,17 @@ bool RS_Graphic::activateChosenLayer(const QString& name) {
 
 /**
  * Makes the layer current, as the user chose it: a hidden layer becomes current and stays hidden,
- * as RS_LayerList::activate() does. Listeners are notified.
+ * and a locked one is refused, as RS_LayerList::activate() does, with the reason on the command
+ * line. Listeners are notified.
  *
  * @return true if the layer is current now
  */
 bool RS_Graphic::activateChosenLayer(RS_Layer* layer) {
+    if (layer != nullptr && m_layerList.contains(layer) && !m_layerList.canActivate(layer)) {
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("Layer \"%1\" is locked: unlock it to make it the current layer.").arg(layer->getName()));
+        return false;
+    }
     return activateLayer(layer, true);
 }
 

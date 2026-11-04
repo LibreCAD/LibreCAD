@@ -129,6 +129,9 @@ bool RS_LayerList::activate(const QString& name, const bool notify) {
  * Activates the given layer, as a layer is made current by choice.
  *
  * A hidden layer can be current: it stays hidden, and so do the entities drawn on it (#3229).
+ * A locked layer is not made current, since what is drawn goes to the current layer and a
+ * locked layer must not change; the current layer stays current when it is locked, and
+ * activating it again (as editing its pen does, to tell the listeners) works.
  *
  * @param layer a layer of this list
  * @param notify Notify listeners.
@@ -145,10 +148,11 @@ bool RS_LayerList::activate(RS_Layer* layer, const bool notify) {
 }
 
 /**
- * @return true if activate() makes the layer the active one: it is a layer of this list
+ * @return true if activate() makes the layer the active one: it is a layer of this list, and it
+ * is not locked or is the active layer already
  */
 bool RS_LayerList::canActivate(RS_Layer* layer) const {
-    return m_layerSet.contains(layer);
+    return m_layerSet.contains(layer) && (layer == m_activeLayer || !layer->isLocked());
 }
 
 /**
