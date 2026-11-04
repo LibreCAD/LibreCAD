@@ -13824,3 +13824,29 @@ matched preview/commit screenshots with Qt app-window DPR, a usable held-drag
 cancellation test, physical stale-peer behavior, direct native-DWG display,
 signed/deployed and macOS 14.4 acceptance, approving review, and final R
 integration remain open.
+
+## 321. W366 Unlocked Native-DWG GUI Retry and Exact-Head CI
+
+After the user confirmed the remote desktop was available, the approved
+`org.librecad.librecad.pr3193visible` test copy was responsive. A fresh Open
+attempt targeted
+`/private/tmp/offset-3193-dwg-visual/out/offset-curves.dwg`. The dialog still
+offered only `Drawing Exchange (*.dxf)`; entering the DWG path produced
+`Import error: undefined error`. This does not establish that the DWG parser
+rejected the file because the chooser remained on DXF, and it is not a DWG
+rendering pass. The dialog was closed and the clean
+`/private/tmp/offset-W193-W358-clean.dxf` fixture was visibly restored; no Save
+command was issued. The direct native-DWG visual gate remains inconclusive.
+
+On exact PR head `a58aca8f66f5d08421daacc6a40c548c6ab22979`, the visible GitHub
+check rollup showed two successful Text Foundations checks, 16 checks in
+progress, five configured skips, and no reported failures. This is a live,
+time-specific snapshot, not a complete CI pass. The local roadmap/refusal
+validators passed 99/99 with 93 unique obligations, zero pending declarations,
+and zero production mismatches; `git diff --check` passed.
+
+PR #3193 remains open, draft, review-required, and not ready to merge. Direct
+native-DWG rendering, retained matched preview/commit screenshots with
+app-window DPR, reproducible held-drag cancellation, physical stale-peer
+behavior, signed/deployed and macOS 14.4 acceptance, an approving review, and
+final R integration remain open.
