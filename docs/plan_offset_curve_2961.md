@@ -13601,3 +13601,32 @@ reproducible held-drag cancellation, or physical stale-peer result. Keep those
 gates open and retry from a clean, verified drawing once native UI control is
 stable. This roadmap-only receipt requires its own tests and fresh exact-head
 status inspection after push.
+
+## 314. W359 Clean Fixture Loaded, Selection Probe Still Inconclusive
+
+After the user confirmed the remote desktop was visible and awake, CUA
+reconnected to the approved `/private/tmp/LibreCAD-PR3193-visible.app` test
+copy and opened `/private/tmp/offset-W193-W358-clean.dxf`. The UI visibly
+reported `Loaded document: /private/tmp/offset-W193-W358-clean.dxf` and showed
+both groups of three nested ellipse-like curves. This confirms the clean
+fixture could be opened and rendered in the app; no screenshot was retained as
+a matched preview/commit artifact.
+
+The app initially exposed a `Choose second edge` command prompt on a canvas
+click despite its accessibility `Current Action: Default` label. Escape and
+right-click returned the command line to `Enter Command`. Clicking the
+Selection Pointer control and temporarily enabling then restoring `Select
+Entities` (Value 0 -> 1 -> 0) did not make the curve click behave as a simple
+selection: it again showed `Choose second edge`. The checkbox was restored to
+its original off state; Grid and Snap on Grid remained enabled. A final
+right-click canceled the prompt and left the app at `Enter Command`. No offset
+preview, commit, geometry delta, or save was performed. Treat this as an
+inconclusive UI/tool-state probe, not an offset acceptance pass or a product
+defect.
+
+This receipt still does not close retained matched preview/commit screenshots
+and app-window DPR, reproducible held-drag cancellation, physical stale-peer
+behavior, direct native-DWG viewport validation, signed/deployed and minimum
+macOS runtime, human review, or final R integration. Keep each gate open. The
+roadmap-only receipt requires its focused validator tests and fresh
+exact-head CI inspection after commit/push.
