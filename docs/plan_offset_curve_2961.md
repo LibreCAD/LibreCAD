@@ -13790,3 +13790,37 @@ draft, review-required, and not ready to merge. Retained matched screenshots
 and DPR, usable held-drag cancellation, physical stale-peer behavior, direct
 native-DWG visual validation, signed/deployed and macOS 14.4 acceptance,
 approving review, and final R integration remain open.
+
+## 320. W365 Native-DWG GUI Gate Recheck
+
+After the user confirmed the remote desktop was available, the approved
+LibreCAD test copy was responsive and returned to the clean
+`/private/tmp/offset-W193-W358-clean.dxf` fixture without saving it. A native
+DWG visual attempt used the roadmap fixture
+`/private/tmp/offset-W171-current-dwg/offset-matrix-write-dwg-R2018-d3_actual.dwg`
+(SHA-256
+`aed066088fab728aff6224481accdd9900ce0b08e2e63c96dd729d28a2838842`). The
+Open dialog remained on `Drawing Exchange (*.dxf)`; its file list showed the
+matching DXF but not the DWG. Accessibility activation, keyboard navigation,
+and visible coordinate clicks did not change the filter. A prior typed-path
+attempt returned `Import error: undefined error` while the DXF filter was
+still selected, so it is not evidence of a DWG reader failure or success.
+
+The test app binary contains DWG-support strings, including DWG filter labels,
+and the source adds the DWG filter under `DWGSUPPORT`; neither observation
+proves that the fixture was opened. Keep native-DWG viewport validation
+inconclusive and open. No Save command was issued; the final visible document
+was the clean DXF offset fixture.
+
+At exact PR head `5a7f85c6fde9910c1685bd7e6d9046908822fb61`, check diagnostics
+reported 23 checks: eight successful, ten in progress, five skipped, and no
+reported failures. This snapshot is time-specific and must be rechecked against
+the exact head. The worktree was clean before this receipt; run the focused
+roadmap/refusal validators and `git diff --check`, then commit and push this
+documentation update.
+
+PR #3193 remains open, draft, review-required, and not ready to merge. Durable
+matched preview/commit screenshots with Qt app-window DPR, a usable held-drag
+cancellation test, physical stale-peer behavior, direct native-DWG display,
+signed/deployed and macOS 14.4 acceptance, approving review, and final R
+integration remain open.
