@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 21:04 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W372; chronological evidence follows): implementation slices
+Updated: 2026-11-04 21:18 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W373; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -41,15 +41,13 @@ commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is pushed. W368 merges current
 branch. W370 requalifies product/source head
 `e4acf6275895b2cb9dd32d8f5b7e04320452a03b`; W371 directly cross-checks the
 unconverted AC1032 DWG spline geometry through LibreDWG and SciPy, with radial
-deviation below `2e-15`. W372 records the current PR head
-`2f2949f8032a08594a0a3870ad1fc5153d193836` and a visible test-copy interaction:
-two offset copies were created with Editable Offset Curve enabled, and the
-result was selectable as `Offset Curve (1)`. Screenshots were observed in the
-session but not retained as files, and app-window DPR was not measured. A later
-drag/Escape attempt did not establish cancellation timing or output parity.
-At 21:04 UTC, exact-head CI had 15 successful checks, six skipped, two in
-progress, one queued, and zero failures. PR #3193 remains open and draft; an
-approving review is still required. Remaining acceptance includes retained
+deviation below `2e-15`. W372 records visible test-copy offset creation and
+selection as `Offset Curve (1)`; its screenshot was not retained and its later
+drag/Escape attempt did not establish cancellation timing or parity. W373
+records checks for W372 exact PR head
+`75e5f5a09c6346ce33e2557890ad2da981d9fd66`: nine in progress, nine queued,
+five skipped, zero completed, zero failures. PR #3193 remains open and draft;
+an approving review is still required. Remaining acceptance includes retained
 matched preview/commit screenshots and app-window DPR, reproducible held-drag
 cancellation, physical stale-peer behavior, independent visual fidelity,
 signed/deployed and minimum-macOS acceptance, review approval, and final R
@@ -14090,3 +14088,32 @@ refusal/inventory suite, and `git diff --check` before committing. The commit
 will create a new exact PR head, so all GitHub checks must be requalified for
 that head. This checkpoint does not complete the roadmap or make the PR ready
 to merge.
+
+## 328. W373 Post-W372 Exact-Head Check Refresh
+
+W372 commit `75e5f5a09c6346ce33e2557890ad2da981d9fd66` is the pushed exact PR
+head at this snapshot; it changes only the roadmap. Product source remains
+`e4acf6275895b2cb9dd32d8f5b7e04320452a03b`. At 21:18 UTC, diagnostics for
+that exact head reported nine in-progress checks, nine queued, five skipped,
+zero completed, and zero failures. The running set includes the macOS
+continuous build, CodeQL analysis, DWG/DXF Windows x64/ARM64, and Pixi Ubuntu,
+Ubuntu ARM64 and Windows lanes. Skips are Security scan by repository policy
+and four configured continuous-build platforms. Do not carry results forward
+from `2f2949f80`; repeat the exact-head check after publishing W373.
+
+The test-only GUI recheck did not supersede W367's positive AC1032 display
+evidence. The approved copy's DWG Open filter showed `Drawing Exchange
+(*.dxf *.dwg)`, but CUA lost the modal window before a path could be entered;
+reopening the test copy produced a blank untitled drawing. No DWG load or
+render is claimed from this attempt, and no Save was issued. W372's visible
+offset-creation result remains valid; its screenshots are still only observed
+in-session, not durable image files, and DPR is unmeasured.
+
+The W372 PR status comment was updated through the authenticated browser with
+the GUI result and then-current CI snapshot. Connector-based comment mutation
+returned 403 and is not treated as a posted update. The local roadmap parser
+and refusal/inventory tests passed 5/5 and 94/94 respectively (93 obligations,
+zero pending declarations and zero production mismatches); `git diff --check`
+passed. This evidence-only checkpoint does not close the held-drag, physical
+stale-peer, screenshot/DPR, independent visual, signed/deployed, human-review,
+or final R-integration gates. The new W373 commit must be checked separately.
