@@ -34,7 +34,6 @@
 #include "lc_layertreeoptionsdialog.h"
 #include "lc_layertreeview.h"
 #include "lc_widgets_common.h"
-#include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -372,9 +371,6 @@ void LC_LayerTreeWidget::activateLayer(RS_Layer *layer) const {
     update();
     m_layerTreeView->viewport()->update();
 
-    //update active layer name in main window status bar
-    QC_ApplicationWindow::getAppWindow()->slotUpdateActiveLayer();
-
     RS_DEBUG->print("QG_LayerWidget::activateLayer() end");
 }
 
@@ -536,7 +532,7 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
             // to selected layer will be updated.
 
             m_withinSelfActivation = true;
-            m_graphic->activateLayer(lay, true);
+            m_graphic->activateChosenLayer(lay);
             m_withinSelfActivation = false;
 
             return;
@@ -826,7 +822,7 @@ void LC_LayerTreeWidget::hideAllLayers() {
     const QList<RS_Layer *> layersToShow;
     QList<RS_Layer *> layersToHide = m_layerTreeModel->collectLayers(acceptAll);
     if (m_layerList != nullptr) {
-        // frozen, the active layer would be replaced by one the filter left visible
+        // "Hide all layers except current"
         layersToHide.removeAll(m_layerList->getActive());
     }
     manageLayersVisibilityFlag(layersToShow, layersToHide, false);
@@ -849,10 +845,12 @@ void LC_LayerTreeWidget::hideOtherThanSelectedLayers()  {
             RS_Layer* layer = layersToShow.at(i);
             layersToHide.removeAll(layer);
         }
-        manageLayersVisibilityFlag(layersToShow, layersToHide, false);
+        // first, so that what hears of the change of visibility (the status bar, the Layer List)
+        // finds the layer current: the activation is not notified
         if (count > 0){
             activateLayer(layersToShow.at(0));
         }
+        manageLayersVisibilityFlag(layersToShow, layersToHide, false);
     }
 }
 /**

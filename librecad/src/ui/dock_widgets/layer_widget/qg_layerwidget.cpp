@@ -42,7 +42,6 @@
 #include "lc_flexlayout.h"
 #include "lc_mouse_tracking_table_view.h"
 #include "lc_tableitem_delegate_base.h"
-#include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
@@ -492,9 +491,6 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, const bool updateScroll) con
         m_layerView->verticalScrollBar()->setValue(yPos);
     }
 
-    //update active layer name in mainwindow status bar
-    QC_ApplicationWindow::getAppWindow()->slotUpdateActiveLayer();
-
     RS_DEBUG->print("QG_LayerWidget::activateLayer() end");
 }
 
@@ -512,7 +508,7 @@ void QG_LayerWidget::slotActivated(const QModelIndex& layerIdx /*const QString& 
     }
 
     if (layerIdx.column() == QG_LayerModel::COLUMN_NAME) {
-        m_graphic->activateLayer(lay, true);
+        m_graphic->activateChosenLayer(lay);
         return;
     }
 

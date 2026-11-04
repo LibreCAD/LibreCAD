@@ -28,6 +28,7 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_layer.h"
+#include "rs_layerlist.h"
 
 QG_ActiveLayerName::QG_ActiveLayerName(QWidget *parent) :
     QWidget(parent){
@@ -35,20 +36,65 @@ QG_ActiveLayerName::QG_ActiveLayerName(QWidget *parent) :
     lActiveLayerName->setText("");
 }
 
-void QG_ActiveLayerName::activeLayerChanged(const QString& name) const {
-    lActiveLayerName->setText(name);
+QG_ActiveLayerName::~QG_ActiveLayerName() = default;
+
+/**
+ * Shows the current layer of the layer list, and whether it is hidden or locked: what is drawn goes to
+ * it all the same, and is not shown on a hidden layer (#3229).
+ */
+void QG_ActiveLayerName::updateActiveLayer() const {
+    const RS_Layer* layer = (m_layerList != nullptr) ? m_layerList->getActive() : nullptr;
+    if (layer == nullptr) {
+        lActiveLayerName->setText("");
+        lActiveLayerName->setToolTip(tr("Name of Current Active Layer"));
+        return;
+    }
+    QString text = layer->getName();
+    QString toolTip = tr("Name of Current Active Layer");
+    if (layer->isFrozen() && layer->isLocked()) {
+        text = tr("%1 (hidden, locked)").arg(text);
+    }
+    else if (layer->isFrozen()) {
+        text = tr("%1 (hidden)").arg(text);
+    }
+    else if (layer->isLocked()) {
+        text = tr("%1 (locked)").arg(text);
+    }
+    if (layer->isFrozen()) {
+        toolTip += "\n" + tr("The current layer is hidden: what is drawn on it is not shown until the layer is shown.");
+    }
+    if (layer->isLocked()) {
+        toolTip += "\n" + tr("The current layer is locked: what is drawn goes to it, but cannot be selected or modified.");
+    }
+    lActiveLayerName->setText(text);
+    lActiveLayerName->setToolTip(toolTip);
+}
+
+void QG_ActiveLayerName::layerListModified(bool) {
+    updateActiveLayer();
+}
+
+/**
+ * The layer list is being destroyed with its drawing, which was not detached from this widget first:
+ * the list has already dropped this listener, so forget it.
+ */
+void QG_ActiveLayerName::layerListDestroyed() {
+    m_layerList = nullptr;
+    updateActiveLayer();
+}
+
+void QG_ActiveLayerName::setLayerList(RS_LayerList* layerList) {
+    if (m_layerList != nullptr) {
+        m_layerList->removeListener(this);
+    }
+    m_layerList = layerList;
+    if (m_layerList != nullptr) {
+        m_layerList->addListener(this);
+    }
+    updateActiveLayer();
 }
 
 void QG_ActiveLayerName::setGraphicView(RS_GraphicView* gview) {
-    if (gview == nullptr) {
-        lActiveLayerName->setText("");
-    }
-    else {
-        const RS_Graphic* graphic = gview->getGraphic();
-        if (graphic != nullptr) {
-            const auto activeLayer = graphic->getActiveLayer();
-            const QString activeLayerName = (activeLayer != nullptr) ? activeLayer->getName() : "";
-            lActiveLayerName->setText(activeLayerName);
-        }
-    }
+    RS_Graphic* graphic = (gview != nullptr) ? gview->getGraphic() : nullptr;
+    setLayerList((graphic != nullptr) ? graphic->getLayerList() : nullptr);
 }

@@ -88,7 +88,7 @@ void LC_PropertiesProviderGraphicLayer::createActiveLayer(LC_PropertyContainer* 
         return e->getActiveLayer();
     };
     auto funSet = [](RS_Layer* l, RS_Graphic* e) -> void {
-        e->activateLayer(l, true);
+        e->activateChosenLayer(l);
     };
 
     createDirectDelegatedStorage<RS_Layer*, RS_Graphic>(funGet, funSet, graphic, activeLayerProperty);

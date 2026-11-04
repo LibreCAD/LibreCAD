@@ -110,28 +110,56 @@ QList<RS_Layer*>::const_iterator RS_LayerList::end() const {
 }
 
 /**
- * Activates the given layer.
+ * Activates the layer of the given name, see activate(RS_Layer*, bool).
  *
  * @param name
  * @param notify Notify listeners.
+ * @return true if the layer is the active layer now
  */
-void RS_LayerList::activate(const QString& name, const bool notify) {
+bool RS_LayerList::activate(const QString& name, const bool notify) {
     RS_DEBUG->print("RS_LayerList::activate: %s, notify: %d begin",
                     name.toLatin1().data(), static_cast<int>(notify));
 
-    activate(find(name), notify);
+    const bool activated = activate(find(name), notify);
     RS_DEBUG->print("RS_LayerList::activate: %s end", name.toLatin1().data());
+    return activated;
 }
 
 /**
- * Activates the given layer.
+ * Activates the given layer, as a layer is made current by choice.
  *
- * @param layer
+ * A hidden layer can be current: it stays hidden, and so do the entities drawn on it (#3229).
+ *
+ * @param layer a layer of this list
+ * @param notify Notify listeners.
+ * @return true if the layer is the active layer now
+ */
+bool RS_LayerList::activate(RS_Layer* layer, const bool notify) {
+    RS_DEBUG->print("RS_LayerList::activate notify: %d begin", static_cast<int>(notify));
+    if (!canActivate(layer)) {
+        return false;
+    }
+    setActive(layer, notify);
+    RS_DEBUG->print("RS_LayerList::activate end");
+    return true;
+}
+
+/**
+ * @return true if activate() makes the layer the active one: it is a layer of this list
+ */
+bool RS_LayerList::canActivate(RS_Layer* layer) const {
+    return m_layerSet.contains(layer);
+}
+
+/**
+ * Makes the given layer of this list the active one whatever its flags, as a drawing was
+ * saved with it.
+ *
+ * @param layer a layer of this list
  * @param notify Notify listeners.
  */
-void RS_LayerList::activate(RS_Layer* layer, const bool notify) {
-    RS_DEBUG->print("RS_LayerList::activate notify: %d begin", static_cast<int>(notify));
-    if (!m_layerSet.contains(layer) || layer->isFrozen()) {
+void RS_LayerList::setActive(RS_Layer* layer, const bool notify) {
+    if (!m_layerSet.contains(layer)) {
         return;
     }
     m_activeLayer = layer;
@@ -139,7 +167,6 @@ void RS_LayerList::activate(RS_Layer* layer, const bool notify) {
     if (notify) {
         fireLayerActivated();
     }
-    RS_DEBUG->print("RS_LayerList::activate end");
 }
 
 /**
@@ -188,15 +215,15 @@ void RS_LayerList::add(RS_Layer* layerToAdd) {
         fireLayerAdded(layerToAdd);
         setModified(true);
 
-        // if there was no active layer so far, activate this one.
+        // if there was no active layer so far, activate this one, locked or not: there is no other
         if (m_activeLayer == nullptr) {
-            activate(layerToAdd);
+            setActive(layerToAdd);
         }
     }
     else {
         // if there was no active layer so far, activate this one.
         if (m_activeLayer == nullptr) {
-            activate(existingLayer);
+            setActive(existingLayer);
         }
         if (existingLayer == layerToAdd) {
             // already listed: nothing to merge, and it must not be freed
@@ -242,7 +269,7 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
     // Select a survivor before notifying listeners.
     if (m_activeLayer == layerToRemove) {
         m_activeLayer = nullptr;
-        ensureActiveLayerIsVisible();
+        ensureActiveLayer();
     }
 
     fireLayerRemoved(layerToRemove);
@@ -261,7 +288,6 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
         return;
     }
     *layer = source;
-    ensureActiveLayerIsVisible();
     fireLayerEdited(layer);
 }
 
@@ -336,7 +362,6 @@ void RS_LayerList::toggle(RS_Layer* layer) {
 
     // set flags
     layer->toggle();
-    ensureActiveLayerIsVisible();
     setModified(true);
 
     // Notify listeners:
@@ -408,8 +433,8 @@ void RS_LayerList::fireLayerToggled() {
 
 /**
  * Freezes or defreezes all layers that the Layer List dock lists; its filter
- * leaves the other layers as they are. The active layer is never frozen:
- * frozen, it would be replaced by a layer the filter left visible.
+ * leaves the other layers as they are. Freezing leaves the active layer as it
+ * is ("Hide all layers except current").
  *
  * @param freeze true: freeze, false: defreeze
  */
@@ -419,7 +444,6 @@ void RS_LayerList::freezeAll(const bool freeze) {
             at(l)->freeze(freeze);
         }
     }
-    ensureActiveLayerIsVisible();
     fireLayerToggled();
 }
 
@@ -492,7 +516,6 @@ void RS_LayerList::setFreezeMulti(const QList<RS_Layer*>& layersEnable, const QL
             layer->freeze(true);
         }
     }
-    ensureActiveLayerIsVisible();
     fireLayerToggled();
 }
 
@@ -558,39 +581,34 @@ void RS_LayerList::toggleFreezeMulti(const QList<RS_Layer*>& layers) {
             toggled.insert(layer);
         }
     }
-    ensureActiveLayerIsVisible();
     fireLayerToggled();
 }
 
-void RS_LayerList::ensureActiveLayerIsVisible() {
-    if (m_layerSet.contains(m_activeLayer) && !m_activeLayer->isFrozen()) {
+/**
+ * Makes a layer active when none of this list is: the active one was removed, or a drawing was
+ * loaded without one. An active layer that is hidden or locked stays active, as hiding or locking
+ * it does not change the current layer. The replacement is the first layer that can be made
+ * current, shown ones first; when every layer is locked, the first shown one, else the first.
+ * Listeners are not notified.
+ */
+void RS_LayerList::ensureActiveLayer() {
+    if (m_layerSet.contains(m_activeLayer)) {
         return;
     }
 
     RS_Layer* fallback = nullptr;
+    int fallbackRank = 4;
     for (RS_Layer* layer : std::as_const(m_layers)) {
-        if (!layer->isFrozen()) {
-            if (fallback == nullptr) {
-                fallback = layer;
-            }
-            if (!layer->isLocked()) {
-                fallback = layer;
+        const int rank = (layer->isLocked() ? 2 : 0) + (layer->isFrozen() ? 1 : 0);
+        if (rank < fallbackRank) {
+            fallback = layer;
+            fallbackRank = rank;
+            if (rank == 0) {
                 break;
             }
         }
     }
-
-    if (fallback == nullptr) {
-        fallback = m_layerSet.contains(m_activeLayer) ? m_activeLayer
-                                                     : (m_layers.isEmpty() ? nullptr : m_layers.first());
-        if (fallback == nullptr) {
-            return;
-        }
-        fallback->freeze(false);
-    }
-    if (fallback != m_activeLayer) {
-        activate(fallback);
-    }
+    m_activeLayer = fallback;
 }
 
 /**

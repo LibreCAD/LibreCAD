@@ -4496,8 +4496,8 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic &g, const QString &file,
   /*set current layer */
   auto cl = m_graphic->findLayer(m_graphic->getVariableString("$CLAYER", "0"));
   if (cl) {
-    // require to notify
-    m_graphic->activateLayer(cl, true);
+    // require to notify; as saved, also when it is hidden or locked
+    m_graphic->restoreActiveLayer(cl);
   }
   RS_DEBUG->print("RS_FilterDXFRW::fileImport: updating inserts");
   const auto updateInsertsStart = std::chrono::steady_clock::now();

@@ -376,19 +376,17 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         REQUIRE(mdi != nullptr);
         auto* graphic = mdi->getGraphic();
         REQUIRE(graphic != nullptr);
-        const QString expectedName = (flags & 1) ? "0" : "Saved";
-        auto* expected = graphic->findLayer(expectedName);
+        // hidden or locked, the saved current layer stays current (#3229)
+        auto* expected = graphic->findLayer("Saved");
         REQUIRE(expected != nullptr);
-        auto* saved = graphic->findLayer("Saved");
-        REQUIRE(saved != nullptr);
         CHECK(graphic->getActiveLayer() == expected);
-        CHECK(saved->isLocked() == bool(flags & 4));
-        CHECK(saved->isFrozen() == bool(flags & 1));
-        CHECK_FALSE(graphic->getActiveLayer()->isFrozen());
+        CHECK(expected->isLocked() == bool(flags & 4));
+        CHECK(expected->isFrozen() == bool(flags & 1));
 
         auto* label = window.findChild<QLabel*>("lActiveLayerName");
         REQUIRE(label != nullptr);
-        CHECK(label->text() == expectedName);
+        const char* const labels[] = {"Saved", "Saved (hidden)", "Saved (locked)", "Saved (hidden, locked)"};
+        CHECK(label->text().toStdString() == labels[(flags & 1) + ((flags & 4) >> 1)]);
         auto* widget = window.findChild<QG_LayerWidget*>();
         REQUIRE(widget != nullptr);
         auto* table = widget->findChild<QTableView*>();

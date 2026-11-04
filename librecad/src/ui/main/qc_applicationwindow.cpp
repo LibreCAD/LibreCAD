@@ -1183,13 +1183,6 @@ void QC_ApplicationWindow::slotEnableActions(const bool enable) const {
     enableAction("EditRedo", enable && m_redoEnable);
 }
 
-// fixme - sand - rework, think about changed to signal from the widget?
-void QC_ApplicationWindow::slotUpdateActiveLayer() const {
-    if (m_layerWidget != nullptr && m_activeLayerNameWidget != nullptr) {
-        m_activeLayerNameWidget->activeLayerChanged(m_layerWidget->getActiveName());
-    }
-}
-
 /**
  * Initializes the global application settings from the
  * config file (unix, mac) or registry (windows).

@@ -1079,7 +1079,7 @@ void Doc_plugin_interface::setLayer(const QString name) {
     }
     RS_Graphic* graphic = m_document->getGraphic();
     if (graphic != nullptr) {
-        graphic->activateLayer(lay, true);
+        graphic->activateChosenLayer(lay);
     }
 }
 

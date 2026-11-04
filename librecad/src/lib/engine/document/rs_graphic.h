@@ -153,8 +153,13 @@ public:
     }
     unsigned countLayers() const {return m_layerList.count();}
     RS_Layer* layerAt(const unsigned i) const {return m_layerList.at(i);}
-    void activateLayer(const QString& name, const bool notify = false) {m_layerList.activate(name, notify);}
-    void activateLayer(RS_Layer* layer, const bool notify = false) {m_layerList.activate(layer, notify);}
+    // RS_LayerList::activate() says which layers can be made current
+    bool activateLayer(const QString& name, const bool notify = false) {return m_layerList.activate(name, notify);}
+    bool activateLayer(RS_Layer* layer, const bool notify = false) {return m_layerList.activate(layer, notify);}
+    bool activateChosenLayer(const QString& name);
+    bool activateChosenLayer(RS_Layer* layer);
+    /// makes the drawing's saved current layer current, hidden or locked as it is
+    void restoreActiveLayer(RS_Layer* layer) {m_layerList.setActive(layer, true);}
     RS_Layer* getActiveLayer() const {return m_layerList.getActive();}
     virtual void addLayer(RS_Layer* layer) {m_layerList.add(layer);}
     void removeLayer(RS_Layer* layer);

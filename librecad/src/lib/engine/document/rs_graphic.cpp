@@ -118,6 +118,31 @@ void RS_Graphic::toggleLayer(RS_Layer* layer) {
     refreshLayerVisibility();
 }
 
+/**
+ * Makes the layer of the given name current, as the user chose it on the command line or in a
+ * plugin, saying on the command line why when it is not (see activateChosenLayer(RS_Layer*)).
+ *
+ * @return true if the layer is current now
+ */
+bool RS_Graphic::activateChosenLayer(const QString& name) {
+    RS_Layer* layer = m_layerList.find(name);
+    if (layer == nullptr) {
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("There is no layer \"%1\".").arg(name));
+        return false;
+    }
+    return activateChosenLayer(layer);
+}
+
+/**
+ * Makes the layer current, as the user chose it: a hidden layer becomes current and stays hidden,
+ * as RS_LayerList::activate() does. Listeners are notified.
+ *
+ * @return true if the layer is current now
+ */
+bool RS_Graphic::activateChosenLayer(RS_Layer* layer) {
+    return activateLayer(layer, true);
+}
+
 void RS_Graphic::freezeAllLayers(const bool freeze) {
     m_layerList.freezeAll(freeze);
     refreshLayerVisibility();
@@ -211,7 +236,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 RS_Graphic::~RS_Graphic() = default;
 
 void RS_Graphic::onLoadingCompleted() {
-    m_layerList.ensureActiveLayerIsVisible();
+    m_layerList.ensureActiveLayer();
 
     const auto fallBackDimStyleFromVars = m_dimstyleList.getFallbackDimStyleFromVars();
     fallBackDimStyleFromVars->fillByDefaults(); // cleanup (is it redundant?)

@@ -117,8 +117,10 @@ protected:
 
     void clear();
 
-    void activate(const QString& name, bool notify = false);
-    void activate(RS_Layer* layer, bool notify = false);
+    bool activate(const QString& name, bool notify = false);
+    bool activate(RS_Layer* layer, bool notify = false);
+    bool canActivate(RS_Layer* layer) const;
+    void setActive(RS_Layer* layer, bool notify = false);
     void toggle(const QString& name);
     void toggle(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
@@ -138,7 +140,7 @@ protected:
     friend class RS_Graphic;
 
 private:
-    void ensureActiveLayerIsVisible();
+    void ensureActiveLayer();
 
     //! layers in the graphic
     QList<RS_Layer*> m_layers;

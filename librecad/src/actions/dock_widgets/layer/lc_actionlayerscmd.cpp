@@ -65,7 +65,7 @@ void LC_ActionLayersCmd::onMouseRightButtonRelease([[maybe_unused]]int status, [
 
 void LC_ActionLayersCmd::activateLayer() const {
     if (m_graphic != nullptr) {
-        m_graphic->activateLayer(m_layerName, true);
+        m_graphic->activateChosenLayer(m_layerName);
     }
 }
 
