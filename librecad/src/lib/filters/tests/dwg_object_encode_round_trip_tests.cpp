@@ -7962,6 +7962,43 @@ TEST_CASE("DRW_Layer preserves off state and special color indices",
     CHECK(parsed.color == DRW::ColorByBlock);
 }
 
+TEST_CASE("DRW_Layer keeps frozen, frozen in new viewports and locked",
+          "[dwg-write][object-encode][layer]") {
+    // R13/R14 store each in a bit of its own, R2000+ in one short; DXF code
+    // 70 has them as 1, 2 and 4. R13/R14 used to take locked as 8 both ways,
+    // so a locked layer of an R13/R14 file was read unlocked.
+    for (const DRW::Version version : {DRW::AC1012, DRW::AC1014, DRW::AC1015,
+                                       DRW::AC1018}) {
+        CAPTURE(static_cast<int>(version));
+        for (const int flags : {0, 1, 2, 4, 1 | 4, 1 | 2 | 4}) {
+            CAPTURE(flags);
+            DRW_Layer source;
+            source.name = "Flags";
+            source.flags = flags;
+            source.color = 3;
+
+            dwgBufferW encoded;
+            if (version < DRW::AC1015) {
+                emitLegacyObjectPreamble(encoded, version, /*oType=*/0x33,
+                                         /*handle=*/0x448);
+            } else {
+                emitObjectPreamble(encoded, version, /*oType=*/0x33,
+                                   /*handle=*/0x448);
+            }
+            REQUIRE(DrwObjectEncodeTestAccess::encodeLayer(
+                source, version, &encoded));
+
+            auto bytes = snapshot(encoded);
+            dwgBuffer reader(bytes.data(), bytes.size());
+            DRW_Layer parsed;
+            REQUIRE(DrwObjectEncodeTestAccess::parseLayer(
+                parsed, version, &reader));
+            CHECK((parsed.flags & 7) == flags);
+            CHECK(parsed.color == 3);
+        }
+    }
+}
+
 TEST_CASE("DRW_Layer rejects unrepresentable color indices",
           "[dwg-write][object-encode][layer][safety]") {
     for (const int color : {-257, 257, std::numeric_limits<int>::min()}) {

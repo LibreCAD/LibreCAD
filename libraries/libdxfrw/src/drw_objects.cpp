@@ -3807,7 +3807,7 @@ bool DRW_Layer::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs)
             return fail();
         parsedFlags |= parsedFrozen ? 1 : 0; //layer frozen
         parsedFlags |= parsedFrozenInNew ? 2 : 0; //frozen in new
-        parsedFlags |= parsedLocked ? 8 : 0; //locked
+        parsedFlags |= parsedLocked ? 4 : 0; //locked
     }
     bool parsedPlot = true;
     auto parsedLineWeight = DRW_LW_Conv::widthDefault;
@@ -6653,7 +6653,7 @@ bool DRW_Layer::encodeDwg(DRW::Version version, dwgBufferW *buf,
         buf->putBit(static_cast<std::uint8_t>(flags & 1));         // frozen
         buf->putBit(layerOff ? 1 : 0);                         // off
         buf->putBit(static_cast<std::uint8_t>((flags >> 1) & 1));  // frozen in new
-        buf->putBit(static_cast<std::uint8_t>((flags >> 3) & 1));  // locked
+        buf->putBit(static_cast<std::uint8_t>((flags >> 2) & 1));  // locked
     }
     if (version > DRW::AC1014) {
         int lwIdx = DRW_LW_Conv::lineWidth2dwgInt(lWeight);
