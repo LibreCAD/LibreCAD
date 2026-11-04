@@ -43174,7 +43174,7 @@ This action can NOT be undone.</source>
       <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="248" />
       <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1787" />
       <source>Remove %n layer(s)</source>
-      <translation>移除 %n 個圖層</translation>
+      <translation></translation>
     </message>
     <message>
       <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="251" />
@@ -43217,7 +43217,7 @@ This action can NOT be undone.</source>
     <message numerus="yes">
       <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="463" />
       <source>Remove %n block(s)</source>
-      <translation>移除 %n 個圖塊</translation>
+      <translation></translation>
     </message>
     <message>
       <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="465" />
