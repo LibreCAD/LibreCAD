@@ -13569,3 +13569,35 @@ and parser tests passed 99/99 with no skips or failures; the inventory reports
 93 obligations, zero pending declarations, and zero production mismatches.
 `git diff --check` also passed. This is roadmap/validator validation only; it
 does not constitute a new product test result.
+
+## 313. W358 Unlocked Desktop, Snap Restoration, And File-Picker Disconnect
+
+The user confirmed the remote desktop was awake and logged in. On the visible
+approved test copy, Escape returned the drawing command prompt to `Enter
+Command`; accessibility reported `Current Action: Default`. Grid snap had
+been temporarily disabled during the previous selection investigation. It was
+restored through the visible checkbox and verified as `Snap on Grid, Value:
+1` before further probing.
+
+A subsequent idle canvas click again produced `Choose second edge` despite the
+accessibility tree still describing the current action as Default. Escape
+canceled the prompt. No source selection, preview, commit, or geometry delta
+was verified, and no Save command was issued. Treat this as an unresolved
+GUI/control-state mismatch, not a product finding.
+
+To isolate the next attempt, `/private/tmp/offset-W193-W358-clean.dxf` was
+copied from the existing W193/W281 fixture; both files had SHA256
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`. The
+approved test app opened its file picker, but native UI control then returned
+`noWindowsAvailable` before the duplicate could be selected. Reattaching by
+the approved app path showed a new blank drawing, not the clean fixture. No
+Save was issued. The matching hash proves only that the two disk fixtures
+matched at copy time; it says nothing about the earlier dirty in-memory
+drawing.
+
+This attempt supplies neither an offset acceptance pass nor the retained
+preview/commit screenshots, observed geometry delta, app-window DPR,
+reproducible held-drag cancellation, or physical stale-peer result. Keep those
+gates open and retry from a clean, verified drawing once native UI control is
+stable. This roadmap-only receipt requires its own tests and fresh exact-head
+status inspection after push.
