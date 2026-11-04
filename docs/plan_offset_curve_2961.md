@@ -13510,3 +13510,32 @@ acceptance includes a retained matched preview/commit screenshot pair and Qt
 app-window DPR, reproducible pointer-drag cancellation and physical stale-peer
 behavior, Developer ID/notarized deployment, exact-minimum macOS 14.4 runtime,
 human review, and final R integration.
+
+## 311. W356 Unlocked Desktop Recheck And Fixture Selection Attempt
+
+On 2026-11-03 local time, the user confirmed the remote desktop was awake and
+logged in. CUA then enumerated the native applications and attached to the
+approved `/private/tmp/LibreCAD-PR3193-visible.app` test copy. The W193/W281
+temporary DXF was open with an unfinished two-point command; Escape returned
+the UI to Default. The drawing was not saved.
+
+The Offset action was started with editable ellipse offsets enabled, fixed
+distance 0.5, and two copies. Several clicks at visible ellipse boundaries did
+not register a source selection; a subsequent idle canvas click exposed a
+"Choose second edge" prompt, which was canceled with Escape. No offset preview,
+commit, or geometry change was verified. This is a failed/inconclusive GUI
+selection attempt, not an offset acceptance pass. Do not attribute the prompt
+to the offset implementation without a reproducible trace.
+
+The focused current-source Release suite result, captured immediately before
+this recheck, is 1,029 passed, 1 skipped, and 3,924,959 assertions. The PR page
+showed exact head `d374e6642d27149db0f8872eee757d3cdc9fa525` with 19 successful
+checks, 7 configured skips, and zero failures. A W356 status comment was posted
+as issue comment `6620952512`; it must be amended to replace its earlier
+"test copy untouched" wording with this interaction result. The roadmap
+refusal/inventory validator then passed all 94 tests with zero failures or
+skips; it still accounts for 93 obligations, zero pending declarations, and
+zero production mismatches. These results do
+not close the retained screenshot/DPR pair, reproducible held-drag cancellation,
+physical stale-peer behavior, direct DWG viewport, signed/deployed and minimum
+macOS runtime, human review, or final R integration gates.
