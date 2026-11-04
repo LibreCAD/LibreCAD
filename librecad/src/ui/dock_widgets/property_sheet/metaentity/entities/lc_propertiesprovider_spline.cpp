@@ -142,9 +142,9 @@ void LC_PropertiesProviderSpline::doCreateSingleEntityCommands(LC_PropertyContai
             {RS2::ActionDrawSplinePointDelTwo, tr("Delete between 2"), tr("Delete points between two points of spline")}
         },
         {
-            tr("Exploding spline and creating rounding box"),
+            tr("Exploding spline and creating bounding box"),
             {RS2::ActionDrawSplineExplode, tr("Explode"), tr("Explode spline to lines")},
-            {RS2::ActionDrawBoundingBox, tr("Rounding box"), tr("Create bounding box around spline")}
+            {RS2::ActionDrawBoundingBox, tr("Bounding box"), tr("Create bounding box around spline")}
         }
     };
     createEntityContextCommands<RS_Spline>(commands, cont, spline, "splineCommands");

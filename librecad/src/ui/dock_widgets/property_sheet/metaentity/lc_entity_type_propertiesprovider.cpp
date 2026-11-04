@@ -97,7 +97,7 @@ void LC_EntityTypePropertiesProvider::doCreateSelectedSetCommands(LC_PropertyCon
         {
             tr("Scaling and stretching"),
             {RS2::ActionModifyScale, tr("Scale"), tr("Selection scaling")},
-            {RS2::ActionModifyStretch, tr("Stretch"), tr("Strech selection")}
+            {RS2::ActionModifyStretch, tr("Stretch"), tr("Stretch selection")}
         },
         {
             tr("Aligning selection"),

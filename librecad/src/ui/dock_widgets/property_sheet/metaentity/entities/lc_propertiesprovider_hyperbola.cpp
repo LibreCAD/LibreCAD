@@ -101,7 +101,7 @@ void LC_PropertiesProviderHyperbola::doCreateEntitySpecificProperties(LC_Propert
 }
 
 void LC_PropertiesProviderHyperbola::doCreateCalculatedProperties(LC_PropertyContainer* container, const QList<RS_Entity*>& list) {
-    addReadOnlyString<LC_Hyperbola>({"eccentricity", tr("Eccentricity"), tr("Ecentricity of hyperbola")}, [this](const LC_Hyperbola* e) -> QString {
+    addReadOnlyString<LC_Hyperbola>({"eccentricity", tr("Eccentricity"), tr("Eccentricity of hyperbola")}, [this](const LC_Hyperbola* e) -> QString {
         const double eccentricity = e->getEccentricity();
         QString value = formatLinear(eccentricity);
         return value;

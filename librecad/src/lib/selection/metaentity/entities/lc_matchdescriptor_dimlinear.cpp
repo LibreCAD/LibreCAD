@@ -69,7 +69,7 @@ void LC_MatchDescriptorDimLinear::init(QMap<RS2::EntityType, LC_EntityMatchDescr
 
     entity->addAngle("obligue", [](const RS_DimLinear* e) {
         return e->getOblique();
-    }, tr("Obligue"), tr("Dimension obligue angle"));
+    }, tr("Oblique"), tr("Dimension oblique angle"));
 
     map.insert(RS2::EntityDimLinear, entity);
 

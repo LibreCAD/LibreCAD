@@ -59,7 +59,7 @@ void LC_MatchDescriptorText::init(QMap<RS2::EntityType, LC_EntityMatchDescriptor
 
     entity->addFontStringList("style", [](const RS_Text* e) -> QString {
         return e->getStyle();
-    }, tr("Style"), tr("Name of the text style)"));
+    }, tr("Style"), tr("Name of the text style"));
 
     entity->addIntChoice("halign", [](const RS_Text* e) {
         return e->getHAlign();

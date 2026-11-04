@@ -80,7 +80,7 @@ void LC_PropertiesProviderText::doCreateEntitySpecificProperties(LC_PropertyCont
 
     const auto contText = createTextContainer(container);
 
-    addString<RS_Text>({"content", tr("Content"), tr("Content text of MText")}, [](RS_Text* e) -> QString {
+    addString<RS_Text>({"content", tr("Content"), tr("Content of the text")}, [](RS_Text* e) -> QString {
                            return e->getText();
                        }, [](const QString& v, RS_Text* e) -> void {
                            e->setText(v);

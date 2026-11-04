@@ -105,7 +105,7 @@ void LC_PropertiesProviderGraphicWorkspace::createShowMainMenu(LC_PropertyContai
 }
 
 void LC_PropertiesProviderGraphicWorkspace::createShowStatusBar(LC_PropertyContainer* cont) {
-    const LC_Property::Names names = {"uiStatusBar", tr("Statusbar"), tr("Defines whether main menu is shown or not")};
+    const LC_Property::Names names = {"uiStatusBar", tr("Statusbar"), tr("Defines whether status bar is shown or not")};
     createUIActionProperty(cont, "ViewStatusBar", names);
 }
 

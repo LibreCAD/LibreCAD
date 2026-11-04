@@ -2955,6 +2955,7 @@ if (BUILD_TESTS)
         librecad/src/ui/components/utils/tests/lc_offsetcurve_names_tests.cpp
         librecad/src/ui/components/utils/tests/lc_offsetcurve_source_ui_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetarctests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucslistmodel_tests.cpp
         librecad/src/ui/dock_widgets/views_list/tests/lc_namedviewsmodel_tests.cpp
