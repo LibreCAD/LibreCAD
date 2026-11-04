@@ -14161,3 +14161,22 @@ declarations or production mismatches), and `git diff --check` passed. This
 checkpoint does not close the preview-cancellation, screenshot/DPR,
 physical-stale-peer, independent-visual, signed/deployed, review, or final
 R-integration gates.
+
+## 330. W375 Current-Source GUI Action Requalification
+
+The current worktree is clean at W374 (`75f2c5708`); its product tree is
+unchanged from `e4acf6275895b2cb9dd32d8f5b7e04320452a03b`. The existing CMake
+Release test build is configured from this worktree. Running
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset-2961-r-release/librecad_tests
+'[lc-offsetcurve][gui]' --reporter compact` passed all 85 discovered cases and
+90,705 assertions with exit status 0. This selector provides broad automated
+offset GUI/action coverage, including existing cancellation, stale-context,
+and publication checks; it does not qualify native macOS pointer timing,
+physical stale-peer behavior, a retained screenshot/DPR pair, or deployed UI.
+
+The W374 visible interaction remains inconclusive about whether Escape arrived
+before the held click released. The passing automated suite does not strengthen
+that event-order evidence and does not close the held-drag acceptance gate.
+PR #3193 remains open, draft, and review-required. Re-run the roadmap parser,
+refusal/inventory suite, and `git diff --check`, then publish this receipt and
+requalify the new exact PR head.
