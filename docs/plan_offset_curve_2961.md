@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 22:00 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W376; chronological evidence follows): implementation slices
+Updated: 2026-11-04 22:38 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W379; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -14261,3 +14261,32 @@ acceptance gates are unchanged: durable matched preview/commit screenshots
 with measured app-window DPR, reproducible held-drag cancellation, physical
 stale-peer behavior, independent visual fidelity, signed/deployed and
 minimum-macOS acceptance, approving review, and final R integration.
+
+## 334. W379 Exact-Head Audit and PR Publication Retry (2026-11-04)
+
+At 22:38 UTC, the pushed branch and PR head are
+`aa4bf5243aaf3b18c4f5e33440432b420f07e183`; the worktree is clean and current
+`origin/master` is an ancestor. This is the W378 documentation checkpoint.
+The roadmap/refusal validator was rerun on this exact tree: 99/99 tests pass,
+covering 93 obligations, with zero pending declarations and zero production
+mismatches. The branch contains no product-source changes after the qualified
+product source pin.
+
+Exact-head diagnostics report Headless ON/OFF successful, 15 checks in
+progress, one queued, five skipped (policy/configured), and zero failures.
+Running or queued checks are not passes, and results from prior heads are not
+inherited.
+
+The existing PR status comment (ID `6620952512`) and PR description were both
+fetched intact, but GitHub denied both the comment update and PR-body update
+with HTTP 403, `Resource not accessible by integration`. Neither was changed.
+The user's remote desktop is reported logged in, but a fresh native-app
+inventory still reports the Mac locked; no new GUI action or acceptance claim
+was made. PR #3193 remains open, draft, and review-required.
+
+Acceptance gates remain: durable matched preview/commit screenshots and measured
+app-window DPR; reproducible held-drag cancellation; physical stale-peer
+behavior; independent visual fidelity; signed/deployed and minimum-macOS
+acceptance; approving human review; and final R integration. Push this
+checkpoint and inspect CI for its new exact head; no current-head result carries
+forward automatically.
