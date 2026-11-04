@@ -14207,3 +14207,27 @@ review-required. After this receipt, the roadmap parser passed 5/5 and
 refusal/inventory passed 94/94 (93 obligations, zero pending declarations or
 production mismatches); `git diff --check` passed. Exact-head CI must be
 rechecked after pushing the checkpoint.
+
+## 332. W377 Exact-Head CI Recheck (2026-11-04)
+
+At 22:08 UTC, the exact PR head was `10ee443a59f19c88b3ed83ef4e2dfea3ecb20445`.
+GitHub Actions' pull-request runs show the Text Foundations `Headless (OFF)`
+job completed successfully. `Headless (ON)`, CodeQL analysis, macOS and
+Windows ARM64 continuous builds, the fast DWG/DXF lane, both Windows DWG/DXF
+lanes, and the five PR Pixi matrix jobs remain in progress. The repository-
+policy Security scan and four configured continuous-build jobs are skipped.
+No failures were reported in the fetched run/job state. These are live,
+incomplete checks; this receipt does not claim the full PR check suite has
+passed. In particular, no result is inherited from the earlier product or
+roadmap heads.
+
+The roadmap parser passed 5/5 and refusal/inventory passed 94/94 (93
+obligations, zero pending declarations or production mismatches); `git diff
+--check` passed. The local worktree was clean at this source pin before this
+receipt. Visible Mac acceptance remains blocked because the computer-use
+bridge still reports the host locked despite the user's remote-desktop login.
+The direct AC1032 viewport evidence recorded in W376 is retained, but durable
+matched screenshots/DPR, reproducible held-drag cancellation, physical
+stale-peer behavior, independent visual review, signed/deployed and
+minimum-macOS acceptance, approving review, and final R integration remain
+open. PR #3193 remains open, draft, and review-required.
