@@ -23,18 +23,26 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 03:24 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W360; chronological evidence follows): implementation slices
-A-core through T3 and the local A-core through C-check audit are present and
-qualified. This includes the shipped native geometry worker, Modify Offset
-creation/repeat, native Trim preview/commit, staged GUI drawing/template
-imports, bounded worker validation for public synchronous file/stream/byte
-filter imports, the public `RS_FileIO` auto-detection route, and a separately
-compiled Qt plugin caller. W353 synchronizes the PR with current `origin/master`
-through `b98d840a1d8fc4b9974d8897c92938bf55368d6c`; the latest implementation
-audit found no additional product-code gap. Remaining work is acceptance,
-external validation, review and integration rather than an unimplemented
-declared feature slice.
+Updated: 2026-11-04 17:28 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W367; chronological evidence follows): implementation slices
+A-core through T3 and the local A-core through C-check audit remain qualified.
+The shipped native geometry worker, Modify Offset creation/repeat, native Trim
+preview/commit, staged GUI drawing/template imports, bounded worker validation
+for public synchronous file/stream/byte filter imports, the public `RS_FileIO`
+auto-detection route, and separately compiled Qt plugin caller are present.
+W367 fixes a newly reproduced DWG Open dialog gap: both Qt and native dialogs
+now default to the combined DXF/DWG filter despite a persisted DXF-only choice,
+and infer DWG from the selected path. The AC1032 offset acceptance fixture was
+opened and visibly rendered through the rebuilt GUI. This closes only that
+fixture's direct DWG display check; broader acceptance remains open. Product
+commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is local and not yet pushed.
+The branch's common ancestor with `origin/master` is `b98d840a1d8fc4b9974d8897c92938bf55368d6c`, while current `origin/master` is
+`ae1e3b8152a18334109fd93393dcc8dd5e436c3c`; review and synchronization to that
+newer tip remain pending. PR #3193 remains open, draft, and review-required.
+Recheck exact-head CI after pushing. Outstanding work is external visual
+fidelity, retained matched preview/commit screenshots and DPR, held-drag
+cancellation, physical stale-peer behavior, signed/deployed and minimum-macOS
+acceptance, review approval, upstream synchronization, and final R integration.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -13850,3 +13858,47 @@ native-DWG rendering, retained matched preview/commit screenshots with
 app-window DPR, reproducible held-drag cancellation, physical stale-peer
 behavior, signed/deployed and macOS 14.4 acceptance, an approving review, and
 final R integration remain open.
+
+## 322. W367 DWG Open Filter and Visible AC1032 Import
+
+The unlocked remote desktop reproduced the W366 chooser issue under the normal
+profile: `UseQtFileOpenDialog` selected Qt's widget dialog and the remembered
+`Drawing Exchange (*.dxf)` filter hid the DWG. The first attempted fix only
+overrode the native-dialog selection and therefore did not cover this actual
+configuration. The corrected product slice defaults both Qt and native dialogs
+to `Drawing Exchange (*.dxf *.dwg)`, while continuing to remember the selected
+filter after a successful open. The selected `.dwg` suffix is recognized
+case-insensitively, so the combined filter dispatches the document to the DWG
+reader. The legacy static open helper now delegates to the same stateful
+implementation.
+
+The CMake Release `librecad_tests` target built successfully with DWG support.
+The focused `[dwg-open-filters]` case passed 25 assertions across both dialog
+modes. The adjacent open/DWG Save As set passed 183 assertions in four cases.
+The rebuilt `LibreCAD.app` was copied into the already approved disposable
+`/private/tmp/LibreCAD-PR3193-visible.app` and its ad-hoc signature verified.
+In the visible Open chooser, the old saved DXF-only setting now showed the
+combined filter and listed `offset-curves.dwg`. Opening that file reported
+`Opened DWG file version AC1032/R2018` and loaded
+`/private/tmp/offset-3193-dwg-visual/out/offset-curves.dwg`; the viewport showed
+the two groups of three elliptical contours. No Save command was issued. The
+live screenshot was inspected in-session but was not retained as a durable
+artifact. This closes the direct GUI open/render check for this AC1032 fixture,
+not the independent external visual-fidelity or signed/deployed-package gates.
+
+Product slice commit: `d8ecf0a74d58429483e85227ac82d3f44f365fa9` (`fix(mac):
+expose DWG in the open dialog`). The roadmap inventory parser passed 5/5;
+the refusal/inventory suite passed 94/94 with 93 unique obligations, zero
+pending declarations, and zero production mismatches; `git diff --check`
+passed. Commit this receipt and push both commits without force. The branch is based on
+`b98d840a1d8fc4b9974d8897c92938bf55368d6c`, while `origin/master` has advanced
+to `ae1e3b8152a18334109fd93393dcc8dd5e436c3c`; inspect and synchronize the
+upstream delta as a separate implementation slice before claiming R
+integration. Inspect exact-head PR CI after the push; the previous CI snapshot
+does not qualify the new head.
+
+Remaining acceptance gates include independent visual fidelity, retained
+matched preview/commit screenshots with measured app-window DPR, reproducible
+held-drag cancellation, physical stale-peer behavior, signed/deployed and
+minimum-macOS acceptance, human review, upstream synchronization, and final R
+integration.
