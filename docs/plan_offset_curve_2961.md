@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 17:36 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W368; chronological evidence follows): implementation slices
+Updated: 2026-11-04 17:45 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W369; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -35,16 +35,17 @@ now default to the combined DXF/DWG filter despite a persisted DXF-only choice,
 and infer DWG from the selected path. The AC1032 offset acceptance fixture was
 opened and visibly rendered through the rebuilt GUI. This closes only that
 fixture's direct DWG display check; broader acceptance remains open. Product
-commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is local. W368 merges current
+commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is pushed. W368 merges current
 `origin/master` `ae1e3b8152a18334109fd93393dcc8dd5e436c3c` as
 `694a453921b2853dc4e0c810184b8e20a487784f`; the new tip is an ancestor of the
-branch. The push attempt failed because `github.com` did not resolve, so the
-remote PR head is still `c2b762162`. PR #3193 remains open, draft, and
-review-required. Recheck exact-head CI after pushing. Outstanding work is
-external visual fidelity, retained matched preview/commit screenshots and DPR,
-held-drag cancellation, physical stale-peer behavior, signed/deployed and
-minimum-macOS acceptance, review approval, remote branch synchronization, and
-final R integration.
+branch. W369 is pushed as exact PR head
+`40c24a65b593030d1375ed3f3739ce6a601b088d`; Text Foundations, Continuous
+build, CodeQL, Pixi Builds, and DWG/DXF verification are queued, and the status
+API has no checks yet. PR #3193 remains open, draft, and review-required.
+Recheck exact-head CI after the roadmap receipt. Outstanding work is external
+visual fidelity, retained matched preview/commit screenshots and DPR, held-drag
+cancellation, physical stale-peer behavior, signed/deployed and minimum-macOS
+acceptance, review approval, and final R integration.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -13930,5 +13931,36 @@ retry a non-force push when network resolution is available.
 
 Remaining gates include publishing and exact-head CI, external visual fidelity,
 durable matched preview/commit screenshots with app-window DPR, held-drag
+cancellation, physical stale-peer behavior, signed/deployed and minimum-macOS
+acceptance, human review, and final R integration.
+
+## 324. W369 Published DWG Open Fix and Current-Head CI
+
+The network-enabled non-force push succeeded, advancing
+`codex/offset-2961-native-worker` from `c2b76216281f02a69f544d522b70f5b4208b5546`
+to `40c24a65b593030d1375ed3f3739ce6a601b088d`. GitHub confirms PR #3193 is
+open, draft, mergeable, and based on current `master`
+`ae1e3b8152a18334109fd93393dcc8dd5e436c3c`; the upstream merge is part of the
+published branch. This includes product commit `d8ecf0a74`, the W367/W368
+roadmap receipts, and merge commit `694a45392`.
+
+At exact head `40c24a65b593030d1375ed3f3739ce6a601b088d`, Text Foundations,
+Continuous build, CodeQL, Pixi Builds, and DWG/DXF verification runs were all
+queued; the combined commit-status API returned no checks yet. This is a fresh
+head and inherits no prior CI result. Recheck after these runs start and wait
+for terminal outcomes before interpreting the gates.
+
+The existing PR status comment was not refreshed: the GitHub integration
+returned HTTP 403 for comment update. The code and roadmap commits are pushed,
+but the comment still describes W366 and should be updated when an authorized
+comment-edit path is available.
+
+This W369 receipt passed the roadmap parser 5/5 and refusal/inventory suite
+94/94 with 93 unique obligations, zero pending declarations, and zero
+production mismatches; `git diff --check` passed. Pushing this roadmap-only
+receipt creates a new PR head, so inspect its exact-head checks separately.
+
+Remaining acceptance gates: independent visual fidelity, durable matched
+preview/commit screenshots and app-window DPR, reproducible held-drag
 cancellation, physical stale-peer behavior, signed/deployed and minimum-macOS
 acceptance, human review, and final R integration.
