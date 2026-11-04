@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 17:45 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W369; chronological evidence follows): implementation slices
+Updated: 2026-11-04 18:43 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W370; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -38,14 +38,20 @@ fixture's direct DWG display check; broader acceptance remains open. Product
 commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is pushed. W368 merges current
 `origin/master` `ae1e3b8152a18334109fd93393dcc8dd5e436c3c` as
 `694a453921b2853dc4e0c810184b8e20a487784f`; the new tip is an ancestor of the
-branch. W369 is pushed as exact PR head
-`40c24a65b593030d1375ed3f3739ce6a601b088d`; Text Foundations, Continuous
-build, CodeQL, Pixi Builds, and DWG/DXF verification are queued, and the status
-API has no checks yet. PR #3193 remains open, draft, and review-required.
-Recheck exact-head CI after the roadmap receipt. Outstanding work is external
-visual fidelity, retained matched preview/commit screenshots and DPR, held-drag
-cancellation, physical stale-peer behavior, signed/deployed and minimum-macOS
-acceptance, review approval, and final R integration.
+branch. W370 records exact PR head
+`e4acf6275895b2cb9dd32d8f5b7e04320452a03b`. Its qmake6 application/worker
+build, qmake-helper external-process suite, CMake test suite, roadmap parser,
+and refusal inventory pass. At 18:43 UTC, exact-head Text Foundations and the
+Linux DWG/DXF lane passed; Windows x64/ARM64 DWG/DXF tests, macOS packaging,
+CodeQL analysis, and Intel macOS Pixi were still running. Other reported Pixi
+platforms and the Windows ARM64 build passed. PR #3193 remains open, draft,
+mergeable, and review-required, with no approving review. CUA continues to
+report the controlled Mac as locked despite the user's remote-desktop session
+being logged in; W370 makes no new visible-interaction claim. Outstanding
+acceptance remains external visual fidelity, retained matched preview/commit
+screenshots and app-window DPR, held-drag cancellation, physical stale-peer
+behavior, signed/deployed and minimum-macOS acceptance, review approval, and
+final R integration.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -13964,3 +13970,40 @@ Remaining acceptance gates: independent visual fidelity, durable matched
 preview/commit screenshots and app-window DPR, reproducible held-drag
 cancellation, physical stale-peer behavior, signed/deployed and minimum-macOS
 acceptance, human review, and final R integration.
+
+## 325. W370 Current-Source Requalification
+
+The current product/source head remains `e4acf6275895b2cb9dd32d8f5b7e04320452a03b`;
+this checkpoint adds no product-code changes. A fresh out-of-tree qmake6
+Release build completed successfully for LibreCAD, plugins/tools, and
+`LibreCADOffsetWorker`. The CMake external-process test executable was placed
+beside that qmake-built helper in a disposable directory and passed all four
+cases / 2,808 assertions, directly exercising the qmake artifact through the
+worker protocol. The CMake Release CTest suite passed 26/26. Additional focused
+results: DWG Open filters 25 assertions; creation preview/commit parity 25;
+stale-peer refusal/recovery 40; offset type matrix 49 passed, 1 skipped, 50,027
+assertions. The roadmap parser passed 5/5 and the refusal/inventory suite passed
+94/94 (93 unique obligations, zero pending declarations and zero production
+mismatches). `git diff --check` passed before this checkpoint.
+
+At exact head `e4acf6275895b2cb9dd32d8f5b7e04320452a03b`, the 18:43 UTC job
+snapshot showed Text Foundations and `VerifyDwgDxfFast` passed. Continuous
+build's Windows ARM64 job passed and macOS packaging remained in progress;
+DWG/DXF Windows x64 and ARM64 test jobs remained in progress; CodeQL analysis
+remained in progress; Pixi builds for macOS, Ubuntu, Windows, and Ubuntu ARM
+passed while Intel macOS remained in progress. CodeQL Security scan and the
+configured platform skips are not treated as passes.
+
+The user reports the remote desktop is logged in, but the CUA-controlled Mac
+still returned its locked-state response. No further GUI input or Save action
+was performed, and W370 supplies no new visual, held-drag, screenshot/DPR, or
+physical stale-peer evidence. PR #3193 is open, draft, and mergeable. The only
+submitted reviews visible at this checkpoint are `COMMENTED`; an approving
+review is still required. Check all workflows against the exact head after
+publishing the roadmap receipt.
+
+Open gates remain: retained matched preview/commit screenshots and measured
+app-window DPR; reproducible held-drag cancellation; physical stale-peer GUI
+behavior; useful independent W171 visual fidelity beyond converted-DXF
+rendering; Developer ID/notarization and actual minimum-macOS runtime; full
+deployed W0-W2 qualification; approving human review; and final R integration.
