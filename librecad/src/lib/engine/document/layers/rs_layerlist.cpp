@@ -204,6 +204,7 @@ void RS_LayerList::add(RS_Layer* layerToAdd) {
         }
 
         existingLayer->freeze(layerToAdd->isFrozen());
+        existingLayer->setHiddenAs(layerToAdd->getHiddenAs());
         existingLayer->lock(layerToAdd->isLocked());
         existingLayer->setPrint(layerToAdd->isPrint());
         existingLayer->setConverted(layerToAdd->isConverted());

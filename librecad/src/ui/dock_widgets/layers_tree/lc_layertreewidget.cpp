@@ -1698,6 +1698,7 @@ void LC_LayerTreeWidget::copyLayerAttributes(RS_Layer *copyLayer, const RS_Layer
 
     copyLayer->setPen(pen);
     copyLayer->freeze(sourceLayer->isFrozen());
+    copyLayer->setHiddenAs(sourceLayer->getHiddenAs());
 }
 
 void LC_LayerTreeWidget::redrawView() const {
