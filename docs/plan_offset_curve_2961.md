@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 21:18 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W373; chronological evidence follows): implementation slices
+Updated: 2026-11-04 21:34 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W374; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -43,12 +43,18 @@ branch. W370 requalifies product/source head
 unconverted AC1032 DWG spline geometry through LibreDWG and SciPy, with radial
 deviation below `2e-15`. W372 records visible test-copy offset creation and
 selection as `Offset Curve (1)`; its screenshot was not retained and its later
-drag/Escape attempt did not establish cancellation timing or parity. W373
-records checks for W372 exact PR head
-`75e5f5a09c6346ce33e2557890ad2da981d9fd66`: nine in progress, nine queued,
-five skipped, zero completed, zero failures. PR #3193 remains open and draft;
-an approving review is still required. Remaining acceptance includes retained
-matched preview/commit screenshots and app-window DPR, reproducible held-drag
+drag/Escape attempt did not establish cancellation timing or parity. W374
+records another unlocked test-copy probe: a held-click sample already showed
+the committed editable copies before Escape, then one Undo restored the six
+source contours. A separate drag/Escape returned to Default with the source
+contours, but no distinct preview frame was captured and input ordering was
+not observable; neither attempt qualifies cancellation. The disposable DXF
+SHA256 still matches its recorded baseline, with no Save issued. W373's latest
+exact-head check snapshot is two successful, eleven in progress, five queued,
+five skipped, and zero failed. PR #3193 remains open and draft; an approving
+review is still required. W374 is a roadmap-only commit, so its checks must be
+qualified separately. Remaining acceptance includes retained matched
+preview/commit screenshots and app-window DPR, reproducible held-drag
 cancellation, physical stale-peer behavior, independent visual fidelity,
 signed/deployed and minimum-macOS acceptance, review approval, and final R
 integration.
@@ -14117,3 +14123,41 @@ zero pending declarations and zero production mismatches); `git diff --check`
 passed. This evidence-only checkpoint does not close the held-drag, physical
 stale-peer, screenshot/DPR, independent visual, signed/deployed, human-review,
 or final R-integration gates. The new W373 commit must be checked separately.
+
+## 329. W374 Held-Click and Drag/Escape Recheck
+
+The user confirmed the remote desktop was unlocked. The approved test-only app
+opened `/private/tmp/offset-pr3193-interaction.dxf`, showing its six original
+nested ellipse contours. The Offset action used fixed distance `0.5`, two
+copies, and Editable Offset Curve enabled. After selecting the left outer
+ellipse, the command reached `Specify direction of offset`.
+
+A CUA drag from blank canvas toward a direction point followed by Escape
+returned the action to Default and left the six source contours visible. The
+sampled frame showed only the selected source; no distinct offset preview was
+visible, and the computer-use bridge does not expose reliable event ordering.
+This verifies prompt cancellation without a committed result, not cancellation
+of an observed live preview.
+
+A second probe used a 2.5-second held-click request and sent Escape after a
+150-ms delay. At the intermediate screenshot, two offset copies were already
+visible and one was selected as `Offset Curve (1)`; the action had returned to
+Default before the click request completed. A single Undo restored the six
+original contours and disabled Undo. Because the bridge does not expose the
+actual pointer-release boundary, this cannot establish whether Escape reached
+LibreCAD before release or whether the command committed on press. No Save was
+issued. The fixture SHA256 is still
+`05aa253d513afc53d7e40bf51efaaf290e5a411cfbbcaaaa99df8386a4281e7d`, matching
+the recorded baseline. Screenshots were observed in-session but not retained;
+app-window DPR remains unmeasured.
+
+At 21:34 UTC, diagnostics for exact pre-W374 PR head
+`4c5597bcd93bb7df4fbc9f386fd964937808b421` reported 23 checks: two successful
+(Headless ON/OFF), eleven in progress, five queued, five skipped, and zero
+failures. The skips are the repository-policy Security scan and four
+configured continuous-build platforms. These results do not qualify W374's new
+head. Roadmap parser 5/5, refusal/inventory 94/94 (93 obligations, zero pending
+declarations or production mismatches), and `git diff --check` passed. This
+checkpoint does not close the preview-cancellation, screenshot/DPR,
+physical-stale-peer, independent-visual, signed/deployed, review, or final
+R-integration gates.
