@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 19:32 UTC. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W371; chronological evidence follows): implementation slices
+Updated: 2026-11-04 21:04 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W372; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -39,20 +39,21 @@ commit `d8ecf0a74d58429483e85227ac82d3f44f365fa9` is pushed. W368 merges current
 `origin/master` `ae1e3b8152a18334109fd93393dcc8dd5e436c3c` as
 `694a453921b2853dc4e0c810184b8e20a487784f`; the new tip is an ancestor of the
 branch. W370 requalifies product/source head
-`e4acf6275895b2cb9dd32d8f5b7e04320452a03b`; W371 records exact PR head
-`efbbac33138d0f4efa7016b0fbdba987578b40f7`. Its qmake6 application/worker
-build, qmake-helper external-process suite, CMake test suite, roadmap parser,
-and refusal inventory pass. W371 directly cross-checks the unconverted AC1032
-DWG spline geometry through LibreDWG and SciPy; radial deviation from its
-analytic arc is below `2e-15`, but this is not visual acceptance. At 19:31 UTC,
-exact-head CI had seven successful checks, eleven in progress, five configured
-skips, and zero failures. PR #3193 remains open and draft; an approving review
-is still required. CUA continues to report the controlled Mac as locked
-despite the user's remote-desktop session being logged in; no new visible
-interaction was performed. Outstanding acceptance remains external visual
-fidelity, retained matched preview/commit screenshots and app-window DPR,
-held-drag cancellation, physical stale-peer behavior, signed/deployed and
-minimum-macOS acceptance, review approval, and final R integration.
+`e4acf6275895b2cb9dd32d8f5b7e04320452a03b`; W371 directly cross-checks the
+unconverted AC1032 DWG spline geometry through LibreDWG and SciPy, with radial
+deviation below `2e-15`. W372 records the current PR head
+`2f2949f8032a08594a0a3870ad1fc5153d193836` and a visible test-copy interaction:
+two offset copies were created with Editable Offset Curve enabled, and the
+result was selectable as `Offset Curve (1)`. Screenshots were observed in the
+session but not retained as files, and app-window DPR was not measured. A later
+drag/Escape attempt did not establish cancellation timing or output parity.
+At 21:04 UTC, exact-head CI had 15 successful checks, six skipped, two in
+progress, one queued, and zero failures. PR #3193 remains open and draft; an
+approving review is still required. Remaining acceptance includes retained
+matched preview/commit screenshots and app-window DPR, reproducible held-drag
+cancellation, physical stale-peer behavior, independent visual fidelity,
+signed/deployed and minimum-macOS acceptance, review approval, and final R
+integration.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -14048,3 +14049,44 @@ behavior; useful independent visual fidelity beyond converted-DXF rendering;
 Developer ID/notarization, exact-minimum macOS runtime, and deployed W0-W2
 qualification; approving human review; and final R integration. This semantic
 DWG check does not close any of those gates or complete the roadmap.
+
+## 327. W372 Visible Offset Creation and Exact-Head Check Refresh
+
+The user confirmed the remote desktop was visible and unlocked. In the
+approved test-only app `org.librecad.librecad.pr3193visible`, the disposable
+`/private/tmp/offset-pr3193-interaction.dxf` was open. Before the operation it
+showed two groups of three nested ellipse contours. With the Offset action's
+Editable Offset Curve option enabled, fixed distance `0.5`, and two copies,
+the selected left ellipse produced two additional contours. After leaving the
+action, the drawing visibly showed five contours in that group; selecting the
+new outer contour exposed the property-sheet type `Offset Curve (1)`. No Save
+command was issued. This is current visible creation/type evidence, not a
+retained matched screenshot pair, not a DPR measurement, and not a saved-file
+round-trip check.
+
+A subsequent right-group drag/Escape probe returned the application to its
+Default action, but the CUA drag did not establish whether Escape arrived
+before the pointer release or whether a geometry result had already committed.
+Its cancellation result is therefore inconclusive; held-drag cancellation and
+physical stale-peer behavior remain open. No claim is made that these gates
+pass. Independent visual fidelity for the native DWG, signed/deployed and
+minimum-macOS acceptance, reviewer approval, and final R integration also
+remain open.
+
+At 21:04 UTC, diagnostics for exact PR head
+`2f2949f8032a08594a0a3870ad1fc5153d193836` reported 15 successes, six skips,
+two in-progress jobs, one queued job, and zero failures. Successful checks
+include both Text Foundations jobs, all three DWG/DXF lanes, the five Pixi
+push jobs, four completed Pixi pull-request jobs, Windows ARM64 continuous
+build, and both CodeQL headless jobs. CodeQL analysis and the continuous macOS
+build remain in progress; Pixi macOS Intel pull-request build remains queued.
+The six skips are the repository-policy Security scan, four configured
+continuous-build platforms, and PackageWindowsMsix. No result from another
+head is inherited.
+
+This is evidence-only; product source remains
+`e4acf6275895b2cb9dd32d8f5b7e04320452a03b`. Re-run the roadmap parser,
+refusal/inventory suite, and `git diff --check` before committing. The commit
+will create a new exact PR head, so all GitHub checks must be requalified for
+that head. This checkpoint does not complete the roadmap or make the PR ready
+to merge.
