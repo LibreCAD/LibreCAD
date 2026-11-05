@@ -1948,74 +1948,84 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
 
-    LC_SplinePointsData fitPoints{false, false};
-    fitPoints.splinePoints = {{0, 0}, {1, 2}, {2, 0}};
-    const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{fitPoints}, .25, 1e-4, false};
-    auto source = definition.source.makeEntity();
-    REQUIRE(source);
-    const auto options = LC_CurveOffset::makeDirectOptions(*source, .25,
-        definition.relativeTolerance);
-    const auto generated = LC_CurveOffset::buildDirectBranches(*source,
-        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25), options,
-        LC_CurveOffset::makeDirectSourceBudget());
-    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
-    auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
-        LC_CurveOffset::makeDirectSourceBudget());
-    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
-    REQUIRE(materialized.entities.size() == 1);
-    const auto* expectedSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
-    REQUIRE(expectedSpline);
-    const RS_SplineData expectedCache = expectedSpline->getData();
-    REQUIRE(expectedSpline->validate());
+    std::vector<LC_SplinePointsData> fitVariants;
+    fitVariants.emplace_back(false, false);
+    fitVariants.back().splinePoints = {{0, 0}, {1, 2}, {2, 0}};
+    fitVariants.emplace_back(false, false);
+    fitVariants.back().splinePoints = {{0, 0}, {1, 1.5}, {2, 1.5}, {3, 0}};
+    fitVariants.emplace_back(false, false);
+    fitVariants.back().splinePoints = {{0, 0}, {1, 1.5}, {2, 2}, {3, 1.5}, {4, 0}};
 
-    for (const bool dwg : {false, true}) {
+    for (size_t variant = 0; variant < fitVariants.size(); ++variant) {
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{fitVariants[variant]}, .25, 1e-4, false};
+        auto source = definition.source.makeEntity();
+        REQUIRE(source);
+        const auto options = LC_CurveOffset::makeDirectOptions(*source, .25,
+            definition.relativeTolerance);
+        const auto generated = LC_CurveOffset::buildDirectBranches(*source,
+            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+        auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(materialized.entities.size() == 1);
+        const auto* expectedSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+        REQUIRE(expectedSpline);
+        const RS_SplineData expectedCache = expectedSpline->getData();
+        REQUIRE(expectedSpline->validate());
+
+        for (const bool dwg : {false, true}) {
 #ifndef DWGSUPPORT
-        if (dwg) continue;
+            if (dwg) continue;
 #endif
-        xd::Definition carrier;
-        carrier.source = definition;
-        xd::Options encoding;
-        if (dwg) { encoding.eed = true; encoding.textEncoding = xd::TextEncoding::Utf16; }
-        else encoding.asciiDxf = false;
-        const auto tags = xd::forExport(
-            {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))}, carrier, encoding);
-        REQUIRE(tags);
-        DRW_Spline cache = f::raw(1, *tags);
-        cache.controllist.clear();
-        for (const auto& point : expectedCache.controlPoints)
-            cache.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
-        cache.knotslist = expectedCache.knotslist;
-        cache.weightlist = expectedCache.weights;
-        cache.degree = expectedCache.degree;
-        cache.flags = 8;
-        cache.m_scenario = 1;
-        cache.ncontrol = cache.controllist.size();
-        cache.nknots = cache.knotslist.size();
-        cache.nfit = 0;
+            xd::Definition carrier;
+            carrier.source = definition;
+            xd::Options encoding;
+            if (dwg) { encoding.eed = true; encoding.textEncoding = xd::TextEncoding::Utf16; }
+            else encoding.asciiDxf = false;
+            const auto tags = xd::forExport(
+                {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))}, carrier, encoding);
+            REQUIRE(tags);
+            DRW_Spline cache = f::raw(1, *tags);
+            cache.controllist.clear();
+            for (const auto& point : expectedCache.controlPoints)
+                cache.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
+            cache.knotslist = expectedCache.knotslist;
+            cache.weightlist = expectedCache.weights;
+            cache.degree = expectedCache.degree;
+            cache.flags = 8;
+            cache.m_scenario = 1;
+            cache.ncontrol = cache.controllist.size();
+            cache.nknots = cache.knotslist.size();
+            cache.nfit = 0;
 
-        const auto input = directory.file(dwg ? "fit-points.dwg" : "fit-points.dxf");
+            const std::string suffix = std::to_string(variant + 3);
+            const auto input = directory.file(dwg ? "fit-points-" + suffix + ".dwg"
+                                                  : "fit-points-" + suffix + ".dxf");
 #ifdef DWGSUPPORT
-        if (dwg) f::dwgFile(input, cache, DRW::AC1032);
-        else f::binaryDxf(input, cache, DRW::AC1032);
+            if (dwg) f::dwgFile(input, cache, DRW::AC1032);
+            else f::binaryDxf(input, cache, DRW::AC1032);
 #else
-        f::binaryDxf(input, cache, DRW::AC1032);
+            f::binaryDxf(input, cache, DRW::AC1032);
 #endif
-        const auto outcome = stagedImport(input, dwg ? Lane::Eed18 : Lane::Binary18);
-        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
-        REQUIRE(outcome.graphic);
-        CHECK(outcome.admitted == 1);
-        CHECK(outcome.downgraded == 0);
-        const auto* imported = dynamic_cast<const LC_OffsetCurve*>(f::sole(*outcome.graphic));
-        REQUIRE(imported);
-        REQUIRE(imported->sourceDefinition());
-        const auto expectedSource = values::encodeSourceDefinition(definition);
-        const auto actualSource = values::encodeSourceDefinition(*imported->sourceDefinition());
-        REQUIRE(expectedSource);
-        REQUIRE(actualSource);
-        CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
-        CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
-              RS_Spline::geometryFingerprint(expectedCache));
+            const auto outcome = stagedImport(input, dwg ? Lane::Eed18 : Lane::Binary18);
+            REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(outcome.graphic);
+            CHECK(outcome.admitted == 1);
+            CHECK(outcome.downgraded == 0);
+            const auto* imported = dynamic_cast<const LC_OffsetCurve*>(f::sole(*outcome.graphic));
+            REQUIRE(imported);
+            REQUIRE(imported->sourceDefinition());
+            const auto expectedSource = values::encodeSourceDefinition(definition);
+            const auto actualSource = values::encodeSourceDefinition(*imported->sourceDefinition());
+            REQUIRE(expectedSource);
+            REQUIRE(actualSource);
+            CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
+            CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+                  RS_Spline::geometryFingerprint(expectedCache));
+        }
     }
 }
 
