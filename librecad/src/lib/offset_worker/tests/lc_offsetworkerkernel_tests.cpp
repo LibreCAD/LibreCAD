@@ -520,6 +520,29 @@ TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains
     }
 }
 
+TEST_CASE("polyline source validation rejects degenerate and inconsistent chains",
+          "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
+    const std::array<LC_OffsetPolylineData, 4> invalidVariants{
+        LC_OffsetPolylineData{{0, 0}, {1, 0}, false,
+            {RS_LineData{{0, 0}, {0, 0}}, RS_LineData{{0, 0}, {1, 0}}}},
+        LC_OffsetPolylineData{{0, 0}, {2, 0}, false,
+            {RS_LineData{{0, 0}, {1, 0}}, RS_LineData{{1.01, 0}, {2, 0}}}},
+        LC_OffsetPolylineData{{0, 0}, {2, 0}, false,
+            {RS_LineData{{0, 0}, {1, 0}}, RS_LineData{{1, 0}, {2, 0}},
+             RS_LineData{{2, 0}, {2, 0}}}},
+        LC_OffsetPolylineData{{0, 0}, {1, 0}, true,
+            {RS_LineData{{0, 0}, {1, 0}}}}
+    };
+
+    for (const auto& data : invalidVariants) {
+        const LC_OffsetSourceGeometry source{data};
+        CHECK_FALSE(source.isWellFormed());
+        CHECK_FALSE(source.makeEntity());
+        const LC_OffsetSourceDefinition definition{source, .25, 1e-4, false};
+        CHECK_FALSE(definition.isWellFormed());
+    }
+}
+
 TEST_CASE("spline and fit-point caches promote on both signed offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][spline-variant]") {
     RS_SplineData rationalQuadratic{2, false};
