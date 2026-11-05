@@ -138,6 +138,9 @@ QModelIndex treeNameIndex(const LC_LayerTreeModel& model, const RS_Layer* layer)
 }
 
 const QString lockedMessage = QStringLiteral("Layer \"Doors\" is locked: unlock it to make it the current layer.");
+/// what a click on the disabled lock icon of "Walls", the current layer, says
+const QString unavailableMessage = QStringLiteral(
+    "Layer \"Walls\" was not locked: it is the current layer, and no other layer is unlocked to take its place.");
 
 /// the Layer Tree's button of that tool tip
 QToolButton* treeButton(const LC_LayerTreeWidget& widget, const QString& toolTip) {
@@ -406,10 +409,11 @@ TEST_CASE("The Layer List disables the lock icon of the current layer when no ot
             CAPTURE(layer->getName());
             CHECK(enabled(layer));
         }
-        // a click on the disabled icon does nothing (there is no action handler to run it here)
+        // a click on the disabled icon locks nothing (there is no action handler to run it here), and
+        // says why on the command line
         widget.slotActivated(lockCell(d.m_walls));
         CHECK_FALSE(d.m_walls->isLocked());
-        CHECK(command.m_messages.isEmpty());
+        CHECK(command.m_messages == QStringList{unavailableMessage});
     }
 
     SECTION("it is enabled again when another layer is unlocked") {
@@ -480,10 +484,11 @@ TEST_CASE("The Layer Tree disables the lock icon and Lock all when no other laye
             CHECK(enabled(layer));
         }
         CHECK_FALSE(lockAll->isEnabled());
-        // a click on the disabled icon does nothing (there is no action handler to run it here)
+        // a click on the disabled icon locks nothing (there is no action handler to run it here), and
+        // says why on the command line
         widget.slotTreeClicked(lockCell(d.m_walls));
         CHECK_FALSE(d.m_walls->isLocked());
-        CHECK(command.m_messages.isEmpty());
+        CHECK(command.m_messages == QStringList{unavailableMessage});
     }
 
     SECTION("they are enabled again when another layer is unlocked") {
@@ -578,7 +583,8 @@ TEST_CASE("The Layer Tree disables the lock icon of a group whose unlocked layer
     CHECK(model->data(groupCell(), Qt::ToolTipRole).toString() == RS_LayerList::lockUnavailableText());
     widget.slotTreeClicked(groupCell());
     CHECK_FALSE(walls->isLocked());
-    CHECK(command.m_messages.isEmpty());
+    CHECK(command.m_messages == QStringList{QStringLiteral(
+              "Layer \"Group-Walls\" was not locked: it is the current layer, and no other layer is unlocked to take its place.")});
 
     // another layer unlocked: the group locks "Walls", and "0" takes its place
     graphic.toggleLayerLock(zero);

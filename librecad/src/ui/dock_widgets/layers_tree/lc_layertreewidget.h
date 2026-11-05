@@ -97,6 +97,7 @@ protected:
     void setLayerList(RS_LayerList* ll);
     void update() const;
     bool canLockAllLayers() const;
+    void reportLockUnavailable() const;
     void keyPressEvent(QKeyEvent* e) override;
     void expandItems(int depth) const;
     QModelIndex getSelectedItemIndex() const;

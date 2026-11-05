@@ -361,6 +361,15 @@ void LC_LayerTreeWidget::update() const {
 }
 
 /**
+ * The lock icon is disabled: say on the command line why a click on it did nothing
+ */
+void LC_LayerTreeWidget::reportLockUnavailable() const {
+    if (m_graphic != nullptr) {
+        m_graphic->reportLockUnavailable();
+    }
+}
+
+/**
  * @return true if Lock All Layers locks a layer: it locks the layers the tree lists, and the
  * current layer is not locked when no other layer is unlocked (RS_LayerList::canLockAny())
  */
@@ -500,6 +509,7 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
             }
             case LC_LayerTreeModel::COLUMN_LOCKED:{
                  if (!m_layerTreeModel->isLockAvailable(layerItem)) {
+                     reportLockUnavailable();
                      break;
                  }
                  if (layerItem->isLocked()){
@@ -584,6 +594,7 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
             }
             case LC_LayerTreeModel::COLUMN_LOCKED:
                 if (!m_layerTreeModel->isLockAvailable(layerItem)) {
+                    reportLockUnavailable();
                     break;
                 }
                 if (normalLayerWithChildren){

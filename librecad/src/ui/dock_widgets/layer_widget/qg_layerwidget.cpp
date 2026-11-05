@@ -535,6 +535,10 @@ void QG_LayerWidget::slotActivated(const QModelIndex& layerIdx /*const QString& 
             if (m_layerList->canToggleLock(lay)) {
                 m_actionHandler->setCurrentAction(RS2::ActionLayersToggleLock, lay);
             }
+            else if (m_graphic != nullptr) {
+                // the icon is disabled: say why
+                m_graphic->reportLockUnavailable();
+            }
             break;
         case QG_LayerModel::COLUMN_PRINT:
             m_actionHandler->setCurrentAction(RS2::ActionLayersTogglePrint, lay);

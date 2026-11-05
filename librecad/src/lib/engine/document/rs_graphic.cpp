@@ -170,6 +170,17 @@ void RS_Graphic::reportCurrentLayerLock(const RS_LayerList::CurrentLayerLock& ou
     }
 }
 
+/**
+ * Says on the command line why a lock control did nothing when it was used although
+ * RS_LayerList::canToggleLock() had disabled it: the current layer is not locked, as no other layer is
+ * unlocked to take its place.
+ */
+void RS_Graphic::reportLockUnavailable() const {
+    RS_LayerList::CurrentLayerLock outcome;
+    outcome.m_asked = m_layerList.getActive();
+    reportCurrentLayerLock(outcome);
+}
+
 void RS_Graphic::toggleLayerLock(RS_Layer* layer) {
     const auto outcome = m_layerList.toggleLock(layer);
     validateSelection();

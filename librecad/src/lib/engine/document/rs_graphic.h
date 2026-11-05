@@ -371,6 +371,7 @@ public:
     void updateFallbackDimStyle(const LC_DimStyle* fromStyle);
     void replaceDimStylesList(const QString& defaultStyleName, const QList<LC_DimStyle*>& styles);
     void validateSelection() const {m_selectedSet->cleanup();}
+    void reportLockUnavailable() const;
 protected:
     void fireGraphicModified(bool modified) const;
 private:
