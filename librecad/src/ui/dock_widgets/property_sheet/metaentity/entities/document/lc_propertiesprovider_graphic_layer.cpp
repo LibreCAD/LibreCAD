@@ -190,9 +190,10 @@ void LC_PropertiesProviderGraphicLayer::createLayerType(LC_PropertyContainer* co
 }
 
 void LC_PropertiesProviderGraphicLayer::createVisible(RS_Graphic* graphic, LC_PropertyContainer* const cont) {
+    // checked when the layer is shown, as the eye of the Layer List and the Layer Tree is open
     auto funGet = [](const RS_Graphic* e) -> bool {
         const auto layer = e->getActiveLayer();
-        return layer->isFrozen();
+        return !layer->isFrozen();
     };
     auto funSet = []([[maybe_unused]] const bool& v, RS_Graphic* e) -> void {
         const auto layer = e->getActiveLayer();

@@ -25,7 +25,11 @@
 
 #include "lc_undosection.h"
 
+#include <QObject>
+
 #include "lc_graphicviewport.h"
+#include "rs_dialogfactory.h"
+#include "rs_dialogfactoryinterface.h"
 #include "rs_document.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
@@ -113,7 +117,22 @@ bool LC_UndoSection::undoableExecute(const RS_Document::FunUndoable& doUndoable)
 
 bool LC_UndoSection::undoableExecute(const RS_Document::FunUndoable& doUndoable, const RS_Document::FunSelection& doSelection) const {
     LC_DocumentModificationBatch ctx;
-    const bool success = doUndoable(ctx);
+    bool success = doUndoable(ctx);
+    if (success && ctx.setActiveLayer && !ctx.entitiesToAdd.isEmpty() && m_document != nullptr) {
+        // A locked layer must not change: nothing is added to it. The current layer is locked only
+        // when no other layer is unlocked (a drawing may be opened that way), and what is drawn goes
+        // to the current layer.
+        const auto graphic = m_document->getGraphic();
+        const RS_Layer* activeLayer = graphic != nullptr ? graphic->getActiveLayer() : nullptr;
+        if (activeLayer != nullptr && activeLayer->isLocked()) {
+            RS_DIALOGFACTORY->commandMessage(
+                QObject::tr("Layer \"%1\" is the current layer and it is locked: unlock it, or add a layer that is not locked, to draw.")
+                    .arg(activeLayer->getName()));
+            qDeleteAll(ctx.entitiesToAdd);
+            ctx.clear();
+            success = false;
+        }
+    }
     ctx.success = success;
     if (success) {
         if (!ctx.entitiesToDelete.isEmpty()) {

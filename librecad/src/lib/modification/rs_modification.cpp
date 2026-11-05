@@ -2718,6 +2718,10 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner, const RS_Vector& sec
 
     for (const auto e : entitiesList) {
         // fixme - sand - iteration over all entities in container???
+        if (e == nullptr || e->isLocked()) {
+            // an entity of a locked layer is not modified
+            continue;
+        }
         /*if (e != nullptr && e->isVisible() && !e->isLocked()) {
             if ((e->isInWindow(firstCorner, secondCorner) ||
                 e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {*/
