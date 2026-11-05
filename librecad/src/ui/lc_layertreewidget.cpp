@@ -821,7 +821,7 @@ void LC_LayerTreeWidget::hideAllLayers(){
     QList<RS_Layer *> layersToShow;
     QList<RS_Layer *> layersToHide = layerTreeModel->collectLayers(&ACCEPT_ALL);
     if (layerList != nullptr) {
-        // frozen, the active layer would be replaced by one the filter left visible
+        // "Hide all layers except current"
         layersToHide.removeAll(layerList->getActive());
     }
     manageLayersVisibilityFlag(layersToShow, layersToHide, false);
@@ -844,10 +844,11 @@ void LC_LayerTreeWidget::hideOtherThanSelectedLayers(){
             RS_Layer* layer = layersToShow.at(i);
             layersToHide.removeAll(layer);
         }
-        manageLayersVisibilityFlag(layersToShow, layersToHide, false);
+        // first, so that what hears of the change of visibility finds the layer current
         if (count > 0){
             activateLayer(layersToShow.at(0));
         }
+        manageLayersVisibilityFlag(layersToShow, layersToHide, false);
     }
 }
 /**

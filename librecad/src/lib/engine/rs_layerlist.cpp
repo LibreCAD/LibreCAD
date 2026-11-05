@@ -98,14 +98,18 @@ void RS_LayerList::activate(const QString& name, bool notify) {
 
 
 /**
- * Activates the given layer.
- * 
+ * Activates the given layer, as a layer is made current by choice.
+ *
+ * A hidden layer can be current: it stays hidden, and so do the entities
+ * drawn on it (#3229).
+ *
+ * @param layer a layer of this list
  * @param notify Notify listeners.
  */
 void RS_LayerList::activate(RS_Layer* layer, bool notify) {
     RS_DEBUG->print("RS_LayerList::activate notify: %d begin", notify);
 
-    if (!layers.contains(layer) || layer->isFrozen()) {
+    if (!layers.contains(layer)) {
         return;
     }
 
@@ -212,7 +216,7 @@ void RS_LayerList::remove(RS_Layer* layer) {
     // Select a survivor before notifying listeners.
     if (activeLayer==layer) {
         activeLayer = nullptr;
-        ensureActiveLayerIsVisible();
+        ensureActiveLayer();
     }
 
     for (int i=0; i<layerListListeners.size(); ++i) {
@@ -237,8 +241,6 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
     }
 
     *layer = source;
-
-    ensureActiveLayerIsVisible();
 
     fireEdit(layer);
 }
@@ -336,7 +338,6 @@ void RS_LayerList::toggle(RS_Layer* layer) {
 
     // set flags
     layer->toggle();
-    ensureActiveLayerIsVisible();
     setModified(true);
 
     // Notify listeners:
@@ -425,8 +426,8 @@ void RS_LayerList::fireLayerToggled(){
 
 /**
  * Freezes or defreezes all layers that the Layer List dock lists; its filter
- * leaves the other layers as they are. The active layer is never frozen:
- * frozen, it would be replaced by a layer the filter left visible.
+ * leaves the other layers as they are. Freezing leaves the active layer as it
+ * is ("Hide all layers except current").
  *
  * @param freeze true: freeze, false: defreeze
  */
@@ -438,7 +439,6 @@ void RS_LayerList::freezeAll(bool freeze) {
          }
     }
 
-    ensureActiveLayerIsVisible();
     fireLayerToggled();
 
 }
@@ -509,8 +509,7 @@ void RS_LayerList::setFreezeMulti(QList<RS_Layer*> layersEnable, QList<RS_Layer*
             layer->freeze(true);
         }
     }
-    ensureActiveLayerIsVisible();
-   fireLayerToggled();
+    fireLayerToggled();
 }
 
 void RS_LayerList::setLockMulti(QList<RS_Layer*> layersToUnlock, QList<RS_Layer*> layersToLock){
@@ -575,12 +574,18 @@ void RS_LayerList::toggleFreezeMulti(QList<RS_Layer*> toggleLayers){
             layer->toggle();
         }
     }
-    ensureActiveLayerIsVisible();
-   fireLayerToggled();
+    fireLayerToggled();
 }
 
-void RS_LayerList::ensureActiveLayerIsVisible() {
-    if (layers.contains(activeLayer) && !activeLayer->isFrozen()) {
+/**
+ * Makes a layer active when none of this list is: the active one was removed,
+ * or a drawing was loaded without one. An active layer that is hidden stays
+ * active, as hiding a layer does not change the current layer (#3229). The
+ * replacement is the first layer that is shown, else the first layer, which
+ * stays hidden. Listeners are not notified.
+ */
+void RS_LayerList::ensureActiveLayer() {
+    if (layers.contains(activeLayer)) {
         return;
     }
 
@@ -591,18 +596,10 @@ void RS_LayerList::ensureActiveLayerIsVisible() {
             break;
         }
     }
-
-    if (fallback == nullptr) {
-        fallback = layers.contains(activeLayer) ? activeLayer
-                                                : (layers.isEmpty() ? nullptr : layers.first());
-        if (fallback == nullptr) {
-            return;
-        }
-        fallback->freeze(false);
+    if (fallback == nullptr && !layers.isEmpty()) {
+        fallback = layers.first();
     }
-    if (fallback != activeLayer) {
-        activate(fallback);
-    }
+    activeLayer = fallback;
 }
 
 
