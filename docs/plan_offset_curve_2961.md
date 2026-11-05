@@ -15418,3 +15418,25 @@ head is `76e571290d22e4e32a50c383b32efa8e549b8338`; GitHub had not reported
 checks yet. These tests strengthen the implicit-weight fix but do not close
 the other legal spline layouts, hyperbola bounds, polyline variants, or the
 remaining PR acceptance gates.
+
+## 365. Wrapped Spline and Closed Arc-Polyline Variants (2026-11-05)
+
+Extended both direct-kernel and joined-worker generation matrices with a
+wrapped periodic cubic spline whose unit weights are implicit, and a closed
+polyline made from four contiguous circular-arc segments. Both complete
+ordinary-generation and worker-protocol round-trip checks pass. This
+supplements the degree-1, rational quadratic, cubic open, control-point,
+fit-point, mixed arc/line polyline, and closed line-polyline examples.
+
+The focused source-generation matrix passes 470 assertions/1 case; the joined
+worker-client family matrix passes 7,522 assertions/1 case. Complete Debug
+worker-kernel tests pass 3,246 assertions/20 cases, and worker-client tests
+pass 24,101 assertions/20 cases. `git diff --check` passes. Test commit
+`bb44bd12deb445efbca8c2c3f089bdcd2ba1ec3a` is pushed. Exact PR head is
+`bb44bd12deb445efbca8c2c3f089bdcd2ba1ec3a`; GitHub had not reported checks at
+the time of this update.
+
+These are representative closure/segment tests, not the complete legal
+wrapped-knot topology, knot multiplicity, polyline arc orientation, repeated
+vertex, or side/distance sweep. Keep the variant audit and external PR gates
+open.
