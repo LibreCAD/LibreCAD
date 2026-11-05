@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-04 22:38 UTC. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
 Current status (W379; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -595,7 +595,7 @@ candidate except the explicitly proposed native-worker tags.
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; W134 current full matrix passed Release/ASan; external CAD application validation and remote/final R acceptance remain | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
 | U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | dialog `705a0135b` and sheet `ac7c7646f`; W135 current-source dialog/sheet/async/batch-failure matrix passed Release/ASan; visible/platform/final R gates remain | `lc_offsetcurve_propertiesdialog_tests.cpp`, `lc_offsetcurve_properties_tests.cpp`, `lc_offsetcurve_batch_failure_tests.cpp`, UI-helper tests |
 | U3 | Grip drag, cancel, ownership, undo/redo and no late publication | E2,U2 | worker continuation `0e80b8540`; W136 current-source `[lc-offsetcurve][h-drag]` passed Release/ASan; visible/platform/final R gates remain | `[lc-offsetcurve][h-drag]` |
-| U4 | Ellipse-only persisted option, preview/commit parity and messages | G,F3,U2,U3 | candidate `3d7195631`; W139 current-source option lifecycle/preview/commit selector passed Release/ASan; physical visible workflows remain | option-enable TU and visible workflows |
+| U4 | Ellipse-only persisted option, preview/commit parity and messages | G,F3,U2,U3 | candidate `3d7195631`; W139 current-source option lifecycle/preview/commit selector passed Release/ASan; W335 adds the ellipse source chooser; physical visible workflows remain. Generalized source selection is planned in Section 336, not closed here. | option-enable TU and visible workflows |
 | O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | worker batch `075038088`; W140 current-source `[lc-offsetcurve][i-update]` passed Release/ASan; visible/platform/final R gates remain | `lc_action_offsetcurve_source_tests.cpp` |
 | O2 | Restore Original, same-container dedup, attributes and all entry points | O1 | candidate `0d3fed653`, `4a231d243` plus final fixes; W141 action, UI dispatch, and R2018 DXF/DWG persistence matrix passed Release/ASan; visible/platform/final R gates remain | Restore/source-UI TUs |
 | T1 | Pure bounded trim prep and exact stored-cache fragments | C-check,E1,F2 | candidate `04c712069`; W104 requalifies standalone trim allocation/cancellation failures locally and adds both trim/cache fault executables to Linux/Windows CI; broader audit remains | `[lc-offsetcurve][trim-kernel]`, standalone trim fault target |
@@ -14314,3 +14314,147 @@ including visible matched-preview/commit screenshots and DPR, held-drag
 cancellation timing, physical stale-peer behavior, independent visual review,
 signed/deployed and minimum-macOS acceptance, approving review, and final R
 integration.
+
+## 336. Generalized Properties Source Selection and Native Source Support
+
+### Goal and current boundary
+
+Extend the editable offset-curve Properties source chooser from its W335
+ellipse-only behavior to every source family the offset implementation
+supports, without silently converting a native editable offset into an
+ordinary SPLINE or weakening its validation and worker-isolation guarantees.
+Selecting a drawing entity supplies its actual source type and value-owned
+geometry; the user does not choose an arbitrary type label that can disagree
+with the selected entity.
+
+The supported-source target matrix is:
+
+| Source family | Required scope | Important constraint |
+|---|---|---|
+| `RS_Ellipse` | Preserve current chooser, creation, editing, persistence, and output behavior | Existing schema-1 ellipse records remain readable and writable compatibly |
+| `RS_Spline` | Native editable source definition, worker generation/validation, Properties selection, and DXF/DWG round-trip | Preserve degree, knots, control points, weights, fit data, and supported flags; reject malformed or unsupported variants explicitly |
+| `LC_SplinePoints` | Same end-to-end lifecycle as `RS_Spline` | Preserve its native representation and fit intent; do not flatten rational data or substitute a different spline representation |
+| `LC_Parabola` | Treat as a distinct selectable/source identity while using its `LC_SplinePoints` geometry representation where appropriate | Preserve parabola classification and exact parameters where available; do not let generic spline reconstruction erase its type |
+| Bounded `LC_Hyperbola` | Native editable source definition and chooser support for explicitly finite parameter bounds | Reject unbounded hyperbolas and invalid bounds before worker submission; do not approximate them as an unbounded entity |
+
+The geometry engine's existing support is not proof that native entity
+definitions, worker messages, caches, or file adapters support these types.
+The implementation must close the entire chain or leave the unsupported type
+disabled with a visible, specific reason. Source association remains
+value-owned rather than a live dependency on the source entity: deleting or
+editing the original drawing entity must not mutate an existing offset.
+
+### Ordered implementation slices
+
+1. **G1 - Source inventory and value model.** Audit the current source capture,
+   `LC_OffsetCurve` definition, transforms, cache validity, and every ellipse-
+   specific branch in creation, grips, editing, actions, preview, and adapters.
+   Define a tagged, value-owned source definition for the five target families
+   above. Add bounded counts, finite-number checks, valid parameter/bounds
+   checks, and source-kind-preserving equality/clone/transform behavior. Keep
+   the current ellipse API and schema-1 interpretation compatible. Tests must
+   prove capture/reconstruction for each family, including parabola identity,
+   bounded and unbounded hyperbolas, rational spline data, and malformed
+   inputs. Do not start UI expansion until this model is stable.
+
+2. **G2 - Native geometry, cache, and worker contract.** Extend the worker
+   request/result representation and every operation that consumes a source
+   definition (Generate, ValidateCache, CheckThrough, and any current
+   source-based batch operation). Validate the tag and all source payload
+   limits on both sides of the process boundary. Integrate the corresponding
+   geometry-engine paths while keeping expensive geometry work in the worker.
+   Define explicitly which generated results can be represented by one native
+   offset cache. If a supported source yields multiple disconnected pieces or
+   an output the native entity cannot store losslessly, refuse native creation
+   transactionally with a typed diagnostic; never keep only the first piece or
+   publish a partial cache. Verify cache/source pairing, transforms, clone,
+   grips, edit, cancel, timeout, crash, stale-result rejection, and undo/redo
+   for every source kind.
+
+3. **G3 - Properties and source picking.** Generalize the current source
+   combo/picker to enumerate eligible live top-level entities of the supported
+   types. Display the source type and useful identity, match the embedded
+   source by kind plus canonical geometry (not only approximate center/radii),
+   and distinguish a matched, replaced, deleted, or unsupported source. A
+   source change captures an immutable value snapshot and uses the guarded
+   worker-edit path; the explicit Select-in-drawing action re-resolves the
+   current entity ID and does not change selection merely by opening or
+   cancelling Properties. Preserve distance/side editing for all supported
+   definitions. Show ellipse-only controls only for ellipses; show source-kind
+   appropriate read-only geometry details for the other types unless a
+   separate editable parameter design is proven safe. Verify single and
+   multiple selection, source replacement, source deletion/stale IDs, cancel,
+   busy state, failed worker results, and successful preview/commit parity.
+
+4. **G4 - Versioned persistence and interchange.** Introduce the next native
+   XDATA definition schema with an explicit source-kind discriminator and
+   bounded typed payloads. Continue reading existing schema-1 ellipse data;
+   write schema 1 only when it faithfully represents the ellipse definition,
+   otherwise write the new schema. Preserve unknown/future payloads under the
+   existing raw-carrier ownership rules. Exercise DXF and DWG write, read,
+   reopen, second-save, conversion, clipboard, downgrade/refusal, and
+   transactional error paths for each source kind and supported version.
+   Confirm the ordinary SPLINE fallback and native metadata agree on the
+   stored source and generated geometry, and that unsupported downgrade paths
+   fail without partially modifying the document.
+
+5. **G5 - Feature integration and delivery.** Audit source assumptions in
+   creation/repeat, Modify Offset, Update, Restore Original, trim, selection,
+   quick info, property sheet, menus, and save/reopen. Add or update tests at
+   the owning layers rather than relying on a widget-only test. Run focused
+   kernel, entity, worker, Properties, action, trim, and persistence selectors;
+   full relevant dialog/property/action suites; clean CMake and qmake6 builds;
+   Release and ASan matrices; and exact-head CI. Use representative DXF/DWG
+   fixtures and an independent reader where available. Record visible
+   Properties selection and matching-preview/commit evidence separately from
+   headless results. Commit each coherent slice and update this roadmap after
+   each commit. Keep physical GUI, signed/deployed package, external-reader,
+   reviewer, and final R gates explicitly open until directly evidenced.
+
+### Completion criteria
+
+The expansion is complete only when every source family in the matrix can be
+selected from the drawing, captured as an immutable native source definition,
+generated and validated by the worker, safely edited and cached, persisted and
+reopened through supported DXF/DWG paths, and either represented losslessly by
+the native entity or rejected with a typed non-mutating diagnostic. Required
+regressions include the existing ellipse workflow; rational and non-rational
+splines; `LC_SplinePoints`; an explicitly identified parabola; bounded versus
+unbounded hyperbola; source-kind mismatch; malformed and oversized payloads;
+multi-piece output refusal; worker timeout/crash/cancel/stale publication;
+source deletion; undo/redo; schema-1 ellipse compatibility; and schema-2
+round-trips. Kernel support alone, chooser enumeration alone, or a DXF-only
+round-trip does not satisfy completion.
+
+### Current status
+
+In progress. W337 implements the first G1 foundation: a value-owned tagged
+snapshot and common signed-distance definition for ellipse, spline,
+spline-points, parabola, and bounded hyperbola inputs. Capture preserves
+parabola identity ahead of its spline-points base and refuses unsupported,
+malformed, or unbounded sources. This contract is not yet consumed by
+`LC_OffsetCurve`, the worker protocol, Properties, or persistence, so it does
+not enable generalized native offsets. W335 remains the completed ellipse-only
+Properties chooser receipt. Continue G1 through integration-specific source
+matching, transforms, and lifecycle inventory before G2. Retain all existing
+W379 acceptance gates; this work does not close them.
+
+## 337. Tagged Source Snapshot Foundation (2026-11-05)
+
+Added `lc_offsetsource.h` with a value-owned geometry variant for `RS_Ellipse`,
+`RS_Spline`, `LC_SplinePoints`, `LC_Parabola`, and bounded `LC_Hyperbola`, plus
+common signed-distance/tolerance/cache-direction fields. `capture()` copies
+the entity geometry and validates finite values, bounded collection sizes,
+spline degree/array consistency, spline-point nondegeneracy, parabola validity,
+and finite bounded hyperbola parameters. Parabolas are tested before their
+`LC_SplinePoints` base so the snapshot retains their identity. This is a
+foundational type contract only; no production offset behavior is switched to
+it yet.
+
+Validation: the existing Debug CMake `librecad_tests` target built successfully
+in `/private/tmp/librecad-offset-source-ui-build`. The focused
+`Offset source snapshots own every supported source type` case passed all 25
+assertions, covering all five variants, parabola identity, value ownership,
+unbounded-hyperbola and unsupported-entity refusal, malformed spline knots,
+degenerate spline-points, and common-definition finite validation. Existing
+unrelated compiler warnings remain in legacy tests. `git diff --check` passed.

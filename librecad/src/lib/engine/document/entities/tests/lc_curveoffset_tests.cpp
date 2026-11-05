@@ -33,11 +33,78 @@
 
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
+#include "lc_offsetsource.h"
+#include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_line.h"
 #include "rs_spline.h"
 
 using Catch::Approx;
+
+TEST_CASE("Offset source snapshots own every supported source type") {
+    RS_EllipseData ellipseData;
+    ellipseData.center = {1.0, 2.0};
+    ellipseData.majorP = {4.0, 0.0};
+    ellipseData.ratio = .5;
+    RS_Ellipse ellipse{nullptr, ellipseData};
+
+    RS_SplineData splineData{2, false};
+    splineData.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    splineData.knotslist = {0, 0, 0, 1, 1, 1};
+    splineData.weights = {1, .7, 1};
+    RS_Spline spline{nullptr, splineData};
+
+    LC_SplinePointsData pointsData{false, false};
+    pointsData.useControlPoints = true;
+    pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    LC_SplinePoints points{nullptr, pointsData};
+
+    LC_Parabola parabola{nullptr, LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}};
+    LC_Hyperbola hyperbola{nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}};
+    LC_Hyperbola unbounded{nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5}};
+    RS_Line line{nullptr, RS_LineData{{0, 0}, {1, 0}}};
+
+    const std::array<const RS_Entity*, 5> entities{&ellipse, &spline, &points, &parabola, &hyperbola};
+    const std::array<LC_OffsetSourceGeometry::Kind, 5> kinds{
+        LC_OffsetSourceGeometry::Kind::Ellipse,
+        LC_OffsetSourceGeometry::Kind::Spline,
+        LC_OffsetSourceGeometry::Kind::SplinePoints,
+        LC_OffsetSourceGeometry::Kind::Parabola,
+        LC_OffsetSourceGeometry::Kind::BoundedHyperbola};
+    for (std::size_t i = 0; i < entities.size(); ++i) {
+        auto snapshot = LC_OffsetSourceGeometry::capture(*entities[i]);
+        REQUIRE(snapshot);
+        CHECK(snapshot->kind() == kinds[i]);
+        CHECK(snapshot->isWellFormed());
+    }
+
+    auto capturedParabola = LC_OffsetSourceGeometry::capture(parabola);
+    REQUIRE(capturedParabola);
+    CHECK(std::holds_alternative<LC_ParabolaData>(capturedParabola->value));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(unbounded));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(line));
+
+    auto ownedSpline = LC_OffsetSourceGeometry::capture(spline);
+    REQUIRE(ownedSpline);
+    spline.getData().controlPoints[0] = {99, 99};
+    CHECK(std::get<RS_SplineData>(ownedSpline->value).controlPoints[0] == RS_Vector{0, 0});
+
+    RS_SplineData malformedSplineData = splineData;
+    malformedSplineData.knotslist.pop_back();
+    RS_Spline malformedSpline{nullptr, malformedSplineData};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(malformedSpline));
+
+    LC_SplinePointsData degeneratePointsData{false, false};
+    degeneratePointsData.useControlPoints = true;
+    degeneratePointsData.controlPoints = {{0, 0}};
+    LC_SplinePoints degeneratePoints{nullptr, degeneratePointsData};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(degeneratePoints));
+
+    LC_OffsetSourceDefinition definition{*ownedSpline, 2.0, 1e-4, false};
+    CHECK(definition.isWellFormed());
+    definition.signedDistance = std::numeric_limits<double>::infinity();
+    CHECK_FALSE(definition.isWellFormed());
+}
 
 namespace {
 
