@@ -15840,3 +15840,17 @@ single-cache promotion because that output is not cache-representable.
 
 The focused spline-variant import suite passes 1,484 assertions across three
 cases with both AC1032 adapters enabled. `git diff --check` passes.
+
+## 388. Single-Cache Internal-Knot Rational Spline Promotion
+
+Added an eligible counterpart to W387: a smooth degree-2 rational spline with
+one interior knot and nonuniform weights. Operation 7 produces one canonical
+spline cache and operation 8 validates it; real AC1032 DXF/DWG import promotes
+the carrier to native editable offset geometry while preserving the exact
+typed source and cache. This pairs positive promotion for cache-representable
+internal-knot data with W387's refusal for a three-branch result.
+
+The spline-variant import suite passes 1,957 assertions across four cases.
+The complete worker-kernel suite passes 4,180 assertions across 29 cases. The
+combined spline-variant and typed-source persistence selection passes 2,932
+assertions across five cases; `git diff --check` passes.
