@@ -194,6 +194,8 @@ void RS_Creation::createParallel(const RS_Vector& coord, const double distance, 
         case RS2::EntityCircle:
             createParallelCircle(coord, distance, number, static_cast<RS_Circle*>(e), createdEntities);
             break;
+        case RS2::EntityEllipse:
+        case RS2::EntityPolyline:
         case RS2::EntityParabola:
         case RS2::EntityHyperbola:
         case RS2::EntitySplinePoints:
@@ -404,16 +406,19 @@ void RS_Creation::createParallelCurve(const RS_Vector& coord, const double dista
         e = plain.get();
     }
 
-    // A spline's offset may change type and have several pieces, so each copy
-    // comes from createOffset(). A copy that fails ends the series instead of
+    // A curve offset may change type and have several pieces, so each copy is
+    // independently generated. A failed copy ends the series instead of
     // adding an unchanged clone: a larger distance on the same side fails too.
     for (int i = 1; i <= number; ++i) {
         // the pointer asks for every copy again on every move: a preview is
         // offset within the smaller limits it can afford
-        const std::vector<RS_Entity*> copy =
-            (forPreview && LC_CurveOffset::isSupportedSource(*e))
+        const bool composite = e->rtti() == RS2::EntityPolyline;
+        const std::vector<RS_Entity*> copy = composite
+            ? (forPreview ? LC_CurveOffset::createPreviewOffset(*e, coord, i * distance)
+                          : LC_CurveOffset::createLegacyOffset(*e, coord, i * distance))
+            : (forPreview && LC_CurveOffset::isSupportedSource(*e)
                 ? LC_CurveOffset::createPreviewOffset(*e, coord, i * distance)
-                : e->createOffset(coord, i * distance);
+                : e->createOffset(coord, i * distance));
         if (copy.empty()) {
             break;
         }

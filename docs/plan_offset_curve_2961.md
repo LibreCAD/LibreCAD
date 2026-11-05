@@ -15074,3 +15074,112 @@ has the targeted local validation recorded in W353; the aggregate
 `[lc-offsetcurve]` filter remains an open CI/acceptance gate because its local
 run did not produce a terminal summary. PR review approval and the wider
 roadmap acceptance gates also remain open.
+
+## 355. Source-Type Switching and Complete Production-Family Coverage (2026-11-05)
+
+### Refined user contract
+
+The offset Properties source widget must support choosing a different source
+curve type before selecting the replacement entity. Changing the type filter
+refreshes the candidate list but does not edit the offset definition, cache,
+selection, or drawing. Selecting a live entity of the chosen type captures its
+geometry as an owned tagged value and replaces the source definition and
+generated cache atomically through the existing joined worker-edit path. The
+selected source remains highlightable only after its entity ID is re-resolved
+against the current document. Include `LC_Parabola` as a distinct choice and
+preserve it ahead of the `LC_SplinePoints` base-class test.
+
+“All supported types” means every concrete family admitted by the production
+offset/creation paths and safely representable by the native offset contract,
+not every kind that happens to have a codec tag or appears in a combo box.
+The candidate inventory is ellipse, spline, spline-points, parabola, bounded
+hyperbola, line, arc, circle, and polyline. The final list must be reconciled
+against the family eligibility matrix; unsupported variants (including
+unbounded hyperbolas and unsupported spline/polyline shapes) must be refused
+explicitly and must not be silently coerced.
+
+### Current codebase status
+
+The Properties widget already exposes `cbSourceType` and `cbSource`, links the
+type filter to document entities, captures a selected entity into a tagged
+source definition, and uses the worker-edit path for generalized source
+replacement. Its current filter enumerates all nine tagged kinds
+unconditionally. Existing focused widget coverage demonstrates line,
+parabola identity, and ellipse replacement, but does not establish the full
+nine-family lifecycle or justify advertising every family. Earlier W347 text
+that describes the production widget as ellipse-only is superseded by this
+status; W352's contract remains valid, with the eligibility-gating detail
+below.
+
+The current implementation slice extends `RS_Creation::createParallel()`
+dispatch to ellipse and polyline, and adds a parity test comparing preview and
+committed output to the curve-offset engine. The target built successfully;
+`[lc-offsetcurve][f-actions][parallel]` passed 3,942 assertions/12 cases. This
+closes only that dispatch gap; it does not prove native editable-offset
+eligibility or persistence for those families. Record the commit and remote
+head after the slice is pushed.
+
+### Implementation slices and exit criteria
+
+1. **Freeze production eligibility before changing the UI inventory.** Trace
+   each entity through ordinary offset command admission, `RS_Creation`
+   dispatch, `LC_CurveOffset`, native source capture, worker generation and
+   cache validation, edit/transform/grip behavior, and output cardinality.
+   Include line, arc, circle, ellipse, spline, spline-points, parabola,
+   bounded/unbounded hyperbola, and polyline segment/bulge variants. Add an
+   owning integration test per admitted family and record precise refusal
+   behavior for excluded variants. Preserve parabola identity before its
+   spline-points base class. The current ellipse/polyline dispatch change is
+   one partial finding, not completion of this matrix.
+
+2. **Close the native source lifecycle for every admitted family.** Ensure
+   immutable source capture, worker generation, canonical cache validation,
+   distance/side edits, transforms/grips, clone/undo, and consistency checks
+   all preserve the exact family and its data. Define atomic refusal for
+   multi-piece, lossy, malformed, or otherwise unsupported results. Keep
+   source geometry value-owned; do not make existing offsets depend on a live
+   source entity.
+
+3. **Complete versioned DXF/DWG persistence for the same matrix.** Preserve
+   schema-1 ellipse compatibility. For every newly admitted family, test
+   save, reopen, import, cache revalidation, fallback metadata preservation,
+   and second save in both formats. A family is not UI-eligible merely because
+   its schema-2 tag can be encoded.
+
+4. **Reconcile the widget choices with the proven matrix.** Replace the
+   unconditional enum-range loop with a single explicit family inventory
+   shared with (or checked against) production eligibility. Either complete
+   all families before exposing them, or show unsupported choices as disabled
+   with a specific reason; never offer a selectable family that the
+   replacement transaction will silently reject. Keep the independent type
+   control usable when its candidate list is empty. Changing type alone must
+   have no side effects; selecting an entity must atomically update source kind,
+   source value, and cache. Type-specific details may remain read-only except
+   for the existing ellipse editor until safe editors are separately designed.
+
+5. **Exercise the full cross-type interaction matrix.** Test switching type
+   before picking, empty candidate buckets, same-type and cross-type
+   replacement, every admitted source family, parabola versus generic
+   spline-points, stale/deleted IDs, embedded source not found, highlighting,
+   cancellation/no side effects, worker busy/refusal/cancel, and preview/commit
+   parity. Assert the tagged value and generated cache correspond to the same
+   selected entity and that changing the filter alone leaves them unchanged.
+   Add per-family DXF/DWG round-trip and second-save cases.
+
+6. **Validate and checkpoint in slices.** Run the focused widget tests, source
+   capture/operation tests, ordinary action dispatch tests, worker client and
+   hostile-input tests, and persistence/import suites after their owning slice.
+   Run `git diff --check`, review all supported build variants, then commit each
+   completed slice and record its commit, exact test commands/results, PR head,
+   and exact-head CI status here. The long-running aggregate
+   `[lc-offsetcurve]` filter and external GUI/CI acceptance gates remain open
+   unless they complete with an explicit result.
+
+### Completion rule
+
+This work is complete only when the widget can change type before picking,
+every production-eligible family is correctly selectable and replaceable,
+parabola identity is preserved, all source/cache changes are atomic and
+validated, and each family passes supported DXF/DWG round-trips. The current
+nine-item combo, the existing line/parabola/ellipse widget test, and the
+uncommitted ellipse/polyline ordinary-dispatch fix are partial evidence only.

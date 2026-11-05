@@ -26,6 +26,7 @@
 #include "lc_actiontestsupport.h"
 #include "lc_offsetcurve.h"
 #include "rs_creation.h"
+#include "rs_ellipse.h"
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_modification.h"
@@ -210,6 +211,10 @@ void sameOutput(const Output& a, const Output& b) {
     for (int i = 0; i < a.entities.size(); ++i) sameGeometry(*a.entities[i], *b.entities[i]);
 }
 
+void append(std::vector<RS_Entity*>&& entities, Output& output) {
+    for (auto* entity : entities) output.entities.append(entity);
+}
+
 class ParallelProbe final : public LC_ActionDrawLineParallel {
 public:
     explicit ParallelProbe(LC_ActionContext* context) : LC_ActionDrawLineParallel(context, RS2::ActionDrawLineParallel) {}
@@ -335,6 +340,28 @@ TEST_CASE("F actions direct parallel creation promotes a native chord to the ful
     RS_Creation::createParallel(p, .125, 1, curve->entityAt(0), false, chord.entities);
     sameOutput(chord, owner);
     CHECK(chord.entities.front()->getLength() == Catch::Approx(curve->getLength()));
+}
+
+TEST_CASE("F actions parallel dispatch covers ellipses and composite polylines",
+          "[lc-offsetcurve][f-actions][parallel][source-matrix]") {
+    RS_Ellipse ellipse{nullptr, RS_EllipseData{{0, 0}, {3, 0}, .6, 0, 1.4, false}};
+    RS_Polyline polyline{nullptr, RS_PolylineData{{0, 0}, {2, 2}, false}};
+    polyline.appendVertexs({{{0, 0}, 0.0}, {{2, 0}, 0.0}, {{2, 2}, 0.0}});
+
+    const auto verify = [](RS_Entity& source, const RS_Vector& side) {
+        for (const bool preview : {false, true}) {
+            CAPTURE(preview, source.rtti());
+            Output actual, expected;
+            RS_Creation::createParallel(side, .125, 2, &source, false, actual.entities, preview);
+            for (int copy = 1; copy <= 2; ++copy)
+                append(preview
+                    ? LC_CurveOffset::createPreviewOffset(source, side, copy * .125)
+                    : LC_CurveOffset::createLegacyOffset(source, side, copy * .125), expected);
+            sameOutput(actual, expected);
+        }
+    };
+    verify(ellipse, {0, 4});
+    verify(polyline, {1, -1});
 }
 
 TEST_CASE("F actions native parallel preview uses the ordinary spline preview engine", "[lc-offsetcurve][f-actions][parallel]") {
