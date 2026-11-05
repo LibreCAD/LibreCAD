@@ -176,41 +176,43 @@ TEST_CASE("Hidden layers are saved frozen, turned off or both, as they were read
 }
 
 TEST_CASE("A hidden current layer is saved turned off", "[layers][layer-off]") {
-    // AutoCAD cannot freeze the current layer; LibreCAD lets it be hidden (#3229)
+    // AutoCAD cannot freeze the current layer; LibreCAD lets it be hidden (#3229). A layer stays
+    // shown, as a file with every layer hidden is opened with one shown.
     (void)lc::test::application();
     const QTemporaryDir directory;
     REQUIRE(directory.isValid());
-    for (const RS2::FormatType format : {RS2::FormatDXFRW, RS2::FormatDWG2018}) {
-        CAPTURE(static_cast<int>(format));
-        const bool dwg = format == RS2::FormatDWG2018;
-        const QString path = QDir(directory.path()).filePath(dwg ? "current.dwg" : "current.dxf");
-        {
-            RS_Graphic graphic;
-            graphic.initForNewDocument();
-            for (const char* name : {"Doors", "Walls"}) {
-                auto* layer = new RS_Layer(QString::fromLatin1(name));
-                graphic.addLayer(layer);
-                auto* line = new RS_Line(&graphic, RS_Vector(0, 0), RS_Vector(10, 0));
-                line->setLayer(layer);
-                graphic.addEntity(line);
+    for (const char* current : {"Walls", "0"}) {
+        for (const RS2::FormatType format : {RS2::FormatDXFRW, RS2::FormatDWG2018}) {
+            CAPTURE(current, static_cast<int>(format));
+            const bool dwg = format == RS2::FormatDWG2018;
+            const QString path = QDir(directory.path()).filePath(dwg ? "current.dwg" : "current.dxf");
+            {
+                RS_Graphic graphic;
+                graphic.initForNewDocument();
+                for (const char* name : {"Doors", "Walls"}) {
+                    auto* layer = new RS_Layer(QString::fromLatin1(name));
+                    graphic.addLayer(layer);
+                    auto* line = new RS_Line(&graphic, RS_Vector(0, 0), RS_Vector(10, 0));
+                    line->setLayer(layer);
+                    graphic.addEntity(line);
+                }
+                graphic.activateLayer(QString::fromLatin1(current));
+                REQUIRE(graphic.getActiveLayer() == graphic.findLayer(QString::fromLatin1(current)));
+                graphic.findLayer(QStringLiteral("Doors"))->freeze(true);
+                graphic.getActiveLayer()->freeze(true);
+                REQUIRE(RS_FileIO::instance()->fileExport(graphic, path, format));
             }
-            graphic.activateLayer(QStringLiteral("Walls"));
-            REQUIRE(graphic.getActiveLayer() == graphic.findLayer(QStringLiteral("Walls")));
-            for (const char* name : {"Doors", "Walls"}) {
-                graphic.findLayer(QString::fromLatin1(name))->freeze(true);
-            }
-            REQUIRE(RS_FileIO::instance()->fileExport(graphic, path, format));
+            RS_Graphic reopened;
+            REQUIRE(open(reopened, path, dwg ? RS2::FormatDWG : RS2::FormatDXFRW));
+            RS_Layer* saved = reopened.findLayer(QString::fromLatin1(current));
+            RS_Layer* doors = reopened.findLayer(QStringLiteral("Doors"));
+            REQUIRE(saved != nullptr);
+            REQUIRE(doors != nullptr);
+            CHECK(saved->isFrozen());
+            CHECK(saved->getHiddenAs() == HiddenAs::Off);
+            CHECK(doors->isFrozen());
+            CHECK(doors->getHiddenAs() == HiddenAs::Frozen);
         }
-        RS_Graphic reopened;
-        REQUIRE(open(reopened, path, dwg ? RS2::FormatDWG : RS2::FormatDXFRW));
-        RS_Layer* walls = reopened.findLayer(QStringLiteral("Walls"));
-        RS_Layer* doors = reopened.findLayer(QStringLiteral("Doors"));
-        REQUIRE(walls != nullptr);
-        REQUIRE(doors != nullptr);
-        CHECK(walls->isFrozen());
-        CHECK(walls->getHiddenAs() == HiddenAs::Off);
-        CHECK(doors->isFrozen());
-        CHECK(doors->getHiddenAs() == HiddenAs::Frozen);
     }
 }
 
