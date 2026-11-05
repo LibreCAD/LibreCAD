@@ -15440,3 +15440,18 @@ These are representative closure/segment tests, not the complete legal
 wrapped-knot topology, knot multiplicity, polyline arc orientation, repeated
 vertex, or side/distance sweep. Keep the variant audit and external PR gates
 open.
+
+## 366. Typed-Source Spline Variant File Persistence (2026-11-05)
+
+Expanded the real DXF/DWG schema-2 file round-trip matrix with an unweighted
+degree-1 spline and a wrapped periodic cubic spline with implicit unit weights.
+Both variants now undergo save, reopen, exact tagged-source comparison, and
+second-save comparison in DXF and DWG lanes. The focused persistence test
+passes 792 assertions/1 case; `git diff --check` passes.
+
+Test commit `033be0eec83a93bb8973012d420d17a0862cb72f` is pushed. Exact PR head
+is `033be0eec83a93bb8973012d420d17a0862cb72f`; DWG/DXF Fast, Windows x64, and
+Windows ARM64 checks are in progress, with no result inherited from earlier
+heads. File persistence is now checked for these spline representations, but
+operation-8 native import promotion and exhaustive knot/weight/closure
+variants remain to be audited, along with the broader PR gates.
