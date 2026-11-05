@@ -339,6 +339,48 @@ TEST_CASE("offset worker op8 accepts only the exact canonical source cache",
     CHECK(result::decode(*rejectedWire, rejectedRequest));
 }
 
+TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its cache is canonical",
+          "[lc-offsetcurve][worker-kernel][source-cache][spline-variant]") {
+    RS_Spline periodic{nullptr, RS_SplineData{3, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
+                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
+        periodic.addControlPoint(point);
+    periodic.setClosed(true);
+    auto wrapped = periodic.getData();
+    wrapped.weights.clear();
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{wrapped}, .25, 1e-4, false};
+
+    const req::Request generatedRequest{token, req::GenerateSource{definition, {}}};
+    const auto generatedReply = LC_OffsetWorkerKernel::run(generatedRequest);
+    const auto& generated = native(generatedReply, 7);
+    REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+    REQUIRE(generated.ordinary.size() == 1);
+    REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+    const auto cache = std::get<RS_SplineData>(generated.ordinary.front());
+
+    const req::Request validationRequest{token, req::ValidateSourceCache{cache, definition, {}}};
+    LC_OffsetWorkerKernel::Trace trace;
+    const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest, &trace);
+    const auto& validated = native(validationReply, 8);
+    CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+    CHECK(validated.changed);
+    CHECK(validated.engineRuns == 1);
+    CHECK(trace.computationCompleted);
+    const auto encoded = result::encode(validationReply, validationRequest);
+    REQUIRE(encoded);
+    CHECK(result::decode(*encoded, validationRequest));
+
+    auto altered = cache;
+    altered.controlPoints.front().x += .125;
+    const req::Request alteredRequest{token, req::ValidateSourceCache{altered, definition, {}}};
+    const auto alteredReply = LC_OffsetWorkerKernel::run(alteredRequest);
+    const auto& refused = native(alteredReply, 8);
+    CHECK(refused.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+    CHECK_FALSE(refused.changed);
+}
+
 TEST_CASE("offset child validates original raw cache once without generating or repairing it",
           "[lc-offsetcurve][worker-kernel][raw]") {
     req::ValidateCache op{arcCache(), definition(), .01, {}};

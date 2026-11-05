@@ -541,18 +541,28 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{closedArcPolyline}
     };
 
+    std::optional<RS_SplineData> wrappedCache;
+    std::optional<LC_OffsetSourceDefinition> wrappedDefinition;
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
-        const Req::Request input{token(qint64(i + 1)), Req::GenerateSource{
+        const qint64 requestId = static_cast<qint64>(i + 1);
+        const Req::Request input{token(requestId), Req::GenerateSource{
             LC_OffsetSourceDefinition{sources[i], .25, 1e-4, false}, {}}};
         Receipts receipts;
         REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
         rt.until([&] { return receipts.calls[0] != 0; });
-        const auto& completion = completed(receipts.at(0), qint64(i + 1), 7);
+        const auto& completion = completed(receipts.at(0), requestId, 7);
         const auto& result = std::get<Reply::Native>(completion.reply().result);
         REQUIRE(result.engineStatus);
         CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        if (i == 13) {
+            REQUIRE(result.ordinary.size() == 1);
+            const auto* cache = std::get_if<RS_SplineData>(&result.ordinary.front());
+            REQUIRE(cache);
+            wrappedCache = *cache;
+            wrappedDefinition = std::get<Req::GenerateSource>(input.operation).definition;
+        }
         CHECK_FALSE(completion.native(attributes));
         auto entities = completion.ordinary(attributes);
         REQUIRE(entities);
@@ -614,7 +624,27 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     linear.weights = {1, 1};
     const LC_OffsetSourceDefinition linearDefinition{
         LC_OffsetSourceGeometry{linear}, .25, 0, false};
-    const qint64 linearRequestId = static_cast<qint64>(sources.size() + 1);
+    REQUIRE(wrappedCache);
+    REQUIRE(wrappedDefinition);
+    const qint64 validationId = static_cast<qint64>(sources.size() + 1);
+    const Req::Request validationInput{token(validationId),
+        Req::ValidateSourceCache{*wrappedCache, *wrappedDefinition, {}}};
+    Receipts validationReceipts;
+    REQUIRE(owned.get().submit(validationInput, Client::Mode::Commit,
+        validationReceipts.into(0)));
+    rt.until([&] { return validationReceipts.calls[0] != 0; });
+    auto& validationCompletion = completed(validationReceipts.at(0), validationId, 8);
+    const auto& validation = std::get<Reply::Native>(validationCompletion.reply().result);
+    CHECK(validation.refusal == LC_OffsetCurveRefusal::None);
+    CHECK(validation.changed);
+    auto validatedNative = validationCompletion.nativeValidatedSource(attributes);
+    REQUIRE(validatedNative);
+    REQUIRE(validatedNative->sourceDefinition());
+    CHECK(Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition()) ==
+          Req::Values::encodeSourceDefinition(*wrappedDefinition));
+    exactCache(validatedNative->getData(), *wrappedCache);
+
+    const qint64 linearRequestId = static_cast<qint64>(sources.size() + 2);
     Receipts linearReceipts;
     REQUIRE(owned.get().submit({token(linearRequestId), Req::GenerateSource{linearDefinition, {}}},
         Client::Mode::Commit, linearReceipts.into(0)));
