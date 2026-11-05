@@ -99,6 +99,14 @@ public:
         return m_layerSet.contains(layer);
     }
 
+    // whether the lock controls (icons, check box, Lock all) can lock: see RS_LayerList::canLock()
+    bool canLock(const RS_Layer* layer) const;
+    bool canToggleLock(const RS_Layer* layer) const;
+    bool canLockAny(const QList<RS_Layer*>& layers) const;
+    bool canLockAll() const;
+    bool canToggleLockOfSelection() const;
+    static QString lockUnavailableText();
+
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
     /// how many listeners are registered (a widget that is destroyed while attached must have unregistered)

@@ -29,6 +29,7 @@
 
 #include<iostream>
 
+#include <QObject>
 #include <QSet>
 #include <QtAlgorithms>
 
@@ -429,6 +430,88 @@ RS_LayerList::CurrentLayerLock RS_LayerList::toggleLock(RS_Layer* layer) {
         fireActiveLayerReplaced();
     }
     return outcome;
+}
+
+/**
+ * What the lock controls (the lock icon of the Layer List and the Layer Tree, the property sheet's
+ * Locked, Lock all layers) ask before they offer to lock a layer: locking the current layer needs
+ * another layer that is not locked to take its place, see keepCurrentLayerUnlocked(); without one
+ * the lock is refused, so the control is disabled rather than refusing when it is used.
+ *
+ * @return true if toggleLock() locks the layer: it is a layer of this list, it is not locked, and
+ * it is not the current layer or another layer is not locked
+ */
+bool RS_LayerList::canLock(const RS_Layer* layer) const {
+    if (layer == nullptr || layer->isLocked() || !m_layerSet.contains(const_cast<RS_Layer*>(layer))) {
+        return false;
+    }
+    if (layer != m_activeLayer) {
+        return true;
+    }
+    return bestLayerToActivate(layer, false) != nullptr;
+}
+
+/**
+ * @return what a lock control that canToggleLock() disabled says in its tool tip
+ */
+QString RS_LayerList::lockUnavailableText() {
+    return QObject::tr("The current layer cannot be locked: no other layer is unlocked to take its place.");
+}
+
+/**
+ * @return true if toggleLock() changes the layer: it unlocks a locked layer of this list, and
+ * locks an unlocked one when canLock() says it can
+ */
+bool RS_LayerList::canToggleLock(const RS_Layer* layer) const {
+    if (layer == nullptr || !m_layerSet.contains(const_cast<RS_Layer*>(layer))) {
+        return false;
+    }
+    return layer->isLocked() || canLock(layer);
+}
+
+/**
+ * @return true if locking the given layers together (a group of the Layer Tree, the layers a
+ * lock icon stands for) locks at least one of them
+ */
+bool RS_LayerList::canLockAny(const QList<RS_Layer*>& layers) const {
+    for (const RS_Layer* layer : layers) {
+        if (canLock(layer)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * @return true if lockAll() locks a layer: one that the Layer List dock lists and that canLock()
+ * says can be locked
+ */
+bool RS_LayerList::canLockAll() const {
+    for (const RS_Layer* layer : std::as_const(m_layers)) {
+        if (layer->isVisibleInLayerList() && canLock(layer)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * The Toggle Layer Lock action (menu, toolbar, Layer List menu) toggles the layers selected in the
+ * layer list, or the current layer when none is selected.
+ *
+ * @return true if it changes one of them: it unlocks a locked layer or locks one that canLock()
+ */
+bool RS_LayerList::canToggleLockOfSelection() const {
+    bool anySelected = false;
+    for (const RS_Layer* layer : std::as_const(m_layers)) {
+        if (layer->isVisibleInLayerList() && layer->isSelectedInLayerList()) {
+            anySelected = true;
+            if (canToggleLock(layer)) {
+                return true;
+            }
+        }
+    }
+    return !anySelected && canToggleLock(m_activeLayer);
 }
 
 /**

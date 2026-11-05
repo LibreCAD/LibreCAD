@@ -81,6 +81,7 @@ QModelIndex QG_LayerModel::index (const int row, const int column, const QModelI
 
 void QG_LayerModel::setLayerList(const RS_LayerList* ll) {
     beginResetModel();
+    m_layers = ll;
     m_listLayer.clear();
     if (ll == nullptr) {
         endResetModel();
@@ -96,6 +97,14 @@ void QG_LayerModel::setLayerList(const RS_LayerList* ll) {
 
     //called to force redraw
     endResetModel();
+}
+
+/**
+ * @return false if the lock icon of the layer is to be disabled: it is the current layer, and
+ * no other layer is unlocked to take its place (RS_LayerList::canToggleLock())
+ */
+bool QG_LayerModel::isLockAvailable(const RS_Layer* layer) const {
+    return m_layers == nullptr || layer == nullptr || m_layers->canToggleLock(layer);
 }
 
 RS_Layer *QG_LayerModel::getLayer(const int row) const {
@@ -155,6 +164,11 @@ QVariant QG_LayerModel::data( const QModelIndex & index, const int role ) const{
         case Qt::DisplayRole:
             if (COLUMN_NAME == col) {
                 return layer->getName();
+            }
+            break;
+        case Qt::ToolTipRole:
+            if (COLUMN_LOCKED == col && !isLockAvailable(layer)) {
+                return RS_LayerList::lockUnavailableText();
             }
             break;
         case Qt::BackgroundRole:
@@ -397,6 +411,7 @@ void QG_LayerWidget::updateWidget() {
     m_layerModel->setLayerList(m_layerList); // allow a null layerList; this clears the widget
     m_layerView->resizeRowsToContents();
     m_layerView->verticalScrollBar()->setValue(yPos);
+    updateLockActions();
 
     if (m_layerList == nullptr) {
         RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr layerList");
@@ -517,7 +532,9 @@ void QG_LayerWidget::slotActivated(const QModelIndex& layerIdx /*const QString& 
             m_actionHandler->setCurrentAction(RS2::ActionLayersToggleView, lay);
             break;
         case QG_LayerModel::COLUMN_LOCKED:
-            m_actionHandler->setCurrentAction(RS2::ActionLayersToggleLock, lay);
+            if (m_layerList->canToggleLock(lay)) {
+                m_actionHandler->setCurrentAction(RS2::ActionLayersToggleLock, lay);
+            }
             break;
         case QG_LayerModel::COLUMN_PRINT:
             m_actionHandler->setCurrentAction(RS2::ActionLayersTogglePrint, lay);
@@ -555,6 +572,26 @@ void QG_LayerWidget::slotSelectionChanged(
             selectionModel->select(QItemSelection(index, index), QItemSelectionModel::Deselect);
         }
     }
+    updateLockActions();
+}
+
+/**
+ * Lock all layers and Toggle layer lock (the toolbar, the menus, this widget's buttons and menu) are
+ * enabled when they would lock or unlock a layer: locking the current layer, which is all that
+ * is left to lock when no other layer is unlocked, is refused (RS_LayerList::canLockAll(),
+ * canToggleLockOfSelection()). Called whenever what they depend on may have changed: the layers, the
+ * current layer, the selected layers, the filter that decides which layers this widget lists.
+ */
+void QG_LayerWidget::updateLockActions() const {
+    if (m_layerList == nullptr || m_actionGroupManager == nullptr) {
+        return;
+    }
+    if (QAction* lockAll = m_actionGroupManager->getActionByType(RS2::ActionLayersLockAll)) {
+        lockAll->setEnabled(m_layerList->canLockAll());
+    }
+    if (QAction* toggleLock = m_actionGroupManager->getActionByType(RS2::ActionLayersToggleLock)) {
+        toggleLock->setEnabled(m_layerList->canToggleLockOfSelection());
+    }
 }
 
 
@@ -580,6 +617,7 @@ void QG_LayerWidget::slotUpdateLayerList() {
     }
 
     restoreSelections();
+    updateLockActions();
 }
 
 void QG_LayerWidget::addMenuItem(QMenu* contextMenu, const RS2::ActionType actionType) const {

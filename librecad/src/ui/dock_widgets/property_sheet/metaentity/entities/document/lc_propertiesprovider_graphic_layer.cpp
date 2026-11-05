@@ -214,8 +214,14 @@ void LC_PropertiesProviderGraphicLayer::createLocked(RS_Graphic* graphic, LC_Pro
         e->toggleLayerLock(layer);
     };
 
-    const LC_Property::Names names = {"layerLocked", tr("Locked"), tr("Defines whether active layer is locked or not")};
-    createDirectDelegatedBool<RS_Graphic>(cont, names, funGet, funSet, graphic);
+    // locking the current layer needs another layer that is not locked to take its place: without
+    // one the box is read-only, and says why (RS_LayerList::canLock())
+    const bool available = graphic->getLayerList()->canToggleLock(graphic->getActiveLayer());
+    const QString description = tr("Defines whether active layer is locked or not");
+    const LC_Property::Names names = {"layerLocked", tr("Locked"),
+                                      available ? description : description + "\n" + RS_LayerList::lockUnavailableText()};
+    auto* property = createDirectDelegatedBool<RS_Graphic>(cont, names, funGet, funSet, graphic);
+    property->setReadOnly(!available);
 }
 
 void LC_PropertiesProviderGraphicLayer::createPrintable(RS_Graphic* graphic, LC_PropertyContainer* const cont) {

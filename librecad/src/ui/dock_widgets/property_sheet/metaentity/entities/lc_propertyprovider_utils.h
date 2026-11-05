@@ -99,8 +99,9 @@ namespace LC_PropertyProviderUtils {
         property->setValueStorage(valueStorage, true);
     }
 
+    /// @return the property, which the container owns, for a caller that has more to say about it
     template <typename EntityClass>
-    void createDirectDelegatedBool(LC_PropertyContainer* container, const LC_Property::Names& names,
+    LC_PropertyBool* createDirectDelegatedBool(LC_PropertyContainer* container, const LC_Property::Names& names,
                                    const typename LC_EntityPropertyValueDirectEntityDelegate<bool, EntityClass>::FunValueGet &funGet,
                                    const std::function<void(const bool&, EntityClass*)> &funSet, EntityClass* entity) {
         auto* property = new LC_PropertyBool(container, false);
@@ -108,6 +109,7 @@ namespace LC_PropertyProviderUtils {
         createDirectDelegatedStorage<bool, EntityClass>(funGet, funSet, entity, property);
         property->setReadOnly(funSet == nullptr);
         container->addChildProperty(property);
+        return property;
     }
 
     template <typename EntityClass>

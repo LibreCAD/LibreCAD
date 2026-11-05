@@ -248,6 +248,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     but->setToolTip(tr("Lock all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::lockAllLayers);
     layButtons->addWidget(but);
+    m_btnLockAll = but;
 
     // add layer:
     but = new QToolButton(this);
@@ -333,6 +334,8 @@ void LC_LayerTreeWidget::update() const {
         // layer is activated by our widget, not externally via listener, so we need just modify active
         // path for currently active layer and do not rebuild existing model
         m_layerTreeModel->proceedActiveLayerChanged(m_layerList);
+        // which lock icons are disabled follows the current layer
+        m_layerTreeView->viewport()->update();
     } else {
         // complete rebuild of the model and update of UI
         const int yPos = m_layerTreeView->verticalScrollBar()->value();
@@ -350,7 +353,23 @@ void LC_LayerTreeWidget::update() const {
         m_layerTreeView->viewport()->update();
     }
 
+    if (m_btnLockAll != nullptr) {
+        m_btnLockAll->setEnabled(canLockAllLayers());
+    }
+
     RS_DEBUG->print("QG_LayerWidget::update(): OK");
+}
+
+/**
+ * @return true if Lock All Layers locks a layer: it locks the layers the tree lists, and the
+ * current layer is not locked when no other layer is unlocked (RS_LayerList::canLockAny())
+ */
+bool LC_LayerTreeWidget::canLockAllLayers() const {
+    if (m_layerList == nullptr) {
+        return false;
+    }
+    const LC_LayerTreeItemAcceptor acceptAll;
+    return m_layerList->canLockAny(m_layerTreeModel->collectLayers(acceptAll));
 }
 
 /**
@@ -480,6 +499,9 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
                 break;
             }
             case LC_LayerTreeModel::COLUMN_LOCKED:{
+                 if (!m_layerTreeModel->isLockAvailable(layerItem)) {
+                     break;
+                 }
                  if (layerItem->isLocked()){
                      layerItem->collectLayers(layersToDisable, acceptAll);
                  }
@@ -561,6 +583,9 @@ void LC_LayerTreeWidget::slotTreeClicked(const QModelIndex &layerIdx /*const QSt
                 break;
             }
             case LC_LayerTreeModel::COLUMN_LOCKED:
+                if (!m_layerTreeModel->isLockAvailable(layerItem)) {
+                    break;
+                }
                 if (normalLayerWithChildren){
                     if (layerItem->isLocked()){
                         layerItem->collectLayers(layersToDisable, acceptAll, true);
@@ -639,7 +664,7 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
 
         using ActionMemberFunc = void (LC_LayerTreeWidget::*)();
         const auto addActionFunc = [this, &contextMenu](const QString& iconName, const QString& name, ActionMemberFunc func) {
-            contextMenu->addAction(QIcon(":/icons/" + iconName + ".lci"), name, this, func);
+            return contextMenu->addAction(QIcon(":/icons/" + iconName + ".lci"), name, this, func);
         };
 
         const QModelIndex index = m_layerTreeView->indexAt(point);
@@ -761,7 +786,8 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
         addActionFunc("visible_all",   tr("&Defreeze All Layers"),  &LC_LayerTreeWidget::showAllLayers);
         addActionFunc("not_visible_all",tr("&Hide all layers except current"), &LC_LayerTreeWidget::hideAllLayers);
         addActionFunc("unlocked", tr("&Unlock All Layers"), &LC_LayerTreeWidget::unlockAllLayers);
-        addActionFunc("locked", tr("&Lock All Layers"), &LC_LayerTreeWidget::lockAllLayers);
+        QAction* lockAllAction = addActionFunc("locked", tr("&Lock All Layers"), &LC_LayerTreeWidget::lockAllLayers);
+        lockAllAction->setEnabled(canLockAllLayers());
         addActionFunc("print", tr("Enable &Printing All Layers"),  &LC_LayerTreeWidget::printAllLayers);
         addActionFunc("noprint", tr("&Disable Printing All Layers"), &LC_LayerTreeWidget::noPrintAllLayers);
         contextMenu->addSeparator();

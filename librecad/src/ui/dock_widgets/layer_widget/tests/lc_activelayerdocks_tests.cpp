@@ -29,9 +29,13 @@
 #include <utility>
 
 #include <QAbstractItemModel>
+#include <QAction>
 #include <QFont>
+#include <QItemSelectionModel>
+#include <QLineEdit>
 #include <QStringList>
 #include <QTableView>
+#include <QToolButton>
 #include <QTreeView>
 
 #include "lc_actiongroupmanager.h"
@@ -45,6 +49,7 @@
 #include "rs_dialogfactoryinterface.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_layerlist.h"
 
 namespace {
 
@@ -91,14 +96,33 @@ struct Drawing {
     }
 };
 
-/// the index of the layer's cell of that kind in a Layer Tree model, which has no nesting for these names
-QModelIndex treeIndex(const LC_LayerTreeModel& model, const RS_Layer* layer, const int columnKind) {
+int treeColumn(const LC_LayerTreeModel& model, const int columnKind) {
     int column = -1;
     for (int c = 0; c < model.columnCount(QModelIndex{}); ++c) {
         if (model.translateColumn(c) == columnKind) {
             column = c;
         }
     }
+    return column;
+}
+
+/// the index of the cell of that kind of the group (a virtual layer, as "Group" is for the layers
+/// "Group-Walls" and "Group-Doors") in a Layer Tree model
+QModelIndex treeGroupIndex(const LC_LayerTreeModel& model, const QString& group, const int columnKind) {
+    const int column = treeColumn(model, columnKind);
+    for (int row = 0; row < model.rowCount(QModelIndex{}); ++row) {
+        const QModelIndex index = model.index(row, column, QModelIndex{});
+        LC_LayerTreeItem* item = model.getItemForIndex(index);
+        if (item != nullptr && item->isVirtual() && item->getName() == group) {
+            return index;
+        }
+    }
+    return {};
+}
+
+/// the index of the layer's cell of that kind in a Layer Tree model, which has no nesting for these names
+QModelIndex treeIndex(const LC_LayerTreeModel& model, const RS_Layer* layer, const int columnKind) {
+    const int column = treeColumn(model, columnKind);
     for (int row = 0; row < model.rowCount(QModelIndex{}); ++row) {
         const QModelIndex index = model.index(row, column, QModelIndex{});
         const LC_LayerTreeItem* item = model.getItemForIndex(index);
@@ -114,6 +138,23 @@ QModelIndex treeNameIndex(const LC_LayerTreeModel& model, const RS_Layer* layer)
 }
 
 const QString lockedMessage = QStringLiteral("Layer \"Doors\" is locked: unlock it to make it the current layer.");
+
+/// the Layer Tree's button of that tool tip
+QToolButton* treeButton(const LC_LayerTreeWidget& widget, const QString& toolTip) {
+    for (QToolButton* button : widget.findChildren<QToolButton*>()) {
+        if (button->toolTip() == toolTip) {
+            return button;
+        }
+    }
+    return nullptr;
+}
+
+/// locks every layer but "Walls", the current layer, which no lock can then take: "0", "Construction"
+/// and "Doors"
+void lockAllButWalls(Drawing& d) {
+    RS_Layer* zero = d.m_graphic.findLayer(QStringLiteral("0"));
+    d.m_graphic.setLockLayers({}, {zero, d.m_construction});
+}
 
 } // namespace
 
@@ -324,4 +365,223 @@ TEST_CASE("The status bar names a layer the Layer List makes current as it is ad
     CHECK(d.m_graphic.getActiveLayer() == roof);
     CHECK(label.lActiveLayerName->text().toStdString() == "Roof");
     CHECK(label.hiddenIcon()->isVisibleTo(&label));
+}
+
+TEST_CASE("The Layer List disables the lock icon of the current layer when no other layer is unlocked", "[gui][layers][lock][3229][offer]") {
+    Drawing d;
+    LC_ActionGroupManager actions(nullptr);
+    QG_LayerWidget widget(&actions, nullptr, nullptr);
+    widget.setGraphicView(&d.m_view);
+    auto* table = widget.findChild<QTableView*>();
+    REQUIRE(table != nullptr);
+    auto* model = dynamic_cast<QG_LayerModel*>(table->model());
+    REQUIRE(model != nullptr);
+    CommandMessages command;
+    RS_Layer* zero = d.m_graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+    const auto lockCell = [model](const RS_Layer* layer) {
+        const QModelIndex name = model->getIndex(const_cast<RS_Layer*>(layer));
+        return model->index(name.row(), QG_LayerModel::COLUMN_LOCKED, QModelIndex{});
+    };
+    const auto enabled = [model, &lockCell](const RS_Layer* layer) {
+        return model->flags(lockCell(layer)).testFlag(Qt::ItemIsEnabled);
+    };
+
+    SECTION("while another layer is unlocked every lock icon is enabled") {
+        for (const RS_Layer* layer : {zero, d.m_construction, d.m_doors, d.m_walls}) {
+            CAPTURE(layer->getName());
+            CHECK(enabled(layer));
+            CHECK_FALSE(model->data(lockCell(layer), Qt::ToolTipRole).isValid());
+        }
+    }
+
+    SECTION("with every other layer locked the current layer's is disabled, and says why") {
+        lockAllButWalls(d);
+        REQUIRE(d.m_doors->isLocked());
+        REQUIRE_FALSE(d.m_walls->isLocked());
+        CHECK_FALSE(enabled(d.m_walls));
+        CHECK(model->data(lockCell(d.m_walls), Qt::ToolTipRole).toString() == RS_LayerList::lockUnavailableText());
+        // the others are locked: their icons unlock them
+        for (const RS_Layer* layer : {zero, d.m_construction, d.m_doors}) {
+            CAPTURE(layer->getName());
+            CHECK(enabled(layer));
+        }
+        // a click on the disabled icon does nothing (there is no action handler to run it here)
+        widget.slotActivated(lockCell(d.m_walls));
+        CHECK_FALSE(d.m_walls->isLocked());
+        CHECK(command.m_messages.isEmpty());
+    }
+
+    SECTION("it is enabled again when another layer is unlocked") {
+        lockAllButWalls(d);
+        REQUIRE_FALSE(enabled(d.m_walls));
+        d.m_graphic.toggleLayerLock(zero);
+        CHECK_FALSE(zero->isLocked());
+        CHECK(enabled(d.m_walls));
+        CHECK_FALSE(model->data(lockCell(d.m_walls), Qt::ToolTipRole).isValid());
+    }
+
+    SECTION("a drawing of one layer") {
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        lc::test::TestGraphicView view;
+        view.setDocument(&graphic);
+        QG_LayerWidget single(&actions, nullptr, nullptr);
+        single.setGraphicView(&view);
+        auto* singleModel = dynamic_cast<QG_LayerModel*>(single.findChild<QTableView*>()->model());
+        REQUIRE(singleModel != nullptr);
+        RS_Layer* only = graphic.findLayer(QStringLiteral("0"));
+        const QModelIndex name = singleModel->getIndex(only);
+        const QModelIndex cell = singleModel->index(name.row(), QG_LayerModel::COLUMN_LOCKED, QModelIndex{});
+        CHECK_FALSE(singleModel->flags(cell).testFlag(Qt::ItemIsEnabled));
+        // a layer added is current: "0" is no longer the current layer, and can be locked
+        graphic.addLayer(new RS_Layer(QStringLiteral("Added")));
+        const QModelIndex cellAfter = singleModel->index(singleModel->getIndex(only).row(), QG_LayerModel::COLUMN_LOCKED, QModelIndex{});
+        CHECK(singleModel->flags(cellAfter).testFlag(Qt::ItemIsEnabled));
+    }
+}
+
+TEST_CASE("The Layer Tree disables the lock icon and Lock all when no other layer is unlocked", "[gui][layers][lock][3229][offer]") {
+    Drawing d;
+    LC_LayerTreeWidget widget(nullptr, nullptr);
+    widget.setGraphicView(&d.m_view);
+    auto* tree = widget.findChild<QTreeView*>();
+    REQUIRE(tree != nullptr);
+    auto* model = dynamic_cast<LC_LayerTreeModel*>(tree->model());
+    REQUIRE(model != nullptr);
+    CommandMessages command;
+    RS_Layer* zero = d.m_graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+    QToolButton* lockAll = treeButton(widget, QStringLiteral("Lock all layers"));
+    REQUIRE(lockAll != nullptr);
+    // the tree is rebuilt for each change: look the cell up again
+    const auto lockCell = [&model](const RS_Layer* layer) { return treeIndex(*model, layer, LC_LayerTreeModel::COLUMN_LOCKED); };
+    const auto enabled = [&](const RS_Layer* layer) {
+        const QModelIndex cell = lockCell(layer);
+        REQUIRE(cell.isValid());
+        return model->flags(cell).testFlag(Qt::ItemIsEnabled);
+    };
+
+    SECTION("while another layer is unlocked the lock icons and Lock all are enabled") {
+        for (const RS_Layer* layer : {zero, d.m_construction, d.m_doors, d.m_walls}) {
+            CAPTURE(layer->getName());
+            CHECK(enabled(layer));
+        }
+        CHECK(lockAll->isEnabled());
+    }
+
+    SECTION("with every other layer locked the current layer's icon and Lock all are disabled") {
+        lockAllButWalls(d);
+        REQUIRE(d.m_doors->isLocked());
+        CHECK_FALSE(enabled(d.m_walls));
+        CHECK(model->data(lockCell(d.m_walls), Qt::ToolTipRole).toString() == RS_LayerList::lockUnavailableText());
+        for (const RS_Layer* layer : {zero, d.m_construction, d.m_doors}) {
+            CAPTURE(layer->getName());
+            CHECK(enabled(layer));
+        }
+        CHECK_FALSE(lockAll->isEnabled());
+        // a click on the disabled icon does nothing (there is no action handler to run it here)
+        widget.slotTreeClicked(lockCell(d.m_walls));
+        CHECK_FALSE(d.m_walls->isLocked());
+        CHECK(command.m_messages.isEmpty());
+    }
+
+    SECTION("they are enabled again when another layer is unlocked") {
+        lockAllButWalls(d);
+        REQUIRE_FALSE(enabled(d.m_walls));
+        d.m_graphic.toggleLayerLock(zero);
+        CHECK(enabled(d.m_walls));
+        CHECK_FALSE(model->data(lockCell(d.m_walls), Qt::ToolTipRole).isValid());
+        CHECK(lockAll->isEnabled());
+    }
+}
+
+TEST_CASE("The toolbar and menu actions Lock all and Toggle layer lock are enabled when they would lock or unlock", "[gui][layers][lock][3229][offer]") {
+    Drawing d;
+    LC_ActionGroupManager actions(nullptr);
+    QAction lockAllAction;
+    QAction toggleLockAction;
+    LC_ActionGroupManager::associateQActionWithActionType(&lockAllAction, RS2::ActionLayersLockAll);
+    LC_ActionGroupManager::associateQActionWithActionType(&toggleLockAction, RS2::ActionLayersToggleLock);
+    actions.getActionsMap().insert(QStringLiteral("LayersLockAll"), &lockAllAction);
+    actions.getActionsMap().insert(QStringLiteral("LayersToggleLock"), &toggleLockAction);
+    actions.completeInit();
+    QG_LayerWidget widget(&actions, nullptr, nullptr);
+    widget.setGraphicView(&d.m_view);
+    auto* table = widget.findChild<QTableView*>();
+    REQUIRE(table != nullptr);
+    auto* model = dynamic_cast<QG_LayerModel*>(table->model());
+    REQUIRE(model != nullptr);
+    CommandMessages command;
+    RS_Layer* zero = d.m_graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+
+    CHECK(lockAllAction.isEnabled());
+    CHECK(toggleLockAction.isEnabled());
+
+    // nothing is left to lock but the current layer
+    lockAllButWalls(d);
+    CHECK_FALSE(lockAllAction.isEnabled());
+    CHECK_FALSE(toggleLockAction.isEnabled());
+
+    // selecting a locked layer gives Toggle layer lock something to unlock
+    table->selectionModel()->select(model->getIndex(d.m_doors), QItemSelectionModel::Select);
+    CHECK(d.m_doors->isSelectedInLayerList());
+    CHECK(toggleLockAction.isEnabled());
+    CHECK_FALSE(lockAllAction.isEnabled());
+    table->selectionModel()->select(model->getIndex(d.m_doors), QItemSelectionModel::Deselect);
+    CHECK_FALSE(d.m_doors->isSelectedInLayerList());
+    CHECK_FALSE(toggleLockAction.isEnabled());
+
+    // unlocking a layer gives both something to do again
+    d.m_graphic.toggleLayerLock(zero);
+    CHECK(lockAllAction.isEnabled());
+    CHECK(toggleLockAction.isEnabled());
+
+    // Lock all locks the layers the dock lists: with a filter that lists only a locked layer it
+    // locks nothing, though "0" is not locked, and with the filter cleared it does again
+    REQUIRE_FALSE(zero->isLocked());
+    widget.getMatchLayerName()->setText(QStringLiteral("Doors"));
+    CHECK_FALSE(lockAllAction.isEnabled());
+    widget.getMatchLayerName()->clear();
+    CHECK(lockAllAction.isEnabled());
+}
+
+TEST_CASE("The Layer Tree disables the lock icon of a group whose unlocked layer cannot be locked", "[gui][layers][lock][3229][offer]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* walls = new RS_Layer(QStringLiteral("Group-Walls"));
+    auto* doors = new RS_Layer(QStringLiteral("Group-Doors"));
+    graphic.addLayer(walls);
+    graphic.addLayer(doors);
+    graphic.activateLayer(walls);
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    LC_LayerTreeWidget widget(nullptr, nullptr);
+    widget.setGraphicView(&view);
+    auto* tree = widget.findChild<QTreeView*>();
+    REQUIRE(tree != nullptr);
+    auto* model = dynamic_cast<LC_LayerTreeModel*>(tree->model());
+    REQUIRE(model != nullptr);
+    CommandMessages command;
+    RS_Layer* zero = graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+    const auto groupCell = [&model] { return treeGroupIndex(*model, QStringLiteral("Group"), LC_LayerTreeModel::COLUMN_LOCKED); };
+    REQUIRE(groupCell().isValid());
+    CHECK(model->flags(groupCell()).testFlag(Qt::ItemIsEnabled));
+
+    // "Walls", the current layer, is the only layer left unlocked: the group has nothing to lock
+    graphic.setLockLayers({}, {zero, doors});
+    REQUIRE(groupCell().isValid());
+    CHECK_FALSE(model->flags(groupCell()).testFlag(Qt::ItemIsEnabled));
+    CHECK(model->data(groupCell(), Qt::ToolTipRole).toString() == RS_LayerList::lockUnavailableText());
+    widget.slotTreeClicked(groupCell());
+    CHECK_FALSE(walls->isLocked());
+    CHECK(command.m_messages.isEmpty());
+
+    // another layer unlocked: the group locks "Walls", and "0" takes its place
+    graphic.toggleLayerLock(zero);
+    REQUIRE(groupCell().isValid());
+    CHECK(model->flags(groupCell()).testFlag(Qt::ItemIsEnabled));
 }

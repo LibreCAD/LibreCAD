@@ -72,8 +72,12 @@ public:
     ~QG_LayerModel() override = default;
 
     Qt::ItemFlags flags(const QModelIndex& index) const override {
-        if (index.column() == 5) {
+        if (index.column() == COLUMN_NAME) {
             return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+        }
+        if (index.column() == COLUMN_LOCKED && !isLockAvailable(getLayer(index.row()))) {
+            // the lock icon of a layer that cannot be locked is shown disabled, and takes no click
+            return Qt::NoItemFlags;
         }
         return Qt::ItemIsEnabled;
     }
@@ -89,6 +93,7 @@ public:
     void setLayerList(const RS_LayerList* ll);
     RS_Layer* getLayer(int row) const;
     QModelIndex getIndex(RS_Layer* lay) const;
+    bool isLockAvailable(const RS_Layer* layer) const;
 
     RS_Layer* getActiveLayer() const {
         return m_activeLayer;
@@ -101,6 +106,8 @@ public:
 
 private:
     QList<RS_Layer*> m_listLayer;
+    /// the list the layers are of, to ask whether a layer can be locked; null if there is none
+    const RS_LayerList* m_layers{nullptr};
     QIcon m_iconLayerVisible;
     QIcon m_iconLayerHidden;
     QIcon m_iconLayerDefreeze;
@@ -185,6 +192,7 @@ protected:
     void keyPressEvent(QKeyEvent* e) override;
     void setLayerList(RS_LayerList* layerList, bool showByBlock);
     void updateFiltering();
+    void updateLockActions() const;
     void addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType);
     void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType) const;
     QLayout* getTopLevelLayout() const override;

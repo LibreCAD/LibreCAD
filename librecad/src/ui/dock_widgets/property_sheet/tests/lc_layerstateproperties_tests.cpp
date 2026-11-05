@@ -29,6 +29,7 @@
 #include "lc_property_container.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_layerlist.h"
 
 namespace {
 
@@ -108,4 +109,49 @@ TEST_CASE("Checking Visible layer and Locked in the sheet shows and hides, locks
     CHECK(walls->isLocked());
     CHECK(graphic.getActiveLayer() == graphic.findLayer(QStringLiteral("0")));
     CHECK_FALSE(locked->value());
+}
+
+TEST_CASE("The sheet's Locked is read-only when no other layer is unlocked, and says why", "[gui][layers][properties][3229][offer]") {
+    // locking the current layer needs another layer that is not locked to take its place
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    LayerStateProvider provider;
+    const auto locked = [&provider, &graphic](LC_PropertyContainer& container) {
+        provider.fill(&container, &graphic);
+        LC_PropertyBool* property = boolProperty(container, QStringLiteral("$layerLocked"));
+        REQUIRE(property != nullptr);
+        return property;
+    };
+
+    SECTION("the only layer of a drawing") {
+        LC_PropertyContainer container;
+        LC_PropertyBool* property = locked(container);
+        CHECK_FALSE(property->isEditableByUser());
+        CHECK(property->getDescription().contains(RS_LayerList::lockUnavailableText()));
+        // the other boxes of the sheet are not affected
+        LC_PropertyBool* visible = boolProperty(container, QStringLiteral("$layerVisible"));
+        REQUIRE(visible != nullptr);
+        CHECK(visible->isEditableByUser());
+    }
+
+    SECTION("another layer that is not locked") {
+        RS_Layer* walls = new RS_Layer(QStringLiteral("Walls"));
+        graphic.addLayer(walls);
+        graphic.activateLayer(walls);
+        LC_PropertyContainer container;
+        LC_PropertyBool* property = locked(container);
+        CHECK(property->isEditableByUser());
+        CHECK_FALSE(property->getDescription().contains(RS_LayerList::lockUnavailableText()));
+
+        // the sheet is filled again when a layer is locked: nothing is left to take the place of "Walls"
+        graphic.toggleLayerLock(graphic.findLayer(QStringLiteral("0")));
+        LC_PropertyContainer refilled;
+        CHECK_FALSE(locked(refilled)->isEditableByUser());
+
+        // and when one is unlocked
+        graphic.toggleLayerLock(graphic.findLayer(QStringLiteral("0")));
+        LC_PropertyContainer again;
+        CHECK(locked(again)->isEditableByUser());
+    }
 }

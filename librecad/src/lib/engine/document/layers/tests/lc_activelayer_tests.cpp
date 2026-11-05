@@ -43,6 +43,7 @@
 #include "rs_fileio.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_layerlist.h"
 #include "rs_layerlistlistener.h"
 #include "rs_line.h"
 
@@ -419,6 +420,156 @@ TEST_CASE("Locking or unlocking other layers leaves the current layer alone", "[
     CHECK(command.m_messages.isEmpty());
     CHECK(f.m_activations.m_replaced.isEmpty());
     CHECK(f.m_activations.m_activated.isEmpty());
+}
+
+TEST_CASE("Locking is offered exactly when it would lock a layer", "[layers][active][3229][lock][offer]") {
+    // what the lock icons, the Locked box and Lock all ask before they offer to lock: the lock the
+    // engine would refuse (the current layer, with no other layer unlocked) is not offered
+    Layers f;
+    RS_LayerList* list = f.m_graphic.getLayerList();
+    REQUIRE(list != nullptr);
+    CommandMessages command;
+
+    SECTION("every layer can be locked while another layer is unlocked, the current layer too") {
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors, f.m_walls}) {
+            CAPTURE(layer->getName());
+            CHECK(list->canLock(layer));
+            CHECK(list->canToggleLock(layer));
+        }
+        CHECK(list->canLockAll());
+        CHECK(list->canToggleLockOfSelection());
+        CHECK(list->canLockAny({f.m_walls}));
+    }
+
+    SECTION("the current layer is not offered when every other layer is locked") {
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors}) {
+            layer->lock(true);
+        }
+        CHECK_FALSE(list->canLock(f.m_walls));
+        CHECK_FALSE(list->canToggleLock(f.m_walls));
+        CHECK_FALSE(list->canLockAny({f.m_walls}));
+        CHECK_FALSE(list->canLockAny({f.m_walls, f.m_doors}));
+        CHECK_FALSE(list->canLockAll());
+        CHECK_FALSE(list->canToggleLockOfSelection());
+        // a locked layer is not locked again, but it can be unlocked
+        CHECK_FALSE(list->canLock(f.m_doors));
+        CHECK(list->canToggleLock(f.m_doors));
+        // and the engine does refuse it
+        f.m_graphic.toggleLayerLock(f.m_walls);
+        CHECK_FALSE(f.m_walls->isLocked());
+        CHECK(command.m_messages == QStringList{keptMessage});
+    }
+
+    SECTION("it is offered again as soon as another layer is unlocked") {
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors}) {
+            layer->lock(true);
+        }
+        REQUIRE_FALSE(list->canLock(f.m_walls));
+        f.m_graphic.toggleLayerLock(f.m_zero);
+        CHECK(list->canLock(f.m_walls));
+        CHECK(list->canLockAll());
+        CHECK(list->canToggleLockOfSelection());
+    }
+
+    SECTION("a hidden layer that is not locked can take the place of the current layer") {
+        f.m_zero->lock(true);
+        f.m_doors->lock(true);
+        f.m_construction->freeze(true);
+        CHECK(list->canLock(f.m_walls));
+        f.m_graphic.toggleLayerLock(f.m_walls);
+        CHECK(f.m_walls->isLocked());
+        CHECK(f.m_graphic.getActiveLayer() == f.m_construction);
+    }
+
+    SECTION("a layer that is not the current one is offered whatever the others are") {
+        f.m_construction->lock(true);
+        f.m_doors->lock(true);
+        REQUIRE_FALSE(f.m_zero->isLocked());
+        CHECK(list->canLock(f.m_zero));
+        CHECK(list->canLockAny({f.m_zero}));
+        f.m_graphic.toggleLayerLock(f.m_zero);
+        CHECK(f.m_zero->isLocked());
+        CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+    }
+
+    SECTION("a drawing opened with every layer locked, the current layer too") {
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors, f.m_walls}) {
+            layer->lock(true);
+        }
+        REQUIRE(f.m_graphic.getActiveLayer() == f.m_walls);
+        // the current layer can be unlocked, and nothing else is offered to lock
+        CHECK(list->canToggleLock(f.m_walls));
+        CHECK_FALSE(list->canLock(f.m_walls));
+        CHECK_FALSE(list->canLockAll());
+        f.m_zero->lock(false);
+        // a layer that is not the current one can be locked, as the engine does: the current layer is
+        // locked already, so it is left as it is
+        CHECK(list->canLock(f.m_zero));
+        CHECK(list->canLockAll());
+        f.m_graphic.toggleLayerLock(f.m_zero);
+        CHECK(f.m_zero->isLocked());
+        CHECK(command.m_messages.isEmpty());
+    }
+
+    SECTION("the only layer of a new drawing") {
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        RS_LayerList* only = graphic.getLayerList();
+        RS_Layer* zero = graphic.findLayer(QStringLiteral("0"));
+        REQUIRE(zero != nullptr);
+        CHECK_FALSE(only->canLock(zero));
+        CHECK_FALSE(only->canToggleLock(zero));
+        CHECK_FALSE(only->canLockAll());
+        CHECK_FALSE(only->canToggleLockOfSelection());
+    }
+
+    SECTION("a layer that is not in the list, and no layer") {
+        RS_Layer stranger(QStringLiteral("Stranger"));
+        CHECK_FALSE(list->canLock(&stranger));
+        CHECK_FALSE(list->canToggleLock(&stranger));
+        CHECK_FALSE(list->canLock(nullptr));
+        CHECK_FALSE(list->canToggleLock(nullptr));
+        CHECK_FALSE(list->canLockAny({}));
+    }
+
+    SECTION("the selected layers decide Toggle layer lock, else the current layer") {
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors}) {
+            layer->lock(true);
+        }
+        // nothing selected: the current layer, which cannot be locked
+        CHECK_FALSE(list->canToggleLockOfSelection());
+        // the current layer alone selected
+        f.m_walls->selectedInLayerList(true);
+        CHECK_FALSE(list->canToggleLockOfSelection());
+        // a locked layer selected with it: that one can be unlocked
+        f.m_doors->selectedInLayerList(true);
+        CHECK(list->canToggleLockOfSelection());
+        // a selected layer the dock does not list, as a filter hides it, does not count
+        f.m_doors->visibleInLayerList(false);
+        CHECK_FALSE(list->canToggleLockOfSelection());
+    }
+
+    SECTION("Lock all is offered while it locks a layer") {
+        f.m_zero->lock(true);
+        f.m_construction->lock(true);
+        f.m_doors->lock(true);
+        REQUIRE_FALSE(list->canLockAll());
+        f.m_doors->lock(false);
+        CHECK(list->canLockAll());
+        // the unlocked layer is one the dock does not list: Lock all locks the current layer, and
+        // that layer takes its place
+        f.m_doors->visibleInLayerList(false);
+        CHECK(list->canLockAll());
+        f.m_graphic.lockAllLayers(true);
+        CHECK(f.m_walls->isLocked());
+        CHECK(f.m_graphic.getActiveLayer() == f.m_doors);
+        // nothing is left to lock: the current layer is the only one that is not
+        CHECK_FALSE(list->canLockAll());
+    }
+
+    SECTION("the controls say why") {
+        CHECK_FALSE(RS_LayerList::lockUnavailableText().isEmpty());
+    }
 }
 
 TEST_CASE("A hidden current layer is locked like any other", "[layers][active][3229][lock]") {
