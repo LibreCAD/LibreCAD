@@ -12,6 +12,7 @@
 
 #include "lc_curveoffset.h"
 #include "lc_ellipseoffsetgeometry.h"
+#include "lc_offsetsource.h"
 #include "rs_spline.h"
 
 struct LC_OffsetRunLimits {
@@ -55,7 +56,7 @@ struct LC_OffsetCurveExtension {
     std::variant<QString, RS_Vector, double, std::int16_t, std::int32_t> value;
 };
 
-/** An editable ellipse offset whose ordinary SPLINE cache was geometrically certified. */
+/** An editable offset whose ordinary SPLINE cache was geometrically certified. */
 class LC_OffsetCurve final : public RS_Spline {
 public:
     using OwnedTail = std::vector<LC_OffsetCurveExtension>;
@@ -94,9 +95,14 @@ public:
     RS2::EntityType rtti() const override { return RS2::EntityOffsetCurve; }
     RS_Entity *clone() const override;
     const LC_EllipseOffsetDefinition &definition() const noexcept { return m_definition; }
+    /** Non-ellipse source snapshot, present only for joined typed-source creation. */
+    const std::optional<LC_OffsetSourceDefinition>& sourceDefinition() const noexcept { return m_sourceDefinition; }
+    bool hasGeneralizedSourceDefinition() const noexcept {
+        return m_sourceDefinition.has_value() && m_defined && isConsistent();
+    }
     bool isDefined() const noexcept { return m_defined; }
     bool isConsistent() const noexcept;
-    bool hasEditableDefinition() const noexcept { return isDefined() && isConsistent(); }
+    bool hasEditableDefinition() const noexcept { return !m_sourceDefinition && isDefined() && isConsistent(); }
     bool sourceIsWhole() const noexcept;
     bool cacheFormsClosedChain() const noexcept { return hasEditableDefinition() && m_closed; }
     double checkedWorldTolerance() const noexcept { return m_worldTolerance; }
@@ -151,11 +157,17 @@ private:
     LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
         const LC_EllipseOffsetDefinition &definition, double tolerance, bool closed,
         std::vector<RS_Vector> grips, const RS_Vector &midpoint, ReceivedCache);
+    struct ReceivedSourceCache {};
+    LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
+        LC_OffsetSourceDefinition sourceDefinition, double tolerance,
+        std::vector<RS_Vector> grips, const RS_Vector &midpoint, ReceivedSourceCache);
     // Similarities transport the existing proof only if every stored coordinate
     // is the exact affine image. Rounded similarities refuse unchanged, not restamp.
     bool transform(const std::array<double, 6> &matrix, double similarityScale, bool reflected);
     void publish(RS_Spline &prepared, const LC_EllipseOffsetDefinition &definition,
         std::vector<RS_Vector> &grips, double tolerance, bool defined, bool closed, const RS_Vector &midpoint);
+    void publishSource(RS_Spline &prepared, LC_OffsetSourceDefinition &definition,
+        std::vector<RS_Vector> &grips, double tolerance, bool closed, const RS_Vector &midpoint);
     static LC_OffsetCurveCreateResult runEngine(const RS_Entity &attributes,
         const LC_EllipseOffsetDefinition &definition, const LC_OffsetRunLimits &limits);
     static bool checkThrough(const LC_OffsetCurve &curve, const RS_Vector &point,
@@ -169,6 +181,7 @@ private:
     LC_OffsetCurveEditResult commitPrepared(LC_OffsetCurveCreateResult &prepared);
 
     LC_EllipseOffsetDefinition m_definition;
+    std::optional<LC_OffsetSourceDefinition> m_sourceDefinition;
     double m_worldTolerance = 0;
     std::uint64_t m_stamp = 0;
     bool m_defined = true;

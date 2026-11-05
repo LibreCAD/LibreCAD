@@ -179,6 +179,41 @@ bool isSignedPermutation(const Matrix &m, const double scale) {
          (m[1] != 0 && m[2] != 0 && m[0] == 0 && m[3] == 0));
 }
 
+bool transformSourceDefinition(LC_OffsetSourceDefinition &definition, const Matrix &matrix,
+    const double scale, const bool reflected) {
+    if (!definition.isWellFormed() || !isSignedPermutation(matrix, scale)) return false;
+    const auto transformPoint = [&](RS_Vector &point, const bool displacement = false) {
+        return mapPoint(matrix, point, point, true, displacement);
+    };
+    const bool geometryTransformed = std::visit([&](auto &data) {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_EllipseData>) {
+            if (!transformPoint(data.center) || !transformPoint(data.majorP, true)) return false;
+            if (reflected) data.reversed = !data.reversed;
+        } else if constexpr (std::is_same_v<T, RS_SplineData>) {
+            for (auto *points : {&data.controlPoints, &data.fitPoints})
+                for (auto &point : *points) if (!transformPoint(point)) return false;
+        } else if constexpr (std::is_same_v<T, LC_SplinePointsData>) {
+            for (auto *points : {&data.splinePoints, &data.controlPoints})
+                for (auto &point : *points) if (!transformPoint(point)) return false;
+        } else if constexpr (std::is_same_v<T, LC_ParabolaData>) {
+            auto controls = data.m_controlPoints;
+            for (auto &point : controls) if (!transformPoint(point)) return false;
+            data = LC_ParabolaData{controls};
+        } else {
+            if (!transformPoint(data.center) || !transformPoint(data.majorP, true)) return false;
+            if (reflected) data.reversed = !data.reversed;
+        }
+        return true;
+    }, definition.source.value);
+    if (!geometryTransformed) return false;
+    double distance;
+    if (!exactValue(Exact(definition.signedDistance) * Exact(scale) * (reflected ? Exact(-1) : Exact(1)),
+            distance, true)) return false;
+    definition.signedDistance = distance;
+    return definition.isWellFormed();
+}
+
 bool setTranslation(Matrix &matrix, const RS_Vector &center, const bool exact) {
     return geo::isFinite2D(center) &&
         exactValue(Exact(center.x) - Exact(matrix[0])*Exact(center.x) - Exact(matrix[1])*Exact(center.y), matrix[4], exact) &&
@@ -308,7 +343,8 @@ LC_OffsetCurveCreateResult LC_OffsetCurve::create(const RS_Ellipse &source, cons
 
 LC_OffsetCurveEditResult LC_OffsetCurve::eligibility() const noexcept {
     LC_OffsetCurveEditResult result;
-    result.refusal = !isDefined() ? LC_OffsetCurveRefusal::Undefined :
+    result.refusal = m_sourceDefinition ? LC_OffsetCurveRefusal::NotCacheRepresentable :
+        !isDefined() ? LC_OffsetCurveRefusal::Undefined :
         !isConsistent() ? LC_OffsetCurveRefusal::Inconsistent : LC_OffsetCurveRefusal::None;
     return result;
 }
@@ -525,12 +561,24 @@ LC_OffsetCurve::LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cac
     m_stamp = geometryFingerprint(getData());
 }
 
+LC_OffsetCurve::LC_OffsetCurve(const RS_Entity &source, const RS_SplineData &cache,
+    LC_OffsetSourceDefinition sourceDefinition, const double tolerance,
+    std::vector<RS_Vector> grips, const RS_Vector &midpoint, ReceivedSourceCache)
+    : RS_Spline(source.getParent(), cache), m_sourceDefinition(std::move(sourceDefinition)),
+      m_worldTolerance(tolerance), m_grips(std::move(grips)), m_cachedMiddlePoint(midpoint) {
+    RS_Entity::operator=(source);
+    calculateBorders();
+    m_closed = isClosed();
+    m_stamp = geometryFingerprint(getData());
+}
+
 bool LC_OffsetCurve::isConsistent() const noexcept {
-    return m_defined && boundedRepresentation(getData()) && m_stamp == geometryFingerprint(getData());
+    return m_defined && (!m_sourceDefinition || m_sourceDefinition->isWellFormed()) &&
+        boundedRepresentation(getData()) && m_stamp == geometryFingerprint(getData());
 }
 
 bool LC_OffsetCurve::sourceIsWhole() const noexcept {
-    return m_definition.basis.angle1 == 0 && m_definition.basis.angle2 == 0;
+    return !m_sourceDefinition && m_definition.basis.angle1 == 0 && m_definition.basis.angle2 == 0;
 }
 
 std::unique_ptr<RS_Spline> LC_OffsetCurve::toPlainSpline() const {
@@ -538,6 +586,7 @@ std::unique_ptr<RS_Spline> LC_OffsetCurve::toPlainSpline() const {
 }
 
 std::unique_ptr<RS_Ellipse> LC_OffsetCurve::originalEllipse() const {
+    if (m_sourceDefinition) return {};
     return std::make_unique<RS_Ellipse>(nullptr, m_definition.basis);
 }
 
@@ -597,8 +646,22 @@ void LC_OffsetCurve::publish(RS_Spline &prepared, const LC_EllipseOffsetDefiniti
     const auto stamp = geometryFingerprint(prepared.getData());
     auto notification = replacePreparedSpline(prepared);
     m_definition = definition; m_grips.swap(grips); m_worldTolerance = tolerance;
+    m_sourceDefinition.reset();
     m_defined = defined; m_stamp = stamp; m_closed = closed;
     m_cachedMiddlePoint = midpoint;
+    m_unknownFlags = 0; m_unknownTail.clear();
+    notification.notify();
+}
+
+void LC_OffsetCurve::publishSource(RS_Spline &prepared, LC_OffsetSourceDefinition &definition,
+    std::vector<RS_Vector> &grips, const double tolerance, const bool closed,
+    const RS_Vector &midpoint) {
+    static_assert(std::is_nothrow_move_constructible_v<LC_OffsetSourceDefinition>);
+    const auto stamp = geometryFingerprint(prepared.getData());
+    std::optional<LC_OffsetSourceDefinition> next{std::move(definition)};
+    auto notification = replacePreparedSpline(prepared);
+    m_sourceDefinition.swap(next); m_grips.swap(grips); m_worldTolerance = tolerance;
+    m_defined = true; m_stamp = stamp; m_closed = closed; m_cachedMiddlePoint = midpoint;
     m_unknownFlags = 0; m_unknownTail.clear();
     notification.notify();
 }
@@ -614,9 +677,12 @@ void LC_OffsetCurve::update() {
 bool LC_OffsetCurve::transform(const Matrix &matrix, const double scale, const bool reflected) {
     if (!std::all_of(matrix.begin(), matrix.end(), [](double x) { return std::isfinite(x); })) return false;
     if (matrix == Matrix{1, 0, 0, 1, 0, 0}) return true;
-    const bool defined = hasEditableDefinition();
+    const bool typed = hasGeneralizedSourceDefinition();
+    if (m_sourceDefinition && !typed) return false;
+    const bool defined = hasEditableDefinition() || typed;
     const bool similarity = scale > 0;
-    if (defined && similarity && (!isSignedPermutation(matrix, scale) || (reflected && !sourceIsWhole()))) return false;
+    if (defined && similarity && (!isSignedPermutation(matrix, scale) ||
+        (!typed && reflected && !sourceIsWhole()))) return false;
     // Bound even a stale, externally replaced payload before copying it.
     const auto &current = getData();
     if (!boundedRepresentation(current)) return false;
@@ -625,23 +691,35 @@ bool LC_OffsetCurve::transform(const Matrix &matrix, const double scale, const b
     for (auto *points : {&data.controlPoints, &data.fitPoints})
         for (auto &point : *points) if (!mapPoint(matrix, point, point, preserve)) return false;
     auto definition = m_definition;
+    auto sourceDefinition = m_sourceDefinition;
     double tolerance = m_worldTolerance;
     auto grips = m_grips;
     if (preserve) {
-        if (!mapPoint(matrix, definition.basis.center, definition.basis.center, true) ||
-            !mapPoint(matrix, definition.basis.majorP, definition.basis.majorP, true, true) ||
-            !exactValue(Exact(definition.distance)*Exact(scale), definition.distance, true) ||
-            !exactValue(Exact(tolerance)*Exact(scale), tolerance, true) ||
-            !(definition.distance > 0) || !(tolerance > 0)) return false;
-        if (reflected) definition.basis.reversed = !definition.basis.reversed;
-        const auto transported = definition.basis;
-        if (!geo::normaliseBasis(definition.basis) || !sameBasisGeometry(transported, definition.basis)) return false;
+        if (!exactValue(Exact(tolerance)*Exact(scale), tolerance, true) || !(tolerance > 0)) return false;
+        if (typed) {
+            if (!sourceDefinition || !transformSourceDefinition(*sourceDefinition, matrix, scale, reflected)) return false;
+        } else {
+            if (!mapPoint(matrix, definition.basis.center, definition.basis.center, true) ||
+                !mapPoint(matrix, definition.basis.majorP, definition.basis.majorP, true, true) ||
+                !exactValue(Exact(definition.distance)*Exact(scale), definition.distance, true) ||
+                !(definition.distance > 0)) return false;
+            if (reflected) definition.basis.reversed = !definition.basis.reversed;
+            const auto transported = definition.basis;
+            if (!geo::normaliseBasis(definition.basis) || !sameBasisGeometry(transported, definition.basis)) return false;
+        }
         for (auto &point : grips) if (!mapPoint(matrix, point, point, true)) return false;
     } else grips.clear();
     RS_Spline prepared{nullptr, data};
-    const auto midpoint = preserve ? LC_OffsetCurveGrips::prepareMiddle(prepared.getData(), tolerance, m_closed) : RS_Vector{false};
+    RS_Vector midpoint{false};
+    if (preserve) {
+        if (typed) {
+            midpoint = m_cachedMiddlePoint;
+            if (!mapPoint(matrix, midpoint, midpoint, true)) return false;
+        } else midpoint = LC_OffsetCurveGrips::prepareMiddle(prepared.getData(), tolerance, m_closed);
+    }
     if (preserve && !geo::isFinite2D(midpoint)) return false;
-    publish(prepared, definition, grips, tolerance, preserve, m_closed, midpoint);
+    if (typed && preserve) publishSource(prepared, *sourceDefinition, grips, tolerance, m_closed, midpoint);
+    else publish(prepared, definition, grips, tolerance, preserve, m_closed, midpoint);
     return true;
 }
 
@@ -691,7 +769,8 @@ void LC_OffsetCurve::mirror(const RS_Vector &a, const RS_Vector &b) {
 }
 
 void LC_OffsetCurve::revertDirection() {
-    const bool defined = hasEditableDefinition();
+    const bool typed = hasGeneralizedSourceDefinition();
+    const bool defined = hasEditableDefinition() || typed;
     const LC_OffsetCheckLimits limits;
     const auto &current = getData();
     if (!boundedCache(current, limits)) return;
@@ -704,10 +783,15 @@ void LC_OffsetCurve::revertDirection() {
     std::reverse(data.controlPoints.begin(), data.controlPoints.end());
     std::reverse(data.weights.begin(), data.weights.end());
     auto definition = m_definition;
-    if (defined) definition.cacheReversed = !definition.cacheReversed;
+    auto sourceDefinition = m_sourceDefinition;
+    if (typed) sourceDefinition->cacheReversed = !sourceDefinition->cacheReversed;
+    else if (defined) definition.cacheReversed = !definition.cacheReversed;
     auto grips = m_grips; std::reverse(grips.begin(), grips.end());
     RS_Spline prepared{nullptr, data};
-    const auto midpoint = defined ? LC_OffsetCurveGrips::prepareMiddle(prepared.getData(), m_worldTolerance, m_closed) : RS_Vector{false};
+    const auto midpoint = defined && !typed ?
+        LC_OffsetCurveGrips::prepareMiddle(prepared.getData(), m_worldTolerance, m_closed) :
+        typed ? m_cachedMiddlePoint : RS_Vector{false};
     if (defined && !geo::isFinite2D(midpoint)) return;
-    publish(prepared, definition, grips, m_worldTolerance, defined, m_closed, midpoint);
+    if (typed) publishSource(prepared, *sourceDefinition, grips, m_worldTolerance, m_closed, midpoint);
+    else publish(prepared, definition, grips, m_worldTolerance, defined, m_closed, midpoint);
 }

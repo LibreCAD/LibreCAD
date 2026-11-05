@@ -42,6 +42,54 @@ std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::native(const RS_Entit
     return curve;
 }
 
+std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::nativeSource(const RS_Entity& attributes) const {
+    if (!m_joined) return {};
+    const auto* request = std::get_if<LC_OffsetWorkerRequest::GenerateSource>(&m_request.operation);
+    const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
+    if (!request || !request->definition.isWellFormed() || !result || result->curve || result->changed ||
+        result->engineRuns != 1 || result->engineStatus != LC_CurveOffsetStatus::Ok ||
+        result->ordinaryStatus != LC_OffsetWorkerResult::OrdinaryStatus::Complete ||
+        result->refusal != LC_OffsetCurveRefusal::NotCacheRepresentable || result->ordinary.size() != 1)
+        return {};
+
+    RS_SplineData cache;
+    if (const auto* data = std::get_if<RS_SplineData>(&result->ordinary.front())) cache = *data;
+    else if (const auto* line = std::get_if<LC_OffsetWorkerRequest::Segment>(&result->ordinary.front())) {
+        cache.degree = 1;
+        cache.controlPoints = {line->start, line->end};
+        cache.knotslist = {0, 0, 1, 1};
+        cache.weights = {1, 1};
+    } else return {};
+    if (cache.controlPoints.size() > 256) return {};
+    RS_Spline checked{nullptr, cache};
+    if (!checked.validate() || RS_Spline::geometryFingerprint(checked.getData()) !=
+        RS_Spline::geometryFingerprint(cache)) return {};
+    const auto display = RS_Spline::displayEntityUpperBound(cache);
+    if (!display || *display > makeDefaultOffsetSourceBudget().maxDeepEntities) return {};
+
+    auto source = request->definition.source.makeEntity();
+    const double magnitude = std::abs(request->definition.signedDistance);
+    if (!source || !std::isfinite(magnitude) || magnitude <= RS_TOLERANCE) return {};
+    const auto options = LC_CurveOffset::makeDirectOptions(
+        *source, magnitude, request->definition.relativeTolerance);
+    const double tolerance = options.tolerance.requestedGeometry;
+    if (!std::isfinite(tolerance) || !(tolerance > 0)) return {};
+
+    std::vector<RS_Vector> grips = cache.controlPoints;
+    RS_Vector midpoint = checked.getMiddlePoint();
+    if (!LC_EllipseOffsetGeometry::isFinite2D(midpoint)) midpoint = cache.controlPoints.front();
+    if (!LC_EllipseOffsetGeometry::isFinite2D(midpoint) ||
+        !std::all_of(grips.begin(), grips.end(), LC_EllipseOffsetGeometry::isFinite2D)) return {};
+    std::unique_ptr<LC_OffsetCurve> curve{new LC_OffsetCurve(attributes, cache,
+        request->definition, tolerance, std::move(grips), midpoint,
+        LC_OffsetCurve::ReceivedSourceCache{})};
+    if (!curve->validate() || !curve->hasGeneralizedSourceDefinition() ||
+        RS_Spline::geometryFingerprint(curve->getData()) != RS_Spline::geometryFingerprint(cache)) return {};
+    if (const auto* previous = dynamic_cast<const LC_OffsetCurve*>(&attributes))
+        if (!curve->setOwnedExtensions(previous->unknownOwnedFlags(), previous->unknownOwnedTail())) return {};
+    return curve;
+}
+
 std::optional<std::vector<std::unique_ptr<RS_Entity>>>
 LC_OffsetWorkerCompletion::ordinary(const RS_Entity& attributes) const {
     if (!m_joined) return std::nullopt;

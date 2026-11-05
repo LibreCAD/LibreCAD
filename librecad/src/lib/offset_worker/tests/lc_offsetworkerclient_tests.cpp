@@ -527,7 +527,75 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             CHECK(entity->getLayer(false) == &layer);
             CHECK((entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline));
         }
+        auto editable = completion.nativeSource(attributes);
+        if (result.ordinary.size() == 1 && std::holds_alternative<RS_SplineData>(result.ordinary.front())) {
+            REQUIRE(editable);
+            REQUIRE(editable->hasGeneralizedSourceDefinition());
+            CHECK_FALSE(editable->hasEditableDefinition());
+            REQUIRE(editable->sourceDefinition());
+            CHECK(Req::Values::encodeSourceDefinition(*editable->sourceDefinition()) ==
+                Req::Values::encodeSourceDefinition(std::get<Req::GenerateSource>(input.operation).definition));
+            std::unique_ptr<RS_Entity> cloned{editable->clone()};
+            const auto* clonedOffset = dynamic_cast<const LC_OffsetCurve*>(cloned.get());
+            REQUIRE(clonedOffset);
+            CHECK(clonedOffset->hasGeneralizedSourceDefinition());
+            CHECK(Req::Values::encodeSourceDefinition(*clonedOffset->sourceDefinition()) ==
+                Req::Values::encodeSourceDefinition(*editable->sourceDefinition()));
+            const auto cacheStamp = RS_Spline::geometryFingerprint(editable->getData());
+            const auto sourceBeforeMove = Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source);
+            CHECK(editable->setDistance(.5).refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+            editable->move({2, 3});
+            REQUIRE(editable->hasGeneralizedSourceDefinition());
+            CHECK(editable->sourceDefinition()->signedDistance == .25);
+            const bool movedExactly = RS_Spline::geometryFingerprint(editable->getData()) != cacheStamp;
+            auto movedSource = std::get<Req::GenerateSource>(input.operation).definition.source.makeEntity();
+            REQUIRE(movedSource);
+            movedSource->move({2, 3});
+            const auto expectedSource = LC_OffsetSourceGeometry::capture(*movedSource);
+            REQUIRE(expectedSource);
+            if (movedExactly) {
+                CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) ==
+                    Req::Values::encodeSourceGeometry(*expectedSource));
+            } else {
+                CHECK(RS_Spline::geometryFingerprint(editable->getData()) == cacheStamp);
+                CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) == sourceBeforeMove);
+            }
+            const auto previousDirection = editable->sourceDefinition()->cacheReversed;
+            editable->revertDirection();
+            REQUIRE(editable->hasGeneralizedSourceDefinition());
+            CHECK(editable->sourceDefinition()->cacheReversed == !previousDirection);
+        } else CHECK_FALSE(editable);
     }
+
+    // A dyadic linear spline and offset have exactly representable geometry,
+    // so this case proves typed movement succeeds when the cache certificate
+    // can be transported exactly rather than only testing refusal behavior.
+    RS_SplineData linear;
+    linear.degree = 1;
+    linear.controlPoints = {{0, 0}, {2, 0}};
+    linear.knotslist = {0, 0, 1, 1};
+    linear.weights = {1, 1};
+    const LC_OffsetSourceDefinition linearDefinition{
+        LC_OffsetSourceGeometry{linear}, .25, 0, false};
+    Receipts linearReceipts;
+    REQUIRE(owned.get().submit({token(6), Req::GenerateSource{linearDefinition, {}}},
+        Client::Mode::Commit, linearReceipts.into(0)));
+    rt.until([&] { return linearReceipts.calls[0] != 0; });
+    auto& linearCompletion = completed(linearReceipts.at(0), 6, 7);
+    auto linearEditable = linearCompletion.nativeSource(attributes);
+    REQUIRE(linearEditable);
+    REQUIRE(linearEditable->hasGeneralizedSourceDefinition());
+    const auto linearCacheStamp = RS_Spline::geometryFingerprint(linearEditable->getData());
+    linearEditable->move({2, 3});
+    REQUIRE(linearEditable->hasGeneralizedSourceDefinition());
+    CHECK(RS_Spline::geometryFingerprint(linearEditable->getData()) != linearCacheStamp);
+    auto movedLinearSource = linearDefinition.source.makeEntity();
+    REQUIRE(movedLinearSource);
+    movedLinearSource->move({2, 3});
+    const auto expectedLinearSource = LC_OffsetSourceGeometry::capture(*movedLinearSource);
+    REQUIRE(expectedLinearSource);
+    CHECK(Req::Values::encodeSourceGeometry(linearEditable->sourceDefinition()->source) ==
+        Req::Values::encodeSourceGeometry(*expectedLinearSource));
     CHECK(owned.get().healthyAndIdle());
 }
 

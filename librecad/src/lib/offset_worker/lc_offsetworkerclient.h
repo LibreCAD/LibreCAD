@@ -34,6 +34,8 @@ public:
     bool isJoined() const noexcept { return m_joined; }
     /** No generation/C/grip proof is repeated in the parent. Attributes stay local. */
     std::unique_ptr<LC_OffsetCurve> native(const RS_Entity& attributes) const;
+    /** Create a typed-source native cache only from a joined op-7 result with one spline branch. */
+    std::unique_ptr<LC_OffsetCurve> nativeSource(const RS_Entity& attributes) const;
     /** Complete ordinary output, including an intentional empty result, or no
      * value when unavailable/materialization refuses. New graph identities;
      * no native definition, generation, or C admission in the parent.

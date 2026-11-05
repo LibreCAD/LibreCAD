@@ -14395,9 +14395,15 @@ editing the original drawing entity must not mutate an existing offset.
    ellipse-only combo behavior with two linked controls: a source-type
    selector/filter populated from the audited supported-source matrix, and an
    entity selector listing eligible live top-level entities of that type.
-   Switching type refreshes the entity list without committing a change;
-   selecting a new entity atomically replaces the source kind and geometry
-   snapshot, even when its type differs from the currently embedded source.
+   Changing the selector must let the user choose a different source curve
+   type before picking; it cannot be locked to the currently embedded source
+   type. Switching type refreshes the entity list without committing a
+   document change, and selecting an entity atomically replaces both the
+   stored source kind and its geometry snapshot, even across types. Include
+   parabola as its own selectable type wherever production eligibility admits
+   it, not merely as a generic spline. The selector must expose every audited
+   source kind that completes the G1/G2/G4 lifecycle; it must not advertise a
+   partial list just because some kinds have not been implemented yet.
    Display type and useful entity identity, match the embedded source by kind
    plus canonical geometry (not only approximate center/radii), and
    distinguish matched, replaced, deleted, stale-ID, and unsupported states.
@@ -14473,8 +14479,18 @@ line/arc/circle/polyline eligibility, integration-specific source matching,
 transforms, and lifecycle inventory; then wire the new codec into worker
 generation and result validation. G3 now requires a type selector/filter and
 entity picker, with cross-type replacement updating kind and geometry
-atomically. W340 tightens valueless-variant, planar, and degenerate-ellipse
-admission. Retain all existing W379 acceptance gates.
+atomically. The selector must include every kind confirmed by the production
+offset audit, with parabola identified separately from generic spline types.
+W340 tightens valueless-variant, planar, and degenerate-ellipse admission.
+Retain all existing W379 acceptance gates. An uncommitted `LC_OffsetCurve`
+typed-source integration attempt now builds and preserves the source/cache
+transform contract: exact transport updates both, while any non-exact result
+refuses without mutation. A generated-geometry test initially assumed every
+translation would succeed; W344 corrects that expectation and covers both
+atomic refusal and an exactly representable positive transform. This is only a
+native-source storage/transform foundation; source-specific cache
+revalidation, generalized edits, persistence, and the Properties type selector
+and cross-type entity picking remain unimplemented.
 
 ## 337. Tagged Source Snapshot Foundation (2026-11-05)
 
@@ -14609,3 +14625,31 @@ materialization now cover all five typed source variants. This remains a
 worker primitive only; the native offset entity, callers, type-aware
 Properties picker, persistence, and expanded production source inventory are
 still incomplete.
+
+## 344. Source-Type Picker Requirement and Typed Transform Contract (2026-11-05)
+
+Made the latest Properties requirement explicit in G3: the user can change the
+source-type selector before picking a replacement, and the entity picker then
+lists eligible live curves of that type. Picking across types atomically
+changes both the tagged source identity and captured geometry. Parabola remains
+an explicit source type rather than being presented as generic spline. The
+selector must ultimately cover every source family accepted by the audited
+production offset path and completed through native definition, worker, and
+persistence; incomplete families must not be advertised as supported.
+
+The first focused run exposed an over-strong test assumption: it required a
+translation to succeed for every worker-generated approximation. Native cache
+transport intentionally requires exact coordinate representability, so such a
+translation must be refused atomically when rounding would invalidate the
+certificate. The corrected test verifies unchanged cache and source on
+refusal, and adds a dyadic linear-spline case where exact movement succeeds and
+the transformed source snapshot matches independently transformed geometry.
+
+Validation: Debug CMake built `librecad_offset_worker_client_tests` and
+`librecad_tests`. The focused typed-source worker-client case passed 2,824
+assertions; the complete client suite passed 17,147 assertions in 18 cases;
+the focused `[lc-offsetcurve][native]` entity suite passed 4,711 assertions in
+29 cases. `git diff --check` passed. This establishes only typed-source
+materialization and exact-transform behavior; it does not establish
+source-specific cache revalidation, generalized edit operations, source type
+selection/replacement UI, or persistence. Those remain open in G1-G5.
