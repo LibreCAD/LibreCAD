@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <memory>
 #include <cstddef>
 #include <optional>
 #include <type_traits>
@@ -19,6 +20,8 @@
 #include "lc_splinepoints.h"
 #include "rs_ellipse.h"
 #include "rs_spline.h"
+
+class RS_EntityContainer;
 
 /** Geometry-only, value-owned source data for editable offset definitions. */
 struct LC_OffsetSourceGeometry {
@@ -41,6 +44,7 @@ struct LC_OffsetSourceGeometry {
     }
 
     static std::optional<LC_OffsetSourceGeometry> capture(const RS_Entity& entity);
+    std::unique_ptr<RS_Entity> makeEntity(RS_EntityContainer* parent = nullptr) const;
     bool isWellFormed() const noexcept;
 };
 
@@ -96,6 +100,18 @@ inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(c
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
     }
     return std::nullopt;
+}
+
+inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeEntity(RS_EntityContainer* parent) const {
+    if (!isWellFormed()) return nullptr;
+    return std::visit([parent](const auto& data) -> std::unique_ptr<RS_Entity> {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_EllipseData>) return std::make_unique<RS_Ellipse>(parent, data);
+        else if constexpr (std::is_same_v<T, RS_SplineData>) return std::make_unique<RS_Spline>(parent, data);
+        else if constexpr (std::is_same_v<T, LC_SplinePointsData>) return std::make_unique<LC_SplinePoints>(parent, data);
+        else if constexpr (std::is_same_v<T, LC_ParabolaData>) return std::make_unique<LC_Parabola>(parent, data);
+        else return std::make_unique<LC_Hyperbola>(parent, data);
+    }, value);
 }
 
 inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {

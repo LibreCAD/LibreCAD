@@ -14432,12 +14432,13 @@ In progress. W337 implements the first G1 foundation: a value-owned tagged
 snapshot and common signed-distance definition for ellipse, spline,
 spline-points, parabola, and bounded hyperbola inputs. Capture preserves
 parabola identity ahead of its spline-points base and refuses unsupported,
-malformed, or unbounded sources. This contract is not yet consumed by
-`LC_OffsetCurve`, the worker protocol, Properties, or persistence, so it does
-not enable generalized native offsets. W335 remains the completed ellipse-only
-Properties chooser receipt. Continue G1 through integration-specific source
-matching, transforms, and lifecycle inventory before G2. Retain all existing
-W379 acceptance gates; this work does not close them.
+malformed, or unbounded sources. W338 adds detached entity reconstruction and
+round-trip identity checks for all five alternatives. This contract is not yet
+consumed by `LC_OffsetCurve`, the worker protocol, Properties, or persistence,
+so it does not enable generalized native offsets. W335 remains the completed
+ellipse-only Properties chooser receipt. Continue G1 through integration-
+specific source matching, transforms, and lifecycle inventory before G2.
+Retain all existing W379 acceptance gates; this work does not close them.
 
 ## 337. Tagged Source Snapshot Foundation (2026-11-05)
 
@@ -14458,3 +14459,17 @@ assertions, covering all five variants, parabola identity, value ownership,
 unbounded-hyperbola and unsupported-entity refusal, malformed spline knots,
 degenerate spline-points, and common-definition finite validation. Existing
 unrelated compiler warnings remain in legacy tests. `git diff --check` passed.
+
+## 338. Detached Source Reconstruction (2026-11-05)
+
+Added `LC_OffsetSourceGeometry::makeEntity()` as the inverse of source capture.
+It creates an entity detached from any drawing by default, preserving source
+RTTI and type-specific geometry data; callers may optionally provide a parent
+container. This supplies a bounded source materialization boundary for worker
+integration without retaining pointers into the live document.
+
+Validation: the focused source snapshot test passed all 65 assertions after a
+successful incremental rebuild of `librecad_tests`. It now reconstructs and
+recaptures each supported family, checks source identity and representative
+geometry/control data, and retains the hostile-input cases from W337.
+`git diff --check` passed.

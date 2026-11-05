@@ -76,6 +76,54 @@ TEST_CASE("Offset source snapshots own every supported source type") {
         REQUIRE(snapshot);
         CHECK(snapshot->kind() == kinds[i]);
         CHECK(snapshot->isWellFormed());
+        auto restored = snapshot->makeEntity();
+        REQUIRE(restored);
+        CHECK(restored->rtti() == entities[i]->rtti());
+        auto recaptured = LC_OffsetSourceGeometry::capture(*restored);
+        REQUIRE(recaptured);
+        CHECK(recaptured->kind() == kinds[i]);
+        switch (kinds[i]) {
+        case LC_OffsetSourceGeometry::Kind::Ellipse: {
+            const auto* value = dynamic_cast<const RS_Ellipse*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().center == ellipseData.center);
+            CHECK(value->getData().majorP == ellipseData.majorP);
+            CHECK(value->getData().ratio == ellipseData.ratio);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Spline: {
+            const auto* value = dynamic_cast<const RS_Spline*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().controlPoints == splineData.controlPoints);
+            CHECK(value->getData().knotslist == splineData.knotslist);
+            CHECK(value->getData().weights == splineData.weights);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::SplinePoints: {
+            const auto* value = dynamic_cast<const LC_SplinePoints*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().controlPoints == pointsData.controlPoints);
+            CHECK(value->getData().useControlPoints == pointsData.useControlPoints);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Parabola: {
+            const auto* value = dynamic_cast<const LC_Parabola*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().m_controlPoints[0] == parabola.getData().m_controlPoints[0]);
+            CHECK(value->getData().m_controlPoints[1] == parabola.getData().m_controlPoints[1]);
+            CHECK(value->getData().m_controlPoints[2] == parabola.getData().m_controlPoints[2]);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::BoundedHyperbola: {
+            const auto* value = dynamic_cast<const LC_Hyperbola*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().center == hyperbola.getData().center);
+            CHECK(value->getData().majorP == hyperbola.getData().majorP);
+            CHECK(value->getData().angle1 == hyperbola.getData().angle1);
+            CHECK(value->getData().angle2 == hyperbola.getData().angle2);
+            break;
+        }
+        }
     }
 
     auto capturedParabola = LC_OffsetSourceGeometry::capture(parabola);
