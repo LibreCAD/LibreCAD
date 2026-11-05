@@ -3497,6 +3497,9 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_dock_layout_tests PRIVATE
         LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
     add_dependencies(librecad_dock_layout_tests librecad_test_translations)
+    # lc_docklayout_tests.cpp includes qg_activelayername.h, which includes its uic output.
+    target_include_directories(librecad_dock_layout_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
     add_librecad_filter_micro_test(
         librecad_dimension_clipboard_tests
         librecad/src/lib/engine/document/entities/tests/lc_dimension_clipboard_tests.cpp)
@@ -3509,6 +3512,9 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_dimension_clipboard_tests PRIVATE
         LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
     add_dependencies(librecad_dimension_clipboard_tests librecad_test_translations)
+    # it compiles lc_docklayout_tests.cpp too (see librecad_dock_layout_tests)
+    target_include_directories(librecad_dimension_clipboard_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
     add_librecad_filter_micro_test(
         librecad_printing_tests
         librecad/src/lib/printing/tests/lc_printingtests.cpp)
