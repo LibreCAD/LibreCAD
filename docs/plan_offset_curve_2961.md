@@ -14861,3 +14861,56 @@ revalidation primitive only: typed native creation callers, generalized
 editing/transforms/grips, Properties type/entity picker, and schema-2 DXF/DWG
 source persistence remain open. Op-7 generation results still cannot directly
 materialize a trusted native offset without a separate cache-validation pass.
+
+## 349. Generalized Source Edit Transaction (2026-11-05)
+
+Extended the private-clone worker edit path to prepare a tagged source
+definition, run operation 7, and atomically publish the new source and its
+generated cache only after a joined completion. The preparation captures the
+original typed definition for local stale checks. `commitSourcePrepared()`
+validates the received native cache/grips/midpoint before publication; failed,
+stale, or unrepresentable results leave the clone unchanged. This provides the
+transaction needed by cross-type Properties replacement but does not make the
+source types persistent.
+
+Validation: Debug CMake built the worker edit and real worker-client test
+targets. The worker edit suite passed 101,553 assertions/15 cases; the focused
+joined typed-source edit passed 2,130 assertions. The full client suite passed
+26,493 assertions/19 cases in an earlier run; a later rerun exceeded its fixed
+24-second watchdog by 3 ms under concurrent test load, with no behavioral
+assertion failure.
+
+P2 remains open: `LC_OffsetCurveXData::Definition` is ellipse-only schema 1,
+so generalized definitions need versioned tagged-source storage in DXF XDATA
+and DWG EED, schema-1 compatibility, and per-family save/reopen/second-save
+tests before the feature is complete.
+
+## 350. Cross-Type Source Picker and Parabola (2026-11-05)
+
+Implemented the linked source-family/entity controls atop W349. The family
+selector lists ellipse, spline, spline-points, parabola, bounded hyperbola,
+line, arc, circle, and polyline. It filters live document candidates by the
+tagged source kind; parabola capture precedes spline-points identity. Changing
+the family only changes the filter. Selecting a non-ellipse captures immutable
+source data and submits the joined operation-7 edit transaction; source and
+cache publish atomically on the dialog clone. Selecting an ellipse preserves
+the established ellipse-definition editing path. Source highlighting
+re-resolves the entity ID immediately before selection. Non-ellipse source
+geometry editors remain disabled.
+
+The selector is intentionally a partial UI milestone, not feature completion:
+schema 1 can only persist ellipse definitions. The DXF/DWG export path now
+refuses generalized source definitions with an explicit serialization
+diagnostic instead of writing stale ellipse metadata or degrading them to
+ordinary splines. The next mandatory slice is the versioned tagged-source
+XDATA/EED schema and per-family round-trip coverage. Also retain P1's
+production-eligibility audit: listing all tagged worker kinds does not prove
+every kind is eligible for every user-facing creation path.
+
+Validation: Debug CMake built `librecad_tests`, worker-edit tests, and
+worker-client tests. The focused source UI suite passed 69 assertions/2 cases;
+the full dialog/offset-curve suite passed 25,995 assertions/58 cases; the
+worker-edit suite passed 101,553/15; and the focused joined typed-source edit
+passed 2,130 assertions. The full worker-client suite had passed
+26,493/19 previously, but the latest rerun narrowly hit its 24-second suite
+watchdog under load. `git diff --check` passed.

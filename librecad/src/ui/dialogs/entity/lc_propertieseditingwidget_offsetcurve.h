@@ -17,6 +17,7 @@ namespace Ui { class LC_OffsetCurvePropertiesEditingWidget; }
 class LC_OffsetWorkerClient;
 class LC_OffsetCurveEditSnapshot;
 class RS_Ellipse;
+class RS_Entity;
 
 /** Edits only the caller-owned dialog clone, never the document entity. */
 class LC_PropertiesEditingWidgetOffsetCurve final : public LC_EntityPropertiesEditorWidget {
@@ -48,6 +49,7 @@ private:
     void finishField(QLineEdit* editor, Field field) const;
     void applyValue(Field field, double value) const;
     void apply(const LC_EllipseOffsetDefinition& definition) const;
+    void applySourceDefinition(const LC_OffsetSourceDefinition& definition) const;
     LC_EllipseOffsetDefinition proposedDefinition() const;
     void setBusy(bool busy) const;
     std::array<QLineEdit*, 8> definitionEditors() const;
@@ -55,7 +57,7 @@ private:
     void refresh(QLineEdit* completed = nullptr, bool force = false) const;
     void inputRefused(QLineEdit* editor, const QString& reason) const;
     void refreshSourceChoices() const;
-    RS_Ellipse* findSourceEllipse(qulonglong id) const;
+    RS_Entity* findSourceEntity(qulonglong id) const;
     void selectCurrentSource() const;
     Ui::LC_OffsetCurvePropertiesEditingWidget* ui;
     LC_OffsetCurve* m_entity = nullptr;

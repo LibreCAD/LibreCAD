@@ -17,6 +17,7 @@
 #include <cmath>
 #include <limits>
 #include "lc_offsetcurveeditsnapshot.h"
+#include "lc_offsetsource.h"
 #include "../../../lib/offset_worker/lc_offsetworkerclient.h"
 #include "../../../lib/offset_worker/lc_offsetworkeredit.h"
 #include "lc_graphicviewport.h"
@@ -29,11 +30,27 @@
 #include "ui_lc_propertieseditingwidget_offsetcurve.h"
 
 namespace {
-bool sameEllipseBasis(const RS_EllipseData& a, const RS_EllipseData& b) {
-    return a.center.x == b.center.x && a.center.y == b.center.y && a.center.z == b.center.z &&
-        a.center.valid == b.center.valid && a.majorP.x == b.majorP.x && a.majorP.y == b.majorP.y &&
-        a.majorP.z == b.majorP.z && a.majorP.valid == b.majorP.valid && a.ratio == b.ratio &&
-        a.angle1 == b.angle1 && a.angle2 == b.angle2 && a.reversed == b.reversed;
+QString sourceKindName(LC_OffsetSourceGeometry::Kind kind) {
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    switch (kind) {
+    case Kind::Ellipse: return QObject::tr("Ellipse");
+    case Kind::Spline: return QObject::tr("Spline");
+    case Kind::SplinePoints: return QObject::tr("Spline points");
+    case Kind::Parabola: return QObject::tr("Parabola");
+    case Kind::BoundedHyperbola: return QObject::tr("Bounded hyperbola");
+    case Kind::Line: return QObject::tr("Line");
+    case Kind::Arc: return QObject::tr("Arc");
+    case Kind::Circle: return QObject::tr("Circle");
+    case Kind::Polyline: return QObject::tr("Polyline");
+    case Kind::Invalid: break;
+    }
+    return QObject::tr("Unsupported");
+}
+
+std::optional<LC_OffsetSourceGeometry::Kind> sourceKind(const RS_Entity& entity) {
+    const auto geometry = LC_OffsetSourceGeometry::capture(entity);
+    if (!geometry) return std::nullopt;
+    return geometry->kind();
 }
 
 struct OffsetDialogContext {
@@ -96,12 +113,30 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
         if (m_refreshing || m_entity == nullptr || index < 0) return;
         bool validId = false;
         const auto id = ui->cbSource->itemData(index).toULongLong(&validId);
-        auto* source = validId ? findSourceEllipse(id) : nullptr;
+        auto* source = validId ? findSourceEntity(id) : nullptr;
         if (source == nullptr) return;
-        auto next = proposedDefinition();
-        next.basis = source->getData();
-        apply(next);
+        const auto geometry = LC_OffsetSourceGeometry::capture(*source);
+        if (!geometry || static_cast<int>(geometry->kind()) != ui->cbSourceType->currentData().toInt()) return;
+        if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(source);
+            ellipse && m_entity->hasEditableDefinition()) {
+            auto next = proposedDefinition();
+            next.basis = ellipse->getData();
+            apply(next);
+            return;
+        }
+        LC_OffsetSourceDefinition next;
+        if (m_entity->sourceDefinition()) next = *m_entity->sourceDefinition();
+        else {
+            const auto& current = m_entity->definition();
+            next.signedDistance = current.towardCentre ? -current.distance : current.distance;
+            next.relativeTolerance = current.relTolerance;
+            next.cacheReversed = current.cacheReversed;
+        }
+        next.source = *geometry;
+        applySourceDefinition(next);
     });
+    connect(ui->cbSourceType, qOverload<int>(&QComboBox::currentIndexChanged), this,
+        [this](int) { if (!m_refreshing) refreshSourceChoices(); });
     connect(ui->tbSelectSource, &QToolButton::clicked, this,
         [this] { selectCurrentSource(); });
 }
@@ -144,9 +179,10 @@ void LC_PropertiesEditingWidgetOffsetCurve::restoreCommittedText() const {
 void LC_PropertiesEditingWidgetOffsetCurve::setBusy(bool busy) const {
     const bool changed = m_busy != busy;
     m_busy = busy;
-    ui->gbDefinition->setEnabled(m_entity && m_viewport && m_entity->hasEditableDefinition() &&
+    ui->gbDefinition->setEnabled(m_entity && m_viewport && (m_entity->hasEditableDefinition() || m_entity->hasGeneralizedSourceDefinition()) &&
         m_generation < std::numeric_limits<qint64>::max() && m_sourceRevision < std::numeric_limits<qint64>::max());
     ui->wPickPointCenter->setEnabled(!busy);
+    ui->cbSourceType->setEnabled(!busy && m_entity && m_viewport);
     ui->cbSource->setEnabled(!busy && m_entity && m_viewport);
     ui->tbSelectSource->setEnabled(!busy && ui->cbSource->currentData().isValid());
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
@@ -187,6 +223,10 @@ void LC_PropertiesEditingWidgetOffsetCurve::setEntity(RS_Entity* entity) {
     if (!alive || !m_worker || revision != m_sourceRevision || cancelledGeneration != m_generation) return;
     m_entity = entity != nullptr && entity->rtti() == RS2::EntityOffsetCurve
         ? static_cast<LC_OffsetCurve*>(entity) : nullptr;
+    {
+        const QSignalBlocker blocked(ui->cbSourceType);
+        ui->cbSourceType->clear();
+    }
     m_lastResult.reset(); m_lastWorkerResult.reset(); m_attempts = 0;
     ui->lRefusal->clear();
     refresh(nullptr, true);
@@ -194,7 +234,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::setEntity(RS_Entity* entity) {
 
 void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool force) const {
     const QScopedValueRollback<bool> refreshing(m_refreshing, true);
-    const bool available = m_entity != nullptr && m_entity->hasEditableDefinition() && m_viewport != nullptr;
+    const bool available = m_entity != nullptr && (m_entity->hasEditableDefinition() || m_entity->hasGeneralizedSourceDefinition()) && m_viewport != nullptr;
+    const bool ellipseDefinition = available && m_entity->hasEditableDefinition();
     const auto text = [completed, force](QLineEdit* editor, const QString& value) {
         // Another dirty editor belongs to the user, not to this field's refresh.
         if (force || editor == completed || !editor->isModified()) {
@@ -207,11 +248,18 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     ui->gbDefinition->setEnabled(available && m_generation < std::numeric_limits<qint64>::max() &&
         m_sourceRevision < std::numeric_limits<qint64>::max());
     ui->wPickPointCenter->setEnabled(!m_busy);
+    ui->cbSourceType->setEnabled(!m_busy && m_entity && m_viewport);
     ui->cbSource->setEnabled(!m_busy && m_entity && m_viewport);
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!m_busy);
     refreshSourceChoices();
     if (m_entity == nullptr || m_viewport == nullptr) return;
+    for (auto* editor : definitionEditors()) editor->setEnabled(ellipseDefinition);
+    ui->cbTowardCentre->setEnabled(ellipseDefinition);
+    ui->cbReversed->setEnabled(ellipseDefinition);
+    for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
+        picker->setEnabled(!m_busy && ellipseDefinition);
+    ui->wPickPointCenter->setEnabled(!m_busy && ellipseDefinition);
     const auto definition = proposedDefinition();
     const auto& basis = definition.basis;
     const auto center = toUIStr(basis.center);
@@ -227,7 +275,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
         ui->cbTowardCentre->setChecked(definition.towardCentre);
         ui->cbReversed->setChecked(basis.reversed);
     }
-    const bool arc = available && !m_entity->sourceIsWhole();
+    const bool arc = ellipseDefinition && !m_entity->sourceIsWhole();
     ui->leAngle1->setEnabled(arc); ui->leAngle2->setEnabled(arc);
     const auto length = LC_OffsetCurveRead::cachedLength(*m_entity);
     ui->lLengthValue->setText(length ? asString(*length) : tr("Unavailable"));
@@ -244,43 +292,79 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
 void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
     if (document == nullptr || m_entity == nullptr) {
+        ui->cbSourceType->clear();
+        ui->cbSourceType->addItem(tr("Source type unavailable"));
         ui->cbSource->clear();
         ui->cbSource->addItem(tr("Source not available"));
         ui->tbSelectSource->setEnabled(false);
         return;
     }
 
-    const auto& embedded = proposedDefinition().basis;
-    QSignalBlocker blocked(ui->cbSource);
+    std::optional<LC_OffsetSourceDefinition> embedded;
+    if (m_entity->sourceDefinition()) embedded = *m_entity->sourceDefinition();
+    else {
+        const auto& current = proposedDefinition();
+        const auto ellipse = LC_OffsetSourceGeometry{current.basis};
+        embedded = LC_OffsetSourceDefinition{ellipse,
+            current.towardCentre ? -current.distance : current.distance,
+            current.relTolerance, current.cacheReversed};
+    }
+    bool hasRequestedKind = false;
+    const int requestedKindValue = ui->cbSourceType->currentData().toInt(&hasRequestedKind);
+    const QSignalBlocker typeBlocked(ui->cbSourceType);
+    const QSignalBlocker sourceBlocked(ui->cbSource);
+    const auto selectedKind = embedded ? embedded->source.kind() : LC_OffsetSourceGeometry::Kind::Invalid;
+    ui->cbSourceType->clear();
+    for (int raw = static_cast<int>(LC_OffsetSourceGeometry::Kind::Ellipse);
+         raw <= static_cast<int>(LC_OffsetSourceGeometry::Kind::Polyline); ++raw) {
+        const auto kind = static_cast<LC_OffsetSourceGeometry::Kind>(raw);
+        ui->cbSourceType->addItem(sourceKindName(kind), raw);
+    }
+    const auto wantedKind = hasRequestedKind
+        ? static_cast<LC_OffsetSourceGeometry::Kind>(requestedKindValue) : selectedKind;
+    int typeIndex = ui->cbSourceType->findData(static_cast<int>(wantedKind));
+    if (typeIndex < 0) typeIndex = 0;
+    ui->cbSourceType->setCurrentIndex(typeIndex);
+    const auto actualKind = static_cast<LC_OffsetSourceGeometry::Kind>(ui->cbSourceType->currentData().toInt());
+
     ui->cbSource->clear();
     int matchedIndex = -1;
     bool hasMatchingSource = false;
     for (auto* entity : document->getEntityList()) {
-        if (entity == nullptr || entity->rtti() != RS2::EntityEllipse || entity->getFlag(RS2::FlagDeleted)) continue;
-        auto* ellipse = static_cast<RS_Ellipse*>(entity);
-        const auto id = static_cast<qulonglong>(ellipse->getId());
-        const auto label = tr("Ellipse %1").arg(id);
+        if (entity == nullptr || entity->getFlag(RS2::FlagDeleted)) continue;
+        const auto kind = sourceKind(*entity);
+        if (!kind || *kind != wantedKind) continue;
+        const auto id = static_cast<qulonglong>(entity->getId());
+        const auto label = tr("%1 %2").arg(sourceKindName(*kind)).arg(id);
         ui->cbSource->addItem(label, QVariant::fromValue<qulonglong>(id));
-        if (!hasMatchingSource && sameEllipseBasis(embedded, ellipse->getData())) {
-            matchedIndex = ui->cbSource->count() - 1;
-            hasMatchingSource = true;
+        if (!hasMatchingSource && embedded && selectedKind == actualKind) {
+            const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
+            if (geometry) {
+                const auto candidate = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
+                const auto current = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(embedded->source);
+                if (candidate && current && *candidate == *current) {
+                    matchedIndex = ui->cbSource->count() - 1;
+                    hasMatchingSource = true;
+                }
+            }
         }
     }
     if (!hasMatchingSource) {
-        ui->cbSource->insertItem(0, tr("Embedded source (not found)"));
+        ui->cbSource->insertItem(0, embedded && selectedKind == wantedKind
+            ? tr("Embedded source (not found)") : tr("Choose a source"));
         matchedIndex = 0;
     }
     ui->cbSource->setCurrentIndex(matchedIndex);
     ui->tbSelectSource->setEnabled(hasMatchingSource && !m_busy);
 }
 
-RS_Ellipse* LC_PropertiesEditingWidgetOffsetCurve::findSourceEllipse(qulonglong id) const {
+RS_Entity* LC_PropertiesEditingWidgetOffsetCurve::findSourceEntity(qulonglong id) const {
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
     if (document == nullptr) return nullptr;
     for (auto* entity : document->getEntityList()) {
-        if (entity != nullptr && entity->rtti() == RS2::EntityEllipse &&
-            !entity->getFlag(RS2::FlagDeleted) && entity->getId() == id)
-            return static_cast<RS_Ellipse*>(entity);
+        if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) || entity->getId() != id) continue;
+        const auto kind = sourceKind(*entity);
+        if (kind && static_cast<int>(*kind) == ui->cbSourceType->currentData().toInt()) return entity;
     }
     return nullptr;
 }
@@ -289,7 +373,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::selectCurrentSource() const {
     if (m_entity == nullptr || m_viewport == nullptr) return;
     bool validId = false;
     const auto id = ui->cbSource->currentData().toULongLong(&validId);
-    auto* source = validId ? findSourceEllipse(id) : nullptr;
+    auto* source = validId ? findSourceEntity(id) : nullptr;
     auto* document = m_viewport->getDocument();
     if (source == nullptr || document == nullptr) return;
     document->select(QList<RS_Entity*>{source}, true);
@@ -449,6 +533,104 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
     } catch (const std::bad_alloc&) {
         if (alive) failure(published ? tr("Offset prepared, but the editor could not be refreshed.") :
             tr("Not enough memory to prepare the offset; the value was not changed."));
+    }
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_OffsetSourceDefinition& definition) const {
+    if (m_entity == nullptr || m_viewport == nullptr || !m_worker) return;
+    const QPointer<const LC_PropertiesEditingWidgetOffsetCurve> alive(this);
+    if (m_generation == std::numeric_limits<qint64>::max() ||
+        m_sourceRevision == std::numeric_limits<qint64>::max() ||
+        m_attempts == std::numeric_limits<std::size_t>::max()) {
+        ui->lRefusal->setText(tr("The offset editing session is no longer current; the source was not changed."));
+        return;
+    }
+    const auto generation = ++m_generation;
+    const auto revision = m_sourceRevision;
+    auto* const target = m_entity;
+    m_worker->cancel();
+    ++m_attempts;
+    m_lastResult.reset();
+    m_lastWorkerResult.reset();
+    try {
+        const auto guard = m_preparationGuard;
+        if (guard && !guard()) {
+            ui->lRefusal->setText(tr("The offset editing input changed; the source was not changed."));
+            return;
+        }
+        const auto context = OffsetDialogContext::capture(m_viewport);
+        auto snapshot = LC_OffsetCurveEditSnapshot::capture(*target);
+        if (!alive || generation != m_generation || target != m_entity) return;
+        if (!snapshot) {
+            ui->lRefusal->setText(tr("The offset input exceeds the bounded snapshot limits; the source was not changed."));
+            return;
+        }
+        auto prepared = LC_OffsetWorkerEdit::prepareSourceDefinition(*target, definition, m_limits);
+        if (!prepared.generateSource()) {
+            m_lastResult = prepared.result();
+            ui->lRefusal->setText(LC_OffsetCurveUI::refusalText(*m_lastResult));
+            return;
+        }
+        m_inputSnapshot = std::move(snapshot);
+        LC_OffsetWorkerRequest::Request request{{generation, generation, revision, 0}, *prepared.generateSource()};
+        const bool accepted = m_worker->submit(request, LC_OffsetWorkerClient::Mode::Commit,
+            [alive, generation, revision, target, context](LC_OffsetWorkerClient::Outcome outcome) mutable {
+                if (!alive || generation != alive->m_generation || revision != alive->m_sourceRevision ||
+                    target != alive->m_entity || !alive->m_busy) return;
+                const auto* self = alive.data();
+                const auto refuse = [self](const QString& text) {
+                    self->m_inputSnapshot.reset();
+                    self->refreshSourceChoices();
+                    self->ui->lRefusal->setText(text);
+                    self->setBusy(false);
+                };
+                try {
+                    if (outcome.status != LC_OffsetWorkerClient::Status::Completed || !outcome.completed) {
+                        refuse(outcome.status == LC_OffsetWorkerClient::Status::TimedOut
+                            ? self->tr("Offset computation timed out; the source was not changed.")
+                            : self->tr("The offset worker could not complete the request; the source was not changed."));
+                        return;
+                    }
+                    if (const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&outcome.completed->reply().result))
+                        self->m_lastWorkerResult = static_cast<const LC_OffsetCurveEditResult&>(*result);
+                    const auto guard = self->m_preparationGuard;
+                    const bool current = !guard || guard();
+                    if (!alive || generation != alive->m_generation || target != alive->m_entity) return;
+                    const auto snapshot = self->m_inputSnapshot;
+                    const bool matches = current && context.matches(self->m_viewport) && snapshot && snapshot->matches(*target);
+                    if (!alive || generation != alive->m_generation || target != alive->m_entity) return;
+                    if (!matches || !context.matches(self->m_viewport)) {
+                        refuse(self->tr("The offset editing input changed; the source was not changed."));
+                        return;
+                    }
+                    self->m_lastResult = outcome.completed->apply(*target);
+                    if (!alive || generation != alive->m_generation || target != alive->m_entity) return;
+                    if (*self->m_lastResult && self->m_lastResult->changed &&
+                        self->m_sourceRevision < std::numeric_limits<qint64>::max()) ++self->m_sourceRevision;
+                    self->m_inputSnapshot.reset();
+                    self->refresh();
+                    self->ui->lRefusal->setText(*self->m_lastResult ? QString{} :
+                        LC_OffsetCurveUI::refusalText(*self->m_lastResult));
+                    self->setBusy(false);
+                } catch (const std::bad_alloc&) {
+                    if (alive) refuse(self->tr("Not enough memory to replace the source; the value was not changed."));
+                }
+            });
+        if (!accepted) {
+            m_inputSnapshot.reset();
+            ui->lRefusal->setText(tr("The offset worker could not start the request; the source was not changed."));
+            return;
+        }
+        const bool wasBusy = m_busy;
+        m_busy = true;
+        refresh();
+        ui->lRefusal->setText(tr("Calculating replacement source..."));
+        if (!wasBusy) emit preparationBusyChanged(true);
+    } catch (const std::bad_alloc&) {
+        if (alive) {
+            m_inputSnapshot.reset();
+            ui->lRefusal->setText(tr("Not enough memory to replace the source; the value was not changed."));
+        }
     }
 }
 

@@ -179,6 +179,7 @@ private:
     LC_OffsetCurveEditResult edit(const LC_EllipseOffsetDefinition &definition,
         const LC_OffsetRunLimits &limits, const RS_Vector *through = nullptr);
     LC_OffsetCurveEditResult commitPrepared(LC_OffsetCurveCreateResult &prepared);
+    LC_OffsetCurveEditResult commitSourcePrepared(LC_OffsetCurveCreateResult &prepared);
 
     LC_EllipseOffsetDefinition m_definition;
     std::optional<LC_OffsetSourceDefinition> m_sourceDefinition;

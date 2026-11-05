@@ -14,28 +14,30 @@
      <item row="0" column="1"><widget class="QLineEdit" name="leDistance"/></item>
      <item row="0" column="2"><widget class="QToolButton" name="tbPickDistance"><property name="toolTip"><string>Pick offset distance</string></property><property name="icon"><iconset resource="../../../../res/icons/icons.qrc"><normaloff>:/icons/interactive_pick_distance.lci</normaloff></iconset></property></widget></item>
      <item row="1" column="0" colspan="3"><widget class="QCheckBox" name="cbTowardCentre"><property name="text"><string>Toward Centre</string></property></widget></item>
-     <item row="2" column="0"><widget class="QLabel" name="lSource"><property name="text"><string>Source ellipse:</string></property><property name="buddy"><cstring>cbSource</cstring></property></widget></item>
-     <item row="2" column="1"><widget class="QComboBox" name="cbSource"/></item>
-     <item row="2" column="2"><widget class="QToolButton" name="tbSelectSource"><property name="text"><string>Select in drawing</string></property><property name="toolTip"><string>Select the matched source ellipse in the drawing</string></property></widget></item>
-     <item row="3" column="0"><widget class="QLabel" name="lCenterX"><property name="text"><string>Source Center X:</string></property><property name="buddy"><cstring>leCenterX</cstring></property></widget></item>
-     <item row="3" column="1"><widget class="QLineEdit" name="leCenterX"/></item>
-     <item row="3" column="2" rowspan="2"><widget class="LC_PointPickButton" name="wPickPointCenter" native="true"><property name="toolTip"><string>Pick source center</string></property></widget></item>
-     <item row="4" column="0"><widget class="QLabel" name="lCenterY"><property name="text"><string>Source Center Y:</string></property><property name="buddy"><cstring>leCenterY</cstring></property></widget></item>
-     <item row="4" column="1"><widget class="QLineEdit" name="leCenterY"/></item>
-     <item row="5" column="0"><widget class="QLabel" name="lMajor"><property name="text"><string>Source Major Radius:</string></property><property name="buddy"><cstring>leMajor</cstring></property></widget></item>
-     <item row="5" column="1"><widget class="QLineEdit" name="leMajor"/></item>
-     <item row="5" column="2"><widget class="QToolButton" name="tbPickMajor"><property name="toolTip"><string>Pick major radius</string></property><property name="icon"><iconset resource="../../../../res/icons/icons.qrc"><normaloff>:/icons/interactive_pick_distance.lci</normaloff></iconset></property></widget></item>
-     <item row="6" column="0"><widget class="QLabel" name="lMinor"><property name="text"><string>Source Minor Radius:</string></property><property name="buddy"><cstring>leMinor</cstring></property></widget></item>
-     <item row="6" column="1"><widget class="QLineEdit" name="leMinor"/></item>
-     <item row="6" column="2"><widget class="QToolButton" name="tbPickMinor"><property name="toolTip"><string>Pick minor radius</string></property><property name="icon"><iconset resource="../../../../res/icons/icons.qrc"><normaloff>:/icons/interactive_pick_distance.lci</normaloff></iconset></property></widget></item>
-     <item row="7" column="0"><widget class="QLabel" name="lRotation"><property name="text"><string>Source Rotation (deg):</string></property><property name="buddy"><cstring>leRotation</cstring></property></widget></item>
-     <item row="7" column="1"><widget class="QLineEdit" name="leRotation"/></item>
-     <item row="7" column="2"><widget class="QToolButton" name="tbPickRotation"><property name="toolTip"><string>Pick source rotation</string></property><property name="icon"><iconset resource="../../../../res/icons/icons.qrc"><normaloff>:/icons/interactive_pick_angle.lci</normaloff></iconset></property></widget></item>
-     <item row="8" column="0"><widget class="QLabel" name="lStart"><property name="text"><string>Start Parameter (deg):</string></property><property name="buddy"><cstring>leAngle1</cstring></property></widget></item>
-     <item row="8" column="1"><widget class="QLineEdit" name="leAngle1"/></item>
-     <item row="9" column="0"><widget class="QLabel" name="lEnd"><property name="text"><string>End Parameter (deg):</string></property><property name="buddy"><cstring>leAngle2</cstring></property></widget></item>
-     <item row="9" column="1"><widget class="QLineEdit" name="leAngle2"/></item>
-     <item row="10" column="0" colspan="3"><widget class="QCheckBox" name="cbReversed"><property name="text"><string>Reversed Source Traversal</string></property></widget></item>
+     <item row="2" column="0"><widget class="QLabel" name="lSourceType"><property name="text"><string>Source type:</string></property><property name="buddy"><cstring>cbSourceType</cstring></property></widget></item>
+     <item row="2" column="1" colspan="2"><widget class="QComboBox" name="cbSourceType"/></item>
+     <item row="3" column="0"><widget class="QLabel" name="lSource"><property name="text"><string>Source curve:</string></property><property name="buddy"><cstring>cbSource</cstring></property></widget></item>
+     <item row="3" column="1"><widget class="QComboBox" name="cbSource"/></item>
+     <item row="3" column="2"><widget class="QToolButton" name="tbSelectSource"><property name="text"><string>Select in drawing</string></property><property name="toolTip"><string>Select the matched source curve in the drawing</string></property></widget></item>
+     <item row="4" column="0"><widget class="QLabel" name="lCenterX"><property name="text"><string>Source Center X:</string></property><property name="buddy"><cstring>leCenterX</cstring></property></widget></item>
+     <item row="4" column="1"><widget class="QLineEdit" name="leCenterX"/></item>
+     <item row="4" column="2" rowspan="2"><widget class="LC_PointPickButton" name="wPickPointCenter" native="true"><property name="toolTip"><string>Pick source center</string></property></widget></item>
+     <item row="5" column="0"><widget class="QLabel" name="lCenterY"><property name="text"><string>Source Center Y:</string></property><property name="buddy"><cstring>leCenterY</cstring></property></widget></item>
+     <item row="5" column="1"><widget class="QLineEdit" name="leCenterY"/></item>
+     <item row="6" column="0"><widget class="QLabel" name="lMajor"><property name="text"><string>Source Major Radius:</string></property><property name="buddy"><cstring>leMajor</cstring></property></widget></item>
+     <item row="6" column="1"><widget class="QLineEdit" name="leMajor"/></item>
+     <item row="6" column="2"><widget class="QToolButton" name="tbPickMajor"><property name="toolTip"><string>Pick major radius</string></property><property name="icon"><iconset resource="../../../../res/icons/icons.qrc"><normaloff>:/icons/interactive_pick_distance.lci</normaloff></iconset></property></widget></item>
+     <item row="7" column="0"><widget class="QLabel" name="lMinor"><property name="text"><string>Source Minor Radius:</string></property><property name="buddy"><cstring>leMinor</cstring></property></widget></item>
+     <item row="7" column="1"><widget class="QLineEdit" name="leMinor"/></item>
+     <item row="7" column="2"><widget class="QToolButton" name="tbPickMinor"><property name="toolTip"><string>Pick minor radius</string></property><property name="icon"><iconset resource="../../../../res/icons/icons.qrc"><normaloff>:/icons/interactive_pick_distance.lci</normaloff></iconset></property></widget></item>
+     <item row="8" column="0"><widget class="QLabel" name="lRotation"><property name="text"><string>Source Rotation (deg):</string></property><property name="buddy"><cstring>leRotation</cstring></property></widget></item>
+     <item row="8" column="1"><widget class="QLineEdit" name="leRotation"/></item>
+     <item row="8" column="2"><widget class="QToolButton" name="tbPickRotation"><property name="toolTip"><string>Pick source rotation</string></property><property name="icon"><iconset resource="../../../../res/icons/icons.qrc"><normaloff>:/icons/interactive_pick_angle.lci</normaloff></iconset></property></widget></item>
+     <item row="9" column="0"><widget class="QLabel" name="lStart"><property name="text"><string>Start Parameter (deg):</string></property><property name="buddy"><cstring>leAngle1</cstring></property></widget></item>
+     <item row="9" column="1"><widget class="QLineEdit" name="leAngle1"/></item>
+     <item row="10" column="0"><widget class="QLabel" name="lEnd"><property name="text"><string>End Parameter (deg):</string></property><property name="buddy"><cstring>leAngle2</cstring></property></widget></item>
+     <item row="10" column="1"><widget class="QLineEdit" name="leAngle2"/></item>
+     <item row="11" column="0" colspan="3"><widget class="QCheckBox" name="cbReversed"><property name="text"><string>Reversed Source Traversal</string></property></widget></item>
     </layout>
    </widget></item>
    <item><layout class="QFormLayout" name="informationLayout">

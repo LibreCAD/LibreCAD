@@ -31,6 +31,7 @@
 #include "lc_entitypropertieseditor.h"
 #include "lc_selectedset.h"
 #include "lc_offsetcurve.h"
+#include "lc_parabola.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "../../../../lib/offset_worker/lc_offsetworkerclient.h"
 #include "rs_point.h"
@@ -617,6 +618,76 @@ TEST_CASE("Native offset properties resolve, replace, and select a source ellips
     CHECK(clone->definition().basis.ratio == replacementData.ratio);
     CHECK(f.curve->definition().basis.center.x == 0);
     CHECK(sourceBox->currentData().toULongLong() == replacement->getId());
+}
+
+TEST_CASE("Native source picker changes family and replaces the source with a typed curve",
+          "[gui][dialog][offsetcurve][source][typed]") {
+    Fixture f;
+    auto* line = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    f.graphic.addEntity(line);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    CHECK(typeBox->count() == 9);
+    const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(lineType >= 0);
+    typeBox->setCurrentIndex(lineType);
+    int lineIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == line->getId()) lineIndex = i;
+    REQUIRE(lineIndex >= 0);
+    sourceBox->setCurrentIndex(lineIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Line);
+    const auto* sourceLine = std::get_if<RS_LineData>(&clone->sourceDefinition()->source.value);
+    REQUIRE(sourceLine);
+    CHECK(sourceLine->startpoint.x == 0);
+    CHECK(sourceLine->startpoint.y == 4);
+    CHECK_FALSE(widget.findChild<QLineEdit*>("leCenterX")->isEnabled());
+    CHECK(sourceBox->currentData().toULongLong() == line->getId());
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(selectSource);
+    click(*selectSource);
+    CHECK(line->getFlag(RS2::FlagSelected));
+
+    auto* parabola = new LC_Parabola(nullptr, LC_ParabolaData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}});
+    f.graphic.addEntity(parabola);
+    const auto parabolaGeometry = LC_OffsetSourceGeometry::capture(*parabola);
+    REQUIRE(parabolaGeometry);
+    CHECK(parabolaGeometry->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+    const int parabolaType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Parabola));
+    REQUIRE(parabolaType >= 0);
+    typeBox->setCurrentIndex(parabolaType);
+    int parabolaIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == parabola->getId()) parabolaIndex = i;
+    REQUIRE(parabolaIndex >= 0);
+    sourceBox->setCurrentIndex(parabolaIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+
+    auto* ellipse = new RS_Ellipse(nullptr, RS_EllipseData{{8, 2}, {2, 0}, .8, 0, 0, false});
+    f.graphic.addEntity(ellipse);
+    const int ellipseType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Ellipse));
+    REQUIRE(ellipseType >= 0);
+    typeBox->setCurrentIndex(ellipseType);
+    int ellipseIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == ellipse->getId()) ellipseIndex = i;
+    REQUIRE(ellipseIndex >= 0);
+    sourceBox->setCurrentIndex(ellipseIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse);
 }
 
 TEST_CASE("Native field Return followed by focus out does not submit twice",

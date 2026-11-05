@@ -8480,6 +8480,8 @@ RS_FilterDXFRW::mergedOffsetSplineXData(const RS_Entity &source,
     const auto &context = *m_offsetOutputContext;
     std::optional<xd::Definition> current;
     const auto *native = dynamic_cast<const LC_OffsetCurve *>(&source);
+    if (includeDefinition && native && native->hasGeneralizedSourceDefinition())
+      return fail(xd::Reason::InvalidDefinition);
     if (includeDefinition && native && native->hasEditableDefinition()) {
       if (native->unknownOwnedTail().size() > xd::MaximumTailItems) return fail(xd::Reason::TailLimit);
       current = xd::Definition{native->definition(), native->unknownOwnedFlags(),

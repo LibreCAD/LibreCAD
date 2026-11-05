@@ -386,6 +386,22 @@ LC_OffsetCurveEditResult LC_OffsetCurve::commitPrepared(LC_OffsetCurveCreateResu
     return result;
 }
 
+LC_OffsetCurveEditResult LC_OffsetCurve::commitSourcePrepared(LC_OffsetCurveCreateResult &prepared) {
+    auto result = static_cast<const LC_OffsetCurveEditResult &>(prepared);
+    if (!prepared) return result;
+    auto& next = *prepared.entity;
+    if (!next.hasGeneralizedSourceDefinition() || next.m_grips.empty() ||
+        !geo::isFinite2D(next.m_cachedMiddlePoint) || !boundedRepresentation(next.getData())) {
+        result.refusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
+        result.changed = false;
+        return result;
+    }
+    auto definition = *next.m_sourceDefinition;
+    auto grips = std::move(next.m_grips);
+    publishSource(next, definition, grips, next.m_worldTolerance, next.m_closed, next.m_cachedMiddlePoint);
+    return result;
+}
+
 bool LC_OffsetCurve::checkThrough(const LC_OffsetCurve &curve, const RS_Vector &point,
     const LC_OffsetCheckLimits &limits, const geo::CheckWork &checked, geo::CheckWork &throughWork) {
     const auto cap = clampedLimits(limits);

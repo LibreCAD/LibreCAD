@@ -265,6 +265,31 @@ LC_OffsetCurveEditResult LC_OffsetWorkerCompletion::apply(LC_OffsetCurve& clone)
     const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
     if (!result) return {};
     auto outcome = static_cast<const LC_OffsetCurveEditResult&>(*result);
+    if (std::holds_alternative<LC_OffsetWorkerRequest::GenerateSource>(m_request.operation)) {
+        if (result->engineStatus != LC_CurveOffsetStatus::Ok || result->engineRuns != 1 ||
+            result->ordinaryStatus != LC_OffsetWorkerResult::OrdinaryStatus::Complete ||
+            result->refusal != LC_OffsetCurveRefusal::NotCacheRepresentable || result->ordinary.size() != 1) return outcome;
+        if (!clone.isConsistent()) {
+            outcome.refusal = LC_OffsetCurveRefusal::Inconsistent;
+            outcome.changed = false;
+            return outcome;
+        }
+        LC_OffsetCurveCreateResult prepared;
+        prepared.engineStatus = result->engineStatus;
+        prepared.engineRuns = result->engineRuns;
+        prepared.sampleUnits = result->sampleUnits;
+        prepared.attemptedOutputUsage = result->attemptedOutputUsage;
+        prepared.attemptedDeepCountComplete = result->attemptedDeepCountComplete;
+        prepared.outputUsage = result->outputUsage;
+        prepared.refusal = LC_OffsetCurveRefusal::None;
+        prepared.changed = true;
+        prepared.entity = nativeSource(clone);
+        if (!prepared.entity) {
+            prepared.refusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
+            prepared.changed = false;
+        }
+        return clone.commitSourcePrepared(prepared);
+    }
     if (!*result) return outcome;
     const auto eligibility = clone.eligibility();
     if (!eligibility) {

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "../lc_offsetworkerclient.h"
+#include "../lc_offsetworkeredit.h"
 #include "lc_offsetcurvexdata.h"
 #include "rs_entitycontainer.h"
 #include "rs_layer.h"
@@ -653,6 +654,44 @@ TEST_CASE("Worker joined op8 validates a typed native source cache before materi
     CHECK_FALSE(rejected.nativeValidatedSource(attributes));
     CHECK(std::get<Reply::Native>(rejected.reply().result).refusal ==
         LC_OffsetCurveRefusal::NotCacheRepresentable);
+    CHECK(owned.get().healthyAndIdle());
+}
+
+TEST_CASE("Worker typed-source edit replaces cache and definition atomically",
+          "[lc-offsetcurve][worker-client][typed-source-edit]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    const LC_OffsetSourceDefinition originalDefinition{
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {4, 0}}}, .5, 1e-4, false};
+    Receipts initialReceipts;
+    REQUIRE(owned.get().submit({token(1), Req::GenerateSource{originalDefinition, {}}},
+        Client::Mode::Commit, initialReceipts.into(0)));
+    rt.until([&] { return initialReceipts.calls[0] != 0; });
+    const auto& initialCompletion = completed(initialReceipts.at(0), 1, 7);
+    auto editable = initialCompletion.nativeSource(attributes);
+    REQUIRE(editable);
+
+    auto replacementDefinition = originalDefinition;
+    replacementDefinition.signedDistance = .75;
+    auto preparation = LC_OffsetWorkerEdit::prepareSourceDefinition(*editable, replacementDefinition, {});
+    REQUIRE(preparation.generateSource());
+    CHECK_FALSE(preparation.result());
+    Receipts editReceipts;
+    REQUIRE(owned.get().submit({token(2), *preparation.generateSource()}, Client::Mode::Commit,
+        editReceipts.into(0)));
+    rt.until([&] { return editReceipts.calls[0] != 0; });
+    const auto& editCompletion = completed(editReceipts.at(0), 2, 7);
+    const auto oldCache = RS_Spline::geometryFingerprint(editable->getData());
+    const auto outcome = editCompletion.apply(*editable);
+    REQUIRE(outcome);
+    CHECK(outcome.changed);
+    REQUIRE(editable->sourceDefinition());
+    CHECK(Req::Values::encodeSourceDefinition(*editable->sourceDefinition()) ==
+        Req::Values::encodeSourceDefinition(replacementDefinition));
+    CHECK(RS_Spline::geometryFingerprint(editable->getData()) != oldCache);
+    CHECK(editable->hasGeneralizedSourceDefinition());
     CHECK(owned.get().healthyAndIdle());
 }
 
