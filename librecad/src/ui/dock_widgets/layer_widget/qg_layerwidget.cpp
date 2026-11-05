@@ -365,7 +365,11 @@ void QG_LayerWidget::updateFiltering(){
 void QG_LayerWidget::layerAdded(RS_Layer* layer){
     updateWidget();   // 1st apply the new layer to the view
     updateFiltering();
-    activateLayer(layer);
+    // a layer added hidden (pasted, or brought in by a library insert) does not become current:
+    // what is drawn or pasted next would not be seen
+    if (layer != nullptr && !layer->isFrozen()) {
+        activateLayer(layer);
+    }
     updateWidget();   // update again, if new layer is last row, the height was wrong
 }
 

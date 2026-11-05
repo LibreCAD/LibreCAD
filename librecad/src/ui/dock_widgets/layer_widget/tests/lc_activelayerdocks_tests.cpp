@@ -512,12 +512,20 @@ TEST_CASE("The status bar names a layer the Layer List makes current as it is ad
     REQUIRE(label.lActiveLayerName->text().toStdString() == "Walls");
 
     auto* roof = new RS_Layer(QStringLiteral("Roof"));
-    roof->freeze(true);
     d.m_graphic.addLayer(roof);
 
     CHECK(d.m_graphic.getActiveLayer() == roof);
     CHECK(label.lActiveLayerName->text().toStdString() == "Roof");
-    CHECK(label.hiddenIcon()->isVisibleTo(&label));
+    CHECK_FALSE(label.hiddenIcon()->isVisibleTo(&label));
+
+    // a layer added hidden, as a paste or a library insert brings one in, is not made current:
+    // what is pasted goes to the current layer, and would not be seen
+    auto* attic = new RS_Layer(QStringLiteral("Attic"));
+    attic->freeze(true);
+    d.m_graphic.addLayer(attic);
+
+    CHECK(d.m_graphic.getActiveLayer() == roof);
+    CHECK(label.lActiveLayerName->text().toStdString() == "Roof");
 }
 
 TEST_CASE("The Layer List disables the lock icon of the current layer when no other layer is unlocked", "[gui][layers][lock][3229][offer]") {
