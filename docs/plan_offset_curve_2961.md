@@ -15659,5 +15659,21 @@ The focused case passes 98 assertions/1 case; the complete worker-kernel suite
 passes 3,797 assertions/24 cases. Commit `3ce7109f1` contains the regression.
 Closed-line/arc examples and refusal behavior are covered, but bulged
 polyline-specific fixtures, repeated/degenerate vertex layouts, long mixed
-segment sequences, and broad side/distance sweeps remain open. This test and
-roadmap update require push, PR evidence, and exact-head CI refresh.
+segment sequences, and broad side/distance sweeps remain open. Commit
+`743741303` records this update; it is pushed and PR #3193 includes the closed
+polyline acceptance/refusal evidence.
+
+## 376. Rational, Cubic, and Fit-Point Spline Side Sweep (2026-11-05)
+
+Added op-7/op-8 coverage for a rational quadratic control-point spline, an
+open cubic spline, and a fit-point `LC_SplinePoints` source. At signed
+distances `-0.25` and `0.25`, each produces exactly one canonical spline cache
+and op 8 promotes that exact cache/source pair. This supplements the wrapped
+periodic/unweighted spline sweep and the cross-family representative matrix.
+
+The focused spline case passes 150 assertions/1 case; the complete
+worker-kernel suite passes 3,947 assertions/25 cases. Commit `210be4055`
+contains the test. These representative source/side cases do not exhaust knot
+multiplicities, rational weight distributions, fit-point parameterization,
+periodic closure layouts, distance ranges, or multi-branch refusal. Push with
+this roadmap update, update PR #3193, and refresh exact-head CI.
