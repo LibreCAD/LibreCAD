@@ -749,6 +749,65 @@ TEST_CASE("offset worker shared value codecs use the request layouts and strict 
     CHECK_FALSE(values::encodeCutter(request::Cutter{invalidCache}));
 }
 
+TEST_CASE("offset worker source codecs preserve all typed source families",
+          "[lc-offsetcurve][worker-protocol][request][source-definition]") {
+    namespace values = request::Values;
+    RS_SplineData splineData{2, false};
+    splineData.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    splineData.knotslist = {0, 0, 0, 1, 1, 1};
+    splineData.weights = {1, .7, 1};
+    LC_SplinePointsData pointsData{false, false};
+    pointsData.useControlPoints = true;
+    pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 5> sources{
+        LC_OffsetSourceGeometry{ellipse()},
+        LC_OffsetSourceGeometry{splineData},
+        LC_OffsetSourceGeometry{pointsData},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}}
+    };
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        const auto encodedSource = values::encodeSourceGeometry(sources[i]);
+        REQUIRE(encodedSource);
+        CHECK(encodedSource->at(0).toInteger() == static_cast<qint64>(i));
+        const auto decodedSource = values::decodeSourceGeometry(*encodedSource);
+        REQUIRE(decodedSource);
+        CHECK(decodedSource->kind() == sources[i].kind());
+        CHECK(values::encodeSourceGeometry(*decodedSource) == encodedSource);
+
+        const LC_OffsetSourceDefinition definition{sources[i], -.75, .00025, true};
+        const auto encodedDefinition = values::encodeSourceDefinition(definition);
+        REQUIRE(encodedDefinition);
+        const auto decodedDefinition = values::decodeSourceDefinition(*encodedDefinition);
+        REQUIRE(decodedDefinition);
+        CHECK(decodedDefinition->source.kind() == sources[i].kind());
+        CHECK(decodedDefinition->signedDistance == -.75);
+        CHECK(decodedDefinition->relativeTolerance == .00025);
+        CHECK(decodedDefinition->cacheReversed);
+        CHECK(values::encodeSourceDefinition(*decodedDefinition) == encodedDefinition);
+    }
+
+    const auto validSource = values::encodeSourceGeometry(sources[1]);
+    REQUIRE(validSource);
+    CHECK_FALSE(values::decodeSourceGeometry(changed(*validSource, {0}, 5)));
+    auto malformed = sources[1];
+    auto& malformedSpline = std::get<RS_SplineData>(malformed.value);
+    malformedSpline.knotslist.pop_back();
+    CHECK_FALSE(values::encodeSourceGeometry(malformed));
+    CHECK_FALSE(values::decodeSourceGeometry(changed(*validSource, {1, 1, 3},
+        std::numeric_limits<double>::infinity())));
+    auto nonPlanar = sources[0];
+    std::get<RS_EllipseData>(nonPlanar.value).center.z = 1.0;
+    CHECK_FALSE(values::encodeSourceGeometry(nonPlanar));
+    CHECK_FALSE(values::decodeSourceGeometry(changed(*validSource, {1, 0, 2}, 1.0)));
+
+    auto invalidDefinition = LC_OffsetSourceDefinition{sources[0], std::numeric_limits<double>::infinity(), 0, false};
+    CHECK_FALSE(values::encodeSourceDefinition(invalidDefinition));
+    auto invalidDistance = *values::encodeSourceDefinition(
+        LC_OffsetSourceDefinition{sources[0], 1.0, .001, false});
+    CHECK_FALSE(values::decodeSourceDefinition(changed(invalidDistance, {1}, std::numeric_limits<double>::quiet_NaN())));
+}
+
 TEST_CASE("offset worker CheckThrough owns raw values and bounds every membership allowance",
           "[lc-offsetcurve][worker-protocol][request][through]") {
     request::CheckThrough op{spline(), definition(), .125, point(), {}};

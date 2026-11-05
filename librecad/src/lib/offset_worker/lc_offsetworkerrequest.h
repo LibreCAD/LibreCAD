@@ -8,6 +8,7 @@
 
 #include "lc_offsetcachetrim.h"
 #include "lc_offsetcurve.h"
+#include "lc_offsetsource.h"
 #include "rs_modification.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -90,6 +91,10 @@ std::optional<QCborArray> encodeCache(const RS_SplineData&);
 std::optional<RS_SplineData> decodeCache(const QCborArray&);
 std::optional<QCborArray> encodeDefinition(const LC_EllipseOffsetDefinition&);
 std::optional<LC_EllipseOffsetDefinition> decodeDefinition(const QCborArray&);
+std::optional<QCborArray> encodeSourceGeometry(const LC_OffsetSourceGeometry&);
+std::optional<LC_OffsetSourceGeometry> decodeSourceGeometry(const QCborArray&);
+std::optional<QCborArray> encodeSourceDefinition(const LC_OffsetSourceDefinition&);
+std::optional<LC_OffsetSourceDefinition> decodeSourceDefinition(const QCborArray&);
 std::optional<QCborArray> encodePick(const LC_OffsetCacheTrim::Pick&);
 std::optional<LC_OffsetCacheTrim::Pick> decodePick(const QCborArray&);
 std::optional<QCborArray> encodeCutter(const Cutter&);

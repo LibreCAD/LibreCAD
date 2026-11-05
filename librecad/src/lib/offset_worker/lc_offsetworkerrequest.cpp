@@ -157,6 +157,49 @@ bool read(const QCborValue& value, RS_SplineData& d) {
         readNumbers(weights, d.weights) && readPoints(fit, d.fitPoints) &&
         readNumbers(saved, d.savedOpenKnots);
 }
+bool valid(const LC_OffsetSourceGeometry& source) { return source.isWellFormed(); }
+bool valid(const LC_OffsetSourceDefinition& definition) { return definition.isWellFormed(); }
+bool read(const QCborValue& value, LC_SplinePointsData& data) {
+    QCborArray a, splinePoints, controlPoints;
+    return array(value, 5, a) && boolean(a.at(0), data.closed) && boolean(a.at(1), data.cut) &&
+        boolean(a.at(2), data.useControlPoints) && boundedArray(a.at(3), ControlCap, splinePoints) &&
+        boundedArray(a.at(4), ControlCap, controlPoints) && readPoints(splinePoints, data.splinePoints) &&
+        readPoints(controlPoints, data.controlPoints);
+}
+bool read(const QCborValue& value, LC_ParabolaData& data) {
+    QCborArray a;
+    if (!array(value, 3, a)) return false;
+    std::array<RS_Vector, 3> points;
+    for (qsizetype i = 0; i < a.size(); ++i) if (!read(a.at(i), points[std::size_t(i)])) return false;
+    data = LC_ParabolaData{points};
+    return true;
+}
+bool read(const QCborValue& value, LC_HyperbolaData& data) {
+    QCborArray a;
+    return array(value, 6, a) && read(a.at(0), data.center) && read(a.at(1), data.majorP) &&
+        number(a.at(2), data.ratio) && number(a.at(3), data.angle1) && number(a.at(4), data.angle2) &&
+        boolean(a.at(5), data.reversed);
+}
+bool read(const QCborValue& value, LC_OffsetSourceGeometry& source) {
+    QCborArray a;
+    qint64 tag;
+    if (!array(value, 2, a) || !integer(a.at(0), tag)) return false;
+    switch (tag) {
+    case 0: { RS_EllipseData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 1: { RS_SplineData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 2: { LC_SplinePointsData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 3: { LC_ParabolaData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 4: { LC_HyperbolaData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    default: return false;
+    }
+    return valid(source);
+}
+bool read(const QCborValue& value, LC_OffsetSourceDefinition& definition) {
+    QCborArray a;
+    return array(value, 4, a) && read(a.at(0), definition.source) &&
+        number(a.at(1), definition.signedDistance) && number(a.at(2), definition.relativeTolerance) &&
+        boolean(a.at(3), definition.cacheReversed) && valid(definition);
+}
 bool valid(const LC_EllipseOffsetDefinition& d) {
     return valid(d.basis) && d.basis.ratio > 0 && std::isfinite(d.distance) && d.distance > 0 &&
         std::isfinite(d.relTolerance) && d.relTolerance > 0;
@@ -483,6 +526,24 @@ QCborArray fields(const RS_SplineData& d) {
         qint64(d.degree), qint64(d.type), qint64(d.savedOpenType), fields(d.savedOpenKnots),
         d.m_closedFlag, d.m_periodicFlag};
 }
+QCborArray fields(const LC_SplinePointsData& d) {
+    return {d.closed, d.cut, d.useControlPoints, fields(d.splinePoints), fields(d.controlPoints)};
+}
+QCborArray fields(const LC_ParabolaData& d) {
+    QCborArray points;
+    for (const auto& point : d.m_controlPoints) points.append(fields(point));
+    return points;
+}
+QCborArray fields(const LC_HyperbolaData& d) {
+    return {fields(d.center), fields(d.majorP), d.ratio, d.angle1, d.angle2, d.reversed};
+}
+QCborArray fields(const LC_OffsetSourceGeometry& source) {
+    return {qint64(source.kind()), std::visit([](const auto& data) { return fields(data); }, source.value)};
+}
+QCborArray fields(const LC_OffsetSourceDefinition& definition) {
+    return {fields(definition.source), definition.signedDistance, definition.relativeTolerance,
+        definition.cacheReversed};
+}
 QCborArray fields(const LC_EllipseOffsetDefinition& d) {
     return {fields(d.basis), d.distance, d.towardCentre, d.cacheReversed, d.relTolerance};
 }
@@ -586,6 +647,24 @@ std::optional<LC_EllipseOffsetDefinition> decodeDefinition(const QCborArray& a) 
     LC_EllipseOffsetDefinition data;
     if (!read(a, data)) return std::nullopt;
     return data;
+}
+std::optional<QCborArray> encodeSourceGeometry(const LC_OffsetSourceGeometry& source) {
+    if (!valid(source)) return std::nullopt;
+    return fields(source);
+}
+std::optional<LC_OffsetSourceGeometry> decodeSourceGeometry(const QCborArray& a) {
+    LC_OffsetSourceGeometry source;
+    if (!read(a, source)) return std::nullopt;
+    return source;
+}
+std::optional<QCborArray> encodeSourceDefinition(const LC_OffsetSourceDefinition& definition) {
+    if (!valid(definition)) return std::nullopt;
+    return fields(definition);
+}
+std::optional<LC_OffsetSourceDefinition> decodeSourceDefinition(const QCborArray& a) {
+    LC_OffsetSourceDefinition definition;
+    if (!read(a, definition)) return std::nullopt;
+    return definition;
 }
 std::optional<QCborArray> encodePick(const LC_OffsetCacheTrim::Pick& data) {
     if (!valid(data)) return std::nullopt;

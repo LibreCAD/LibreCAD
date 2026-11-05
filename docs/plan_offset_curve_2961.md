@@ -14433,12 +14433,14 @@ snapshot and common signed-distance definition for ellipse, spline,
 spline-points, parabola, and bounded hyperbola inputs. Capture preserves
 parabola identity ahead of its spline-points base and refuses unsupported,
 malformed, or unbounded sources. W338 adds detached entity reconstruction and
-round-trip identity checks for all five alternatives. This contract is not yet
-consumed by `LC_OffsetCurve`, the worker protocol, Properties, or persistence,
-so it does not enable generalized native offsets. W335 remains the completed
-ellipse-only Properties chooser receipt. Continue G1 through integration-
-specific source matching, transforms, and lifecycle inventory before G2.
-Retain all existing W379 acceptance gates; this work does not close them.
+round-trip identity checks for all five alternatives. W339 adds bounded CBOR
+codecs for the tagged source and common definition. These codecs are not yet
+consumed by a worker operation, and the source contract is not yet used by
+`LC_OffsetCurve`, Properties, or persistence, so generalized native offsets
+remain unavailable. W335 remains the completed ellipse-only Properties
+chooser receipt. Continue G1 through integration-specific source matching,
+transforms, and lifecycle inventory; then wire the new codec into worker
+generation and result validation. Retain all existing W379 acceptance gates.
 
 ## 337. Tagged Source Snapshot Foundation (2026-11-05)
 
@@ -14473,3 +14475,17 @@ successful incremental rebuild of `librecad_tests`. It now reconstructs and
 recaptures each supported family, checks source identity and representative
 geometry/control data, and retains the hostile-input cases from W337.
 `git diff --check` passed.
+
+## 339. Tagged Source Worker Codecs (2026-11-05)
+
+Added bounded CBOR value codecs for the five source alternatives and the common
+signed-distance definition. The source record carries an explicit stable kind
+tag and exact-arity per-kind payloads; decode validates tags before selecting
+the type and rejects non-finite, non-planar, oversized, malformed, or
+unbounded source data before publishing a value. Existing protocol-4 operation
+layouts are unchanged; these helpers are not yet connected to a new operation
+or kernel dispatch.
+
+Validation: `librecad_offset_worker_request_tests` rebuilt successfully. The
+new tagged-source test passed 76 assertions, and the complete request suite
+passed all 597,242 assertions in 14 cases. `git diff --check` passed.

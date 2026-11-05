@@ -65,7 +65,8 @@ namespace LC_OffsetSourceDetail {
 inline constexpr std::size_t MaximumSourceItems = 65536;
 
 inline bool finite(const RS_Vector& point) noexcept {
-    return point.valid && std::isfinite(point.x) && std::isfinite(point.y) && std::isfinite(point.z);
+    return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+           std::isfinite(point.z) && point.z == 0.0;
 }
 
 inline bool finitePoints(const std::vector<RS_Vector>& points) noexcept {
