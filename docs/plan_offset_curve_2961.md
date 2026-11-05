@@ -15474,3 +15474,73 @@ PR head is `83ff1dc1a10c5b506a884c4a3cd5412c443e8a90`; GitHub had not reported
 checks yet. Wrapped-spline operation-8 promotion and broader legal variant
 coverage remain open, as do the remaining review and external acceptance
 gates.
+
+## 368. Source-Type Switching and Parabola Picker Status (2026-11-05)
+
+Clarified the roadmap against the latest source-picker requirement. The
+Properties widget now has a source-family selector followed by a live-entity
+selector; the family selector is not locked to the embedded source type.
+Changing the family only refreshes the candidate list and does not mutate the
+offset definition, generated cache, or drawing selection. Choosing an entity
+from another family submits the guarded worker-backed replacement, capturing
+its geometry as a value-owned source. The current source is matched by kind
+and canonical encoded geometry, and the explicit Select-in-drawing control is
+available only when that live match exists.
+
+The explicit picker inventory is nine families: ellipse, spline,
+spline-points, parabola, bounded hyperbola, line, arc, circle, and polyline.
+`LC_Parabola` is presented and persisted as its own source kind, not collapsed
+into the `LC_SplinePoints` base representation. The existing Properties
+integration matrix verifies changing type before selection and replacing the
+source across the inventory; it also checks signed-distance/side edits. Empty
+or unsupported buckets have an explicit placeholder and cannot submit a
+selection. This satisfies the requested type-changing UI and parabola
+visibility, but does not assert that every geometrically legal variant within
+each family can produce a single native cache.
+
+The remaining implementation work is the production-path variant matrix and
+its explicit admission/refusal policy: wrapped spline knot and weight layouts
+(including operation-8 native import promotion), bounded hyperbola ranges, and
+polyline segment, orientation, repeated-vertex, and closure combinations
+across signed-distance/side choices. Add or refine worker, Properties,
+persistence, and import tests for each admitted or refused class; every
+refusal must remain atomic and diagnostic. Keep the existing nine-family
+selector contract stable while eligibility is refined; do not hide a family
+merely because some variants are refused. Exact-head CI, external-reader,
+visible GUI, deployment, review, and final integration gates remain
+separately open.
+
+Current roadmap head: `4e3237f05edc98c3e3e695a7931af26a36ed5bf9` (plan-only
+checkpoint after product/test commit `83ff1dc1a10c5b506a884c4a3cd5412c443e8a90`).
+This entry updates plan status only; no product code or validation result is
+claimed beyond the evidence recorded in W359-W367.
+
+## 369. Wrapped-Spline Operation-8 Helper Promotion (2026-11-05)
+
+Added an operation-8 kernel regression for the wrapped periodic cubic source
+already used by the source-generation matrix. Its generated ordinary result is
+one canonical open spline; op 8 accepts that exact payload, the joined result
+can create the validated native source, and changing a cache control point is
+refused without publication. This closes the worker-level promotion gap for
+this wrapped periodic fixture, not the full wrapped-spline import/file matrix.
+
+Extended the joined worker-client source-family test to send the wrapped
+spline's exact op-7 result into op 8 and verify `nativeValidatedSource()`
+preserves its tagged source and exact generated cache. A local attempt to build
+a real DXF/DWG carrier from the application-side `materializeBranches()`
+result was rejected by the fixture writer: the observed serialized candidate
+had 87 controls, 89 knots, and 85 weights. The failed fixture was removed; do
+not treat this as proof that wrapped DXF/DWG import fails. Add a focused audit
+to determine whether this output is an ineligible direct-materialization
+variant or a fixture/cache conversion mismatch, then exercise file import
+using a valid writer-accepted cache before closing that gate.
+
+Validation on the exact local source: full worker-client suite passed 24,871
+assertions/20 cases; wrapped op-8 kernel test passed 43 assertions/1 case; the
+typed-source import-session spline-variant filter passed 453 assertions/1
+case; `git diff --check` passed. Test commit
+`63c1403146de6e6ed79aad6e479f98d7a19aa6ed` contains this implementation.
+The worktree is now at that test commit plus this roadmap update. Push it,
+check exact-head CI, and append the evidence to PR #3193. Wrapped file-import
+validation and the direct-materialization/cache-shape investigation remain
+open.
