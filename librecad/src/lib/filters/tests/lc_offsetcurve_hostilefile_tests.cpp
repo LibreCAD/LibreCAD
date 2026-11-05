@@ -1157,6 +1157,14 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     splineSource.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
     splineSource.knotslist = {0, 0, 0, 1, 1, 1};
     splineSource.weights = {1, .7, 1};
+    RS_SplineData nonuniformQuadratic{2, false};
+    nonuniformQuadratic.controlPoints = {{0, 0}, {1, 2}, {2, -1}, {3, 2}, {4, 0}};
+    nonuniformQuadratic.knotslist = {0, 0, 0, .3, .7, 1, 1, 1};
+    nonuniformQuadratic.weights = {1, .6, 1.8, .8, 1};
+    RS_SplineData repeatedKnotCubic{3, false};
+    repeatedKnotCubic.controlPoints = {{0, 0}, {1, 2}, {2, 2}, {3, -1}, {4, -1}, {5, 1}};
+    repeatedKnotCubic.knotslist = {0, 0, 0, 0, .4, .4, 1, 1, 1, 1};
+    repeatedKnotCubic.weights = {1, .7, 1.4, .9, 1.6, 1};
     RS_SplineData unweightedSpline{1, false};
     unweightedSpline.controlPoints = {{0, 0}, {1, 0}, {2, 0}};
     unweightedSpline.knotslist = {0, 0, .5, 1, 1};
@@ -1176,9 +1184,12 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         RS_ArcData{{0, 0}, 2, quarterTurn, M_PI, false},
         RS_ArcData{{0, 0}, 2, M_PI, 3 * quarterTurn, false},
         RS_ArcData{{0, 0}, 2, 3 * quarterTurn, 2 * M_PI, false}}};
-    const std::array<LC_OffsetSourceGeometry, 12> sources{
+    const std::array<LC_OffsetSourceGeometry, 14> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
-        LC_OffsetSourceGeometry{splineSource}, LC_OffsetSourceGeometry{unweightedSpline},
+        LC_OffsetSourceGeometry{splineSource},
+        LC_OffsetSourceGeometry{nonuniformQuadratic},
+        LC_OffsetSourceGeometry{repeatedKnotCubic},
+        LC_OffsetSourceGeometry{unweightedSpline},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
