@@ -4184,6 +4184,22 @@ recovery, stale source/selection/layer/UCS rejection, and one-cycle undo/redo
 publication. These are offscreen Qt action tests, not visible interactive
 acceptance.
 
+## 372. Wrapped-Spline Signed-Side and Distance Sweep (2026-11-05)
+
+Extended the wrapped periodic cubic op-8 regression across signed distances
+`-0.5`, `-0.25`, `0.25`, and `0.5`. These cover both offset sides and two
+magnitudes. Each op-7 generation returns exactly one canonical spline cache;
+op 8 accepts that exact source/cache pair. The pre-existing mutation case
+continues to prove that changing cache geometry is refused.
+
+The focused sweep passes 143 assertions/1 case; the complete worker-kernel
+suite passes 3,389 assertions/21 cases; `git diff --check` passes. Commit
+`50d2c490b` contains the test. The representative wrapped-spline side/distance
+slice is closed; it does not close signed-distance sweeps for other spline
+topologies, hyperbola bounds, or polyline layouts. Add those to the remaining
+variant matrix, then push this test and roadmap update, record PR evidence, and
+recheck exact-head CI.
+
 | W71b lane | Testcases / assertions | Result | SHA256 |
 |---|---:|---|---|
 | Creation/repeat Release | 13 / 318 | PASS | `431301b4020ce1dad423503772271d972cca5430335498be760da42dda975ce5` |
