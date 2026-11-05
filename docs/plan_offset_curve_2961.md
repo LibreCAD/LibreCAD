@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W391; chronological evidence follows): implementation slices
+Current status (W392; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -70,7 +70,7 @@ Changing the family filter alone is non-mutating; selecting a candidate goes
 through guarded worker-backed replacement. This closes the requested picker
 behavior, not exhaustive eligibility for every legal geometry variant or
 every distance/side, and not the broader plan's acceptance gates. The
-recent W378-W391 source-variant slices add malformed-polyline refusal,
+recent W378-W392 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15890,6 +15890,20 @@ spline-variant, fit-point, and typed-source persistence selection passes 4,883
 assertions across six cases. `git diff --check` passes. This verifies one
 closed fit-point shape only; other closed layouts and tangent constraints
 remain unqualified.
+
+## 392. Fit-Point Import Across R14 DXF and AC1032 (2026-11-05)
+
+Extended the four W390-W391 fit-point fixtures (three-, four-, and five-point
+open sources plus one closed eight-point source) to R14/AC1014 binary DXF.
+Each fixture now goes through staged import and operation-8 native promotion
+in R14 DXF, AC1032 DXF, and AC1032 DWG, with exact source and cache values
+checked in every lane.
+
+The focused fit-point import case passes 2,888 assertions; the combined
+spline-variant, fit-point, and typed-source persistence selection passes 5,897
+assertions across six cases. `git diff --check` passes. This is version
+coverage for the selected fit-point shapes, not general historical DWG
+coverage or every legal interpolation/tangent layout.
 
 ## 390. Fit-Point Count Variants in DXF/DWG Import Promotion (2026-11-05)
 
