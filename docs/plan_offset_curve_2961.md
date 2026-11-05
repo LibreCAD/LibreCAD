@@ -15694,3 +15694,18 @@ The focused file-persistence test passes 864 assertions/1 case. Commit
 file-persistence receipt to PR #3193, and recheck exact-head CI. Remaining
 polyline gaps include bulge-origin import variants, repeated/degenerate
 vertices, longer mixed segment runs, and side/distance sweeps.
+
+## 378. Degenerate Polyline Source Refusal (2026-11-05)
+
+Added focused source-validation regressions for zero-length first and trailing
+segments, a disconnected repeated-vertex chain, and a closed flag whose final
+endpoint does not return to the start. Each malformed value is rejected by
+`isWellFormed()`, cannot be materialized as an entity, and makes the containing
+source definition invalid before worker execution. This confirms the current
+typed-source validation boundary; no production behavior change was needed.
+
+The focused polyline worker-kernel filter passes 212 assertions across three
+cases; the complete worker-kernel suite passes 3,959 assertions across 26
+cases, and `git diff --check` passes. The malformed-chain refusal slice is
+covered. Import-origin duplicate-vertex behavior, bulged-vertex import
+variants, longer mixed chains, and broader signed-distance sweeps remain open.
