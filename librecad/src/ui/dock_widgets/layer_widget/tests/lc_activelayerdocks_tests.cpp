@@ -29,6 +29,12 @@
 #include <utility>
 
 #include <QAbstractItemModel>
+#include <QApplication>
+#include <QContextMenuEvent>
+#include <QMenu>
+#include <QMessageBox>
+#include <QMouseEvent>
+#include <QTimer>
 #include <QAction>
 #include <QFont>
 #include <QItemSelectionModel>
@@ -43,6 +49,7 @@
 #include "lc_layertreeitem.h"
 #include "lc_layertreemodel.h"
 #include "lc_layertreewidget.h"
+#include "qg_actionhandler.h"
 #include "qg_activelayername.h"
 #include "qg_layerwidget.h"
 #include "rs_dialogfactory.h"
@@ -159,6 +166,55 @@ void lockAllButWalls(Drawing& d) {
     d.m_graphic.setLockLayers({}, {zero, d.m_construction});
 }
 
+/// What a user does with the mouse on the cell of a view: press and release the right button on it
+/// (which selects the row, as it does for the user), then the context menu it asks for. The menu is
+/// found while it is open: its entries are noted, and the one named `choose` is triggered (none if it
+/// is empty); a message box that the entry opens is answered with OK.
+struct RightClick {
+    QStringList m_entries;
+    bool m_triggered{false};
+};
+
+RightClick rightClick(QAbstractItemView* view, const QModelIndex& index, const QString& choose) {
+    // shared with the timer, which runs after the call when the menu has no entries and is not shown
+    const auto result = std::make_shared<RightClick>();
+    const QPoint pos = view->visualRect(index).center();
+    QWidget* viewport = view->viewport();
+    QMouseEvent press(QEvent::MouseButtonPress, pos, viewport->mapToGlobal(pos), Qt::RightButton, Qt::RightButton,
+                      Qt::NoModifier);
+    QApplication::sendEvent(viewport, &press);
+    QMouseEvent release(QEvent::MouseButtonRelease, pos, viewport->mapToGlobal(pos), Qt::RightButton, Qt::NoButton,
+                        Qt::NoModifier);
+    QApplication::sendEvent(viewport, &release);
+    QTimer::singleShot(0, [result, choose] {
+        QMenu* menu = qobject_cast<QMenu*>(QApplication::activePopupWidget());
+        if (menu == nullptr) {
+            return; // a menu with no entries is not shown
+        }
+        for (QAction* action : menu->actions()) {
+            if (!action->isSeparator()) {
+                result->m_entries << action->text().remove('&');
+            }
+        }
+        for (QAction* action : menu->actions()) {
+            if (!choose.isEmpty() && action->text().remove('&') == choose) {
+                QTimer::singleShot(0, [] {
+                    auto* box = qobject_cast<QMessageBox*>(QApplication::activeModalWidget());
+                    REQUIRE(box != nullptr);
+                    box->button(QMessageBox::Ok)->click();
+                });
+                result->m_triggered = true;
+                action->trigger();
+            }
+        }
+        menu->close();
+    });
+    QContextMenuEvent menuEvent(QContextMenuEvent::Mouse, pos, viewport->mapToGlobal(pos));
+    QApplication::sendEvent(viewport, &menuEvent);
+    QCoreApplication::processEvents();
+    return *result;
+}
+
 } // namespace
 
 TEST_CASE("Clicking a hidden layer in the Layer List makes it current, still hidden", "[gui][layers][active][3229]") {
@@ -236,6 +292,96 @@ TEST_CASE("Clicking a hidden or locked layer in the Layer Tree", "[gui][layers][
         REQUIRE(walls.isValid());
         CHECK(model->getItemForIndex(walls)->isActiveLayer());
         CHECK(command.m_messages == QStringList{lockedMessage});
+    }
+}
+
+TEST_CASE("Right-clicking a layer of the Layer Tree offers Remove Layer, except for layer 0", "[gui][layers][remove][3229]") {
+    Drawing d;
+    QG_ActionHandler handler(nullptr);
+    LC_LayerTreeWidget widget(&handler, nullptr);
+    widget.setGraphicView(&d.m_view);
+    widget.resize(500, 400);
+    widget.show();
+    auto* tree = widget.findChild<QTreeView*>();
+    REQUIRE(tree != nullptr);
+    auto* model = dynamic_cast<LC_LayerTreeModel*>(tree->model());
+    REQUIRE(model != nullptr);
+    CommandMessages command;
+    const RS_LayerList* layers = d.m_graphic.getLayerList();
+    RS_Layer* zero = d.m_graphic.findLayer(QStringLiteral("0"));
+    const QString remove = QStringLiteral("Remove Layer");
+
+    SECTION("layer 0 has no Remove entry") {
+        const QModelIndex name = treeNameIndex(*model, zero);
+        REQUIRE(name.isValid());
+        const RightClick click = rightClick(tree, name, remove);
+        CHECK_FALSE(click.m_entries.isEmpty());
+        CHECK_FALSE(click.m_triggered);
+        // "Find And Remove Empty Layers" is not about this layer: it is in every menu of the tree
+        for (const QString& entry : click.m_entries) {
+            CAPTURE(entry.toStdString());
+            CHECK_FALSE(entry.startsWith(QStringLiteral("Remove")));
+            CHECK_FALSE(entry.contains(QStringLiteral("Delete"), Qt::CaseInsensitive));
+        }
+        CHECK(layers->contains(zero));
+    }
+    SECTION("a layer that is not locked is removed, and the current layer stays") {
+        const QModelIndex name = treeNameIndex(*model, d.m_construction);
+        REQUIRE(name.isValid());
+        const RightClick click = rightClick(tree, name, remove);
+        CHECK(click.m_entries.contains(remove));
+        CHECK(click.m_triggered);
+        CHECK_FALSE(layers->contains(d.m_construction));
+        CHECK(d.m_graphic.getActiveLayer() == d.m_walls);
+        CHECK(command.m_messages.isEmpty());
+    }
+    SECTION("the current layer is removed too, another layer taking its place") {
+        const QModelIndex name = treeNameIndex(*model, d.m_walls);
+        REQUIRE(name.isValid());
+        const RightClick click = rightClick(tree, name, remove);
+        CHECK(click.m_triggered);
+        CHECK_FALSE(layers->contains(d.m_walls));
+        CHECK(d.m_graphic.getActiveLayer() == zero);
+        CHECK(command.m_messages == QStringList{QStringLiteral("Layer \"Walls\" is being removed, so \"0\" is the current layer now.")});
+    }
+    SECTION("the current layer is kept when no other layer is unlocked") {
+        lockAllButWalls(d);
+        const QModelIndex name = treeNameIndex(*model, d.m_walls);
+        REQUIRE(name.isValid());
+        // the layer is skipped, with a message box of its own that is answered with OK
+        const RightClick click = rightClick(tree, name, remove);
+        CHECK(click.m_triggered);
+        CHECK(layers->contains(d.m_walls));
+        CHECK(d.m_graphic.getActiveLayer() == d.m_walls);
+    }
+}
+
+TEST_CASE("Right-clicking a layer of the Layer List offers Remove Layer, except for layer 0", "[gui][layers][remove][3229]") {
+    Drawing d;
+    LC_ActionGroupManager actions(nullptr);
+    QAction removeAction(QStringLiteral("&Remove Layer"));
+    LC_ActionGroupManager::associateQActionWithActionType(&removeAction, RS2::ActionLayersRemove);
+    actions.getActionsMap().insert(QStringLiteral("LayersRemove"), &removeAction);
+    actions.completeInit();
+    QG_LayerWidget widget(&actions, nullptr, nullptr);
+    widget.setGraphicView(&d.m_view);
+    widget.resize(500, 400);
+    widget.show();
+    auto* table = widget.findChild<QTableView*>();
+    REQUIRE(table != nullptr);
+    auto* model = dynamic_cast<QG_LayerModel*>(table->model());
+    REQUIRE(model != nullptr);
+    RS_Layer* zero = d.m_graphic.findLayer(QStringLiteral("0"));
+    REQUIRE(zero != nullptr);
+    const QString remove = QStringLiteral("Remove Layer");
+
+    SECTION("layer 0 has no Remove entry") {
+        const RightClick click = rightClick(table, model->getIndex(zero).siblingAtColumn(QG_LayerModel::COLUMN_NAME), QString());
+        CHECK_FALSE(click.m_entries.contains(remove));
+    }
+    SECTION("another layer has one") {
+        const RightClick click = rightClick(table, model->getIndex(d.m_construction).siblingAtColumn(QG_LayerModel::COLUMN_NAME), QString());
+        CHECK(click.m_entries.contains(remove));
     }
 }
 

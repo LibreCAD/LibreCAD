@@ -650,7 +650,22 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
     addMenuItem(menu, RS2::ActionLayersToggleLock);
     addMenuItem(menu, RS2::ActionLayersTogglePrint);
     addMenuItem(menu, RS2::ActionLayersToggleConstruction);
-    addMenuItem(menu, RS2::ActionLayersRemove);
+    // layer 0 is never removed: no entry when it is all that the action would act on
+    bool removable = false;
+    bool anySelected = false;
+    for (const RS_Layer* layer : *m_layerList) {
+        if (layer->isVisibleInLayerList() && layer->isSelectedInLayerList()) {
+            anySelected = true;
+            removable = removable || layer->getName() != "0";
+        }
+    }
+    if (!anySelected) {
+        const RS_Layer* active = m_layerList->getActive();
+        removable = active != nullptr && active->getName() != "0";
+    }
+    if (removable) {
+        addMenuItem(menu, RS2::ActionLayersRemove);
+    }
     menu->addSeparator();
     // Single layer actions:
     addMenuItem(menu, RS2::ActionLayersAdd);
