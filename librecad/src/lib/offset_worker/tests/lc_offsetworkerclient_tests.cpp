@@ -541,8 +541,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{closedArcPolyline}
     };
 
-    std::optional<RS_SplineData> wrappedCache;
-    std::optional<LC_OffsetSourceDefinition> wrappedDefinition;
+    std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
@@ -583,8 +582,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             CHECK(directCache.knotslist.size() == directCache.controlPoints.size() +
                   static_cast<std::size_t>(directCache.degree) + 1);
             CHECK(directCache.weights.size() == directCache.controlPoints.size());
-            wrappedCache = *cache;
-            wrappedDefinition = std::get<Req::GenerateSource>(input.operation).definition;
+            exactCache(directCache, *cache);
         }
         CHECK_FALSE(completion.native(attributes));
         auto entities = completion.ordinary(attributes);
@@ -603,6 +601,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             REQUIRE(editable->hasGeneralizedSourceDefinition());
             CHECK_FALSE(editable->hasEditableDefinition());
             REQUIRE(editable->sourceDefinition());
+            cacheCandidates.emplace_back(*editable->sourceDefinition(), editable->getData());
             CHECK(Req::Values::encodeSourceDefinition(*editable->sourceDefinition()) ==
                 Req::Values::encodeSourceDefinition(std::get<Req::GenerateSource>(input.operation).definition));
             std::unique_ptr<RS_Entity> cloned{editable->clone()};
@@ -647,27 +646,29 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     linear.weights = {1, 1};
     const LC_OffsetSourceDefinition linearDefinition{
         LC_OffsetSourceGeometry{linear}, .25, 0, false};
-    REQUIRE(wrappedCache);
-    REQUIRE(wrappedDefinition);
-    const qint64 validationId = static_cast<qint64>(sources.size() + 1);
-    const Req::Request validationInput{token(validationId),
-        Req::ValidateSourceCache{*wrappedCache, *wrappedDefinition, {}}};
-    Receipts validationReceipts;
-    REQUIRE(owned.get().submit(validationInput, Client::Mode::Commit,
-        validationReceipts.into(0)));
-    rt.until([&] { return validationReceipts.calls[0] != 0; });
-    auto& validationCompletion = completed(validationReceipts.at(0), validationId, 8);
-    const auto& validation = std::get<Reply::Native>(validationCompletion.reply().result);
-    CHECK(validation.refusal == LC_OffsetCurveRefusal::None);
-    CHECK(validation.changed);
-    auto validatedNative = validationCompletion.nativeValidatedSource(attributes);
-    REQUIRE(validatedNative);
-    REQUIRE(validatedNative->sourceDefinition());
-    CHECK(Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition()) ==
-          Req::Values::encodeSourceDefinition(*wrappedDefinition));
-    exactCache(validatedNative->getData(), *wrappedCache);
+    REQUIRE_FALSE(cacheCandidates.empty());
+    qint64 nextRequestId = static_cast<qint64>(sources.size() + 1);
+    for (const auto& [sourceDefinition, cache] : cacheCandidates) {
+        const Req::Request validationInput{token(nextRequestId),
+            Req::ValidateSourceCache{cache, sourceDefinition, {}}};
+        Receipts validationReceipts;
+        REQUIRE(owned.get().submit(validationInput, Client::Mode::Commit,
+            validationReceipts.into(0)));
+        rt.until([&] { return validationReceipts.calls[0] != 0; });
+        auto& validationCompletion = completed(validationReceipts.at(0), nextRequestId, 8);
+        const auto& validation = std::get<Reply::Native>(validationCompletion.reply().result);
+        CHECK(validation.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validation.changed);
+        auto validatedNative = validationCompletion.nativeValidatedSource(attributes);
+        REQUIRE(validatedNative);
+        REQUIRE(validatedNative->sourceDefinition());
+        CHECK(Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition()) ==
+              Req::Values::encodeSourceDefinition(sourceDefinition));
+        exactCache(validatedNative->getData(), cache);
+        ++nextRequestId;
+    }
 
-    const qint64 linearRequestId = static_cast<qint64>(sources.size() + 2);
+    const qint64 linearRequestId = nextRequestId;
     Receipts linearReceipts;
     REQUIRE(owned.get().submit({token(linearRequestId), Req::GenerateSource{linearDefinition, {}}},
         Client::Mode::Commit, linearReceipts.into(0)));
