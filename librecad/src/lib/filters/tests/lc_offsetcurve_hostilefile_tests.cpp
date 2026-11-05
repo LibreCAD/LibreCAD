@@ -1389,19 +1389,24 @@ TEST_CASE("bulged LWPOLYLINE import preserves signed arc geometry for offset sou
           "[lc-offsetcurve][import-session][typed-source][polyline][bulge]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-bulged-polyline-source-import");
-    const double bulge = std::tan(M_PI / 16.0);
+    const std::array<double, 4> bulges{
+        std::tan(M_PI / 16.0), -std::tan(M_PI / 8.0), 1.0, -1.5};
     DRW_LWPolyline raw;
-    raw.vertexnum = 4;
-    raw.addVertex(DRW_Vertex2D(0, 0, bulge));
-    raw.addVertex(DRW_Vertex2D(2, 0, -bulge));
-    raw.addVertex(DRW_Vertex2D(4, 0, 0));
-    raw.addVertex(DRW_Vertex2D(6, 0, 0));
+    raw.vertexnum = 6;
+    raw.addVertex(DRW_Vertex2D(0, 0, bulges[0]));
+    raw.addVertex(DRW_Vertex2D(2, 0, bulges[1]));
+    raw.addVertex(DRW_Vertex2D(4, 0, bulges[2]));
+    raw.addVertex(DRW_Vertex2D(6, 0, bulges[3]));
+    raw.addVertex(DRW_Vertex2D(8, 0, 0));
+    raw.addVertex(DRW_Vertex2D(10, 0, 0));
 
     RS_Polyline expected;
-    expected.addVertex({0, 0}, bulge);
-    expected.addVertex({2, 0}, -bulge);
-    expected.addVertex({4, 0});
-    expected.addVertex({6, 0});
+    expected.addVertex({0, 0}, bulges[0]);
+    expected.addVertex({2, 0}, bulges[1]);
+    expected.addVertex({4, 0}, bulges[2]);
+    expected.addVertex({6, 0}, bulges[3]);
+    expected.addVertex({8, 0});
+    expected.addVertex({10, 0});
     const auto expectedSource = LC_OffsetSourceGeometry::capture(expected);
     REQUIRE(expectedSource);
 
@@ -1434,20 +1439,20 @@ TEST_CASE("bulged LWPOLYLINE import preserves signed arc geometry for offset sou
         const auto& actualData = std::get<LC_OffsetPolylineData>(actualSource->value);
         REQUIRE(actualData.segments.size() == expectedData.segments.size());
         CHECK(actualData.closed == expectedData.closed);
-        CHECK(actualData.startpoint.x == Catch::Approx(expectedData.startpoint.x));
-        CHECK(actualData.startpoint.y == Catch::Approx(expectedData.startpoint.y));
-        CHECK(actualData.endpoint.x == Catch::Approx(expectedData.endpoint.x));
-        CHECK(actualData.endpoint.y == Catch::Approx(expectedData.endpoint.y));
+        CHECK(actualData.startpoint.x == Catch::Approx(expectedData.startpoint.x).margin(1e-12));
+        CHECK(actualData.startpoint.y == Catch::Approx(expectedData.startpoint.y).margin(1e-12));
+        CHECK(actualData.endpoint.x == Catch::Approx(expectedData.endpoint.x).margin(1e-12));
+        CHECK(actualData.endpoint.y == Catch::Approx(expectedData.endpoint.y).margin(1e-12));
         for (std::size_t i = 0; i < expectedData.segments.size(); ++i) {
             CAPTURE(dwg, version, i);
             REQUIRE(actualData.segments[i].index() == expectedData.segments[i].index());
             if (const auto* expectedArc = std::get_if<RS_ArcData>(&expectedData.segments[i])) {
                 const auto& actualArc = std::get<RS_ArcData>(actualData.segments[i]);
-                CHECK(actualArc.center.x == Catch::Approx(expectedArc->center.x));
-                CHECK(actualArc.center.y == Catch::Approx(expectedArc->center.y));
-                CHECK(actualArc.radius == Catch::Approx(expectedArc->radius));
-                CHECK(actualArc.angle1 == Catch::Approx(expectedArc->angle1));
-                CHECK(actualArc.angle2 == Catch::Approx(expectedArc->angle2));
+                CHECK(actualArc.center.x == Catch::Approx(expectedArc->center.x).margin(1e-12));
+                CHECK(actualArc.center.y == Catch::Approx(expectedArc->center.y).margin(1e-12));
+                CHECK(actualArc.radius == Catch::Approx(expectedArc->radius).margin(1e-12));
+                CHECK(actualArc.angle1 == Catch::Approx(expectedArc->angle1).margin(1e-12));
+                CHECK(actualArc.angle2 == Catch::Approx(expectedArc->angle2).margin(1e-12));
                 CHECK(actualArc.reversed == expectedArc->reversed);
             }
         }
