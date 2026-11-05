@@ -435,6 +435,40 @@ TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across 
     }
 }
 
+TEST_CASE("polyline cache promotion preserves mixed segment orientation and offset side",
+          "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
+    const std::array<LC_OffsetPolylineData, 2> variants{
+        LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
+        LC_OffsetPolylineData{{2, 2}, {0, 0}, false,
+            {RS_LineData{{2, 2}, {2, 0}}, RS_ArcData{{1, 0}, 1, 0, M_PI, true}}}
+    };
+    for (const auto& data : variants) {
+        CAPTURE(data.startpoint.x, data.startpoint.y,
+                data.endpoint.x, data.endpoint.y);
+        const LC_OffsetSourceGeometry source{data};
+        REQUIRE(source.isWellFormed());
+        for (const double signedDistance : {-.25, .25}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE(generated.ordinary.size() == 1);
+            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+            const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+            const req::Request validationRequest{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validated.changed);
+        }
+    }
+}
+
 TEST_CASE("offset child validates original raw cache once without generating or repairing it",
           "[lc-offsetcurve][worker-kernel][raw]") {
     req::ValidateCache op{arcCache(), definition(), .01, {}};
