@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W385; chronological evidence follows): implementation slices
+Current status (W386; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -62,7 +62,7 @@ includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
-The recent W378-W385 source-variant slices add malformed-polyline refusal,
+The recent W378-W386 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15794,8 +15794,8 @@ orientation are compared against the equivalent native polyline.
 
 The focused bulge-import cases pass 177 assertions/2 cases; together with the
 typed-source persistence case, the selected run passes 1,185 assertions/3
-cases. `git diff --check` passes. Other R13/R2000+ variants, non-axial OCS
-reflection, and a wider range of bulge magnitudes remain open.
+cases. `git diff --check` passes. Other R13/R2000+ versions and non-axial OCS
+remain open; magnitude coverage is broadened in W386.
 
 ## 385. Reflected-OCS Signed-Bulge Import
 
@@ -15810,3 +15810,18 @@ The focused reflected-OCS case passes 71 assertions; the combined signed,
 closed, reflected-bulge, and typed-source persistence selection passes 1,256
 assertions across four cases. `git diff --check` passes. Arbitrary non-axial
 OCS inputs remain intentionally unsupported by the current 2D source model.
+
+## 386. Bulge-Magnitude Range in Real File Imports
+
+Expanded the open signed-bulge LWPOLYLINE fixture to include four magnitudes
+and both signs: a small arc, a larger minor arc, a semicircle, and a
+greater-than-semicircle arc (`|bulge| > 1`). Each geometry is round-tripped
+through AC1014/R14 DXF, AC1032 DXF, and AC1032 DWG, then captured as typed
+offset-source data and compared segment-by-segment against the equivalent
+native source. Geometry comparisons use a tight `1e-12` absolute margin to
+account for floating-point center reconstruction.
+
+The focused signed-bulge cases pass 290 assertions across three selected cases;
+the combined bulge, reflected-OCS, and schema-2 persistence run passes 1,298
+assertions across four cases. `git diff --check` passes. Additional older DWG
+versions and non-axial OCS remain open.
