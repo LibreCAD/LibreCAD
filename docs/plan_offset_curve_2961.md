@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W379; chronological evidence follows): implementation slices
+Current status (W381; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -62,6 +62,12 @@ includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
+The recent W378-W381 source-variant slices add malformed-polyline refusal,
+long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
+validation, and schema-2 DXF/DWG second-save persistence. The current PR head is
+`bdecdbfedd7e2a4e75efc1341663f6d43af0c638`; at the latest query,
+`VerifyDwgDxfFast` and both Windows verification jobs were in progress, with no
+completed results yet. Earlier CI status below is historical only.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
