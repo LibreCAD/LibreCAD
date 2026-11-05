@@ -224,6 +224,59 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     CHECK_FALSE(definition.isWellFormed());
 }
 
+TEST_CASE("Offset polyline source snapshots preserve positive and negative bulge arcs",
+          "[lc-offsetcurve][source][polyline]") {
+    const double bulge = std::tan(M_PI / 16.0);
+    RS_Polyline source;
+    source.addVertex({0, 0}, bulge);
+    source.addVertex({2, 0}, -bulge);
+    source.addVertex({4, 0});
+    source.addVertex({6, 0});
+
+    REQUIRE(source.size() == 3);
+    REQUIRE(source.entityAt(0)->rtti() == RS2::EntityArc);
+    REQUIRE(source.entityAt(1)->rtti() == RS2::EntityArc);
+    REQUIRE(source.entityAt(2)->rtti() == RS2::EntityLine);
+    const auto* first = dynamic_cast<const RS_Arc*>(source.entityAt(0));
+    const auto* second = dynamic_cast<const RS_Arc*>(source.entityAt(1));
+    REQUIRE(first);
+    REQUIRE(second);
+    CHECK_FALSE(first->getData().reversed);
+    CHECK(second->getData().reversed);
+
+    const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(snapshot);
+    REQUIRE(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    const auto& data = std::get<LC_OffsetPolylineData>(snapshot->value);
+    REQUIRE(data.segments.size() == 3);
+    REQUIRE(std::holds_alternative<RS_ArcData>(data.segments[0]));
+    REQUIRE(std::holds_alternative<RS_ArcData>(data.segments[1]));
+    const auto checkArcData = [](const RS_ArcData& actual, const RS_ArcData& expected) {
+        CHECK(actual.center == expected.center);
+        CHECK(actual.radius == expected.radius);
+        CHECK(actual.angle1 == expected.angle1);
+        CHECK(actual.angle2 == expected.angle2);
+        CHECK(actual.reversed == expected.reversed);
+    };
+    checkArcData(std::get<RS_ArcData>(data.segments[0]), first->getData());
+    checkArcData(std::get<RS_ArcData>(data.segments[1]), second->getData());
+
+    auto restoredEntity = snapshot->makeEntity();
+    const auto* restored = dynamic_cast<const RS_Polyline*>(restoredEntity.get());
+    REQUIRE(restored);
+    REQUIRE(restored->size() == source.size());
+    for (std::size_t i = 0; i < source.size(); ++i) {
+        const auto* expected = dynamic_cast<const RS_Arc*>(source.entityAt(i));
+        const auto* actual = dynamic_cast<const RS_Arc*>(restored->entityAt(i));
+        if (expected) {
+            REQUIRE(actual);
+            checkArcData(actual->getData(), expected->getData());
+        } else {
+            CHECK(restored->entityAt(i)->rtti() == RS2::EntityLine);
+        }
+    }
+}
+
 namespace {
 
 RS_Spline makeSpline(const size_t degree, const std::vector<RS_Vector>& controls,
