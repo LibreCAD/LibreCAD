@@ -643,22 +643,26 @@ bool DRW_Layer::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         //dint16 xrefindex = buf->getBitShort();
     }
     flags |= buf->getBit() << 4;//is refx dependent
+    bool layerOff = false;
     if (version < DRW::AC1015) {//14-
         flags |= buf->getBit(); //layer frozen
-        /*flags |=*/ buf->getBit(); //unused, negate the color
+        layerOff = buf->getBit() != 0; //layer off: a negative colour, as in DXF
         flags |= buf->getBit() << 1;//frozen in new
-        flags |= buf->getBit()<< 3;//locked
+        flags |= buf->getBit()<< 2;//locked, DXF code 70 bit 4
     }
     if (version > DRW::AC1014) {//2000+
         dint16 f = buf->getSBitShort();//bit2 are layer on
         DRW_DBG(", flags 2000+: "); DRW_DBG(f); DRW_DBG("\n");
         flags |= f & 0x0001; //layer frozen
+        layerOff = (f & 0x0002) != 0; //bit 2 is "layer on" in the specification, and is read as off, as the ODA File Converter writes it
         flags |= ( f>> 1) & 0x0002;//frozen in new
         flags |= ( f>> 1) & 0x0004;//locked
         plotF = ( f>> 4) & 0x0001;
         lWeight = DRW_LW_Conv::dwgInt2lineWidth( (f & 0x03E0) >> 5 );
     }
-    color = buf->getCmColor(version); //BS or CMC //ok for R14 or negate
+    color = buf->getCmColor(version); //BS or CMC
+    if (layerOff && color > 0)
+        color = -color;
     DRW_DBG(", entity color: "); DRW_DBG(color); DRW_DBG("\n");
 
     if (version > DRW::AC1018) {//2007+ skip string area

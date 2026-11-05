@@ -240,8 +240,15 @@ void RS_FilterDXFRW::addLayer(const DRW_Layer &data) {
     layer->setPen(attributesToPen(&data));
 
     RS_DEBUG->print("RS_FilterDXF::addLayer: flags");
-    if (data.flags&0x01) {
+    // AutoCAD turns a layer off with a negative colour, and keeps that apart from
+    // frozen: either hides the layer, which remembers how it was saved
+    const bool frozen = (data.flags & 0x01) != 0;
+    const bool off = data.color < 0;
+    if (frozen || off) {
         layer->freeze(true);
+        layer->setHiddenAs(!off      ? RS_Layer::HiddenAs::Frozen
+                           : frozen ? RS_Layer::HiddenAs::FrozenAndOff
+                                    : RS_Layer::HiddenAs::Off);
     }
     if (data.flags&0x04) {
         layer->lock(true);
@@ -1982,7 +1989,19 @@ void RS_FilterDXFRW::writeLayers(){
         lay.color24 = exact_rgb;
         lay.lWeight = widthToNumber(pen.getWidth());
         lay.lineType = lineTypeToName(pen.getLineType()).toStdString();
-        lay.flags = l->isFrozen() ? 0x01 : 0x00;
+        lay.flags = 0x00;
+        if (l->isFrozen()) {
+            // hidden: frozen, turned off (a negative colour) or both, as the layer
+            // was read; AutoCAD does not freeze the current layer, so that one is
+            // turned off
+            const RS_Layer::HiddenAs hiddenAs = l == graphic->getActiveLayer()
+                                                    ? RS_Layer::HiddenAs::Off
+                                                    : l->getHiddenAs();
+            if (hiddenAs != RS_Layer::HiddenAs::Off)
+                lay.flags |= 0x01;
+            if (hiddenAs != RS_Layer::HiddenAs::Frozen)
+                lay.color = (lay.color > 0 && lay.color < 256) ? -lay.color : -7;
+        }
         if (l->isLocked()) lay.flags |=0x04;
         lay.plotF = l->isPrint();
         if( l->isConstruction()) {
@@ -3230,7 +3249,8 @@ RS_Pen RS_FilterDXFRW::attributesToPen(const DRW_Layer* att) const {
                               att->color24 >> 8 & 0xFF,
                               att->color24 & 0xFF);
     else
-        col = numberToColor(att->color);
+        // negative: the layer is turned off (addLayer())
+        col = numberToColor(std::abs(att->color));
 
     RS_Pen pen(col, numberToWidth(att->lWeight),
                nameToLineType(QString::fromUtf8(att->lineType.c_str())) );

@@ -131,6 +131,9 @@ private:
     duint32 ucsCtrl;
     duint32 vportCtrl;
     duint32 vpEntHeaderCtrl;
+    /// DWG CLAYER, the current layer by handle. parseDwg captures it, and the
+    /// DWG reader turns it into the "$CLAYER" name once the LAYER table is read.
+    duint32 clayerHandle;
 
     int measurement(const int unit);
 };

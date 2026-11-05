@@ -183,6 +183,7 @@ void RS_LayerList::add(RS_Layer* layer) {
         }
 
         l->freeze( layer->isFrozen());
+        l->setHiddenAs(layer->getHiddenAs());
         l->lock( layer->isLocked());
         l->setPrint( layer->isPrint());
         l->setConverted( layer->isConverted());

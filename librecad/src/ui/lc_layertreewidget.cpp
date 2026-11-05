@@ -1668,6 +1668,7 @@ void LC_LayerTreeWidget::copyLayerAttributes(RS_Layer *copyLayer, RS_Layer *sour
 
     copyLayer->setPen(pen);
     copyLayer->freeze(sourceLayer->isFrozen());
+    copyLayer->setHiddenAs(sourceLayer->getHiddenAs());
 }
 
 // TODO - actually this operations are good candidates for moving them into separate actions
