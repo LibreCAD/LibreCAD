@@ -560,6 +560,29 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             REQUIRE(result.ordinary.size() == 1);
             const auto* cache = std::get_if<RS_SplineData>(&result.ordinary.front());
             REQUIRE(cache);
+            auto directSource = sources[i].makeEntity();
+            REQUIRE(directSource);
+            const auto directOptions = LC_CurveOffset::makeDirectOptions(*directSource, .25, 1e-4);
+            const auto directGeometry = LC_CurveOffset::buildDirectBranches(*directSource,
+                LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25), directOptions,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            const auto directMaterialized = LC_CurveOffset::materializeBranches(*directSource,
+                directGeometry, directOptions, LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(directMaterialized.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(directMaterialized.entities.size() == 1);
+            const auto* directSpline = dynamic_cast<const RS_Spline*>(directMaterialized.entities.front().get());
+            REQUIRE(directSpline);
+            const auto& directCache = directSpline->getData();
+            INFO("direct controls=" << directCache.controlPoints.size()
+                 << " knots=" << directCache.knotslist.size()
+                 << " weights=" << directCache.weights.size()
+                 << " degree=" << directCache.degree
+                 << " type=" << static_cast<int>(directCache.type));
+            CHECK(directSpline->validate());
+            CHECK(directCache.knotslist.size() == directCache.controlPoints.size() +
+                  static_cast<std::size_t>(directCache.degree) + 1);
+            CHECK(directCache.weights.size() == directCache.controlPoints.size());
             wrappedCache = *cache;
             wrappedDefinition = std::get<Req::GenerateSource>(input.operation).definition;
         }
