@@ -218,8 +218,8 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
             layer0Selected = true;
             continue;
         }
-        if (!layerList->canRemove(layer)) {
-            refusals << RS_LayerList::removalRefusedText(layer->getName());
+        if (!layerList->canRemoveChosen(layer)) {
+            refusals << RS_LayerList::removalNoTakeoverText(layer->getName());
             continue;
         }
         names << layer->getName();
@@ -233,8 +233,8 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
             if (layer->getName() == "0") {
                 layer0Selected = true;
             }
-            else if (!layerList->canRemove(layer)) {
-                refusals << RS_LayerList::removalRefusedText(layer->getName());
+            else if (!layerList->canRemoveChosen(layer)) {
+                refusals << RS_LayerList::removalNoTakeoverText(layer->getName());
             }
             else {
                 names << layer->getName();

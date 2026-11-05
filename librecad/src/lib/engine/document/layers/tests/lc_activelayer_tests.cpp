@@ -661,6 +661,90 @@ TEST_CASE("The current layer is not removed, nor is layer 0", "[layers][active][
     }
 }
 
+TEST_CASE("A layer chosen in a dock is removed even if it is the current layer, which gives way", "[layers][active][3229][remove]") {
+    Layers f;
+    CommandMessages command;
+    const RS_LayerList* layers = f.m_graphic.getLayerList();
+    // in name order: "0", "Construction", "Doors", "Walls" (current)
+    RS_Layer* expected = nullptr;
+
+    SECTION("to the first layer that is shown and not locked") {
+        expected = f.m_zero;
+    }
+    SECTION("to a shown layer rather than a hidden one") {
+        f.m_zero->freeze(true);
+        f.m_construction->lock(true);
+        expected = f.m_doors;
+    }
+    SECTION("else to the first that is not locked, though hidden") {
+        f.m_zero->freeze(true);
+        f.m_doors->freeze(true);
+        f.m_construction->lock(true);
+        expected = f.m_zero;
+    }
+
+    const bool zeroHidden = f.m_zero->isFrozen();
+    const bool constructionLocked = f.m_construction->isLocked();
+    CHECK(layers->canRemoveChosen(f.m_walls));
+    CHECK_FALSE(layers->canRemove(f.m_walls));
+    REQUIRE(f.m_graphic.removeChosenLayer(f.m_walls));
+    CHECK_FALSE(layers->contains(f.m_walls));
+    CHECK(f.m_graphic.getActiveLayer() == expected);
+    // the listeners hear of a replacement, which moves no entity to the layer
+    CHECK(f.m_activations.m_replaced == QList<RS_Layer*>{expected});
+    CHECK(f.m_activations.m_activated.isEmpty());
+    CHECK(command.m_messages == QStringList{QStringLiteral("Layer \"Walls\" is being removed, so \"%1\" is the current layer now.")
+                                                .arg(expected->getName())});
+    // nothing was shown or unlocked for it
+    CHECK(f.m_zero->isFrozen() == zeroHidden);
+    CHECK(f.m_construction->isLocked() == constructionLocked);
+}
+
+TEST_CASE("A layer chosen in a dock is not removed when it cannot give way", "[layers][active][3229][remove]") {
+    Layers f;
+    CommandMessages command;
+    const RS_LayerList* layers = f.m_graphic.getLayerList();
+    const QString noTakeover = QStringLiteral(
+        "Layer \"Walls\" was not removed: it is the current layer, and no other layer is unlocked to take its place.");
+
+    SECTION("every other layer is locked") {
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors}) {
+            layer->lock(true);
+        }
+        CHECK_FALSE(layers->canRemoveChosen(f.m_walls));
+        CHECK_FALSE(f.m_graphic.removeChosenLayer(f.m_walls));
+        CHECK(layers->contains(f.m_walls));
+        CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+        CHECK(f.m_activations.m_replaced.isEmpty());
+        CHECK(command.m_messages == QStringList{noTakeover});
+    }
+    SECTION("layer 0, current or not") {
+        bool current = false;
+        SECTION("current") {
+            current = true;
+        }
+        SECTION("not current") {
+        }
+        f.m_graphic.activateLayer(current ? f.m_zero : f.m_doors, true);
+        CHECK_FALSE(layers->canRemoveChosen(f.m_zero));
+        CHECK_FALSE(f.m_graphic.removeChosenLayer(f.m_zero));
+        CHECK(layers->contains(f.m_zero));
+        CHECK(command.m_messages == QStringList{QStringLiteral("Layer \"0\" can never be removed.")});
+    }
+}
+
+TEST_CASE("A layer chosen in a dock that is not the current layer is removed as it is", "[layers][active][3229][remove]") {
+    Layers f;
+    CommandMessages command;
+    f.m_doors->lock(true);
+    CHECK(f.m_graphic.removeChosenLayer(f.m_doors));
+    CHECK_FALSE(f.m_graphic.getLayerList()->contains(f.m_doors));
+    CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+    CHECK(f.m_activations.m_replaced.isEmpty());
+    CHECK(command.m_messages.isEmpty());
+    CHECK_FALSE(f.m_graphic.removeChosenLayer(nullptr));
+}
+
 TEST_CASE("A drawing opens with its saved current layer, unless it is locked and another is not", "[layers][active][3229][dxf]") {
     const QTemporaryDir directory;
     REQUIRE(directory.isValid());

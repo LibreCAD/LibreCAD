@@ -106,7 +106,9 @@ public:
     bool canToggleLockOfSelection() const;
     static QString lockUnavailableText();
     bool canRemove(const RS_Layer* layer) const;
+    bool canRemoveChosen(const RS_Layer* layer) const;
     static QString removalRefusedText(const QString& layerName);
+    static QString removalNoTakeoverText(const QString& layerName);
 
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
@@ -147,6 +149,7 @@ protected:
     void setActive(RS_Layer* layer, bool notify = false);
     void restoreActive(RS_Layer* layer);
     void settleActiveLayer();
+    RS_Layer* handOverCurrentLayer();
     void toggle(const QString& name);
     void toggle(RS_Layer* layer);
     CurrentLayerLock toggleLock(RS_Layer* layer);

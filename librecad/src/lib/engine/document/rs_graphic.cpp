@@ -339,9 +339,30 @@ unsigned RS_Graphic::countLayerEntities(RS_Layer* layer) const {
 }
 
 /**
+ * Removes the layer, as the user chose it in a dock, where choosing a layer makes it current: the
+ * current layer is removed too, another layer that is not locked becoming current in its place
+ * (and, as the command line says, no entity moves to it). With no other layer unlocked, or for layer "0",
+ * the layer stays, and the command line says why.
+ *
+ * @return true if the layer was removed
+ */
+bool RS_Graphic::removeChosenLayer(RS_Layer* layer) {
+    if (layer != nullptr && layer == m_layerList.getActive() && layer->getName() != "0") {
+        if (!m_layerList.canRemoveChosen(layer)) {
+            RS_DIALOGFACTORY->commandMessage(RS_LayerList::removalNoTakeoverText(layer->getName()));
+            return false;
+        }
+        const RS_Layer* replacement = m_layerList.handOverCurrentLayer();
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("Layer \"%1\" is being removed, so \"%2\" is the current layer now.")
+                .arg(layer->getName(), replacement->getName()));
+    }
+    return removeLayer(layer);
+}
+
+/**
  * Removes the given layer and undoes all m_entities on it. Layer "0" is not removed, and neither is
- * the current layer when no other layer is unlocked to take its place (RS_LayerList::canRemove()):
- * the command line says so.
+ * the current layer (RS_LayerList::canRemove()): the command line says so.
  *
  * @return true if the layer was removed
  */

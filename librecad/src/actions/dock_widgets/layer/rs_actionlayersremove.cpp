@@ -44,7 +44,7 @@ void RS_ActionLayersRemove::trigger() {
 
         if (!names.isEmpty()) {
             for (const auto& name : std::as_const(names)) {
-                m_graphic->removeLayer(ll->find(name));
+                m_graphic->removeChosenLayer(ll->find(name));
             }
             m_graphic->updateInserts();
             m_document->calculateBorders();

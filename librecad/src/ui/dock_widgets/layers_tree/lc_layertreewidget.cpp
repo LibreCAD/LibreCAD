@@ -1847,11 +1847,11 @@ void LC_LayerTreeWidget::doRemoveLayerItems(QList<LC_LayerTreeItem *> &itemsToRe
         if (!item->isVirtual()){
             if (item->isZero()){ // don't let removing zero layer
                 QMessageBox::information(this, QMessageBox::tr("Remove Layer"), QMessageBox::tr("Layer \"0\" can never be removed."), QMessageBox::Ok);
-            } else if (!m_layerList->canRemove(item->getLayer())) {
+            } else if (!m_layerList->canRemoveChosen(item->getLayer())) {
                 // the current layer, when no other layer is unlocked to take its place; a locked layer
                 // is removed, as the original Layer List does
                 QMessageBox::information(this, QMessageBox::tr("Remove Layer"),
-                                         RS_LayerList::removalRefusedText(item->getName()), QMessageBox::Ok);
+                                         RS_LayerList::removalNoTakeoverText(item->getName()), QMessageBox::Ok);
             } else {
                 layerNames << item->getDisplayName();
                 layersToRemove << item->getLayer();
@@ -1876,7 +1876,7 @@ void LC_LayerTreeWidget::doRemoveLayers(QList<RS_Layer *> &layers) const {
     for (const auto layer: layers) {
         RS_Graphic *graphic = m_document->getGraphic();
         if (graphic != nullptr){
-            graphic->removeLayer(layer);
+            graphic->removeChosenLayer(layer);
         }
     }
     m_document->updateInserts();

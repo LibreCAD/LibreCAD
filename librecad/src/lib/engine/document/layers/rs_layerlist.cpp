@@ -323,8 +323,19 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
  * @return true if the layer is a layer of this list that remove() may remove
  */
 bool RS_LayerList::canRemove(const RS_Layer* layer) const {
-    return layer != nullptr && m_layerSet.contains(const_cast<RS_Layer*>(layer)) && layer != m_activeLayer
-        && layer->getName() != "0";
+    return canRemoveChosen(layer) && layer != m_activeLayer;
+}
+
+/**
+ * What RS_Graphic::removeChosenLayer() asks, for a layer the user chose in a dock (which selects a layer
+ * by making it current): as canRemove(), but the current layer too, when another layer that is not
+ * locked can take its place (handOverCurrentLayer()).
+ *
+ * @return true if the layer is a layer of this list that is removed, the current layer giving way
+ */
+bool RS_LayerList::canRemoveChosen(const RS_Layer* layer) const {
+    return layer != nullptr && m_layerSet.contains(const_cast<RS_Layer*>(layer)) && layer->getName() != "0"
+        && (layer != m_activeLayer || bestLayerToActivate(layer, false) != nullptr);
 }
 
 /**
@@ -333,6 +344,30 @@ bool RS_LayerList::canRemove(const RS_Layer* layer) const {
 QString RS_LayerList::removalRefusedText(const QString& layerName) {
     return QObject::tr("Layer \"%1\" was not removed: it is the current layer. Make another layer current to remove it.")
         .arg(layerName);
+}
+
+/**
+ * @return what is said when canRemoveChosen() refused the current layer
+ */
+QString RS_LayerList::removalNoTakeoverText(const QString& layerName) {
+    return QObject::tr("Layer \"%1\" was not removed: it is the current layer, and no other layer is unlocked to take its place.")
+        .arg(layerName);
+}
+
+/**
+ * Makes the layer that a layer being removed gives way to current: the first layer that is shown and
+ * not locked, else the first that is not locked (bestLayerToActivate()). The listeners hear of it as of a
+ * replacement, which moves nothing: see RS_LayerListListener::activeLayerReplaced().
+ *
+ * @return the new current layer; nullptr, and nothing done, when no other layer is unlocked
+ */
+RS_Layer* RS_LayerList::handOverCurrentLayer() {
+    RS_Layer* replacement = bestLayerToActivate(m_activeLayer, false);
+    if (replacement != nullptr) {
+        m_activeLayer = replacement;
+        fireActiveLayerReplaced();
+    }
+    return replacement;
 }
 
 /**
