@@ -367,8 +367,10 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
         }
     }
     if (!hasMatchingSource) {
-        ui->cbSource->insertItem(0, embedded && selectedKind == wantedKind
-            ? tr("Embedded source (not found)") : tr("Choose a source"));
+        const QString placeholder = embedded && selectedKind == wantedKind
+            ? tr("Embedded source (not found)")
+            : ui->cbSource->count() == 0 ? tr("No supported source entities") : tr("Choose a source");
+        ui->cbSource->insertItem(0, placeholder);
         matchedIndex = 0;
     }
     ui->cbSource->setCurrentIndex(matchedIndex);

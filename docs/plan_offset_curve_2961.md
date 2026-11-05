@@ -15290,6 +15290,30 @@ source suite passes 2,817 assertions/3 cases; the worker-client suite passes
 inventory intentional but does not complete spline/hyperbola/polyline
 variant eligibility or per-variant geometry refusal diagnostics.
 
-Commit, push, and exact-head CI status are pending for this slice. Continue the
+Commit `aaf6cf197` is pushed to PR #3193. GitHub had not reported checks for
+that head at the last query; no earlier-head status is inherited. Continue the
 variant matrix next; the aggregate roadmap and review/platform gates remain
 open.
+
+## 360. Unsupported-Variant Empty-Bucket Feedback (2026-11-05, in progress)
+
+The source entity combo now distinguishes an empty supported-family bucket
+(`No supported source entities`) from a live bucket awaiting a choice and from
+an embedded source that is no longer present. Added a Properties integration
+test with an out-of-model degree-4 spline and an unbounded hyperbola. Both are
+excluded from their source-family choices; the empty state is explicit, the
+select-in-drawing button is disabled, and switching families leaves the
+editable offset/cache and drawing selection unchanged.
+
+The full Debug CMake `librecad_tests` target builds. The focused unsupported
+variant case passes 212 assertions/1 case; all source Properties tests pass
+3,029 assertions/4 cases; `git diff --check` passes. Existing geometry tests
+also cover malformed spline knots, degenerate points/lines/ellipses,
+disconnected/inconsistent polyline chains, bounded versus unbounded
+hyperbolas, and source ownership. These checks still do not constitute the
+full production-path admission and output-cardinality matrix for every legal
+spline flag or polyline layout.
+
+Commit, push, PR description update, and exact-head check state remain pending
+for this feedback/test slice. Continue variant eligibility and output
+representability review; the overall plan is not complete.

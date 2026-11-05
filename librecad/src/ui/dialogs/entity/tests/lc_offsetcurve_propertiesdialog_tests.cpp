@@ -815,6 +815,43 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     }
 }
 
+TEST_CASE("Native source picker explains empty buckets for unsupported curve variants",
+          "[gui][dialog][offsetcurve][source][eligibility]") {
+    Fixture f;
+    RS_SplineData highDegree{4, false};
+    highDegree.controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {4, 0}};
+    highDegree.knotslist = {0, 0, 0, 0, 0, 1, 1, 1, 1, 1};
+    auto* unsupportedSpline = new RS_Spline(nullptr, highDegree);
+    auto* unboundedHyperbola = new LC_Hyperbola(nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5});
+    f.graphic.addEntity(unsupportedSpline);
+    f.graphic.addEntity(unboundedHyperbola);
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
+    const Snapshot before(*clone);
+
+    for (const auto kind : {LC_OffsetSourceGeometry::Kind::Spline,
+                            LC_OffsetSourceGeometry::Kind::BoundedHyperbola}) {
+        CAPTURE(kind);
+        const int typeIndex = typeBox->findData(static_cast<int>(kind));
+        REQUIRE(typeIndex >= 0);
+        typeBox->setCurrentIndex(typeIndex);
+        CHECK(sourceBox->count() == 1);
+        CHECK(sourceBox->itemText(0) == QStringLiteral("No supported source entities"));
+        CHECK_FALSE(sourceBox->itemData(0).isValid());
+        CHECK_FALSE(selectSource->isEnabled());
+        CHECK_FALSE(unsupportedSpline->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(unboundedHyperbola->getFlag(RS2::FlagSelected));
+        before.geometry(*clone);
+    }
+}
+
 TEST_CASE("Native field Return followed by focus out does not submit twice",
           "[gui][dialog][offsetcurve][noop]") {
     Fixture f;
