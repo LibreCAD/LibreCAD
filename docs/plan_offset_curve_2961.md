@@ -15455,3 +15455,22 @@ Windows ARM64 checks are in progress, with no result inherited from earlier
 heads. File persistence is now checked for these spline representations, but
 operation-8 native import promotion and exhaustive knot/weight/closure
 variants remain to be audited, along with the broader PR gates.
+
+## 367. Operation-8 Import Promotion for Unweighted Spline Sources (2026-11-05)
+
+Added a real import-session regression for an unweighted degree-1 spline
+source. The test generates the canonical offset cache using the source
+materializer, writes the typed carrier and cache as both DXF and DWG, imports
+through the joined worker, and requires operation-8 validation to promote the
+entity to native editable offset geometry. It also compares the exact typed
+source representation and confirms its empty weight vector remains empty.
+The focused DXF/DWG case passes 467 assertions/1 case.
+
+Together with the expanded schema-2 file round-trip matrix (792 assertions/1
+case, including unweighted and wrapped spline variants), this verifies both
+metadata persistence and validated native import for the implicit-weight
+case. Test commit `83ff1dc1a10c5b506a884c4a3cd5412c443e8a90` is pushed. Exact
+PR head is `83ff1dc1a10c5b506a884c4a3cd5412c443e8a90`; GitHub had not reported
+checks yet. Wrapped-spline operation-8 promotion and broader legal variant
+coverage remain open, as do the remaining review and external acceptance
+gates.
