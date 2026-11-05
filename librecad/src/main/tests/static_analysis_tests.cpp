@@ -21,6 +21,7 @@
 #include "qc_applicationwindow.h"
 #include "qg_dlghatch.h"
 #include "qg_dlgoptionsdrawing.h"
+#include "qg_layerwidget.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_commands.h"
@@ -1170,8 +1171,7 @@ private slots:
         QCOMPARE(result.getActiveLayer(), restored);
     }
 
-    // Clicking the name of a hidden layer in the Layer Tree makes it current, and
-    // "Hide other layers" keeps the chosen layer current.
+    // Clicking the name of a hidden layer in the Layer Tree makes it current.
     void layerTreeActivatesHiddenLayer()
     {
         RS_Graphic graphic;
@@ -1200,6 +1200,27 @@ private slots:
         tree.slotTreeClicked(wallsIndex);
         QCOMPARE(graphic.getActiveLayer(), walls);
         QVERIFY(walls->isFrozen());
+    }
+
+    // A layer added hidden, as a paste or a library insert brings one in, does
+    // not become current: what is pasted goes to the current layer, and would
+    // not be seen. A layer added shown becomes current, as before.
+    void addedHiddenLayerIsNotMadeCurrent()
+    {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        RS_Layer* zero = graphic.findLayer("0");
+        QG_LayerWidget widget(nullptr, nullptr);
+        widget.setLayerList(graphic.getLayerList(), false);
+        graphic.addLayerListListener(&widget);
+        auto* hidden = new RS_Layer("Hidden");
+        hidden->freeze(true);
+        graphic.addLayer(hidden);
+        QCOMPARE(graphic.getActiveLayer(), zero);
+        auto* shown = new RS_Layer("Shown");
+        graphic.addLayer(shown);
+        QCOMPARE(graphic.getActiveLayer(), shown);
+        graphic.removeLayerListListener(&widget);
     }
 
     // Issue #3228: "Hide all layers" now says "except current". With the Layer List filtered, the

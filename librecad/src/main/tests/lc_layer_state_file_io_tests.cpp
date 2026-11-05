@@ -179,29 +179,36 @@ private slots:
         }
     }
 
-    void aHiddenCurrentLayerIsSavedTurnedOff()
+    void aHiddenCurrentLayerIsSavedAsItWasHidden()
     {
-        // AutoCAD cannot freeze the current layer, so that one is turned off
-        const QString path = QDir(directory.path()).filePath("current.dxf");
-        {
-            RS_Graphic graphic;
-            graphic.newDoc();
-            graphic.addLayer(new RS_Layer("Doors"));
-            graphic.addLayer(new RS_Layer("Walls"));
-            graphic.activateLayer("Walls");
-            graphic.findLayer("Doors")->freeze(true);
-            graphic.findLayer("Walls")->freeze(true);
-            QVERIFY(graphic.saveAs(path, RS2::FormatDXFRW, true));
+        // a hidden current layer stays current, and is saved frozen or turned off
+        // as it was read (#3229 lets a hidden layer be current)
+        for (const HiddenAs hiddenAs : {HiddenAs::Frozen, HiddenAs::Off}) {
+            const QString path = QDir(directory.path()).filePath(
+                QString("current-%1.dxf").arg(static_cast<int>(hiddenAs)));
+            {
+                RS_Graphic graphic;
+                graphic.newDoc();
+                graphic.addLayer(new RS_Layer("Doors"));
+                graphic.addLayer(new RS_Layer("Walls"));
+                graphic.activateLayer("Walls");
+                graphic.findLayer("Doors")->freeze(true);
+                RS_Layer* current = graphic.findLayer("Walls");
+                current->freeze(true);
+                current->setHiddenAs(hiddenAs);
+                QVERIFY(graphic.saveAs(path, RS2::FormatDXFRW, true));
+            }
+            RS_Graphic reopened;
+            QVERIFY(open(reopened, path, RS2::FormatDXFRW));
+            RS_Layer* walls = reopened.findLayer("Walls");
+            RS_Layer* doors = reopened.findLayer("Doors");
+            QVERIFY(walls != nullptr && doors != nullptr);
+            QCOMPARE(reopened.getActiveLayer(), walls);
+            QVERIFY(walls->isFrozen());
+            QCOMPARE(walls->getHiddenAs(), hiddenAs);
+            QVERIFY(doors->isFrozen());
+            QCOMPARE(doors->getHiddenAs(), HiddenAs::Frozen);
         }
-        RS_Graphic reopened;
-        QVERIFY(open(reopened, path, RS2::FormatDXFRW));
-        RS_Layer* walls = reopened.findLayer("Walls");
-        RS_Layer* doors = reopened.findLayer("Doors");
-        QVERIFY(walls != nullptr && doors != nullptr);
-        QVERIFY(walls->isFrozen());
-        QCOMPARE(walls->getHiddenAs(), HiddenAs::Off);
-        QVERIFY(doors->isFrozen());
-        QCOMPARE(doors->getHiddenAs(), HiddenAs::Frozen);
     }
 
     void aLayerKeepsHowItIsHiddenWhenShownCopiedOrAddedAgain()

@@ -1992,11 +1992,8 @@ void RS_FilterDXFRW::writeLayers(){
         lay.flags = 0x00;
         if (l->isFrozen()) {
             // hidden: frozen, turned off (a negative colour) or both, as the layer
-            // was read; AutoCAD does not freeze the current layer, so that one is
-            // turned off
-            const RS_Layer::HiddenAs hiddenAs = l == graphic->getActiveLayer()
-                                                    ? RS_Layer::HiddenAs::Off
-                                                    : l->getHiddenAs();
+            // was read
+            const RS_Layer::HiddenAs hiddenAs = l->getHiddenAs();
             if (hiddenAs != RS_Layer::HiddenAs::Off)
                 lay.flags |= 0x01;
             if (hiddenAs != RS_Layer::HiddenAs::Frozen)

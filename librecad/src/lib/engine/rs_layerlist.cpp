@@ -98,12 +98,8 @@ void RS_LayerList::activate(const QString& name, bool notify) {
 
 
 /**
- * Activates the given layer, as a layer is made current by choice.
- *
- * A hidden layer can be current: it stays hidden, and so do the entities
- * drawn on it (#3229).
- *
- * @param layer a layer of this list
+ * Activates the given layer.
+ * 
  * @param notify Notify listeners.
  */
 void RS_LayerList::activate(RS_Layer* layer, bool notify) {
@@ -510,7 +506,7 @@ void RS_LayerList::setFreezeMulti(QList<RS_Layer*> layersEnable, QList<RS_Layer*
             layer->freeze(true);
         }
     }
-    fireLayerToggled();
+   fireLayerToggled();
 }
 
 void RS_LayerList::setLockMulti(QList<RS_Layer*> layersToUnlock, QList<RS_Layer*> layersToLock){
@@ -575,7 +571,7 @@ void RS_LayerList::toggleFreezeMulti(QList<RS_Layer*> toggleLayers){
             layer->toggle();
         }
     }
-    fireLayerToggled();
+   fireLayerToggled();
 }
 
 /**
