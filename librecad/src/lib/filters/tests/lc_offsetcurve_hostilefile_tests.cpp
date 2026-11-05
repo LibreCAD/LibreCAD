@@ -1366,6 +1366,103 @@ TEST_CASE("typed source DXF import materializes only an operation-8 validated ca
     }
 }
 
+TEST_CASE("unweighted spline source imports through operation-8 validation in DXF and DWG",
+          "[lc-offsetcurve][import-session][typed-source][spline-variant]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-unweighted-spline-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+
+    RS_SplineData unweighted{1, false};
+    unweighted.controlPoints = {{0, 0}, {1, 0}, {2, 0}};
+    unweighted.knotslist = {0, 0, .5, 1, 1};
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{unweighted}, .5, 1e-4, false};
+    auto source = definition.source.makeEntity();
+    REQUIRE(source);
+    const auto options = LC_CurveOffset::makeDirectOptions(*source, .5, definition.relativeTolerance);
+    const auto generated = LC_CurveOffset::buildDirectBranches(*source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .5), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+    auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(materialized.entities.size() == 1);
+    const auto* line = dynamic_cast<const RS_Line*>(materialized.entities.front().get());
+    const auto* spline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+    REQUIRE((line || spline));
+
+    for (const bool dwg : {false, true}) {
+#ifndef DWGSUPPORT
+        if (dwg) continue;
+#endif
+        xd::Definition carrier;
+        carrier.source = definition;
+        xd::Options encoding;
+        if (dwg) { encoding.eed = true; encoding.textEncoding = xd::TextEncoding::Utf16; }
+        else encoding.asciiDxf = false;
+        const auto tags = xd::forExport({std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+            carrier, encoding);
+        REQUIRE(tags);
+        DRW_Spline cache = f::raw(1, *tags);
+        cache.controllist.clear();
+        if (line) {
+            cache.controllist.push_back(std::make_shared<DRW_Coord>(line->getStartpoint().x,
+                line->getStartpoint().y, 0));
+            cache.controllist.push_back(std::make_shared<DRW_Coord>(line->getEndpoint().x,
+                line->getEndpoint().y, 0));
+            cache.knotslist = {0, 0, 1, 1};
+            cache.weightlist = {1, 1};
+            cache.degree = 1;
+        } else {
+            const auto& data = spline->getData();
+            REQUIRE((data.degree == 1 || data.degree == 3));
+            for (const auto& point : data.controlPoints)
+                cache.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
+            cache.knotslist = data.knotslist;
+            cache.weightlist = data.weights;
+            cache.degree = data.degree;
+        }
+        cache.flags = 8;
+        cache.m_scenario = 1;
+        cache.ncontrol = cache.controllist.size();
+        cache.nknots = cache.knotslist.size();
+        cache.nfit = 0;
+
+        const auto input = directory.file(dwg ? "unweighted.dwg" : "unweighted.dxf");
+#ifdef DWGSUPPORT
+        if (dwg) f::dwgFile(input, cache, DRW::AC1032);
+        else f::binaryDxf(input, cache, DRW::AC1032);
+#else
+        f::binaryDxf(input, cache, DRW::AC1032);
+#endif
+        LC_OffsetImportSession session;
+        std::optional<LC_OffsetImportSession::Outcome> outcome;
+        const auto format = dwg ? RS2::FormatDWG2018 : RS2::FormatDXFRW2018;
+        REQUIRE(session.start(QString::fromStdString(input.string()), format,
+            RS2::DxfTextEncoding::Declared, false,
+            [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+        QElapsedTimer elapsed; elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < 35000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome->graphic);
+        CHECK(outcome->admitted == 1);
+        CHECK(outcome->downgraded == 0);
+        auto* imported = dynamic_cast<LC_OffsetCurve*>(f::sole(*outcome->graphic));
+        REQUIRE(imported);
+        REQUIRE(imported->sourceDefinition());
+        CHECK(values::encodeSourceGeometry(imported->sourceDefinition()->source) ==
+              values::encodeSourceGeometry(definition.source));
+        REQUIRE(std::holds_alternative<RS_SplineData>(imported->sourceDefinition()->source.value));
+        CHECK(std::get<RS_SplineData>(imported->sourceDefinition()->source.value).weights.empty());
+    }
+}
+
 TEST_CASE("Staged offset import cancellation after helper start suppresses delivery",
           "[lc-offsetcurve][import-session][worker][lifetime][asan]") {
     Setup setup; lc::test::OutputDirectory directory("offset-staged-active-cancel");
