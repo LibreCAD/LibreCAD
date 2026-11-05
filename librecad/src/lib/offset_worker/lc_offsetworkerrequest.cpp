@@ -359,6 +359,9 @@ bool valid(const Generate& op) {
 bool valid(const GenerateSource& op) {
     return valid(op.definition) && valid(op.limits);
 }
+bool valid(const ValidateSourceCache& op) {
+    return valid(op.cache) && valid(op.definition) && valid(op.limits);
+}
 bool valid(const ValidateCache& op) {
     return valid(op.cache) && valid(op.definition) && std::isfinite(op.worldTolerance) && valid(op.limits);
 }
@@ -664,6 +667,9 @@ QCborArray fields(const LC_OffsetPreviewSnapshot& snapshot) {
 }
 QCborArray fields(const CachedProduce& op) { return {fields(op.produce), fields(op.cache)}; }
 QCborArray fields(const GenerateSource& op) { return {fields(op.definition), fields(op.limits)}; }
+QCborArray fields(const ValidateSourceCache& op) {
+    return {fields(op.cache), fields(op.definition), fields(op.limits)};
+}
 QCborArray fields(const CheckThrough& op) {
     return {fields(op.cache), fields(op.definition), op.worldTolerance, fields(op.point), fields(op.limits)};
 }
@@ -810,6 +816,12 @@ std::optional<Request> decode(const QCborArray& a) {
         GenerateSource op;
         if (body.size() == 2 && read(body.at(0), op.definition) && read(body.at(1), op.limits))
             return Request{token, std::move(op)};
+        break;
+    }
+    case 8: {
+        ValidateSourceCache op;
+        if (body.size() == 3 && read(body.at(0), op.cache) && read(body.at(1), op.definition) &&
+            read(body.at(2), op.limits)) return Request{token, std::move(op)};
         break;
     }
     case 4: {

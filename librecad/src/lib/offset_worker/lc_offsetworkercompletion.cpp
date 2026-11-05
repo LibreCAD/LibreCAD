@@ -8,6 +8,7 @@
 #include "rs_line.h"
 
 #include <algorithm>
+#include <cmath>
 #include <utility>
 
 LC_OffsetWorkerCompletion::LC_OffsetWorkerCompletion(LC_OffsetWorkerRequest::Request&& request,
@@ -85,6 +86,36 @@ std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::nativeSource(const RS
         LC_OffsetCurve::ReceivedSourceCache{})};
     if (!curve->validate() || !curve->hasGeneralizedSourceDefinition() ||
         RS_Spline::geometryFingerprint(curve->getData()) != RS_Spline::geometryFingerprint(cache)) return {};
+    if (const auto* previous = dynamic_cast<const LC_OffsetCurve*>(&attributes))
+        if (!curve->setOwnedExtensions(previous->unknownOwnedFlags(), previous->unknownOwnedTail())) return {};
+    return curve;
+}
+
+std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::nativeValidatedSource(const RS_Entity& attributes) const {
+    if (!m_joined) return {};
+    const auto* request = std::get_if<LC_OffsetWorkerRequest::ValidateSourceCache>(&m_request.operation);
+    const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
+    if (!request || !request->definition.isWellFormed() || !result || result->curve || !result->changed ||
+        result->refusal != LC_OffsetCurveRefusal::None || result->engineRuns != 1 ||
+        result->engineStatus != LC_CurveOffsetStatus::Ok || result->ordinaryStatus != LC_OffsetWorkerResult::OrdinaryStatus::None ||
+        !result->ordinary.empty()) return {};
+    RS_Spline checked{nullptr, request->cache};
+    if (!checked.validate() || RS_Spline::geometryFingerprint(checked.getData()) !=
+        RS_Spline::geometryFingerprint(request->cache)) return {};
+    auto source = request->definition.source.makeEntity();
+    const double magnitude = std::abs(request->definition.signedDistance);
+    if (!source || !std::isfinite(magnitude) || magnitude <= RS_TOLERANCE) return {};
+    const double tolerance = LC_CurveOffset::makeDirectOptions(
+        *source, magnitude, request->definition.relativeTolerance).tolerance.requestedGeometry;
+    if (!std::isfinite(tolerance) || !(tolerance > 0)) return {};
+    auto grips = request->cache.controlPoints;
+    RS_Vector midpoint = checked.getMiddlePoint();
+    if (!LC_EllipseOffsetGeometry::isFinite2D(midpoint)) midpoint = request->cache.controlPoints.front();
+    if (!LC_EllipseOffsetGeometry::isFinite2D(midpoint)) return {};
+    std::unique_ptr<LC_OffsetCurve> curve{new LC_OffsetCurve(attributes, request->cache,
+        request->definition, tolerance, std::move(grips), midpoint, LC_OffsetCurve::ReceivedSourceCache{})};
+    if (!curve->validate() || !curve->hasGeneralizedSourceDefinition() ||
+        RS_Spline::geometryFingerprint(curve->getData()) != RS_Spline::geometryFingerprint(request->cache)) return {};
     if (const auto* previous = dynamic_cast<const LC_OffsetCurve*>(&attributes))
         if (!curve->setOwnedExtensions(previous->unknownOwnedFlags(), previous->unknownOwnedTail())) return {};
     return curve;

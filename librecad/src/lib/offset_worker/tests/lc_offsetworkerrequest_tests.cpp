@@ -86,6 +86,8 @@ std::vector<request::Request> fixtures() {
     values.push_back({token(), request::Generate{definition(), runLimits(), point(13.25, -0.0)}});
     values.push_back({token(), request::CheckThrough{spline(), definition(), 0.125,
         point(13.25, -0.0), checkLimits()}});
+    values.push_back({token(), request::ValidateSourceCache{spline(),
+        LC_OffsetSourceDefinition{LC_OffsetSourceGeometry{ellipse()}, .25, .001, false}, runLimits()}});
     return values;
 }
 void same(double a, double b) { CHECK(std::memcmp(&a, &b, sizeof(double)) == 0); }
@@ -203,6 +205,12 @@ void same(const request::CachedProduce& a, const request::CachedProduce& b) {
     CHECK(request::Values::encodePreview(a.cache) == request::Values::encodePreview(b.cache));
 }
 void same(const request::GenerateSource& a, const request::GenerateSource& b) {
+    CHECK(request::Values::encodeSourceDefinition(a.definition) ==
+          request::Values::encodeSourceDefinition(b.definition));
+    same(a.limits, b.limits);
+}
+void same(const request::ValidateSourceCache& a, const request::ValidateSourceCache& b) {
+    same(a.cache, b.cache);
     CHECK(request::Values::encodeSourceDefinition(a.definition) ==
           request::Values::encodeSourceDefinition(b.definition));
     same(a.limits, b.limits);
@@ -368,6 +376,11 @@ TEST_CASE("offset worker request has exact version two positional shapes",
             CHECK(at(root, {3, 1}).toArray().size() == 4);
             CHECK(at(root, {3, 1, 0}).toArray().size() == 3);
             CHECK(at(root, {3, 1, 3}).toArray().size() == 5);
+        } else if (value.operation.index() == 8) {
+            REQUIRE(body.size() == 3);
+            REQUIRE(body.at(0).toArray().size() == 10);
+            REQUIRE(body.at(1).toArray().size() == 4);
+            REQUIRE(body.at(2).toArray().size() == 4);
         } else {
             REQUIRE(body.size() == (value.operation.index() >= 3 ? 5 : 4));
             REQUIRE(body.at(0).toArray().size() == 10);
@@ -866,6 +879,21 @@ TEST_CASE("offset worker op7 transports generalized source generation requests",
         sources.front(), .25, .001, false}, runLimits()};
     excessive.limits.outputBudget.maxCubicPieces = makeDefaultOffsetSourceBudget().maxCubicPieces + 1;
     CHECK_FALSE(request::encode({token(), excessive}));
+}
+
+TEST_CASE("offset worker op8 transports source cache validation requests",
+          "[lc-offsetcurve][worker-protocol][request][source-cache]") {
+    RS_SplineData cache;
+    cache.degree = 1;
+    cache.controlPoints = {{0, 0}, {2, .5}};
+    cache.knotslist = {0, 0, 1, 1};
+    cache.weights = {1, 1};
+    const request::Request input{token(), request::ValidateSourceCache{cache,
+        LC_OffsetSourceDefinition{LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}}, .5, 1e-4, false}, runLimits()}};
+    roundTrip(input);
+    auto invalid = std::get<request::ValidateSourceCache>(input.operation);
+    invalid.cache.weights[0] = std::numeric_limits<double>::infinity();
+    CHECK_FALSE(request::encode({token(), invalid}));
 }
 
 TEST_CASE("offset worker CheckThrough owns raw values and bounds every membership allowance",

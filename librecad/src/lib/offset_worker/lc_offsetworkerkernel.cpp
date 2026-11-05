@@ -237,6 +237,41 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
     return output;
 }
 
+result::Native LC_OffsetWorkerKernel::validateSourceCache(const req::ValidateSourceCache& input, Trace& trace) {
+    result::Native output;
+    output.refusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
+    const auto generated = generateSource(req::GenerateSource{input.definition, input.limits}, trace);
+    output.engineRuns = generated.engineRuns;
+    output.engineStatus = generated.engineStatus;
+    output.sampleUnits = generated.sampleUnits;
+    output.attemptedOutputUsage = generated.attemptedOutputUsage;
+    output.attemptedDeepCountComplete = generated.attemptedDeepCountComplete;
+    if (generated.engineStatus != LC_CurveOffsetStatus::Ok ||
+        generated.ordinaryStatus != result::OrdinaryStatus::Complete || generated.ordinary.size() != 1)
+        return output;
+
+    RS_SplineData expected;
+    if (const auto* spline = std::get_if<RS_SplineData>(&generated.ordinary.front())) expected = *spline;
+    else if (const auto* line = std::get_if<req::Segment>(&generated.ordinary.front())) {
+        expected.degree = 1;
+        expected.controlPoints = {line->start, line->end};
+        expected.knotslist = {0, 0, 1, 1};
+        expected.weights = {1, 1};
+    } else return output;
+
+    if (!ordinarySpline(expected) || !same(input.cache, expected)) return output;
+    RS_Spline checked{nullptr, input.cache};
+    if (!checked.validate() || !same(checked.getData(), input.cache)) return output;
+    output.refusal = LC_OffsetCurveRefusal::None;
+    output.changed = true;
+    output.ordinaryStatus = result::OrdinaryStatus::None;
+    output.ordinary.clear();
+    output.ordinaryUsage = {};
+    output.outputUsage = {};
+    trace.computationCompleted = true;
+    return output;
+}
+
 result::Native LC_OffsetWorkerKernel::validate(const req::ValidateCache& input, Trace& trace) {
     result::Native output;
     const Snapshot observed{trace, output};
@@ -432,6 +467,7 @@ result::Reply LC_OffsetWorkerKernel::run(const req::Request& input, Trace* obser
             reply.result = produce(cached.produce, trace, &cached.cache); break;
         }
         case 7: reply.result = generateSource(std::get<req::GenerateSource>(input.operation), trace); break;
+        case 8: reply.result = validateSourceCache(std::get<req::ValidateSourceCache>(input.operation), trace); break;
         default: return reply;
         }
         trace.computationCompleted = true;

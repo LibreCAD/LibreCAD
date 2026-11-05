@@ -32,6 +32,7 @@ private:
         const LC_OffsetPreviewSnapshot* = nullptr);
     static LC_OffsetWorkerResult::Native generate(const LC_OffsetWorkerRequest::Generate&, Trace&);
     static LC_OffsetWorkerResult::Native generateSource(const LC_OffsetWorkerRequest::GenerateSource&, Trace&);
+    static LC_OffsetWorkerResult::Native validateSourceCache(const LC_OffsetWorkerRequest::ValidateSourceCache&, Trace&);
     static LC_OffsetWorkerResult::Native validate(const LC_OffsetWorkerRequest::ValidateCache&, Trace&);
     static LC_OffsetWorkerResult::Native checkThrough(const LC_OffsetWorkerRequest::CheckThrough&, Trace&);
 };

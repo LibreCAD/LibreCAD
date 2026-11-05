@@ -609,6 +609,53 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     CHECK(owned.get().healthyAndIdle());
 }
 
+TEST_CASE("Worker joined op8 validates a typed native source cache before materialization", Tags) {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {4, 0}}}, .5, 1e-4, false};
+
+    Receipts generatedReceipts;
+    REQUIRE(owned.get().submit({token(1), Req::GenerateSource{definition, {}}},
+        Client::Mode::Commit, generatedReceipts.into(0)));
+    rt.until([&] { return generatedReceipts.calls[0] != 0; });
+    const auto& generated = completed(generatedReceipts.at(0), 1, 7);
+    const auto& generatedResult = std::get<Reply::Native>(generated.reply().result);
+    REQUIRE(generatedResult.ordinary.size() == 1);
+    RS_SplineData cache;
+    if (const auto* spline = std::get_if<RS_SplineData>(&generatedResult.ordinary.front())) cache = *spline;
+    else {
+        const auto& line = std::get<Req::Segment>(generatedResult.ordinary.front());
+        cache.degree = 1; cache.controlPoints = {line.start, line.end};
+        cache.knotslist = {0, 0, 1, 1}; cache.weights = {1, 1};
+    }
+
+    Receipts validatedReceipts;
+    const Req::ValidateSourceCache validation{cache, definition, {}};
+    REQUIRE(owned.get().submit({token(2), validation}, Client::Mode::Commit, validatedReceipts.into(0)));
+    rt.until([&] { return validatedReceipts.calls[0] != 0; });
+    const auto& validated = completed(validatedReceipts.at(0), 2, 8);
+    auto native = validated.nativeValidatedSource(attributes);
+    REQUIRE(native);
+    CHECK(native->hasGeneralizedSourceDefinition());
+    REQUIRE(native->sourceDefinition());
+    CHECK(Req::Values::encodeSourceDefinition(*native->sourceDefinition()) ==
+        Req::Values::encodeSourceDefinition(definition));
+
+    auto altered = validation;
+    altered.cache.controlPoints.back().y += 1;
+    Receipts rejectedReceipts;
+    REQUIRE(owned.get().submit({token(3), altered}, Client::Mode::Commit, rejectedReceipts.into(0)));
+    rt.until([&] { return rejectedReceipts.calls[0] != 0; });
+    const auto& rejected = completed(rejectedReceipts.at(0), 3, 8);
+    CHECK_FALSE(rejected.nativeValidatedSource(attributes));
+    CHECK(std::get<Reply::Native>(rejected.reply().result).refusal ==
+        LC_OffsetCurveRefusal::NotCacheRepresentable);
+    CHECK(owned.get().healthyAndIdle());
+}
+
 TEST_CASE("Worker Produce completions materialize ordered native copies without publication authority", Tags) {
     auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
     RS_EntityContainer owner; RS_Layer layer{QStringLiteral("produce local")};

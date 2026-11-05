@@ -14738,3 +14738,126 @@ cannot be safely represented by the native offset entity, record the exact
 non-mutating refusal boundary and do not advertise it as selectable. Preserve
 the separate G2 cache/edit and G4 persistence requirements; a picker-only
 change does not complete source support.
+
+## 347. Cross-Type Source Picker Readiness (2026-11-05)
+
+### User requirement
+
+The offset-curve Properties source widget must let the user change the source
+curve type while replacing the source, then select an existing curve of that
+type. It is not sufficient to keep the current source type fixed or to add
+only another ellipse chooser. The type selector and entity picker are linked:
+changing type refreshes the eligible-entity list, and picking an entity
+replaces the source kind and immutable source geometry together. Include
+parabola as its own type, even though `LC_Parabola` derives from
+`LC_SplinePoints`.
+
+### Current implementation boundary
+
+The production Properties widget remains ellipse-only. Its `cbSource` combo
+enumerates top-level live ellipses, compares the embedded basis, and selecting
+an entry copies `RS_EllipseData` into the ellipse edit definition. The nearby
+"Select in drawing" command resolves only `RS_Ellipse`. The tagged value model
+and op-7 worker generation now cover ellipse, spline, spline-points, parabola,
+bounded hyperbola, line, arc, circle, and polyline, but these capabilities do
+not yet make those types valid native `LC_OffsetCurve` sources. Generalized
+native cache validation/editing and DXF/DWG persistence remain prerequisites;
+do not expose worker-only families in the UI as supported choices.
+
+### Implementation slices
+
+1. **P1 - Freeze the production eligibility matrix.** Trace ordinary offset
+   command admission, `LC_CurveOffset`, native offset construction, worker
+   source dispatch, and output representation. Record each accepted and
+   refused concrete entity type, including composite policy. At minimum,
+   explicitly decide ellipse, `RS_Spline`, `LC_SplinePoints`, `LC_Parabola`,
+   bounded/unbounded `LC_Hyperbola`, line, arc, circle, and polyline. Preserve
+   parabola's dynamic identity before testing its spline-points base class.
+   Add an owning-layer test for every admitted type and document a specific
+   refusal for every excluded type.
+
+2. **P2 - Complete the native source contract before advertising types.**
+   Carry every admitted source through value-owned native definition,
+   generation, canonical cache certification/revalidation, transforms,
+   distance/side edits, clone/grips/undo, and cache-vs-source consistency.
+   Define which outputs fit the native entity; refuse multi-piece or lossy
+   output atomically. Retain schema-1 ellipse compatibility and implement the
+   versioned source-kind persistence path for the added types across DXF and
+   DWG. Do not infer that W342-W346's source codec and worker generation close
+   this slice.
+
+3. **P3 - Replace the ellipse-only control with linked type/entity controls.**
+   Add a source-type selector and an entity selector. Populate type choices
+   only from families that have passed P1/P2; include a distinct Parabola
+   choice. Changing the type must not mutate the edited offset and must
+   refresh the entity list, including an explicit empty state. Selecting an
+   entity captures its geometry by value and atomically updates the tagged
+   source definition; selecting across types must not leave a mismatched type
+   and payload. Preserve the current ellipse parameter editing only when the
+   active definition is an ellipse; other families show suitable read-only
+   source details until safe type-specific editing is designed.
+
+4. **P4 - Preserve resolution and drawing-selection semantics.** Match the
+   current embedded source by source-kind plus canonical geometry, not only
+   approximate display properties. Distinguish matched, embedded/not found,
+   replaced, deleted, stale ID, and unsupported states. The explicit
+   select-in-drawing action must re-resolve the selected entity ID immediately
+   before selection and redraw; it must never act on a stale pointer. Merely
+   opening, changing the type filter, or cancelling the dialog must not alter
+   drawing selection or the document. A replacement uses the existing guarded
+   worker-edit path and remains cancelable/stale-result safe.
+
+5. **P5 - Verify the full interaction and source matrix.** Add widget and
+   owning integration tests for changing type before picking, direct
+   cross-type replacement, parabola-vs-spline-points identity, each admitted
+   type, empty buckets, deleted/stale entities, unmatched embedded sources,
+   selection highlighting, multi-selection behavior, cancel/no side effect,
+   worker refusal/busy/cancel, and preview/commit parity. Add per-family
+   DXF/DWG save, reopen, and second-save assertions. Run focused Properties,
+   worker, entity/action, and persistence suites plus supported build variants;
+   retain GUI screenshots and DPR evidence as separate acceptance gates.
+
+### Completion rule and status
+
+This request is complete only when the type can be changed before picking,
+every production-eligible source type is available and correctly identified,
+and the selected value survives native generation/editing and supported file
+round-trips. A visually working type combo, parabola-only addition, worker
+codec, or source snapshot is not completion. Current status: **not
+implemented**. P1-P5 are the required implementation order. W335 remains
+ellipse-only UI; W337-W346 are source-value/worker foundations only. No code
+change or validation result is claimed in this plan update.
+
+P1 audit is now partially evidenced from the current code: `RS_Creation::createParallel()`
+dispatches line, arc, circle, parabola, hyperbola, spline-points, spline, and
+native-offset-cache entities. Its generic curve path uses each entity's
+`createOffset()`; bounded preview uses `LC_CurveOffset` only when
+`isSupportedSource()` admits the class. That engine predicate admits
+`RS_Ellipse`, `RS_Spline`, `LC_SplinePoints` (therefore `LC_Parabola` through
+inheritance), and `LC_Hyperbola`. Source capture further refuses unbounded
+hyperbolas. The main `createParallel()` switch does not dispatch `EntityEllipse`
+or polylines, despite direct engine/virtual ellipse offset support and worker
+polyline adapters. P1 still needs an owning test matrix and explicit decisions
+about direct-vs-command eligibility before the UI type list can be finalized.
+
+## 348. Exact Typed Source Cache Revalidation (2026-11-05)
+
+Added protocol operation 8 without changing operations 0-7. It accepts a
+canonical spline cache, tagged source definition, and run limits; the helper
+regenerates the typed source offset and accepts only a byte-exact match to one
+canonical ordinary output. It never repairs the input, returns partial output,
+or grants authority to an unjoined public reply. A joined completion can
+materialize `LC_OffsetCurve` only from the accepted op-8 result, retaining the
+source definition and validating the native entity invariants. A modified
+cache is refused as not cache-representable.
+
+Validation: Debug CMake rebuilt the request, kernel, helper, and client-test
+targets. The op-8 request round-trip passed 176 assertions; the kernel exact
+match/mutation refusal case passed 48 assertions; the real child-process
+op-8 completion and native materialization passed within the full worker-client
+suite (24,956 assertions in 19 cases). Complete request and kernel suites
+passed 601,667/16 and 3,076/20. `git diff --check` passed. This is the cache
+revalidation primitive only: typed native creation callers, generalized
+editing/transforms/grips, Properties type/entity picker, and schema-2 DXF/DWG
+source persistence remain open. Op-7 generation results still cannot directly
+materialize a trusted native offset without a separate cache-validation pass.

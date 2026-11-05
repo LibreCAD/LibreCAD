@@ -82,10 +82,16 @@ struct GenerateSource {
     LC_OffsetSourceDefinition definition;
     LC_OffsetRunLimits limits;
 };
+/** Regenerate a typed source and accept only its exact canonical single cache. */
+struct ValidateSourceCache {
+    RS_SplineData cache;
+    LC_OffsetSourceDefinition definition;
+    LC_OffsetRunLimits limits;
+};
 struct Request {
     Token token;
     std::variant<Generate, ValidateCache, TrimCache, TrimConic, CheckThrough, Produce, CachedProduce,
-                 GenerateSource> operation;
+                 GenerateSource, ValidateSourceCache> operation;
 };
 
 /** Shared strict value syntax, NOT C certificates or geometric proof.
@@ -125,6 +131,9 @@ bool scanPreview(const QCborArray&);
  * Copies are 1..100. Signed distances are finite; zero/overflow are typed kernel refusals.
  * GenerateSource (op 7): [tagged-source-definition,run-limits]. Its reply is
  * ordinary generated geometry only and conveys no native cache certificate.
+ * ValidateSourceCache (op 8): [canonical-cache,tagged-source-definition,run-limits].
+ * It reruns source generation and accepts only an exactly equal canonical
+ * one-entity cache; no cache repair or partial output is returned.
  * No attributes, document identity, cache import or publication authority is transported.
  * Cutter [ordinal 0..4,record]; vector [x,y,z,valid]; pick [point,hint-or-null,seed-or-null].
  * Definition [basis,distance,towardCentre,cacheReversed,relTolerance].

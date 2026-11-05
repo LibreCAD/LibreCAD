@@ -255,6 +255,7 @@ bool readCurve(const QCborValue& v, Curve& d, Counts& c, std::size_t cap, bool m
 LC_OffsetCheckLimits checkLimits(const Req::Request& r) {
     auto l = r.operation.index() == 0 ? std::get<Req::Generate>(r.operation).limits.checkLimits :
         r.operation.index() == 4 ? std::get<Req::CheckThrough>(r.operation).limits :
+        r.operation.index() == 8 ? std::get<Req::ValidateSourceCache>(r.operation).limits.checkLimits :
             std::get<Req::ValidateCache>(r.operation).limits;
     const LC_OffsetCheckLimits hard;
     l.maxCacheSpans = std::min(l.maxCacheSpans, hard.maxCacheSpans);
@@ -288,10 +289,18 @@ LC_OffsetSourceBudget outputBudget(const Req::GenerateSource& op) {
     budget.maxDeepEntities = std::min(budget.maxDeepEntities, hard.maxDeepEntities);
     return budget;
 }
+LC_OffsetSourceBudget outputBudget(const Req::ValidateSourceCache& op) {
+    auto budget = op.limits.outputBudget;
+    const auto hard = makeDefaultOffsetSourceBudget();
+    budget.maxCubicPieces = std::min(budget.maxCubicPieces, hard.maxCubicPieces);
+    budget.maxOutputEntities = std::min(budget.maxOutputEntities, hard.maxOutputEntities);
+    budget.maxDeepEntities = std::min(budget.maxDeepEntities, hard.maxDeepEntities);
+    return budget;
+}
 LC_OffsetSourceBudget outputBudget(const Req::Request& request) {
-    return request.operation.index() == 7
-        ? outputBudget(std::get<Req::GenerateSource>(request.operation))
-        : outputBudget(std::get<Req::Generate>(request.operation));
+    if (request.operation.index() == 7) return outputBudget(std::get<Req::GenerateSource>(request.operation));
+    if (request.operation.index() == 8) return outputBudget(std::get<Req::ValidateSourceCache>(request.operation));
+    return outputBudget(std::get<Req::Generate>(request.operation));
 }
 bool ordinaryHeader(const Native& n, const Req::Request& r, std::size_t count) {
     if (!admitted(n.ordinaryStatus) || !admitted(n.ordinaryUsage)) return false;
@@ -752,12 +761,32 @@ bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool
 }
 
 bool native(const Native& n, const Req::Request& r) {
-    if ((r.operation.index() > 1 && r.operation.index() != 4 && r.operation.index() != 7) ||
+    if ((r.operation.index() > 1 && r.operation.index() != 4 && r.operation.index() != 7 && r.operation.index() != 8) ||
         !admitted(n.refusal) || !admitted(n.engineStatus) ||
         !admitted(n.checkReason) || !admitted(n.checkWork) || !admitted(n.throughWork)) return false;
     // Op 7's ordinary array is validated after its wire count is scanned by
     // readOrdinary(), or from the materialized vector by ordinary().
     if (r.operation.index() == 7) return true;
+    if (r.operation.index() == 8) {
+        const auto& op = std::get<Req::ValidateSourceCache>(r.operation);
+        const auto cap = outputBudget(op);
+        const std::size_t sampleCap = op.limits.maxSamples
+            ? std::min(op.limits.maxSamples, LC_CurveOffset::kDefaultMaxSamples)
+            : LC_CurveOffset::kDefaultMaxSamples;
+        const bool accepted = n.refusal == Refusal::None;
+        if (n.curve || n.changed != accepted || n.checkReason || !zero(n.checkWork) || !zero(n.throughWork) ||
+            n.engineRuns > 1 || bool(n.engineStatus) != (n.engineRuns == 1) ||
+            !usage(n.attemptedOutputUsage, cap) || !zero(n.outputUsage) || !zero(n.ordinaryUsage) ||
+            n.ordinaryStatus != OrdinaryStatus::None || !n.ordinary.empty() || n.sampleUnits > sampleCap)
+            return false;
+        if (!n.engineRuns) return !n.engineStatus && !accepted && !n.sampleUnits &&
+            zero(n.attemptedOutputUsage) && n.attemptedDeepCountComplete &&
+            (n.refusal == Refusal::InvalidInput || n.refusal == Refusal::TooSmall ||
+                n.refusal == Refusal::NotCacheRepresentable);
+        if (n.engineStatus != Status::Ok)
+            return !accepted && n.refusal == Refusal::NotCacheRepresentable;
+        return accepted ? n.refusal == Refusal::None : n.refusal == Refusal::NotCacheRepresentable;
+    }
     const auto cap = checkLimits(r);
     const auto& c = n.checkWork;
     const auto& t = n.throughWork;
@@ -1067,7 +1096,7 @@ bool token(const Req::Token& a, const Req::Token& b) {
         a.sourceRevision == b.sourceRevision && a.undoEpoch == b.undoEpoch;
 }
 bool envelope(const Reply& d, const Req::Request& r) {
-    return !r.operation.valueless_by_exception() && d.operation <= 7 && d.operation == r.operation.index() &&
+    return !r.operation.valueless_by_exception() && d.operation <= 8 && d.operation == r.operation.index() &&
         token(d.token, r.token) && admitted(d.failure) && !d.result.valueless_by_exception();
 }
 
@@ -1180,7 +1209,7 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
         if (!Req::admitted(r) || !value) return std::nullopt;
         if (d.operation == 5 ? !admittedProduced(*value, std::get<Req::Produce>(r.operation)) :
             !admittedProduced(*value, std::get<Req::CachedProduce>(r.operation))) return std::nullopt;
-    } else if (d.operation <= 1 || d.operation == 4 || d.operation == 7) {
+    } else if (d.operation <= 1 || d.operation == 4 || d.operation == 7 || d.operation == 8) {
         const auto* n = std::get_if<Native>(&d.result);
         Counts c;
         if (!n || !native(*n, r) || !ordinary(*n, r) || (n->curve && (!curve(*n->curve, c, checkLimits(r).maxCacheSpans) ||
@@ -1193,7 +1222,7 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
     if (d.failure == Failure::None) {
         if (d.operation == 5) payload = fields(std::get<Produced>(d.result));
         else if (d.operation == 6) payload = cachedFields(std::get<Produced>(d.result));
-        else payload = d.operation <= 1 || d.operation == 4 || d.operation == 7 ?
+        else payload = d.operation <= 1 || d.operation == 4 || d.operation == 7 || d.operation == 8 ?
             fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
     }
     const auto& t = d.token;
@@ -1241,7 +1270,7 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
         const auto& op = std::get<Req::Produce>(r.operation);
         if (!readProduced(a.at(4), scan, op, false) || !readProduced(a.at(4), value, op, true)) return std::nullopt;
         d.result = std::move(value);
-    } else if (d.operation <= 1 || d.operation == 4 || d.operation == 7) {
+    } else if (d.operation <= 1 || d.operation == 4 || d.operation == 7 || d.operation == 8) {
         Native scan, value;
         if (!readNative(a.at(4), scan, r, false) || !readNative(a.at(4), value, r, true)) return std::nullopt;
         d.result = std::move(value);
