@@ -4184,22 +4184,6 @@ recovery, stale source/selection/layer/UCS rejection, and one-cycle undo/redo
 publication. These are offscreen Qt action tests, not visible interactive
 acceptance.
 
-## 372. Wrapped-Spline Signed-Side and Distance Sweep (2026-11-05)
-
-Extended the wrapped periodic cubic op-8 regression across signed distances
-`-0.5`, `-0.25`, `0.25`, and `0.5`. These cover both offset sides and two
-magnitudes. Each op-7 generation returns exactly one canonical spline cache;
-op 8 accepts that exact source/cache pair. The pre-existing mutation case
-continues to prove that changing cache geometry is refused.
-
-The focused sweep passes 143 assertions/1 case; the complete worker-kernel
-suite passes 3,389 assertions/21 cases; `git diff --check` passes. Commit
-`50d2c490b` contains the test. The representative wrapped-spline side/distance
-slice is closed; it does not close signed-distance sweeps for other spline
-topologies, hyperbola bounds, or polyline layouts. Add those to the remaining
-variant matrix, then push this test and roadmap update, record PR evidence, and
-recheck exact-head CI.
-
 | W71b lane | Testcases / assertions | Result | SHA256 |
 |---|---:|---|---|
 | Creation/repeat Release | 13 / 318 | PASS | `431301b4020ce1dad423503772271d972cca5430335498be760da42dda975ce5` |
@@ -15609,8 +15593,39 @@ cache, tying the file-import fixture back to the production geometry result.
 The focused joined-worker source-family case passes 16,242 assertions/1 case;
 the complete worker-client suite passes 32,735 assertions/20 cases. These are
 fresh runs after the matrix expansion. Commit `bb93f6512` contains the test
-slice; it is local and needs its roadmap update, push, PR evidence, and
-exact-head CI check. Remaining work includes legal spline knot/weight/closure
+slice; checkpoint `fe99bcda8` records the update. Both are pushed and PR #3193
+contains matching evidence. Remaining work includes legal spline knot/weight/closure
 variants, hyperbola bound and side/distance sweeps, polyline orientation,
 repeated-vertex and closure layouts, and broader external/GUI/deployment
 acceptance.
+
+## 372. Wrapped-Spline Signed-Side and Distance Sweep (2026-11-05)
+
+Extended the wrapped periodic cubic op-8 regression across signed distances
+`-0.5`, `-0.25`, `0.25`, and `0.5`. These cover both offset sides and two
+magnitudes. Each op-7 generation returns exactly one canonical spline cache;
+op 8 accepts that exact source/cache pair. The pre-existing mutation case
+continues to prove that changing cache geometry is refused.
+
+The focused sweep passes 143 assertions/1 case; the complete worker-kernel
+suite passes 3,389 assertions/21 cases; `git diff --check` passes. Commit
+`50d2c490b` contains the test. Checkpoint `46cdf686a` records the update; both
+are pushed and PR #3193 includes the evidence. The representative
+wrapped-spline side/distance slice is closed; signed-distance sweeps for other
+spline topologies, hyperbola bounds, and polyline layouts remain open.
+
+## 373. Bounded-Hyperbola Cache-Promotion Variants (2026-11-05)
+
+Added op-7/op-8 validation for four bounded hyperbola layouts: a broad
+forward interval, the same bounds in reverse parameter order, a narrow
+interval on the opposite branch, and the broad interval on that branch. Each
+is generated at signed distances `-0.3` and `0.3`; all eight results are one
+canonical spline cache and validate exactly through op 8. This confirms that
+the typed source retains finite bounds, parameter direction, and branch
+identity through the native-cache contract for these samples.
+
+The focused kernel case passes 208 assertions/1 case; the complete
+worker-kernel suite passes 3,597 assertions/22 cases. Commit `6856211c9`
+contains the tests. This is representative bounded-range coverage, not an
+exhaustive hyperbola bound/distance sweep. The test commit and this roadmap
+update are the next push; PR evidence and exact-head CI must then be updated.
