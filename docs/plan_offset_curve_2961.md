@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W390; chronological evidence follows): implementation slices
+Current status (W391; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -70,7 +70,7 @@ Changing the family filter alone is non-mutating; selecting a candidate goes
 through guarded worker-backed replacement. This closes the requested picker
 behavior, not exhaustive eligibility for every legal geometry variant or
 every distance/side, and not the broader plan's acceptance gates. The
-recent W378-W390 source-variant slices add malformed-polyline refusal,
+recent W378-W391 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15877,6 +15877,19 @@ fit-point, and typed-source persistence selection passes 3,441 assertions
 across six cases. `git diff --check` passes. This covers one three-point
 fit-point representation, not all legal fit counts, tangent constraints, or
 fit-parameter layouts.
+
+## 391. Closed Fit-Point Spline Import Promotion (2026-11-05)
+
+Extended the fit-point source matrix with a closed eight-point `LC_SplinePoints`
+loop. Its generated offset has one canonical spline cache; both AC1032 DXF and
+DWG staged imports pass operation-8 validation, promote to native editable
+offsets, and preserve the exact tagged source and cache fingerprint.
+
+The focused fit-point import case passes 1,957 assertions; the combined
+spline-variant, fit-point, and typed-source persistence selection passes 4,883
+assertions across six cases. `git diff --check` passes. This verifies one
+closed fit-point shape only; other closed layouts and tangent constraints
+remain unqualified.
 
 ## 390. Fit-Point Count Variants in DXF/DWG Import Promotion (2026-11-05)
 
