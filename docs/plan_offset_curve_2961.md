@@ -15545,3 +15545,32 @@ are pushed to the PR branch, and PR #3193 has a matching validation note.
 At the latest exact-head query the five Pixi platform checks had started with
 no terminal results. Wrapped file-import validation and the
 direct-materialization/cache-shape investigation remain open.
+
+## 370. Wrapped-Spline DXF/DWG Import Promotion (2026-11-05)
+
+Corrected W369's fixture diagnosis. The reported 87-control/89-knot/85-weight
+shape was not produced by `materializeBranches()`: the raw `DRW_Spline` test
+fixture began with two pre-populated control points, and the first test draft
+forgot to clear them before copying the generated spline. The production-side
+materialized spline passes `RS_Spline::validate()` and has the expected knot
+and weight counts. Clearing the fixture's existing control list fixed the
+writer failure; no product defect was established by that failed attempt.
+
+The corrected real-file regression now saves a wrapped periodic cubic source
+and its generated cache as both AC1032 DXF and DWG, imports each through
+`LC_OffsetImportSession`, and verifies op-8 promotion, exact typed-source
+preservation, and cache geometry equality. The joined-worker test independently
+feeds op-7's exact wrapped cache into op 8, verifies private native promotion,
+and retains the altered-cache refusal assertion. Thus wrapped-spline op-8
+promotion and file import are no longer open for this representative fixture;
+the broader legal knot/weight/closure and side/distance matrix remains open.
+
+Validation on the committed test slice: wrapped file-import case, 476
+assertions/1 case; full typed-source spline-variant import filter, 955
+assertions/2 cases; typed-source DXF/DWG persistence, 792 assertions/1 case;
+wrapped op-8 kernel, 43 assertions/1 case; full worker-client suite, 25,133
+assertions/20 cases; `git diff --check` passes. Commit
+`0b3647c26` contains the real-file test and direct-cache structural
+assertions. Push it, update PR #3193 with this correction and evidence, then
+recheck exact-head CI. Do not retain W369's rejected-fixture note as an open
+product issue.
