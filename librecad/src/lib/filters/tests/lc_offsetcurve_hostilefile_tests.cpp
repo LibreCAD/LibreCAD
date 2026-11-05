@@ -1861,6 +1861,86 @@ TEST_CASE("multi-branch rational spline import refuses native promotion and reta
     }
 }
 
+TEST_CASE("single-cache internal-knot rational spline imports as native offset curve",
+          "[lc-offsetcurve][import-session][typed-source][spline-variant]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-single-cache-rational-spline-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+
+    RS_SplineData rational{2, false};
+    rational.controlPoints = {{0, 0}, {1, .25}, {3, .25}, {4, 0}};
+    rational.knotslist = {0, 0, 0, .5, 1, 1, 1};
+    rational.weights = {1, .9, 1.1, 1};
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{rational}, .05, 1e-4, false};
+    auto source = definition.source.makeEntity();
+    REQUIRE(source);
+    const auto options = LC_CurveOffset::makeDirectOptions(*source, .05,
+        definition.relativeTolerance);
+    const auto generated = LC_CurveOffset::buildDirectBranches(*source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .05), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+    auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(materialized.entities.size() == 1);
+    const auto* expectedSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+    REQUIRE(expectedSpline);
+    const RS_SplineData expectedCache = expectedSpline->getData();
+    REQUIRE(expectedSpline->validate());
+
+    for (const bool dwg : {false, true}) {
+#ifndef DWGSUPPORT
+        if (dwg) continue;
+#endif
+        xd::Definition carrier;
+        carrier.source = definition;
+        xd::Options encoding;
+        if (dwg) { encoding.eed = true; encoding.textEncoding = xd::TextEncoding::Utf16; }
+        else encoding.asciiDxf = false;
+        const auto tags = xd::forExport(
+            {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))}, carrier, encoding);
+        REQUIRE(tags);
+        DRW_Spline cache = f::raw(1, *tags);
+        cache.controllist.clear();
+        for (const auto& point : expectedCache.controlPoints)
+            cache.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
+        cache.knotslist = expectedCache.knotslist;
+        cache.weightlist = expectedCache.weights;
+        cache.degree = expectedCache.degree;
+        cache.flags = 8;
+        cache.m_scenario = 1;
+        cache.ncontrol = cache.controllist.size();
+        cache.nknots = cache.knotslist.size();
+        cache.nfit = 0;
+
+        const auto input = directory.file(dwg ? "single-cache.dwg" : "single-cache.dxf");
+#ifdef DWGSUPPORT
+        if (dwg) f::dwgFile(input, cache, DRW::AC1032);
+        else f::binaryDxf(input, cache, DRW::AC1032);
+#else
+        f::binaryDxf(input, cache, DRW::AC1032);
+#endif
+        const auto outcome = stagedImport(input, dwg ? Lane::Eed18 : Lane::Binary18);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        CHECK(outcome.admitted == 1);
+        CHECK(outcome.downgraded == 0);
+        const auto* imported = dynamic_cast<const LC_OffsetCurve*>(f::sole(*outcome.graphic));
+        REQUIRE(imported);
+        REQUIRE(imported->sourceDefinition());
+        const auto expectedSource = values::encodeSourceDefinition(definition);
+        const auto actualSource = values::encodeSourceDefinition(*imported->sourceDefinition());
+        REQUIRE(expectedSource);
+        REQUIRE(actualSource);
+        CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
+        CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+              RS_Spline::geometryFingerprint(expectedCache));
+    }
+}
+
 TEST_CASE("Staged offset import cancellation after helper start suppresses delivery",
           "[lc-offsetcurve][import-session][worker][lifetime][asan]") {
     Setup setup; lc::test::OutputDirectory directory("offset-staged-active-cancel");
