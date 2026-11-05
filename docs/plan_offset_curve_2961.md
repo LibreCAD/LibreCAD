@@ -15626,6 +15626,21 @@ identity through the native-cache contract for these samples.
 
 The focused kernel case passes 208 assertions/1 case; the complete
 worker-kernel suite passes 3,597 assertions/22 cases. Commit `6856211c9`
-contains the tests. This is representative bounded-range coverage, not an
-exhaustive hyperbola bound/distance sweep. The test commit and this roadmap
-update are the next push; PR evidence and exact-head CI must then be updated.
+contains the tests; checkpoint `73345eec6` records the status. Both are pushed
+and PR #3193 contains the results. This is representative bounded-range
+coverage, not an exhaustive hyperbola bound/distance sweep.
+
+## 374. Mixed-Polyline Orientation and Cache-Promotion Sides (2026-11-05)
+
+Added an op-7/op-8 matrix for an open polyline composed of one circular arc
+and one line, plus the same geometry with reversed segment order and
+direction. Both source layouts remain well-formed and preserve their ordered
+segment data. At signed distances `-0.25` and `0.25`, each generation returns
+one canonical spline cache and op 8 promotes the exact cache/source pair.
+
+The focused kernel case passes 102 assertions/1 case; the complete
+worker-kernel suite passes 3,699 assertions/23 cases. Commit `0116d291e`
+contains the test. This closes representative open mixed-segment orientation
+coverage only; closed/bulged polylines, repeated/degenerate vertices, larger
+segment mixes, and broader distance sweeps remain open. Push with this roadmap
+update, refresh PR #3193, and check the exact new head.
