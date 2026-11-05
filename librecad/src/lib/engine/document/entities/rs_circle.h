@@ -34,9 +34,6 @@
 class LC_Quadratic;
 class QPainterPath;
 
-struct LC_FirstMoment;
-struct LC_SecondMoment;
-
 /**
  * Holds the data that defines a circle.
  */
@@ -162,17 +159,17 @@ m0 x + m1 y + m2 =0
     */
     double areaLineIntegral() const override;
 
-    LC_FirstMoment firstMomentLineIntegral() const override;
-
     /**
-     * @brief secondMomentLineIntegral - exact second moments for a full circle.
-     *
-     * For a circle centered at (cx,cy) with radius r:
-     *   ixx = π r²(cx² + r²/4)
-     *   iyy = π r²(cy² + r²/4)
-     *   ixy = π r² cx cy
+     * @brief momentLineIntegrals - closed-form moments of a full circle about
+     *        `origin`. For a circle centered at (cx, cy) with radius r and
+     *        d = c - origin:
+     *          A    = π r²
+     *          m    = A * d
+     *          Ixx  = A * (d.x² + r²/4)
+     *          Iyy  = A * (d.y² + r²/4)
+     *          Ixy  = A * d.x * d.y
      */
-    LC_SecondMoment secondMomentLineIntegral() const override;
+    LC_AreaMoments momentLineIntegrals(const RS_Vector& origin) const override;
 
     friend std::ostream& operator <<(std::ostream& os, const RS_Circle& a);
 

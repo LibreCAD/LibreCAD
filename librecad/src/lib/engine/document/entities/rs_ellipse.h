@@ -277,16 +277,12 @@ a quadratic contains coefficients for quadratic:
     double areaLineIntegral() const override;
 
     /**
-     * @brief firstMomentLineIntegral – exact closed-form 1st-order moments
-     *        via Green's theorem contour integrals (local aligned frame + transform)
+     * @brief momentLineIntegrals – Green's-theorem line integrals of
+     *        (P - origin). A whole ellipse uses the closed-form region
+     *        moments; an elliptic arc goes through LC_MomentQuadrature with
+     *        h = π/8 on the local parameter.
      */
-    LC_FirstMoment firstMomentLineIntegral() const override;
-
-    /**
-     * @brief secondMomentLineIntegral – exact closed-form 2nd-order moments
-     *        via Green's theorem contour integrals (local aligned frame + transform)
-     */
-    LC_SecondMoment secondMomentLineIntegral() const override;
+    LC_AreaMoments momentLineIntegrals(const RS_Vector& origin) const override;
 
 protected:
     RS_EllipseData m_data; // fixme - renderperf - cache major and minor radiuses!
@@ -308,9 +304,6 @@ private:
      */
     void mergeBoundingBox(LC_Rect& boundingBox, const RS_Vector& direction) const;
     RS_Vector doGetNearestCenter(const RS_Vector& coord, double* dist, RS_Entity** centerEntity) const override;
-    double computeLocalArea(double t1, double t2) const;
-    LC_FirstMoment computeLocalFirstMoment(double t1, double t2) const;
-    LC_SecondMoment computeLocalSecondMoment(double t1, double t2) const;
 };
 
 #endif

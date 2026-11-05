@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QPainterPath>
 
 #include "lc_curveoffset.h"
+#include "lc_momentquadrature.h"
 #include "lc_quadratic.h"
 #include "rs_circle.h"
 #include "rs_information.h"
@@ -641,11 +642,13 @@ RS_Vector LC_SplinePoints::getStartpoint() const {
     }
 
     const std::vector<RS_Vector>& pts = getPoints();
-    const size_t iCount = pts.size();
-    if (iCount < 1) {
-        return RS_Vector(false);
+    if (!pts.empty()) {
+        return pts.front();
     }
-    return pts.at(0);
+    // An open spline built from a control net (useControlPoints, no fit points)
+    // passes through its first and last control points, so those are its ends.
+    return m_data.controlPoints.empty() ? RS_Vector(false)
+                                        : m_data.controlPoints.front();
 }
 
 /** @return End point of the entity */
@@ -655,9 +658,11 @@ RS_Vector LC_SplinePoints::getEndpoint() const {
     }
 
     const std::vector<RS_Vector>& pts = getPoints();
-    const size_t iCount = pts.size();
-
-    return (iCount < 1) ? RS_Vector{false} : pts.at(iCount - 1);
+    if (!pts.empty()) {
+        return pts.back();
+    }
+    return m_data.controlPoints.empty() ? RS_Vector(false)
+                                        : m_data.controlPoints.back();
 }
 
 RS_Vector LC_SplinePoints::doGetNearestEndpoint(const RS_Vector& coord, double* dist, RS_Entity** entity) const {
@@ -3378,91 +3383,29 @@ double LC_SplinePoints::areaLineIntegral() const {
     return res;
 }
 
-LC_SecondMoment LC_SplinePoints::secondMomentLineIntegral() const {
-    // 5-point Gauss-Legendre quadrature on [0,1] — exact for polynomial degree ≤ 9.
-    // Each quadratic Bézier segment has degree-7 integrands (x³y'/3 etc.),
-    // so this gives the exact result per segment.
-    static constexpr double t5[] = {
-        0.04691007703067, 0.23076534494716, 0.5,
-        0.76923465505284, 0.95308992296933
-    };
-    static constexpr double w5[] = {
-        0.11846344252810, 0.23931433524969, 0.28444444444444,
-        0.23931433524969, 0.11846344252810
-    };
-
-    // Helper: integrate second moments over one quadratic Bézier segment P0,P1,P2
-    auto segMoment = [&](const RS_Vector& p0, const RS_Vector& p1, const RS_Vector& p2) -> LC_SecondMoment {
-        LC_SecondMoment m;
-        for (int i = 0; i < 5; ++i) {
-            const double t   = t5[i];
-            const double mt  = 1.0 - t;
-            const double x   = mt*mt*p0.x + 2.0*mt*t*p1.x + t*t*p2.x;
-            const double y   = mt*mt*p0.y + 2.0*mt*t*p1.y + t*t*p2.y;
-            const double dxdt = 2.0*(mt*(p1.x-p0.x) + t*(p2.x-p1.x));
-            const double dydt = 2.0*(mt*(p1.y-p0.y) + t*(p2.y-p1.y));
-            m.ixx += w5[i] * x*x*x / 3.0 * dydt;
-            m.iyy += w5[i] * (-y*y*y / 3.0) * dxdt;
-            m.ixy += w5[i] * x*x * y / 2.0 * dydt;
-        }
-        return m;
-    };
-
-    // Replicate the segment decomposition from areaLineIntegral()
-    size_t n = m_data.controlPoints.size();
-    if (n < 2) {
-        return {};
-    }
-
-    LC_SecondMoment res;
-    RS_Vector vStart, vControl, vEnd;
-
-    if (!m_data.closed) {
-        if (n == 2) {
-            // Degenerate: straight line
-            RS_Vector s = getStartpoint();
-            RS_Vector e = getEndpoint();
-            RS_Line line(nullptr, RS_LineData{s, e});
-            return line.secondMomentLineIntegral();
-        }
-        vStart   = m_data.controlPoints[0];
-        vControl = m_data.controlPoints[1];
-        if (n == 3) {
-            vEnd = m_data.controlPoints[2];
-            return segMoment(vStart, vControl, vEnd);
-        }
-        vEnd = (m_data.controlPoints[1] + m_data.controlPoints[2]) / 2.0;
-        res += segMoment(vStart, vControl, vEnd);
-
-        for (size_t i = 2; i < n - 2; ++i) {
-            vStart   = vEnd;
-            vControl = m_data.controlPoints[i];
-            vEnd     = (m_data.controlPoints[i] + m_data.controlPoints[i+1]) / 2.0;
-            res += segMoment(vStart, vControl, vEnd);
-        }
-        vStart   = vEnd;
-        vControl = m_data.controlPoints[n-2];
-        vEnd     = m_data.controlPoints[n-1];
-        res += segMoment(vStart, vControl, vEnd);
-    } else {
-        if (n < 3) {
+LC_AreaMoments LC_SplinePoints::momentLineIntegrals(const RS_Vector& origin) const {
+    // Walk the spline's own segment decomposition: each Line or Quadratic
+    // Bezier is integrated by its closed-form helper; the Quadratic Bezier
+    // integrator is exact (degree-7 integrand, 8-node Gauss-Legendre).
+    const size_t n = getSegmentCount();
+    LC_AreaMoments res;
+    for (size_t i = 0; i < n; ++i) {
+        LC_SplinePointsSegment seg;
+        if (!tryGetSegment(i, seg)) {
             return {};
         }
-        vStart   = (m_data.controlPoints[n-1] + m_data.controlPoints[0]) / 2.0;
-        vControl = m_data.controlPoints[0];
-        vEnd     = (m_data.controlPoints[0]   + m_data.controlPoints[1]) / 2.0;
-        res += segMoment(vStart, vControl, vEnd);
-
-        for (size_t i = 1; i < n - 1; ++i) {
-            vStart   = vEnd;
-            vControl = m_data.controlPoints[i];
-            vEnd     = (m_data.controlPoints[i] + m_data.controlPoints[i+1]) / 2.0;
-            res += segMoment(vStart, vControl, vEnd);
+        switch (seg.kind) {
+        case LC_SplinePointsSegment::Kind::Point:
+            // Zero-length segment contributes nothing to the line integral.
+            break;
+        case LC_SplinePointsSegment::Kind::Line:
+            res += LC_MomentQuadrature::segment(seg.start, seg.end, origin);
+            break;
+        case LC_SplinePointsSegment::Kind::Quadratic:
+            res += LC_MomentQuadrature::quadraticBezier(
+                seg.start, seg.control, seg.end, origin);
+            break;
         }
-        vStart   = vEnd;
-        vControl = m_data.controlPoints[n-1];
-        vEnd     = (m_data.controlPoints[n-1] + m_data.controlPoints[0]) / 2.0;
-        res += segMoment(vStart, vControl, vEnd);
     }
     return res;
 }

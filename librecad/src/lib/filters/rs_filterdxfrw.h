@@ -1952,6 +1952,12 @@ class RsFilterDxfRwHeaderTestAccess;
 // test-only friend; defined in tests/family_exposure_tests.cpp. Grants access
 // to m_graphic for cross-read filter exposure / Navisworks metadata tests.
 class RsFilterDxfRwExposureTestAccess;
+// Pack a (version, release, patch) triple into one comparable unsigned. The
+// macro has to be visible before the constants below, which is why it sits
+// just outside the class instead of in its private section.
+#define LIBDXFRW_VERSION(version, release, patch)                              \
+  (((version) << 16) | ((release) << 8) | (patch))
+
 /**
  * This format filter class can import and export DXF files.
  * It depends on the libdxfrw library.
@@ -1971,6 +1977,17 @@ class RS_FilterDXFRW : public RS_FilterInterface,
   friend class DwgWriteFailureTestAccess;
 #endif
 public:
+  /// First libdxfrw version to write DXF hatch angles in degrees (0.6.4).
+  static constexpr unsigned kFirstDegreeHatchWriter = LIBDXFRW_VERSION(0, 6, 4);
+  /// The standalone libdxfrw fork writes "999 dxfrw 2.0.0" with raw hatch
+  /// angles; files bearing that version string are read as legacy radians.
+  static constexpr unsigned kRawHatchForkVersion    = LIBDXFRW_VERSION(2, 0, 0);
+  /// Converts a DXF hatch angle just handed to the filter by libdxfrw into
+  /// the radian value LibreCAD stores on RS_Hatch. Legacy LibreCAD/QCAD
+  /// writers stored raw 52 and the libdxfrw-side divide by ARAD now turns
+  /// those back into tiny values; the rule reinterprets them. Solids are
+  /// untouched (the DXF 52 group has no geometric meaning for them).
+  static double importedHatchAngle(double drwAngle, bool legacyRadians, bool solid);
   enum class DwgDataStorageIdentityStatus : std::uint8_t {
     Missing,
     NumericOnly,
@@ -3243,10 +3260,16 @@ private:
   QString m_versionStr;
   int m_version = 0;
   /** Library File version. */
-#define LIBDXFRW_VERSION(version, release, patch)                              \
-  (((version) << 16) | ((release) << 8) | (patch))
   bool m_isLibDxfRw{false};
   uint m_libDxfRwVersion = 0;
+  /** Major version of a dxflib writer whose first comment is "dxflib X.Y.Z.W",
+   *  else 0. Only LibreCAD 1.x (1) and QCAD 2 (2) are known to have written
+   *  radians under group 52; QCAD 3 (3) is already degrees. */
+  int m_dxflibMajor = 0;
+  /** Imported DXF file writes group 52 raw: convert angles with the tie-break
+   *  rule in importedHatchAngle(). Only header-detected legacy writers; set
+   *  per import, false for DWG (whose comment list is empty). */
+  bool m_legacyHatchRadians = false;
   /** dimension style. */
   QString m_dimStyle;
   /** text style. */

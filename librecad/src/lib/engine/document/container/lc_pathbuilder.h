@@ -31,6 +31,7 @@
 #include "rs_vector.h"
 
 class RS_Entity;
+class RS_EntityContainer;
 class RS_Painter;
 class RS_Vector;
 class RS_Line;
@@ -90,6 +91,7 @@ public:
   void clear();
 
   friend class LC_Loops;
+  friend QPainterPath buildLoopPath(RS_Painter*, const RS_EntityContainer&, double);
 
 private:
   /**

@@ -592,32 +592,35 @@ m0 x + m1 y + m2 =0
     virtual double areaLineIntegral() const;
 
     /**
-     * @brief firstMomentLineIntegral - computes the first-order moments of area
-     *        via Green's theorem contour integrals.
-     *
-     * Returns:
-     *   mx = ∬ x dA   (first moment with respect to y-axis)
-     *   my = ∬ y dA   (first moment with respect to x-axis)
-     *
-     * These values are used to compute the centroid: cx = mx / A, cy = my / A.
-     *
-     * @return LC_FirstMoment containing mx and my.
+     * @brief firstMomentLineIntegral - thin wrapper that returns the first
+     *        moment component of momentLineIntegrals about the WCS origin.
+     *        Non-virtual; the single moment path overrides momentLineIntegrals.
      */
-    virtual LC_FirstMoment firstMomentLineIntegral() const;
+    LC_FirstMoment firstMomentLineIntegral() const;
 
     /**
-     * @brief secondMomentLineIntegral - Green's theorem line integrals for the
-     * three second moments of area (∬ x² dA, ∬ y² dA, ∬ x·y dA).
-     *
-     * For a closed contour traversed counter-clockwise, summing the contributions
-     * of all boundary entities gives:
-     *   ixx = ∮ (x³/3) dy       →  ∬ x² dA
-     *   iyy = -∮ (y³/3) dx      →  ∬ y² dA
-     *   ixy = ∮ (x²·y/2) dy     →  ∬ x·y dA
-     *
-     * @return LC_SecondMoment containing the three line-integral contributions.
+     * @brief secondMomentLineIntegral - thin wrapper that returns the second
+     *        moment component of momentLineIntegrals about the WCS origin.
+     *        Non-virtual; the single moment path overrides momentLineIntegrals.
      */
-    virtual LC_SecondMoment secondMomentLineIntegral() const;
+    LC_SecondMoment secondMomentLineIntegral() const;
+
+    /**
+     * @brief momentLineIntegrals - six Green's-theorem line integrals of
+     *        (P − origin), from the entity's start to its end, bundled into
+     *        the area, first and second moment accumulators of LC_AreaMoments.
+     *
+     * A closed atomic entity (full circle, whole ellipse) returns the moments
+     * of its region. Summed around a loop with one shared origin, the loop's
+     * area/centroid/tensor follow by LC_AreaMoments::getCentral and
+     * regionTranslated/regionRotated.
+     *
+     * Overriders in RS_Line/RS_Circle/RS_Arc/RS_Ellipse supply the stable
+     * closed forms or Gauss-Legendre quadrature. The default returns a
+     * zero-initialised LC_AreaMoments.
+     */
+    virtual LC_AreaMoments momentLineIntegrals(const RS_Vector& origin) const;
+
     /**
      * @brief trimmable, whether the entity type can be trimmed
      * @return true, for trimmable entity types

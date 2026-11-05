@@ -1927,6 +1927,10 @@ void RS_EntityContainer::drawAsChild(RS_Painter* painter) {
  * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
  * Contour Area =\oint x dy
  * @return line integral \oint x dy along the entity
+ *
+ * The sign logic (open-edge contour direction decision, closed atomics,
+ * sub-container subtraction, abs-value fold) is mirrored in
+ * momentLineIntegrals(origin); keep the two in step.
  */
 double RS_EntityContainer::areaLineIntegral() const {
     //TODO make sure all contour integral is by counter-clockwise
@@ -1980,35 +1984,34 @@ double RS_EntityContainer::areaLineIntegral() const {
     return std::abs(contourArea) + closedArea - subArea;
 }
 
-LC_FirstMoment RS_EntityContainer::firstMomentLineIntegral() const {
-    // Mirrors secondMomentLineIntegral() traversal; accumulates (∬ x dA, ∬ y dA).
-    LC_FirstMoment contourMoment;
-    double         contourArea = 0.0;
-    LC_FirstMoment closedMoment;
-    LC_FirstMoment subMoment;
+LC_AreaMoments RS_EntityContainer::momentLineIntegrals(const RS_Vector& origin) const {
+    // Sign logic mirrored in areaLineIntegral; keep the two in step: open-edge
+    // run with contour-direction decision, closed atomics summed directly, sub-
+    // containers subtracted. The accumulator carries area + first + second so
+    // one traversal replaces the former two.
+    LC_AreaMoments contourMoment;
+    LC_AreaMoments closedMoment;
+    LC_AreaMoments subMoment;
 
     RS_Vector previousPoint(false);
     for (unsigned i = 0; i < count(); ++i) {
         RS_Entity* e = m_entities.at(i);
         if (isClosedLoop(*e)) {
             if (e->isContainer()) {
-                subMoment += e->firstMomentLineIntegral();
-            }
-            else {
-                closedMoment += e->firstMomentLineIntegral();
+                subMoment += e->momentLineIntegrals(origin);
+            } else {
+                closedMoment += e->momentLineIntegrals(origin);
             }
             continue;
         }
         e->setLayer(getLayer());
-        LC_FirstMoment m        = e->firstMomentLineIntegral();
-        double         integral = e->areaLineIntegral();
-        RS_Vector      startPt  = e->getStartpoint();
-        RS_Vector      endPt    = e->getEndpoint();
+        LC_AreaMoments m = e->momentLineIntegrals(origin);
+        RS_Vector startPt = e->getStartpoint();
+        RS_Vector endPt = e->getEndpoint();
 
         if (previousPoint.valid && endPt.squaredTo(previousPoint) <= RS_TOLERANCE15) {
-            contourArea   -= integral;
             contourMoment -= m;
-            previousPoint  = startPt;
+            previousPoint = startPt;
         } else {
             bool useEndPoint = true;
             if (!previousPoint.valid && i + 1 < count()) {
@@ -2016,72 +2019,18 @@ LC_FirstMoment RS_EntityContainer::firstMomentLineIntegral() const {
                 useEndPoint = endPointDistance(endPt, *currEntity) < endPointDistance(startPt, *currEntity);
             }
             if (useEndPoint) {
-                contourArea   += integral;
                 contourMoment += m;
-                previousPoint  = endPt;
+                previousPoint = endPt;
             } else {
-                contourArea   -= integral;
                 contourMoment -= m;
-                previousPoint  = startPt;
+                previousPoint = startPt;
             }
         }
     }
-    if (contourArea < 0.0) {
-        contourMoment = -contourMoment;
-    }
-
-    return contourMoment + closedMoment - subMoment;
-}
-
-LC_SecondMoment RS_EntityContainer::secondMomentLineIntegral() const {
-    // Follows the same traversal logic as areaLineIntegral(), applying identical
-    // sign flips so the moments are consistent with the signed area convention.
-    LC_SecondMoment contourMoment;
-    double          contourArea = 0.0;
-    LC_SecondMoment closedMoment;
-    LC_SecondMoment subMoment;
-
-    RS_Vector previousPoint(false);
-    for (unsigned i = 0; i < count(); ++i) {
-        RS_Entity* e = m_entities.at(i);
-        if (isClosedLoop(*e)) {
-            if (e->isContainer()) {
-                subMoment += e->secondMomentLineIntegral();
-            }
-            else {
-                closedMoment += e->secondMomentLineIntegral();
-            }
-            continue;
-        }
-        e->setLayer(getLayer());
-        LC_SecondMoment m        = e->secondMomentLineIntegral();
-        double          integral = e->areaLineIntegral();
-        RS_Vector       startPt  = e->getStartpoint();
-        RS_Vector       endPt    = e->getEndpoint();
-
-        if (previousPoint.valid && endPt.squaredTo(previousPoint) <= RS_TOLERANCE15) {
-            contourArea   -= integral;
-            contourMoment -= m;
-            previousPoint  = startPt;
-        } else {
-            bool useEndPoint = true;
-            if (!previousPoint.valid && i + 1 < count()) {
-                auto currEntity = m_entities.at(i + 1);
-                useEndPoint = endPointDistance(endPt, *currEntity) < endPointDistance(startPt, *currEntity);
-            }
-            if (useEndPoint) {
-                contourArea   += integral;
-                contourMoment += m;
-                previousPoint  = endPt;
-            } else {
-                contourArea   -= integral;
-                contourMoment -= m;
-                previousPoint  = startPt;
-            }
-        }
-    }
-    // Match the abs-value convention of areaLineIntegral()
-    if (contourArea < 0.0) {
+    // Match the abs-value convention of areaLineIntegral(): if the signed
+    // area accumulated during the open-edge walk was negative, the whole
+    // contour contribution was traversed CW and must flip sign.
+    if (contourMoment.area < 0.0) {
         contourMoment = -contourMoment;
     }
 

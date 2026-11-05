@@ -238,12 +238,15 @@ public:
  * @author Dongxu Li
  */
     double areaLineIntegral() const override;
+
     /**
-     * @brief secondMomentLineIntegral - second-moment line integrals for a
-     * quadratic B-spline, computed per segment via 5-point Gauss-Legendre
-     * quadrature. Exact for each quadratic Bézier segment's polynomial integrand.
+     * @brief momentLineIntegrals - six Green's theorem line integrals of
+     *        (P - origin), summed over the quadratic B-spline's segments.
+     *        Line and point segments use the closed-form `segment`
+     *        contribution; quadratic segments use `quadraticBezier`, which
+     *        is exact (degree-7 integrand, 8-node Gauss-Legendre).
      */
-    LC_SecondMoment secondMomentLineIntegral() const override;
+    LC_AreaMoments momentLineIntegrals(const RS_Vector& origin) const override;
 
     int getQuadPoints(int iSeg, RS_Vector* pvStart, RS_Vector* pvControl, RS_Vector* pvEnd) const;
 

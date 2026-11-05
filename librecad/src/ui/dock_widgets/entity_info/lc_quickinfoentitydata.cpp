@@ -27,6 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_containertraverser.h"
 #include "lc_dimarc.h"
 #include "lc_dimordinate.h"
+#include "lc_hatchdensity.h"
+#include "lc_hatchdensitytext.h"
 #include "lc_hyperbola.h"
 #include "lc_parabola.h"
 #include "lc_peninforegistry.h"
@@ -1389,6 +1391,12 @@ void LC_QuickInfoEntityData::collectHatchProperties(const RS_Hatch* hatch) {
         addProperty(tr("Scale"), formatDouble(scale), PROPERTY_TYPE_OTHER);
         addAngleProperty(tr("Angle"), angle); // fixme - sand - or raw angle value should be there? Check!
         addAreaProperty(tr("Total Area"), hatch->getTotalArea());
+        // Status of the pattern pieces: shown as "generated" or
+        // "not generated (~ N > limit M)" when the density guard tripped.
+        addProperty(tr("Pattern lines"),
+                    LC_HatchDensityText::patternLinesStatus(
+                        hatch->getDensityReport()),
+                    PROPERTY_TYPE_OTHER);
     }
 }
 
