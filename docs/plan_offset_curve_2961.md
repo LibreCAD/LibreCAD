@@ -15047,10 +15047,10 @@ file-roundtrip, import-session, and worker-client groups listed here all
 completed successfully, providing slice-level qualification; the aggregate
 Catch filter remains a separate CI/acceptance gate.
 
-Before committing this persistence slice, complete the final review of
-family-aware allocation accounting, schema-1 byte compatibility, EED packet
-and payload boundary arithmetic, and `git diff --check`. Then commit and push
-the product slice, update PR #3193 with the implementation and evidence, and
-record exact commit/head and CI status. Current implementation and roadmap
-changes remain uncommitted; schema-2 persistence and the overall roadmap are
-not complete.
+Final review covered family-aware allocation accounting, schema-1 byte
+compatibility, EED packet and payload boundary arithmetic, and `git diff
+--check`. The implementation slice is committed locally as
+`8b01e83e490cf5f90cc4b6eebfa67a19547a36f8`; it has not yet been pushed or
+added to PR #3193. Next, push the product slice, update PR #3193 with the
+implementation and test evidence, and record exact remote head and CI status.
+Schema-2 persistence and the overall roadmap are not complete.
