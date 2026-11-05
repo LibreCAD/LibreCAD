@@ -194,8 +194,8 @@ void RS_LayerList::restoreActive(RS_Layer* layer) {
 /**
  * Makes the active layer one that can be: a drawing has one, and it is not locked while another layer
  * is not. A drawing is opened with no active layer, or with a locked one (AutoCAD lets a locked layer
- * be current and a file may say so); the replacement is the one a removed current layer gets,
- * shown layers first. Listeners are not notified.
+ * be current and a file may say so); the replacement is the first layer that is shown and not locked,
+ * as bestLayerToActivate() says. Listeners are not notified.
  */
 void RS_LayerList::settleActiveLayer() {
     ensureActiveLayer();
@@ -316,24 +316,22 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
 }
 
 /**
- * What RS_Graphic::removeLayer() asks before it removes a layer. Layer "0" is never removed. The
- * current layer is not removed when no other layer is unlocked to take its place: a locked layer
- * is not current, as with keepCurrentLayerUnlocked(); any other layer, locked or not, may be removed.
+ * What RS_Graphic::removeLayer() asks before it removes a layer: layer "0" is never removed, and
+ * neither is the current layer (as in other CADs: make another layer current to remove it). Any other
+ * layer, locked or not, may be removed.
  *
  * @return true if the layer is a layer of this list that remove() may remove
  */
 bool RS_LayerList::canRemove(const RS_Layer* layer) const {
-    if (layer == nullptr || !m_layerSet.contains(const_cast<RS_Layer*>(layer)) || layer->getName() == "0") {
-        return false;
-    }
-    return layer != m_activeLayer || bestLayerToActivate(layer, false) != nullptr;
+    return layer != nullptr && m_layerSet.contains(const_cast<RS_Layer*>(layer)) && layer != m_activeLayer
+        && layer->getName() != "0";
 }
 
 /**
  * @return what is said when canRemove() refused the current layer
  */
 QString RS_LayerList::removalRefusedText(const QString& layerName) {
-    return QObject::tr("Layer \"%1\" was not removed: it is the current layer, and no other layer is unlocked to take its place.")
+    return QObject::tr("Layer \"%1\" was not removed: it is the current layer. Make another layer current to remove it.")
         .arg(layerName);
 }
 

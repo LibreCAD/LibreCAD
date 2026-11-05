@@ -583,89 +583,73 @@ TEST_CASE("A hidden current layer is locked like any other", "[layers][active][3
     CHECK(command.m_messages == QStringList{replacedMessage.arg("0")});
 }
 
-TEST_CASE("Removing the current layer makes a layer current that can be, shown ones first", "[layers][active][3229]") {
-    Layers f;
-    // in name order: "0" hidden, "Construction" locked, "Doors" hidden, "Walls" current
-    f.m_zero->freeze(true);
-    f.m_construction->lock(true);
-    f.m_doors->freeze(true);
-    RS_Layer* expected = nullptr;
-
-    SECTION("a shown layer that is not locked") {
-        auto* shown = new RS_Layer(QStringLiteral("Roof"));
-        f.m_graphic.addLayer(shown);
-        expected = shown;
-    }
-    SECTION("else the first that is not locked, though hidden") {
-        expected = f.m_zero;
-    }
-
-    REQUIRE(f.m_graphic.removeLayer(f.m_walls));
-    CHECK(f.m_graphic.getActiveLayer() == expected);
-    // nothing was shown or unlocked for it
-    CHECK(f.m_zero->isFrozen());
-    CHECK(f.m_construction->isLocked());
-    CHECK(f.m_doors->isFrozen());
-}
-
-TEST_CASE("The current layer is not removed when no other layer is unlocked, nor is layer 0", "[layers][active][3229][remove]") {
+TEST_CASE("The current layer is not removed, nor is layer 0", "[layers][active][3229][remove]") {
     Layers f;
     CommandMessages command;
     const RS_LayerList* layers = f.m_graphic.getLayerList();
     const QString refused = QStringLiteral(
-        "Layer \"Walls\" was not removed: it is the current layer, and no other layer is unlocked to take its place.");
+        "Layer \"Walls\" was not removed: it is the current layer. Make another layer current to remove it.");
 
     SECTION("layer 0 is never removed, and the command line says so") {
+        f.m_graphic.activateLayer(f.m_doors, true);
         CHECK_FALSE(layers->canRemove(f.m_zero));
         CHECK_FALSE(f.m_graphic.removeLayer(f.m_zero));
         CHECK(layers->contains(f.m_zero));
         CHECK(command.m_messages == QStringList{QStringLiteral("Layer \"0\" can never be removed.")});
     }
-    SECTION("layer 0 is not removed though no other layer is current") {
-        f.m_graphic.activateLayer(f.m_doors, true);
+    SECTION("layer 0 is not removed when it is the current layer either") {
+        f.m_graphic.activateLayer(f.m_zero, true);
         CHECK_FALSE(f.m_graphic.removeLayer(f.m_zero));
         CHECK(layers->contains(f.m_zero));
+        CHECK(f.m_graphic.getActiveLayer() == f.m_zero);
+        CHECK(command.m_messages == QStringList{QStringLiteral("Layer \"0\" can never be removed.")});
     }
-    SECTION("the current layer, every other layer being locked") {
-        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors}) {
-            layer->lock(true);
+    SECTION("the current layer is not removed, whatever the other layers are") {
+        bool othersLocked = false;
+        bool hidden = false;
+        SECTION("the others unlocked") {
         }
+        SECTION("the others locked") {
+            othersLocked = true;
+        }
+        SECTION("the current layer hidden") {
+            hidden = true;
+        }
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors}) {
+            layer->lock(othersLocked);
+        }
+        f.m_walls->freeze(hidden);
         CHECK_FALSE(layers->canRemove(f.m_walls));
         CHECK_FALSE(f.m_graphic.removeLayer(f.m_walls));
         CHECK(layers->contains(f.m_walls));
         CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
         CHECK(command.m_messages == QStringList{refused});
-        // a locked layer that is not current is removed, as it was before
-        CHECK(layers->canRemove(f.m_doors));
-        CHECK(f.m_graphic.removeLayer(f.m_doors));
-        CHECK_FALSE(layers->contains(f.m_doors));
-        CHECK(command.m_messages == QStringList{refused});
-    }
-    SECTION("the current layer, another being unlocked, hidden or not") {
-        for (RS_Layer* layer : {f.m_zero, f.m_construction}) {
-            layer->lock(true);
-        }
-        f.m_doors->freeze(true);
-        CHECK(layers->canRemove(f.m_walls));
-        CHECK(f.m_graphic.removeLayer(f.m_walls));
-        CHECK(f.m_graphic.getActiveLayer() == f.m_doors);
-        CHECK(command.m_messages.isEmpty());
-    }
-    SECTION("a locked layer is removed while another is unlocked") {
-        f.m_doors->lock(true);
-        CHECK(layers->canRemove(f.m_doors));
-        CHECK(f.m_graphic.removeLayer(f.m_doors));
-        CHECK_FALSE(layers->contains(f.m_doors));
-        CHECK(command.m_messages.isEmpty());
     }
     SECTION("a drawing opened with every layer locked keeps its current layer") {
         for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors, f.m_walls}) {
             layer->lock(true);
         }
-        CHECK_FALSE(layers->canRemove(f.m_walls));
         CHECK_FALSE(f.m_graphic.removeLayer(f.m_walls));
         CHECK(command.m_messages == QStringList{refused});
         CHECK(layers->canRemove(f.m_construction));
+    }
+    SECTION("any other layer is removed, locked or hidden or not, and the current layer stays") {
+        f.m_doors->lock(true);
+        f.m_construction->freeze(true);
+        CHECK(layers->canRemove(f.m_doors));
+        CHECK(layers->canRemove(f.m_construction));
+        CHECK(f.m_graphic.removeLayer(f.m_doors));
+        CHECK(f.m_graphic.removeLayer(f.m_construction));
+        CHECK_FALSE(layers->contains(f.m_doors));
+        CHECK_FALSE(layers->contains(f.m_construction));
+        CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+        CHECK(command.m_messages.isEmpty());
+    }
+    SECTION("a layer made current can be removed once another is") {
+        f.m_graphic.activateLayer(f.m_doors, true);
+        CHECK_FALSE(f.m_graphic.removeLayer(f.m_doors));
+        f.m_graphic.activateLayer(f.m_walls, true);
+        CHECK(f.m_graphic.removeLayer(f.m_doors));
     }
     SECTION("nothing to remove") {
         RS_Layer stranger(QStringLiteral("Stranger"));

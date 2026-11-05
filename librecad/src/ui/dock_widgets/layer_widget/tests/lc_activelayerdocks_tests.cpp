@@ -324,9 +324,13 @@ TEST_CASE("The status bar names the current layer, with the dock icons when it i
     d->m_graphic.activateChosenLayer(d->m_construction);
     CHECK(text() == "Construction");
     CHECK(icons() == Icons{true, false});
-    // the layer made current in place of a removed one
-    d->m_graphic.removeLayer(d->m_construction);
-    CHECK(text() == "0");
+    // the current layer is not removed, and the label stays
+    CHECK_FALSE(d->m_graphic.removeLayer(d->m_construction));
+    CHECK(text() == "Construction");
+    CHECK(icons() == Icons{true, false});
+    d->m_graphic.activateChosenLayer(d->m_walls);
+    CHECK(d->m_graphic.removeLayer(d->m_construction));
+    CHECK(text() == "Walls");
     CHECK(icons() == Icons{false, false});
 
     // the drawing goes with the label still attached to it
