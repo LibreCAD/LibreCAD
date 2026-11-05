@@ -142,7 +142,7 @@ public:
 
 private:
 
-    void ensureActiveLayerIsVisible();
+    void ensureActiveLayer();
 
     friend class RS_Graphic;
 

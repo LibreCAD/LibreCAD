@@ -13,6 +13,8 @@
 #include "lc_actiondrawrectangle3points.h"
 #include "lc_actionmodifylinejoin.h"
 #include "lc_hyperbola.h"
+#include "lc_layertreemodel.h"
+#include "lc_layertreeview.h"
 #include "lc_layertreewidget.h"
 #include "lc_widgetoptionsdialog.h"
 #include "picfile.h"
@@ -1054,8 +1056,153 @@ private slots:
         dialog.processFile(&document);
         QCOMPARE(graphic.count(), lineCount);
     }
-    // Issue #3228: since 2.2.1.6 the current layer is never hidden, and "Hide
-    // all layers" now says "except current". With the Layer List filtered, the
+    // Issue #3229: a hidden layer can be the current layer, and stays hidden.
+    // Since 2.2.1.6 clicking its name did nothing, and hiding the current
+    // layer made another one current.
+    void hiddenLayerCanBeCurrent()
+    {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        auto* construction = new RS_Layer("Construction");
+        auto* walls = new RS_Layer("Walls");
+        graphic.addLayer(construction);
+        graphic.addLayer(walls);
+        graphic.toggleLayer(construction);
+        QVERIFY(construction->isFrozen());
+
+        graphic.activateLayer(construction);
+        QCOMPARE(graphic.getActiveLayer(), construction);
+        QVERIFY(construction->isFrozen());
+
+        // what is drawn is hidden with the layer, and goes to it
+        auto* line = new RS_Line(&graphic, RS_LineData({0, 0}, {10, 0}));
+        line->setLayerToActive();
+        graphic.addEntity(line);
+        QCOMPARE(line->getLayer(), construction);
+        QVERIFY(!line->isVisible());
+    }
+
+    void hidingTheCurrentLayerKeepsItCurrent()
+    {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        RS_Layer* zero = graphic.findLayer("0");
+        auto* walls = new RS_Layer("Walls");
+        graphic.addLayer(walls);
+        graphic.activateLayer(walls);
+
+        // its eye icon
+        graphic.toggleLayer(walls);
+        QVERIFY(walls->isFrozen());
+        QCOMPARE(graphic.getActiveLayer(), walls);
+        graphic.toggleLayer(walls);
+        QVERIFY(!walls->isFrozen());
+
+        // editing it
+        RS_Layer edited(*walls);
+        edited.freeze(true);
+        graphic.editLayer(walls, edited);
+        QVERIFY(walls->isFrozen());
+        QCOMPARE(graphic.getActiveLayer(), walls);
+        graphic.toggleLayer(walls);
+
+        // "Hide all layers except current" leaves it shown
+        graphic.freezeAllLayers(true);
+        QVERIFY(!walls->isFrozen());
+        QVERIFY(zero->isFrozen());
+        QCOMPARE(graphic.getActiveLayer(), walls);
+
+        // a hidden layer clicked in the list becomes current, hidden
+        graphic.activateLayer(zero);
+        QCOMPARE(graphic.getActiveLayer(), zero);
+        QVERIFY(zero->isFrozen());
+        QVERIFY(!walls->isFrozen());
+    }
+
+    // Only the removal of the current layer picks another one: a layer that is
+    // shown first.
+    void removedCurrentLayerFallsBackToShownLayer()
+    {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        RS_Layer* zero = graphic.findLayer("0");
+        auto* doors = new RS_Layer("Doors");
+        auto* walls = new RS_Layer("Walls");
+        graphic.addLayer(doors);
+        graphic.addLayer(walls);
+        zero->freeze(true);
+        doors->freeze(true);
+        graphic.activateLayer(walls);
+        graphic.removeLayer(walls);
+        // the first layers are hidden, none is shown: the first one, still hidden
+        QCOMPARE(graphic.getActiveLayer(), zero);
+        QVERIFY(zero->isFrozen());
+
+        auto* roof = new RS_Layer("Roof");
+        graphic.addLayer(roof);
+        graphic.activateLayer(doors);
+        graphic.removeLayer(doors);
+        QCOMPARE(graphic.getActiveLayer(), roof);
+        QVERIFY(!roof->isFrozen());
+    }
+
+    // The current layer a drawing was saved with is current when it opens, also
+    // when it is hidden.
+    void hiddenCurrentLayerSurvivesDxfRoundTrip()
+    {
+        QTemporaryDir directory;
+        QVERIFY(directory.isValid());
+        RS_Graphic source;
+        source.newDoc();
+        auto* construction = new RS_Layer("Construction");
+        source.addLayer(construction);
+        source.activateLayer(construction);
+        source.toggleLayer(construction);
+        QVERIFY(construction->isFrozen());
+        const QString path = directory.filePath("hidden-current.dxf");
+        QVERIFY(RS_FileIO::instance()->fileExport(source, path, RS2::FormatDXFRW));
+
+        RS_Graphic result;
+        QVERIFY(result.open(path, RS2::FormatDXFRW));
+        RS_Layer* restored = result.findLayer("Construction");
+        QVERIFY(restored != nullptr);
+        QVERIFY(restored->isFrozen());
+        QCOMPARE(result.getActiveLayer(), restored);
+    }
+
+    // Clicking the name of a hidden layer in the Layer Tree makes it current, and
+    // "Hide other layers" keeps the chosen layer current.
+    void layerTreeActivatesHiddenLayer()
+    {
+        RS_Graphic graphic;
+        graphic.newDoc();
+        RS_Layer* zero = graphic.findLayer("0");
+        auto* walls = new RS_Layer("Walls");
+        graphic.addLayer(walls);
+        graphic.activateLayer(zero);
+        walls->freeze(true);
+        RS_StaticGraphicView view(100, 100, nullptr);
+        view.setContainer(&graphic);
+        LC_LayerTreeWidget tree(nullptr, nullptr);
+        tree.setLayerList(graphic.getLayerList());
+        tree.set_view(&view);
+        tree.set_document(&graphic);
+        auto* treeView = tree.findChild<LC_LayerTreeView*>();
+        QVERIFY(treeView != nullptr);
+        QAbstractItemModel* model = treeView->model();
+        QModelIndex wallsIndex;
+        for (int row = 0; row < model->rowCount(); ++row) {
+            const QModelIndex index = model->index(row, LC_LayerTreeModel::NAME);
+            if (index.data().toString() == "Walls")
+                wallsIndex = index;
+        }
+        QVERIFY(wallsIndex.isValid());
+        tree.slotTreeClicked(wallsIndex);
+        QCOMPARE(graphic.getActiveLayer(), walls);
+        QVERIFY(walls->isFrozen());
+    }
+
+    // Issue #3228: "Hide all layers" now says "except current". With the Layer List filtered, the
     // current layer was still hidden and a layer the filter left visible was
     // made current instead.
     void hideAllLayersKeepsCurrent_data()
