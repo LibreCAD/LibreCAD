@@ -261,6 +261,16 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
         CHECK_FALSE(transported.curve);
         CHECK(transported.ordinary.size() == output.ordinary.size());
         CHECK(transported.ordinaryUsage.outputEntities == output.ordinaryUsage.outputEntities);
+        if (i == 4) {
+            auto equivalent = std::get<RS_SplineData>(sources[i].value);
+            equivalent.weights.assign(equivalent.controlPoints.size(), 1.0);
+            const req::Request explicitWeightsInput{token, req::GenerateSource{
+                LC_OffsetSourceDefinition{LC_OffsetSourceGeometry{equivalent}, .25, 1e-4, false}, {}}};
+            const auto explicitWeightsReply = LC_OffsetWorkerKernel::run(explicitWeightsInput);
+            const auto explicitWeightsWire = result::encode(explicitWeightsReply, explicitWeightsInput);
+            REQUIRE(explicitWeightsWire);
+            CHECK(*wire == *explicitWeightsWire);
+        }
     }
 }
 
