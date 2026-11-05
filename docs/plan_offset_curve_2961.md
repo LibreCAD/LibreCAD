@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W387; chronological evidence follows): implementation slices
+Current status (W389; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -62,7 +62,15 @@ includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
-The recent W378-W387 source-variant slices add malformed-polyline refusal,
+The source Properties widget requirement to change curve family before
+choosing a replacement is implemented and covered for the nine modeled
+families: ellipse, spline, spline-points, parabola, bounded hyperbola, line,
+arc, circle, and polyline. Parabola remains a distinct choice and source kind.
+Changing the family filter alone is non-mutating; selecting a candidate goes
+through guarded worker-backed replacement. This closes the requested picker
+behavior, not exhaustive eligibility for every legal geometry variant or
+every distance/side, and not the broader plan's acceptance gates. The
+recent W378-W389 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15854,3 +15862,18 @@ The spline-variant import suite passes 1,957 assertions across four cases.
 The complete worker-kernel suite passes 4,180 assertions across 29 cases. The
 combined spline-variant and typed-source persistence selection passes 2,932
 assertions across five cases; `git diff --check` passes.
+
+## 389. Fit-Point Spline-Points Import Promotion (2026-11-05)
+
+Added staged-import coverage for a fit-point-mode `LC_SplinePoints` source.
+The test generates a canonical single-spline offset cache, writes the typed
+carrier and cache as AC1032 DXF and DWG, then requires operation-8 validation
+to promote each import to a native editable offset. It compares the exact
+typed source encoding and cache geometry fingerprint after import.
+
+The focused DXF/DWG import case passes 480 assertions; the full worker-kernel
+suite passes 4,180 assertions across 29 cases; the combined spline-variant,
+fit-point, and typed-source persistence selection passes 3,441 assertions
+across six cases. `git diff --check` passes. This covers one three-point
+fit-point representation, not all legal fit counts, tangent constraints, or
+fit-parameter layouts.
