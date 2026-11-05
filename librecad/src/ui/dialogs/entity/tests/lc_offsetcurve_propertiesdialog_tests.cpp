@@ -701,10 +701,13 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     LC_SplinePointsData points{false, false};
     points.useControlPoints = true;
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 9> sources{
+    LC_SplinePointsData fitPoints{false, false};
+    fitPoints.splinePoints = {{0, 0}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 10> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
+        LC_OffsetSourceGeometry{fitPoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
@@ -734,7 +737,7 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     REQUIRE(typeBox); REQUIRE(sourceBox);
-    REQUIRE(typeBox->count() == static_cast<int>(sources.size()));
+    REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
 
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
@@ -850,6 +853,76 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
         CHECK_FALSE(unboundedHyperbola->getFlag(RS2::FlagSelected));
         before.geometry(*clone);
     }
+}
+
+TEST_CASE("Native source picker refuses unrepresentable source variants atomically",
+          "[gui][dialog][offsetcurve][source][eligibility]") {
+    Fixture f;
+    LC_OffsetPolylineData closedSquare{{0, 0}, {0, 0}, true,
+        {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
+         RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}};
+    auto polyline = LC_OffsetSourceGeometry{closedSquare}.makeEntity();
+    REQUIRE(polyline);
+    auto* source = polyline.get();
+    f.graphic.addEntity(source);
+    polyline.release();
+    LC_SplinePointsData smoothFitData{false, false};
+    smoothFitData.splinePoints = {{0, 0}, {1, 2}, {2, 0}};
+    auto smoothFit = LC_OffsetSourceGeometry{smoothFitData}.makeEntity();
+    REQUIRE(smoothFit);
+    auto* fitSource = smoothFit.get();
+    f.graphic.addEntity(fitSource);
+    smoothFit.release();
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    const Snapshot before(*clone);
+    const auto verifyRefusal = [&](LC_OffsetSourceGeometry::Kind kind, RS_Entity& candidate) {
+        CAPTURE(kind, candidate.rtti());
+        const int typeIndex = typeBox->findData(static_cast<int>(kind));
+        REQUIRE(typeIndex >= 0);
+        typeBox->setCurrentIndex(typeIndex);
+        int sourceIndex = -1;
+        for (int i = 0; i < sourceBox->count(); ++i)
+            if (sourceBox->itemData(i).toULongLong() == candidate.getId()) sourceIndex = i;
+        REQUIRE(sourceIndex >= 0);
+        sourceBox->setCurrentIndex(sourceIndex);
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult());
+        CHECK_FALSE(*widget.lastEditResult());
+        CHECK_FALSE(widget.lastEditResult()->changed);
+        CHECK_FALSE(clone->sourceDefinition());
+        before.geometry(*clone);
+        CHECK_FALSE(candidate.getFlag(RS2::FlagSelected));
+        auto* refusal = widget.findChild<QLabel*>("lRefusal");
+        REQUIRE(refusal);
+        CHECK_FALSE(refusal->text().isEmpty());
+    };
+    verifyRefusal(LC_OffsetSourceGeometry::Kind::Polyline, *source);
+
+    const int splinePointsType = typeBox->findData(
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::SplinePoints));
+    REQUIRE(splinePointsType >= 0);
+    typeBox->setCurrentIndex(splinePointsType);
+    int fitIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == fitSource->getId()) fitIndex = i;
+    REQUIRE(fitIndex >= 0);
+    sourceBox->setCurrentIndex(fitIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::SplinePoints);
+    const auto capturedFit = LC_OffsetSourceGeometry::capture(*fitSource);
+    REQUIRE(capturedFit);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(clone->sourceDefinition()->source) ==
+          LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*capturedFit));
 }
 
 TEST_CASE("Native field Return followed by focus out does not submit twice",

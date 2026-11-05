@@ -15306,14 +15306,50 @@ select-in-drawing button is disabled, and switching families leaves the
 editable offset/cache and drawing selection unchanged.
 
 The full Debug CMake `librecad_tests` target builds. The focused unsupported
-variant case passes 212 assertions/1 case; all source Properties tests pass
-3,029 assertions/4 cases; `git diff --check` passes. Existing geometry tests
+variant case passes 212 assertions/1 case; after subsequent family-variant
+coverage, all source Properties tests pass 3,155 assertions/5 cases;
+`git diff --check` passes. Existing geometry tests
 also cover malformed spline knots, degenerate points/lines/ellipses,
 disconnected/inconsistent polyline chains, bounded versus unbounded
 hyperbolas, and source ownership. These checks still do not constitute the
 full production-path admission and output-cardinality matrix for every legal
 spline flag or polyline layout.
 
-Commit, push, PR description update, and exact-head check state remain pending
-for this feedback/test slice. Continue variant eligibility and output
-representability review; the overall plan is not complete.
+The implementation/test slice is committed and pushed as `fd30d817f`
+(`fix(offset): clarify unsupported source picker buckets`); the PR description
+records the empty-bucket behavior and focused evidence. Exact-head CI was not
+reported at the last query, and no prior-head status is inherited. Continue
+variant eligibility and output representability review; the overall plan is
+not complete.
+
+## 361. Type-Switching Contract and Source-Variant Matrix (2026-11-05, in progress)
+
+The picker contract is type-changing: the user chooses a source family, then
+chooses a live entity from that family, and only that second choice may submit
+the worker-backed replacement. Type-filter changes must not mutate the
+existing source, generated cache, or drawing selection. The explicit
+`SupportedKinds` inventory currently contains exactly nine families: ellipse,
+spline, spline-points, parabola, bounded hyperbola, line, arc, circle, and
+polyline. Parabola remains a distinct identity despite its spline-points base.
+
+Expanded the successful Properties matrix with fit-point-mode
+`LC_SplinePoints` (two points) in addition to control-point-mode data. Added a
+variant integration case that confirms a three-point fit spline can replace
+the source at the fixture's current signed distance, while a closed square
+polyline candidate whose offset produces multiple branches is refused as
+`NotCacheRepresentable`. The refusal leaves the previous editable definition
+and cache unchanged, does not select the candidate, and reports a visible
+reason. Thus the picker exposes every modeled family, but candidate admission
+and native replacement remain variant-, side-, and distance-dependent.
+
+Debug CMake test target builds. The expanded successful family matrix passes
+2,744 assertions/1 case; the atomic multi-branch/fit-point test passes 130
+assertions/1 case; the complete source Properties group passes 3,155
+assertions/5 cases. `git diff --check` passes. This is representative coverage,
+not a complete signed-distance sweep or all closed/bulged polyline layouts.
+
+Implementation and tests for this slice are present in the worktree but are
+not yet committed or pushed. After checkpointing, continue the
+distance/side-dependent representability audit, then revalidate exact-head
+DXF/DWG persistence and PR checks. Variant audit, review, and external
+acceptance remain open.
