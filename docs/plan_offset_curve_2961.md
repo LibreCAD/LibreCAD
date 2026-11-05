@@ -15725,3 +15725,17 @@ cases; the full worker-kernel suite passes 4,056 assertions across 27 cases.
 `git diff --check` passes. This is a representative long-chain sweep, not
 coverage of arbitrary segment counts, bulge-import origins, or self-intersecting
 polyline topology.
+
+## 380. Nonuniform Rational Spline Knot Layouts (2026-11-05)
+
+Added op-7/op-8 regression coverage for two legal rational spline layouts not
+represented by the earlier clamped single-span fixtures: a quadratic spline
+with two distinct interior knots and nonuniform positive weights, and a cubic
+spline with a repeated interior knot and nonuniform positive weights. Both
+are exercised at signed distances `-0.2` and `0.2`. A single canonical spline
+cache must promote exactly; multi-entity output is refused without mutation.
+
+The focused spline-variant filter passes 391 assertions across three cases;
+the complete worker-kernel suite passes 4,154 assertions across 28 cases.
+`git diff --check` passes. These fixtures do not exhaust legal knot
+multiplicities, periodic closure, or rational weight ranges.
