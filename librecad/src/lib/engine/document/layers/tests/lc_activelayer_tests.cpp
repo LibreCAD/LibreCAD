@@ -23,8 +23,9 @@
 // parallel on a construction layer that is hidden so that its own entities are out of the way).
 // Now hiding a layer never changes the current one, a hidden layer is made current as any other,
 // and what is drawn on it is hidden with it. A locked layer is not made current, since what is
-// drawn would change it; the current layer stays current when it is locked, and a drawing's
-// saved current layer is restored as it was saved.
+// drawn would change it: locking the current layer makes another layer current (with the command
+// line saying so), or, when no other layer is unlocked, is not done; a drawing's saved current
+// layer is restored as it was saved unless it is locked and another layer is not.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -51,9 +52,13 @@ namespace {
 class ActivationRecorder final : public RS_LayerListListener {
 public:
     QList<RS_Layer*> m_activated;
+    QList<RS_Layer*> m_replaced;
 
     void layerActivated(RS_Layer* layer) override {
         m_activated << layer;
+    }
+    void activeLayerReplaced(RS_Layer* layer) override {
+        m_replaced << layer;
     }
 };
 
@@ -292,27 +297,139 @@ TEST_CASE("A layer that is not in the drawing is not made current", "[layers][ac
     CHECK(f.m_activations.m_activated.isEmpty());
 }
 
-TEST_CASE("The current layer stays current when it is locked", "[layers][active][3229]") {
+const QString replacedMessage = QStringLiteral(
+    "Layer \"Walls\" is locked, so it cannot stay the current layer: \"%1\" is the current layer now.");
+const QString keptMessage = QStringLiteral(
+    "Layer \"Walls\" was not locked: it is the current layer, and no other layer is unlocked to take its place.");
+
+TEST_CASE("Locking the current layer makes another layer current", "[layers][active][3229][lock]") {
     Layers f;
     CommandMessages command;
+    RS_Layer* expected = f.m_zero;
 
-    SECTION("by its lock icon") {
+    // in name order: "0", "Construction", "Doors", "Walls" (current)
+    SECTION("with its lock icon: the first shown layer") {
         f.m_graphic.toggleLayerLock(f.m_walls);
     }
-    SECTION("with every other layer") {
+    SECTION("not a hidden layer, while a shown one is unlocked") {
+        f.m_zero->freeze(true);
+        f.m_graphic.toggleLayerLock(f.m_walls);
+        expected = f.m_construction;
+    }
+    SECTION("a hidden layer, when every unlocked layer is hidden") {
+        f.m_construction->freeze(true);
+        f.m_doors->freeze(true);
+        f.m_zero->lock(true);
+        f.m_graphic.toggleLayerLock(f.m_walls);
+        expected = f.m_construction;
+        // nothing was shown for it
+        CHECK(f.m_construction->isFrozen());
+    }
+    SECTION("as one of the layers selected in a dock") {
+        f.m_graphic.toggleLockLayers({f.m_walls, f.m_zero});
+        REQUIRE(f.m_zero->isLocked());
+        expected = f.m_construction;
+    }
+    SECTION("as one of the layers a dock locks and unlocks") {
+        f.m_graphic.setLockLayers({}, {f.m_zero, f.m_construction, f.m_walls});
+        REQUIRE(f.m_zero->isLocked());
+        REQUIRE(f.m_construction->isLocked());
+        expected = f.m_doors;
+    }
+    SECTION("with Lock all layers, when a layer that the dock does not list is unlocked") {
+        f.m_construction->visibleInLayerList(false);
         f.m_graphic.lockAllLayers(true);
-        CHECK_FALSE(f.m_graphic.activateLayer(f.m_doors, true));
+        CHECK(f.m_zero->isLocked());
+        CHECK(f.m_doors->isLocked());
+        CHECK_FALSE(f.m_construction->isLocked());
+        expected = f.m_construction;
     }
 
-    REQUIRE(f.m_walls->isLocked());
+    CHECK(f.m_walls->isLocked());
+    CHECK(f.m_graphic.getActiveLayer() == expected);
+    CHECK_FALSE(expected->isLocked());
+    CHECK(command.m_messages == QStringList{replacedMessage.arg(expected->getName())});
+    // the listeners are told, but nothing selected is moved to the layer: that is what
+    // activating a layer does when "Modify entities to the active layer" is on
+    CHECK(f.m_activations.m_replaced == QList<RS_Layer*>{expected});
+    CHECK(f.m_activations.m_activated.isEmpty());
+}
+
+TEST_CASE("The current layer is not locked when no other layer is unlocked", "[layers][active][3229][lock]") {
+    CommandMessages command;
+
+    SECTION("the only layer of a new drawing") {
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        RS_Layer* zero = graphic.findLayer(QStringLiteral("0"));
+        REQUIRE(zero != nullptr);
+        REQUIRE(graphic.getActiveLayer() == zero);
+        graphic.toggleLayerLock(zero);
+        CHECK_FALSE(zero->isLocked());
+        CHECK(graphic.getActiveLayer() == zero);
+        CHECK(command.m_messages == QStringList{QStringLiteral(
+                  "Layer \"0\" was not locked: it is the current layer, and no other layer is unlocked to take its place.")});
+    }
+
+    SECTION("every other layer being locked") {
+        Layers f;
+        f.m_zero->lock(true);
+        f.m_construction->lock(true);
+        f.m_doors->lock(true);
+        f.m_graphic.toggleLayerLock(f.m_walls);
+        CHECK_FALSE(f.m_walls->isLocked());
+        CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+        CHECK(command.m_messages == QStringList{keptMessage});
+        CHECK(f.m_activations.m_replaced.isEmpty());
+    }
+
+    SECTION("Lock all layers locks all the other layers") {
+        Layers f;
+        f.m_graphic.lockAllLayers(true);
+        CHECK(f.m_zero->isLocked());
+        CHECK(f.m_construction->isLocked());
+        CHECK(f.m_doors->isLocked());
+        CHECK_FALSE(f.m_walls->isLocked());
+        CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+        CHECK(command.m_messages == QStringList{keptMessage});
+        // and unlocking them all still works
+        f.m_graphic.lockAllLayers(false);
+        CHECK_FALSE(f.m_zero->isLocked());
+    }
+
+    SECTION("locking all the layers with the Layer Tree's multiple lock") {
+        Layers f;
+        f.m_graphic.setLockLayers({}, {f.m_zero, f.m_construction, f.m_doors, f.m_walls});
+        CHECK(f.m_zero->isLocked());
+        CHECK_FALSE(f.m_walls->isLocked());
+        CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
+        CHECK(command.m_messages == QStringList{keptMessage});
+    }
+}
+
+TEST_CASE("Locking or unlocking other layers leaves the current layer alone", "[layers][active][3229][lock]") {
+    Layers f;
+    CommandMessages command;
+    f.m_graphic.toggleLayerLock(f.m_doors);
+    f.m_graphic.toggleLockLayers({f.m_zero, f.m_construction});
+    f.m_graphic.toggleLayerLock(f.m_doors);
+    f.m_graphic.setLockLayers({f.m_zero}, {f.m_doors});
     CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
-    // activated again (as editing its pen in the pen palette or the property sheet does, to tell
-    // the listeners), it stays current
-    CHECK(f.m_graphic.activateLayer(f.m_walls, true));
-    CHECK(f.m_graphic.activateChosenLayer(f.m_walls));
-    CHECK(f.m_graphic.getActiveLayer() == f.m_walls);
-    CHECK(f.m_activations.m_activated == QList<RS_Layer*>{f.m_walls, f.m_walls});
+    CHECK_FALSE(f.m_walls->isLocked());
     CHECK(command.m_messages.isEmpty());
+    CHECK(f.m_activations.m_replaced.isEmpty());
+    CHECK(f.m_activations.m_activated.isEmpty());
+}
+
+TEST_CASE("A hidden current layer is locked like any other", "[layers][active][3229][lock]") {
+    Layers f;
+    CommandMessages command;
+    f.m_walls->freeze(true);
+    f.m_graphic.toggleLayerLock(f.m_walls);
+    CHECK(f.m_walls->isLocked());
+    CHECK(f.m_walls->isFrozen());
+    CHECK(f.m_graphic.getActiveLayer() == f.m_zero);
+    CHECK(command.m_messages == QStringList{replacedMessage.arg("0")});
 }
 
 TEST_CASE("Removing the current layer makes a layer current that can be, shown ones first", "[layers][active][3229]") {
@@ -345,26 +462,36 @@ TEST_CASE("Removing the current layer makes a layer current that can be, shown o
     CHECK(f.m_doors->isFrozen());
 }
 
-TEST_CASE("A drawing opens with its saved current layer, hidden or locked as saved", "[layers][active][3229][dxf]") {
+TEST_CASE("A drawing opens with its saved current layer, unless it is locked and another is not", "[layers][active][3229][dxf]") {
     const QTemporaryDir directory;
     REQUIRE(directory.isValid());
     const QString path = directory.filePath(QStringLiteral("current.dxf"));
     bool hidden = false;
     bool locked = false;
+    bool othersLocked = false;
     SECTION("hidden") {
         hidden = true;
     }
-    SECTION("locked") {
+    SECTION("locked, another layer being unlocked") {
         locked = true;
     }
-    SECTION("hidden and locked") {
+    SECTION("hidden and locked, another layer being unlocked") {
         hidden = true;
         locked = true;
+    }
+    SECTION("locked, every other layer being locked") {
+        locked = true;
+        othersLocked = true;
     }
     {
         Layers saved;
         saved.m_walls->freeze(hidden);
         saved.m_walls->lock(locked);
+        if (othersLocked) {
+            for (RS_Layer* layer : {saved.m_zero, saved.m_construction, saved.m_doors}) {
+                layer->lock(true);
+            }
+        }
         REQUIRE(saved.m_graphic.getActiveLayer() == saved.m_walls);
         REQUIRE(RS_FileIO::instance()->fileExport(saved.m_graphic, path, RS2::FormatDXFRW));
     }
@@ -379,7 +506,54 @@ TEST_CASE("A drawing opens with its saved current layer, hidden or locked as sav
     opened.onLoadingCompleted();
     RS_Layer* walls = opened.findLayer(QStringLiteral("Walls"));
     REQUIRE(walls != nullptr);
-    CHECK(opened.getActiveLayer() == walls);
     CHECK(walls->isFrozen() == hidden);
     CHECK(walls->isLocked() == locked);
+    if (locked && !othersLocked) {
+        // AutoCAD lets a locked layer be current, and a file may say so: a locked layer is not current
+        // here, so the layer that a removed current layer would give way to is
+        CHECK(opened.getActiveLayer() == opened.findLayer(QStringLiteral("0")));
+    }
+    else {
+        CHECK(opened.getActiveLayer() == walls);
+    }
+}
+
+TEST_CASE("A saved locked current layer gives way to a layer that is not locked", "[layers][active][3229][lock]") {
+    SECTION("restored from a drawing's header") {
+        Layers f;
+        f.m_walls->lock(true);
+        f.m_graphic.restoreActiveLayer(f.m_walls);
+        // "0" is the first layer that is shown and not locked
+        CHECK(f.m_graphic.getActiveLayer() == f.m_zero);
+        // the listeners are told of the layer that is current
+        REQUIRE_FALSE(f.m_activations.m_activated.isEmpty());
+        CHECK(f.m_activations.m_activated.constLast() == f.m_zero);
+    }
+    SECTION("restored, every other layer being locked") {
+        Layers f;
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors, f.m_walls}) {
+            layer->lock(true);
+        }
+        f.m_graphic.restoreActiveLayer(f.m_doors);
+        CHECK(f.m_graphic.getActiveLayer() == f.m_doors);
+    }
+    SECTION("restored, hidden") {
+        Layers f;
+        f.m_doors->freeze(true);
+        f.m_graphic.restoreActiveLayer(f.m_doors);
+        CHECK(f.m_graphic.getActiveLayer() == f.m_doors);
+    }
+    SECTION("a drawing completed with a locked layer as the only current one it has had") {
+        // loading adds the file's layers: the first one added is current, locked or not, until the
+        // drawing says which is
+        RS_Graphic graphic;
+        graphic.clearLayers();
+        auto* locked = new RS_Layer(QStringLiteral("Locked"));
+        locked->lock(true);
+        auto* free = new RS_Layer(QStringLiteral("Free"));
+        graphic.addLayer(locked);
+        graphic.addLayer(free);
+        graphic.onLoadingCompleted();
+        CHECK(graphic.getActiveLayer() == free);
+    }
 }

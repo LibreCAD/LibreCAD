@@ -44,6 +44,21 @@ class RS_LayerListListener;
  */
 class RS_LayerList {
 public:
+    /**
+     * What a request to lock layers did to the current layer: a locked layer is not current, so
+     * locking the current layer makes another layer current, or, when no other layer is unlocked,
+     * is not done.
+     */
+    struct CurrentLayerLock {
+        //! the current layer, when the request asked to lock it; else nullptr
+        RS_Layer* m_asked{nullptr};
+        //! the layer made current in its place; nullptr when it stayed current, and unlocked
+        RS_Layer* m_replacement{nullptr};
+
+        bool wasReplaced() const {return m_replacement != nullptr;}
+        bool wasKept() const {return m_asked != nullptr && m_replacement == nullptr;}
+    };
+
     explicit RS_LayerList();
     virtual ~RS_LayerList();
     RS_LayerList(const RS_LayerList&) = delete;
@@ -121,19 +136,21 @@ protected:
     bool activate(RS_Layer* layer, bool notify = false);
     bool canActivate(RS_Layer* layer) const;
     void setActive(RS_Layer* layer, bool notify = false);
+    void restoreActive(RS_Layer* layer);
+    void settleActiveLayer();
     void toggle(const QString& name);
     void toggle(RS_Layer* layer);
-    void toggleLock(RS_Layer* layer);
+    CurrentLayerLock toggleLock(RS_Layer* layer);
     void togglePrint(RS_Layer* layer);
     void toggleConstruction(RS_Layer* layer);
     void freezeAll(bool freeze);
-    void lockAll(bool lock);
-    void toggleLockMulti(const QList<RS_Layer*>& layers);
+    CurrentLayerLock lockAll(bool lock);
+    CurrentLayerLock toggleLockMulti(const QList<RS_Layer*>& layers);
     void togglePrintMulti(const QList<RS_Layer*>& layers);
     void toggleConstructionMulti(const QList<RS_Layer*>& layers);
     void toggleFreezeMulti(const QList<RS_Layer*>& layers);
     void setFreezeMulti(const QList<RS_Layer*>& layersEnable, const QList<RS_Layer*>& layersDisable);
-    void setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock);
+    CurrentLayerLock setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock);
     void setPrintMulti(const QList<RS_Layer*>& layersNoPrint, const QList<RS_Layer*>& layersPrint);
     void setConstructionMulti(const QList<RS_Layer*>& layersNoConstruction, const QList<RS_Layer*>& layersConstruction);
 
@@ -141,6 +158,9 @@ protected:
 
 private:
     void ensureActiveLayer();
+    RS_Layer* bestLayerToActivate(const RS_Layer* except, bool allowLocked) const;
+    CurrentLayerLock keepCurrentLayerUnlocked(bool wasLocked);
+    void fireActiveLayerReplaced();
 
     //! layers in the graphic
     QList<RS_Layer*> m_layers;

@@ -85,6 +85,13 @@ void QG_PenToolBar::layerActivated(RS_Layer* l) {
     updateByLayer(l);
 }
 
+/**
+ * Called by the layer list when another layer became current, as the current one was locked.
+ */
+void QG_PenToolBar::activeLayerReplaced(RS_Layer* l) {
+    updateByLayer(l);
+}
+
 void QG_PenToolBar::setLayerColor(const RS_Color& color, const bool updateSelection) {
     m_colorBox->setLayerColor(color);
     if (updateSelection) {

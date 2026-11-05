@@ -130,8 +130,9 @@ bool RS_LayerList::activate(const QString& name, const bool notify) {
  *
  * A hidden layer can be current: it stays hidden, and so do the entities drawn on it (#3229).
  * A locked layer is not made current, since what is drawn goes to the current layer and a
- * locked layer must not change; the current layer stays current when it is locked, and
- * activating it again (as editing its pen does, to tell the listeners) works.
+ * locked layer must not change. (The current layer is locked only when no other layer is
+ * unlocked, see keepCurrentLayerUnlocked(); activating it again, as editing its pen does to tell
+ * the listeners, works.)
  *
  * @param layer a layer of this list
  * @param notify Notify listeners.
@@ -170,6 +171,37 @@ void RS_LayerList::setActive(RS_Layer* layer, const bool notify) {
 
     if (notify) {
         fireLayerActivated();
+    }
+}
+
+/**
+ * Makes the layer a drawing was saved with current, as it is opened. It is current whatever its
+ * flags, hidden or not, but a locked one gives way to a layer that can be current, as settleActiveLayer()
+ * says. Listeners are notified.
+ *
+ * @param layer a layer of this list
+ */
+void RS_LayerList::restoreActive(RS_Layer* layer) {
+    if (!m_layerSet.contains(layer)) {
+        return;
+    }
+    m_activeLayer = layer;
+    settleActiveLayer();
+    fireLayerActivated();
+}
+
+/**
+ * Makes the active layer one that can be: a drawing has one, and it is not locked while another layer
+ * is not. A drawing is opened with no active layer, or with a locked one (AutoCAD lets a locked layer
+ * be current and a file may say so); the replacement is the one a removed current layer gets,
+ * shown layers first. Listeners are not notified.
+ */
+void RS_LayerList::settleActiveLayer() {
+    ensureActiveLayer();
+    if (m_activeLayer != nullptr && m_activeLayer->isLocked()) {
+        if (RS_Layer* better = bestLayerToActivate(m_activeLayer, false)) {
+            m_activeLayer = better;
+        }
     }
 }
 
@@ -375,21 +407,28 @@ void RS_LayerList::toggle(RS_Layer* layer) {
 }
 
 /**
- * Locks or unlocks the given layer.
+ * Locks or unlocks the given layer; locking the current layer is handled as
+ * keepCurrentLayerUnlocked() says.
  * Listeners are notified.
  */
-void RS_LayerList::toggleLock(RS_Layer* layer) {
+RS_LayerList::CurrentLayerLock RS_LayerList::toggleLock(RS_Layer* layer) {
     if (layer == nullptr) {
-        return;
+        return {};
     }
 
+    const bool currentWasLocked = m_activeLayer != nullptr && m_activeLayer->isLocked();
     layer->toggleLock();
+    const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
     setModified(true);
 
     // Notify listeners:
     for (const auto l : std::as_const(m_layerListListeners)) {
         l->layerToggledLock(layer);
     }
+    if (outcome.wasReplaced()) {
+        fireActiveLayerReplaced();
+    }
+    return outcome;
 }
 
 /**
@@ -458,20 +497,30 @@ void RS_LayerList::fireLayerActivated() {
 }
 
 /**
- * Locks or unlocks all layers.
+ * Locks or unlocks all layers that the Layer List dock lists. Locking leaves the current layer
+ * unlocked, with every layer locked ("Lock all layers" locks all but the current layer, as "Hide all
+ * layers except current" hides all but it); with a layer the dock does not list unlocked, that one
+ * becomes current, as keepCurrentLayerUnlocked() says.
  *
  * @param lock true: lock, false: unlock
  */
-void RS_LayerList::lockAll(const bool lock) {
+RS_LayerList::CurrentLayerLock RS_LayerList::lockAll(const bool lock) {
+    const bool currentWasLocked = m_activeLayer != nullptr && m_activeLayer->isLocked();
     for (unsigned l = 0; l < count(); l++) {
         if (at(l)->isVisibleInLayerList()) {
             at(l)->lock(lock);
         }
     }
+    const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
     fireLayerToggled();
+    if (outcome.wasReplaced()) {
+        fireActiveLayerReplaced();
+    }
+    return outcome;
 }
 
-void RS_LayerList::toggleLockMulti(const QList<RS_Layer*>& layers) {
+RS_LayerList::CurrentLayerLock RS_LayerList::toggleLockMulti(const QList<RS_Layer*>& layers) {
+    const bool currentWasLocked = m_activeLayer != nullptr && m_activeLayer->isLocked();
     const int count = layers.count();
     for (int i = 0; i < count; i++) {
         RS_Layer* layer = layers.at(i);
@@ -480,7 +529,12 @@ void RS_LayerList::toggleLockMulti(const QList<RS_Layer*>& layers) {
         }
     }
 
+    const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
     fireLayerToggled();
+    if (outcome.wasReplaced()) {
+        fireActiveLayerReplaced();
+    }
+    return outcome;
 }
 
 void RS_LayerList::togglePrintMulti(const QList<RS_Layer*>& layers) {
@@ -523,7 +577,9 @@ void RS_LayerList::setFreezeMulti(const QList<RS_Layer*>& layersEnable, const QL
     fireLayerToggled();
 }
 
-void RS_LayerList::setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock) {
+RS_LayerList::CurrentLayerLock RS_LayerList::setLockMulti(const QList<RS_Layer*>& layersToUnlock,
+                                                          const QList<RS_Layer*>& layersToLock) {
+    const bool currentWasLocked = m_activeLayer != nullptr && m_activeLayer->isLocked();
     const int countUnFreeze = layersToUnlock.count();
     for (int i = 0; i < countUnFreeze; i++) {
         RS_Layer* layer = layersToUnlock.at(i);
@@ -538,7 +594,12 @@ void RS_LayerList::setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QL
             layer->lock(true);
         }
     }
+    const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
     fireLayerToggled();
+    if (outcome.wasReplaced()) {
+        fireActiveLayerReplaced();
+    }
+    return outcome;
 }
 
 void RS_LayerList::setPrintMulti(const QList<RS_Layer*>& layersNoPrint, const QList<RS_Layer*>& layersPrint) {
@@ -599,20 +660,66 @@ void RS_LayerList::ensureActiveLayer() {
     if (m_layerSet.contains(m_activeLayer)) {
         return;
     }
+    m_activeLayer = bestLayerToActivate(nullptr, true);
+}
 
-    RS_Layer* fallback = nullptr;
-    int fallbackRank = 4;
+/**
+ * @param except a layer that is not to be chosen, or nullptr
+ * @param allowLocked whether a locked layer may be chosen when no unlocked one is left
+ * @return the first layer of the list that is shown and not locked, else the first one that is not
+ * locked, though hidden, else (when allowed) the first shown one, else the first; nullptr if none
+ */
+RS_Layer* RS_LayerList::bestLayerToActivate(const RS_Layer* except, const bool allowLocked) const {
+    RS_Layer* best = nullptr;
+    int bestRank = 4;
     for (RS_Layer* layer : std::as_const(m_layers)) {
+        if (layer == except || (layer->isLocked() && !allowLocked)) {
+            continue;
+        }
         const int rank = (layer->isLocked() ? 2 : 0) + (layer->isFrozen() ? 1 : 0);
-        if (rank < fallbackRank) {
-            fallback = layer;
-            fallbackRank = rank;
+        if (rank < bestRank) {
+            best = layer;
+            bestRank = rank;
             if (rank == 0) {
                 break;
             }
         }
     }
-    m_activeLayer = fallback;
+    return best;
+}
+
+/**
+ * A locked layer must not change, and what is drawn goes to the current layer: so a locked layer is
+ * not current. When a request to lock layers has locked the current layer, the first layer that is
+ * shown and not locked (else one that is hidden) becomes current in its place (nothing is moved to
+ * it: see RS_LayerListListener::activeLayerReplaced()); when no other layer is unlocked there is
+ * none to take its place, and the current layer is not locked.
+ *
+ * @param wasLocked whether the current layer was locked before the request, as a drawing may be
+ * opened that way: it is then left as it is
+ * @return what became of the current layer; the caller notifies the listeners (about the toggles
+ * first, then fireActiveLayerReplaced() when it was replaced)
+ */
+RS_LayerList::CurrentLayerLock RS_LayerList::keepCurrentLayerUnlocked(const bool wasLocked) {
+    CurrentLayerLock outcome;
+    if (m_activeLayer == nullptr || wasLocked || !m_activeLayer->isLocked()) {
+        return outcome;
+    }
+    outcome.m_asked = m_activeLayer;
+    if (RS_Layer* replacement = bestLayerToActivate(m_activeLayer, false)) {
+        outcome.m_replacement = replacement;
+        m_activeLayer = replacement;
+    }
+    else {
+        m_activeLayer->lock(false);
+    }
+    return outcome;
+}
+
+void RS_LayerList::fireActiveLayerReplaced() {
+    for (const auto l : std::as_const(m_layerListListeners)) {
+        l->activeLayerReplaced(m_activeLayer);
+    }
 }
 
 /**

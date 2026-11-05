@@ -16,6 +16,7 @@
 #include "lc_menufactory.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
+#include "qg_activelayername.h"
 #include "qg_graphicview.h"
 #include "qg_layerwidget.h"
 #include "rs_debug.h"
@@ -376,17 +377,26 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         REQUIRE(mdi != nullptr);
         auto* graphic = mdi->getGraphic();
         REQUIRE(graphic != nullptr);
-        // hidden or locked, the saved current layer stays current (#3229)
-        auto* expected = graphic->findLayer("Saved");
+        // a hidden saved current layer stays current (#3229); a locked one cannot be current, so the
+        // first layer that is shown and not locked is
+        auto* saved = graphic->findLayer("Saved");
+        REQUIRE(saved != nullptr);
+        CHECK(saved->isLocked() == bool(flags & 4));
+        CHECK(saved->isFrozen() == bool(flags & 1));
+        const bool locked = flags & 4;
+        auto* expected = locked ? graphic->findLayer("0") : saved;
         REQUIRE(expected != nullptr);
         CHECK(graphic->getActiveLayer() == expected);
-        CHECK(expected->isLocked() == bool(flags & 4));
-        CHECK(expected->isFrozen() == bool(flags & 1));
 
+        // the status bar names the current layer and shows an icon for each state it is in
         auto* label = window.findChild<QLabel*>("lActiveLayerName");
         REQUIRE(label != nullptr);
-        const char* const labels[] = {"Saved", "Saved (hidden)", "Saved (locked)", "Saved (hidden, locked)"};
-        CHECK(label->text().toStdString() == labels[(flags & 1) + ((flags & 4) >> 1)]);
+        CHECK(label->text().toStdString() == expected->getName().toStdString());
+        auto* name = window.findChild<QG_ActiveLayerName*>();
+        REQUIRE(name != nullptr);
+        CHECK(name->hiddenIcon()->isVisibleTo(name) == (!locked && bool(flags & 1)));
+        CHECK_FALSE(name->lockedIcon()->isVisibleTo(name));
+
         auto* widget = window.findChild<QG_LayerWidget*>();
         REQUIRE(widget != nullptr);
         auto* table = widget->findChild<QTableView*>();

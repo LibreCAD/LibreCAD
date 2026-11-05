@@ -149,6 +149,51 @@ bool RS_Graphic::activateChosenLayer(RS_Layer* layer) {
     return activateLayer(layer, true);
 }
 
+/**
+ * Says on the command line what locking layers did to the current layer, when it was among them: the
+ * current layer is never left locked, so another layer became current, or, there being no other
+ * unlocked layer, it was not locked.
+ */
+void RS_Graphic::reportCurrentLayerLock(const RS_LayerList::CurrentLayerLock& outcome) const {
+    if (outcome.m_asked == nullptr) {
+        return;
+    }
+    if (outcome.wasReplaced()) {
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("Layer \"%1\" is locked, so it cannot stay the current layer: \"%2\" is the current layer now.")
+                .arg(outcome.m_asked->getName(), outcome.m_replacement->getName()));
+    }
+    else {
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("Layer \"%1\" was not locked: it is the current layer, and no other layer is unlocked to take its place.")
+                .arg(outcome.m_asked->getName()));
+    }
+}
+
+void RS_Graphic::toggleLayerLock(RS_Layer* layer) {
+    const auto outcome = m_layerList.toggleLock(layer);
+    validateSelection();
+    reportCurrentLayerLock(outcome);
+}
+
+void RS_Graphic::lockAllLayers(const bool lock) {
+    const auto outcome = m_layerList.lockAll(lock);
+    validateSelection();
+    reportCurrentLayerLock(outcome);
+}
+
+void RS_Graphic::toggleLockLayers(const QList<RS_Layer*>& layers) {
+    const auto outcome = m_layerList.toggleLockMulti(layers);
+    validateSelection();
+    reportCurrentLayerLock(outcome);
+}
+
+void RS_Graphic::setLockLayers(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock) {
+    const auto outcome = m_layerList.setLockMulti(layersToUnlock, layersToLock);
+    validateSelection();
+    reportCurrentLayerLock(outcome);
+}
+
 void RS_Graphic::freezeAllLayers(const bool freeze) {
     m_layerList.freezeAll(freeze);
     refreshLayerVisibility();
@@ -242,7 +287,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 RS_Graphic::~RS_Graphic() = default;
 
 void RS_Graphic::onLoadingCompleted() {
-    m_layerList.ensureActiveLayer();
+    m_layerList.settleActiveLayer();
 
     const auto fallBackDimStyleFromVars = m_dimstyleList.getFallbackDimStyleFromVars();
     fallBackDimStyleFromVars->fillByDefaults(); // cleanup (is it redundant?)

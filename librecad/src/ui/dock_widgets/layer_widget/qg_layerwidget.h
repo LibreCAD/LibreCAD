@@ -129,6 +129,10 @@ public:
     void layerActivated(RS_Layer* layer) override {
         activateLayer(layer);
     }
+    /// another layer became current, as the current one was locked
+    void activeLayerReplaced(RS_Layer* layer) override {
+        activateLayer(layer);
+    }
 
     void layerAdded(RS_Layer* layer) override;
     void layerEdited(RS_Layer*) override;

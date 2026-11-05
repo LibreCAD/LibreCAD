@@ -158,8 +158,8 @@ public:
     bool activateLayer(RS_Layer* layer, const bool notify = false) {return m_layerList.activate(layer, notify);}
     bool activateChosenLayer(const QString& name);
     bool activateChosenLayer(RS_Layer* layer);
-    /// makes the drawing's saved current layer current, hidden or locked as it is
-    void restoreActiveLayer(RS_Layer* layer) {m_layerList.setActive(layer, true);}
+    /// makes the drawing's saved current layer current, hidden or not; a locked one gives way to another layer
+    void restoreActiveLayer(RS_Layer* layer) {m_layerList.restoreActive(layer);}
     RS_Layer* getActiveLayer() const {return m_layerList.getActive();}
     virtual void addLayer(RS_Layer* layer) {m_layerList.add(layer);}
     void removeLayer(RS_Layer* layer);
@@ -167,17 +167,18 @@ public:
     RS_Layer* findLayer(const QString& name) {return m_layerList.find(name);}
     void toggleLayer(const QString& name);
     void toggleLayer(RS_Layer* layer);
-    void toggleLayerLock(RS_Layer* layer) {m_layerList.toggleLock(layer); validateSelection();}
+    // locking the current layer makes another layer current, or is not done: see RS_LayerList::CurrentLayerLock
+    void toggleLayerLock(RS_Layer* layer);
     void toggleLayerPrint(RS_Layer* layer) {m_layerList.togglePrint(layer);}
     void toggleLayerConstruction(RS_Layer* layer) {m_layerList.toggleConstruction(layer);}
     void freezeAllLayers(bool freeze);
-    void lockAllLayers(const bool lock) {m_layerList.lockAll(lock);validateSelection();}
-    void toggleLockLayers(const QList<RS_Layer*>& layers){m_layerList.toggleLockMulti(layers);validateSelection();}
+    void lockAllLayers(bool lock);
+    void toggleLockLayers(const QList<RS_Layer*>& layers);
     void togglePrintLayers(const QList<RS_Layer*>& layers){m_layerList.togglePrintMulti(layers);validateSelection();}
     void toggleConstructionLayers(const QList<RS_Layer*>& layers){m_layerList.toggleConstructionMulti(layers);validateSelection();}
     void toggleFreezeLayers(const QList<RS_Layer*>& layers);
     void setFreezeLayers(const QList<RS_Layer*>& layersEnable, const QList<RS_Layer*>& layersDisable);
-    void setLockLayers(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock){m_layerList.setLockMulti(layersToUnlock, layersToLock);validateSelection();}
+    void setLockLayers(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock);
     void setPrintLayers(const QList<RS_Layer*>& layersNoPrint, const QList<RS_Layer*>& layersPrint){m_layerList.setPrintMulti(layersNoPrint, layersPrint);validateSelection();}
     void setConstructionLayers(const QList<RS_Layer*>& layersNoConstruction, const QList<RS_Layer*>& layersConstruction){m_layerList.setConstructionMulti(layersNoConstruction, layersConstruction);validateSelection();}
 
@@ -375,6 +376,8 @@ protected:
 private:
     /** Rebuild INSERT visibility and refresh cached drawing state after layer changes. */
     void refreshLayerVisibility();
+    /** Says on the command line what locking layers did to the current layer. */
+    void reportCurrentLayerLock(const RS_LayerList::CurrentLayerLock& outcome) const;
     /** Rebuild derived INSERT children after block visibility changes. */
     void refreshBlockVisibility();
 
