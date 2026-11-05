@@ -372,6 +372,27 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
     REQUIRE(encoded);
     CHECK(result::decode(*encoded, validationRequest));
 
+    for (const double signedDistance : {-.5, -.25, .25, .5}) {
+        CAPTURE(signedDistance);
+        auto variantDefinition = definition;
+        variantDefinition.signedDistance = signedDistance;
+        const req::Request variantGeneration{token,
+            req::GenerateSource{variantDefinition, {}}};
+        const auto variantGeneratedReply = LC_OffsetWorkerKernel::run(variantGeneration);
+        const auto& variantGenerated = native(variantGeneratedReply, 7);
+        REQUIRE(variantGenerated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(variantGenerated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(variantGenerated.ordinary.size() == 1);
+        REQUIRE(std::holds_alternative<RS_SplineData>(variantGenerated.ordinary.front()));
+        const auto& variantCache = std::get<RS_SplineData>(variantGenerated.ordinary.front());
+        const req::Request variantValidation{token,
+            req::ValidateSourceCache{variantCache, variantDefinition, {}}};
+        const auto variantValidatedReply = LC_OffsetWorkerKernel::run(variantValidation);
+        const auto& variantValidated = native(variantValidatedReply, 8);
+        CHECK(variantValidated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(variantValidated.changed);
+    }
+
     auto altered = cache;
     altered.controlPoints.front().x += .125;
     const req::Request alteredRequest{token, req::ValidateSourceCache{altered, definition, {}}};
