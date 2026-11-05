@@ -14290,3 +14290,27 @@ behavior; independent visual fidelity; signed/deployed and minimum-macOS
 acceptance; approving human review; and final R integration. Push this
 checkpoint and inspect CI for its new exact head; no current-head result carries
 forward automatically.
+
+## 335. Properties Source Ellipse Chooser (2026-11-05)
+
+The native offset-curve properties editor now enumerates live top-level ellipse
+entities, matches the embedded source basis to an existing ellipse, and labels
+an unmatched embedded basis as not found. The source combo can replace the
+editable definition basis by value while preserving the offset parameters and
+using the existing guarded worker-edit path. A separate explicit command
+selects the matched/current source ellipse in the drawing and requests redraw;
+opening or cancelling Properties alone does not change drawing selection.
+This does not add a persistent associative link, nor broaden native offset
+definitions beyond ellipse sources.
+
+Validation used a fresh Debug CMake build in
+`/private/tmp/librecad-offset-source-ui-build`. The focused source GUI case
+passed (21 assertions), and the complete
+`librecad_offset_properties_dialog_tests` suite passed (25,958 assertions in
+57 cases) with `QT_QPA_PLATFORM=offscreen`. `git diff --check` passed. This
+receipt is local validation only: the product changes require a new PR head and
+exact-head CI requalification. All W379 external acceptance gates remain open,
+including visible matched-preview/commit screenshots and DPR, held-drag
+cancellation timing, physical stale-peer behavior, independent visual review,
+signed/deployed and minimum-macOS acceptance, approving review, and final R
+integration.

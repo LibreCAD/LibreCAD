@@ -581,6 +581,44 @@ TEST_CASE("Native dialog untouched rounded and equivalent exact values do not re
     before.exact(*f.curve);
 }
 
+TEST_CASE("Native offset properties resolve, replace, and select a source ellipse",
+          "[gui][dialog][offsetcurve][source]") {
+    Fixture f;
+    auto* matched = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(matched);
+    RS_EllipseData replacementData{{10, 2}, {2, 0}, .75, .2, 1.1, false};
+    auto* replacement = new RS_Ellipse(nullptr, replacementData);
+    f.graphic.addEntity(replacement);
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(sourceBox != nullptr);
+    REQUIRE(sourceBox->currentData().isValid());
+    CHECK(sourceBox->currentData().toULongLong() == matched->getId());
+
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(selectSource != nullptr);
+    CHECK_FALSE(matched->getFlag(RS2::FlagSelected));
+    click(*selectSource);
+    CHECK(matched->getFlag(RS2::FlagSelected));
+
+    int replacementIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == replacement->getId()) replacementIndex = i;
+    REQUIRE(replacementIndex >= 0);
+    sourceBox->setCurrentIndex(replacementIndex);
+    awaitPreparation(widget);
+    CHECK(clone->definition().basis.center.x == replacementData.center.x);
+    CHECK(clone->definition().basis.center.y == replacementData.center.y);
+    CHECK(clone->definition().basis.majorP.x == replacementData.majorP.x);
+    CHECK(clone->definition().basis.ratio == replacementData.ratio);
+    CHECK(f.curve->definition().basis.center.x == 0);
+    CHECK(sourceBox->currentData().toULongLong() == replacement->getId());
+}
+
 TEST_CASE("Native field Return followed by focus out does not submit twice",
           "[gui][dialog][offsetcurve][noop]") {
     Fixture f;

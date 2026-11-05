@@ -7,6 +7,7 @@
 
 #include <QCheckBox>
 #include <QApplication>
+#include <QComboBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QPointer>
@@ -22,10 +23,19 @@
 #include "lc_offsetcurveui.h"
 #include "lc_offsetcurvereadutils.h"
 #include "lc_pointpickbutton.h"
+#include "rs_document.h"
+#include "rs_ellipse.h"
 #include "rs_math.h"
 #include "ui_lc_propertieseditingwidget_offsetcurve.h"
 
 namespace {
+bool sameEllipseBasis(const RS_EllipseData& a, const RS_EllipseData& b) {
+    return a.center.x == b.center.x && a.center.y == b.center.y && a.center.z == b.center.z &&
+        a.center.valid == b.center.valid && a.majorP.x == b.majorP.x && a.majorP.y == b.majorP.y &&
+        a.majorP.z == b.majorP.z && a.majorP.valid == b.majorP.valid && a.ratio == b.ratio &&
+        a.angle1 == b.angle1 && a.angle2 == b.angle2 && a.reversed == b.reversed;
+}
+
 struct OffsetDialogContext {
     LC_GraphicViewport* viewport = nullptr;
     RS_Document* document = nullptr; // Identity only; never dereferenced after an event turn.
@@ -82,6 +92,18 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
         }
         apply(next);
     });
+    connect(ui->cbSource, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](int index) {
+        if (m_refreshing || m_entity == nullptr || index < 0) return;
+        bool validId = false;
+        const auto id = ui->cbSource->itemData(index).toULongLong(&validId);
+        auto* source = validId ? findSourceEllipse(id) : nullptr;
+        if (source == nullptr) return;
+        auto next = proposedDefinition();
+        next.basis = source->getData();
+        apply(next);
+    });
+    connect(ui->tbSelectSource, &QToolButton::clicked, this,
+        [this] { selectCurrentSource(); });
 }
 
 LC_PropertiesEditingWidgetOffsetCurve::~LC_PropertiesEditingWidgetOffsetCurve() {
@@ -125,6 +147,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::setBusy(bool busy) const {
     ui->gbDefinition->setEnabled(m_entity && m_viewport && m_entity->hasEditableDefinition() &&
         m_generation < std::numeric_limits<qint64>::max() && m_sourceRevision < std::numeric_limits<qint64>::max());
     ui->wPickPointCenter->setEnabled(!busy);
+    ui->cbSource->setEnabled(!busy && m_entity && m_viewport);
+    ui->tbSelectSource->setEnabled(!busy && ui->cbSource->currentData().isValid());
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!busy);
     if (changed) emit preparationBusyChanged(busy); // No member access after user slots.
@@ -183,8 +207,10 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     ui->gbDefinition->setEnabled(available && m_generation < std::numeric_limits<qint64>::max() &&
         m_sourceRevision < std::numeric_limits<qint64>::max());
     ui->wPickPointCenter->setEnabled(!m_busy);
+    ui->cbSource->setEnabled(!m_busy && m_entity && m_viewport);
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!m_busy);
+    refreshSourceChoices();
     if (m_entity == nullptr || m_viewport == nullptr) return;
     const auto definition = proposedDefinition();
     const auto& basis = definition.basis;
@@ -213,6 +239,61 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
             ? LC_OffsetCurveRefusal::Undefined : LC_OffsetCurveRefusal::Inconsistent;
         ui->lRefusal->setText(LC_OffsetCurveUI::refusalText(state));
     }
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
+    auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
+    if (document == nullptr || m_entity == nullptr) {
+        ui->cbSource->clear();
+        ui->cbSource->addItem(tr("Source not available"));
+        ui->tbSelectSource->setEnabled(false);
+        return;
+    }
+
+    const auto& embedded = proposedDefinition().basis;
+    QSignalBlocker blocked(ui->cbSource);
+    ui->cbSource->clear();
+    int matchedIndex = -1;
+    bool hasMatchingSource = false;
+    for (auto* entity : document->getEntityList()) {
+        if (entity == nullptr || entity->rtti() != RS2::EntityEllipse || entity->getFlag(RS2::FlagDeleted)) continue;
+        auto* ellipse = static_cast<RS_Ellipse*>(entity);
+        const auto id = static_cast<qulonglong>(ellipse->getId());
+        const auto label = tr("Ellipse %1").arg(id);
+        ui->cbSource->addItem(label, QVariant::fromValue<qulonglong>(id));
+        if (!hasMatchingSource && sameEllipseBasis(embedded, ellipse->getData())) {
+            matchedIndex = ui->cbSource->count() - 1;
+            hasMatchingSource = true;
+        }
+    }
+    if (!hasMatchingSource) {
+        ui->cbSource->insertItem(0, tr("Embedded source (not found)"));
+        matchedIndex = 0;
+    }
+    ui->cbSource->setCurrentIndex(matchedIndex);
+    ui->tbSelectSource->setEnabled(hasMatchingSource && !m_busy);
+}
+
+RS_Ellipse* LC_PropertiesEditingWidgetOffsetCurve::findSourceEllipse(qulonglong id) const {
+    auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
+    if (document == nullptr) return nullptr;
+    for (auto* entity : document->getEntityList()) {
+        if (entity != nullptr && entity->rtti() == RS2::EntityEllipse &&
+            !entity->getFlag(RS2::FlagDeleted) && entity->getId() == id)
+            return static_cast<RS_Ellipse*>(entity);
+    }
+    return nullptr;
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::selectCurrentSource() const {
+    if (m_entity == nullptr || m_viewport == nullptr) return;
+    bool validId = false;
+    const auto id = ui->cbSource->currentData().toULongLong(&validId);
+    auto* source = validId ? findSourceEllipse(id) : nullptr;
+    auto* document = m_viewport->getDocument();
+    if (source == nullptr || document == nullptr) return;
+    document->select(QList<RS_Entity*>{source}, true);
+    m_viewport->notifyChanged(RS2::RedrawDrawing);
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::inputRefused(QLineEdit* editor, const QString& reason) const {
@@ -263,6 +344,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
         if (!published) m_lastResult.reset();
         m_proposedDefinition.reset(); m_inputSnapshot.reset();
         if (!published) restoreCommittedText();
+        refreshSourceChoices();
         ui->lRefusal->setText(text); setBusy(false);
     };
     if (m_generation == std::numeric_limits<qint64>::max() ||
@@ -323,6 +405,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
                     if (!published) self->m_lastResult.reset();
                     self->m_proposedDefinition.reset(); self->m_inputSnapshot.reset();
                     if (!published) self->restoreCommittedText();
+                    self->refreshSourceChoices();
                     self->ui->lRefusal->setText(text); self->setBusy(false);
                 };
                 try {

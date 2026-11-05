@@ -16,6 +16,7 @@
 namespace Ui { class LC_OffsetCurvePropertiesEditingWidget; }
 class LC_OffsetWorkerClient;
 class LC_OffsetCurveEditSnapshot;
+class RS_Ellipse;
 
 /** Edits only the caller-owned dialog clone, never the document entity. */
 class LC_PropertiesEditingWidgetOffsetCurve final : public LC_EntityPropertiesEditorWidget {
@@ -53,6 +54,9 @@ private:
     void restoreCommittedText() const;
     void refresh(QLineEdit* completed = nullptr, bool force = false) const;
     void inputRefused(QLineEdit* editor, const QString& reason) const;
+    void refreshSourceChoices() const;
+    RS_Ellipse* findSourceEllipse(qulonglong id) const;
+    void selectCurrentSource() const;
     Ui::LC_OffsetCurvePropertiesEditingWidget* ui;
     LC_OffsetCurve* m_entity = nullptr;
     LC_OffsetRunLimits m_limits;
