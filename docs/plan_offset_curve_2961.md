@@ -15356,3 +15356,22 @@ assertions/5 cases; `git diff --check` passed before commit. Exact PR head is
 reports no checks for that head. Continue the distance/side-dependent
 representability audit, then revalidate exact-head DXF/DWG persistence and PR
 checks. Variant audit, review, and external acceptance remain open.
+
+## 362. Typed-Source Persistence and Worker Requalification (2026-11-05)
+
+Re-ran the targeted persistence and worker suites from the current Debug
+build after the source-picker variant checkpoint. Real typed-source DXF/DWG
+save, reopen, and second-save passed 648 assertions/1 case across all nine
+families. Typed-source import validation passed 917 assertions/1 case; the
+standalone worker-client suite passed 22,726 assertions/20 cases. These are
+the observed counts from this exact executable and supersede the older
+requalification counts as current evidence; they do not establish wider
+variant admission or publication behavior beyond the cases in those suites.
+
+At this checkpoint, PR #3193 head is the roadmap-only commit
+`bd3dfa32fab28cc8d1de35be636fb6aae7809c80`, on top of product/test commit
+`5b7f768a65b9667feb1cab34df98b863ee9d9543`. The five Pixi jobs for that exact
+head were in progress: Windows, Ubuntu x64, Ubuntu ARM64, macOS latest, and
+macOS Intel. No result is inherited from the preceding head. Continue the
+signed-distance/side and geometry-layout variant audit; review and external
+acceptance remain open.
