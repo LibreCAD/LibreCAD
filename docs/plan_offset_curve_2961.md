@@ -15709,3 +15709,19 @@ cases; the complete worker-kernel suite passes 3,959 assertions across 26
 cases, and `git diff --check` passes. The malformed-chain refusal slice is
 covered. Import-origin duplicate-vertex behavior, bulged-vertex import
 variants, longer mixed chains, and broader signed-distance sweeps remain open.
+
+## 379. Long Mixed-Polyline Offset Sweep (2026-11-05)
+
+Added operation-7/operation-8 coverage for a seven-segment open polyline that
+alternates line and circular-arc segments. Its ordered chain is checked at
+signed distances `-0.5`, `-0.1`, `0.1`, and `0.5`. Whenever the producer emits
+one canonical spline cache, operation 8 accepts the exact source/cache pair;
+multi-entity output is explicitly refused without mutation. This extends the
+two-segment orientation test with a longer mixed chain and four distance/side
+samples.
+
+The focused polyline worker-kernel filter passes 309 assertions across four
+cases; the full worker-kernel suite passes 4,056 assertions across 27 cases.
+`git diff --check` passes. This is a representative long-chain sweep, not
+coverage of arbitrary segment counts, bulge-import origins, or self-intersecting
+polyline topology.
