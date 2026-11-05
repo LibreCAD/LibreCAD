@@ -39,6 +39,7 @@
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 using Catch::Approx;
@@ -67,10 +68,12 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     RS_Line line{nullptr, RS_LineData{{0, 0}, {1, 0}}};
     RS_Arc arc{nullptr, RS_ArcData{{2, 3}, 4.0, .25, 1.5, true}};
     RS_Circle circle{nullptr, RS_CircleData{{-2, 3}, 5.0}};
+    RS_Polyline polyline;
+    polyline.addVertex({0, 0}, 1.0); polyline.addVertex({2, 0}); polyline.addVertex({2, 2});
 
-    const std::array<const RS_Entity*, 8> entities{&ellipse, &spline, &points, &parabola, &hyperbola,
-                                                    &line, &arc, &circle};
-    const std::array<LC_OffsetSourceGeometry::Kind, 8> kinds{
+    const std::array<const RS_Entity*, 9> entities{&ellipse, &spline, &points, &parabola, &hyperbola,
+                                                    &line, &arc, &circle, &polyline};
+    const std::array<LC_OffsetSourceGeometry::Kind, 9> kinds{
         LC_OffsetSourceGeometry::Kind::Ellipse,
         LC_OffsetSourceGeometry::Kind::Spline,
         LC_OffsetSourceGeometry::Kind::SplinePoints,
@@ -78,7 +81,8 @@ TEST_CASE("Offset source snapshots own every supported source type") {
         LC_OffsetSourceGeometry::Kind::BoundedHyperbola,
         LC_OffsetSourceGeometry::Kind::Line,
         LC_OffsetSourceGeometry::Kind::Arc,
-        LC_OffsetSourceGeometry::Kind::Circle};
+        LC_OffsetSourceGeometry::Kind::Circle,
+        LC_OffsetSourceGeometry::Kind::Polyline};
     for (std::size_t i = 0; i < entities.size(); ++i) {
         auto snapshot = LC_OffsetSourceGeometry::capture(*entities[i]);
         REQUIRE(snapshot);
@@ -155,6 +159,18 @@ TEST_CASE("Offset source snapshots own every supported source type") {
             CHECK(value->getData().radius == circle.getData().radius);
             break;
         }
+        case LC_OffsetSourceGeometry::Kind::Polyline: {
+            const auto* value = dynamic_cast<const RS_Polyline*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->isClosed() == polyline.isClosed());
+            CHECK(value->getStartpoint() == polyline.getStartpoint());
+            CHECK(value->getEndpoint() == polyline.getEndpoint());
+            CHECK(value->size() == polyline.size());
+            REQUIRE(value->size() == 2);
+            CHECK(value->entityAt(0)->rtti() == RS2::EntityArc);
+            CHECK(value->entityAt(1)->rtti() == RS2::EntityLine);
+            break;
+        }
         case LC_OffsetSourceGeometry::Kind::Invalid:
             FAIL("valid source snapshot has invalid kind");
         }
@@ -175,6 +191,16 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     degenerateEllipseData.majorP = {0, 0};
     RS_Ellipse degenerateEllipse{nullptr, degenerateEllipseData};
     CHECK_FALSE(LC_OffsetSourceGeometry::capture(degenerateEllipse));
+
+    LC_OffsetPolylineData disconnected{{0, 0}, {2, 0}, false,
+        {RS_LineData{{0, 0}, {1, 0}}, RS_LineData{{1.1, 0}, {2, 0}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{disconnected}.isWellFormed());
+    LC_OffsetPolylineData inconsistentHeader{{0, 0}, {3, 0}, false,
+        {RS_LineData{{0, 0}, {2, 0}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{inconsistentHeader}.isWellFormed());
+    LC_OffsetPolylineData closedChain{{0, 0}, {2, 0}, true,
+        {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {0, 0}}}};
+    CHECK(LC_OffsetSourceGeometry{closedChain}.isWellFormed());
 
     auto ownedSpline = LC_OffsetSourceGeometry::capture(spline);
     REQUIRE(ownedSpline);

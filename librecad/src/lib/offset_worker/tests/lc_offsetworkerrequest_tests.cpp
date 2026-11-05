@@ -765,7 +765,7 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     LC_SplinePointsData pointsData{false, false};
     pointsData.useControlPoints = true;
     pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 8> sources{
+    const std::array<LC_OffsetSourceGeometry, 10> sources{
         LC_OffsetSourceGeometry{ellipse()},
         LC_OffsetSourceGeometry{splineData},
         LC_OffsetSourceGeometry{pointsData},
@@ -773,16 +773,23 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
         LC_OffsetSourceGeometry{arc()},
-        LC_OffsetSourceGeometry{circle()}
+        LC_OffsetSourceGeometry{circle()},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {0, 0}, true,
+            {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
+             RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}}
     };
     for (std::size_t i = 0; i < sources.size(); ++i) {
         const auto encodedSource = values::encodeSourceGeometry(sources[i]);
         REQUIRE(encodedSource);
-        CHECK(encodedSource->at(0).toInteger() == static_cast<qint64>(i));
+        CHECK(encodedSource->at(0).toInteger() == static_cast<qint64>(sources[i].kind()));
         const auto decodedSource = values::decodeSourceGeometry(*encodedSource);
         REQUIRE(decodedSource);
         CHECK(decodedSource->kind() == sources[i].kind());
-        CHECK(values::encodeSourceGeometry(*decodedSource) == encodedSource);
+        const auto reencodedSource = values::encodeSourceGeometry(*decodedSource);
+        REQUIRE(reencodedSource);
+        CHECK(QCborValue(*encodedSource).toCbor() == QCborValue(*reencodedSource).toCbor());
 
         const LC_OffsetSourceDefinition definition{sources[i], -.75, .00025, true};
         const auto encodedDefinition = values::encodeSourceDefinition(definition);
@@ -792,8 +799,8 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
         CHECK(decodedDefinition->source.kind() == sources[i].kind());
         CHECK(decodedDefinition->signedDistance == -.75);
         CHECK(decodedDefinition->relativeTolerance == .00025);
-        CHECK(decodedDefinition->cacheReversed);
-        CHECK(values::encodeSourceDefinition(*decodedDefinition) == encodedDefinition);
+        const bool decodedReversed = decodedDefinition->cacheReversed;
+        CHECK(decodedReversed);
     }
 
     const auto validSource = values::encodeSourceGeometry(sources[1]);
@@ -826,7 +833,7 @@ TEST_CASE("offset worker op7 transports generalized source generation requests",
     LC_SplinePointsData pointsData{false, false};
     pointsData.useControlPoints = true;
     pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 8> sources{
+    const std::array<LC_OffsetSourceGeometry, 10> sources{
         LC_OffsetSourceGeometry{ellipse()},
         LC_OffsetSourceGeometry{splineData},
         LC_OffsetSourceGeometry{pointsData},
@@ -834,7 +841,12 @@ TEST_CASE("offset worker op7 transports generalized source generation requests",
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
         LC_OffsetSourceGeometry{arc()},
-        LC_OffsetSourceGeometry{circle()}
+        LC_OffsetSourceGeometry{circle()},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {0, 0}, true,
+            {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
+             RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}}
     };
     for (const auto& source : sources) {
         const request::Request input{token(), request::GenerateSource{

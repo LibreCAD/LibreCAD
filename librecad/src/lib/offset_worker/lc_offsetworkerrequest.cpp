@@ -85,6 +85,30 @@ bool read(const QCborValue& value, RS_LineData& d) {
     QCborArray a;
     return array(value, 2, a) && read(a.at(0), d.startpoint) && read(a.at(1), d.endpoint);
 }
+bool read(const QCborValue& value, LC_OffsetPolylineSegment& segment) {
+    QCborArray a;
+    qint64 tag;
+    if (!array(value, 2, a) || !integer(a.at(0), tag)) return false;
+    if (tag == 0) { RS_LineData data; if (!read(a.at(1), data)) return false; segment = data; }
+    else if (tag == 1) { RS_ArcData data; if (!read(a.at(1), data)) return false; segment = data; }
+    else return false;
+    return true;
+}
+bool read(const QCborValue& value, LC_OffsetPolylineData& data) {
+    QCborArray a;
+    if (!array(value, 4, a) || !read(a.at(0), data.startpoint) || !read(a.at(1), data.endpoint) ||
+        !boolean(a.at(2), data.closed) || !a.at(3).isArray()) return false;
+    const auto segments = a.at(3).toArray();
+    if (segments.isEmpty() || std::size_t(segments.size()) > LC_OffsetSourceDetail::MaximumSourceItems) return false;
+    data.segments.clear();
+    data.segments.reserve(std::size_t(segments.size()));
+    for (const auto& item : segments) {
+        LC_OffsetPolylineSegment segment;
+        if (!read(item, segment)) return false;
+        data.segments.push_back(std::move(segment));
+    }
+    return true;
+}
 bool valid(const RS_EllipseData& d) {
     return valid(d.center) && valid(d.majorP) && std::isfinite(d.ratio) &&
         std::isfinite(d.angle1) && std::isfinite(d.angle2) && std::isfinite(d.angleDegrees) &&
@@ -197,6 +221,7 @@ bool read(const QCborValue& value, LC_OffsetSourceGeometry& source) {
     case 5: { RS_LineData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     case 6: { RS_ArcData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     case 7: { RS_CircleData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 8: { LC_OffsetPolylineData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     default: return false;
     }
     return valid(source);
@@ -513,6 +538,19 @@ bool readPreview(const QCborArray& a, LC_OffsetPreviewSnapshot* out) {
 
 QCborArray fields(const RS_Vector& p) { return {p.x, p.y, p.z, p.valid}; }
 QCborArray fields(const RS_LineData& d) { return {fields(d.startpoint), fields(d.endpoint)}; }
+QCborArray fields(const RS_ArcData& d);
+QCborArray fields(const LC_OffsetPolylineSegment& segment) {
+    return std::visit([](const auto& data) -> QCborArray {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_LineData>) return {0, fields(data)};
+        else return {1, fields(data)};
+    }, segment);
+}
+QCborArray fields(const LC_OffsetPolylineData& data) {
+    QCborArray segments;
+    for (const auto& segment : data.segments) segments.append(fields(segment));
+    return {fields(data.startpoint), fields(data.endpoint), data.closed, segments};
+}
 QCborArray fields(const RS_ArcData& d) {
     return {fields(d.center), d.radius, d.angle1, d.angle2, d.reversed,
         d.startAngleDegrees, d.otherAngleDegrees, d.angularLength};

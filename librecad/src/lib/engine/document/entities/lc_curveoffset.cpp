@@ -36,6 +36,7 @@
 #include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 namespace {
@@ -630,6 +631,94 @@ private:
     std::vector<RS_Vector> m_hull;
 };
 
+std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity);
+
+class PolylineSource final : public OffsetSource {
+public:
+    static std::unique_ptr<OffsetSource> make(const RS_Polyline& polyline) {
+        auto result = std::unique_ptr<PolylineSource>{new PolylineSource{polyline.isClosed()}};
+        double cursor = 0.0;
+        for (const RS_Entity* child : polyline) {
+            if (!child) return nullptr;
+            auto source = makeSource(*child);
+            if (!source || source->breaks().size() < 2) return nullptr;
+            const auto& local = source->breaks();
+            const double span = local.back() - local.front();
+            if (!std::isfinite(span) || !(span > 0.0) || !std::isfinite(cursor + span)) return nullptr;
+            result->m_pieces.push_back({std::move(source), cursor, span});
+            for (std::size_t i = 0; i < local.size(); ++i) {
+                const double global = cursor + (local[i] - local.front());
+                if (result->m_breaks.empty() || global > result->m_breaks.back()) result->m_breaks.push_back(global);
+            }
+            const auto& hull = result->m_pieces.back().source->hull();
+            result->m_hull.insert(result->m_hull.end(), hull.begin(), hull.end());
+            cursor += span;
+        }
+        if (result->m_pieces.empty() || result->m_breaks.size() < 2) return nullptr;
+        return result;
+    }
+
+    bool closed() const override { return m_closed; }
+    const std::vector<double>& breaks() const override { return m_breaks; }
+    bool jet(const double t, const LC_CurveEvaluationSide side, LC_CurveJet& out) const override {
+        const double parameter = m_closed && t == m_breaks.back() && side != LC_CurveEvaluationSide::Left
+            ? m_breaks.front() : t;
+        const auto index = pieceAt(parameter, side);
+        if (!index) { out = LC_CurveJet{}; return false; }
+        const auto& piece = m_pieces[*index];
+        const double local = piece.source->breaks().front() + (parameter - piece.offset);
+        return piece.source->jet(local, side, out);
+    }
+    bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        const auto index = pieceAt(a + (b - a) * .5, LC_CurveEvaluationSide::Interior);
+        if (!index) { out = LC_CurveJetBounds{}; return false; }
+        const auto& piece = m_pieces[*index];
+        const double start = piece.source->breaks().front() + (a - piece.offset);
+        const double end = piece.source->breaks().front() + (b - piece.offset);
+        return piece.source->boundJet(start, end, out);
+    }
+    bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
+        const auto index = pieceAt(a + (b - a) * .5, LC_CurveEvaluationSide::Interior);
+        if (!index) { out = LC_CurveJetBounds{}; return false; }
+        const auto& piece = m_pieces[*index];
+        const double start = piece.source->breaks().front() + (a - piece.offset);
+        const double end = piece.source->breaks().front() + (b - piece.offset);
+        return piece.source->boundJetWithProducts(start, end, out);
+    }
+    const std::vector<RS_Vector>& hull() const override { return m_hull; }
+    bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
+        if (m_closed || m_pieces.size() != 1) return false;
+        return m_pieces.front().source->straightSegment(start, end);
+    }
+    bool cubicSpans() const override {
+        return std::all_of(m_pieces.begin(), m_pieces.end(),
+            [](const Piece& piece) { return piece.source->cubicSpans(); });
+    }
+
+private:
+    struct Piece {
+        std::unique_ptr<OffsetSource> source;
+        double offset;
+        double span;
+    };
+    explicit PolylineSource(const bool closed) : m_closed{closed} {}
+
+    std::optional<std::size_t> pieceAt(const double t, const LC_CurveEvaluationSide side) const {
+        if (!std::isfinite(t) || m_pieces.empty() || t < 0.0 || t > m_breaks.back()) return std::nullopt;
+        for (std::size_t i = 0; i < m_pieces.size(); ++i) {
+            const double end = m_pieces[i].offset + m_pieces[i].span;
+            if (t < end || (t == end && (side == LC_CurveEvaluationSide::Left || i + 1 == m_pieces.size())))
+                return i;
+        }
+        return m_pieces.size() - 1;
+    }
+
+    bool m_closed;
+    std::vector<Piece> m_pieces;
+    std::vector<double> m_breaks;
+    std::vector<RS_Vector> m_hull;
+};
+
 std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
     if (const auto* line = dynamic_cast<const RS_Line*>(&entity)) return LineSource::make(*line);
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
@@ -654,6 +743,9 @@ std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
         RS_EllipseData data;
         data.center = source.center; data.majorP = {source.radius, 0.0}; data.ratio = 1.0;
         return EllipseSource::make(data, true);
+    }
+    if (const auto* polyline = dynamic_cast<const RS_Polyline*>(&entity)) {
+        return PolylineSource::make(*polyline);
     }
     if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
         return EllipseSource::make(*ellipse);

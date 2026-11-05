@@ -498,7 +498,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     LC_SplinePointsData points{false, false};
     points.useControlPoints = true;
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 8> sources{
+    const std::array<LC_OffsetSourceGeometry, 10> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
@@ -506,7 +506,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
         LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, .25, 1.5, false}},
-        LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}}
+        LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {0, 0}, true,
+            {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
+             RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}}
     };
 
     for (std::size_t i = 0; i < sources.size(); ++i) {
@@ -583,10 +588,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     const LC_OffsetSourceDefinition linearDefinition{
         LC_OffsetSourceGeometry{linear}, .25, 0, false};
     Receipts linearReceipts;
-    REQUIRE(owned.get().submit({token(9), Req::GenerateSource{linearDefinition, {}}},
+    REQUIRE(owned.get().submit({token(11), Req::GenerateSource{linearDefinition, {}}},
         Client::Mode::Commit, linearReceipts.into(0)));
     rt.until([&] { return linearReceipts.calls[0] != 0; });
-    auto& linearCompletion = completed(linearReceipts.at(0), 9, 7);
+    auto& linearCompletion = completed(linearReceipts.at(0), 11, 7);
     auto linearEditable = linearCompletion.nativeSource(attributes);
     REQUIRE(linearEditable);
     REQUIRE(linearEditable->hasGeneralizedSourceDefinition());

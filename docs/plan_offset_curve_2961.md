@@ -14488,9 +14488,13 @@ circle while preserving their source identity. This worker adapter support is
 separate from `LC_CurveOffset::isSupportedSource()` and leaves those types on
 their pre-existing ordinary-offset dispatch; no ordinary command is silently
 routed to the new direct adapters. The production source audit now records
-line, arc, circle, and polyline as separate ordinary-path families; polyline
-still needs a lossless composite source representation. Source-specific cache
-revalidation, generalized edits, persistence, and the Properties type
+line, arc, circle, and polyline as separate ordinary-path families. W346 now
+adds value-owned polyline data composed of ordered line/arc segments,
+closed-state and endpoint metadata, detached reconstruction, stable op-7 wire
+tag 8, and worker geometry support. It validates segment continuity and
+header agreement and rejects malformed/unsupported segments. This closes the
+source-value/worker-generation portion for polyline only. Source-specific
+cache revalidation, generalized edits, persistence, and the Properties type
 selector/cross-type picker remain unimplemented. Retain all existing W379
 acceptance gates.
 
@@ -14682,3 +14686,55 @@ assertions/15 cases, 2,968/19, and 19,267/18, respectively. The focused
 parser passed 5/5 and `git diff --check` passed. This closes only source
 value/worker generation for these three kinds; UI selection, cache-source
 revalidation, editable operations, and DXF/DWG persistence remain open.
+
+## 346. Polyline Source Modeling and Cross-Type Picker Clarification (2026-11-05)
+
+The requested source picker behavior is explicitly type-changing, not merely a
+filter over the type embedded in the current offset: the user can select a new
+source family first, then choose a live entity of that family. Selection must
+replace the source kind and immutable geometry atomically. The UI must offer
+every production-eligible source family only after its complete native-source
+workflow is implemented; it must not expose partial worker-only support.
+`LC_Parabola` remains a distinct selectable source family and must not be
+collapsed into generic spline-points. The chooser must also retain the current
+source match/highlight behavior, including after a cross-type replacement.
+
+Polyline is represented as an ordered composite of native line and arc segment
+values, preserving closed state and endpoints instead of flattening to a
+spline. Capture/reconstruction validates finite planar segment data, nonempty
+bounded segments, adjacent endpoint continuity, open/closed terminal
+continuity, and endpoint-header agreement. The wire format appends stable
+source tag 8 and uses explicit line/arc segment tags; the worker adapter
+composes the segment evaluators over a shared parameter domain. Arc encoding
+is declared before the generic segment visitor to prevent overload resolution
+from recursively converting an arc back into the segment variant.
+
+Validation: Debug CMake built `librecad_tests`,
+`librecad_offset_worker_request_tests`, `librecad_offset_worker_kernel_tests`,
+and `librecad_offset_worker_client_tests`. The source snapshot test passed 119
+assertions, including native arc-plus-line reconstruction, disconnected and
+header-inconsistent refusal, and a valid closed chain. The source codec and
+op-7 request tests passed 136 and 1,250 assertions; the kernel source-generation
+case passed 300 assertions; the joined real-worker case passed 6,258
+assertions. Complete request, kernel, and client suites passed 598,552/15,
+3,028/19, and 23,644/18. `[lc-offsetcurve][native]` passed 4,711 assertions in
+29 cases; the roadmap parser passed 5/5 and `git diff --check` passed. A broad
+`[lc-offsetcurve]` run passed 488 cases and 3,160,273 assertions before being
+interrupted at a long DWG trim stress case; it is partial evidence, not a full
+suite pass. ASan and exact-head CI have not yet been run for this slice.
+
+This closes W346's value capture/reconstruction and worker-generation scope,
+not polyline-native cache/edit/persistence or user-facing picker support.
+Transform exactness still needs dedicated tests. The source-type selector must
+continue to remain disabled for polyline until G2 cache/edit and G4 persistence
+are complete; the same rule applies to every other partially modeled family.
+
+After that slice, resume the production source-kind inventory and carry each
+confirmed kind through the same chain before implementing G3's UI selector.
+The selector must support switching to ellipse, spline, spline-points,
+parabola, bounded hyperbola, line, arc, circle, polyline, and every additional
+single-curve family accepted by production dispatch. For any audited type that
+cannot be safely represented by the native offset entity, record the exact
+non-mutating refusal boundary and do not advertise it as selectable. Preserve
+the separate G2 cache/edit and G4 persistence requirements; a picker-only
+change does not complete source support.

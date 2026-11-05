@@ -211,6 +211,22 @@ bool transformSourceDefinition(LC_OffsetSourceDefinition &definition, const Matr
             if (reflected || matrix[1] != 0 || matrix[2] != 0 || matrix[0] != scale || matrix[3] != scale ||
                 !transformPoint(data.center) || !exactValue(Exact(data.radius) * Exact(scale), data.radius, true))
                 return false;
+        } else if constexpr (std::is_same_v<T, LC_OffsetPolylineData>) {
+            if (!transformPoint(data.startpoint) || !transformPoint(data.endpoint)) return false;
+            for (auto& segment : data.segments) {
+                const bool transformed = std::visit([&](auto& value) {
+                    using S = std::decay_t<decltype(value)>;
+                    if constexpr (std::is_same_v<S, RS_LineData>)
+                        return transformPoint(value.startpoint) && transformPoint(value.endpoint);
+                    else {
+                        if (reflected || matrix[1] != 0 || matrix[2] != 0 ||
+                            matrix[0] != scale || matrix[3] != scale || !transformPoint(value.center) ||
+                            !exactValue(Exact(value.radius) * Exact(scale), value.radius, true)) return false;
+                        return true;
+                    }
+                }, segment);
+                if (!transformed) return false;
+            }
         } else {
             if (!transformPoint(data.center) || !exactValue(Exact(data.radius) * Exact(scale), data.radius, true))
                 return false;
