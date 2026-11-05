@@ -15540,7 +15540,8 @@ assertions/20 cases; wrapped op-8 kernel test passed 43 assertions/1 case; the
 typed-source import-session spline-variant filter passed 453 assertions/1
 case; `git diff --check` passed. Test commit
 `63c1403146de6e6ed79aad6e479f98d7a19aa6ed` contains this implementation.
-The worktree is now at that test commit plus this roadmap update. Push it,
-check exact-head CI, and append the evidence to PR #3193. Wrapped file-import
-validation and the direct-materialization/cache-shape investigation remain
-open.
+Both the test commit and roadmap checkpoint `b75f028aa655a93f680febab3c5eaf35dfce3b4d`
+are pushed to the PR branch, and PR #3193 has a matching validation note.
+At the latest exact-head query the five Pixi platform checks had started with
+no terminal results. Wrapped file-import validation and the
+direct-materialization/cache-shape investigation remain open.
