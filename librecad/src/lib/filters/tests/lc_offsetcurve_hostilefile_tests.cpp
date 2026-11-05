@@ -1981,7 +1981,9 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         const RS_SplineData expectedCache = expectedSpline->getData();
         REQUIRE(expectedSpline->validate());
 
-        for (const bool dwg : {false, true}) {
+        for (const int format : {0, 1, 2}) {
+            const bool dwg = format == 2;
+            const bool r14 = format == 1;
 #ifndef DWGSUPPORT
             if (dwg) continue;
 #endif
@@ -2007,15 +2009,17 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             cache.nfit = 0;
 
             const std::string suffix = std::to_string(variant + 3);
-            const auto input = directory.file(dwg ? "fit-points-" + suffix + ".dwg"
-                                                  : "fit-points-" + suffix + ".dxf");
+            const std::string extension = dwg ? ".dwg" : ".dxf";
+            const std::string version = r14 ? "-r14" : (dwg ? "-dwg" : "-r2018");
+            const auto input = directory.file("fit-points-" + suffix + version + extension);
 #ifdef DWGSUPPORT
             if (dwg) f::dwgFile(input, cache, DRW::AC1032);
-            else f::binaryDxf(input, cache, DRW::AC1032);
+            else f::binaryDxf(input, cache, r14 ? DRW::AC1014 : DRW::AC1032);
 #else
-            f::binaryDxf(input, cache, DRW::AC1032);
+            f::binaryDxf(input, cache, r14 ? DRW::AC1014 : DRW::AC1032);
 #endif
-            const auto outcome = stagedImport(input, dwg ? Lane::Eed18 : Lane::Binary18);
+            const Lane lane = dwg ? Lane::Eed18 : (r14 ? Lane::Binary14 : Lane::Binary18);
+            const auto outcome = stagedImport(input, lane);
             REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
             REQUIRE(outcome.graphic);
             CHECK(outcome.admitted == 1);
