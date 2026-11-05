@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W394; chronological evidence follows): implementation slices
+Current status (W395; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -70,7 +70,7 @@ Changing the family filter alone is non-mutating; selecting a candidate goes
 through guarded worker-backed replacement. This closes the requested picker
 behavior, not exhaustive eligibility for every legal geometry variant or
 every distance/side, and not the broader plan's acceptance gates. The
-recent W378-W394 source-variant slices add malformed-polyline refusal,
+recent W378-W395 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15948,3 +15948,17 @@ spline-variant, fit-point, and typed-source persistence selection passes 7,807
 assertions across six cases. `git diff --check` passes. These two closed
 fixtures improve topology coverage but do not exhaust closed fit-point shapes
 or endpoint-tangent variants.
+
+## 395. Fit-Point Import on Both Offset Sides (2026-11-05)
+
+Expanded the five fit-point fixtures to both left-normal and right-normal
+offsets at magnitude `0.25`. The three open point-count variants and both
+closed loops each generate a single canonical cache on both sides; staged
+operation-8 imports preserve exact signed source values and cache fingerprints
+through R14 DXF, AC1015 DWG, AC1032 DXF, and AC1032 DWG.
+
+The focused fit-point import case passes 9,741 assertions; the combined
+spline-variant, fit-point, and typed-source persistence selection passes
+12,701 assertions across six cases. `git diff --check` passes. This is a
+two-sided check at one distance magnitude, not a full signed-distance or
+curvature/topology sweep.
