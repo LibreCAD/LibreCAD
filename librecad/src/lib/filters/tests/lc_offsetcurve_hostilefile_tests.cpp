@@ -1516,6 +1516,67 @@ TEST_CASE("closed bulged LWPOLYLINE import preserves its closing arc in DXF and 
     }
 }
 
+TEST_CASE("reflected OCS bulge import mirrors coordinates and reverses arc orientation",
+          "[lc-offsetcurve][import-session][typed-source][polyline][bulge][ocs]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-reflected-bulged-polyline-import");
+    const double bulge = std::tan(M_PI / 16.0);
+    DRW_LWPolyline raw;
+    raw.vertexnum = 4;
+    raw.extPoint.z = -1.0;
+    raw.addVertex(DRW_Vertex2D(0, 0, bulge));
+    raw.addVertex(DRW_Vertex2D(2, 0, -bulge));
+    raw.addVertex(DRW_Vertex2D(4, 0, 0));
+    raw.addVertex(DRW_Vertex2D(6, 0, 0));
+
+    RS_Polyline expected;
+    expected.addVertex({0, 0}, -bulge);
+    expected.addVertex({-2, 0}, bulge);
+    expected.addVertex({-4, 0});
+    expected.addVertex({-6, 0});
+    const auto expectedSource = LC_OffsetSourceGeometry::capture(expected);
+    REQUIRE(expectedSource);
+    const auto& expectedData = std::get<LC_OffsetPolylineData>(expectedSource->value);
+
+    for (const auto& [lane, dwg] : std::array<std::pair<Lane, bool>, 2>{{
+             {Lane::Binary18, false}, {Lane::Eed18, true}}}) {
+#ifndef DWGSUPPORT
+        if (dwg) continue;
+#endif
+        const auto path = directory.file(dwg ? "reflected.dwg" : "reflected.dxf");
+#ifdef DWGSUPPORT
+        if (dwg) f::dwgPolylineFile(path, raw, DRW::AC1032);
+        else f::binaryDxfPolyline(path, raw, DRW::AC1032);
+#else
+        f::binaryDxfPolyline(path, raw, DRW::AC1032);
+#endif
+        const auto outcome = stagedImport(path, lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        const auto* imported = dynamic_cast<const RS_Polyline*>(f::sole(*outcome.graphic));
+        REQUIRE(imported);
+        const auto actualSource = LC_OffsetSourceGeometry::capture(*imported);
+        REQUIRE(actualSource);
+        const auto& actualData = std::get<LC_OffsetPolylineData>(actualSource->value);
+        REQUIRE(actualData.segments.size() == expectedData.segments.size());
+        CHECK(actualData.startpoint.x == Catch::Approx(expectedData.startpoint.x));
+        CHECK(actualData.endpoint.x == Catch::Approx(expectedData.endpoint.x));
+        for (std::size_t i = 0; i < expectedData.segments.size(); ++i) {
+            CAPTURE(dwg, i);
+            REQUIRE(actualData.segments[i].index() == expectedData.segments[i].index());
+            if (const auto* expectedArc = std::get_if<RS_ArcData>(&expectedData.segments[i])) {
+                const auto& actualArc = std::get<RS_ArcData>(actualData.segments[i]);
+                CHECK(actualArc.center.x == Catch::Approx(expectedArc->center.x));
+                CHECK(actualArc.center.y == Catch::Approx(expectedArc->center.y));
+                CHECK(actualArc.radius == Catch::Approx(expectedArc->radius));
+                CHECK(actualArc.angle1 == Catch::Approx(expectedArc->angle1));
+                CHECK(actualArc.angle2 == Catch::Approx(expectedArc->angle2));
+                CHECK(actualArc.reversed == expectedArc->reversed);
+            }
+        }
+    }
+}
+
 TEST_CASE("unweighted spline source imports through operation-8 validation in DXF and DWG",
           "[lc-offsetcurve][import-session][typed-source][spline-variant]") {
     Setup setup;
