@@ -15054,3 +15054,23 @@ compatibility, EED packet and payload boundary arithmetic, and `git diff
 added to PR #3193. Next, push the product slice, update PR #3193 with the
 implementation and test evidence, and record exact remote head and CI status.
 Schema-2 persistence and the overall roadmap are not complete.
+
+## 354. Typed-Source Persistence Push and PR Update (2026-11-05)
+
+Product commit `8b01e83e490cf5f90cc4b6eebfa67a19547a36f8` and roadmap
+checkpoint `36c5a4a8c21f615db65128fe6fcef72cd677ff4e` are pushed to
+`codex/offset-2961-native-worker`. PR #3193 remains open and draft. Its title
+now reads “Add editable offset curves and native geometry worker”; the source
+support description documents schema-1 compatibility, nine schema-2 typed
+families, exact op-8 cache validation, fallback metadata preservation, and
+family-specific eligibility constraints. The previous GitHub connector denied
+PR edits/comments with 403; the authenticated GitHub CLI updated and verified
+the title/body successfully.
+
+At the time of the check, exact-head DWG/DXF fast verification, Windows x64 and
+ARM64 DWG/DXF verification, and the five reported Pixi platform jobs were
+pending. No result is inherited from the prior head. The product/source slice
+has the targeted local validation recorded in W353; the aggregate
+`[lc-offsetcurve]` filter remains an open CI/acceptance gate because its local
+run did not produce a terminal summary. PR review approval and the wider
+roadmap acceptance gates also remain open.
