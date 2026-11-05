@@ -1981,16 +1981,26 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         const RS_SplineData expectedCache = expectedSpline->getData();
         REQUIRE(expectedSpline->validate());
 
-        for (const int format : {0, 1, 2}) {
-            const bool dwg = format == 2;
+        for (const int format : {0, 1, 2, 3}) {
+            const bool dwg = format >= 2;
             const bool r14 = format == 1;
+            const bool r2000 = format == 3;
 #ifndef DWGSUPPORT
             if (dwg) continue;
 #endif
             xd::Definition carrier;
             carrier.source = definition;
             xd::Options encoding;
-            if (dwg) { encoding.eed = true; encoding.textEncoding = xd::TextEncoding::Utf16; }
+            if (dwg) {
+                encoding.eed = true;
+                if (r2000) {
+                    encoding.textEncoding = xd::TextEncoding::Legacy;
+                    encoding.legacyEncodedBytes = [](std::string_view text)
+                        -> std::optional<std::size_t> { return text.size(); };
+                } else {
+                    encoding.textEncoding = xd::TextEncoding::Utf16;
+                }
+            }
             else encoding.asciiDxf = false;
             const auto tags = xd::forExport(
                 {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))}, carrier, encoding);
@@ -2010,15 +2020,17 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
 
             const std::string suffix = std::to_string(variant + 3);
             const std::string extension = dwg ? ".dwg" : ".dxf";
-            const std::string version = r14 ? "-r14" : (dwg ? "-dwg" : "-r2018");
+            const std::string version = r14 ? "-r14" :
+                (r2000 ? "-r2000-dwg" : (dwg ? "-dwg" : "-r2018"));
             const auto input = directory.file("fit-points-" + suffix + version + extension);
 #ifdef DWGSUPPORT
-            if (dwg) f::dwgFile(input, cache, DRW::AC1032);
+            if (dwg) f::dwgFile(input, cache, r2000 ? DRW::AC1015 : DRW::AC1032);
             else f::binaryDxf(input, cache, r14 ? DRW::AC1014 : DRW::AC1032);
 #else
             f::binaryDxf(input, cache, r14 ? DRW::AC1014 : DRW::AC1032);
 #endif
-            const Lane lane = dwg ? Lane::Eed18 : (r14 ? Lane::Binary14 : Lane::Binary18);
+            const Lane lane = dwg ? (r2000 ? Lane::Eed2000 : Lane::Eed18)
+                                  : (r14 ? Lane::Binary14 : Lane::Binary18);
             const auto outcome = stagedImport(input, lane);
             REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
             REQUIRE(outcome.graphic);
