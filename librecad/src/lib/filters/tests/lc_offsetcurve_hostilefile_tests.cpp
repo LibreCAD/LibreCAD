@@ -1170,7 +1170,13 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     LC_SplinePointsData splinePoints{false, false};
     splinePoints.useControlPoints = true;
     splinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 11> sources{
+    const double quarterTurn = M_PI / 2.0;
+    LC_OffsetPolylineData closedArcPolyline{{2, 0}, {2, 0}, true, {
+        RS_ArcData{{0, 0}, 2, 0, quarterTurn, false},
+        RS_ArcData{{0, 0}, 2, quarterTurn, M_PI, false},
+        RS_ArcData{{0, 0}, 2, M_PI, 3 * quarterTurn, false},
+        RS_ArcData{{0, 0}, 2, 3 * quarterTurn, 2 * M_PI, false}}};
+    const std::array<LC_OffsetSourceGeometry, 12> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{splineSource}, LC_OffsetSourceGeometry{unweightedSpline},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
@@ -1180,7 +1186,8 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
         LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 0}, false,
-            {RS_LineData{{0, 0}, {2, 0}}}}}
+            {RS_LineData{{0, 0}, {2, 0}}}}},
+        LC_OffsetSourceGeometry{closedArcPolyline}
     };
     const auto app = std::make_shared<DRW_Variant>(1001, std::string("LibreCad"));
     for (std::size_t i = 0; i < sources.size(); ++i) {
