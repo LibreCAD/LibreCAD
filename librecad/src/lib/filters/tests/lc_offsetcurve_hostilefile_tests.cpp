@@ -1956,6 +1956,8 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
     fitVariants.emplace_back(false, false);
     fitVariants.back().splinePoints = {{0, 0}, {1, 1.5}, {2, 2}, {3, 1.5}, {4, 0}};
     fitVariants.emplace_back(true, false);
+    fitVariants.back().splinePoints = {{0, 0}, {2, 0}, {2, 2}, {0, 2}};
+    fitVariants.emplace_back(true, false);
     fitVariants.back().splinePoints = {{2, 0}, {1.4142135623730951, 1.4142135623730951},
         {0, 2}, {-1.4142135623730951, 1.4142135623730951}, {-2, 0},
         {-1.4142135623730951, -1.4142135623730951}, {0, -2},
