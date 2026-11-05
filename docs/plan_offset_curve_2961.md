@@ -15571,6 +15571,30 @@ assertions/2 cases; typed-source DXF/DWG persistence, 792 assertions/1 case;
 wrapped op-8 kernel, 43 assertions/1 case; full worker-client suite, 25,133
 assertions/20 cases; `git diff --check` passes. Commit
 `0b3647c26` contains the real-file test and direct-cache structural
-assertions. Push it, update PR #3193 with this correction and evidence, then
-recheck exact-head CI. Do not retain W369's rejected-fixture note as an open
-product issue.
+assertions. Commit `fa780083e` records this roadmap correction. Both are
+pushed, and PR #3193 was updated to remove the fixture-only caveat and record
+the successful DXF/DWG import evidence. Exact-head CI must be checked after
+the next push. Do not retain W369's rejected-fixture note as an open product
+issue.
+
+## 371. Cross-Family Native-Cache Operation-8 Matrix (2026-11-05)
+
+Expanded the joined-worker source-family matrix to retain each op-7 candidate
+that is actually eligible for a native cache, then submit that exact source
+definition/cache pair through op 8 and verify joined native promotion and
+exact cache/source preservation. This covers all representative one-cache
+results among the spline, spline-points, parabola, bounded-hyperbola, ellipse,
+line, arc, circle, and polyline samples; multi-output or otherwise ineligible
+results remain governed by the existing explicit refusal/fallback behavior.
+For the wrapped periodic cubic, the direct application materializer also
+produces a valid spline and is compared exactly against the worker-generated
+cache, tying the file-import fixture back to the production geometry result.
+
+The focused joined-worker source-family case passes 16,242 assertions/1 case;
+the complete worker-client suite passes 32,735 assertions/20 cases. These are
+fresh runs after the matrix expansion. Commit `bb93f6512` contains the test
+slice; it is local and needs its roadmap update, push, PR evidence, and
+exact-head CI check. Remaining work includes legal spline knot/weight/closure
+variants, hyperbola bound and side/distance sweeps, polyline orientation,
+repeated-vertex and closure layouts, and broader external/GUI/deployment
+acceptance.
