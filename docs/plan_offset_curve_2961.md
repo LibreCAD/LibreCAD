@@ -15673,7 +15673,24 @@ periodic/unweighted spline sweep and the cross-family representative matrix.
 
 The focused spline case passes 150 assertions/1 case; the complete
 worker-kernel suite passes 3,947 assertions/25 cases. Commit `210be4055`
-contains the test. These representative source/side cases do not exhaust knot
+contains the test; checkpoint `dd7533b2` records it. Both are pushed and PR
+#3193 contains the evidence. These representative source/side cases do not exhaust knot
 multiplicities, rational weight distributions, fit-point parameterization,
 periodic closure layouts, distance ranges, or multi-branch refusal. Push with
-this roadmap update, update PR #3193, and refresh exact-head CI.
+future roadmap updates and refresh exact-head CI.
+
+## 377. Closed-Arc-Polyline Typed-Source File Persistence (2026-11-05)
+
+Extended the real typed-source DXF/DWG save, reopen, exact-source comparison,
+and second-save matrix with a closed polyline made from four contiguous
+circular-arc segments. This verifies schema-2 persistence preserves its
+closure, segment order, centers, radii, sweep angles, and endpoints through
+both file adapters. It does not claim native op-8 promotion: closed polyline
+offsets that produce multiple ordinary branches remain explicitly refused as
+a native single-cache entity, as covered by W375.
+
+The focused file-persistence test passes 864 assertions/1 case. Commit
+`bfe6401fb` contains the test. Push it with this roadmap update, append the
+file-persistence receipt to PR #3193, and recheck exact-head CI. Remaining
+polyline gaps include bulge-origin import variants, repeated/degenerate
+vertices, longer mixed segment runs, and side/distance sweeps.
