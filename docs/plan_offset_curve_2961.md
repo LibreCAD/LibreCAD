@@ -15111,13 +15111,12 @@ that describes the production widget as ellipse-only is superseded by this
 status; W352's contract remains valid, with the eligibility-gating detail
 below.
 
-The current implementation slice extends `RS_Creation::createParallel()`
-dispatch to ellipse and polyline, and adds a parity test comparing preview and
-committed output to the curve-offset engine. The target built successfully;
-`[lc-offsetcurve][f-actions][parallel]` passed 3,942 assertions/12 cases. This
-closes only that dispatch gap; it does not prove native editable-offset
-eligibility or persistence for those families. Record the commit and remote
-head after the slice is pushed.
+Commit `9dd1597b7` extends `RS_Creation::createParallel()` dispatch to ellipse
+and polyline, and adds a parity test comparing preview and committed output to
+the curve-offset engine. The target built successfully;
+`[lc-offsetcurve][f-actions][parallel]` passed 3,942 assertions/12 cases. The
+commit is pushed to PR #3193. This closes only that dispatch gap; it does not
+prove native editable-offset eligibility or persistence for those families.
 
 ### Implementation slices and exit criteria
 
@@ -15181,5 +15180,38 @@ This work is complete only when the widget can change type before picking,
 every production-eligible family is correctly selectable and replaceable,
 parabola identity is preserved, all source/cache changes are atomic and
 validated, and each family passes supported DXF/DWG round-trips. The current
-nine-item combo, the existing line/parabola/ellipse widget test, and the
-uncommitted ellipse/polyline ordinary-dispatch fix are partial evidence only.
+nine-item combo, the representative nine-family widget test in W356, and
+ellipse/polyline ordinary-dispatch fix in `9dd1597b7` are partial evidence;
+variant-specific eligibility and exact-head persistence requalification are
+still open.
+
+## 356. Nine-Family Properties Replacement Matrix (2026-11-05, in progress)
+
+Added a real Properties-widget integration test for ellipse, spline,
+spline-points, parabola, bounded hyperbola, line, arc, circle, and polyline.
+For each family it creates a live document entity, changes the source-type
+filter, verifies the offset remains unchanged before selection, selects the
+matching entity, waits for the real joined worker, and checks the resulting
+source identity and captured geometry. Ellipse replacement intentionally
+retains the compatible legacy editable definition; the other eight use typed
+source definitions. The test compares against geometry captured from each
+live entity, accounting for container normalization of derived arc/polyline
+fields.
+
+Debug CMake `librecad_tests` build succeeded. The new focused matrix passed
+2,315 assertions/1 case; the complete Properties source suite passed 2,384
+assertions/3 cases. The test establishes successful replacement for one
+representative geometry of each of the nine modeled families, not all spline
+degrees/flags, hyperbola bounds, polyline segment/bulge layouts, output
+cardinalities, or every source distance. Those remain in the production
+eligibility and native-lifecycle matrix. Per-family DXF/DWG save/reopen/import/
+second-save evidence remains as recorded in W353 and still needs exact-head
+requalification after the upcoming PR push.
+
+The cross-type source-picker interaction is therefore covered for the nine
+base families, including type-filter no-side-effects and parabola identity.
+The unconditional type list is supported by these representative successful
+worker replacements, but its full advertised eligibility still depends on
+closing the variant-specific P1/P2 audit; unsupported variants must continue
+to fail atomically with an explicit reason. This does not complete the overall
+source-support plan or its external acceptance gates.

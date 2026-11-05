@@ -31,6 +31,7 @@
 #include "lc_entitypropertieseditor.h"
 #include "lc_selectedset.h"
 #include "lc_offsetcurve.h"
+#include "lc_offsetsource.h"
 #include "lc_parabola.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "../../../../lib/offset_worker/lc_offsetworkerclient.h"
@@ -688,6 +689,87 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
     REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
     REQUIRE(clone->sourceDefinition());
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse);
+}
+
+TEST_CASE("Native source picker replaces every modeled source family without filter side effects",
+          "[gui][dialog][offsetcurve][source][typed][matrix]") {
+    Fixture f;
+    RS_SplineData spline{2, false};
+    spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    spline.knotslist = {0, 0, 0, 1, 1, 1};
+    spline.weights = {1, .7, 1};
+    LC_SplinePointsData points{false, false};
+    points.useControlPoints = true;
+    points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 9> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
+        LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{points},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, .25, 1.5, false}},
+        LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}}
+    };
+    std::array<qulonglong, sources.size()> sourceIds{};
+    std::array<RS_Entity*, sources.size()> sourceEntities{};
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        auto entity = sources[i].makeEntity();
+        REQUIRE(entity);
+        auto* raw = entity.get();
+        f.graphic.addEntity(raw);
+        sourceIds[i] = static_cast<qulonglong>(raw->getId());
+        sourceEntities[i] = raw;
+        entity.release();
+    }
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    REQUIRE(typeBox->count() == static_cast<int>(sources.size()));
+
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        CAPTURE(i);
+        const Snapshot before(*clone);
+        const auto kind = sources[i].kind();
+        const auto expected = LC_OffsetSourceGeometry::capture(*sourceEntities[i]);
+        REQUIRE(expected);
+        REQUIRE(expected->kind() == kind);
+        const int typeIndex = typeBox->findData(static_cast<int>(kind));
+        REQUIRE(typeIndex >= 0);
+        typeBox->setCurrentIndex(typeIndex);
+        before.geometry(*clone);
+        CHECK_FALSE(widget.isPreparing());
+
+        int entityIndex = -1;
+        for (int j = 0; j < sourceBox->count(); ++j) {
+            if (sourceBox->itemData(j).toULongLong() == sourceIds[i]) entityIndex = j;
+        }
+        REQUIRE(entityIndex >= 0);
+        sourceBox->setCurrentIndex(entityIndex);
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult());
+        REQUIRE(*widget.lastEditResult());
+        if (kind == LC_OffsetSourceGeometry::Kind::Ellipse) {
+            CHECK(clone->hasEditableDefinition());
+            CHECK_FALSE(clone->sourceDefinition());
+            const LC_OffsetSourceGeometry actual{clone->definition().basis};
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(actual) ==
+                  LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
+        } else {
+            REQUIRE(clone->sourceDefinition());
+            CHECK(clone->sourceDefinition()->source.kind() == kind);
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(clone->sourceDefinition()->source) ==
+                  LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
+        }
+        CHECK(sourceBox->currentData().toULongLong() == sourceIds[i]);
+    }
 }
 
 TEST_CASE("Native field Return followed by focus out does not submit twice",
