@@ -15878,6 +15878,21 @@ across six cases. `git diff --check` passes. This covers one three-point
 fit-point representation, not all legal fit counts, tangent constraints, or
 fit-parameter layouts.
 
+## 390. Fit-Point Count Variants in DXF/DWG Import Promotion (2026-11-05)
+
+Expanded W389's staged-import promotion matrix from one three-point
+`LC_SplinePoints` fixture to three-, four-, and five-point fit-point sources.
+Each source independently generates a canonical single-spline cache and is
+written/imported as both AC1032 DXF and DWG. Operation-8 validation promotes
+all six imports, with exact typed-source encoding and cache fingerprints
+checked after import.
+
+The focused fit-point import case passes 1,451 assertions; the combined
+spline-variant, fit-point, and typed-source persistence selection passes 4,410
+assertions across six cases. `git diff --check` passes. These fixtures cover
+three point counts and representative smooth shapes, not all point
+configurations, closed fit-point data, or constrained endpoint tangents.
+
 ## 391. Closed Fit-Point Spline Import Promotion (2026-11-05)
 
 Extended the fit-point source matrix with a closed eight-point `LC_SplinePoints`
@@ -15904,18 +15919,3 @@ spline-variant, fit-point, and typed-source persistence selection passes 5,897
 assertions across six cases. `git diff --check` passes. This is version
 coverage for the selected fit-point shapes, not general historical DWG
 coverage or every legal interpolation/tangent layout.
-
-## 390. Fit-Point Count Variants in DXF/DWG Import Promotion (2026-11-05)
-
-Expanded W389's staged-import promotion matrix from one three-point
-`LC_SplinePoints` fixture to three-, four-, and five-point fit-point sources.
-Each source independently generates a canonical single-spline cache and is
-written/imported as both AC1032 DXF and DWG. Operation-8 validation promotes
-all six imports, with exact typed-source encoding and cache fingerprints
-checked after import.
-
-The focused fit-point import case passes 1,451 assertions; the combined
-spline-variant, fit-point, and typed-source persistence selection passes 4,410
-assertions across six cases. `git diff --check` passes. These fixtures cover
-three point counts and representative smooth shapes, not all point
-configurations, closed fit-point data, or constrained endpoint tangents.
