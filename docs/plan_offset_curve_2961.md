@@ -14587,6 +14587,25 @@ spline-points, parabola, bounded hyperbola), and encoded/decoded their ordinary
 branch results: 150 assertions passed. The complete kernel suite passed 2,878
 assertions in 19 cases; the complete request suite passed 597,838 assertions
 in 15 cases. `git diff --check` passed. This closes only the isolated worker
-generation primitive; request-client dispatch, native entity lifecycle,
+generation primitive; document/GUI callers, native entity lifecycle,
 source-specific cache validation, Properties, schema-2 DXF/DWG persistence,
 and the expanded line/arc/circle/polyline inventory remain open.
+
+## 343. Typed Source Completion Materialization (2026-11-05)
+
+Extended `LC_OffsetWorkerCompletion::ordinary()` to accept joined op-7
+completions as well as the existing ellipse Generate operation. It retains the
+same joined-process requirement, ordinary line/spline validation, metadata
+stripping, local attributes/layer handling, fresh identity assignment, and
+deep-output limits. It cannot produce an editable native entity from op 7.
+
+Validation: rebuilt the actual helper and
+`librecad_offset_worker_client_tests` in Debug CMake. The real-process case
+submitted all five modeled source families, joined each worker, and
+materialized the complete ordinary result: 2,744 assertions passed. The full
+client suite passed 19,943 assertions in 18 cases. Together with W342, worker
+kernel, request codec, reply codec, real process framing, and ordinary entity
+materialization now cover all five typed source variants. This remains a
+worker primitive only; the native offset entity, callers, type-aware
+Properties picker, persistence, and expanded production source inventory are
+still incomplete.

@@ -47,7 +47,8 @@ LC_OffsetWorkerCompletion::ordinary(const RS_Entity& attributes) const {
     if (!m_joined) return std::nullopt;
     const auto* result = std::get_if<LC_OffsetWorkerResult::Native>(&m_reply.result);
     const auto* generate = std::get_if<LC_OffsetWorkerRequest::Generate>(&m_request.operation);
-    if (!generate || generate->throughPoint || !result ||
+    const auto* sourceGenerate = std::get_if<LC_OffsetWorkerRequest::GenerateSource>(&m_request.operation);
+    if ((!generate && !sourceGenerate) || (generate && generate->throughPoint) || !result ||
         result->ordinaryStatus != LC_OffsetWorkerResult::OrdinaryStatus::Complete)
         return std::nullopt;
     if (!attributes.cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) return std::nullopt;
@@ -55,10 +56,11 @@ LC_OffsetWorkerCompletion::ordinary(const RS_Entity& attributes) const {
     metadataLimits.maximumItems = 4096; metadataLimits.maximumBytes = std::size_t{1} << 20;
     const auto foreign = LC_OffsetCurveXData::parseAndStrip(attributes.getDrwExtData(), metadataLimits);
     if (!foreign.remaining) return std::nullopt;
+    const auto& limits = generate ? generate->limits : sourceGenerate->limits;
     auto cap = makeDefaultOffsetSourceBudget();
-    cap.maxCubicPieces = std::min(cap.maxCubicPieces, generate->limits.outputBudget.maxCubicPieces);
-    cap.maxOutputEntities = std::min(cap.maxOutputEntities, generate->limits.outputBudget.maxOutputEntities);
-    cap.maxDeepEntities = std::min(cap.maxDeepEntities, generate->limits.outputBudget.maxDeepEntities);
+    cap.maxCubicPieces = std::min(cap.maxCubicPieces, limits.outputBudget.maxCubicPieces);
+    cap.maxOutputEntities = std::min(cap.maxOutputEntities, limits.outputBudget.maxOutputEntities);
+    cap.maxDeepEntities = std::min(cap.maxDeepEntities, limits.outputBudget.maxDeepEntities);
     std::vector<std::unique_ptr<RS_Entity>> entities;
     entities.reserve(result->ordinary.size());
     std::size_t deepEntities = 0;

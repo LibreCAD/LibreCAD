@@ -483,6 +483,54 @@ TEST_CASE("Worker ordinary completions materialize exact plain output with fresh
     }
 }
 
+TEST_CASE("Worker client joins typed source generation for every modeled source family", Tags) {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Layer layer{QStringLiteral("typed source")};
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    attributes.setLayer(&layer);
+
+    RS_SplineData spline{2, false};
+    spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    spline.knotslist = {0, 0, 0, 1, 1, 1};
+    spline.weights = {1, .7, 1};
+    LC_SplinePointsData points{false, false};
+    points.useControlPoints = true;
+    points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 5> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
+        LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{points},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}}
+    };
+
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        CAPTURE(i);
+        const Req::Request input{token(qint64(i + 1)), Req::GenerateSource{
+            LC_OffsetSourceDefinition{sources[i], .25, 1e-4, false}, {}}};
+        Receipts receipts;
+        REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
+        const auto& completion = completed(receipts.at(0), qint64(i + 1), 7);
+        const auto& result = std::get<Reply::Native>(completion.reply().result);
+        REQUIRE(result.engineStatus);
+        CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        CHECK_FALSE(completion.native(attributes));
+        auto entities = completion.ordinary(attributes);
+        REQUIRE(entities);
+        REQUIRE_FALSE(entities->empty());
+        for (const auto& entity : *entities) {
+            CHECK(entity->getParent() == &owner);
+            CHECK(entity->getLayer(false) == &layer);
+            CHECK((entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline));
+        }
+    }
+    CHECK(owned.get().healthyAndIdle());
+}
+
 TEST_CASE("Worker Produce completions materialize ordered native copies without publication authority", Tags) {
     auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
     RS_EntityContainer owner; RS_Layer layer{QStringLiteral("produce local")};
