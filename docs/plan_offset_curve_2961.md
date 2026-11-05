@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W395; chronological evidence follows): implementation slices
+Current status (W396; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -70,7 +70,7 @@ Changing the family filter alone is non-mutating; selecting a candidate goes
 through guarded worker-backed replacement. This closes the requested picker
 behavior, not exhaustive eligibility for every legal geometry variant or
 every distance/side, and not the broader plan's acceptance gates. The
-recent W378-W395 source-variant slices add malformed-polyline refusal,
+recent W378-W396 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15962,3 +15962,16 @@ spline-variant, fit-point, and typed-source persistence selection passes
 12,701 assertions across six cases. `git diff --check` passes. This is a
 two-sided check at one distance magnitude, not a full signed-distance or
 curvature/topology sweep.
+
+## 396. Parabola Source Highlight After Cross-Type Replacement (2026-11-05)
+
+Extended the Properties integration test to switch from a line source to a
+parabola, then invoke “Select in drawing” after the joined worker replacement.
+The currently matched parabola is selected, confirming that the control
+resolves and highlights the new source after a cross-family change. Selection
+remains additive by design; the test does not clear unrelated prior selection.
+
+The focused typed-source Properties suite passes 2,793 assertions across two
+cases; `git diff --check` passes. This supplements the nine-family replacement
+matrix, but does not replace visible GUI acceptance or stale/deleted-source
+interaction coverage.
