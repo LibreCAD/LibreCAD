@@ -15213,8 +15213,9 @@ This closes representative Properties-level magnitude/side edits for all nine
 modeled families. It does not close every numeric/boundary case, transform and
 grip behavior, native replacement semantics for multiple output branches,
 polyline/spline variant eligibility, DXF/DWG exact-head requalification, or
-the broader roadmap gates. Commit, push, update PR #3193, and record the exact
-head/checks after slice review.
+the broader roadmap gates. This slice is committed as `540c0b19e` and pushed
+to PR #3193; exact-head checks and subsequent persistence qualification are
+recorded in W358.
 
 ## 356. Nine-Family Properties Replacement Matrix (2026-11-05, in progress)
 
@@ -15246,3 +15247,29 @@ worker replacements, but its full advertised eligibility still depends on
 closing the variant-specific P1/P2 audit; unsupported variants must continue
 to fail atomically with an explicit reason. This does not complete the overall
 source-support plan or its external acceptance gates.
+
+## 358. Typed-Source Persistence and Worker Requalification (2026-11-05)
+
+Re-ran typed-source persistence/import/worker coverage after the latest source
+picker and Properties-edit changes. Real DXF and DWG save, reopen, import, and
+second-save coverage across all nine source families passed 648 assertions.
+The typed-source import test, including operation-8 exact-cache validation and
+fallback preservation, passed 955 assertions. The complete worker-client
+suite passed 23,247 assertions/20 cases. These validate existing file and
+worker paths at this source head; they do not prove every spline, hyperbola,
+or polyline variant is eligible.
+
+Exact PR head is `540c0b19e27a8667a3785f30ee67d4361de2cdd3`, open and draft.
+At the check, the five Pixi platform jobs (macOS Intel/latest, Ubuntu
+ARM64/latest, and Windows) were pending, with no failure surfaced. No check
+result from an earlier head is inherited. PR #3193's description contains the
+source-dispatch, nine-family picker, and generic magnitude/side-edit receipts.
+
+The remaining implementation focus is the variant-level production
+eligibility matrix: supported spline data shapes, bounded hyperbola bounds,
+polyline line/arc segment combinations and closure, and native single-cache
+representability versus ordinary multi-output fallback. Preserve the current
+explicit refusal/fallback rules, add a test for every newly admitted or
+refused variant, and only then align the source type/entity choices with that
+matrix. Review approval, exact-head CI completion, and broader GUI/platform
+acceptance remain open.
