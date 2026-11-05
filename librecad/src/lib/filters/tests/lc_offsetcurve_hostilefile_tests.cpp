@@ -1157,12 +1157,23 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     splineSource.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
     splineSource.knotslist = {0, 0, 0, 1, 1, 1};
     splineSource.weights = {1, .7, 1};
+    RS_SplineData unweightedSpline{1, false};
+    unweightedSpline.controlPoints = {{0, 0}, {1, 0}, {2, 0}};
+    unweightedSpline.knotslist = {0, 0, .5, 1, 1};
+    RS_Spline periodic{nullptr, RS_SplineData{3, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
+                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
+        periodic.addControlPoint(point);
+    periodic.setClosed(true);
+    auto wrappedSpline = periodic.getData();
+    wrappedSpline.weights.clear();
     LC_SplinePointsData splinePoints{false, false};
     splinePoints.useControlPoints = true;
     splinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 9> sources{
+    const std::array<LC_OffsetSourceGeometry, 11> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
-        LC_OffsetSourceGeometry{splineSource}, LC_OffsetSourceGeometry{splinePoints},
+        LC_OffsetSourceGeometry{splineSource}, LC_OffsetSourceGeometry{unweightedSpline},
+        LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
