@@ -8480,9 +8480,14 @@ RS_FilterDXFRW::mergedOffsetSplineXData(const RS_Entity &source,
     const auto &context = *m_offsetOutputContext;
     std::optional<xd::Definition> current;
     const auto *native = dynamic_cast<const LC_OffsetCurve *>(&source);
-    if (includeDefinition && native && native->hasGeneralizedSourceDefinition())
-      return fail(xd::Reason::InvalidDefinition);
-    if (includeDefinition && native && native->hasEditableDefinition()) {
+    if (includeDefinition && native && native->hasGeneralizedSourceDefinition()) {
+      if (native->unknownOwnedTail().size() > xd::MaximumTailItems) return fail(xd::Reason::TailLimit);
+      xd::Definition definition;
+      definition.source = *native->sourceDefinition();
+      definition.reservedFlags = native->unknownOwnedFlags();
+      definition.tail = native->unknownOwnedTail();
+      current = std::move(definition);
+    } else if (includeDefinition && native && native->hasEditableDefinition()) {
       if (native->unknownOwnedTail().size() > xd::MaximumTailItems) return fail(xd::Reason::TailLimit);
       current = xd::Definition{native->definition(), native->unknownOwnedFlags(),
                                native->unknownOwnedTail()};
@@ -8567,11 +8572,66 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     for (const auto &diagnostic : parsed.diagnostics)
       m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::XData,
           int(diagnostic.reason), diagnostic.item);
-    if (parsed.knownCandidates && !(context && parsed.status == xd::Status::Schema1 &&
+    const bool recognizedSchema = parsed.status == xd::Status::Schema1 || parsed.status == xd::Status::Schema2;
+    if (parsed.knownCandidates && !(context && recognizedSchema &&
         parsed.definition && parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE))
       ++m_offsetImportBudget->refused;
   }
-  const auto *remaining = parsed.remaining ? &*parsed.remaining : nullptr;
+  const xd::XData *remaining = parsed.remaining ? &*parsed.remaining : nullptr;
+  if (context && parsed.status == xd::Status::Schema2 && parsed.definition && parsed.definition->source &&
+      parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE) {
+    const auto raw = LC_OffsetCurveCarrier::fromRawSpline(*data);
+    if (m_offsetCurveCacheOnlyImport) {
+      auto display = raw
+          ? std::make_unique<RS_Spline>(m_currentContainer, *raw.data)
+          : makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+      applyImportedSplineAttributes(display.get(), data, remaining);
+      m_currentContainer->addEntity(display.release());
+      return;
+    }
+    if (raw && m_deferOffsetAdmission && m_offsetImportBudget) {
+      try {
+        auto source = parsed.definition->source->source.makeEntity();
+        const double magnitude = std::abs(parsed.definition->source->signedDistance);
+        const double tolerance = source && std::isfinite(magnitude) && magnitude > RS_TOLERANCE
+            ? LC_CurveOffset::makeDirectOptions(*source, magnitude,
+                parsed.definition->source->relativeTolerance).tolerance.requestedGeometry
+            : std::numeric_limits<double>::quiet_NaN();
+        if (std::isfinite(tolerance) && tolerance > 0 &&
+            m_offsetImportBudget->admit(*raw.data, *parsed.definition, remaining->size(),
+                                        &data->extData)) {
+          auto fallback = makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+          applyImportedSplineAttributes(fallback.get(), data, remaining);
+          if (!fallback->cloneMetadataFits(1024, std::size_t{1} << 20, 4096)) {
+            ++m_offsetImportBudget->refused;
+            m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Budget, 1);
+            m_currentContainer->addEntity(fallback.get()); fallback.release();
+            return;
+          }
+          auto carrier = std::make_shared<LC_OffsetImportPlaceholder::Carrier>();
+          carrier->cache = *raw.data;
+          carrier->definition = *parsed.definition;
+          carrier->fallbackXData = data->extData;
+          carrier->tolerance = tolerance;
+          auto pending = std::make_unique<LC_OffsetImportPlaceholder>(*fallback, std::move(carrier));
+          m_currentContainer->addEntity(pending.get()); pending.release();
+          return;
+        }
+        ++m_offsetImportBudget->refused;
+        m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Carrier, -1);
+      } catch (const std::bad_alloc &) {
+        ++m_offsetImportBudget->refused;
+        m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Budget, 2);
+      }
+    } else if (!raw && m_offsetImportBudget) {
+      ++m_offsetImportBudget->refused;
+      m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::Carrier,
+          int(raw.refusal), raw.item.value_or(0));
+    }
+    // Until a joined op-8 receipt certifies the source/cache pair, preserve the
+    // exact schema-2 XDATA on ordinary fallback geometry.
+    remaining = &data->extData;
+  }
   if (context && parsed.status == xd::Status::Schema1 && parsed.definition &&
       parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE) {
     const auto raw = LC_OffsetCurveCarrier::fromRawSpline(*data);

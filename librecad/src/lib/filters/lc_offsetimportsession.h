@@ -36,7 +36,8 @@ struct LC_OffsetImportBudget {
     std::size_t suppressedDiagnostics = 0;
     std::vector<LC_OffsetImportDiagnostic> diagnostics;
     void report(LC_OffsetImportDiagnostic::Kind, int reason = 0, std::size_t item = 0, int detail = 0);
-    bool admit(const RS_SplineData&, const LC_OffsetCurveXData::Definition&, std::size_t metadataItems);
+    bool admit(const RS_SplineData&, const LC_OffsetCurveXData::Definition&, std::size_t metadataItems,
+               const LC_OffsetCurveXData::XData* fallbackXData = nullptr);
 };
 
 /** Private carrier used only inside an unpublished import drawing. It keeps no
@@ -46,6 +47,7 @@ public:
     struct Carrier {
         RS_SplineData cache;
         LC_OffsetCurveXData::Definition definition;
+        LC_OffsetCurveXData::XData fallbackXData;
         double tolerance = 0;
     };
     LC_OffsetImportPlaceholder(const RS_Spline& fallback, std::shared_ptr<const Carrier> carrier)

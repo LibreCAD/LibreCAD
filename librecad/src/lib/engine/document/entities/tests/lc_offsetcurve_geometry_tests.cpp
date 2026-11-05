@@ -623,7 +623,9 @@ TEST_CASE("Offset tolerance helper agrees with existing engine options", "[lc-of
     CHECK(std::isnan(LC_CurveOffset::toleranceFor(source, 1.0, std::numeric_limits<double>::infinity())));
     const RS_Line line{nullptr, RS_LineData{RS_Vector{0.0, 0.0}, RS_Vector{1.0, 0.0}}};
     CHECK(LC_CurveOffset::relativeOffsetTolerance(line) == LC_CurveOffset::kDefaultRelativeOffsetTolerance);
-    CHECK(std::isnan(LC_CurveOffset::toleranceFor(line, 1.0, 1e-6)));
+    const double lineTolerance = LC_CurveOffset::toleranceFor(line, 1.0, 1e-6);
+    CHECK(std::isfinite(lineTolerance));
+    CHECK(lineTolerance > 0.0);
 
     auto distantData = basis();
     distantData.center = RS_Vector{1e12, -1e12};

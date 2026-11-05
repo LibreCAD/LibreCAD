@@ -16,6 +16,7 @@
 #include <stdexcept>
 
 #include "intern/drw_textcodec.h"
+#include "librecad/src/lib/offset_worker/lc_offsetworkerrequest.h"
 #include "rs_line.h"
 
 namespace xd = LC_OffsetCurveXData;
@@ -1090,4 +1091,149 @@ TEST_CASE("schema accepted encoding boundary tails survive native storage and se
         sameTags(*encoded, snapshot);
         sameTags(input, snapshot);
     }
+}
+
+TEST_CASE("schema two typed source definitions round-trip every source family in DXF and EED",
+          "[offset-xdata][typed-source][persistence]") {
+    namespace values = LC_OffsetWorkerRequest::Values;
+    RS_SplineData spline{2, false};
+    spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    spline.knotslist = {0, 0, 0, 1, 1, 1};
+    spline.weights = {1, .7, 1};
+    LC_SplinePointsData points{false, false};
+    points.useControlPoints = true;
+    points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 9> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
+        LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{points},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, 0, 1, false}},
+        LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 0}, false,
+            {RS_LineData{{0, 0}, {2, 0}}}}}
+    };
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        CAPTURE(i);
+        const LC_OffsetSourceDefinition source{sources[i], -.75, .00025, true};
+        for (const auto& options : {xd::Options{}, eed()}) {
+            auto current = xd::Definition{};
+            current.source = source;
+            current.reservedFlags = 0x10;
+            current.tail = {{1000, QStringLiteral("typed tail")}, {1070, std::int16_t{23}}};
+            const auto encoded = xd::forExport({}, current, options);
+            REQUIRE(encoded);
+            const auto parsed = xd::parseAndStrip(*encoded, options);
+            REQUIRE(parsed.status == xd::Status::Schema2);
+            REQUIRE(parsed.definition);
+            REQUIRE(parsed.definition->source);
+            CHECK(parsed.definition->reservedFlags == 0x10);
+            CHECK(parsed.definition->tail.size() == 2);
+            CHECK(parsed.definition->source->source.kind() == sources[i].kind());
+            const auto before = values::encodeSourceDefinition(source);
+            const auto after = values::encodeSourceDefinition(*parsed.definition->source);
+            REQUIRE(before); REQUIRE(after);
+            CHECK(QCborValue(*before).toCbor() == QCborValue(*after).toCbor());
+            const auto reencoded = xd::forExport(*parsed.remaining, parsed.definition, options);
+            REQUIRE(reencoded);
+            sameTags(*reencoded, *encoded);
+        }
+    }
+}
+
+TEST_CASE("schema two rejects malformed or oversized tagged-source binary payloads",
+          "[offset-xdata][typed-source][hostile]") {
+    auto malformed = Tags{str(1001, "LibreCad"), str(1000, "LC_OFFSET_CURVE"), str(1002, "{"),
+        integer(1070, 2), str(1000, "TYPED_SOURCE"), integer(1070, 0),
+        std::make_shared<DRW_Variant>(1004, std::vector<std::uint8_t>{0xff}), str(1002, "}")};
+    auto parsed = xd::parseAndStrip(malformed);
+    CHECK(parsed.status == xd::Status::Invalid);
+    CHECK_FALSE(parsed.definition);
+
+    auto tooLarge = xd::Definition{};
+    tooLarge.source = LC_OffsetSourceDefinition{
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2000, 0}, false,
+            {RS_LineData{{0, 0}, {1, 0}}}}}, .5, 1e-4, false};
+    // Repeated control data makes the owned CBOR exceed the fixed payload cap.
+    auto& polyline = std::get<LC_OffsetPolylineData>(tooLarge.source->source.value);
+    polyline.segments.clear();
+    for (int i = 0; i < 2000; ++i)
+        polyline.segments.emplace_back(RS_LineData{{double(i), 0}, {double(i + 1), 0}});
+    xd::Diagnostics diagnostics;
+    CHECK_FALSE(xd::forExport({}, tooLarge, {}, &diagnostics));
+    CHECK(has(diagnostics, xd::Reason::InvalidDefinition));
+}
+
+TEST_CASE("schema two typed-source byte cap admits its largest encodable payload",
+          "[offset-xdata][typed-source][boundary]") {
+    namespace values = LC_OffsetWorkerRequest::Values;
+    constexpr std::size_t maximumBytes = 48u * 1024u;
+    const auto sourceForSegments = [](std::size_t count) {
+        LC_OffsetPolylineData polyline{{0, 0}, {static_cast<double>(count), 0}, false, {}};
+        polyline.segments.reserve(count);
+        for (std::size_t i = 0; i < count; ++i) {
+            polyline.segments.emplace_back(RS_LineData{{static_cast<double>(i), 0},
+                {static_cast<double>(i + 1), 0}});
+        }
+        return LC_OffsetSourceDefinition{LC_OffsetSourceGeometry{std::move(polyline)}, .5, 1e-4, false};
+    };
+    const auto encodedSize = [&](std::size_t count) {
+        const auto fields = values::encodeSourceDefinition(sourceForSegments(count));
+        REQUIRE(fields);
+        return static_cast<std::size_t>(QCborValue(*fields).toCbor().size());
+    };
+
+    std::size_t accepted = 0;
+    std::size_t rejected = 1;
+    while (encodedSize(rejected) <= maximumBytes) {
+        accepted = rejected;
+        rejected *= 2;
+    }
+    while (rejected - accepted > 1) {
+        const auto middle = accepted + (rejected - accepted) / 2;
+        if (encodedSize(middle) <= maximumBytes) accepted = middle;
+        else rejected = middle;
+    }
+    REQUIRE(accepted > 0);
+    CHECK(encodedSize(accepted) <= maximumBytes);
+    CHECK(encodedSize(rejected) > maximumBytes);
+
+    for (const auto& options : {xd::Options{}, eed()}) {
+        auto current = xd::Definition{};
+        current.source = sourceForSegments(accepted);
+        REQUIRE(xd::forExport({}, current, options));
+        current.source = sourceForSegments(rejected);
+        xd::Diagnostics diagnostics;
+        CHECK_FALSE(xd::forExport({}, current, options, &diagnostics));
+        CHECK(has(diagnostics, xd::Reason::InvalidDefinition));
+    }
+}
+
+TEST_CASE("schema two ASCII DXF byte preflight includes binary-to-hex expansion",
+          "[offset-xdata][typed-source][boundary]") {
+    LC_OffsetPolylineData polyline{{0, 0}, {128, 0}, false, {}};
+    polyline.segments.reserve(128);
+    for (int i = 0; i < 128; ++i)
+        polyline.segments.emplace_back(RS_LineData{{double(i), 0}, {double(i + 1), 0}});
+    xd::Definition current;
+    current.source = LC_OffsetSourceDefinition{
+        LC_OffsetSourceGeometry{std::move(polyline)}, .5, 1e-4, false};
+    const auto fields = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*current.source);
+    REQUIRE(fields);
+    const auto payload = static_cast<std::size_t>(QCborValue(*fields).toCbor().size());
+    const auto chunks = payload / 127 + (payload % 127 != 0);
+    // APPID header (11), owned marker/kind/flags/braces (43), hex payload,
+    // and two framing bytes for each emitted binary group.
+    const auto encodedBytes = 54 + 2 * payload + 2 * chunks;
+
+    xd::Options options;
+    options.asciiDxf = true;
+    options.maximumBytes = encodedBytes;
+    REQUIRE(xd::forExport({}, current, options));
+    --options.maximumBytes;
+    xd::Diagnostics diagnostics;
+    CHECK_FALSE(xd::forExport({}, current, options, &diagnostics));
+    CHECK(has(diagnostics, xd::Reason::ResourceLimit));
 }

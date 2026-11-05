@@ -14898,14 +14898,14 @@ the established ellipse-definition editing path. Source highlighting
 re-resolves the entity ID immediately before selection. Non-ellipse source
 geometry editors remain disabled.
 
-The selector is intentionally a partial UI milestone, not feature completion:
-schema 1 can only persist ellipse definitions. The DXF/DWG export path now
-refuses generalized source definitions with an explicit serialization
-diagnostic instead of writing stale ellipse metadata or degrading them to
-ordinary splines. The next mandatory slice is the versioned tagged-source
-XDATA/EED schema and per-family round-trip coverage. Also retain P1's
-production-eligibility audit: listing all tagged worker kinds does not prove
-every kind is eligible for every user-facing creation path.
+The selector is intentionally a partial UI milestone, not feature completion.
+At the time of this entry, schema 1 could only persist ellipse definitions and
+generalized export was refused. Section 351 supersedes that persistence status:
+schema-2 typed-source XDATA/EED encoding and the start of deferred import are
+now present in the working tree, but remain uncommitted and not yet qualified
+by file-level round trips. Also retain P1's production-eligibility audit:
+listing all tagged worker kinds does not prove every kind is eligible for every
+user-facing creation path.
 
 Validation: Debug CMake built `librecad_tests`, worker-edit tests, and
 worker-client tests. The focused source UI suite passed 69 assertions/2 cases;
@@ -14914,3 +14914,143 @@ worker-edit suite passed 101,553/15; and the focused joined typed-source edit
 passed 2,130 assertions. The full worker-client suite had passed
 26,493/19 previously, but the latest rerun narrowly hit its 24-second suite
 watchdog under load. `git diff --check` passed.
+
+## 351. Schema-2 Typed-Source Persistence (2026-11-05, in progress)
+
+Working-tree changes now add a version-2 `TYPED_SOURCE` sublist while retaining
+schema-1 ellipse encoding. The typed source is serialized with the existing
+worker tagged-source value codec, wrapped in bounded CBOR, and stored as
+contiguous 1004 binary chunks; typed-source payloads are capped at 48 KiB.
+Unknown schema-2 sublists remain opaque for forward compatibility. The DXF/DWG
+export integration now emits typed metadata instead of refusing generalized
+sources. Deferred spline import recognizes schema 2, accounts for the source,
+validates its cache through worker operation 8, and materializes a native
+offset only from a joined validated completion. Existing schema-1 direct and
+deferred paths are preserved.
+
+The import budget now estimates decoded typed-source allocations by source
+family and vector capacity rather than multiplying encoded CBOR size. If
+operation-8 cache validation refuses a schema-2 candidate, the import keeps
+the ordinary fallback spline and restores the original XDATA instead of
+discarding the typed metadata. The carrier accounts for that additional
+metadata against the existing bounded import budget.
+
+Codec coverage round-trips all nine tagged source families through the
+XDATA/EED codec and rejects malformed CBOR and oversized source data. The
+whole `[offset-xdata]` suite passed 333,638 assertions/53 cases; the focused
+`[offset-xdata][typed-source]` suite passed 1,072 assertions/2 cases. File
+coverage now saves, reopens, imports, and second-saves all nine source families
+through DXF and DWG; it passed 648 assertions. Staged DXF and DWG import tests
+verify that only an operation-8-validated cache materializes the native typed
+source, and that a modified/unrepresentable cache falls back while preserving
+schema-2 XDATA; the focused import-session run passed 2,046 assertions. The
+broader `[lc-offsetcurve]` run has one failure in its initial execution,
+but its failure detail was truncated. A compact rerun produced no completion
+summary during this plan update and was stopped; the broad-suite gate remains
+open. This is not a passing result or evidence that the initial failure is
+flaky.
+
+**Next implementation slices, in order:**
+
+1. Review the family-aware import accounting against every decoded container
+   and confirm the aggregate budget rejects expansion before excessive
+   allocation. Preserve the existing fallback-XDATA behavior on cache refusal.
+2. Audit encoding preflight against the EED packet limit, including chunk
+   framing, schema strings, extension tail, and aggregate typed payload. Add
+   boundary tests at the accepted maximum and one byte/item beyond it.
+3. Re-run `[lc-offsetcurve]` with output captured in a way that preserves the
+   exact failure details; determine whether the initial failure is a regression
+   or an existing/flaky failure. Do not close the gate without that result.
+   Then run the worker-client suite with an adequate watchdog and hostile-file
+   tests.
+4. Review the diff for schema-1 byte compatibility, EED maximum-boundary
+   behavior, malformed schema-2 cursor safety, and fallback/import accounting;
+   run `git diff --check` and the focused persistence/import suites.
+5. Only after all gates pass, commit and push this persistence slice, then
+   record the exact commit/head and CI state here. Until then, schema-2
+   persistence is **in progress**, not a completed feature.
+
+After persistence is qualified, continue the earlier open P1 source-family
+eligibility audit and UI creation-path coverage. Do not expand claims to
+additional source types or direct creation routes unless their worker
+generation, editing, transform/grip, cache validation, import, export, and
+second-save paths are independently tested.
+
+## 352. Source Picker Contract Reaffirmed (2026-11-05)
+
+The Properties replacement flow must expose source type as an independently
+changeable choice, not infer or lock it from the currently attached source.
+The user can change the type filter before choosing a replacement; the entity
+picker then lists live entities of that type, and choosing one atomically
+replaces the tagged source definition and generated offset cache through the
+joined worker edit transaction. Changing the filter alone must not alter the
+definition, cache, or drawing selection. The type/entity controls must remain
+usable when the selected type has no candidate entities.
+
+The intended type set is every source family the product actually supports,
+not merely every type present in the worker codec. The existing picker
+milestone lists ellipse, spline, spline-points, parabola, bounded hyperbola,
+line, arc, circle, and polyline; this inventory is provisional until the P1
+creation-path and P2 operation/transform/persistence audits prove each family
+eligible end to end. `LC_Parabola` must remain an explicit type and preserve its
+identity ahead of its `LC_SplinePoints` base class. Unsupported or unbounded
+variants must be omitted or clearly unavailable, never silently coerced into a
+different family.
+
+Implementation order is unchanged: finish schema-2 DXF/DWG save/reopen and
+second-save qualification first; then complete the source-family eligibility
+matrix and reconcile the UI choices against it; add interaction tests for
+changing type before picking, empty candidate lists, cross-type replacement,
+parabola-vs-spline-points identity, cancellation/no side effects, and exact
+preview/commit parity; finally re-run the per-family persistence and worker
+validation suites. W350 demonstrates the current linked picker and parabola
+choice, but does not close these completion gates. No product behavior or test
+result is newly claimed by this roadmap update.
+
+## 353. Typed-Source Boundary Validation and Suite Triage (2026-11-05, in progress)
+
+Added a schema-2 typed-source size-boundary test. It constructs the largest
+tested polyline source payload below the 48 KiB encoded-CBOR limit and the next
+larger candidate, verifies DXF and EED export accept the former and reject the
+latter, and exercises the EED framing preflight. Review also found that
+`currentEncoding()` charged typed binary chunks at their raw size for ASCII
+DXF even though group 1004 serializes as hex. It now charges twice the payload
+size in ASCII mode; a regression test proves exact-size acceptance and refusal
+one encoded byte below the boundary. The full `[offset-xdata]` suite passes
+333,673 assertions/55 cases, and all typed-source tests pass 3,873 assertions/
+6 cases after rebuilding and rerunning file/import validation.
+
+Real DXF/DWG all-family save, reopen, import, and second-save passes 648
+assertions; staged typed-source DXF/DWG cache-validation and refusal/fallback
+passes 1,901 assertions. Operation-8 kernel exact-cache validation passes 48
+assertions, the joined typed-source worker edit passes 2,352 assertions, and
+the full worker-client target passes 26,571 assertions/20 cases.
+
+The geometry suite passes 1,576,299 assertions/373 cases, including a corrected
+line-tolerance expectation: the common source adapter supplies a finite
+positive tolerance for line source definitions, which is required by their
+cache-validation path. The hostile-file group passes 48,849 assertions/32
+cases, the Trim/action group passes 46,717/68, and the persistence group passes
+993/2. The previously reported Trim preview assertion passes when isolated
+(5,012 assertions in its test case) and in the full Trim/action group, so that
+failure was not reproduced outside the overloaded broad run.
+
+The complete `[lc-offsetcurve]` Catch filter remains unqualified: a rerun ran
+for more than ten minutes without a terminal summary and was stopped. The
+earlier interrupted log identified the stale line-tolerance expectation and
+the Trim preview assertion; the former is fixed and its geometry group is now
+green, while the latter passes both in isolation and in the complete
+Trim/action group. Its third reported failure was the test runner's SIGINT,
+not a product assertion. Do not count either interrupted broad run as a pass.
+The deterministic geometry, hostile-file, Trim/action, persistence, codec,
+file-roundtrip, import-session, and worker-client groups listed here all
+completed successfully, providing slice-level qualification; the aggregate
+Catch filter remains a separate CI/acceptance gate.
+
+Before committing this persistence slice, complete the final review of
+family-aware allocation accounting, schema-1 byte compatibility, EED packet
+and payload boundary arithmetic, and `git diff --check`. Then commit and push
+the product slice, update PR #3193 with the implementation and evidence, and
+record exact commit/head and CI status. Current implementation and roadmap
+changes remain uncommitted; schema-2 persistence and the overall roadmap are
+not complete.

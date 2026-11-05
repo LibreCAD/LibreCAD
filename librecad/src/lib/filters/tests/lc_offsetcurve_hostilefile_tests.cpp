@@ -1147,6 +1147,214 @@ TEST_CASE("Staged offset import bounds its aggregate carrier allowance",
     CHECK(metadata.diagnostics.size() == 32); CHECK(metadata.suppressedDiagnostics == 9);
 }
 
+TEST_CASE("typed offset source survives real DXF and DWG file save reopen and second save",
+          "[lc-offsetcurve][persistence][typed-source][file]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-typed-source-file-roundtrip");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+    RS_SplineData splineSource{2, false};
+    splineSource.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    splineSource.knotslist = {0, 0, 0, 1, 1, 1};
+    splineSource.weights = {1, .7, 1};
+    LC_SplinePointsData splinePoints{false, false};
+    splinePoints.useControlPoints = true;
+    splinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 9> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
+        LC_OffsetSourceGeometry{splineSource}, LC_OffsetSourceGeometry{splinePoints},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, 0, 1, false}},
+        LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 0}, false,
+            {RS_LineData{{0, 0}, {2, 0}}}}}
+    };
+    const auto app = std::make_shared<DRW_Variant>(1001, std::string("LibreCad"));
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        CAPTURE(i);
+        xd::Definition definition;
+        definition.source = LC_OffsetSourceDefinition{sources[i], -.75, .00025, true};
+        definition.reservedFlags = 0x10;
+        definition.tail = {{1000, QStringLiteral("file roundtrip tail")}, {1070, std::int16_t{23}}};
+
+        const auto verify = [&](const std::filesystem::path &path, bool dwg, bool secondSave) {
+            const auto captured = f::readCodec(path, dwg);
+            REQUIRE(captured.splines.size() == 1);
+            xd::Options options;
+            if (dwg) {
+                options.eed = true;
+                options.textEncoding = xd::TextEncoding::Utf16;
+            } else {
+                options.asciiDxf = false;
+            }
+            CAPTURE(f::tagsState(captured.splines.front().extData));
+            const auto parsed = xd::parseAndStrip(captured.splines.front().extData, options);
+            REQUIRE(parsed.status == xd::Status::Schema2);
+            REQUIRE(parsed.definition);
+            REQUIRE(parsed.definition->source);
+            CHECK(parsed.definition->reservedFlags == definition.reservedFlags);
+            REQUIRE(parsed.definition->tail.size() == definition.tail.size());
+            const auto before = values::encodeSourceDefinition(*definition.source);
+            const auto after = values::encodeSourceDefinition(*parsed.definition->source);
+            REQUIRE(before); REQUIRE(after);
+            CHECK(QCborValue(*before).toCbor() == QCborValue(*after).toCbor());
+            if (!secondSave) return;
+
+            const auto repeat = directory.file("second-" + std::to_string(i) + (dwg ? ".dwg" : ".dxf"));
+#ifdef DWGSUPPORT
+            if (dwg) f::dwgFile(repeat, captured.splines.front(), DRW::AC1032);
+            else f::binaryDxf(repeat, captured.splines.front(), DRW::AC1032);
+#else
+            REQUIRE_FALSE(dwg);
+            f::binaryDxf(repeat, captured.splines.front(), DRW::AC1032);
+#endif
+            const auto second = f::readCodec(repeat, dwg);
+            REQUIRE(second.splines.size() == 1);
+            const auto repeated = xd::parseAndStrip(second.splines.front().extData, options);
+            REQUIRE(repeated.status == xd::Status::Schema2);
+            REQUIRE(repeated.definition);
+            REQUIRE(repeated.definition->source);
+            const auto repeatedSource = values::encodeSourceDefinition(*repeated.definition->source);
+            REQUIRE(repeatedSource);
+            CHECK(QCborValue(*before).toCbor() == QCborValue(*repeatedSource).toCbor());
+        };
+
+        for (const bool dwg : {false, true}) {
+#ifndef DWGSUPPORT
+            if (dwg) continue;
+#endif
+            xd::Options options;
+            if (dwg) { options.eed = true; options.textEncoding = xd::TextEncoding::Utf16; }
+            else options.asciiDxf = false;
+            const auto tags = xd::forExport({app}, definition, options);
+            REQUIRE(tags);
+            auto entity = f::raw(1, *tags);
+            const auto path = directory.file(std::to_string(i) + (dwg ? ".dwg" : ".dxf"));
+#ifdef DWGSUPPORT
+            if (dwg) f::dwgFile(path, entity, DRW::AC1032);
+            else f::binaryDxf(path, entity, DRW::AC1032);
+#else
+            f::binaryDxf(path, entity, DRW::AC1032);
+#endif
+            verify(path, dwg, true);
+        }
+    }
+}
+
+TEST_CASE("typed source DXF import materializes only an operation-8 validated cache",
+          "[lc-offsetcurve][import-session][typed-source][validation]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-typed-source-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {4, 0}}}, .5, 1e-4, false};
+    RS_Line source{nullptr, std::get<RS_LineData>(definition.source.value)};
+    const auto options = LC_CurveOffset::makeDirectOptions(source, .5, definition.relativeTolerance);
+    const auto generated = LC_CurveOffset::buildDirectBranches(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .5), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+    LC_CurveOffsetMaterializationResult materialized = LC_CurveOffset::materializeBranches(
+        source, generated, options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(materialized.entities.size() == 1);
+    const auto* line = dynamic_cast<const RS_Line*>(materialized.entities.front().get());
+    REQUIRE(line);
+
+    for (const bool dwg : {false, true}) {
+#ifndef DWGSUPPORT
+        if (dwg) continue;
+#endif
+        xd::Definition xdata;
+        xdata.source = definition;
+        xd::Options encoding;
+        if (dwg) { encoding.eed = true; encoding.textEncoding = xd::TextEncoding::Utf16; }
+        else encoding.asciiDxf = false;
+        const auto tags = xd::forExport({std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+            xdata, encoding);
+        REQUIRE(tags);
+        DRW_Spline cache = f::raw(1, *tags);
+        cache.controllist.clear();
+        cache.controllist.push_back(std::make_shared<DRW_Coord>(line->getStartpoint().x,
+            line->getStartpoint().y, 0));
+        cache.controllist.push_back(std::make_shared<DRW_Coord>(line->getEndpoint().x,
+            line->getEndpoint().y, 0));
+        cache.knotslist = {0, 0, 1, 1};
+        cache.weightlist = {1, 1};
+        cache.degree = 1;
+        cache.flags = 8;
+        cache.m_scenario = 1;
+        cache.ncontrol = 2;
+        cache.nknots = 4;
+        cache.nfit = 0;
+
+        const auto input = directory.file(dwg ? "validated.dwg" : "validated.dxf");
+#ifdef DWGSUPPORT
+        if (dwg) f::dwgFile(input, cache, DRW::AC1032);
+        else f::binaryDxf(input, cache, DRW::AC1032);
+#else
+        f::binaryDxf(input, cache, DRW::AC1032);
+#endif
+        LC_OffsetImportSession session;
+        std::optional<LC_OffsetImportSession::Outcome> outcome;
+        const auto format = dwg ? RS2::FormatDWG2018 : RS2::FormatDXFRW2018;
+        REQUIRE(session.start(QString::fromStdString(input.string()), format,
+            RS2::DxfTextEncoding::Declared, false,
+            [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
+        QElapsedTimer elapsed; elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < 35000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(outcome->status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome->graphic);
+        CHECK(outcome->admitted == 1);
+        CHECK(outcome->downgraded == 0);
+        auto* imported = dynamic_cast<LC_OffsetCurve*>(f::sole(*outcome->graphic));
+        REQUIRE(imported);
+        REQUIRE(imported->sourceDefinition());
+        const auto expected = values::encodeSourceDefinition(definition);
+        const auto received = values::encodeSourceDefinition(*imported->sourceDefinition());
+        REQUIRE(expected); REQUIRE(received);
+        CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
+        CHECK(imported->getData().controlPoints.size() == 2);
+
+        cache.controllist.front()->y += .125;
+        const auto refusedInput = directory.file(dwg ? "modified-cache.dwg" : "modified-cache.dxf");
+#ifdef DWGSUPPORT
+        if (dwg) f::dwgFile(refusedInput, cache, DRW::AC1032);
+        else f::binaryDxf(refusedInput, cache, DRW::AC1032);
+#else
+        f::binaryDxf(refusedInput, cache, DRW::AC1032);
+#endif
+        LC_OffsetImportSession refusedSession;
+        std::optional<LC_OffsetImportSession::Outcome> refused;
+        REQUIRE(refusedSession.start(QString::fromStdString(refusedInput.string()), format,
+            RS2::DxfTextEncoding::Declared, false,
+            [&](LC_OffsetImportSession::Outcome result) { refused.emplace(std::move(result)); }));
+        elapsed.restart();
+        while (!refused) {
+            REQUIRE(elapsed.elapsed() < 35000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(refused->status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(refused->graphic);
+        CHECK(refused->downgraded == 1);
+        auto* ordinary = f::sole(*refused->graphic);
+        CHECK(dynamic_cast<LC_OffsetCurve*>(ordinary) == nullptr);
+        const auto preserved = xd::parseAndStrip(ordinary->getDrwExtData(), encoding);
+        CHECK(preserved.status == xd::Status::Schema2);
+        REQUIRE(preserved.definition);
+        REQUIRE(preserved.definition->source);
+    }
+}
+
 TEST_CASE("Staged offset import cancellation after helper start suppresses delivery",
           "[lc-offsetcurve][import-session][worker][lifetime][asan]") {
     Setup setup; lc::test::OutputDirectory directory("offset-staged-active-cancel");

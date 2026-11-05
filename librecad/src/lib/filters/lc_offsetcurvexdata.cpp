@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "lc_offsetcurvexdata.h"
+#include "../offset_worker/lc_offsetworkerrequest.h"
 
 #include <algorithm>
 #include <cmath>
@@ -12,6 +13,7 @@
 #include <utility>
 
 #include <QByteArrayView>
+#include <QCborValue>
 #include <QStringConverter>
 #include <QStringView>
 
@@ -22,6 +24,9 @@ constexpr std::size_t HardBytes = 64u * 1024u * 1024u;
 constexpr std::size_t HardDiagnostics = 32;
 constexpr std::size_t EedPacketBytes = 65535;
 constexpr std::size_t EedPackets = 65536;
+constexpr std::size_t MaximumTypedSourceBytes = 48u * 1024u;
+constexpr std::size_t TypedBinaryChunkBytes = 127;
+constexpr std::size_t DecodedTypedBinaryChunkBytes = 255;
 
 void diagnose(Diagnostics &out, const Options &options, Reason reason, std::size_t item) {
     if (out.size() < std::min(options.maximumDiagnostics, HardDiagnostics))
@@ -377,6 +382,86 @@ std::optional<Definition> readKnown(const XData &input, std::size_t marker,
     return result;
 }
 
+std::optional<std::vector<std::uint8_t>> encodeTypedSource(const LC_OffsetSourceDefinition& source) {
+    if (!source.isWellFormed()) return std::nullopt;
+    const auto fields = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(source);
+    if (!fields) return std::nullopt;
+    const auto bytes = QCborValue(*fields).toCbor();
+    if (bytes.isEmpty() || static_cast<std::size_t>(bytes.size()) > MaximumTypedSourceBytes) return std::nullopt;
+    std::vector<std::uint8_t> result;
+    result.reserve(static_cast<std::size_t>(bytes.size()));
+    for (const auto byte : bytes) result.push_back(static_cast<std::uint8_t>(byte));
+    return result;
+}
+
+std::optional<LC_OffsetSourceDefinition> decodeTypedSource(const XData& input, std::size_t begin,
+    std::size_t end) {
+    const auto hexValue = [](unsigned char c) -> int {
+        if (c >= '0' && c <= '9') return c - '0';
+        if (c >= 'a' && c <= 'f') return c - 'a' + 10;
+        if (c >= 'A' && c <= 'F') return c - 'A' + 10;
+        return -1;
+    };
+    std::size_t bytes = 0;
+    for (std::size_t i = begin; i < end; ++i) {
+        const auto& item = input[i];
+        if (!item || item->code() != 1004) return std::nullopt;
+        std::size_t chunkBytes = 0;
+        if (item->type() == DRW_Variant::BINARY) {
+            if (item->content.b != item->binary() || item->binary()->empty() ||
+                item->binary()->size() > DecodedTypedBinaryChunkBytes) return std::nullopt;
+            chunkBytes = item->binary()->size();
+        } else {
+            const auto* encoded = text(item.get(), 1004);
+            if (!encoded || encoded->empty() || encoded->size() % 2 ||
+                encoded->size() > 2 * DecodedTypedBinaryChunkBytes || !hex(*encoded)) return std::nullopt;
+            chunkBytes = encoded->size() / 2;
+        }
+        if (!charge(bytes, chunkBytes, MaximumTypedSourceBytes)) return std::nullopt;
+    }
+    if (!bytes) return std::nullopt;
+    QByteArray payload;
+    payload.reserve(static_cast<qsizetype>(bytes));
+    for (std::size_t i = begin; i < end; ++i) {
+        const auto& item = input[i];
+        if (item->type() == DRW_Variant::BINARY) {
+            const auto& chunk = *item->binary();
+            payload.append(reinterpret_cast<const char*>(chunk.data()), static_cast<qsizetype>(chunk.size()));
+        } else {
+            const auto& encoded = *item->content.s;
+            for (std::size_t j = 0; j < encoded.size(); j += 2) {
+                const int high = hexValue(static_cast<unsigned char>(encoded[j]));
+                const int low = hexValue(static_cast<unsigned char>(encoded[j + 1]));
+                if (high < 0 || low < 0) return std::nullopt;
+                const char byte = static_cast<char>((high << 4) | low);
+                payload.append(&byte, 1);
+            }
+        }
+    }
+    QCborParserError error;
+    const auto value = QCborValue::fromCbor(payload, &error);
+    if (error.error != QCborError::NoError || error.offset != payload.size() || !value.isArray()) return std::nullopt;
+    return LC_OffsetWorkerRequest::Values::decodeSourceDefinition(value.toArray());
+}
+
+std::optional<Definition> readTyped(const XData& input, std::size_t marker,
+    const CandidateEnd& end, const Options& o, Diagnostics& diagnostics, bool decodeTail) {
+    if (!end.closed || !end.validBraces || end.end - marker < 7 ||
+        !literal(input[marker + 3].get(), 1000, "TYPED_SOURCE")) return std::nullopt;
+    std::int32_t flags = 0;
+    if (!integer16(input[marker + 4].get(), flags) || flags < 0 ||
+        (static_cast<unsigned>(flags) & ~ReservedFlags)) return std::nullopt;
+    std::size_t payloadEnd = marker + 5;
+    while (payloadEnd < end.end - 1 && input[payloadEnd] && input[payloadEnd]->code() == 1004) ++payloadEnd;
+    auto source = decodeTypedSource(input, marker + 5, payloadEnd);
+    if (!source) return std::nullopt;
+    Definition result;
+    result.source = std::move(*source);
+    result.reservedFlags = static_cast<unsigned>(flags);
+    if (decodeTail) result.tail = readTail(input, payloadEnd, end.end - 1, o, diagnostics);
+    return result;
+}
+
 ParseResult parse(const XData &input, const Options &o, bool decodeTail = true) {
     ParseResult result;
     if (!optionsValid(o) || !bounded(input, o)) {
@@ -405,14 +490,18 @@ ParseResult parse(const XData &input, const Options &o, bool decodeTail = true) 
                 const auto boundary = candidateEnd(input, i + 1, end);
                 std::int32_t schema = 0;
                 const bool typed = i + 2 < end && integer16(input[i + 2].get(), schema);
-                if (typed && schema != 1) {
+                const bool typedSourceKind = i + 3 < end && literal(input[i + 3].get(), 1000, "TYPED_SOURCE");
+                if (typed && schema != 1 && (schema != 2 || !typedSourceKind)) {
                     other = true;
                     if (!boundary.closed || !boundary.validBraces)
                         diagnose(result.diagnostics, o, Reason::MalformedUnknown, i);
                     remaining.insert(remaining.end(), input.begin() + i, input.begin() + boundary.end);
                 } else {
                     ++result.knownCandidates;
-                    auto definition = typed ? readKnown(input, i, boundary, o, result.diagnostics, decodeTail) : std::nullopt;
+                    auto definition = typed && schema == 1
+                        ? readKnown(input, i, boundary, o, result.diagnostics, decodeTail)
+                        : typed && schema == 2
+                        ? readTyped(input, i, boundary, o, result.diagnostics, decodeTail) : std::nullopt;
                     if (!definition) {
                         invalid = true;
                         diagnose(result.diagnostics, o, Reason::MalformedKnown, i);
@@ -438,7 +527,8 @@ ParseResult parse(const XData &input, const Options &o, bool decodeTail = true) 
         if (depth) { invalid = true; diagnose(result.diagnostics, o, Reason::MalformedGroup, start); }
         start = end;
     }
-    result.status = invalid ? Status::Invalid : result.definition ? Status::Schema1 :
+    result.status = invalid ? Status::Invalid : result.definition
+        ? (result.definition->source ? Status::Schema2 : Status::Schema1) :
         other ? Status::Other : Status::NoSubList;
     if (invalid) result.definition.reset();
     result.remaining = std::move(remaining);
@@ -498,17 +588,29 @@ std::optional<std::size_t> extensionBytes(const LC_OffsetCurveExtension &item, c
 
 struct CurrentSize {
     LC_EllipseOffsetDefinition geometry;
+    std::vector<std::uint8_t> typedPayload;
     std::size_t items = 0, storage = 0, encoded = 0, markerEncoded = 0;
 };
 
 std::optional<CurrentSize> currentStorage(const Definition &current, const Options &o, Diagnostics &diagnostics) {
-    CurrentSize size{current.geometry, 13 + current.tail.size(), 0, 0};
-    if ((current.reservedFlags & ~ReservedFlags) || !normalize(size.geometry)) {
+    CurrentSize size;
+    size.geometry = current.geometry;
+    if ((current.reservedFlags & ~ReservedFlags) ||
+        (current.source ? !current.source->isWellFormed() : !normalize(size.geometry))) {
         diagnose(diagnostics, o, Reason::InvalidDefinition, 0); return std::nullopt;
     }
+    if (current.source) {
+        auto payload = encodeTypedSource(*current.source);
+        if (!payload) { diagnose(diagnostics, o, Reason::InvalidDefinition, 0); return std::nullopt; }
+        size.typedPayload = std::move(*payload);
+        const auto chunks = size.typedPayload.size() / TypedBinaryChunkBytes +
+            (size.typedPayload.size() % TypedBinaryChunkBytes != 0);
+        size.items = 6 + chunks + current.tail.size();
+    } else size.items = 13 + current.tail.size();
     const auto cap = std::min(o.maximumBytes, HardBytes);
-    // Marker (15), kind (7), and the two one-byte brace strings.
-    if (!charge(size.storage, size.items * sizeof(std::shared_ptr<DRW_Variant>) + 24, cap)) {
+    // Marker/kind text, brace strings, and bounded container storage.
+    if (!charge(size.storage, size.items * sizeof(std::shared_ptr<DRW_Variant>) + 24 +
+        size.typedPayload.size(), cap)) {
         diagnose(diagnostics, o, Reason::ResourceLimit, 0); return std::nullopt;
     }
     unsigned depth = 0;
@@ -539,16 +641,47 @@ bool currentEncoding(const Definition &current, CurrentSize &size, const Options
         }
     }
     const auto marker = stringBytes(std::string_view(Marker), o);
-    const auto kind = stringBytes(std::string_view("ELLIPSE"), o);
+    const auto kind = stringBytes(std::string_view(current.source ? "TYPED_SOURCE" : "ELLIPSE"), o);
     if (!marker || !kind) { diagnose(diagnostics, o, Reason::Encoding, 0); return false; }
     const auto framing = o.eed && o.textEncoding == TextEncoding::Legacy ? 4u : 3u;
-    // Two coordinates, five doubles, two int16 values, and two braces.
-    size.encoded = 105 + 2*framing + *marker + *kind + tail;
+    if (current.source) {
+        const auto chunks = size.typedPayload.size() / TypedBinaryChunkBytes +
+            (size.typedPayload.size() % TypedBinaryChunkBytes != 0);
+        const auto binaryFraming = !o.eed && !o.asciiDxf ? (o.binaryDxfR12 ? 4u : 3u) : 2u;
+        const auto binaryPayload = !o.eed && o.asciiDxf
+            ? 2 * size.typedPayload.size() : size.typedPayload.size();
+        size.encoded = 10 + 2*framing + *marker + *kind + binaryPayload +
+            chunks * binaryFraming + tail;
+    } else {
+        // Two coordinates, five doubles, two int16 values, and two braces.
+        size.encoded = 105 + 2*framing + *marker + *kind + tail;
+    }
     size.markerEncoded = framing + *marker;
     return true;
 }
 
 std::optional<XData> writeCurrent(const Definition &current, const CurrentSize &size) {
+    if (current.source) {
+        XData out;
+        out.reserve(size.items);
+        out.push_back(std::make_shared<DRW_Variant>(1000, std::string(Marker)));
+        out.push_back(std::make_shared<DRW_Variant>(1002, std::string("{")));
+        out.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{2}));
+        out.push_back(std::make_shared<DRW_Variant>(1000, std::string("TYPED_SOURCE")));
+        out.push_back(std::make_shared<DRW_Variant>(1070, static_cast<std::int32_t>(current.reservedFlags)));
+        for (std::size_t begin = 0; begin < size.typedPayload.size(); begin += TypedBinaryChunkBytes) {
+            const auto end = std::min(size.typedPayload.size(), begin + TypedBinaryChunkBytes);
+            std::vector<std::uint8_t> chunk(size.typedPayload.begin() + begin, size.typedPayload.begin() + end);
+            out.push_back(std::make_shared<DRW_Variant>(1004, std::move(chunk)));
+        }
+        for (const auto &item : current.tail) {
+            auto value = writeExtension(item);
+            if (!value) return std::nullopt;
+            out.push_back(std::move(value));
+        }
+        out.push_back(std::make_shared<DRW_Variant>(1002, std::string("}")));
+        return out;
+    }
     const auto &g = size.geometry;
     const unsigned flags = current.reservedFlags | (g.basis.reversed ? 1u : 0u) |
         (g.towardCentre ? 2u : 0u) | (g.cacheReversed ? 4u : 0u) |
@@ -693,7 +826,7 @@ std::optional<XData> merge(const XData &input, const std::optional<Definition> &
     if (!optionsValid(o)) { diagnose(diagnostics, o, Reason::InvalidOptions, 0); return std::nullopt; }
     if (current) {
         if (current->tail.size() > MaximumTailItems) { diagnose(diagnostics, o, Reason::TailLimit, 0); return std::nullopt; }
-        const auto minimum = 14 + current->tail.size();
+        const auto minimum = (current->source ? 7 : 14) + current->tail.size();
         if (minimum > itemCap || minimum*sizeof(std::shared_ptr<DRW_Variant>) + 32 > byteCap) {
             diagnose(diagnostics, o, Reason::ResourceLimit, 0); return std::nullopt;
         }

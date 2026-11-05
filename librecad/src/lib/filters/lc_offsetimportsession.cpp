@@ -16,15 +16,57 @@
 #include <map>
 #include <set>
 #include <stdexcept>
+#include <type_traits>
 #include <utility>
 #include <vector>
+
+namespace {
+bool addAllocation(std::size_t &total, std::size_t count, std::size_t width) {
+    if (count > (std::numeric_limits<std::size_t>::max() - total) / width) return false;
+    total += count * width;
+    return true;
+}
+
+template <typename T>
+bool addVectorAllocation(std::size_t &total, const std::vector<T> &items) {
+    return addAllocation(total, items.capacity(), sizeof(T));
+}
+
+std::optional<std::size_t> sourceAllocation(const LC_OffsetSourceDefinition &definition) {
+    if (!definition.isWellFormed()) return std::nullopt;
+    std::size_t total = sizeof(LC_OffsetSourceDefinition);
+    const bool sized = std::visit([&](const auto &source) {
+        using T = std::decay_t<decltype(source)>;
+        if constexpr (std::is_same_v<T, RS_SplineData>) {
+            return addAllocation(total, 1, sizeof(T)) &&
+                addVectorAllocation(total, source.controlPoints) &&
+                addVectorAllocation(total, source.knotslist) &&
+                addVectorAllocation(total, source.weights) &&
+                addVectorAllocation(total, source.fitPoints) &&
+                addVectorAllocation(total, source.savedOpenKnots);
+        } else if constexpr (std::is_same_v<T, LC_SplinePointsData>) {
+            return addAllocation(total, 1, sizeof(T)) &&
+                addVectorAllocation(total, source.splinePoints) &&
+                addVectorAllocation(total, source.controlPoints);
+        } else if constexpr (std::is_same_v<T, LC_OffsetPolylineData>) {
+            return addAllocation(total, 1, sizeof(T)) &&
+                addVectorAllocation(total, source.segments);
+        } else {
+            return addAllocation(total, 1, sizeof(T));
+        }
+    }, definition.source.value);
+    return sized ? std::optional<std::size_t>(total) : std::nullopt;
+}
+}
+
 void LC_OffsetImportBudget::report(LC_OffsetImportDiagnostic::Kind kind, int reason, std::size_t item, int detail) {
     if (diagnostics.size() == 32) { ++suppressedDiagnostics; return; }
     diagnostics.push_back({kind, reason, detail, item});
 }
 
 bool LC_OffsetImportBudget::admit(const RS_SplineData& cache, const LC_OffsetCurveXData::Definition& definition,
-                                  std::size_t metadataItems) {
+                                  std::size_t metadataItems,
+                                  const LC_OffsetCurveXData::XData* fallbackXData) {
     std::size_t size = sizeof(LC_OffsetImportPlaceholder::Carrier);
     const auto add = [&](std::size_t count, std::size_t width) {
         if (count > (MaximumBytes - size) / width) return false;
@@ -36,6 +78,26 @@ bool LC_OffsetImportBudget::admit(const RS_SplineData& cache, const LC_OffsetCur
         !add(cache.savedOpenKnots.size(), sizeof(double)) ||
         !add(metadataItems, sizeof(std::shared_ptr<DRW_Variant>)) ||
         !add(definition.tail.size(), sizeof(LC_OffsetCurveExtension))) { ++refused; report(LC_OffsetImportDiagnostic::Kind::Budget); return false; }
+    if (definition.source) {
+        const auto allocation = sourceAllocation(*definition.source);
+        if (!allocation || !add(*allocation, 1)) {
+            ++refused; report(LC_OffsetImportDiagnostic::Kind::Budget); return false;
+        }
+    }
+    if (fallbackXData) {
+        if (!add(fallbackXData->size(), sizeof(std::shared_ptr<DRW_Variant>))) {
+            ++refused; report(LC_OffsetImportDiagnostic::Kind::Budget); return false;
+        }
+        for (const auto& item : *fallbackXData) {
+            if (!item) continue;
+            const std::size_t payload = item->type() == DRW_Variant::STRING && item->content.s
+                ? item->content.s->size()
+                : item->type() == DRW_Variant::BINARY ? item->binary()->size() : 0;
+            if (!add(payload, 1)) {
+                ++refused; report(LC_OffsetImportDiagnostic::Kind::Budget); return false;
+            }
+        }
+    }
     for (const auto& item : definition.tail) if (const auto* text = std::get_if<QString>(&item.value))
         if (!add(std::size_t(text->size()), sizeof(QChar))) { ++refused; report(LC_OffsetImportDiagnostic::Kind::Budget); return false; }
     if (size > (MaximumBytes - bytes) / 3) { ++refused; report(LC_OffsetImportDiagnostic::Kind::Budget); return false; }
@@ -550,8 +612,12 @@ void LC_OffsetImportSession::advance(const std::shared_ptr<Work>& work) {
             finish(work, Status::ResourceLimit); return;
         }
         const auto& carrier = candidate.entity->carrier();
-        LC_OffsetWorkerRequest::Request request{{++m_request, work->generation, 0, 0},
-            LC_OffsetWorkerRequest::ValidateCache{carrier.cache, carrier.definition.geometry, carrier.tolerance, {}}};
+        const auto operation = carrier.definition.source
+            ? decltype(LC_OffsetWorkerRequest::Request::operation){LC_OffsetWorkerRequest::ValidateSourceCache{
+                carrier.cache, *carrier.definition.source, {}}}
+            : decltype(LC_OffsetWorkerRequest::Request::operation){LC_OffsetWorkerRequest::ValidateCache{
+                carrier.cache, carrier.definition.geometry, carrier.tolerance, {}}};
+        LC_OffsetWorkerRequest::Request request{{++m_request, work->generation, 0, 0}, operation};
         if (!m_worker.submit(request, LC_OffsetWorkerClient::Mode::Commit,
             [alive, work](LC_OffsetWorkerClient::Outcome result) {
                 if (!alive || alive->m_work != work || work->expired) return;
@@ -576,7 +642,9 @@ void LC_OffsetImportSession::consume(const std::shared_ptr<Work>& work, std::uni
     if (!candidateLive(*work->graphic, candidate)) throw std::runtime_error("Import carrier changed");
     std::unique_ptr<RS_Entity> replacement;
     if (completion) {
-        auto native = completion->native(*candidate.entity);
+        auto native = candidate.entity->carrier().definition.source
+            ? completion->nativeValidatedSource(*candidate.entity)
+            : completion->native(*candidate.entity);
         if (native && native->setOwnedExtensions(candidate.entity->carrier().definition.reservedFlags,
                                                  candidate.entity->carrier().definition.tail)) {
             replacement = std::move(native); ++work->admitted;
@@ -588,7 +656,12 @@ void LC_OffsetImportSession::consume(const std::shared_ptr<Work>& work, std::uni
                 work->index, result && result->checkReason ? int(*result->checkReason) : -1);
         }
     }
-    if (!replacement) { replacement = std::make_unique<RS_Spline>(*candidate.entity); ++work->downgraded; }
+    if (!replacement) {
+        replacement = std::make_unique<RS_Spline>(*candidate.entity);
+        const auto& fallbackXData = candidate.entity->carrier().fallbackXData;
+        if (!fallbackXData.empty()) replacement->setDrwExtData(fallbackXData);
+        ++work->downgraded;
+    }
     auto* parent = candidate.parent; const int index = parent->findEntityIndex(candidate.entity);
     replacement->setParent(parent); parent->insertEntity(index, replacement.get()); replacement.release();
     if (!parent->removeEntity(candidate.entity)) throw std::runtime_error("Import carrier replacement failed");
