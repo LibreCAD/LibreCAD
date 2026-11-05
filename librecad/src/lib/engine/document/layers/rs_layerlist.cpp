@@ -316,6 +316,28 @@ void RS_LayerList::remove(RS_Layer* layerToRemove) {
 }
 
 /**
+ * What RS_Graphic::removeLayer() asks before it removes a layer. Layer "0" is never removed. The
+ * current layer is not removed when no other layer is unlocked to take its place: a locked layer
+ * is not current, as with keepCurrentLayerUnlocked(); any other layer, locked or not, may be removed.
+ *
+ * @return true if the layer is a layer of this list that remove() may remove
+ */
+bool RS_LayerList::canRemove(const RS_Layer* layer) const {
+    if (layer == nullptr || !m_layerSet.contains(const_cast<RS_Layer*>(layer)) || layer->getName() == "0") {
+        return false;
+    }
+    return layer != m_activeLayer || bestLayerToActivate(layer, false) != nullptr;
+}
+
+/**
+ * @return what is said when canRemove() refused the current layer
+ */
+QString RS_LayerList::removalRefusedText(const QString& layerName) {
+    return QObject::tr("Layer \"%1\" was not removed: it is the current layer, and no other layer is unlocked to take its place.")
+        .arg(layerName);
+}
+
+/**
  * Changes a layer's attributes. The attributes of layer 'layer'
  * are copied from layer 'source'.
  * Listeners are notified.

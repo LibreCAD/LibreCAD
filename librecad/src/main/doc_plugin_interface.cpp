@@ -1108,8 +1108,7 @@ QStringList Doc_plugin_interface::getAllBlocks() {
 bool Doc_plugin_interface::deleteLayer(const QString name) {
     RS_Layer* layer = m_docGr->findLayer(name);
     if (layer != nullptr) {
-        m_docGr->removeLayer(layer);
-        return true;
+        return m_docGr->removeLayer(layer);
     }
     return false;
 }

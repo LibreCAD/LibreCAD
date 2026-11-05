@@ -339,13 +339,18 @@ unsigned RS_Graphic::countLayerEntities(RS_Layer* layer) const {
 }
 
 /**
- * Removes the given layer and undoes all m_entities on it.
+ * Removes the given layer and undoes all m_entities on it. Layer "0" is not removed, and neither is
+ * the current layer when no other layer is unlocked to take its place (RS_LayerList::canRemove()):
+ * the command line says so.
+ *
+ * @return true if the layer was removed
  */
-void RS_Graphic::removeLayer(RS_Layer* layer) {
+bool RS_Graphic::removeLayer(RS_Layer* layer) {
     // fixme - move to other class?
+    bool removed = false;
     if (layer != nullptr) {
         const QString& layerName = layer->getName();
-        if (layerName != "0") {
+        if (m_layerList.canRemove(layer)) {
             std::vector<RS_Entity*> toRemove;
             //find entities on layer
             for (RS_Entity* e : *this) {
@@ -386,9 +391,15 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
             }
 
             m_layerList.remove(layer);
+            removed = true;
+        }
+        else if (m_layerList.contains(layer)) {
+            RS_DIALOGFACTORY->commandMessage(layerName == "0" ? QObject::tr("Layer \"0\" can never be removed.")
+                                                              : RS_LayerList::removalRefusedText(layerName));
         }
         validateSelection();
     }
+    return removed;
 }
 
 /**

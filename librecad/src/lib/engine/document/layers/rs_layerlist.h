@@ -105,6 +105,8 @@ public:
     bool canLockAll() const;
     bool canToggleLockOfSelection() const;
     static QString lockUnavailableText();
+    bool canRemove(const RS_Layer* layer) const;
+    static QString removalRefusedText(const QString& layerName);
 
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);

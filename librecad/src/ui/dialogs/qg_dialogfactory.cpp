@@ -200,6 +200,7 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
     }
 
     QStringList names;
+    QStringList refusals; // the current layer, when no other layer is unlocked to take its place
     bool layer0Selected{false};
 
     // first, try to add selected layers
@@ -217,6 +218,10 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
             layer0Selected = true;
             continue;
         }
+        if (!layerList->canRemove(layer)) {
+            refusals << RS_LayerList::removalRefusedText(layer->getName());
+            continue;
+        }
         names << layer->getName();
     }
 
@@ -227,6 +232,9 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
         if ((layer != nullptr) && layer->isVisibleInLayerList()) {
             if (layer->getName() == "0") {
                 layer0Selected = true;
+            }
+            else if (!layerList->canRemove(layer)) {
+                refusals << RS_LayerList::removalRefusedText(layer->getName());
             }
             else {
                 names << layer->getName();
@@ -239,6 +247,9 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
         if (layer0Selected) {
             QMessageBox::information(parent, QMessageBox::tr("Remove Layer"), QMessageBox::tr("Layer \"0\" can never be removed."),
                                      QMessageBox::Ok);
+        }
+        if (!refusals.isEmpty()) {
+            QMessageBox::information(parent, QMessageBox::tr("Remove Layer"), refusals.join('\n'), QMessageBox::Ok);
         }
         return names; // empty, nothing to remove
     }
@@ -255,6 +266,9 @@ QStringList QG_DialogFactory::requestSelectedLayersRemovalDialog(RS_LayerList* l
 
     if (layer0Selected) {
         textLines << "" << QMessageBox::tr("Warning: layer \"0\" can never be removed.");
+    }
+    if (!refusals.isEmpty()) {
+        textLines << "" << refusals;
     }
 
     QStringList detailLines = {QMessageBox::tr("Layers for removal:"), "",};
