@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W381; chronological evidence follows): implementation slices
+Current status (W383; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -62,12 +62,12 @@ includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
-The recent W378-W381 source-variant slices add malformed-polyline refusal,
+The recent W378-W383 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
-validation, and schema-2 DXF/DWG second-save persistence. The current PR head is
-`bdecdbfedd7e2a4e75efc1341663f6d43af0c638`; at the latest query,
-`VerifyDwgDxfFast` and both Windows verification jobs were in progress, with no
-completed results yet. Earlier CI status below is historical only.
+validation and persistence, signed-bulge capture/materialization, and actual
+AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
+head-specific and must be read from PR #3193; older statuses below are
+historical and are not inherited by newer heads.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -15769,3 +15769,18 @@ bulge directions; it is not evidence of disk DXF/DWG import behavior.
 The focused test passes 38 assertions; the existing all-source snapshot test
 still passes 119 assertions. Full DXF/DWG bulge-origin import coverage remains
 open.
+
+## 383. Signed-Bulge LWPOLYLINE File Import
+
+Added real AC1032 binary DXF and DWG fixtures containing an `LWPOLYLINE` with
+positive- and negative-bulge arc segments followed by a straight segment. Both
+files are read through the staged import path, then `LC_OffsetSourceGeometry`
+captures the resulting native polyline. The test compares segment ordering,
+closure, endpoints, arc centers, radii, angular bounds, and reversal flags
+against the equivalent live bulge-built source.
+
+The focused bulge-import test passes 77 assertions; together with the typed
+source persistence case, the selected tests pass 1,085 assertions across two
+cases. `git diff --check` passes. This closes representative AC1032 bulge
+origin coverage; older DXF versions, closed bulged polylines, and other
+bulge magnitudes remain open.
