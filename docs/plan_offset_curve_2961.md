@@ -15348,8 +15348,11 @@ assertions/1 case; the complete source Properties group passes 3,155
 assertions/5 cases. `git diff --check` passes. This is representative coverage,
 not a complete signed-distance sweep or all closed/bulged polyline layouts.
 
-Implementation and tests for this slice are present in the worktree but are
-not yet committed or pushed. After checkpointing, continue the
-distance/side-dependent representability audit, then revalidate exact-head
-DXF/DWG persistence and PR checks. Variant audit, review, and external
-acceptance remain open.
+Implementation and tests for this slice are committed as `5b7f768a6`
+(`test(offset): cover source variant eligibility`) and pushed to PR #3193.
+The source Properties suite was rerun on the committed tree and passed 3,155
+assertions/5 cases; `git diff --check` passed before commit. Exact PR head is
+`5b7f768a65b9667feb1cab34df98b863ee9d9543`, open and draft; GitHub currently
+reports no checks for that head. Continue the distance/side-dependent
+representability audit, then revalidate exact-head DXF/DWG persistence and PR
+checks. Variant audit, review, and external acceptance remain open.
