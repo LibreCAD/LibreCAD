@@ -15640,7 +15640,24 @@ one canonical spline cache and op 8 promotes the exact cache/source pair.
 
 The focused kernel case passes 102 assertions/1 case; the complete
 worker-kernel suite passes 3,699 assertions/23 cases. Commit `0116d291e`
-contains the test. This closes representative open mixed-segment orientation
-coverage only; closed/bulged polylines, repeated/degenerate vertices, larger
-segment mixes, and broader distance sweeps remain open. Push with this roadmap
-update, refresh PR #3193, and check the exact new head.
+contains the test. Checkpoint `accbfe35e` records it and both are pushed; PR
+#3193 contains the corresponding evidence. This closes representative open
+mixed-segment orientation coverage only; closed/bulged polylines,
+repeated/degenerate vertices, larger segment mixes, and broader distance
+sweeps remain open.
+
+## 375. Closed-Polyline Cache Acceptance and Atomic Refusal (2026-11-05)
+
+Added operation-7/op-8 checks for a closed four-line square and a closed
+four-arc loop, each at signed distances `-0.25` and `0.25`. The test preserves
+the producer's cardinality policy: one canonical spline cache must validate
+exactly; multi-branch output must be refused as `NotCacheRepresentable` and
+must not set `changed`. This avoids dropping all but one branch while still
+testing cache promotion wherever the output shape permits it.
+
+The focused case passes 98 assertions/1 case; the complete worker-kernel suite
+passes 3,797 assertions/24 cases. Commit `3ce7109f1` contains the regression.
+Closed-line/arc examples and refusal behavior are covered, but bulged
+polyline-specific fixtures, repeated/degenerate vertex layouts, long mixed
+segment sequences, and broad side/distance sweeps remain open. This test and
+roadmap update require push, PR evidence, and exact-head CI refresh.
