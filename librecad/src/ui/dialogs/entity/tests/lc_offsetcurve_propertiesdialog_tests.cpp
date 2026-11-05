@@ -674,6 +674,8 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
     REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
     REQUIRE(clone->sourceDefinition());
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+    click(*selectSource);
+    CHECK(parabola->getFlag(RS2::FlagSelected));
 
     auto* ellipse = new RS_Ellipse(nullptr, RS_EllipseData{{8, 2}, {2, 0}, .8, 0, 0, false});
     f.graphic.addEntity(ellipse);
