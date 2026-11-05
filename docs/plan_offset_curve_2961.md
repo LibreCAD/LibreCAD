@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W384; chronological evidence follows): implementation slices
+Current status (W385; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -62,7 +62,7 @@ includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
-The recent W378-W384 source-variant slices add malformed-polyline refusal,
+The recent W378-W385 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15796,3 +15796,17 @@ The focused bulge-import cases pass 177 assertions/2 cases; together with the
 typed-source persistence case, the selected run passes 1,185 assertions/3
 cases. `git diff --check` passes. Other R13/R2000+ variants, non-axial OCS
 reflection, and a wider range of bulge magnitudes remain open.
+
+## 385. Reflected-OCS Signed-Bulge Import
+
+Added AC1032 DXF and DWG import fixtures for a lightweight polyline in the
+negative-Z axial extrusion frame. The source coordinates are mirrored into
+LibreCAD's XY plane while signed bulges are inverted to preserve the same
+oriented physical arcs. Tests compare the imported offset-source endpoints,
+segment order, arc centers, radii, angular bounds, and reversal state against
+the expected normalized polyline.
+
+The focused reflected-OCS case passes 71 assertions; the combined signed,
+closed, reflected-bulge, and typed-source persistence selection passes 1,256
+assertions across four cases. `git diff --check` passes. Arbitrary non-axial
+OCS inputs remain intentionally unsupported by the current 2D source model.
