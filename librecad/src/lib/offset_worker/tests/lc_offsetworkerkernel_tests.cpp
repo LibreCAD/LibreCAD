@@ -632,6 +632,54 @@ TEST_CASE("spline and fit-point caches promote on both signed offset sides",
     }
 }
 
+TEST_CASE("nonuniform rational spline knot layouts preserve exact cache validation",
+          "[lc-offsetcurve][worker-kernel][source-cache][spline-variant]") {
+    RS_SplineData quadratic{2, false};
+    quadratic.controlPoints = {{0, 0}, {1, 2}, {2, -1}, {3, 2}, {4, 0}};
+    quadratic.knotslist = {0, 0, 0, .3, .7, 1, 1, 1};
+    quadratic.weights = {1, .6, 1.8, .8, 1};
+    RS_SplineData cubic{3, false};
+    cubic.controlPoints = {{0, 0}, {1, 2}, {2, 2}, {3, -1}, {4, -1}, {5, 1}};
+    cubic.knotslist = {0, 0, 0, 0, .4, .4, 1, 1, 1, 1};
+    cubic.weights = {1, .7, 1.4, .9, 1.6, 1};
+    const std::array<LC_OffsetSourceGeometry, 2> sources{
+        LC_OffsetSourceGeometry{quadratic}, LC_OffsetSourceGeometry{cubic}};
+
+    for (const auto& source : sources) {
+        CAPTURE(static_cast<int>(source.kind()));
+        REQUIRE(source.isWellFormed());
+        for (const double signedDistance : {-.2, .2}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+
+            if (generated.ordinary.size() == 1 &&
+                std::holds_alternative<RS_SplineData>(generated.ordinary.front())) {
+                const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+                const req::Request validationRequest{token,
+                    req::ValidateSourceCache{cache, definition, {}}};
+                const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+                const auto& validated = native(validationReply, 8);
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                CHECK(validated.changed);
+            } else {
+                const RS_SplineData cache = arcCache();
+                const req::Request validationRequest{token,
+                    req::ValidateSourceCache{cache, definition, {}}};
+                const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+                const auto& validated = native(validationReply, 8);
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+            }
+        }
+    }
+}
+
 TEST_CASE("offset child validates original raw cache once without generating or repairing it",
           "[lc-offsetcurve][worker-kernel][raw]") {
     req::ValidateCache op{arcCache(), definition(), .01, {}};
