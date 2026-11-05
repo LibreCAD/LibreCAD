@@ -594,12 +594,7 @@ RS_LayerList::CurrentLayerLock RS_LayerList::lockAll(const bool lock) {
             at(l)->lock(lock);
         }
     }
-    const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
-    fireLayerToggled();
-    if (outcome.wasReplaced()) {
-        fireActiveLayerReplaced();
-    }
-    return outcome;
+    return finishLockRequest(currentWasLocked);
 }
 
 RS_LayerList::CurrentLayerLock RS_LayerList::toggleLockMulti(const QList<RS_Layer*>& layers) {
@@ -612,12 +607,7 @@ RS_LayerList::CurrentLayerLock RS_LayerList::toggleLockMulti(const QList<RS_Laye
         }
     }
 
-    const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
-    fireLayerToggled();
-    if (outcome.wasReplaced()) {
-        fireActiveLayerReplaced();
-    }
-    return outcome;
+    return finishLockRequest(currentWasLocked);
 }
 
 void RS_LayerList::togglePrintMulti(const QList<RS_Layer*>& layers) {
@@ -677,12 +667,7 @@ RS_LayerList::CurrentLayerLock RS_LayerList::setLockMulti(const QList<RS_Layer*>
             layer->lock(true);
         }
     }
-    const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
-    fireLayerToggled();
-    if (outcome.wasReplaced()) {
-        fireActiveLayerReplaced();
-    }
-    return outcome;
+    return finishLockRequest(currentWasLocked);
 }
 
 void RS_LayerList::setPrintMulti(const QList<RS_Layer*>& layersNoPrint, const QList<RS_Layer*>& layersPrint) {
@@ -795,6 +780,19 @@ RS_LayerList::CurrentLayerLock RS_LayerList::keepCurrentLayerUnlocked(const bool
     }
     else {
         m_activeLayer->lock(false);
+    }
+    return outcome;
+}
+
+/**
+ * The end of a request that locked or unlocked several layers: the current layer is kept unlocked
+ * (keepCurrentLayerUnlocked()), then the listeners hear of the toggles, then of a replacement.
+ */
+RS_LayerList::CurrentLayerLock RS_LayerList::finishLockRequest(const bool currentWasLocked) {
+    const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
+    fireLayerToggled();
+    if (outcome.wasReplaced()) {
+        fireActiveLayerReplaced();
     }
     return outcome;
 }

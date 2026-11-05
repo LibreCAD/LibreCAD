@@ -56,7 +56,6 @@ public:
         RS_Layer* m_replacement{nullptr};
 
         bool wasReplaced() const {return m_replacement != nullptr;}
-        bool wasKept() const {return m_asked != nullptr && m_replacement == nullptr;}
     };
 
     explicit RS_LayerList();
@@ -168,6 +167,7 @@ private:
     void ensureActiveLayer();
     RS_Layer* bestLayerToActivate(const RS_Layer* except, bool allowLocked) const;
     CurrentLayerLock keepCurrentLayerUnlocked(bool wasLocked);
+    CurrentLayerLock finishLockRequest(bool currentWasLocked);
     void fireActiveLayerReplaced();
 
     //! layers in the graphic
