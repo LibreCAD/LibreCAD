@@ -183,7 +183,13 @@ inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeEntity(RS_EntityC
     return std::visit([parent](const auto& data) -> std::unique_ptr<RS_Entity> {
         using T = std::decay_t<decltype(data)>;
         if constexpr (std::is_same_v<T, RS_EllipseData>) return std::make_unique<RS_Ellipse>(parent, data);
-        else if constexpr (std::is_same_v<T, RS_SplineData>) return std::make_unique<RS_Spline>(parent, data);
+        else if constexpr (std::is_same_v<T, RS_SplineData>) {
+            auto materialized = data;
+            // An omitted NURBS weight is implicitly one, but RS_Spline evaluation expects explicit weights.
+            if (materialized.weights.empty())
+                materialized.weights.assign(materialized.controlPoints.size(), 1.0);
+            return std::make_unique<RS_Spline>(parent, materialized);
+        }
         else if constexpr (std::is_same_v<T, LC_SplinePointsData>) return std::make_unique<LC_SplinePoints>(parent, data);
         else if constexpr (std::is_same_v<T, LC_ParabolaData>) return std::make_unique<LC_Parabola>(parent, data);
         else if constexpr (std::is_same_v<T, LC_HyperbolaData>) return std::make_unique<LC_Hyperbola>(parent, data);

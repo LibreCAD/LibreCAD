@@ -499,10 +499,21 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     LC_SplinePointsData points{false, false};
     points.useControlPoints = true;
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 10> sources{
+    LC_SplinePointsData fitPoints{false, false};
+    fitPoints.splinePoints = {{0, 0}, {1, 2}, {2, 0}};
+    RS_SplineData degreeOne{1, false};
+    degreeOne.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    degreeOne.knotslist = {0, 0, .5, 1, 1};
+    RS_SplineData cubic{3, false};
+    cubic.controlPoints = {{0, 0}, {1, 2}, {2, 2}, {3, 0}};
+    cubic.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    const std::array<LC_OffsetSourceGeometry, 13> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
+        LC_OffsetSourceGeometry{fitPoints},
+        LC_OffsetSourceGeometry{degreeOne},
+        LC_OffsetSourceGeometry{cubic},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
@@ -588,11 +599,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     linear.weights = {1, 1};
     const LC_OffsetSourceDefinition linearDefinition{
         LC_OffsetSourceGeometry{linear}, .25, 0, false};
+    const qint64 linearRequestId = static_cast<qint64>(sources.size() + 1);
     Receipts linearReceipts;
-    REQUIRE(owned.get().submit({token(11), Req::GenerateSource{linearDefinition, {}}},
+    REQUIRE(owned.get().submit({token(linearRequestId), Req::GenerateSource{linearDefinition, {}}},
         Client::Mode::Commit, linearReceipts.into(0)));
     rt.until([&] { return linearReceipts.calls[0] != 0; });
-    auto& linearCompletion = completed(linearReceipts.at(0), 11, 7);
+    auto& linearCompletion = completed(linearReceipts.at(0), linearRequestId, 7);
     auto linearEditable = linearCompletion.nativeSource(attributes);
     REQUIRE(linearEditable);
     REQUIRE(linearEditable->hasGeneralizedSourceDefinition());

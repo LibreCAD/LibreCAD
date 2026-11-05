@@ -873,6 +873,13 @@ TEST_CASE("Native source picker refuses unrepresentable source variants atomical
     auto* fitSource = smoothFit.get();
     f.graphic.addEntity(fitSource);
     smoothFit.release();
+    RS_SplineData unweightedSpline{1, false};
+    unweightedSpline.controlPoints = {{0, 0}, {1, 0}, {2, 0}};
+    unweightedSpline.knotslist = {0, 0, .5, 1, 1};
+    auto plainSpline = std::make_unique<RS_Spline>(nullptr, unweightedSpline);
+    auto* plainSplineSource = plainSpline.get();
+    f.graphic.addEntity(plainSplineSource);
+    plainSpline.release();
 
     std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
     NativeWidget widget;
@@ -923,6 +930,22 @@ TEST_CASE("Native source picker refuses unrepresentable source variants atomical
     REQUIRE(capturedFit);
     CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(clone->sourceDefinition()->source) ==
           LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*capturedFit));
+
+    const int splineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
+    REQUIRE(splineType >= 0);
+    typeBox->setCurrentIndex(splineType);
+    int plainSplineIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == plainSplineSource->getId()) plainSplineIndex = i;
+    REQUIRE(plainSplineIndex >= 0);
+    sourceBox->setCurrentIndex(plainSplineIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Spline);
+    REQUIRE(std::holds_alternative<RS_SplineData>(clone->sourceDefinition()->source.value));
+    CHECK(std::get<RS_SplineData>(clone->sourceDefinition()->source.value).weights.empty());
 }
 
 TEST_CASE("Native field Return followed by focus out does not submit twice",

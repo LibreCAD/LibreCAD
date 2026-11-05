@@ -200,10 +200,21 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
     LC_SplinePointsData points{false, false};
     points.useControlPoints = true;
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 10> sources{
+    LC_SplinePointsData fitPoints{false, false};
+    fitPoints.splinePoints = {{0, 0}, {1, 2}, {2, 0}};
+    RS_SplineData degreeOne{1, false};
+    degreeOne.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    degreeOne.knotslist = {0, 0, .5, 1, 1};
+    RS_SplineData cubic{3, false};
+    cubic.controlPoints = {{0, 0}, {1, 2}, {2, 2}, {3, 0}};
+    cubic.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    const std::array<LC_OffsetSourceGeometry, 13> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
+        LC_OffsetSourceGeometry{fitPoints},
+        LC_OffsetSourceGeometry{degreeOne},
+        LC_OffsetSourceGeometry{cubic},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
@@ -217,6 +228,14 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
     };
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
+        REQUIRE(sources[i].isWellFormed());
+        if (i == 4) {
+            CHECK(std::get<RS_SplineData>(sources[i].value).weights.empty());
+            auto materialized = sources[i].makeEntity();
+            const auto* splineEntity = dynamic_cast<const RS_Spline*>(materialized.get());
+            REQUIRE(splineEntity);
+            CHECK(splineEntity->getData().weights == std::vector<double>{1.0, 1.0, 1.0});
+        }
         const req::Request input{token, req::GenerateSource{
             LC_OffsetSourceDefinition{sources[i], .25, 1e-4, false}, {}}};
         LC_OffsetWorkerKernel::Trace trace;
