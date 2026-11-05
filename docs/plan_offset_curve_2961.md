@@ -15739,3 +15739,14 @@ The focused spline-variant filter passes 391 assertions across three cases;
 the complete worker-kernel suite passes 4,154 assertions across 28 cases.
 `git diff --check` passes. These fixtures do not exhaust legal knot
 multiplicities, periodic closure, or rational weight ranges.
+
+## 381. Rational Knot Variant File Persistence (2026-11-05)
+
+Extended the real schema-2 DXF/DWG save, reopen, and second-save matrix with
+the nonuniform quadratic and repeated-interior-knot cubic fixtures from W380.
+The test compares the encoded tagged source values after each format round
+trip, including knot vectors and rational weights.
+
+The focused typed-source file-persistence test passes 1,008 assertions in one
+case with DWG enabled. This establishes serialization fidelity, not
+operation-8 import promotion for these specific layouts; that remains open.
