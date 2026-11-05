@@ -1964,14 +1964,17 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         {1.4142135623730951, -1.4142135623730951}};
 
     for (size_t variant = 0; variant < fitVariants.size(); ++variant) {
+      for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                            LC_CurveOffsetSide::Right}) {
+        const double signedDistance = side == LC_CurveOffsetSide::Left ? .25 : -.25;
         const LC_OffsetSourceDefinition definition{
-            LC_OffsetSourceGeometry{fitVariants[variant]}, .25, 1e-4, false};
+            LC_OffsetSourceGeometry{fitVariants[variant]}, signedDistance, 1e-4, false};
         auto source = definition.source.makeEntity();
         REQUIRE(source);
         const auto options = LC_CurveOffset::makeDirectOptions(*source, .25,
             definition.relativeTolerance);
         const auto generated = LC_CurveOffset::buildDirectBranches(*source,
-            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25), options,
+            LC_CurveOffset::makeSideRequest(side, .25), options,
             LC_CurveOffset::makeDirectSourceBudget());
         REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
         auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
@@ -2024,7 +2027,8 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             const std::string extension = dwg ? ".dwg" : ".dxf";
             const std::string version = r14 ? "-r14" :
                 (r2000 ? "-r2000-dwg" : (dwg ? "-dwg" : "-r2018"));
-            const auto input = directory.file("fit-points-" + suffix + version + extension);
+            const std::string sideName = side == LC_CurveOffsetSide::Left ? "-left" : "-right";
+            const auto input = directory.file("fit-points-" + suffix + sideName + version + extension);
 #ifdef DWGSUPPORT
             if (dwg) f::dwgFile(input, cache, r2000 ? DRW::AC1015 : DRW::AC1032);
             else f::binaryDxf(input, cache, r14 ? DRW::AC1014 : DRW::AC1032);
@@ -2049,6 +2053,7 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
                   RS_Spline::geometryFingerprint(expectedCache));
         }
+      }
     }
 }
 
