@@ -15756,3 +15756,16 @@ trip, including knot vectors and rational weights.
 The focused typed-source file-persistence test passes 1,008 assertions in one
 case with DWG enabled. This establishes serialization fidelity, not
 operation-8 import promotion for these specific layouts; that remains open.
+
+## 382. Signed-Bulge Polyline Source Capture
+
+Added a source-capture/materialization regression for a polyline made from
+positive- and negative-bulge arc segments followed by a line. It verifies the
+captured arc centers, radii, angular bounds, and reversal flags against the
+live `RS_Polyline`, then verifies those values survive `makeEntity()` and a
+second structural inspection. This tests source-value fidelity for both
+bulge directions; it is not evidence of disk DXF/DWG import behavior.
+
+The focused test passes 38 assertions; the existing all-source snapshot test
+still passes 119 assertions. Full DXF/DWG bulge-origin import coverage remains
+open.
