@@ -334,10 +334,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
     const QSignalBlocker sourceBlocked(ui->cbSource);
     const auto selectedKind = embedded ? embedded->source.kind() : LC_OffsetSourceGeometry::Kind::Invalid;
     ui->cbSourceType->clear();
-    for (int raw = static_cast<int>(LC_OffsetSourceGeometry::Kind::Ellipse);
-         raw <= static_cast<int>(LC_OffsetSourceGeometry::Kind::Polyline); ++raw) {
-        const auto kind = static_cast<LC_OffsetSourceGeometry::Kind>(raw);
-        ui->cbSourceType->addItem(sourceKindName(kind), raw);
+    for (const auto kind : LC_OffsetSourceGeometry::SupportedKinds) {
+        ui->cbSourceType->addItem(sourceKindName(kind), static_cast<int>(kind));
     }
     const auto wantedKind = hasRequestedKind
         ? static_cast<LC_OffsetSourceGeometry::Kind>(requestedKindValue) : selectedKind;

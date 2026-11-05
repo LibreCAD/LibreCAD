@@ -7,6 +7,7 @@
 #define LC_OFFSETSOURCE_H
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <memory>
 #include <cstddef>
@@ -44,6 +45,9 @@ struct LC_OffsetSourceGeometry {
 
     enum class Kind { Ellipse, Spline, SplinePoints, Parabola, BoundedHyperbola,
                       Line, Arc, Circle, Polyline, Invalid };
+    static constexpr std::array<Kind, 9> SupportedKinds{
+        Kind::Ellipse, Kind::Spline, Kind::SplinePoints, Kind::Parabola,
+        Kind::BoundedHyperbola, Kind::Line, Kind::Arc, Kind::Circle, Kind::Polyline};
 
     Value value;
 

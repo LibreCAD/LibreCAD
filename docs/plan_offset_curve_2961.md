@@ -15273,3 +15273,23 @@ explicit refusal/fallback rules, add a test for every newly admitted or
 refused variant, and only then align the source type/entity choices with that
 matrix. Review approval, exact-head CI completion, and broader GUI/platform
 acceptance remain open.
+
+## 359. Explicit Selectable Source-Kind Inventory (2026-11-05, in progress)
+
+Replaced the widget's enum-range walk with
+`LC_OffsetSourceGeometry::SupportedKinds`, an explicit nine-family inventory
+owned by the source model. The picker no longer assumes enum values remain
+contiguous or that a future enum addition should automatically become
+selectable. The nine-family replacement/edit matrix remains the executable
+check that every listed family has a representative supported source.
+
+The full Debug CMake `librecad_tests` target and the standalone worker-client
+test target build successfully after the shared-header change. The Properties
+source suite passes 2,817 assertions/3 cases; the worker-client suite passes
+23,290 assertions/20 cases. `git diff --check` passes. This makes the family
+inventory intentional but does not complete spline/hyperbola/polyline
+variant eligibility or per-variant geometry refusal diagnostics.
+
+Commit, push, and exact-head CI status are pending for this slice. Continue the
+variant matrix next; the aggregate roadmap and review/platform gates remain
+open.
