@@ -15401,3 +15401,20 @@ This closes the implicit-weight representation mismatch only; additional
 spline knot/closure layouts, hyperbola bounds, polyline segment/closure
 combinations, distance/side-dependent cardinality, and the overall PR review
 and acceptance gates remain open.
+
+## 364. Implicit/Explicit Weight Equivalence and Full Worker Suites (2026-11-05)
+
+Added a kernel-level equivalence assertion for the unweighted degree-1 spline:
+the worker reply encoded from implicit weights is byte-identical to the reply
+for the same spline with an explicit all-one weight vector. This verifies the
+materialization normalization changes no generated offset geometry or reply
+metadata. The focused source-generation case passes 408 assertions/1 case;
+the complete worker-kernel suite passes 3,184 assertions/20 cases, and the
+complete worker-client suite passes 23,146 assertions/20 cases.
+`git diff --check` passes.
+
+Test commit `76e571290d22e4e32a50c383b32efa8e549b8338` is pushed. The exact PR
+head is `76e571290d22e4e32a50c383b32efa8e549b8338`; GitHub had not reported
+checks yet. These tests strengthen the implicit-weight fix but do not close
+the other legal spline layouts, hyperbola bounds, polyline variants, or the
+remaining PR acceptance gates.
