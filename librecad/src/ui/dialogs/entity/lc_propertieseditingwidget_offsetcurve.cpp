@@ -97,6 +97,12 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
     bind(ui->leAngle1, Field::Start); bind(ui->leAngle2, Field::End);
     connect(ui->cbTowardCentre, &QCheckBox::toggled, this, [this](bool inward) {
         if (m_refreshing || m_entity == nullptr) return;
+        if (m_entity->hasGeneralizedSourceDefinition() && m_entity->sourceDefinition()) {
+            auto next = *m_entity->sourceDefinition();
+            next.signedDistance = std::copysign(std::abs(next.signedDistance), inward ? -1.0 : 1.0);
+            applySourceDefinition(next);
+            return;
+        }
         auto next = proposedDefinition(); next.towardCentre = inward;
         apply(next);
     });
@@ -181,6 +187,11 @@ void LC_PropertiesEditingWidgetOffsetCurve::setBusy(bool busy) const {
     m_busy = busy;
     ui->gbDefinition->setEnabled(m_entity && m_viewport && (m_entity->hasEditableDefinition() || m_entity->hasGeneralizedSourceDefinition()) &&
         m_generation < std::numeric_limits<qint64>::max() && m_sourceRevision < std::numeric_limits<qint64>::max());
+    ui->leDistance->setEnabled(!busy && m_entity && m_viewport &&
+        (m_entity->hasEditableDefinition() || m_entity->hasGeneralizedSourceDefinition()));
+    ui->cbTowardCentre->setEnabled(!busy && m_entity && m_viewport &&
+        (m_entity->hasEditableDefinition() || m_entity->hasGeneralizedSourceDefinition()));
+    ui->cbReversed->setEnabled(!busy && m_entity && m_entity->hasEditableDefinition());
     ui->wPickPointCenter->setEnabled(!busy);
     ui->cbSourceType->setEnabled(!busy && m_entity && m_viewport);
     ui->cbSource->setEnabled(!busy && m_entity && m_viewport);
@@ -197,7 +208,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::cancelPreparation() const {
     m_worker->cancel();
     m_proposedDefinition.reset(); m_inputSnapshot.reset();
     if (wasBusy) {
-        restoreCommittedText();
+        if (m_entity && m_entity->hasGeneralizedSourceDefinition()) refresh(nullptr, true);
+        else restoreCommittedText();
         ui->lRefusal->setText(tr("Offset computation was cancelled; the value was not changed."));
     }
     setBusy(false);
@@ -236,6 +248,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     const QScopedValueRollback<bool> refreshing(m_refreshing, true);
     const bool available = m_entity != nullptr && (m_entity->hasEditableDefinition() || m_entity->hasGeneralizedSourceDefinition()) && m_viewport != nullptr;
     const bool ellipseDefinition = available && m_entity->hasEditableDefinition();
+    const bool generalizedDefinition = available && m_entity->hasGeneralizedSourceDefinition();
     const auto text = [completed, force](QLineEdit* editor, const QString& value) {
         // Another dirty editor belongs to the user, not to this field's refresh.
         if (force || editor == completed || !editor->isModified()) {
@@ -255,7 +268,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     refreshSourceChoices();
     if (m_entity == nullptr || m_viewport == nullptr) return;
     for (auto* editor : definitionEditors()) editor->setEnabled(ellipseDefinition);
-    ui->cbTowardCentre->setEnabled(ellipseDefinition);
+    ui->leDistance->setEnabled(!m_busy && available);
+    ui->cbTowardCentre->setText(generalizedDefinition ? tr("Right side") : tr("Toward centre"));
+    ui->cbTowardCentre->setEnabled(!m_busy && (ellipseDefinition || generalizedDefinition));
     ui->cbReversed->setEnabled(ellipseDefinition);
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!m_busy && ellipseDefinition);
@@ -263,7 +278,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     const auto definition = proposedDefinition();
     const auto& basis = definition.basis;
     const auto center = toUIStr(basis.center);
-    text(ui->leDistance, asString(definition.distance));
+    const double displayDistance = m_entity->hasGeneralizedSourceDefinition() && m_entity->sourceDefinition()
+        ? std::abs(m_entity->sourceDefinition()->signedDistance) : definition.distance;
+    text(ui->leDistance, asString(displayDistance));
     text(ui->leCenterX, center.first); text(ui->leCenterY, center.second);
     text(ui->leMajor, asString(basis.majorP.magnitude()));
     text(ui->leMinor, asString(basis.majorP.magnitude() * basis.ratio));
@@ -272,7 +289,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     text(ui->leAngle2, asStringAngleDeg(basis.angle2));
     {
         const QSignalBlocker side(ui->cbTowardCentre), reversed(ui->cbReversed);
-        ui->cbTowardCentre->setChecked(definition.towardCentre);
+        const bool rightSide = generalizedDefinition && m_entity->sourceDefinition()
+            ? m_entity->sourceDefinition()->signedDistance < 0 : definition.towardCentre;
+        ui->cbTowardCentre->setChecked(rightSide);
         ui->cbReversed->setChecked(basis.reversed);
     }
     const bool arc = ellipseDefinition && !m_entity->sourceIsWhole();
@@ -555,6 +574,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
     try {
         const auto guard = m_preparationGuard;
         if (guard && !guard()) {
+            refresh(nullptr, true);
             ui->lRefusal->setText(tr("The offset editing input changed; the source was not changed."));
             return;
         }
@@ -562,12 +582,14 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
         auto snapshot = LC_OffsetCurveEditSnapshot::capture(*target);
         if (!alive || generation != m_generation || target != m_entity) return;
         if (!snapshot) {
+            refresh(nullptr, true);
             ui->lRefusal->setText(tr("The offset input exceeds the bounded snapshot limits; the source was not changed."));
             return;
         }
         auto prepared = LC_OffsetWorkerEdit::prepareSourceDefinition(*target, definition, m_limits);
         if (!prepared.generateSource()) {
             m_lastResult = prepared.result();
+            refresh(nullptr, true);
             ui->lRefusal->setText(LC_OffsetCurveUI::refusalText(*m_lastResult));
             return;
         }
@@ -580,7 +602,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
                 const auto* self = alive.data();
                 const auto refuse = [self](const QString& text) {
                     self->m_inputSnapshot.reset();
-                    self->refreshSourceChoices();
+                    self->refresh(nullptr, true);
                     self->ui->lRefusal->setText(text);
                     self->setBusy(false);
                 };
@@ -618,6 +640,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
             });
         if (!accepted) {
             m_inputSnapshot.reset();
+            refresh(nullptr, true);
             ui->lRefusal->setText(tr("The offset worker could not start the request; the source was not changed."));
             return;
         }
@@ -629,6 +652,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
     } catch (const std::bad_alloc&) {
         if (alive) {
             m_inputSnapshot.reset();
+            refresh(nullptr, true);
             ui->lRefusal->setText(tr("Not enough memory to replace the source; the value was not changed."));
         }
     }
@@ -636,6 +660,17 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
 
 void LC_PropertiesEditingWidgetOffsetCurve::applyValue(Field field, double value) const {
     if (m_entity == nullptr || m_viewport == nullptr) return;
+    if (m_entity->hasGeneralizedSourceDefinition() && m_entity->sourceDefinition()) {
+        if (field != Field::Distance) return;
+        if (value < 0.0) {
+            inputRefused(ui->leDistance, tr("Enter a positive distance; use the Right side option to reverse direction."));
+            return;
+        }
+        auto next = *m_entity->sourceDefinition();
+        next.signedDistance = std::copysign(value, next.signedDistance);
+        applySourceDefinition(next);
+        return;
+    }
     auto next = proposedDefinition(); auto& basis = next.basis;
     if (!m_entity->hasEditableDefinition()) {
         // Let D-edit classify stale/undefined state before local radius checks.

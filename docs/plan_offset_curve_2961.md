@@ -15185,6 +15185,37 @@ ellipse/polyline ordinary-dispatch fix in `9dd1597b7` are partial evidence;
 variant-specific eligibility and exact-head persistence requalification are
 still open.
 
+## 357. Generic Typed-Source Distance and Side Editing (2026-11-05, in progress)
+
+Extended the Properties editor so a generalized typed-source offset can edit
+its offset magnitude and side through the same joined `GenerateSource` worker
+transaction used for source replacement. The distance field displays the
+absolute magnitude and preserves the source definition's signed side when the
+magnitude changes. Negative magnitudes are explicitly rejected with guidance
+to use the side control. The side checkbox is labeled `Right side` for typed
+sources and toggles the sign of `signedDistance`; ellipse definitions retain
+their existing `Toward centre` semantics. Other ellipse-basis controls remain
+read-only for generalized source definitions. Cancellation/refusal refreshes
+from the committed typed definition, and busy-state completion now re-enables
+distance and side controls correctly.
+
+The nine-family widget matrix now performs, for each representative source,
+type-filter-only no-side-effect validation, replacement, side reversal, and a
+distance change to 0.375; typed source geometry and kind are asserted unchanged
+by the latter edits. The first test run found that async completion left the
+side control disabled; `setBusy(false)` now restores eligibility-dependent
+control state. A negative-distance refusal test also proves the committed
+source/distance remain intact. Debug CMake `librecad_tests` builds, the matrix
+passes 2,748 assertions/1 case, and the complete source Properties group
+passes 2,817 assertions/3 cases. `git diff --check` passes.
+
+This closes representative Properties-level magnitude/side edits for all nine
+modeled families. It does not close every numeric/boundary case, transform and
+grip behavior, native replacement semantics for multiple output branches,
+polyline/spline variant eligibility, DXF/DWG exact-head requalification, or
+the broader roadmap gates. Commit, push, update PR #3193, and record the exact
+head/checks after slice review.
+
 ## 356. Nine-Family Properties Replacement Matrix (2026-11-05, in progress)
 
 Added a real Properties-widget integration test for ellipse, spline,

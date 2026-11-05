@@ -729,6 +729,8 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     NativeWidget widget;
     widget.setGraphicViewport(f.view.getViewPort());
     widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
     auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     REQUIRE(typeBox); REQUIRE(sourceBox);
@@ -769,6 +771,47 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
                   LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
         }
         CHECK(sourceBox->currentData().toULongLong() == sourceIds[i]);
+
+        auto* distance = widget.findChild<QLineEdit*>("leDistance");
+        REQUIRE(distance);
+        CHECK(distance->isEnabled());
+        auto* side = widget.findChild<QCheckBox*>("cbTowardCentre");
+        REQUIRE(side);
+        CHECK(side->isEnabled());
+        const bool requestedRightSide = !side->isChecked();
+        side->setChecked(requestedRightSide);
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult());
+        REQUIRE(*widget.lastEditResult());
+        if (kind == LC_OffsetSourceGeometry::Kind::Ellipse) {
+            CHECK(clone->definition().towardCentre == requestedRightSide);
+        } else {
+            REQUIRE(clone->sourceDefinition());
+            CHECK((clone->sourceDefinition()->signedDistance < 0) == requestedRightSide);
+        }
+
+        submitInput(widget, "leDistance", ".375");
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult());
+        REQUIRE(*widget.lastEditResult());
+        if (kind == LC_OffsetSourceGeometry::Kind::Ellipse) {
+            CHECK(clone->definition().distance == Catch::Approx(.375));
+        } else {
+            REQUIRE(clone->sourceDefinition());
+            CHECK(std::abs(clone->sourceDefinition()->signedDistance) == Catch::Approx(.375));
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(clone->sourceDefinition()->source) ==
+                  LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
+            if (kind == LC_OffsetSourceGeometry::Kind::Line) {
+                const auto committed = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
+                    *clone->sourceDefinition());
+                submitInput(widget, "leDistance", "-.5");
+                CHECK_FALSE(widget.isPreparing());
+                CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*clone->sourceDefinition()) == committed);
+                auto* refusal = widget.findChild<QLabel*>("lRefusal");
+                REQUIRE(refusal);
+                CHECK(refusal->text().contains(QStringLiteral("positive distance")));
+            }
+        }
     }
 }
 
