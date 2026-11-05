@@ -14440,7 +14440,8 @@ consumed by a worker operation, and the source contract is not yet used by
 remain unavailable. W335 remains the completed ellipse-only Properties
 chooser receipt. Continue G1 through integration-specific source matching,
 transforms, and lifecycle inventory; then wire the new codec into worker
-generation and result validation. Retain all existing W379 acceptance gates.
+generation and result validation. W340 tightens valueless-variant, planar, and
+degenerate-ellipse admission. Retain all existing W379 acceptance gates.
 
 ## 337. Tagged Source Snapshot Foundation (2026-11-05)
 
@@ -14489,3 +14490,15 @@ or kernel dispatch.
 Validation: `librecad_offset_worker_request_tests` rebuilt successfully. The
 new tagged-source test passed 76 assertions, and the complete request suite
 passed all 597,242 assertions in 14 cases. `git diff --check` passed.
+
+## 340. Source Admission Hardening (2026-11-05)
+
+Closed three source-value boundary gaps found while reviewing the worker
+codec: valueless variants now fail closed without invoking `std::visit`, source
+points must be finite and planar, and ellipse source axes must be finite and
+nonzero. These checks apply both to entity capture and typed worker encoding.
+
+Validation: `librecad_tests` rebuilt and the focused source snapshot case
+passed 67 assertions, including nonplanar and degenerate ellipses. The complete
+worker request suite passed 597,242 assertions in 14 cases. `git diff --check`
+passed.

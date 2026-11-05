@@ -123,6 +123,8 @@ TEST_CASE("Offset source snapshots own every supported source type") {
             CHECK(value->getData().angle2 == hyperbola.getData().angle2);
             break;
         }
+        case LC_OffsetSourceGeometry::Kind::Invalid:
+            FAIL("valid source snapshot has invalid kind");
         }
     }
 
@@ -131,6 +133,14 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     CHECK(std::holds_alternative<LC_ParabolaData>(capturedParabola->value));
     CHECK_FALSE(LC_OffsetSourceGeometry::capture(unbounded));
     CHECK_FALSE(LC_OffsetSourceGeometry::capture(line));
+    auto nonPlanarEllipseData = ellipseData;
+    nonPlanarEllipseData.center.z = 1.0;
+    RS_Ellipse nonPlanarEllipse{nullptr, nonPlanarEllipseData};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(nonPlanarEllipse));
+    auto degenerateEllipseData = ellipseData;
+    degenerateEllipseData.majorP = {0, 0};
+    RS_Ellipse degenerateEllipse{nullptr, degenerateEllipseData};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(degenerateEllipse));
 
     auto ownedSpline = LC_OffsetSourceGeometry::capture(spline);
     REQUIRE(ownedSpline);

@@ -28,11 +28,12 @@ struct LC_OffsetSourceGeometry {
     using Value = std::variant<RS_EllipseData, RS_SplineData, LC_SplinePointsData,
                                LC_ParabolaData, LC_HyperbolaData>;
 
-    enum class Kind { Ellipse, Spline, SplinePoints, Parabola, BoundedHyperbola };
+    enum class Kind { Ellipse, Spline, SplinePoints, Parabola, BoundedHyperbola, Invalid };
 
     Value value;
 
     Kind kind() const noexcept {
+        if (value.valueless_by_exception()) return Kind::Invalid;
         return std::visit([](const auto& data) noexcept {
             using T = std::decay_t<decltype(data)>;
             if constexpr (std::is_same_v<T, RS_EllipseData>) return Kind::Ellipse;
@@ -117,10 +118,13 @@ inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeEntity(RS_EntityC
 
 inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
     using namespace LC_OffsetSourceDetail;
+    if (value.valueless_by_exception()) return false;
     return std::visit([](const auto& data) noexcept {
         using T = std::decay_t<decltype(data)>;
         if constexpr (std::is_same_v<T, RS_EllipseData>) {
-            return finite(data.center) && finite(data.majorP) && std::isfinite(data.ratio) && data.ratio > 0.0 &&
+            const double majorLength = std::hypot(data.majorP.x, data.majorP.y);
+            return finite(data.center) && finite(data.majorP) && std::isfinite(majorLength) && majorLength > 0.0 &&
+                   std::isfinite(data.ratio) && data.ratio > 0.0 &&
                    std::isfinite(data.angle1) && std::isfinite(data.angle2);
         } else if constexpr (std::is_same_v<T, RS_SplineData>) {
             const auto degree = data.degree;
