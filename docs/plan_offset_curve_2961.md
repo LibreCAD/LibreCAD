@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W386; chronological evidence follows): implementation slices
+Current status (W387; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -62,7 +62,7 @@ includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
-The recent W378-W386 source-variant slices add malformed-polyline refusal,
+The recent W378-W387 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15755,7 +15755,8 @@ trip, including knot vectors and rational weights.
 
 The focused typed-source file-persistence test passes 1,008 assertions in one
 case with DWG enabled. This establishes serialization fidelity, not
-operation-8 import promotion for these specific layouts; that remains open.
+operation-8 native promotion for these specific layouts; W387 verifies the
+safe multi-branch refusal for the nonuniform quadratic variant.
 
 ## 382. Signed-Bulge Polyline Source Capture
 
@@ -15825,3 +15826,17 @@ The focused signed-bulge cases pass 290 assertions across three selected cases;
 the combined bulge, reflected-OCS, and schema-2 persistence run passes 1,298
 assertions across four cases. `git diff --check` passes. Additional older DWG
 versions and non-axial OCS remain open.
+
+## 387. Multi-Branch Rational Spline Import Refusal
+
+Added real AC1032 DXF/DWG staged-import tests for the nonuniform quadratic
+rational spline from W380. Its offset generates three ordinary branches, so a
+carrier containing a single branch must not become an editable native offset
+curve. Import correctly reports a downgrade, leaves the ordinary spline
+geometry in the drawing, and preserves the complete schema-2 source metadata
+for future reevaluation. This validates the operation-8 refusal path for a
+representative internal-knot rational source; it does not claim native
+single-cache promotion because that output is not cache-representable.
+
+The focused spline-variant import suite passes 1,484 assertions across three
+cases with both AC1032 adapters enabled. `git diff --check` passes.
