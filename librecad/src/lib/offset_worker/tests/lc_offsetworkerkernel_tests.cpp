@@ -520,6 +520,45 @@ TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains
     }
 }
 
+TEST_CASE("spline and fit-point caches promote on both signed offset sides",
+          "[lc-offsetcurve][worker-kernel][source-cache][spline-variant]") {
+    RS_SplineData rationalQuadratic{2, false};
+    rationalQuadratic.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    rationalQuadratic.knotslist = {0, 0, 0, 1, 1, 1};
+    rationalQuadratic.weights = {1, .7, 1};
+    RS_SplineData cubic{3, false};
+    cubic.controlPoints = {{0, 0}, {1, 2}, {2, 2}, {3, 0}};
+    cubic.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    LC_SplinePointsData fitPoints{false, false};
+    fitPoints.splinePoints = {{0, 0}, {1, 2}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 3> sources{
+        LC_OffsetSourceGeometry{rationalQuadratic},
+        LC_OffsetSourceGeometry{cubic},
+        LC_OffsetSourceGeometry{fitPoints}
+    };
+    for (const auto& source : sources) {
+        CAPTURE(static_cast<int>(source.kind()));
+        for (const double signedDistance : {-.25, .25}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE(generated.ordinary.size() == 1);
+            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+            const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+            const req::Request validationRequest{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validated.changed);
+        }
+    }
+}
+
 TEST_CASE("offset child validates original raw cache once without generating or repairing it",
           "[lc-offsetcurve][worker-kernel][raw]") {
     req::ValidateCache op{arcCache(), definition(), .01, {}};
