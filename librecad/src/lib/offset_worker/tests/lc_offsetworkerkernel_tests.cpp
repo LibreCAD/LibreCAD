@@ -469,6 +469,57 @@ TEST_CASE("polyline cache promotion preserves mixed segment orientation and offs
     }
 }
 
+TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains on both sides",
+          "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
+    const double quarterTurn = M_PI / 2.0;
+    const std::array<LC_OffsetPolylineData, 2> variants{
+        LC_OffsetPolylineData{{0, 0}, {0, 0}, true,
+            {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
+             RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}},
+        LC_OffsetPolylineData{{2, 0}, {2, 0}, true,
+            {RS_ArcData{{0, 0}, 2, 0, quarterTurn, false},
+             RS_ArcData{{0, 0}, 2, quarterTurn, M_PI, false},
+             RS_ArcData{{0, 0}, 2, M_PI, 3 * quarterTurn, false},
+             RS_ArcData{{0, 0}, 2, 3 * quarterTurn, 2 * M_PI, false}}}
+    };
+    for (const auto& data : variants) {
+        const LC_OffsetSourceGeometry source{data};
+        REQUIRE(source.isWellFormed());
+        for (const double signedDistance : {-.25, .25}) {
+            CAPTURE(signedDistance, data.segments.size());
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+            RS_SplineData cache;
+            if (const auto* spline = std::get_if<RS_SplineData>(&generated.ordinary.front())) {
+                cache = *spline;
+            } else {
+                const auto& segment = std::get<req::Segment>(generated.ordinary.front());
+                cache.degree = 1;
+                cache.controlPoints = {segment.start, segment.end};
+                cache.knotslist = {0, 0, 1, 1};
+                cache.weights = {1, 1};
+            }
+            const req::Request validationRequest{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            if (generated.ordinary.size() == 1 &&
+                std::holds_alternative<RS_SplineData>(generated.ordinary.front())) {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                CHECK(validated.changed);
+            } else {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+            }
+        }
+    }
+}
+
 TEST_CASE("offset child validates original raw cache once without generating or repairing it",
           "[lc-offsetcurve][worker-kernel][raw]") {
     req::ValidateCache op{arcCache(), definition(), .01, {}};
