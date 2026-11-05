@@ -208,7 +208,20 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
     RS_SplineData cubic{3, false};
     cubic.controlPoints = {{0, 0}, {1, 2}, {2, 2}, {3, 0}};
     cubic.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
-    const std::array<LC_OffsetSourceGeometry, 13> sources{
+    RS_Spline periodic{nullptr, RS_SplineData{3, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
+                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
+        periodic.addControlPoint(point);
+    periodic.setClosed(true);
+    auto wrapped = periodic.getData();
+    wrapped.weights.clear();
+    const double pi = std::acos(-1.0);
+    LC_OffsetPolylineData closedArcPolyline{{2, 0}, {2, 0}, true, {
+        RS_ArcData{{0, 0}, 2, 0, pi / 2, false},
+        RS_ArcData{{0, 0}, 2, pi / 2, pi, false},
+        RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
+        RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}};
+    const std::array<LC_OffsetSourceGeometry, 15> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
@@ -224,7 +237,9 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
             {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}},
         LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {0, 0}, true,
             {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
-             RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}}
+             RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}},
+        LC_OffsetSourceGeometry{wrapped},
+        LC_OffsetSourceGeometry{closedArcPolyline}
     };
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
