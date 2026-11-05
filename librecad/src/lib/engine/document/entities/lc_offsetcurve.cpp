@@ -200,9 +200,20 @@ bool transformSourceDefinition(LC_OffsetSourceDefinition &definition, const Matr
             auto controls = data.m_controlPoints;
             for (auto &point : controls) if (!transformPoint(point)) return false;
             data = LC_ParabolaData{controls};
-        } else {
+        } else if constexpr (std::is_same_v<T, LC_HyperbolaData>) {
             if (!transformPoint(data.center) || !transformPoint(data.majorP, true)) return false;
             if (reflected) data.reversed = !data.reversed;
+        } else if constexpr (std::is_same_v<T, RS_LineData>) {
+            if (!transformPoint(data.startpoint) || !transformPoint(data.endpoint)) return false;
+        } else if constexpr (std::is_same_v<T, RS_ArcData>) {
+            // The arc stores its parameter angles in world coordinates. Only
+            // axis-preserving scale/translation leaves those doubles exact.
+            if (reflected || matrix[1] != 0 || matrix[2] != 0 || matrix[0] != scale || matrix[3] != scale ||
+                !transformPoint(data.center) || !exactValue(Exact(data.radius) * Exact(scale), data.radius, true))
+                return false;
+        } else {
+            if (!transformPoint(data.center) || !exactValue(Exact(data.radius) * Exact(scale), data.radius, true))
+                return false;
         }
         return true;
     }, definition.source.value);

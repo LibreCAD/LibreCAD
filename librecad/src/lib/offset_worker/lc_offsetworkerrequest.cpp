@@ -81,6 +81,10 @@ bool read(const QCborValue& value, RS_CircleData& d) {
     QCborArray a;
     return array(value, 2, a) && read(a.at(0), d.center) && number(a.at(1), d.radius);
 }
+bool read(const QCborValue& value, RS_LineData& d) {
+    QCborArray a;
+    return array(value, 2, a) && read(a.at(0), d.startpoint) && read(a.at(1), d.endpoint);
+}
 bool valid(const RS_EllipseData& d) {
     return valid(d.center) && valid(d.majorP) && std::isfinite(d.ratio) &&
         std::isfinite(d.angle1) && std::isfinite(d.angle2) && std::isfinite(d.angleDegrees) &&
@@ -190,6 +194,9 @@ bool read(const QCborValue& value, LC_OffsetSourceGeometry& source) {
     case 2: { LC_SplinePointsData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     case 3: { LC_ParabolaData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     case 4: { LC_HyperbolaData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 5: { RS_LineData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 6: { RS_ArcData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 7: { RS_CircleData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     default: return false;
     }
     return valid(source);
@@ -505,6 +512,7 @@ bool readPreview(const QCborArray& a, LC_OffsetPreviewSnapshot* out) {
 }
 
 QCborArray fields(const RS_Vector& p) { return {p.x, p.y, p.z, p.valid}; }
+QCborArray fields(const RS_LineData& d) { return {fields(d.startpoint), fields(d.endpoint)}; }
 QCborArray fields(const RS_ArcData& d) {
     return {fields(d.center), d.radius, d.angle1, d.angle2, d.reversed,
         d.startAngleDegrees, d.otherAngleDegrees, d.angularLength};

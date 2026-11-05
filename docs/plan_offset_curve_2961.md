@@ -14482,15 +14482,17 @@ entity picker, with cross-type replacement updating kind and geometry
 atomically. The selector must include every kind confirmed by the production
 offset audit, with parabola identified separately from generic spline types.
 W340 tightens valueless-variant, planar, and degenerate-ellipse admission.
-Retain all existing W379 acceptance gates. An uncommitted `LC_OffsetCurve`
-typed-source integration attempt now builds and preserves the source/cache
-transform contract: exact transport updates both, while any non-exact result
-refuses without mutation. A generated-geometry test initially assumed every
-translation would succeed; W344 corrects that expectation and covers both
-atomic refusal and an exactly representable positive transform. This is only a
-native-source storage/transform foundation; source-specific cache
-revalidation, generalized edits, persistence, and the Properties type selector
-and cross-type entity picking remain unimplemented.
+W344 validates typed-source storage and exact-transform behavior. W345 extends
+value capture/reconstruction and op-7 worker generation to line, arc, and
+circle while preserving their source identity. This worker adapter support is
+separate from `LC_CurveOffset::isSupportedSource()` and leaves those types on
+their pre-existing ordinary-offset dispatch; no ordinary command is silently
+routed to the new direct adapters. The production source audit now records
+line, arc, circle, and polyline as separate ordinary-path families; polyline
+still needs a lossless composite source representation. Source-specific cache
+revalidation, generalized edits, persistence, and the Properties type
+selector/cross-type picker remain unimplemented. Retain all existing W379
+acceptance gates.
 
 ## 337. Tagged Source Snapshot Foundation (2026-11-05)
 
@@ -14653,3 +14655,30 @@ the focused `[lc-offsetcurve][native]` entity suite passed 4,711 assertions in
 materialization and exact-transform behavior; it does not establish
 source-specific cache revalidation, generalized edit operations, source type
 selection/replacement UI, or persistence. Those remain open in G1-G5.
+
+## 345. Line, Arc, and Circle Typed Worker Sources (2026-11-05)
+
+Extended the tagged value model with `RS_LineData`, `RS_ArcData`, and
+`RS_CircleData`, appending stable wire tags 5-7 so the existing ellipse,
+spline, spline-points, parabola, and bounded-hyperbola tags 0-4 do not move.
+Capture/reconstruction validates finite, planar, nondegenerate source values.
+The worker's direct geometry adapter now handles line segments and converts
+circular arc/circle parameter data to the shared conic evaluator while keeping
+the original tagged source in the native result. Arc transforms are limited to
+exactly representable scale/translation; unsupported angular transforms
+refuse rather than restamping an unverified cache. These additions do not
+change the public ordinary-offset dispatch predicate, preserving its existing
+legacy line/arc/circle path. Polyline remains a composite source requiring a
+separate segment-preserving representation.
+
+Validation: Debug CMake rebuilt `librecad_offset_worker_request_tests`,
+`librecad_offset_worker_kernel_tests`, `librecad_offset_worker_client_tests`,
+and `librecad_tests`. Snapshot capture/reconstruction passed 101 assertions;
+source codec round-trip passed 112; op-7 request round-trip passed 886; the
+kernel source-generation case passed 240; and the real-worker typed-source
+case passed 4,159. Complete request, kernel, and client suites passed 598,164
+assertions/15 cases, 2,968/19, and 19,267/18, respectively. The focused
+`[lc-offsetcurve][native]` suite passed 4,711 assertions/29 cases. The roadmap
+parser passed 5/5 and `git diff --check` passed. This closes only source
+value/worker generation for these three kinds; UI selection, cache-source
+revalidation, editable operations, and DXF/DWG persistence remain open.

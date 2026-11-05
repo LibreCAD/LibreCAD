@@ -32,6 +32,8 @@
 #include "lc_curvejet.h"
 #include "lc_hyperbola.h"
 #include "lc_splinepoints.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_spline.h"
@@ -160,6 +162,56 @@ public:
 
 private:
     const RS_Spline& m_spline;
+    std::vector<double> m_breaks;
+    std::vector<RS_Vector> m_hull;
+};
+
+class LineSource final : public OffsetSource {
+public:
+    static std::unique_ptr<OffsetSource> make(const RS_Line& line) {
+        const RS_Vector start = line.getStartpoint();
+        const RS_Vector end = line.getEndpoint();
+        const double length = start.distanceTo(end);
+        if (!isFinite(start) || !isFinite(end) || !std::isfinite(length) || !(length > 0.0)) return nullptr;
+        return std::make_unique<LineSource>(RS_LineData{start, end});
+    }
+
+    explicit LineSource(const RS_LineData& data)
+        : m_start{data.startpoint}, m_end{data.endpoint},
+          m_length{m_start.distanceTo(m_end)}, m_direction{(m_end - m_start) / m_length},
+          m_breaks{0.0, m_length}, m_hull{m_start, m_end} {}
+
+    bool closed() const override { return false; }
+    const std::vector<double>& breaks() const override { return m_breaks; }
+    bool jet(const double t, const LC_CurveEvaluationSide, LC_CurveJet& out) const override {
+        out = LC_CurveJet{};
+        if (!std::isfinite(t) || t < 0.0 || t > m_length) return false;
+        out.point = m_start + m_direction * t;
+        out.first = m_direction;
+        out.second = RS_Vector{0.0, 0.0};
+        return isFinite(out.point) && isFinite(out.first);
+    }
+    bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        out = LC_CurveJetBounds{};
+        if (!std::isfinite(a) || !std::isfinite(b) || a < 0.0 || b > m_length || a > b) return false;
+        const RS_Vector pa = m_start + m_direction * a;
+        const RS_Vector pb = m_start + m_direction * b;
+        out.x = LC_Interval::hull(pa.x, pb.x); out.y = LC_Interval::hull(pa.y, pb.y);
+        out.dx = LC_Interval::point(m_direction.x); out.dy = LC_Interval::point(m_direction.y);
+        out.ddx = LC_Interval::point(0.0); out.ddy = LC_Interval::point(0.0);
+        return out.isValid();
+    }
+    const std::vector<RS_Vector>& hull() const override { return m_hull; }
+    bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
+        start = m_start; end = m_end; return true;
+    }
+    bool cubicSpans() const override { return true; }
+
+private:
+    RS_Vector m_start;
+    RS_Vector m_end;
+    double m_length;
+    RS_Vector m_direction;
     std::vector<double> m_breaks;
     std::vector<RS_Vector> m_hull;
 };
@@ -361,7 +413,10 @@ private:
 class EllipseSource final : public OffsetSource {
 public:
     static std::unique_ptr<OffsetSource> make(const RS_Ellipse& ellipse) {
-        const RS_EllipseData& d = ellipse.getData();
+        return make(ellipse.getData(), !ellipse.isEllipticArc());
+    }
+
+    static std::unique_ptr<OffsetSource> make(const RS_EllipseData& d, const bool whole) {
         const RS_Vector major{d.majorP.x, d.majorP.y};
         const RS_Vector minor = RS_Vector{-d.majorP.y, d.majorP.x} * d.ratio;
         if (!isFinite(d.center) || !isFinite(major) || !std::isfinite(d.ratio) || !(d.ratio > 0.0) ||
@@ -371,7 +426,7 @@ public:
         const double s = d.reversed ? -1.0 : 1.0;
         double start = M_PI_4;
         double sweep = 2.0 * M_PI;
-        const bool closed = !ellipse.isEllipticArc();
+        const bool closed = whole;
         if (!closed) {
             // as RS_Ellipse keeps an arc: from angle1 towards angle2, the way it runs
             start = d.angle1;
@@ -576,6 +631,7 @@ private:
 };
 
 std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
+    if (const auto* line = dynamic_cast<const RS_Line*>(&entity)) return LineSource::make(*line);
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
         return std::make_unique<SplineSource>(*spline);
     }
@@ -584,6 +640,20 @@ std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
     }
     if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&entity)) {
         return HyperbolaSource::make(*hyperbola);
+    }
+    if (const auto* arc = dynamic_cast<const RS_Arc*>(&entity)) {
+        const RS_ArcData& source = arc->getData();
+        RS_EllipseData data;
+        data.center = source.center; data.majorP = {source.radius, 0.0}; data.ratio = 1.0;
+        data.angle1 = source.angle1; data.angle2 = source.angle2; data.reversed = source.reversed;
+        data.isArc = source.angle1 != source.angle2;
+        return EllipseSource::make(data, source.angle1 == source.angle2);
+    }
+    if (const auto* circle = dynamic_cast<const RS_Circle*>(&entity)) {
+        const RS_CircleData& source = circle->getData();
+        RS_EllipseData data;
+        data.center = source.center; data.majorP = {source.radius, 0.0}; data.ratio = 1.0;
+        return EllipseSource::make(data, true);
     }
     if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
         return EllipseSource::make(*ellipse);

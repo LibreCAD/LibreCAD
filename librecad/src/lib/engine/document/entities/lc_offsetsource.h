@@ -18,7 +18,10 @@
 #include "lc_hyperbola.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_ellipse.h"
+#include "rs_line.h"
 #include "rs_spline.h"
 
 class RS_EntityContainer;
@@ -26,9 +29,11 @@ class RS_EntityContainer;
 /** Geometry-only, value-owned source data for editable offset definitions. */
 struct LC_OffsetSourceGeometry {
     using Value = std::variant<RS_EllipseData, RS_SplineData, LC_SplinePointsData,
-                               LC_ParabolaData, LC_HyperbolaData>;
+                               LC_ParabolaData, LC_HyperbolaData, RS_LineData,
+                               RS_ArcData, RS_CircleData>;
 
-    enum class Kind { Ellipse, Spline, SplinePoints, Parabola, BoundedHyperbola, Invalid };
+    enum class Kind { Ellipse, Spline, SplinePoints, Parabola, BoundedHyperbola,
+                      Line, Arc, Circle, Invalid };
 
     Value value;
 
@@ -40,7 +45,10 @@ struct LC_OffsetSourceGeometry {
             if constexpr (std::is_same_v<T, RS_SplineData>) return Kind::Spline;
             if constexpr (std::is_same_v<T, LC_SplinePointsData>) return Kind::SplinePoints;
             if constexpr (std::is_same_v<T, LC_ParabolaData>) return Kind::Parabola;
-            return Kind::BoundedHyperbola;
+            if constexpr (std::is_same_v<T, LC_HyperbolaData>) return Kind::BoundedHyperbola;
+            if constexpr (std::is_same_v<T, RS_LineData>) return Kind::Line;
+            if constexpr (std::is_same_v<T, RS_ArcData>) return Kind::Arc;
+            return Kind::Circle;
         }, value);
     }
 
@@ -101,6 +109,18 @@ inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(c
         LC_OffsetSourceGeometry result{hyperbola->getData()};
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
     }
+    if (const auto* line = dynamic_cast<const RS_Line*>(&entity)) {
+        LC_OffsetSourceGeometry result{RS_LineData{line->getStartpoint(), line->getEndpoint()}};
+        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+    }
+    if (const auto* arc = dynamic_cast<const RS_Arc*>(&entity)) {
+        LC_OffsetSourceGeometry result{arc->getData()};
+        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+    }
+    if (const auto* circle = dynamic_cast<const RS_Circle*>(&entity)) {
+        LC_OffsetSourceGeometry result{circle->getData()};
+        return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
+    }
     return std::nullopt;
 }
 
@@ -112,7 +132,10 @@ inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeEntity(RS_EntityC
         else if constexpr (std::is_same_v<T, RS_SplineData>) return std::make_unique<RS_Spline>(parent, data);
         else if constexpr (std::is_same_v<T, LC_SplinePointsData>) return std::make_unique<LC_SplinePoints>(parent, data);
         else if constexpr (std::is_same_v<T, LC_ParabolaData>) return std::make_unique<LC_Parabola>(parent, data);
-        else return std::make_unique<LC_Hyperbola>(parent, data);
+        else if constexpr (std::is_same_v<T, LC_HyperbolaData>) return std::make_unique<LC_Hyperbola>(parent, data);
+        else if constexpr (std::is_same_v<T, RS_LineData>) return std::make_unique<RS_Line>(parent, data);
+        else if constexpr (std::is_same_v<T, RS_ArcData>) return std::make_unique<RS_Arc>(parent, data);
+        else return std::make_unique<RS_Circle>(parent, data);
     }, value);
 }
 
@@ -157,12 +180,20 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             return data.isValid() &&
                    std::all_of(data.m_controlPoints.begin(), data.m_controlPoints.end(), finite) &&
                    finite(data.m_focus) && finite(data.m_axis) && finite(data.m_vertex);
-        } else {
+        } else if constexpr (std::is_same_v<T, LC_HyperbolaData>) {
             const double majorLength = std::hypot(data.majorP.x, data.majorP.y);
             return data.isValid() && finite(data.center) && finite(data.majorP) && std::isfinite(data.ratio) &&
                    data.ratio > 0.0 && std::isfinite(majorLength) && majorLength > 0.0 && std::isfinite(data.angle1) &&
                    std::isfinite(data.angle2) && data.angle1 != data.angle2 &&
                    std::max(std::abs(data.angle1), std::abs(data.angle2)) < 700.0;
+        } else if constexpr (std::is_same_v<T, RS_LineData>) {
+            return finite(data.startpoint) && finite(data.endpoint) &&
+                   (data.startpoint.x != data.endpoint.x || data.startpoint.y != data.endpoint.y);
+        } else if constexpr (std::is_same_v<T, RS_ArcData>) {
+            return data.isValid() && finite(data.center) && std::isfinite(data.radius) && data.radius > 0.0 &&
+                   std::isfinite(data.angle1) && std::isfinite(data.angle2);
+        } else {
+            return data.isValid() && finite(data.center) && std::isfinite(data.radius) && data.radius > 0.0;
         }
     }, value);
 }

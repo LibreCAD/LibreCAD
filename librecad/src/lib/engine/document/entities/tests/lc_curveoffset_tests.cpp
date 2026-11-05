@@ -36,6 +36,8 @@
 #include "lc_offsetsource.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_line.h"
 #include "rs_spline.h"
 
@@ -63,14 +65,20 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     LC_Hyperbola hyperbola{nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}};
     LC_Hyperbola unbounded{nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5}};
     RS_Line line{nullptr, RS_LineData{{0, 0}, {1, 0}}};
+    RS_Arc arc{nullptr, RS_ArcData{{2, 3}, 4.0, .25, 1.5, true}};
+    RS_Circle circle{nullptr, RS_CircleData{{-2, 3}, 5.0}};
 
-    const std::array<const RS_Entity*, 5> entities{&ellipse, &spline, &points, &parabola, &hyperbola};
-    const std::array<LC_OffsetSourceGeometry::Kind, 5> kinds{
+    const std::array<const RS_Entity*, 8> entities{&ellipse, &spline, &points, &parabola, &hyperbola,
+                                                    &line, &arc, &circle};
+    const std::array<LC_OffsetSourceGeometry::Kind, 8> kinds{
         LC_OffsetSourceGeometry::Kind::Ellipse,
         LC_OffsetSourceGeometry::Kind::Spline,
         LC_OffsetSourceGeometry::Kind::SplinePoints,
         LC_OffsetSourceGeometry::Kind::Parabola,
-        LC_OffsetSourceGeometry::Kind::BoundedHyperbola};
+        LC_OffsetSourceGeometry::Kind::BoundedHyperbola,
+        LC_OffsetSourceGeometry::Kind::Line,
+        LC_OffsetSourceGeometry::Kind::Arc,
+        LC_OffsetSourceGeometry::Kind::Circle};
     for (std::size_t i = 0; i < entities.size(); ++i) {
         auto snapshot = LC_OffsetSourceGeometry::capture(*entities[i]);
         REQUIRE(snapshot);
@@ -123,6 +131,30 @@ TEST_CASE("Offset source snapshots own every supported source type") {
             CHECK(value->getData().angle2 == hyperbola.getData().angle2);
             break;
         }
+        case LC_OffsetSourceGeometry::Kind::Line: {
+            const auto* value = dynamic_cast<const RS_Line*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getStartpoint() == line.getStartpoint());
+            CHECK(value->getEndpoint() == line.getEndpoint());
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Arc: {
+            const auto* value = dynamic_cast<const RS_Arc*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().center == arc.getData().center);
+            CHECK(value->getData().radius == arc.getData().radius);
+            CHECK(value->getData().angle1 == arc.getData().angle1);
+            CHECK(value->getData().angle2 == arc.getData().angle2);
+            CHECK(value->getData().reversed == arc.getData().reversed);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Circle: {
+            const auto* value = dynamic_cast<const RS_Circle*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().center == circle.getData().center);
+            CHECK(value->getData().radius == circle.getData().radius);
+            break;
+        }
         case LC_OffsetSourceGeometry::Kind::Invalid:
             FAIL("valid source snapshot has invalid kind");
         }
@@ -132,7 +164,9 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     REQUIRE(capturedParabola);
     CHECK(std::holds_alternative<LC_ParabolaData>(capturedParabola->value));
     CHECK_FALSE(LC_OffsetSourceGeometry::capture(unbounded));
-    CHECK_FALSE(LC_OffsetSourceGeometry::capture(line));
+    CHECK(LC_OffsetSourceGeometry::capture(line));
+    RS_Line degenerateLine{nullptr, RS_LineData{{1, 1}, {1, 1}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(degenerateLine));
     auto nonPlanarEllipseData = ellipseData;
     nonPlanarEllipseData.center.z = 1.0;
     RS_Ellipse nonPlanarEllipse{nullptr, nonPlanarEllipseData};

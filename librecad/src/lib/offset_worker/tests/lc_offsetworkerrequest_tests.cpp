@@ -765,12 +765,15 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     LC_SplinePointsData pointsData{false, false};
     pointsData.useControlPoints = true;
     pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 5> sources{
+    const std::array<LC_OffsetSourceGeometry, 8> sources{
         LC_OffsetSourceGeometry{ellipse()},
         LC_OffsetSourceGeometry{splineData},
         LC_OffsetSourceGeometry{pointsData},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
-        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}}
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{arc()},
+        LC_OffsetSourceGeometry{circle()}
     };
     for (std::size_t i = 0; i < sources.size(); ++i) {
         const auto encodedSource = values::encodeSourceGeometry(sources[i]);
@@ -823,12 +826,15 @@ TEST_CASE("offset worker op7 transports generalized source generation requests",
     LC_SplinePointsData pointsData{false, false};
     pointsData.useControlPoints = true;
     pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 5> sources{
+    const std::array<LC_OffsetSourceGeometry, 8> sources{
         LC_OffsetSourceGeometry{ellipse()},
         LC_OffsetSourceGeometry{splineData},
         LC_OffsetSourceGeometry{pointsData},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
-        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}}
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{arc()},
+        LC_OffsetSourceGeometry{circle()}
     };
     for (const auto& source : sources) {
         const request::Request input{token(), request::GenerateSource{

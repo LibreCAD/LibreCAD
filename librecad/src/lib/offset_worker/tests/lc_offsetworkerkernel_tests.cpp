@@ -200,12 +200,15 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
     LC_SplinePointsData points{false, false};
     points.useControlPoints = true;
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 5> sources{
+    const std::array<LC_OffsetSourceGeometry, 8> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
-        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}}
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, .25, 1.5, false}},
+        LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}}
     };
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
