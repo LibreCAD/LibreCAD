@@ -38,7 +38,7 @@ const result::Native& native(const result::Reply& reply, std::size_t operation) 
     CHECK(reply.token.sourceRevision == token.sourceRevision); CHECK(reply.token.undoEpoch == token.undoEpoch);
     REQUIRE(std::holds_alternative<result::Native>(reply.result));
     const auto& output = std::get<result::Native>(reply.result);
-    if (operation != 0 || output.refusal == LC_OffsetCurveRefusal::None ||
+    if ((operation != 0 && operation != 7) || output.refusal == LC_OffsetCurveRefusal::None ||
         output.refusal == LC_OffsetCurveRefusal::ThroughNotOnCache) {
         CHECK(output.ordinaryStatus == result::OrdinaryStatus::None); CHECK(output.ordinary.empty());
         CHECK(output.ordinaryUsage.cubicPieces == 0); CHECK(output.ordinaryUsage.outputEntities == 0);
@@ -188,6 +188,52 @@ TEST_CASE("offset child transports real empty and several-piece ordinary produce
         else CHECK(output.ordinaryUsage.deepEntities == 0);
         const auto encoded = result::encode(reply, input); REQUIRE(encoded);
         REQUIRE(result::decode(*encoded, input));
+    }
+}
+
+TEST_CASE("offset worker op7 generates and transports a typed source without cache authority",
+          "[lc-offsetcurve][worker-kernel][source-generation]") {
+    RS_SplineData spline{2, false};
+    spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    spline.knotslist = {0, 0, 0, 1, 1, 1};
+    spline.weights = {1, .7, 1};
+    LC_SplinePointsData points{false, false};
+    points.useControlPoints = true;
+    points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 5> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
+        LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{points},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}}
+    };
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        CAPTURE(i);
+        const req::Request input{token, req::GenerateSource{
+            LC_OffsetSourceDefinition{sources[i], .25, 1e-4, false}, {}}};
+        LC_OffsetWorkerKernel::Trace trace;
+        const auto reply = LC_OffsetWorkerKernel::run(input, &trace);
+        const auto& output = native(reply, 7);
+        CHECK(output.engineRuns == 1);
+        REQUIRE(output.engineStatus);
+        CHECK(*output.engineStatus == LC_CurveOffsetStatus::Ok);
+        CHECK_FALSE(output.curve);
+        CHECK_FALSE(output.changed);
+        CHECK(trace.nativePrepareEntered);
+        CHECK(trace.computationCompleted);
+        REQUIRE(output.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE_FALSE(output.ordinary.empty());
+        CHECK(output.ordinaryUsage.outputEntities == output.ordinary.size());
+        CHECK(output.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+
+        const auto wire = result::encode(reply, input);
+        REQUIRE(wire);
+        const auto decoded = result::decode(*wire, input);
+        REQUIRE(decoded);
+        const auto& transported = native(*decoded, 7);
+        CHECK_FALSE(transported.curve);
+        CHECK(transported.ordinary.size() == output.ordinary.size());
+        CHECK(transported.ordinaryUsage.outputEntities == output.ordinaryUsage.outputEntities);
     }
 }
 

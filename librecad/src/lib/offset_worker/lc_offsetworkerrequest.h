@@ -77,9 +77,15 @@ struct CachedProduce {
     Produce produce;
     LC_OffsetPreviewSnapshot cache;
 };
+/** General source geometry job. Results are bounded ordinary branches, not a native cache certificate. */
+struct GenerateSource {
+    LC_OffsetSourceDefinition definition;
+    LC_OffsetRunLimits limits;
+};
 struct Request {
     Token token;
-    std::variant<Generate, ValidateCache, TrimCache, TrimConic, CheckThrough, Produce, CachedProduce> operation;
+    std::variant<Generate, ValidateCache, TrimCache, TrimConic, CheckThrough, Produce, CachedProduce,
+                 GenerateSource> operation;
 };
 
 /** Shared strict value syntax, NOT C certificates or geometric proof.
@@ -117,6 +123,8 @@ bool scanPreview(const QCborArray&);
  * Source [0 ellipse / 1 raw spline,record]; context [topLevel,nativeSource,definition-or-null];
  * bounds [minimum-or-null,maximum-or-null]; batchLimits [outputBudget,samples,pairs,requestDeep].
  * Copies are 1..100. Signed distances are finite; zero/overflow are typed kernel refusals.
+ * GenerateSource (op 7): [tagged-source-definition,run-limits]. Its reply is
+ * ordinary generated geometry only and conveys no native cache certificate.
  * No attributes, document identity, cache import or publication authority is transported.
  * Cutter [ordinal 0..4,record]; vector [x,y,z,valid]; pick [point,hint-or-null,seed-or-null].
  * Definition [basis,distance,towardCentre,cacheReversed,relTolerance].

@@ -202,6 +202,11 @@ void same(const request::CachedProduce& a, const request::CachedProduce& b) {
     same(a.produce, b.produce);
     CHECK(request::Values::encodePreview(a.cache) == request::Values::encodePreview(b.cache));
 }
+void same(const request::GenerateSource& a, const request::GenerateSource& b) {
+    CHECK(request::Values::encodeSourceDefinition(a.definition) ==
+          request::Values::encodeSourceDefinition(b.definition));
+    same(a.limits, b.limits);
+}
 void same(const request::Request& a, const request::Request& b) {
     CHECK(a.token.requestId == b.token.requestId); CHECK(a.token.generation == b.token.generation);
     CHECK(a.token.sourceRevision == b.token.sourceRevision); CHECK(a.token.undoEpoch == b.token.undoEpoch);
@@ -370,7 +375,8 @@ TEST_CASE("offset worker request has exact version two positional shapes",
             std::visit([&](const auto& op) {
                 if constexpr (!std::is_same_v<std::decay_t<decltype(op)>, request::Generate> &&
                     !std::is_same_v<std::decay_t<decltype(op)>, request::Produce> &&
-                    !std::is_same_v<std::decay_t<decltype(op)>, request::CachedProduce>) {
+                    !std::is_same_v<std::decay_t<decltype(op)>, request::CachedProduce> &&
+                    !std::is_same_v<std::decay_t<decltype(op)>, request::GenerateSource>) {
                     CHECK(at(root, {3, 0, 0}).toArray().size() == qsizetype(op.cache.controlPoints.size()));
                     CHECK(at(root, {3, 0, 1}).toArray().size() == qsizetype(op.cache.knotslist.size()));
                     CHECK(at(root, {3, 0, 2}).toArray().size() == qsizetype(op.cache.weights.size()));
@@ -806,6 +812,42 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     auto invalidDistance = *values::encodeSourceDefinition(
         LC_OffsetSourceDefinition{sources[0], 1.0, .001, false});
     CHECK_FALSE(values::decodeSourceDefinition(changed(invalidDistance, {1}, std::numeric_limits<double>::quiet_NaN())));
+}
+
+TEST_CASE("offset worker op7 transports generalized source generation requests",
+          "[lc-offsetcurve][worker-protocol][request][source-generation]") {
+    RS_SplineData splineData{2, false};
+    splineData.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    splineData.knotslist = {0, 0, 0, 1, 1, 1};
+    splineData.weights = {1, .7, 1};
+    LC_SplinePointsData pointsData{false, false};
+    pointsData.useControlPoints = true;
+    pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 5> sources{
+        LC_OffsetSourceGeometry{ellipse()},
+        LC_OffsetSourceGeometry{splineData},
+        LC_OffsetSourceGeometry{pointsData},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}}
+    };
+    for (const auto& source : sources) {
+        const request::Request input{token(), request::GenerateSource{
+            LC_OffsetSourceDefinition{source, .25, .001, false}, runLimits()}};
+        const auto wire = encoded(input);
+        CHECK(wire.at(2).toInteger() == 7);
+        const auto decoded = request::decode(wire);
+        REQUIRE(decoded);
+        same(input, *decoded);
+        sameTree(wire, encoded(*decoded));
+    }
+
+    request::GenerateSource invalid{LC_OffsetSourceDefinition{
+        sources.front(), std::numeric_limits<double>::infinity(), .001, false}, runLimits()};
+    CHECK_FALSE(request::encode({token(), invalid}));
+    auto excessive = request::GenerateSource{LC_OffsetSourceDefinition{
+        sources.front(), .25, .001, false}, runLimits()};
+    excessive.limits.outputBudget.maxCubicPieces = makeDefaultOffsetSourceBudget().maxCubicPieces + 1;
+    CHECK_FALSE(request::encode({token(), excessive}));
 }
 
 TEST_CASE("offset worker CheckThrough owns raw values and bounds every membership allowance",

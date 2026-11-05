@@ -164,6 +164,79 @@ result::Native LC_OffsetWorkerKernel::generate(const req::Generate& input, Trace
     return output;
 }
 
+result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& input, Trace& trace) {
+    result::Native output;
+    output.refusal = LC_OffsetCurveRefusal::InvalidInput;
+    if (!input.definition.isWellFormed()) return output;
+
+    auto source = input.definition.source.makeEntity();
+    if (!source) return output;
+    const double magnitude = std::abs(input.definition.signedDistance);
+    if (!std::isfinite(magnitude) || magnitude <= RS_TOLERANCE) {
+        output.refusal = LC_OffsetCurveRefusal::TooSmall;
+        return output;
+    }
+
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(
+        *source, magnitude, input.definition.relativeTolerance);
+    if (!std::isfinite(options.tolerance.requestedGeometry)) return output;
+    if (input.limits.maxSamples) options.maxSamples = input.limits.maxSamples;
+    if (input.limits.maxIntersectionPairs)
+        options.maxIntersectionPairs = input.limits.maxIntersectionPairs;
+    options.maxOutputBranches = std::min(options.maxOutputBranches,
+        input.limits.outputBudget.maxOutputEntities);
+    const LC_CurveOffsetSide side = input.definition.signedDistance > 0
+        ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
+
+    trace.nativePrepareEntered = true;
+    output.engineRuns = 1;
+    LC_CurveOffsetGeometryResult geometry = LC_CurveOffset::buildDirectBranches(
+        *source, LC_CurveOffset::makeSideRequest(side, magnitude), options,
+        input.limits.outputBudget);
+    output.engineStatus = geometry.status;
+    output.sampleUnits = geometry.exactSamples;
+    if (geometry.status != LC_CurveOffsetStatus::Ok) {
+        output.refusal = LC_OffsetCurveRefusal::Engine;
+        return output;
+    }
+
+    LC_CurveOffsetMaterializationResult materialized = LC_CurveOffset::materializeBranches(
+        *source, geometry, options, input.limits.outputBudget);
+    output.engineStatus = materialized.status;
+    output.sampleUnits = materialized.sampleUnits;
+    output.attemptedOutputUsage = materialized.attemptedOutputUsage;
+    output.attemptedDeepCountComplete = materialized.attemptedDeepCountComplete;
+    if (materialized.status != LC_CurveOffsetStatus::Ok) {
+        output.outputUsage = {};
+        output.refusal = LC_OffsetCurveRefusal::Engine;
+        return output;
+    }
+
+    output.ordinaryStatus = result::OrdinaryStatus::Complete;
+    output.outputUsage = materialized.usage;
+    output.ordinaryUsage = materialized.usage;
+    output.ordinary.reserve(materialized.entities.size());
+    for (const auto& entity : materialized.entities) {
+        if (const auto* line = dynamic_cast<const RS_Line*>(entity.get())) {
+            output.ordinary.emplace_back(req::Segment{line->getStartpoint(), line->getEndpoint()});
+        } else if (const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+                   spline && ordinarySpline(spline->getData())) {
+            output.ordinary.emplace_back(spline->getData());
+        } else {
+            output.ordinary.clear();
+            output.ordinaryStatus = result::OrdinaryStatus::Unsupported;
+            output.ordinaryUsage = {};
+            output.outputUsage = {};
+            output.refusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
+            return output;
+        }
+    }
+    output.refusal = materialized.entities.empty()
+        ? LC_OffsetCurveRefusal::NothingLeft : LC_OffsetCurveRefusal::NotCacheRepresentable;
+    trace.computationCompleted = true;
+    return output;
+}
+
 result::Native LC_OffsetWorkerKernel::validate(const req::ValidateCache& input, Trace& trace) {
     result::Native output;
     const Snapshot observed{trace, output};
@@ -358,6 +431,7 @@ result::Reply LC_OffsetWorkerKernel::run(const req::Request& input, Trace* obser
             const auto& cached = std::get<req::CachedProduce>(input.operation);
             reply.result = produce(cached.produce, trace, &cached.cache); break;
         }
+        case 7: reply.result = generateSource(std::get<req::GenerateSource>(input.operation), trace); break;
         default: return reply;
         }
         trace.computationCompleted = true;

@@ -324,6 +324,9 @@ bool read(const QCborValue& value, Token& t) {
 bool valid(const Generate& op) {
     return valid(op.definition) && valid(op.limits) && (!op.throughPoint || valid(*op.throughPoint));
 }
+bool valid(const GenerateSource& op) {
+    return valid(op.definition) && valid(op.limits);
+}
 bool valid(const ValidateCache& op) {
     return valid(op.cache) && valid(op.definition) && std::isfinite(op.worldTolerance) && valid(op.limits);
 }
@@ -614,6 +617,7 @@ QCborArray fields(const LC_OffsetPreviewSnapshot& snapshot) {
     return {qint64(snapshot.revision), qint64(snapshot.otherEntries), snapshot.cleared, entries};
 }
 QCborArray fields(const CachedProduce& op) { return {fields(op.produce), fields(op.cache)}; }
+QCborArray fields(const GenerateSource& op) { return {fields(op.definition), fields(op.limits)}; }
 QCborArray fields(const CheckThrough& op) {
     return {fields(op.cache), fields(op.definition), op.worldTolerance, fields(op.point), fields(op.limits)};
 }
@@ -755,6 +759,12 @@ std::optional<Request> decode(const QCborArray& a) {
         if (!cache) break;
         op.cache = std::move(*cache);
         return Request{token, std::move(op)};
+    }
+    case 7: {
+        GenerateSource op;
+        if (body.size() == 2 && read(body.at(0), op.definition) && read(body.at(1), op.limits))
+            return Request{token, std::move(op)};
+        break;
     }
     case 4: {
         CheckThrough op;

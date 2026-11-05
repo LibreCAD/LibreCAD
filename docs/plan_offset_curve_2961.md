@@ -14320,14 +14320,16 @@ integration.
 ### Goal and current boundary
 
 Extend the editable offset-curve Properties source chooser from its W335
-ellipse-only behavior to every source family the offset implementation
-supports, without silently converting a native editable offset into an
-ordinary SPLINE or weakening its validation and worker-isolation guarantees.
-Selecting a drawing entity supplies its actual source type and value-owned
-geometry; the user does not choose an arbitrary type label that can disagree
-with the selected entity.
+ellipse-only behavior to every single-curve source family accepted by the
+offset implementation, without silently converting a native editable offset
+into an ordinary SPLINE or weakening its validation and worker-isolation
+guarantees. The chooser must let the user change the source type while
+replacing the source, then choose a live drawing entity of that type. The
+selected entity remains authoritative: changing the type filter cannot create
+a mismatched type/geometry pair, and selecting an entity updates both the
+displayed type and the value-owned geometry snapshot.
 
-The supported-source target matrix is:
+The initial supported-source target matrix is:
 
 | Source family | Required scope | Important constraint |
 |---|---|---|
@@ -14336,6 +14338,21 @@ The supported-source target matrix is:
 | `LC_SplinePoints` | Same end-to-end lifecycle as `RS_Spline` | Preserve its native representation and fit intent; do not flatten rational data or substitute a different spline representation |
 | `LC_Parabola` | Treat as a distinct selectable/source identity while using its `LC_SplinePoints` geometry representation where appropriate | Preserve parabola classification and exact parameters where available; do not let generic spline reconstruction erase its type |
 | Bounded `LC_Hyperbola` | Native editable source definition and chooser support for explicitly finite parameter bounds | Reject unbounded hyperbolas and invalid bounds before worker submission; do not approximate them as an unbounded entity |
+
+G1 must also audit the ordinary offset command, `LC_CurveOffset`, and worker
+dispatch for other supported single-curve source classes, including line, arc,
+circle, and polyline. Add every class that those production paths genuinely
+accept to the source-kind matrix and carry it through the same native
+definition, chooser, worker, persistence, and round-trip criteria. This list
+is an audit starting point, not permission to claim support from a test helper
+or an isolated geometry routine. Every audited single-curve class accepted by
+the ordinary offset path is a required native-source type and must be carried
+end-to-end; it cannot be excluded merely because the current native entity or
+worker has not yet been extended. Classes not accepted by the production
+offset path must be recorded as out of scope with the concrete eligibility
+reason, never silently omitted. Composite/aggregate entities are in scope only
+where the current offset command treats them as one source and the native
+entity can preserve their source identity without lossy flattening.
 
 The geometry engine's existing support is not proof that native entity
 definitions, worker messages, caches, or file adapters support these types.
@@ -14349,13 +14366,16 @@ editing the original drawing entity must not mutate an existing offset.
 1. **G1 - Source inventory and value model.** Audit the current source capture,
    `LC_OffsetCurve` definition, transforms, cache validity, and every ellipse-
    specific branch in creation, grips, editing, actions, preview, and adapters.
-   Define a tagged, value-owned source definition for the five target families
-   above. Add bounded counts, finite-number checks, valid parameter/bounds
-   checks, and source-kind-preserving equality/clone/transform behavior. Keep
-   the current ellipse API and schema-1 interpretation compatible. Tests must
-   prove capture/reconstruction for each family, including parabola identity,
-   bounded and unbounded hyperbolas, rational spline data, and malformed
-   inputs. Do not start UI expansion until this model is stable.
+   Audit all source classes accepted by production ordinary-offset and worker
+   paths, starting with line, arc, circle, polyline, ellipse, spline,
+   spline-points, parabola, and bounded hyperbola. Define a tagged, value-owned
+   source definition for every class confirmed in scope. Add bounded counts,
+   finite-number checks, valid parameter/bounds checks, and source-kind-
+   preserving equality/clone/transform behavior. Keep the current ellipse API
+   and schema-1 interpretation compatible. Tests must prove capture and
+   reconstruction for each family, including parabola identity, bounded and
+   unbounded hyperbolas, rational spline data, and malformed inputs. Do not
+   start UI expansion until this model is stable.
 
 2. **G2 - Native geometry, cache, and worker contract.** Extend the worker
    request/result representation and every operation that consumes a source
@@ -14371,20 +14391,26 @@ editing the original drawing entity must not mutate an existing offset.
    grips, edit, cancel, timeout, crash, stale-result rejection, and undo/redo
    for every source kind.
 
-3. **G3 - Properties and source picking.** Generalize the current source
-   combo/picker to enumerate eligible live top-level entities of the supported
-   types. Display the source type and useful identity, match the embedded
-   source by kind plus canonical geometry (not only approximate center/radii),
-   and distinguish a matched, replaced, deleted, or unsupported source. A
-   source change captures an immutable value snapshot and uses the guarded
-   worker-edit path; the explicit Select-in-drawing action re-resolves the
-   current entity ID and does not change selection merely by opening or
-   cancelling Properties. Preserve distance/side editing for all supported
-   definitions. Show ellipse-only controls only for ellipses; show source-kind
-   appropriate read-only geometry details for the other types unless a
-   separate editable parameter design is proven safe. Verify single and
-   multiple selection, source replacement, source deletion/stale IDs, cancel,
-   busy state, failed worker results, and successful preview/commit parity.
+3. **G3 - Properties type selector and source picking.** Replace the
+   ellipse-only combo behavior with two linked controls: a source-type
+   selector/filter populated from the audited supported-source matrix, and an
+   entity selector listing eligible live top-level entities of that type.
+   Switching type refreshes the entity list without committing a change;
+   selecting a new entity atomically replaces the source kind and geometry
+   snapshot, even when its type differs from the currently embedded source.
+   Display type and useful entity identity, match the embedded source by kind
+   plus canonical geometry (not only approximate center/radii), and
+   distinguish matched, replaced, deleted, stale-ID, and unsupported states.
+   The explicit Select-in-drawing action re-resolves the current entity ID and
+   highlights/selects that source; opening or cancelling Properties must not
+   change drawing selection. A source change captures an immutable value
+   snapshot and uses the guarded worker-edit path. Preserve distance/side
+   editing for all supported definitions. Show ellipse-only controls only for
+   ellipses and type-appropriate read-only geometry details otherwise unless
+   a separate editable parameter design is proven safe. Verify changing type
+   before picking, direct cross-type replacement, empty type buckets,
+   unsupported/deleted source, single and multiple selection, cancel, busy
+   state, failed worker results, and preview/commit parity.
 
 4. **G4 - Versioned persistence and interchange.** Introduce the next native
    XDATA definition schema with an explicit source-kind discriminator and
@@ -14413,8 +14439,10 @@ editing the original drawing entity must not mutate an existing offset.
 
 ### Completion criteria
 
-The expansion is complete only when every source family in the matrix can be
-selected from the drawing, captured as an immutable native source definition,
+The expansion is complete only when the source-kind inventory is reconciled
+against the actual production offset and worker dispatches, and every
+supported single-curve family in that inventory can be selected through the
+type-aware Properties chooser, captured as an immutable native source definition,
 generated and validated by the worker, safely edited and cached, persisted and
 reopened through supported DXF/DWG paths, and either represented losslessly by
 the native entity or rejected with a typed non-mutating diagnostic. Required
@@ -14435,13 +14463,18 @@ parabola identity ahead of its spline-points base and refuses unsupported,
 malformed, or unbounded sources. W338 adds detached entity reconstruction and
 round-trip identity checks for all five alternatives. W339 adds bounded CBOR
 codecs for the tagged source and common definition. These codecs are not yet
-consumed by a worker operation, and the source contract is not yet used by
-`LC_OffsetCurve`, Properties, or persistence, so generalized native offsets
-remain unavailable. W335 remains the completed ellipse-only Properties
-chooser receipt. Continue G1 through integration-specific source matching,
+used by `LC_OffsetCurve`, Properties, or persistence, so generalized native
+offsets remain unavailable. W342 now consumes them through a dedicated
+worker-kernel operation that generates bounded ordinary branches, but it does
+not publish or validate a native cache and is not wired to a caller. W335
+remains the completed ellipse-only Properties
+chooser receipt. Continue G1 through the full source-kind audit, including
+line/arc/circle/polyline eligibility, integration-specific source matching,
 transforms, and lifecycle inventory; then wire the new codec into worker
-generation and result validation. W340 tightens valueless-variant, planar, and
-degenerate-ellipse admission. Retain all existing W379 acceptance gates.
+generation and result validation. G3 now requires a type selector/filter and
+entity picker, with cross-type replacement updating kind and geometry
+atomically. W340 tightens valueless-variant, planar, and degenerate-ellipse
+admission. Retain all existing W379 acceptance gates.
 
 ## 337. Tagged Source Snapshot Foundation (2026-11-05)
 
@@ -14502,3 +14535,58 @@ Validation: `librecad_tests` rebuilt and the focused source snapshot case
 passed 67 assertions, including nonplanar and degenerate ellipses. The complete
 worker request suite passed 597,242 assertions in 14 cases. `git diff --check`
 passed.
+
+## 341. Type-Aware Properties Source Picker and Complete Source Inventory (2026-11-05)
+
+Refined Section 336 after the follow-up UI requirement. The Properties editor
+must allow changing source type as part of replacing the source, not merely
+list entities matching the current ellipse type. The planned control is a
+type selector/filter linked to an entity picker: switching type refreshes
+eligible live entities, while selecting one atomically updates the type and
+the captured geometry. The explicit drawing-selection action must highlight
+the matched current/replacement entity; opening or cancelling the dialog
+cannot change selection.
+
+The supported-source audit is expanded beyond the five typed snapshots
+already implemented. G1 must inspect production ordinary-offset and worker
+dispatch paths for line, arc, circle, and polyline, plus any other single
+curve classes accepted there. Each accepted class is required through native
+definition, worker, Properties, and DXF/DWG persistence together. Only classes
+not accepted by the actual production offset path may be excluded, with a
+specific reason. Composite sources are included only when source identity is
+representable without lossy flattening. This
+prevents the UI from implying that current snapshot types are the complete
+engine capability set.
+
+Implementation order remains G1 inventory/model, G2 worker/native behavior,
+G3 type-aware UI, G4 versioned persistence, and G5 cross-feature validation.
+Each slice must add its source-family matrix entries and tests before the UI
+advertises them; cross-type selection, empty type buckets, deleted/stale
+entities, highlighting, cancel/no-side-effect, and preview/commit parity are
+explicit G3 cases. This is a plan refinement only; it makes no claim that the
+currently uncommitted op-7 worker work or the generalized Properties workflow
+was complete at that checkpoint; W342 now covers only the isolated kernel and
+wire operation, not the generalized Properties workflow.
+
+## 342. Typed Source Worker Generation Operation (2026-11-05)
+
+Added worker operation 7, carrying the tagged `LC_OffsetSourceDefinition` and
+run limits without changing operation layouts 0-6. The kernel reconstructs a
+detached source, runs the existing direct-branch geometry engine, and returns
+only bounded ordinary line/spline branches. It deliberately carries no native
+cache certificate or document authority. Unsupported materialized entity
+types are refused as not cache-representable rather than partially returned.
+The reply validator now admits op 7, applies its source output/sample bounds,
+and validates its ordinary payload before materialization. Zero sample and
+intersection limits retain their documented meaning of using engine defaults.
+
+Validation: Debug CMake built `librecad_offset_worker_kernel_tests` and
+`librecad_offset_worker_request_tests`. The new op-7 kernel test executed all
+five currently modeled source families (ellipse, rational spline,
+spline-points, parabola, bounded hyperbola), and encoded/decoded their ordinary
+branch results: 150 assertions passed. The complete kernel suite passed 2,878
+assertions in 19 cases; the complete request suite passed 597,838 assertions
+in 15 cases. `git diff --check` passed. This closes only the isolated worker
+generation primitive; request-client dispatch, native entity lifecycle,
+source-specific cache validation, Properties, schema-2 DXF/DWG persistence,
+and the expanded line/arc/circle/polyline inventory remain open.
