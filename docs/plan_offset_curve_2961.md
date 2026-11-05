@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W383; chronological evidence follows): implementation slices
+Current status (W384; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -62,7 +62,7 @@ includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
-The recent W378-W383 source-variant slices add malformed-polyline refusal,
+The recent W378-W384 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15782,5 +15782,17 @@ against the equivalent live bulge-built source.
 The focused bulge-import test passes 77 assertions; together with the typed
 source persistence case, the selected tests pass 1,085 assertions across two
 cases. `git diff --check` passes. This closes representative AC1032 bulge
-origin coverage; older DXF versions, closed bulged polylines, and other
-bulge magnitudes remain open.
+origin coverage; R14 and AC1032 closed-arc cases are added in W384.
+
+## 384. R14 and Closed-Bulge Import Variants
+
+Expanded the real-file import matrix with the signed open-bulge LWPOLYLINE in
+AC1014/R14 DXF and added a closed AC1032 LWPOLYLINE whose final vertex carries
+the bulge for its closing arc. The closed fixture is imported from both binary
+DXF and DWG, and its closure, segment types, closing arc geometry, and
+orientation are compared against the equivalent native polyline.
+
+The focused bulge-import cases pass 177 assertions/2 cases; together with the
+typed-source persistence case, the selected run passes 1,185 assertions/3
+cases. `git diff --check` passes. Other R13/R2000+ variants, non-axial OCS
+reflection, and a wider range of bulge magnitudes remain open.
