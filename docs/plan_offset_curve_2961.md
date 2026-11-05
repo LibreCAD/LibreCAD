@@ -15375,3 +15375,29 @@ head were in progress: Windows, Ubuntu x64, Ubuntu ARM64, macOS latest, and
 macOS Intel. No result is inherited from the preceding head. Continue the
 signed-distance/side and geometry-layout variant audit; review and external
 acceptance remain open.
+
+## 363. Implicit Spline Weights and End-to-End Variant Checks (2026-11-05)
+
+The expanded worker matrix found that a source spline with omitted weights was
+accepted as well-formed but its materialized `RS_Spline` could not be evaluated
+by the offset worker. NURBS assigns an omitted weight the value one, so
+`LC_OffsetSourceGeometry::makeEntity()` now fills unit weights on the temporary
+entity only; the tagged source value and persisted representation are left
+unchanged. Regression coverage includes a degree-1 unweighted spline, a cubic
+spline, fit-point spline points, and the existing nine source families. The
+Properties picker test selects a live unweighted spline and verifies that the
+resulting source definition still has an empty weight vector.
+
+Fresh Debug build succeeded for `librecad_tests`, the worker-kernel suite, and
+the worker-client suite. Targeted results: worker source-generation kernel,
+406 assertions/1 case; joined worker-client family generation, 7,446
+assertions/1 case; complete source Properties group, 3,168 assertions/5
+cases; typed-source DXF/DWG file round-trip, 648 assertions/1 case; typed
+source import validation, 936 assertions/1 case. `git diff --check` passed.
+
+Product commit `7c6bc0017e153e94e904766a09484a35e449c645` is pushed to PR #3193.
+The exact-head check rollup had not reported jobs at the time of this entry.
+This closes the implicit-weight representation mismatch only; additional
+spline knot/closure layouts, hyperbola bounds, polyline segment/closure
+combinations, distance/side-dependent cardinality, and the overall PR review
+and acceptance gates remain open.
