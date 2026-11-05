@@ -13720,7 +13720,7 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         pixelSize = reader->getDouble();
         break;
     case 52:
-        angle = reader->getDouble();
+        angle = reader->getDouble() / ARAD;
         break;
     case 53: // pattern line angle — starts a new PatternLine record
         if (!validateCurrentPatternLineDxf())
@@ -13731,7 +13731,7 @@ bool DRW_Hatch::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
         if (patternLines.size() >= static_cast<std::size_t>(kMaxHatchItems))
             return false;
         patternLines.push_back(PatternLine());
-        patternLines.back().angle = reader->getDouble();
+        patternLines.back().angle = reader->getDouble() / ARAD;
         m_dxfPatternDashCountExpected = -1;
         m_dxfPatternDashCountSeen = false;
         break;
@@ -14108,16 +14108,42 @@ bool DRW_Hatch::validateDxf() const {
 }
 
 bool DRW_MPolygon::parseCode(int code, const std::unique_ptr<dxfReader>& reader){
-    // MPOLYGON shares HATCH's boundary/pattern/gradient codes, so delegate those
-    // to DRW_Hatch::parseCode. It adds a trailer that plain HATCH never emits:
-    //   63 / 421 / 430  fill color (ACI / RGB / book-name) — the filled area's
-    //                   color, which may differ from the boundary outline color;
-    //   11 / 21         boundary x-direction vector (no render impact; left to
-    //                   the base, which ignores it outside an edge context);
-    //   99              count of degenerate boundary paths.
-    // 63/421 are also gradient sub-codes in HATCH, so only claim them here when no
-    // gradient is being accumulated (gradColors empty) — otherwise defer to base.
+    // MPOLYGON shares HATCH's boundary/pattern/gradient codes but overloads
+    // several of them: 70 is the version (HATCH stores it as `solid`), 71 is
+    // the solid flag (HATCH stores it as `associative`), the after-loop 73
+    // is annotatedBoundary, and 11/21 is the boundary x-direction vector that
+    // DRW_Hatch would otherwise feed into a line-edge's end point. m_loopsDone
+    // flips once the loop list is behind us so late 73/11/21 go to the trailer
+    // instead of the current loop record.
     switch (code) {
+    case 70:
+        mpVersion = reader->getInt32();
+        return mpVersion >= 0 && mpVersion <= 32767;
+    case 71:
+        solid = reader->getInt32() != 0 ? 1 : 0;
+        return true;
+    case 76:
+        // Flip into "trailer" mode first; DRW_Hatch::parseCode stores hpattern.
+        m_loopsDone = true;
+        break;
+    case 73:
+        if (m_loopsDone) {
+            annotatedBoundary = reader->getInt32();
+            return true;
+        }
+        break;  // loop's closed bit, let DRW_Hatch::parseCode handle it
+    case 11:
+        if (m_loopsDone) {
+            xDirX = reader->getDouble();
+            return true;
+        }
+        break;  // line-edge end inside an open loop
+    case 21:
+        if (m_loopsDone) {
+            xDirY = reader->getDouble();
+            return true;
+        }
+        break;
     case 63:
         if (gradColors.empty()) { fillColorAci = reader->getInt32(); return true; }
         break;
@@ -14136,40 +14162,168 @@ bool DRW_MPolygon::parseCode(int code, const std::unique_ptr<dxfReader>& reader)
     return DRW_Hatch::parseCode(code, reader);
 }
 
-// DRW_MPolygon::parseDwg — AcDbMPolygon DWG body.
-// Layout mirrors HATCH except (per ACadSharp MPolygon / libreDWG dwg.spec):
-//   * a leading BS `style` (DXF group 75) precedes the gradient block, and
-//   * the trailer is a fill CMC + boundary x-direction (2RD) + degenerate-path
-//     count (BL) instead of HATCH's pixel-size + seed points.
-// The gradient/elevation/extrusion/name/solid/associative prologue and the whole
-// boundary-loop body are identical, so they reuse DRW_Hatch::parseDwgBoundaryData.
-// DWG runtime coverage uses testdata/mpolygon_solid.dwg, ODA-synthesized from
-// the ezdxf-verified inline DXF in mpolygon_tests.cpp and confirmed with the
-// dwg-parser oracle.
-bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
-    resetDwgState();
-    dwgBuffer *sourceBuf = buf;
-    auto fail = [this, sourceBuf]() {
-        if (sourceBuf != nullptr)
-            sourceBuf->invalidate();
-        resetDwgState();
+bool DRW_MPolygon::polylineLoop(const DRW_HatchLoop& loop, DRW_LWPolyline& out) {
+    out.vertlist.clear();
+    out.flags = 1;  // closed
+    // A polyline-loop record (bit 2) carries its single DRW_LWPolyline as the
+    // only object. Copy it as-is.
+    if ((loop.type & 2) == 2) {
+        if (loop.objlist.empty())
+            return false;
+        const DRW_LWPolyline* pl = dynamic_cast<const DRW_LWPolyline*>(loop.objlist.at(0).get());
+        if (pl == nullptr)
+            return false;
+        for (const std::shared_ptr<DRW_Vertex2D>& v : pl->vertlist) {
+            if (!v)
+                return false;
+            out.vertlist.push_back(std::make_shared<DRW_Vertex2D>(*v));
+        }
+        out.flags = (pl->flags & 1) ? 1 : 0;
+        return !out.vertlist.empty();
+    }
+    if (loop.objlist.empty())
         return false;
+    struct Seg {
+        DRW_Coord p;
+        DRW_Coord q;
+        double bulge;
     };
-    if (sourceBuf == nullptr)
-        return fail();
+    std::vector<Seg> segs;
+    segs.reserve(loop.objlist.size());
+    double bboxMinX = 0.0, bboxMinY = 0.0, bboxMaxX = 0.0, bboxMaxY = 0.0;
+    bool bboxInit = false;
+    auto track = [&](const DRW_Coord& c) {
+        if (!bboxInit) {
+            bboxMinX = bboxMaxX = c.x;
+            bboxMinY = bboxMaxY = c.y;
+            bboxInit = true;
+        } else {
+            bboxMinX = std::min(bboxMinX, c.x);
+            bboxMaxX = std::max(bboxMaxX, c.x);
+            bboxMinY = std::min(bboxMinY, c.y);
+            bboxMaxY = std::max(bboxMaxY, c.y);
+        }
+    };
+    for (const auto& ownedEdge : loop.objlist) {
+        const DRW_Entity* edge = ownedEdge.get();
+        if (edge == nullptr)
+            return false;
+        if (edge->eType == DRW::LINE) {
+            const DRW_Line* ln = static_cast<const DRW_Line*>(edge);
+            Seg s{ln->basePoint, ln->secPoint, 0.0};
+            track(s.p);
+            track(s.q);
+            segs.push_back(s);
+        } else if (edge->eType == DRW::ARC) {
+            // Hatch arc convention: isccw selects between (a0, a1) and
+            // (2*pi - a0, 2*pi - a1); the sweep is signed by direction.
+            const DRW_Arc* a = static_cast<const DRW_Arc*>(edge);
+            const int ccw = a->isccw;
+            double s = ccw ? a->staangle : (2.0 * M_PI - a->staangle);
+            double t = ccw ? a->endangle : (2.0 * M_PI - a->endangle);
+            const double rawSweep = std::fabs(a->endangle - a->staangle);
+            double sweep;
+            if (rawSweep >= 2.0 * M_PI - 1e-12) {
+                sweep = 2.0 * M_PI;
+            } else {
+                double d = ccw ? (t - s) : (s - t);
+                while (d < 0.0) d += 2.0 * M_PI;
+                while (d > 2.0 * M_PI) d -= 2.0 * M_PI;
+                sweep = d;
+            }
+            const double sign = ccw ? +1.0 : -1.0;
+            if (std::fabs(sweep - 2.0 * M_PI) < 1e-12) {
+                // Represent a full circle as two half-sweep bulges.
+                DRW_Coord ps{a->basePoint.x + a->radious * std::cos(s),
+                             a->basePoint.y + a->radious * std::sin(s),
+                             0.0};
+                DRW_Coord mid{2.0 * a->basePoint.x - ps.x,
+                              2.0 * a->basePoint.y - ps.y, 0.0};
+                segs.push_back({ps, mid, sign * 1.0});
+                segs.push_back({mid, ps, sign * 1.0});
+                track(ps);
+                track(mid);
+            } else {
+                DRW_Coord ps{a->basePoint.x + a->radious * std::cos(s),
+                             a->basePoint.y + a->radious * std::sin(s),
+                             0.0};
+                DRW_Coord qs{a->basePoint.x + a->radious * std::cos(t),
+                             a->basePoint.y + a->radious * std::sin(t),
+                             0.0};
+                segs.push_back({ps, qs, sign * std::tan(sweep / 4.0)});
+                track(ps);
+                track(qs);
+            }
+        } else {
+            // ELLIPSE / SPLINE / unknown: refused, as ezdxf does.
+            return false;
+        }
+    }
+    const double diag = std::hypot(bboxMaxX - bboxMinX, bboxMaxY - bboxMinY);
+    const double tol = 1e-9 * std::max(1.0, diag);
+    for (size_t i = 0; i < segs.size(); ++i) {
+        const Seg& cur = segs[i];
+        const Seg& nxt = segs[(i + 1) % segs.size()];
+        if (std::hypot(cur.q.x - nxt.p.x, cur.q.y - nxt.p.y) > tol)
+            return false;
+    }
+    for (const Seg& s : segs) {
+        auto v = std::make_shared<DRW_Vertex2D>();
+        v->x = s.p.x;
+        v->y = s.p.y;
+        v->bulge = s.bulge;
+        out.vertlist.push_back(v);
+    }
+    return !out.vertlist.empty();
+}
 
+// Reset MPOLYGON-only carriers alongside DRW_Hatch::resetDwgState(). Also used
+// at the start of parseDwg and inside its fail lambda so a reused entity never
+// publishes stale additions after a failed parse.
+void DRW_MPolygon::resetMPolygonState() {
     fillColorAci = 0;
     fillColorRgb = -1;
     fillColorName.clear();
     xDirX = 0.0;
     xDirY = 0.0;
     degenerateLoops = 0;
+    mpVersion = 1;
+    annotatedBoundary = 0;
+    m_loopsDone = false;
+}
+
+// DRW_MPolygon::parseDwg — AcDbMPolygon DWG body in ODA's layout.
+//
+// AcDbMPolygon is HATCH-derived but has a different DWG body. The leading BS
+// is the version (DXF 70), not a style; there is no associative bit and no
+// second style BS after the loops; each loop is a `is_closed`/`hasBulge`/BL
+// count/vertices record (no derived-boundary bit, no edge paths); and only
+// the common entity handles follow — no boundary-source-handle list. The
+// trailer is HATCH-foreign too: fill CMC, 2RD x-direction and BL degenerate
+// path count instead of HATCH's pixel size and seed points.
+//
+// Decoded from ODA File Converter output: 8 AC1015 objects accounted to the
+// RL bit size, and 24 R2004/R2007/R2010/R2018 objects (including the repo
+// fixture) accounted to 0 bits by `mpoly_bitsize_check.py`,
+// `mpoly_generic_decode.py` and `mpoly_r2004plus_accounting.py`.
+bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t bs){
+    resetDwgState();
+    resetMPolygonState();
+    dwgBuffer *sourceBuf = buf;
+    auto fail = [this, sourceBuf]() {
+        if (sourceBuf != nullptr)
+            sourceBuf->invalidate();
+        resetDwgState();
+        resetMPolygonState();
+        return false;
+    };
+    if (sourceBuf == nullptr)
+        return fail();
+
     dwgBuffer bodyProbe = sourceBuf->forkIndependent();
     dwgBuffer stringProbe = sourceBuf->forkIndependent();
     buf = &bodyProbe;
     dwgBuffer *sBuf = version > DRW::AC1018 ? &stringProbe : buf;
-    std::uint32_t totalBoundItems = 0;
-    bool havePixelSize = false;
     if (!DRW_Entity::parseDwg(
             version, buf, version > DRW::AC1018 ? &stringProbe : nullptr, bs)
         || !buf->isGood() || !sBuf->isGood())
@@ -14188,13 +14342,15 @@ bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
         }
     }
 
-    // Leading BS style (group 75) — read once here and again after the loops
-    // below (HATCH has only the latter); matches the reference parser, which
-    // discards this first read.
-    std::uint16_t parsedLeadingStyle = 0;
-    if (!readBoundedBitShort(*buf, bodyEndBit, parsedLeadingStyle))
+    // Leading BS is MPOLYGON's version (DXF code 70), not HATCH's style. ODA
+    // writes 1; a value above 32767 would overflow DXF's unsigned-16 field, so
+    // refuse it before taking the parse any further.
+    std::uint16_t parsedMpVersion = 0;
+    if (!readBoundedBitShort(*buf, bodyEndBit, parsedMpVersion))
         return fail();
-    hstyle = parsedLeadingStyle;
+    if (parsedMpVersion > 32767u)
+        return fail();
+    mpVersion = static_cast<int>(parsedMpVersion);
 
     if (version > DRW::AC1015) { //2004+ gradient (same layout as HATCH)
         if (!readBoundedHatchGradient(
@@ -14218,27 +14374,65 @@ bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
         return fail();
     }
     bool parsedSolid = false;
-    bool parsedAssociative = false;
+    // MPOLYGON writes only the solid bit — there is no associative bit between
+    // the name and the loop count in ODA's layout. associative stays 0.
     if (!sBuf->isGood()
         || currentDwgBit(sBuf) > stringEndBit
-        || !readBoundedBit(*buf, bodyEndBit, parsedSolid)
-        || !readBoundedBit(*buf, bodyEndBit, parsedAssociative))
+        || !readBoundedBit(*buf, bodyEndBit, parsedSolid))
         return fail();
     solid = parsedSolid;
-    associative = parsedAssociative;
+    associative = 0;
     name = std::move(parsedName);
 
-    if (!parseDwgBoundaryData(version, buf, totalBoundItems, havePixelSize))
+    // Each MPOLYGON loop is an is_closed/hasBulge/vertex-count record; no
+    // derived-boundary bit, no edge paths, no boundary-source-handle count.
+    std::uint32_t parsedLoopCount = 0;
+    if (!readTableBodyCount(version, buf, objSize, kMaxHatchItems, 4,
+                            parsedLoopCount))
         return fail();
+    if (!DRW::reserve(looplist, parsedLoopCount))
+        return fail();
+    loopsnum = static_cast<std::int32_t>(parsedLoopCount);
+    for (std::uint32_t i = 0; i < parsedLoopCount; ++i) {
+        bool closed = false;
+        bool asBulge = false;
+        if (!proxyEntityHasBits(*buf, bodyEndBit, 2)
+            || !readBoundedBit(*buf, bodyEndBit, closed)
+            || !readBoundedBit(*buf, bodyEndBit, asBulge))
+            return fail();
+        std::uint32_t numVert = 0;
+        if (!readTableBodyCount(version, buf, objSize, kMaxHatchItems,
+                                asBulge ? 130u : 128u, numVert))
+            return fail();
+        auto polyline = std::make_shared<DRW_LWPolyline>();
+        polyline->flags = closed ? 1 : 0;
+        polyline->vertexnum = static_cast<int>(numVert);
+        for (std::uint32_t j = 0; j < numVert; ++j) {
+            DRW_Vertex2D v;
+            if (!readBoundedRawDouble(*buf, bodyEndBit, v.x)
+                || !readBoundedRawDouble(*buf, bodyEndBit, v.y)
+                || !std::isfinite(v.x) || !std::isfinite(v.y))
+                return fail();
+            if (asBulge) {
+                if (!readBoundedBitDouble(*buf, bodyEndBit, v.bulge)
+                    || !std::isfinite(v.bulge))
+                    return fail();
+            }
+            polyline->addVertex(v);
+        }
+        auto hatchLoop = std::make_shared<DRW_HatchLoop>(2); // polyline path
+        hatchLoop->objlist.push_back(polyline);
+        hatchLoop->update();
+        looplist.push_back(hatchLoop);
+    }
 
-    std::uint16_t parsedStyle = 0;
     std::uint16_t parsedPattern = 0;
-    if (!readBoundedBitShort(*buf, bodyEndBit, parsedStyle)
-        || !readBoundedBitShort(*buf, bodyEndBit, parsedPattern))
+    if (!readBoundedBitShort(*buf, bodyEndBit, parsedPattern))
         return fail();
-    hstyle = parsedStyle;
     hpattern = parsedPattern;
-    if (!solid){
+    hstyle = 0; // MPOLYGON has no second style BS; HATCH's second style is absent.
+
+    if (!solid) {
         double parsedAngle = 0.0;
         double parsedScale = 0.0;
         bool parsedDoubleFlag = false;
@@ -14258,7 +14452,7 @@ bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
         if (!DRW::reserve(patternLines, parsedDeflines))
             return fail();
         deflines = static_cast<int>(parsedDeflines);
-        for (std::uint32_t i = 0 ; i < parsedDeflines; ++i){
+        for (std::uint32_t i = 0; i < parsedDeflines; ++i) {
             PatternLine patternLine;
             if (!readBoundedBitDouble(*buf, bodyEndBit, patternLine.angle)
                 || !readBoundedBitDouble(*buf, bodyEndBit, patternLine.baseX)
@@ -14278,7 +14472,7 @@ bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
                     *buf, bodyEndBit, static_cast<std::uint64_t>(numDashL) * 2u)
                 || !DRW::reserve(patternLine.dashList, numDashL))
                 return fail();
-            for (std::uint32_t d = 0 ; d < numDashL; ++d) {
+            for (std::uint32_t d = 0; d < numDashL; ++d) {
                 double dash = 0.0;
                 if (!readBoundedBitDouble(*buf, bodyEndBit, dash)
                     || !std::isfinite(dash))
@@ -14312,6 +14506,8 @@ bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
         return fail();
     degenerateLoops = static_cast<std::int32_t>(parsedDegenerateLoops);
 
+    // MPOLYGON carries only the common entity handles; HATCH's trailing
+    // boundary-source-handle list is absent.
     std::uint64_t handleEndBit = 0;
     if (!dwgHandleStreamEndBit(*sourceBuf, version, objSize, bs,
                                handleEndBit))
@@ -14320,14 +14516,6 @@ bool DRW_MPolygon::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint32_t 
     if (!DRW_Entity::parseDwgEntHandle(version, &handleProbe, true,
                                        handleEndBit)
         || !handleProbe.isGood())
-        return fail();
-    for (std::uint32_t i = 0 ; i < totalBoundItems; ++i) {
-        dwgHandle boundaryHandle;
-        if (!readBoundedDwgHandle(handleProbe, handleEndBit, handle, false,
-                                  boundaryHandle))
-            return fail();
-    }
-    if (!handleProbe.isGood())
         return fail();
 
     *sourceBuf = handleProbe;
@@ -14403,28 +14591,60 @@ bool DRW_MPolygon::encodeDwg(DRW::Version version, dwgBufferW *buf,
                              dwgBufferW *handleBuf) {
     (void)bs;
     if (!validateDwgHatchData(*this)
-        || !isValidCount(degenerateLoops, kMaxHatchItems))
+        || !isValidCount(degenerateLoops, kMaxHatchItems)
+        || mpVersion < 0 || mpVersion > 32767
+        || annotatedBoundary != 0)
         return false;
+    // Every loop must flatten into a bulge polyline (LINE / ARC only); refuse
+    // ellipse, spline or any other edge up front so the file stays loss-free.
+    for (const auto& loop : looplist) {
+        if (!loop)
+            return false;
+        DRW_LWPolyline probe;
+        if (!polylineLoop(*loop, probe))
+            return false;
+    }
     oType = kDwgClassNum;
     if (!encodeDwgCommon(version, buf, strBuf))
         return false;
 
     dwgBufferW *sb = strBuf ? strBuf : buf;
 
-    // AcDbMPolygon has a leading style field before the HATCH-like gradient
-    // prologue. The same style is emitted again after the boundary data.
-    buf->putBitShort(static_cast<std::uint16_t>(hstyle));
+    // AcDbMPolygon writes the version BS first (DXF code 70), not a style.
+    buf->putBitShort(static_cast<std::uint16_t>(mpVersion));
     encodeDwgGradientData(version, buf, sb);
 
     buf->putBitDouble(basePoint.z);
     buf->put3BitDouble(extPoint);
     sb->putVariableText(version, name);
     buf->putBit(static_cast<std::uint8_t>(solid));
-    buf->putBit(static_cast<std::uint8_t>(associative));
-    if (!encodeDwgBoundaryData(version, buf)) return false;
+    // No associative bit: MPOLYGON is never associative in the ODA layout.
 
-    buf->putBitShort(static_cast<std::uint16_t>(hstyle));
+    // Each loop writes as is_closed/hasBulge/vertex-count/vertices; no derived
+    // bit, no edge paths, no boundary-source-handle count.
+    buf->putBitLong(static_cast<std::int32_t>(looplist.size()));
+    for (const auto& loop : looplist) {
+        DRW_LWPolyline polyline;
+        if (!polylineLoop(*loop, polyline))
+            return false;
+        const bool closed = (polyline.flags & 1) != 0;
+        bool asBulge = false;
+        for (const auto& v : polyline.vertlist) {
+            if (v && v->bulge != 0.0) { asBulge = true; break; }
+        }
+        buf->putBit(static_cast<std::uint8_t>(closed));
+        buf->putBit(static_cast<std::uint8_t>(asBulge));
+        buf->putBitLong(static_cast<std::int32_t>(polyline.vertlist.size()));
+        for (const auto& v : polyline.vertlist) {
+            buf->putRawDouble(v->x);
+            buf->putRawDouble(v->y);
+            if (asBulge)
+                buf->putBitDouble(v->bulge);
+        }
+    }
+
     buf->putBitShort(static_cast<std::uint16_t>(hpattern));
+    // No second style BS: hstyle is held locally at 0 and never emitted again.
 
     if (!solid) {
         buf->putBitDouble(angle);

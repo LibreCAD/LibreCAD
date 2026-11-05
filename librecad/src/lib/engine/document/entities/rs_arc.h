@@ -283,8 +283,7 @@ public:
      * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
      */
     double areaLineIntegral() const override;
-    LC_FirstMoment firstMomentLineIntegral() const override;
-    LC_SecondMoment secondMomentLineIntegral() const override;
+    LC_AreaMoments momentLineIntegrals(const RS_Vector& origin) const override;
 
     void updateMiddlePoint();
 

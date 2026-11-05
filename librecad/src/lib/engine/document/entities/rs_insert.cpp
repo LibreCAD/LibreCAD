@@ -34,6 +34,7 @@
 #include <memory>
 #include <vector>
 
+#include "lc_hatchdensity.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
@@ -477,6 +478,13 @@ void RS_Insert::update(const RS_InsertExpansionBudget& budget) {
         queueArrayCell(*blk, m_data, LC_InsertTransform{}, expansionPen, getLayer(),
                        isVisible(), 0, 0);
     }
+    // Shared hatch-piece budget: every pattern-hatch clone of this expansion
+    // reads it, caps its own generation by the remaining room, and after
+    // generation charges its taken count. A tripped hatch becomes
+    // HATCH_TOO_DENSE and is kept; the expansion itself never fails. The
+    // scope is restored before this function returns.
+    LC_HatchPieceBudget hatchPieces{budget.maxHatchPieces};
+    LC_HatchDensity::ScopedSharedBudget hatchScope{hatchPieces};
     while (success && !work.empty()) {
         LC_InsertExpansionWork item = std::move(work.back());
         work.pop_back();

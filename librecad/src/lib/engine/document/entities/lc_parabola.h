@@ -171,24 +171,14 @@ public:
  * @author Dongxu Li
  */
     double areaLineIntegral() const override;
-    /**
-     * @brief firstMomentLineIntegral - computes the first-order moments of area
-     *        via Green's theorem contour integrals.
-     *
-     * @return LC_FirstMoment containing mx and my.
-     * @note Exact closed-form using quadratic Bézier parametrization in local frame,
-     *       then transformed to world coordinates.
-     */
-    LC_FirstMoment firstMomentLineIntegral() const override;
 
     /**
-     * @brief secondMomentLineIntegral - computes the second-order moments of area
-     *        via Green's theorem contour integrals.
-     *
-     * @return LC_SecondMoment {ixx, iyy, ixy}.
-     * @note Exact closed-form (replaces previous Gauss quadrature).
+     * @brief momentLineIntegrals - six Green's theorem line integrals of
+     *        (P - origin) along the quadratic Bezier curve. The integrands
+     *        are polynomials of degree <= 7 in the Bezier parameter, so the
+     *        8-node Gauss-Legendre rule is exact.
      */
-    LC_SecondMoment secondMomentLineIntegral() const override;
+    LC_AreaMoments momentLineIntegrals(const RS_Vector& origin) const override;
 
     /**
      * @brief approximateOffset - approximate offset by a parabola
@@ -205,11 +195,6 @@ private:
     // rotate a point around the parabola vertex so, the parabola is y= ax^2 + bx + c, with a > 0 after the
     // same rotation
     RS_Vector rotateToQuadratic(RS_Vector vp) const;
-
-    // Exact local antiderivatives (Green's theorem)
-    double computeLocalArea(double t1, double t2) const;
-    LC_FirstMoment computeLocalFirstMoment(double t1, double t2) const;
-    LC_SecondMoment computeLocalSecondMoment(double t1, double t2) const;
 };
 
 #endif

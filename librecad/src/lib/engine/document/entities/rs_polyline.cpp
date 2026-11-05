@@ -220,7 +220,16 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, const d
     RS_DEBUG->print("RS_Polyline::createVertex: %f/%f to %f/%f bulge: %f", m_data.endpoint.x, m_data.endpoint.y, v.x, v.y, bulge);
 
     // create line for the polyline:
-    if (std::abs(bulge) < RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE) {
+    //
+    // Bulges whose arc sweep 4 * atan(|bulge|) is below RS_TOLERANCE_ANGLE
+    // (|bulge| < ~2.5e-9) also become straight lines. RS_ArcData::getAngleLength
+    // would otherwise round such a sweep up to a full turn, so an "almost
+    // straight" edge would be stored as a circle whose radius dwarfs the chord
+    // (r = chord/(2*sin(alpha/2)) ~ chord / alpha). The near-flat threshold is
+    // one tenth of the chord length in sagitta, well below the resolution of
+    // any downstream geometry.
+    if (std::abs(bulge) < RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE ||
+        4.0 * std::atan(std::abs(bulge)) < RS_TOLERANCE_ANGLE) {
         entity = std::make_unique<RS_Line>(this, prepend ? v : m_data.endpoint, prepend ? m_data.startpoint : v);
     }
     else {
