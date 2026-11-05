@@ -473,9 +473,12 @@ RS_LayerList::CurrentLayerLock RS_LayerList::toggleLock(RS_Layer* layer) {
     }
 
     const bool currentWasLocked = m_activeLayer != nullptr && m_activeLayer->isLocked();
+    const bool layerWasLocked = layer->isLocked();
     layer->toggleLock();
     const CurrentLayerLock outcome = keepCurrentLayerUnlocked(currentWasLocked);
-    setModified(true);
+    if (layer->isLocked() != layerWasLocked) { // not when the lock was refused
+        setModified(true);
+    }
 
     // Notify listeners:
     for (const auto l : std::as_const(m_layerListListeners)) {
@@ -816,24 +819,26 @@ RS_Layer* RS_LayerList::bestLayerToActivate(const RS_Layer* except, const bool a
  * not current. When a request to lock layers has locked the current layer, the first layer that is
  * shown and not locked (else one that is hidden) becomes current in its place (nothing is moved to
  * it: see RS_LayerListListener::activeLayerReplaced()); when no other layer is unlocked there is
- * none to take its place, and the current layer is not locked.
+ * none to take its place, and the current layer is not locked. A drawing may be opened with every
+ * layer locked, the current one too: that layer stays current until a request unlocks another layer,
+ * which then takes its place.
  *
- * @param wasLocked whether the current layer was locked before the request, as a drawing may be
- * opened that way: it is then left as it is
+ * @param wasLocked whether the current layer was locked before the request
  * @return what became of the current layer; the caller notifies the listeners (about the toggles
  * first, then fireActiveLayerReplaced() when it was replaced)
  */
 RS_LayerList::CurrentLayerLock RS_LayerList::keepCurrentLayerUnlocked(const bool wasLocked) {
     CurrentLayerLock outcome;
-    if (m_activeLayer == nullptr || wasLocked || !m_activeLayer->isLocked()) {
+    if (m_activeLayer == nullptr || !m_activeLayer->isLocked()) {
         return outcome;
     }
-    outcome.m_asked = m_activeLayer;
     if (RS_Layer* replacement = bestLayerToActivate(m_activeLayer, false)) {
+        outcome.m_asked = m_activeLayer;
         outcome.m_replacement = replacement;
         m_activeLayer = replacement;
     }
-    else {
+    else if (!wasLocked) {
+        outcome.m_asked = m_activeLayer;
         m_activeLayer->lock(false);
     }
     return outcome;

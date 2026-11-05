@@ -121,14 +121,14 @@ bool LC_UndoSection::undoableExecute(const RS_Document::FunUndoable& doUndoable,
     if (success && ctx.setActiveLayer && !ctx.entitiesToAdd.isEmpty() && m_document != nullptr) {
         // A locked layer must not change: nothing is added to it. The current layer is locked only
         // when no other layer is unlocked (a drawing may be opened that way), and what is drawn goes
-        // to the current layer.
+        // to the current layer. The refused entities stay the caller's, as with any batch that fails:
+        // a tool may hold a pointer to what it handed in, so they are not deleted here.
         const auto graphic = m_document->getGraphic();
         const RS_Layer* activeLayer = graphic != nullptr ? graphic->getActiveLayer() : nullptr;
         if (activeLayer != nullptr && activeLayer->isLocked()) {
             RS_DIALOGFACTORY->commandMessage(
                 QObject::tr("Layer \"%1\" is the current layer and it is locked: unlock it, or add a layer that is not locked, to draw.")
                     .arg(activeLayer->getName()));
-            qDeleteAll(ctx.entitiesToAdd);
             ctx.clear();
             success = false;
         }

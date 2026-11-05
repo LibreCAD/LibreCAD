@@ -93,11 +93,14 @@ struct Drawing {
 
     /// adds a line to the drawing as a draw tool does: to the current layer, undoably
     bool draw() {
+        m_drawn = new RS_Line(&m_graphic, RS_LineData(RS_Vector(0, 10), RS_Vector(10, 10)));
         return m_graphic.undoableModify(m_view.getViewPort(), [this](LC_DocumentModificationBatch& ctx) {
-            ctx += new RS_Line(&m_graphic, RS_LineData(RS_Vector(0, 10), RS_Vector(10, 10)));
+            ctx += m_drawn;
             return true;
         });
     }
+    /// what draw() made; the drawing owns it once it was added, the caller while it was refused
+    RS_Line* m_drawn = nullptr;
 
     int liveLines() const {
         int count = 0;
@@ -176,6 +179,10 @@ TEST_CASE("Nothing is added to a locked current layer", "[layers][locked][3229]"
         const int before = d.liveLines();
         CHECK_FALSE(d.draw());
         CHECK(d.liveLines() == before);
+        // still the caller's, and alive: a tool may keep the pointer it handed in
+        REQUIRE(d.m_drawn != nullptr);
+        CHECK(d.m_drawn->rtti() == RS2::EntityLine); // not freed: reading it is safe
+        delete d.m_drawn;
         REQUIRE(command.m_messages.size() == 1);
         CHECK(command.m_messages.constFirst().contains(QStringLiteral("\"Free\"")));
         CHECK(command.m_messages.constFirst().contains(QStringLiteral("locked")));

@@ -35,6 +35,7 @@ struct LC_DockLayoutTestAccess {
         return window.m_menuFactory->createGraphicViewPopupMenu(view, entity, RS_Vector(0, 0), actions, true);
     }
     static void fit(QC_ApplicationWindow& window) { window.fitDocksToWindow(); }
+    static void activate(QC_ApplicationWindow& window, QMdiSubWindow* mdi) { window.doWindowActivated(mdi, true); }
     static void isolate(QC_ApplicationWindow& window) {
         window.m_autoCollapsedGroups.clear();
         window.m_collapsedGroupMembers.clear();
@@ -407,6 +408,41 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         CHECK(table->currentIndex().row() == model->getIndex(expected).row());
         CHECK_FALSE(graphic->isModified());
     }
+}
+
+TEST_CASE("Lock all layers and Toggle layer lock are disabled when the lock would be refused",
+          "[.gui][dock-window][layers][3229]") {
+    DockFixture fixture;
+    auto& window = fixture.window;
+    window.slotFileNewFromDefaultTemplate();
+    settle(0);
+    auto* mdi = window.getCurrentMDIWindow();
+    REQUIRE(mdi != nullptr);
+    auto* graphic = mdi->getGraphic();
+    REQUIRE(graphic != nullptr);
+    QAction* lockAll = window.getAction("LayersLockAll");
+    QAction* toggleLock = window.getAction("LayersToggleLock");
+    REQUIRE(lockAll != nullptr);
+    REQUIRE(toggleLock != nullptr);
+
+    // a new drawing has layer "0" alone, and it is current: locking it would be refused. Activating
+    // a drawing window enables the layer actions with the print preview ones, which must not
+    // override that.
+    REQUIRE(graphic->countLayers() == 1);
+    CHECK_FALSE(lockAll->isEnabled());
+    CHECK_FALSE(toggleLock->isEnabled());
+
+    // another layer that is not locked takes the current layer's place when it is locked
+    graphic->addLayer(new RS_Layer(QStringLiteral("Walls")));
+    settle(0);
+    CHECK(lockAll->isEnabled());
+    CHECK(toggleLock->isEnabled());
+
+    // and a window activated again keeps them as the layers say
+    graphic->findLayer(QStringLiteral("Walls"))->lock(true);
+    LC_DockLayoutTestAccess::activate(window, mdi);
+    CHECK(lockAll->isEnabled() == graphic->getLayerList()->canLockAll());
+    CHECK(toggleLock->isEnabled() == graphic->getLayerList()->canToggleLockOfSelection());
 }
 
 TEST_CASE("Legacy UTF-8 recovery has a separate File menu action", "[.gui][legacy-utf8-ui]") {

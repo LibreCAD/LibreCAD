@@ -150,16 +150,22 @@ bool LC_ActionPolylineAppend::setPolylineToModify(RS_Entity* entity, const RS_Ve
         }
 
         auto *clone = static_cast<RS_Polyline *>(m_originalPolyline->clone());
+        if (!undoCycleReplace(m_originalPolyline, clone)) {
+            delete clone; // refused: the current layer is locked
+            return false;
+        }
         m_actionData->polyline = clone;
         m_actionData->data = clone->getData();
-        undoCycleReplace(m_originalPolyline, clone);
         select(clone);
     } else {
         const auto nearestSegment = m_originalPolyline->getNearestEntity(mouse, &dist, RS2::ResolveNone);
         auto *clone = static_cast<RS_Polyline *>(m_originalPolyline->clone());
+        if (!undoCycleReplace(m_originalPolyline, clone)) {
+            delete clone; // refused: the current layer is locked
+            return false;
+        }
         m_actionData->polyline = clone;
         m_actionData->data = clone->getData();
-        undoCycleReplace(m_originalPolyline, clone);
         select(clone);
         m_prepend = false;
         if (nearestSegment == entFirst) {

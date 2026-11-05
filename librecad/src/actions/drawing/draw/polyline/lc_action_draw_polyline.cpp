@@ -418,13 +418,20 @@ void LC_ActionDrawPolyline::onCoordinateEvent(const int status, [[maybe_unused]]
 
                 if (addPolylineToDocument) {
                     const LC_UndoSection undo(m_document, m_viewport);
-                    undo.undoableExecute([this, polylineToUse](LC_DocumentModificationBatch& ctx)-> bool {
+                    const bool added = undo.undoableExecute([this, polylineToUse](LC_DocumentModificationBatch& ctx)-> bool {
                         ctx += polylineToUse;
                         if (m_actionData->polyline != nullptr) {
                             ctx -= m_actionData->polyline;
                         }
                         return true;
                     });
+                    if (!added) {
+                        // refused, as the current layer is locked: the polyline is not in the drawing
+                        delete polylineToUse;
+                        m_actionData->history.removeLast();
+                        m_actionData->bHistory.removeLast();
+                        return;
+                    }
                 }
 
                 m_actionData->polyline = polylineToUse;

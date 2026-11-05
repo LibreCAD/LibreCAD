@@ -186,13 +186,14 @@ public
     void slotSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected) const;
     void slotUpdateLayerList();
     void activateLayer(int row) const;
+    /// Puts Lock all layers and Toggle layer lock in step with what the layer list would allow.
+    void updateLockActions() const;
 
 protected:
     void contextMenuEvent(QContextMenuEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
     void setLayerList(RS_LayerList* layerList, bool showByBlock);
     void updateFiltering();
-    void updateLockActions() const;
     void addToolbarButton(LC_FlexLayout* layButtons, RS2::ActionType actionType);
     void addMenuItem(QMenu* contextMenu, RS2::ActionType actionType) const;
     QLayout* getTopLevelLayout() const override;

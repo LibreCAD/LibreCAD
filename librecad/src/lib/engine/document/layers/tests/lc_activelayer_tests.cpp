@@ -454,9 +454,11 @@ TEST_CASE("Locking is offered exactly when it would lock a layer", "[layers][act
         // a locked layer is not locked again, but it can be unlocked
         CHECK_FALSE(list->canLock(f.m_doors));
         CHECK(list->canToggleLock(f.m_doors));
-        // and the engine does refuse it
+        // and the engine does refuse it, which changes nothing
+        f.m_graphic.setModified(false);
         f.m_graphic.toggleLayerLock(f.m_walls);
         CHECK_FALSE(f.m_walls->isLocked());
+        CHECK_FALSE(f.m_graphic.isModified());
         CHECK(command.m_messages == QStringList{keptMessage});
     }
 
@@ -501,14 +503,25 @@ TEST_CASE("Locking is offered exactly when it would lock a layer", "[layers][act
         CHECK(list->canToggleLock(f.m_walls));
         CHECK_FALSE(list->canLock(f.m_walls));
         CHECK_FALSE(list->canLockAll());
-        f.m_zero->lock(false);
-        // a layer that is not the current one can be locked, as the engine does: the current layer is
-        // locked already, so it is left as it is
-        CHECK(list->canLock(f.m_zero));
-        CHECK(list->canLockAll());
+        // unlocking another layer gives it the place of the current layer, which is locked
         f.m_graphic.toggleLayerLock(f.m_zero);
-        CHECK(f.m_zero->isLocked());
-        CHECK(command.m_messages.isEmpty());
+        CHECK_FALSE(f.m_zero->isLocked());
+        CHECK(f.m_walls->isLocked());
+        CHECK(f.m_graphic.getActiveLayer() == f.m_zero);
+        REQUIRE(command.m_messages.size() == 1);
+        CHECK(command.m_messages.constFirst().contains(QStringLiteral("\"Walls\"")));
+        CHECK(command.m_messages.constFirst().contains(QStringLiteral("\"0\"")));
+    }
+
+    SECTION("a drawing opened with every layer locked: unlocking several, the first shown takes the place") {
+        for (RS_Layer* layer : {f.m_zero, f.m_construction, f.m_doors, f.m_walls}) {
+            layer->lock(true);
+        }
+        f.m_zero->freeze(true);
+        REQUIRE(f.m_graphic.getActiveLayer() == f.m_walls);
+        f.m_graphic.toggleLockLayers({f.m_zero, f.m_construction});
+        CHECK(f.m_graphic.getActiveLayer() == f.m_construction);
+        CHECK(f.m_walls->isLocked());
     }
 
     SECTION("the only layer of a new drawing") {

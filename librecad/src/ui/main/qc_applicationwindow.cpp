@@ -2794,6 +2794,10 @@ void QC_ApplicationWindow::updateActionsAndWidgetsForPrintPreview(const bool pri
             a->setEnabled(enable);
         }
     }
+    if (enable) {
+        // enabling the layer actions above overrode the lock actions the layer list had disabled
+        m_layerWidget->updateLockActions();
+    }
     enableWidgetList(enable, {
                          m_coordinateWidget,
                          m_selectionWidget,

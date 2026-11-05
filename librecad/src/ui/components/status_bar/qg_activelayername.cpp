@@ -119,6 +119,6 @@ void QG_ActiveLayerName::setLayerList(RS_LayerList* layerList) {
 }
 
 void QG_ActiveLayerName::setGraphicView(RS_GraphicView* gview) {
-    RS_Graphic* graphic = (gview != nullptr) ? gview->getGraphic() : nullptr;
+    RS_Graphic* graphic = (gview != nullptr) ? gview->getGraphic(true) : nullptr;
     setLayerList((graphic != nullptr) ? graphic->getLayerList() : nullptr);
 }
