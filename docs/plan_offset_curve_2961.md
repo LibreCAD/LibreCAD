@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W471; chronological evidence follows): implementation slices
+Current status (W472; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W471. Historical results from
+No exact-head CI result is claimed for W441-W472. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18571,4 +18571,37 @@ passes 1,088 assertions; the focused closed-polyline worker-cache case passes
 across 30 cases. `git diff --check` passes. These are local results, not
 exact-head CI or external CAD acceptance. Test commit `184b3d101`
 (`test(offset): cover closed mixed-bulge source paths`); this roadmap receipt
+is committed separately.
+
+## 472. Mixed-Bulge Polyline Side-Specific Import Admission
+
+W471 verifies worker/cache handling and source metadata persistence, but does
+not exercise staged import promotion. Add an exact real-file matrix for the
+closed mixed-bulge polyline on both signed sides across R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. The right-side `-0.25` output is a single canonical spline
+cache and must promote after operation-8 validation. The left-side `+0.25`
+output has multiple branches; a carrier containing one branch must downgrade
+to ordinary geometry, preserve the schema-2 source definition, and never
+silently manufacture a native editable offset. Keep this source-specific
+eligibility separate from family-level picker availability.
+
+### Completion receipt
+
+The closed source has a positive minor bulge, a negative minor bulge, and two
+straight edges. Across all five file/version lanes, `-0.25` generates one
+canonical cache and staged import admits a native offset with exact source
+encoding and cache fingerprint. At `+0.25`, generation yields multiple
+branches; importing the first branch alone downgrades, produces no native
+`LC_OffsetCurve`, and retains the exact schema-2 source metadata for recovery.
+This proves only the recorded geometry and settings, not all mixed-bulge
+topologies or magnitudes.
+
+Validation: incremental CMake Debug builds pass for `librecad_tests` and
+`librecad_offset_worker_kernel_tests`. The focused staged-import matrix passes
+2,419 assertions; `[lc-offsetcurve][import-session][typed-source]` passes
+100,363 assertions across 30 cases; the focused side-specific worker test
+passes 54 assertions; the full worker-kernel suite passes 4,794 assertions
+across 31 cases. `git diff --check` passes. These are local results, not
+exact-head CI or external CAD acceptance. Test commit `a5715a957`
+(`test(offset): qualify mixed-bulge cache admission`); this roadmap receipt
 is committed separately.
