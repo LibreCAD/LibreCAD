@@ -19937,3 +19937,39 @@ serialize no generation or precision refusal. Run focused and broad worker
 tests, CMake Debug test build, roadmap parser, and `git diff --check` for the
 worker slice. The later file slice must additionally run the focused and broad
 typed-source import tests and the same build/roadmap checks.
+
+### W514 worker-slice completion receipt
+
+The worker test now combines scales `1e-3`, `1`, and `1e12` with translation
+ratio `1e9` for ordinary partial, reversed partial, ratio-1.4 partial, and
+forward/reversed thin full ellipses. Scaled signed distances are exercised;
+generation outcome parity is required between centered and translated inputs.
+Successful paired outputs are compared at 129 normalized parameters using the
+requested geometry tolerance plus a coordinate-ULP allowance. Operation 8
+must admit a single-cache result or explicitly refuse without mutation when
+the source/tolerance is not cache eligible. Every grid cell is accounted for
+as a compared success or an explicit generation/tolerance refusal.
+
+Validation: focused `[combined]` worker selection passes 73,252 assertions
+across two cases; the full worker-kernel suite passes 207,835 assertions
+across 42 cases; the incremental CMake Debug target
+`librecad_offset_worker_kernel_tests` builds; the roadmap parser passes 5/5;
+and `git diff --check` passes. Local worker evidence only, not file round trips,
+exact-head CI, visible-GUI, or external CAD acceptance. Product test commit
+`2225bb3f9` (`test(offset): qualify translated ellipse scales`).
+
+## 515. Ellipse Combined Scale and Translation Through DXF/DWG Import
+
+Carry W514's finite scale/translation ellipse grid through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. Use the same source variants and distance grid;
+only serialize cases for which centered and translated worker generation and
+cache validation admit a single native cache. Count generation, tolerance,
+and multi-branch refusal cells explicitly and do not write them as native
+cache fixtures. On reopen, derive native promotion from complete imported
+topology, require exact schema-2 source metadata (including source reversal,
+ratio, and interval), and sample imported cache geometry at 129 normalized
+parameters against the generated reference within the persisted tolerance and
+coordinate-ULP bounds. For non-promoted carriers, verify ordinary geometry and
+typed source metadata remain intact. Run focused import and broad typed-source
+tests, CMake Debug `librecad_tests` build, roadmap parser, and `git diff
+--check`; report local results separately from exact-head CI/external CAD.
