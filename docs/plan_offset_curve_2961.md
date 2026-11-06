@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W425; chronological evidence follows): implementation slices
+Current status (W426; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -100,6 +100,12 @@ refuses it. The focused case passes 60 assertions; the full imported
 typed-source/polyline selection passes 1,138 assertions/11 cases. Test commit
 `c88e876ae` adds no product behavior. Exact-head PR checks must be checked for
 the new pushed commit.
+
+W426 adds a source-level adjacent arc/arc regression. The circular arcs share
+their expected join but also intersect at a second point; source capture must
+refuse that topology. The focused case passes 6 assertions, and the full
+direct `[lc-offsetcurve][source][polyline]` selection passes 45 assertions/3
+cases. Test commit `8a048fe5f` adds no production behavior.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -16718,3 +16724,21 @@ arc-arc intersections, broader non-axial OCS, mesh/polyface/3D legacy
 POLYLINE, distance/side admission, and visible GUI acceptance remain open.
 Push the product/test and roadmap checkpoints to PR #3193, then inspect
 checks for the exact current head.
+
+## 426. Adjacent Arc/Arc Double-Intersection Regression (2026-11-06)
+
+Added a direct `LC_OffsetPolylineData` case with two adjacent circular arcs
+whose expected join is valid but whose selected arc sweeps intersect at a
+second point. The source geometry must be refused. This specifically guards
+the validator's adjacent-pair rule for arc/arc geometry rather than treating
+adjacency itself as proof of a simple chain.
+
+The focused topology case passes 6 assertions/1 case; all direct
+`[lc-offsetcurve][source][polyline]` cases pass 45 assertions/3 cases. The
+Release test target builds and `git diff --check` passes. Test commit:
+`8a048fe5f` (`test(offset): cover adjacent arc intersections`).
+
+Imported arc/arc file fixtures remain open, as do non-axial OCS,
+mesh/polyface/3D legacy POLYLINE, broad distance/side admission, and visible
+GUI acceptance. Push this test and roadmap checkpoint to PR #3193 and check
+only results reported for its exact new head.
