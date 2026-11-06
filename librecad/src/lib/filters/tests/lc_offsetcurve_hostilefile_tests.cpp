@@ -1389,6 +1389,118 @@ TEST_CASE("typed source DXF import materializes only an operation-8 validated ca
     }
 }
 
+TEST_CASE("conic typed sources promote from real DXF and DWG cache carriers",
+          "[lc-offsetcurve][import-session][typed-source][conic][persistence]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-conic-source-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+    const double tau = 2.0 * M_PI;
+    const std::array<LC_OffsetSourceGeometry, 4> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {4, 0}, .6, 0, tau, false}},
+        LC_OffsetSourceGeometry{RS_EllipseData{{3, -2}, {3, 0}, .7, .2, 2.1, false}},
+        LC_OffsetSourceGeometry{RS_ArcData{{-1, 2}, 2.5, .2, 2.4, true}},
+        LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}}
+    };
+    for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
+        CAPTURE(sourceIndex, static_cast<int>(sources[sourceIndex].kind()));
+        for (const double signedDistance : {-.1, .1}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{
+                sources[sourceIndex], signedDistance, 1e-4, false};
+            auto source = definition.source.makeEntity();
+            REQUIRE(source);
+            const double magnitude = std::abs(signedDistance);
+            const auto options = LC_CurveOffset::makeDirectOptions(*source, magnitude,
+                definition.relativeTolerance);
+            const auto generated = LC_CurveOffset::buildDirectBranches(*source,
+                LC_CurveOffset::makeSideRequest(
+                    signedDistance < 0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
+                    magnitude), options, LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+            auto materialized = LC_CurveOffset::materializeBranches(*source, generated,
+                options, LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(materialized.entities.size() == 1);
+
+            RS_SplineData expectedCache;
+            if (const auto* spline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get())) {
+                expectedCache = spline->getData();
+                REQUIRE(spline->validate());
+            } else if (const auto* line = dynamic_cast<const RS_Line*>(materialized.entities.front().get())) {
+                expectedCache.degree = 1;
+                expectedCache.controlPoints = {line->getStartpoint(), line->getEndpoint()};
+                expectedCache.knotslist = {0, 0, 1, 1};
+                expectedCache.weights = {1, 1};
+            } else {
+                FAIL("conic offset cache must be a spline or exact line");
+            }
+
+            for (const bool dwg : {false, true}) {
+#ifndef DWGSUPPORT
+                if (dwg) continue;
+#endif
+                xd::Definition xdata;
+                xdata.source = definition;
+                xd::Options encoding;
+                if (dwg) {
+                    encoding.eed = true;
+                    encoding.textEncoding = xd::TextEncoding::Utf16;
+                } else {
+                    encoding.asciiDxf = false;
+                }
+                const auto tags = xd::forExport(
+                    {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+                    xdata, encoding);
+                REQUIRE(tags);
+                DRW_Spline cache = f::raw(1, *tags);
+                cache.controllist.clear();
+                for (const auto& point : expectedCache.controlPoints)
+                    cache.controllist.push_back(
+                        std::make_shared<DRW_Coord>(point.x, point.y, 0));
+                cache.knotslist = expectedCache.knotslist;
+                cache.weightlist = expectedCache.weights;
+                cache.degree = expectedCache.degree;
+                cache.flags = 8;
+                cache.m_scenario = 1;
+                cache.ncontrol = cache.controllist.size();
+                cache.nknots = cache.knotslist.size();
+                cache.nfit = 0;
+
+                const auto suffix = std::to_string(sourceIndex) +
+                    (signedDistance < 0 ? "-right" : "-left") +
+                    (dwg ? ".dwg" : ".dxf");
+                const auto input = directory.file(suffix);
+#ifdef DWGSUPPORT
+                if (dwg) f::dwgFile(input, cache, DRW::AC1032);
+                else f::binaryDxf(input, cache, DRW::AC1032);
+#else
+                f::binaryDxf(input, cache, DRW::AC1032);
+#endif
+                const auto outcome = stagedImport(input,
+                    dwg ? Lane::Eed18 : Lane::Binary18);
+                REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+                REQUIRE(outcome.graphic);
+                CHECK(outcome.admitted == 1);
+                CHECK(outcome.downgraded == 0);
+                const auto* imported = dynamic_cast<const LC_OffsetCurve*>(
+                    f::sole(*outcome.graphic));
+                REQUIRE(imported);
+                REQUIRE(imported->sourceDefinition());
+                const auto expectedSource = values::encodeSourceDefinition(definition);
+                const auto importedSource = values::encodeSourceDefinition(
+                    *imported->sourceDefinition());
+                REQUIRE(expectedSource);
+                REQUIRE(importedSource);
+                CHECK(QCborValue(*expectedSource).toCbor() ==
+                      QCborValue(*importedSource).toCbor());
+                CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+                      RS_Spline::geometryFingerprint(expectedCache));
+            }
+        }
+    }
+}
+
 TEST_CASE("bulged LWPOLYLINE import preserves signed arc geometry for offset source capture",
           "[lc-offsetcurve][import-session][typed-source][polyline][bulge]") {
     Setup setup;
