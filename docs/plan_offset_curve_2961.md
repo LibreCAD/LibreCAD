@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W443; chronological evidence follows): implementation slices
+Current status (W444; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W443. Historical results from
+No exact-head CI result is claimed for W441-W444. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request is already implemented: the user can choose a
@@ -17659,3 +17659,35 @@ This closes representative typed-conic cache promotion across the tested
 R14/R2000/R2018 file lanes. It does not establish other source families,
 arbitrary conic sweeps/OCS, all distances/sides, or format-writer conformance
 outside these fixtures.
+
+## 444. Primitive Source-Family DXF/DWG Promotion
+
+Extend the real-file operation-8 promotion matrix to the remaining currently
+modeled primitive families that have a single canonical offset cache: finite
+parabola, bounded hyperbola, and line. Reuse the R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG lanes and both signed sides. Each case must validate the exact
+typed source and canonical cache after staged import; no downgrade or ordinary
+fallback counts as promotion.
+
+### Completion receipt
+
+Added finite bowl-shaped parabola, bounded hyperbola, and straight-line source
+definitions to the real-carrier matrix alongside the four W442/W443 conic
+definitions. All seven sources at `-0.1` and `0.1` produce one operation-8
+validated cache and promote through all five DXF/DWG lanes: 70 real carrier
+imports. Every import admits exactly one native editable offset, has zero
+downgrades, preserves the tagged source definition, and matches the generated
+canonical cache fingerprint.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+selector `[lc-offsetcurve][import-session][typed-source][cache-promotion][persistence]`
+passes 16,963 assertions/1 case; the broader
+`[lc-offsetcurve][import-session][typed-source]` selector passes 37,694
+assertions/28 cases. `git diff --check` passes. Test commit
+`44348f214` (`test(offset): promote primitive sources through import`).
+
+This closes representative real-file promotion for seven source definitions,
+not every legal parameterization or distance. Spline-points and spline cases
+retain their separate fit/knot/weight tests; polyline topology and cache
+representability remain governed by their dedicated eligibility/refusal
+matrix. Exact-head CI and external CAD acceptance are not inferred.
