@@ -810,6 +810,55 @@ TEST_CASE("Coherent cubic SPLINE control and fit lists retain fit intent",
   }
 }
 
+TEST_CASE("Closed cubic fit SPLINE safely round-trips as a control net",
+          "[dxf][dwg][filter][spline][fit-points][roundtrip]") {
+  ensureSettings();
+  SplineRecord source;
+  source.m_flags = 3;
+  source.m_degree = 3;
+  source.m_fitPoints = {{0., 0.}, {2., 0.}, {3., 2.}, {1., 4.}, {-1., 2.}, {0., 0.}};
+  RS_Graphic graphic;
+  importDxf(graphic, source, "closed_cubic_fit_point_source");
+  RS_Spline *imported = onlySpline(graphic);
+  REQUIRE(imported->validate());
+  REQUIRE(imported->isClosed());
+  const auto sourceCurve = splineCurve(*imported, 100);
+
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDXFRW, "dxf"},
+#ifdef DWGSUPPORT
+      {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2018, "dwg-r2018"},
+#endif
+  };
+  for (const auto &[format, suffix] : formats) {
+    INFO(suffix);
+    const std::string path = tempPath("closed_cubic_fit_point_" + suffix);
+    std::remove(path.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+    }
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    const RS2::FormatType readFormat =
+        format == RS2::FormatDXFRW ? RS2::FormatDXFRW : RS2::FormatDWG;
+    importFile(reopened, path, readFormat, &written);
+    std::filesystem::remove(path);
+    REQUIRE(written.size() == 1);
+    CHECK(written.front().m_fitPoints.empty());
+    CHECK_FALSE(written.front().m_controlPoints.empty());
+    if (format != RS2::FormatDXFRW)
+      CHECK(written.front().m_scenario == 1);
+    RS_Spline *reopenedSpline = onlySpline(reopened);
+    REQUIRE(reopenedSpline->validate());
+    const auto reopenedCurve = splineCurve(*reopenedSpline, 100);
+    REQUIRE(sourceCurve.size() == reopenedCurve.size());
+    for (std::size_t i = 0; i < sourceCurve.size(); ++i)
+      CHECK(sourceCurve[i].distanceTo(reopenedCurve[i]) < 2.5e-7);
+  }
+}
+
 TEST_CASE("Edited cubic fit-point SPLINE exports its current control net",
           "[dxf][filter][spline][fit-points][roundtrip]") {
   ensureSettings();
