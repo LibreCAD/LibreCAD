@@ -4599,6 +4599,109 @@ TEST_CASE("wrapped periodic spline source imports through operation-8 validation
     }
 }
 
+TEST_CASE("multi-branch hyperbola import refuses partial cache and retains source data",
+          "[lc-offsetcurve][import-session][typed-source][hyperbola][refusal]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-hyperbola-multibranch-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}},
+        -1.1, 1e-4, false};
+    auto source = definition.source.makeEntity();
+    REQUIRE(source);
+    const double magnitude = std::abs(definition.signedDistance);
+    const auto options = LC_CurveOffset::makeDirectOptions(
+        *source, magnitude, definition.relativeTolerance);
+    const auto generated = LC_CurveOffset::buildDirectBranches(
+        *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, magnitude),
+        options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+    const auto materialized = LC_CurveOffset::materializeBranches(
+        *source, generated, options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(materialized.entities.size() == 3);
+    const auto* firstBranch =
+        dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+    REQUIRE(firstBranch);
+    const RS_SplineData firstBranchCache = firstBranch->getData();
+    REQUIRE(firstBranch->validate());
+
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        xd::Definition metadata;
+        metadata.source = definition;
+        xd::Options encoding;
+        if (format.dwg) {
+            encoding.eed = true;
+            encoding.textEncoding = xd::TextEncoding::Utf16;
+        } else {
+            encoding.asciiDxf = false;
+        }
+        const auto tags = xd::forExport(
+            {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+            metadata, encoding);
+        REQUIRE(tags);
+        DRW_Spline cache = f::raw(1, *tags);
+        cache.controllist.clear();
+        for (const auto& point : firstBranchCache.controlPoints)
+            cache.controllist.push_back(
+                std::make_shared<DRW_Coord>(point.x, point.y, 0));
+        cache.knotslist = firstBranchCache.knotslist;
+        cache.weightlist = firstBranchCache.weights;
+        cache.degree = firstBranchCache.degree;
+        cache.flags = 8;
+        cache.m_scenario = 1;
+        cache.ncontrol = cache.controllist.size();
+        cache.nknots = cache.knotslist.size();
+        cache.nfit = 0;
+
+        const auto input = directory.file(format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwgFile(input, cache, format.version);
+        else f::binaryDxf(input, cache, format.version);
+#else
+        f::binaryDxf(input, cache, format.version);
+#endif
+        const auto outcome = stagedImport(input, format.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        CHECK(outcome.admitted == 0);
+        CHECK(outcome.downgraded == 1);
+        const auto* fallback = dynamic_cast<const RS_Spline*>(
+            f::sole(*outcome.graphic));
+        REQUIRE(fallback);
+        CHECK(dynamic_cast<const LC_OffsetCurve*>(f::sole(*outcome.graphic)) == nullptr);
+        CHECK(RS_Spline::geometryFingerprint(fallback->getData()) ==
+              RS_Spline::geometryFingerprint(firstBranchCache));
+        const auto parsed = xd::parseAndStrip(fallback->getDrwExtData(), encoding);
+        REQUIRE(parsed.status == xd::Status::Schema2);
+        REQUIRE(parsed.definition);
+        REQUIRE(parsed.definition->source);
+        const auto expected = values::encodeSourceDefinition(definition);
+        const auto received = values::encodeSourceDefinition(*parsed.definition->source);
+        REQUIRE(expected);
+        REQUIRE(received);
+        CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
+    }
+}
+
 TEST_CASE("multi-branch rational spline import refuses native promotion and retains source data",
           "[lc-offsetcurve][import-session][typed-source][spline-variant]") {
     Setup setup;
