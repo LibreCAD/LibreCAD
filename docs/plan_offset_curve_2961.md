@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W478; chronological evidence follows): implementation slices
+Current status (W479; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W478. Historical results from
+No exact-head CI result is claimed for W441-W479. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18766,3 +18766,26 @@ exact-head CI or external CAD acceptance. Test commit `38b3fc9ec`
 receipt is a separate docs commit. Remaining: additional finite bounds,
 denser distances near curvature limits, and explicit multi-branch/refusal
 fixtures.
+
+## 479. Hyperbola Interval Bounds Through Worker Generation
+
+W478 covers four broad/reversed hyperbola layouts, but does not exercise
+positive-only and negative-only parameter intervals or a broad interval
+crossing the vertex on each branch. Add these distinct bounded-domain shapes
+to the same operation-7/operation-8 distance sweep. Require one canonical
+spline cache and exact cache validation for each result at `±0.1`, `±0.3`, and
+`±0.5`; keep finite-source validation and worker refusal behavior intact.
+
+### Completion receipt
+
+The hyperbola worker matrix now includes eight bounded interval/branch shapes:
+the original broad/reversed cases, positive-only and negative-only intervals,
+and broad vertex-crossing intervals on both branches. All eight pass generation
+and cache validation at each of six signed distances, with one canonical spline
+cache per case. The focused test passes 1,248 assertions; the complete worker
+kernel suite passes 5,834 assertions across 31 cases. CMake Debug incremental
+build and `git diff --check` pass. This is worker-level evidence only; the four
+new interval shapes have not yet been exercised through DXF/DWG staged import.
+Test commit `3fa9cb455` (`test(offset): cover hyperbola interval bound
+variants`); roadmap receipt is separate. Remaining: real-file promotion for
+these added bounds and intervals near curvature/topology refusal thresholds.
