@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W408; chronological evidence follows): implementation slices
+Current status (W409; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16300,3 +16300,24 @@ Validation: `[fit-points][roundtrip]` passes 1,178 assertions/6 cases;
 target builds; `git diff --check` passes. Product/test commit: `883279035`
 (`test(dwg): cover closed cubic fit spline fallback`). Closed scenario-2
 encoding, all closed layouts, and exact fit representation remain open.
+
+## 409. Degree-2 Spline-Points Fit-Tolerance Preservation (2026-11-05)
+
+`LC_SplinePointsData` now carries the source SPLINE fit tolerance with the
+existing `1e-7` default. The degree-2 fit-point importer stores a finite,
+positive `tolfit`, and `writeSplinePoints()` emits the stored tolerance for
+scenario 2, falling back to the default if the mutable data contains an
+invalid value. This closes the same metadata loss for the degree-2
+`LC_SplinePoints` path that W405 closed for degree-3 `RS_Spline`.
+
+Extended the W402 degree-2 file-roundtrip assertions to check non-default
+`1e-10` tolerance at import, in captured DXF/DWG records, and after reopen for
+DXF, AC1015/R2000 DWG, and AC1032/R2018 DWG.
+
+Validation: `[fit-points][roundtrip]` passes 1,185 assertions/6 cases;
+`[dxf][filter][spline]` passes 3,001 assertions/19 cases; Release test target
+builds and `git diff --check` passes. Product commit: `d353d955c` (`fix(dxf):
+preserve quadratic spline fit tolerance`). Fit tangent-constraint metadata for
+degree-2 `LC_SplinePoints` remains a separate limitation; this slice only
+preserves tolerance and does not claim all quadratic fit-spline metadata is
+lossless.
