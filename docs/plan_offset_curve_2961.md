@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W419; chronological evidence follows): implementation slices
+Current status (W420; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16560,3 +16560,33 @@ imported 2D LWPOLYLINE forms. Near-coincident non-adjacent vertices,
 line/arc crossings without a shared vertex, non-axial OCS, mesh/polyface/3D
 legacy POLYLINE, and broad topology/side/distance qualification remain open.
 Push this test and roadmap checkpoint, then read exact-head PR diagnostics.
+
+## 420. Near-Coincident Polyline Vertex Refusal (2026-11-05)
+
+Polyline source validation now rejects non-adjacent vertices within the same
+scale-aware coordinate tolerance used for endpoint continuity, not only
+bitwise-equal coordinates. A magnitude-binned spatial index checks adjacent
+grid buckets and nearby exponent bins, keeping the lookup logarithmic rather
+than comparing every vertex pair. Closed-polyline seam handling temporarily
+removes the first vertex from the index before checking the final endpoint, so
+the declared implicit closure remains legal while an interior near-repeat is
+still refused. Allocation failure remains a clean source refusal under the
+validator's `noexcept` contract.
+
+Added a real-file LWPOLYLINE with an interior vertex only `1e-15` from its
+start vertex, below the existing endpoint tolerance. The ordinary imported
+polyline retains its close-but-distinct vertices and imports successfully;
+typed offset-source capture refuses it. The new repeated/near-coincident case
+passes 165 assertions/1 case through R14/AC1014 DXF, AC1032 DXF, and AC1032
+DWG. The complete `[import-session][typed-source][polyline]` selection passes
+970 assertions/9 cases; worker-kernel `[source-cache][polyline]` passes 309
+assertions/4 cases; and direct `[lc-offsetcurve][source][polyline]` passes 38
+assertions/1 case. Release test targets build and `git diff --check` passes.
+Product commit: `e3274a57e` (`fix(offset): reject near-coincident polyline
+vertices`).
+
+Near-coincident vertex refusal is now covered for this 2D imported topology;
+arbitrary line/arc intersections without a shared vertex, non-axial OCS,
+mesh/polyface/3D legacy POLYLINE, and the broad side/distance matrix remain
+open. Commit this W420 roadmap checkpoint, push the product and docs to PR
+#3193, then inspect checks for the exact head.
