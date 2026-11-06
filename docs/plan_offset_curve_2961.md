@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W409; chronological evidence follows): implementation slices
+Current status (W411; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -63,13 +63,18 @@ reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
 The source Properties widget requirement to change curve family before
-choosing a replacement is implemented and covered for the nine modeled
-families: ellipse, spline, spline-points, parabola, bounded hyperbola, line,
-arc, circle, and polyline. Parabola remains a distinct choice and source kind.
-Changing the family filter alone is non-mutating; selecting a candidate goes
-through guarded worker-backed replacement. This closes the requested picker
-behavior, not exhaustive eligibility for every legal geometry variant or
-every distance/side, and not the broader plan's acceptance gates. The
+choosing a replacement is implemented and covered for the nine currently
+modeled families: ellipse, spline, spline-points, parabola, bounded hyperbola,
+line, arc, circle, and polyline. Parabola remains a distinct choice and source
+kind. Changing the family filter alone is non-mutating; selecting a candidate
+goes through guarded worker-backed replacement. Here, "all supported types"
+means every family in this explicit matrix, not every legal geometric variant
+within each family. Variant-specific worker eligibility, single-cache
+representability, persistence, and distance/side behavior remain separate
+acceptance obligations; unsupported variants must refuse visibly without
+replacing the prior source or cache. This closes the requested picker behavior,
+not exhaustive eligibility for every legal geometry variant or every
+distance/side, and not the broader plan's acceptance gates. The
 recent W378-W399 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
@@ -16321,3 +16326,53 @@ preserve quadratic spline fit tolerance`). Fit tangent-constraint metadata for
 degree-2 `LC_SplinePoints` remains a separate limitation; this slice only
 preserves tolerance and does not claim all quadratic fit-spline metadata is
 lossless.
+
+## 410. Source Picker Type-Switching Scope Reaffirmed (2026-11-05)
+
+The picker requirement is a two-step replacement workflow: the user may
+change the source-family filter first, then select a live entity from that
+family. Changing the filter is not a document edit. Selecting the candidate
+replaces the tagged source definition and generated cache together through the
+guarded worker-backed transaction. The current family matrix is ellipse,
+`RS_Spline`, `LC_SplinePoints`, distinct `LC_Parabola`, bounded
+`LC_Hyperbola`, line, arc, circle, and polyline. Parabola must not be hidden
+because its implementation derives from spline-points.
+
+This family-level picker behavior is already implemented and covered by the
+nine-family Properties replacement matrix (W356), explicit family inventory
+(W359), parabola cross-type identity/highlight coverage (W396), and deleted
+source handling (W397). No duplicate widget or parabola implementation is
+planned. "All supported types" is deliberately not interpreted as accepting
+every legal geometry variant: continue the production-path admission/refusal
+matrix for splines, bounded hyperbolas, and polylines, and verify each admitted
+variant through worker generation/cache validation, source replacement,
+distance/side edits, DXF/DWG persistence, and reopen. Refusal must leave both
+the prior source definition and cache unchanged. Broader GUI and external
+acceptance gates remain open as stated above.
+
+## 411. Degree-2 Fit Tangent Constraint Fallback (2026-11-05)
+
+The degree-2, non-rational SPLINE import path now records whether either DXF/
+DWG endpoint tangent is nonzero in `LC_SplinePointsData`. Since the native
+quadratic interpolator does not apply those source tangent constraints,
+`writeSplinePoints()` no longer emits scenario 2 for marked entities and does
+not emit fit-point lists or a nonzero fit count with the scenario-1 control
+net. This avoids inventing new endpoint tangents from adjacent fit points.
+
+Added a constrained quadratic fit fixture and file round trips through DXF,
+AC1015/R2000 DWG, and AC1032/R2018 DWG. The test verifies import marks the
+constraint, output has no fit list and uses scenario 1 for DWG, and reopened
+control points match the imported LibreCAD control geometry. Focused test:
+53 assertions/1 case. Full `[fit-points][roundtrip]`: 1,238 assertions/7
+cases. `[dxf][filter][spline]`: 3,054 assertions/20 cases. Release
+`librecad_tests` rebuilt successfully; `git diff --check` passes. Product
+commit: `997ea7fba` (`fix(dxf): avoid rewriting constrained quadratic fit
+splines`).
+
+This is a geometry-preserving fallback for LibreCAD's imported native curve,
+not exact source tangent-constraint round-trip: the native entity still does
+not apply or retain tangent vectors after control-net export. Rational
+quadratic and closed tangent-constrained layouts are not covered by this
+degree-2 branch. Push the product and roadmap commits to PR #3193, then
+qualify the exact new head's CI; continue the remaining source-variant,
+external GUI, review, deployment, and integration gates.
