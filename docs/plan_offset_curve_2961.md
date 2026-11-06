@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W459; chronological evidence follows): implementation slices
+Current status (W460; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W459. Historical results from
+No exact-head CI result is claimed for W441-W460. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request (2026-11-06) reconfirms that changing an
@@ -18177,3 +18177,31 @@ assertions across 29 cases. `git diff --check` passes. These are local results,
 not exact-head CI or external CAD acceptance. Test commit `3ab3cc75e`
 (`test(dwg): cover legacy bulged OCS XDATA lanes`); the roadmap receipt is
 committed separately.
+
+## 460. Legacy 2D POLYLINE Signed and Major Bulge OCS Matrix
+
+W459 adds XDATA-bearing positive-minor tilted-OCS legacy POLYLINE imports in
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The corresponding negative-minor
+and greater-than-semicircle variants were not checked across those lanes.
+Extend the same five-lane fixture matrix to both bulge signs/magnitudes and
+assert sweep, projected entity type/count, directed endpoints, line continuity,
+OCS/conic provenance, unrelated XDATA, and typed-source refusal. Keep closed
+bulges and reflected normals as distinct unqualified cases.
+
+### Completion receipt
+
+Positive minor, negative minor, and positive major tilted-OCS legacy 2D
+POLYLINE inputs now import through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+For every lane and variant, tests verify the projected ellipse sweep and
+finite positive radii, expected ratio, source-directed arc/line endpoints,
+both provenance markers, unrelated `FixtureSourceData`, and refusal of both
+lossy fragments as native offset sources. This does not cover closed legacy
+bulge variants or reflected-normal legacy OCS.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`non-axial legacy 2D POLYLINEs project straight segments safely` case passes
+929 assertions; `[lc-offsetcurve][import-session][typed-source]` passes 96,423
+assertions across 29 cases. `git diff --check` passes. These are local results,
+not exact-head CI or external CAD acceptance. Test commit `00588e034`
+(`test(dwg): cover legacy OCS bulge variants by version`); the roadmap receipt
+is committed separately.
