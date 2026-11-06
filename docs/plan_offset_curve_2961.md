@@ -19853,7 +19853,7 @@ Debug `librecad_tests` build passes. These are local results, not exact-head
 CI, visible-GUI, or external-CAD acceptance. Product test commit `1dcfbcd8d`
 (`test(offset): import hyperbola translation boundaries`).
 
-## 510. Source Picker Request Reconciliation (2026-11-06)
+## 510. Source Picker Request Reconciliation (2026-11-06; reaffirmed)
 
 The latest request again requires changing the source-curve type before
 selecting a replacement and expanding the picker to supported types, including
@@ -19882,3 +19882,35 @@ now provide combined scale/translation worker and staged-file evidence for
 bounded hyperbolas, including fail-closed relative-translation boundaries.
 This request adds no duplicate product-code scope and does not close
 visible-GUI, exact-head CI, or external CAD acceptance.
+
+## 513. Source Type Switching and All Supported Families (2026-11-06)
+
+Rechecked against the latest request to change source-curve type while
+selecting a replacement and to include every supported curve type. The
+existing `cbSourceType` selector is editable before and during candidate
+selection; changing it refreshes the filtered `cbSource` list without
+changing the current source definition/cache. Candidate selection is checked
+against the selected family, and the replacement is applied only after the
+worker-prepared edit succeeds. The nine supported family choices are line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola must stay a distinct choice ahead of its
+`LC_SplinePoints` base class.
+
+This is a reconciliation, not a new implementation slice: W440 and W510
+already specify the requested workflow, while the properties-dialog matrix
+tests family switching and typed replacement and the separate source UI tests
+cover selection/highlighting. Do not add another selector or infer complete
+geometry support from the family menu. The open work remains the per-family
+and per-variant eligibility matrix: for each enabled variant, demonstrate
+source capture, worker generation, cache validation, atomic replacement,
+cancellation/failure non-mutation, and applicable DXF/DWG save/reopen. Where
+the worker or cache refuses a valid-but-unrepresentable case, surface the
+reason and retain the prior source/cache; statically unsupported geometry
+must not appear as an eligible candidate.
+
+Validation references: `Native source picker changes family and replaces the
+source with a typed curve`, `Native source picker replaces every modeled
+source family without filter side effects`, and the matching/highlight tests
+in `lc_offsetcurve_source_ui_tests.cpp`. This request adds no new modeled
+family and does not close the remaining variant matrix, visible-GUI,
+exact-head CI, or external-CAD acceptance gates.
