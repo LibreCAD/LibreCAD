@@ -69,7 +69,8 @@ void ensureSettings() {
 }
 
 std::string tempPath(const std::string &name) {
-  return (std::filesystem::temp_directory_path() / ("closed_spline_" + name)).string();
+  return (std::filesystem::temp_directory_path() / ("closed_spline_" + name))
+      .string();
 }
 
 /** What a SPLINE record carries. */
@@ -81,22 +82,38 @@ struct SplineRecord {
   std::vector<RS_Vector> m_fitPoints;
   int m_scenario = 0;
   double m_tolFit = 0.0;
+  RS_Vector m_tangentStart;
+  RS_Vector m_tangentEnd;
 };
 
 /** A DXF holding one SPLINE; no HEADER, so no $ACADVER. */
 std::string splineDxf(const SplineRecord &spline) {
   std::ostringstream out;
   out.precision(17);
-  out << "0\nSECTION\n2\nENTITIES\n0\nSPLINE\n8\n0\n100\nAcDbEntity\n100\nAcDbSpline\n"
-      << "70\n" << spline.m_flags << "\n71\n" << spline.m_degree << "\n72\n" << spline.m_knots.size()
-      << "\n73\n" << spline.m_controlPoints.size() << "\n74\n" << spline.m_fitPoints.size()
-      << "\n42\n1e-10\n43\n1e-10\n44\n1e-10\n";
+  out << "0\nSECTION\n2\nENTITIES\n0\nSPLINE\n8\n0\n100\nAcDbEntity\n100\nAcDbS"
+         "pline\n"
+      << "70\n"
+      << spline.m_flags << "\n71\n"
+      << spline.m_degree << "\n72\n"
+      << spline.m_knots.size() << "\n73\n"
+      << spline.m_controlPoints.size() << "\n74\n"
+      << spline.m_fitPoints.size() << "\n42\n1e-10\n43\n1e-10\n44\n1e-10\n";
   for (const double k : spline.m_knots)
     out << "40\n" << k << "\n";
   for (const RS_Vector &p : spline.m_controlPoints)
     out << "10\n" << p.x << "\n20\n" << p.y << "\n30\n0\n";
   for (const RS_Vector &p : spline.m_fitPoints)
     out << "11\n" << p.x << "\n21\n" << p.y << "\n31\n0\n";
+  if (spline.m_tangentStart.magnitude() > 0.0)
+    out << "12\n"
+        << spline.m_tangentStart.x << "\n22\n"
+        << spline.m_tangentStart.y << "\n32\n"
+        << spline.m_tangentStart.z << "\n";
+  if (spline.m_tangentEnd.magnitude() > 0.0)
+    out << "13\n"
+        << spline.m_tangentEnd.x << "\n23\n"
+        << spline.m_tangentEnd.y << "\n33\n"
+        << spline.m_tangentEnd.z << "\n";
   out << "0\nENDSEC\n0\nEOF\n";
   return out.str();
 }
@@ -112,6 +129,8 @@ public:
     record.m_degree = data->degree;
     record.m_scenario = data->m_scenario;
     record.m_tolFit = data->tolfit;
+    record.m_tangentStart = {data->tgStart.x, data->tgStart.y, data->tgStart.z};
+    record.m_tangentEnd = {data->tgEnd.x, data->tgEnd.y, data->tgEnd.z};
     for (const auto &p : data->controllist)
       record.m_controlPoints.emplace_back(p->x, p->y);
     for (const auto &p : data->fitlist)
@@ -777,4 +796,54 @@ TEST_CASE("Edited cubic fit-point SPLINE exports its current control net",
   CHECK(reopenedSpline->getData().fitPoints.empty());
   CHECK(reopenedSpline->getData().controlPoints[1].distanceTo(edited) <
         1.0e-12);
+}
+
+TEST_CASE("Tangent-constrained cubic fit SPLINE falls back to its control net",
+          "[dxf][dwg][filter][spline][fit-points][roundtrip]") {
+  ensureSettings();
+  SplineRecord source;
+  source.m_flags = 8;
+  source.m_degree = 3;
+  source.m_fitPoints = {{0., 0.}, {2., 4.}, {5., 3.}, {8., 0.}};
+  source.m_tangentStart = {1., 0., 0.};
+  source.m_tangentEnd = {0., 1., 0.};
+  RS_Graphic graphic;
+  importDxf(graphic, source, "tangent_cubic_fit_point_source");
+  RS_Spline *sourceSpline = onlySpline(graphic);
+  REQUIRE(sourceSpline->getData().fitTangentsConstrained);
+  const auto sourceCurve = splineCurve(*sourceSpline, 100);
+
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDXFRW, "dxf"},
+#ifdef DWGSUPPORT
+      {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2018, "dwg-r2018"},
+#endif
+  };
+  for (const auto &[format, suffix] : formats) {
+    INFO(suffix);
+    const std::string path = tempPath("tangent_cubic_fit_point_" + suffix);
+    std::remove(path.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+    }
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    const RS2::FormatType readFormat =
+        format == RS2::FormatDXFRW ? RS2::FormatDXFRW : RS2::FormatDWG;
+    importFile(reopened, path, readFormat, &written);
+    std::filesystem::remove(path);
+
+    REQUIRE(written.size() == 1);
+    CHECK(written.front().m_fitPoints.empty());
+    CHECK_FALSE(written.front().m_controlPoints.empty());
+    if (format != RS2::FormatDXFRW)
+      CHECK(written.front().m_scenario == 1);
+    RS_Spline *reopenedSpline = onlySpline(reopened);
+    const auto reopenedCurve = splineCurve(*reopenedSpline, 100);
+    REQUIRE(sourceCurve.size() == reopenedCurve.size());
+    for (std::size_t i = 0; i < sourceCurve.size(); ++i)
+      CHECK(sourceCurve[i].distanceTo(reopenedCurve[i]) < 1.0e-8);
+  }
 }

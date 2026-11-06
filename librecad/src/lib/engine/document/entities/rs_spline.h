@@ -81,6 +81,9 @@ struct RS_SplineData {
   /** Fit-point tolerance from the source SPLINE, when available. */
   double fitTolerance = 1.0e-7;
 
+  /** True when source endpoint tangents cannot be represented by this spline. */
+  bool fitTangentsConstrained = false;
+
   /** Degree (1-3) */
   size_t degree = 3;
 

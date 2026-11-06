@@ -8811,6 +8811,11 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     spline->setFitPoints(fitPoints);
     if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
       spline->getData().fitTolerance = data->tolfit;
+    const auto nonzero = [](const DRW_Coord &tangent) {
+      return tangent.x != 0.0 || tangent.y != 0.0 || tangent.z != 0.0;
+    };
+    spline->getData().fitTangentsConstrained =
+        nonzero(data->tgStart) || nonzero(data->tgEnd);
   }
 
   if (isClosed) {
@@ -32024,7 +32029,8 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
   // the saved fit list. A mismatch means the control net is authoritative.
   bool writeFitPoints = false;
   if (degree == 3 && !s->isClosed() && !splineData.m_closedFlag &&
-      !splineData.m_periodicFlag && splineData.fitPoints.size() >= 4 &&
+      !splineData.m_periodicFlag && !splineData.fitTangentsConstrained &&
+      splineData.fitPoints.size() >= 4 &&
       splineData.fitPoints.size() <= maximum &&
       std::all_of(splineData.fitPoints.begin(), splineData.fitPoints.end(),
                   [](const RS_Vector &point) {
