@@ -1417,13 +1417,16 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
     const double tau = 2.0 * M_PI;
-    const std::array<LC_OffsetSourceGeometry, 7> sources{
+    const std::array<LC_OffsetSourceGeometry, 10> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {4, 0}, .6, 0, tau, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{3, -2}, {3, 0}, .7, .2, 2.1, false}},
         LC_OffsetSourceGeometry{RS_ArcData{{-1, 2}, 2.5, .2, 2.4, true}},
         LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{-4, 4}, RS_Vector{0, -4}, RS_Vector{4, 4}}}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, 1.5, -1.2, false}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -.4, .4, true}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, true}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}}
     };
     struct Format {
@@ -1441,7 +1444,11 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
     }};
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
         CAPTURE(sourceIndex, static_cast<int>(sources[sourceIndex].kind()));
-        for (const double signedDistance : {-.4, -.1, .1, .4}) {
+        const std::vector<double> signedDistances =
+            sources[sourceIndex].kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola
+                ? std::vector<double>{-.3, .3}
+                : std::vector<double>{-.4, -.1, .1, .4};
+        for (const double signedDistance : signedDistances) {
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{
                 sources[sourceIndex], signedDistance, 1e-4, false};
