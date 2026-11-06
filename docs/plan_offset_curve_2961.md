@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W470; chronological evidence follows): implementation slices
+Current status (W471; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W470. Historical results from
+No exact-head CI result is claimed for W441-W471. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18542,3 +18542,33 @@ Validation: incremental CMake Debug `librecad_tests` build passes. The focused
 `git diff --check` passes. These are local results, not exact-head CI or
 external CAD acceptance. Test commit `978a13c59` (`test(offset): cover closed
 mixed-bulge OCS chains`); the roadmap receipt is committed separately.
+
+## 471. Closed Mixed-Bulge Polyline Source Paths
+
+The nine-family picker and polyline worker matrix already cover open mixed
+line/arc paths and closed line-only or all-arc loops. Add a closed four-edge
+polyline with one positive and one negative bulge arc plus two straight edges
+to real schema-2 DXF/DWG save/reopen/second-save coverage, and to worker
+operation-7/operation-8 validation on both signed offset sides. The worker
+must either promote a single canonical cache exactly or refuse a multi-output
+result as `NotCacheRepresentable` without mutation; metadata round-trip alone
+must not be reported as cache support.
+
+### Completion receipt
+
+The captured closed polyline retains two oppositely oriented arc segments and
+two lines. Its typed source passes real AC1032 DXF and DWG schema-2
+save/reopen/second-save equality as the fifteenth file-persistence variant.
+Worker operation 7 and operation 8 run for both `-0.25` and `0.25`; the tests
+require exact single-cache validation when one spline is produced and an
+unchanged-state `NotCacheRepresentable` refusal otherwise. The tests do not
+claim import-session promotion for this specific closed mixed-bulge source.
+
+Validation: incremental CMake Debug builds pass for `librecad_tests` and
+`librecad_offset_worker_kernel_tests`. The focused typed-source file test
+passes 1,088 assertions; the focused closed-polyline worker-cache case passes
+151 assertions; the complete worker-kernel suite passes 4,740 assertions
+across 30 cases. `git diff --check` passes. These are local results, not
+exact-head CI or external CAD acceptance. Test commit `184b3d101`
+(`test(offset): cover closed mixed-bulge source paths`); this roadmap receipt
+is committed separately.
