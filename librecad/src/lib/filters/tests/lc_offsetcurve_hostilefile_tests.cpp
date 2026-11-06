@@ -2451,6 +2451,9 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     }
 
     DRW_Polyline bulged = raw;
+    for (auto& vertex : bulged.vertlist) {
+        vertex = std::make_shared<DRW_Vertex>(*vertex);
+    }
     bulged.vertlist.front()->bulge = std::tan(M_PI / 8.0);
     const auto unsupportedArc = directory.file("non-axial-bulge.dxf");
     f::binaryDxf2dPolyline(unsupportedArc, bulged, DRW::AC1032);
@@ -2461,6 +2464,19 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
                        unsupportedOutcome.graphic->end(), [](const RS_Entity* entity) {
         return dynamic_cast<const RS_Polyline*>(entity) != nullptr;
     }));
+
+    DRW_Polyline zeroNormal = raw;
+    zeroNormal.extPoint = {0.0, 0.0, 0.0};
+    const auto zeroNormalFile = directory.file("zero-normal.dxf");
+    f::binaryDxf2dPolyline(zeroNormalFile, zeroNormal, DRW::AC1032);
+    const auto zeroNormalOutcome = stagedImport(zeroNormalFile, Lane::Binary18);
+    REQUIRE(zeroNormalOutcome.status == LC_OffsetImportSession::Status::Complete);
+    REQUIRE(zeroNormalOutcome.graphic);
+    CHECK(std::none_of(
+        zeroNormalOutcome.graphic->begin(), zeroNormalOutcome.graphic->end(),
+        [](const RS_Entity* entity) {
+            return dynamic_cast<const RS_Polyline*>(entity) != nullptr;
+        }));
 
     REQUIRE(sourceDrawing);
     const auto dxf = directory.file("roundtrip.dxf");
