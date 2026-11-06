@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W516 matrices complete; remaining family/variant and acceptance work
+Current status (W517 complete; remaining family/variant and acceptance work
 is open; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -20055,3 +20055,35 @@ return no ordinary geometry and no mutation. Account for these asymmetric
 cells separately from paired generated cells; never construct or serialize a
 translated cache after generation refusal. Run the focused boundary test, full
 worker-kernel suite, CMake Debug worker target, roadmap parser, and diff check.
+
+### W517 completion receipt
+
+The ellipse worker matrix now validates each generated side independently
+before classifying centered/translated parity. Thus, when translation refuses
+and returns no ordinary output, a generated centered cache still receives an
+operation-8 admission/refusal check; translated-only successes are checked as
+well. A single cache with valid tolerance must be admitted and marked changed;
+all other generated candidates must be explicitly refused without mutation or
+fingerprint change.
+
+Validation: focused ellipse combined worker test passes 45,930 assertions;
+the full worker-kernel suite passes 240,778 assertions across 42 cases; CMake
+Debug worker target builds; roadmap parser passes 5/5 and `git diff --check`
+passes. Product test commit `1a60fb077` (`test(offset): validate centered
+caches on translation refusal`).
+
+## 518. Rotated Thin-Ellipse Translation Boundaries
+
+W516's thin ratio-0.2 full ellipses are axis-aligned, while its ordinary
+partial variants include rotated major axes. Add rotated full thin ellipses
+with major-axis directions at 30 and 60 degrees, retaining both forward and
+reversed orientation where the source model distinguishes them. Carry these
+variants through the W516 scale/translation ratios and near-curvature signed
+distances. Compare generation outcomes and operation-8 decisions independently
+for centered and translated sources; compare successful local samples using
+the existing tolerance/ULP rule. Send only admitted single-cache cells through
+all five DXF/DWG lanes, requiring exact axis/reversal source metadata and
+per-cell accounting. Refused translated output must remain empty and unchanged.
+Run focused worker/import tests, full worker suite, ellipse-family import
+suite, CMake Debug test build, roadmap parser, and diff check. This finite
+orientation grid does not claim arbitrary angle coverage.
