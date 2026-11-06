@@ -17106,7 +17106,13 @@ qmake6 application and plugins build successfully; `git diff --check` passes.
 The compiled test binary emits the existing shell-profile warning about the
 absent `/private/tmp/libdxfrw-cargo/env`; it does not affect test results.
 
-Commit the implementation and this checkpoint together, push to PR #3193, and
-inspect checks for that exact head. Continue with the remaining OCS and
-source-variant eligibility matrix; do not infer AC1015 DWG coverage from the
-existing AC1032 DWG tests.
+Implementation commit: `2b585cc1c` (`fix(offset): preserve non-axial
+polyline projections`). It is pushed to PR #3193 at exact head
+`2b585cc1cde8372de88a0d7416db0bdb87e979ba`; the PR remains open and draft.
+The exact-head combined-status and workflow-run queries currently report no
+checks. GitHub denied both the top-level progress comment and PR-body update
+with HTTP 403 (`Resource not accessible by integration`); the branch update is
+present, but the PR description has not been amended for this slice.
+
+Continue with the remaining OCS and source-variant eligibility matrix; do not
+infer AC1015 DWG coverage from the existing AC1032 DWG tests.
