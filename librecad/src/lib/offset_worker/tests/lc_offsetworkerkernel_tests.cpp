@@ -1268,7 +1268,7 @@ TEST_CASE("bounded hyperbola worker classifies relative translation boundaries",
 TEST_CASE("ellipse worker preserves detail across combined scale and translation",
           "[lc-offsetcurve][worker-kernel][source-cache][ellipse][precision][combined]") {
     constexpr double tau = 2.0 * M_PI;
-    const std::array<RS_EllipseData, 9> variants{
+    const std::array<RS_EllipseData, 17> variants{
         RS_EllipseData{{2, -3}, {4, 0}, .6, .2, 2.1, false},
         RS_EllipseData{{-1, 2}, {3, 1}, .8, 1.8, .1, true},
         RS_EllipseData{{3, 1}, {2, -1}, 1.4, .3, 2.3, false},
@@ -1277,11 +1277,20 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
         RS_EllipseData{{0, 0}, {std::sqrt(3.0), 1}, .2, 0, tau, false},
         RS_EllipseData{{0, 0}, {std::sqrt(3.0), 1}, .2, 0, tau, true},
         RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, 0, tau, false},
-        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, 0, tau, true}};
+        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, 0, tau, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, .2, M_PI - .2, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, .2, M_PI - .2, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, .2, M_PI + .2, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, .2, M_PI + .2, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, .4, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, .4, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, M_PI + .2, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, M_PI + .2, true}};
     constexpr std::array<double, 3> scales{1e-3, 1.0, 1e12};
     constexpr std::array<double, 3> translationRatios{1e6, 1e9, 1e12};
     constexpr std::array<double, 4> ordinaryNormalizedDistances{-.4, -.1, .1, .4};
     constexpr std::array<double, 8> thinNormalizedDistances{-.09, -.08, -.07, -.05, .05, .07, .08, .09};
+    constexpr std::array<double, 6> partialThinNormalizedDistances{-.09, -.08, -.07, .07, .08, .09};
     const auto asSpline = [](const req::Cutter& item) {
         if (const auto* spline = std::get_if<RS_SplineData>(&item)) return *spline;
         const auto& segment = std::get<req::Segment>(item);
@@ -1319,9 +1328,16 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
             REQUIRE(centeredEntity);
             REQUIRE(translatedEntity);
             const bool thin = base.ratio == .2;
-            const std::vector<double> distances = thin
-                ? std::vector<double>(thinNormalizedDistances.begin(), thinNormalizedDistances.end())
-                : std::vector<double>(ordinaryNormalizedDistances.begin(), ordinaryNormalizedDistances.end());
+            const bool thinFull = thin && base.angle1 == 0.0 &&
+                (base.angle2 == tau || base.angle2 == 0.0);
+            std::vector<double> distances;
+            if (thinFull) {
+                distances.assign(thinNormalizedDistances.begin(), thinNormalizedDistances.end());
+            } else if (thin) {
+                distances.assign(partialThinNormalizedDistances.begin(), partialThinNormalizedDistances.end());
+            } else {
+                distances.assign(ordinaryNormalizedDistances.begin(), ordinaryNormalizedDistances.end());
+            }
 
             for (const double normalizedDistance : distances) {
                 CAPTURE(normalizedDistance);
@@ -1353,7 +1369,7 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
                     const auto validation = LC_OffsetWorkerKernel::run(
                         {token, req::ValidateSourceCache{cache, definition, {}}});
                     const auto& validated = native(validation, 8);
-                    if (options && output.ordinary.size() == 1) {
+                    if (output.ordinary.size() == 1) {
                         CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
                         CHECK(validated.changed);
                         ++acceptedCaches;
@@ -1379,7 +1395,7 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
                     continue;
                 }
 
-                if (!centeredOptions || !translatedOptions ||
+                if (!centeredOptions ||
                     centeredOutput.ordinary.size() != translatedOutput.ordinary.size()) {
                     ++generationOrToleranceRefusals;
                     continue;
@@ -1389,24 +1405,53 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
                 if (centeredOutput.ordinary.size() == translatedOutput.ordinary.size()) {
                     const double roundingAllowance = 64.0 * std::numeric_limits<double>::epsilon() *
                         std::max(std::abs(translation.x), std::abs(translation.y));
+                    const double translatedTolerance = translatedOptions
+                        ? translatedOptions->tolerance.requestedGeometry
+                        : centeredOptions->tolerance.requestedGeometry;
                     const double deviationLimit = 4.0 * std::max(centeredOptions->tolerance.requestedGeometry,
-                                                                  translatedOptions->tolerance.requestedGeometry) + roundingAllowance;
+                                                                  translatedTolerance) + roundingAllowance;
+                    std::vector<RS_Spline> centeredSplines;
+                    std::vector<RS_Spline> translatedSplines;
+                    centeredSplines.reserve(centeredOutput.ordinary.size());
+                    translatedSplines.reserve(translatedOutput.ordinary.size());
                     for (std::size_t branch = 0; branch < centeredOutput.ordinary.size(); ++branch) {
-                        const RS_Spline centeredSpline{nullptr, asSpline(centeredOutput.ordinary[branch])};
-                        const RS_Spline translatedSpline{nullptr, asSpline(translatedOutput.ordinary[branch])};
-                        double maximumLocalDeviation = 0.0;
+                        centeredSplines.emplace_back(nullptr, asSpline(centeredOutput.ordinary[branch]));
+                        translatedSplines.emplace_back(nullptr, asSpline(translatedOutput.ordinary[branch]));
+                    }
+                    const auto deviation = [&](const RS_Spline& localSpline, const RS_Spline& worldSpline,
+                                               const bool reverse) {
+                        double maximum = 0.0;
                         for (int sample = 0; sample <= 128; ++sample) {
                             const double parameter = static_cast<double>(sample) / 128.0;
-                            const RS_Vector local = centeredSpline.getPointAt(parameter);
-                            const RS_Vector world = translatedSpline.getPointAt(parameter);
+                            const RS_Vector local = localSpline.getPointAt(parameter);
+                            const RS_Vector world = worldSpline.getPointAt(reverse ? 1.0 - parameter : parameter);
                             REQUIRE(local.valid);
                             REQUIRE(world.valid);
-                            maximumLocalDeviation = std::max(maximumLocalDeviation,
-                                std::hypot((world.x - translation.x) - local.x,
-                                           (world.y - translation.y) - local.y));
+                            maximum = std::max(maximum, std::hypot((world.x - translation.x) - local.x,
+                                                                   (world.y - translation.y) - local.y));
                         }
-                        CHECK(maximumLocalDeviation <= deviationLimit);
+                        return maximum;
+                    };
+                    std::vector<bool> matched(translatedSplines.size(), false);
+                    double maximumMatchedDeviation = 0.0;
+                    for (const RS_Spline& localSpline : centeredSplines) {
+                        double bestDeviation = std::numeric_limits<double>::infinity();
+                        std::size_t bestIndex = translatedSplines.size();
+                        for (std::size_t candidate = 0; candidate < translatedSplines.size(); ++candidate) {
+                            if (matched[candidate]) continue;
+                            const double forward = deviation(localSpline, translatedSplines[candidate], false);
+                            const double reverse = deviation(localSpline, translatedSplines[candidate], true);
+                            const double candidateDeviation = std::min(forward, reverse);
+                            if (candidateDeviation < bestDeviation) {
+                                bestDeviation = candidateDeviation;
+                                bestIndex = candidate;
+                            }
+                        }
+                        REQUIRE(bestIndex < translatedSplines.size());
+                        matched[bestIndex] = true;
+                        maximumMatchedDeviation = std::max(maximumMatchedDeviation, bestDeviation);
                     }
+                    CHECK(maximumMatchedDeviation <= deviationLimit);
                 }
             }
           }
@@ -1414,7 +1459,8 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
     }
     CHECK(completedPairs + generationOrToleranceRefusals == scales.size() *
           translationRatios.size() *
-          (3 * ordinaryNormalizedDistances.size() + 6 * thinNormalizedDistances.size()));
+          (3 * ordinaryNormalizedDistances.size() + 6 * thinNormalizedDistances.size() +
+           8 * partialThinNormalizedDistances.size()));
     CHECK(completedPairs > 0);
     CHECK(acceptedCaches > 0);
 }

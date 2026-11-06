@@ -109,6 +109,27 @@ public:
     explicit RawCircle(const RS_CircleData& data) { m_data = data; }
 };
 
+bool translateCutter(req::Cutter& cutter, const RS_Vector& offset) {
+    return std::visit([&](auto& data) {
+        using T = std::decay_t<decltype(data)>;
+        const auto translate = [&](RS_Vector& point) {
+            point.x += offset.x;
+            point.y += offset.y;
+        };
+        if constexpr (std::is_same_v<T, req::Segment>) {
+            translate(data.start);
+            translate(data.end);
+            return geo::isFinite2D(data.start) && geo::isFinite2D(data.end);
+        } else if constexpr (std::is_same_v<T, RS_SplineData>) {
+            for (RS_Vector& point : data.controlPoints) translate(point);
+            for (RS_Vector& point : data.fitPoints) translate(point);
+            return std::all_of(data.controlPoints.begin(), data.controlPoints.end(), geo::isFinite2D) &&
+                   std::all_of(data.fitPoints.begin(), data.fitPoints.end(), geo::isFinite2D);
+        }
+        return true;
+    }, cutter);
+}
+
 std::unique_ptr<RS_Entity> cutter(const req::Cutter& input) {
     return std::visit([](const auto& data) -> std::unique_ptr<RS_Entity> {
         using T = std::decay_t<decltype(data)>;
@@ -170,15 +191,24 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
     output.refusal = LC_OffsetCurveRefusal::InvalidInput;
     if (!input.definition.isWellFormed()) return output;
 
-    auto source = input.definition.source.makeEntity();
+    LC_OffsetSourceDefinition definition = input.definition;
+    RS_Vector outputTranslation{0, 0};
+    if (auto* ellipse = std::get_if<RS_EllipseData>(&definition.source.value)) {
+        // Keep offset predicates and approximation independent of large world coordinates.
+        outputTranslation = {ellipse->center.x, ellipse->center.y};
+        ellipse->center.x = 0.0;
+        ellipse->center.y = 0.0;
+    }
+
+    auto source = definition.source.makeEntity();
     if (!source) return output;
-    const double magnitude = std::abs(input.definition.signedDistance);
+    const double magnitude = std::abs(definition.signedDistance);
     if (!std::isfinite(magnitude) || magnitude <= RS_TOLERANCE) {
         output.refusal = LC_OffsetCurveRefusal::TooSmall;
         return output;
     }
 
-    const auto optionsValue = LC_OffsetWorkerTolerance::directOptions(input.definition, *source);
+    const auto optionsValue = LC_OffsetWorkerTolerance::directOptions(definition, *source);
     if (!optionsValue) return output;
     LC_CurveOffsetOptions options = *optionsValue;
     if (input.limits.maxSamples) options.maxSamples = input.limits.maxSamples;
@@ -186,7 +216,7 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         options.maxIntersectionPairs = input.limits.maxIntersectionPairs;
     options.maxOutputBranches = std::min(options.maxOutputBranches,
         input.limits.outputBudget.maxOutputEntities);
-    const LC_CurveOffsetSide side = input.definition.signedDistance > 0
+    const LC_CurveOffsetSide side = definition.signedDistance > 0
         ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right;
 
     trace.nativePrepareEntered = true;
@@ -224,6 +254,14 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
                    spline && ordinarySpline(spline->getData())) {
             output.ordinary.emplace_back(spline->getData());
         } else {
+            output.ordinary.clear();
+            output.ordinaryStatus = result::OrdinaryStatus::Unsupported;
+            output.ordinaryUsage = {};
+            output.outputUsage = {};
+            output.refusal = LC_OffsetCurveRefusal::NotCacheRepresentable;
+            return output;
+        }
+        if (!translateCutter(output.ordinary.back(), outputTranslation)) {
             output.ordinary.clear();
             output.ordinaryStatus = result::OrdinaryStatus::Unsupported;
             output.ordinaryUsage = {};

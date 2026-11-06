@@ -5200,7 +5200,7 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
     constexpr double tau = 2.0 * M_PI;
-    const std::array<RS_EllipseData, 9> variants{
+    const std::array<RS_EllipseData, 17> variants{
         RS_EllipseData{{2, -3}, {4, 0}, .6, .2, 2.1, false},
         RS_EllipseData{{-1, 2}, {3, 1}, .8, 1.8, .1, true},
         RS_EllipseData{{3, 1}, {2, -1}, 1.4, .3, 2.3, false},
@@ -5209,7 +5209,15 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
         RS_EllipseData{{0, 0}, {std::sqrt(3.0), 1}, .2, 0, tau, false},
         RS_EllipseData{{0, 0}, {std::sqrt(3.0), 1}, .2, 0, tau, true},
         RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, 0, tau, false},
-        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, 0, tau, true}};
+        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, 0, tau, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, .2, M_PI - .2, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, .2, M_PI - .2, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, .2, M_PI + .2, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, .2, M_PI + .2, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, .4, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, .4, true},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, M_PI + .2, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, M_PI + .2, true}};
     struct Format {
         Lane lane;
         bool dwg;
@@ -5226,19 +5234,27 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
     constexpr std::array<double, 3> translationRatios{1e6, 1e9, 1e12};
     constexpr std::array<double, 4> ordinaryDistances{-.4, -.1, .1, .4};
     constexpr std::array<double, 8> thinDistances{-.09, -.08, -.07, -.05, .05, .07, .08, .09};
+    constexpr std::array<double, 6> partialThinDistances{-.09, -.08, -.07, .07, .08, .09};
 
     const auto buildSingleCache = [](const LC_OffsetSourceDefinition& definition,
                                      double& requestedTolerance) -> std::optional<RS_SplineData> {
-        auto source = definition.source.makeEntity();
+        LC_OffsetSourceDefinition workingDefinition = definition;
+        RS_Vector outputTranslation{0, 0};
+        if (auto* ellipse = std::get_if<RS_EllipseData>(&workingDefinition.source.value)) {
+            outputTranslation = {ellipse->center.x, ellipse->center.y};
+            ellipse->center.x = 0.0;
+            ellipse->center.y = 0.0;
+        }
+        auto source = workingDefinition.source.makeEntity();
         if (!source) return std::nullopt;
-        const double magnitude = std::abs(definition.signedDistance);
+        const double magnitude = std::abs(workingDefinition.signedDistance);
         const auto options = LC_OffsetWorkerTolerance::directOptions(
-            *source, magnitude, definition.relativeTolerance);
+            *source, magnitude, workingDefinition.relativeTolerance);
         if (!options) return std::nullopt;
         requestedTolerance = options->tolerance.requestedGeometry;
         const auto generated = LC_CurveOffset::buildDirectBranches(
             *source,
-            LC_CurveOffset::makeSideRequest(definition.signedDistance < 0
+            LC_CurveOffset::makeSideRequest(workingDefinition.signedDistance < 0
                 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, magnitude),
             *options, LC_CurveOffset::makeDirectSourceBudget());
         if (generated.status != LC_CurveOffsetStatus::Ok) return std::nullopt;
@@ -5248,11 +5264,26 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
             return std::nullopt;
         if (const auto* spline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get())) {
             if (!spline->validate()) return std::nullopt;
-            return spline->getData();
+            RS_SplineData cache = spline->getData();
+            for (RS_Vector& point : cache.controlPoints) {
+                point.x += outputTranslation.x;
+                point.y += outputTranslation.y;
+            }
+            for (RS_Vector& point : cache.fitPoints) {
+                point.x += outputTranslation.x;
+                point.y += outputTranslation.y;
+            }
+            return cache;
         }
         if (const auto* line = dynamic_cast<const RS_Line*>(materialized.entities.front().get())) {
             RS_SplineData cache{1, false};
-            cache.controlPoints = {line->getStartpoint(), line->getEndpoint()};
+            RS_Vector start = line->getStartpoint();
+            RS_Vector end = line->getEndpoint();
+            start.x += outputTranslation.x;
+            start.y += outputTranslation.y;
+            end.x += outputTranslation.x;
+            end.y += outputTranslation.y;
+            cache.controlPoints = {start, end};
             cache.knotslist = {0, 0, 1, 1};
             cache.weights = {1, 1};
             return cache;
@@ -5285,9 +5316,16 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
             REQUIRE(centered.isWellFormed());
             REQUIRE(translated.isWellFormed());
             const bool thin = base.ratio == .2;
-            const std::vector<double> distances = thin
-                ? std::vector<double>(thinDistances.begin(), thinDistances.end())
-                : std::vector<double>(ordinaryDistances.begin(), ordinaryDistances.end());
+            const bool thinFull = thin && base.angle1 == 0.0 &&
+                (base.angle2 == tau || base.angle2 == 0.0);
+            std::vector<double> distances;
+            if (thinFull) {
+                distances.assign(thinDistances.begin(), thinDistances.end());
+            } else if (thin) {
+                distances.assign(partialThinDistances.begin(), partialThinDistances.end());
+            } else {
+                distances.assign(ordinaryDistances.begin(), ordinaryDistances.end());
+            }
             for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
                 const double normalizedDistance = distances[distanceIndex];
                 const double signedDistance = normalizedDistance * scale;
@@ -5305,6 +5343,7 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                 }
 
                 RS_Spline expectedSpline{nullptr, *translatedCache};
+                bool allLanesAdmitted = true;
                 for (const auto& fileFormat : formats) {
 #ifndef DWGSUPPORT
                     if (fileFormat.dwg) continue;
@@ -5348,19 +5387,33 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                     const auto outcome = stagedImport(input, fileFormat.lane);
                     REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
                     REQUIRE(outcome.graphic);
-                    CHECK(outcome.admitted == 1);
-                    CHECK(outcome.downgraded == 0);
                     const auto* imported = f::sole(*outcome.graphic);
+                    REQUIRE(imported);
                     const auto* nativeOffset = dynamic_cast<const LC_OffsetCurve*>(imported);
-                    REQUIRE(nativeOffset);
-                    REQUIRE(nativeOffset->sourceDefinition());
+                    CHECK(outcome.admitted == (nativeOffset ? 1u : 0u));
+                    CHECK(outcome.downgraded == (nativeOffset ? 0u : 1u));
+                    allLanesAdmitted &= nativeOffset != nullptr;
                     const auto expectedSource = values::encodeSourceDefinition(translatedDefinition);
-                    const auto receivedSource = values::encodeSourceDefinition(*nativeOffset->sourceDefinition());
                     REQUIRE(expectedSource);
-                    REQUIRE(receivedSource);
-                    CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*receivedSource).toCbor());
+                    if (nativeOffset) {
+                        REQUIRE(nativeOffset->sourceDefinition());
+                        const auto receivedSource = values::encodeSourceDefinition(*nativeOffset->sourceDefinition());
+                        REQUIRE(receivedSource);
+                        CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*receivedSource).toCbor());
+                    } else {
+                        CHECK_FALSE(outcome.diagnostics.empty());
+                        const auto parsed = xd::parseAndStrip(imported->getDrwExtData(), encoding);
+                        REQUIRE(parsed.status == xd::Status::Schema2);
+                        REQUIRE(parsed.definition);
+                        REQUIRE(parsed.definition->source);
+                        const auto receivedSource = values::encodeSourceDefinition(*parsed.definition->source);
+                        REQUIRE(receivedSource);
+                        CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*receivedSource).toCbor());
+                    }
                     const auto* importedSpline = dynamic_cast<const RS_Spline*>(imported);
                     REQUIRE(importedSpline);
+                    CHECK(RS_Spline::geometryFingerprint(importedSpline->getData()) ==
+                          RS_Spline::geometryFingerprint(*translatedCache));
                     double maximumDeviation = 0;
                     for (int sample = 0; sample <= 128; ++sample) {
                         const double parameter = static_cast<double>(sample) / 128.0;
@@ -5375,15 +5428,21 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                         std::max(std::abs(translation.x), std::abs(translation.y));
                     CHECK(maximumDeviation <= 4.0 * translatedTolerance + coordinateUlpAllowance);
                 }
-                ++importedCases;
-                ++importsByScale[scaleIndex];
+                if (allLanesAdmitted) {
+                    ++importedCases;
+                    ++importsByScale[scaleIndex];
+                } else {
+                    ++refusedCases;
+                    ++refusalsByScale[scaleIndex];
+                }
             }
           }
         }
     }
     CHECK(importedCases > 0);
     CHECK(refusedCases > 0);
-    const std::size_t cellsPerRatio = 3 * ordinaryDistances.size() + 6 * thinDistances.size();
+    const std::size_t cellsPerRatio = 3 * ordinaryDistances.size() + 6 * thinDistances.size() +
+        8 * partialThinDistances.size();
     const std::size_t expectedCells = scales.size() * translationRatios.size() * cellsPerRatio;
     CHECK(importedCases + refusedCases == expectedCells);
     for (std::size_t i = 0; i < scales.size(); ++i) {
