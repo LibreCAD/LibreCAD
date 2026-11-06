@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W431; chronological evidence follows): implementation slices
+Current status (W432; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16909,3 +16909,36 @@ complete all line/arc numerical conditioning, non-axial OCS, mesh/polyface/3D
 legacy POLYLINE, broad distance/side eligibility, visible GUI acceptance, or
 cross-platform review gates. Push product and roadmap commits to PR #3193 and
 inspect the exact-head checks.
+
+## 432. Near-Parallel Line Crossing Detection (2026-11-06)
+
+The shared `RS_Information::getIntersectionLineLine()` helper uses fixed
+absolute determinant and angle thresholds. A valid shallow intersection can
+therefore be classified as parallel, leaving a non-adjacent self-crossing
+polyline eligible for an editable offset. A three-segment regression with a
+`1e-10` vertical offset reproduced the false acceptance while keeping all
+vertices distinct beyond the source validator's duplicate-point tolerance.
+
+Offset-source validation now uses a scale-normalized line-line intersection
+calculation for its 2D segment pairs. It computes the crossing without the
+shared helper's absolute cutoffs, refuses numerically ambiguous nonzero
+determinants, and retains the existing collinear-span overlap check and
+finite-segment filtering. Added a real three-segment LWPOLYLINE import case;
+R14 DXF, AC1032 DXF, and AC1032 DWG remain ordinary imported geometry while
+typed-source capture refuses the crossing.
+
+Validation: focused imported case passes 63 assertions/1 case; direct
+`[lc-offsetcurve][source][polyline]` passes 54 assertions/3 cases; imported
+`[import-session][typed-source][polyline]` passes 1,513 assertions/17 cases;
+worker `[lc-offsetcurve][polyline][source-cache][worker-kernel]` passes 309
+assertions/4 cases. CMake Release `librecad_lib`, `librecad_tests`, and
+`librecad_offset_worker_kernel_tests` build; the full qmake6 application and
+plugin build succeeds; `git diff --check` passes. Product commit:
+`0221d12cf` (`fix(offset): detect near-parallel line crossings`).
+
+This closes representative shallow line/line crossings in the supported 2D
+polyline snapshot model. It does not qualify the entire floating-point
+conditioning envelope, non-axial OCS, mesh/polyface/3D legacy POLYLINE, broad
+distance/side eligibility, visible GUI acceptance, or cross-platform review
+gates. Push product and roadmap commits to PR #3193 and inspect exact-head
+checks.
