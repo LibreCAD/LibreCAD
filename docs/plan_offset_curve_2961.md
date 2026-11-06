@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W481; chronological evidence follows): implementation slices
+Current status (W482; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W481. Historical results from
+No exact-head CI result is claimed for W441-W482. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18838,3 +18838,28 @@ cases. CMake Debug incremental build and `git diff --check` pass. This is
 worker-level evidence only; staged file-import downgrade remains open. Test
 commit `e1a98c94c` (`test(offset): refuse multi-branch hyperbola caches`);
 roadmap receipt is separate.
+
+## 482. Hyperbola Multi-Branch File Import Refusal
+
+W481 proves worker operation-8 refuses a partial cache when a bounded
+hyperbola offset generates multiple pieces. Exercise the same source and
+distance through real R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG carriers that
+contain only the first branch. Staged import must downgrade to ordinary spline
+geometry, never admit `LC_OffsetCurve`, and preserve the schema-2 typed source
+so the complete source definition remains recoverable.
+
+### Completion receipt
+
+For the broad `[-1.2, 1.5]` right-branch source at distance `-1.1`, generation
+produces three branches. Across all five real file/version lanes, a carrier
+containing only the first branch is downgraded; no native offset is admitted.
+The ordinary spline fingerprint matches that branch and schema-2 metadata
+round-trips with exact source bounds and branch identity.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`multi-branch hyperbola import refuses partial cache and retains source data`
+case passes 1,222 assertions. `git diff --check` passes. This is local test
+evidence, not exact-head CI or external CAD acceptance. Test commit
+`6a1cba71a` (`test(offset): refuse partial hyperbola file carriers`); roadmap
+receipt is separate. Remaining hyperbola work is broader bounds/distance
+qualification, not a claim that this one explicit refusal exhausts topology.
