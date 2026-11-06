@@ -19468,3 +19468,23 @@ passes. These are local results, not file-round-trip, exact-head CI,
 visible-GUI, or external-CAD acceptance. Product test commit `bc6d9e629`
 (`test(offset): extend parabola worker scale limits`). Other source families,
 translated extreme scales, and broader precision boundaries remain open.
+
+## 502. Round-Trip Large-Scale Parabola Cache Admission
+
+W497 verified parabola staged imports only through scale `1e3`, while W501
+qualified operation-7/8 at `1e12`. Added a geometrically similar finite
+parabola at scale `1e12` to the R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+staged-import matrix. Both signed sides at normalized magnitudes `2.0`, `2.5`,
+and `3.0` run through all five lanes. Expected promotion is derived from
+generated topology; only single canonical caches are promoted by operation 8,
+and downgraded results preserve the ordinary spline and exact schema-2 source
+metadata. The high-scale case independently exercises both admission and
+downgrade outcomes.
+
+Validation: focused curvature-import case passes 45,852 assertions/1 case
+across 180 staged imports; full `[parabola]` selector passes 66,157
+assertions/17 cases; CMake Debug `librecad_tests` builds; roadmap parser passes
+5/5; `git diff --check` passes. This qualifies this source shape and distance
+matrix only, not all parabola shapes or numeric scales. These are local
+results, not exact-head CI, visible-GUI, or external-CAD acceptance. Product
+test commit `38c3d9b7a` (`test(offset): import large-scale parabola caches`).
