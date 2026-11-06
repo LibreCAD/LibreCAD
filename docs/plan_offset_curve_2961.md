@@ -17048,7 +17048,9 @@ registration is exercised with a real imported 3D POLYLINE. R14/R2000/AC1032
 DXF and AC1032 DWG input are covered; the marker and APPID survive AC1032 DXF
 and DWG save/reopen. `[lc-offsetcurve][import-session][typed-source][polyline]`
 passes 1,923 assertions in 18 cases; the focused 3D case passes 96 assertions;
-`[dxf][appid-registration]` passes 819 assertions in 7 cases; the direct
+`[dxf][appid-registration]` passes 833 assertions in 7 cases, and checks that
+real mesh, polyface, MLINE, underlay, and 3D import callbacks produce markers
+that source capture refuses; the direct
 `[lc-offsetcurve][source]` suite passes 150 assertions in 5 cases. CMake
 Release `librecad_tests` builds, the qmake6 full application/worker/plugin
 build succeeds, and `git diff --check` passes. A low-level fixture attempt for
@@ -17056,3 +17058,8 @@ AC1015/R2000 DWG POLYLINE returned false from the existing `dwgRW` fixture
 writer, so that input lane remains unverified rather than being inferred from
 AC1032 DWG coverage. Native 3D geometry, non-axial OCS, and actual mesh/polyface
 offset sources remain separate open work.
+
+The import-level marker/refusal assertions are in `1d3c04a59`
+(`test(offset): verify imported projection refusal`). The appid-registration
+suite result above is from that commit; no production behavior changed in this
+test-only slice.
