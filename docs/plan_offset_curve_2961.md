@@ -26,8 +26,9 @@ USA.
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
-grid; remaining family/variant and acceptance work is open; chronological
-evidence follows):
+grid; W526 polyline worker scale/translation qualification complete for its
+defined matrix; remaining family/variant and acceptance work is open;
+chronological evidence follows):
 implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -20485,3 +20486,68 @@ replacement, and persistence gates.
 Do not count the existing nine-family widget test as proof of exhaustive
 variant support, and do not close visible-GUI, external-CAD, or exact-head CI
 acceptance from this reconciliation.
+
+## 526. Polyline Scale-and-Translation Worker Matrix
+
+Typed polyline tests cover segment order, orientation, closed/open topology,
+signed bulges, worker generation, and operation-8 admission, but they do not
+combine uniform scale with large world translation. `generateSource()` also
+recenters ellipses and parabolas but currently sends polyline coordinates to
+the geometry engine in world position. Add a worker-kernel matrix for
+representative open line/arc chains (including reversed traversal) and closed
+line/arc loops. Use scales `1e-3`, `1`, and `1e3`, translation ratios `1e4`
+and `1e6` times scale, and signed normalized distances `-0.25`, `-0.1`,
+`0.1`, and `0.25`.
+
+Transform every endpoint and arc center, scale each arc radius and signed
+distance, and preserve segment order, closure, sweep angles, and reversal.
+Compare centered/translated operation-7 engine status, ordinary status, and
+complete output topology. Match branches without assuming output order or
+parameter direction; compare local geometry with requested tolerance plus a
+coordinate-ULP allowance. Run operation 8 on every branch from both placements:
+single-cache admission must be changed/accepted, while multi-branch candidates
+must be refused as `NotCacheRepresentable` without modifying the candidate.
+Require generated/refused and validated/admitted/refused counts to account for
+every matrix cell and branch. This is worker qualification only and does not
+claim DXF/DWG round-trip support.
+
+If the matrix demonstrates a world-coordinate precision defect, recenter the
+entire owned polyline definition at its start point before geometry generation
+and translate all generated cutters back to world coordinates. Keep line
+endpoints and arc centers coherent and leave radii/angles unchanged apart from
+the source scale applied by the test. Verify that malformed inputs still fail
+closed and that ordinary non-typed offset dispatch is unaffected. Run the
+focused polyline matrix, complete worker-kernel suite, Release worker target,
+roadmap parser, and `git diff --check`. Commit the product/test slice, record
+its exact evidence here in a separate roadmap commit, then push both to PR
+#3193 and query exact-head diagnostics.
+
+### W526 Completion Receipt
+
+`generateSource()` now constructs each polyline source from its original,
+validated world-space value, moves only that temporary entity to a local frame
+anchored at the source start point, runs geometry generation there, and
+translates each generated cutter back to world coordinates. The tagged source
+definition passed to operation 7 and later operation-8 validation is not
+rewritten. Constructing before moving is important for closed arc joins whose
+world-coordinate ULP allowance would otherwise be lost when revalidating their
+recentered coordinates at a smaller local scale.
+
+The worker matrix covers four layouts (forward/reversed open mixed line/arc,
+closed line loop, and closed circular arc loop), scales `1e-3`, `1`, and `1e3`,
+translation ratios `1e4` and `1e6`, and signed normalized distances
+`+/-0.1` and `+/-0.25`. It compares centered/translated statuses and topology,
+matches branches independent of ordering and traversal direction, checks
+sampled local geometry against requested tolerance plus coordinate-ULP
+allowance, and independently validates every generated branch from both
+placements. Single-cache results must pass operation 8; multi-branch results
+must refuse without mutation.
+
+Product/test commit `09f9a7f0e` (`fix(offset): center polyline worker
+geometry`). Focused W526 passes 82,228 assertions in one case. The full worker
+kernel suite passes 1,660,728 assertions across 44 cases. Release
+`LibreCADOffsetWorker`, `librecad_tests`, and worker-kernel targets build;
+`git diff --check` passes. This is worker-level evidence only: staged DXF/DWG
+polyline persistence for combined scale and translation remains a separate
+slice, as do broader source-family/variant, visible-GUI, external-CAD, and
+exact-head CI gates.
