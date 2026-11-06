@@ -606,7 +606,7 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
           "[lc-offsetcurve][worker-kernel][source-cache][parabola][scale]") {
     std::size_t acceptedCaches = 0;
     std::size_t refusedCaches = 0;
-    for (const double scale : {1e-8, 1e-3, 1e3}) {
+    for (const double scale : {1e-8, 1e-3, 1e3, 1e12}) {
         CAPTURE(scale);
         const LC_ParabolaData parabola{{RS_Vector{0, 0}, RS_Vector{5 * scale, 10 * scale},
                                         RS_Vector{10 * scale, 0}}};
@@ -658,7 +658,7 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
             CHECK(validated.engineRuns == 1);
         }
     }
-    CHECK(acceptedCaches + refusedCaches == 24);
+    CHECK(acceptedCaches + refusedCaches == 32);
     CHECK(acceptedCaches > 0);
     CHECK(refusedCaches > 0);
 }
@@ -666,7 +666,7 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
 TEST_CASE("typed worker tolerance defaults relatively and scales with the source",
           "[lc-offsetcurve][parabola][scale][tolerance][worker-kernel]") {
     double previousNormalized = 0.0;
-    for (const double scale : {1e-8, 1e-3, 1e3}) {
+    for (const double scale : {1e-8, 1e-3, 1e3, 1e12}) {
         CAPTURE(scale);
         const LC_OffsetSourceGeometry source{LC_ParabolaData{{
             RS_Vector{0, 0}, RS_Vector{5 * scale, 10 * scale}, RS_Vector{10 * scale, 0}}}};
@@ -695,6 +695,23 @@ TEST_CASE("typed worker tolerance defaults relatively and scales with the source
             req::GenerateSource{defaultDefinition, {}}});
         CHECK(native(generated, 7).engineStatus == LC_CurveOffsetStatus::Ok);
     }
+}
+
+TEST_CASE("parabola worker reports the absolute lower distance bound explicitly",
+          "[lc-offsetcurve][parabola][scale][refusal][worker-kernel]") {
+    constexpr double scale = 1e-12;
+    const LC_OffsetSourceGeometry source{LC_ParabolaData{{
+        RS_Vector{0, 0}, RS_Vector{5 * scale, 10 * scale}, RS_Vector{10 * scale, 0}}}};
+    REQUIRE(source.isWellFormed());
+    const LC_OffsetSourceDefinition definition{source, 0.5 * scale, 1e-4, false};
+    const auto reply = LC_OffsetWorkerKernel::run({token,
+        req::GenerateSource{definition, {}}});
+    const auto& generated = native(reply, 7);
+    CHECK(generated.refusal == LC_OffsetCurveRefusal::TooSmall);
+    CHECK(generated.engineRuns == 0);
+    CHECK(generated.ordinaryStatus == result::OrdinaryStatus::None);
+    CHECK(generated.ordinary.empty());
+    CHECK_FALSE(generated.changed);
 }
 
 TEST_CASE("parabola worker cache validation preserves local detail at large coordinates",
