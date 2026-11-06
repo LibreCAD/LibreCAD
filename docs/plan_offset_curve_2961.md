@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W477; chronological evidence follows): implementation slices
+Current status (W478; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W477. Historical results from
+No exact-head CI result is claimed for W441-W478. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18740,3 +18740,29 @@ exact-head CI, or external CAD acceptance. Test commit `3eff43333`
 (`test(offset): sweep bounded hyperbola cache sides`); roadmap receipt is
 separate. Remaining: staged DXF/DWG promotion at these additional magnitudes,
 other finite hyperbola bounds, and curvature/topology-driven refusal cases.
+
+## 478. Bounded-Hyperbola DXF/DWG Distance Promotion
+
+W477 establishes operation-7/operation-8 cache eligibility through magnitude
+0.5, but its real-file matrix only proves ±0.3. Carry all four bounded
+interval/orientation variants through staged import at signed distances
+`-0.1`, `0.1`, `-0.3`, `0.3`, `-0.5`, and `0.5` for R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. Assert operation-8 admission, exact typed-source bytes, and
+cache fingerprints on every lane.
+
+### Completion receipt
+
+All four hyperbola layouts promote across the five file/version lanes at each
+of the six signed distances: 120 staged imports. Every carrier admits one
+native editable offset with exact source-definition equality and matching
+canonical cache fingerprint. This covers only the four finite layouts and
+three tested magnitudes, not arbitrary bounds or curvature singularities.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`typed source families promote from real DXF and DWG cache carriers` case passes
+58,259 assertions. `git diff --check` passes. These are local results, not
+exact-head CI or external CAD acceptance. Test commit `38b3fc9ec`
+(`test(offset): promote hyperbolas across file distance matrix`); this roadmap
+receipt is a separate docs commit. Remaining: additional finite bounds,
+denser distances near curvature limits, and explicit multi-branch/refusal
+fixtures.
