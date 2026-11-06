@@ -199,6 +199,15 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         ellipse->center.x = 0.0;
         ellipse->center.y = 0.0;
     }
+    else if (auto* parabola = std::get_if<LC_ParabolaData>(&definition.source.value)) {
+        outputTranslation = parabola->m_controlPoints.front();
+        auto points = parabola->m_controlPoints;
+        for (auto& point : points) {
+            point.x -= outputTranslation.x;
+            point.y -= outputTranslation.y;
+        }
+        *parabola = LC_ParabolaData{points};
+    }
 
     auto source = definition.source.makeEntity();
     if (!source) return output;

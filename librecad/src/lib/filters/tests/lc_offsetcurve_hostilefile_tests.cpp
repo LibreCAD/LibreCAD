@@ -1744,6 +1744,8 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     lc::test::OutputDirectory directory("offset-parabola-curvature-import");
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
+    namespace req = LC_OffsetWorkerRequest;
+    namespace result = LC_OffsetWorkerResult;
     const std::array<LC_OffsetSourceGeometry, 6> sources{
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}},
@@ -1769,6 +1771,25 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     }};
     std::size_t promotedCases = 0;
     std::size_t downgradedCases = 0;
+    LC_OffsetWorkerClient worker;
+    qint64 nextRequestId = 1;
+    const auto runWorker = [&](req::Request request) {
+        std::optional<LC_OffsetWorkerClient::Outcome> outcome;
+        REQUIRE(worker.submit(request, LC_OffsetWorkerClient::Mode::Commit,
+            [&](LC_OffsetWorkerClient::Outcome completed) { outcome.emplace(std::move(completed)); }));
+        QElapsedTimer elapsed;
+        elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(outcome->status == LC_OffsetWorkerClient::Status::Completed);
+        REQUIRE(outcome->completed);
+        CHECK(outcome->completed->isJoined());
+        CHECK(worker.healthyAndIdle());
+        return std::move(outcome->completed);
+    };
 
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
         bool sourcePromoted = false;
@@ -1778,30 +1799,21 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
             CAPTURE(sourceIndex, unitDistance, signedDistance);
             const LC_OffsetSourceDefinition definition{
                 sources[sourceIndex], signedDistance, 1e-4, false};
-            auto source = definition.source.makeEntity();
-            REQUIRE(source);
-            const double magnitude = std::abs(signedDistance);
-            const auto options = LC_OffsetWorkerTolerance::directOptions(
-                *source, magnitude, definition.relativeTolerance).value();
-            const auto generated = LC_CurveOffset::buildDirectBranches(
-                *source,
-                LC_CurveOffset::makeSideRequest(
-                    signedDistance < 0 ? LC_CurveOffsetSide::Right
-                                       : LC_CurveOffsetSide::Left,
-                    magnitude),
-                options, LC_CurveOffset::makeDirectSourceBudget());
-            REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
-            const auto materialized = LC_CurveOffset::materializeBranches(
-                *source, generated, options,
-                LC_CurveOffset::makeDirectSourceBudget());
-            REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE_FALSE(materialized.entities.empty());
-            const auto* firstBranch =
-                dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
-            REQUIRE(firstBranch);
-            REQUIRE(firstBranch->validate());
-            const RS_SplineData expectedCache = firstBranch->getData();
-            const bool shouldPromote = materialized.entities.size() == 1;
+            const auto completion = runWorker({
+                {nextRequestId++, 1, 1, 1}, req::GenerateSource{definition, {}}});
+            const auto& reply = completion->reply();
+            REQUIRE(reply.failure == result::Failure::None);
+            REQUIRE(reply.operation == 7);
+            REQUIRE(std::holds_alternative<result::Native>(reply.result));
+            const auto& generated = std::get<result::Native>(reply.result);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+            const auto* expectedCache = std::get_if<RS_SplineData>(&generated.ordinary.front());
+            REQUIRE(expectedCache);
+            RS_Spline expectedSpline{nullptr, *expectedCache};
+            REQUIRE(expectedSpline.validate());
+            const bool shouldPromote = generated.ordinary.size() == 1;
             sourcePromoted |= shouldPromote;
             sourceDowngraded |= !shouldPromote;
             if (shouldPromote) ++promotedCases;
@@ -1826,12 +1838,12 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
                 REQUIRE(tags);
                 DRW_Spline cache = f::raw(1, *tags);
                 cache.controllist.clear();
-                for (const auto& point : expectedCache.controlPoints)
+                for (const auto& point : expectedCache->controlPoints)
                     cache.controllist.push_back(
                         std::make_shared<DRW_Coord>(point.x, point.y, 0));
-                cache.knotslist = expectedCache.knotslist;
-                cache.weightlist = expectedCache.weights;
-                cache.degree = expectedCache.degree;
+                cache.knotslist = expectedCache->knotslist;
+                cache.weightlist = expectedCache->weights;
+                cache.degree = expectedCache->degree;
                 cache.flags = 8;
                 cache.m_scenario = 1;
                 cache.ncontrol = cache.controllist.size();
@@ -1859,7 +1871,7 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
                 const auto* importedSpline = dynamic_cast<const RS_Spline*>(imported);
                 REQUIRE(importedSpline);
                 CHECK(RS_Spline::geometryFingerprint(importedSpline->getData()) ==
-                      RS_Spline::geometryFingerprint(expectedCache));
+                      RS_Spline::geometryFingerprint(*expectedCache));
                 const auto expectedSource = values::encodeSourceDefinition(definition);
                 REQUIRE(expectedSource);
                 if (shouldPromote) {
@@ -7032,4 +7044,359 @@ TEST_CASE("scaled translated spline caches persist through staged DXF and DWG im
 #endif
     CHECK(promotedFiles + fallbackFiles == importedFiles);
     CHECK(promotedFiles > 0);
+}
+
+TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG import",
+          "[lc-offsetcurve][import-session][typed-source][parabola][precision][combined]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-parabola-translated-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+    namespace req = LC_OffsetWorkerRequest;
+    namespace result = LC_OffsetWorkerResult;
+
+    const std::array<LC_ParabolaData, 3> variants{
+        LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}},
+        LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}},
+        LC_ParabolaData{{RS_Vector{3, -7}, RS_Vector{2.3301270189221936, 4.160254037844386},
+                         RS_Vector{11.660254037844386, -2}}}};
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
+    constexpr std::array<double, 3> scales{1e-3, 1.0, 1e3};
+    constexpr std::array<double, 2> translationRatios{1e6, 1e9};
+    constexpr std::array<double, 6> normalizedDistances{-3.0, -2.5, -2.0, 2.0, 2.5, 3.0};
+
+    LC_OffsetWorkerClient worker;
+    qint64 nextRequestId = 1;
+    const auto runWorker = [&](req::Request request) {
+        std::optional<LC_OffsetWorkerClient::Outcome> outcome;
+        REQUIRE(worker.submit(request, LC_OffsetWorkerClient::Mode::Commit,
+            [&](LC_OffsetWorkerClient::Outcome completed) { outcome.emplace(std::move(completed)); }));
+        QElapsedTimer elapsed;
+        elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(outcome->status == LC_OffsetWorkerClient::Status::Completed);
+        REQUIRE(outcome->completed);
+        CHECK(outcome->completed->isJoined());
+        CHECK(worker.healthyAndIdle());
+        return std::move(outcome->completed);
+    };
+    const auto transform = [](const LC_ParabolaData& source, const double scale,
+                              const RS_Vector& translation) {
+        auto points = source.m_controlPoints;
+        for (auto& point : points) {
+            point.x = point.x * scale + translation.x;
+            point.y = point.y * scale + translation.y;
+            point.z *= scale;
+        }
+        return LC_OffsetSourceGeometry{LC_ParabolaData{points}};
+    };
+    const auto asSpline = [](const req::Cutter& item) {
+        if (const auto* spline = std::get_if<RS_SplineData>(&item)) return *spline;
+        const auto& segment = std::get<req::Segment>(item);
+        RS_SplineData line{1, false};
+        line.controlPoints = {segment.start, segment.end};
+        line.knotslist = {0, 0, 1, 1};
+        line.weights = {1, 1};
+        return line;
+    };
+    const auto coordinateUlp = [](const double value) {
+        return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) -
+               std::abs(value);
+    };
+
+    std::size_t cells = 0;
+    std::size_t generatedCells = 0;
+    std::size_t generationRefusedCells = 0;
+    std::size_t admittedTranslatedCaches = 0;
+    std::size_t refusedTranslatedCacheCells = 0;
+    std::size_t validatedBranches = 0;
+    std::size_t importedFiles = 0;
+    std::size_t promotedFiles = 0;
+    std::size_t fallbackFiles = 0;
+
+    for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
+        for (const double scale : scales) {
+            for (const double ratio : translationRatios) {
+                const RS_Vector translation{ratio * scale, -ratio * scale};
+                const auto centeredSource = transform(variants[variantIndex], scale, {});
+                const auto translatedSource = transform(variants[variantIndex], scale, translation);
+                REQUIRE(centeredSource.isWellFormed());
+                REQUIRE(translatedSource.isWellFormed());
+                for (const double normalizedDistance : normalizedDistances) {
+                    ++cells;
+                    CAPTURE(variantIndex, scale, ratio, normalizedDistance);
+                    const double signedDistance = normalizedDistance * scale;
+                    const LC_OffsetSourceDefinition centeredDefinition{
+                        centeredSource, signedDistance, 1e-4, false};
+                    const LC_OffsetSourceDefinition translatedDefinition{
+                        translatedSource, signedDistance, 1e-4, false};
+
+                    const auto centeredCompletion = runWorker({
+                        {nextRequestId++, 1, 1, 1}, req::GenerateSource{centeredDefinition, {}}});
+                    const auto translatedCompletion = runWorker({
+                        {nextRequestId++, 1, 1, 1}, req::GenerateSource{translatedDefinition, {}}});
+                    const auto& centeredReply = centeredCompletion->reply();
+                    const auto& translatedReply = translatedCompletion->reply();
+                    REQUIRE(centeredReply.failure == result::Failure::None);
+                    REQUIRE(translatedReply.failure == result::Failure::None);
+                    REQUIRE(centeredReply.operation == 7);
+                    REQUIRE(translatedReply.operation == 7);
+                    REQUIRE(std::holds_alternative<result::Native>(centeredReply.result));
+                    REQUIRE(std::holds_alternative<result::Native>(translatedReply.result));
+                    const auto& centered = std::get<result::Native>(centeredReply.result);
+                    const auto& translated = std::get<result::Native>(translatedReply.result);
+                    const auto generated = [](const result::Native& output) {
+                        return output.engineStatus == LC_CurveOffsetStatus::Ok &&
+                            output.ordinaryStatus == result::OrdinaryStatus::Complete &&
+                            !output.ordinary.empty();
+                    };
+                    const bool centeredGenerated = generated(centered);
+                    const bool translatedGenerated = generated(translated);
+                    CHECK(centered.engineStatus == translated.engineStatus);
+                    CHECK(centered.ordinaryStatus == translated.ordinaryStatus);
+                    CHECK(centered.ordinary.size() == translated.ordinary.size());
+                    REQUIRE(centeredGenerated == translatedGenerated);
+                    if (!centeredGenerated) {
+                        CHECK(centered.ordinary.empty());
+                        CHECK(translated.ordinary.empty());
+                        CHECK_FALSE(centered.changed);
+                        CHECK_FALSE(translated.changed);
+                        ++generationRefusedCells;
+                        continue;
+                    }
+                    ++generatedCells;
+                    REQUIRE(centered.ordinary.size() == translated.ordinary.size());
+
+                    const auto centeredEntity = centeredSource.makeEntity();
+                    const auto translatedEntity = translatedSource.makeEntity();
+                    REQUIRE(centeredEntity);
+                    REQUIRE(translatedEntity);
+                    const auto centeredOptions = LC_OffsetWorkerTolerance::directOptions(
+                        centeredDefinition, *centeredEntity);
+                    const auto translatedOptions = LC_OffsetWorkerTolerance::directOptions(
+                        translatedDefinition, *translatedEntity);
+                    REQUIRE(centeredOptions);
+                    REQUIRE(translatedOptions);
+                    const double ulpAllowance = 64.0 * std::max(
+                        coordinateUlp(translation.x), coordinateUlp(translation.y));
+                    const double deviationLimit = 4.0 * std::max(
+                        centeredOptions->tolerance.requestedGeometry,
+                        translatedOptions->tolerance.requestedGeometry) + ulpAllowance;
+                    std::vector<RS_Spline> centeredSplines;
+                    std::vector<RS_Spline> translatedSplines;
+                    for (const auto& item : centered.ordinary)
+                        centeredSplines.emplace_back(nullptr, asSpline(item));
+                    for (const auto& item : translated.ordinary)
+                        translatedSplines.emplace_back(nullptr, asSpline(item));
+                    std::vector<bool> matched(translatedSplines.size(), false);
+                    const auto samples = [&](const RS_Spline& spline, const RS_Vector& offset,
+                                             const int subdivisions) {
+                        double first = 0.0;
+                        double last = 0.0;
+                        REQUIRE(spline.getParameterDomain(first, last));
+                        std::vector<RS_Vector> points;
+                        points.reserve(static_cast<std::size_t>(subdivisions) + 1);
+                        for (int sample = 0; sample <= subdivisions; ++sample) {
+                            const double fraction = static_cast<double>(sample) / subdivisions;
+                            const double parameter = first + (last - first) * fraction;
+                            RS_Vector point = spline.getPointAt(parameter);
+                            REQUIRE(point.valid);
+                            point.x -= offset.x;
+                            point.y -= offset.y;
+                            points.push_back(point);
+                        }
+                        return points;
+                    };
+                    const auto directedDistance = [](const std::vector<RS_Vector>& points,
+                                                     const std::vector<RS_Vector>& segments) {
+                        double maximum = 0.0;
+                        for (const auto& point : points) {
+                            double minimum = std::numeric_limits<double>::infinity();
+                            for (std::size_t i = 1; i < segments.size(); ++i) {
+                                const RS_Vector direction = segments[i] - segments[i - 1];
+                                const RS_Vector relative = point - segments[i - 1];
+                                const double lengthSquared = direction.x * direction.x +
+                                                             direction.y * direction.y;
+                                const double parameter = lengthSquared > 0.0
+                                    ? std::clamp((relative.x * direction.x + relative.y * direction.y) /
+                                                 lengthSquared, 0.0, 1.0)
+                                    : 0.0;
+                                const RS_Vector nearest = segments[i - 1] + direction * parameter;
+                                minimum = std::min(minimum,
+                                    std::hypot(point.x - nearest.x, point.y - nearest.y));
+                            }
+                            maximum = std::max(maximum, minimum);
+                        }
+                        return maximum;
+                    };
+                    const auto deviation = [&](const RS_Spline& local, const RS_Spline& world) {
+                        const auto localChecks = samples(local, {}, 128);
+                        const auto worldChecks = samples(world, translation, 128);
+                        const auto localCurve = samples(local, {}, 2048);
+                        const auto worldCurve = samples(world, translation, 2048);
+                        return std::max(directedDistance(localChecks, worldCurve),
+                                        directedDistance(worldChecks, localCurve));
+                    };
+                    for (const auto& local : centeredSplines) {
+                        double bestDeviation = std::numeric_limits<double>::infinity();
+                        std::size_t bestIndex = translatedSplines.size();
+                        for (std::size_t candidate = 0; candidate < translatedSplines.size(); ++candidate) {
+                            if (matched[candidate]) continue;
+                            const double candidateDeviation = deviation(local, translatedSplines[candidate]);
+                            if (candidateDeviation < bestDeviation) {
+                                bestDeviation = candidateDeviation;
+                                bestIndex = candidate;
+                            }
+                        }
+                        REQUIRE(bestIndex < translatedSplines.size());
+                        matched[bestIndex] = true;
+                        CHECK(bestDeviation <= deviationLimit);
+                    }
+
+                    bool translatedCacheAdmitted = false;
+                    for (std::size_t branch = 0; branch < translated.ordinary.size(); ++branch) {
+                        auto cache = asSpline(translated.ordinary[branch]);
+                        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+                        const auto validationCompletion = runWorker({
+                            {nextRequestId++, 1, 1, 1},
+                            req::ValidateSourceCache{cache, translatedDefinition, {}}});
+                        const auto& validationReply = validationCompletion->reply();
+                        REQUIRE(validationReply.failure == result::Failure::None);
+                        REQUIRE(validationReply.operation == 8);
+                        REQUIRE(std::holds_alternative<result::Native>(validationReply.result));
+                        const auto& validation = std::get<result::Native>(validationReply.result);
+                        ++validatedBranches;
+                        if (validation.refusal == LC_OffsetCurveRefusal::None) {
+                            CHECK(validation.changed);
+                            CHECK(translated.ordinary.size() == 1);
+                            translatedCacheAdmitted = translated.ordinary.size() == 1 &&
+                                validation.changed;
+                        } else {
+                            CHECK_FALSE(validation.changed);
+                            CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+                            if (translated.ordinary.size() > 1)
+                                CHECK(validation.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                        }
+                    }
+                    if (!translatedCacheAdmitted) {
+                        ++refusedTranslatedCacheCells;
+                        continue;
+                    }
+                    ++admittedTranslatedCaches;
+
+                    const auto cache = asSpline(translated.ordinary.front());
+                    RS_Spline expectedSpline{nullptr, cache};
+                    REQUIRE(expectedSpline.validate());
+                    const auto expectedSource = values::encodeSourceDefinition(translatedDefinition);
+                    REQUIRE(expectedSource);
+                    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+                        if (format.dwg) continue;
+#endif
+                        xd::Definition metadata;
+                        metadata.source = translatedDefinition;
+                        xd::Options encoding;
+                        if (format.dwg) {
+                            encoding.eed = true;
+                            if (format.version == DRW::AC1015) {
+                                encoding.textEncoding = xd::TextEncoding::Legacy;
+                                encoding.legacyEncodedBytes = [](std::string_view text)
+                                    -> std::optional<std::size_t> { return text.size(); };
+                            } else {
+                                encoding.textEncoding = xd::TextEncoding::Utf16;
+                            }
+                        } else {
+                            encoding.asciiDxf = false;
+                        }
+                        const auto tags = xd::forExport(
+                            {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+                            metadata, encoding);
+                        REQUIRE(tags);
+                        DRW_Spline carrier = f::raw(1, *tags);
+                        carrier.controllist.clear();
+                        for (const auto& point : cache.controlPoints)
+                            carrier.controllist.push_back(
+                                std::make_shared<DRW_Coord>(point.x, point.y, 0));
+                        carrier.knotslist = cache.knotslist;
+                        carrier.weightlist = cache.weights;
+                        carrier.degree = cache.degree;
+                        carrier.flags = 8;
+                        carrier.m_scenario = 1;
+                        carrier.ncontrol = carrier.controllist.size();
+                        carrier.nknots = carrier.knotslist.size();
+                        carrier.nfit = 0;
+                        const auto input = directory.file(std::to_string(variantIndex) + "-" +
+                            std::to_string(scale) + "-" + std::to_string(ratio) + "-" +
+                            std::to_string(normalizedDistance) + "-" + format.suffix);
+#ifdef DWGSUPPORT
+                        if (format.dwg) f::dwgFile(input, carrier, format.version);
+                        else f::binaryDxf(input, carrier, format.version);
+#else
+                        f::binaryDxf(input, carrier, format.version);
+#endif
+                        const auto outcome = stagedImport(input, format.lane);
+                        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+                        REQUIRE(outcome.graphic);
+                        REQUIRE(outcome.admitted + outcome.downgraded == 1);
+                        const auto* imported = f::sole(*outcome.graphic);
+                        REQUIRE(imported);
+                        const auto* native = dynamic_cast<const LC_OffsetCurve*>(imported);
+                        CHECK((native != nullptr) == (outcome.admitted == 1));
+                        CHECK((native == nullptr) == (outcome.downgraded == 1));
+                        std::optional<QCborArray> actualSource;
+                        if (native) {
+                            REQUIRE(native->sourceDefinition());
+                            actualSource = values::encodeSourceDefinition(*native->sourceDefinition());
+                            ++promotedFiles;
+                        } else {
+                            REQUIRE_FALSE(outcome.diagnostics.empty());
+                            const auto parsed = xd::parseAndStrip(imported->getDrwExtData(), encoding);
+                            REQUIRE(parsed.status == xd::Status::Schema2);
+                            REQUIRE(parsed.definition);
+                            REQUIRE(parsed.definition->source);
+                            actualSource = values::encodeSourceDefinition(*parsed.definition->source);
+                            ++fallbackFiles;
+                        }
+                        REQUIRE(actualSource);
+                        CHECK(QCborValue(*expectedSource).toCbor() ==
+                              QCborValue(*actualSource).toCbor());
+                        const auto* importedSpline = dynamic_cast<const RS_Spline*>(imported);
+                        REQUIRE(importedSpline);
+                        for (int sample = 0; sample <= 128; ++sample) {
+                            const double parameter = static_cast<double>(sample) / 128.0;
+                            const RS_Vector expected = expectedSpline.getPointAt(parameter);
+                            const RS_Vector actual = importedSpline->getPointAt(parameter);
+                            REQUIRE(expected.valid);
+                            REQUIRE(actual.valid);
+                            CHECK(std::hypot(actual.x - expected.x, actual.y - expected.y) <=
+                                  deviationLimit);
+                        }
+                        ++importedFiles;
+                    }
+                }
+            }
+        }
+    }
+
+    CHECK(cells == variants.size() * scales.size() * translationRatios.size() *
+          normalizedDistances.size());
+    CHECK(generatedCells + generationRefusedCells == cells);
+    CHECK(admittedTranslatedCaches + refusedTranslatedCacheCells == generatedCells);
+    CHECK(validatedBranches >= admittedTranslatedCaches);
+#ifndef DWGSUPPORT
+    CHECK(importedFiles == admittedTranslatedCaches * 3);
+#else
+    CHECK(importedFiles == admittedTranslatedCaches * formats.size());
+#endif
+    CHECK(promotedFiles + fallbackFiles == importedFiles);
 }

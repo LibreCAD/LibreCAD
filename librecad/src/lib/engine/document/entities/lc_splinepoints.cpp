@@ -856,7 +856,7 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             break;
         case LC_SplinePointsSegment::Kind::Line: {
             auto at = [&](const LC_Interval& u, const LC_Interval& p0, const LC_Interval& p1) {
-                return (one - u) * p0 + u * p1;
+                return p0 + u * (p1 - p0);
             };
             const LC_Interval x0 = px(segment.start);
             const LC_Interval x1 = px(segment.end);
@@ -876,8 +876,9 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             // Bezier control points of the segment restricted to [a, b]
             auto blossom = [&](const LC_Interval& u1, const LC_Interval& u2, const LC_Interval& p0,
                                const LC_Interval& p1, const LC_Interval& p2) {
-                return (one - u1) * (one - u2) * p0 + ((one - u1) * u2 + u1 * (one - u2)) * p1 +
-                       u1 * u2 * p2;
+                const LC_Interval c1 = (one - u1) * u2 + u1 * (one - u2);
+                const LC_Interval c2 = u1 * u2;
+                return p0 + c1 * (p1 - p0) + c2 * (p2 - p0);
             };
             LC_Interval qx[3];
             LC_Interval qy[3];
@@ -899,8 +900,8 @@ bool LC_SplinePoints::tryBoundJet(const double a, const double b, LC_CurveJetBou
             const LC_Interval dy[2] = {slope(ua, y0, y1, y2), slope(ub, y0, y1, y2)};
             result.dx = LC_Interval::hull(dx[0], dx[1]);
             result.dy = LC_Interval::hull(dy[0], dy[1]);
-            result.ddx = two * (x2 - two * x1 + x0);
-            result.ddy = two * (y2 - two * y1 + y0);
+            result.ddx = two * ((x2 - x1) - (x1 - x0));
+            result.ddy = two * ((y2 - y1) - (y1 - y0));
             if (products) {
                 // |C'|^2 and C' x C'' from the Bezier coefficients of the products,
                 // which cancel only by rounding where C' and C'' are parallel
@@ -982,9 +983,10 @@ bool LC_SplinePoints::tryEvaluateJet(double t, const LC_CurveEvaluationSide side
             break;
         case LC_SplinePointsSegment::Kind::Quadratic: {
             const double v = 1.0 - u;
-            point = segment.start * (v * v) + segment.control * (2.0 * u * v) + segment.end * (u * u);
+            point = segment.start + (segment.control - segment.start) * (2.0 * u * v) +
+                    (segment.end - segment.start) * (u * u);
             first = ((segment.control - segment.start) * v + (segment.end - segment.control) * u) * 2.0;
-            second = (segment.end - segment.control * 2.0 + segment.start) * 2.0;
+            second = ((segment.end - segment.control) - (segment.control - segment.start)) * 2.0;
             break;
         }
     }
