@@ -3128,6 +3128,72 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
       CHECK(isClosedConnection(lines[0], lines[1]));
     }
 
+    for (const auto &format : bulgeFormats) {
+#ifndef DWGSUPPORT
+      if (format.dwg)
+        continue;
+#endif
+      DRW_LWPolyline fixture = bulged;
+      fixture.extPoint = {0.6, 0.0, -0.8};
+      fixture.flags = 1;
+      const double bulge = -std::tan(M_PI / 8.0);
+      fixture.vertlist.front()->bulge = bulge;
+      const auto path = directory.file(std::string("closed-reflected-negative-") +
+                                       format.suffix);
+#ifdef DWGSUPPORT
+      if (format.dwg)
+        f::dwgPolylineFile(path, fixture, format.version);
+      else
+        f::binaryDxfPolyline(path, fixture, format.version);
+#else
+      f::binaryDxfPolyline(path, fixture, format.version);
+#endif
+      const auto imported = stagedImport(path, format.lane);
+      INFO(format.suffix);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == 3);
+      const RS_Ellipse *ellipse = nullptr;
+      std::vector<const RS_Line *> lines;
+      for (const RS_Entity *entity : *imported.graphic) {
+        CHECK(hasFragmentXData(*entity));
+        CHECK(hasProjectionApp(*entity, "LibreCAD_POLYLINE_OCS"));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity)) {
+          ellipse = candidate;
+          CHECK(hasProjectionApp(*entity, "LibreCAD_CONIC_OCS"));
+        }
+        if (const auto *candidate = dynamic_cast<const RS_Line *>(entity))
+          lines.push_back(candidate);
+      }
+      REQUIRE(ellipse);
+      REQUIRE(lines.size() == 2);
+      CHECK_FALSE(ellipse->isReversed());
+      CHECK(ellipse->getAngleLength() ==
+            Catch::Approx(std::abs(4.0 * std::atan(bulge))));
+      CHECK(std::isfinite(ellipse->getCenter().x));
+      CHECK(std::isfinite(ellipse->getCenter().y));
+      const auto matchesEllipseEnds = [&](const RS_Vector &left,
+                                          const RS_Vector &right) {
+        return (samePoint(left, ellipse->getStartpoint()) &&
+                samePoint(right, ellipse->getEndpoint())) ||
+               (samePoint(right, ellipse->getStartpoint()) &&
+                samePoint(left, ellipse->getEndpoint()));
+      };
+      const auto connected = [&](const RS_Line *first, const RS_Line *second) {
+        return (samePoint(first->getStartpoint(), second->getStartpoint()) &&
+                matchesEllipseEnds(first->getEndpoint(), second->getEndpoint())) ||
+               (samePoint(first->getStartpoint(), second->getEndpoint()) &&
+                matchesEllipseEnds(first->getEndpoint(), second->getStartpoint())) ||
+               (samePoint(first->getEndpoint(), second->getStartpoint()) &&
+                matchesEllipseEnds(first->getStartpoint(), second->getEndpoint())) ||
+               (samePoint(first->getEndpoint(), second->getEndpoint()) &&
+                matchesEllipseEnds(first->getStartpoint(), second->getStartpoint()));
+      };
+      CHECK(connected(lines[0], lines[1]));
+    }
+
     DRW_LWPolyline rankDeficient = raw;
     rankDeficient.extPoint = {1.0, 0.0, 0.0};
     rankDeficient.vertlist.front()->bulge = std::tan(M_PI / 8.0);
