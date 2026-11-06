@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W484; chronological evidence follows): implementation slices
+Current status (W485; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W484. Historical results from
+No exact-head CI result is claimed for W441-W485. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18909,3 +18909,30 @@ case passes 1,664 assertions; `git diff --check` passes. These are local
 results, not exact-head CI or external CAD acceptance. Test commit
 `c6eba78f4` (`test(offset): persist hyperbola interval source variants`);
 roadmap receipt is a separate documentation commit.
+
+## 485. Hyperbola Curvature-Neighborhood Worker Sweep
+
+W481 tests through ±1.1 but does not sample around the representative
+hyperbola's vertex-curvature radius (for `a=3`, `b=1.8`, the radius is 1.08).
+Add signed samples at magnitudes 1.05, 1.08, and 1.09 for all eight bounded
+interval/branch layouts. Classify each generated output by branch count:
+validate a single-cache result exactly, and require multi-piece outputs to be
+refused by operation 8 without mutation. Do not assume a geometric output is
+editable merely because generation completed.
+
+### Completion receipt
+
+The eight-layout worker matrix now covers 16 signed distances: `±0.1`, `±0.3`,
+`±0.5`, `±1.0`, `±1.05`, `±1.08`, `±1.09`, and `±1.1`. Every generated
+nonempty result is classified: single-piece caches pass operation 8, and
+multi-piece candidates return `NotCacheRepresentable` without changing state.
+At least one multi-piece result occurs in this curvature-neighborhood sweep;
+the exact broad-interval `-1.1` three-branch case is separately asserted and
+covered through real-file downgrade in W482.
+
+Validation: CMake Debug incremental worker-kernel target builds. Focused
+hyperbola test passes 3,330 assertions; full worker-kernel suite passes 7,916
+assertions across 31 cases. `git diff --check` passes. Local worker evidence
+only; this dense neighborhood is not yet a real-file magnitude matrix.
+Test commit `b296eb7f0` (`test(offset): probe hyperbola curvature boundary`);
+roadmap receipt is separate.
