@@ -1633,6 +1633,71 @@ TEST_CASE("legacy 2D POLYLINE import preserves signed bulge source geometry",
     }
 }
 
+TEST_CASE("closed legacy 2D POLYLINE import preserves its closing bulge",
+          "[lc-offsetcurve][import-session][typed-source][polyline][legacy][closed]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-closed-legacy-polyline-import");
+    const double closingBulge = std::tan(M_PI / 16.0);
+    DRW_Polyline raw;
+    raw.flags = 1;
+    raw.addVertex(DRW_Vertex(0, 0, 0, 0));
+    raw.addVertex(DRW_Vertex(2, 0, 0, 0));
+    raw.addVertex(DRW_Vertex(2, 2, 0, 0));
+    raw.addVertex(DRW_Vertex(0, 2, 0, closingBulge));
+
+    RS_Polyline expected;
+    expected.addVertex({0, 0});
+    expected.addVertex({2, 0});
+    expected.addVertex({2, 2});
+    expected.addVertex({0, 2}, closingBulge);
+    expected.setClosed(true, closingBulge);
+    const auto expectedSource = LC_OffsetSourceGeometry::capture(expected);
+    REQUIRE(expectedSource);
+    const auto& expectedData = std::get<LC_OffsetPolylineData>(expectedSource->value);
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        const auto path = directory.file(std::string("closed-legacy-polyline-") + format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwg2dPolylineFile(path, raw, format.version);
+        else f::binaryDxf2dPolyline(path, raw, format.version);
+#else
+        f::binaryDxf2dPolyline(path, raw, format.version);
+#endif
+
+        auto outcome = stagedImport(path, format.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        std::vector<const RS_Polyline*> polylines;
+        for (const RS_Entity* entity : *outcome.graphic) {
+            if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity))
+                polylines.push_back(polyline);
+        }
+        REQUIRE(polylines.size() == 1);
+        const auto actualSource = LC_OffsetSourceGeometry::capture(*polylines.front());
+        REQUIRE(actualSource);
+        const auto& actualData = std::get<LC_OffsetPolylineData>(actualSource->value);
+        CHECK(actualData.closed);
+        REQUIRE(actualData.segments.size() == expectedData.segments.size());
+        CHECK(actualData.startpoint.distanceTo(expectedData.startpoint) < 1.0e-12);
+        REQUIRE(std::holds_alternative<RS_ArcData>(actualData.segments.back()));
+        const auto& actualClosingArc = std::get<RS_ArcData>(actualData.segments.back());
+        const auto& expectedClosingArc = std::get<RS_ArcData>(expectedData.segments.back());
+        CHECK(actualClosingArc.center.distanceTo(expectedClosingArc.center) < 1.0e-12);
+        CHECK(actualClosingArc.radius == Catch::Approx(expectedClosingArc.radius).margin(1.0e-12));
+        CHECK(actualClosingArc.reversed == expectedClosingArc.reversed);
+        CHECK(LC_OffsetSourceGeometry{actualData}.isWellFormed());
+    }
+}
+
 TEST_CASE("polyline bulge conversion follows the minimum valid arc sweep",
           "[lc-offsetcurve][import-session][typed-source][polyline][bulge][boundary]") {
     Setup setup;
