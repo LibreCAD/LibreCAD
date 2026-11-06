@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W447; chronological evidence follows): implementation slices
+Current status (W448; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W447. Historical results from
+No exact-head CI result is claimed for W441-W448. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request is already implemented: the user can choose a
@@ -17779,3 +17779,32 @@ This closes version-lane coverage for one multi-branch rational source and
 cache. It does not establish every unsupported spline topology, malformed
 cache handling in every version, or all rational knot/weight configurations.
 Exact-head CI and external CAD acceptance remain separate.
+
+## 448. Wrapped Periodic Spline Import Across DXF/DWG Versions
+
+The wrapped periodic cubic source had real-file operation-8 promotion coverage
+only in R2018. Extend the same closed, wrapped-knot source and its canonical
+offset cache to R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Require every lane to
+preserve the typed source and match the cache fingerprint before native
+promotion.
+
+### Completion receipt
+
+The closed five-control periodic cubic with generated wrapped knots and
+implicit unit weights now promotes through staged import and operation 8 in
+all five file lanes. Each case admits one native offset, reports zero
+downgrades, preserves the tagged source definition, and matches the generated
+canonical cache fingerprint.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` selector
+passes 4,881 assertions/4 cases; the broader
+`[lc-offsetcurve][import-session][typed-source]` selector passes 40,762
+assertions/28 cases. `git diff --check` passes. Test commit
+`29b6bd4b6` (`test(offset): qualify wrapped spline import versions`).
+
+This closes historical-lane coverage for one wrapped periodic source/cache
+pair at one side and distance. It does not qualify all periodic/closed knot
+layouts, non-unit weights, other degrees, arbitrary distances/sides, or all
+historical DWG versions. Exact-head CI and external CAD acceptance remain
+separate.
