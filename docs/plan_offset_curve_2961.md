@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W515 complete; remaining family/variant and acceptance work
+Current status (W516 matrices complete; remaining family/variant and acceptance work
 is open; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -20018,3 +20018,40 @@ fallback/refusal semantics rather than serializing a refused single branch as
 a false cache. Run focused worker/import tests, full worker-kernel suite,
 ellipse-family import suite, CMake Debug test build, roadmap parser, and diff
 check. This finite matrix does not imply arbitrary precision support.
+
+### W516 matrix completion receipt
+
+The worker and five-lane import grids now combine scales `1e-3`, `1`, and
+`1e12` with relative translation ratios `1e6`, `1e9`, and `1e12`. The ordinary
+partial and ratio-1.4 ellipse variants use signed normalized distances
+`+/-0.1` and `+/-0.4`; both orientations of the ratio-0.2 full ellipse use
+`+/-0.05`, `+/-0.07`, `+/-0.08`, and `+/-0.09`. Every cell is counted as
+compared generation/cache validation or an explicit generation, tolerance, or
+topology refusal. Only paired representable single-cache cells enter DXF/DWG;
+all imported caches retain exact typed source metadata and match 129 samples
+within tolerance plus coordinate-ULP allowance.
+
+Validation: focused W516 worker case passes 45,027 assertions; full worker suite
+passes 239,875 assertions across 42 cases. Focused staged import passes 289,251
+assertions; broad `[ellipse]` selection passes 1,019,663 assertions across
+31 cases. CMake Debug worker/test targets build and the roadmap parser passes
+5/5. Local results, not exact-head CI or external CAD. Product commit
+`38f891b50` (`test(offset): qualify ellipse translation boundaries`).
+
+One focused follow-up remains: when translated generation refuses, the test
+proves empty output and no mutation but skips operation-8 validation of a
+successful centered counterpart. W517 closes that asymmetric-cell assertion;
+it does not require a refused translated cache to exist or be serialized.
+
+## 517. Validate Centered Cache on Translated-Generation Refusal
+
+In W516's ellipse combined matrix, translated generation can fail closed while
+the centered counterpart still generates an ordinary cache. In those cells,
+validate the centered cache with operation 8 using the centered definition:
+require admission and a changed result when the centered cache is a single
+branch with valid tolerance, otherwise require explicit non-mutating refusal
+and an unchanged fingerprint. Continue to require the translated failure to
+return no ordinary geometry and no mutation. Account for these asymmetric
+cells separately from paired generated cells; never construct or serialize a
+translated cache after generation refusal. Run the focused boundary test, full
+worker-kernel suite, CMake Debug worker target, roadmap parser, and diff check.
