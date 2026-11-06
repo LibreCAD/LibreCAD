@@ -19914,3 +19914,26 @@ source family without filter side effects`, and the matching/highlight tests
 in `lc_offsetcurve_source_ui_tests.cpp`. This request adds no new modeled
 family and does not close the remaining variant matrix, visible-GUI,
 exact-head CI, or external-CAD acceptance gates.
+
+## 514. Ellipse Combined Scale and Translation Worker Matrix
+
+Ellipse worker coverage qualifies several sweep, reversal, ratio, and
+curvature-threshold cases, but does not yet combine geometric scale with large
+world-coordinate translation. Add a bounded worker matrix across representative
+partial and reversed sweeps, ratio-above-one input, and both orientations of a
+thin full ellipse. Use scales `1e-3`, `1`, and `1e12`, translation ratio `1e9`,
+and signed distances scaled with the source. Compare centered and translated
+generation status/topology; for successful results compare 129 normalized
+samples in local coordinates under geometry-tolerance and coordinate-ULP
+bounds. Validate operation-8 admission for single-cache outputs and require
+non-mutating refusal for split outputs or numerically unrepresentable cases.
+Record every matrix cell as accepted or explicitly refused; do not infer
+arbitrary ellipse scale/translation support from this finite grid.
+
+After the worker slice passes, carry admissible cells through the five existing
+DXF/DWG lanes in a separate staged-import slice. Derive promotion from imported
+topology, require exact typed source metadata, and verify imported cache detail;
+serialize no generation or precision refusal. Run focused and broad worker
+tests, CMake Debug test build, roadmap parser, and `git diff --check` for the
+worker slice. The later file slice must additionally run the focused and broad
+typed-source import tests and the same build/roadmap checks.
