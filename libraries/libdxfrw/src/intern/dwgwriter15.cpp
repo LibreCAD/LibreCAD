@@ -955,30 +955,6 @@ bool dwgWriter15::emitDeferredBlockControl() {
         return false;
     };
 
-    if (m_version <= DRW::AC1015) {
-        const auto isContiguousChain = [](const std::vector<std::uint32_t>& handles) {
-            for (std::size_t index = 1; index < handles.size(); ++index) {
-                if (handles[index - 1] == std::numeric_limits<std::uint32_t>::max()
-                    || handles[index] != handles[index - 1] + 1u)
-                    return false;
-            }
-            return true;
-        };
-        std::vector<std::uint32_t> modelSpaceEntityHandles = m_modelSpaceEntityHandles;
-        std::vector<std::uint32_t> paperSpaceEntityHandles = m_paperSpaceEntityHandles;
-        std::sort(modelSpaceEntityHandles.begin(), modelSpaceEntityHandles.end());
-        std::sort(paperSpaceEntityHandles.begin(), paperSpaceEntityHandles.end());
-        if (!isContiguousChain(modelSpaceEntityHandles)
-            || !isContiguousChain(paperSpaceEntityHandles))
-            return fail();
-        for (const PendingUserBlock& block : m_userBlocks) {
-            std::vector<std::uint32_t> entityHandles = block.entityHandles;
-            std::sort(entityHandles.begin(), entityHandles.end());
-            if (!isContiguousChain(entityHandles))
-                return fail();
-        }
-    }
-
     // Every child listed by a BLOCK_RECORD must already have a committed
     // object frame. Publishing an orphan handle would make the ownership
     // graph disagree with HANDLES and leave the entity unreachable.

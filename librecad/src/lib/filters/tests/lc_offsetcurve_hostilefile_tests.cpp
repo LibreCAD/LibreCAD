@@ -2296,8 +2296,9 @@ TEST_CASE("legacy 2D POLYLINE import preserves signed bulge source geometry",
     const auto& expectedData = std::get<LC_OffsetPolylineData>(expectedSource->value);
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 4> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
@@ -3307,8 +3308,9 @@ TEST_CASE("closed legacy 2D POLYLINE import preserves its closing bulge",
     const auto& expectedData = std::get<LC_OffsetPolylineData>(expectedSource->value);
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 4> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
