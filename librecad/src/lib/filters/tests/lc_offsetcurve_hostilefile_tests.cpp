@@ -1720,6 +1720,148 @@ TEST_CASE("high-eccentricity ellipse refuses partial cache promotion across file
     }
 }
 
+TEST_CASE("parabola curvature neighborhood admits only exact single-cache imports",
+          "[lc-offsetcurve][import-session][typed-source][parabola][curvature]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-parabola-curvature-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+    const std::array<LC_OffsetSourceGeometry, 3> sources{
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{3, 4}, RS_Vector{-7, 9}, RS_Vector{3, 14}}}}
+    };
+
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    std::size_t promotedCases = 0;
+    std::size_t downgradedCases = 0;
+
+    for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
+        for (const double signedDistance : {-3.0, -2.5, -2.0, 2.0, 2.5, 3.0}) {
+            CAPTURE(sourceIndex, signedDistance);
+            const LC_OffsetSourceDefinition definition{
+                sources[sourceIndex], signedDistance, 1e-4, false};
+            auto source = definition.source.makeEntity();
+            REQUIRE(source);
+            const double magnitude = std::abs(signedDistance);
+            const auto options = LC_CurveOffset::makeDirectOptions(
+                *source, magnitude, definition.relativeTolerance);
+            const auto generated = LC_CurveOffset::buildDirectBranches(
+                *source,
+                LC_CurveOffset::makeSideRequest(
+                    signedDistance < 0 ? LC_CurveOffsetSide::Right
+                                       : LC_CurveOffsetSide::Left,
+                    magnitude),
+                options, LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+            const auto materialized = LC_CurveOffset::materializeBranches(
+                *source, generated, options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(materialized.entities.empty());
+            const auto* firstBranch =
+                dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+            REQUIRE(firstBranch);
+            REQUIRE(firstBranch->validate());
+            const RS_SplineData expectedCache = firstBranch->getData();
+            const bool shouldPromote = materialized.entities.size() == 1;
+            if (shouldPromote) ++promotedCases;
+            else ++downgradedCases;
+
+            for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+                if (format.dwg) continue;
+#endif
+                xd::Definition metadata;
+                metadata.source = definition;
+                xd::Options encoding;
+                if (format.dwg) {
+                    encoding.eed = true;
+                    encoding.textEncoding = xd::TextEncoding::Utf16;
+                } else {
+                    encoding.asciiDxf = false;
+                }
+                const auto tags = xd::forExport(
+                    {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+                    metadata, encoding);
+                REQUIRE(tags);
+                DRW_Spline cache = f::raw(1, *tags);
+                cache.controllist.clear();
+                for (const auto& point : expectedCache.controlPoints)
+                    cache.controllist.push_back(
+                        std::make_shared<DRW_Coord>(point.x, point.y, 0));
+                cache.knotslist = expectedCache.knotslist;
+                cache.weightlist = expectedCache.weights;
+                cache.degree = expectedCache.degree;
+                cache.flags = 8;
+                cache.m_scenario = 1;
+                cache.ncontrol = cache.controllist.size();
+                cache.nknots = cache.knotslist.size();
+                cache.nfit = 0;
+
+                const auto input = directory.file(
+                    std::to_string(sourceIndex) + "-" + std::to_string(signedDistance) +
+                    "-" + format.suffix);
+#ifdef DWGSUPPORT
+                if (format.dwg) f::dwgFile(input, cache, format.version);
+                else f::binaryDxf(input, cache, format.version);
+#else
+                f::binaryDxf(input, cache, format.version);
+#endif
+                const auto outcome = stagedImport(input, format.lane);
+                REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+                REQUIRE(outcome.graphic);
+                CHECK(outcome.admitted == (shouldPromote ? 1u : 0u));
+                CHECK(outcome.downgraded == (shouldPromote ? 0u : 1u));
+                const auto* imported = f::sole(*outcome.graphic);
+                REQUIRE(imported);
+                const auto* nativeOffset = dynamic_cast<const LC_OffsetCurve*>(imported);
+                CHECK((nativeOffset != nullptr) == shouldPromote);
+                const auto* importedSpline = dynamic_cast<const RS_Spline*>(imported);
+                REQUIRE(importedSpline);
+                CHECK(RS_Spline::geometryFingerprint(importedSpline->getData()) ==
+                      RS_Spline::geometryFingerprint(expectedCache));
+                const auto expectedSource = values::encodeSourceDefinition(definition);
+                REQUIRE(expectedSource);
+                if (shouldPromote) {
+                    REQUIRE(nativeOffset);
+                    REQUIRE(nativeOffset->sourceDefinition());
+                    const auto importedSource = values::encodeSourceDefinition(
+                        *nativeOffset->sourceDefinition());
+                    REQUIRE(importedSource);
+                    CHECK(QCborValue(*expectedSource).toCbor() ==
+                          QCborValue(*importedSource).toCbor());
+                } else {
+                    const auto parsed = xd::parseAndStrip(
+                        imported->getDrwExtData(), encoding);
+                    REQUIRE(parsed.status == xd::Status::Schema2);
+                    REQUIRE(parsed.definition);
+                    REQUIRE(parsed.definition->source);
+                    const auto importedSource = values::encodeSourceDefinition(
+                        *parsed.definition->source);
+                    REQUIRE(importedSource);
+                    CHECK(QCborValue(*expectedSource).toCbor() ==
+                          QCborValue(*importedSource).toCbor());
+                }
+            }
+        }
+    }
+    CHECK(promotedCases > 0);
+    CHECK(downgradedCases > 0);
+}
+
 TEST_CASE("closed mixed-bulge polyline promotes only its representable side across file lanes",
           "[lc-offsetcurve][import-session][typed-source][polyline][cache-promotion][persistence]") {
     Setup setup;
