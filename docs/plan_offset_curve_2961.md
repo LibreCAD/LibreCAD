@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W465; chronological evidence follows): implementation slices
+Current status (W466; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W465. Historical results from
+No exact-head CI result is claimed for W441-W466. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request (2026-11-06) reconfirms that changing an
@@ -18344,4 +18344,32 @@ Validation: incremental CMake Debug `librecad_tests` build passes. The focused
 97,287 assertions across 29 cases. `git diff --check` passes. These are local
 results, not exact-head CI or external CAD acceptance. Test commit
 `b423c1c9d` (`test(dwg): cover closed reflected OCS bulges`); the roadmap
+receipt is committed separately.
+
+## 466. Closed Negative-Bulge LWPOLYLINE OCS Matrix
+
+The five-lane closed LWPOLYLINE matrix covers positive major bulges and a
+closed reflected major case, but closed negative-minor bulges were absent.
+Add the closed negative-minor source through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. Check the signed sweep, arc and line connectivity around the closed
+loop, provenance, unrelated XDATA, and refusal of projected fragments as
+typed offset sources. This does not cover reflected negative closed bulges or
+negative-major closed bulges.
+
+### Completion receipt
+
+The closed negative-minor tilted-OCS LWPOLYLINE now imports through all five
+DXF/DWG lanes with `FixtureSourceData` retained. Every result contains one
+ellipse and two lines; tests compare the absolute sweep to the signed source
+bulge, verify the arc's directed endpoints and both connecting line segments,
+check OCS/conic provenance, and reject every lossy projection as an editable
+typed source. Reflected negative and negative-major closed variants remain
+open.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`non-axial LWPOLYLINEs remain visible as marked XY projections` case passes
+1,543 assertions; `[lc-offsetcurve][import-session][typed-source]` passes
+97,426 assertions across 29 cases. `git diff --check` passes. These are local
+results, not exact-head CI or external CAD acceptance. Test commit
+`048649a4b` (`test(dwg): cover closed negative OCS bulges`); the roadmap
 receipt is committed separately.
