@@ -34,6 +34,8 @@ W529 closed major/minor mixed-bulge source qualification complete for its
 defined matrix;
 W530 reversed major/minor mixed-bulge qualification complete for its defined
 matrix;
+W531 imported major/minor polyline-to-worker qualification complete for its
+defined lanes and signed distances;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -20769,3 +20771,43 @@ Product/test commit and completion receipt are to be committed separately and
 pushed to PR #3193; exact-head checks must be re-read after push. This finite
 matrix does not qualify other major-bulge orders, arbitrary bulge chains,
 self-intersection, OCS variants, external CAD, or visible GUI behavior.
+
+## 531. Imported Major/Minor Polyline-to-Worker Qualification
+
+W529-W530 construct typed sources directly from native `RS_Polyline` objects
+and exercise operation 7/8 plus cache-carrier persistence. Existing real-file
+bulge tests verify imported geometry and source capture separately. Connect
+those paths for a closed four-vertex LWPOLYLINE containing the positive-major,
+negative-minor arcs from W529: import the actual entity from R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG, capture its typed source, and submit that imported
+value to the production worker client.
+
+For each file lane, verify closure, ordered arc/line segments, major/minor
+directed sweep, arc geometry, and typed source kind. Generate both signed
+offset sides with the worker; validate every output branch with operation 8.
+Single-cache output must be admitted and changed; multi-branch output must be
+refused as `NotCacheRepresentable` without mutating the candidate. Generation
+refusal must have no partial output. Keep the existing staged offset-carrier
+round trips as independent evidence; this slice proves imported-source to
+worker integration, not additional carrier persistence.
+
+The closed positive-major/negative-minor LWPOLYLINE now imports through all
+five file/version lanes. Each imported `RS_Polyline` retains closed topology,
+two ordered signed arcs, and two straight segments; its captured value is sent
+through the production worker client at both `-0.25` and `0.25`. Operation 7
+completes in all ten lane/side combinations. Every emitted branch is checked
+with operation 8: one-cache outputs must be admitted and changed, while
+multi-branch outputs are refused as `NotCacheRepresentable` without candidate
+mutation. The focused case passes 3,269 assertions; the full
+`[lc-offsetcurve][import-session][typed-source][polyline]` selection passes
+493,615 assertions across 23 cases; polyline worker tests pass 82,644
+assertions across six cases. Release `librecad_tests` and
+`librecad_offset_worker_kernel_tests` targets build, and `git diff --check`
+passes.
+
+Product/test commit `de80f25e4` (`test(offset): qualify imported bulge
+sources`). This proves imported-source to worker integration for this fixture
+and these five lanes only; it does not add carrier round-trip coverage or
+qualify other bulge signs/orders, arbitrary polylines, OCS, external CAD, or
+visible GUI behavior. Commit this receipt separately, push it with the test
+commit, and inspect exact-head CI.
