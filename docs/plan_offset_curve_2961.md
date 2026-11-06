@@ -19337,3 +19337,43 @@ Debug build and `git diff --check` pass. These are local results, not file
 round-trip, exact-head CI, visible-GUI, or external-CAD acceptance. Test commit
 `2cda6960c` (`test(offset): qualify translated parabola detail`). More extreme
 translations and the remaining conic/spline families remain open.
+
+## 499. Scale-Relative Parabola Primitive Validity
+
+Near-degenerate review found `LC_ParabolaData::calculatePrimitives()` used an
+absolute `RS_TOLERANCE2` curvature check and `RS_Vector::normalize()`'s
+absolute threshold. This marks geometrically valid tiny parabolas invalid and
+can leave derived primitives non-finite for degenerate input. Make validity
+relative to the local control-net scale, normalize the axis using its measured
+magnitude, and reject non-finite or exactly degenerate primitive results.
+Cover uniform scales from `1e-12` through `1e12`, a nearly straight but
+representable parabola, and an exactly collinear control net. Separately
+record offset-engine admission: primitive validity must not be confused with
+worker support below the engine's tangent threshold.
+
+### Completion receipt
+
+Parabola primitive construction now checks finite planar controls, compares
+curvature magnitude with a machine-epsilon threshold relative to local control
+span, computes the axis direction without `RS_Vector::normalize()`, and marks
+degenerate/non-finite derived values invalid. Canonical parabolas retain the
+expected vertex, focus, and focal distance at scales `1e-12`, `1e-6`, `1`,
+`1e6`, and `1e12`; an almost-straight representable curve is valid and an
+exactly collinear curve is rejected.
+
+The worker matrix separately confirms that scale `1e-8` control geometry is a
+well-formed typed source but its tested offsets refuse as `UndefinedTangent`
+without ordinary output or mutation. At `1e-3` and `1e3`, both-side
+curvature-neighborhood generation and operation-8 cache validation continue
+to produce explicit canonical admission or `NotCacheRepresentable` refusal.
+The lower worker scale refusal is an open numerical limit, not claimed offset
+support.
+
+Validation: the primitive boundary case passes 39 assertions; the full
+`[parabola]` suite passes 58,595 assertions across 17 cases (including the
+five-lane import matrix); the full worker-kernel suite passes 11,614 assertions
+across 35 cases. Incremental CMake Debug targets build and `git diff --check`
+passes. These are local results, not exact-head CI or external-CAD acceptance.
+Product commit `18c855195` (`fix(offset): scale parabola primitive
+validation`). Worker-scale refusal and more extreme/translated degenerate
+curves remain open.
