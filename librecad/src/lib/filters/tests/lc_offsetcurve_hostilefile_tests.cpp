@@ -3201,6 +3201,89 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
     }
     }
 
+    for (const auto &format : bulgeFormats) {
+#ifndef DWGSUPPORT
+      if (format.dwg)
+        continue;
+#endif
+      DRW_LWPolyline fixture = raw;
+      fixture.extPoint = {0.6, 0.0, -0.8};
+      fixture.flags = 1;
+      fixture.vertlist[0]->bulge = std::tan(M_PI / 8.0);
+      fixture.vertlist[1]->bulge = -2.0;
+      fixture.extData.push_back(std::make_shared<DRW_Variant>(
+          1001, std::string("FixtureSourceData")));
+      fixture.extData.push_back(std::make_shared<DRW_Variant>(
+          1000, std::string("preserve-this-xdata")));
+      const auto path = directory.file(
+          std::string("closed-mixed-bulges-") + format.suffix);
+#ifdef DWGSUPPORT
+      if (format.dwg)
+        f::dwgPolylineFile(path, fixture, format.version);
+      else
+        f::binaryDxfPolyline(path, fixture, format.version);
+#else
+      f::binaryDxfPolyline(path, fixture, format.version);
+#endif
+      const auto imported = stagedImport(path, format.lane);
+      INFO(format.suffix);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == 3);
+
+      std::vector<std::pair<RS_Vector, RS_Vector>> fragments;
+      std::vector<const RS_Ellipse *> ellipses;
+      std::vector<const RS_Line *> lines;
+      for (const RS_Entity *entity : *imported.graphic) {
+        CHECK(hasFragmentXData(*entity));
+        CHECK(hasProjectionApp(*entity, "LibreCAD_POLYLINE_OCS"));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+        if (const auto *ellipse = dynamic_cast<const RS_Ellipse *>(entity)) {
+          ellipses.push_back(ellipse);
+          fragments.emplace_back(ellipse->getStartpoint(), ellipse->getEndpoint());
+          CHECK(hasProjectionApp(*entity, "LibreCAD_CONIC_OCS"));
+        } else if (const auto *line = dynamic_cast<const RS_Line *>(entity)) {
+          lines.push_back(line);
+          fragments.emplace_back(line->getStartpoint(), line->getEndpoint());
+        }
+      }
+      REQUIRE(ellipses.size() == 2);
+      REQUIRE(lines.size() == 1);
+      REQUIRE(fragments.size() == 3);
+      std::array<double, 2> expectedSweeps{
+          std::abs(4.0 * std::atan(fixture.vertlist[0]->bulge)),
+          std::abs(4.0 * std::atan(fixture.vertlist[1]->bulge))};
+      std::array<double, 2> actualSweeps{
+          ellipses[0]->getAngleLength(), ellipses[1]->getAngleLength()};
+      std::sort(expectedSweeps.begin(), expectedSweeps.end());
+      std::sort(actualSweeps.begin(), actualSweeps.end());
+      CHECK(actualSweeps[0] == Catch::Approx(expectedSweeps[0]));
+      CHECK(actualSweeps[1] == Catch::Approx(expectedSweeps[1]));
+      for (const auto *ellipse : ellipses) {
+        CHECK(std::isfinite(ellipse->getCenter().x));
+        CHECK(std::isfinite(ellipse->getCenter().y));
+      }
+      CHECK(std::count_if(ellipses.begin(), ellipses.end(),
+                          [](const RS_Ellipse *ellipse) {
+                            return ellipse->isReversed();
+                          }) == 1);
+
+      // A closed source chain must project to a cycle: each fragment endpoint
+      // has exactly one matching endpoint on another fragment.
+      for (std::size_t i = 0; i < fragments.size(); ++i) {
+        for (const auto &endpoint : {fragments[i].first, fragments[i].second}) {
+          std::size_t peers = 0;
+          for (std::size_t j = 0; j < fragments.size(); ++j) {
+            if (i == j) continue;
+            peers += samePoint(endpoint, fragments[j].first) ? 1 : 0;
+            peers += samePoint(endpoint, fragments[j].second) ? 1 : 0;
+          }
+          CHECK(peers == 1);
+        }
+      }
+    }
+
     DRW_LWPolyline rankDeficient = raw;
     rankDeficient.extPoint = {1.0, 0.0, 0.0};
     rankDeficient.vertlist.front()->bulge = std::tan(M_PI / 8.0);
