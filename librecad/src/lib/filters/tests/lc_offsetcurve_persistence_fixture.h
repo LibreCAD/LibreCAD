@@ -281,9 +281,11 @@ template <typename Writer> struct EmitPolyline final : NullDrwInterface {
         else REQUIRE(writer.addLayer(&layer));
     }
     void writeAppId() override {
-        DRW_AppId app; app.name = "LibreCad";
-        if constexpr (std::is_same_v<Writer, dxfRW>) REQUIRE(writer.writeAppId(&app));
-        else REQUIRE(writer.addAppId(&app));
+        for (const auto* name : {"LibreCad", "FixtureSourceData"}) {
+            DRW_AppId app; app.name = name;
+            if constexpr (std::is_same_v<Writer, dxfRW>) REQUIRE(writer.writeAppId(&app));
+            else REQUIRE(writer.addAppId(&app));
+        }
     }
     void writeEntities() override { wrote = writer.writeLWPolyline(&polyline); REQUIRE(wrote); }
 };
