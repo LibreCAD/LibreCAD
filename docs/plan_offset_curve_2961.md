@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W506; chronological evidence follows): implementation slices
+Current status (W507; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -74,6 +74,10 @@ uniform scales and five historical DXF/DWG lanes. Its focused matrix passes
 285,397 assertions; the full typed-source import selection passes 504,226
 assertions across 34 cases. These measurements qualify only the recorded
 layouts, scales, and normalized distances.
+W507 adds centered-versus-translated worker geometry/cache checks for all eight
+bounded hyperbola layouts at six curvature-neighborhood settings; the focused
+case passes 15,088 assertions and the worker-kernel suite passes 42,085 across
+39 cases. Staged import at translated coordinates remains open.
 W439 adds bulged LWPOLYLINE and legacy 2D POLYLINE input coverage across R14
 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
@@ -19636,3 +19640,50 @@ acceptance. Product test commit `e79d08615`
 (`test(offset): import hyperbola scale variants`); this roadmap receipt is
 committed separately. Arbitrary hyperbola scales, translations, other interval
 layouts, and untested tolerance/precision limits remain open.
+
+## 507. Bounded-Hyperbola Translation Precision at Curvature Boundaries
+
+W505/W506 qualify uniform scales but use a zero-centered source. Compare all
+eight bounded interval/branch layouts at the unit scale with copies translated
+by `(1e9, -1e9)`, using signed distances `±1.05`, `±1.08`, and `±1.09`.
+Require equal generation status and output topology, sample corresponding
+first-branch caches in local coordinates, and bound deviation by the requested
+world tolerance plus representational rounding at the translated magnitude.
+Run operation 8 on centered and translated caches and require identical
+admission/refusal without mutation. Keep source and cache data exact within
+each run; do not require identical adaptive control-point layouts. Follow with
+a separate staged DXF/DWG import slice only if the worker comparison passes.
+
+### Completion receipt
+
+All eight bounded interval/branch layouts were compared at the origin and at
+`(1e9, -1e9)` for signed distances `±1.05`, `±1.08`, and `±1.09`. Centered
+and translated generation both complete with identical output topology. The
+first-branch caches were sampled at 129 normalized parameters and maximum
+local deviation stayed within four times the larger requested geometry
+tolerance plus a 64-ULP translation allowance. Operation 8 made the same
+accept/refuse decision for both placements, including non-mutating
+`NotCacheRepresentable` on multi-output results.
+
+Validation: focused `[hyperbola][precision]` worker test passes 15,088
+assertions in one case; the complete worker-kernel suite passes 42,085
+assertions across 39 cases; the CMake Debug worker target builds and
+`git diff --check` passes. These are local worker results, not staged file
+round trips, exact-head CI, visible-GUI, or external-CAD acceptance. Product
+test commit `98b99ab91` (`test(offset): preserve translated hyperbola
+detail`); this roadmap receipt is committed separately.
+
+## 508. Translated Bounded-Hyperbola DXF/DWG Import
+
+W507 establishes worker topology, local geometry, and operation-8 parity at
+large world coordinates, but its source/cache never crosses serialization.
+Carry the eight bounded interval/branch layouts translated to `(1e9, -1e9)`
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG for signed distances
+`±1.05`, `±1.08`, and `±1.09`. Derive promotion versus fallback from the full
+generated output topology. On promotion, compare the exact encoded source
+metadata and imported cache geometry to the generated cache within the
+requested geometry tolerance plus a serialization-rounding allowance. On
+multi-output fallback, require ordinary visible spline geometry, no native
+offset, and exact schema-2 typed-source metadata. Require both outcomes in the
+aggregate matrix. Run the focused import case, full typed-source import
+selection, CMake Debug test build, roadmap parser, and diff check.
