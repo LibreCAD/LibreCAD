@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W517 complete; remaining family/variant and acceptance work
+Current status (W518 complete; remaining family/variant and acceptance work
 is open; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -20087,3 +20087,38 @@ per-cell accounting. Refused translated output must remain empty and unchanged.
 Run focused worker/import tests, full worker suite, ellipse-family import
 suite, CMake Debug test build, roadmap parser, and diff check. This finite
 orientation grid does not claim arbitrary angle coverage.
+
+### W518 completion receipt
+
+The W516 worker/import grids now include full ratio-0.2 ellipses with 30- and
+60-degree major axes, both forward and reversed, in addition to the axis-aligned
+cases. All are carried across the three scales, three relative-translation
+ratios, and four near-curvature distances. Each import cell is counted as an
+admitted five-lane round trip or explicit refusal; admitted imports retain
+exact source axis/reversal metadata and sampled geometry.
+
+Validation: focused worker case passes 91,704 assertions; full worker suite
+passes 286,552 assertions across 42 cases. Focused staged import passes 518,567
+assertions; broad `[ellipse]` selection passes 1,247,344 assertions across
+31 cases. CMake Debug targets build; roadmap parser passes 5/5 and diff check
+passes. Product commit `2d6d78eb4` (`test(offset): qualify rotated thin ellipse
+imports`). These are local results, not exact-head CI or external CAD.
+
+## 519. Thin-Ellipse Partial-Interval Curvature Topology
+
+The high-eccentricity boundary matrices exercise full ellipses; a partial
+ellipse can omit the high-curvature extremum and remain single-branch beyond
+the full-ellipse split threshold. Add ratio-0.2 partial intervals that exclude
+or include each major-axis extremum, in forward and reversed directions.
+Bracket the `0.08 * scale` full-ellipse threshold with signed distances
+`+/-0.07`, `+/-0.08`, and `+/-0.09`, at scales `1e-3`, `1`, and `1e12` and
+translation ratios `1e6`, `1e9`, and `1e12`. For each cell, compare centered
+and translated generation plus operation-8 admission/refusal, asserting empty
+output and unchanged cache on refusal. Sample all matching branches in local
+coordinates when topology agrees. Carry only valid single-cache cells through
+the five DXF/DWG lanes; assert exact interval/reversal typed-source metadata,
+imported topology, sampled cache tolerance, and complete per-cell accounting.
+Use existing W488-W491 cases for full-ellipse fallback semantics. Run focused
+worker/import tests, full worker suite, ellipse-family import suite, CMake
+Debug build, roadmap parser, and diff check. Treat the sampled interval set as
+finite, not proof for every possible sweep.
