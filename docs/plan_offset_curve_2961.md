@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W486; chronological evidence follows): implementation slices
+Current status (W487; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W486. Historical results from
+No exact-head CI result is claimed for W441-W487. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18960,3 +18960,33 @@ case passes 4,148 assertions. `git diff --check` passes. These are local
 results, not exact-head CI or external CAD acceptance. Test commit
 `58d84d816` (`test(offset): roundtrip typed sources across DWG versions`);
 roadmap receipt is separate.
+
+## 487. Ellipse Ratio-Above-One Support Matrix
+
+The conic adapter explicitly accepts ellipse ratios above one because imported
+DXF/DWG data can use the longer axis in the field LibreCAD calls `majorP`, but
+the current worker and real-file matrices did not exercise that valid layout.
+Add a partial ellipse with ratio 1.4 through operation-7 generation,
+operation-8 cache validation, five-lane DXF/DWG staged promotion at both sides
+and two magnitudes, and the five-version schema-2 source persistence test.
+Require exact typed-source and cache fingerprints; do not normalize the source
+silently during interchange.
+
+### Completion receipt
+
+The ratio-1.4 partial ellipse passes the conic worker matrix at signed
+distances `±0.1` and `±0.4`; all four produce a single cache accepted by
+operation 8. Real R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG staged imports
+promote all four cases with exact source and cache fingerprints. The five-lane
+source-only DXF/DWG save/reopen/second-save matrix also preserves it, alongside
+the other 23 source definitions.
+
+Validation: incremental CMake Debug worker and `librecad_tests` targets build.
+The focused conic worker case passes 608 assertions, the complete worker-kernel
+suite passes 8,017 assertions/31 cases, the focused real-file family import
+case passes 111,334 assertions, and typed-source persistence passes 4,328
+assertions. `git diff --check` passes. These are local results, not exact-head
+CI or external CAD acceptance. Test commit `a6701fee0`
+(`test(offset): qualify ratio-wide ellipse sources`); roadmap receipt is
+separate. Remaining ellipse work includes more sweep/reversal/eccentricity
+layouts and behavior near curvature singularities.
