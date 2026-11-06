@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W414; chronological evidence follows): implementation slices
+Current status (W415; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16449,5 +16449,36 @@ near-coincident polylines. Non-consecutive repeated vertices, broader
 topology/side/distance cases, non-axial OCS, and mesh/polyface/3D legacy
 polylines remain open. Continue the production-path admission/refusal matrix
 for supported source variants, then update and validate the next slice against
-these boundaries rather than treating the family as fully covered. Roadmap
-checkpoint for W414 is pending push and exact-head CI diagnostics.
+these boundaries rather than treating the family as fully covered. The W414
+product and roadmap commits were pushed to the PR branch; diagnostics
+for exact head `1bb2f003158eb98249a0de3f39a8b6355fe16af7` returned no checks or
+statuses immediately after push. Re-read checks after the next update.
+
+## 415. Repeated-Vertex Polyline Source Refusal (2026-11-05)
+
+Typed polyline source validation now rejects repeated XY vertices, including
+non-consecutive repeats that create self-touching paths. The expected implicit
+closure from the last segment endpoint to the first vertex remains allowed for
+closed polylines. Detection uses an ordered coordinate set, keeping the check
+O(n log n) for the existing 65,536-segment source bound; allocation failure
+becomes a clean invalid-source result under the validator's `noexcept`
+contract.
+
+Added real-file LWPOLYLINE imports that revisit the initial vertex before
+continuing, through R14/AC1014 DXF, AC1032 DXF, and AC1032 DWG. Import remains
+successful and preserves the ordinary polyline, but offset-source capture
+refuses it. The focused case passes 57 assertions/1 case; the full
+`[import-session][typed-source][polyline]` selection passes 732 assertions/7
+cases, including ordinary closed, signed-bulge, OCS, duplicate-adjacent, and
+threshold cases. Worker-kernel `[source-cache][polyline]` passes 309
+assertions/4 cases. Release `librecad_tests` and worker-kernel test target
+build successfully; `git diff --check` passes. Product commit: `d9d74321c`
+(`fix(offset): reject repeated polyline source vertices`).
+
+The repeated-vertex test is exact-coordinate based for non-adjacent vertices;
+it does not detect near-coincident vertices or arbitrary line/arc
+self-intersections. Those remain in the broader topology validation matrix.
+The all-offset-tagged suite was started but interrupted because its unrelated
+verbose cases made the run excessively long; it is not counted as validation.
+Commit the W415 roadmap checkpoint, push both commits to PR #3193, and
+requalify the exact pushed head.
