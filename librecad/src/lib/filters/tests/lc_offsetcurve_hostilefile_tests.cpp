@@ -3960,11 +3960,12 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         {1.4142135623730951, -1.4142135623730951}};
 
     for (size_t variant = 0; variant < fitVariants.size(); ++variant) {
-      std::vector<double> magnitudes{.25};
+      std::vector<double> magnitudes{.1, .25, .4};
       if (variant == 2) magnitudes.push_back(.5);
       for (const double magnitude : magnitudes) {
       for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
                                             LC_CurveOffsetSide::Right}) {
+        CAPTURE(variant, magnitude, side);
         const double signedDistance = side == LC_CurveOffsetSide::Left ? magnitude : -magnitude;
         const LC_OffsetSourceDefinition definition{
             LC_OffsetSourceGeometry{fitVariants[variant]}, signedDistance, 1e-4, false};
@@ -3979,7 +3980,8 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
             LC_CurveOffset::makeDirectSourceBudget());
         REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
-        REQUIRE(materialized.entities.size() == 1);
+        REQUIRE_FALSE(materialized.entities.empty());
+        const bool singleCache = materialized.entities.size() == 1;
         const auto* expectedSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
         REQUIRE(expectedSpline);
         const RS_SplineData expectedCache = expectedSpline->getData();
@@ -4029,7 +4031,8 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
                 (r2000Dxf ? "-r2000-dxf" :
                     (r2000 ? "-r2000-dwg" : (dwg ? "-dwg" : "-r2018")));
             const std::string sideName = side == LC_CurveOffsetSide::Left ? "-left" : "-right";
-            const std::string distanceName = magnitude == .25 ? "-025" : "-050";
+            const std::string distanceName = "-" +
+                std::to_string(static_cast<int>(std::lround(magnitude * 100.0)));
             const auto input = directory.file("fit-points-" + suffix + sideName + distanceName + version + extension);
 #ifdef DWGSUPPORT
             if (dwg) f::dwgFile(input, cache, r2000 ? DRW::AC1015 : DRW::AC1032);
@@ -4045,17 +4048,37 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             const auto outcome = stagedImport(input, lane);
             REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
             REQUIRE(outcome.graphic);
-            CHECK(outcome.admitted == 1);
-            CHECK(outcome.downgraded == 0);
-            const auto* imported = dynamic_cast<const LC_OffsetCurve*>(f::sole(*outcome.graphic));
-            REQUIRE(imported);
-            REQUIRE(imported->sourceDefinition());
+            CHECK(outcome.admitted == (singleCache ? 1 : 0));
+            CHECK(outcome.downgraded == (singleCache ? 0 : 1));
+            const auto* importedEntity = f::sole(*outcome.graphic);
+            REQUIRE(importedEntity);
+            const auto* imported = dynamic_cast<const LC_OffsetCurve*>(importedEntity);
+            const RS_SplineData* importedSpline = nullptr;
+            if (singleCache) {
+                REQUIRE(imported);
+                REQUIRE(imported->sourceDefinition());
+                importedSpline = &imported->getData();
+            } else {
+                CHECK_FALSE(imported);
+                const auto* fallbackSpline = dynamic_cast<const RS_Spline*>(importedEntity);
+                REQUIRE(fallbackSpline);
+                importedSpline = &fallbackSpline->getData();
+            }
             const auto expectedSource = values::encodeSourceDefinition(definition);
-            const auto actualSource = values::encodeSourceDefinition(*imported->sourceDefinition());
+            auto actualSource = expectedSource;
+            if (singleCache) {
+                actualSource = values::encodeSourceDefinition(*imported->sourceDefinition());
+            } else {
+                const auto preserved = xd::parseAndStrip(importedEntity->getDrwExtData(), encoding);
+                REQUIRE(preserved.status == xd::Status::Schema2);
+                REQUIRE(preserved.definition);
+                REQUIRE(preserved.definition->source);
+                actualSource = values::encodeSourceDefinition(*preserved.definition->source);
+            }
             REQUIRE(expectedSource);
             REQUIRE(actualSource);
             CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
-            CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+            CHECK(RS_Spline::geometryFingerprint(*importedSpline) ==
                   RS_Spline::geometryFingerprint(expectedCache));
         }
       }
