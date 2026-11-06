@@ -1446,7 +1446,7 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
         CAPTURE(sourceIndex, static_cast<int>(sources[sourceIndex].kind()));
         const std::vector<double> signedDistances =
             sources[sourceIndex].kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola
-                ? std::vector<double>{-.3, .3}
+                ? std::vector<double>{-.5, -.3, -.1, .1, .3, .5}
                 : std::vector<double>{-.4, -.1, .1, .4};
         for (const double signedDistance : signedDistances) {
             CAPTURE(signedDistance);
