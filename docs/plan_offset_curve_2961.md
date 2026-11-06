@@ -19488,3 +19488,68 @@ assertions/17 cases; CMake Debug `librecad_tests` builds; roadmap parser passes
 matrix only, not all parabola shapes or numeric scales. These are local
 results, not exact-head CI, visible-GUI, or external-CAD acceptance. Product
 test commit `38c3d9b7a` (`test(offset): import large-scale parabola caches`).
+
+## 503. Hyperbola Curvature-Neighborhood Staged Import
+
+W485 qualifies operation-7/operation-8 behavior for eight bounded
+hyperbola interval/branch layouts at signed distances `±1.05`, `±1.08`, and
+`±1.09` around the representative curvature radius, but this dense
+neighborhood has not crossed the DXF/DWG import boundary. Carry each generated
+first-branch carrier through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Derive
+expected behavior from full generated topology: a single-branch cache must
+promote and match exact source/cache values; a first-branch-only multi-branch
+carrier must downgrade to ordinary spline while preserving schema-2 source
+metadata. Require both outcomes in the aggregate matrix when the worker
+topology produces both. Run the focused import case, full typed-source import
+selection, CMake Debug test build, roadmap parser, and diff check.
+
+### Completion receipt
+
+Added eight bounded-hyperbola interval/branch layouts and six signed distances
+(`±1.05`, `±1.08`, `±1.09`) to staged imports across R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. Expected promotion is derived from the full generated
+topology. Single-branch outputs promote with exact source/cache checks;
+multi-branch first-branch carriers downgrade and retain schema-2 source
+metadata. The focused curvature import case passes 59,016 assertions across
+one case. The full `[lc-offsetcurve][import-session][typed-source]` selection
+passes 327,550 assertions across 34 cases. These results qualify these
+recorded variants/settings and do not imply arbitrary hyperbola coverage.
+
+Validation: CMake Debug `librecad_tests` builds; roadmap parser passes 5/5;
+`git diff --check` passes. These are local results, not exact-head CI, visible
+GUI, or external-CAD acceptance. Product test commit `9221c3d6b`
+(`test(offset): import hyperbola curvature neighborhoods`); this roadmap
+receipt is committed separately.
+
+## 504. Source Picker Type-Change and Parabola Request Revalidation
+
+The latest request reiterates that changing the selected source-curve type
+must be possible before picking, that the source picker must cover the
+supported curve families, and that parabola must be included. Re-audit the
+current widget and regression tests before adding UI work: the selector is
+already populated from the nine-family typed-source inventory (line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline); the pick handler rejects an entity whose captured kind does not
+match the selected family; and parabola is identified separately before its
+spline-points base type. The source-selection integration tests cover
+cross-family replacement, parabola identity/highlighting, unsupported or
+unrepresentable candidates, and atomic refusal.
+
+Therefore do not add a second selector or duplicate parabola UI/type branch.
+The UI requirement is satisfied by the existing editable family combo and
+type-filtered candidate list. “All supported types” means these admitted
+families, not every entity RTTI; it does not imply every geometric variant is
+offsettable or cache-representable. Continue the existing per-variant work:
+capture/reconstruction, worker generation and operation-8 admission,
+source/cache atomicity, and relevant DXF/DWG round trips. Keep explicit
+variant refusal as supported behavior when exact native representation is not
+available, and update the inventory only when a new family has a complete
+production path and regression coverage.
+
+Code references: `lc_propertieseditingwidget_offsetcurve.cpp` builds the
+family selector and filters picked entities; the source-picker test suites
+under `ui/dialogs/entity/tests` and `ui/components/utils/tests` exercise the
+interaction contract. Earlier receipts W359/W396/W397/W440/W474 and W494
+remain the implementation evidence. This revalidation adds no product-code
+work; it narrows the remaining plan to actual source-family/variant support
+gaps and does not close visible-GUI, exact-head CI, or external-CAD checks.
