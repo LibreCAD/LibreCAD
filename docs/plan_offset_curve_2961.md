@@ -18515,6 +18515,14 @@ finishes source support.
    changes or picking is cancelled. The implemented nine-family inventory is
    line, arc, circle, ellipse, spline, spline-points, parabola, bounded
    hyperbola, and polyline.
+   Treat every inventory entry as an independently selectable filter while
+   replacing a source, including transitions into and out of parabola; changing
+   the filter must not itself replace the source. The regression matrix must
+   prove that a matching candidate can be picked for each family, that the
+   selected/highlighted source follows a successful cross-family replacement,
+   and that cancellation, no candidate, or refusal leaves the old source and
+   cache intact. In particular, test parabola and generic spline-points in both
+   directions so inheritance cannot collapse the two filter identities.
 2. **Audit actual family/variant admission.** For each advertised family,
    enumerate concrete representations and determine whether capture,
    ordinary offset generation, worker validation, native single-cache
@@ -18522,6 +18530,12 @@ finishes source support.
    typed geometry. Distinguish static non-representability from exact-settings
    worker/cache refusal; do not hide an entire family because one variant or
    distance is unsupported.
+   Maintain a family-by-stage ledger rather than a single supported flag:
+   record capture, generation, worker/cache, editing, DXF, and DWG outcomes
+   separately for each variant. A family may remain available in the picker
+   when some variants are unsupported, but each unsupported candidate must
+   produce a visible, non-mutating refusal; never report the family as fully
+   supported based only on picker enumeration or ordinary generation.
 3. **Keep parabola identity explicit.** Capture and reconstruct `LC_Parabola`
    before testing its `LC_SplinePoints` base class. Verify family filtering,
    replacement, operation-8 cache reconstruction, property edits, and
@@ -18537,6 +18551,10 @@ finishes source support.
    distances/sides, file lanes, assertions, and validation commands. Keep
    visible-GUI, external CAD, and exact-head CI acceptance separate from local
    unit/integration success.
+   The picker regression gate is the nine-family cross-family workflow, with
+   explicit parabola-versus-spline-points cases; the geometry support gate is
+   the separate family-by-variant ledger and end-to-end matrix. Passing the
+   former closes only the widget contract, never the latter.
 
 The family selector, cross-family replacement flow, current-source
 highlighting, and distinct parabola choice already have implementation and
@@ -20122,3 +20140,29 @@ Use existing W488-W491 cases for full-ellipse fallback semantics. Run focused
 worker/import tests, full worker suite, ellipse-family import suite, CMake
 Debug build, roadmap parser, and diff check. Treat the sampled interval set as
 finite, not proof for every possible sweep.
+
+### W519 Completion Receipt
+
+The worker's direct ellipse source path now constructs geometry in a
+center-relative frame and translates completed line/spline output back to
+drawing coordinates. This avoids translation-sensitive cusp/endpoint
+construction for thin wrapped partial intervals; retranslated non-finite
+output is rejected without publishing a partial result. The worker regression
+matches branches one-to-one by sampled geometry, allowing reversed traversal
+without assuming stable branch order.
+
+The W519 grid covers 17 ellipse layouts, including eight thin partial
+interval/reversal cases, three scales, three relative-translation ratios, and
+the planned signed distances. Every worker cell is classified as paired
+generation/cache validation or an explicit refusal, and generated caches are
+checked independently through operation 8. The five-lane R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG matrix accounts for every source/distance cell as
+native promotion in every lane or a diagnosed non-mutating downgrade retaining
+ordinary spline geometry and exact schema-2 source metadata.
+
+Validation: focused worker matrix passes 847,749 assertions; the full
+worker-kernel suite passes 1,042,597 assertions across 42 cases. Focused
+five-lane staged import passes 1,458,660 assertions; broad `[ellipse]`
+selection passes 2,189,712 assertions across 31 cases. CMake Debug worker and
+test targets build. Roadmap parser passes 5/5 and `git diff --check` passes.
+Local results only, not exact-head CI, visible-GUI, or external CAD acceptance.
