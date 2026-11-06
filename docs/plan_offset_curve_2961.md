@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W448; chronological evidence follows): implementation slices
+Current status (W449; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W448. Historical results from
+No exact-head CI result is claimed for W441-W449. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request is already implemented: the user can choose a
@@ -17808,3 +17808,33 @@ pair at one side and distance. It does not qualify all periodic/closed knot
 layouts, non-unit weights, other degrees, arbitrary distances/sides, or all
 historical DWG versions. Exact-head CI and external CAD acceptance remain
 separate.
+
+## 449. Control-Point Spline-Points Import Across DXF/DWG Versions
+
+The source family `LC_SplinePoints` has real-file operation-8 coverage for
+fit-point mode, while control-point mode was only represented by generic
+`RS_Spline` tests. Add a distinct `LC_SplinePointsData` fixture with
+`useControlPoints=true` and run staged promotion through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. Assert the imported source retains control-point
+mode rather than being reclassified as fit points or a generic spline.
+
+### Completion receipt
+
+A three-control open `LC_SplinePoints` source in control-point mode now
+generates one canonical spline cache and promotes after staged import in all
+five file lanes. Each lane admits exactly one native offset, reports zero
+downgrades, preserves the exact tagged source definition and the
+`useControlPoints` discriminator, and matches the generated cache fingerprint.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`[lc-offsetcurve][import-session][typed-source][control-points][persistence]`
+selector passes 1,211 assertions/1 case; the broader
+`[lc-offsetcurve][import-session][typed-source]` selector passes 41,991
+assertions/29 cases. `git diff --check` passes. Test commit
+`a150e2ee5` (`test(offset): promote control-point spline sources`).
+
+This closes version-lane coverage for one open three-control representation
+at one side and distance. It does not qualify other control counts, closed
+control-point shapes, all fit/control combinations, arbitrary distances/sides,
+or all historical DWG versions. Exact-head CI and external CAD acceptance
+remain separate.
