@@ -1726,11 +1726,14 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     lc::test::OutputDirectory directory("offset-parabola-curvature-import");
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
-    const std::array<LC_OffsetSourceGeometry, 3> sources{
+    const std::array<LC_OffsetSourceGeometry, 5> sources{
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}},
-        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{3, 4}, RS_Vector{-7, 9}, RS_Vector{3, 14}}}}
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{3, 4}, RS_Vector{-7, 9}, RS_Vector{3, 14}}}},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{.005, .01}, RS_Vector{.01, 0}}}},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5000, 10000}, RS_Vector{10000, 0}}}}
     };
+    const std::array<double, 5> sourceScales{1.0, 1.0, 1.0, 1e-3, 1e3};
 
     struct Format {
         Lane lane;
@@ -1751,8 +1754,9 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
         bool sourcePromoted = false;
         bool sourceDowngraded = false;
-        for (const double signedDistance : {-3.0, -2.5, -2.0, 2.0, 2.5, 3.0}) {
-            CAPTURE(sourceIndex, signedDistance);
+        for (const double unitDistance : {-3.0, -2.5, -2.0, 2.0, 2.5, 3.0}) {
+            const double signedDistance = unitDistance * sourceScales[sourceIndex];
+            CAPTURE(sourceIndex, unitDistance, signedDistance);
             const LC_OffsetSourceDefinition definition{
                 sources[sourceIndex], signedDistance, 1e-4, false};
             auto source = definition.source.makeEntity();
