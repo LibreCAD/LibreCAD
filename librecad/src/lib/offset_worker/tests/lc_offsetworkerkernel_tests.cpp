@@ -463,11 +463,15 @@ TEST_CASE("ellipse, arc, and circle source caches validate across signed distanc
 
 TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][hyperbola]") {
-    const std::array<LC_HyperbolaData, 4> variants{
+    const std::array<LC_HyperbolaData, 8> variants{
         LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false},
         LC_HyperbolaData{{0, 0}, {3, 0}, .6, 1.5, -1.2, false},
         LC_HyperbolaData{{0, 0}, {3, 0}, .6, -.4, .4, true},
-        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, true}
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, true},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, .2, 1.2, false},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, -.2, false},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true}
     };
     for (const auto& data : variants) {
         CAPTURE(data.angle1, data.angle2, data.reversed);
