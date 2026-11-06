@@ -24,8 +24,10 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W522 complete; remaining family/variant and acceptance work is
-open; chronological evidence follows): implementation slices
+Current status (W523 complete for its defined spline precision/persistence
+matrix; remaining family/variant and acceptance work is open; chronological
+evidence follows):
+implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -19933,6 +19935,16 @@ in `lc_offsetcurve_source_ui_tests.cpp`. This request adds no new modeled
 family and does not close the remaining variant matrix, visible-GUI,
 exact-head CI, or external-CAD acceptance gates.
 
+The latest rebuilt Properties-dialog regression run passes 2,765 assertions.
+Treat the requested UI work as closed: do not add another source widget, family
+selector, or parabola branch unless a regression is demonstrated. The next
+implementation work is exclusively variant eligibility and persistence: for
+each curve layout that the selector can expose, prove capture, operation-7
+generation, operation-8 cache admission, guarded replacement, failure and
+cancellation non-mutation, and the applicable DXF/DWG save/reopen path. Record
+unsupported layouts as explicit refusals; do not claim support from family
+enumeration or from this dialog test.
+
 ## 514. Ellipse Combined Scale and Translation Worker Matrix
 
 Ellipse worker coverage qualifies several sweep, reversal, ratio, and
@@ -20306,3 +20318,64 @@ cases. The Release worker-kernel target builds, roadmap parser passes 5/5, and
 `git diff --check` passes. Product test commit `f2f4593eb` (`test(offset):
 qualify spline scale and translation`). These are local worker results, not
 staged DXF/DWG import, exact-head CI, visible-GUI, or external-CAD acceptance.
+
+## 523. Spline Scale-and-Translation DXF/DWG Persistence Matrix
+
+W522 qualifies worker generation and operation-8 cache admission for three
+representative spline layouts, but has not carried those exact cases through
+file serialization. Reuse the degree-2 nonuniform rational internal-knot
+spline, rational cubic with a repeated interior knot, and fit-point
+spline-points source. Exercise scales `1` and `1e3`, translation ratios `1e6`
+and `1e9` times scale, and signed normalized distances `+/-0.1` and `+/-0.4`.
+For every cell, derive the transformed typed source, worker generation result,
+and complete output topology; only a cache independently accepted by
+operation 8 may be serialized. Count failed generation, multi-output
+non-representability, and operation-8 refusal as explicit non-import cells,
+with unchanged source/cache state. Do not serialize a first branch from a
+multi-output result as if it were a native cache.
+
+Carry every admitted cache through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+On reopen, require complete staged import and exactly one outcome: native
+offset promotion with exact schema-2 source CBOR, or a diagnosed ordinary
+spline fallback with exact preserved source CBOR. Compare imported cache
+geometry to the admitted cache at 129 normalized samples, using the requested
+world tolerance plus a coordinate-ULP allowance. Assert per-cell accounting
+for generated, admitted, imported, and refused cases; do not silently skip a
+serialization or lane failure. Run the focused matrix, full typed-source
+import selection, Release hostile-file target, roadmap parser, and diff check.
+This finite matrix is evidence for these layouts/precision cells only, not a
+claim of arbitrary spline degree, knot, weight, scale, translation, or
+tolerance support.
+
+### W523 Implementation Receipt
+
+The staged persistence matrix is implemented in
+`lc_offsetcurve_hostilefile_tests.cpp`. It uses the isolated production worker
+to generate and independently admit caches, then carries only admitted
+single-output results through all five requested DXF/DWG lanes. It checks
+staged-import completeness, exact schema-2 source CBOR, cache geometry at 129
+samples, refusal accounting, and unchanged state for non-import cases.
+
+Product-test commit `87b173aa9` (`test(offset): verify spline cache
+persistence`) adds W523 and corrects the existing conic promotion fixture to
+derive its expected cache from the isolated worker's canonical operation-7
+result. Focused validation passes: the combined W523 persistence and real-file
+typed-source promotion run reports 182,480 assertions across two cases. The
+Release `librecad_tests` target builds, the roadmap inventory parser passes
+5/5, and `git diff --check` passes. The full
+`[lc-offsetcurve][import-session][typed-source]` selection was rerun after
+correcting its conic-cache fixture to use the isolated worker's canonical
+result. It reached 31/32 cases and 2,205,019 passing assertions before the
+remaining long-running case was interrupted (SIGINT; 2,205,020 total
+assertions reported). This is an incomplete run, not a test failure or a pass.
+The broad run was then split at that one expensive test boundary: the exact
+translated-ellipse test passed alone (1,889,620 assertions), and the other 38
+typed-source import cases passed together (1,477,540 assertions). Thus every
+case in the typed-source selection has a complete passing execution at this
+source revision, although the original monolithic invocation was interrupted
+and not counted as a pass. The separate focused W523 plus conic-promotion run
+also passes (182,480 assertions across two cases). Release target build,
+roadmap parser (5/5), and `git diff --check` pass. W523 is complete for the
+finite source layouts, scales, translations, distances, and serialization
+lanes defined here; it does not close the broader spline/variant, visible-GUI,
+external-CAD, or exact-head CI gates.
