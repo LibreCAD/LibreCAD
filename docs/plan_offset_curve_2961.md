@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W426; chronological evidence follows): implementation slices
+Current status (W427; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -106,6 +106,13 @@ their expected join but also intersect at a second point; source capture must
 refuse that topology. The focused case passes 6 assertions, and the full
 direct `[lc-offsetcurve][source][polyline]` selection passes 45 assertions/3
 cases. Test commit `8a048fe5f` adds no production behavior.
+
+W427 verifies that same adjacent arc/arc double intersection from actual
+LWPOLYLINE files, including bulge decoding and staged import in R14 DXF,
+AC1032 DXF, and AC1032 DWG. All three retain ordinary two-arc polylines while
+offset-source capture refuses them. The focused fixture passes 60 assertions;
+the full imported typed-source/polyline suite passes 1,198 assertions/12
+cases. Test commit `f3d7697ec` adds no production behavior.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -16742,3 +16749,22 @@ Imported arc/arc file fixtures remain open, as do non-axial OCS,
 mesh/polyface/3D legacy POLYLINE, broad distance/side admission, and visible
 GUI acceptance. Push this test and roadmap checkpoint to PR #3193 and check
 only results reported for its exact new head.
+
+## 427. Imported Bulge Arc/Arc Double Intersection (2026-11-06)
+
+Added a real LWPOLYLINE fixture composed of two adjacent bulge arcs from
+different circles. The sweeps share their expected join and cross again at a
+second point. R14/AC1014 binary DXF, AC1032 DXF, and AC1032 DWG all decode the
+entity as an ordinary two-arc polyline; source capture refuses it as
+self-intersecting.
+
+The focused imported arc/arc case passes 60 assertions/1 case. The complete
+`[import-session][typed-source][polyline]` selection passes 1,198 assertions
+in 12 cases. Release `librecad_tests` builds and `git diff --check` passes.
+Test commit: `f3d7697ec` (`test(offset): cover imported arc-arc crossings`).
+
+This closes imported adjacent arc/arc crossing coverage for these representative
+bulges and file versions, not all arc sweep magnitudes or OCS transforms.
+Non-axial OCS, mesh/polyface/3D legacy POLYLINE, broad distance/side admission,
+and visible GUI acceptance remain open. Push the test and plan commits to PR
+#3193 and query checks for the exact resulting head.
