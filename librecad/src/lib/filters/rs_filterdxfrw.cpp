@@ -8783,9 +8783,31 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                     numCtrl, data->weightlist.size());
   }
 
+  const auto preserveFitMetadata = [data](RS_Spline *spline) {
+    if (data->degree != 3 || data->fitlist.empty())
+      return;
+    std::vector<RS_Vector> fitPoints;
+    fitPoints.reserve(data->fitlist.size());
+    for (const auto &coord : data->fitlist) {
+      if (!coord)
+        return;
+      fitPoints.emplace_back(coord->x, coord->y);
+    }
+    RS_SplineData &target = spline->getData();
+    target.fitPoints = std::move(fitPoints);
+    if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
+      target.fitTolerance = data->tolfit;
+    const auto nonzero = [](const DRW_Coord &tangent) {
+      return tangent.x != 0.0 || tangent.y != 0.0 || tangent.z != 0.0;
+    };
+    target.fitTangentsConstrained =
+        nonzero(data->tgStart) || nonzero(data->tgEnd);
+  };
+
   if (numCtrl != 0) {
     std::unique_ptr<RS_Spline> spline =
         makeSplineFromDrw(m_currentContainer, *data, data->weightlist);
+    preserveFitMetadata(spline.get());
     applyImportedSplineAttributes(spline.get(), data, remaining);
     m_currentContainer->addEntity(spline.release());
     return;
@@ -8809,13 +8831,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                      return RS_Vector{coord->x, coord->y};
                    });
     spline->setFitPoints(fitPoints);
-    if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
-      spline->getData().fitTolerance = data->tolfit;
-    const auto nonzero = [](const DRW_Coord &tangent) {
-      return tangent.x != 0.0 || tangent.y != 0.0 || tangent.z != 0.0;
-    };
-    spline->getData().fitTangentsConstrained =
-        nonzero(data->tgStart) || nonzero(data->tgEnd);
+    preserveFitMetadata(spline);
   }
 
   if (isClosed) {
@@ -32015,7 +32031,8 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
   // ends still meet.
   sp.flags = (s->isClosed()) ? 0b1011 : 0b1000;
   const RS_SplineData &splineData = s->getData();
-  if (!s->isClosed() && (splineData.m_closedFlag || splineData.m_periodicFlag) &&
+  if (!s->isClosed() &&
+      (splineData.m_closedFlag || splineData.m_periodicFlag) &&
       splineCurveCloses(splineData)) {
     sp.flags |= (splineData.m_closedFlag ? 0x1 : 0) |
                 (splineData.m_periodicFlag ? 0x2 : 0);

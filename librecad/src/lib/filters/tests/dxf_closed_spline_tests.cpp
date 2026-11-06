@@ -761,6 +761,55 @@ TEST_CASE("Cubic fit-point SPLINE intent survives file round trips",
   }
 }
 
+TEST_CASE("Coherent cubic SPLINE control and fit lists retain fit intent",
+          "[dxf][dwg][filter][spline][fit-points][roundtrip]") {
+  ensureSettings();
+  SplineRecord source;
+  source.m_flags = 8;
+  source.m_degree = 3;
+  source.m_fitPoints = {{0., 0.}, {2., 4.}, {5., 3.}, {8., 0.}};
+  RS_SplineData generatedData(3, false);
+  RS_Spline generated(nullptr, generatedData);
+  generated.setFitPoints(source.m_fitPoints);
+  source.m_controlPoints = generated.getData().controlPoints;
+  source.m_knots = generated.getData().knotslist;
+
+  RS_Graphic graphic;
+  importDxf(graphic, source, "cubic_fit_point_both_lists");
+  RS_Spline *imported = onlySpline(graphic);
+  checkSameVectors(imported->getData().fitPoints, source.m_fitPoints);
+
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDXFRW, "dxf"},
+#ifdef DWGSUPPORT
+      {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2018, "dwg-r2018"},
+#endif
+  };
+  for (const auto &[format, suffix] : formats) {
+    INFO(suffix);
+    const std::string path = tempPath("cubic_fit_point_both_lists_" + suffix);
+    std::remove(path.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+    }
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    const RS2::FormatType readFormat =
+        format == RS2::FormatDXFRW ? RS2::FormatDXFRW : RS2::FormatDWG;
+    importFile(reopened, path, readFormat, &written);
+    std::filesystem::remove(path);
+    REQUIRE(written.size() == 1);
+    CHECK(written.front().m_controlPoints.empty());
+    checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
+    if (format != RS2::FormatDXFRW)
+      CHECK(written.front().m_scenario == 2);
+    checkSameVectors(onlySpline(reopened)->getData().fitPoints,
+                     source.m_fitPoints);
+  }
+}
+
 TEST_CASE("Edited cubic fit-point SPLINE exports its current control net",
           "[dxf][filter][spline][fit-points][roundtrip]") {
   ensureSettings();
