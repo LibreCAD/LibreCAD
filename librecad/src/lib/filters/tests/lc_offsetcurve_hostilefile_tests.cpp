@@ -7120,6 +7120,9 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
     std::size_t admittedTranslatedCaches = 0;
     std::size_t refusedTranslatedCacheCells = 0;
     std::size_t validatedBranches = 0;
+    std::size_t expectedValidationBranches = 0;
+    std::size_t centeredCacheAdmittedCells = 0;
+    std::size_t centeredCacheRefusedCells = 0;
     std::size_t importedFiles = 0;
     std::size_t promotedFiles = 0;
     std::size_t fallbackFiles = 0;
@@ -7263,31 +7266,40 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
                         CHECK(bestDeviation <= deviationLimit);
                     }
 
-                    bool translatedCacheAdmitted = false;
-                    for (std::size_t branch = 0; branch < translated.ordinary.size(); ++branch) {
-                        auto cache = asSpline(translated.ordinary[branch]);
-                        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
-                        const auto validationCompletion = runWorker({
-                            {nextRequestId++, 1, 1, 1},
-                            req::ValidateSourceCache{cache, translatedDefinition, {}}});
-                        const auto& validationReply = validationCompletion->reply();
-                        REQUIRE(validationReply.failure == result::Failure::None);
-                        REQUIRE(validationReply.operation == 8);
-                        REQUIRE(std::holds_alternative<result::Native>(validationReply.result));
-                        const auto& validation = std::get<result::Native>(validationReply.result);
-                        ++validatedBranches;
-                        if (validation.refusal == LC_OffsetCurveRefusal::None) {
-                            CHECK(validation.changed);
-                            CHECK(translated.ordinary.size() == 1);
-                            translatedCacheAdmitted = translated.ordinary.size() == 1 &&
-                                validation.changed;
-                        } else {
-                            CHECK_FALSE(validation.changed);
-                            CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
-                            if (translated.ordinary.size() > 1)
-                                CHECK(validation.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                    const auto validateEveryBranch = [&](const result::Native& generatedResult,
+                                                         const LC_OffsetSourceDefinition& sourceDefinition) {
+                        expectedValidationBranches += generatedResult.ordinary.size();
+                        bool singleCacheAdmitted = false;
+                        for (const auto& item : generatedResult.ordinary) {
+                            auto cache = asSpline(item);
+                            const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+                            const auto validationCompletion = runWorker({
+                                {nextRequestId++, 1, 1, 1},
+                                req::ValidateSourceCache{cache, sourceDefinition, {}}});
+                            const auto& validationReply = validationCompletion->reply();
+                            REQUIRE(validationReply.failure == result::Failure::None);
+                            REQUIRE(validationReply.operation == 8);
+                            REQUIRE(std::holds_alternative<result::Native>(validationReply.result));
+                            const auto& validation = std::get<result::Native>(validationReply.result);
+                            ++validatedBranches;
+                            if (validation.refusal == LC_OffsetCurveRefusal::None) {
+                                CHECK(validation.changed);
+                                CHECK(generatedResult.ordinary.size() == 1);
+                                singleCacheAdmitted = generatedResult.ordinary.size() == 1 &&
+                                    validation.changed;
+                            } else {
+                                CHECK_FALSE(validation.changed);
+                                CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+                                if (generatedResult.ordinary.size() > 1)
+                                    CHECK(validation.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                            }
                         }
-                    }
+                        return singleCacheAdmitted;
+                    };
+                    const bool centeredCacheAdmitted = validateEveryBranch(centered, centeredDefinition);
+                    const bool translatedCacheAdmitted = validateEveryBranch(translated, translatedDefinition);
+                    if (centeredCacheAdmitted) ++centeredCacheAdmittedCells;
+                    else ++centeredCacheRefusedCells;
                     if (!translatedCacheAdmitted) {
                         ++refusedTranslatedCacheCells;
                         continue;
@@ -7392,7 +7404,8 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
           normalizedDistances.size());
     CHECK(generatedCells + generationRefusedCells == cells);
     CHECK(admittedTranslatedCaches + refusedTranslatedCacheCells == generatedCells);
-    CHECK(validatedBranches >= admittedTranslatedCaches);
+    CHECK(centeredCacheAdmittedCells + centeredCacheRefusedCells == generatedCells);
+    CHECK(validatedBranches == expectedValidationBranches);
 #ifndef DWGSUPPORT
     CHECK(importedFiles == admittedTranslatedCaches * 3);
 #else
