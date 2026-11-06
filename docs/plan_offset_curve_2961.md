@@ -19382,7 +19382,8 @@ across 35 cases. Incremental CMake Debug targets build and `git diff --check`
 passes. These are local results, not exact-head CI or external-CAD acceptance.
 Product commit `18c855195` (`fix(offset): scale parabola primitive
 validation`). Worker-scale refusal and more extreme/translated degenerate
-curves remain open.
+curves remained open at this historical checkpoint; W500 supersedes the
+`1e-8` worker-refusal result, and W501 extends the qualified upper scale.
 
 ## 500. Convert Typed Relative Tolerance to World Units Consistently
 
@@ -19436,3 +19437,34 @@ Product commits `45f463d8c` (`fix(offset): scale typed worker tolerances`) and
 The source-picker clarification in W440 remains a completed UI contract; it
 does not change this worker/import tolerance fix or imply that all geometry
 scales are supported.
+
+## 501. Extend Parabola Worker Scale Boundaries
+
+W499 establishes finite primitive geometry through scale `1e12`; W500
+qualifies worker generation/cache validation through scale `1e-8` on the small
+side and `1e3` on the large side. Extend worker operation-7 and operation-8
+coverage to scale `1e12`, scaling signed distances with the source and deriving
+cache admission/refusal from the generated topology. Also exercise a
+well-formed `1e-12` parabola at a proportionally scaled offset: because that
+distance is below the product's documented absolute `RS_TOLERANCE`, require an
+explicit `TooSmall` refusal before engine execution, no ordinary output, and no
+mutation. This records the product boundary rather than claiming scale
+invariance below it.
+
+### Completion receipt
+
+Extended the operation-7/operation-8 matrix to uniform scale `1e12`; all eight
+signed-distance cases generate successfully and each cache is admitted only
+for a single canonical output, otherwise refused without mutation. Relative
+tolerance remains proportional and default-factor parity holds at `1e12`.
+At scale `1e-12`, the typed parabola remains well-formed, but a proportional
+offset below the absolute `RS_TOLERANCE` is explicitly refused as `TooSmall`
+before the geometry engine runs; no ordinary output or state mutation occurs.
+
+Validation: focused scale/boundary selector passes 971 assertions/3 cases;
+complete worker-kernel suite passes 12,082 assertions/37 cases; incremental
+CMake Debug worker target builds; roadmap parser passes 5/5; `git diff --check`
+passes. These are local results, not file-round-trip, exact-head CI,
+visible-GUI, or external-CAD acceptance. Product test commit `bc6d9e629`
+(`test(offset): extend parabola worker scale limits`). Other source families,
+translated extreme scales, and broader precision boundaries remain open.
