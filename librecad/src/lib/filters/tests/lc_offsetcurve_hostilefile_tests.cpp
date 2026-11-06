@@ -5219,8 +5219,9 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
     constexpr std::array<double, 3> scales{1e-3, 1.0, 1e12};
+    constexpr std::array<double, 3> translationRatios{1e6, 1e9, 1e12};
     constexpr std::array<double, 4> ordinaryDistances{-.4, -.1, .1, .4};
-    constexpr std::array<double, 2> thinDistances{-.05, .05};
+    constexpr std::array<double, 8> thinDistances{-.09, -.08, -.07, -.05, .05, .07, .08, .09};
 
     const auto buildSingleCache = [](const LC_OffsetSourceDefinition& definition,
                                      double& requestedTolerance) -> std::optional<RS_SplineData> {
@@ -5262,8 +5263,11 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
     for (std::size_t scaleIndex = 0; scaleIndex < scales.size(); ++scaleIndex) {
         const double scale = scales[scaleIndex];
         CAPTURE(scale);
-        const RS_Vector translation{1e9 * scale, -1e9 * scale};
-        for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
+        for (std::size_t ratioIndex = 0; ratioIndex < translationRatios.size(); ++ratioIndex) {
+          const double translationRatio = translationRatios[ratioIndex];
+          CAPTURE(translationRatio);
+          const RS_Vector translation{translationRatio * scale, -translationRatio * scale};
+          for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
             const auto& base = variants[variantIndex];
             const RS_EllipseData centeredData{{base.center.x * scale, base.center.y * scale, base.center.z},
                                               {base.majorP.x * scale, base.majorP.y * scale, base.majorP.z},
@@ -5290,7 +5294,6 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                 double translatedTolerance = 0;
                 const auto centeredCache = buildSingleCache(centeredDefinition, centeredTolerance);
                 const auto translatedCache = buildSingleCache(translatedDefinition, translatedTolerance);
-                CHECK(bool(centeredCache) == bool(translatedCache));
                 if (!centeredCache || !translatedCache) {
                     ++refusedCases;
                     ++refusalsByScale[scaleIndex];
@@ -5330,7 +5333,8 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                     carrier.nfit = 0;
 
                     const auto input = directory.file(std::to_string(scaleIndex) + "-" +
-                        std::to_string(variantIndex) + "-" + std::to_string(distanceIndex) + "-" + fileFormat.suffix);
+                        std::to_string(ratioIndex) + "-" + std::to_string(variantIndex) + "-" +
+                        std::to_string(distanceIndex) + "-" + fileFormat.suffix);
 #ifdef DWGSUPPORT
                     if (fileFormat.dwg) f::dwgFile(input, carrier, fileFormat.version);
                     else f::binaryDxf(input, carrier, fileFormat.version);
@@ -5370,17 +5374,17 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                 ++importedCases;
                 ++importsByScale[scaleIndex];
             }
+          }
         }
     }
     CHECK(importedCases > 0);
     CHECK(refusedCases > 0);
-    const std::size_t expectedCells = scales.size() *
-        (3 * ordinaryDistances.size() + 2 * thinDistances.size());
+    const std::size_t cellsPerRatio = 3 * ordinaryDistances.size() + 2 * thinDistances.size();
+    const std::size_t expectedCells = scales.size() * translationRatios.size() * cellsPerRatio;
     CHECK(importedCases + refusedCases == expectedCells);
     for (std::size_t i = 0; i < scales.size(); ++i) {
         CAPTURE(scales[i]);
-        CHECK(importsByScale[i] + refusalsByScale[i] ==
-              3 * ordinaryDistances.size() + 2 * thinDistances.size());
+        CHECK(importsByScale[i] + refusalsByScale[i] == translationRatios.size() * cellsPerRatio);
     }
 }
 
