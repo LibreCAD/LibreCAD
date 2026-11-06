@@ -8739,6 +8739,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
         splinePoints->addPoint({vert->x, vert->y});
       }
     }
+    if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
+      splinePoints->getData().fitTolerance = data->tolfit;
 
     splinePoints->update();
     m_currentContainer->addEntity(splinePoints);
@@ -32187,7 +32189,9 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     sp.m_knotParam = 0;
     sp.ncontrol = 0;
     sp.nknots = 0;
-    sp.tolfit = 0.0000001;
+    sp.tolfit = std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0
+                    ? data.fitTolerance
+                    : 0.0000001;
     const RS_Vector startTangent = fitPoints[1] - fitPoints[0];
     const RS_Vector endTangent =
         fitPoints.back() - fitPoints[fitPoints.size() - 2];

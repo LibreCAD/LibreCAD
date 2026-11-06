@@ -60,6 +60,8 @@ struct LC_SplinePointsData {
     bool useControlPoints = false;
     /** points on the spline. */
     std::vector<RS_Vector> splinePoints;
+    /** Fit-point tolerance from the source SPLINE, when available. */
+    double fitTolerance = 1.0e-7;
     std::vector<RS_Vector> controlPoints;
 };
 

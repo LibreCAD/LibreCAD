@@ -660,6 +660,7 @@ TEST_CASE("Fit-point SPLINE intent survives DXF and DWG file round trips",
   LC_SplinePoints *sourcePoints = onlySplinePoints(first);
   REQUIRE_FALSE(sourcePoints->getData().useControlPoints);
   checkSameVectors(sourcePoints->getData().splinePoints, source.m_fitPoints);
+  CHECK(std::abs(sourcePoints->getData().fitTolerance - 1.0e-10) < 1.0e-20);
 
   const std::vector<std::pair<RS2::FormatType, std::string>> formats{
       {RS2::FormatDXFRW, "dxf"},
@@ -679,19 +680,21 @@ TEST_CASE("Fit-point SPLINE intent survives DXF and DWG file round trips",
 
     RS_Graphic reopened;
     std::vector<SplineRecord> written;
-    const RS2::FormatType readFormat = format == RS2::FormatDXFRW
-        ? RS2::FormatDXFRW : RS2::FormatDWG;
+    const RS2::FormatType readFormat =
+        format == RS2::FormatDXFRW ? RS2::FormatDXFRW : RS2::FormatDWG;
     importFile(reopened, path, readFormat, &written);
     std::filesystem::remove(path);
 
     REQUIRE(written.size() == 1);
     CHECK(written.front().m_controlPoints.empty());
     checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
-      if (format != RS2::FormatDXFRW)
+    CHECK(std::abs(written.front().m_tolFit - 1.0e-10) < 1.0e-20);
+    if (format != RS2::FormatDXFRW)
       CHECK(written.front().m_scenario == 2);
 
     LC_SplinePoints *reopenedPoints = onlySplinePoints(reopened);
     CHECK_FALSE(reopenedPoints->getData().useControlPoints);
+    CHECK(std::abs(reopenedPoints->getData().fitTolerance - 1.0e-10) < 1.0e-20);
     checkSameVectors(reopenedPoints->getData().splinePoints,
                      sourcePoints->getData().splinePoints);
   }
