@@ -184,7 +184,7 @@ int run() {
 }
 
 int main(int argc, char** argv) {
-    if (argc != 2 || std::strcmp(argv[1], "--protocol=4") != 0) return 2;
+    if (argc != 2 || std::strcmp(argv[1], "--protocol=5") != 0) return 2;
     try {
         QCoreApplication application(argc, argv);
         return run();

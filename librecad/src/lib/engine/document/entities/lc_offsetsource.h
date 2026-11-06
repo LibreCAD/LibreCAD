@@ -339,6 +339,7 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             const auto& activePoints = data.useControlPoints ? data.controlPoints : data.splinePoints;
             return activePoints.size() >= 2 && data.splinePoints.size() <= MaximumSourceItems &&
                    data.controlPoints.size() <= MaximumSourceItems &&
+                   std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0 &&
                    finitePoints(data.splinePoints) && finitePoints(data.controlPoints);
         } else if constexpr (std::is_same_v<T, LC_ParabolaData>) {
             return data.isValid() &&

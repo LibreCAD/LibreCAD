@@ -286,7 +286,7 @@ void LC_OffsetWorkerClient::start() {
         connect(m_process.get(), &QProcess::readyReadStandardError, this, [this] { drain(); });
         // Finalization is polled, not performed inside QProcess's signal stack.
         m_process->setProgram(helperPath());
-        m_process->setArguments({QStringLiteral("--protocol=4")});
+        m_process->setArguments({QStringLiteral("--protocol=5")});
         m_process->start();
         m_timer.start();
     } catch (...) {

@@ -318,7 +318,7 @@ TEST_CASE("Worker ordinary fallback retains exact raw values outside lowered C a
         }
         const auto decoded = roundtrip(r, reply(r, n));
         const auto wire = Reply::encode(decoded, r); REQUIRE(wire);
-        CHECK(wire->at(0).toInteger() == 4);
+        CHECK(wire->at(0).toInteger() == 5);
         const auto body = wire->at(4).toArray(); REQUIRE(body.size() == 15);
         CHECK(body.at(12).toInteger() == qint64(Reply::OrdinaryStatus::Complete));
         REQUIRE(body.at(13).toArray().size() == 3);
@@ -574,7 +574,7 @@ TEST_CASE("Worker CheckThrough receipts contain only bounded membership work and
     roundtrip(r, reply(r, n));
     n.refusal = Refusal::ThroughNotOnCache; roundtrip(r, reply(r, n));
     const auto encoded = Reply::encode(reply(r, n), r); REQUIRE(encoded);
-    CHECK(encoded->at(0).toInteger() == 4); CHECK(encoded->at(2).toInteger() == 4);
+    CHECK(encoded->at(0).toInteger() == 5); CHECK(encoded->at(2).toInteger() == 4);
     REQUIRE(encoded->at(4).toArray().size() == 15);
     CHECK_FALSE(Reply::decode(patched(*encoded, {0}, 1), r));
     CHECK_FALSE(Reply::decode(patched(*encoded, {2}, 5), r));
@@ -1051,11 +1051,11 @@ TEST_CASE("Produced receipts retain pointer-free diagnostics grouping and succes
     d.source.stoppedBy = LC_OffsetSourceStatus::Vanished; d.source.engineStatus = Status::Ok;
     producedRoundtrip(r, d);
     const auto wire = producedRoundtrip(r, d);
-    CHECK(wire.at(0).toInteger() == 4); CHECK(wire.at(2).toInteger() == 5);
+    CHECK(wire.at(0).toInteger() == 5); CHECK(wire.at(2).toInteger() == 5);
     REQUIRE(wire.at(4).toArray().size() == 6);
     REQUIRE(wire.at(4).toArray().at(0).toArray().size() == 19);
     for (const auto& bad : {
-            patched(wire, {0}, 3), patched(wire, {2}, 4), patched(wire, {1, 1}, 1),
+            patched(wire, {0}, 3), patched(wire, {0}, 4), patched(wire, {2}, 4), patched(wire, {1, 1}, 1),
             patched(wire, {4, 0, 0}, qint64(LC_OffsetSourceStatus::LimitExceeded)),
             patched(wire, {4, 0, 1}, qint64(Status::LimitExceeded)),
             patched(wire, {4, 0, 3}, qint64(LC_OffsetSourceStatus::Succeeded)),

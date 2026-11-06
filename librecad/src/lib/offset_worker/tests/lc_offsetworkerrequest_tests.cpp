@@ -359,7 +359,8 @@ TEST_CASE("offset worker request has exact version two positional shapes",
           "[lc-offsetcurve][worker-protocol][request]") {
     for (const auto& value : fixtures()) {
         const auto root = encoded(value);
-        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 4);
+        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 5);
+        CHECK_FALSE(request::decode(changed(root, {0}, 4)));
         const auto t = root.at(1).toArray();
         REQUIRE(t.size() == 4); CHECK(t.at(0).toInteger() == value.token.requestId);
         CHECK(t.at(1).toInteger() == value.token.generation);
@@ -778,6 +779,8 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     LC_SplinePointsData pointsData{false, false};
     pointsData.useControlPoints = true;
     pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    pointsData.fitTangentsConstrained = true;
+    pointsData.fitTolerance = 1e-10;
     const std::array<LC_OffsetSourceGeometry, 10> sources{
         LC_OffsetSourceGeometry{ellipse()},
         LC_OffsetSourceGeometry{splineData},
@@ -800,6 +803,11 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
         const auto decodedSource = values::decodeSourceGeometry(*encodedSource);
         REQUIRE(decodedSource);
         CHECK(decodedSource->kind() == sources[i].kind());
+        if (i == 2) {
+            const auto& decodedPoints = std::get<LC_SplinePointsData>(decodedSource->value);
+            CHECK(decodedPoints.fitTangentsConstrained);
+            CHECK(decodedPoints.fitTolerance == 1e-10);
+        }
         const auto reencodedSource = values::encodeSourceGeometry(*decodedSource);
         REQUIRE(reencodedSource);
         CHECK(QCborValue(*encodedSource).toCbor() == QCborValue(*reencodedSource).toCbor());
@@ -816,6 +824,17 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
         CHECK(decodedReversed);
     }
 
+    auto legacyPoints = *values::encodeSourceGeometry(sources[2]);
+    auto legacyFields = legacyPoints.at(1).toArray();
+    legacyFields.removeAt(6);
+    legacyFields.removeAt(5);
+    legacyPoints[1] = legacyFields;
+    const auto decodedLegacyPoints = values::decodeSourceGeometry(legacyPoints);
+    REQUIRE(decodedLegacyPoints);
+    const auto& legacyData = std::get<LC_SplinePointsData>(decodedLegacyPoints->value);
+    CHECK_FALSE(legacyData.fitTangentsConstrained);
+    CHECK(legacyData.fitTolerance == 1e-7);
+
     const auto validSource = values::encodeSourceGeometry(sources[1]);
     REQUIRE(validSource);
     CHECK_FALSE(values::decodeSourceGeometry(changed(*validSource, {0}, 5)));
@@ -829,6 +848,12 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     std::get<RS_EllipseData>(nonPlanar.value).center.z = 1.0;
     CHECK_FALSE(values::encodeSourceGeometry(nonPlanar));
     CHECK_FALSE(values::decodeSourceGeometry(changed(*validSource, {1, 0, 2}, 1.0)));
+    auto invalidFitMetadata = sources[2];
+    std::get<LC_SplinePointsData>(invalidFitMetadata.value).fitTolerance = 0.0;
+    CHECK_FALSE(values::encodeSourceGeometry(invalidFitMetadata));
+    const auto validFitSource = values::encodeSourceGeometry(sources[2]);
+    REQUIRE(validFitSource);
+    CHECK_FALSE(values::decodeSourceGeometry(changed(*validFitSource, {1, 6}, -1.0)));
 
     auto invalidDefinition = LC_OffsetSourceDefinition{sources[0], std::numeric_limits<double>::infinity(), 0, false};
     CHECK_FALSE(values::encodeSourceDefinition(invalidDefinition));
@@ -937,7 +962,7 @@ TEST_CASE("offset worker CheckThrough owns raw values and bounds every membershi
 }
 
 
-TEST_CASE("Produce requests freeze protocol four raw sources context bounds and copy-series limits",
+TEST_CASE("Produce requests freeze protocol five raw sources context bounds and copy-series limits",
           "[lc-offsetcurve][worker-protocol][request][produce]") {
     request::Produce op;
     op.source = ellipse(); op.context.topLevel = true;
@@ -945,14 +970,14 @@ TEST_CASE("Produce requests freeze protocol four raw sources context bounds and 
     op.fallback = point(8, 9); op.distance = -.125; op.copies = 100; op.asOffsetCurve = true;
     const request::Request input{{71, 73, 79, 83}, op};
     const auto wire = request::encode(input); REQUIRE(wire);
-    CHECK(wire->at(0).toInteger() == 4); CHECK(wire->at(2).toInteger() == 5);
+    CHECK(wire->at(0).toInteger() == 5); CHECK(wire->at(2).toInteger() == 5);
     REQUIRE(wire->at(3).toArray().size() == 10);
     const auto decoded = request::decode(*wire); REQUIRE(decoded);
     CHECK(request::encode(*decoded) == wire); same(input, *decoded);
     const auto& owned = std::get<request::Produce>(decoded->operation);
     CHECK(owned.distance == -.125); CHECK(owned.copies == 100); REQUIRE(owned.minimum);
     CHECK(owned.minimum->z == 0); CHECK(std::signbit(owned.minimum->z));
-    for (qint64 old : {1, 2, 3}) CHECK_FALSE(request::decode(changed(*wire, {0}, old)));
+    for (qint64 old : {1, 2, 3, 4}) CHECK_FALSE(request::decode(changed(*wire, {0}, old)));
     for (const auto& bad : {
             changed(*wire, {2}, 6), changed(*wire, {3, 0, 0}, 2), changed(*wire, {3, 1, 1}, true),
             changed(*wire, {3, 6}, 0), changed(*wire, {3, 6}, 101), changed(*wire, {3, 6}, 1.0),
@@ -1003,7 +1028,7 @@ TEST_CASE("Cached Produce appends operation six with owned bounded ordinary prev
     op.cache.entries.push_back(entry);
     const request::Request input{token(), op};
     const auto wire = request::encode(input); REQUIRE(wire);
-    CHECK(wire->at(0).toInteger() == 4); CHECK(wire->at(2).toInteger() == 6);
+    CHECK(wire->at(0).toInteger() == 5); CHECK(wire->at(2).toInteger() == 6);
     REQUIRE(wire->at(3).toArray().size() == 2);
     CHECK(at(*wire, {3, 0}).toArray().size() == 10);
     CHECK(at(*wire, {3, 1}).toArray().size() == 4);

@@ -3958,6 +3958,10 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         {0, 2}, {-1.4142135623730951, 1.4142135623730951}, {-2, 0},
         {-1.4142135623730951, -1.4142135623730951}, {0, -2},
         {1.4142135623730951, -1.4142135623730951}};
+    fitVariants.emplace_back(false, false);
+    fitVariants.back().splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    fitVariants.back().fitTangentsConstrained = true;
+    fitVariants.back().fitTolerance = 1e-10;
 
     for (size_t variant = 0; variant < fitVariants.size(); ++variant) {
       std::vector<double> magnitudes{.1, .25, .4};
@@ -4054,10 +4058,19 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             REQUIRE(importedEntity);
             const auto* imported = dynamic_cast<const LC_OffsetCurve*>(importedEntity);
             const RS_SplineData* importedSpline = nullptr;
+            const auto checkFitMetadata = [&](const LC_OffsetSourceDefinition& received) {
+                const auto* fitSource = std::get_if<LC_SplinePointsData>(
+                    &received.source.value);
+                REQUIRE(fitSource);
+                CHECK(fitSource->fitTangentsConstrained ==
+                      fitVariants[variant].fitTangentsConstrained);
+                CHECK(fitSource->fitTolerance == fitVariants[variant].fitTolerance);
+            };
             if (singleCache) {
                 REQUIRE(imported);
                 REQUIRE(imported->sourceDefinition());
                 importedSpline = &imported->getData();
+                checkFitMetadata(*imported->sourceDefinition());
             } else {
                 CHECK_FALSE(imported);
                 const auto* fallbackSpline = dynamic_cast<const RS_Spline*>(importedEntity);
@@ -4073,6 +4086,7 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
                 REQUIRE(preserved.status == xd::Status::Schema2);
                 REQUIRE(preserved.definition);
                 REQUIRE(preserved.definition->source);
+                checkFitMetadata(*preserved.definition->source);
                 actualSource = values::encodeSourceDefinition(*preserved.definition->source);
             }
             REQUIRE(expectedSource);

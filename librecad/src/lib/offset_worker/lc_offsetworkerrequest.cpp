@@ -189,10 +189,17 @@ bool valid(const LC_OffsetSourceGeometry& source) { return source.isWellFormed()
 bool valid(const LC_OffsetSourceDefinition& definition) { return definition.isWellFormed(); }
 bool read(const QCborValue& value, LC_SplinePointsData& data) {
     QCborArray a, splinePoints, controlPoints;
-    return array(value, 5, a) && boolean(a.at(0), data.closed) && boolean(a.at(1), data.cut) &&
-        boolean(a.at(2), data.useControlPoints) && boundedArray(a.at(3), ControlCap, splinePoints) &&
-        boundedArray(a.at(4), ControlCap, controlPoints) && readPoints(splinePoints, data.splinePoints) &&
-        readPoints(controlPoints, data.controlPoints);
+    if (!value.isArray()) return false;
+    a = value.toArray();
+    if ((a.size() != 5 && a.size() != 7) || !boolean(a.at(0), data.closed) ||
+        !boolean(a.at(1), data.cut) || !boolean(a.at(2), data.useControlPoints) ||
+        !boundedArray(a.at(3), ControlCap, splinePoints) ||
+        !boundedArray(a.at(4), ControlCap, controlPoints) ||
+        !readPoints(splinePoints, data.splinePoints) ||
+        !readPoints(controlPoints, data.controlPoints)) return false;
+    if (a.size() == 7 && (!boolean(a.at(5), data.fitTangentsConstrained) ||
+                          !number(a.at(6), data.fitTolerance))) return false;
+    return true;
 }
 bool read(const QCborValue& value, LC_ParabolaData& data) {
     QCborArray a;
@@ -579,7 +586,8 @@ QCborArray fields(const RS_SplineData& d) {
         d.m_closedFlag, d.m_periodicFlag};
 }
 QCborArray fields(const LC_SplinePointsData& d) {
-    return {d.closed, d.cut, d.useControlPoints, fields(d.splinePoints), fields(d.controlPoints)};
+    return {d.closed, d.cut, d.useControlPoints, fields(d.splinePoints), fields(d.controlPoints),
+        d.fitTangentsConstrained, d.fitTolerance};
 }
 QCborArray fields(const LC_ParabolaData& d) {
     QCborArray points;
@@ -751,14 +759,14 @@ std::optional<QCborArray> encode(const Request& request) {
     // No CBOR arrays are populated until the entire caller-owned value is admitted.
     if (!admitted(request)) return std::nullopt;
     const auto& t = request.token;
-    return QCborArray{4, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{5, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(request.operation.index()), std::visit([](const auto& op) { return fields(op); }, request.operation)};
 }
 
 std::optional<Request> decode(const QCborArray& a) {
     qint64 version, tag;
     Token token;
-    if (a.size() != 4 || !integer(a.at(0), version) || version != 4 ||
+    if (a.size() != 4 || !integer(a.at(0), version) || version != 5 ||
         !read(a.at(1), token) || !integer(a.at(2), tag) || !a.at(3).isArray()) return std::nullopt;
     const auto body = a.at(3).toArray();
     switch (tag) {
