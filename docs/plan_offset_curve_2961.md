@@ -17578,8 +17578,11 @@ side can form a single native cache.
 ### Completion criteria
 
 - A user can switch the requested source type before invoking entity selection;
-  the candidate list follows the selected type and changing the filter alone
-  does not mutate the existing source or cache.
+  while replacement selection is active, changing the type refreshes the
+  eligible candidate list immediately. Changing the filter alone, opening or
+  cancelling selection, and highlighting a candidate do not mutate the
+  existing source or cache; mutation occurs only after a candidate passes the
+  joined worker preflight and the replacement transaction commits.
 - Every production-supported family/variant can be selected, highlighted when
   it is the current live source, replaced atomically, edited, and persisted;
   parabola identity survives independently of generic spline-points.
@@ -17594,7 +17597,10 @@ side can form a single native cache.
 
 This entry consolidates the repeated picker requests into the existing
 eligibility roadmap; it does not reopen completed type-selector, highlighting,
-or parabola-identity work.
+or parabola-identity work. The latest reaffirmation adds no new family beyond
+the nine listed above; it sharpens the dynamic-filter and preflight atomicity
+checks, which must remain in the regression suite as family/variant support
+expands.
 
 ## 441. Ellipse, Arc, and Circle Cache Side/Distance Matrix
 
@@ -19377,3 +19383,53 @@ passes. These are local results, not exact-head CI or external-CAD acceptance.
 Product commit `18c855195` (`fix(offset): scale parabola primitive
 validation`). Worker-scale refusal and more extreme/translated degenerate
 curves remain open.
+
+## 500. Convert Typed Relative Tolerance to World Units Consistently
+
+`LC_OffsetSourceDefinition::relativeTolerance` is a dimensionless relative
+factor, while `LC_CurveOffset::makeDirectOptions()` accepts an absolute
+world-space tolerance. The worker currently passes the typed factor directly
+as the absolute tolerance during source generation and cache reconstruction.
+At small source scales this can make the tolerance larger than the geometry,
+causing a valid typed parabola to refuse as `UndefinedTangent`; fixing primitive
+validity alone does not address this mismatch.
+
+Before constructing direct options, resolve a zero factor to the source's
+default `relativeOffsetTolerance`, then use
+`LC_CurveOffset::toleranceFor(source, distance, relativeFactor)` to obtain the
+world-space tolerance. Apply the same conversion in operation-7 generation and
+both operation-8/cache-reconstruction paths so generated previews, promotion,
+and committed native offsets use identical settings. Reject non-finite or
+non-positive resolved tolerances explicitly rather than silently reverting to
+an unrelated absolute default. Keep direct-engine APIs that explicitly receive
+an absolute tolerance unchanged.
+
+### Completion receipt
+
+Added the shared `LC_OffsetWorkerTolerance::directOptions()` conversion and
+used it for worker operation-7 generation, both operation-8 completion paths,
+and staged DXF/DWG offset import. It resolves a zero factor to the per-source
+relative default, converts via `toleranceFor()` to world units, and rejects
+invalid or unusable values. Direct-engine APIs that accept absolute tolerances
+are unchanged. Typed-source fixture generation now uses the same conversion.
+
+The worker parabola matrix now requires generation at scale `1e-8` and covers
+24 operation-7/8 settings across `1e-8`, `1e-3`, and `1e3`; op-8 admits exactly
+single-cache results and refuses non-single topology without mutation. A
+separate case verifies zero-factor/default parity and world tolerance scaling
+across all three scales.
+
+Validation: dedicated worker-kernel suite passes 11,830 assertions/36 cases;
+worker-client suite passes 39,686 assertions/20 cases; the full `[parabola]`
+selector passes 58,733 assertions/17 cases, including staged DXF/DWG import
+lanes; the full LibreCAD app and test targets build; roadmap parser passes 5/5;
+`git diff --check` passes. The broader `[typed-source]` run was stopped after
+remaining at the same R2018 DWG stage without log progress for over a minute;
+it is not counted as a pass. These are local results, not exact-head CI,
+visible-GUI, or external-CAD acceptance.
+
+Product commit `45f463d8c` (`fix(offset): scale typed worker tolerances`).
+
+The source-picker clarification in W440 remains a completed UI contract; it
+does not change this worker/import tolerance fix or imply that all geometry
+scales are supported.
