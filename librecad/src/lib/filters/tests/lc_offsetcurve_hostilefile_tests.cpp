@@ -1413,9 +1413,11 @@ TEST_CASE("bulged LWPOLYLINE import preserves signed arc geometry for offset sou
     REQUIRE(expectedSource);
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
     for (const auto& format : formats) {
@@ -1473,9 +1475,11 @@ TEST_CASE("imported duplicate LWPOLYLINE vertices remain ordinary and are not of
     raw.addVertex(DRW_Vertex2D(4, 1, 0));
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
     for (const auto& format : formats) {
@@ -1522,9 +1526,11 @@ TEST_CASE("imported non-consecutive repeated LWPOLYLINE vertices are not offset 
     raw.addVertex(DRW_Vertex2D(0, 2, 0));
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
     for (const auto& format : formats) {
@@ -1796,9 +1802,11 @@ TEST_CASE("imported near-concentric bulge arcs crossing twice are not an offset 
     raw.addVertex(DRW_Vertex2D(centerShift + radius, 0, 0));
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
     for (const auto& format : formats) {
@@ -1860,9 +1868,11 @@ TEST_CASE("imported near-tangent line and arc crossing is not an offset source",
     raw.addVertex(DRW_Vertex2D(arcEndX, arcEndY, 0.0));
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
     for (const auto& format : formats) {
@@ -1908,9 +1918,11 @@ TEST_CASE("imported near-parallel line crossing is not an offset source",
     raw.addVertex(DRW_Vertex2D(1.0, -offset, 0.0));
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
     for (const auto& format : formats) {
