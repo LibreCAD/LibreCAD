@@ -20,6 +20,7 @@
 DRW_Header::DRW_Header() {
     linetypeCtrl = layerCtrl = styleCtrl = dimstyleCtrl = appidCtrl = 0;
     blockCtrl = viewCtrl = ucsCtrl = vportCtrl = vpEntHeaderCtrl = 0;
+    clayerHandle = 0;
     version = DRW::AC1021;
 }
 
@@ -1949,6 +1950,7 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     DRW_DBG("\nHANDSEED: "); DRW_DBGHL(HANDSEED.code, HANDSEED.size, HANDSEED.ref);
     dwgHandle CLAYER = hBbuf->getHandle();
     DRW_DBG("\nCLAYER: "); DRW_DBGHL(CLAYER.code, CLAYER.size, CLAYER.ref);
+    clayerHandle = CLAYER.ref;
     dwgHandle TEXTSTYLE = hBbuf->getHandle();
     DRW_DBG("\nTEXTSTYLE: "); DRW_DBGHL(TEXTSTYLE.code, TEXTSTYLE.size, TEXTSTYLE.ref);
     dwgHandle CELTYPE = hBbuf->getHandle();

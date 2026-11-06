@@ -505,7 +505,7 @@ bool RS_Graphic::loadTemplate(const QString &filename, RS2::FormatType type) {
     ret = RS_FileIO::instance()->fileImport(*this, filename, type);
 
     if (ret) {
-        layerList.ensureActiveLayerIsVisible();
+        layerList.ensureActiveLayer();
     }
 
     setModified(false);
@@ -540,7 +540,7 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
     ret = RS_FileIO::instance()->fileImport(*this, filename, type);
 
     if( ret) {
-        layerList.ensureActiveLayerIsVisible();
+        layerList.ensureActiveLayer();
         setModified(false);
         layerList.setModified(false);
         blockList.setModified(false);

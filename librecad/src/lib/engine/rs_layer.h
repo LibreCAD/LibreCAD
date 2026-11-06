@@ -71,6 +71,17 @@ struct RS_LayerData {
  */
 class RS_Layer {
 public:
+    /**
+     * How DXF and DWG store a hidden layer. AutoCAD keeps a frozen layer apart from one that is
+     * turned off (saved with a negative colour), and a layer can be both; LibreCAD hides the
+     * layer either way (isFrozen()) and saves it back as the file it was read from had it.
+     */
+    enum class HiddenAs {
+        Frozen,
+        Off,
+        FrozenAndOff
+    };
+
     explicit RS_Layer(const QString& name);
     //RS_Layer(const char* name);
 
@@ -195,11 +206,16 @@ public:
      */
 	bool setConstruction( const bool construction);
 
+    /// how the layer is saved while it is hidden; kept when the layer is shown and hidden again
+    HiddenAs getHiddenAs() const {return hiddenAs;}
+    void setHiddenAs(HiddenAs hiddenAs) {this->hiddenAs = hiddenAs;}
+
     friend std::ostream& operator << (std::ostream& os, const RS_Layer& l);
 
 private:
     //! Layer data
     RS_LayerData data;
+    HiddenAs hiddenAs = HiddenAs::Frozen;
 
 };
 

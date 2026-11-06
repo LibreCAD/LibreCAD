@@ -314,7 +314,11 @@ void QG_LayerWidget::layerAdded(RS_Layer* layer)
     if (! matchLayerName->text().isEmpty()) {
         slotUpdateLayerList();
     }
-    activateLayer(layer);
+    // a layer added hidden (pasted, or brought in by a library insert) does not
+    // become current: what is drawn or pasted next would not be visible
+    if (layer != nullptr && !layer->isFrozen()) {
+        activateLayer(layer);
+    }
     update();   // update again, if new layer is last row, the height was wrong
 }
 
