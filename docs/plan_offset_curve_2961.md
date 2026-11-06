@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W460; chronological evidence follows): implementation slices
+Current status (W461; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W460. Historical results from
+No exact-head CI result is claimed for W441-W461. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request (2026-11-06) reconfirms that changing an
@@ -18205,3 +18205,32 @@ assertions across 29 cases. `git diff --check` passes. These are local results,
 not exact-head CI or external CAD acceptance. Test commit `00588e034`
 (`test(dwg): cover legacy OCS bulge variants by version`); the roadmap receipt
 is committed separately.
+
+## 461. Closed Tilted-OCS Legacy POLYLINE Projection Matrix
+
+The legacy 2D POLYLINE version matrix now covers positive, negative, and major
+open tilted-OCS bulges, while closed legacy coverage only exercises source
+capture for an axial polyline. Add a closed tilted legacy POLYLINE with a
+bulged closing edge and unrelated XDATA across R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG. Verify the one-ellipse/three-line projected loop, directed
+connectivity, provenance, XDATA, and typed-source refusal. Do not infer
+negative/major closed bulges or reflected-normal legacy OCS from this fixture.
+
+### Completion receipt
+
+A closed tilted-OCS legacy 2D POLYLINE with a positive bulged closing segment
+now imports across all five DXF/DWG lanes. Each import produces exactly one
+ellipse and three line fragments forming the expected closed projected loop;
+tests check the arc sweep and direction, all straight-edge endpoints, both
+OCS provenance markers, unrelated `FixtureSourceData`, and refusal of every
+projected fragment as an editable typed source. This qualifies only this
+positive closed-bulge layout, not other closing bulges or reflected normals.
+
+Validation: incremental CMake Debug `librecad_tests` build passes without new
+compiler warnings. The focused `non-axial legacy 2D POLYLINEs project straight
+segments safely` case passes 1,114 assertions; the full
+`[lc-offsetcurve][import-session][typed-source]` selection passes 96,494
+assertions across 29 cases. `git diff --check` passes. These are local results,
+not exact-head CI or external CAD acceptance. Test commit `c33cb7c20`
+(`test(dwg): cover closed legacy OCS projection`); the roadmap receipt is
+committed separately.
