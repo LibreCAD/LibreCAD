@@ -2518,6 +2518,136 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
 #endif
 }
 
+TEST_CASE("non-axial CIRCLE ARC and ELLIPSE import as marked XY conics",
+          "[lc-offsetcurve][import-session][typed-source][conic][ocs]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-non-axial-conic-projection");
+    const DRW_Coord normal{0.6, 0.0, 0.8};
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
+    const std::array<f::ConicKind, 3> kinds{
+        f::ConicKind::Circle, f::ConicKind::Arc, f::ConicKind::Ellipse};
+
+    for (const auto kind : kinds) {
+        std::unique_ptr<RS_Graphic> roundTripSource;
+        for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+            if (format.dwg) continue;
+#endif
+            const auto input = directory.file(
+                std::string(format.suffix) + "-" + std::to_string(static_cast<int>(kind)));
+#ifdef DWGSUPPORT
+            if (format.dwg) f::dwgConicFile(input, kind, normal, format.version);
+            else f::binaryDxfConic(input, kind, normal, format.version);
+#else
+            f::binaryDxfConic(input, kind, normal, format.version);
+#endif
+            auto outcome = stagedImport(input, format.lane);
+            REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(outcome.graphic);
+            auto* ellipse = dynamic_cast<RS_Ellipse*>(f::sole(*outcome.graphic));
+            REQUIRE(ellipse);
+            CHECK_FALSE(LC_OffsetSourceGeometry::capture(*ellipse));
+            const auto& data = ellipse->getData();
+            const auto& ext = ellipse->getDrwExtData();
+            const auto marker = std::find_if(ext.begin(), ext.end(), [](const auto& value) {
+                return value && value->code() == 1001 &&
+                       value->type() == DRW_Variant::STRING &&
+                       std::string{value->c_str()} == "LibreCAD_CONIC_OCS";
+            });
+            REQUIRE(marker != ext.end());
+            const auto markerKind = std::find_if(std::next(marker), ext.end(), [](const auto& value) {
+                return value && value->code() == 1070;
+            });
+            REQUIRE(markerKind != ext.end());
+            CHECK((*markerKind)->i_val() == static_cast<int>(kind));
+            const auto markerNormal = std::find_if(std::next(markerKind), ext.end(), [](const auto& value) {
+                return value && value->code() == 1010 &&
+                       value->type() == DRW_Variant::COORD;
+            });
+            REQUIRE(markerNormal != ext.end());
+            REQUIRE((*markerNormal)->coord() != nullptr);
+            CHECK((*markerNormal)->coord()->x == Catch::Approx(normal.x));
+            CHECK((*markerNormal)->coord()->y == Catch::Approx(normal.y));
+            CHECK((*markerNormal)->coord()->z == Catch::Approx(normal.z));
+            CHECK(data.center.x == Catch::Approx(0.2).margin(1e-10));
+            CHECK(data.center.y == Catch::Approx(1.0).margin(1e-10));
+            CHECK(data.majorP.x == Catch::Approx(0.0).margin(1e-10));
+            CHECK(data.majorP.y == Catch::Approx(5.0).margin(1e-10));
+            const double expectedRatio = kind == f::ConicKind::Ellipse ? 0.4 : 0.8;
+            CHECK(data.ratio == Catch::Approx(expectedRatio).margin(1e-10));
+            if (kind != f::ConicKind::Circle) {
+                CHECK(ellipse->isEllipticArc());
+                CHECK(ellipse->getStartpoint().x == Catch::Approx(0.2).margin(1e-9));
+                CHECK(ellipse->getStartpoint().y == Catch::Approx(6.0).margin(1e-9));
+                const double expectedEndX = kind == f::ConicKind::Arc ? -3.8 : -1.8;
+                CHECK(ellipse->getEndpoint().x == Catch::Approx(expectedEndX).margin(1e-9));
+                CHECK(ellipse->getEndpoint().y == Catch::Approx(1.0).margin(1e-9));
+            }
+            if (!format.dwg) roundTripSource = std::move(outcome.graphic);
+        }
+
+        REQUIRE(roundTripSource);
+        const auto dxf = directory.file("roundtrip-" +
+            std::to_string(static_cast<int>(kind)) + ".dxf");
+        REQUIRE(lc::test::exportDrawing(*roundTripSource, dxf, RS2::FormatDXFRW2018));
+        const auto appids = lc::test::dxfRecords(dxf, "APPID");
+        CHECK(std::any_of(appids.begin(), appids.end(), [](const auto& record) {
+            return record.own(2) == std::vector<std::string>{"LibreCAD_CONIC_OCS"};
+        }));
+        RS_Graphic reopened;
+        REQUIRE(lc::test::importDrawing(reopened, dxf, RS2::FormatDXFRW2018));
+        auto* reopenedEllipse = dynamic_cast<RS_Ellipse*>(f::sole(reopened));
+        REQUIRE(reopenedEllipse);
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*reopenedEllipse));
+#ifdef DWGSUPPORT
+        const auto dwg = directory.file("roundtrip-" +
+            std::to_string(static_cast<int>(kind)) + ".dwg");
+        RS_FilterDXFRW writer;
+        REQUIRE(writer.fileExport(*roundTripSource, lc::test::toQString(dwg),
+                                  RS2::FormatDWG2018));
+        RS_Graphic reopenedDwg;
+        REQUIRE(lc::test::importDrawing(reopenedDwg, dwg, RS2::FormatDWG2018));
+        CHECK(reopenedDwg.dwgAdvancedMetadata().findAppIdTableEntryByName(
+                  "LibreCAD_CONIC_OCS") != nullptr);
+        auto* reopenedDwgEllipse = dynamic_cast<RS_Ellipse*>(f::sole(reopenedDwg));
+        REQUIRE(reopenedDwgEllipse);
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*reopenedDwgEllipse));
+#endif
+    }
+
+    const auto reflectedArc = directory.file("reflected-normal-arc.dxf");
+    f::binaryDxfConic(reflectedArc, f::ConicKind::Arc,
+                      DRW_Coord{0.6, 0.0, -0.8}, DRW::AC1032);
+    const auto reflectedOutcome = stagedImport(reflectedArc, Lane::Binary18);
+    REQUIRE(reflectedOutcome.status == LC_OffsetImportSession::Status::Complete);
+    REQUIRE(reflectedOutcome.graphic);
+    const auto* reflected = dynamic_cast<const RS_Ellipse*>(f::sole(*reflectedOutcome.graphic));
+    REQUIRE(reflected);
+    CHECK(reflected->isReversed());
+    CHECK(reflected->getStartpoint().x == Catch::Approx(3.4).margin(1e-9));
+    CHECK(reflected->getStartpoint().y == Catch::Approx(6.0).margin(1e-9));
+    CHECK(reflected->getEndpoint().x == Catch::Approx(7.4).margin(1e-9));
+    CHECK(reflected->getEndpoint().y == Catch::Approx(1.0).margin(1e-9));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*reflected));
+
+    const auto degenerate = directory.file("degenerate-xy-circle.dxf");
+    f::binaryDxfConic(degenerate, f::ConicKind::Circle,
+                      DRW_Coord{1.0, 0.0, 0.0}, DRW::AC1032);
+    const auto degenerateOutcome = stagedImport(degenerate, Lane::Binary18);
+    REQUIRE(degenerateOutcome.status == LC_OffsetImportSession::Status::Complete);
+    REQUIRE(degenerateOutcome.graphic);
+    CHECK(std::none_of(degenerateOutcome.graphic->begin(),
+                       degenerateOutcome.graphic->end(), [](const RS_Entity* entity) {
+        return dynamic_cast<const RS_Ellipse*>(entity) != nullptr;
+    }));
+}
+
 TEST_CASE("closed legacy 2D POLYLINE import preserves its closing bulge",
           "[lc-offsetcurve][import-session][typed-source][polyline][legacy][closed]") {
     Setup setup;

@@ -94,6 +94,8 @@ inline constexpr std::size_t MaximumSourceItems = 65536;
 
 bool hasUnsupportedPolylineProjectionProvenance(
     const RS_Polyline& polyline) noexcept;
+bool hasUnsupportedConicProjectionProvenance(
+    const RS_Entity& entity) noexcept;
 
 inline bool finite(const RS_Vector& point) noexcept {
     return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
@@ -207,6 +209,8 @@ inline bool endpoints(const LC_OffsetPolylineSegment& segment, RS_Vector& start,
 }
 
 inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(const RS_Entity& entity) {
+    if (LC_OffsetSourceDetail::hasUnsupportedConicProjectionProvenance(entity))
+        return std::nullopt;
     if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
         LC_OffsetSourceGeometry result{ellipse->getData()};
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;

@@ -456,6 +456,24 @@ bool hasUnsupportedPolylineProjectionProvenance(
     return false;
 }
 
+bool hasUnsupportedConicProjectionProvenance(const RS_Entity& entity) noexcept {
+    static constexpr std::string_view marker{"LibreCAD_CONIC_OCS"};
+    for (const auto& value : entity.getDrwExtData()) {
+        if (!value) return true;
+        if (value->code() != 1001) continue;
+        if (value->type() != DRW_Variant::STRING || value->c_str() == nullptr)
+            return true;
+        const std::string_view app{value->c_str()};
+        if (app.size() != marker.size()) continue;
+        if (std::equal(app.begin(), app.end(), marker.begin(),
+                       [](unsigned char lhs, unsigned char rhs) {
+                           return std::tolower(lhs) == std::tolower(rhs);
+                       }))
+            return true;
+    }
+    return false;
+}
+
 bool hasNoNonAdjacentSegmentIntersections(const LC_OffsetPolylineData& data) noexcept {
     constexpr std::size_t MaximumCandidatePairsPerSegment = 64;
     try {

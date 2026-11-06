@@ -341,6 +341,72 @@ inline void dwg2dPolylineFile(const std::filesystem::path& file, const DRW_Polyl
 }
 #endif
 
+enum class ConicKind { Circle, Arc, Ellipse };
+template <typename Writer> struct EmitConic final : NullDrwInterface {
+    Writer& writer;
+    ConicKind kind;
+    DRW_Circle circle;
+    DRW_Arc arc;
+    DRW_Ellipse ellipse;
+    bool wrote = false;
+    EmitConic(Writer& writer, ConicKind kind, const DRW_Coord& normal)
+        : writer(writer), kind(kind) {
+        circle.layer = arc.layer = ellipse.layer = "FixtureOffsets";
+        circle.basePoint = arc.basePoint = ellipse.basePoint = {1.0, 2.0, 3.0};
+        circle.extPoint = arc.extPoint = ellipse.extPoint = normal;
+        circle.radious = arc.radious = 5.0;
+        arc.staangle = 0.0;
+        arc.endangle = M_PI / 2.0;
+        ellipse.secPoint = {5.0, 0.0, 0.0};
+        ellipse.ratio = 0.5;
+        ellipse.staparam = 0.0;
+        ellipse.endparam = M_PI / 2.0;
+    }
+    void writeHeader(DRW_Header& header) override {
+        header.addStr("$DWGCODEPAGE", "ANSI_1252", 3);
+    }
+    void writeLayers() override {
+        DRW_Layer layer; layer.name = "FixtureOffsets"; layer.color = 3;
+        if constexpr (std::is_same_v<Writer, dxfRW>) REQUIRE(writer.writeLayer(&layer));
+        else REQUIRE(writer.addLayer(&layer));
+    }
+    void writeAppId() override {
+        DRW_AppId app; app.name = "LibreCad";
+        if constexpr (std::is_same_v<Writer, dxfRW>) REQUIRE(writer.writeAppId(&app));
+        else REQUIRE(writer.addAppId(&app));
+    }
+    void writeEntities() override {
+        if constexpr (std::is_same_v<Writer, dxfRW>) {
+            wrote = kind == ConicKind::Circle ? writer.writeCircle(&circle)
+                  : kind == ConicKind::Arc ? writer.writeArc(&arc)
+                                           : writer.writeEllipse(&ellipse);
+        } else {
+            wrote = kind == ConicKind::Circle ? writer.writeCircle(&circle)
+                  : kind == ConicKind::Arc ? writer.writeArc(&arc)
+                                           : writer.writeEllipse(&ellipse);
+        }
+        REQUIRE(wrote);
+    }
+};
+
+inline void binaryDxfConic(const std::filesystem::path& file, ConicKind kind,
+                           const DRW_Coord& normal, DRW::Version version) {
+    dxfRW writer(file.string().c_str());
+    EmitConic<dxfRW> source(writer, kind, normal);
+    REQUIRE(writer.write(&source, version, true)); REQUIRE(source.wrote);
+    const std::string signature("AutoCAD Binary DXF\r\n\x1a\0", 22);
+    REQUIRE(fileBytes(file).compare(0, signature.size(), signature) == 0);
+}
+#ifdef DWGSUPPORT
+inline void dwgConicFile(const std::filesystem::path& file, ConicKind kind,
+                         const DRW_Coord& normal, DRW::Version version) {
+    dwgRW writer(file.string().c_str());
+    EmitConic<dwgRW> source(writer, kind, normal);
+    REQUIRE(writer.write(&source, version, false)); REQUIRE(source.wrote);
+    REQUIRE(fileBytes(file).substr(0, 2) == "AC");
+}
+#endif
+
 inline std::vector<RS_Entity*> live(RS_EntityContainer& container) {
     std::vector<RS_Entity*> result;
     for (auto* entity : container) if (entity && !entity->isDeleted()) result.push_back(entity);

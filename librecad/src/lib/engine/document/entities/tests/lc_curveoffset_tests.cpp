@@ -273,6 +273,24 @@ TEST_CASE("Offset source capture rejects lossy polyline preview projections",
     CHECK_FALSE(LC_OffsetSourceGeometry::capture(nullXData));
 }
 
+TEST_CASE("Offset source capture rejects projected arbitrary-OCS conics",
+          "[lc-offsetcurve][source][provenance][ocs]") {
+    RS_Ellipse projected{nullptr,
+        {RS_Vector{4.0, -2.0}, RS_Vector{3.0, 1.0}, 0.4, 0.0, 0.0, false}};
+    CHECK(LC_OffsetSourceGeometry::capture(projected));
+
+    projected.setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "LibreCAD_CONIC_OCS"),
+        std::make_shared<DRW_Variant>(1070, 0),
+        std::make_shared<DRW_Variant>(1010, DRW_Coord{0.3, 0.4, 0.8660254037844386})});
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(projected));
+
+    projected.setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "CUSTOM_APP"),
+        std::make_shared<DRW_Variant>(1000, "LibreCAD_CONIC_OCS")});
+    CHECK(LC_OffsetSourceGeometry::capture(projected));
+}
+
 TEST_CASE("Polyline source topology validation accepts its maximum bounded segment count",
           "[lc-offsetcurve][source][polyline][bounded]") {
     constexpr std::size_t segmentCount = 65536;

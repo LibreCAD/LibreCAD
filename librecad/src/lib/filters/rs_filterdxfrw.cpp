@@ -5571,6 +5571,9 @@ constexpr const char *kCircleOcsMarker = "LibreCAD_CIRCLE_OCS";
 // ARC center and angles are OCS data. Keep its plane metadata separately so
 // the editable 2D arc can be transformed back to the source OCS on export.
 constexpr const char *kArcOcsMarker = "LibreCAD_ARC_OCS";
+// Arbitrary-plane conics are projected to XY for display; unlike the axial
+// sidecars above, this marker denotes geometry that is not a native 2D source.
+constexpr const char *kConicOcsProjectionMarker = "LibreCAD_CONIC_OCS";
 // 3DLINE is distinct from LINE even when its normal and thickness are default.
 constexpr const char *k3DLineMarker = "LibreCAD_3DLINE";
 // HATCH boundary coordinates remain raw OCS in libdxfrw. Preserve the
@@ -7353,12 +7356,113 @@ bool canCreatePlanarEntity(const T &entity, const char *typeName) {
                   "RS_FilterDXFRW::%s: skipped non-axial extrusion", typeName);
   return false;
 }
+
+void appendTypeSidecar(RS_Entity *entity, const char *marker,
+                       std::vector<std::shared_ptr<DRW_Variant>> payload);
+
+bool projectConicToEllipse(const DRW_Coord &center, const DRW_Coord &axisU,
+                           const DRW_Coord &axisV, const double start,
+                           const double end, const bool full,
+                           RS_EllipseData &result) {
+  const double values[]{center.x, center.y, center.z, axisU.x, axisU.y,
+                        axisU.z, axisV.x, axisV.y, axisV.z, start, end};
+  if (!std::all_of(std::begin(values), std::end(values),
+                   [](double value) { return std::isfinite(value); }))
+    return false;
+
+  const double sxx = axisU.x * axisU.x + axisV.x * axisV.x;
+  const double sxy = axisU.x * axisU.y + axisV.x * axisV.y;
+  const double syy = axisU.y * axisU.y + axisV.y * axisV.y;
+  const double majorEigenvalue =
+      (sxx + syy + std::hypot(sxx - syy, 2.0 * sxy)) / 2.0;
+  if (!std::isfinite(majorEigenvalue) || majorEigenvalue <= 0.0)
+    return false;
+
+  const double majorRadius = std::sqrt(majorEigenvalue);
+  const double determinant = axisU.x * axisV.y - axisV.x * axisU.y;
+  const double minorRadius = std::abs(determinant) / majorRadius;
+  constexpr double relativeRankTolerance =
+      1024.0 * std::numeric_limits<double>::epsilon();
+  if (!std::isfinite(minorRadius) ||
+      minorRadius <= relativeRankTolerance * majorRadius)
+    return false;
+
+  const double rotation = 0.5 * std::atan2(2.0 * sxy, sxx - syy);
+  const double cosine = std::cos(rotation);
+  const double sine = std::sin(rotation);
+  const auto parameterAt = [&](double parameter) {
+    const double x = axisU.x * std::cos(parameter) +
+                     axisV.x * std::sin(parameter);
+    const double y = axisU.y * std::cos(parameter) +
+                     axisV.y * std::sin(parameter);
+    const double majorCoordinate = (x * cosine + y * sine) / majorRadius;
+    const double minorCoordinate = (-x * sine + y * cosine) / minorRadius;
+    return std::atan2(minorCoordinate, majorCoordinate);
+  };
+
+  result = {RS_Vector{center.x, center.y},
+            RS_Vector{majorRadius * cosine, majorRadius * sine},
+            minorRadius / majorRadius, full ? 0.0 : parameterAt(start),
+            full ? 0.0 : parameterAt(end), determinant < 0.0};
+  return std::isfinite(result.ratio) && result.ratio > 0.0 &&
+         std::isfinite(result.angle1) && std::isfinite(result.angle2);
+}
+
+bool ocsBasis(const DRW_Coord &normal, DRW_Coord &axisX,
+              DRW_Coord &axisY) {
+  DRW_Coord x, y;
+  if (!projectPolylineOcsPoint(normal, 0.0, 1.0, 0.0, x) ||
+      !projectPolylineOcsPoint(normal, 0.0, 0.0, 1.0, y))
+    return false;
+  axisX = x;
+  axisY = y;
+  return true;
+}
+
+void appendConicProjectionMarker(RS_Entity *entity, int sourceKind,
+                                 const DRW_Coord &normal,
+                                 const DRW_Coord &center,
+                                 const DRW_Coord &axisU,
+                                 const DRW_Coord &axisV,
+                                 double start, double end) {
+  std::vector<std::shared_ptr<DRW_Variant>> payload;
+  payload.push_back(std::make_shared<DRW_Variant>(1070, sourceKind));
+  payload.push_back(std::make_shared<DRW_Variant>(1010, normal));
+  payload.push_back(std::make_shared<DRW_Variant>(1011, center));
+  payload.push_back(std::make_shared<DRW_Variant>(1012, axisU));
+  payload.push_back(std::make_shared<DRW_Variant>(1013, axisV));
+  payload.push_back(std::make_shared<DRW_Variant>(1040, start));
+  payload.push_back(std::make_shared<DRW_Variant>(1041, end));
+  appendTypeSidecar(entity, kConicOcsProjectionMarker, std::move(payload));
+}
 } // namespace
 
 void RS_FilterDXFRW::addCircle(const DRW_Circle &data) {
   RS_DEBUG->print("RS_FilterDXF::addCircle");
-  if (!canCreatePlanarEntity(data, "addCircle"))
+  if (!hasNormalizedAxialExtrusion(data)) {
+    DRW_Coord axisX, axisY;
+    if (!ocsBasis(data.extPoint, axisX, axisY) ||
+        !std::isfinite(data.radious) || data.radious <= 0.0) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addCircle: invalid non-axial conic");
+      return;
+    }
+    axisX.x *= data.radious; axisX.y *= data.radious; axisX.z *= data.radious;
+    axisY.x *= data.radious; axisY.y *= data.radious; axisY.z *= data.radious;
+    RS_EllipseData projection;
+    if (!projectConicToEllipse(data.basePoint, axisX, axisY, 0.0,
+                               2.0 * M_PI, true, projection)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addCircle: degenerate XY projection");
+      return;
+    }
+    auto *entity = new RS_Ellipse(m_currentContainer, projection);
+    setEntityAttributes(entity, &data);
+    appendConicProjectionMarker(entity, 0, data.extPoint, data.basePoint,
+                                axisX, axisY, 0.0, 2.0 * M_PI);
+    m_currentContainer->addEntity(entity);
     return;
+  }
 
   RS_Vector v{data.basePoint.x, data.basePoint.y};
   const auto entity = new RS_Circle(m_currentContainer, {v, data.radious});
@@ -7381,8 +7485,31 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle &data) {
  */
 void RS_FilterDXFRW::addArc(const DRW_Arc &data) {
   RS_DEBUG->print("RS_FilterDXF::addArc");
-  if (!canCreatePlanarEntity(data, "addArc"))
+  if (!hasNormalizedAxialExtrusion(data)) {
+    DRW_Coord axisX, axisY;
+    if (!ocsBasis(data.extPoint, axisX, axisY) ||
+        !std::isfinite(data.radious) || data.radious <= 0.0 ||
+        !std::isfinite(data.staangle) || !std::isfinite(data.endangle)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addArc: invalid non-axial conic");
+      return;
+    }
+    axisX.x *= data.radious; axisX.y *= data.radious; axisX.z *= data.radious;
+    axisY.x *= data.radious; axisY.y *= data.radious; axisY.z *= data.radious;
+    RS_EllipseData projection;
+    if (!projectConicToEllipse(data.basePoint, axisX, axisY, data.staangle,
+                               data.endangle, false, projection)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addArc: degenerate XY projection");
+      return;
+    }
+    auto *entity = new RS_Ellipse(m_currentContainer, projection);
+    setEntityAttributes(entity, &data);
+    appendConicProjectionMarker(entity, 1, data.extPoint, data.basePoint,
+                                axisX, axisY, data.staangle, data.endangle);
+    m_currentContainer->addEntity(entity);
     return;
+  }
   const RS_Vector v(data.basePoint.x, data.basePoint.y);
   const RS_ArcData d(v, data.radious, data.staangle, data.endangle, false);
   const auto entity = new RS_Arc(m_currentContainer, d);
@@ -7405,8 +7532,40 @@ void RS_FilterDXFRW::addArc(const DRW_Arc &data) {
  */
 void RS_FilterDXFRW::addEllipse(const DRW_Ellipse &data) {
   RS_DEBUG->print("RS_FilterDXFRW::addEllipse");
-  if (!canCreatePlanarEntity(data, "addEllipse"))
+  if (!hasNormalizedAxialExtrusion(data)) {
+    const double normalLength = std::hypot(data.extPoint.x, data.extPoint.y,
+                                           data.extPoint.z);
+    if (!std::isfinite(normalLength) || normalLength == 0.0 ||
+        !std::isfinite(data.ratio) || data.ratio <= 0.0) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addEllipse: invalid non-axial conic");
+      return;
+    }
+    DRW_Coord normal{data.extPoint.x / normalLength,
+                     data.extPoint.y / normalLength,
+                     data.extPoint.z / normalLength};
+    DRW_Coord axisU = data.secPoint;
+    const double minorScale = data.ratio;
+    DRW_Coord axisV{(normal.y * axisU.z - normal.z * axisU.y) * minorScale,
+                    (normal.z * axisU.x - normal.x * axisU.z) * minorScale,
+                    (normal.x * axisU.y - normal.y * axisU.x) * minorScale};
+    const bool full = std::abs(data.endparam - data.staparam) >=
+                          2.0 * M_PI - 128.0 * std::numeric_limits<double>::epsilon() ||
+                      data.endparam == data.staparam;
+    RS_EllipseData projection;
+    if (!projectConicToEllipse(data.basePoint, axisU, axisV, data.staparam,
+                               data.endparam, full, projection)) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addEllipse: degenerate XY projection");
+      return;
+    }
+    auto *entity = new RS_Ellipse(m_currentContainer, projection);
+    setEntityAttributes(entity, &data);
+    appendConicProjectionMarker(entity, 2, data.extPoint, data.basePoint,
+                                axisU, axisV, data.staparam, data.endparam);
+    m_currentContainer->addEntity(entity);
     return;
+  }
 
   const RS_Vector v1(data.basePoint.x, data.basePoint.y);
   const RS_Vector v2(data.secPoint.x, data.secPoint.y);
