@@ -27,7 +27,9 @@ Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
-defined matrix; remaining family/variant and acceptance work is open;
+defined matrix; W527 polyline staged-file persistence complete for its defined
+matrix;
+remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
@@ -20455,6 +20457,56 @@ targets build, and `git diff --check` passes. These finite-grid and local
 results do not close general variant support, visible-GUI, external-CAD, or
 exact-head CI gates.
 
+## 527. Polyline Scale-and-Translation DXF/DWG Persistence Matrix
+
+W526 establishes centered-versus-translated worker generation and operation-8
+cache admission for open mixed line/arc chains, a closed line loop, and a
+closed arc loop. Carry the same four layouts through real staged import at
+scales `1e-3`, `1`, and `1e3`, translation ratios `1e4` and `1e6`, and signed
+normalized distances `-0.25`, `-0.1`, `0.1`, and `0.25`. Preserve closed state,
+segment order, endpoints, arc centers/radii/angles/reversal and the exact
+schema-2 tagged source value.
+
+For every cell, run operation 7 on the translated source and operation 8 on
+every generated branch. Generation refusal must expose no partial geometry;
+multi-branch results must be refused as non-cache-representable without
+mutation; only an admitted one-cache result may be serialized. Carry those
+admitted results through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Each staged
+reopen must complete and produce exactly one native promotion or diagnosed
+ordinary-spline fallback, preserving exact source CBOR and imported cache
+geometry within the requested tolerance plus coordinate-ULP allowance.
+Count every cell as generation refusal, cache refusal, or a complete five-lane
+import; a missing file lane is a failure, not a skip. This matrix does not
+claim arbitrary polyline topology, precision, or format-version support.
+
+Run the focused persistence matrix, full typed-source import selection,
+Release `librecad_tests` build, roadmap inventory parser, and `git diff
+--check`. Commit the test/product slice separately from its roadmap receipt,
+push both commits to PR #3193, and query exact-head CI. If file writing/import
+reveals a production defect, fix it in the owning slice and keep the source
+definition and operation-8 rules unchanged.
+
+### W527 Completion Receipt
+
+The staged persistence matrix passes for four source layouts (forward and
+reversed open mixed line/arc chains, a closed line loop, and a closed circular
+arc loop), scales `1e-3`, `1`, and `1e3`, translation ratios `1e4` and `1e6`,
+and signed normalized distances `-0.25`, `-0.1`, `0.1`, and `0.25`. Each of
+the 96 cells accounts for generation refusal, cache refusal, or an admitted
+single-cache result. Every admitted result is written and reopened in five
+lanes: R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The test verifies exact
+schema-2 source CBOR, promotion or diagnosed ordinary-spline fallback,
+imported cache fingerprints, and 129 normalized geometry samples with
+tolerance plus coordinate-ULP allowance.
+
+Product/test commit `6b3e7bc75` (`test(offset): qualify translated polyline
+persistence`) adds this coverage. The focused matrix passes 217,623 assertions
+in one test case; `[lc-offsetcurve][import-session][typed-source]` passes
+4,590,093 assertions across 41 cases. Release `librecad_tests` builds, the
+roadmap parser suite passes 5/5, and `git diff --check` passes. These results
+qualify only this finite grid; arbitrary polyline topology/precision, visible
+GUI, external-CAD, and exact-head CI acceptance remain open.
+
 ## 525. Source Picker Scope Reconfirmation (2026-11-06)
 
 The source-curve widget must let the user change the requested family before
@@ -20468,15 +20520,32 @@ W359/W396/W397/W440/W474 and the nine-family matrix in W356. Parabola remains
 a distinct source kind and must be captured before its `LC_SplinePoints` base
 class is considered.
 
+Treat the picker behavior as this concrete regression contract:
+
+1. With an existing source, selecting a different family before invoking the
+   picker makes the next selection accept only that family and replaces the
+   source atomically.
+2. After changing the family, the next entity selection uses that family; it
+   must not retain the old filter or infer a family from the current source.
+   If a pick is cancelled and restarted after changing the family, the
+   restarted pick uses the new family. A wrong-type pick or worker refusal
+   must not leave a partial replacement or stale cache.
+3. The current source remains selected/highlighted when its family is shown;
+   cross-family replacement updates the source identity and highlighting.
+4. Exercise all nine choices, including parabola alongside spline-points, and
+   verify capture/serialization preserves the typed family. This validates the
+   family selector, not exhaustive geometric variants within each family.
+
 This is a scope clarification, not a request for another widget or a new
 parabola implementation. “All supported types” means the nine modeled
 families above; it does not mean all legal geometry layouts within those
-families are already eligible. Keep the selector behavior as a regression
-contract, and continue the existing family/variant audit: for each advertised
-layout, prove capture, worker generation, operation-8 cache admission, atomic
-replacement, failure/cancellation non-mutation, and applicable DXF/DWG
-save/reopen. A valid layout that cannot be represented as one native cache
-must be refused explicitly without changing the prior source or cache.
+families are already eligible. Keep the selector behavior above as a regression
+contract, and continue the existing family/variant audit separately: for each
+advertised layout, prove capture, worker generation, operation-8 cache
+admission, atomic replacement, failure/cancellation non-mutation, and
+applicable DXF/DWG save/reopen. A valid layout that cannot be represented as
+one native cache must be refused explicitly without changing the prior source
+or cache.
 
 No implementation or validation result is added by this checkpoint. W524's
 parabola scale/translation matrix is now complete for its defined grid. Resume
