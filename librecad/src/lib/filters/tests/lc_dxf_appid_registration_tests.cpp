@@ -19,6 +19,7 @@
 #include "lc_dimstyle.h"
 #include "lc_drwnullinterface.h"
 #include "lc_filtertestsupport.h"
+#include "lc_offsetsource.h"
 #include "libdxfrw.h"
 #include "rs_dimaligned.h"
 #include "rs_hatch.h"
@@ -178,9 +179,23 @@ TEST_CASE("DXF registers sidecar applications generated on import", "[dxf][appid
     RS_Graphic drawing;
     REQUIRE(lc::test::importDrawing(drawing, source, RS2::FormatDXFRW));
     REQUIRE(drawing.count() >= 6);
+    std::map<std::string, std::size_t> projectedPolylineCounts;
     std::size_t previewChildren = 0;
     for (RS_Entity *entity : drawing) {
         if (auto *polyline = dynamic_cast<RS_Polyline *>(entity)) {
+            for (const auto& value : polyline->getDrwExtData()) {
+                if (!value || value->code() != 1001 ||
+                    value->type() != DRW_Variant::STRING)
+                    continue;
+                const std::string marker = value->c_str();
+                if (marker == "LibreCAD_POLYLINE_MESH" ||
+                    marker == "LibreCAD_POLYLINE_PFACE" ||
+                    marker == "LibreCAD_MLINE" || marker == "LibreCAD_UNDERLAY" ||
+                    marker == "LibreCAD_POLYLINE_3D") {
+                    ++projectedPolylineCounts[marker];
+                    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*polyline));
+                }
+            }
             for (RS_Entity *child : *polyline) {
                 child->setDrwExtData({
                     std::make_shared<DRW_Variant>(1001, "APPID.PREVIEW_ONLY"),
@@ -190,6 +205,12 @@ TEST_CASE("DXF registers sidecar applications generated on import", "[dxf][appid
         }
     }
     REQUIRE(previewChildren > 0);
+    for (const char* marker : {"LibreCAD_POLYLINE_MESH", "LibreCAD_POLYLINE_PFACE",
+                               "LibreCAD_MLINE", "LibreCAD_UNDERLAY",
+                               "LibreCAD_POLYLINE_3D"}) {
+        CAPTURE(marker);
+        CHECK(projectedPolylineCounts[marker] > 0);
+    }
     const auto exported = output.file("exported.dxf");
     REQUIRE(lc::test::exportDrawing(drawing, exported, RS2::FormatDXFRW2013));
     const auto applications = checkRegisteredXData(exported);
