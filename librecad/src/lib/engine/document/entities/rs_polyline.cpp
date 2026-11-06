@@ -27,6 +27,7 @@
 
 #include "rs_polyline.h"
 
+#include <cmath>
 #include <memory>
 
 #include <iostream>
@@ -41,6 +42,14 @@
 #include "rs_math.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
+
+namespace {
+bool isStraightBulge(const double bulge) {
+    const double magnitude = std::abs(bulge);
+    return magnitude < RS_TOLERANCE || magnitude >= RS_MAXDOUBLE ||
+           4.0 * std::atan(magnitude) <= RS_TOLERANCE_ANGLE;
+}
+}
 
 RS_PolylineData::RS_PolylineData(const RS_Vector& startpoint, const RS_Vector& endpoint, const bool closed) : startpoint(startpoint),
     endpoint(endpoint) {
@@ -220,7 +229,7 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, const d
     RS_DEBUG->print("RS_Polyline::createVertex: %f/%f to %f/%f bulge: %f", m_data.endpoint.x, m_data.endpoint.y, v.x, v.y, bulge);
 
     // create line for the polyline:
-    if (std::abs(bulge) < RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE) {
+    if (isStraightBulge(bulge)) {
         entity = std::make_unique<RS_Line>(this, prepend ? v : m_data.endpoint, prepend ? m_data.startpoint : v);
     }
     else {
@@ -836,7 +845,7 @@ RS_Vector RS_Polyline::getVertex(const int index) const {
 }
 
 RS_Arc* RS_Polyline::arcFromBulge(const RS_Vector& start, const RS_Vector& end, const double bulge) {
-    if (std::abs(bulge) < RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE) {
+    if (isStraightBulge(bulge)) {
         return nullptr;
     }
     const bool reversed = std::signbit(bulge);

@@ -1585,6 +1585,57 @@ TEST_CASE("legacy 2D POLYLINE import preserves signed bulge source geometry",
     }
 }
 
+TEST_CASE("polyline bulge conversion follows the minimum valid arc sweep",
+          "[lc-offsetcurve][import-session][typed-source][polyline][bulge][boundary]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-polyline-bulge-sweep-boundary");
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const double sweepFactor : {0.5, 2.0}) {
+        for (const double sign : {-1.0, 1.0}) {
+            const double sweep = RS_TOLERANCE_ANGLE * sweepFactor;
+            const double bulge = sign * std::tan(sweep / 4.0);
+            for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+                if (format.dwg) continue;
+#endif
+                DRW_LWPolyline raw;
+                raw.vertexnum = 3;
+                raw.addVertex(DRW_Vertex2D(0, 0, bulge));
+                raw.addVertex(DRW_Vertex2D(2, 0, 0));
+                raw.addVertex(DRW_Vertex2D(4, 1, 0));
+                const auto path = directory.file(std::string("sweep-") +
+                    std::to_string(sweepFactor) + (sign < 0 ? "-" : "+") + format.suffix);
+#ifdef DWGSUPPORT
+                if (format.dwg) f::dwgPolylineFile(path, raw, format.version);
+                else f::binaryDxfPolyline(path, raw, format.version);
+#else
+                f::binaryDxfPolyline(path, raw, format.version);
+#endif
+
+                auto outcome = stagedImport(path, format.lane);
+                REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+                REQUIRE(outcome.graphic);
+                std::vector<const RS_Polyline*> polylines;
+                for (const RS_Entity* entity : *outcome.graphic) {
+                    if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity))
+                        polylines.push_back(polyline);
+                }
+                REQUIRE(polylines.size() == 1);
+                REQUIRE(polylines.front()->size() == 2);
+                const bool expectArc = sweepFactor > 1.0;
+                CHECK((polylines.front()->entityAt(0)->rtti() == RS2::EntityArc) == expectArc);
+                const auto source = LC_OffsetSourceGeometry::capture(*polylines.front());
+                CHECK(source.has_value());
+            }
+        }
+    }
+}
+
 TEST_CASE("closed bulged LWPOLYLINE import preserves its closing arc in DXF and DWG",
           "[lc-offsetcurve][import-session][typed-source][polyline][bulge]") {
     Setup setup;

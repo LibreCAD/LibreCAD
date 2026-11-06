@@ -98,11 +98,23 @@ inline bool finitePoints(const std::vector<RS_Vector>& points) noexcept {
            std::all_of(points.begin(), points.end(), finite);
 }
 
-inline bool sameEndpoint(const RS_Vector& lhs, const RS_Vector& rhs) noexcept {
+inline bool sameEndpoint(const RS_Vector& lhs, const RS_Vector& rhs,
+                         const double geometricScale = 1.0) noexcept {
     const double scale = std::max({1.0, std::abs(lhs.x), std::abs(lhs.y),
-                                   std::abs(rhs.x), std::abs(rhs.y)});
+                                   std::abs(rhs.x), std::abs(rhs.y),
+                                   geometricScale});
     return std::hypot(lhs.x - rhs.x, lhs.y - rhs.y) <=
            128.0 * std::numeric_limits<double>::epsilon() * scale;
+}
+
+inline double segmentScale(const LC_OffsetPolylineSegment& segment) noexcept {
+    if (segment.valueless_by_exception()) return 1.0;
+    return std::visit([](const auto& data) noexcept {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_ArcData>)
+            return std::isfinite(data.radius) ? std::max(1.0, data.radius) : 1.0;
+        return 1.0;
+    }, segment);
 }
 
 inline bool endpoints(const LC_OffsetPolylineSegment& segment, RS_Vector& start,
@@ -291,22 +303,35 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             RS_Vector previousEnd;
             RS_Vector lastStart;
             RS_Vector lastEnd;
+            double firstScale = 1.0;
+            double previousScale = 1.0;
+            double lastScale = 1.0;
             for (std::size_t i = 0; i < data.segments.size(); ++i) {
                 RS_Vector start;
                 RS_Vector end;
                 if (!endpoints(data.segments[i], start, end)) return false;
-                if (i == 0) firstStart = start;
-                else if (!sameEndpoint(previousEnd, start)) return false;
+                const double scale = segmentScale(data.segments[i]);
+                if (i == 0) {
+                    firstStart = start;
+                    firstScale = scale;
+                } else if (!sameEndpoint(previousEnd, start,
+                                         std::max(previousScale, scale))) {
+                    return false;
+                }
                 previousEnd = end;
+                previousScale = scale;
                 lastStart = start;
                 lastEnd = end;
+                lastScale = scale;
             }
-            if (!sameEndpoint(firstStart, data.startpoint)) return false;
+            if (!sameEndpoint(firstStart, data.startpoint, firstScale)) return false;
             if (data.closed) {
-                return sameEndpoint(lastEnd, data.startpoint) &&
-                       (sameEndpoint(data.endpoint, lastStart) || sameEndpoint(data.endpoint, lastEnd));
+                return sameEndpoint(lastEnd, data.startpoint,
+                                    std::max(lastScale, firstScale)) &&
+                       (sameEndpoint(data.endpoint, lastStart, lastScale) ||
+                        sameEndpoint(data.endpoint, lastEnd, lastScale));
             }
-            return sameEndpoint(lastEnd, data.endpoint);
+            return sameEndpoint(lastEnd, data.endpoint, lastScale);
         }
     }, value);
 }
