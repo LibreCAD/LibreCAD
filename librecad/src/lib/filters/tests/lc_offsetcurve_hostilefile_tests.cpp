@@ -1749,6 +1749,8 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     std::size_t downgradedCases = 0;
 
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
+        bool sourcePromoted = false;
+        bool sourceDowngraded = false;
         for (const double signedDistance : {-3.0, -2.5, -2.0, 2.0, 2.5, 3.0}) {
             CAPTURE(sourceIndex, signedDistance);
             const LC_OffsetSourceDefinition definition{
@@ -1777,6 +1779,8 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
             REQUIRE(firstBranch->validate());
             const RS_SplineData expectedCache = firstBranch->getData();
             const bool shouldPromote = materialized.entities.size() == 1;
+            sourcePromoted |= shouldPromote;
+            sourceDowngraded |= !shouldPromote;
             if (shouldPromote) ++promotedCases;
             else ++downgradedCases;
 
@@ -1857,6 +1861,8 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
                 }
             }
         }
+        CHECK(sourcePromoted);
+        CHECK(sourceDowngraded);
     }
     CHECK(promotedCases > 0);
     CHECK(downgradedCases > 0);
