@@ -1527,25 +1527,6 @@ TEST_CASE("control-point spline-points source promotes through DXF and DWG impor
     LC_SplinePointsData controlPoints{false, false};
     controlPoints.useControlPoints = true;
     controlPoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
-    const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{controlPoints}, .25, 1e-4, false};
-    auto source = definition.source.makeEntity();
-    REQUIRE(source);
-    const auto options = LC_CurveOffset::makeDirectOptions(*source, .25,
-        definition.relativeTolerance);
-    const auto generated = LC_CurveOffset::buildDirectBranches(*source,
-        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25), options,
-        LC_CurveOffset::makeDirectSourceBudget());
-    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
-    auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
-        LC_CurveOffset::makeDirectSourceBudget());
-    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
-    REQUIRE(materialized.entities.size() == 1);
-    const auto* expectedSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
-    REQUIRE(expectedSpline);
-    const RS_SplineData expectedCache = expectedSpline->getData();
-    REQUIRE(expectedSpline->validate());
-
     struct Format {
         Lane lane;
         bool dwg;
@@ -1559,8 +1540,32 @@ TEST_CASE("control-point spline-points source promotes through DXF and DWG impor
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
-    for (const auto& fileFormat : formats) {
-        const auto [lane, dwg, version, suffix] = fileFormat;
+    for (const double signedDistance : {-.4, -.1, .1, .4}) {
+      CAPTURE(signedDistance);
+      const LC_OffsetSourceDefinition definition{
+          LC_OffsetSourceGeometry{controlPoints}, signedDistance, 1e-4, false};
+      auto source = definition.source.makeEntity();
+      REQUIRE(source);
+      const double magnitude = std::abs(signedDistance);
+      const auto options = LC_CurveOffset::makeDirectOptions(*source, magnitude,
+          definition.relativeTolerance);
+      const auto side = signedDistance < 0 ? LC_CurveOffsetSide::Right
+                                           : LC_CurveOffsetSide::Left;
+      const auto generated = LC_CurveOffset::buildDirectBranches(*source,
+          LC_CurveOffset::makeSideRequest(side, magnitude), options,
+          LC_CurveOffset::makeDirectSourceBudget());
+      REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+      auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
+          LC_CurveOffset::makeDirectSourceBudget());
+      REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+      REQUIRE(materialized.entities.size() == 1);
+      const auto* expectedSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+      REQUIRE(expectedSpline);
+      const RS_SplineData expectedCache = expectedSpline->getData();
+      REQUIRE(expectedSpline->validate());
+
+      for (const auto& fileFormat : formats) {
+        const auto [lane, dwg, version, formatSuffix] = fileFormat;
 #ifndef DWGSUPPORT
         if (dwg) continue;
 #endif
@@ -1585,7 +1590,9 @@ TEST_CASE("control-point spline-points source promotes through DXF and DWG impor
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(std::string("control-points-") + suffix);
+        const auto input = directory.file(std::string("control-points-") +
+            (signedDistance < 0 ? "right-" : "left-") +
+            std::to_string(magnitude) + "-" + formatSuffix);
 #ifdef DWGSUPPORT
         if (dwg) f::dwgFile(input, cache, version);
         else f::binaryDxf(input, cache, version);
@@ -1611,6 +1618,7 @@ TEST_CASE("control-point spline-points source promotes through DXF and DWG impor
         CHECK(received->useControlPoints);
         CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
               RS_Spline::geometryFingerprint(expectedCache));
+      }
     }
 }
 
