@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W452; chronological evidence follows): implementation slices
+Current status (W453; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W452. Historical results from
+No exact-head CI result is claimed for W441-W453. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request (2026-11-06) reconfirms the already implemented
@@ -17933,3 +17933,41 @@ This closes only the five existing fit-point fixtures at these distances and
 file lanes. It does not establish every fit count, tangent constraint,
 tolerance, coincident-point layout, or every multi-branch transition.
 Exact-head CI and external CAD acceptance remain separate.
+
+## 453. Preserve Fit Constraints and Tolerance Through Worker Source Codec
+
+Expanding the fit-point import matrix exposed data loss in the shared worker
+source codec: `LC_SplinePointsData` serialization omitted
+`fitTangentsConstrained` and `fitTolerance`, so successful operation-8
+promotion silently restored their defaults. Preserve both semantic fields in
+the codec, reject non-finite/non-positive tolerances at source admission, and
+retain compatibility with existing five-field schema-2 source payloads by
+decoding them with the historical defaults. Bump the worker request/reply
+protocol and helper invocation to version 5 so an older helper cannot silently
+ignore the expanded value layout.
+
+### Completion receipt
+
+The source codec now emits both fit metadata fields and accepts legacy
+five-field spline-points arrays with `fitTangentsConstrained=false` and
+`fitTolerance=1e-7`. New values are validated, and protocol-4 helpers/envelopes
+are rejected. A constrained fit-point fixture (`fitTangentsConstrained=true`,
+`fitTolerance=1e-10`) now survives DXF/DWG staged import and operation-8
+promotion/fallback with exact typed-source metadata. This preserves LibreCAD's
+current native curve and its constraint marker; it does not implement the
+original endpoint-tangent interpolation semantics.
+
+Validation: CMake Debug builds pass for `librecad_tests`, the worker request,
+result, process, and fault test targets, and the worker executable. The focused
+fit-point import selection passes 47,919 assertions/1 case; the broader
+typed-source import selection passes 94,965 assertions/29 cases. Worker
+request tests pass 601,715 assertions/16 cases; result tests pass 467,579/26;
+process tests pass 3,664/4; fault tests pass 27,710/7. The roadmap inventory
+parser passes 5/5 and `git diff --check` passes. These are local CMake results,
+not exact-head CI or external CAD acceptance. Product commit: `552315c83`
+(`fix(offset): preserve spline-point source metadata`).
+
+This closes preservation of the two source fields across the shared worker
+codec, existing schema-2 reads, and the tested import matrix. It does not make
+tangent-constrained spline interpolation lossless, qualify every fit-point
+layout, or close the remaining offset-family and PR acceptance gates.
