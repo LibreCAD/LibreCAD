@@ -19307,3 +19307,33 @@ Validation: the expanded focused import case passes 37,210 assertions across
 visible-GUI, or external-CAD acceptance. Test commit `c507ef5e7`
 (`test(offset): qualify scaled parabola file imports`). Arbitrary scales,
 degenerate control nets, and precision boundaries remain open.
+
+## 498. Parabola Local Detail at Large World Coordinates
+
+Parabola coverage now includes two uniform scales, but not a small finite
+curve located far from the origin. Compare worker generation for a centered
+parabola and the same parabola translated to `(1e9, -1e9)` at both signed
+sides of six distances spanning below and around the apex-curvature threshold.
+Compare the generated first-branch geometry by sampling in local coordinates,
+not by requiring identical adaptive control-point counts. Require matching
+topology and operation-8 acceptance/refusal parity for both translated and
+centered definitions; keep the comparison tolerance tied to the requested
+geometry tolerance.
+
+### Completion receipt
+
+For all six signed distances (`±0.5`, `±2.5`, and `±3.0`), centered and
+`(1e9, -1e9)`-translated parabola generation returns the same branch count.
+The first-branch splines are sampled at 129 normalized parameters; after
+removing the translation, maximum local deviation stays below the requested
+`1e-3` geometry tolerance. Operation 8 makes the same accept/refuse decision
+for each source placement. Adaptive cache control-point counts may differ;
+the test intentionally compares actual geometry rather than representation
+layout.
+
+Validation: the focused translation case passes 1,850 assertions; the full
+worker-kernel suite passes 11,516 assertions across 35 cases; incremental CMake
+Debug build and `git diff --check` pass. These are local results, not file
+round-trip, exact-head CI, visible-GUI, or external-CAD acceptance. Test commit
+`2cda6960c` (`test(offset): qualify translated parabola detail`). More extreme
+translations and the remaining conic/spline families remain open.
