@@ -1420,7 +1420,7 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
     }};
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
         CAPTURE(sourceIndex, static_cast<int>(sources[sourceIndex].kind()));
-        for (const double signedDistance : {-.1, .1}) {
+        for (const double signedDistance : {-.4, -.1, .1, .4}) {
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{
                 sources[sourceIndex], signedDistance, 1e-4, false};
