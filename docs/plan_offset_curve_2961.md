@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W475; chronological evidence follows): implementation slices
+Current status (W476; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W474. Historical results from
+No exact-head CI result is claimed for W441-W476. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18690,3 +18690,30 @@ coverage distinct from successful native-cache promotion.
 This is a roadmap refinement only; no product code changed. It incorporates
 the repeated source-picker/parabola request into the existing W440 eligibility
 work rather than reopening completed UI behavior.
+
+## 476. Bounded-Hyperbola File Import Promotion Variants
+
+The W444 real-file promotion baseline covered only one bounded-hyperbola
+interval, while the worker kernel already qualifies four bounded layouts
+(including reversed interval/orientation cases; commit `6856211c9`). Extend
+that actual DXF/DWG staged-import path to all four layouts. For both signed
+offset sides, write and import R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG; require
+operation-8 native admission, exact tagged source preservation, and matching
+canonical cache fingerprints.
+
+### Completion receipt
+
+The real typed-source promotion matrix now exercises all four bounded
+hyperbola layouts at `-0.3` and `0.3` through all five file/version lanes (40
+staged imports). Every import promotes to a native editable offset; each
+retains the exact encoded source bounds/orientation and the expected cache
+fingerprint. The other source families retain their existing distance matrix.
+
+Validation: the incremental CMake Debug `librecad_tests` target builds. The
+focused `typed source families promote from real DXF and DWG cache carriers`
+case passes 38,877 assertions. `git diff --check` passes. This is local test
+evidence, not exact-head CI or external CAD acceptance. Test commit
+`b0a81dfdf` (`test(offset): promote hyperbola variants from real files`);
+this roadmap receipt is a separate documentation commit. Remaining: other
+finite hyperbola bounds and broader distance/curvature sweeps, including
+dynamic multi-branch refusal cases.
