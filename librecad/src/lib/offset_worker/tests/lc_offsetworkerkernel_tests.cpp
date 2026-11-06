@@ -402,6 +402,65 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
     CHECK_FALSE(refused.changed);
 }
 
+TEST_CASE("ellipse, arc, and circle source caches validate across signed distances",
+          "[lc-offsetcurve][worker-kernel][source-cache][conic][side]") {
+    const double tau = 2.0 * M_PI;
+    const std::array<LC_OffsetSourceGeometry, 5> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {4, 0}, .6, 0, tau, false}},
+        LC_OffsetSourceGeometry{RS_EllipseData{{3, -2}, {3, 0}, .7, .2, 2.1, false}},
+        LC_OffsetSourceGeometry{RS_EllipseData{{-3, 1}, {2, 1}, .8, 1.8, .1, true}},
+        LC_OffsetSourceGeometry{RS_ArcData{{-1, 2}, 2.5, .2, 2.4, true}},
+        LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}}
+    };
+    const std::array<double, 4> distances{-.4, -.1, .1, .4};
+    std::size_t acceptedCaches = 0;
+    std::size_t refusedCaches = 0;
+    for (const auto& source : sources) {
+        CAPTURE(static_cast<int>(source.kind()));
+        REQUIRE(source.isWellFormed());
+        for (const double signedDistance : distances) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const req::Request generationRequest{token,
+                req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+
+            RS_SplineData cache;
+            if (const auto* spline = std::get_if<RS_SplineData>(&generated.ordinary.front())) {
+                cache = *spline;
+            } else {
+                const auto* segment = std::get_if<req::Segment>(&generated.ordinary.front());
+                REQUIRE(segment);
+                cache.degree = 1;
+                cache.controlPoints = {segment->start, segment->end};
+                cache.knotslist = {0, 0, 1, 1};
+                cache.weights = {1, 1};
+            }
+
+            const req::Request validationRequest{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            if (generated.ordinary.size() == 1) {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                CHECK(validated.changed);
+                ++acceptedCaches;
+            } else {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+                ++refusedCaches;
+            }
+            CHECK(validated.engineRuns == 1);
+        }
+    }
+    CHECK(acceptedCaches == sources.size() * distances.size());
+    CHECK(refusedCaches == 0);
+}
+
 TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][hyperbola]") {
     const std::array<LC_HyperbolaData, 4> variants{
