@@ -16375,4 +16375,10 @@ not apply or retain tangent vectors after control-net export. Rational
 quadratic and closed tangent-constrained layouts are not covered by this
 degree-2 branch. Push the product and roadmap commits to PR #3193, then
 qualify the exact new head's CI; continue the remaining source-variant,
-external GUI, review, deployment, and integration gates.
+external GUI, review, deployment, and integration gates. Product commit
+`997ea7fba` and roadmap commit `2363fa54b` were pushed to
+`codex/offset-2961-native-worker`. Diagnostics for exact head
+`2363fa54b0e4b813c81cede1517d98af1acfffe2` returned no checks or statuses
+immediately after push. The GitHub comment integration rejected the attempted
+PR update with HTTP 403, and the local `gh` credential is invalid; the branch
+push is the only successfully published PR update so far.
