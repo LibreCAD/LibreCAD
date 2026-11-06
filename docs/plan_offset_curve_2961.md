@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W458; chronological evidence follows): implementation slices
+Current status (W459; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W458. Historical results from
+No exact-head CI result is claimed for W441-W459. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request (2026-11-06) reconfirms that changing an
@@ -18147,3 +18147,33 @@ assertions across 29 cases. `git diff --check` passes. These are local results,
 not exact-head CI or external CAD acceptance. Test commit `eae7a46bc`
 (`test(dwg): cover tilted OCS bulge variants by version`); the roadmap receipt
 is committed separately.
+
+## 459. Legacy 2D POLYLINE Bulged OCS XDATA Version Matrix
+
+The straight non-axial legacy 2D POLYLINE fixture preserves unrelated XDATA in
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Its positive-bulge counterpart had
+only an AC1032 DXF input with XDATA, while the DWG fixture explicitly removed
+that metadata. Extend the positive-bulge input case across the same five
+format/version lanes without stripping XDATA. Verify the projected ellipse
+and line, OCS/conic provenance, unrelated `FixtureSourceData`, directed
+endpoints, and refusal of the projected entities as native offset sources.
+This does not generalize XDATA preservation to negative/major or closed legacy
+bulges.
+
+### Completion receipt
+
+The positive tilted-OCS legacy 2D POLYLINE now imports from R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG with `FixtureSourceData` retained. Each lane yields
+the expected ellipse-and-line projection, checks the projected conic geometry
+and source direction, preserves `LibreCAD_POLYLINE_OCS` and
+`LibreCAD_CONIC_OCS` provenance, and refuses typed offset-source capture for
+the lossy fragments. The previous AC1032 DWG fixture's XDATA stripping is
+removed. This closes only the positive-bulge variant in those lanes.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`non-axial legacy 2D POLYLINEs project straight segments safely` case passes
+589 assertions; `[lc-offsetcurve][import-session][typed-source]` passes 95,858
+assertions across 29 cases. `git diff --check` passes. These are local results,
+not exact-head CI or external CAD acceptance. Test commit `3ab3cc75e`
+(`test(dwg): cover legacy bulged OCS XDATA lanes`); the roadmap receipt is
+committed separately.
