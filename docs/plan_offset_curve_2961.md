@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W474; chronological evidence follows): implementation slices
+Current status (W475; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -71,15 +71,21 @@ No exact-head CI result is claimed for W441-W474. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
-section 440 and the typed-source eligibility work below: choosing a replacement
-must allow changing the source family first, then selecting a matching live
-entity; the candidate currently backing the offset remains selected/highlighted
-when present. The explicit family inventory includes parabola as a distinct
-choice. This is not a request for another widget or a second parabola entity
-implementation. Remaining work is to reconcile every advertised family and
-variant with production offset generation, worker/cache representability, and
-DXF/DWG round trips, and to hide or atomically refuse variants those paths do
-not support. Do not equate the picker list with complete offset support.
+section 440 and the typed-source eligibility work below: while replacing an
+offset source, the user can change the source-family selector first, then pick
+a matching live entity; the currently matched source remains selected and can
+be highlighted when present. The selector covers line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
+distinct choice and must remain so through capture, worker dispatch, replacement,
+and persistence; it must not collapse into generic spline-points. These UI and
+identity requirements are implemented and covered by W359/W396/W397/W440/W474.
+This is not a request for another widget or another parabola entity branch.
+“Support all types” is an end-to-end requirement, not just an enumeration
+requirement: each advertised family/variant must be checked through ordinary
+offset generation, worker/cache validation and admission, edits, and real
+DXF/DWG round trips. Remaining work is to close that family/variant matrix and
+hide or atomically refuse variants those paths do not support. Do not equate
+the picker list with complete offset support.
 The latest source-widget request (2026-11-06) reconfirms that changing an
 existing offset's source must begin with an editable source-family choice:
 the candidate picker filters to that choice, and selecting a candidate
@@ -18660,3 +18666,27 @@ six cases. `git diff --check` passes. These are local automated results, not
 visible-GUI or external CAD acceptance and not exact-head CI. Test commit
 `1cf2e82fb` (`test(offset): verify picker highlighting for every source
 family`); this roadmap receipt is committed separately.
+
+## 475. Source-Family Change and Parabola Support Clarification
+
+The repeated request is an end-to-end requirement for the existing Properties
+workflow: the user changes the source-family selector, then picks a replacement
+entity from that family; if the current live source exists, it remains matched
+and can be selected/highlighted. Parabola must be offered as a distinct family,
+not folded into spline-points. These UI behaviors and the nine-family inventory
+are already implemented and regression-tested (W359/W396/W397/W440/W474), so
+do not create a duplicate selector or parabola entity implementation.
+
+The remaining implementation is substantive type support, not UI inventory:
+for each advertised family and geometry variant, qualify ordinary generation,
+worker operation-7 generation, operation-8 cache validation/admission, atomic
+Properties replacement, applicable edits/transforms, and real DXF/DWG
+save/reopen/second-save. Record exact side/distance/topology eligibility.
+Variants that cannot produce a single lossless native cache must refuse
+atomically with an explicit diagnostic; do not drop them silently or infer
+complete support from the family selector. Keep source metadata round-trip
+coverage distinct from successful native-cache promotion.
+
+This is a roadmap refinement only; no product code changed. It incorporates
+the repeated source-picker/parabola request into the existing W440 eligibility
+work rather than reopening completed UI behavior.
