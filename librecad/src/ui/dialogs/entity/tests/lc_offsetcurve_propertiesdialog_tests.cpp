@@ -693,6 +693,47 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse);
 }
 
+TEST_CASE("Native source picker disables a deleted source candidate",
+          "[gui][dialog][offsetcurve][source][stale]") {
+    Fixture f;
+    auto* line = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    f.graphic.addEntity(line);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
+
+    const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(lineType >= 0);
+    typeBox->setCurrentIndex(lineType);
+    int lineIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == line->getId()) lineIndex = i;
+    REQUIRE(lineIndex >= 0);
+    sourceBox->setCurrentIndex(lineIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Line);
+    CHECK_FALSE(line->getFlag(RS2::FlagSelected));
+    CHECK(selectSource->isEnabled());
+
+    line->setFlag(RS2::FlagDeleted);
+    typeBox->setCurrentIndex(typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Ellipse)));
+    typeBox->setCurrentIndex(lineType);
+    CHECK(sourceBox->count() == 1);
+    CHECK(sourceBox->itemText(0) == QStringLiteral("Embedded source (not found)"));
+    CHECK_FALSE(sourceBox->itemData(0).isValid());
+    CHECK_FALSE(selectSource->isEnabled());
+    click(*selectSource);
+    CHECK_FALSE(line->getFlag(RS2::FlagSelected));
+    CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Line);
+}
+
 TEST_CASE("Native source picker replaces every modeled source family without filter side effects",
           "[gui][dialog][offsetcurve][source][typed][matrix]") {
     Fixture f;
