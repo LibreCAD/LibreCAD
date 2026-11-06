@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W451; chronological evidence follows): implementation slices
+Current status (W452; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W451. Historical results from
+No exact-head CI result is claimed for W441-W452. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request (2026-11-06) reconfirms the already implemented
@@ -17901,3 +17901,35 @@ distances and five file lanes. It does not qualify other control counts,
 closed control-point shapes, all fit/control combinations, distances near
 singularities, or every historical DWG version. Exact-head CI and external CAD
 acceptance remain separate.
+
+## 452. Fit-Point Spline-Points Signed-Distance Promotion and Refusal Matrix
+
+The fit-point `LC_SplinePointsData` import matrix covered open and closed
+fixtures at distance 0.25 (and 0.5 for one variant), on both sides. Extend the
+existing five fixtures to magnitudes 0.1, 0.25, and 0.4 while retaining both
+sides and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. A cache is promotable only
+when the generated offset has exactly one branch. Multi-branch output must
+refuse native promotion and retain the ordinary spline and typed source XDATA.
+
+### Completion receipt
+
+The expanded matrix now validates the five fit-point fixtures at the requested
+distances and sides through all five file lanes. Single-branch outputs admit
+one native offset with exact source/cache parity. The open three-point source
+at distance 0.4 on the right produces three branches; its first-branch carrier
+is correctly refused as a native offset, and staged import keeps the ordinary
+spline plus schema-2 source metadata. This verifies that a branch-shaped cache
+cannot misrepresent a multi-branch offset as a complete editable native entity.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`[lc-offsetcurve][import-session][typed-source][fit-points]` selector passes
+39,237 assertions/1 case; the broader
+`[lc-offsetcurve][import-session][typed-source]` selector passes 87,429
+assertions/29 cases. `git diff --check` passes. This is local CMake evidence,
+not exact-head CI or external CAD acceptance. Test commit: `730910031`
+(`test(offset): widen fit-point import matrix`).
+
+This closes only the five existing fit-point fixtures at these distances and
+file lanes. It does not establish every fit count, tangent constraint,
+tolerance, coincident-point layout, or every multi-branch transition.
+Exact-head CI and external CAD acceptance remain separate.
