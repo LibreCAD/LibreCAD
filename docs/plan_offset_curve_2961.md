@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W476; chronological evidence follows): implementation slices
+Current status (W477; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W476. Historical results from
+No exact-head CI result is claimed for W441-W477. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18717,3 +18717,26 @@ evidence, not exact-head CI or external CAD acceptance. Test commit
 this roadmap receipt is a separate documentation commit. Remaining: other
 finite hyperbola bounds and broader distance/curvature sweeps, including
 dynamic multi-branch refusal cases.
+
+## 477. Bounded-Hyperbola Worker Side and Distance Sweep
+
+The W476 real-file promotion matrix exercises four bounded interval/orientation
+variants at `-0.3` and `0.3`. Extend worker operation-7 generation and
+operation-8 cache validation for those same variants to `-0.1`, `0.1`, `-0.5`,
+and `0.5`, on both sides. Require one canonical spline cache and exact worker
+cache validation for each eligible result; keep worker-kernel evidence distinct
+from real DXF/DWG staged-import promotion.
+
+### Completion receipt
+
+All four bounded-hyperbola layouts now pass operation-7/operation-8 worker
+validation at signed distances `-0.1`, `0.1`, `-0.3`, `0.3`, `-0.5`, and
+`0.5`. Every case produces one canonical spline cache and validates without
+refusal. The focused case passes 624 assertions; the complete
+`librecad_offset_worker_kernel_tests` suite passes 5,210 assertions across 31
+cases. The test also builds incrementally in CMake Debug, and `git diff
+--check` passes. These are local kernel tests, not real-file proof at ±0.5,
+exact-head CI, or external CAD acceptance. Test commit `3eff43333`
+(`test(offset): sweep bounded hyperbola cache sides`); roadmap receipt is
+separate. Remaining: staged DXF/DWG promotion at these additional magnitudes,
+other finite hyperbola bounds, and curvature/topology-driven refusal cases.
