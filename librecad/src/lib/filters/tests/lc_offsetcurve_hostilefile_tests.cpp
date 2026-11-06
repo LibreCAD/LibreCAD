@@ -5374,9 +5374,13 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
     }
     CHECK(importedCases > 0);
     CHECK(refusedCases > 0);
+    const std::size_t expectedCells = scales.size() *
+        (3 * ordinaryDistances.size() + 2 * thinDistances.size());
+    CHECK(importedCases + refusedCases == expectedCells);
     for (std::size_t i = 0; i < scales.size(); ++i) {
         CAPTURE(scales[i]);
-        CHECK(importsByScale[i] + refusalsByScale[i] > 0);
+        CHECK(importsByScale[i] + refusalsByScale[i] ==
+              3 * ordinaryDistances.size() + 2 * thinDistances.size());
     }
 }
 
