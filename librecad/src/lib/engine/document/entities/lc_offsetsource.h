@@ -96,7 +96,7 @@ inline bool finite(const RS_Vector& point) noexcept {
 
 inline bool finitePoints(const std::vector<RS_Vector>& points) noexcept {
     return points.size() <= MaximumSourceItems &&
-           std::all_of(points.begin(), points.end(), finite);
+           std::all_of(points.begin(), points.end(), LC_OffsetSourceDetail::finite);
 }
 
 inline bool sameEndpoint(const RS_Vector& lhs, const RS_Vector& rhs,
@@ -267,7 +267,8 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
                    finitePoints(data.splinePoints) && finitePoints(data.controlPoints);
         } else if constexpr (std::is_same_v<T, LC_ParabolaData>) {
             return data.isValid() &&
-                   std::all_of(data.m_controlPoints.begin(), data.m_controlPoints.end(), finite) &&
+                   std::all_of(data.m_controlPoints.begin(), data.m_controlPoints.end(),
+                               LC_OffsetSourceDetail::finite) &&
                    finite(data.m_focus) && finite(data.m_axis) && finite(data.m_vertex);
         } else if constexpr (std::is_same_v<T, LC_HyperbolaData>) {
             const double majorLength = std::hypot(data.majorP.x, data.majorP.y);
