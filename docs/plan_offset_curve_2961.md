@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W424; chronological evidence follows): implementation slices
+Current status (W425; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -92,6 +92,14 @@ only intersecting topology detection for supported 2D line/arc polyline
 snapshots; candidate-density caps intentionally refuse ambiguous dense cases,
 and non-axial OCS, mesh/polyface/3D legacy POLYLINE, broad distance/side
 qualification, and visible GUI acceptance remain open.
+
+W425 extends the topology regression matrix with an adjacent bulge-arc/line
+crossing imported as ordinary LWPOLYLINE geometry. R14 DXF, AC1032 DXF, and
+AC1032 DWG all retain the two-segment entity while typed offset-source capture
+refuses it. The focused case passes 60 assertions; the full imported
+typed-source/polyline selection passes 1,138 assertions/11 cases. Test commit
+`c88e876ae` adds no product behavior. Exact-head PR checks must be checked for
+the new pushed commit.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -16688,3 +16696,25 @@ Dense candidate sets beyond the explicit work cap are refused; non-axial OCS,
 mesh/polyface/3D legacy POLYLINE, broader distance/side admission, and visible
 GUI behavior remain open. Push product and roadmap commits to PR #3193, then
 inspect exact-head CI/checks rather than inheriting older statuses.
+
+## 425. Imported Bulge-Arc/Line Crossing (2026-11-06)
+
+Added a real LWPOLYLINE file fixture whose first segment is a semicircular
+bulge arc and whose immediately adjacent line crosses that arc away from
+their shared vertex. This targets the adjacency rule directly: a neighboring
+segment pair is not automatically safe when the pair intersects again away
+from its expected join. R14/AC1014 binary DXF, AC1032 DXF, and AC1032 DWG each
+import successfully as an ordinary two-segment polyline (arc then line), but
+typed offset-source capture refuses the crossing topology.
+
+The focused imported-crossing test passes 60 assertions/1 case. The complete
+`[import-session][typed-source][polyline]` selection passes 1,138 assertions
+in 11 cases. Release `librecad_tests` rebuilds and `git diff --check` passes.
+Test commit: `c88e876ae` (`test(offset): cover imported arc-line crossings`).
+No production behavior changes in this slice.
+
+This adds adjacent arc/line double-intersection import coverage only. Imported
+arc-arc intersections, broader non-axial OCS, mesh/polyface/3D legacy
+POLYLINE, distance/side admission, and visible GUI acceptance remain open.
+Push the product/test and roadmap checkpoints to PR #3193, then inspect
+checks for the exact current head.
