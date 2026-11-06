@@ -17039,3 +17039,20 @@ The Release `librecad_tests` target builds; `[lc-offsetcurve][source]` passes
 lossy marker refusal, case-insensitive matching, unrelated XDATA, and malformed
 APPID payload refusal. `git diff --check` passes. The legacy-3D marker and
 format-round-trip slice remains open.
+
+The legacy-3D provenance slice is implemented in `b3765b4b1`
+(`fix(dxf): mark projected legacy 3d polylines`). Import keeps the XY
+projection visible, appends `LibreCAD_POLYLINE_3D` plus a payload without
+replacing existing XDATA, and refuses it as an editable offset source. APPID
+registration is exercised with a real imported 3D POLYLINE. R14/R2000/AC1032
+DXF and AC1032 DWG input are covered; the marker and APPID survive AC1032 DXF
+and DWG save/reopen. `[lc-offsetcurve][import-session][typed-source][polyline]`
+passes 1,923 assertions in 18 cases; the focused 3D case passes 96 assertions;
+`[dxf][appid-registration]` passes 819 assertions in 7 cases; the direct
+`[lc-offsetcurve][source]` suite passes 150 assertions in 5 cases. CMake
+Release `librecad_tests` builds, the qmake6 full application/worker/plugin
+build succeeds, and `git diff --check` passes. A low-level fixture attempt for
+AC1015/R2000 DWG POLYLINE returned false from the existing `dwgRW` fixture
+writer, so that input lane remains unverified rather than being inferred from
+AC1032 DWG coverage. Native 3D geometry, non-axial OCS, and actual mesh/polyface
+offset sources remain separate open work.
