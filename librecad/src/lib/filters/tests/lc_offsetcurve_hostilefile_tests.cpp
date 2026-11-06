@@ -2710,6 +2710,60 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
       CHECK(samePoint(line->getEndpoint(), RS_Vector{0.2, 2.0}));
     }
 
+    const std::array<std::pair<const char *, double>, 2> ocsBulgeVariants{{
+        {"negative-minor", -std::tan(M_PI / 8.0)},
+        {"positive-major", 2.0}}};
+    for (const auto &[variantName, bulge] : ocsBulgeVariants) {
+      for (const auto &format : bulgedFormats) {
+#ifndef DWGSUPPORT
+        if (format.dwg)
+          continue;
+#endif
+        DRW_LWPolyline fixture = bulged;
+        fixture.vertlist.front()->bulge = bulge;
+        const auto path = directory.file(std::string("ocs-") + variantName +
+                                         "-" + format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg)
+          f::dwgPolylineFile(path, fixture, format.version);
+        else
+          f::binaryDxfPolyline(path, fixture, format.version);
+#else
+        f::binaryDxfPolyline(path, fixture, format.version);
+#endif
+        const auto imported = stagedImport(path, format.lane);
+        INFO(variantName << " " << format.suffix);
+        REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(imported.graphic);
+        REQUIRE(std::distance(imported.graphic->begin(),
+                              imported.graphic->end()) == 2);
+        const RS_Ellipse *ellipse = nullptr;
+        const RS_Line *line = nullptr;
+        for (const RS_Entity *entity : *imported.graphic) {
+          CHECK(hasFragmentXData(*entity));
+          CHECK(hasProjectionApp(*entity, "LibreCAD_POLYLINE_OCS"));
+          CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+          if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity)) {
+            ellipse = candidate;
+            CHECK(hasProjectionApp(*entity, "LibreCAD_CONIC_OCS"));
+          }
+          if (const auto *candidate = dynamic_cast<const RS_Line *>(entity))
+            line = candidate;
+        }
+        REQUIRE(ellipse);
+        REQUIRE(line);
+        CHECK(ellipse->getAngleLength() ==
+              Catch::Approx(std::abs(4.0 * std::atan(bulge))));
+        CHECK(std::isfinite(ellipse->getMajorRadius()));
+        CHECK(ellipse->getMajorRadius() > 0.0);
+        CHECK(ellipse->getRatio() == Catch::Approx(0.8));
+        CHECK(samePoint(ellipse->getStartpoint(), RS_Vector{1.8, 0.0}));
+        CHECK(samePoint(ellipse->getEndpoint(), RS_Vector{1.8, 2.0}));
+        CHECK(samePoint(line->getStartpoint(), RS_Vector{1.8, 2.0}));
+        CHECK(samePoint(line->getEndpoint(), RS_Vector{0.2, 2.0}));
+      }
+    }
+
     const auto projectedDxf = directory.file("bulged-roundtrip.dxf");
     REQUIRE(lc::test::exportDrawing(*unsupportedOutcome.graphic, projectedDxf,
                                     RS2::FormatDXFRW2018));
