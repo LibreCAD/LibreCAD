@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W420; chronological evidence follows): implementation slices
+Current status (W421; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16590,3 +16590,21 @@ arbitrary line/arc intersections without a shared vertex, non-axial OCS,
 mesh/polyface/3D legacy POLYLINE, and the broad side/distance matrix remain
 open. Commit this W420 roadmap checkpoint, push the product and docs to PR
 #3193, then inspect checks for the exact head.
+
+## 421. Spatial-Bucket Exponent-Boundary Regression (2026-11-05)
+
+Extended W420's real-file topology fixture with a pair of non-adjacent
+vertices separated by one ULP across the coordinate-magnitude boundary at
+`2.0`. This forces the duplicate lookup to search neighboring exponent bins,
+not only adjacent cells within the same bin. The fixture retains the two
+distinct imported coordinates and requires source capture to refuse the
+polyline in R14/AC1014 binary DXF, AC1032 DXF, and AC1032 DWG.
+
+The focused repeated/near-coincident case passes 222 assertions/1 case. The
+full `[import-session][typed-source][polyline]` selection passes 1,027
+assertions/9 cases. Release `librecad_tests` builds and `git diff --check`
+passes. Test commit: `e63f63e86` (`test(offset): cover exponent boundary
+duplicates`). This adds a scale-bin-boundary regression only; arbitrary
+line/arc intersections, non-axial OCS, non-2D legacy polylines, and the broad
+side/distance matrix remain open. Commit this roadmap checkpoint, push W421,
+then inspect exact-head PR checks.
