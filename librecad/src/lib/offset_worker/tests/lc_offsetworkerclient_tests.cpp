@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "../lc_offsetworkerclient.h"
+#include "../lc_offsetworkertolerance.h"
 #include "../lc_offsetworkeredit.h"
 #include "lc_offsetcurvexdata.h"
 #include "rs_entitycontainer.h"
@@ -561,7 +562,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             REQUIRE(cache);
             auto directSource = sources[i].makeEntity();
             REQUIRE(directSource);
-            const auto directOptions = LC_CurveOffset::makeDirectOptions(*directSource, .25, 1e-4);
+            const LC_OffsetSourceDefinition directDefinition{sources[i], .25, 1e-4, false};
+            const auto directOptionsValue = LC_OffsetWorkerTolerance::directOptions(
+                directDefinition, *directSource);
+            REQUIRE(directOptionsValue);
+            const auto directOptions = *directOptionsValue;
             const auto directGeometry = LC_CurveOffset::buildDirectBranches(*directSource,
                 LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25), directOptions,
                 LC_CurveOffset::makeDirectSourceBudget());

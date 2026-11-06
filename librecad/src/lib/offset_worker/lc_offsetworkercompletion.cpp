@@ -5,6 +5,7 @@
  */
 #include "lc_offsetworkerclient.h"
 #include "lc_offsetcurvexdata.h"
+#include "lc_offsetworkertolerance.h"
 #include "rs_line.h"
 
 #include <algorithm>
@@ -71,10 +72,9 @@ std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::nativeSource(const RS
     auto source = request->definition.source.makeEntity();
     const double magnitude = std::abs(request->definition.signedDistance);
     if (!source || !std::isfinite(magnitude) || magnitude <= RS_TOLERANCE) return {};
-    const auto options = LC_CurveOffset::makeDirectOptions(
-        *source, magnitude, request->definition.relativeTolerance);
-    const double tolerance = options.tolerance.requestedGeometry;
-    if (!std::isfinite(tolerance) || !(tolerance > 0)) return {};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(request->definition, *source);
+    if (!options) return {};
+    const double tolerance = options->tolerance.requestedGeometry;
 
     std::vector<RS_Vector> grips = cache.controlPoints;
     RS_Vector midpoint = checked.getMiddlePoint();
@@ -105,9 +105,9 @@ std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::nativeValidatedSource
     auto source = request->definition.source.makeEntity();
     const double magnitude = std::abs(request->definition.signedDistance);
     if (!source || !std::isfinite(magnitude) || magnitude <= RS_TOLERANCE) return {};
-    const double tolerance = LC_CurveOffset::makeDirectOptions(
-        *source, magnitude, request->definition.relativeTolerance).tolerance.requestedGeometry;
-    if (!std::isfinite(tolerance) || !(tolerance > 0)) return {};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(request->definition, *source);
+    if (!options) return {};
+    const double tolerance = options->tolerance.requestedGeometry;
     auto grips = request->cache.controlPoints;
     RS_Vector midpoint = checked.getMiddlePoint();
     if (!LC_EllipseOffsetGeometry::isFinite2D(midpoint)) midpoint = request->cache.controlPoints.front();

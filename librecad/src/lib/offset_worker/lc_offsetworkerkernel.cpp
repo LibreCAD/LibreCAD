@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "lc_offsetworkerkernel.h"
+#include "lc_offsetworkertolerance.h"
 
 #include "rs_line.h"
 #include <algorithm>
@@ -177,9 +178,9 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         return output;
     }
 
-    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(
-        *source, magnitude, input.definition.relativeTolerance);
-    if (!std::isfinite(options.tolerance.requestedGeometry)) return output;
+    const auto optionsValue = LC_OffsetWorkerTolerance::directOptions(input.definition, *source);
+    if (!optionsValue) return output;
+    LC_CurveOffsetOptions options = *optionsValue;
     if (input.limits.maxSamples) options.maxSamples = input.limits.maxSamples;
     if (input.limits.maxIntersectionPairs)
         options.maxIntersectionPairs = input.limits.maxIntersectionPairs;

@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "lc_offsetcurve_persistence_fixture.h"
+#include "../../offset_worker/lc_offsetworkertolerance.h"
 #include "lc_offsetimportsession.h"
 #include "intern/dwg_dxf_output_transaction.h"
 #include <QElapsedTimer>
@@ -1342,7 +1343,8 @@ TEST_CASE("typed source DXF import materializes only an operation-8 validated ca
     const LC_OffsetSourceDefinition definition{
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {4, 0}}}, .5, 1e-4, false};
     RS_Line source{nullptr, std::get<RS_LineData>(definition.source.value)};
-    const auto options = LC_CurveOffset::makeDirectOptions(source, .5, definition.relativeTolerance);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        source, .5, definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(source,
         LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .5), options,
         LC_CurveOffset::makeDirectSourceBudget());
@@ -1502,8 +1504,8 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
             auto source = definition.source.makeEntity();
             REQUIRE(source);
             const double magnitude = std::abs(signedDistance);
-            const auto options = LC_CurveOffset::makeDirectOptions(*source, magnitude,
-                definition.relativeTolerance);
+            const auto options = LC_OffsetWorkerTolerance::directOptions(
+                *source, magnitude, definition.relativeTolerance).value();
             const auto generated = LC_CurveOffset::buildDirectBranches(*source,
                 LC_CurveOffset::makeSideRequest(
                     signedDistance < 0 ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left,
@@ -1630,8 +1632,8 @@ TEST_CASE("high-eccentricity ellipse refuses partial cache promotion across file
                                                        1e-4, false};
             auto source = definition.source.makeEntity();
             REQUIRE(source);
-            const auto options = LC_CurveOffset::makeDirectOptions(
-                *source, magnitude, definition.relativeTolerance);
+            const auto options = LC_OffsetWorkerTolerance::directOptions(
+                *source, magnitude, definition.relativeTolerance).value();
             const auto generated = LC_CurveOffset::buildDirectBranches(
                 *source,
                 LC_CurveOffset::makeSideRequest(signedDistance < 0
@@ -1762,8 +1764,8 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
             auto source = definition.source.makeEntity();
             REQUIRE(source);
             const double magnitude = std::abs(signedDistance);
-            const auto options = LC_CurveOffset::makeDirectOptions(
-                *source, magnitude, definition.relativeTolerance);
+            const auto options = LC_OffsetWorkerTolerance::directOptions(
+                *source, magnitude, definition.relativeTolerance).value();
             const auto generated = LC_CurveOffset::buildDirectBranches(
                 *source,
                 LC_CurveOffset::makeSideRequest(
@@ -1909,8 +1911,8 @@ TEST_CASE("closed mixed-bulge polyline promotes only its representable side acro
         auto sourceEntity = definition.source.makeEntity();
         REQUIRE(sourceEntity);
         const double magnitude = std::abs(signedDistance);
-        const auto options = LC_CurveOffset::makeDirectOptions(
-            *sourceEntity, magnitude, definition.relativeTolerance);
+        const auto options = LC_OffsetWorkerTolerance::directOptions(
+            *sourceEntity, magnitude, definition.relativeTolerance).value();
         const auto generated = LC_CurveOffset::buildDirectBranches(
             *sourceEntity,
             LC_CurveOffset::makeSideRequest(signedDistance < 0
@@ -2049,8 +2051,8 @@ TEST_CASE("control-point spline-points source promotes through DXF and DWG impor
       auto source = definition.source.makeEntity();
       REQUIRE(source);
       const double magnitude = std::abs(signedDistance);
-      const auto options = LC_CurveOffset::makeDirectOptions(*source, magnitude,
-          definition.relativeTolerance);
+      const auto options = LC_OffsetWorkerTolerance::directOptions(
+          *source, magnitude, definition.relativeTolerance).value();
       const auto side = signedDistance < 0 ? LC_CurveOffsetSide::Right
                                            : LC_CurveOffsetSide::Left;
       const auto generated = LC_CurveOffset::buildDirectBranches(*source,
@@ -4725,7 +4727,8 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
         LC_OffsetSourceGeometry{unweighted}, .5, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
-    const auto options = LC_CurveOffset::makeDirectOptions(*source, .5, definition.relativeTolerance);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        *source, .5, definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(*source,
         LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .5), options,
         LC_CurveOffset::makeDirectSourceBudget());
@@ -4839,8 +4842,8 @@ TEST_CASE("wrapped periodic spline source imports through operation-8 validation
         LC_OffsetSourceGeometry{wrapped}, .25, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
-    const auto options = LC_CurveOffset::makeDirectOptions(*source, .25,
-        definition.relativeTolerance);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        *source, .25, definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(*source,
         LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25), options,
         LC_CurveOffset::makeDirectSourceBudget());
@@ -4943,8 +4946,8 @@ TEST_CASE("multi-branch hyperbola import refuses partial cache and retains sourc
     auto source = definition.source.makeEntity();
     REQUIRE(source);
     const double magnitude = std::abs(definition.signedDistance);
-    const auto options = LC_CurveOffset::makeDirectOptions(
-        *source, magnitude, definition.relativeTolerance);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        *source, magnitude, definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(
         *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, magnitude),
         options, LC_CurveOffset::makeDirectSourceBudget());
@@ -5048,8 +5051,8 @@ TEST_CASE("multi-branch rational spline import refuses native promotion and reta
         LC_OffsetSourceGeometry{rational}, .2, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
-    const auto options = LC_CurveOffset::makeDirectOptions(*source, .2,
-        definition.relativeTolerance);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        *source, .2, definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(*source,
         LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .2), options,
         LC_CurveOffset::makeDirectSourceBudget());
@@ -5148,8 +5151,8 @@ TEST_CASE("single-cache internal-knot rational spline imports as native offset c
         LC_OffsetSourceGeometry{rational}, .05, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
-    const auto options = LC_CurveOffset::makeDirectOptions(*source, .05,
-        definition.relativeTolerance);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        *source, .05, definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(*source,
         LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .05), options,
         LC_CurveOffset::makeDirectSourceBudget());
@@ -5268,8 +5271,8 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         displayedGeometry.fitTangentsConstrained = false;
         auto source = LC_OffsetSourceGeometry{displayedGeometry}.makeEntity();
         REQUIRE(source);
-        const auto options = LC_CurveOffset::makeDirectOptions(*source, magnitude,
-            definition.relativeTolerance);
+        const auto options = LC_OffsetWorkerTolerance::directOptions(
+            *source, magnitude, definition.relativeTolerance).value();
         const auto generated = LC_CurveOffset::buildDirectBranches(*source,
             LC_CurveOffset::makeSideRequest(side, magnitude), options,
             LC_CurveOffset::makeDirectSourceBudget());

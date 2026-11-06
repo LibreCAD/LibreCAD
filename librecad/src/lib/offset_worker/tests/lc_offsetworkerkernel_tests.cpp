@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "../lc_offsetworkerkernel.h"
+#include "../lc_offsetworkertolerance.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_spline.h"
@@ -605,7 +606,6 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
           "[lc-offsetcurve][worker-kernel][source-cache][parabola][scale]") {
     std::size_t acceptedCaches = 0;
     std::size_t refusedCaches = 0;
-    std::size_t lowScaleRefusals = 0;
     for (const double scale : {1e-8, 1e-3, 1e3}) {
         CAPTURE(scale);
         const LC_ParabolaData parabola{{RS_Vector{0, 0}, RS_Vector{5 * scale, 10 * scale},
@@ -619,18 +619,16 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
             const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
             const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
             const auto& generated = native(generationReply, 7);
-            if (scale == 1e-8) {
-                CHECK(generated.refusal == LC_OffsetCurveRefusal::Engine);
-                CHECK(generated.engineStatus == LC_CurveOffsetStatus::UndefinedTangent);
-                CHECK(generated.ordinaryStatus == result::OrdinaryStatus::None);
-                CHECK(generated.ordinary.empty());
-                CHECK_FALSE(generated.changed);
-                ++lowScaleRefusals;
-                continue;
-            }
             REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
             REQUIRE_FALSE(generated.ordinary.empty());
+
+            auto sourceEntity = source.makeEntity();
+            REQUIRE(sourceEntity);
+            const auto effectiveOptions = LC_OffsetWorkerTolerance::directOptions(
+                definition, *sourceEntity);
+            REQUIRE(effectiveOptions);
+            CHECK(effectiveOptions->tolerance.requestedGeometry < scale * 2e-3);
 
             RS_SplineData cache;
             if (const auto* spline = std::get_if<RS_SplineData>(&generated.ordinary.front())) {
@@ -660,10 +658,43 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
             CHECK(validated.engineRuns == 1);
         }
     }
-    CHECK(acceptedCaches + refusedCaches == 16);
+    CHECK(acceptedCaches + refusedCaches == 24);
     CHECK(acceptedCaches > 0);
     CHECK(refusedCaches > 0);
-    CHECK(lowScaleRefusals == 8);
+}
+
+TEST_CASE("typed worker tolerance defaults relatively and scales with the source",
+          "[lc-offsetcurve][parabola][scale][tolerance][worker-kernel]") {
+    double previousNormalized = 0.0;
+    for (const double scale : {1e-8, 1e-3, 1e3}) {
+        CAPTURE(scale);
+        const LC_OffsetSourceGeometry source{LC_ParabolaData{{
+            RS_Vector{0, 0}, RS_Vector{5 * scale, 10 * scale}, RS_Vector{10 * scale, 0}}}};
+        REQUIRE(source.isWellFormed());
+        auto sourceEntity = source.makeEntity();
+        REQUIRE(sourceEntity);
+
+        const LC_OffsetSourceDefinition defaultDefinition{source, 0.5 * scale, 0.0, false};
+        const LC_OffsetSourceDefinition explicitDefinition{
+            source, 0.5 * scale, LC_CurveOffset::relativeOffsetTolerance(*sourceEntity), false};
+        const auto defaultOptions = LC_OffsetWorkerTolerance::directOptions(
+            defaultDefinition, *sourceEntity);
+        const auto explicitOptions = LC_OffsetWorkerTolerance::directOptions(
+            explicitDefinition, *sourceEntity);
+        REQUIRE(defaultOptions);
+        REQUIRE(explicitOptions);
+        CHECK(defaultOptions->tolerance.requestedGeometry ==
+              explicitOptions->tolerance.requestedGeometry);
+        const double normalizedTolerance = defaultOptions->tolerance.requestedGeometry / scale;
+        if (previousNormalized > 0.0) {
+            CHECK(std::abs(normalizedTolerance / previousNormalized - 1.0) < 1e-12);
+        }
+        previousNormalized = normalizedTolerance;
+
+        const auto generated = LC_OffsetWorkerKernel::run({token,
+            req::GenerateSource{defaultDefinition, {}}});
+        CHECK(native(generated, 7).engineStatus == LC_CurveOffsetStatus::Ok);
+    }
 }
 
 TEST_CASE("parabola worker cache validation preserves local detail at large coordinates",

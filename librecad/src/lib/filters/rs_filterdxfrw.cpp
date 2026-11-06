@@ -76,6 +76,7 @@
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurvecarrier.h"
 #include "lc_offsetimportsession.h"
+#include "../offset_worker/lc_offsetworkertolerance.h"
 #include "lc_colornumbers.h"
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
@@ -9072,9 +9073,11 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
       try {
         auto source = parsed.definition->source->source.makeEntity();
         const double magnitude = std::abs(parsed.definition->source->signedDistance);
-        const double tolerance = source && std::isfinite(magnitude) && magnitude > RS_TOLERANCE
-            ? LC_CurveOffset::makeDirectOptions(*source, magnitude,
-                parsed.definition->source->relativeTolerance).tolerance.requestedGeometry
+        const auto sourceOptions = source && std::isfinite(magnitude) && magnitude > RS_TOLERANCE
+            ? LC_OffsetWorkerTolerance::directOptions(*parsed.definition->source, *source)
+            : std::nullopt;
+        const double tolerance = sourceOptions
+            ? sourceOptions->tolerance.requestedGeometry
             : std::numeric_limits<double>::quiet_NaN();
         if (std::isfinite(tolerance) && tolerance > 0 &&
             m_offsetImportBudget->admit(*raw.data, *parsed.definition, remaining->size(),
