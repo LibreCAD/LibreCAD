@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W493; chronological evidence follows): implementation slices
+Current status (W504; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -61,7 +61,14 @@ commit, so its checks must be qualified separately. Remaining acceptance
 includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
-and final R integration.
+and final R integration. W503 adds staged-import promotion/refusal coverage
+for eight bounded-hyperbola layouts across five DXF/DWG lanes and six nearby
+signed distances; the focused case passes 59,016 assertions and the full
+typed-source import selection passes 327,550 assertions across 34 cases.
+W504 revalidates that the editable nine-family selector and distinct parabola
+choice are already implemented; remaining source support is variant-level.
+Exact PR head `771e256758137a4a4685eab255063931962c928e` currently has no
+reported checks or statuses, so no CI pass is claimed for these commits.
 W439 adds bulged LWPOLYLINE and legacy 2D POLYLINE input coverage across R14
 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
