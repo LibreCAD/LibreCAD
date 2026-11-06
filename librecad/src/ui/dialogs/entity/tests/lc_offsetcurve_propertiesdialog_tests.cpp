@@ -779,7 +779,8 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     QApplication::processEvents();
     auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
-    REQUIRE(typeBox); REQUIRE(sourceBox);
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
     REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
 
     for (std::size_t i = 0; i < sources.size(); ++i) {
@@ -817,6 +818,9 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
                   LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
         }
         CHECK(sourceBox->currentData().toULongLong() == sourceIds[i]);
+        CHECK(selectSource->isEnabled());
+        click(*selectSource);
+        CHECK(sourceEntities[i]->getFlag(RS2::FlagSelected));
 
         auto* distance = widget.findChild<QLineEdit*>("leDistance");
         REQUIRE(distance);
