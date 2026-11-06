@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W463; chronological evidence follows): implementation slices
+Current status (W464; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W463. Historical results from
+No exact-head CI result is claimed for W441-W464. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request (2026-11-06) reconfirms that changing an
@@ -18288,4 +18288,32 @@ Validation: incremental CMake Debug `librecad_tests` build passes. The focused
 97,047 assertions across 29 cases. `git diff --check` passes. These are local
 results, not exact-head CI or external CAD acceptance. Test commit
 `34d25fd8c` (`test(dwg): cover reflected OCS bulges by version`); the roadmap
+receipt is committed separately.
+
+## 464. Reflected OCS Legacy POLYLINE Bulge Version Matrix
+
+W463 qualifies the reflected positive minor-bulge LWPOLYLINE across the five
+DXF/DWG lanes, but the equivalent legacy 2D POLYLINE still has no reflected
+OCS fixture. Add the open positive minor-bulge legacy source with negative-Z
+normal across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Verify reversal,
+sweep, arc-to-line continuity, OCS/conic provenance, unrelated XDATA, and
+refusal of projected pieces as typed offset sources. Closed reflected legacy
+polylines and other reflected bulges remain out of scope for this slice.
+
+### Completion receipt
+
+The reflected positive minor-bulge legacy 2D POLYLINE now imports from all
+five format/version lanes with unrelated `FixtureSourceData`. Every output
+retains reversed ellipse orientation and expected quarter-circle sweep,
+finite center coordinates, endpoint continuity with the following line, both
+OCS provenance markers, and refusal to capture the projected fragments as
+native offset sources. This does not qualify closed reflected legacy sources
+or other reflected bulge magnitudes.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`non-axial legacy 2D POLYLINEs project straight segments safely` case passes
+1,264 assertions; `[lc-offsetcurve][import-session][typed-source]` passes
+96,936 assertions across 29 cases. `git diff --check` passes. These are local
+results, not exact-head CI or external CAD acceptance. Test commit
+`f26abff5d` (`test(dwg): cover reflected legacy OCS bulges`); the roadmap
 receipt is committed separately.
