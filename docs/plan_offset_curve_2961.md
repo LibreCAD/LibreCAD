@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W469; chronological evidence follows): implementation slices
+Current status (W470; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W469. Historical results from
+No exact-head CI result is claimed for W441-W470. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18512,3 +18512,33 @@ test receipts (section 440, including W359/W396/W397/W440). Do not reopen them
 unless a regression appears. The open deliverable is exhaustive, evidence-led
 support for the geometry variants behind those family choices, with explicit
 refusal rather than silent source/cache corruption where support is absent.
+
+## 470. Closed Mixed-Sign Bulge Chain in Reflected OCS
+
+W469 covers a single reflected negative-major bulge across the five DXF/DWG
+lanes. Add a closed three-segment LWPOLYLINE whose first edge has a positive
+minor bulge, second edge a negative major bulge, and closing edge is straight.
+Exercise R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG with a reflected tilted
+normal. Verify both projected conic sweeps/orientations, closed endpoint
+connectivity, XDATA and OCS/conic provenance, and refusal to capture the lossy
+XY fragments as typed offset sources. This does not establish arbitrary
+multi-bulge counts, all sign/order permutations, legacy POLYLINE parity, or
+native non-axial bulged-polyline offsets.
+
+### Completion receipt
+
+The reflected closed mixed-sign chain imports in all five format/version
+lanes as two projected ellipses plus one closing line. Tests compare both
+absolute bulge sweeps, verify the expected reflected orientation parity and
+finite centers, and check that every fragment endpoint has exactly one peer
+on another fragment to form a closed cycle. Each fragment retains the source
+XDATA and OCS marker; conics retain the conic marker; no projected fragment is
+accepted as an editable typed offset source.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`non-axial LWPOLYLINEs remain visible as marked XY projections` case passes
+2,253 assertions; `[lc-offsetcurve][import-session][typed-source]` passes
+98,315 assertions across 29 cases. The roadmap inventory parser passes 5/5 and
+`git diff --check` passes. These are local results, not exact-head CI or
+external CAD acceptance. Test commit `978a13c59` (`test(offset): cover closed
+mixed-bulge OCS chains`); the roadmap receipt is committed separately.
