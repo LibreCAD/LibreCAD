@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W489; chronological evidence follows): implementation slices
+Current status (W490; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W489. Historical results from
+No exact-head CI result is claimed for W441-W490. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -19047,3 +19047,30 @@ acceptance. Test commit `5eeae093b` (`test(offset): promote reversed ellipse
 source variants`); roadmap receipt is separate. Remaining ellipse work
 includes untested directed sweeps, further eccentricities, and distance
 behavior near curvature boundaries.
+
+## 490. Thin-Ellipse Curvature Threshold
+
+W488 tests a thin ratio-0.2 ellipse at distances `±0.1` and `±0.4`, but does
+not locate its minimum-curvature threshold. For semi-axes 2 and 0.4, sample
+both sides around radius 0.08. Require exact operation-8 acceptance for
+single-cache cases and non-mutating refusal for the split inward result; prove
+the same promotion/refusal distinction through the five real DXF/DWG lanes.
+
+### Completion receipt
+
+The worker matrix samples signed distances `±0.05`, `±0.07`, `±0.08`, and
+`±0.09` for the ratio-0.2 ellipse. Both signs below the curvature threshold
+and the exact `+0.08` case yield one cache accepted by operation 8; `+0.09`
+splits and a single-branch candidate is refused. Real R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG imports promote `±0.05`, `±0.07`, and `±0.08`; partial
+carriers at `+0.09`, `+0.1`, and `+0.4` downgrade and preserve schema-2 source
+metadata across the same five lanes.
+
+Validation: focused conic worker test passes 842 assertions; full
+worker-kernel suite passes 8,251 assertions across 31 cases. Real-family
+promotion matrix passes 117,363 assertions; high-eccentricity refusal matrix
+passes 3,757 assertions. The incremental CMake Debug test targets build and
+`git diff --check` passes. Local tests, not exact-head CI or external CAD
+acceptance. Test commit `452fae8b9` (`test(offset): qualify thin ellipse
+curvature boundary`); roadmap receipt is separate. Further ellipse sweep,
+reversal, and curvature/topology combinations remain open.
