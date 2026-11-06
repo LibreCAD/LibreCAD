@@ -7755,19 +7755,40 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
     return;
   }
 
-  // libdxfrw has already applied the OCS frame before this callback. A
-  // LibreCAD polyline is strictly 2D, so only the two normalized axial
-  // frames can be represented without retaining a second coordinate space.
-  if (!hasNormalizedAxialExtrusion(data)) {
+  const double extrusionMagnitude =
+      std::hypot(data.extPoint.x, data.extPoint.y, data.extPoint.z);
+  if (!std::isfinite(extrusionMagnitude) || extrusionMagnitude == 0.0) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW::addLWPolyline: invalid extrusion normal");
+    return;
+  }
+
+  // libdxfrw has already applied the OCS frame before this callback. Keep a
+  // visible XY projection for non-axial planes, but mark it as lossy so it
+  // cannot be edited as a native offset source or mistaken for source OCS.
+  const bool projectedOcs = !hasNormalizedAxialExtrusion(data);
+  if (projectedOcs && std::any_of(data.vertlist.cbegin(), data.vertlist.cend(),
+                                  [](const auto& vertex) {
+                                    return vertex && vertex->bulge != 0.0;
+                                  })) {
     RS_DEBUG->print(
         RS_Debug::D_WARNING,
-        "RS_FilterDXFRW::addLWPolyline: skipped non-axial extrusion");
+        "RS_FilterDXFRW::addLWPolyline: skipped non-axial bulged projection");
     return;
   }
   const bool reflectedOcs = data.extPoint.z < 0.0;
   RS_PolylineData d(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
   auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, d);
   setEntityAttributes(polyline.get(), &data);
+  if (projectedOcs) {
+    auto ext = polyline->getDrwExtData();
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1001, std::string("LibreCAD_POLYLINE_OCS")));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord{data.extPoint.x, data.extPoint.y, data.extPoint.z}));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data.elevation));
+    polyline->setDrwExtData(std::move(ext));
+  }
 
   std::vector<std::pair<RS_Vector, double>> verList;
   for (const auto &v : data.vertlist) {
@@ -7776,7 +7797,7 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
   }
 
   polyline->appendVertexs(verList);
-  const bool defaultExtrusion = !reflectedOcs;
+  const bool defaultExtrusion = !projectedOcs && !reflectedOcs;
   bool hasVertexMetadata = false;
   for (const auto &v : data.vertlist) {
     if (v && (v->stawidth != 0.0 || v->endwidth != 0.0 || v->identifier != 0)) {
@@ -7791,9 +7812,11 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
         1001, std::string("LibreCAD_LWPOLYLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1040, data.width));
     ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.elevation : data.elevation));
+        1040, projectedOcs ? 0.0
+                           : (reflectedOcs ? -data.elevation : data.elevation)));
     ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.thickness : data.thickness));
+        1040, projectedOcs ? 0.0
+                           : (reflectedOcs ? -data.thickness : data.thickness)));
     ext.push_back(
         std::make_shared<DRW_Variant>(1010, DRW_Coord{0.0, 0.0, 1.0}));
     ext.push_back(std::make_shared<DRW_Variant>(

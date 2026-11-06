@@ -248,6 +248,7 @@ TEST_CASE("Offset source capture rejects lossy polyline preview projections",
                                "LibreCAD_POLYLINE_PFACE",
                                "LibreCAD_MLINE",
                                "LibreCAD_UNDERLAY",
+                               "LibreCAD_POLYLINE_OCS",
                                "librecad_polyline_mesh"}) {
         CAPTURE(marker);
         auto projection = makePolyline();

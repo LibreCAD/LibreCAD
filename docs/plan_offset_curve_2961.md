@@ -16681,10 +16681,13 @@ Rechecked the latest request for the Properties source widget against the
 current implementation and coverage. While replacing a source, the user must
 be able to change the source-family selector before choosing an entity; the
 entity chooser must then offer matching candidates from that family. The
-selector must include every currently modeled family: ellipse, spline,
-spline-points, parabola, bounded hyperbola, line, arc, circle, and polyline.
-Parabola remains its own choice despite inheriting from `LC_SplinePoints`, and
-must be identified, selectable, and highlighted as a parabola.
+selector is driven by the explicit `LC_OffsetSourceGeometry::SupportedKinds`
+inventory, not by the currently embedded source type or an enum-range
+assumption. That inventory currently contains every modeled family: ellipse,
+spline, spline-points, parabola, bounded hyperbola, line, arc, circle, and
+polyline. Parabola remains its own choice despite inheriting from
+`LC_SplinePoints`; capture, display, replacement, and source highlighting must
+preserve and identify it as a parabola.
 
 Changing only the family filter is a non-mutating browse operation: it must
 not change the offset definition, source handle, generated cache, or drawing
@@ -16695,11 +16698,19 @@ rejected, deleted, or unsupported candidates leave the prior source/cache
 intact and report failure. “All supported types” here means the nine listed
 source families, not every possible geometric variant within each family.
 
-This behavior is already implemented and tested by W356/W359 (nine-family
-replacement and family inventory), W396 (cross-type parabola identity and
-highlighting), and W397 (deleted-source handling). No duplicate picker or
-parabola implementation is needed. Preserve these tests while completing the
-remaining variant-level worker, cache, persistence, import, and signed
+This behavior is already implemented in
+`LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices()` and its source
+selection handlers, and tested by W356/W359 (nine-family replacement and
+explicit family inventory), W396 (cross-type parabola identity and
+highlighting), and W397 (deleted-source handling). Changing the family filter
+is browse-only; only selecting a live candidate may submit the guarded
+worker-backed replacement. No duplicate picker or parabola implementation is
+needed.
+
+“All supported types” means all nine source families in the current explicit
+inventory, not every possible geometry variant or every entity accepted by an
+ordinary offset command. Preserve the separate family-level UI contract while
+completing the variant-level worker, cache, persistence, import, and signed
 distance/side admission matrix. A family being selectable does not imply that
 every legal entity variant is representable by one editable native cache;
 unsupported variants must fail visibly and atomically, preserving the prior
@@ -17063,3 +17074,39 @@ The import-level marker/refusal assertions are in `1d3c04a59`
 (`test(offset): verify imported projection refusal`). The appid-registration
 suite result above is from that commit; no production behavior changed in this
 test-only slice.
+
+## 435. Preserve Straight Non-Axial LWPOLYLINE Projections (2026-11-06)
+
+Non-axial LWPOLYLINE import previously discarded the entity, even though the
+DXF/DWG readers had already transformed its vertices through the OCS frame.
+LibreCAD now retains the transformed XY line-chain as a display projection and
+marks it with `LibreCAD_POLYLINE_OCS`, carrying the source extrusion vector
+and elevation in XDATA. The typed offset-source capture rejects this marker,
+so projected geometry cannot be mistaken for a native planar source. Export
+registers the marker APPID and preserves it through DXF and DWG save/reopen.
+The generated LWPOLYLINE sidecar records the projected geometry as axial with
+zero elevation/thickness instead of falsely attaching the original plane to
+already transformed vertices.
+
+The importer validates the extrusion normal before accepting the projection.
+Non-axial LWPOLYLINEs with bulges are still skipped: an OCS circular arc
+projects to a general conic in XY, and retaining its bulge as a circular arc
+would misrepresent its geometry. Legacy non-axial POLYLINE, exact arbitrary
+OCS reconstruction, non-axial bulged-curve projection, and external CAD
+visual validation remain open; this slice does not claim full OCS support.
+
+Validation: the focused OCS import/save/reopen case passes 189 assertions in
+2 cases across R14 DXF, AC1032 DXF, and AC1032 DWG, including marker/source
+refusal, normal metadata, APPID registration, and the bulged-arc refusal. The
+complete `[lc-offsetcurve][import-session][typed-source][polyline]` selector
+passes 2,041 assertions in 19 cases. `[dxf][appid-registration]` passes 846
+assertions in 7 cases, and direct `[lc-offsetcurve][source][polyline]
+[provenance]` passes 11 assertions. CMake Debug `librecad_tests` builds;
+qmake6 application and plugins build successfully; `git diff --check` passes.
+The compiled test binary emits the existing shell-profile warning about the
+absent `/private/tmp/libdxfrw-cargo/env`; it does not affect test results.
+
+Commit the implementation and this checkpoint together, push to PR #3193, and
+inspect checks for that exact head. Continue with the remaining OCS and
+source-variant eligibility matrix; do not infer AC1015 DWG coverage from the
+existing AC1032 DWG tests.

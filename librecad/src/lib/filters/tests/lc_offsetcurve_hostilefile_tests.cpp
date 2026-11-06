@@ -2251,6 +2251,111 @@ TEST_CASE("legacy 3D POLYLINE projections remain visible but are not offset sour
 #endif
 }
 
+TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
+          "[lc-offsetcurve][import-session][typed-source][polyline][ocs]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-non-axial-lwpolyline-projection");
+    DRW_LWPolyline raw;
+    raw.vertexnum = 3;
+    raw.extPoint = {0.6, 0.0, 0.8};
+    raw.elevation = 3.0;
+    raw.addVertex(DRW_Vertex2D(0.0, 0.0, 0.0));
+    raw.addVertex(DRW_Vertex2D(2.0, 0.0, 0.0));
+    raw.addVertex(DRW_Vertex2D(2.0, 2.0, 0.0));
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
+
+    std::unique_ptr<RS_Graphic> sourceDrawing;
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        const auto input = directory.file(format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwgPolylineFile(input, raw, format.version);
+        else f::binaryDxfPolyline(input, raw, format.version);
+#else
+        f::binaryDxfPolyline(input, raw, format.version);
+#endif
+        auto outcome = stagedImport(input, format.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        auto* projected = dynamic_cast<RS_Polyline*>(f::sole(*outcome.graphic));
+        REQUIRE(projected);
+        const auto points = projected->getVertexes();
+        REQUIRE(points.size() == 3);
+        CHECK(points[0].x == Catch::Approx(1.8));
+        CHECK(points[0].y == Catch::Approx(0.0));
+        CHECK(points[1].x == Catch::Approx(1.8));
+        CHECK(points[1].y == Catch::Approx(2.0));
+        CHECK(points[2].x == Catch::Approx(0.2));
+        CHECK(points[2].y == Catch::Approx(2.0));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*projected));
+
+        const auto& ext = projected->getDrwExtData();
+        const auto app = std::find_if(ext.begin(), ext.end(), [](const auto& value) {
+            return value && value->code() == 1001 &&
+                   value->type() == DRW_Variant::STRING &&
+                   std::string{value->c_str()} == "LibreCAD_POLYLINE_OCS";
+        });
+        REQUIRE(app != ext.end());
+        const auto normal = std::find_if(std::next(app), ext.end(), [](const auto& value) {
+            return value && value->code() == 1010 &&
+                   value->type() == DRW_Variant::COORD;
+        });
+        REQUIRE(normal != ext.end());
+        REQUIRE((*normal)->coord() != nullptr);
+        CHECK((*normal)->coord()->x == Catch::Approx(0.6));
+        CHECK((*normal)->coord()->y == Catch::Approx(0.0));
+        CHECK((*normal)->coord()->z == Catch::Approx(0.8));
+        if (!format.dwg) sourceDrawing = std::move(outcome.graphic);
+    }
+
+    DRW_LWPolyline bulged = raw;
+    bulged.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+    const auto unsupportedArc = directory.file("non-axial-bulge.dxf");
+    f::binaryDxfPolyline(unsupportedArc, bulged, DRW::AC1032);
+    const auto unsupportedOutcome = stagedImport(unsupportedArc, Lane::Binary18);
+    REQUIRE(unsupportedOutcome.status == LC_OffsetImportSession::Status::Complete);
+    REQUIRE(unsupportedOutcome.graphic);
+    CHECK(std::none_of(unsupportedOutcome.graphic->begin(),
+                       unsupportedOutcome.graphic->end(), [](const RS_Entity* entity) {
+        return dynamic_cast<const RS_Polyline*>(entity) != nullptr;
+    }));
+
+    REQUIRE(sourceDrawing);
+    const auto dxf = directory.file("roundtrip.dxf");
+    REQUIRE(lc::test::exportDrawing(*sourceDrawing, dxf, RS2::FormatDXFRW2018));
+    const auto appids = lc::test::dxfRecords(dxf, "APPID");
+    CHECK(std::any_of(appids.begin(), appids.end(), [](const auto& record) {
+        return record.own(2) == std::vector<std::string>{"LibreCAD_POLYLINE_OCS"};
+    }));
+    RS_Graphic reopened;
+    REQUIRE(lc::test::importDrawing(reopened, dxf, RS2::FormatDXFRW2018));
+    const auto* reopenedPolyline = dynamic_cast<const RS_Polyline*>(f::sole(reopened));
+    REQUIRE(reopenedPolyline);
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*reopenedPolyline));
+
+#ifdef DWGSUPPORT
+    const auto dwg = directory.file("roundtrip.dwg");
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(*sourceDrawing, lc::test::toQString(dwg),
+                              RS2::FormatDWG2018));
+    RS_Graphic reopenedDwg;
+    REQUIRE(lc::test::importDrawing(reopenedDwg, dwg, RS2::FormatDWG2018));
+    CHECK(reopenedDwg.dwgAdvancedMetadata().findAppIdTableEntryByName(
+              "LibreCAD_POLYLINE_OCS") != nullptr);
+    const auto* reopenedDwgPolyline =
+        dynamic_cast<const RS_Polyline*>(f::sole(reopenedDwg));
+    REQUIRE(reopenedDwgPolyline);
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*reopenedDwgPolyline));
+#endif
+}
+
 TEST_CASE("closed legacy 2D POLYLINE import preserves its closing bulge",
           "[lc-offsetcurve][import-session][typed-source][polyline][legacy][closed]") {
     Setup setup;
