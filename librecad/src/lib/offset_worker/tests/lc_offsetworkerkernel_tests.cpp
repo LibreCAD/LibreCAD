@@ -1473,6 +1473,225 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
     CHECK(acceptedCaches > 0);
 }
 
+TEST_CASE("spline worker preserves cache detail across scale and translation",
+          "[lc-offsetcurve][worker-kernel][source-cache][spline-variant][precision][combined]") {
+    RS_SplineData rational{2, false};
+    rational.controlPoints = {{0, 0}, {1, 2}, {2, -1}, {3, 2}, {4, 0}};
+    rational.knotslist = {0, 0, 0, .3, .7, 1, 1, 1};
+    rational.weights = {1, .6, 1.8, .8, 1};
+    RS_SplineData cubic{3, false};
+    cubic.controlPoints = {{0, 0}, {1, 2}, {2, 2}, {3, -1}, {4, -1}, {5, 1}};
+    cubic.knotslist = {0, 0, 0, 0, .4, .4, 1, 1, 1, 1};
+    cubic.weights = {1, .7, 1.4, .9, 1.6, 1};
+    LC_SplinePointsData fitPoints{false, false};
+    fitPoints.splinePoints = {{0, 0}, {1, 2}, {2, 2}, {3, -1}, {4, 0}};
+    fitPoints.fitTolerance = 1e-6;
+    const std::array<LC_OffsetSourceGeometry, 3> variants{
+        LC_OffsetSourceGeometry{rational}, LC_OffsetSourceGeometry{cubic},
+        LC_OffsetSourceGeometry{fitPoints}};
+    constexpr std::array<double, 2> scales{1.0, 1e3};
+    constexpr std::array<double, 2> translationRatios{1e6, 1e9};
+    constexpr std::array<double, 4> normalizedDistances{-.4, -.1, .1, .4};
+    const auto transformPoint = [](RS_Vector& point, const double scale,
+                                   const RS_Vector& translation) {
+        point.x = point.x * scale + translation.x;
+        point.y = point.y * scale + translation.y;
+        point.z *= scale;
+    };
+    const auto transform = [&](LC_OffsetSourceGeometry source, const double scale,
+                               const RS_Vector& translation) {
+        std::visit([&](auto& data) {
+            using T = std::decay_t<decltype(data)>;
+            if constexpr (std::is_same_v<T, RS_SplineData>) {
+                for (auto& point : data.controlPoints) transformPoint(point, scale, translation);
+                for (auto& point : data.fitPoints) transformPoint(point, scale, translation);
+            } else if constexpr (std::is_same_v<T, LC_SplinePointsData>) {
+                for (auto& point : data.controlPoints) transformPoint(point, scale, translation);
+                for (auto& point : data.splinePoints) transformPoint(point, scale, translation);
+            }
+        }, source.value);
+        return source;
+    };
+    const auto asSpline = [](const req::Cutter& item) {
+        if (const auto* spline = std::get_if<RS_SplineData>(&item)) return *spline;
+        const auto& segment = std::get<req::Segment>(item);
+        RS_SplineData cache{1, false};
+        cache.controlPoints = {segment.start, segment.end};
+        cache.knotslist = {0, 0, 1, 1};
+        cache.weights = {1, 1};
+        return cache;
+    };
+
+    std::size_t completedPairs = 0;
+    std::size_t symmetricRefusals = 0;
+    std::size_t acceptedCaches = 0;
+    for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
+        const auto& base = variants[variantIndex];
+        CAPTURE(variantIndex);
+        for (const double scale : scales) {
+            CAPTURE(scale);
+            for (const double translationRatio : translationRatios) {
+                CAPTURE(translationRatio);
+                const RS_Vector translation{translationRatio * scale,
+                                            -translationRatio * scale};
+                const auto centered = transform(base, scale, RS_Vector{0, 0});
+                const auto translated = transform(base, scale, translation);
+                REQUIRE(centered.isWellFormed());
+                REQUIRE(translated.isWellFormed());
+                CHECK(centered.kind() == base.kind());
+                CHECK(translated.kind() == base.kind());
+                if (const auto* source = std::get_if<RS_SplineData>(&base.value)) {
+                    const auto* local = std::get_if<RS_SplineData>(&centered.value);
+                    const auto* world = std::get_if<RS_SplineData>(&translated.value);
+                    REQUIRE(local); REQUIRE(world);
+                    CHECK(local->degree == source->degree);
+                    CHECK(world->degree == source->degree);
+                    CHECK(local->knotslist == source->knotslist);
+                    CHECK(world->knotslist == source->knotslist);
+                    CHECK(local->weights == source->weights);
+                    CHECK(world->weights == source->weights);
+                } else {
+                    const auto& baseFit = std::get<LC_SplinePointsData>(base.value);
+                    const auto& local = std::get<LC_SplinePointsData>(centered.value);
+                    const auto& world = std::get<LC_SplinePointsData>(translated.value);
+                    CHECK(local.useControlPoints == baseFit.useControlPoints);
+                    CHECK(world.useControlPoints == baseFit.useControlPoints);
+                    CHECK(local.fitTangentsConstrained == baseFit.fitTangentsConstrained);
+                    CHECK(world.fitTangentsConstrained == baseFit.fitTangentsConstrained);
+                    CHECK(local.fitTolerance == baseFit.fitTolerance);
+                    CHECK(world.fitTolerance == baseFit.fitTolerance);
+                }
+
+                const auto centeredEntity = centered.makeEntity();
+                const auto translatedEntity = translated.makeEntity();
+                REQUIRE(centeredEntity); REQUIRE(translatedEntity);
+                for (const double normalizedDistance : normalizedDistances) {
+                    CAPTURE(normalizedDistance);
+                    const double signedDistance = normalizedDistance * scale;
+                    const LC_OffsetSourceDefinition centeredDefinition{
+                        centered, signedDistance, 1e-4, false};
+                    const LC_OffsetSourceDefinition translatedDefinition{
+                        translated, signedDistance, 1e-4, false};
+                    const auto centeredOptions = LC_OffsetWorkerTolerance::directOptions(
+                        centeredDefinition, *centeredEntity);
+                    const auto translatedOptions = LC_OffsetWorkerTolerance::directOptions(
+                        translatedDefinition, *translatedEntity);
+                    REQUIRE(centeredOptions); REQUIRE(translatedOptions);
+
+                    const auto centeredReply = LC_OffsetWorkerKernel::run(
+                        {token, req::GenerateSource{centeredDefinition, {}}});
+                    const auto& centeredOutput = native(centeredReply, 7);
+                    const auto translatedReply = LC_OffsetWorkerKernel::run(
+                        {token, req::GenerateSource{translatedDefinition, {}}});
+                    const auto& translatedOutput = native(translatedReply, 7);
+                    CHECK(centeredOutput.engineStatus == translatedOutput.engineStatus);
+                    CHECK(centeredOutput.ordinaryStatus == translatedOutput.ordinaryStatus);
+                    CHECK(centeredOutput.ordinary.size() == translatedOutput.ordinary.size());
+
+                    const auto generated = [](const result::Native& output) {
+                        return output.engineStatus == LC_CurveOffsetStatus::Ok &&
+                            output.ordinaryStatus == result::OrdinaryStatus::Complete &&
+                            !output.ordinary.empty();
+                    };
+                    const bool centeredGenerated = generated(centeredOutput);
+                    const bool translatedGenerated = generated(translatedOutput);
+                    CHECK(centeredGenerated == translatedGenerated);
+                    if (!centeredGenerated || !translatedGenerated) {
+                        CHECK(centeredOutput.ordinary.empty());
+                        CHECK(translatedOutput.ordinary.empty());
+                        CHECK_FALSE(centeredOutput.changed);
+                        CHECK_FALSE(translatedOutput.changed);
+                        ++symmetricRefusals;
+                        continue;
+                    }
+                    ++completedPairs;
+
+                    std::vector<RS_Spline> centeredSplines;
+                    std::vector<RS_Spline> translatedSplines;
+                    for (const auto& item : centeredOutput.ordinary)
+                        centeredSplines.emplace_back(nullptr, asSpline(item));
+                    for (const auto& item : translatedOutput.ordinary)
+                        translatedSplines.emplace_back(nullptr, asSpline(item));
+                    std::vector<bool> matched(translatedSplines.size(), false);
+                    const double roundingAllowance = 64.0 * std::numeric_limits<double>::epsilon() *
+                        std::max(std::abs(translation.x), std::abs(translation.y));
+                    const double deviationLimit = 4.0 * std::max(
+                        centeredOptions->tolerance.requestedGeometry,
+                        translatedOptions->tolerance.requestedGeometry) + roundingAllowance;
+                    const auto deviation = [&](const RS_Spline& local, const RS_Spline& world,
+                                               const bool reverse) {
+                        double maximum = 0.0;
+                        for (int sample = 0; sample <= 128; ++sample) {
+                            const double parameter = static_cast<double>(sample) / 128.0;
+                            const RS_Vector p = local.getPointAt(parameter);
+                            const RS_Vector q = world.getPointAt(reverse ? 1.0 - parameter : parameter);
+                            REQUIRE(p.valid); REQUIRE(q.valid);
+                            maximum = std::max(maximum,
+                                std::hypot((q.x - translation.x) - p.x,
+                                           (q.y - translation.y) - p.y));
+                        }
+                        return maximum;
+                    };
+                    for (const auto& local : centeredSplines) {
+                        double best = std::numeric_limits<double>::infinity();
+                        std::size_t bestIndex = translatedSplines.size();
+                        for (std::size_t candidate = 0; candidate < translatedSplines.size(); ++candidate) {
+                            if (matched[candidate]) continue;
+                            const double candidateDeviation = std::min(
+                                deviation(local, translatedSplines[candidate], false),
+                                deviation(local, translatedSplines[candidate], true));
+                            if (candidateDeviation < best) {
+                                best = candidateDeviation;
+                                bestIndex = candidate;
+                            }
+                        }
+                        REQUIRE(bestIndex < translatedSplines.size());
+                        matched[bestIndex] = true;
+                        CHECK(best <= deviationLimit);
+                    }
+
+                    for (const auto& item : centeredOutput.ordinary) {
+                        auto cache = asSpline(item);
+                        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+                        const auto validation = LC_OffsetWorkerKernel::run(
+                            {token, req::ValidateSourceCache{cache, centeredDefinition, {}}});
+                        const auto& checked = native(validation, 8);
+                        if (centeredOutput.ordinary.size() == 1) {
+                            CHECK(checked.refusal == LC_OffsetCurveRefusal::None);
+                            CHECK(checked.changed);
+                            ++acceptedCaches;
+                        } else {
+                            CHECK(checked.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                            CHECK_FALSE(checked.changed);
+                            CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+                        }
+                    }
+                    for (const auto& item : translatedOutput.ordinary) {
+                        auto cache = asSpline(item);
+                        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+                        const auto validation = LC_OffsetWorkerKernel::run(
+                            {token, req::ValidateSourceCache{cache, translatedDefinition, {}}});
+                        const auto& checked = native(validation, 8);
+                        if (translatedOutput.ordinary.size() == 1) {
+                            CHECK(checked.refusal == LC_OffsetCurveRefusal::None);
+                            CHECK(checked.changed);
+                            ++acceptedCaches;
+                        } else {
+                            CHECK(checked.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                            CHECK_FALSE(checked.changed);
+                            CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    CHECK(completedPairs + symmetricRefusals == variants.size() * scales.size() *
+          translationRatios.size() * normalizedDistances.size());
+    CHECK(completedPairs > 0);
+    CHECK(acceptedCaches > 0);
+}
+
 TEST_CASE("polyline cache promotion preserves mixed segment orientation and offset side",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
     const std::array<LC_OffsetPolylineData, 2> variants{
