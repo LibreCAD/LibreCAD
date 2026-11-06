@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W512 complete; remaining family/variant and acceptance work
+Current status (W515 complete; remaining family/variant and acceptance work
 is open; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -19969,7 +19969,52 @@ cache fixtures. On reopen, derive native promotion from complete imported
 topology, require exact schema-2 source metadata (including source reversal,
 ratio, and interval), and sample imported cache geometry at 129 normalized
 parameters against the generated reference within the persisted tolerance and
-coordinate-ULP bounds. For non-promoted carriers, verify ordinary geometry and
-typed source metadata remain intact. Run focused import and broad typed-source
-tests, CMake Debug `librecad_tests` build, roadmap parser, and `git diff
---check`; report local results separately from exact-head CI/external CAD.
+coordinate-ULP bounds. Do not serialize generation, precision, or multi-branch
+refusal cells. Existing W488-W491 cases independently verify high-eccentricity
+multi-branch downgrade and retained ordinary geometry/source metadata. Run the
+focused import and broad ellipse-family regression tests, CMake Debug
+`librecad_tests` build, roadmap parser, and `git diff --check`; report local
+results separately from exact-head CI/external CAD.
+
+### W515 staged-file completion receipt
+
+The five-lane import matrix combines source scales `1e-3`, `1`, and `1e12`
+with translation ratio `1e9`, the same five partial/thin/reversed ellipse
+layouts, and scaled signed distances. Its 48 source/distance cells are all
+accounted for as paired centered/translated single-cache cases imported in
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, or explicit worker/tolerance/topology
+refusals that are not serialized. Each admitted reopen promotes to a native
+offset, preserves exact schema-2 typed source CBOR, and matches the generated
+translated cache at 129 normalized samples within four times requested
+geometry tolerance plus the coordinate-ULP allowance. Exact per-scale cell
+counts prevent silently skipped matrix cells.
+
+Validation: the focused staged-import case passes 106,394 assertions; the
+broad `[ellipse]` selection passes 836,850 assertions across 31 cases; the
+CMake Debug `librecad_tests` target builds; roadmap parser passes 5/5 and
+`git diff --check` passes. An additional broad
+`[lc-offsetcurve][import-session][typed-source]` run reached 1,525,293 passing
+assertions across 29 cases before being interrupted in a large unrelated
+hyperbola matrix, so it is not counted as a pass. Local results only, not
+exact-head CI or external CAD acceptance. Product commits `5d9324eaf` and
+`eb37537b7` (`test(offset): import translated ellipse scale matrix`, `test(offset):
+account for all ellipse import cells`).
+
+## 516. Ellipse Relative-Translation and Curvature Boundaries
+
+W514-W515 qualify a `1e9` translation ratio and avoid the thin-ellipse
+curvature split boundary. Extend the worker matrix across translation ratios
+`1e6`, `1e9`, and `1e12`, scales `1e-3`, `1`, and `1e12`, and the thin full
+ellipse in both orientations at signed normalized distances `+/-0.05`, `+/-0.07`,
+`+/-0.08`, and `+/-0.09`. Include representative ordinary partial and ratio-above-
+one ellipses at `+/-0.1` and `+/-0.4`. Compare centered and translated generation
+and operation-8 outcomes; record numeric/tolerance or multi-branch refusals
+explicitly and require no partial output/cache mutation. For admitted cells,
+compare local geometry at 129 parameters with tolerance plus coordinate-ULP
+bounds. Carry only operation-8-admitted single-cache cells through the five
+DXF/DWG lanes, asserting exact per-cell accounting, native promotion, typed
+source preservation, and imported cache samples. Reuse W488-W491 for ordinary
+fallback/refusal semantics rather than serializing a refused single branch as
+a false cache. Run focused worker/import tests, full worker-kernel suite,
+ellipse-family import suite, CMake Debug test build, roadmap parser, and diff
+check. This finite matrix does not imply arbitrary precision support.
