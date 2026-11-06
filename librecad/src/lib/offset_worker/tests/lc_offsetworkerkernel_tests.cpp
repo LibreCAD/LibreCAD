@@ -600,6 +600,60 @@ TEST_CASE("parabola source caches validate across orientation and curvature dist
     CHECK(refusedCaches > 0);
 }
 
+TEST_CASE("parabola worker cache validation is stable across uniform scales",
+          "[lc-offsetcurve][worker-kernel][source-cache][parabola][scale]") {
+    std::size_t acceptedCaches = 0;
+    std::size_t refusedCaches = 0;
+    for (const double scale : {1e-3, 1e3}) {
+        CAPTURE(scale);
+        const LC_ParabolaData parabola{{RS_Vector{0, 0}, RS_Vector{5 * scale, 10 * scale},
+                                        RS_Vector{10 * scale, 0}}};
+        const LC_OffsetSourceGeometry source{parabola};
+        REQUIRE(source.isWellFormed());
+        for (const double unitDistance : {-.5, .5, -2.0, 2.0, -2.5, 2.5, -3.0, 3.0}) {
+            CAPTURE(unitDistance);
+            const double signedDistance = unitDistance * scale;
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+
+            RS_SplineData cache;
+            if (const auto* spline = std::get_if<RS_SplineData>(&generated.ordinary.front())) {
+                cache = *spline;
+            } else {
+                const auto* segment = std::get_if<req::Segment>(&generated.ordinary.front());
+                REQUIRE(segment);
+                cache.degree = 1;
+                cache.controlPoints = {segment->start, segment->end};
+                cache.knotslist = {0, 0, 1, 1};
+                cache.weights = {1, 1};
+            }
+
+            const req::Request validationRequest{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            if (generated.ordinary.size() == 1) {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                CHECK(validated.changed);
+                ++acceptedCaches;
+            } else {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+                ++refusedCaches;
+            }
+            CHECK(validated.engineRuns == 1);
+        }
+    }
+    CHECK(acceptedCaches + refusedCaches == 16);
+    CHECK(acceptedCaches > 0);
+    CHECK(refusedCaches > 0);
+}
+
 TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][hyperbola]") {
     const std::array<LC_HyperbolaData, 8> variants{
