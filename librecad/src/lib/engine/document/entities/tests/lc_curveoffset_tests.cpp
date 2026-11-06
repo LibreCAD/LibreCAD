@@ -224,6 +224,21 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     CHECK_FALSE(definition.isWellFormed());
 }
 
+TEST_CASE("Polyline source topology validation accepts its maximum bounded segment count",
+          "[lc-offsetcurve][source][polyline][bounded]") {
+    constexpr std::size_t segmentCount = 65536;
+    LC_OffsetPolylineData data;
+    data.startpoint = {0, 0};
+    data.endpoint = {static_cast<double>(segmentCount), 0};
+    data.segments.reserve(segmentCount);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double start = static_cast<double>(i);
+        data.segments.emplace_back(RS_LineData{{start, 0}, {start + 1.0, 0}});
+    }
+
+    CHECK(LC_OffsetSourceGeometry{std::move(data)}.isWellFormed());
+}
+
 TEST_CASE("Offset polyline source snapshots preserve positive and negative bulge arcs",
           "[lc-offsetcurve][source][polyline]") {
     const double bulge = std::tan(M_PI / 16.0);
