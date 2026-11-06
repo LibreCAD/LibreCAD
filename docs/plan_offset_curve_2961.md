@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W450; chronological evidence follows): implementation slices
+Current status (W451; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,13 +67,17 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W450. Historical results from
+No exact-head CI result is claimed for W441-W451. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
-The latest source-widget request is already implemented: the user can choose a
-source kind before selecting a replacement, and the picker exposes all nine
-modeled families. That UI/family-selection workflow is complete; the separate
-per-variant worker/cache and DXF/DWG eligibility matrix remains open.
+The latest source-widget request (2026-11-06) reconfirms the already implemented
+workflow: choose a source kind before selecting a replacement, then select a
+matching entity. The picker exposes all nine modeled families, with
+`LC_Parabola` as a distinct choice rather than generic spline-points. The
+type-changing UI and family-selection workflow are complete and covered by
+W440; do not schedule another picker/parabola UI slice. The separate
+per-variant worker/cache and DXF/DWG eligibility matrix remains open, and must
+not be described as complete merely because a family appears in the picker.
 W436 adds marked XY display projections for straight non-axial LWPOLYLINE and
 legacy 2D POLYLINE imports, with typed offset-source refusal and DXF/DWG
 provenance round-trips. Legacy POLYLINE coverage now includes R14, R2000, and
@@ -17866,3 +17870,34 @@ This closes only the listed source shapes at four signed magnitudes. It does
 not qualify distances near curvature singularities, all conic sweeps/OCS,
 other spline/polyline variants, or external CAD acceptance. Exact-head CI
 remains separate.
+
+## 451. Control-Point Spline-Points Signed-Distance Import Matrix
+
+The three-control open `LC_SplinePointsData` control-point source had staged
+operation-8 DXF/DWG promotion coverage at only one side and distance. Extend
+this distinct representation to both signed sides at magnitudes 0.1 and 0.4
+across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Each carrier must preserve
+the exact typed source, retain `useControlPoints=true`, admit exactly one
+native offset, and match its canonical generated cache.
+
+### Completion receipt
+
+The source now promotes through all five format/version lanes for `-0.4`,
+`-0.1`, `0.1`, and `0.4`: 20 real carriers. Every staged import admits one
+native offset, reports zero downgrades, preserves the tagged source and
+control-point-mode discriminator, and matches the generated cache fingerprint.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`[lc-offsetcurve][import-session][typed-source][control-points][persistence]`
+selector passes 4,853 assertions/1 case; the broader
+`[lc-offsetcurve][import-session][typed-source]` selector passes 62,792
+assertions/29 cases. The roadmap inventory parser passes 5/5 tests and
+`git diff --check` passes. This is local CMake evidence, not exact-head CI or
+external CAD acceptance. Test commit: `55a3c03b1`
+(`test(offset): cover control-point import distances`).
+
+This closes one open three-control source representation at these four signed
+distances and five file lanes. It does not qualify other control counts,
+closed control-point shapes, all fit/control combinations, distances near
+singularities, or every historical DWG version. Exact-head CI and external CAD
+acceptance remain separate.
