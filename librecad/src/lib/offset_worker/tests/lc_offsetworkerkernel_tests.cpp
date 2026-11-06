@@ -478,7 +478,8 @@ TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across 
     for (const auto& data : variants) {
         CAPTURE(data.angle1, data.angle2, data.reversed);
         for (const double signedDistance :
-             {-.1, .1, -.3, .3, -.5, .5, -1.0, 1.0, -1.1, 1.1}) {
+             {-.1, .1, -.3, .3, -.5, .5, -1.0, 1.0, -1.05, 1.05,
+              -1.08, 1.08, -1.09, 1.09, -1.1, 1.1}) {
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{
                 LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
@@ -506,7 +507,7 @@ TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across 
             CHECK(validated.engineRuns == 1);
         }
     }
-    CHECK(acceptedCaches + refusedCaches == variants.size() * 10);
+    CHECK(acceptedCaches + refusedCaches == variants.size() * 16);
     CHECK(refusedCaches > 0);
 }
 
