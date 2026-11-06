@@ -473,9 +473,12 @@ TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across 
         LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false},
         LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true}
     };
+    std::size_t acceptedCaches = 0;
+    std::size_t refusedCaches = 0;
     for (const auto& data : variants) {
         CAPTURE(data.angle1, data.angle2, data.reversed);
-        for (const double signedDistance : {-.5, -.3, -.1, .1, .3, .5}) {
+        for (const double signedDistance :
+             {-.1, .1, -.3, .3, -.5, .5, -1.0, 1.0, -1.1, 1.1}) {
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{
                 LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
@@ -484,18 +487,27 @@ TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across 
             const auto& generated = native(generationReply, 7);
             REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
-            REQUIRE(generated.ordinary.size() == 1);
+            REQUIRE_FALSE(generated.ordinary.empty());
             REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
             const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
             const req::Request validationRequest{token,
                 req::ValidateSourceCache{cache, definition, {}}};
             const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
             const auto& validated = native(validationReply, 8);
-            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
-            CHECK(validated.changed);
+            if (generated.ordinary.size() == 1) {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                CHECK(validated.changed);
+                ++acceptedCaches;
+            } else {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+                ++refusedCaches;
+            }
             CHECK(validated.engineRuns == 1);
         }
     }
+    CHECK(acceptedCaches + refusedCaches == variants.size() * 10);
+    CHECK(refusedCaches > 0);
 }
 
 TEST_CASE("polyline cache promotion preserves mixed segment orientation and offset side",
