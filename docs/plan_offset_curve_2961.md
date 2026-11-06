@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W509 complete; W511 is the next open qualification slice;
+Current status (W511 complete; W512 is the next open qualification slice;
 chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -19772,6 +19772,49 @@ full typed-source import selection, CMake Debug `librecad_tests`, roadmap
 parser, and `git diff --check`. Keep this finite matrix distinct from arbitrary
 hyperbola bounds, scales, translations, and tolerance limits.
 
+### Completion receipt
+
+The combined scaled/translated sources now traverse staged import at scales
+`1e-3`, `1`, `1e3`, and `1e12`, with translations `(1e9 * scale,
+-1e9 * scale)`, eight bounded interval/branch layouts, six signed normalized
+curvature distances, and all five R14/R2000/R2018 DXF/DWG lanes: 960 imports.
+Expected promotion is derived independently from full generated topology at
+each translated placement. Every scale has both promoted and fallback cases.
+Native promotion and ordinary-spline fallback both preserve exact typed-source
+metadata; imported cache geometry is compared at 129 normalized parameters
+within four times requested geometry tolerance plus the 64-ULP world-coordinate
+allowance.
+
+Validation: focused `[combined]` staged-import case passes 523,828 assertions
+in one case; the complete `[lc-offsetcurve][import-session][typed-source]`
+selection passes 1,132,656 assertions across 36 cases; incremental CMake
+Debug `librecad_tests` build passes. These are local results, not exact-head
+CI, visible-GUI, or external-CAD acceptance. Product test commit `0a2cfae92`
+(`test(offset): import combined hyperbola precision matrix`). Roadmap parser
+and final diff checks are run with this receipt commit.
+
+## 512. Hyperbola Relative-Translation Boundaries
+
+W509-W511 qualify one coupled translation ratio (`1e9` times source scale)
+for scales `1e-3` through `1e12`. Extend the bounded-hyperbola precision matrix
+to distinguish geometry scale from translation ratio. At scales `1e-3`, `1`,
+and `1e12`, compare centered sources with translations of `1e6`, `1e9`, and
+`1e12` times the source scale, using all eight interval/branch layouts and the
+signed normalized distances `±1.05`, `±1.08`, and `±1.09`.
+
+For worker generation, measure sampled local geometry and operation-8
+admission/refusal parity, accounting for coordinate ULP and the engine's
+documented absolute minimum-distance boundary. A well-formed source that
+cannot be represented at a requested offset must return an explicit refusal
+without ordinary output or cache mutation; do not relax the bound to force
+admission. Carry only numerically valid generated cases through the five
+DXF/DWG lanes, deriving promotion from full topology and requiring exact typed
+source metadata on promotion or fallback. Record unsupported precision cells
+as explicit refusals, not as missing coverage. Run focused worker and import
+cases, the full relevant typed-source selection, CMake Debug test build,
+roadmap parser, and diff check. This is a finite boundary matrix, not a claim
+of support for arbitrary floating-point magnitudes.
+
 ## 510. Source Picker Request Reconciliation (2026-11-06)
 
 The latest request again requires changing the source-curve type before
@@ -19796,7 +19839,8 @@ variant is offsettable or cache-representable. The remaining implementation
 work is variant-level: preserve typed source identity, generate and validate
 worker caches, replace source/cache atomically, and exercise applicable DXF/DWG
 round trips. Unsupported variants must report an explicit refusal and leave
-the prior source/cache and drawing selection unchanged. W509 and the subsequent
-family-specific worker/import slices remain open; this request adds no new
-product-code scope and does not close visible-GUI, exact-head CI, or external
-CAD acceptance.
+the prior source/cache and drawing selection unchanged. W509 and W511 now
+provide combined scale/translation worker and staged-file evidence for
+bounded hyperbolas; the broader boundary matrix is tracked in W512. This
+request adds no duplicate product-code scope and does not close visible-GUI,
+exact-head CI, or external CAD acceptance.
