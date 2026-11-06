@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W480; chronological evidence follows): implementation slices
+Current status (W481; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W480. Historical results from
+No exact-head CI result is claimed for W441-W481. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18815,3 +18815,26 @@ exact-head CI or external CAD acceptance. Test commit `3652c4c86`
 (`test(offset): promote hyperbola interval bounds from files`); roadmap receipt
 is separate. Remaining: hyperbola ranges near numeric/curvature limits and
 dynamic multi-branch/refusal cases.
+
+## 481. Hyperbola Multi-Branch Cache Refusal
+
+The W479 worker interval sweep covered distances through ±0.5, below the
+vertex-curvature scale of the representative hyperbola. Extend it to ±1.0 and
+±1.1 and classify operation-7 output by actual branch count. A single canonical
+cache must validate normally. If generation returns multiple pieces, feeding
+one piece to operation 8 must return `NotCacheRepresentable` without changing
+the candidate cache; never promote only the first branch.
+
+### Completion receipt
+
+The worker sweep now includes eight bounded interval/branch shapes at signed
+distances `±0.1`, `±0.3`, `±0.5`, `±1.0`, and `±1.1`. Single-piece results
+pass operation-8 validation. Multi-piece results are refused as
+`NotCacheRepresentable` and remain unchanged. In particular, the broad
+`[-1.2, 1.5]` right-branch source at distance `-1.1` produces three pieces and
+is refused rather than silently caching one. The focused case passes 2,082
+assertions; the full worker-kernel suite passes 6,668 assertions across 31
+cases. CMake Debug incremental build and `git diff --check` pass. This is
+worker-level evidence only; staged file-import downgrade remains open. Test
+commit `e1a98c94c` (`test(offset): refuse multi-branch hyperbola caches`);
+roadmap receipt is separate.
