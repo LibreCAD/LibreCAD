@@ -150,6 +150,7 @@ void LC_LayerTreeModel::setLayerList(const RS_LayerList* ll) {
      */
     beginResetModel();
 
+    m_layers = ll;
     m_rootItem -> invalidate();
     m_rootItem = std::make_unique<LC_LayerTreeItem>();
 
@@ -755,6 +756,23 @@ bool LC_LayerTreeModel::isValidRestructure(const LC_LayerTreeItem*  source, cons
 }
 
 /**
+ * The lock icon of an item is disabled when clicking it would lock nothing: the item is not locked,
+ * and none of the layers it stands for (its own and those below it) can be locked, which is the
+ * case of the current layer when no other layer is unlocked to take its place
+ * (RS_LayerList::canLockAny()).
+ *
+ * @return false if the lock icon of the item is to be disabled
+ */
+bool LC_LayerTreeModel::isLockAvailable(LC_LayerTreeItem* item) const {
+    if (m_layers == nullptr || item == nullptr || item->isLocked()) {
+        return true;
+    }
+    QList<RS_Layer*> layers;
+    item->collectLayers(layers, LC_LayerTreeItemAcceptor(), true);
+    return layers.isEmpty() || m_layers->canLockAny(layers);
+}
+
+/**
  * Get active layer from layer list and update the model to mark active layer paths accordingly
  * @param ll
  */
@@ -928,6 +946,9 @@ QVariant LC_LayerTreeModel::data ( const QModelIndex & index, const int role ) c
                     QString displayName = layerItem->getFullName();
                     return displayName;
                 }
+                if (COLUMN_LOCKED == col && !isLockAvailable(layerItem)) {
+                    return RS_LayerList::lockUnavailableText();
+                }
             }
             break;
         }
@@ -984,6 +1005,10 @@ Qt::ItemFlags LC_LayerTreeModel::flags(const QModelIndex & index) const{
             }
         }
         return result;
+    }
+    if (col == COLUMN_LOCKED && !isLockAvailable(getItemForIndex(index))) {
+        // the lock icon of a layer that cannot be locked is shown disabled, and takes no click
+        return Qt::NoItemFlags;
     }
     return Qt::ItemIsEnabled;
 }

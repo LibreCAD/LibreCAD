@@ -44,6 +44,20 @@ class RS_LayerListListener;
  */
 class RS_LayerList {
 public:
+    /**
+     * What a request to lock layers did to the current layer: a locked layer is not current, so
+     * locking the current layer makes another layer current, or, when no other layer is unlocked,
+     * is not done.
+     */
+    struct CurrentLayerLock {
+        //! the current layer, when the request asked to lock it; else nullptr
+        RS_Layer* m_asked{nullptr};
+        //! the layer made current in its place; nullptr when it stayed current, and unlocked
+        RS_Layer* m_replacement{nullptr};
+
+        bool wasReplaced() const {return m_replacement != nullptr;}
+    };
+
     explicit RS_LayerList();
     virtual ~RS_LayerList();
     RS_LayerList(const RS_LayerList&) = delete;
@@ -84,6 +98,18 @@ public:
         return m_layerSet.contains(layer);
     }
 
+    // whether the lock controls (icons, check box, Lock all) can lock: see RS_LayerList::canLock()
+    bool canLock(const RS_Layer* layer) const;
+    bool canToggleLock(const RS_Layer* layer) const;
+    bool canLockAny(const QList<RS_Layer*>& layers) const;
+    bool canLockAll() const;
+    bool canToggleLockOfSelection() const;
+    static QString lockUnavailableText();
+    bool canRemove(const RS_Layer* layer) const;
+    bool canRemoveChosen(const RS_Layer* layer) const;
+    static QString removalRefusedText(const QString& layerName);
+    static QString removalNoTakeoverText(const QString& layerName);
+
     void addListener(RS_LayerListListener* listener);
     void removeListener(RS_LayerListListener* listener);
     /// how many listeners are registered (a widget that is destroyed while attached must have unregistered)
@@ -117,28 +143,37 @@ protected:
 
     void clear();
 
-    void activate(const QString& name, bool notify = false);
-    void activate(RS_Layer* layer, bool notify = false);
+    bool activate(const QString& name, bool notify = false);
+    bool activate(RS_Layer* layer, bool notify = false);
+    bool canActivate(RS_Layer* layer) const;
+    void setActive(RS_Layer* layer, bool notify = false);
+    void restoreActive(RS_Layer* layer);
+    void settleActiveLayer();
+    RS_Layer* handOverCurrentLayer();
     void toggle(const QString& name);
     void toggle(RS_Layer* layer);
-    void toggleLock(RS_Layer* layer);
+    CurrentLayerLock toggleLock(RS_Layer* layer);
     void togglePrint(RS_Layer* layer);
     void toggleConstruction(RS_Layer* layer);
     void freezeAll(bool freeze);
-    void lockAll(bool lock);
-    void toggleLockMulti(const QList<RS_Layer*>& layers);
+    CurrentLayerLock lockAll(bool lock);
+    CurrentLayerLock toggleLockMulti(const QList<RS_Layer*>& layers);
     void togglePrintMulti(const QList<RS_Layer*>& layers);
     void toggleConstructionMulti(const QList<RS_Layer*>& layers);
     void toggleFreezeMulti(const QList<RS_Layer*>& layers);
     void setFreezeMulti(const QList<RS_Layer*>& layersEnable, const QList<RS_Layer*>& layersDisable);
-    void setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock);
+    CurrentLayerLock setLockMulti(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock);
     void setPrintMulti(const QList<RS_Layer*>& layersNoPrint, const QList<RS_Layer*>& layersPrint);
     void setConstructionMulti(const QList<RS_Layer*>& layersNoConstruction, const QList<RS_Layer*>& layersConstruction);
 
     friend class RS_Graphic;
 
 private:
-    void ensureActiveLayerIsVisible();
+    void ensureActiveLayer();
+    RS_Layer* bestLayerToActivate(const RS_Layer* except, bool allowLocked) const;
+    CurrentLayerLock keepCurrentLayerUnlocked(bool wasLocked);
+    CurrentLayerLock finishLockRequest(bool currentWasLocked);
+    void fireActiveLayerReplaced();
 
     //! layers in the graphic
     QList<RS_Layer*> m_layers;

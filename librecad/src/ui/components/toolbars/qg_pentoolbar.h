@@ -51,6 +51,7 @@ public:
 
     // Methods from RS_LayerListListener Interface:
     void layerActivated(RS_Layer*) override;
+    void activeLayerReplaced(RS_Layer*) override;
     void layerEdited(RS_Layer*) override;
     /// the list is being destroyed: forget it
     void layerListDestroyed() override;

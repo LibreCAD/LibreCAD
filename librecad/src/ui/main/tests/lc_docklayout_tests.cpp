@@ -16,6 +16,7 @@
 #include "lc_menufactory.h"
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
+#include "qg_activelayername.h"
 #include "qg_graphicview.h"
 #include "qg_layerwidget.h"
 #include "rs_debug.h"
@@ -34,6 +35,7 @@ struct LC_DockLayoutTestAccess {
         return window.m_menuFactory->createGraphicViewPopupMenu(view, entity, RS_Vector(0, 0), actions, true);
     }
     static void fit(QC_ApplicationWindow& window) { window.fitDocksToWindow(); }
+    static void activate(QC_ApplicationWindow& window, QMdiSubWindow* mdi) { window.doWindowActivated(mdi, true); }
     static void isolate(QC_ApplicationWindow& window) {
         window.m_autoCollapsedGroups.clear();
         window.m_collapsedGroupMembers.clear();
@@ -376,19 +378,26 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         REQUIRE(mdi != nullptr);
         auto* graphic = mdi->getGraphic();
         REQUIRE(graphic != nullptr);
-        const QString expectedName = (flags & 1) ? "0" : "Saved";
-        auto* expected = graphic->findLayer(expectedName);
-        REQUIRE(expected != nullptr);
+        // a hidden saved current layer stays current (#3229); a locked one cannot be current, so the
+        // first layer that is shown and not locked is
         auto* saved = graphic->findLayer("Saved");
         REQUIRE(saved != nullptr);
-        CHECK(graphic->getActiveLayer() == expected);
         CHECK(saved->isLocked() == bool(flags & 4));
         CHECK(saved->isFrozen() == bool(flags & 1));
-        CHECK_FALSE(graphic->getActiveLayer()->isFrozen());
+        const bool locked = flags & 4;
+        auto* expected = locked ? graphic->findLayer("0") : saved;
+        REQUIRE(expected != nullptr);
+        CHECK(graphic->getActiveLayer() == expected);
 
+        // the status bar names the current layer and shows an icon for each state it is in
         auto* label = window.findChild<QLabel*>("lActiveLayerName");
         REQUIRE(label != nullptr);
-        CHECK(label->text() == expectedName);
+        CHECK(label->text().toStdString() == expected->getName().toStdString());
+        auto* name = window.findChild<QG_ActiveLayerName*>();
+        REQUIRE(name != nullptr);
+        CHECK(name->hiddenIcon()->isVisibleTo(name) == (!locked && bool(flags & 1)));
+        CHECK_FALSE(name->lockedIcon()->isVisibleTo(name));
+
         auto* widget = window.findChild<QG_LayerWidget*>();
         REQUIRE(widget != nullptr);
         auto* table = widget->findChild<QTableView*>();
@@ -399,6 +408,41 @@ TEST_CASE("Opening a drawing keeps its saved current layer", "[.gui][dock-window
         CHECK(table->currentIndex().row() == model->getIndex(expected).row());
         CHECK_FALSE(graphic->isModified());
     }
+}
+
+TEST_CASE("Lock all layers and Toggle layer lock are disabled when the lock would be refused",
+          "[.gui][dock-window][layers][3229]") {
+    DockFixture fixture;
+    auto& window = fixture.window;
+    window.slotFileNewFromDefaultTemplate();
+    settle(0);
+    auto* mdi = window.getCurrentMDIWindow();
+    REQUIRE(mdi != nullptr);
+    auto* graphic = mdi->getGraphic();
+    REQUIRE(graphic != nullptr);
+    QAction* lockAll = window.getAction("LayersLockAll");
+    QAction* toggleLock = window.getAction("LayersToggleLock");
+    REQUIRE(lockAll != nullptr);
+    REQUIRE(toggleLock != nullptr);
+
+    // a new drawing has layer "0" alone, and it is current: locking it would be refused. Activating
+    // a drawing window enables the layer actions with the print preview ones, which must not
+    // override that.
+    REQUIRE(graphic->countLayers() == 1);
+    CHECK_FALSE(lockAll->isEnabled());
+    CHECK_FALSE(toggleLock->isEnabled());
+
+    // another layer that is not locked takes the current layer's place when it is locked
+    graphic->addLayer(new RS_Layer(QStringLiteral("Walls")));
+    settle(0);
+    CHECK(lockAll->isEnabled());
+    CHECK(toggleLock->isEnabled());
+
+    // and a window activated again keeps them as the layers say
+    graphic->findLayer(QStringLiteral("Walls"))->lock(true);
+    LC_DockLayoutTestAccess::activate(window, mdi);
+    CHECK(lockAll->isEnabled() == graphic->getLayerList()->canLockAll());
+    CHECK(toggleLock->isEnabled() == graphic->getLayerList()->canToggleLockOfSelection());
 }
 
 TEST_CASE("Legacy UTF-8 recovery has a separate File menu action", "[.gui][legacy-utf8-ui]") {

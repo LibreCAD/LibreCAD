@@ -44,6 +44,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dialogfactoryinterface.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
+#include "rs_layer.h"
 #include "rs_point.h"
 #include "rs_settings.h"
 #include "ui_lc_quickinfowidget.h"
@@ -694,6 +695,12 @@ void LC_QuickInfoWidget::onEditEntityProperties(){
     if (m_entityData->hasData() && m_document != nullptr){
         const unsigned long entityId = m_entityData->getEntityId();
         RS_Entity *en = findEntityById(entityId);
+        if (en != nullptr && en->isLocked()){
+            // the entity of a locked layer is not edited
+            RS_DIALOGFACTORY->commandMessage(
+                tr("Layer \"%1\" is locked: unlock it to edit its entities.").arg(en->getLayer(true)->getName()));
+            return;
+        }
         if (en != nullptr){
             // entity found, do editing
             RS_Entity* clone = en->clone();

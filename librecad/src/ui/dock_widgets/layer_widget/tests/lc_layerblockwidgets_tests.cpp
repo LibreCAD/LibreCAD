@@ -21,10 +21,12 @@
 // the drawing of the active window; loading a file resets that drawing (initForNewDocument),
 // which frees its layers and blocks, and a widget attached to it must not keep naming them.
 //
-// A layer added to a drawing that a QG_LayerWidget shows is activated through the application
-// window singleton, which a test must not create (its constructor builds the whole main window
-// and changes process-wide state). A layer that is frozen is not activated: FreezeAdded freezes
-// each layer as it is added, and is listed before the widget so it hears of the layer first.
+// A layer added to a drawing that a QG_LayerWidget shows is activated. That used to update the
+// status bar through the application window singleton, which a test must not create (its
+// constructor builds the whole main window and changes process-wide state), so these tests froze
+// each layer as it was added (FreezeAdded, listed before the widget so it hears of the layer
+// first), as a frozen layer was not activated. The status bar now follows the layer list itself,
+// and a hidden layer is activated (#3229): neither path reaches the singleton any more.
 
 #include <catch2/catch_test_macros.hpp>
 

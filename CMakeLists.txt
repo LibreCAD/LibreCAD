@@ -2687,6 +2687,8 @@ if (BUILD_TESTS)
         librecad/src/lib/information/tests/lc_insidecontour_tests.cpp
         librecad/src/lib/engine/tests/rs_color_tests.cpp
         librecad/src/lib/engine/document/layers/tests/lc_layerlist_tests.cpp
+        librecad/src/lib/engine/document/layers/tests/lc_activelayer_tests.cpp
+        librecad/src/lib/engine/document/layers/tests/lc_lockedhiddenlayer_tests.cpp
         librecad/src/lib/engine/document/tests/lc_trackedlistener_tests.cpp
         librecad/src/lib/engine/document/blocks/tests/lc_blocklist_tests.cpp
         librecad/src/lib/engine/document/ucs/tests/lc_ucslist_tests.cpp
@@ -2827,8 +2829,10 @@ if (BUILD_TESTS)
         librecad/src/actions/drawing/draw/dimensions/tests/rs_actiondimleader_tests.cpp
         librecad/src/ui/dock_widgets/command_line/tests/qg_commandwidget_tests.cpp
         librecad/src/ui/dock_widgets/layer_widget/tests/lc_layerblockwidgets_tests.cpp
+        librecad/src/ui/dock_widgets/layer_widget/tests/lc_activelayerdocks_tests.cpp
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucsviewsselectiondocks_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_layerstateproperties_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetarctests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
@@ -3535,6 +3539,9 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_dock_layout_tests PRIVATE
         LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
     add_dependencies(librecad_dock_layout_tests librecad_test_translations)
+    # lc_docklayout_tests.cpp includes qg_activelayername.h, which includes its uic output.
+    target_include_directories(librecad_dock_layout_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
     add_librecad_filter_micro_test(
         librecad_dimension_clipboard_tests
         librecad/src/lib/engine/document/entities/tests/lc_dimension_clipboard_tests.cpp)
@@ -3547,6 +3554,9 @@ if (BUILD_TESTS)
     target_compile_definitions(librecad_dimension_clipboard_tests PRIVATE
         LIBRECAD_TEST_TRANSLATION_DIR="${CMAKE_CURRENT_BINARY_DIR}")
     add_dependencies(librecad_dimension_clipboard_tests librecad_test_translations)
+    # it compiles lc_docklayout_tests.cpp too (see librecad_dock_layout_tests)
+    target_include_directories(librecad_dimension_clipboard_tests PRIVATE
+        "${CMAKE_CURRENT_BINARY_DIR}/librecad_lib_autogen/include")
     add_librecad_filter_micro_test(
         librecad_printing_tests
         librecad/src/lib/printing/tests/lc_printingtests.cpp)

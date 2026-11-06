@@ -4146,7 +4146,7 @@ End Edge Point: (%9 , %10)</source>
         <translation>角度：%1
 餘角： %2
 補角： %3
-共軛角： %4
+周角補角： %4
 起始邊界點：(%5 , %6)
 交點：(%7, %8)
 終止邊界點：(%9 , %10)</translation>
@@ -4178,7 +4178,7 @@ End Edge Point: (%9 , %10)</source>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="211"/>
         <source>Explementary angle: </source>
         <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
-        <translation>共軛角：</translation>
+        <translation>周角補角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/info/lc_actioninfo3pointsangle.cpp" line="213"/>
@@ -4390,7 +4390,7 @@ Point: (%8 , %9)</source>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="321"/>
         <source>Explementary angle: </source>
         <extracomment>Completes one full turn with the measured angle (2*pi - angle).</extracomment>
-        <translation>共軛角：</translation>
+        <translation>周角補角：</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/pick/lc_actioninteractivepickangle.cpp" line="164"/>

@@ -692,8 +692,8 @@ void RS_ActionInterface::initPrevious(const int status) {
     init(status - 1);
 }
 
-void RS_ActionInterface::undoCycleReplace(RS_Entity* entityToReplace, RS_Entity* entityReplacing) const {
-    m_document->undoableModify(m_viewport, [entityToReplace, entityReplacing](LC_DocumentModificationBatch& ctx)-> bool {
+bool RS_ActionInterface::undoCycleReplace(RS_Entity* entityToReplace, RS_Entity* entityReplacing) const {
+    return m_document->undoableModify(m_viewport, [entityToReplace, entityReplacing](LC_DocumentModificationBatch& ctx)-> bool {
         ctx += entityReplacing;
         ctx -= entityToReplace;
         return true;

@@ -35,7 +35,7 @@ LC_ActionLayerToggle::LC_ActionLayerToggle(LC_ActionContext* context, const RS2:
 void LC_ActionLayerToggle::doWithLayer(RS_Graphic* graphic, RS_Layer* layer) {
     switch (m_actionType) {
         case RS2::ActionLayerEntityActivate: {
-            graphic->activateLayer(layer, true);
+            graphic->activateChosenLayer(layer);
             break;
         }
         case RS2::ActionLayerEntityToggleLock: {
