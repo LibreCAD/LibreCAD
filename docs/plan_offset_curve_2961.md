@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W416; chronological evidence follows): implementation slices
+Current status (W418; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16504,3 +16504,35 @@ This is representative closed 2D legacy coverage, not support validation for
 mesh/polyface/3D polylines, every legacy flag combination, arbitrary OCS, or
 all topology/side/distance cases. Push the test and roadmap checkpoint to PR
 #3193, then qualify the exact new head.
+
+## 417. Full Offset-Suite Requalification (2026-11-05)
+
+Re-ran the complete `[lc-offsetcurve]` selection with output captured to
+`/private/tmp/offset-curve-full-suite.log`, preserving the final Catch2 summary
+that was missing from the earlier interrupted attempt. The run completed with
+1,046 passed cases, one skipped case, zero failed cases, and all 3,971,471
+assertions passing. This closes the earlier broad-suite uncertainty for exact
+source head `135b8e748fe21099e75643bcf6ae23abdba4130b`; it does not waive the
+separate platform, visual, packaging, PR review, or final integration gates.
+
+The full run and the W416 source changes are on the same exact local/pushed
+head. PR diagnostics for that head subsequently exposed a Linux GCC compile
+failure in the changed typed-source header; W418 records the corrective
+qualification and new-head follow-up below.
+
+## 418. Linux GCC Finite-Predicate Portability (2026-11-05)
+
+Exact-head `build_with_pixi (ubuntu-latest)` for W416 head
+`135b8e748fe21099e75643bcf6ae23abdba4130b` failed while compiling
+`lc_offsetsource.h`: GCC found the unqualified `finite` predicate ambiguous
+inside the source-family validation visitor. The helper calls in
+`finitePoints()` and parabola control-point validation now explicitly name
+`LC_OffsetSourceDetail::finite`, avoiding lookup of other visible math
+overloads. No geometry semantics changed.
+
+The fix builds the Release `librecad_tests` target locally; the complete
+imported-polyline selection passes 805 assertions/8 cases and
+`git diff --check` passes. Product commit: `1e95e70e9` (`fix(offset): qualify
+geometry finite predicates`). Push this correction and the W417/W418 roadmap
+checkpoint, then inspect the replacement Linux job and the exact new PR head
+before treating cross-platform validation as cleared.
