@@ -1209,7 +1209,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
-    const std::array<LC_OffsetSourceGeometry, 15> sources{
+    const std::array<LC_OffsetSourceGeometry, 23> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{splineSource},
         LC_OffsetSourceGeometry{nonuniformQuadratic},
@@ -1218,6 +1218,14 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, 1.5, -1.2, false}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -.4, .4, true}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, true}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, .2, 1.2, false}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, -.2, false}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
         LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
