@@ -20166,3 +20166,42 @@ five-lane staged import passes 1,458,660 assertions; broad `[ellipse]`
 selection passes 2,189,712 assertions across 31 cases. CMake Debug worker and
 test targets build. Roadmap parser passes 5/5 and `git diff --check` passes.
 Local results only, not exact-head CI, visible-GUI, or external CAD acceptance.
+
+## 520. Rotated Thin-Ellipse Partial-Interval Curvature Topology
+
+W519 covers eight ratio-0.2 partial intervals at an axis-aligned major axis.
+Add eight corresponding definitions at 30- and 60-degree major-axis
+orientations: at each orientation include a partial sweep that excludes one
+high-curvature extremum and a wrapped sweep that includes it, each forward and
+reversed. Exercise worker generation and operation-8 validation at signed
+normalized distances `+/-0.07`, `+/-0.08`, and `+/-0.09`, scales `1e-3`, `1`,
+and `1e12`, and relative-translation ratios `1e6`, `1e9`, and `1e12`. Match
+branches independent of engine order and traversal direction; compare sampled
+local geometry within the requested tolerance plus coordinate-ULP allowance.
+Carry representable single-cache cells through R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG, preserving exact rotated axes, intervals, and reversal. Every
+cell must be counted as full five-lane promotion or a diagnosed non-mutating
+fallback retaining exact ordinary geometry and schema-2 source metadata. Run
+the focused worker/import matrices, full worker suite, broad ellipse-family
+regression, CMake Debug target builds, roadmap parser, and diff check. This is a
+finite orientation/interval matrix, not arbitrary-angle coverage.
+
+### W520 Completion Receipt
+
+The worker and staged-import matrices now add all eight planned partial
+interval cases at 30- and 60-degree major-axis orientations, alongside W519's
+axis-aligned variants. The grid covers 25 total ellipse layouts; exact
+accounting is 1,404 source/distance cells from 3 ordinary layouts x 4
+distances, 6 full thin layouts x 8 distances, and 16 partial thin layouts x 6
+distances, across three scales and three translation ratios. The import test
+requires every cell to resolve as five-lane promotion or a diagnosed
+downgrade; downgraded files retain the ordinary spline fingerprint and exact
+schema-2 typed source.
+
+Validation: focused worker matrix passes 1,313,985 assertions; the complete
+worker-kernel suite passes 1,508,833 assertions across 42 cases. Focused
+five-lane staged import passes 2,276,916 assertions; broad `[ellipse]`
+selection passes 3,007,306 assertions across 31 cases. CMake Debug worker and
+test targets build. Roadmap parser passes 5/5 and `git diff --check` passes.
+Local results only; exact-head CI for the prior PR head is still being
+investigated, and no visible-GUI or external CAD acceptance is claimed.
