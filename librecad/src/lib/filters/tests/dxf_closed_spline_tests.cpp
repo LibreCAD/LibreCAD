@@ -78,6 +78,8 @@ struct SplineRecord {
   int m_degree = 3;
   std::vector<RS_Vector> m_controlPoints;
   std::vector<double> m_knots;
+  std::vector<RS_Vector> m_fitPoints;
+  int m_scenario = 0;
 };
 
 /** A DXF holding one SPLINE; no HEADER, so no $ACADVER. */
@@ -86,11 +88,14 @@ std::string splineDxf(const SplineRecord &spline) {
   out.precision(17);
   out << "0\nSECTION\n2\nENTITIES\n0\nSPLINE\n8\n0\n100\nAcDbEntity\n100\nAcDbSpline\n"
       << "70\n" << spline.m_flags << "\n71\n" << spline.m_degree << "\n72\n" << spline.m_knots.size()
-      << "\n73\n" << spline.m_controlPoints.size() << "\n74\n0\n42\n1e-10\n43\n1e-10\n";
+      << "\n73\n" << spline.m_controlPoints.size() << "\n74\n" << spline.m_fitPoints.size()
+      << "\n42\n1e-10\n43\n1e-10\n44\n1e-10\n";
   for (const double k : spline.m_knots)
     out << "40\n" << k << "\n";
   for (const RS_Vector &p : spline.m_controlPoints)
     out << "10\n" << p.x << "\n20\n" << p.y << "\n30\n0\n";
+  for (const RS_Vector &p : spline.m_fitPoints)
+    out << "11\n" << p.x << "\n21\n" << p.y << "\n31\n0\n";
   out << "0\nENDSEC\n0\nEOF\n";
   return out.str();
 }
@@ -104,8 +109,11 @@ public:
     SplineRecord record;
     record.m_flags = data->flags;
     record.m_degree = data->degree;
+    record.m_scenario = data->m_scenario;
     for (const auto &p : data->controllist)
       record.m_controlPoints.emplace_back(p->x, p->y);
+    for (const auto &p : data->fitlist)
+      record.m_fitPoints.emplace_back(p->x, p->y);
     record.m_knots = data->knotslist;
     m_records.push_back(record);
     RS_FilterDXFRW::addSpline(data);
@@ -117,6 +125,16 @@ RS_Spline *onlySpline(RS_Graphic &graphic) {
   for (RS_Entity *e : graphic)
     if (e->rtti() == RS2::EntitySpline)
       splines.push_back(static_cast<RS_Spline *>(e));
+  REQUIRE(splines.size() == 1);
+  REQUIRE(graphic.count() == 1);
+  return splines.front();
+}
+
+LC_SplinePoints *onlySplinePoints(RS_Graphic &graphic) {
+  std::vector<LC_SplinePoints *> splines;
+  for (RS_Entity *e : graphic)
+    if (e->rtti() == RS2::EntitySplinePoints)
+      splines.push_back(static_cast<LC_SplinePoints *>(e));
   REQUIRE(splines.size() == 1);
   REQUIRE(graphic.count() == 1);
   return splines.front();
@@ -599,4 +617,61 @@ TEST_CASE("A closed spline written to R12 is a polyline on its curve",
   }
   CHECK(vertices.front().distanceTo(curve.front()) < 1e-9);
   CHECK(vertices.back().distanceTo(curve.back()) < 1e-9);
+}
+
+TEST_CASE("Fit-point SPLINE intent survives DXF and DWG file round trips",
+          "[dxf][dwg][filter][spline][fit-points][roundtrip]") {
+  ensureSettings();
+
+  SplineRecord source;
+  source.m_flags = 8;
+  source.m_degree = 2;
+  source.m_fitPoints = {{0., 0.}, {2., 3.}, {5., 4.}, {8., 0.}};
+  const std::string inputPath = tempPath("fit_point_source.dxf");
+  {
+    std::ofstream out(inputPath);
+    out << splineDxf(source);
+  }
+
+  RS_Graphic first;
+  importFile(first, inputPath, RS2::FormatDXFRW);
+  std::filesystem::remove(inputPath);
+  LC_SplinePoints *sourcePoints = onlySplinePoints(first);
+  REQUIRE_FALSE(sourcePoints->getData().useControlPoints);
+  checkSameVectors(sourcePoints->getData().splinePoints, source.m_fitPoints);
+
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDXFRW, "dxf"},
+#ifdef DWGSUPPORT
+      {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2018, "dwg-r2018"},
+#endif
+  };
+  for (const auto &[format, suffix] : formats) {
+    INFO(suffix);
+    const std::string path = tempPath("fit_point_" + suffix);
+    std::remove(path.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(first, QString::fromStdString(path), format));
+    }
+
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    const RS2::FormatType readFormat = format == RS2::FormatDXFRW
+        ? RS2::FormatDXFRW : RS2::FormatDWG;
+    importFile(reopened, path, readFormat, &written);
+    std::filesystem::remove(path);
+
+    REQUIRE(written.size() == 1);
+    CHECK(written.front().m_controlPoints.empty());
+    checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
+      if (format != RS2::FormatDXFRW)
+      CHECK(written.front().m_scenario == 2);
+
+    LC_SplinePoints *reopenedPoints = onlySplinePoints(reopened);
+    CHECK_FALSE(reopenedPoints->getData().useControlPoints);
+    checkSameVectors(reopenedPoints->getData().splinePoints,
+                     sourcePoints->getData().splinePoints);
+  }
 }
