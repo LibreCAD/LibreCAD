@@ -2632,6 +2632,30 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
       CHECK(hasFragmentXData(*entity));
       CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
     }
+    const auto checkDwgOriginProjection = [&](const RS_Graphic &drawing) {
+      REQUIRE(std::distance(drawing.begin(), drawing.end()) == 2);
+      const RS_Ellipse *ellipse = nullptr;
+      const RS_Line *line = nullptr;
+      for (const RS_Entity *entity : drawing) {
+        CHECK(hasFragmentXData(*entity));
+        CHECK(hasProjectionApp(*entity, "LibreCAD_POLYLINE_OCS"));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity)) {
+          ellipse = candidate;
+          CHECK(hasProjectionApp(*entity, "LibreCAD_CONIC_OCS"));
+        }
+        if (const auto *candidate = dynamic_cast<const RS_Line *>(entity))
+          line = candidate;
+      }
+      REQUIRE(ellipse);
+      REQUIRE(line);
+      CHECK(ellipse->getMajorRadius() == Catch::Approx(std::sqrt(2.0)));
+      CHECK(ellipse->getRatio() == Catch::Approx(0.8));
+      CHECK(samePoint(ellipse->getStartpoint(), RS_Vector{1.8, 0.0}));
+      CHECK(samePoint(ellipse->getEndpoint(), RS_Vector{1.8, 2.0}));
+      CHECK(samePoint(line->getStartpoint(), RS_Vector{1.8, 2.0}));
+      CHECK(samePoint(line->getEndpoint(), RS_Vector{0.2, 2.0}));
+    };
 
     struct BulgedFormat {
       Lane lane;
@@ -2720,6 +2744,28 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
       CHECK(hasFragmentXData(*entity));
     CHECK(reopenedBulgedDwg.dwgAdvancedMetadata().findAppIdTableEntryByName(
               "LibreCAD_POLYLINE_OCS") != nullptr);
+
+    const auto fromDwgDxf = directory.file("bulged-from-dwg.dxf");
+    REQUIRE(lc::test::exportDrawing(*importedBulgedDwg.graphic, fromDwgDxf,
+                                    RS2::FormatDXFRW2018));
+    RS_Graphic reopenedFromDwgDxf;
+    REQUIRE(lc::test::importDrawing(reopenedFromDwgDxf, fromDwgDxf,
+                                    RS2::FormatDXFRW2018));
+    checkDwgOriginProjection(reopenedFromDwgDxf);
+
+    const auto fromDwgDwg = directory.file("bulged-from-dwg.dwg");
+    RS_FilterDXFRW fromDwgWriter;
+    REQUIRE(fromDwgWriter.fileExport(*importedBulgedDwg.graphic,
+                                     lc::test::toQString(fromDwgDwg),
+                                     RS2::FormatDWG2018));
+    RS_Graphic reopenedFromDwgDwg;
+    REQUIRE(lc::test::importDrawing(reopenedFromDwgDwg, fromDwgDwg,
+                                    RS2::FormatDWG2018));
+    checkDwgOriginProjection(reopenedFromDwgDwg);
+    CHECK(reopenedFromDwgDwg.dwgAdvancedMetadata().findAppIdTableEntryByName(
+              "LibreCAD_POLYLINE_OCS") != nullptr);
+    CHECK(reopenedFromDwgDwg.dwgAdvancedMetadata().findAppIdTableEntryByName(
+              "LibreCAD_CONIC_OCS") != nullptr);
 #endif
 
     const auto checkBulgeVariant = [&](double bulge, bool closed,
