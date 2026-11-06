@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W518 complete; remaining family/variant and acceptance work
+Current status (W521 complete; remaining family/variant and acceptance work
 is open; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -20205,3 +20205,45 @@ selection passes 3,007,306 assertions across 31 cases. CMake Debug worker and
 test targets build. Roadmap parser passes 5/5 and `git diff --check` passes.
 Local results only; exact-head CI for the prior PR head is still being
 investigated, and no visible-GUI or external CAD acceptance is claimed.
+
+## 521. Release DXF Fast-Lane OCS Reconciliation
+
+The first workflow-equivalent Release run built all bounded CI targets, but
+`librecad_dxf_fast_tests` exposed two stale/incorrect OCS expectations. The
+reflected legacy 2D POLYLINE reader receives OCS vertex coordinates directly,
+unlike the LWPOLYLINE callback where libdxfrw has already applied the OCS
+frame. For an axial negative-Z extrusion, convert each legacy vertex's OCS X
+coordinate to WCS XY by negating X, and retain the existing reflected-bulge,
+elevation, thickness, and width handling. Regression coverage must verify the
+serialized first vertex and a save/reopen cycle. Separately, the tilted-planar
+DXF test predates the intentional marked-XY projection support: straight
+LWPOLYLINE and legacy 2D POLYLINE inputs now survive as two projected
+LWPOLYLINE records, while tilted circles, arcs, and ellipses remain rejected.
+Update that assertion to match the supported projection contract.
+
+Re-run the complete workflow-equivalent Release CTest set and its standalone
+`[sync-api]`, `[lc-offsetcurve][creation-worker]`, trim-failure, and
+cache-check-failure invocations. Then run the relocated worker client test
+from a path containing spaces. Keep local equivalence evidence separate from
+exact-head PR checks, which must be queried after push.
+
+### W521 Completion Receipt
+
+Legacy 2D POLYLINEs with an axial negative-Z extrusion now transform the
+unmodified OCS vertex X coordinate when constructing LibreCAD's XY geometry;
+bulge reversal remains unchanged. The existing reflected legacy round-trip
+fixture verifies its expected negative X coordinate, elevation, thickness,
+bulges, and widths through export and reopen. The tilted-planar test now
+requires both supported straight-polyline XY projections and still requires
+tilted circles, arcs, and ellipses to be absent.
+
+Validation: Release build of `librecad_dxf_fast_tests` succeeds; the focused
+`[extrusion]` selection passes 548 assertions across 19 cases. The complete
+workflow-equivalent Release CTest set passes 26/26. Standalone sync API passes
+299 assertions, creation-worker passes 398 assertions across 14 cases, and
+both cache trim/check allocation-failure executables exit successfully.
+the relocated worker-client suite passes 20,725 assertions across 20 cases
+from `/private/tmp/offset worker install/bin`. Roadmap parser passes 5/5 and
+`git diff --check` passes. These are local results, not exact-head remote CI,
+visible-GUI, or external-CAD acceptance. Product commit and exact-head remote
+checks remain to be recorded after commit/push.
