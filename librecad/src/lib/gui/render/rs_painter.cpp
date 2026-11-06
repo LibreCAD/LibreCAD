@@ -2232,6 +2232,7 @@ void RS_Painter::pathForEntity(
     const RS_Entity* entity,
     double baseAngle,
     double fullAngleLength,
+    bool reversed,
     const std::function<double(const RS_Vector&)>& getParamFunc,
     const std::function<RS_Vector(double)>& getPointFunc,
     double approxRadius
@@ -2246,10 +2247,8 @@ void RS_Painter::pathForEntity(
   }
 
   const LC_Rect& vpRect = getWcsBoundingRect();
-  // A negative length is a reversed arc, drawn clockwise from baseAngle. The
-  // parameters below are the distances travelled from baseAngle in that
-  // direction, so they always grow from 0 to the arc's length.
-  const bool reversed = fullAngleLength < 0.;
+  // The parameters below are the distances travelled from baseAngle, clockwise
+  // for a reversed arc, so they always grow from 0 to the arc's length.
   const double direction = reversed ? -1. : 1.;
   std::vector<double> crossPoints;
   // Compute intersections with viewport borders
@@ -2261,7 +2260,13 @@ void RS_Painter::pathForEntity(
       const double ap1 = entity->getTangentDirection(vp).angle();
       const double ap2 = line.getTangentDirection(vp).angle();
       if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
-        const double param = RS_Math::getAngleDifference(baseAngle, getParamFunc(vp), reversed);
+        double param = RS_Math::getAngleDifference(baseAngle, getParamFunc(vp), reversed);
+        // vp is on the entity, within tolerance. A crossing at an end that
+        // rounds to the wrong side of it lands beyond the entity, about a full
+        // turn away from where it belongs: bring it back to the end it is at.
+        if (param > fullAngleLength) {
+          param = (param - fullAngleLength < 2. * M_PI - param) ? fullAngleLength : 0.;
+        }
         if (hasFiniteValue(param))
           crossPoints.push_back(param);
       }
@@ -2269,7 +2274,7 @@ void RS_Painter::pathForEntity(
   }
   // Add start/end if visible
   crossPoints.insert(crossPoints.begin(), 0.0);
-  crossPoints.push_back(std::abs(fullAngleLength));
+  crossPoints.push_back(fullAngleLength);
   // Sort and unique
   std::sort(crossPoints.begin(), crossPoints.end());
   const auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {

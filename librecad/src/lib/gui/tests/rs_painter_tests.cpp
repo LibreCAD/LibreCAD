@@ -43,6 +43,7 @@
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_linetypepattern.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
@@ -640,4 +641,38 @@ TEST_CASE("a reversed elliptic arc paints as the same arc written counter-clockw
     INFO("zoom " << zoom << ", along " << along);
     REQUIRE(countPixels(expected, qRgb(0, 0, 0)) > 100);
     CHECK(actual == expected);
+}
+
+TEST_CASE("an arc whose end lies on the border of the view paints no stray line",
+          "[gui][painter][arc]") {
+    (void)application();
+    const double zoom = GENERATE(34.0, 400.0);
+    // start angle, angle length, whether the view's border passes through the
+    // end (else the start) of the arc, whether that border is the left (else the
+    // bottom) one; rounding puts the crossing at the wrong side of the end
+    struct Case { double start; double length; bool atEnd; bool leftBorder; };
+    const Case c = GENERATE(Case{0.603815, 2.40035, false, true},
+                            Case{-2.89118, 2.2814, false, false},
+                            Case{2.92677, 0.271003, true, true},
+                            Case{-0.484462, 1.54977, true, false});
+    const RS_Vector center(230.75, 64.0);
+    const double radius = 90.0;
+    const double end = c.start + c.length;
+    const RS_Vector onBorder = center + RS_Vector::polar(radius, c.atEnd ? end : c.start);
+    const double half = 150. / zoom;
+    const RS_Vector focus = c.leftBorder ? RS_Vector(onBorder.x + half, onBorder.y)
+                                         : RS_Vector(onBorder.x, onBorder.y + half);
+
+    // the arc as many short lines is what it must look like
+    RS_Polyline reference(nullptr);
+    for (int i = 0; i <= 20000; ++i) {
+        reference.addVertex(center + RS_Vector::polar(radius, c.start + c.length * i / 20000.));
+    }
+    RS_Arc counterClockwise(nullptr, RS_ArcData{center, radius, c.start, end, false});
+    RS_Arc reversed(nullptr, RS_ArcData{center, radius, end, c.start, true});
+    const int expected = countPixels(paintAround(reference, focus, zoom), qRgb(0, 0, 0));
+    INFO("zoom " << zoom);
+    // a stray line adds a hundred pixels or more
+    CHECK(countPixels(paintAround(counterClockwise, focus, zoom), qRgb(0, 0, 0)) < expected + 20);
+    CHECK(countPixels(paintAround(reversed, focus, zoom), qRgb(0, 0, 0)) < expected + 20);
 }

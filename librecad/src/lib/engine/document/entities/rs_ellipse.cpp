@@ -1745,9 +1745,6 @@ void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) cons
     if (!hasFiniteValue(baseAngle) || !hasFiniteValue(fullAngleLength))
         return;
 
-    if (isArc() && isReversed()){
-        fullAngleLength = - fullAngleLength;
-    }
     auto getParamFunc = [this](const RS_Vector& vp) { return getEllipseAngle(vp); };
     auto getPointFunc = [this](double param) { return getEllipsePoint(param); };
     // pathForParametricCurve calibrates the step assuming an arc with constant
@@ -1767,8 +1764,8 @@ void RS_Ellipse::createPainterPath(RS_Painter* painter, QPainterPath& path) cons
         (minSemi > RS_TOLERANCE)
             ? (maxSemi * maxSemi * maxSemi) / (minSemi * minSemi)
             : maxSemi;
-    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc,
-                           getPointFunc, approxRadius);
+    painter->pathForEntity(path, this, baseAngle, fullAngleLength, isArc() && isReversed(),
+                           getParamFunc, getPointFunc, approxRadius);
 }
 
 /**
