@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W505; chronological evidence follows): implementation slices
+Current status (W506; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -69,6 +69,11 @@ W504 revalidates that the editable nine-family selector and distinct parabola
 choice are already implemented; remaining source support is variant-level.
 The latest worker-scale slice passes focused and full worker-kernel tests;
 exact-head CI must be queried again after its commits are pushed.
+W506 extends the hyperbola curvature-neighborhood import matrix to four
+uniform scales and five historical DXF/DWG lanes. Its focused matrix passes
+285,397 assertions; the full typed-source import selection passes 504,226
+assertions across 34 cases. These measurements qualify only the recorded
+layouts, scales, and normalized distances.
 W439 adds bulged LWPOLYLINE and legacy 2D POLYLINE input coverage across R14
 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
@@ -19610,3 +19615,24 @@ first-branch carrier for multi-output geometry must downgrade and retain exact
 schema-2 source metadata. Require both outcomes per scale across the aggregate
 matrix where generation produces them. Run the focused case, full typed-source
 import selection, CMake Debug test build, roadmap parser, and diff check.
+
+### Completion receipt
+
+The eight bounded interval/branch layouts now traverse staged import at scales
+`1e-3`, `1`, `1e3`, and `1e12`, signed normalized distances `±1.05`, `±1.08`,
+and `±1.09`, and all five lanes: R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+This is 960 imports. For each scale, generated topology produces both native
+promotion and first-branch fallback. Promotion preserves exact typed source
+and canonical cache fingerprints; fallback preserves ordinary spline geometry
+and exact schema-2 metadata. The topology decision is derived from full
+generation output, not hard-coded by scale or side.
+
+Validation: the focused `[hyperbola][curvature][scale]` import case passes
+285,397 assertions; the full `[lc-offsetcurve][import-session][typed-source]`
+selection passes 504,226 assertions across 34 cases; CMake Debug
+`librecad_tests` builds; roadmap parser passes 5/5; `git diff --check` passes.
+These are local results, not exact-head CI, visible-GUI, or external-CAD
+acceptance. Product test commit `e79d08615`
+(`test(offset): import hyperbola scale variants`); this roadmap receipt is
+committed separately. Arbitrary hyperbola scales, translations, other interval
+layouts, and untested tolerance/precision limits remain open.
