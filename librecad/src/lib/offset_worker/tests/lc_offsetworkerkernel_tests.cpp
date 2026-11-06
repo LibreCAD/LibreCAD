@@ -1340,6 +1340,28 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
                 };
                 const bool centeredGenerated = generated(centeredOutput);
                 const bool translatedGenerated = generated(translatedOutput);
+                const auto validateOutput = [&](const LC_OffsetSourceDefinition& definition,
+                                                const auto& options,
+                                                const result::Native& output) {
+                    if (!generated(output)) return;
+                    const auto cache = asSpline(output.ordinary.front());
+                    const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+                    const auto validation = LC_OffsetWorkerKernel::run(
+                        {token, req::ValidateSourceCache{cache, definition, {}}});
+                    const auto& validated = native(validation, 8);
+                    if (options && output.ordinary.size() == 1) {
+                        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                        CHECK(validated.changed);
+                        ++acceptedCaches;
+                    } else {
+                        CHECK(validated.refusal != LC_OffsetCurveRefusal::None);
+                        CHECK_FALSE(validated.changed);
+                        CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+                    }
+                    CHECK(validated.engineRuns == 1);
+                };
+                validateOutput(centeredDefinition, centeredOptions, centeredOutput);
+                validateOutput(translatedDefinition, translatedOptions, translatedOutput);
                 if (!centeredGenerated || !translatedGenerated) {
                     if (!centeredGenerated) {
                         CHECK(centeredOutput.ordinary.empty());
@@ -1353,25 +1375,6 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
                     continue;
                 }
 
-                for (const auto& [definition, options, output] :
-                     {std::tuple{centeredDefinition, centeredOptions, &centeredOutput},
-                      std::tuple{translatedDefinition, translatedOptions, &translatedOutput}}) {
-                        const auto cache = asSpline(output->ordinary.front());
-                        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
-                        const auto validation = LC_OffsetWorkerKernel::run(
-                            {token, req::ValidateSourceCache{cache, definition, {}}});
-                        const auto& validated = native(validation, 8);
-                        if (options && output->ordinary.size() == 1) {
-                            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
-                            CHECK(validated.changed);
-                            ++acceptedCaches;
-                        } else {
-                            CHECK(validated.refusal != LC_OffsetCurveRefusal::None);
-                            CHECK_FALSE(validated.changed);
-                            CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
-                        }
-                        CHECK(validated.engineRuns == 1);
-                    }
                 if (!centeredOptions || !translatedOptions ||
                     centeredOutput.ordinary.size() != translatedOutput.ordinary.size()) {
                     ++generationOrToleranceRefusals;
@@ -1503,7 +1506,7 @@ TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains
             } else {
                 CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
                 CHECK_FALSE(validated.changed);
-            }
+          }
         }
     }
 }
