@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W413; chronological evidence follows): implementation slices
+Current status (W414; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16423,3 +16423,31 @@ legacy polyline source imports`). This closes representative valid 2D legacy
 POLYLINE import with signed bulges for those versions, not mesh/polyface/3D
 polyline support or every legacy DXF/DWG release. Push the test and roadmap
 update to PR #3193 and re-read exact-head checks.
+
+## 414. Near-Limit Polyline Bulge Conversion (2026-11-05)
+
+Polyline bulges whose implied arc sweep is at or below the model's minimum
+valid arc angle are now normalized to straight segments. This prevents
+`RS_Polyline` from constructing an invalid `RS_Arc` for a geometrically
+unresolvable sweep. For valid small-sweep arcs, source continuity validation
+now scales its floating-point endpoint tolerance by the adjoining arc radius,
+accounting for cancellation in endpoint reconstruction without loosening
+line-only joins.
+
+Added real-file imports at both sides of the angular threshold, for both bulge
+signs, through R14/AC1014 DXF, AC1032 DXF, and AC1032 DWG. The focused boundary
+case passes 216 assertions/1 case; `[lc-offsetcurve][source][polyline]`
+passes 38 assertions/1 case; the imported-polyline selection passes 675
+assertions/6 cases; and the worker-kernel polyline selection passes 309
+assertions/4 cases. Release `librecad_tests` and the worker-kernel test target
+build successfully; `git diff --check` passes. Product commit: `2c3a150e4`
+(`fix(offset): validate near-limit polyline bulges`).
+
+The radius-conditioned tolerance is limited to joins involving arc segments;
+it does not establish robust topology for arbitrary self-intersecting or
+near-coincident polylines. Non-consecutive repeated vertices, broader
+topology/side/distance cases, non-axial OCS, and mesh/polyface/3D legacy
+polylines remain open. Continue the production-path admission/refusal matrix
+for supported source variants, then update and validate the next slice against
+these boundaries rather than treating the family as fully covered. Roadmap
+checkpoint for W414 is pending push and exact-head CI diagnostics.
