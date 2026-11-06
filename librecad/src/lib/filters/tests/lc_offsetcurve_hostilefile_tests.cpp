@@ -2392,8 +2392,9 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     };
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 3> formats{{
+    const std::array<Format, 4> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
 
