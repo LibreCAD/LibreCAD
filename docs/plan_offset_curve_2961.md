@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W401; chronological evidence follows): implementation slices
+Current status (W402; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16065,3 +16065,20 @@ selection, which passes 1,260 assertions/63 cases. The Release
 tested fit-point layouts and versions; it does not by itself qualify complete
 DWG file writing/reading through the DWG section writer or preserve fit-point
 intent in every LibreCAD entity conversion path.
+
+## 402. LibreCAD Fit-Point SPLINE File Round Trips (2026-11-05)
+
+Added a filter-level fit-only degree-2 SPLINE fixture and round-tripped it as
+DXF, AC1015/R2000 DWG, and AC1032/R2018 DWG. The test verifies the emitted file
+contains fit points without a control net, verifies both DWG writers select
+scenario 2, and confirms reopening recreates `LC_SplinePoints` in fit-point
+mode with the original ordered fit coordinates. This closes the app-side
+write/read path for a representative open fit-point spline at these two DWG
+versions; closed/degree-3 variants, tangents as user-editable data, and all
+intermediate DWG releases are not established here.
+
+Validation: `[fit-points][roundtrip]` passes 62 assertions/1 case from the
+Release `librecad_tests` executable; `git diff --check` passes. This complements
+W401's direct entity-codec matrix and W389-W399's typed-source carrier/import
+coverage; none alone establishes every application conversion or legal
+fit-point variant.
