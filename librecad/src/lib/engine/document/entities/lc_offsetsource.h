@@ -13,6 +13,7 @@
 #include <cstddef>
 #include <limits>
 #include <optional>
+#include <set>
 #include <type_traits>
 #include <utility>
 #include <variant>
@@ -303,6 +304,10 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             RS_Vector previousEnd;
             RS_Vector lastStart;
             RS_Vector lastEnd;
+            const auto vertexKey = [](const RS_Vector& point) {
+                return std::pair{point.x, point.y};
+            };
+            std::set<std::pair<double, double>> uniqueVertices;
             double firstScale = 1.0;
             double previousScale = 1.0;
             double lastScale = 1.0;
@@ -310,6 +315,13 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
                 RS_Vector start;
                 RS_Vector end;
                 if (!endpoints(data.segments[i], start, end)) return false;
+                bool inserted = false;
+                try {
+                    inserted = uniqueVertices.insert(vertexKey(start)).second;
+                } catch (...) {
+                    return false;
+                }
+                if (!inserted) return false;
                 const double scale = segmentScale(data.segments[i]);
                 if (i == 0) {
                     firstStart = start;
@@ -326,11 +338,20 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             }
             if (!sameEndpoint(firstStart, data.startpoint, firstScale)) return false;
             if (data.closed) {
-                return sameEndpoint(lastEnd, data.startpoint,
-                                    std::max(lastScale, firstScale)) &&
-                       (sameEndpoint(data.endpoint, lastStart, lastScale) ||
-                        sameEndpoint(data.endpoint, lastEnd, lastScale));
+                if (!sameEndpoint(lastEnd, data.startpoint,
+                                  std::max(lastScale, firstScale))) return false;
+                uniqueVertices.erase(vertexKey(firstStart));
+                if (uniqueVertices.count(vertexKey(lastEnd))) return false;
+                return sameEndpoint(data.endpoint, lastStart, lastScale) ||
+                       sameEndpoint(data.endpoint, lastEnd, lastScale);
             }
+            bool inserted = false;
+            try {
+                inserted = uniqueVertices.insert(vertexKey(lastEnd)).second;
+            } catch (...) {
+                return false;
+            }
+            if (!inserted) return false;
             return sameEndpoint(lastEnd, data.endpoint, lastScale);
         }
     }, value);

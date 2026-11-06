@@ -1509,6 +1509,54 @@ TEST_CASE("imported duplicate LWPOLYLINE vertices remain ordinary and are not of
     }
 }
 
+TEST_CASE("imported non-consecutive repeated LWPOLYLINE vertices are not offset sources",
+          "[lc-offsetcurve][import-session][typed-source][polyline][malformed][topology]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-nonconsecutive-repeat-polyline-import");
+    DRW_LWPolyline raw;
+    raw.vertexnum = 5;
+    raw.addVertex(DRW_Vertex2D(0, 0, 0));
+    raw.addVertex(DRW_Vertex2D(2, 0, 0));
+    raw.addVertex(DRW_Vertex2D(2, 2, 0));
+    raw.addVertex(DRW_Vertex2D(0, 0, 0));
+    raw.addVertex(DRW_Vertex2D(0, 2, 0));
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        const auto path = directory.file(std::string("repeated-vertex-") + format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwgPolylineFile(path, raw, format.version);
+        else f::binaryDxfPolyline(path, raw, format.version);
+#else
+        f::binaryDxfPolyline(path, raw, format.version);
+#endif
+
+        auto outcome = stagedImport(path, format.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        std::vector<const RS_Polyline*> polylines;
+        for (const RS_Entity* entity : *outcome.graphic) {
+            if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity))
+                polylines.push_back(polyline);
+        }
+        REQUIRE(polylines.size() == 1);
+        const RS_Polyline& imported = *polylines.front();
+        const auto vertices = imported.getVertexes();
+        REQUIRE(vertices.size() == 5);
+        CHECK(vertices[0] == vertices[3]);
+        CHECK(imported.size() == 4);
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(imported));
+    }
+}
+
 TEST_CASE("legacy 2D POLYLINE import preserves signed bulge source geometry",
           "[lc-offsetcurve][import-session][typed-source][polyline][legacy]") {
     Setup setup;
