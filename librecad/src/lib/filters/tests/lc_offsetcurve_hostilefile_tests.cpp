@@ -2373,6 +2373,23 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     raw.addVertex(DRW_Vertex(0.0, 0.0, 0.0, 0.0));
     raw.addVertex(DRW_Vertex(2.0, 0.0, 0.0, 0.0));
     raw.addVertex(DRW_Vertex(2.0, 2.0, 0.0, 0.0));
+    raw.extData.push_back(std::make_shared<DRW_Variant>(
+        1001, std::string("FixtureSourceData")));
+    raw.extData.push_back(std::make_shared<DRW_Variant>(
+        1000, std::string("preserve-this-xdata")));
+
+    const auto hasFixtureXData = [](const RS_Polyline& polyline) {
+        const auto& ext = polyline.getDrwExtData();
+        const auto app = std::find_if(ext.begin(), ext.end(), [](const auto& value) {
+            return value && value->code() == 1001 &&
+                   value->type() == DRW_Variant::STRING &&
+                   std::string{value->c_str()} == "FixtureSourceData";
+        });
+        return app != ext.end() && std::next(app) != ext.end() &&
+               (*std::next(app))->code() == 1000 &&
+               (*std::next(app))->type() == DRW_Variant::STRING &&
+               std::string{(*std::next(app))->c_str()} == "preserve-this-xdata";
+    };
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 3> formats{{
@@ -2428,6 +2445,7 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
             });
         REQUIRE(elevation != ext.end());
         CHECK((*elevation)->content.d == Catch::Approx(3.0));
+        CHECK(hasFixtureXData(*projected));
         CHECK_FALSE(LC_OffsetSourceGeometry::capture(*projected));
         if (!format.dwg) sourceDrawing = std::move(outcome.graphic);
     }
@@ -2455,6 +2473,7 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     REQUIRE(lc::test::importDrawing(reopened, dxf, RS2::FormatDXFRW2018));
     const auto* reopenedPolyline = dynamic_cast<const RS_Polyline*>(f::sole(reopened));
     REQUIRE(reopenedPolyline);
+    CHECK(hasFixtureXData(*reopenedPolyline));
     CHECK_FALSE(LC_OffsetSourceGeometry::capture(*reopenedPolyline));
 
 #ifdef DWGSUPPORT
@@ -2469,6 +2488,7 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     const auto* reopenedDwgPolyline =
         dynamic_cast<const RS_Polyline*>(f::sole(reopenedDwg));
     REQUIRE(reopenedDwgPolyline);
+    CHECK(hasFixtureXData(*reopenedDwgPolyline));
     CHECK_FALSE(LC_OffsetSourceGeometry::capture(*reopenedDwgPolyline));
 #endif
 }

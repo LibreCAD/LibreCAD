@@ -319,6 +319,9 @@ template <typename Writer> struct Emit2dPolyline final : NullDrwInterface {
         DRW_AppId app; app.name = "LibreCad";
         if constexpr (std::is_same_v<Writer, dxfRW>) REQUIRE(writer.writeAppId(&app));
         else REQUIRE(writer.addAppId(&app));
+        DRW_AppId fixtureApp; fixtureApp.name = "FixtureSourceData";
+        if constexpr (std::is_same_v<Writer, dxfRW>) REQUIRE(writer.writeAppId(&fixtureApp));
+        else REQUIRE(writer.addAppId(&fixtureApp));
     }
     void writeEntities() override { wrote = writer.writePolyline(&polyline); REQUIRE(wrote); }
 };
