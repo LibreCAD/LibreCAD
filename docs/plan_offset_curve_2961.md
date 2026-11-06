@@ -24,8 +24,8 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W521 complete; remaining family/variant and acceptance work
-is open; chronological evidence follows): implementation slices
+Current status (W522 complete; remaining family/variant and acceptance work is
+open; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -20241,9 +20241,68 @@ Validation: Release build of `librecad_dxf_fast_tests` succeeds; the focused
 `[extrusion]` selection passes 548 assertions across 19 cases. The complete
 workflow-equivalent Release CTest set passes 26/26. Standalone sync API passes
 299 assertions, creation-worker passes 398 assertions across 14 cases, and
-both cache trim/check allocation-failure executables exit successfully.
-the relocated worker-client suite passes 20,725 assertions across 20 cases
+both cache trim/check allocation-failure executables exit successfully. The
+relocated worker-client suite passes 20,725 assertions across 20 cases
 from `/private/tmp/offset worker install/bin`. Roadmap parser passes 5/5 and
 `git diff --check` passes. These are local results, not exact-head remote CI,
 visible-GUI, or external-CAD acceptance. Product commit and exact-head remote
 checks remain to be recorded after commit/push.
+
+## 522. Spline Scale-and-Translation Worker Precision Matrix
+
+Recent worker matrices combine scale and translation for ellipses and bounded
+hyperbolas, while spline tests currently qualify representative knot/weight
+layouts and signed distances mostly near the origin. Add a worker-kernel
+matrix for value-owned rational internal-knot, cubic repeated-knot, and
+fit-point sources. Apply each uniform scale to every source point and signed
+distance, then translate every resulting control/fit point by each tested
+relative translation ratio; leave knot values, weights, fit tolerance, and
+constrained-tangent metadata unchanged. Require each transformed tagged source
+to remain well formed and its canonical encoding to preserve the exact spline
+variant metadata.
+
+For each source, scale, translation ratio, and signed distance, compare
+operation-7 generation status and full output cardinality between centered
+and translated sources. A failed generation must expose no ordinary geometry
+and must not report mutation. For successful outputs, match branches by
+sampled geometry without relying on engine order or traversal direction;
+compare samples after removing the translation, with an error bound composed
+of the requested world-space geometry tolerance and coordinate-ULP allowance.
+Run operation 8 independently on every generated branch: a sole canonical
+cache must validate and mark changed; a first-branch candidate for multi-output
+generation must be refused as `NotCacheRepresentable` without mutation. Check
+source/cache fingerprints before and after refusal. Count every matrix cell
+as paired generation/cache validation or an explicit symmetric refusal; fail
+on centered/translated topology or status disagreement rather than silently
+skipping it.
+
+Keep the first slice at worker scope. Run the focused matrix, full worker
+kernel suite, Release target build, roadmap parser, and diff check. If the
+worker grid reveals a production numerical defect, fix it in the same product
+slice and retain the smallest reproducer; otherwise record the qualified
+finite domain and follow with a separate staged DXF/DWG persistence/import
+matrix using only worker-admitted caches. Do not infer arbitrary spline
+translation, degree, weight, knot, or precision support from this finite
+sample.
+
+### W522 Completion Receipt
+
+The worker matrix now covers a degree-2 nonuniform rational internal-knot
+spline, a rational cubic with a repeated interior knot, and a fit-point
+spline-points source with non-default fit tolerance. Each runs at scales `1`
+and `1e3`, relative translations `1e6` and `1e9` times scale, and signed
+normalized distances `+/-0.1` and `+/-0.4`, for 48 centered/translated
+source-distance cells. Every transformed source remains well formed and
+retains its spline degree, knots, weights, fit mode, tangent-constraint flag,
+and fit tolerance. Generation status and output topology match across source
+placement; successful branches are matched independent of order or traversal
+and compared at 129 samples in local coordinates with requested tolerance plus
+the coordinate-ULP allowance. Operation 8 validates each single-cache result
+and refuses multi-output first-branch candidates without mutation.
+
+Validation: focused W522 worker matrix passes 69,667 assertions in one case;
+the full Release worker-kernel suite passes 1,578,500 assertions across 43
+cases. The Release worker-kernel target builds, roadmap parser passes 5/5, and
+`git diff --check` passes. Product test commit `f2f4593eb` (`test(offset):
+qualify spline scale and translation`). These are local worker results, not
+staged DXF/DWG import, exact-head CI, visible-GUI, or external-CAD acceptance.
