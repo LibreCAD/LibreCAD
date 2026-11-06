@@ -2852,35 +2852,54 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
     checkBulgeVariant(-std::tan(M_PI / 8.0), false, "negative-bulge.dxf");
     checkBulgeVariant(2.0, true, "closed-major-bulge.dxf");
 
-    DRW_LWPolyline reflectedBulge = raw;
-    reflectedBulge.extPoint = {0.6, 0.0, -0.8};
-    reflectedBulge.vertlist.front()->bulge = std::tan(M_PI / 8.0);
-    const auto reflectedBulgePath = directory.file("reflected-bulge.dxf");
-    f::binaryDxfPolyline(reflectedBulgePath, reflectedBulge, DRW::AC1032);
-    const auto reflectedBulgeImport =
-        stagedImport(reflectedBulgePath, Lane::Binary18);
-    REQUIRE(reflectedBulgeImport.status ==
-            LC_OffsetImportSession::Status::Complete);
-    REQUIRE(reflectedBulgeImport.graphic);
-    REQUIRE(std::distance(reflectedBulgeImport.graphic->begin(),
-                          reflectedBulgeImport.graphic->end()) == 2);
-    const RS_Ellipse *reflectedEllipse = nullptr;
-    const RS_Line *reflectedLine = nullptr;
-    for (const RS_Entity *entity : *reflectedBulgeImport.graphic) {
-      if (const auto *ellipse = dynamic_cast<const RS_Ellipse *>(entity))
-        reflectedEllipse = ellipse;
-      if (const auto *line = dynamic_cast<const RS_Line *>(entity))
-        reflectedLine = line;
-      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+    for (const auto &format : bulgedFormats) {
+#ifndef DWGSUPPORT
+      if (format.dwg)
+        continue;
+#endif
+      DRW_LWPolyline reflectedBulge = bulged;
+      reflectedBulge.extPoint = {0.6, 0.0, -0.8};
+      reflectedBulge.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+      const auto path = directory.file(std::string("reflected-bulge-") +
+                                       format.suffix);
+#ifdef DWGSUPPORT
+      if (format.dwg)
+        f::dwgPolylineFile(path, reflectedBulge, format.version);
+      else
+        f::binaryDxfPolyline(path, reflectedBulge, format.version);
+#else
+      f::binaryDxfPolyline(path, reflectedBulge, format.version);
+#endif
+      const auto imported = stagedImport(path, format.lane);
+      INFO(format.suffix);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == 2);
+      const RS_Ellipse *reflectedEllipse = nullptr;
+      const RS_Line *reflectedLine = nullptr;
+      for (const RS_Entity *entity : *imported.graphic) {
+        CHECK(hasFragmentXData(*entity));
+        CHECK(hasProjectionApp(*entity, "LibreCAD_POLYLINE_OCS"));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+        if (const auto *ellipse = dynamic_cast<const RS_Ellipse *>(entity)) {
+          reflectedEllipse = ellipse;
+          CHECK(hasProjectionApp(*entity, "LibreCAD_CONIC_OCS"));
+        }
+        if (const auto *line = dynamic_cast<const RS_Line *>(entity))
+          reflectedLine = line;
+      }
+      REQUIRE(reflectedEllipse);
+      REQUIRE(reflectedLine);
+      CHECK(reflectedEllipse->isReversed());
+      CHECK(reflectedEllipse->getAngleLength() == Catch::Approx(M_PI / 2.0));
+      CHECK(std::isfinite(reflectedEllipse->getCenter().x));
+      CHECK(std::isfinite(reflectedEllipse->getCenter().y));
+      CHECK(std::hypot(reflectedEllipse->getEndpoint().x -
+                       reflectedLine->getStartpoint().x,
+                       reflectedEllipse->getEndpoint().y -
+                       reflectedLine->getStartpoint().y) < 1e-8);
     }
-    REQUIRE(reflectedEllipse);
-    REQUIRE(reflectedLine);
-    CHECK(reflectedEllipse->isReversed());
-    CHECK(reflectedEllipse->getAngleLength() == Catch::Approx(M_PI / 2.0));
-    CHECK(std::hypot(reflectedEllipse->getEndpoint().x -
-                     reflectedLine->getStartpoint().x,
-                     reflectedEllipse->getEndpoint().y -
-                     reflectedLine->getStartpoint().y) < 1e-8);
 
     struct BulgeFormat {
       Lane lane;
