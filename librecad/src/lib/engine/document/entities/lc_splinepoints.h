@@ -58,6 +58,8 @@ struct LC_SplinePointsData {
     bool cut = false;
     // directly use control points from data, instead of generating control points from splinePoints
     bool useControlPoints = false;
+    /** Source fit SPLINE had endpoint tangent constraints not modeled here. */
+    bool fitTangentsConstrained = false;
     /** points on the spline. */
     std::vector<RS_Vector> splinePoints;
     /** Fit-point tolerance from the source SPLINE, when available. */

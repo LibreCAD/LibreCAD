@@ -700,6 +700,61 @@ TEST_CASE("Fit-point SPLINE intent survives DXF and DWG file round trips",
   }
 }
 
+TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control net",
+          "[dxf][dwg][filter][spline][fit-points][roundtrip]") {
+  ensureSettings();
+  SplineRecord source;
+  source.m_flags = 8;
+  source.m_degree = 2;
+  source.m_fitPoints = {{0., 0.}, {2., 3.}, {5., 4.}, {8., 0.}};
+  source.m_tangentStart = {1., 0., 0.};
+  source.m_tangentEnd = {0., 1., 0.};
+  RS_Graphic graphic;
+  importDxf(graphic, source, "tangent_quadratic_fit_point_source");
+
+  LC_SplinePoints *sourceSpline = onlySplinePoints(graphic);
+  REQUIRE_FALSE(sourceSpline->getData().useControlPoints);
+  REQUIRE(sourceSpline->getData().fitTangentsConstrained);
+  const auto sourceControls = sourceSpline->getControlPoints();
+  REQUIRE(sourceControls.size() >= 3);
+
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDXFRW, "dxf"},
+#ifdef DWGSUPPORT
+      {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2018, "dwg-r2018"},
+#endif
+  };
+  for (const auto &[format, suffix] : formats) {
+    INFO(suffix);
+    const std::string path = tempPath("tangent_quadratic_fit_point_" + suffix);
+    std::remove(path.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+    }
+
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    const RS2::FormatType readFormat =
+        format == RS2::FormatDXFRW ? RS2::FormatDXFRW : RS2::FormatDWG;
+    importFile(reopened, path, readFormat, &written);
+    std::filesystem::remove(path);
+
+    REQUIRE(written.size() == 1);
+    CHECK(written.front().m_fitPoints.empty());
+    CHECK_FALSE(written.front().m_controlPoints.empty());
+    CHECK(written.front().m_tangentStart.magnitude() == 0.0);
+    CHECK(written.front().m_tangentEnd.magnitude() == 0.0);
+    if (format != RS2::FormatDXFRW)
+      CHECK(written.front().m_scenario == 1);
+
+    LC_SplinePoints *reopenedSpline = onlySplinePoints(reopened);
+    checkSameVectors(reopenedSpline->getControlPoints(), sourceControls);
+    CHECK_FALSE(reopenedSpline->getData().fitTangentsConstrained);
+  }
+}
+
 TEST_CASE("Cubic fit-point SPLINE intent survives file round trips",
           "[dxf][dwg][filter][spline][fit-points][roundtrip]") {
   ensureSettings();

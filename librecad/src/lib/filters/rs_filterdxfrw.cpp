@@ -8741,6 +8741,11 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     }
     if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
       splinePoints->getData().fitTolerance = data->tolfit;
+    const auto nonzero = [](const DRW_Coord &tangent) {
+      return tangent.x != 0.0 || tangent.y != 0.0 || tangent.z != 0.0;
+    };
+    splinePoints->getData().fitTangentsConstrained =
+        nonzero(data->tgStart) || nonzero(data->tgEnd);
 
     splinePoints->update();
     m_currentContainer->addEntity(splinePoints);
@@ -32180,9 +32185,11 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
 
   LC_SplinePointsData &data = s->getData();
   auto const &fitPoints = data.splinePoints;
-  const bool writeFitScenario = !data.useControlPoints && fitPoints.size() >= 2;
+  const bool writeFitScenario = !data.useControlPoints &&
+                                !data.fitTangentsConstrained &&
+                                fitPoints.size() >= 2;
   sp.degree = 2;
-  sp.nfit = static_cast<std::int32_t>(fitPoints.size());
+  sp.nfit = writeFitScenario ? static_cast<std::int32_t>(fitPoints.size()) : 0;
 
   if (writeFitScenario) {
     sp.m_scenario = 2;
@@ -32222,9 +32229,12 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     }
   }
 
-  // fit points
-  for (auto const &v : fitPoints) {
-    sp.fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+  // Fit-point fields and tangents are one scenario; do not pair stale or
+  // unsupported fit metadata with a control-net fallback.
+  if (writeFitScenario) {
+    for (auto const &v : fitPoints) {
+      sp.fitlist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+    }
   }
 
   getEntityAttributes(&sp, s);
