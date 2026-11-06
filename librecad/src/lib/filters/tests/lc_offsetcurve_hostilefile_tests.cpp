@@ -3327,6 +3327,55 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
       }
     }
 
+    for (const auto &format : formats) {
+#ifndef DWGSUPPORT
+      if (format.dwg)
+        continue;
+#endif
+      DRW_Polyline fixture = bulged;
+      fixture.extPoint = {0.6, 0.0, -0.8};
+      for (auto &vertex : fixture.vertlist)
+        vertex = std::make_shared<DRW_Vertex>(*vertex);
+      const auto path = directory.file(std::string("reflected-bulged-") +
+                                       format.suffix);
+#ifdef DWGSUPPORT
+      if (format.dwg)
+        f::dwg2dPolylineFile(path, fixture, format.version);
+      else
+        f::binaryDxf2dPolyline(path, fixture, format.version);
+#else
+      f::binaryDxf2dPolyline(path, fixture, format.version);
+#endif
+      const auto imported = stagedImport(path, format.lane);
+      INFO(format.suffix);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == 2);
+      const RS_Ellipse *ellipse = nullptr;
+      const RS_Line *line = nullptr;
+      for (const RS_Entity *entity : *imported.graphic) {
+        CHECK(hasFixtureXData(*entity));
+        CHECK(hasProjectionApp(*entity, "LibreCAD_POLYLINE_OCS"));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity)) {
+          ellipse = candidate;
+          CHECK(hasProjectionApp(*entity, "LibreCAD_CONIC_OCS"));
+        }
+        if (const auto *candidate = dynamic_cast<const RS_Line *>(entity))
+          line = candidate;
+      }
+      REQUIRE(ellipse);
+      REQUIRE(line);
+      CHECK(ellipse->isReversed());
+      CHECK(ellipse->getAngleLength() == Catch::Approx(M_PI / 2.0));
+      CHECK(std::isfinite(ellipse->getCenter().x));
+      CHECK(std::isfinite(ellipse->getCenter().y));
+      CHECK(std::hypot(ellipse->getEndpoint().x - line->getStartpoint().x,
+                       ellipse->getEndpoint().y - line->getStartpoint().y) <
+            1e-8);
+    }
+
     const auto projectedDxf = directory.file("bulged-roundtrip.dxf");
     REQUIRE(lc::test::exportDrawing(*unsupportedOutcome.graphic, projectedDxf,
                                     RS2::FormatDXFRW2018));
