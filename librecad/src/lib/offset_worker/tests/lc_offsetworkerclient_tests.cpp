@@ -607,6 +607,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             CHECK_FALSE(editable->hasEditableDefinition());
             REQUIRE(editable->sourceDefinition());
             cacheCandidates.emplace_back(*editable->sourceDefinition(), editable->getData());
+            auto toleranceSource = editable->sourceDefinition()->source.makeEntity();
+            REQUIRE(toleranceSource);
+            const auto expectedOptions = LC_OffsetWorkerTolerance::directOptions(
+                *editable->sourceDefinition(), *toleranceSource);
+            REQUIRE(expectedOptions);
+            CHECK(editable->checkedWorldTolerance() ==
+                  expectedOptions->tolerance.requestedGeometry);
             CHECK(Req::Values::encodeSourceDefinition(*editable->sourceDefinition()) ==
                 Req::Values::encodeSourceDefinition(std::get<Req::GenerateSource>(input.operation).definition));
             std::unique_ptr<RS_Entity> cloned{editable->clone()};
@@ -667,6 +674,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto validatedNative = validationCompletion.nativeValidatedSource(attributes);
         REQUIRE(validatedNative);
         REQUIRE(validatedNative->sourceDefinition());
+        auto toleranceSource = validatedNative->sourceDefinition()->source.makeEntity();
+        REQUIRE(toleranceSource);
+        const auto expectedOptions = LC_OffsetWorkerTolerance::directOptions(
+            *validatedNative->sourceDefinition(), *toleranceSource);
+        REQUIRE(expectedOptions);
+        CHECK(validatedNative->checkedWorldTolerance() ==
+              expectedOptions->tolerance.requestedGeometry);
         CHECK(Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition()) ==
               Req::Values::encodeSourceDefinition(sourceDefinition));
         exactCache(validatedNative->getData(), cache);
@@ -682,6 +696,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     auto linearEditable = linearCompletion.nativeSource(attributes);
     REQUIRE(linearEditable);
     REQUIRE(linearEditable->hasGeneralizedSourceDefinition());
+    auto linearToleranceSource = linearDefinition.source.makeEntity();
+    REQUIRE(linearToleranceSource);
+    const auto linearOptions = LC_OffsetWorkerTolerance::directOptions(
+        linearDefinition, *linearToleranceSource);
+    REQUIRE(linearOptions);
+    CHECK(linearEditable->checkedWorldTolerance() ==
+          linearOptions->tolerance.requestedGeometry);
     const auto linearCacheStamp = RS_Spline::geometryFingerprint(linearEditable->getData());
     linearEditable->move({2, 3});
     REQUIRE(linearEditable->hasGeneralizedSourceDefinition());
