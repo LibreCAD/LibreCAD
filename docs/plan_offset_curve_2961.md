@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W442; chronological evidence follows): implementation slices
+Current status (W443; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W442. Historical results from
+No exact-head CI result is claimed for W441-W443. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request is already implemented: the user can choose a
@@ -17626,3 +17626,36 @@ sources from DWG DXF`).
 This qualifies representative AC1032 conic imports on both sides. Other source
 families still require their own real-file operation-8 matrix; no historical
 DXF/DWG format or broader conic sweep/distance is inferred from this slice.
+
+## 443. Historical DXF/DWG Conic Typed-Source Promotion
+
+Extend the conic staged-import operation-8 matrix beyond AC1032. Use real R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG carriers for the same full/partial
+ellipse, reversed arc, and circle sources, on both signed offset sides. Keep
+the exact source-definition and generated-cache fingerprint comparisons so
+older format coverage cannot pass by merely retaining metadata or accepting a
+fallback entity.
+
+### Completion receipt
+
+The W442 conic import case now covers all five file lanes. Four source
+definitions (full ellipse, partial ellipse, reversed circular arc, circle) at
+`-0.1` and `0.1` are exported with operation-8-validated spline caches and
+schema-2 typed source metadata, then imported by `LC_OffsetImportSession`. All
+40 real carriers admit exactly one native editable offset, report zero
+downgrades, preserve the tagged source definition, and match the expected
+canonical cache geometry fingerprint.
+
+Validation: isolated CMake Debug configuration and the `librecad_tests` target
+build pass. The focused selector
+`[lc-offsetcurve][import-session][typed-source][conic][persistence]` passes
+10,485 assertions/1 case; the broader
+`[lc-offsetcurve][import-session][typed-source]` selector passes 30,690
+assertions/28 cases. `git diff --check` passes. This is local CMake evidence,
+not an exact-head CI or external CAD acceptance result. Test commit
+`9efd85160` (`test(offset): qualify conic import across DWG versions`).
+
+This closes representative typed-conic cache promotion across the tested
+R14/R2000/R2018 file lanes. It does not establish other source families,
+arbitrary conic sweeps/OCS, all distances/sides, or format-writer conformance
+outside these fixtures.
