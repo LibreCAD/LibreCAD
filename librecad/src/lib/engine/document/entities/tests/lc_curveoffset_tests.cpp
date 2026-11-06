@@ -198,8 +198,9 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     LC_OffsetPolylineData inconsistentHeader{{0, 0}, {3, 0}, false,
         {RS_LineData{{0, 0}, {2, 0}}}};
     CHECK_FALSE(LC_OffsetSourceGeometry{inconsistentHeader}.isWellFormed());
-    LC_OffsetPolylineData closedChain{{0, 0}, {2, 0}, true,
-        {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {0, 0}}}};
+    LC_OffsetPolylineData closedChain{{0, 0}, {1, 1}, true,
+        {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {1, 1}},
+         RS_LineData{{1, 1}, {0, 0}}}};
     CHECK(LC_OffsetSourceGeometry{closedChain}.isWellFormed());
 
     auto ownedSpline = LC_OffsetSourceGeometry::capture(spline);
@@ -237,6 +238,29 @@ TEST_CASE("Polyline source topology validation accepts its maximum bounded segme
     }
 
     CHECK(LC_OffsetSourceGeometry{std::move(data)}.isWellFormed());
+}
+
+TEST_CASE("Polyline source topology validation rejects segment self-intersections",
+          "[lc-offsetcurve][source][polyline][topology]") {
+    const LC_OffsetPolylineData bowTie{{0, 0}, {2, 0}, false,
+        {RS_LineData{{0, 0}, {2, 2}}, RS_LineData{{2, 2}, {0, 2}},
+         RS_LineData{{0, 2}, {2, 0}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{bowTie}.isWellFormed());
+
+    const LC_OffsetPolylineData arcCrossing{{1, 0}, {0, 0.5}, false,
+        {RS_ArcData{{0, 0}, 1.0, 0.0, M_PI, false},
+         RS_LineData{{-1, 0}, {-2, 0}}, RS_LineData{{-2, 0}, {0, 0.5}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{arcCrossing}.isWellFormed());
+
+    const LC_OffsetPolylineData simpleChain{{0, 0}, {3, 1}, false,
+        {RS_LineData{{0, 0}, {1, 0}}, RS_LineData{{1, 0}, {2, 1}},
+         RS_LineData{{2, 1}, {3, 1}}}};
+    CHECK(LC_OffsetSourceGeometry{simpleChain}.isWellFormed());
+
+    const LC_OffsetPolylineData overlappingLines{{0, 0}, {5, 0}, false,
+        {RS_LineData{{0, 0}, {4, 0}}, RS_LineData{{4, 0}, {2, 0}},
+         RS_LineData{{2, 0}, {5, 0}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{overlappingLines}.isWellFormed());
 }
 
 TEST_CASE("Offset polyline source snapshots preserve positive and negative bulge arcs",

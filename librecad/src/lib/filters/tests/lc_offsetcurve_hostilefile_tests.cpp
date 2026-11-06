@@ -1557,6 +1557,48 @@ TEST_CASE("imported non-consecutive repeated LWPOLYLINE vertices are not offset 
     }
 }
 
+TEST_CASE("imported self-crossing LWPOLYLINE remains ordinary but is not an offset source",
+          "[lc-offsetcurve][import-session][typed-source][polyline][topology]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-crossing-polyline-import");
+    DRW_LWPolyline raw;
+    raw.vertexnum = 4;
+    raw.addVertex(DRW_Vertex2D(0, 0, 0));
+    raw.addVertex(DRW_Vertex2D(2, 2, 0));
+    raw.addVertex(DRW_Vertex2D(0, 2, 0));
+    raw.addVertex(DRW_Vertex2D(2, 0, 0));
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        const auto path = directory.file(std::string("crossing-") + format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwgPolylineFile(path, raw, format.version);
+        else f::binaryDxfPolyline(path, raw, format.version);
+#else
+        f::binaryDxfPolyline(path, raw, format.version);
+#endif
+        auto outcome = stagedImport(path, format.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        std::vector<const RS_Polyline*> polylines;
+        for (const RS_Entity* entity : *outcome.graphic) {
+            if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity))
+                polylines.push_back(polyline);
+        }
+        REQUIRE(polylines.size() == 1);
+        CHECK(polylines.front()->size() == 3);
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*polylines.front()));
+    }
+}
+
 TEST_CASE("imported repeated and near-coincident polyline vertices are refused as offset sources",
           "[lc-offsetcurve][import-session][typed-source][polyline][malformed][topology]") {
     Setup setup;
@@ -1822,6 +1864,7 @@ TEST_CASE("polyline bulge conversion follows the minimum valid arc sweep",
                 const bool expectArc = sweepFactor > 1.0;
                 CHECK((polylines.front()->entityAt(0)->rtti() == RS2::EntityArc) == expectArc);
                 const auto source = LC_OffsetSourceGeometry::capture(*polylines.front());
+                CAPTURE(sweepFactor, sign, format.suffix);
                 CHECK(source.has_value());
             }
         }

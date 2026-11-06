@@ -172,6 +172,8 @@ inline bool eraseVertex(PolylineVertexBuckets& buckets, const RS_Vector& point) 
     return true;
 }
 
+bool hasNoNonAdjacentSegmentIntersections(const LC_OffsetPolylineData& data) noexcept;
+
 inline double segmentScale(const LC_OffsetPolylineSegment& segment) noexcept {
     if (segment.valueless_by_exception()) return 1.0;
     return std::visit([](const auto& data) noexcept {
@@ -398,11 +400,13 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
                                   std::max(lastScale, firstScale))) return false;
                 if (!eraseVertex(uniqueVertices, firstStart) ||
                     !insertUniqueVertex(uniqueVertices, lastEnd)) return false;
-                return sameEndpoint(data.endpoint, lastStart, lastScale) ||
-                       sameEndpoint(data.endpoint, lastEnd, lastScale);
+                if (!sameEndpoint(data.endpoint, lastStart, lastScale) &&
+                    !sameEndpoint(data.endpoint, lastEnd, lastScale)) return false;
+            } else {
+                if (!insertUniqueVertex(uniqueVertices, lastEnd) ||
+                    !sameEndpoint(lastEnd, data.endpoint, lastScale)) return false;
             }
-            if (!insertUniqueVertex(uniqueVertices, lastEnd)) return false;
-            return sameEndpoint(lastEnd, data.endpoint, lastScale);
+            return hasNoNonAdjacentSegmentIntersections(data);
         }
     }, value);
 }

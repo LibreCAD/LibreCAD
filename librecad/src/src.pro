@@ -463,6 +463,7 @@ HEADERS += \
     lib/engine/document/entities/lc_curveoffset.h \
     lib/engine/document/entities/lc_ellipseoffsetgeometry.h \
     lib/engine/document/entities/lc_offsetcurve.h \
+    lib/engine/document/entities/lc_offsetsource.h \
     lib/engine/document/entities/lc_offsetworkerwire.h \
     lib/offset_worker/lc_offsetworkerrequest.h \
     lib/offset_worker/lc_offsetworkerresult.h \
@@ -1075,6 +1076,7 @@ SOURCES += \
     lib/engine/document/entities/lc_curveoffset.cpp \
     lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp \
     lib/engine/document/entities/lc_offsetcurve.cpp \
+    lib/engine/document/entities/lc_offsetsource.cpp \
     lib/engine/document/entities/lc_offsetworkerwire.cpp \
     lib/offset_worker/lc_offsetworkerrequest.cpp \
     lib/offset_worker/lc_offsetworkerresult.cpp \

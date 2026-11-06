@@ -899,6 +899,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
      librecad/src/lib/engine/document/entities/lc_offsetcurve.cpp
      librecad/src/lib/engine/document/entities/lc_offsetcurve.h
+     librecad/src/lib/engine/document/entities/lc_offsetsource.cpp
+     librecad/src/lib/engine/document/entities/lc_offsetsource.h
      librecad/src/lib/engine/document/entities/lc_offsetworkerwire.cpp
      librecad/src/lib/engine/document/entities/lc_offsetworkerwire.h
      librecad/src/lib/offset_worker/lc_offsetworkerrequest.cpp
