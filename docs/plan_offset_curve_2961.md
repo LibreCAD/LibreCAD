@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W444; chronological evidence follows): implementation slices
+Current status (W445; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W444. Historical results from
+No exact-head CI result is claimed for W441-W445. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request is already implemented: the user can choose a
@@ -17691,3 +17691,33 @@ not every legal parameterization or distance. Spline-points and spline cases
 retain their separate fit/knot/weight tests; polyline topology and cache
 representability remain governed by their dedicated eligibility/refusal
 matrix. Exact-head CI and external CAD acceptance are not inferred.
+
+## 445. Unweighted Control-Spline Import Across DXF/DWG Versions
+
+The fit-point spline family already has staged operation-8 coverage in R14,
+R2000, and R2018 DXF/DWG, but an unweighted control-point spline with an
+interior knot was only exercised in R2018. Extend that real-file promotion
+fixture across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Verify the imported
+source remains unweighted and is not silently normalized to explicit unit
+weights.
+
+### Completion receipt
+
+The degree-1 three-control unweighted spline with an interior knot now imports
+through `LC_OffsetImportSession` and operation-8 validation in all five file
+lanes. Each lane admits exactly one native offset, reports no downgrade, and
+preserves the source spline's empty weight vector. The generated cache is
+checked as the canonical line/spline geometry before serialization.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` selector
+passes 2,669 assertions/4 cases; the broad
+`[lc-offsetcurve][import-session][typed-source]` selector passes 38,702
+assertions/28 cases. `git diff --check` passes. Test commit
+`08d41cc52` (`test(offset): cover unweighted spline import versions`).
+
+This closes version-lane coverage for one unweighted degree-1/interior-knot
+control-spline fixture at one offset side and distance. It does not qualify
+other degrees, rational weights, periodic/wrapped knot layouts, arbitrary
+distances/sides, or all historical DWG versions. Exact-head CI and external
+CAD acceptance remain separate.
