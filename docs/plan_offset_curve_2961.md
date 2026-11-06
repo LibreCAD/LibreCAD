@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W456; chronological evidence follows): implementation slices
+Current status (W457; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,23 +67,27 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W456. Historical results from
+No exact-head CI result is claimed for W441-W457. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
-The latest source-widget requests (2026-11-06) reconfirm the same interaction:
-the user can change the source family in the widget, the candidate picker then
-filters to that family, and choosing a matching entity replaces the source;
-when the current source still exists, it is shown selected/highlighted. The
-family inventory is ellipse, spline, spline-points, parabola, bounded
-hyperbola, line, arc, circle, and polyline. `LC_Parabola` remains a distinct
-choice even though it derives from `LC_SplinePoints`. This is not a request to
-add a second type selector or another parabola implementation: the
-type-changing workflow and cross-family source replacement are implemented
-and covered by W359/W396/W397/W440 and the nine-family integration matrix.
-Keep that behavior as a regression requirement. The still-open work is
-per-variant worker/cache eligibility, persistence, and DXF/DWG behavior; a
+The latest source-widget request (2026-11-06) reconfirms that changing an
+existing offset's source must begin with an editable source-family choice:
+the candidate picker filters to that choice, and selecting a candidate
+replaces the source. The user must be able to change this choice as part of
+the replacement workflow, rather than being locked to the embedded source's
+current type. When that source still exists, it is shown selected/highlighted.
+The requested family inventory is ellipse, spline, spline-points, parabola,
+bounded hyperbola, line, arc, circle, and polyline. `LC_Parabola` remains a
+distinct choice even though it derives from `LC_SplinePoints`. These controls,
+cross-family replacement, highlighting, and parabola identity are already
+implemented and covered by W359/W396/W397/W440 and the nine-family integration
+matrix; do not add duplicate controls or another parabola implementation.
+Keep this behavior as a regression requirement. “All supported types” means
+families and variants that pass the production offset, worker/cache, and file
+round-trip paths, not merely types visible in the picker. The still-open work
+is per-variant worker/cache eligibility, persistence, and DXF/DWG behavior. A
 family appearing in the picker does not prove every geometry variant is
-supported. Unsupported variants must refuse visibly without replacing the
+supported; unsupported variants must refuse visibly without replacing the
 previous source or cache.
 W436 adds marked XY display projections for straight non-axial LWPOLYLINE and
 legacy 2D POLYLINE imports, with typed offset-source refusal and DXF/DWG
@@ -18081,3 +18085,35 @@ This closes one tilted positive-bulge/XDATA layout across the supported file
 versions. Negative and greater-than-semicircle bulges, closed chains, reflected
 normals, and older-version XDATA combinations for legacy 2D POLYLINE remain
 separate coverage obligations.
+
+## 457. DWG-Origin OCS Projection Save/Reopen
+
+W456 verifies that a tilted, bulged AC1032 LWPOLYLINE imported from DWG becomes
+the expected marked XY ellipse-and-line projection, but its export/reopen
+checks began from a DXF-origin drawing. Add independent save/reopen checks
+starting from the actual imported DWG projection and exporting to both R2018
+DXF and R2018 DWG. Verify projected entity count and types, ellipse radii and
+directed endpoints, line endpoints, both provenance markers, unrelated source
+XDATA, and continued refusal to capture either projected fragment as a native
+offset source. This qualifies only the tested AC1032 positive-bulge source and
+does not generalize to other DWG versions or bulge layouts.
+
+### Completion receipt
+
+The AC1032 DWG-origin projected drawing now independently exports and reopens
+as both R2018 DXF and R2018 DWG. Both outputs retain exactly the ellipse and
+line fragments, expected major radius/ratio and directed endpoints, the
+`LibreCAD_POLYLINE_OCS` marker on both fragments, `LibreCAD_CONIC_OCS` on the
+ellipse, and the unrelated `FixtureSourceData` value. Neither reopened
+fragment is admitted as an editable typed offset source; the DWG reopen also
+retains both provenance APPID table records. This closes the DWG-origin
+round-trip gap for this single tilted positive-bulge fixture, not for other
+versions, bulge signs/magnitudes, closed chains, or legacy POLYLINE layouts.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`non-axial LWPOLYLINEs remain visible as marked XY projections` case passes 591
+assertions; `[lc-offsetcurve][import-session][typed-source]` passes 95,510
+assertions across 29 cases. `git diff --check` passes. These are local results,
+not exact-head CI or external CAD acceptance. Test commit `bd77f9f11`
+(`test(dwg): round-trip OCS projection from DWG source`); the roadmap receipt
+is committed separately.
