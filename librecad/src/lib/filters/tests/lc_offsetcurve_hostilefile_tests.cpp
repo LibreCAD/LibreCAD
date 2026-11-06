@@ -2486,6 +2486,53 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
                      reflectedEllipse->getEndpoint().y -
                      reflectedLine->getStartpoint().y) < 1e-8);
 
+    struct BulgeFormat {
+      Lane lane;
+      bool dwg;
+      DRW::Version version;
+      const char *suffix;
+    };
+    const std::array<BulgeFormat, 5> bulgeFormats{{
+        {Lane::Binary14, false, DRW::AC1014, "bulge-r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "bulge-r2000.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "bulge-r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "bulge-r2000.dwg"},
+        {Lane::Eed18, true, DRW::AC1032, "bulge-r2018.dwg"}}};
+    for (const auto &format : bulgeFormats) {
+#ifndef DWGSUPPORT
+      if (format.dwg) continue;
+#endif
+      DRW_LWPolyline fixture = raw;
+      fixture.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+      const auto path = directory.file(format.suffix);
+#ifdef DWGSUPPORT
+      if (format.dwg) f::dwgPolylineFile(path, fixture, format.version);
+      else f::binaryDxfPolyline(path, fixture, format.version);
+#else
+      f::binaryDxfPolyline(path, fixture, format.version);
+#endif
+      auto imported = stagedImport(path, format.lane);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == 2);
+      const RS_Ellipse *ellipse = nullptr;
+      const RS_Line *line = nullptr;
+      for (const RS_Entity *entity : *imported.graphic) {
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity))
+          ellipse = candidate;
+        if (const auto *candidate = dynamic_cast<const RS_Line *>(entity))
+          line = candidate;
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+      }
+      REQUIRE(ellipse);
+      REQUIRE(line);
+      CHECK(samePoint(ellipse->getStartpoint(), RS_Vector{1.8, 0.0}));
+      CHECK(samePoint(ellipse->getEndpoint(), RS_Vector{1.8, 2.0}));
+      CHECK(samePoint(line->getStartpoint(), RS_Vector{1.8, 2.0}));
+      CHECK(samePoint(line->getEndpoint(), RS_Vector{0.2, 2.0}));
+    }
+
     DRW_LWPolyline rankDeficient = raw;
     rankDeficient.extPoint = {1.0, 0.0, 0.0};
     rankDeficient.vertlist.front()->bulge = std::tan(M_PI / 8.0);
@@ -2762,6 +2809,56 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     };
     checkBulgeVariant(-std::tan(M_PI / 8.0), false, "negative-bulge.dxf");
     checkBulgeVariant(2.0, true, "closed-major-bulge.dxf");
+
+    struct BulgeFormat {
+      Lane lane;
+      bool dwg;
+      DRW::Version version;
+      const char *suffix;
+    };
+    const std::array<BulgeFormat, 5> bulgeFormats{{
+        {Lane::Binary14, false, DRW::AC1014, "bulge-r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "bulge-r2000.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "bulge-r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "bulge-r2000.dwg"},
+        {Lane::Eed18, true, DRW::AC1032, "bulge-r2018.dwg"}}};
+    for (const auto &format : bulgeFormats) {
+#ifndef DWGSUPPORT
+      if (format.dwg) continue;
+#endif
+      DRW_Polyline fixture = raw;
+      for (auto &vertex : fixture.vertlist)
+        vertex = std::make_shared<DRW_Vertex>(*vertex);
+      fixture.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+      fixture.extData.clear();
+      const auto path = directory.file(format.suffix);
+#ifdef DWGSUPPORT
+      if (format.dwg) f::dwg2dPolylineFile(path, fixture, format.version);
+      else f::binaryDxf2dPolyline(path, fixture, format.version);
+#else
+      f::binaryDxf2dPolyline(path, fixture, format.version);
+#endif
+      auto imported = stagedImport(path, format.lane);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == 2);
+      const RS_Ellipse *ellipse = nullptr;
+      const RS_Line *line = nullptr;
+      for (const RS_Entity *entity : *imported.graphic) {
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity))
+          ellipse = candidate;
+        if (const auto *candidate = dynamic_cast<const RS_Line *>(entity))
+          line = candidate;
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+      }
+      REQUIRE(ellipse);
+      REQUIRE(line);
+      CHECK(samePoint(ellipse->getStartpoint(), straightPoints[0]));
+      CHECK(samePoint(ellipse->getEndpoint(), straightPoints[1]));
+      CHECK(samePoint(line->getStartpoint(), straightPoints[1]));
+      CHECK(samePoint(line->getEndpoint(), straightPoints[2]));
+    }
 
     DRW_Polyline rankDeficientBulge = raw;
     for (auto &vertex : rankDeficientBulge.vertlist)
