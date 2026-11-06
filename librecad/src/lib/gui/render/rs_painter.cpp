@@ -2246,6 +2246,11 @@ void RS_Painter::pathForEntity(
   }
 
   const LC_Rect& vpRect = getWcsBoundingRect();
+  // A negative length is a reversed arc, drawn clockwise from baseAngle. The
+  // parameters below are the distances travelled from baseAngle in that
+  // direction, so they always grow from 0 to the arc's length.
+  const bool reversed = fullAngleLength < 0.;
+  const double direction = reversed ? -1. : 1.;
   std::vector<double> crossPoints;
   // Compute intersections with viewport borders
   const std::array<RS_Vector, 4> vertices = vpRect.vertices();
@@ -2256,7 +2261,7 @@ void RS_Painter::pathForEntity(
       const double ap1 = entity->getTangentDirection(vp).angle();
       const double ap2 = line.getTangentDirection(vp).angle();
       if (std::abs(RS_Math::correctAngle(ap2 - ap1)) > RS_TOLERANCE_ANGLE) {
-        const double param = RS_Math::getAngleDifference(baseAngle, getParamFunc(vp));
+        const double param = RS_Math::getAngleDifference(baseAngle, getParamFunc(vp), reversed);
         if (hasFiniteValue(param))
           crossPoints.push_back(param);
       }
@@ -2264,7 +2269,7 @@ void RS_Painter::pathForEntity(
   }
   // Add start/end if visible
   crossPoints.insert(crossPoints.begin(), 0.0);
-  crossPoints.push_back(fullAngleLength);
+  crossPoints.push_back(std::abs(fullAngleLength));
   // Sort and unique
   std::sort(crossPoints.begin(), crossPoints.end());
   const auto last = std::unique(crossPoints.begin(), crossPoints.end(), [](double a, double b) {
@@ -2272,8 +2277,8 @@ void RS_Painter::pathForEntity(
   });
   crossPoints.erase(last, crossPoints.end());
   // Define point getter
-  auto getPointAtParam = [getPointFunc, baseAngle](double relParam) {
-    return getPointFunc(baseAngle + relParam);
+  auto getPointAtParam = [getPointFunc, baseAngle, direction](double relParam) {
+    return getPointFunc(baseAngle + direction * relParam);
   };
   pathForParametricCurve(path, crossPoints, getPointAtParam, approxRadius);
 }
