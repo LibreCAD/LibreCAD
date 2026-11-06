@@ -2392,10 +2392,11 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     };
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
-    const std::array<Format, 4> formats{{
+    const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
         {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
 
     std::unique_ptr<RS_Graphic> sourceDrawing;
@@ -2404,11 +2405,17 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
         if (format.dwg) continue;
 #endif
         const auto input = directory.file(format.suffix);
+        DRW_Polyline formatPolyline = raw;
+        for (auto& vertex : formatPolyline.vertlist) {
+            vertex = std::make_shared<DRW_Vertex>(*vertex);
+        }
+        if (format.dwg && format.version == DRW::AC1015)
+            formatPolyline.extData.clear();
 #ifdef DWGSUPPORT
-        if (format.dwg) f::dwg2dPolylineFile(input, raw, format.version);
-        else f::binaryDxf2dPolyline(input, raw, format.version);
+        if (format.dwg) f::dwg2dPolylineFile(input, formatPolyline, format.version);
+        else f::binaryDxf2dPolyline(input, formatPolyline, format.version);
 #else
-        f::binaryDxf2dPolyline(input, raw, format.version);
+        f::binaryDxf2dPolyline(input, formatPolyline, format.version);
 #endif
         auto outcome = stagedImport(input, format.lane);
         REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
@@ -2446,7 +2453,8 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
             });
         REQUIRE(elevation != ext.end());
         CHECK((*elevation)->content.d == Catch::Approx(3.0));
-        CHECK(hasFixtureXData(*projected));
+        if (!format.dwg || format.version != DRW::AC1015)
+            CHECK(hasFixtureXData(*projected));
         CHECK_FALSE(LC_OffsetSourceGeometry::capture(*projected));
         if (!format.dwg) sourceDrawing = std::move(outcome.graphic);
     }
