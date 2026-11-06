@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W398; chronological evidence follows): implementation slices
+Current status (W399; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -70,7 +70,7 @@ Changing the family filter alone is non-mutating; selecting a candidate goes
 through guarded worker-backed replacement. This closes the requested picker
 behavior, not exhaustive eligibility for every legal geometry variant or
 every distance/side, and not the broader plan's acceptance gates. The
-recent W378-W398 source-variant slices add malformed-polyline refusal,
+recent W378-W399 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -16001,3 +16001,19 @@ spline-variant, fit-point, and typed-source persistence selection passes
 14,523 assertions across six cases. `git diff --check` passes. This adds one
 larger-distance source/shape case, not an exhaustive distance or curvature
 sweep.
+
+## 399. Fit-Point Import Through R2000 DXF (2026-11-06)
+
+Added a dedicated staged-import lane for AC1015/R2000 binary DXF and included
+it for all fit-point fixtures. The three-, four-, and five-point open shapes
+and two closed shapes now validate and promote through R14 DXF, R2000 DXF,
+AC1032 DXF, AC1015 DWG, and AC1032 DWG. Both sides are covered at magnitude
+`0.25`; the smooth five-point source also covers magnitude `0.5` on both
+sides. The R2000 DXF lane is local to this matrix and does not expand unrelated
+legacy hostile-file selectors.
+
+The focused fit-point import case passes 14,544 assertions; the combined
+spline-variant, fit-point, and typed-source persistence selection passes
+17,495 assertions across six cases. `git diff --check` passes. These selected
+fit-point cases and versions do not exhaust historical DWG or all spline
+interpolation variants.
