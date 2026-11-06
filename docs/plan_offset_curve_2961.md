@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W399; chronological evidence follows): implementation slices
+Current status (W401; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16017,3 +16017,51 @@ spline-variant, fit-point, and typed-source persistence selection passes
 17,495 assertions across six cases. `git diff --check` passes. These selected
 fit-point cases and versions do not exhaust historical DWG or all spline
 interpolation variants.
+
+## 400. Source Picker Type Switching and Parabola Scope (2026-11-05)
+
+Reconciled the latest source-widget request with the implementation and prior
+test evidence. The source picker must let the user choose a different source
+family before choosing a replacement entity; the type choice filters the live
+candidate list and is not itself an edit. A picked candidate of the chosen
+family is captured as an owned typed source and submitted through the guarded
+worker-backed replacement transaction. The advertised family inventory is
+ellipse, spline, spline-points, parabola, bounded hyperbola, line, arc, circle,
+and polyline. `LC_Parabola` remains separately selectable and encoded as
+parabola, despite inheriting from `LC_SplinePoints`.
+
+This requested widget behavior is already implemented and covered by the
+nine-family Properties replacement matrix (W356), explicit family inventory
+(W359), cross-type parabola highlighting (W396), and deleted-source handling
+(W397). No duplicate product change is planned. The remaining work is not
+adding another type control or another parabola branch: it is completing the
+variant-level admission/refusal matrix, confirming atomic cache/source
+replacement for each supported geometry shape and distance/side, and retaining
+the broader DXF/DWG and external GUI acceptance gates. A family being
+selectable does not promise that every malformed, unbounded, multi-branch, or
+otherwise non-cache-representable candidate can become a native editable
+offset; such cases must remain explicitly refused without changing the prior
+definition or cache.
+
+## 401. Native DWG Fit-Point SPLINE Scenario Coverage (2026-11-05)
+
+Extended the direct `DRW_Spline` DWG encode/parse round-trip matrix beyond
+AC1015/AC1018 to AC1021, AC1024, AC1027, and AC1032. Assertions cover scenario
+2 identity, degree/count, all fit coordinates, fit tolerance, and both
+endpoint tangents. Added a closed AC1032 fit-point case that checks the
+R2018+ method/closed/use-knot-parameter flags, knot parameter, and fit data.
+
+The first expanded run exposed a fixture-framing issue, not a product parser
+failure: modern entity handles live after the body stream, and AC1021 requires
+its object-size boundary to be patched. The test frame builder now supplies
+body/string/handle streams and finalizes the AC1021 size field before parsing,
+matching the versioned layout expected by the codec.
+
+Validation: focused fit-point round-trip passes 102 assertions/1 case; the
+closed AC1032 case is included in the full `[dwg-write][entity-encode]`
+selection, which passes 1,260 assertions/63 cases. The Release
+`librecad_dwg_entity_encode_round_trip_tests` target builds, and
+`git diff --check` passes. This closes direct entity-codec coverage for the
+tested fit-point layouts and versions; it does not by itself qualify complete
+DWG file writing/reading through the DWG section writer or preserve fit-point
+intent in every LibreCAD entity conversion path.
