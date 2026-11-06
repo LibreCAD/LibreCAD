@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W436; chronological evidence follows): implementation slices
+Current status (W437; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -14405,7 +14405,11 @@ selected entity remains authoritative: changing the type filter cannot create
 a mismatched type/geometry pair, and selecting an entity updates both the
 displayed type and the value-owned geometry snapshot.
 
-The initial supported-source target matrix is:
+The source model currently names nine candidate families. All nine must be
+audited against the production Modify Offset, worker, and cache paths; none is
+implicitly supported merely because it appears in the value variant. Any
+candidate accepted by the ordinary offset command is required end-to-end.
+The matrix is:
 
 | Source family | Required scope | Important constraint |
 |---|---|---|
@@ -14414,6 +14418,26 @@ The initial supported-source target matrix is:
 | `LC_SplinePoints` | Same end-to-end lifecycle as `RS_Spline` | Preserve its native representation and fit intent; do not flatten rational data or substitute a different spline representation |
 | `LC_Parabola` | Treat as a distinct selectable/source identity while using its `LC_SplinePoints` geometry representation where appropriate | Preserve parabola classification and exact parameters where available; do not let generic spline reconstruction erase its type |
 | Bounded `LC_Hyperbola` | Native editable source definition and chooser support for explicitly finite parameter bounds | Reject unbounded hyperbolas and invalid bounds before worker submission; do not approximate them as an unbounded entity |
+| `RS_Line` | Include if accepted by production Modify Offset; otherwise record the exact rejection point and reason | Preserve endpoint direction and exact source identity; do not silently turn a line source into an unrelated spline |
+| `RS_Arc` | Include if accepted by production Modify Offset | Preserve center, radius, sweep, and orientation; reject invalid/degenerate sweeps explicitly |
+| `RS_Circle` | Include if accepted by production Modify Offset | Preserve center and radius; retain circle identity rather than treating it as an ellipse with arbitrary serialized identity |
+| `RS_Polyline` | Include when the production offset command treats the whole polyline as one source | Preserve ordered line/arc segments, bulges, closure, and direction; reject unsupported child entities or multi-output cases transactionally |
+
+The type-control contract is independent of the currently embedded source kind:
+the user can switch the requested source family first, then choose a matching
+entity. Switching family refreshes the candidate list and does not edit the
+drawing or the offset definition. Choosing a candidate atomically updates the
+source-kind tag and its complete value-owned geometry; the displayed family
+must then agree with the captured entity. A family with no eligible entities
+shows an empty candidate state without silently reverting to the old family.
+Parabola must be a distinct family option even though its implementation may
+share storage/base-class machinery with `LC_SplinePoints`. The same behavior
+must work through direct canvas picking where that is retained; the picker
+must accept all enabled families rather than staying ellipse-only. Matching
+the currently embedded source must compare the tagged family and canonical
+geometry, not only center/radius approximations. Explicit select/highlight
+must re-resolve the selected entity identity and must not run merely by opening
+or cancelling Properties.
 
 G1 must also audit the ordinary offset command, `LC_CurveOffset`, and worker
 dispatch for other supported single-curve source classes, including line, arc,
@@ -14471,15 +14495,19 @@ editing the original drawing entity must not mutate an existing offset.
    ellipse-only combo behavior with two linked controls: a source-type
    selector/filter populated from the audited supported-source matrix, and an
    entity selector listing eligible live top-level entities of that type.
-   Changing the selector must let the user choose a different source curve
-   type before picking; it cannot be locked to the currently embedded source
-   type. Switching type refreshes the entity list without committing a
-   document change, and selecting an entity atomically replaces both the
-   stored source kind and its geometry snapshot, even across types. Include
-   parabola as its own selectable type wherever production eligibility admits
-   it, not merely as a generic spline. The selector must expose every audited
-   source kind that completes the G1/G2/G4 lifecycle; it must not advertise a
-   partial list just because some kinds have not been implemented yet.
+   The matrix above explicitly audits ellipse, spline, spline-points, parabola,
+   bounded hyperbola, line, arc, circle, and polyline. Changing the type
+   selector must let the user choose a different source curve type before
+   picking; it cannot be locked to the currently embedded source type.
+   Switching type refreshes the entity list without committing a document
+   change, and selecting an entity atomically replaces both the stored source
+   kind and its geometry snapshot, even across types. Include parabola as its
+   own selectable type, not merely as a generic spline. The type selector must
+   expose every audited source kind that completes the G1/G2/G4 lifecycle; it
+   must not advertise a partial list just because some kinds have not been
+   implemented yet. Empty type buckets, hidden/deleted/stale entities, and
+   unsupported variants must have explicit UI states and must never leave a
+   displayed type inconsistent with the stored source definition.
    Display type and useful entity identity, match the embedded source by kind
    plus canonical geometry (not only approximate center/radii), and
    distinguish matched, replaced, deleted, stale-ID, and unsupported states.
@@ -17222,3 +17250,100 @@ pre-existing XDATA; the XDATA-bearing fixture attempt returned false from
 geometry-only case. Non-axial bulged curves, exact 3D geometry, mesh/polyface
 offsets, external CAD visual validation, and non-finite serialized fixtures
 remain open. This is not full arbitrary OCS support.
+W437 adds marked XY display projections for non-axial CIRCLE, ARC, and ELLIPSE
+imports. The projections preserve visible conic geometry within the XY display
+model, retain original OCS parameters in XDATA, and are refused as typed offset
+sources. This is not exact arbitrary-OCS round-trip or general conic offset
+eligibility.
+
+## 437. Non-Axial Conic Display Projection
+
+### Current gap
+
+`RS_FilterDXFRW::addCircle()`, `addArc()`, and `addEllipse()` currently reject
+non-axial extrusion normals. libdxfrw has already transformed circle/arc
+centers and ellipse center/major-axis vectors to WCS, but LibreCAD's current
+2D entity model only renders in XY. Dropping these entities loses visible
+geometry; treating them as ordinary axial circles/ellipses would instead
+misstate geometry and allow invalid typed offset-source capture.
+
+### Implementation slice
+
+1. Add a bounded arbitrary-plane-to-XY projection helper using a normalized
+   extrusion normal and the DXF arbitrary-axis basis. Project each conic's two
+   in-plane basis vectors into XY and compute a canonical major/minor axis
+   decomposition. Reject non-finite, zero-normal, and numerically degenerate
+   projections without emitting partial entities.
+2. Keep the exact existing axial/reflected paths unchanged. For non-axial
+   CIRCLE, create an `RS_Ellipse` display projection. For ARC, project its
+   oriented start/end points and preserve the directed partial sweep in the
+   resulting ellipse parameterization, accounting for a reflected projected
+   basis. For ELLIPSE, project its WCS center/major axis and derive its
+   in-plane minor axis from the source normal and ratio before canonicalizing
+   the XY ellipse. Full circles/ellipses must remain full; partial conics must
+   retain their endpoints and orientation within a scale-aware tolerance.
+3. Attach an explicit `LibreCAD_CONIC_OCS` provenance payload identifying the
+   original entity kind, normal, and source parameters. Preserve unrelated
+   XDATA and APPID registration. Make `LC_OffsetSourceGeometry::capture()`
+   refuse every entity carrying this lossy-projection marker, including after
+   save/reopen. Do not confuse this marker with the existing axial
+   `LibreCAD_CIRCLE_OCS` and `LibreCAD_ARC_OCS` round-trip sidecars.
+4. Round-trip only as the documented projected XY representation plus
+   provenance unless an exact arbitrary-OCS native writer is implemented.
+   Never replay original arbitrary-plane coordinates onto already projected
+   geometry, and do not imply that changing the projection back to CIRCLE/ARC
+   is lossless. Existing normal/thickness type-preservation behavior remains
+   intact for axial entities.
+
+### Required validation
+
+- Unit tests for the OCS basis and projection decomposition: orthogonal and
+  oblique normals, positive/negative normal direction, tilted circles,
+  partial arcs in both projected orientations, tilted ellipses, and explicit
+  rejection of zero/non-finite normals, zero radii/ratios, and rank-deficient
+  XY projections.
+- Real filter fixtures for CIRCLE, ARC, and ELLIPSE in R14 DXF, AC1015 DXF/DWG,
+  and AC1032 DXF/DWG. Assert projected bounds and sampled points, directed arc
+  endpoints/sweep, retained entity visibility, provenance payload, and source
+  capture refusal. Keep axial/reflected imports byte/behavior compatible.
+- Save/reopen the projected entities through DXF and DWG and verify marker
+  APPID registration, marker payload preservation, no duplicate source
+  geometry, and continued source refusal. Preserve unrelated XDATA.
+- Run focused conic import, XDATA/APPID, source-capture and typed-source
+  selectors, then CMake Debug/Release and qmake6 app/plugin builds plus
+  `git diff --check`. Record each unavailable file-version fixture explicitly.
+
+### Completion receipt
+
+The DXF reader projects supported non-axial CIRCLE, ARC, and ELLIPSE entities
+into XY ellipses using the arbitrary-axis basis and a 2D covariance
+decomposition. Full and partial arcs retain their projected endpoints and
+direction, including reflected projections. `LibreCAD_CONIC_OCS` XDATA records
+the original kind, extrusion, center, basis, and source parameters. Typed offset
+source capture rejects this marker after import and after save/reopen; unrelated
+XDATA remains eligible and is preserved. Rank-deficient projections are
+rejected without emitting partial geometry. Existing axial/reflected entity
+paths are unchanged.
+
+Validation: the conic import-session selector passes 576 assertions/1 case
+across R14 DXF, AC1015/R2000 DXF and DWG, and AC1032 DXF and DWG; coverage
+includes projected centers/axes/ratios, partial-arc endpoints and direction,
+provenance, capture refusal, DXF/DWG save-reopen, registered APPID, reflected
+arc orientation, and degenerate projection rejection. Source provenance passes
+14 assertions/2 cases. The typed polyline import matrix passes 2,267
+assertions/20 cases, the APPID suite passes 846 assertions/7 cases, and the
+nine-family Properties selector passes 2,744 assertions/1 case. The CMake Debug
+`librecad_tests` target and qmake6 application/plugins build both pass;
+`git diff --check` passes. qmake6 reports pre-existing warnings in unrelated
+DWG metadata headers and macOS SDK targeting. These are local validations and do
+not qualify an exact pushed PR head.
+Product commit: `5913e7a70` (`fix(dxf): preserve non-axial conic projections`).
+
+This slice is display preservation, not full arbitrary-OCS entity round-trip,
+editable conic source support, or 3D offsetting. Unsupported or degenerate
+projections remain diagnosed and omitted rather than rendered as false
+geometry. Non-axial bulged polylines, arbitrary-plane exact output, editable
+conic offset sources, and external CAD visual fidelity remain independent work.
+The picker contract remains complete for its nine modeled source families;
+each family's variant-level worker eligibility, cache representability,
+persistence, and distance/side behavior is tracked separately above.
