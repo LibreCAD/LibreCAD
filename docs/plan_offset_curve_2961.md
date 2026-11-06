@@ -28,7 +28,8 @@ Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
 defined matrix; W527 polyline staged-file persistence complete for its defined
-matrix;
+matrix; W528 mixed-sign bulge polyline scale/translation qualification
+complete for its defined matrix;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -20509,6 +20510,19 @@ GUI, external-CAD, and exact-head CI acceptance remain open.
 
 ## 525. Source Picker Scope Reconfirmation (2026-11-06)
 
+The latest repeat of the source-widget request does not add a new UI slice.
+The production picker already takes its family list from
+`LC_OffsetSourceGeometry::SupportedKinds`, so the UI inventory stays aligned
+with the source model instead of maintaining a separate hand-written set of
+types. The current nine choices are line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. The integration
+matrix verifies family changes before picking, cross-family replacement,
+parabola identity, and atomic refusal for unsupported variants. Keep that
+coverage as a regression gate when adding a new modeled kind: the kind should
+appear through the shared inventory, but it is not eligible for replacement
+until generation, worker/cache admission, and applicable DXF/DWG persistence
+are also qualified.
+
 The source-curve widget must let the user change the requested family before
 choosing a replacement and must include every family currently modeled for
 typed offset sources: line, arc, circle, ellipse, spline, spline-points,
@@ -20620,3 +20634,57 @@ kernel suite passes 1,660,728 assertions across 44 cases. Release
 polyline persistence for combined scale and translation remains a separate
 slice, as do broader source-family/variant, visible-GUI, external-CAD, and
 exact-head CI gates.
+
+## 528. Mixed-Sign Bulge Polyline Scale-and-Translation Persistence
+
+W471-W472 qualify a closed four-edge polyline with positive and negative
+minor-bulge arcs plus two straight edges at the original scale and placement.
+W526-W527 qualify scale plus large translation for representative line/arc
+layouts, but not this mixed-bulge topology. The W528 matrix combines those
+transformations for five layouts: the four existing forward/reversed open or
+closed line/arc layouts plus the captured mixed-sign bulge source. It covers
+scales `1e-3`, `1`, and `1e3`, translation ratios `1e4` and `1e6`, and signed
+normalized distances `-0.25`, `-0.1`, `0.1`, and `0.25`, for 120 accounted
+cells. Endpoints, arc centers/radii, and offset distance scale together;
+translation is applied uniformly and topology, closure, segment order, and
+bulge-derived arc direction are preserved.
+
+Each cell compares centered and translated operation-7 status and branch
+count. It matches branches independent of branch order and traversal direction
+using 129 normalized samples per branch, requested geometry tolerance, and a
+coordinate-ULP allowance. Operation 8 validates every centered and translated
+branch independently. Single-cache results must be admitted; multi-branch
+results must refuse as `NotCacheRepresentable` without mutation; refused
+generation must expose no partial geometry. The import matrix carries every
+admitted single-cache result and known multi-branch first-cache fallback
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. It verifies exactly one
+promotion or diagnosed ordinary-geometry downgrade, exact schema-2 source
+CBOR, imported cache fingerprints, and 129 normalized samples. Missing cells,
+branches, or file lanes fail rather than skip.
+
+The mixed-bulge case exposed parameter overshoot at cumulative child-curve
+boundaries in the polyline adapter: mapping a global parameter back to a child
+could place it a few floating-point ULPs outside that child's valid domain,
+causing valid translated input to report `InvalidSource`. The adapter now
+rejects non-finite or materially out-of-domain mappings and clamps only
+roundoff-sized boundary excess before evaluating jets and bounds. The captured
+source definition remains unchanged. The scale/translation matrix is the
+regression reproducer.
+
+Product/test commit `2d2cc60d2` (`test(offset): qualify mixed-bulge
+persistence`) includes the adapter correction and W528 coverage. The focused
+120-cell staged persistence case passes 352,068 assertions; the full
+`[lc-offsetcurve][import-session][typed-source][polyline]` selection passes
+359,117 assertions across 22 cases; standalone worker `[polyline]` tests pass
+82,644 assertions across six cases. Release `librecad_tests` and
+`librecad_offset_worker_kernel_tests` targets build. The roadmap parser and
+refusal inventory pass 99/99 tests with 93 obligations, zero pending
+declarations, and zero production mismatches; `git diff --check` passes.
+
+This matrix qualifies only the five layouts, three scales, two translation
+ratios, four signed distances, and five interchange lanes listed above. It
+does not claim arbitrary bulge sequences, self-intersection, OCS variants,
+distance ranges, or precision support. External-CAD and visible-GUI evidence
+remain separate. Push the product/test commit and this receipt to PR #3193,
+then query diagnostics for the exact pushed head; do not inherit older CI
+results.
