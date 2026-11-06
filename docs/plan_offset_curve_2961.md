@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W455; chronological evidence follows): implementation slices
+Current status (W456; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W455. Historical results from
+No exact-head CI result is claimed for W441-W456. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget requests (2026-11-06) reconfirm the same interaction:
@@ -18046,3 +18046,38 @@ The roadmap checkpoint is committed separately below.
 This closes XDATA-bearing input for these two specific DWG fixtures. It does
 not qualify every older DWG bulge, open/closed topology, or projected-fragment
 round-trip combination.
+
+## 456. Tilted Bulged LWPOLYLINE Projection Across DXF/DWG Versions
+
+W438/W439 covered tilted bulged LWPOLYLINE projection primarily at R2018 and
+covered older versions with straight geometry. Extend the real-file matrix for
+the same positive-bulge tilted OCS source with `FixtureSourceData` through R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Each lane must produce the expected
+ellipse and line fragments with matching projected radii/ratio and directed
+endpoints, retain unrelated XDATA plus both OCS provenance APPIDs, and refuse
+typed offset-source capture. Do not infer negative/major/closed-bulge coverage
+at older versions from this representative positive-bulge case.
+
+### Completion receipt
+
+The tilted positive-bulge LWPOLYLINE now writes and imports with unrelated
+XDATA in all five file lanes: AC1014 DXF, AC1015 DXF/DWG, and AC1032 DXF/DWG.
+Each lane yields exactly one projected ellipse and one line; tests compare
+major radius, ratio, directed arc endpoints, and line endpoints, verify
+`LibreCAD_POLYLINE_OCS` and (on the ellipse) `LibreCAD_CONIC_OCS`, preserve the
+`FixtureSourceData` value, and confirm the lossy fragments cannot become
+offset sources.
+
+Validation: the focused `non-axial LWPOLYLINEs remain visible as marked XY
+projections` test passes 553 assertions/1 case. The full
+`[lc-offsetcurve][import-session][typed-source]` selection passes 95,520
+assertions/29 cases. Incremental CMake Debug `librecad_tests` build passes;
+`git diff --check` passes. These are local results, not exact-head CI or
+external CAD acceptance. Test commit `75376b8cd`
+(`test(offset): cover bulged OCS versions with XDATA`); the roadmap receipt is
+committed separately.
+
+This closes one tilted positive-bulge/XDATA layout across the supported file
+versions. Negative and greater-than-semicircle bulges, closed chains, reflected
+normals, and older-version XDATA combinations for legacy 2D POLYLINE remain
+separate coverage obligations.
