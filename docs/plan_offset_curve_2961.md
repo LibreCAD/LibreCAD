@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W421; chronological evidence follows): implementation slices
+Current status (W422; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16608,3 +16608,19 @@ duplicates`). This adds a scale-bin-boundary regression only; arbitrary
 line/arc intersections, non-axial OCS, non-2D legacy polylines, and the broad
 side/distance matrix remain open. Commit this roadmap checkpoint, push W421,
 then inspect exact-head PR checks.
+
+## 422. Maximum Polyline Source-Bound Validation (2026-11-05)
+
+Added a direct source-validation case at the documented maximum of 65,536
+segments. The generated chain is continuous, line-only, open, and has unique
+vertices; validation must accept it. This exercises the spatial duplicate
+index at its largest supported input size without making the regression
+depend on a wall-clock threshold.
+
+The focused maximum-size case passes 1 assertion/1 case. Direct
+`[lc-offsetcurve][source][polyline]` coverage passes 39 assertions/2 cases.
+Release `librecad_tests` builds and `git diff --check` passes. Test commit:
+`8dc295419` (`test(offset): bound polyline topology validation`). This pins
+bounded acceptance and exercises the non-quadratic implementation, but does
+not replace broad side/distance tests or arbitrary line/arc intersection
+detection. Commit and push W422, then qualify the exact PR head.
