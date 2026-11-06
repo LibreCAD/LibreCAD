@@ -3446,7 +3446,21 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
     const auto* spline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
     REQUIRE((line || spline));
 
-    for (const bool dwg : {false, true}) {
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& fileFormat : formats) {
+        const auto [lane, dwg, version, suffix] = fileFormat;
 #ifndef DWGSUPPORT
         if (dwg) continue;
 #endif
@@ -3483,17 +3497,16 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(dwg ? "unweighted.dwg" : "unweighted.dxf");
+        const auto input = directory.file(std::string("unweighted-") + suffix);
 #ifdef DWGSUPPORT
-        if (dwg) f::dwgFile(input, cache, DRW::AC1032);
-        else f::binaryDxf(input, cache, DRW::AC1032);
+        if (dwg) f::dwgFile(input, cache, version);
+        else f::binaryDxf(input, cache, version);
 #else
-        f::binaryDxf(input, cache, DRW::AC1032);
+        f::binaryDxf(input, cache, version);
 #endif
         LC_OffsetImportSession session;
         std::optional<LC_OffsetImportSession::Outcome> outcome;
-        const auto format = dwg ? RS2::FormatDWG2018 : RS2::FormatDXFRW2018;
-        REQUIRE(session.start(QString::fromStdString(input.string()), format,
+        REQUIRE(session.start(QString::fromStdString(input.string()), format(lane),
             RS2::DxfTextEncoding::Declared, false,
             [&](LC_OffsetImportSession::Outcome result) { outcome.emplace(std::move(result)); }));
         QElapsedTimer elapsed; elapsed.start();
