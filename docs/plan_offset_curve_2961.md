@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W472; chronological evidence follows): implementation slices
+Current status (W473; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W472. Historical results from
+No exact-head CI result is claimed for W441-W473. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18605,3 +18605,31 @@ across 31 cases. `git diff --check` passes. These are local results, not
 exact-head CI or external CAD acceptance. Test commit `a5715a957`
 (`test(offset): qualify mixed-bulge cache admission`); this roadmap receipt
 is committed separately.
+
+## 473. Mixed-Bulge Picker Refusal Is Atomic
+
+W472 establishes that this closed mixed-bulge source promotes on the right
+side and downgrades on the left side because the latter produces multiple
+branches. Exercise that exact left-side source through the Properties picker:
+the candidate may appear in the polyline bucket because the source geometry is
+valid, but selecting it must report worker/cache refusal, preserve the prior
+source definition and cache byte-for-byte, and not mark the rejected candidate
+selected in the drawing. This is a variant/settings refusal, not a reason to
+remove the entire polyline source family from the picker.
+
+### Completion receipt
+
+The Properties integration test now includes the same closed four-edge source
+with positive and negative bulge arcs. Choosing it from the Polyline bucket at
+the current unrepresentable side refuses without changing the legacy offset
+definition/cache or selecting the source entity. Existing successful
+cross-family replacement cases continue afterward, confirming the failed
+attempt does not poison the widget's worker/session state.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`Native source picker refuses unrepresentable source variants atomically` case
+passes 256 assertions; the full `[gui][dialog][offsetcurve][source]` selection
+passes 3,307 assertions across six cases. `git diff --check` passes. These are
+local results, not exact-head CI or visible-GUI/external CAD acceptance. Test
+commit `68ca647dd` (`test(offset): preserve source on mixed-bulge picker
+refusal`); this roadmap receipt is committed separately.
