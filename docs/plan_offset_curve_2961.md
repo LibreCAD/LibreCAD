@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W418; chronological evidence follows): implementation slices
+Current status (W419; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16536,3 +16536,27 @@ imported-polyline selection passes 805 assertions/8 cases and
 geometry finite predicates`). Push this correction and the W417/W418 roadmap
 checkpoint, then inspect the replacement Linux job and the exact new PR head
 before treating cross-platform validation as cleared.
+
+## 419. Polyline Return and Closed-Repeat Import Coverage (2026-11-05)
+
+Extended the imported topology refusal matrix with two distinct malformed
+source shapes: an open LWPOLYLINE whose final endpoint returns to its start
+without an interior repeated start, and a closed LWPOLYLINE with a repeated
+interior vertex. In both cases staged import completes and preserves an
+ordinary `RS_Polyline`, while typed offset-source capture refuses the
+self-touching geometry. The closed importer materializes its implicit closure
+as one additional native vertex; the fixture assertions account for that
+model representation.
+
+Both shapes are exercised through R14/AC1014 binary DXF, AC1032 DXF, and
+AC1032 DWG. The focused case passes 108 assertions/1 case, and the combined
+`[import-session][typed-source][polyline]` selection passes 913 assertions/9
+cases. Release `librecad_tests` builds successfully and `git diff --check`
+passes. Test commit: `66132d7f4` (`test(offset): cover polyline return
+topology`).
+
+This closes exact-coordinate repeated-vertex refusal coverage for these
+imported 2D LWPOLYLINE forms. Near-coincident non-adjacent vertices,
+line/arc crossings without a shared vertex, non-axial OCS, mesh/polyface/3D
+legacy POLYLINE, and broad topology/side/distance qualification remain open.
+Push this test and roadmap checkpoint, then read exact-head PR diagnostics.
