@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W487; chronological evidence follows): implementation slices
+Current status (W488; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W487. Historical results from
+No exact-head CI result is claimed for W441-W488. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18990,3 +18990,34 @@ CI or external CAD acceptance. Test commit `a6701fee0`
 (`test(offset): qualify ratio-wide ellipse sources`); roadmap receipt is
 separate. Remaining ellipse work includes more sweep/reversal/eccentricity
 layouts and behavior near curvature singularities.
+
+## 488. High-Eccentricity Ellipse Eligibility and Refusal
+
+W487 covers a ratio-above-one ellipse, but not a thin ellipse whose inward
+offset crosses its minimum-curvature radius and splits into multiple pieces.
+Add a full ellipse with ratio 0.2 to worker generation/cache validation,
+low-distance staged promotion, source persistence, and real-file refusal for
+multi-branch inward offsets. Require exact promotion below the eligibility
+boundary and non-mutating `NotCacheRepresentable`/ordinary fallback behavior
+when a carrier contains only one branch of a multi-piece output.
+
+### Completion receipt
+
+The ratio-0.2 ellipse passes worker generation and operation-8 validation at
+distances `±0.1` and `±0.4`: the negative side is a single cache, while positive
+inward offsets split and are refused without mutation. The real staged-import
+matrix promotes low-magnitude `±0.01` caches through R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. At `+0.1` and `+0.4`, first-branch-only carriers are
+downgraded in all five lanes, preserving ordinary geometry and exact schema-2
+source metadata. The five-version source-only persistence test also retains
+the thin ellipse.
+
+Validation: focused conic worker test passes 738 assertions; full worker-kernel
+suite passes 8,147 assertions/31 cases. The real-family import matrix passes
+114,709 assertions, the five-lane refusal case passes 2,963 assertions, and
+the five-version source persistence case passes 4,508 assertions. CMake Debug
+targets build; `git diff --check` passes. Local evidence only, not exact-head
+CI or external CAD acceptance. Test commit `b5302c7cb`
+(`test(offset): cover high-eccentricity ellipse eligibility`); roadmap receipt
+is separate. Remaining ellipse work includes more sweep/reversal/eccentricity
+layouts and denser distance checks near curvature boundaries.
