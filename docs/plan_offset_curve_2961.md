@@ -24,8 +24,8 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W511 complete; W512 is the next open qualification slice;
-chronological evidence follows): implementation slices
+Current status (W512 worker-boundary slice complete; W512 staged-file slice
+open; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -19814,6 +19814,25 @@ as explicit refusals, not as missing coverage. Run focused worker and import
 cases, the full relevant typed-source selection, CMake Debug test build,
 roadmap parser, and diff check. This is a finite boundary matrix, not a claim
 of support for arbitrary floating-point magnitudes.
+
+### Worker-slice completion receipt
+
+Added the centered-versus-translated worker matrix for all eight bounded
+interval/branch layouts, scales `1e-3`, `1`, and `1e12`, translation ratios
+`1e6`, `1e9`, and `1e12`, and six signed normalized curvature distances. The
+matrix explicitly classifies successful generation versus fail-closed
+precision refusal. Successful translated outputs are sampled in local
+coordinates against the centered cache with requested-geometry and coordinate
+ULP bounds; operation-8 admission/refusal is checked without mutation.
+Refused generation must return no ordinary output and report no change.
+
+Validation: focused `[translation-boundary]` case passes 92,498 assertions;
+the full worker-kernel suite passes 194,848 assertions across 41 cases; the
+CMake Debug worker target builds and `git diff --check` passes. These are
+local worker results, not staged file round trips, exact-head CI, visible-GUI,
+or external-CAD acceptance. Product test commit `3a4521f32` (`test(offset):
+classify hyperbola translation boundaries`). W512 remains open for staged
+DXF/DWG imports of generated cases that are numerically admissible.
 
 ## 510. Source Picker Request Reconciliation (2026-11-06)
 
