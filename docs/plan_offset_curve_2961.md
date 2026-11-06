@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W441; chronological evidence follows): implementation slices
+Current status (W442; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,9 +67,13 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for the new W441 test commit. Historical
-results from W440 or earlier heads are not inherited; query the current PR head
-after the roadmap checkpoint is pushed.
+No exact-head CI result is claimed for W441-W442. Historical results from
+earlier heads are not inherited; query the current PR head after the roadmap
+checkpoint is pushed.
+The latest source-widget request is already implemented: the user can choose a
+source kind before selecting a replacement, and the picker exposes all nine
+modeled families. That UI/family-selection workflow is complete; the separate
+per-variant worker/cache and DXF/DWG eligibility matrix remains open.
 W436 adds marked XY display projections for straight non-axial LWPOLYLINE and
 legacy 2D POLYLINE imports, with typed offset-source refusal and DXF/DWG
 provenance round-trips. Legacy POLYLINE coverage now includes R14, R2000, and
@@ -17493,12 +17497,15 @@ a clear reason and must fail atomically if encountered through stale data.
 The type-switching UI, candidate filtering, existing-source selection and
 canvas highlighting have prior implementation/test receipts (including W350,
 W359, W396, and W397). Do not duplicate those controls or parabola identity
-handling. The remaining work is to close the family/variant eligibility matrix
-in the “Typed Source Eligibility and Properties Picker” plan section, enable
-every proven supported candidate, and test same-type/cross-type replacement,
-empty buckets, cancellation, stale sources, worker failure, cache parity, and
-per-family DXF/DWG round trips. Update that matrix and this receipt after each
-implementation slice; do not claim completion from the picker inventory alone.
+handling. This fulfills the request to change source type as part of choosing a
+new source and to include every currently modeled source family. The remaining
+work is not another widget/type-control implementation: close the family/variant
+eligibility matrix in the “Typed Source Eligibility and Properties Picker” plan
+section, enable only candidates proven by the production offset path, and test
+same-type/cross-type replacement, empty buckets, cancellation, stale sources,
+worker failure, cache parity, and per-family DXF/DWG round trips. Update that
+matrix after each implementation slice; do not claim complete geometric
+support from the picker inventory alone.
 
 ### Current implementation evidence
 
@@ -17589,3 +17596,33 @@ This closes only representative ellipse/arc/circle source/cache cases at four
 signed distances. It does not establish every legal ellipse sweep/reversal,
 distance-to-curvature singularity, arbitrary OCS, all-source exact-head
 persistence, or external CAD acceptance.
+
+## 442. Real DXF/DWG Conic Typed-Source Promotion
+
+Operation-8 kernel success alone does not prove that a typed conic source and
+its canonical cache survive file decoding and staged import. Add real AC1032
+DXF and DWG cache carriers for full and partial ellipses, a reversed circular
+arc, and a circle, using both signed sides. Require the staged import worker to
+promote each to a native editable offset only after exact cache validation.
+
+### Completion receipt
+
+Four conic source values (full ellipse, partial ellipse, reversed circular
+arc, circle) at signed distances `-0.1` and `0.1` are serialized into real
+AC1032 DXF and DWG SPLINE cache carriers with schema-2 source metadata. All 16
+files import through `LC_OffsetImportSession`; each admits exactly one native
+offset, with no fallback downgrade. Tests compare the encoded tagged source
+definition and spline geometry fingerprint against the generated canonical
+cache after operation-8 validation.
+
+Validation: CMake Debug `librecad_tests` builds. The focused selector
+`[lc-offsetcurve][import-session][typed-source][conic][persistence]` passes
+3,923 assertions/1 case; the broader
+`[lc-offsetcurve][import-session][typed-source]` selection passes 24,886
+assertions/28 cases. `git diff --check` passes. This test-only slice does not
+rerun qmake6. Test commit: `0006a3f9f` (`test(offset): import conic typed
+sources from DWG DXF`).
+
+This qualifies representative AC1032 conic imports on both sides. Other source
+families still require their own real-file operation-8 matrix; no historical
+DXF/DWG format or broader conic sweep/distance is inferred from this slice.
