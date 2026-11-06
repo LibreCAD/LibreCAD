@@ -8687,6 +8687,8 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   const bool is2dPolyline = (data.flags & (8 | 16 | 64)) == 0;
   const bool projectedOcs =
       is2dPolyline && !hasNormalizedAxialExtrusion(data);
+  const bool reflectedOcs =
+      is2dPolyline && !projectedOcs && data.extPoint.z < 0.0;
   if (projectedOcs && std::any_of(data.vertlist.cbegin(), data.vertlist.cend(),
                                   [](const auto &vertex) {
                                     return vertex && vertex->bulge != 0.0;
@@ -8753,13 +8755,13 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
     positions.reserve(data.vertlist.size());
     for (const auto& vertex : data.vertlist) {
       if (!vertex) return;
-      positions.emplace_back(vertex->basePoint.x, vertex->basePoint.y);
+      positions.emplace_back(reflectedOcs ? -vertex->basePoint.x
+                                          : vertex->basePoint.x,
+                             vertex->basePoint.y);
     }
   }
 
   RS_PolylineData pd(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
-  const bool reflectedOcs =
-      is2dPolyline && !projectedOcs && data.extPoint.z < 0.0;
   auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, pd);
   setEntityAttributes(polyline.get(), &data);
   if (projectedOcs) {
