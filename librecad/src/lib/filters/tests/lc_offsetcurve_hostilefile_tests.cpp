@@ -3128,6 +3128,11 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
       CHECK(isClosedConnection(lines[0], lines[1]));
     }
 
+    const std::array<std::pair<const char *, double>, 2>
+        reflectedClosedNegativeBulges{{
+            {"negative-minor", -std::tan(M_PI / 8.0)},
+            {"negative-major", -2.0}}};
+    for (const auto &variant : reflectedClosedNegativeBulges) {
     for (const auto &format : bulgeFormats) {
 #ifndef DWGSUPPORT
       if (format.dwg)
@@ -3136,10 +3141,11 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
       DRW_LWPolyline fixture = bulged;
       fixture.extPoint = {0.6, 0.0, -0.8};
       fixture.flags = 1;
-      const double bulge = -std::tan(M_PI / 8.0);
+      const double bulge = variant.second;
       fixture.vertlist.front()->bulge = bulge;
-      const auto path = directory.file(std::string("closed-reflected-negative-") +
-                                       format.suffix);
+      const auto path = directory.file(
+          std::string("closed-reflected-") + variant.first + "-" +
+          format.suffix);
 #ifdef DWGSUPPORT
       if (format.dwg)
         f::dwgPolylineFile(path, fixture, format.version);
@@ -3149,7 +3155,7 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
       f::binaryDxfPolyline(path, fixture, format.version);
 #endif
       const auto imported = stagedImport(path, format.lane);
-      INFO(format.suffix);
+      INFO(variant.first << " " << format.suffix);
       REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
       REQUIRE(imported.graphic);
       REQUIRE(std::distance(imported.graphic->begin(),
@@ -3192,6 +3198,7 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
                 matchesEllipseEnds(first->getStartpoint(), second->getStartpoint()));
       };
       CHECK(connected(lines[0], lines[1]));
+    }
     }
 
     DRW_LWPolyline rankDeficient = raw;
