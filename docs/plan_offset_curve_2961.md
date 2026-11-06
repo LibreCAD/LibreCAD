@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W446; chronological evidence follows): implementation slices
+Current status (W447; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W446. Historical results from
+No exact-head CI result is claimed for W441-W447. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request is already implemented: the user can choose a
@@ -17750,3 +17750,32 @@ offset side and distance. It does not qualify multi-branch rational outputs,
 all weight/knot layouts, periodic/wrapped splines, arbitrary distances/sides,
 or all historical DWG versions. Exact-head CI and external CAD acceptance
 remain separate.
+
+## 447. Multi-Branch Rational Spline Refusal Across DXF/DWG Versions
+
+The multi-branch rational internal-knot spline has an explicit R2018 test
+proving that an ordinary cache carrier cannot be promoted as a native editable
+offset. Extend this safety case to R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+Every import must remain an ordinary spline, preserve the exact typed source
+metadata and expected cache geometry, and report a downgrade rather than
+admitting a native offset.
+
+### Completion receipt
+
+The multi-branch degree-2 rational source now imports in all five file lanes.
+Each staged import admits zero native offsets and downgrades exactly one
+ordinary spline; its geometry fingerprint and schema-2 source definition
+match the fixture. This verifies that version differences do not turn a
+non-single-cache result into a native offset or discard its source metadata.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` selector
+passes 4,125 assertions/4 cases; the broader
+`[lc-offsetcurve][import-session][typed-source]` selector passes 40,271
+assertions/28 cases. `git diff --check` passes. Test commit
+`36def0a3d` (`test(offset): preserve rational fallback across versions`).
+
+This closes version-lane coverage for one multi-branch rational source and
+cache. It does not establish every unsupported spline topology, malformed
+cache handling in every version, or all rational knot/weight configurations.
+Exact-head CI and external CAD acceptance remain separate.
