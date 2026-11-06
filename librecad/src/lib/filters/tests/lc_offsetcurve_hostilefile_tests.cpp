@@ -7424,7 +7424,17 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
     namespace result = LC_OffsetWorkerResult;
 
     const double pi = std::acos(-1.0);
-    const std::array<LC_OffsetPolylineData, 4> variants{{
+    RS_Polyline mixedBulgeEntity;
+    mixedBulgeEntity.addVertex({0, 0}, 0.2);
+    mixedBulgeEntity.addVertex({8, 0}, -0.2);
+    mixedBulgeEntity.addVertex({8, 6});
+    mixedBulgeEntity.addVertex({0, 6});
+    mixedBulgeEntity.setClosed(true);
+    mixedBulgeEntity.endPolyline();
+    const auto mixedBulgeSource = LC_OffsetSourceGeometry::capture(mixedBulgeEntity);
+    REQUIRE(mixedBulgeSource);
+    REQUIRE(mixedBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    const std::array<LC_OffsetPolylineData, 5> variants{{
         {{0, 0}, {2, 2}, false,
          {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
         {{2, 2}, {0, 0}, false,
@@ -7436,7 +7446,8 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
          {RS_ArcData{{0, 0}, 2, 0, pi / 2, false},
           RS_ArcData{{0, 0}, 2, pi / 2, pi, false},
           RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
-          RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}}}};
+          RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}},
+        std::get<LC_OffsetPolylineData>(mixedBulgeSource->value)}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
@@ -7499,6 +7510,40 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
         line.weights = {1, 1};
         return line;
     };
+    const auto sameBranchGeometry = [&](const req::Cutter& centered,
+                                        const req::Cutter& translated,
+                                        const RS_Vector& translation,
+                                        const double tolerance) {
+        if (centered.index() != translated.index()) return false;
+        RS_Spline centeredSpline{nullptr, asSpline(centered)};
+        RS_Spline translatedSpline{nullptr, asSpline(translated)};
+        double centeredFirst = 0.0, centeredLast = 0.0;
+        double translatedFirst = 0.0, translatedLast = 0.0;
+        if (!centeredSpline.validate() || !translatedSpline.validate() ||
+            !centeredSpline.getParameterDomain(centeredFirst, centeredLast) ||
+            !translatedSpline.getParameterDomain(translatedFirst, translatedLast)) return false;
+        const auto matchesDirection = [&](const bool reverse) {
+            for (int sample = 0; sample <= 128; ++sample) {
+                const double fraction = static_cast<double>(sample) / 128.0;
+                const auto local = centeredSpline.getPointAt(
+                    centeredFirst + (centeredLast - centeredFirst) * fraction);
+                const double otherFraction = reverse ? 1.0 - fraction : fraction;
+                const auto world = translatedSpline.getPointAt(
+                    translatedFirst + (translatedLast - translatedFirst) * otherFraction);
+                if (!local.valid || !world.valid) return false;
+                const double expectedX = local.x + translation.x;
+                const double expectedY = local.y + translation.y;
+                const double magnitude = std::max({std::abs(expectedX), std::abs(expectedY),
+                    std::abs(world.x), std::abs(world.y)});
+                const double ulp = std::nextafter(magnitude,
+                    std::numeric_limits<double>::infinity()) - magnitude;
+                if (std::hypot(world.x - expectedX, world.y - expectedY) >
+                    4.0 * tolerance + 64.0 * ulp) return false;
+            }
+            return true;
+        };
+        return matchesDirection(false) || matchesDirection(true);
+    };
 
     std::size_t cells = 0;
     std::size_t generationRefusedCells = 0;
@@ -7507,18 +7552,38 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
     std::size_t importedFiles = 0;
     std::size_t promotedFiles = 0;
     std::size_t fallbackFiles = 0;
+    std::size_t partialCarrierCells = 0;
     for (std::size_t variant = 0; variant < variants.size(); ++variant) {
         for (const double scale : scales) {
             for (const double ratio : translationRatios) {
                 const RS_Vector translation{ratio * scale, -ratio * scale};
-                const LC_OffsetSourceGeometry source{transform(variants[variant], scale, translation)};
-                REQUIRE(source.isWellFormed());
+                const LC_OffsetSourceGeometry centeredSource{
+                    transform(variants[variant], scale, {})};
+                const LC_OffsetSourceGeometry translatedSource{
+                    transform(variants[variant], scale, translation)};
+                REQUIRE(centeredSource.isWellFormed());
+                REQUIRE(translatedSource.isWellFormed());
                 for (const double normalizedDistance : normalizedDistances) {
                     ++cells;
                     CAPTURE(variant, scale, ratio, normalizedDistance);
+                    const LC_OffsetSourceDefinition centeredDefinition{
+                        centeredSource, normalizedDistance * scale, 1e-4, false};
                     const LC_OffsetSourceDefinition definition{
-                        source, normalizedDistance * scale, 1e-4, false};
-                    const auto sourceEntity = source.makeEntity();
+                        translatedSource, normalizedDistance * scale, 1e-4, false};
+                    const auto centeredCompletion = runWorker({
+                        {nextRequestId++, 1, 1, 1},
+                        req::GenerateSource{centeredDefinition, {}}});
+                    const auto& centeredReply = centeredCompletion->reply();
+                    REQUIRE(centeredReply.failure == result::Failure::None);
+                    REQUIRE(centeredReply.operation == 7);
+                    REQUIRE(std::holds_alternative<result::Native>(centeredReply.result));
+                    const auto& centered = std::get<result::Native>(centeredReply.result);
+                    const auto centeredEntity = centeredSource.makeEntity();
+                    REQUIRE(centeredEntity);
+                    const auto centeredOptions = LC_OffsetWorkerTolerance::directOptions(
+                        centeredDefinition, *centeredEntity);
+                    REQUIRE(centeredOptions);
+                    const auto sourceEntity = translatedSource.makeEntity();
                     REQUIRE(sourceEntity);
                     const auto sourceOptions = LC_OffsetWorkerTolerance::directOptions(
                         definition, *sourceEntity);
@@ -7530,6 +7595,34 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
                     REQUIRE(generatedReply.operation == 7);
                     REQUIRE(std::holds_alternative<result::Native>(generatedReply.result));
                     const auto& generated = std::get<result::Native>(generatedReply.result);
+                    INFO("centered engine=" << (centered.engineStatus
+                             ? static_cast<int>(*centered.engineStatus) : -1)
+                         << " ordinary=" << static_cast<int>(centered.ordinaryStatus)
+                         << " refusal=" << static_cast<int>(centered.refusal)
+                         << " items=" << centered.ordinary.size()
+                         << "; translated engine=" << (generated.engineStatus
+                             ? static_cast<int>(*generated.engineStatus) : -1)
+                         << " ordinary=" << static_cast<int>(generated.ordinaryStatus)
+                         << " refusal=" << static_cast<int>(generated.refusal)
+                         << " items=" << generated.ordinary.size());
+                    CHECK(centered.engineStatus == generated.engineStatus);
+                    CHECK(centered.ordinaryStatus == generated.ordinaryStatus);
+                    CHECK(centered.ordinary.size() == generated.ordinary.size());
+                    REQUIRE(centered.ordinary.size() == generated.ordinary.size());
+                    std::vector<bool> matchedBranches(generated.ordinary.size(), false);
+                    for (const auto& centeredBranch : centered.ordinary) {
+                        bool matched = false;
+                        for (std::size_t branch = 0; branch < generated.ordinary.size(); ++branch) {
+                            if (matchedBranches[branch]) continue;
+                            if (!sameBranchGeometry(centeredBranch, generated.ordinary[branch],
+                                    translation, std::max(centeredOptions->tolerance.requestedGeometry,
+                                        sourceOptions->tolerance.requestedGeometry))) continue;
+                            matchedBranches[branch] = true;
+                            matched = true;
+                            break;
+                        }
+                        CHECK(matched);
+                    }
                     if (generated.engineStatus != LC_CurveOffsetStatus::Ok ||
                         generated.ordinaryStatus != result::OrdinaryStatus::Complete ||
                         generated.ordinary.empty()) {
@@ -7537,6 +7630,29 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
                         CHECK_FALSE(generated.changed);
                         ++generationRefusedCells;
                         continue;
+                    }
+
+                    for (const auto& item : centered.ordinary) {
+                        auto cache = asSpline(item);
+                        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+                        const auto validationCompletion = runWorker({
+                            {nextRequestId++, 1, 1, 1},
+                            req::ValidateSourceCache{cache, centeredDefinition, {}}});
+                        const auto& validationReply = validationCompletion->reply();
+                        REQUIRE(validationReply.failure == result::Failure::None);
+                        REQUIRE(validationReply.operation == 8);
+                        REQUIRE(std::holds_alternative<result::Native>(validationReply.result));
+                        const auto& validation =
+                            std::get<result::Native>(validationReply.result);
+                        if (centered.ordinary.size() == 1) {
+                            REQUIRE(validation.refusal == LC_OffsetCurveRefusal::None);
+                            REQUIRE(validation.changed);
+                        } else {
+                            CHECK(validation.refusal ==
+                                  LC_OffsetCurveRefusal::NotCacheRepresentable);
+                            CHECK_FALSE(validation.changed);
+                            CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+                        }
                     }
 
                     bool admitted = false;
@@ -7561,11 +7677,16 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
                             CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
                         }
                     }
-                    if (!admitted) {
+                    const bool partialCarrier = !admitted && generated.ordinary.size() > 1;
+                    if (!admitted && !partialCarrier) {
                         ++cacheRefusedCells;
                         continue;
                     }
-                    ++admittedCells;
+                    if (admitted) ++admittedCells;
+                    else {
+                        ++cacheRefusedCells;
+                        ++partialCarrierCells;
+                    }
 
                     const auto cache = asSpline(generated.ordinary.front());
                     RS_Spline expectedSpline{nullptr, cache};
@@ -7622,8 +7743,10 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
                         const auto* imported = f::sole(*outcome.graphic);
                         REQUIRE(imported);
                         const auto* native = dynamic_cast<const LC_OffsetCurve*>(imported);
-                        CHECK((native != nullptr) == (outcome.admitted == 1));
-                        CHECK((native == nullptr) == (outcome.downgraded == 1));
+                        CHECK((native != nullptr) == admitted);
+                        CHECK((native == nullptr) == !admitted);
+                        CHECK(outcome.admitted == (admitted ? 1u : 0u));
+                        CHECK(outcome.downgraded == (admitted ? 0u : 1u));
                         std::optional<QCborArray> actualSource;
                         if (native) {
                             REQUIRE(native->sourceDefinition());
@@ -7676,9 +7799,13 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
           normalizedDistances.size());
     CHECK(generationRefusedCells + cacheRefusedCells + admittedCells == cells);
 #ifndef DWGSUPPORT
-    CHECK(importedFiles == admittedCells * 3);
+    CHECK(importedFiles == (admittedCells + partialCarrierCells) * 3);
+    CHECK(promotedFiles == admittedCells * 3);
+    CHECK(fallbackFiles == partialCarrierCells * 3);
 #else
-    CHECK(importedFiles == admittedCells * formats.size());
+    CHECK(importedFiles == (admittedCells + partialCarrierCells) * formats.size());
+    CHECK(promotedFiles == admittedCells * formats.size());
+    CHECK(fallbackFiles == partialCarrierCells * formats.size());
 #endif
     CHECK(promotedFiles + fallbackFiles == importedFiles);
 }

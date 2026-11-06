@@ -666,24 +666,33 @@ public:
         const auto index = pieceAt(parameter, side);
         if (!index) { out = LC_CurveJet{}; return false; }
         const auto& piece = m_pieces[*index];
-        const double local = piece.source->breaks().front() + (parameter - piece.offset);
-        return piece.source->jet(local, side, out);
+        const auto local = localParameter(piece, parameter);
+        if (!local) { out = LC_CurveJet{}; return false; }
+        return piece.source->jet(*local, side, out);
     }
     bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
         const auto index = pieceAt(a + (b - a) * .5, LC_CurveEvaluationSide::Interior);
         if (!index) { out = LC_CurveJetBounds{}; return false; }
         const auto& piece = m_pieces[*index];
-        const double start = piece.source->breaks().front() + (a - piece.offset);
-        const double end = piece.source->breaks().front() + (b - piece.offset);
-        return piece.source->boundJet(start, end, out);
+        const auto start = localParameter(piece, a);
+        const auto end = localParameter(piece, b);
+        if (!start || !end || *start > *end) {
+            out = LC_CurveJetBounds{};
+            return false;
+        }
+        return piece.source->boundJet(*start, *end, out);
     }
     bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
         const auto index = pieceAt(a + (b - a) * .5, LC_CurveEvaluationSide::Interior);
         if (!index) { out = LC_CurveJetBounds{}; return false; }
         const auto& piece = m_pieces[*index];
-        const double start = piece.source->breaks().front() + (a - piece.offset);
-        const double end = piece.source->breaks().front() + (b - piece.offset);
-        return piece.source->boundJetWithProducts(start, end, out);
+        const auto start = localParameter(piece, a);
+        const auto end = localParameter(piece, b);
+        if (!start || !end || *start > *end) {
+            out = LC_CurveJetBounds{};
+            return false;
+        }
+        return piece.source->boundJetWithProducts(*start, *end, out);
     }
     const std::vector<RS_Vector>& hull() const override { return m_hull; }
     bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
@@ -702,6 +711,18 @@ private:
         double span;
     };
     explicit PolylineSource(const bool closed) : m_closed{closed} {}
+
+    static std::optional<double> localParameter(const Piece& piece, const double parameter) {
+        const auto& breaks = piece.source->breaks();
+        const double first = breaks.front();
+        const double last = breaks.back();
+        const double mapped = first + (parameter - piece.offset);
+        const double slack = 16.0 * std::numeric_limits<double>::epsilon() *
+            std::max({1.0, std::abs(mapped), std::abs(first), std::abs(last)});
+        if (!std::isfinite(mapped) || mapped < first - slack || mapped > last + slack)
+            return std::nullopt;
+        return std::clamp(mapped, first, last);
+    }
 
     std::optional<std::size_t> pieceAt(const double t, const LC_CurveEvaluationSide side) const {
         if (!std::isfinite(t) || m_pieces.empty() || t < 0.0 || t > m_breaks.back()) return std::nullopt;
