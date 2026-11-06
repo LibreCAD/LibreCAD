@@ -405,10 +405,11 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
 TEST_CASE("ellipse, arc, and circle source caches validate across signed distances",
           "[lc-offsetcurve][worker-kernel][source-cache][conic][side]") {
     const double tau = 2.0 * M_PI;
-    const std::array<LC_OffsetSourceGeometry, 5> sources{
+    const std::array<LC_OffsetSourceGeometry, 6> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {4, 0}, .6, 0, tau, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{3, -2}, {3, 0}, .7, .2, 2.1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{-3, 1}, {2, 1}, .8, 1.8, .1, true}},
+        LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_ArcData{{-1, 2}, 2.5, .2, 2.4, true}},
         LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}}
     };

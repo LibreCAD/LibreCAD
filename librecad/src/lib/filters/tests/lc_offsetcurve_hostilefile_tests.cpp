@@ -1209,8 +1209,9 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
-    const std::array<LC_OffsetSourceGeometry, 23> sources{
+    const std::array<LC_OffsetSourceGeometry, 24> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
+        LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{splineSource},
         LC_OffsetSourceGeometry{nonuniformQuadratic},
         LC_OffsetSourceGeometry{repeatedKnotCubic},
@@ -1445,9 +1446,10 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
     const double tau = 2.0 * M_PI;
-    const std::array<LC_OffsetSourceGeometry, 14> sources{
+    const std::array<LC_OffsetSourceGeometry, 15> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {4, 0}, .6, 0, tau, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{3, -2}, {3, 0}, .7, .2, 2.1, false}},
+        LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_ArcData{{-1, 2}, 2.5, .2, 2.4, true}},
         LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{-4, 4}, RS_Vector{0, -4}, RS_Vector{4, 4}}}},
