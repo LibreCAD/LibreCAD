@@ -25,7 +25,8 @@ USA.
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
 Current status (W523 complete for its defined spline precision/persistence
-matrix; remaining family/variant and acceptance work is open; chronological
+matrix; W524 parabola translation/persistence matrix complete for its defined
+grid; remaining family/variant and acceptance work is open; chronological
 evidence follows):
 implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
@@ -20379,3 +20380,104 @@ roadmap parser (5/5), and `git diff --check` pass. W523 is complete for the
 finite source layouts, scales, translations, distances, and serialization
 lanes defined here; it does not close the broader spline/variant, visible-GUI,
 external-CAD, or exact-head CI gates.
+
+## 524. Parabola Scale-and-Translation DXF/DWG Persistence Matrix
+
+Parabola generation and cache admission have scale, curvature-neighborhood,
+and large-coordinate worker checks, while existing staged-file coverage
+scales parabola geometry without combining scale and large translation. Close
+that family-specific gap with three typed parabola layouts: the canonical
+forward source, its reversed control order, and a rotated/non-origin source.
+Use scales `1e-3`, `1`, and `1e3`, relative translation ratios `1e6` and
+`1e9`, and normalized signed distances `-3`, `-2.5`, `-2`, `2`, `2.5`, and
+`3`. Transform every source control point uniformly and apply the same world
+translation to centered-result comparison only; scale signed distances and
+the declared tolerance with the source.
+
+For every source/scale/translation/distance cell, compare centered and
+translated operation-7 status and complete topology. Match output branches by
+sampled local geometry (allow reverse parameterization); compare 129 samples
+under the requested world tolerance plus a coordinate-ULP allowance. Run
+operation 8 independently on every generated branch: require single-cache
+admission and mutation, or explicit non-mutating `NotCacheRepresentable`
+refusal for multi-output results. Require generation refusals to have empty
+outputs and no changed state, count each cell exactly once, and never create a
+cache from a partial/multi-branch result.
+
+Carry each translated, operation-8-admitted single cache through R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG. A staged reopen must complete and yield
+exactly one native promotion or diagnosed ordinary-spline fallback; either
+outcome must preserve the exact schema-2 parabola source CBOR. Compare reopened
+cache geometry to the admitted cache at 129 normalized samples with requested
+tolerance plus coordinate-ULP allowance. Explicitly account for every
+generated, refused, admitted, and imported cell; a serialization or lane
+failure is not a skip. This is a finite grid, not a guarantee for arbitrary
+parabola shape, distance, scale, translation, or numeric precision.
+
+Validation: focused W524 matrix, existing parabola worker and staged-import
+selections, Release `librecad_tests` build, roadmap inventory parser, and
+`git diff --check`. Commit the product/test slice first, then update this
+roadmap receipt in a separate commit and push both commits to PR #3193. Do not
+close general source-variant, visible-GUI, external-CAD, or exact-head CI
+gates from this matrix.
+
+### W524 Completion Receipt
+
+The parabola matrix now covers three layouts (forward, reversed, and
+rotated/non-origin), scales `1e-3`, `1`, and `1e3`, translation ratios `1e6`
+and `1e9`, and six signed normalized distances. Centered and translated
+operation-7 results are matched by parameter-domain-normalized sampled
+geometry and a dense bidirectional polyline-distance check; each translated
+branch is independently checked through operation 8. Only an admitted
+single-cache result enters R14 DXF, R2000 DXF/DWG, or R2018 DXF/DWG staged
+import. The test accounts for refusals and admissions and checks source CBOR
+and reopened cache geometry.
+
+The worker now recenters parabola input at its first control point and
+translates generated cutters back to world coordinates. `LC_SplinePoints`
+uses origin-relative affine Bézier evaluation and difference-based second
+derivatives to reduce cancellation at large coordinates. The existing
+parabola curvature-import fixture now obtains its expected cache and output
+cardinality from the isolated production worker, avoiding a mismatch with the
+worker's canonical centered representation.
+
+Product/test commit `b06468d1a` (`test(offset): qualify parabola translation
+persistence`). Validation: W524 staged matrix passes 1,152,123 assertions in
+one case; the previous parabola curvature-import regression passes 31,533
+assertions; `[parabola],[LC_SplinePoints]` passes 1,210,688 assertions across
+28 cases; standalone worker-kernel `[parabola]` passes 3,580 assertions across
+five cases. Release `librecad_tests` and worker-kernel targets build, and
+`git diff --check` passes. These finite-grid and local results do not close
+general variant support, visible-GUI, external-CAD, or exact-head CI gates.
+
+## 525. Source Picker Scope Reconfirmation (2026-11-06)
+
+The source-curve widget must let the user change the requested family before
+choosing a replacement and must include every family currently modeled for
+typed offset sources: line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. The live Properties widget already
+has the independent family selector and filtered entity picker; replacing a
+source is guarded by the worker-backed edit transaction. Existing-source
+selection/highlighting and cross-family replacement are already covered by
+W359/W396/W397/W440/W474 and the nine-family matrix in W356. Parabola remains
+a distinct source kind and must be captured before its `LC_SplinePoints` base
+class is considered.
+
+This is a scope clarification, not a request for another widget or a new
+parabola implementation. “All supported types” means the nine modeled
+families above; it does not mean all legal geometry layouts within those
+families are already eligible. Keep the selector behavior as a regression
+contract, and continue the existing family/variant audit: for each advertised
+layout, prove capture, worker generation, operation-8 cache admission, atomic
+replacement, failure/cancellation non-mutation, and applicable DXF/DWG
+save/reopen. A valid layout that cannot be represented as one native cache
+must be refused explicitly without changing the prior source or cache.
+
+No implementation or validation result is added by this checkpoint. W524's
+parabola scale/translation matrix is now complete for its defined grid. Resume
+implementation by selecting the next uncovered family/variant from the
+eligibility inventory and applying the same capture, generation, cache,
+replacement, and persistence gates.
+Do not count the existing nine-family widget test as proof of exhaustive
+variant support, and do not close visible-GUI, external-CAD, or exact-head CI
+acceptance from this reconciliation.
