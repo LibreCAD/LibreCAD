@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W483; chronological evidence follows): implementation slices
+Current status (W484; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W483. Historical results from
+No exact-head CI result is claimed for W441-W484. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18884,3 +18884,28 @@ Validation: `QT_QPA_PLATFORM=offscreen librecad_tests
 "[lc-offsetcurve][import-session][typed-source]"` passes with zero failed
 assertions; `git diff --check` passes. This roadmap-only checkpoint captures
 local combined-suite evidence; no product code changed in this slice.
+
+## 484. Hyperbola Interval Source Persistence
+
+W480 proves cache-promotion imports for eight bounded interval/branch layouts,
+but the schema-2 source-only DXF/DWG save/reopen/second-save test still covered
+one hyperbola definition. Add all eight layouts to that persistence matrix and
+compare the encoded typed source after both reopen passes. Keep this metadata
+round-trip evidence distinct from operation-8 native-cache promotion.
+
+### Completion receipt
+
+The source-only typed-source round-trip test now carries all eight
+worker-qualified hyperbola interval/branch layouts, in addition to the prior
+families/variants. All DXF and DWG source records survive save, reopen, and
+second save with exact encoded definition equality. The focused test passes
+1,664 assertions across the 23 source definitions. This tests source metadata
+preservation, not regenerated cache admission; W480 is the separate cache
+promotion evidence.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`typed offset source survives real DXF and DWG file save reopen and second save`
+case passes 1,664 assertions; `git diff --check` passes. These are local
+results, not exact-head CI or external CAD acceptance. Test commit
+`c6eba78f4` (`test(offset): persist hyperbola interval source variants`);
+roadmap receipt is a separate documentation commit.
