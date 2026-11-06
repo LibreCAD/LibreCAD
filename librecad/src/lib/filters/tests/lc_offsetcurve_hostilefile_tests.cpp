@@ -1402,6 +1402,19 @@ TEST_CASE("conic typed sources promote from real DXF and DWG cache carriers",
         LC_OffsetSourceGeometry{RS_ArcData{{-1, 2}, 2.5, .2, 2.4, true}},
         LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}}
     };
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
         CAPTURE(sourceIndex, static_cast<int>(sources[sourceIndex].kind()));
         for (const double signedDistance : {-.1, .1}) {
@@ -1436,7 +1449,8 @@ TEST_CASE("conic typed sources promote from real DXF and DWG cache carriers",
                 FAIL("conic offset cache must be a spline or exact line");
             }
 
-            for (const bool dwg : {false, true}) {
+            for (const auto& fileFormat : formats) {
+                const auto [lane, dwg, version, formatSuffix] = fileFormat;
 #ifndef DWGSUPPORT
                 if (dwg) continue;
 #endif
@@ -1469,16 +1483,15 @@ TEST_CASE("conic typed sources promote from real DXF and DWG cache carriers",
 
                 const auto suffix = std::to_string(sourceIndex) +
                     (signedDistance < 0 ? "-right" : "-left") +
-                    (dwg ? ".dwg" : ".dxf");
+                    "-" + formatSuffix;
                 const auto input = directory.file(suffix);
 #ifdef DWGSUPPORT
-                if (dwg) f::dwgFile(input, cache, DRW::AC1032);
-                else f::binaryDxf(input, cache, DRW::AC1032);
+                if (dwg) f::dwgFile(input, cache, version);
+                else f::binaryDxf(input, cache, version);
 #else
-                f::binaryDxf(input, cache, DRW::AC1032);
+                f::binaryDxf(input, cache, version);
 #endif
-                const auto outcome = stagedImport(input,
-                    dwg ? Lane::Eed18 : Lane::Binary18);
+                const auto outcome = stagedImport(input, lane);
                 REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
                 REQUIRE(outcome.graphic);
                 CHECK(outcome.admitted == 1);
