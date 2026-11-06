@@ -19417,10 +19417,12 @@ The worker parabola matrix now requires generation at scale `1e-8` and covers
 24 operation-7/8 settings across `1e-8`, `1e-3`, and `1e3`; op-8 admits exactly
 single-cache results and refuses non-single topology without mutation. A
 separate case verifies zero-factor/default parity and world tolerance scaling
-across all three scales.
+across all three scales. Joined op-7 and op-8 completion tests also assert that
+the materialized native entity stores exactly the same world tolerance as the
+typed-source conversion, including a zero-factor line source.
 
 Validation: dedicated worker-kernel suite passes 11,830 assertions/36 cases;
-worker-client suite passes 39,686 assertions/20 cases; the full `[parabola]`
+worker-client suite passes 33,427 assertions/20 cases; the full `[parabola]`
 selector passes 58,733 assertions/17 cases, including staged DXF/DWG import
 lanes; the full LibreCAD app and test targets build; roadmap parser passes 5/5;
 `git diff --check` passes. The broader `[typed-source]` run was stopped after
@@ -19428,7 +19430,8 @@ remaining at the same R2018 DWG stage without log progress for over a minute;
 it is not counted as a pass. These are local results, not exact-head CI,
 visible-GUI, or external-CAD acceptance.
 
-Product commit `45f463d8c` (`fix(offset): scale typed worker tolerances`).
+Product commits `45f463d8c` (`fix(offset): scale typed worker tolerances`) and
+`39caa3eb7` (`test(offset): assert worker tolerance parity`).
 
 The source-picker clarification in W440 remains a completed UI contract; it
 does not change this worker/import tolerance fix or imply that all geometry
