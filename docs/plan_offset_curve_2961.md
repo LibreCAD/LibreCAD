@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W415; chronological evidence follows): implementation slices
+Current status (W416; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16482,3 +16482,25 @@ The all-offset-tagged suite was started but interrupted because its unrelated
 verbose cases made the run excessively long; it is not counted as validation.
 Commit the W415 roadmap checkpoint, push both commits to PR #3193, and
 requalify the exact pushed head.
+
+## 416. Closed Legacy 2D POLYLINE Import Coverage (2026-11-05)
+
+Added a closed legacy 2D `POLYLINE` fixture with an explicit signed bulge on
+the last vertex, which represents the implicit closing arc. Staged import is
+covered through R14/AC1014 binary DXF, AC1032 DXF, and AC1032 DWG. Each imported
+polyline must remain closed, be accepted as a typed offset source, and retain
+the closing arc's center, radius, and orientation relative to an equivalent
+native source.
+
+The focused case passes 73 assertions/1 case. The full
+`[import-session][typed-source][polyline]` selection passes 805 assertions/8
+cases, including open signed-bulge legacy POLYLINE, closed bulged LWPOLYLINE,
+OCS reflection, duplicate and repeated vertices, and near-minimum bulge
+thresholds. Release `librecad_tests` builds successfully and `git diff --check`
+passes. Test commit: `f4e995125` (`test(offset): cover closed legacy polyline
+imports`).
+
+This is representative closed 2D legacy coverage, not support validation for
+mesh/polyface/3D polylines, every legacy flag combination, arbitrary OCS, or
+all topology/side/distance cases. Push the test and roadmap checkpoint to PR
+#3193, then qualify the exact new head.
