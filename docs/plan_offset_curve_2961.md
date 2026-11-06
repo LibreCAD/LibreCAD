@@ -19182,3 +19182,73 @@ visible GUI, or external CAD acceptance. Product test commits `2e81b2f2b`
 (`test(offset): require parabola cache boundary per variant`); this roadmap
 receipt is committed separately. Other parabola scales, degeneracies, and
 precision modes remain open.
+
+## 494. Source Picker Type-Change Contract Reconfirmed
+
+The source-curve Properties widget must let the user choose or change the
+source family before selecting a replacement entity; it must not lock the
+family to the currently embedded source. “All supported types” means every
+source family admitted by the production offset workflow, not every entity
+class in LibreCAD. The current admitted inventory is line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+Parabola remains its own choice despite deriving from `LC_SplinePoints`.
+
+Codebase review against W474/W475 and the current picker tests confirms that
+the editable family selector, cross-family replacement, current-source
+highlighting, and all nine family choices are already implemented. Do not add
+a duplicate widget or another parabola branch. Continue the existing
+family/variant qualification: each advertised family must capture and
+reconstruct its exact typed geometry, pass worker generation and cache
+validation, replace source and cache atomically, and retain metadata through
+applicable DXF/DWG round trips. A family remains selectable when only a
+particular geometry/settings combination is unsupported, but that candidate
+must return an explicit refusal, leave the previous source/cache unchanged,
+and not become selected in the drawing. Add a new family to the selector only
+after its production and regression-test path satisfies the same contract.
+
+Validation for each new or newly admitted family/variant must cover changing
+the selector before picking, matching/highlighting the selected live source,
+successful cross-family replacement or typed refusal, source/cache atomicity,
+and relevant worker/persistence behavior. Visible GUI acceptance, exact-head
+CI, and external-CAD validation remain separate from local automated tests.
+This clarification supersedes the repeated request as a separate UI task; it
+does not close the remaining geometry-variant and interoperability work.
+
+## 495. Refuse Tangent-Constrained Fit Sources Until Semantics Are Modeled
+
+W453 preserves `fitTangentsConstrained` and `fitTolerance` through typed-source
+serialization and file fallback, but `LC_SplinePoints` still evaluates its
+own unconstrained interpolation. Native offset generation must not treat that
+approximation as the original endpoint-tangent-constrained curve. Reject
+constrained `LC_SplinePoints` and `RS_Spline` sources from direct branch
+generation; operation 7 must return an engine refusal and operation 8 must not
+admit a cache generated from the unconstrained display approximation. On file
+import, keep the ordinary visible spline and schema-2 source metadata rather
+than promoting that cache to an editable native offset.
+
+This is an explicit semantic refusal, not implementation of endpoint-tangent
+interpolation. Keep the source fields losslessly serializable. A future
+support slice may replace the refusal only after it models the constrained
+curve and proves offset/cache equivalence; it must add directed-tangent,
+reversed-endpoint, degenerate, and tolerance-boundary cases before enabling
+native admission.
+
+### Completion receipt
+
+Direct branch generation now rejects tangent-constrained `LC_SplinePoints`
+and `RS_Spline` inputs as `InvalidSource`. Worker operation 7 reports an
+engine refusal with no ordinary output, and operation 8 rejects the cache
+computed from the unconstrained display approximation. The five-lane
+fit-point import matrix still round-trips the constrained marker and tolerance
+but always downgrades this constrained variant to an ordinary visible spline;
+other fit-point variants retain their existing exact-cache admission rules.
+
+Validation: focused direct-engine cases pass 2 assertions across 2 cases; the
+worker refusal case passes 40 assertions; the fit-point DXF/DWG import matrix
+passes 47,858 assertions; the full worker-kernel selection passes 9,261
+assertions across 33 cases; and all source-picker tests pass 3,328 assertions
+across 6 cases. Incremental CMake Debug targets build and `git diff --check`
+passes. These are local results, not exact-head CI, visible-GUI, or external
+CAD acceptance. Product commit `3c522a472` (`fix(offset): refuse
+tangent-constrained fit sources`). Exact tangent interpolation semantics and
+their native cache admission remain open.
