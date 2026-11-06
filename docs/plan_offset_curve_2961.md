@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W437; chronological evidence follows): implementation slices
+Current status (W438; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -17255,6 +17255,10 @@ imports. The projections preserve visible conic geometry within the XY display
 model, retain original OCS parameters in XDATA, and are refused as typed offset
 sources. This is not exact arbitrary-OCS round-trip or general conic offset
 eligibility.
+W438 projects non-axial bulged LWPOLYLINE and legacy 2D POLYLINE segments into
+line/ellipse display fragments, preserving signed and major sweeps with OCS
+provenance. Typed source capture rejects every fragment. Exact arbitrary-OCS
+editing and offsetting remain out of scope.
 
 ## 437. Non-Axial Conic Display Projection
 
@@ -17347,3 +17351,84 @@ conic offset sources, and external CAD visual fidelity remain independent work.
 The picker contract remains complete for its nine modeled source families;
 each family's variant-level worker eligibility, cache representability,
 persistence, and distance/side behavior is tracked separately above.
+
+## 438. Non-Axial Bulged Polyline Display Projection
+
+### Scope
+
+Non-axial LWPOLYLINE and legacy 2D POLYLINE imports with bulges are currently
+dropped. A bulged segment is circular in its source OCS but generally elliptical
+after XY projection. Preserve that exact projected display geometry without
+turning the fragments into editable native offset sources.
+
+### Implementation steps
+
+1. Use the normalized DXF arbitrary-axis basis and each segment's endpoints and
+   bulge to derive its OCS circular-arc center, radius, start parameter, and
+   signed sweep. Project line segments as XY lines and bulged segments through
+   the bounded conic-to-ellipse projector from W437.
+2. Handle open/closed polylines, last-to-first closing segments, positive and
+   negative bulges, and major arcs. Validate every vertex, bulge, intermediate,
+   and projected component before adding any fragment; invalid input must not
+   leave partial geometry in the drawing.
+3. Attach `LibreCAD_POLYLINE_OCS` provenance to every generated line/ellipse
+   fragment, including source normal/elevation and segment ordinal/count. Arc
+   fragments also carry the conic projection marker. Preserve unrelated XDATA
+   and entity attributes. Typed source capture must reject either marker on
+   every entity class, not only on `RS_Polyline`/`RS_Ellipse`.
+4. Keep existing axial/reflected polyline import unchanged. Do not synthesize a
+   projected `RS_Polyline` by flattening conics or by retaining circular bulges.
+
+### Validation
+
+- Real DXF and DWG fixtures for LWPOLYLINE and legacy 2D POLYLINE; open and
+  closed chains; positive, negative, and greater-than-semicircle bulges;
+  mixed line/arc segments; tilted and reflected normals.
+- Assert exact projected segment endpoints, ellipse center/axes/sweep, total
+  emitted fragment count, marker payload, preservation of unrelated XDATA, and
+  source-capture refusal for line and ellipse fragments.
+- Round-trip fragments through DXF/DWG and assert APPID registration, marker
+  survival, and source refusal after reopen. Verify malformed/non-finite and
+  degenerate inputs emit no fragments.
+- Re-run existing axial/reflected/bulged polyline and conic tests, source
+  provenance, APPID registration, CMake Debug tests, qmake6 app/plugins build,
+  and `git diff --check`.
+
+### Completion receipt
+
+Non-axial bulged LWPOLYLINE and legacy 2D POLYLINE now decompose atomically into
+projected XY line segments and exact ellipse arcs. LWPOLYLINE callback vertices
+are inverted from their already-transformed XY positions to OCS before bulge
+geometry is derived; legacy POLYLINE vertices remain in OCS and use the direct
+path. Signed sweeps account for the projected-basis determinant, including
+negative and greater-than-semicircle bulges. Closed polylines include the
+last-to-first segment. Every output fragment carries `LibreCAD_POLYLINE_OCS`
+with source normal, elevation, bulge, ordinal, and count; ellipse arcs also
+carry `LibreCAD_CONIC_OCS`. The importer validates all segments before adding
+any, rejects degenerate projected lines and rank-deficient arcs without partial
+output, and clears source-handle/reactor/dictionary references that cannot be
+shared by the emitted fragments. Common source capture refuses both projection
+markers on every entity class. Unrelated XDATA, APPID registration, and emitted
+fragment provenance survive DXF/DWG save-reopen.
+
+Validation: the complete focused polyline OCS selector passes 668 assertions/3
+cases, covering both encodings, open and closed chains, mixed line/arc
+segments, positive/negative/major bulges, reflected normals, source refusal,
+zero-normal and rank-deficient refusal, direct AC1032 DWG input, and DXF/DWG
+save-reopen with XDATA preservation. The direct AC1032 DWG input fixtures omit
+unrelated input XDATA because the low-level fixture writer refuses XDATA-bearing
+bulged input;
+DXF-imported source XDATA is independently verified through both output formats.
+The fixture writer cannot encode non-finite coordinates for an import fixture;
+the reader validates them, but serialized non-finite rejection is not claimed.
+Bulged input is not yet fixture-tested for R14/R2000. The AC1032 conic selector
+passes 576 assertions/1 case, APPID registration passes 846/7, and source
+provenance passes 14/2. CMake Debug `librecad_tests` builds and the focused
+suite passes; the qmake6 application/plugins build exits 0. `git diff --check`
+passes. qmake6 emits pre-existing DWG metadata, sign-compare, and macOS SDK
+target warnings. These local results do not qualify an exact pushed PR head.
+
+Completion boundary: this is marked display projection, not native arbitrary-
+OCS round-trip, editing, or offsetting. Mesh/polyface offsets, full DWG-version
+bulge input coverage, and external CAD visual review remain separate gates.
+Product commit: `f9d25cdf7` (`fix(dxf): project non-axial bulged polylines`).
