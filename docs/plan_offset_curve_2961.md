@@ -24,8 +24,8 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W512 worker-boundary slice complete; W512 staged-file slice
-open; chronological evidence follows): implementation slices
+Current status (W512 complete; remaining family/variant and acceptance work
+is open; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -19831,8 +19831,27 @@ the full worker-kernel suite passes 194,848 assertions across 41 cases; the
 CMake Debug worker target builds and `git diff --check` passes. These are
 local worker results, not staged file round trips, exact-head CI, visible-GUI,
 or external-CAD acceptance. Product test commit `3a4521f32` (`test(offset):
-classify hyperbola translation boundaries`). W512 remains open for staged
-DXF/DWG imports of generated cases that are numerically admissible.
+classify hyperbola translation boundaries`).
+
+### Staged-file completion receipt
+
+Every numerically admissible generated case in the W512 scale/translation
+grid now traverses R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Cells without a
+usable world-space tolerance or whose direct generation refuses are counted
+as explicit refusals and do not enter serialization. For admitted imports,
+promotion is derived from complete generated topology; both native promotion
+and ordinary-spline fallback preserve exact typed-source metadata, and
+imported cache geometry is sampled at 129 normalized parameters within four
+times requested geometry tolerance plus the coordinate-ULP allowance. Every
+scale/translation cell accounts for all eight layouts and six signed
+distances as either imported or refused.
+
+Validation: focused `[translation-boundary]` staged-import case passes
+776,337 assertions; the full `[lc-offsetcurve][import-session][typed-source]`
+selection passes 1,907,523 assertions across 37 cases; incremental CMake
+Debug `librecad_tests` build passes. These are local results, not exact-head
+CI, visible-GUI, or external-CAD acceptance. Product test commit `1dcfbcd8d`
+(`test(offset): import hyperbola translation boundaries`).
 
 ## 510. Source Picker Request Reconciliation (2026-11-06)
 
@@ -19858,8 +19877,8 @@ variant is offsettable or cache-representable. The remaining implementation
 work is variant-level: preserve typed source identity, generate and validate
 worker caches, replace source/cache atomically, and exercise applicable DXF/DWG
 round trips. Unsupported variants must report an explicit refusal and leave
-the prior source/cache and drawing selection unchanged. W509 and W511 now
-provide combined scale/translation worker and staged-file evidence for
-bounded hyperbolas; the broader boundary matrix is tracked in W512. This
-request adds no duplicate product-code scope and does not close visible-GUI,
-exact-head CI, or external CAD acceptance.
+the prior source/cache and drawing selection unchanged. W509, W511, and W512
+now provide combined scale/translation worker and staged-file evidence for
+bounded hyperbolas, including fail-closed relative-translation boundaries.
+This request adds no duplicate product-code scope and does not close
+visible-GUI, exact-head CI, or external CAD acceptance.
