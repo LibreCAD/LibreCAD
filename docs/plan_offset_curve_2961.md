@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W438; chronological evidence follows): implementation slices
+Current status (W440; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -52,8 +52,8 @@ the committed editable copies before Escape, then one Undo restored the six
 source contours. A separate drag/Escape returned to Default with the source
 contours, but no distinct preview frame was captured and input ordering was
 not observable; neither attempt qualifies cancellation. The disposable DXF
-SHA256 still matches its recorded baseline, with no Save issued. At 22:00 UTC,
-diagnostics for exact PR head `f0a48b61d2db5ac32e807143efcd708860b337ce`
+SHA256 still matches its recorded baseline, with no Save issued. Historical
+diagnostics at 22:00 UTC for exact PR head `f0a48b61d2db5ac32e807143efcd708860b337ce`
 report one successful check (Headless ON), 14 in progress, three queued, five
 skipped, and zero failures. No prior-head result is inherited. PR #3193 remains
 open and draft; an approving review is still required. W376 is a roadmap-only
@@ -62,6 +62,15 @@ includes retained matched preview/commit screenshots and app-window DPR,
 reproducible held-drag cancellation, physical stale-peer behavior, independent
 visual fidelity, signed/deployed and minimum-macOS acceptance, review approval,
 and final R integration.
+W439 adds bulged LWPOLYLINE and legacy 2D POLYLINE input coverage across R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
+selection and the nine-family Properties picker with 3,194 assertions across
+six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
+variants, and the broader family/variant persistence matrix remains open.
+The latest live diagnostics for exact PR head
+`e0c0084bd8027781d71348640c8167030a8db4bd` showed five build_with_pixi checks
+in progress (macOS 15 Intel, macOS latest, Ubuntu latest, Windows latest, and
+Ubuntu 24.04 ARM); no conclusion is inherited from prior heads.
 W436 adds marked XY display projections for straight non-axial LWPOLYLINE and
 legacy 2D POLYLINE imports, with typed offset-source refusal and DXF/DWG
 provenance round-trips. Legacy POLYLINE coverage now includes R14, R2000, and
@@ -17507,17 +17516,25 @@ spline-points base class.
 
 Statically unrepresentable shapes such as degree-4 splines and unbounded
 hyperbolas are omitted because source capture fails, and empty buckets report
-“No supported source entities.” There is a narrower dynamic gap: a well-formed
-closed polyline can appear in the candidate list, but the joined worker may
-reject its result as not representable by the native editable cache. The
-transaction is atomic and leaves the existing definition unchanged, as tested
-by `Native source picker refuses unrepresentable source variants atomically`,
-but the candidate is not pre-disabled with that reason. Eligibility depends on
-generation/cache shape (and may depend on offset settings), so do not add a
-static family-wide exclusion. Either provide a correct preflight/disabled
-reason tied to the exact proposed settings, or retain explicit worker refusal
-with no publication and document the behavior before declaring this matrix
-closed.
+“No supported source entities.” A well-formed closed polyline can appear in
+the candidate list, then be refused by the joined worker if its generated
+result cannot be represented by the native editable cache. This is a dynamic,
+exact-settings decision; the source-change transaction itself is the
+preflight. The worker's refusal is surfaced, and the existing definition/cache
+remains unchanged, as tested by `Native source picker refuses unrepresentable
+source variants atomically`. Do not claim a candidate is supported until the
+worker accepts it, but do not statically exclude a family based on one
+topology/distance failure. The exhaustive variant eligibility matrix remains
+open separately from the completed type-changing picker workflow.
+
+Round-trip evidence: `typed offset source survives real DXF and DWG file save
+reopen and second save` passes 1,008 assertions for 14 source variants. The
+spline-variant import selector passes 1,946 assertions/4 cases, and fit-point
+import passes 14,591 assertions/1 case across R14, R2000, and R2018 DXF/DWG
+lanes. The 14-variant test validates source metadata round-trips; the dedicated
+operation-8 import tests validate cache reconstruction for their spline and
+fit-point cases. They do not prove every valid geometry variant, distance, or
+side can form a single native cache.
 
 ### Completion criteria
 
@@ -17529,9 +17546,9 @@ closed.
   parabola identity survives independently of generic spline-points.
 - Statically unsupported variants are omitted; dynamic worker/cache refusal is
   surfaced for the attempted candidate and cannot leave a partially changed
-  source/cache after selection, cancellation, or worker failure. Before
-  completion, decide and test whether exact-settings preflight is required to
-  disable dynamic failures before selection.
+  source/cache after selection, cancellation, or worker failure. The worker
+  generation on selection is the exact-settings preflight; it is not a claim
+  that every candidate in a type bucket is eligible.
 - Focused UI, worker, cache, and DXF/DWG persistence tests pass for every
   enabled family, and the plan records remaining exclusions rather than
   describing the widget's visible family list as complete support.
