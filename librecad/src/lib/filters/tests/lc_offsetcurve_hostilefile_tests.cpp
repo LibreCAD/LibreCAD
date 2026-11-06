@@ -1461,6 +1461,54 @@ TEST_CASE("bulged LWPOLYLINE import preserves signed arc geometry for offset sou
     }
 }
 
+TEST_CASE("imported duplicate LWPOLYLINE vertices remain ordinary and are not offset sources",
+          "[lc-offsetcurve][import-session][typed-source][polyline][malformed]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-duplicate-polyline-source-import");
+    DRW_LWPolyline raw;
+    raw.vertexnum = 4;
+    raw.addVertex(DRW_Vertex2D(0, 0, 0));
+    raw.addVertex(DRW_Vertex2D(2, 0, 0));
+    raw.addVertex(DRW_Vertex2D(2, 0, 0));
+    raw.addVertex(DRW_Vertex2D(4, 1, 0));
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        const auto path = directory.file(std::string("duplicate-vertices-") + format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwgPolylineFile(path, raw, format.version);
+        else f::binaryDxfPolyline(path, raw, format.version);
+#else
+        f::binaryDxfPolyline(path, raw, format.version);
+#endif
+
+        auto outcome = stagedImport(path, format.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        std::vector<const RS_Polyline*> polylines;
+        for (const RS_Entity* entity : *outcome.graphic) {
+            if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity))
+                polylines.push_back(polyline);
+        }
+        REQUIRE(polylines.size() == 1);
+        const RS_Polyline& imported = *polylines.front();
+        const auto vertices = imported.getVertexes();
+        REQUIRE(vertices.size() == 4);
+        CHECK(vertices[1] == vertices[2]);
+        REQUIRE(imported.size() == 3);
+        CHECK(imported.entityAt(1)->getStartpoint() == imported.entityAt(1)->getEndpoint());
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(imported));
+    }
+}
+
 TEST_CASE("closed bulged LWPOLYLINE import preserves its closing arc in DXF and DWG",
           "[lc-offsetcurve][import-session][typed-source][polyline][bulge]") {
     Setup setup;
