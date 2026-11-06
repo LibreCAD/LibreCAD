@@ -30,6 +30,8 @@ grid; W526 polyline worker scale/translation qualification complete for its
 defined matrix; W527 polyline staged-file persistence complete for its defined
 matrix; W528 mixed-sign bulge polyline scale/translation qualification
 complete for its defined matrix;
+W529 closed major/minor mixed-bulge source qualification complete for its
+defined matrix;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -20688,3 +20690,46 @@ distance ranges, or precision support. External-CAD and visible-GUI evidence
 remain separate. Push the product/test commit and this receipt to PR #3193,
 then query diagnostics for the exact pushed head; do not inherit older CI
 results.
+
+## 529. Closed Major/Minor Mixed-Bulge Typed-Source Persistence
+
+W471-W472 and W528 qualify a closed mixed-sign source whose two arc bulges are
+minor. Other plan sections cover major-bulge display/import projections, but
+that does not prove editable typed-source worker/cache behavior or offset
+carrier promotion. W529 adds a closed four-edge source with one positive
+greater-than-semicircle bulge, one negative minor bulge, and two straight
+edges. Capture assertions verify the signed sweep classes, closure, segment
+order, and no lossy projection.
+
+The six-layout matrix covers scales `1e-3`, `1`, and `1e3`, translation ratios
+`1e4` and `1e6`, and signed normalized distances `-0.25`, `-0.1`, `0.1`, and
+`0.25`, for 144 accounted cells. It compares centered/translated generation
+status and branch count, then matches branches independent of order and
+traversal using 129 arc-length-normalized samples, requested geometry
+tolerance, and coordinate-ULP allowance. Operation 8 validates every branch;
+single-cache results must be admitted and multi-branch candidates must refuse
+as `NotCacheRepresentable` without mutation. Refused generation may not expose
+partial geometry.
+
+The staged import carries generated candidates through R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. Native promotion requires exact schema-2 source CBOR,
+operation-8 admission, and cache fingerprint/sample agreement. A multi-branch
+first-cache carrier downgrades to ordinary spline geometry, preserves the
+typed source metadata, and does not create a native offset. Every cell and lane
+is counted; no lane is skipped.
+
+Product/test commit `befa9fee0` (`test(offset): cover major mixed-bulge
+offsets`) extends the existing staged scale/translation matrix and uses
+arc-length-normalized comparison because adaptive output splines can represent
+matching geometry with different normalized parameterizations. The focused
+144-cell persistence case passes 429,162 assertions; the complete polyline
+worker-kernel selection passes 82,644 assertions across six cases; the full
+`[lc-offsetcurve][import-session][typed-source][polyline]` selection passes
+436,380 assertions across 22 cases. Release `librecad_tests` builds and
+`git diff --check` passes.
+
+This qualifies only this positive-major/negative-minor four-edge source, the
+three scales, two translations, four distances, and five file/version lanes.
+Other major-bulge sign/order combinations, arbitrary multi-bulge chains,
+self-intersection, OCS variants, external-CAD, and visible-GUI behavior remain
+open. Update exact-head CI after pushing; do not inherit earlier checks.
