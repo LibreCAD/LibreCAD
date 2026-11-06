@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W492; chronological evidence follows): implementation slices
+Current status (W493; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -19148,3 +19148,37 @@ results, not exact-head CI or external CAD acceptance. Product test commit
 `247e9193e` (`test(offset): qualify parabola source variants`); roadmap receipt
 is committed separately. Arbitrary parabola scale/degeneracy/precision and
 other family-variant matrices remain open.
+
+## 493. Parabola Curvature-Threshold File Admission
+
+W492 qualifies worker/cache behavior around the parabola apex radius and
+five-version promotion at small distances, but file admission near the
+curvature threshold was not covered. For each of the normal, reversed-control,
+and rigidly rotated finite bowls, generate partial-cache carriers at signed
+distances `±2.0`, `±2.5`, and `±3.0`, then import through R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. Derive expected promotion versus fallback from the exact
+generated output topology. Require both outcomes for every source variant,
+exact cache fingerprints, typed source on native promotion, and preserved
+schema-2 metadata on downgrade.
+
+### Completion receipt
+
+The real-file matrix exercises all three parabola control nets, six signed
+settings, and all five format/version lanes: 90 distinct staged imports. Each
+source variant independently exhibits both promotion of an exact single-cache
+result and downgrade of a partial carrier for multi-piece output. Imported
+cache fingerprints match the generated first branch; promoted entities retain
+their exact native source definition, while downgraded splines preserve the
+schema-2 source data in XDATA/EED. The decision follows observed geometry for
+each setting rather than hard-coding a side/topology assumption at the
+curvature boundary.
+
+Validation: the focused test
+`parabola curvature neighborhood admits only exact single-cache imports`
+passes 22,224 assertions. Incremental CMake Debug `librecad_tests` build and
+`git diff --check` pass. These are local results, not exact-head CI, qmake6,
+visible GUI, or external CAD acceptance. Product test commits `2e81b2f2b`
+(`test(offset): qualify parabola curvature imports`) and `d1c94765a`
+(`test(offset): require parabola cache boundary per variant`); this roadmap
+receipt is committed separately. Other parabola scales, degeneracies, and
+precision modes remain open.
