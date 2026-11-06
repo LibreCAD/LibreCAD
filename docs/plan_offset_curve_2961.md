@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W397; chronological evidence follows): implementation slices
+Current status (W398; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -70,7 +70,7 @@ Changing the family filter alone is non-mutating; selecting a candidate goes
 through guarded worker-backed replacement. This closes the requested picker
 behavior, not exhaustive eligibility for every legal geometry variant or
 every distance/side, and not the broader plan's acceptance gates. The
-recent W378-W397 source-variant slices add malformed-polyline refusal,
+recent W378-W398 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15987,3 +15987,17 @@ source value remains intact on the edit clone.
 The full source-picker Properties suite passes 3,194 assertions across six
 cases; `git diff --check` passes. This covers the deleted-ID state, not every
 document-removal race or visible stale-source interaction.
+
+## 398. Larger-Distance Fit-Point Import Promotion (2026-11-05)
+
+Added a `0.5` distance-magnitude case for the smooth five-point open
+fit-source, on both left and right sides. Its single-cache result promotes
+through operation 8 after staged import in R14 DXF, AC1015 DWG, AC1032 DXF,
+and AC1032 DWG, preserving exact signed source and cache values. Other fit
+fixtures retain the established `0.25` baseline.
+
+The focused fit-point import case passes 11,667 assertions; the combined
+spline-variant, fit-point, and typed-source persistence selection passes
+14,523 assertions across six cases. `git diff --check` passes. This adds one
+larger-distance source/shape case, not an exhaustive distance or curvature
+sweep.
