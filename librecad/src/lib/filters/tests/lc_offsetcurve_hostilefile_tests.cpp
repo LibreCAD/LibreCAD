@@ -5193,6 +5193,193 @@ TEST_CASE("hyperbola curvature-neighborhood imports follow topology across scale
     }
 }
 
+TEST_CASE("translated ellipse scale matrix preserves typed source and cache through file import",
+          "[lc-offsetcurve][import-session][typed-source][ellipse][precision][combined]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-ellipse-translated-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+    constexpr double tau = 2.0 * M_PI;
+    const std::array<RS_EllipseData, 5> variants{
+        RS_EllipseData{{2, -3}, {4, 0}, .6, .2, 2.1, false},
+        RS_EllipseData{{-1, 2}, {3, 1}, .8, 1.8, .1, true},
+        RS_EllipseData{{3, 1}, {2, -1}, 1.4, .3, 2.3, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, 0, tau, false},
+        RS_EllipseData{{0, 0}, {2, 0}, .2, 0, tau, true}};
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
+    constexpr std::array<double, 3> scales{1e-3, 1.0, 1e12};
+    constexpr std::array<double, 4> ordinaryDistances{-.4, -.1, .1, .4};
+    constexpr std::array<double, 2> thinDistances{-.05, .05};
+
+    const auto buildSingleCache = [](const LC_OffsetSourceDefinition& definition,
+                                     double& requestedTolerance) -> std::optional<RS_SplineData> {
+        auto source = definition.source.makeEntity();
+        if (!source) return std::nullopt;
+        const double magnitude = std::abs(definition.signedDistance);
+        const auto options = LC_OffsetWorkerTolerance::directOptions(
+            *source, magnitude, definition.relativeTolerance);
+        if (!options) return std::nullopt;
+        requestedTolerance = options->tolerance.requestedGeometry;
+        const auto generated = LC_CurveOffset::buildDirectBranches(
+            *source,
+            LC_CurveOffset::makeSideRequest(definition.signedDistance < 0
+                ? LC_CurveOffsetSide::Right : LC_CurveOffsetSide::Left, magnitude),
+            *options, LC_CurveOffset::makeDirectSourceBudget());
+        if (generated.status != LC_CurveOffsetStatus::Ok) return std::nullopt;
+        auto materialized = LC_CurveOffset::materializeBranches(
+            *source, generated, *options, LC_CurveOffset::makeDirectSourceBudget());
+        if (materialized.status != LC_CurveOffsetStatus::Ok || materialized.entities.size() != 1)
+            return std::nullopt;
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get())) {
+            if (!spline->validate()) return std::nullopt;
+            return spline->getData();
+        }
+        if (const auto* line = dynamic_cast<const RS_Line*>(materialized.entities.front().get())) {
+            RS_SplineData cache{1, false};
+            cache.controlPoints = {line->getStartpoint(), line->getEndpoint()};
+            cache.knotslist = {0, 0, 1, 1};
+            cache.weights = {1, 1};
+            return cache;
+        }
+        return std::nullopt;
+    };
+
+    std::size_t importedCases = 0;
+    std::size_t refusedCases = 0;
+    std::array<std::size_t, scales.size()> importsByScale{};
+    std::array<std::size_t, scales.size()> refusalsByScale{};
+    for (std::size_t scaleIndex = 0; scaleIndex < scales.size(); ++scaleIndex) {
+        const double scale = scales[scaleIndex];
+        CAPTURE(scale);
+        const RS_Vector translation{1e9 * scale, -1e9 * scale};
+        for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
+            const auto& base = variants[variantIndex];
+            const RS_EllipseData centeredData{{base.center.x * scale, base.center.y * scale, base.center.z},
+                                              {base.majorP.x * scale, base.majorP.y * scale, base.majorP.z},
+                                              base.ratio, base.angle1, base.angle2, base.reversed};
+            const RS_EllipseData translatedData{{centeredData.center.x + translation.x,
+                                                 centeredData.center.y + translation.y, centeredData.center.z},
+                                                centeredData.majorP, centeredData.ratio,
+                                                centeredData.angle1, centeredData.angle2, centeredData.reversed};
+            const LC_OffsetSourceGeometry centered{centeredData};
+            const LC_OffsetSourceGeometry translated{translatedData};
+            REQUIRE(centered.isWellFormed());
+            REQUIRE(translated.isWellFormed());
+            const bool thin = base.ratio == .2;
+            const std::vector<double> distances = thin
+                ? std::vector<double>(thinDistances.begin(), thinDistances.end())
+                : std::vector<double>(ordinaryDistances.begin(), ordinaryDistances.end());
+            for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
+                const double normalizedDistance = distances[distanceIndex];
+                const double signedDistance = normalizedDistance * scale;
+                CAPTURE(variantIndex, normalizedDistance);
+                const LC_OffsetSourceDefinition centeredDefinition{centered, signedDistance, 1e-4, false};
+                const LC_OffsetSourceDefinition translatedDefinition{translated, signedDistance, 1e-4, false};
+                double centeredTolerance = 0;
+                double translatedTolerance = 0;
+                const auto centeredCache = buildSingleCache(centeredDefinition, centeredTolerance);
+                const auto translatedCache = buildSingleCache(translatedDefinition, translatedTolerance);
+                CHECK(bool(centeredCache) == bool(translatedCache));
+                if (!centeredCache || !translatedCache) {
+                    ++refusedCases;
+                    ++refusalsByScale[scaleIndex];
+                    continue;
+                }
+
+                RS_Spline expectedSpline{nullptr, *translatedCache};
+                for (const auto& fileFormat : formats) {
+#ifndef DWGSUPPORT
+                    if (fileFormat.dwg) continue;
+#endif
+                    xd::Definition metadata;
+                    metadata.source = translatedDefinition;
+                    xd::Options encoding;
+                    if (fileFormat.dwg) {
+                        encoding.eed = true;
+                        encoding.textEncoding = xd::TextEncoding::Utf16;
+                    }
+                    else {
+                        encoding.asciiDxf = false;
+                    }
+                    const auto tags = xd::forExport(
+                        {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+                        metadata, encoding);
+                    REQUIRE(tags);
+                    DRW_Spline carrier = f::raw(1, *tags);
+                    carrier.controllist.clear();
+                    for (const auto& point : translatedCache->controlPoints)
+                        carrier.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
+                    carrier.knotslist = translatedCache->knotslist;
+                    carrier.weightlist = translatedCache->weights;
+                    carrier.degree = translatedCache->degree;
+                    carrier.flags = 8;
+                    carrier.m_scenario = 1;
+                    carrier.ncontrol = carrier.controllist.size();
+                    carrier.nknots = carrier.knotslist.size();
+                    carrier.nfit = 0;
+
+                    const auto input = directory.file(std::to_string(scaleIndex) + "-" +
+                        std::to_string(variantIndex) + "-" + std::to_string(distanceIndex) + "-" + fileFormat.suffix);
+#ifdef DWGSUPPORT
+                    if (fileFormat.dwg) f::dwgFile(input, carrier, fileFormat.version);
+                    else f::binaryDxf(input, carrier, fileFormat.version);
+#else
+                    f::binaryDxf(input, carrier, fileFormat.version);
+#endif
+                    const auto outcome = stagedImport(input, fileFormat.lane);
+                    REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+                    REQUIRE(outcome.graphic);
+                    CHECK(outcome.admitted == 1);
+                    CHECK(outcome.downgraded == 0);
+                    const auto* imported = f::sole(*outcome.graphic);
+                    const auto* nativeOffset = dynamic_cast<const LC_OffsetCurve*>(imported);
+                    REQUIRE(nativeOffset);
+                    REQUIRE(nativeOffset->sourceDefinition());
+                    const auto expectedSource = values::encodeSourceDefinition(translatedDefinition);
+                    const auto receivedSource = values::encodeSourceDefinition(*nativeOffset->sourceDefinition());
+                    REQUIRE(expectedSource);
+                    REQUIRE(receivedSource);
+                    CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*receivedSource).toCbor());
+                    const auto* importedSpline = dynamic_cast<const RS_Spline*>(imported);
+                    REQUIRE(importedSpline);
+                    double maximumDeviation = 0;
+                    for (int sample = 0; sample <= 128; ++sample) {
+                        const double parameter = static_cast<double>(sample) / 128.0;
+                        const RS_Vector expected = expectedSpline.getPointAt(parameter);
+                        const RS_Vector actual = importedSpline->getPointAt(parameter);
+                        REQUIRE(expected.valid);
+                        REQUIRE(actual.valid);
+                        maximumDeviation = std::max(maximumDeviation,
+                            std::hypot(actual.x - expected.x, actual.y - expected.y));
+                    }
+                    const double coordinateUlpAllowance = 64.0 * std::numeric_limits<double>::epsilon() *
+                        std::max(std::abs(translation.x), std::abs(translation.y));
+                    CHECK(maximumDeviation <= 4.0 * translatedTolerance + coordinateUlpAllowance);
+                }
+                ++importedCases;
+                ++importsByScale[scaleIndex];
+            }
+        }
+    }
+    CHECK(importedCases > 0);
+    CHECK(refusedCases > 0);
+    for (std::size_t i = 0; i < scales.size(); ++i) {
+        CAPTURE(scales[i]);
+        CHECK(importsByScale[i] + refusalsByScale[i] > 0);
+    }
+}
+
 TEST_CASE("translated hyperbola imports preserve local cache and typed source",
           "[lc-offsetcurve][import-session][typed-source][hyperbola][precision]") {
     Setup setup;
