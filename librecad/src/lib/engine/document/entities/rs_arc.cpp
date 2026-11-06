@@ -839,11 +839,9 @@ void RS_Arc::stretch(const RS_Vector& firstCorner, const RS_Vector& secondCorner
 }
 
 void RS_Arc::createPainterPath(RS_Painter* painter, QPainterPath& path) const {
-    const double baseAngle = getAngle1();
-    const double fullAngleLength = isReversed() ? - getAngleLength() : getAngleLength();
     auto getParamFunc = [this](const RS_Vector& vp) { return getArcAngle(vp); };
     auto getPointFunc = [this](double param) { return getPointAtParameter(param); };
-    painter->pathForEntity(path, this, baseAngle, fullAngleLength, getParamFunc, getPointFunc, getRadius());
+    painter->pathForEntity(path, this, getAngle1(), getAngleLength(), isReversed(), getParamFunc, getPointFunc, getRadius());
 }
 
 void RS_Arc::draw(RS_Painter* painter) {

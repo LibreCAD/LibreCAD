@@ -313,6 +313,10 @@ public:
      * respect to this base.
      *      * @param fullParamLength   Total parameter range covered by the
      * entity (e.g. 2*M_PI for full circle/ellipse, getAngleLength() for arcs).
+     * Never negative.
+     *
+     * @param reversed          The entity runs clockwise from baseParam, as a
+     * reversed arc does, instead of counter-clockwise.
      *      * @param getParamFromPoint Function that converts a world point →
      * parameter value on the curve. Example for arc/circle:    [](const
      * RS_Vector& p){ return (p - center).angle(); } Example for ellipse:
@@ -366,6 +370,7 @@ public:
         const RS_Entity* entity,
         double baseParam,
         double fullParamLength,
+        bool reversed,
         const std::function<double(const RS_Vector&)>& getParamFromPoint,
         const std::function<RS_Vector(double)>& getPointFromParam,
         double approxRadius

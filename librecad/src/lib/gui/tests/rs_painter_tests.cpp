@@ -38,9 +38,12 @@
 #include "lc_graphicviewport.h"
 #include "lc_imageexporter.h"
 #include "lc_printviewportrenderer.h"
+#include "rs_arc.h"
 #include "rs_color.h"
+#include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_linetypepattern.h"
 #include "rs_painter.h"
 #include "rs_pen.h"
@@ -571,4 +574,105 @@ TEST_CASE("print renderer survives a painter that could not begin", "[gui][print
     renderer.render();
 
     CHECK_FALSE(painter.isActive());
+}
+
+// Issue #3236: Break/Divide leaves a reversed arc, and once the view was zoomed
+// past RS_Painter::getMaximumArcNonErrorRadius() such an arc drew the rest of
+// its circle too, as lines that ran out of the view. A reversed arc and the same
+// arc written the other way round must paint the same pixels at every zoom.
+namespace {
+
+/** Draws \p entity in a 300x300 view, zoomed by \p zoom and centred on \p focus. */
+QImage paintAround(RS_Entity& entity, const RS_Vector& focus, const double zoom) {
+    QImage image(300, 300, QImage::Format_RGB32);
+    image.fill(Qt::white);
+    LC_GraphicViewport viewport;
+    viewport.setSize(300, 300);
+    viewport.setOffsetAndFactor(150. - focus.x * zoom, 150. - focus.y * zoom, zoom);
+    RS_Painter painter(&image);
+    painter.setViewPort(&viewport);
+    painter.setWorldBoundingRect(LC_Rect(RS_Vector(focus.x - 150. / zoom, focus.y - 150. / zoom),
+                                         RS_Vector(focus.x + 150. / zoom, focus.y + 150. / zoom)));
+    painter.setPen(testPen(RS2::SolidLine, 1.0));
+    entity.draw(&painter);
+    painter.end();
+    return image;
+}
+
+} // namespace
+
+TEST_CASE("a reversed arc paints as the same arc written counter-clockwise at any zoom",
+          "[gui][painter][arc]") {
+    (void)application();
+    // radius 90: Qt draws the arc below zoom 33.3, a path above it
+    const double zoom = GENERATE(10.0, 34.0, 400.0);
+    // the view is centred on a point at this fraction of the quarter turn
+    const double along = GENERATE(0.0, 0.5, 1.0);
+    const RS_Vector center(230.75, 64.0);
+    const double radius = 90.0;
+    const RS_Vector focus = center + RS_Vector::polar(radius, M_PI / 2. + along * M_PI / 2.);
+
+    RS_Arc counterClockwise(nullptr, RS_ArcData{center, radius, M_PI / 2., M_PI, false});
+    RS_Arc reversed(nullptr, RS_ArcData{center, radius, M_PI, M_PI / 2., true});
+    const QImage expected = paintAround(counterClockwise, focus, zoom);
+    const QImage actual = paintAround(reversed, focus, zoom);
+
+    INFO("zoom " << zoom << ", along " << along);
+    REQUIRE(countPixels(expected, qRgb(0, 0, 0)) > 100);
+    CHECK(actual == expected);
+}
+
+TEST_CASE("a reversed elliptic arc paints as the same arc written counter-clockwise at any zoom",
+          "[gui][painter][ellipse]") {
+    (void)application();
+    // minor radius 81: drawn as a path from zoom 37.1 up
+    const double zoom = GENERATE(10.0, 400.0);
+    const double along = GENERATE(0.0, 0.5, 1.0);
+    const RS_Vector center(230.75, 64.0);
+    const double start = 0.2;
+    const double end = 2.4;
+
+    RS_Ellipse counterClockwise(nullptr, RS_EllipseData{center, RS_Vector(90., 0.), 0.9, start, end, false});
+    RS_Ellipse reversed(nullptr, RS_EllipseData{center, RS_Vector(90., 0.), 0.9, end, start, true});
+    const RS_Vector focus = counterClockwise.getEllipsePoint(start + along * (end - start));
+    const QImage expected = paintAround(counterClockwise, focus, zoom);
+    const QImage actual = paintAround(reversed, focus, zoom);
+
+    INFO("zoom " << zoom << ", along " << along);
+    REQUIRE(countPixels(expected, qRgb(0, 0, 0)) > 100);
+    CHECK(actual == expected);
+}
+
+TEST_CASE("an arc whose end lies on the border of the view paints no stray line",
+          "[gui][painter][arc]") {
+    (void)application();
+    const double zoom = GENERATE(34.0, 400.0);
+    // start angle, angle length, whether the view's border passes through the
+    // end (else the start) of the arc, whether that border is the left (else the
+    // bottom) one; rounding puts the crossing at the wrong side of the end
+    struct Case { double start; double length; bool atEnd; bool leftBorder; };
+    const Case c = GENERATE(Case{0.603815, 2.40035, false, true},
+                            Case{-2.89118, 2.2814, false, false},
+                            Case{2.92677, 0.271003, true, true},
+                            Case{-0.484462, 1.54977, true, false});
+    const RS_Vector center(230.75, 64.0);
+    const double radius = 90.0;
+    const double end = c.start + c.length;
+    const RS_Vector onBorder = center + RS_Vector::polar(radius, c.atEnd ? end : c.start);
+    const double half = 150. / zoom;
+    const RS_Vector focus = c.leftBorder ? RS_Vector(onBorder.x + half, onBorder.y)
+                                         : RS_Vector(onBorder.x, onBorder.y + half);
+
+    // the arc as many short lines is what it must look like
+    RS_Polyline reference(nullptr);
+    for (int i = 0; i <= 20000; ++i) {
+        reference.addVertex(center + RS_Vector::polar(radius, c.start + c.length * i / 20000.));
+    }
+    RS_Arc counterClockwise(nullptr, RS_ArcData{center, radius, c.start, end, false});
+    RS_Arc reversed(nullptr, RS_ArcData{center, radius, end, c.start, true});
+    const int expected = countPixels(paintAround(reference, focus, zoom), qRgb(0, 0, 0));
+    INFO("zoom " << zoom);
+    // a stray line adds a hundred pixels or more
+    CHECK(countPixels(paintAround(counterClockwise, focus, zoom), qRgb(0, 0, 0)) < expected + 20);
+    CHECK(countPixels(paintAround(reversed, focus, zoom), qRgb(0, 0, 0)) < expected + 20);
 }
