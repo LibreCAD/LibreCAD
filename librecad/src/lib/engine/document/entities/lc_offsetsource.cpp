@@ -9,6 +9,7 @@
 #include <cmath>
 #include <iterator>
 #include <limits>
+#include <optional>
 #include <type_traits>
 #include <vector>
 
@@ -69,9 +70,78 @@ RS_VectorSolutions segmentIntersections(const LC_OffsetPolylineSegment& lhs,
     }, lhs, rhs);
 }
 
-RS_VectorSolutions intersectionsOnSegments(const LC_OffsetPolylineSegment& lhs,
-                                           const LC_OffsetPolylineSegment& rhs) {
-    auto points = segmentIntersections(lhs, rhs);
+std::optional<RS_VectorSolutions> arcArcIntersections(const RS_ArcData& lhs,
+                                                     const RS_ArcData& rhs) noexcept {
+    const double dx = rhs.center.x - lhs.center.x;
+    const double dy = rhs.center.y - lhs.center.y;
+    const double centerDistance = std::hypot(dx, dy);
+    const double coordinateScale = std::max({1.0, std::abs(lhs.center.x),
+        std::abs(lhs.center.y), std::abs(rhs.center.x), std::abs(rhs.center.y),
+        lhs.radius, rhs.radius});
+    const double coordinateTolerance = 128.0 * std::numeric_limits<double>::epsilon() *
+                                       coordinateScale;
+    if (!std::isfinite(centerDistance) || !std::isfinite(coordinateTolerance))
+        return std::nullopt;
+
+    const double scale = std::max({lhs.radius, rhs.radius, centerDistance});
+    if (!std::isfinite(scale) || scale <= 0.0) return std::nullopt;
+    const double r1 = lhs.radius / scale;
+    const double r2 = rhs.radius / scale;
+    const double distance = centerDistance / scale;
+    const double tolerance = coordinateTolerance / scale;
+    if (!std::isfinite(tolerance)) return std::nullopt;
+    if (centerDistance <= coordinateTolerance) {
+        const double radiusDifference = std::abs(lhs.radius - rhs.radius);
+        if (centerDistance == 0.0 && radiusDifference == 0.0)
+            return RS_VectorSolutions{};
+        if (radiusDifference > centerDistance + coordinateTolerance) return RS_VectorSolutions{};
+        return std::nullopt;
+    }
+    if (distance > r1 + r2 + tolerance ||
+        distance < std::abs(r1 - r2) - tolerance) return RS_VectorSolutions{};
+
+    // Scale before squaring to keep very large circle radii in range.
+    const double along = (r1 - r2) * (r1 + r2) + distance * distance;
+    const double alongCenter = along / (2.0 * distance);
+    const double heightSquared = r1 * r1 - alongCenter * alongCenter;
+    const double squareTolerance = 256.0 * std::numeric_limits<double>::epsilon() *
+        std::max({r1 * r1, r2 * r2, alongCenter * alongCenter,
+                  std::numeric_limits<double>::min()});
+    if (!std::isfinite(alongCenter) || !std::isfinite(heightSquared) ||
+        !std::isfinite(squareTolerance)) return std::nullopt;
+    if (heightSquared < -squareTolerance) return RS_VectorSolutions{};
+
+    const double projection = alongCenter / distance;
+    const double height = scale * std::sqrt(std::max(0.0, heightSquared));
+    const double normalX = -dy / centerDistance;
+    const double normalY = dx / centerDistance;
+    const RS_Vector base{lhs.center.x + dx * projection,
+                         lhs.center.y + dy * projection};
+    const RS_Vector offset{normalX * height, normalY * height};
+    if (!LC_OffsetSourceDetail::finite(base) ||
+        !LC_OffsetSourceDetail::finite(offset)) return std::nullopt;
+    if (heightSquared <= squareTolerance) return RS_VectorSolutions{base};
+    const RS_Vector first = base + offset;
+    const RS_Vector second = base - offset;
+    if (!LC_OffsetSourceDetail::finite(first) ||
+        !LC_OffsetSourceDetail::finite(second)) return std::nullopt;
+    return RS_VectorSolutions{first, second};
+}
+
+std::optional<RS_VectorSolutions> intersectionsOnSegments(
+    const LC_OffsetPolylineSegment& lhs, const LC_OffsetPolylineSegment& rhs) {
+    RS_VectorSolutions points;
+    if (const auto* firstArc = std::get_if<RS_ArcData>(&lhs)) {
+        if (const auto* secondArc = std::get_if<RS_ArcData>(&rhs)) {
+            auto intersections = arcArcIntersections(*firstArc, *secondArc);
+            if (!intersections) return std::nullopt;
+            points = std::move(*intersections);
+        } else {
+            points = segmentIntersections(lhs, rhs);
+        }
+    } else {
+        points = segmentIntersections(lhs, rhs);
+    }
     RS_VectorSolutions onSegments;
     const double scale = std::visit([](const auto& first, const auto& second) {
         const auto pointScale = [](const auto& item) {
@@ -223,7 +293,10 @@ bool segmentsIntersectOnlyAtJoin(const LC_OffsetPolylineData& data,
     if ((sequential || closedSeam) &&
         std::holds_alternative<RS_LineData>(data.segments[first]) &&
         std::holds_alternative<RS_LineData>(data.segments[second])) return true;
-    const auto intersections = intersectionsOnSegments(data.segments[first], data.segments[second]);
+    const auto foundIntersections = intersectionsOnSegments(data.segments[first],
+                                                             data.segments[second]);
+    if (!foundIntersections) return false;
+    const auto& intersections = *foundIntersections;
     if (intersections.empty()) return true;
     if (!sequential && !closedSeam) return false;
 

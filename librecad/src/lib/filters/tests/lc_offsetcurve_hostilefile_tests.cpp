@@ -1782,6 +1782,60 @@ TEST_CASE("imported overlapping coincident bulge arcs are not an offset source",
     }
 }
 
+TEST_CASE("imported near-concentric bulge arcs crossing twice are not an offset source",
+          "[lc-offsetcurve][import-session][typed-source][polyline][topology][bulge]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-near-concentric-bulge-arcs-import");
+    constexpr double centerShift = 1.0e-8;
+    const double joinAngle = 3.0 * M_PI / 2.0 - std::atan(centerShift);
+    const double radius = std::hypot(centerShift, 1.0);
+    DRW_LWPolyline raw;
+    raw.vertexnum = 3;
+    raw.addVertex(DRW_Vertex2D(1, 0, std::tan(3.0 * M_PI / 8.0)));
+    raw.addVertex(DRW_Vertex2D(0, -1, -std::tan(joinAngle / 4.0)));
+    raw.addVertex(DRW_Vertex2D(centerShift + radius, 0, 0));
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        const auto path = directory.file(std::string("near-concentric-arcs-") + format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwgPolylineFile(path, raw, format.version);
+        else f::binaryDxfPolyline(path, raw, format.version);
+#else
+        f::binaryDxfPolyline(path, raw, format.version);
+#endif
+        auto outcome = stagedImport(path, format.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        const RS_Polyline* imported = nullptr;
+        for (const RS_Entity* entity : *outcome.graphic) {
+            if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity)) {
+                REQUIRE(imported == nullptr);
+                imported = polyline;
+            }
+        }
+        REQUIRE(imported);
+        REQUIRE(imported->size() == 2);
+        CHECK(imported->entityAt(0)->rtti() == RS2::EntityArc);
+        CHECK(imported->entityAt(1)->rtti() == RS2::EntityArc);
+        const auto* firstArc = dynamic_cast<const RS_Arc*>(imported->entityAt(0));
+        const auto* secondArc = dynamic_cast<const RS_Arc*>(imported->entityAt(1));
+        REQUIRE(firstArc);
+        REQUIRE(secondArc);
+        CHECK(firstArc->isPointOnEntity({0, 1}, 1.0e-9));
+        CHECK(secondArc->isPointOnEntity({0, 1}, 1.0e-9));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*imported));
+    }
+}
+
 TEST_CASE("imported repeated and near-coincident polyline vertices are refused as offset sources",
           "[lc-offsetcurve][import-session][typed-source][polyline][malformed][topology]") {
     Setup setup;

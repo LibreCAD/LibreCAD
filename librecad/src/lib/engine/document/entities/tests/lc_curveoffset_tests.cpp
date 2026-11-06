@@ -271,6 +271,23 @@ TEST_CASE("Polyline source topology validation rejects segment self-intersection
          RS_ArcData{{0, 0}, 1.0, 2.0 * M_PI / 3.0, M_PI, false}}};
     CHECK(LC_OffsetSourceGeometry{touchingArcs}.isWellFormed());
 
+    const double nearConcentricShift = 1.0e-8;
+    const double nearConcentricRadius = std::hypot(nearConcentricShift, 1.0);
+    double nearConcentricJoinAngle = std::atan2(-1.0, -nearConcentricShift);
+    if (nearConcentricJoinAngle < 0.0) nearConcentricJoinAngle += 2.0 * M_PI;
+    const LC_OffsetPolylineData nearConcentricCrossing{{1, 0},
+        {nearConcentricShift + nearConcentricRadius, 0}, false,
+        {RS_ArcData{{0, 0}, 1.0, 0.0, 3.0 * M_PI / 2.0, false},
+         RS_ArcData{{nearConcentricShift, 0}, nearConcentricRadius,
+                    nearConcentricJoinAngle, 0.0, true}}};
+    const RS_Arc nearConcentricFirstArc{nullptr,
+        std::get<RS_ArcData>(nearConcentricCrossing.segments[0])};
+    const RS_Arc nearConcentricSecondArc{nullptr,
+        std::get<RS_ArcData>(nearConcentricCrossing.segments[1])};
+    CHECK(nearConcentricFirstArc.isPointOnEntity({0, 1}, 1.0e-12));
+    CHECK(nearConcentricSecondArc.isPointOnEntity({0, 1}, 1.0e-12));
+    CHECK_FALSE(LC_OffsetSourceGeometry{nearConcentricCrossing}.isWellFormed());
+
     const LC_OffsetPolylineData simpleChain{{0, 0}, {3, 1}, false,
         {RS_LineData{{0, 0}, {1, 0}}, RS_LineData{{1, 0}, {2, 1}},
          RS_LineData{{2, 1}, {3, 1}}}};
