@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W473; chronological evidence follows): implementation slices
+Current status (W474; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W473. Historical results from
+No exact-head CI result is claimed for W441-W474. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18633,3 +18633,30 @@ passes 3,307 assertions across six cases. `git diff --check` passes. These are
 local results, not exact-head CI or visible-GUI/external CAD acceptance. Test
 commit `68ca647dd` (`test(offset): preserve source on mixed-bulge picker
 refusal`); this roadmap receipt is committed separately.
+
+## 474. Current-Source Highlight Across All Picker Families
+
+The source picker can highlight a matched live source, and prior focused tests
+cover line and parabola selection. Extend the nine-family replacement matrix
+so each successful replacement can invoke Select in drawing and verify the
+newly matched entity is selected. This must include parabola as its own kind
+before generic spline-points, and cover spline, spline-points, bounded
+hyperbola, ellipse, line, arc, circle, and polyline without changing their
+source/cache definitions. This is automated interaction coverage; the
+separate visible-GUI acceptance gate remains open.
+
+### Completion receipt
+
+Each of the nine modeled source families is now replaced through the Properties
+picker and selected through its matched live candidate. The integration test
+asserts Select in drawing is enabled after replacement and that the exact
+candidate is selected, including the distinct parabola entry and the polyline
+family. Existing tests continue to cover filter-only no-op behavior,
+cross-family replacement, cancellation/refusal, and source/cache invariants.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The full
+`[gui][dialog][offsetcurve][source]` selection passes 3,328 assertions across
+six cases. `git diff --check` passes. These are local automated results, not
+visible-GUI or external CAD acceptance and not exact-head CI. Test commit
+`1cf2e82fb` (`test(offset): verify picker highlighting for every source
+family`); this roadmap receipt is committed separately.
