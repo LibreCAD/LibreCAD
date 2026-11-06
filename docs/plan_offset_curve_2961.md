@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W485; chronological evidence follows): implementation slices
+Current status (W486; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W485. Historical results from
+No exact-head CI result is claimed for W441-W486. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18935,4 +18935,28 @@ hyperbola test passes 3,330 assertions; full worker-kernel suite passes 7,916
 assertions across 31 cases. `git diff --check` passes. Local worker evidence
 only; this dense neighborhood is not yet a real-file magnitude matrix.
 Test commit `b296eb7f0` (`test(offset): probe hyperbola curvature boundary`);
+roadmap receipt is separate.
+
+## 486. Typed-Source Persistence Across Historical DXF/DWG Versions
+
+W484 expanded the source-only schema-2 save/reopen/second-save test to 23
+definitions, including all eight bounded-hyperbola interval layouts, but it
+used only R2018 DXF/DWG. Run the same exact-source verification through R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG, and write the second save using the
+same version as the first. Preserve schema-2 metadata and source-definition
+bytes on both reads.
+
+### Completion receipt
+
+All 23 source definitions now round-trip through all five historical DXF/DWG
+lanes: R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Each initial save, reopen,
+and same-version second save preserves the exact encoded typed source, common
+flags, and XDATA/EED tail. This is source-metadata persistence, not cache
+generation or native import admission; those remain separate matrix lanes.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`typed offset source survives real DXF and DWG file save reopen and second save`
+case passes 4,148 assertions. `git diff --check` passes. These are local
+results, not exact-head CI or external CAD acceptance. Test commit
+`58d84d816` (`test(offset): roundtrip typed sources across DWG versions`);
 roadmap receipt is separate.
