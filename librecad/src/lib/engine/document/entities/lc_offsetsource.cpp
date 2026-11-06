@@ -150,6 +150,63 @@ bool collinearLinesOverlap(const RS_LineData& lhs, const RS_LineData& rhs) noexc
     return high - low > tolerance;
 }
 
+bool coincidentArcSpansOverlap(const RS_ArcData& lhs, const RS_ArcData& rhs) noexcept {
+    constexpr double TwoPi = 2.0 * M_PI;
+    const double scale = std::max({1.0, std::abs(lhs.center.x), std::abs(lhs.center.y),
+        std::abs(rhs.center.x), std::abs(rhs.center.y), lhs.radius, rhs.radius});
+    const double geometryTolerance = 128.0 * std::numeric_limits<double>::epsilon() * scale;
+    const double centerDistance = std::hypot(lhs.center.x - rhs.center.x,
+                                             lhs.center.y - rhs.center.y);
+    if (!std::isfinite(geometryTolerance) || !std::isfinite(centerDistance)) return true;
+    if (centerDistance > geometryTolerance ||
+        std::abs(lhs.radius - rhs.radius) > geometryTolerance) return false;
+
+    struct AngularIntervals {
+        std::array<std::pair<double, double>, 2> values{};
+        std::size_t count = 0;
+    };
+    const auto intervals = [=](const RS_ArcData& arc) noexcept {
+        AngularIntervals result;
+        const double start = arc.reversed ? arc.angle2 : arc.angle1;
+        const double end = arc.reversed ? arc.angle1 : arc.angle2;
+        const double rawSweep = end - start;
+        if (!std::isfinite(rawSweep)) {
+            result.count = 2;
+            result.values = {{{0.0, TwoPi}, {0.0, 0.0}}};
+            return result;
+        }
+        double normalizedStart = std::fmod(start, TwoPi);
+        if (normalizedStart < 0.0) normalizedStart += TwoPi;
+        double sweep = std::fmod(rawSweep, TwoPi);
+        if (sweep < 0.0) sweep += TwoPi;
+        const double finish = normalizedStart + sweep;
+        if (finish <= TwoPi) {
+            result.values[0] = {normalizedStart, finish};
+            result.count = 1;
+        } else {
+            result.values[0] = {normalizedStart, TwoPi};
+            result.values[1] = {0.0, finish - TwoPi};
+            result.count = 2;
+        }
+        return result;
+    };
+    const AngularIntervals first = intervals(lhs);
+    const AngularIntervals second = intervals(rhs);
+    const double angularTolerance = std::max(
+        128.0 * std::numeric_limits<double>::epsilon(),
+        geometryTolerance / std::max(std::numeric_limits<double>::min(),
+                                     std::min(lhs.radius, rhs.radius)));
+    if (!std::isfinite(angularTolerance) || angularTolerance >= TwoPi) return true;
+    for (std::size_t i = 0; i < first.count; ++i) {
+        for (std::size_t j = 0; j < second.count; ++j) {
+            const double overlap = std::min(first.values[i].second, second.values[j].second) -
+                                   std::max(first.values[i].first, second.values[j].first);
+            if (overlap > angularTolerance) return true;
+        }
+    }
+    return false;
+}
+
 bool segmentsIntersectOnlyAtJoin(const LC_OffsetPolylineData& data,
                                  const std::size_t first,
                                  const std::size_t second) {
@@ -158,6 +215,10 @@ bool segmentsIntersectOnlyAtJoin(const LC_OffsetPolylineData& data,
     if (const auto* lineA = std::get_if<RS_LineData>(&data.segments[first])) {
         if (const auto* lineB = std::get_if<RS_LineData>(&data.segments[second]);
             lineB && collinearLinesOverlap(*lineA, *lineB)) return false;
+    }
+    if (const auto* arcA = std::get_if<RS_ArcData>(&data.segments[first])) {
+        if (const auto* arcB = std::get_if<RS_ArcData>(&data.segments[second]);
+            arcB && coincidentArcSpansOverlap(*arcA, *arcB)) return false;
     }
     if ((sequential || closedSeam) &&
         std::holds_alternative<RS_LineData>(data.segments[first]) &&
