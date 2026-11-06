@@ -32014,22 +32014,81 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
                 (splineData.m_periodicFlag ? 0x2 : 0);
   }
 
-  // write spline control points:
-  for (const RS_Vector &v : s->getUnwrappedControlPoints()) {
-    sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
-  }
-  sp.weightlist = s->getUnwrappedWeights();
-  if (std::any_of(sp.weightlist.begin(), sp.weightlist.end(),
-                  differsFromUnitWeight)) {
-    sp.flags |= 0x04;
-  }
-
-  sp.ncontrol = static_cast<std::int32_t>(sp.controllist.size());
   sp.degree = static_cast<std::int32_t>(degree);
 
-  // knot vector from RS_Spline
-  sp.knotslist = s->getUnwrappedKnotVector();
-  sp.nknots = static_cast<std::int32_t>(sp.knotslist.size());
+  // RS_Spline keeps fit points alongside the control net derived from them.
+  // Reconstruct that net before using the fit points as file data: callers can
+  // mutate getData() directly, and control-point editing APIs do not all clear
+  // the saved fit list. A mismatch means the control net is authoritative.
+  bool writeFitPoints = false;
+  if (degree == 3 && !s->isClosed() && !splineData.m_closedFlag &&
+      !splineData.m_periodicFlag && splineData.fitPoints.size() >= 4 &&
+      splineData.fitPoints.size() <= maximum &&
+      std::all_of(splineData.fitPoints.begin(), splineData.fitPoints.end(),
+                  [](const RS_Vector &point) {
+                    return point.valid && std::isfinite(point.x) &&
+                           std::isfinite(point.y) && std::isfinite(point.z) &&
+                           point.z == 0.0;
+                  })) {
+    RS_SplineData reconstructedData(3, false);
+    RS_Spline reconstructed(nullptr, reconstructedData);
+    reconstructed.setFitPoints(splineData.fitPoints);
+    const RS_SplineData &fitData = reconstructed.getData();
+    const auto samePoints = [](const std::vector<RS_Vector> &left,
+                               const std::vector<RS_Vector> &right) {
+      if (left.size() != right.size())
+        return false;
+      for (std::size_t i = 0; i < left.size(); ++i) {
+        if (!left[i].valid || !right[i].valid ||
+            left[i].distanceTo(right[i]) > 1.0e-9)
+          return false;
+      }
+      return true;
+    };
+    const auto sameNumbers = [](const std::vector<double> &left,
+                                const std::vector<double> &right) {
+      if (left.size() != right.size())
+        return false;
+      for (std::size_t i = 0; i < left.size(); ++i) {
+        if (!std::isfinite(left[i]) || !std::isfinite(right[i]) ||
+            std::abs(left[i] - right[i]) > 1.0e-12)
+          return false;
+      }
+      return true;
+    };
+    writeFitPoints =
+        reconstructed.validate() && fitData.degree == degree &&
+        splineData.degree == fitData.degree &&
+        splineData.type == fitData.type &&
+        samePoints(splineData.controlPoints, fitData.controlPoints) &&
+        sameNumbers(splineData.knotslist, fitData.knotslist) &&
+        sameNumbers(splineData.weights, fitData.weights);
+  }
+
+  if (writeFitPoints) {
+    sp.m_scenario = 2;
+    sp.flags = 0x08; // planar, non-rational fit-point spline
+    sp.nfit = static_cast<std::int32_t>(splineData.fitPoints.size());
+    sp.fitlist.reserve(splineData.fitPoints.size());
+    for (const RS_Vector &point : splineData.fitPoints)
+      sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0.0));
+  } else {
+    // write spline control points:
+    for (const RS_Vector &v : s->getUnwrappedControlPoints()) {
+      sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+    }
+    sp.weightlist = s->getUnwrappedWeights();
+    if (std::any_of(sp.weightlist.begin(), sp.weightlist.end(),
+                    differsFromUnitWeight)) {
+      sp.flags |= 0x04;
+    }
+
+    sp.ncontrol = static_cast<std::int32_t>(sp.controllist.size());
+
+    // knot vector from RS_Spline
+    sp.knotslist = s->getUnwrappedKnotVector();
+    sp.nknots = static_cast<std::int32_t>(sp.knotslist.size());
+  }
 
   getEntityAttributes(&sp, s);
   sp.extData = std::move(*merged);
