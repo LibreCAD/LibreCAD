@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W488; chronological evidence follows): implementation slices
+Current status (W489; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W488. Historical results from
+No exact-head CI result is claimed for W441-W489. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -19021,3 +19021,29 @@ CI or external CAD acceptance. Test commit `b5302c7cb`
 (`test(offset): cover high-eccentricity ellipse eligibility`); roadmap receipt
 is separate. Remaining ellipse work includes more sweep/reversal/eccentricity
 layouts and denser distance checks near curvature boundaries.
+
+## 489. Reversed Partial-Ellipse File Promotion
+
+W441's worker conic matrix includes a reversed partial ellipse whose directed
+parameter interval crosses the angle wrap, but the real staged-import matrix
+did not include it. Add that exact source definition to the five DXF/DWG
+version lanes at signed distances `±0.1` and `±0.4`; require native cache
+admission with the original reversal/interval data and exact cache fingerprint.
+Also retain it in the five-version schema-2 source-only second-save matrix.
+
+### Completion receipt
+
+The reversed partial ellipse spanning angles `1.8` to `0.1` with reversed
+orientation promotes through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG at both
+signed distances and both tested magnitudes. Each imported offset retains the
+exact source definition and expected cache fingerprint. Its schema-2 source
+also survives same-version save/reopen/second-save in all five lanes.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+real-file family import case passes 117,461 assertions and the complete
+five-version typed-source persistence case passes 4,688 assertions.
+`git diff --check` passes. Local evidence, not exact-head CI or external CAD
+acceptance. Test commit `5eeae093b` (`test(offset): promote reversed ellipse
+source variants`); roadmap receipt is separate. Remaining ellipse work
+includes untested directed sweeps, further eccentricities, and distance
+behavior near curvature boundaries.
