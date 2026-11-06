@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W396; chronological evidence follows): implementation slices
+Current status (W397; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -70,7 +70,7 @@ Changing the family filter alone is non-mutating; selecting a candidate goes
 through guarded worker-backed replacement. This closes the requested picker
 behavior, not exhaustive eligibility for every legal geometry variant or
 every distance/side, and not the broader plan's acceptance gates. The
-recent W378-W396 source-variant slices add malformed-polyline refusal,
+recent W378-W397 source-variant slices add malformed-polyline refusal,
 long mixed-polyline operation-7/8 sweeps, rational internal-knot worker
 validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
@@ -15975,3 +15975,15 @@ The focused typed-source Properties suite passes 2,793 assertions across two
 cases; `git diff --check` passes. This supplements the nine-family replacement
 matrix, but does not replace visible GUI acceptance or stale/deleted-source
 interaction coverage.
+
+## 397. Deleted Source Candidate Refusal in Properties (2026-11-05)
+
+Added a Properties regression that replaces the embedded source with a live
+line, marks that document entity deleted, and refreshes the source-family
+choices. The widget reports `Embedded source (not found)`, disables the
+Select-in-drawing command, and cannot select the deleted entity; the typed
+source value remains intact on the edit clone.
+
+The full source-picker Properties suite passes 3,194 assertions across six
+cases; `git diff --check` passes. This covers the deleted-ID state, not every
+document-removal race or visible stale-source interaction.
