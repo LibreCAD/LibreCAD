@@ -531,7 +531,20 @@ TEST_CASE("polyline cache promotion preserves mixed segment orientation and offs
 TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains on both sides",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
     const double quarterTurn = M_PI / 2.0;
-    const std::array<LC_OffsetPolylineData, 2> variants{
+    RS_Polyline mixedBulgePolyline;
+    mixedBulgePolyline.addVertex({0, 0}, 0.2);
+    mixedBulgePolyline.addVertex({8, 0}, -0.2);
+    mixedBulgePolyline.addVertex({8, 6});
+    mixedBulgePolyline.addVertex({0, 6});
+    mixedBulgePolyline.setClosed(true);
+    mixedBulgePolyline.endPolyline();
+    const auto mixedBulgeSource = LC_OffsetSourceGeometry::capture(mixedBulgePolyline);
+    REQUIRE(mixedBulgeSource);
+    REQUIRE(mixedBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    const auto& mixedBulgeData = std::get<LC_OffsetPolylineData>(mixedBulgeSource->value);
+    REQUIRE(mixedBulgeData.closed);
+    REQUIRE(mixedBulgeData.segments.size() == 4);
+    const std::array<LC_OffsetPolylineData, 3> variants{
         LC_OffsetPolylineData{{0, 0}, {0, 0}, true,
             {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
              RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}},
@@ -539,7 +552,8 @@ TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains
             {RS_ArcData{{0, 0}, 2, 0, quarterTurn, false},
              RS_ArcData{{0, 0}, 2, quarterTurn, M_PI, false},
              RS_ArcData{{0, 0}, 2, M_PI, 3 * quarterTurn, false},
-             RS_ArcData{{0, 0}, 2, 3 * quarterTurn, 2 * M_PI, false}}}
+             RS_ArcData{{0, 0}, 2, 3 * quarterTurn, 2 * M_PI, false}}},
+        mixedBulgeData
     };
     for (const auto& data : variants) {
         const LC_OffsetSourceGeometry source{data};

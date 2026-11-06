@@ -1189,7 +1189,27 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         RS_ArcData{{0, 0}, 2, quarterTurn, M_PI, false},
         RS_ArcData{{0, 0}, 2, M_PI, 3 * quarterTurn, false},
         RS_ArcData{{0, 0}, 2, 3 * quarterTurn, 2 * M_PI, false}}};
-    const std::array<LC_OffsetSourceGeometry, 14> sources{
+    RS_Polyline mixedBulgePolyline;
+    mixedBulgePolyline.addVertex({0, 0}, 0.2);
+    mixedBulgePolyline.addVertex({8, 0}, -0.2);
+    mixedBulgePolyline.addVertex({8, 6});
+    mixedBulgePolyline.addVertex({0, 6});
+    mixedBulgePolyline.setClosed(true);
+    mixedBulgePolyline.endPolyline();
+    const auto mixedBulgePolylineSource =
+        LC_OffsetSourceGeometry::capture(mixedBulgePolyline);
+    REQUIRE(mixedBulgePolylineSource);
+    REQUIRE(mixedBulgePolylineSource->kind() ==
+            LC_OffsetSourceGeometry::Kind::Polyline);
+    const auto &mixedPolylineData =
+        std::get<LC_OffsetPolylineData>(mixedBulgePolylineSource->value);
+    REQUIRE(mixedPolylineData.closed);
+    REQUIRE(mixedPolylineData.segments.size() == 4);
+    REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[0]));
+    REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
+    REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
+    REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
+    const std::array<LC_OffsetSourceGeometry, 15> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{splineSource},
         LC_OffsetSourceGeometry{nonuniformQuadratic},
@@ -1203,7 +1223,8 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
         LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 0}, false,
             {RS_LineData{{0, 0}, {2, 0}}}}},
-        LC_OffsetSourceGeometry{closedArcPolyline}
+        LC_OffsetSourceGeometry{closedArcPolyline},
+        *mixedBulgePolylineSource
     };
     const auto app = std::make_shared<DRW_Variant>(1001, std::string("LibreCad"));
     for (std::size_t i = 0; i < sources.size(); ++i) {
