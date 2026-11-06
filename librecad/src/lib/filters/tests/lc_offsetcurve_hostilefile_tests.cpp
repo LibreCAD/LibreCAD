@@ -1389,18 +1389,21 @@ TEST_CASE("typed source DXF import materializes only an operation-8 validated ca
     }
 }
 
-TEST_CASE("conic typed sources promote from real DXF and DWG cache carriers",
-          "[lc-offsetcurve][import-session][typed-source][conic][persistence]") {
+TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
+          "[lc-offsetcurve][import-session][typed-source][cache-promotion][persistence]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-conic-source-import");
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
     const double tau = 2.0 * M_PI;
-    const std::array<LC_OffsetSourceGeometry, 4> sources{
+    const std::array<LC_OffsetSourceGeometry, 7> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {4, 0}, .6, 0, tau, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{3, -2}, {3, 0}, .7, .2, 2.1, false}},
         LC_OffsetSourceGeometry{RS_ArcData{{-1, 2}, 2.5, .2, 2.4, true}},
-        LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}}
+        LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{-4, 4}, RS_Vector{0, -4}, RS_Vector{4, 4}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}}
     };
     struct Format {
         Lane lane;
