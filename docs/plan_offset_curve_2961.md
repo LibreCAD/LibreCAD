@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W491; chronological evidence follows): implementation slices
+Current status (W492; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -19110,3 +19110,41 @@ passes. These are local results, not exact-head CI or external CAD acceptance.
 Product test commit `0dce0c02e` (`test(offset): qualify reversed thin ellipse
 variants`); roadmap receipt is committed separately. Broader ellipse sweep,
 reversal, and curvature/topology combinations remain open.
+
+## 492. Parabola Orientation, Curvature, and File Variants
+
+The finite parabola family already appears in the source picker and a basic
+source/cache promotion fixture, but worker side/distance coverage only proved
+generation at a generic distance. Add worker operation-7 generation and
+operation-8 cache validation for normal, reversed-control-order, and rigidly
+rotated parabola control nets. Sample both signed sides at 0.25, 0.5, 2.0,
+2.5, and 3.0 around the known 2.5 apex-curvature radius. For a one-entity
+result, require exact cache acceptance; for a multi-entity result, require
+`NotCacheRepresentable` without state mutation. Add the reversed and rotated
+source values to the five-version DXF/DWG schema-2 save/reopen/second-save and
+staged operation-8 promotion matrices, comparing exact tagged source and
+canonical cache fingerprints. This qualifies only these finite control nets,
+distances, tolerances, and file lanes; it does not prove arbitrary parabola
+scale, degeneracy, or precision behavior.
+
+### Completion receipt
+
+Three finite parabola control nets (the existing bowl, reversed endpoint
+order, and a rigidly rotated/translated bowl) now run worker operation 7 and
+operation 8 at signed distances `±0.25`, `±0.5`, `±2.0`, `±2.5`, and `±3.0`.
+Every generated value is either accepted as an exact single cache or refused
+as `NotCacheRepresentable` without mutation when the result has multiple
+pieces. The reversed and rotated source definitions were added to all five
+schema-2 save/reopen/second-save lanes and to real staged-import promotion at
+`±0.1` and `±0.4` in R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The import tests
+check exact tagged parabola identity and cache fingerprints.
+
+Validation: focused parabola worker matrix passes 759 assertions; the full
+worker-kernel suite passes 9,221 assertions across 32 cases. Typed-source
+persistence passes 5,228 assertions. The selected real-file cache-promotion
+and persistence matrix passes 124,274 assertions across 2 cases. Incremental
+CMake Debug test targets build and `git diff --check` passes. These are local
+results, not exact-head CI or external CAD acceptance. Product test commit
+`247e9193e` (`test(offset): qualify parabola source variants`); roadmap receipt
+is committed separately. Arbitrary parabola scale/degeneracy/precision and
+other family-variant matrices remain open.
