@@ -3007,6 +3007,61 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
         continue;
 #endif
       DRW_LWPolyline fixture = bulged;
+      fixture.flags = 1;
+      const double bulge = -std::tan(M_PI / 8.0);
+      fixture.vertlist.front()->bulge = bulge;
+      const auto path = directory.file(std::string("closed-negative-") +
+                                       format.suffix);
+#ifdef DWGSUPPORT
+      if (format.dwg)
+        f::dwgPolylineFile(path, fixture, format.version);
+      else
+        f::binaryDxfPolyline(path, fixture, format.version);
+#else
+      f::binaryDxfPolyline(path, fixture, format.version);
+#endif
+      const auto imported = stagedImport(path, format.lane);
+      INFO(format.suffix);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == 3);
+      const RS_Ellipse *ellipse = nullptr;
+      std::vector<const RS_Line *> lines;
+      for (const RS_Entity *entity : *imported.graphic) {
+        CHECK(hasFragmentXData(*entity));
+        CHECK(hasProjectionApp(*entity, "LibreCAD_POLYLINE_OCS"));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity)) {
+          ellipse = candidate;
+          CHECK(hasProjectionApp(*entity, "LibreCAD_CONIC_OCS"));
+        }
+        if (const auto *candidate = dynamic_cast<const RS_Line *>(entity))
+          lines.push_back(candidate);
+      }
+      REQUIRE(ellipse);
+      REQUIRE(lines.size() == 2);
+      CHECK(ellipse->getAngleLength() ==
+            Catch::Approx(std::abs(4.0 * std::atan(bulge))));
+      CHECK(samePoint(ellipse->getStartpoint(), RS_Vector{1.8, 0.0}));
+      CHECK(samePoint(ellipse->getEndpoint(), RS_Vector{1.8, 2.0}));
+      const std::array<std::pair<RS_Vector, RS_Vector>, 2> expectedLines{{
+          {{1.8, 2.0}, {0.2, 2.0}},
+          {{0.2, 2.0}, {1.8, 0.0}}}};
+      for (const auto &expected : expectedLines) {
+        CHECK(std::any_of(lines.begin(), lines.end(), [&](const RS_Line *line) {
+          return samePoint(line->getStartpoint(), expected.first) &&
+                 samePoint(line->getEndpoint(), expected.second);
+        }));
+      }
+    }
+
+    for (const auto &format : bulgeFormats) {
+#ifndef DWGSUPPORT
+      if (format.dwg)
+        continue;
+#endif
+      DRW_LWPolyline fixture = bulged;
       fixture.extPoint = {0.6, 0.0, -0.8};
       fixture.flags = 1;
       fixture.vertlist.front()->bulge = 2.0;
