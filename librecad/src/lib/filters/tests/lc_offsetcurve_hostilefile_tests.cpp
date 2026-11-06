@@ -1235,6 +1235,19 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         *mixedBulgePolylineSource
     };
     const auto app = std::make_shared<DRW_Variant>(1001, std::string("LibreCad"));
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         xd::Definition definition;
@@ -1242,11 +1255,12 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         definition.reservedFlags = 0x10;
         definition.tail = {{1000, QStringLiteral("file roundtrip tail")}, {1070, std::int16_t{23}}};
 
-        const auto verify = [&](const std::filesystem::path &path, bool dwg, bool secondSave) {
-            const auto captured = f::readCodec(path, dwg);
+        const auto verify = [&](const std::filesystem::path &path, const Format& fileFormat,
+                                bool secondSave) {
+            const auto captured = f::readCodec(path, fileFormat.dwg);
             REQUIRE(captured.splines.size() == 1);
             xd::Options options;
-            if (dwg) {
+            if (fileFormat.dwg) {
                 options.eed = true;
                 options.textEncoding = xd::TextEncoding::Utf16;
             } else {
@@ -1265,15 +1279,18 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             CHECK(QCborValue(*before).toCbor() == QCborValue(*after).toCbor());
             if (!secondSave) return;
 
-            const auto repeat = directory.file("second-" + std::to_string(i) + (dwg ? ".dwg" : ".dxf"));
+            const auto repeat = directory.file("second-" + std::to_string(i) + "-" +
+                                               fileFormat.suffix);
 #ifdef DWGSUPPORT
-            if (dwg) f::dwgFile(repeat, captured.splines.front(), DRW::AC1032);
-            else f::binaryDxf(repeat, captured.splines.front(), DRW::AC1032);
+            if (fileFormat.dwg)
+                f::dwgFile(repeat, captured.splines.front(), fileFormat.version);
+            else
+                f::binaryDxf(repeat, captured.splines.front(), fileFormat.version);
 #else
-            REQUIRE_FALSE(dwg);
-            f::binaryDxf(repeat, captured.splines.front(), DRW::AC1032);
+            REQUIRE_FALSE(fileFormat.dwg);
+            f::binaryDxf(repeat, captured.splines.front(), fileFormat.version);
 #endif
-            const auto second = f::readCodec(repeat, dwg);
+            const auto second = f::readCodec(repeat, fileFormat.dwg);
             REQUIRE(second.splines.size() == 1);
             const auto repeated = xd::parseAndStrip(second.splines.front().extData, options);
             REQUIRE(repeated.status == xd::Status::Schema2);
@@ -1284,24 +1301,27 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             CHECK(QCborValue(*before).toCbor() == QCborValue(*repeatedSource).toCbor());
         };
 
-        for (const bool dwg : {false, true}) {
+        for (const auto& fileFormat : formats) {
 #ifndef DWGSUPPORT
-            if (dwg) continue;
+            if (fileFormat.dwg) continue;
 #endif
             xd::Options options;
-            if (dwg) { options.eed = true; options.textEncoding = xd::TextEncoding::Utf16; }
+            if (fileFormat.dwg) {
+                options.eed = true;
+                options.textEncoding = xd::TextEncoding::Utf16;
+            }
             else options.asciiDxf = false;
             const auto tags = xd::forExport({app}, definition, options);
             REQUIRE(tags);
             auto entity = f::raw(1, *tags);
-            const auto path = directory.file(std::to_string(i) + (dwg ? ".dwg" : ".dxf"));
+            const auto path = directory.file(std::to_string(i) + "-" + fileFormat.suffix);
 #ifdef DWGSUPPORT
-            if (dwg) f::dwgFile(path, entity, DRW::AC1032);
-            else f::binaryDxf(path, entity, DRW::AC1032);
+            if (fileFormat.dwg) f::dwgFile(path, entity, fileFormat.version);
+            else f::binaryDxf(path, entity, fileFormat.version);
 #else
-            f::binaryDxf(path, entity, DRW::AC1032);
+            f::binaryDxf(path, entity, fileFormat.version);
 #endif
-            verify(path, dwg, true);
+            verify(path, fileFormat, true);
         }
     }
 }
