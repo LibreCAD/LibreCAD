@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W504; chronological evidence follows): implementation slices
+Current status (W505; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,8 +67,8 @@ signed distances; the focused case passes 59,016 assertions and the full
 typed-source import selection passes 327,550 assertions across 34 cases.
 W504 revalidates that the editable nine-family selector and distinct parabola
 choice are already implemented; remaining source support is variant-level.
-Exact PR head `771e256758137a4a4685eab255063931962c928e` currently has no
-reported checks or statuses, so no CI pass is claimed for these commits.
+The latest worker-scale slice passes focused and full worker-kernel tests;
+exact-head CI must be queried again after its commits are pushed.
 W439 adds bulged LWPOLYLINE and legacy 2D POLYLINE input coverage across R14
 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
@@ -19560,3 +19560,53 @@ interaction contract. Earlier receipts W359/W396/W397/W440/W474 and W494
 remain the implementation evidence. This revalidation adds no product-code
 work; it narrows the remaining plan to actual source-family/variant support
 gaps and does not close visible-GUI, exact-head CI, or external-CAD checks.
+
+## 505. Bounded-Hyperbola Uniform-Scale Worker Qualification
+
+W485/W503 qualify eight bounded interval/branch layouts near the representative
+curvature radius, but only at one world scale. Scale each layout's center and
+major-axis vector uniformly and scale signed offset distance by the same
+factor. Exercise scales `1e-3`, `1`, `1e3`, and `1e12` at the existing signed
+curvature-neighborhood samples `±1.05`, `±1.08`, and `±1.09` (normalized by
+scale), plus the established `±0.1`, `±0.3`, `±0.5`, `±1.0`, and `±1.1`
+settings. Run operation 7 and operation 8 for every generated first-branch
+cache. Require exact admission only when generation yields one canonical
+output; for multiple outputs require `NotCacheRepresentable` with no candidate
+mutation. Assert world-space tolerance scales with geometry and keep this
+worker result distinct from staged DXF/DWG persistence/import. If the worker
+matrix passes, use its settings/topology classification to scope a separate
+five-lane real-file slice; do not assume scale invariance from worker tests.
+
+### Completion receipt
+
+The eight bounded interval/branch layouts now run operation 7 and operation 8
+at scales `1e-3`, `1`, `1e3`, and `1e12`. Each scale uses 16 signed distances
+proportional to the representative geometry, including the curvature samples
+from W485. Generated output topology determines admission: single canonical
+caches pass operation 8, while multi-output first-branch candidates return
+`NotCacheRepresentable` and leave the caller-owned cache unchanged. Relative
+world tolerance divided by scale matches the corresponding unit-scale value
+for each source layout and distance.
+
+Validation: focused `[hyperbola][scale]` worker test passes 14,915 assertions
+in one case; the complete worker-kernel suite passes 26,997 assertions across
+38 cases; the CMake Debug worker test target builds; `git diff --check` passes.
+These are local worker results, not real-file round trips, exact-head CI,
+visible-GUI, or external-CAD acceptance. Product test commit `cb196a7c0`
+(`test(offset): qualify hyperbola worker scales`); the roadmap receipt is
+committed separately.
+
+## 506. Bounded-Hyperbola Scale Matrix Through DXF/DWG Import
+
+W505 verifies worker generation and cache validation for all eight
+bounded-hyperbola interval/branch layouts at scales `1e-3`, `1`, `1e3`, and
+`1e12`, but staged import still exercises only unit-scale curvature cases.
+Carry those same eight layouts at all four scales through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG, using signed normalized distances `±1.05`, `±1.08`,
+and `±1.09`. Derive expected import promotion/downgrade from the complete
+generated output topology, not a hard-coded side assumption. Promoted records
+must preserve exact typed source and canonical cache fingerprints; a
+first-branch carrier for multi-output geometry must downgrade and retain exact
+schema-2 source metadata. Require both outcomes per scale across the aggregate
+matrix where generation produces them. Run the focused case, full typed-source
+import selection, CMake Debug test build, roadmap parser, and diff check.
