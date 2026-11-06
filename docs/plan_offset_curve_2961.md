@@ -16962,3 +16962,80 @@ This adds R2000 evidence only for these six representative topology/source
 cases; it is not full historical-version coverage, complete OCS/legacy
 POLYLINE support, exhaustive source-variant distance/side admission, or GUI
 acceptance. Push the test and roadmap commits and inspect exact-head checks.
+
+## 434. Reject Lossy Polyline Preview Projections as Offset Sources (2026-11-06)
+
+### Finding
+
+`LC_OffsetSourceGeometry::capture()` currently accepts any `RS_Polyline` made
+from line and arc segments. Some import callbacks deliberately flatten richer
+entities into ordinary polylines for display or round-trip reconstruction:
+polygon-mesh rows/columns (`LibreCAD_POLYLINE_MESH`), polyface faces
+(`LibreCAD_POLYLINE_PFACE`), MLINE elements (`LibreCAD_MLINE`), and underlay
+boundaries (`LibreCAD_UNDERLAY`). Such a display projection must not become an
+editable offset source merely because its geometry happens to pass the native
+polyline validator. Legacy 3D POLYLINE import also drops vertex Z and currently
+adds no provenance marker, so the resulting 2D projection can be admitted
+incorrectly. This is separate from unsupported non-axial OCS handling, which
+must continue to refuse or preserve the original geometry without silently
+projecting it into the XY offset model.
+
+### Implementation slice
+
+1. Add one centralized source-eligibility check for reserved XDATA application
+   markers on `RS_Polyline`; compare marker names case-insensitively and only
+   interpret well-formed group-code-1001 string values. Reject derived preview
+   polylines marked `LibreCAD_POLYLINE_MESH`, `LibreCAD_POLYLINE_PFACE`,
+   `LibreCAD_MLINE`, or `LibreCAD_UNDERLAY`. Do not reject
+   `LibreCAD_LWPOLYLINE`, which carries editable 2D source data and is already
+   part of the source-import contract. Preserve the existing geometry-only
+   admission behavior for unmarked ordinary polylines.
+2. In the legacy 3D POLYLINE import branch, attach a dedicated
+   `LibreCAD_POLYLINE_3D` XDATA marker whenever flags identify 3D POLYLINE
+   input whose Z coordinates the `RS_Polyline` representation cannot retain.
+   Append to, rather than replace, existing XDATA. Confirm the marker APPID is
+   registered in both DXF and DWG output paths; update the APPID registration
+   regression if needed. Never add this marker to eligible 2D POLYLINE input.
+3. Verify normal XDATA round-trip and the existing native/raw metadata
+   ownership rules do not strip, duplicate, or misclassify the provenance
+   marker. If a marker is malformed, duplicated, or mixed with unrelated
+   application data, fail closed for source eligibility without damaging the
+   imported display entity or its other XDATA.
+
+### Required validation
+
+- Unit coverage: an unmarked line/arc polyline and a valid
+  `LibreCAD_LWPOLYLINE` polyline remain capturable; each of the five lossy
+  projection markers is refused; unrelated XDATA remains eligible; malformed
+  marker values fail closed. Include mixed-case marker names and ensure marker
+  scanning does not mistake group 1000 strings for APPID markers.
+- Import coverage: legacy 2D POLYLINE remains eligible where already
+  supported; legacy 3D POLYLINE remains visible as ordinary geometry but is
+  not capturable as a native offset source. Mesh, polyface, MLINE, and underlay
+  preview polylines remain visible and are refused as sources.
+- Interchange coverage: round-trip the 3D provenance marker through the
+  applicable R12/R14/R2000/AC1032 DXF and DWG lanes, and check that each
+  emitted XDATA APPID has a corresponding APPID table record. Existing DXF
+  application-name registration tests must include `LibreCAD_POLYLINE_3D`.
+- Run the focused source-capture and imported-source suites, DWG/DXF XDATA and
+  APPID tests, `git diff --check`, and the normal CMake/qmake6 build gates.
+  Record any format/version lane unavailable for a fixture as open rather than
+  inferring coverage from another lane.
+
+### Slice order and completion
+
+Commit the production eligibility guard and focused unit tests together; then
+commit legacy 3D import provenance plus DXF/DWG round-trip and APPID tests; then
+update this section with exact test counts, build results, and commit IDs. Keep
+non-axial OCS transformation, native mesh/polyface offset support, and genuine
+3D offset geometry as separate roadmap work: this slice prevents lossy preview
+projections from being advertised as editable 2D sources, but does not claim
+those richer geometries are implemented.
+
+Progress: the eligibility guard and direct source-capture regression are
+implemented in `659297022` (`fix(offset): reject projected polyline sources`).
+The Release `librecad_tests` target builds; `[lc-offsetcurve][source]` passes
+150 assertions in 5 cases, including valid ordinary/LWPOLYLINE admission,
+lossy marker refusal, case-insensitive matching, unrelated XDATA, and malformed
+APPID payload refusal. `git diff --check` passes. The legacy-3D marker and
+format-round-trip slice remains open.
