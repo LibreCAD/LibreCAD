@@ -94,6 +94,33 @@ TEST_CASE("LC_Parabola: CalculatePrimitives derives focus/vertex/axis",
   }
 }
 
+TEST_CASE("LC_Parabola: primitive construction is scale-relative near degeneracy",
+          "[parabola][primitives][scale]") {
+  for (const double scale : {1e-12, 1e-6, 1.0, 1e6, 1e12}) {
+    CAPTURE(scale);
+    const auto parabola = makeCanonicalParabola(scale, scale);
+    const auto& data = parabola.getData();
+    REQUIRE(data.isValid());
+    const double tolerance = scale * 1e-10;
+    CHECK(std::abs(data.m_vertex.x) <= tolerance);
+    CHECK(std::abs(data.m_vertex.y) <= tolerance);
+    CHECK(std::abs(data.m_focus.y - scale) <= tolerance);
+    CHECK(std::abs(data.m_axis.magnitude() - scale) <= tolerance);
+    CHECK(std::isfinite(data.m_focus.x));
+    CHECK(std::isfinite(data.m_focus.y));
+  }
+
+  const LC_ParabolaData almostStraight{{
+      RS_Vector{0, 0}, RS_Vector{5, 1e-14}, RS_Vector{10, 0}}};
+  REQUIRE(almostStraight.isValid());
+  CHECK(std::isfinite(almostStraight.m_focus.x));
+  CHECK(std::isfinite(almostStraight.m_focus.y));
+
+  const LC_ParabolaData straight{{
+      RS_Vector{0, 0}, RS_Vector{5, 0}, RS_Vector{10, 0}}};
+  CHECK_FALSE(straight.isValid());
+}
+
 TEST_CASE("LC_Parabola: getQuadratic vanishes on sampled curve points",
           "[parabola][quadratic]") {
   auto p = makeCanonicalParabola(1.0, 1.0);

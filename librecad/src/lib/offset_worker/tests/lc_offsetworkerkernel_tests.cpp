@@ -605,7 +605,8 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
           "[lc-offsetcurve][worker-kernel][source-cache][parabola][scale]") {
     std::size_t acceptedCaches = 0;
     std::size_t refusedCaches = 0;
-    for (const double scale : {1e-3, 1e3}) {
+    std::size_t lowScaleRefusals = 0;
+    for (const double scale : {1e-8, 1e-3, 1e3}) {
         CAPTURE(scale);
         const LC_ParabolaData parabola{{RS_Vector{0, 0}, RS_Vector{5 * scale, 10 * scale},
                                         RS_Vector{10 * scale, 0}}};
@@ -618,6 +619,15 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
             const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
             const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
             const auto& generated = native(generationReply, 7);
+            if (scale == 1e-8) {
+                CHECK(generated.refusal == LC_OffsetCurveRefusal::Engine);
+                CHECK(generated.engineStatus == LC_CurveOffsetStatus::UndefinedTangent);
+                CHECK(generated.ordinaryStatus == result::OrdinaryStatus::None);
+                CHECK(generated.ordinary.empty());
+                CHECK_FALSE(generated.changed);
+                ++lowScaleRefusals;
+                continue;
+            }
             REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
             REQUIRE_FALSE(generated.ordinary.empty());
@@ -653,6 +663,7 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
     CHECK(acceptedCaches + refusedCaches == 16);
     CHECK(acceptedCaches > 0);
     CHECK(refusedCaches > 0);
+    CHECK(lowScaleRefusals == 8);
 }
 
 TEST_CASE("parabola worker cache validation preserves local detail at large coordinates",
