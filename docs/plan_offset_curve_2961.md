@@ -19279,3 +19279,31 @@ build and `git diff --check` pass. These are local worker results, not real-file
 DXF/DWG round trips, exact-head CI, visible-GUI, or external-CAD acceptance.
 Test commit `9ee90c804` (`test(offset): qualify parabola worker scales`).
 Other source scales, degeneracies, and precision limits remain open.
+
+## 497. Parabola Scale Matrix Through DXF/DWG Import
+
+W496 qualifies scaled parabola generation and cache validation inside the
+worker but does not exercise serialization, parsing, or staged import. Extend
+the curvature-neighborhood fixture with uniformly scaled parabola sources at
+`1e-3` and `1e3`; for each, test both signed sides at normalized magnitudes
+`2.0`, `2.5`, and `3.0` through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+Derive expected promotion from the generated entity count. Require exact
+source/cache parity when promoted and preserved schema-2 source metadata plus
+ordinary spline fallback when output has multiple pieces. Require both
+promotion and downgrade for each added scale.
+
+### Completion receipt
+
+The staged-import curvature matrix now covers the original three parabola
+control nets plus small (`1e-3`) and large (`1e3`) uniform scales. The two new
+scales add 60 real staged imports across six signed settings and all five
+DXF/DWG version lanes. Each scale independently produces promoted and
+downgraded outcomes; imported cache fingerprints and typed source data are
+checked on the appropriate path.
+
+Validation: the expanded focused import case passes 37,210 assertions across
+150 staged imports. Incremental CMake Debug `librecad_tests` build and
+`git diff --check` pass. These are local results, not exact-head CI,
+visible-GUI, or external-CAD acceptance. Test commit `c507ef5e7`
+(`test(offset): qualify scaled parabola file imports`). Arbitrary scales,
+degenerate control nets, and precision boundaries remain open.
