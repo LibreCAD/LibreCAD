@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W402; chronological evidence follows): implementation slices
+Current status (W404; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16082,3 +16082,128 @@ Release `librecad_tests` executable; `git diff --check` passes. This complements
 W401's direct entity-codec matrix and W389-W399's typed-source carrier/import
 coverage; none alone establishes every application conversion or legal
 fit-point variant.
+
+## 403. Degree-3 Fit-Point SPLINE Round-Trip Plan (2026-11-05)
+
+### Current code assessment
+
+W402 proves the file-level scenario-2 path only for open degree-2 fit-only
+SPLINEs, which import as `LC_SplinePoints`. A separate application path remains
+incomplete: `RS_FilterDXFRW::addSpline()` imports fit-only degree-3 SPLINEs by
+calling `RS_Spline::setFitPoints()`, which stores the fit points alongside a
+derived control net in `RS_SplineData`; `RS_FilterDXFRW::writeSpline()` always
+serializes that control net and knot vector as scenario 1. Thus a valid
+degree-3 fit-point SPLINE can render after import but loses its original fit
+representation on export. W404 implements the bounded open cubic case and its
+stale-control-net guard. Explicit fit tolerances/tangent constraints and closed
+cubic fit splines remain outside the native representation.
+
+There is a correctness hazard to resolve before using `fitPoints` as writer
+input: `RS_SplineData` exposes a mutable `getData()` reference, and editing
+methods such as `setControlPoint()` and `moveRef()` change the control net
+without changing or clearing the fit points. Transform methods intentionally
+transform both representations. The writer must never emit stale fit points
+after an edit. Audit all public mutation paths and mutable-data callers; choose
+the smallest reliable policy, preferably invalidating fit-point serialization
+when control geometry is independently edited while preserving it for
+operations that transform both representations coherently. If a mutable
+reference makes that distinction impossible, validate the fit representation
+against the current curve before selecting scenario 2, otherwise safely fall
+back to scenario 1.
+
+### Implementation sequence
+
+1. Add import characterization tests for open degree-3 fit-only SPLINEs in
+   DXF and DWG. Assert the imported entity class, degree, ordered fit points,
+   derived controls, and sampled geometry. Include insufficient, duplicate,
+   non-finite, and closed layouts as explicit refusal/fallback cases; do not
+   silently manufacture scenario-2 output from malformed data.
+2. Audit `RS_Spline` mutation APIs and every non-const `getData()` call that can
+   alter control points, knots, weights, degree, or closure. Document and
+   implement a minimal fit-source validity/invalidation contract. Preserve
+   fit-point intent across translate, rotate, scale, mirror, reverse, and
+   other operations only where both representations remain synchronized.
+3. Add a writer selector that emits scenario 2 for a valid, current,
+   representable degree-3 fit-point spline. Keep scenario 1 for control-point
+   splines, rational splines, edited/stale fit metadata, unsupported closures,
+   and any case where required tangent or knot-parameter semantics cannot be
+   represented. Preserve entity attributes and XDATA in both paths. Do not
+   invent endpoint tangents: the current native model does not store editable
+   tangent constraints.
+4. Add focused codec assertions for scenario-2 count/degree, fit coordinates,
+   tolerance, tangent defaults/availability, and versioned stream framing.
+   Add filter-level DXF and DWG save, reopen, and second-save tests proving
+   that supported inputs remain fit-point scenario 2 and unsupported/stale
+   representations remain valid scenario 1 without geometry loss.
+5. Exercise at least AC1015/R2000 and AC1032/R2018 for file-level round trips,
+   plus each intermediate DWG version supported by the writer in the direct
+   entity-codec matrix. Include open and closed cases only where the native
+   representation and round-trip semantics are demonstrably equivalent.
+   Compare sampled geometry before import, after import, and after reopen
+   under a documented tolerance; assert representation separately from shape.
+6. Run focused SPLINE codec, filter round-trip, entity mutation, and
+   `[fit-points]` tests, then the relevant DWG/DXF writer/import suites and
+   `git diff --check`. Record exact commands, assertion/case counts, fixtures,
+   and version coverage. Commit the product slice and its evidence separately
+   from a roadmap-only checkpoint; push and report exact-head CI results before
+   claiming completion.
+
+### Exit criteria and explicit limits
+
+- A valid open degree-3 fit-only SPLINE round-trips through DXF and the tested
+  DWG versions as scenario 2, with ordered fit points and geometry preserved.
+- Any native edit that invalidates fit-point intent cannot export stale fit
+  points; it either regenerates a demonstrably equivalent fit representation
+  or falls back to the current control-net scenario.
+- Existing degree-2 `LC_SplinePoints` W402 coverage and ordinary/rational
+  control-net serialization remain unchanged.
+- Failures are reported through the existing write-failure path; no entity is
+  silently dropped, truncated, or changed into a different curve.
+- Tangent-constrained fit splines, arbitrary legal fit-point parameterizations,
+  all closed variants, and exact preservation of tangent metadata remain open
+  unless the native data model is extended and separately validated. This
+  slice must not claim complete fit-point SPLINE support.
+
+Current status: the core open cubic fit-only scenario-2 path is implemented in
+W404; its validation and limitations are recorded below. W401/W402 alone did
+not close this degree-3 import/export path. Source-family picker work,
+including the separate parabola choice and all nine currently advertised
+families, remains implemented as recorded in W400; its broader variant
+eligibility and acceptance gates remain independent roadmap items.
+
+## 404. Open Cubic Fit-Point SPLINE Scenario-2 Export (2026-11-05)
+
+`RS_FilterDXFRW::writeSpline()` now emits scenario 2 for an open, planar,
+degree-3 `RS_Spline` with at least four saved fit points when regenerating the
+fit-point control net reproduces the entity's current control points, knots,
+weights, degree, and type. This guards the mutable `RS_SplineData` API: when a
+control-point edit makes the saved fit points stale, export falls back to the
+current control-net scenario 1. Unsupported, closed, rational, or otherwise
+nonmatching geometry continues through the existing control-net path.
+
+Added file-level coverage for an open cubic fit-only SPLINE through DXF,
+AC1015/R2000 DWG, and AC1032/R2018 DWG. The test checks that export has no
+control net, preserves the ordered fit points, uses DWG scenario 2, reopens as
+degree 3, and matches 101 sampled positions before and after round trip. A
+separate regression directly mutates `getData().controlPoints`, then verifies
+that export does not revive stale fit points and instead reopens the edited
+control net. Existing direct DWG codec coverage exercises degree-3 scenario 2
+for AC1015, AC1018, AC1021, AC1024, AC1027, and AC1032.
+
+Validation: `[dxf][filter][spline]` passes 2,262 assertions/16 cases;
+`[dwg-write][entity-encode]` passes 1,260 assertions/63 cases; the filter test
+target and direct DWG codec test target build in Release; `git diff --check`
+passes. Product commit: `32d175bdd` (`fix(dwg): preserve cubic fit-point
+splines`).
+
+Scope limits: fit-only import currently does not retain fit tolerance or
+endpoint tangent constraints in `RS_SplineData`; the output uses the writer's
+default tolerance and zero tangents. Inputs with tangent-constrained shape are
+not proven equivalent and must not be described as lossless. This change covers
+open, non-rational cubic fit-only inputs with matching regenerated native
+geometry, not closed cubic layouts, every legal fit parameterization, or
+custom tangent/tolerance round trips. Next, extend the native fit metadata only
+if lossless tolerance/tangent preservation is required; otherwise keep these
+variants explicitly outside the scenario-2 eligibility contract. Push the
+product commit, update PR #3193 with evidence and limitations, then record
+exact-head checks before claiming the slice complete.
