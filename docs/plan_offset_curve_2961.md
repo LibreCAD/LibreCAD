@@ -17116,3 +17116,93 @@ present, but the PR description has not been amended for this slice.
 
 Continue with the remaining OCS and source-variant eligibility matrix; do not
 infer AC1015 DWG coverage from the existing AC1032 DWG tests.
+
+## 436. Legacy 2D POLYLINE Non-Axial OCS Import (2026-11-06)
+
+### Scope clarification
+
+The requested source-family control remains the nine-family selector already
+implemented and recorded in Sections 368 and 410: ellipse, spline,
+spline-points, distinct parabola, bounded hyperbola, line, arc, circle, and
+polyline. No additional source-type widget or parabola branch is needed.
+Family selection changes the live candidate filter; entity selection performs
+the guarded source/cache replacement. This picker contract does not imply that
+every imported POLYLINE variant is valid as an offset source.
+
+### Implementation slice
+
+Extend the straight-segment non-axial OCS display projection from
+LWPOLYLINE to legacy 2D POLYLINE, without admitting the projected entity as a
+native planar offset source:
+
+1. Identify legacy 2D POLYLINE from its flags before applying the 2D projection
+   path. Leave mesh, polyface, 3D, and other non-2D variants on their existing
+   handling paths; do not reinterpret their coordinates as a 2D OCS chain.
+2. For a non-axial normal, validate finite, nonzero extrusion and finite
+   elevation/vertex coordinates, then use the DXF arbitrary-axis OCS basis to
+   transform each straight vertex into WCS. Keep the resulting XY line-chain
+   visible as a display projection. Refuse the entire entity on invalid input.
+3. Do not project bulged segments into circular arcs: their arbitrary OCS
+   projection is generally conic. Skip those non-axial entities with a
+   diagnostic rather than silently changing their geometry.
+4. Append `LibreCAD_POLYLINE_OCS` provenance with the source extrusion and
+   elevation. Normalize the projected `LibreCAD_LWPOLYLINE` sidecar to axial,
+   zero-elevation/zero-thickness projected geometry; do not attach the original
+   plane to already transformed vertices. Preserve pre-existing XDATA and
+   verify the APPID remains registered on DXF and DWG output.
+5. Keep typed source capture rejecting the OCS projection marker. Ordinary
+   axial/reflected legacy 2D POLYLINE source behavior and the nine-family
+   picker must remain unchanged.
+
+### Required validation
+
+- Add real import fixtures for straight non-axial legacy 2D POLYLINE in R14
+  DXF, AC1032 DXF, and AC1032 DWG. Assert the transformed XY coordinates,
+  retained visibility, marker payload, and typed-source refusal.
+- Exercise a non-axial bulged legacy POLYLINE and assert it is not imported as
+  an incorrect straight or circular approximation. Add invalid/zero normal
+  and non-finite coordinate coverage where the fixture layer can encode them.
+- Round-trip accepted projections through DXF and DWG, asserting XDATA,
+  registered APPID, projected geometry, and source refusal survive reopen.
+- Re-run the existing axial/reflected legacy POLYLINE, closed-bulge, 3D,
+  mesh/polyface, APPID, and OCS test selections to detect dispatch or metadata
+  regressions. Run CMake and qmake6 builds plus `git diff --check`.
+- Treat R2000/AC1015 DWG legacy POLYLINE coverage as an independent fixture
+  question. If the existing writer cannot generate it, record that lane as
+  unverified; do not infer it from AC1032 DWG.
+
+### Completion receipt and boundaries
+
+The importer projects straight non-axial legacy 2D POLYLINE vertices through
+the DXF arbitrary-axis OCS basis into visible XY geometry, appends the
+`LibreCAD_POLYLINE_OCS` marker with original extrusion/elevation, and emits
+normalized axial/zero-elevation sidecar metadata. Existing XDATA is retained
+on import and across DXF/DWG save-reopen. Typed source capture rejects the
+projection. Non-axial bulged input and zero extrusion are rejected without
+creating a polyline. The fixture writer refuses non-finite coordinates before
+they reach the reader, so non-finite import rejection is not claimed as
+fixture-tested; the importer still checks every normal/elevation/vertex and
+projected component for finiteness.
+
+Validation on the final test binary: the focused legacy OCS case passes 149
+assertions/1 case across R14 DXF, AC1032 DXF, and AC1032 DWG, including
+projection coordinates, original OCS payload, source refusal, existing XDATA
+preservation, save/reopen, bulged-curve refusal, and zero-normal rejection.
+The complete `[lc-offsetcurve][import-session][typed-source][polyline]`
+selection passes 2,200 assertions/20 cases; `[dxf][appid-registration]`
+passes 846 assertions/7 cases. CMake Debug `librecad_tests` builds, the qmake6
+application/plugins build exits successfully, and `git diff --check` passes.
+The qmake6 build reports existing missing-field-initializer, sign-compare,
+and macOS SDK-version warnings. The test runner also reports the pre-existing
+missing `/private/tmp/libdxfrw-cargo/env` shell-profile warning.
+
+Product commit: `b36c383e0` (`fix(dxf): project straight legacy polylines
+from OCS`). XDATA preservation test commit: `6a707326f` (`test(offset): verify
+legacy OCS XDATA preservation`). Malformed-input test commit: `752f99642`
+(`test(offset): reject malformed legacy OCS polylines`).
+
+Only AC1032 DWG is qualified here; R2000/AC1015 DWG legacy POLYLINE remains
+unverified because the existing fixture writer has not demonstrated that
+lane. Non-axial bulged curves, exact 3D geometry, mesh/polyface offsets,
+external CAD visual validation, and non-finite serialized fixtures remain
+open. This is not full arbitrary OCS support.
