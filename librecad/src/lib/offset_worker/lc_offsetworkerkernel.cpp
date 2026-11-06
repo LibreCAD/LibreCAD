@@ -193,6 +193,7 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
 
     LC_OffsetSourceDefinition definition = input.definition;
     RS_Vector outputTranslation{0, 0};
+    std::unique_ptr<RS_Entity> source;
     if (auto* ellipse = std::get_if<RS_EllipseData>(&definition.source.value)) {
         // Keep offset predicates and approximation independent of large world coordinates.
         outputTranslation = {ellipse->center.x, ellipse->center.y};
@@ -208,8 +209,17 @@ result::Native LC_OffsetWorkerKernel::generateSource(const req::GenerateSource& 
         }
         *parabola = LC_ParabolaData{points};
     }
+    else if (auto* polyline = std::get_if<LC_OffsetPolylineData>(&definition.source.value)) {
+        outputTranslation = polyline->startpoint;
+        // Validate and construct in the original frame first. Rechecking
+        // rounded arc joins after translation to the local frame would apply
+        // a smaller coordinate-relative tolerance and can reject valid input.
+        source = definition.source.makeEntity();
+        if (!source) return output;
+        source->move({-outputTranslation.x, -outputTranslation.y});
+    }
 
-    auto source = definition.source.makeEntity();
+    if (!source) source = definition.source.makeEntity();
     if (!source) return output;
     const double magnitude = std::abs(definition.signedDistance);
     if (!std::isfinite(magnitude) || magnitude <= RS_TOLERANCE) {
