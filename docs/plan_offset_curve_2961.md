@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W449; chronological evidence follows): implementation slices
+Current status (W450; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W449. Historical results from
+No exact-head CI result is claimed for W441-W450. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request is already implemented: the user can choose a
@@ -17838,3 +17838,31 @@ at one side and distance. It does not qualify other control counts, closed
 control-point shapes, all fit/control combinations, arbitrary distances/sides,
 or all historical DWG versions. Exact-head CI and external CAD acceptance
 remain separate.
+
+## 450. Larger Signed-Distance Typed-Source Import Matrix
+
+The seven representative sources in the real-file operation-8 matrix were
+tested at `-0.1` and `0.1`. Add larger signed offsets `-0.4` and `0.4` for the
+same full/partial ellipse, reversed arc, circle, finite parabola, bounded
+hyperbola, and line definitions, retaining all five R14/R2000/R2018 file
+lanes. Promotion still requires exact source and cache equality.
+
+### Completion receipt
+
+All seven source definitions at `-0.4`, `-0.1`, `0.1`, and `0.4` now generate
+one operation-8-validated cache and promote through R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG: 140 real carriers. Every import admits exactly one native
+offset, reports zero downgrades, and preserves the exact tagged source and
+canonical cache fingerprint.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`[lc-offsetcurve][import-session][typed-source][cache-promotion][persistence]`
+selector passes 34,110 assertions/1 case; the broader
+`[lc-offsetcurve][import-session][typed-source]` selector passes 59,156
+assertions/29 cases. `git diff --check` passes. Test commit
+`663d21bac` (`test(offset): cover larger signed import distances`).
+
+This closes only the listed source shapes at four signed magnitudes. It does
+not qualify distances near curvature singularities, all conic sweeps/OCS,
+other spline/polyline variants, or external CAD acceptance. Exact-head CI
+remains separate.
