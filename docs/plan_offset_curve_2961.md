@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W404; chronological evidence follows): implementation slices
+Current status (W405; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16207,3 +16207,28 @@ if lossless tolerance/tangent preservation is required; otherwise keep these
 variants explicitly outside the scenario-2 eligibility contract. Push the
 product commit, update PR #3193 with evidence and limitations, then record
 exact-head checks before claiming the slice complete.
+
+## 405. Fit Tolerance Preservation for Cubic Fit-Point SPLINE (2026-11-05)
+
+Follow-up to W404: `RS_SplineData` now carries the SPLINE fit tolerance, with
+the established `1e-7` default for newly created splines. Fit-only degree-3
+import copies a finite positive tolerance from DXF/DWG into the native entity;
+scenario-2 export writes that value back. Invalid source tolerances do not
+replace the safe native default. This metadata is independent of the control
+net consistency check and survives ordinary `RS_SplineData` copies.
+
+The cubic file-roundtrip test uses its non-default `1e-10` fixture tolerance
+and asserts it on import and after DXF, AC1015/R2000 DWG, and AC1032/R2018 DWG
+reopen. The focused `[fit-points][roundtrip]` selection passes 450 assertions/
+3 cases; `[dxf][filter][spline]` passes 2,266 assertions/16 cases. The Release
+`librecad_tests` target rebuilt successfully, and `git diff --check` passes.
+Product commit: `ad9aeb5af` (`fix(dxf): retain spline fit tolerance`).
+
+W405 closes fit-tolerance preservation for the implemented open cubic
+fit-only scenario-2 path. It does not add endpoint tangent constraints to the
+native spline model. Nonzero tangent inputs remain outside the lossless
+scenario-2 contract until the importer, native interpolation, edits, and
+writer can preserve both the constrained curve and tangent vectors. Next:
+update PR #3193 and validate current-head checks, then continue the remaining
+tangent/closed-layout and broader offset-roadmap gaps rather than treating
+W404/W405 as completion of the full plan.
