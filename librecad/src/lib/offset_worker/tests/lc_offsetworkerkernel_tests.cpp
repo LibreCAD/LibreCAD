@@ -1139,6 +1139,132 @@ TEST_CASE("bounded hyperbola worker preserves detail across combined scale and t
     CHECK(acceptedCaches + refusedCaches == scales.size() * variants.size() * normalizedDistances.size() * 2);
 }
 
+TEST_CASE("bounded hyperbola worker classifies relative translation boundaries",
+          "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][precision][translation-boundary]") {
+    const std::array<LC_HyperbolaData, 8> variants{
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}, LC_HyperbolaData{{0, 0}, {3, 0}, .6, 1.5, -1.2, false},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -.4, .4, true},    LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, true},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, .2, 1.2, false},   LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, -.2, false},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false}, LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true}};
+    constexpr std::array<double, 3> scales{1e-3, 1.0, 1e12};
+    constexpr std::array<double, 3> translationRatios{1e6, 1e9, 1e12};
+    constexpr std::array<double, 6> normalizedDistances{-1.05, 1.05, -1.08, 1.08, -1.09, 1.09};
+    const auto firstCache = [](const result::Native& output) {
+        if (const auto* spline = std::get_if<RS_SplineData>(&output.ordinary.front()))
+            return *spline;
+        const auto& segment = std::get<req::Segment>(output.ordinary.front());
+        RS_SplineData cache{1, false};
+        cache.controlPoints = {segment.start, segment.end};
+        cache.knotslist = {0, 0, 1, 1};
+        cache.weights = {1, 1};
+        return cache;
+    };
+
+    std::size_t completedTranslated = 0;
+    std::size_t refusedTranslated = 0;
+    for (const double scale : scales) {
+        CAPTURE(scale);
+        for (const double translationRatio : translationRatios) {
+            CAPTURE(translationRatio);
+            const RS_Vector translation{translationRatio * scale, -translationRatio * scale};
+            for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
+                const auto& base = variants[variantIndex];
+                const LC_HyperbolaData centeredData{{base.center.x * scale, base.center.y * scale, base.center.z},
+                                                    {base.majorP.x * scale, base.majorP.y * scale, base.majorP.z},
+                                                    base.ratio,
+                                                    base.angle1,
+                                                    base.angle2,
+                                                    base.reversed};
+                const LC_HyperbolaData translatedData{
+                    {centeredData.center.x + translation.x, centeredData.center.y + translation.y, centeredData.center.z},
+                    centeredData.majorP,
+                    centeredData.ratio,
+                    centeredData.angle1,
+                    centeredData.angle2,
+                    centeredData.reversed};
+                const LC_OffsetSourceGeometry centered{centeredData};
+                const LC_OffsetSourceGeometry translated{translatedData};
+                REQUIRE(centered.isWellFormed());
+                REQUIRE(translated.isWellFormed());
+                for (const double normalizedDistance : normalizedDistances) {
+                    CAPTURE(variantIndex, normalizedDistance);
+                    const double signedDistance = normalizedDistance * scale;
+                    const LC_OffsetSourceDefinition centeredDefinition{centered, signedDistance, 1e-4, false};
+                    const LC_OffsetSourceDefinition translatedDefinition{translated, signedDistance, 1e-4, false};
+                    const auto centeredReply = LC_OffsetWorkerKernel::run({token, req::GenerateSource{centeredDefinition, {}}});
+                    const auto translatedReply = LC_OffsetWorkerKernel::run({token, req::GenerateSource{translatedDefinition, {}}});
+                    const auto& centeredOutput = native(centeredReply, 7);
+                    const auto& translatedOutput = native(translatedReply, 7);
+                    REQUIRE(centeredOutput.engineStatus == LC_CurveOffsetStatus::Ok);
+                    REQUIRE(centeredOutput.ordinaryStatus == result::OrdinaryStatus::Complete);
+                    REQUIRE_FALSE(centeredOutput.ordinary.empty());
+
+                    if (translatedOutput.engineStatus != LC_CurveOffsetStatus::Ok ||
+                        translatedOutput.ordinaryStatus != result::OrdinaryStatus::Complete || translatedOutput.ordinary.empty()) {
+                        CHECK(translatedOutput.ordinary.empty());
+                        CHECK_FALSE(translatedOutput.changed);
+                        ++refusedTranslated;
+                        continue;
+                    }
+
+                    ++completedTranslated;
+                    CHECK(centeredOutput.ordinary.size() == translatedOutput.ordinary.size());
+                    const RS_SplineData centeredCache = firstCache(centeredOutput);
+                    const RS_SplineData translatedCache = firstCache(translatedOutput);
+                    const RS_Spline centeredSpline{nullptr, centeredCache};
+                    const RS_Spline translatedSpline{nullptr, translatedCache};
+                    const double roundingAllowance =
+                        64.0 * std::numeric_limits<double>::epsilon() * std::max(std::abs(translation.x), std::abs(translation.y));
+                    const auto centeredEntity = centered.makeEntity();
+                    const auto translatedEntity = translated.makeEntity();
+                    REQUIRE(centeredEntity);
+                    REQUIRE(translatedEntity);
+                    const LC_OffsetSourceDefinition centeredWithDistance{centered, signedDistance, 1e-4, false};
+                    const LC_OffsetSourceDefinition translatedWithDistance{translated, signedDistance, 1e-4, false};
+                    const auto centeredOptions = LC_OffsetWorkerTolerance::directOptions(centeredWithDistance, *centeredEntity);
+                    const auto translatedOptions = LC_OffsetWorkerTolerance::directOptions(translatedWithDistance, *translatedEntity);
+                    REQUIRE(centeredOptions);
+                    REQUIRE(translatedOptions);
+                    const double deviationLimit =
+                        4.0 * std::max(centeredOptions->tolerance.requestedGeometry, translatedOptions->tolerance.requestedGeometry) +
+                        roundingAllowance;
+                    double maximumLocalDeviation = 0.0;
+                    for (int sample = 0; sample <= 128; ++sample) {
+                        const double parameter = static_cast<double>(sample) / 128.0;
+                        const RS_Vector local = centeredSpline.getPointAt(parameter);
+                        const RS_Vector world = translatedSpline.getPointAt(parameter);
+                        REQUIRE(local.valid);
+                        REQUIRE(world.valid);
+                        maximumLocalDeviation = std::max(
+                            maximumLocalDeviation, std::hypot((world.x - translation.x) - local.x, (world.y - translation.y) - local.y));
+                    }
+                    CHECK(maximumLocalDeviation <= deviationLimit);
+
+                    for (const auto& [definition, cache, expectedOutput] :
+                         {std::tuple{centeredDefinition, centeredCache, &centeredOutput},
+                          std::tuple{translatedDefinition, translatedCache, &translatedOutput}}) {
+                        const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+                        const auto validation = LC_OffsetWorkerKernel::run({token, req::ValidateSourceCache{cache, definition, {}}});
+                        const auto& validated = native(validation, 8);
+                        if (expectedOutput->ordinary.size() == 1) {
+                            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                            CHECK(validated.changed);
+                        }
+                        else {
+                            CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                            CHECK_FALSE(validated.changed);
+                            CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+                        }
+                        CHECK(validated.engineRuns == 1);
+                    }
+                }
+            }
+        }
+    }
+    CHECK(completedTranslated > 0);
+    CHECK(refusedTranslated > 0);
+}
+
 TEST_CASE("polyline cache promotion preserves mixed segment orientation and offset side",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
     const std::array<LC_OffsetPolylineData, 2> variants{
