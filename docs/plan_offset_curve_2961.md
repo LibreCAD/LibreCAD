@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W468; chronological evidence follows): implementation slices
+Current status (W469; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,9 +67,19 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W468. Historical results from
+No exact-head CI result is claimed for W441-W469. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
+The latest source-picker clarification (2026-11-06) is incorporated in
+section 440 and the typed-source eligibility work below: choosing a replacement
+must allow changing the source family first, then selecting a matching live
+entity; the candidate currently backing the offset remains selected/highlighted
+when present. The explicit family inventory includes parabola as a distinct
+choice. This is not a request for another widget or a second parabola entity
+implementation. Remaining work is to reconcile every advertised family and
+variant with production offset generation, worker/cache representability, and
+DXF/DWG round trips, and to hide or atomically refuse variants those paths do
+not support. Do not equate the picker list with complete offset support.
 The latest source-widget request (2026-11-06) reconfirms that changing an
 existing offset's source must begin with an editable source-family choice:
 the candidate picker filters to that choice, and selecting a candidate
@@ -18429,3 +18439,76 @@ Validation: incremental CMake Debug `librecad_tests` build passes. The focused
 results, not exact-head CI or external CAD acceptance. Test commit
 `2d79a10b2` (`test(dwg): cover reflected closed negative OCS bulges`); the
 roadmap receipt is committed separately.
+
+## 469. Reflected Closed Negative-Major LWPOLYLINE Matrix
+
+W468 qualifies the reflected closed negative-minor LWPOLYLINE in all five
+DXF/DWG version lanes. Add a negative-major bulge to ensure the same reflected
+orientation parity and closed connectivity hold beyond a minor sweep. Retain
+XDATA/provenance and typed-source refusal assertions. This still does not
+exhaust closed polylines containing multiple bulged segments or mixed
+positive/negative bulges.
+
+### Completion receipt
+
+The closed reflected negative-major LWPOLYLINE now imports across R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG with unrelated XDATA preserved. The
+projected ellipse remains non-reversed for the paired negative bulge and
+negative-Z normal, has the expected greater-than-semicircle sweep, and joins
+the two line fragments into a closed loop. OCS/conic provenance and typed
+source refusal are checked for all five lanes. Multi-segment mixed-bulge
+closed chains remain open.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`non-axial LWPOLYLINEs remain visible as marked XY projections` case passes
+2,038 assertions; `[lc-offsetcurve][import-session][typed-source]` passes
+97,741 assertions across 29 cases. The nine-family source picker regression
+`[gui][dialog][offsetcurve][source]` passes 3,194 assertions across six cases.
+`git diff --check` passes. These are local
+results, not exact-head CI or external CAD acceptance. Test commit
+`12cddcdb0` (`test(dwg): cover reflected closed negative-major OCS`); the
+roadmap receipt is committed separately.
+
+## Current Source-Picker Work Order (2026-11-06)
+
+This order consolidates the repeated request to change source type while
+choosing a replacement and to include all supported curve types, including
+parabola. It supersedes any interpretation that adding a combo item alone
+finishes source support.
+
+1. **Preserve the completed interaction contract.** Keep the source-family
+   selector editable before entity picking, filter candidates by its current
+   value, select/highlight the currently referenced live source when it
+   exists, and preserve the existing definition/cache when only the filter
+   changes or picking is cancelled. The implemented nine-family inventory is
+   line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+   hyperbola, and polyline.
+2. **Audit actual family/variant admission.** For each advertised family,
+   enumerate concrete representations and determine whether capture,
+   ordinary offset generation, worker validation, native single-cache
+   promotion, edits/transforms, and DXF/DWG persistence all preserve the same
+   typed geometry. Distinguish static non-representability from exact-settings
+   worker/cache refusal; do not hide an entire family because one variant or
+   distance is unsupported.
+3. **Keep parabola identity explicit.** Capture and reconstruct `LC_Parabola`
+   before testing its `LC_SplinePoints` base class. Verify family filtering,
+   replacement, operation-8 cache reconstruction, property edits, and
+   persistence retain the parabola tag rather than silently degrading to
+   generic spline-points.
+4. **Complete one family/variant slice at a time.** Enable a candidate only
+   when its production path is verified; otherwise omit/disable it with a
+   useful reason or surface a worker refusal. Replacement must commit source
+   and cache together, and leave both unchanged on invalid geometry, worker
+   failure, cancellation, or unrepresentable output. Add focused picker,
+   worker/cache, and file round-trip tests for each newly admitted case.
+5. **Update evidence and the roadmap per slice.** Record the exact variants,
+   distances/sides, file lanes, assertions, and validation commands. Keep
+   visible-GUI, external CAD, and exact-head CI acceptance separate from local
+   unit/integration success.
+
+The family selector, cross-family replacement flow, current-source
+highlighting, and distinct parabola choice already have implementation and
+test receipts (section 440, including W359/W396/W397/W440). Do not reopen them
+unless a regression appears. The open deliverable is exhaustive, evidence-led
+support for the geometry variants behind those family choices, with explicit
+refusal rather than silent source/cache corruption where support is absent.
