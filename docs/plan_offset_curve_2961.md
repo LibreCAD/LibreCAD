@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W453; chronological evidence follows): implementation slices
+Current status (W454; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,22 +67,29 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W453. Historical results from
+No exact-head CI result is claimed for W441-W454. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
-The latest source-widget request (2026-11-06) reconfirms the already implemented
-workflow: choose a source kind before selecting a replacement, then select a
-matching entity. The picker exposes all nine modeled families, with
-`LC_Parabola` as a distinct choice rather than generic spline-points. The
-type-changing UI and family-selection workflow are complete and covered by
-W440; do not schedule another picker/parabola UI slice. The separate
-per-variant worker/cache and DXF/DWG eligibility matrix remains open, and must
-not be described as complete merely because a family appears in the picker.
+The latest source-widget requests (2026-11-06) reconfirm the same interaction:
+the user can change the source family in the widget, the candidate picker then
+filters to that family, and choosing a matching entity replaces the source;
+when the current source still exists, it is shown selected/highlighted. The
+family inventory is ellipse, spline, spline-points, parabola, bounded
+hyperbola, line, arc, circle, and polyline. `LC_Parabola` remains a distinct
+choice even though it derives from `LC_SplinePoints`. This is not a request to
+add a second type selector or another parabola implementation: the
+type-changing workflow and cross-family source replacement are implemented
+and covered by W359/W396/W397/W440 and the nine-family integration matrix.
+Keep that behavior as a regression requirement. The still-open work is
+per-variant worker/cache eligibility, persistence, and DXF/DWG behavior; a
+family appearing in the picker does not prove every geometry variant is
+supported. Unsupported variants must refuse visibly without replacing the
+previous source or cache.
 W436 adds marked XY display projections for straight non-axial LWPOLYLINE and
 legacy 2D POLYLINE imports, with typed offset-source refusal and DXF/DWG
 provenance round-trips. Legacy POLYLINE coverage now includes R14, R2000, and
-R2018 DXF plus R2000/R2018 DWG; the R2000 DWG geometry fixture uses no source
-XDATA because the fixture writer refuses that variant. This does not implement
+R2018 DXF plus R2000/R2018 DWG; W454 verifies signed-bulge AC1015 DWG input.
+This does not implement
 non-axial bulged-curve projection, native 3D/mesh offsets, or close the
 independent acceptance gates.
 The source Properties widget requirement to change curve family before
@@ -17971,3 +17978,37 @@ This closes preservation of the two source fields across the shared worker
 codec, existing schema-2 reads, and the tested import matrix. It does not make
 tangent-constrained spline interpolation lossless, qualify every fit-point
 layout, or close the remaining offset-family and PR acceptance gates.
+
+## 454. AC1015 DWG Writer Must Permit Reserved-Handle Gaps in POLYLINE Chains
+
+Adding R2000 DWG coverage for open and closed bulged legacy 2D POLYLINEs
+exposed that `dwgWriter15::emitDeferredBlockControl()` rejected every
+AC1015 model-space chain whose entity handles were not numerically contiguous.
+This is invalid as a writer precondition: AC1015 emits explicit previous/next
+entity links, while fixed reserved object handles can legitimately leave gaps
+between a POLYLINE parent, its VERTEX records, and its SEQEND. Keep ownership
+membership, object-frame, uniqueness, and link-patching validation; remove only
+the contiguity restriction. Retain staged-import assertions for both open and
+closed signed-bulge source geometry in AC1015 DWG.
+
+### Completion receipt
+
+The obsolete AC1015 numeric-contiguity rejection is removed. The writer still
+validates each owned handle against emitted object frames, rejects duplicates,
+and patches explicit predecessor/successor links. Open and closed legacy
+POLYLINE sources with signed bulges now write and import successfully from
+AC1015 DWG, preserving segment geometry.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`[lc-offsetcurve][import-session][typed-source][polyline][legacy]` selection
+passes 801 assertions/4 cases; the full
+`[lc-offsetcurve][import-session][typed-source]` selection passes 96,221
+assertions/29 cases; and `[dwg][safety][writer]` passes 1,094 assertions/46
+cases. These are local results, not exact-head CI or external CAD acceptance.
+Product commit `91724a101` (`fix(dwg): allow gapped R2000 entity handles`).
+The roadmap receipt is committed separately and then pushed with the slice.
+
+This closes the specific reserved-handle-gap rejection for the tested
+AC1015 POLYLINE chains. It does not establish every legacy entity-chain
+ordering, arbitrary preserved-handle layout, or external R2000 CAD
+interoperability.
