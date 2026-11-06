@@ -19524,28 +19524,6 @@ selection, CMake Debug test build, roadmap parser, and diff check.
 
 ### Completion receipt
 
-The eight bounded interval/branch layouts translated to `(1e9, -1e9)` now
-traverse staged import at signed distances `±1.05`, `±1.08`, and `±1.09` in
-R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG: 240 imports. Full generated output
-topology controls admission. Native promotions preserve exact typed-source
-metadata; multi-output first-branch carriers become ordinary visible splines
-and preserve exact schema-2 source metadata without native promotion. Imported
-cache geometry is sampled against generated geometry at 129 normalized
-parameters; maximum deviation remains within four times the requested geometry
-tolerance plus the explicit 64-ULP world-coordinate allowance.
-
-Validation: focused `[hyperbola][precision]` staged-import case passes 121,025
-assertions; the full `[lc-offsetcurve][import-session][typed-source]`
-selection passes 600,512 assertions across 35 cases; CMake Debug
-`librecad_tests` builds; roadmap parser passes 5/5; `git diff --check` passes.
-These are local results, not exact-head CI, visible-GUI, or external-CAD
-acceptance. Product test commit `8b9f901fa`
-(`test(offset): import translated hyperbola variants`); this roadmap receipt
-is committed separately. Other translation magnitudes, scales combined with
-translation, and arbitrary interval/tolerance cases remain open.
-
-### Completion receipt
-
 Added eight bounded-hyperbola interval/branch layouts and six signed distances
 (`±1.05`, `±1.08`, `±1.09`) to staged imports across R14 DXF, R2000 DXF/DWG,
 and R2018 DXF/DWG. Expected promotion is derived from the full generated
@@ -19712,3 +19690,40 @@ multi-output fallback, require ordinary visible spline geometry, no native
 offset, and exact schema-2 typed-source metadata. Require both outcomes in the
 aggregate matrix. Run the focused import case, full typed-source import
 selection, CMake Debug test build, roadmap parser, and diff check.
+
+### Completion receipt
+
+The eight bounded interval/branch layouts translated to `(1e9, -1e9)` now
+traverse staged import at signed distances `±1.05`, `±1.08`, and `±1.09` in
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG: 240 imports. Full generated output
+topology controls admission. Native promotions preserve exact typed-source
+metadata; multi-output first-branch carriers become ordinary visible splines
+and preserve exact schema-2 source metadata without native promotion. Imported
+cache geometry is sampled against generated geometry at 129 normalized
+parameters; maximum deviation remains within four times the requested geometry
+tolerance plus the explicit 64-ULP world-coordinate allowance.
+
+Validation: focused `[hyperbola][precision]` staged-import case passes 121,025
+assertions; the full `[lc-offsetcurve][import-session][typed-source]`
+selection passes 600,512 assertions across 35 cases; CMake Debug
+`librecad_tests` builds; roadmap parser passes 5/5; `git diff --check` passes.
+These are local results, not exact-head CI, visible-GUI, or external-CAD
+acceptance. Product test commit `8b9f901fa`
+(`test(offset): import translated hyperbola variants`); this roadmap receipt
+is committed separately. Other translation magnitudes, scales combined with
+translation, and arbitrary interval/tolerance cases remain open.
+
+## 509. Combined Hyperbola Scale and Translation Worker Matrix
+
+W505-W508 qualify scale and translation independently. Add a combined worker
+matrix for all eight bounded interval/branch layouts at scales `1e-3`, `1`,
+`1e3`, and `1e12`, with each scaled source translated by
+`(1e9 * scale, -1e9 * scale)`. Use signed normalized curvature samples
+`±1.05`, `±1.08`, and `±1.09`. Compare centered and translated generation at
+each scale for topology parity and sampled local-geometry error, bounding
+deviation by the larger requested geometry tolerance plus a rounding allowance
+derived from the translated coordinate ULP. Require operation-8 admission or
+`NotCacheRepresentable` parity, unchanged candidate state on refusal, and both
+topology outcomes per scale where generated. Keep this worker evidence
+separate from file import; add a later staged-file slice only if the combined
+matrix passes.
