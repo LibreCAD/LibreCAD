@@ -1728,14 +1728,15 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     lc::test::OutputDirectory directory("offset-parabola-curvature-import");
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
-    const std::array<LC_OffsetSourceGeometry, 5> sources{
+    const std::array<LC_OffsetSourceGeometry, 6> sources{
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{3, 4}, RS_Vector{-7, 9}, RS_Vector{3, 14}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{.005, .01}, RS_Vector{.01, 0}}}},
-        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5000, 10000}, RS_Vector{10000, 0}}}}
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5000, 10000}, RS_Vector{10000, 0}}}},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5e12, 1e13}, RS_Vector{1e13, 0}}}}
     };
-    const std::array<double, 5> sourceScales{1.0, 1.0, 1.0, 1e-3, 1e3};
+    const std::array<double, 6> sourceScales{1.0, 1.0, 1.0, 1e-3, 1e3, 1e12};
 
     struct Format {
         Lane lane;
