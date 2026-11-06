@@ -1487,7 +1487,7 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
                 ? std::vector<double>{-.5, -.3, -.1, .1, .3, .5}
                 : (std::get_if<RS_EllipseData>(&sources[sourceIndex].value) &&
                    std::get<RS_EllipseData>(sources[sourceIndex].value).ratio == .2)
-                    ? std::vector<double>{-.01, .01}
+                    ? std::vector<double>{-.08, -.07, -.05, .05, .07, .08}
                 : std::vector<double>{-.4, -.1, .1, .4};
         for (const double signedDistance : signedDistances) {
             CAPTURE(signedDistance);
@@ -1610,7 +1610,7 @@ TEST_CASE("high-eccentricity ellipse refuses partial cache promotion across file
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
 
-    for (const double signedDistance : {.1, .4}) {
+    for (const double signedDistance : {.09, .1, .4}) {
         CAPTURE(signedDistance);
         const LC_OffsetSourceDefinition definition{
             sourceGeometry, signedDistance, 1e-4, false};

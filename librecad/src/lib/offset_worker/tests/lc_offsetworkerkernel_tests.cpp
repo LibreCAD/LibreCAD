@@ -414,12 +414,18 @@ TEST_CASE("ellipse, arc, and circle source caches validate across signed distanc
         LC_OffsetSourceGeometry{RS_ArcData{{-1, 2}, 2.5, .2, 2.4, true}},
         LC_OffsetSourceGeometry{RS_CircleData{{1, -1}, 2}}
     };
-    const std::array<double, 4> distances{-.4, -.1, .1, .4};
     std::size_t acceptedCaches = 0;
     std::size_t refusedCaches = 0;
+    std::size_t expectedCases = 0;
     for (const auto& source : sources) {
         CAPTURE(static_cast<int>(source.kind()));
         REQUIRE(source.isWellFormed());
+        const auto* sourceEllipse = std::get_if<RS_EllipseData>(&source.value);
+        const bool highEccentricity = sourceEllipse && sourceEllipse->ratio == .2;
+        const std::vector<double> distances = highEccentricity
+            ? std::vector<double>{-.09, -.08, -.07, -.05, .05, .07, .08, .09}
+            : std::vector<double>{-.4, -.1, .1, .4};
+        expectedCases += distances.size();
         for (const double signedDistance : distances) {
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
@@ -430,11 +436,12 @@ TEST_CASE("ellipse, arc, and circle source caches validate across signed distanc
             REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
             REQUIRE_FALSE(generated.ordinary.empty());
-            const auto* ellipse = std::get_if<RS_EllipseData>(&source.value);
-            const bool highEccentricity = ellipse && ellipse->ratio == .2;
             if (highEccentricity) {
-                if (signedDistance > 0.0) CHECK(generated.ordinary.size() > 1);
-                else REQUIRE(generated.ordinary.size() == 1);
+                if (signedDistance < 0.0 || signedDistance < .08)
+                    REQUIRE(generated.ordinary.size() == 1);
+                if (signedDistance == .08)
+                    CHECK(generated.ordinary.size() == 1);
+                if (signedDistance == .09) CHECK(generated.ordinary.size() > 1);
             } else {
                 REQUIRE(generated.ordinary.size() == 1);
             }
@@ -467,7 +474,7 @@ TEST_CASE("ellipse, arc, and circle source caches validate across signed distanc
             CHECK(validated.engineRuns == 1);
         }
     }
-    CHECK(acceptedCaches + refusedCaches == sources.size() * distances.size());
+    CHECK(acceptedCaches + refusedCaches == expectedCases);
     CHECK(acceptedCaches >= 24);
     CHECK(refusedCaches > 0);
 }
