@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W464; chronological evidence follows): implementation slices
+Current status (W465; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W464. Historical results from
+No exact-head CI result is claimed for W441-W465. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget request (2026-11-06) reconfirms that changing an
@@ -18316,4 +18316,32 @@ Validation: incremental CMake Debug `librecad_tests` build passes. The focused
 96,936 assertions across 29 cases. `git diff --check` passes. These are local
 results, not exact-head CI or external CAD acceptance. Test commit
 `f26abff5d` (`test(dwg): cover reflected legacy OCS bulges`); the roadmap
+receipt is committed separately.
+
+## 465. Closed Reflected OCS LWPOLYLINE Bulge Matrix
+
+W462 covers a closed major-bulge LWPOLYLINE with a positive-Z normal, while
+W463 covers a reflected normal only for an open minor bulge. Add the combined
+closed, reflected, major-bulge case through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. Check reversal, major sweep, closed connectivity between the ellipse
+and both line fragments, provenance, unrelated XDATA, and typed-source
+refusal. This does not infer support for other closed reflected bulge
+magnitudes or legacy POLYLINEs.
+
+### Completion receipt
+
+The closed reflected positive-major LWPOLYLINE now imports through all five
+DXF/DWG version lanes with unrelated `FixtureSourceData` preserved. Each
+produces one reversed ellipse and two lines; tests validate the major sweep,
+finite arc geometry, the two line segments joining each other to the ellipse's
+directed endpoints into a closed loop, OCS/conic provenance, and refusal of
+all projected fragments as native offset sources. Other closed reflected
+bulge magnitudes and legacy closed-reflected cases remain open.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`non-axial LWPOLYLINEs remain visible as marked XY projections` case passes
+1,378 assertions; `[lc-offsetcurve][import-session][typed-source]` passes
+97,287 assertions across 29 cases. `git diff --check` passes. These are local
+results, not exact-head CI or external CAD acceptance. Test commit
+`b423c1c9d` (`test(dwg): cover closed reflected OCS bulges`); the roadmap
 receipt is committed separately.
