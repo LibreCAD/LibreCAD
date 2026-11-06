@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W407; chronological evidence follows): implementation slices
+Current status (W408; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16283,3 +16283,20 @@ builds; `git diff --check` passes. Product commit: `68afba3c8` (`fix(dxf):
 retain cubic spline fit metadata`). Next, push W406/W407, update PR #3193 with
 the dual-list extension, and continue the still-open tangent-constrained source
 semantics, closed fit-point variants, and broader offset-roadmap phases.
+
+## 408. Closed Cubic Fit SPLINE Control-Net Fallback (2026-11-05)
+
+Added representative closed degree-3 fit-only coverage. LibreCAD imports and
+validates the native closed spline, then exports its current control net as
+scenario 1 rather than claiming scenario-2 closed-fit semantics. DXF,
+AC1015/R2000 DWG, and AC1032/R2018 DWG reopen as valid splines. Comparing 101
+samples before and after round trip gives a worst observed deviation of
+`1.99024e-7`; the test uses a `2.5e-7` bound to account for DWG coordinate
+quantization. This qualifies one closed geometry as a shape-preserving
+control-net fallback, not closed fit-point intent preservation.
+
+Validation: `[fit-points][roundtrip]` passes 1,178 assertions/6 cases;
+`[dxf][filter][spline]` passes 2,994 assertions/19 cases; Release filter test
+target builds; `git diff --check` passes. Product/test commit: `883279035`
+(`test(dwg): cover closed cubic fit spline fallback`). Closed scenario-2
+encoding, all closed layouts, and exact fit representation remain open.
