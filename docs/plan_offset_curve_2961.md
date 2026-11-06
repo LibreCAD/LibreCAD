@@ -20428,10 +20428,10 @@ rotated/non-origin), scales `1e-3`, `1`, and `1e3`, translation ratios `1e6`
 and `1e9`, and six signed normalized distances. Centered and translated
 operation-7 results are matched by parameter-domain-normalized sampled
 geometry and a dense bidirectional polyline-distance check; each translated
-branch is independently checked through operation 8. Only an admitted
-single-cache result enters R14 DXF, R2000 DXF/DWG, or R2018 DXF/DWG staged
-import. The test accounts for refusals and admissions and checks source CBOR
-and reopened cache geometry.
+and centered branch is independently checked through operation 8. Only an
+admitted translated single-cache result enters R14 DXF, R2000 DXF/DWG, or
+R2018 DXF/DWG staged import. The test accounts for centered and translated
+refusals/admissions and checks source CBOR and reopened cache geometry.
 
 The worker now recenters parabola input at its first control point and
 translates generated cutters back to world coordinates. `LC_SplinePoints`
@@ -20442,13 +20442,17 @@ cardinality from the isolated production worker, avoiding a mismatch with the
 worker's canonical centered representation.
 
 Product/test commit `b06468d1a` (`test(offset): qualify parabola translation
-persistence`). Validation: W524 staged matrix passes 1,152,123 assertions in
-one case; the previous parabola curvature-import regression passes 31,533
-assertions; `[parabola],[LC_SplinePoints]` passes 1,210,688 assertions across
-28 cases; standalone worker-kernel `[parabola]` passes 3,580 assertions across
-five cases. Release `librecad_tests` and worker-kernel targets build, and
-`git diff --check` passes. These finite-grid and local results do not close
-general variant support, visible-GUI, external-CAD, or exact-head CI gates.
+persistence` implements the matrix and stabilizes parabola worker evaluation.
+Commit `94e04fa37` (`test(offset): validate centered parabola caches`) closes
+the operation-8 coverage gap by independently validating every centered and
+translated generated branch. The expanded W524 staged matrix passes
+1,179,266 assertions in one case; the parabola curvature-import regression
+passes 31,533 assertions; `[parabola],[LC_SplinePoints]` passes 1,210,688
+assertions across 28 cases; standalone worker-kernel `[parabola]` passes 3,580
+assertions across five cases. Release `librecad_tests` and worker-kernel
+targets build, and `git diff --check` passes. These finite-grid and local
+results do not close general variant support, visible-GUI, external-CAD, or
+exact-head CI gates.
 
 ## 525. Source Picker Scope Reconfirmation (2026-11-06)
 
