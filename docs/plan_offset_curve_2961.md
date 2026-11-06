@@ -23,8 +23,8 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W429; chronological evidence follows): implementation slices
+Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
+Current status (W430; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16675,29 +16675,37 @@ bounded acceptance and exercises the non-quadratic implementation, but does
 not replace broad side/distance tests or arbitrary line/arc intersection
 detection. Commit and push W422, then qualify the exact PR head.
 
-## 423. Source Picker Type-Switching Requirement Reconfirmation (2026-11-05)
+## 423. Source Picker Type-Switching Requirement Reconfirmation (2026-11-06)
 
-Rechecked the requested source-widget behavior against the current code and
-coverage. The picker must allow choosing a different source family before
-selecting an entity, then restrict the live candidate list to that family.
-Changing the family alone must not mutate the offset definition, source,
-generated cache, or drawing selection. Choosing a replacement must preserve
-the candidate's concrete source kind and go through the guarded worker-backed
-replacement path. The family list remains ellipse, spline, spline-points,
-parabola, bounded hyperbola, line, arc, circle, and polyline; parabola must
-remain distinct from its `LC_SplinePoints` base class and must be matchable,
-selectable, and highlighted as a parabola.
+Rechecked the latest request for the Properties source widget against the
+current implementation and coverage. While replacing a source, the user must
+be able to change the source-family selector before choosing an entity; the
+entity chooser must then offer matching candidates from that family. The
+selector must include every currently modeled family: ellipse, spline,
+spline-points, parabola, bounded hyperbola, line, arc, circle, and polyline.
+Parabola remains its own choice despite inheriting from `LC_SplinePoints`, and
+must be identified, selectable, and highlighted as a parabola.
+
+Changing only the family filter is a non-mutating browse operation: it must
+not change the offset definition, source handle, generated cache, or drawing
+selection. Until a valid replacement is committed, the current source remains
+identifiable and selectable/highlighted. Choosing a candidate preserves its
+concrete source kind and uses the guarded worker-backed replacement path;
+rejected, deleted, or unsupported candidates leave the prior source/cache
+intact and report failure. “All supported types” here means the nine listed
+source families, not every possible geometric variant within each family.
 
 This behavior is already implemented and tested by W356/W359 (nine-family
 replacement and family inventory), W396 (cross-type parabola identity and
 highlighting), and W397 (deleted-source handling). No duplicate picker or
-parabola implementation is needed. Preserve those tests while completing the
+parabola implementation is needed. Preserve these tests while completing the
 remaining variant-level worker, cache, persistence, import, and signed
 distance/side admission matrix. A family being selectable does not imply that
 every legal entity variant is representable by one editable native cache;
 unsupported variants must fail visibly and atomically, preserving the prior
 source and cache. Broader DXF/DWG round-trip and visible GUI acceptance remain
-separate gates. This is a roadmap clarification only and makes no new product
+separate gates. This incorporates the latest widget request into the existing
+acceptance contract; it is a roadmap clarification and makes no new product
 or validation claim.
 
 ## 424. Intersecting Polyline Source Refusal (2026-11-05)
@@ -16834,3 +16842,36 @@ supported 2D snapshot model. Non-axial OCS, mesh/polyface/3D legacy POLYLINE,
 broader distance/side eligibility, visible GUI acceptance, and the remaining
 cross-platform/review gates stay open. Push this product commit and roadmap
 checkpoint to PR #3193, then inspect checks for the exact head.
+
+## 430. Near-Concentric Arc Crossing Detection (2026-11-06)
+
+Review of the arc/arc topology path found that
+`RS_Information::getIntersectionArcArc()` treats center distances below a
+coarse radius-relative threshold as concentric. Distinct circles can still
+intersect twice at such a separation, so relying on that helper produced a
+false empty intersection set and could admit a self-crossing polyline as an
+editable offset source.
+
+Arc/arc source validation now uses a local scale-normalized circle
+intersection calculation, with finite/range checks and fail-closed behavior
+for numerically ambiguous cases. Exact coincident circles continue through
+the separate angular-span overlap check, preserving refusal of positive-span
+overlap and acceptance of arcs that meet only at the expected endpoint.
+Added direct geometry assertions and a real two-bulge LWPOLYLINE fixture;
+the entity remains importable as ordinary geometry but source capture refuses
+it. The imported case passes in R14 DXF, AC1032 DXF, and AC1032 DWG.
+
+Validation: focused imported case passes 72 assertions/1 case; direct
+`[lc-offsetcurve][source][polyline]` passes 50 assertions/3 cases; imported
+`[import-session][typed-source][polyline]` passes 1,387 assertions/15 cases;
+worker `[lc-offsetcurve][polyline][source-cache][worker-kernel]` passes 309
+assertions/4 cases. CMake Release `librecad_tests` and
+`librecad_offset_worker_kernel_tests` build, the full qmake6 application and
+plugin build succeeds, and `git diff --check` passes. Product commit:
+`7dc3d3f98` (`fix(offset): detect near-concentric arc crossings`).
+
+This addresses near-concentric arc/arc crossings for the supported 2D
+polyline snapshot model. Non-axial OCS, mesh/polyface/3D legacy POLYLINE,
+broader distance/side eligibility, visible GUI acceptance, and cross-platform
+review gates remain open. Push product and roadmap commits to PR #3193, then
+inspect checks for the exact new head.
