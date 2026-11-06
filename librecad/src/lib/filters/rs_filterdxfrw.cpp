@@ -8304,6 +8304,14 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   const bool reflectedOcs = is2dPolyline && data.extPoint.z < 0.0;
   auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, pd);
   setEntityAttributes(polyline.get(), &data);
+  if (data.flags & 8) {
+    auto ext = polyline->getDrwExtData();
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1001, std::string("LibreCAD_POLYLINE_3D")));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1000, std::string("projected-to-xy")));
+    polyline->setDrwExtData(std::move(ext));
+  }
 
   if (data.vertlist.empty()) {
     m_currentContainer->addEntity(polyline.release());

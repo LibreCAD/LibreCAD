@@ -3,8 +3,10 @@
 #include <catch2/generators/catch_generators.hpp>
 #include <catch2/catch_approx.hpp>
 
+#include <algorithm>
 #include <array>
 #include <limits>
+#include <memory>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
@@ -2108,6 +2110,145 @@ TEST_CASE("legacy 2D POLYLINE import preserves signed bulge source geometry",
             }
         }
     }
+}
+
+TEST_CASE("legacy 3D POLYLINE projections remain visible but are not offset sources",
+          "[lc-offsetcurve][import-session][typed-source][polyline][legacy][3d]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-legacy-3d-polyline-provenance");
+    DRW_Polyline raw;
+    raw.flags = 8;
+    raw.addVertex(DRW_Vertex(0, 0, 5, 0));
+    raw.addVertex(DRW_Vertex(2, 0, 7, 0));
+    raw.addVertex(DRW_Vertex(3, 2, 9, 0));
+    raw.extData.push_back(std::make_shared<DRW_Variant>(1001, "LibreCad"));
+    raw.extData.push_back(
+        std::make_shared<DRW_Variant>(1000, "input-before-projection"));
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 4> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
+
+    std::unique_ptr<RS_Graphic> roundTripSource;
+    const auto hasProjectionMarker = [](const RS_Polyline& polyline) {
+        return std::any_of(polyline.getDrwExtData().begin(),
+                           polyline.getDrwExtData().end(), [](const auto& value) {
+            return value && value->code() == 1001 &&
+                   value->type() == DRW_Variant::STRING &&
+                   std::string{value->c_str()} == "LibreCAD_POLYLINE_3D";
+        });
+    };
+    const auto hasInputXData = [](const RS_Polyline& polyline) {
+        const auto& values = polyline.getDrwExtData();
+        bool app = false;
+        bool payload = false;
+        for (const auto& value : values) {
+            if (!value || value->type() != DRW_Variant::STRING) continue;
+            if (value->code() == 1001 && std::string{value->c_str()} == "LibreCad")
+                app = true;
+            if (value->code() == 1000 &&
+                std::string{value->c_str()} == "input-before-projection")
+                payload = true;
+        }
+        return app && payload;
+    };
+
+    for (const auto& input : formats) {
+#ifndef DWGSUPPORT
+        if (input.dwg) continue;
+#endif
+        const auto path = directory.file(std::string("legacy-3d-") + input.suffix);
+#ifdef DWGSUPPORT
+        if (input.dwg) f::dwg2dPolylineFile(path, raw, input.version);
+        else f::binaryDxf2dPolyline(path, raw, input.version);
+#else
+        f::binaryDxf2dPolyline(path, raw, input.version);
+#endif
+        auto outcome = stagedImport(path, input.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        std::vector<RS_Polyline*> polylines;
+        for (RS_Entity* entity : *outcome.graphic) {
+            if (auto* polyline = dynamic_cast<RS_Polyline*>(entity))
+                polylines.push_back(polyline);
+        }
+        REQUIRE(polylines.size() == 1);
+        CHECK(polylines.front()->getVertexes().size() == 3);
+        CHECK(polylines.front()->getVertexes()[0].z == 0.0);
+        CHECK(hasProjectionMarker(*polylines.front()));
+        CHECK(hasInputXData(*polylines.front()));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*polylines.front()));
+        if (input.lane == Lane::Binary18)
+            roundTripSource = std::move(outcome.graphic);
+    }
+
+    REQUIRE(roundTripSource);
+    const auto dxf = directory.file("roundtrip.dxf");
+    REQUIRE(lc::test::exportDrawing(*roundTripSource, dxf, RS2::FormatDXFRW2018));
+    const auto appRecords = lc::test::dxfRecords(dxf, "APPID");
+    CHECK(std::any_of(appRecords.begin(), appRecords.end(), [](const auto& record) {
+        return record.own(2) == std::vector<std::string>{"LibreCAD_POLYLINE_3D"};
+    }));
+    const auto dxfRecords = lc::test::dxfRecords(dxf);
+    CHECK(std::any_of(dxfRecords.begin(), dxfRecords.end(), [](const auto& record) {
+        const auto markers = record.own(1001);
+        return std::find(markers.begin(), markers.end(),
+                         "LibreCAD_POLYLINE_3D") != markers.end();
+    }));
+
+    RS_Graphic reopenedDxf;
+    REQUIRE(lc::test::importDrawing(reopenedDxf, dxf, RS2::FormatDXFRW2018));
+    std::size_t visibleDxfPolylines = 0;
+    for (RS_Entity* entity : reopenedDxf) {
+        if (auto* polyline = dynamic_cast<RS_Polyline*>(entity)) {
+            ++visibleDxfPolylines;
+            CHECK(hasProjectionMarker(*polyline));
+            CHECK_FALSE(LC_OffsetSourceGeometry::capture(*polyline));
+        }
+    }
+    CHECK(visibleDxfPolylines == 1);
+
+#ifdef DWGSUPPORT
+    const RS_Polyline* importedProjection = nullptr;
+    for (const RS_Entity* entity : *roundTripSource) {
+        if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity))
+            importedProjection = polyline;
+    }
+    REQUIRE(importedProjection);
+    REQUIRE(hasProjectionMarker(*importedProjection));
+    RS_Graphic cleanDwg;
+    cleanDwg.initForNewDocument();
+    cleanDwg.addEntity(new RS_Line(&cleanDwg, RS_LineData({0.0, 0.0}, {1.0, 1.0})));
+    auto dwgPolyline = std::make_unique<RS_Polyline>(
+        &cleanDwg, RS_PolylineData{RS_Vector{}, RS_Vector{}, false});
+    dwgPolyline->addVertex({0.0, 0.0});
+    dwgPolyline->addVertex({2.0, 0.0});
+    dwgPolyline->setDrwExtData(importedProjection->getDrwExtData());
+    cleanDwg.addEntity(dwgPolyline.release());
+    const auto dwg = directory.file("roundtrip.dwg");
+    RS_FilterDXFRW dwgWriter;
+    const bool dwgExported = dwgWriter.fileExport(
+        cleanDwg, lc::test::toQString(dwg), RS2::FormatDWG2018);
+    INFO(dwgWriter.dwgExportAdmissionReport().toStdString());
+    INFO(dwgWriter.exportReport().toStdString());
+    REQUIRE(dwgExported);
+    RS_Graphic reopenedDwg;
+    REQUIRE(lc::test::importDrawing(reopenedDwg, dwg, RS2::FormatDWG2018));
+    CHECK(reopenedDwg.dwgAdvancedMetadata().findAppIdTableEntryByName(
+        "LibreCAD_POLYLINE_3D") != nullptr);
+    std::size_t visibleDwgPolylines = 0;
+    for (RS_Entity* entity : reopenedDwg) {
+        if (auto* polyline = dynamic_cast<RS_Polyline*>(entity)) {
+            ++visibleDwgPolylines;
+            CHECK(hasProjectionMarker(*polyline));
+            CHECK_FALSE(LC_OffsetSourceGeometry::capture(*polyline));
+        }
+    }
+    CHECK(visibleDwgPolylines == 1);
+#endif
 }
 
 TEST_CASE("closed legacy 2D POLYLINE import preserves its closing bulge",

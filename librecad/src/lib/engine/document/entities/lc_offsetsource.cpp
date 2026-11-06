@@ -434,9 +434,9 @@ bool segmentsIntersectOnlyAtJoin(const LC_OffsetPolylineData& data,
 namespace LC_OffsetSourceDetail {
 bool hasUnsupportedPolylineProjectionProvenance(
     const RS_Polyline& polyline) noexcept {
-    static constexpr std::array<std::string_view, 4> unsupportedMarkers{
+    static constexpr std::array<std::string_view, 5> unsupportedMarkers{
         "LibreCAD_POLYLINE_MESH", "LibreCAD_POLYLINE_PFACE",
-        "LibreCAD_MLINE", "LibreCAD_UNDERLAY"};
+        "LibreCAD_MLINE", "LibreCAD_UNDERLAY", "LibreCAD_POLYLINE_3D"};
     for (const auto& value : polyline.getDrwExtData()) {
         if (!value) return true;
         if (value->code() != 1001) continue;

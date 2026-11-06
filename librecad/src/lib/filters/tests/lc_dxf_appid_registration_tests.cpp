@@ -92,6 +92,12 @@ public:
         polyline.addVertex(DRW_Vertex2D(4, 0, 0));
         m_ok = m_writer->writeLWPolyline(&polyline) && m_ok;
 
+        DRW_Polyline threeDimensionalPolyline;
+        threeDimensionalPolyline.flags = 8;
+        threeDimensionalPolyline.addVertex(DRW_Vertex(0, 0, 5, 0));
+        threeDimensionalPolyline.addVertex(DRW_Vertex(4, 0, 7, 0));
+        m_ok = m_writer->writePolyline(&threeDimensionalPolyline) && m_ok;
+
         DRW_MLine mline;
         mline.numLines = 2;
         mline.numVerts = 2;
@@ -191,7 +197,8 @@ TEST_CASE("DXF registers sidecar applications generated on import", "[dxf][appid
     CHECK(lc::test::dxfRecords(exported, "PDFUNDERLAY").size() == 1);
     CHECK(lc::test::dxfRecords(exported, "PDFDEFINITION").size() == 1);
     for (const char* name : {"LibreCAD_SOLID", "LibreCAD_LWPOLYLINE", "LibreCAD_MLINE",
-                             "LibreCAD_POLYLINE_PFACE", "LibreCAD_POLYLINE_MESH", "LibreCAD_UNDERLAY"}) {
+                             "LibreCAD_POLYLINE_PFACE", "LibreCAD_POLYLINE_MESH",
+                             "LibreCAD_UNDERLAY", "LibreCAD_POLYLINE_3D"}) {
         CAPTURE(name);
         CHECK(applications.count(normalizedName(name)) == 1);
     }
