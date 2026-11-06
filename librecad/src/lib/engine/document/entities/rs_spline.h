@@ -78,6 +78,9 @@ struct RS_SplineData {
   /** Fit points for interpolation */
   std::vector<RS_Vector> fitPoints;
 
+  /** Fit-point tolerance from the source SPLINE, when available. */
+  double fitTolerance = 1.0e-7;
+
   /** Degree (1-3) */
   size_t degree = 3;
 

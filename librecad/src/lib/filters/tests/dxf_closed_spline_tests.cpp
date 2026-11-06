@@ -80,6 +80,7 @@ struct SplineRecord {
   std::vector<double> m_knots;
   std::vector<RS_Vector> m_fitPoints;
   int m_scenario = 0;
+  double m_tolFit = 0.0;
 };
 
 /** A DXF holding one SPLINE; no HEADER, so no $ACADVER. */
@@ -110,6 +111,7 @@ public:
     record.m_flags = data->flags;
     record.m_degree = data->degree;
     record.m_scenario = data->m_scenario;
+    record.m_tolFit = data->tolfit;
     for (const auto &p : data->controllist)
       record.m_controlPoints.emplace_back(p->x, p->y);
     for (const auto &p : data->fitlist)
@@ -696,6 +698,7 @@ TEST_CASE("Cubic fit-point SPLINE intent survives file round trips",
   RS_Spline *sourceSpline = onlySpline(first);
   REQUIRE(sourceSpline->getData().degree == 3);
   checkSameVectors(sourceSpline->getData().fitPoints, source.m_fitPoints);
+  CHECK(std::abs(sourceSpline->getData().fitTolerance - 1.0e-10) < 1.0e-20);
 
   const std::vector<std::pair<RS2::FormatType, std::string>> formats{
       {RS2::FormatDXFRW, "dxf"},
@@ -724,6 +727,7 @@ TEST_CASE("Cubic fit-point SPLINE intent survives file round trips",
     CHECK(written.front().m_controlPoints.empty());
     CHECK(written.front().m_fitPoints.size() == source.m_fitPoints.size());
     checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
+    CHECK(std::abs(written.front().m_tolFit - 1.0e-10) < 1.0e-20);
     if (format != RS2::FormatDXFRW)
       CHECK(written.front().m_scenario == 2);
 

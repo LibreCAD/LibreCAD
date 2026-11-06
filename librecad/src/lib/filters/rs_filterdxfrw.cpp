@@ -8809,6 +8809,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                      return RS_Vector{coord->x, coord->y};
                    });
     spline->setFitPoints(fitPoints);
+    if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
+      spline->getData().fitTolerance = data->tolfit;
   }
 
   if (isClosed) {
@@ -32068,6 +32070,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
   if (writeFitPoints) {
     sp.m_scenario = 2;
     sp.flags = 0x08; // planar, non-rational fit-point spline
+    sp.tolfit = splineData.fitTolerance;
     sp.nfit = static_cast<std::int32_t>(splineData.fitPoints.size());
     sp.fitlist.reserve(splineData.fitPoints.size());
     for (const RS_Vector &point : splineData.fitPoints)
