@@ -3655,7 +3655,21 @@ TEST_CASE("multi-branch rational spline import refuses native promotion and reta
     const RS_SplineData expectedCache = expectedSpline->getData();
     REQUIRE(expectedSpline->validate());
 
-    for (const bool dwg : {false, true}) {
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& fileFormat : formats) {
+        const auto [lane, dwg, version, suffix] = fileFormat;
 #ifndef DWGSUPPORT
         if (dwg) continue;
 #endif
@@ -3680,14 +3694,14 @@ TEST_CASE("multi-branch rational spline import refuses native promotion and reta
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(dwg ? "rational.dwg" : "rational.dxf");
+        const auto input = directory.file(std::string("rational-") + suffix);
 #ifdef DWGSUPPORT
-        if (dwg) f::dwgFile(input, cache, DRW::AC1032);
-        else f::binaryDxf(input, cache, DRW::AC1032);
+        if (dwg) f::dwgFile(input, cache, version);
+        else f::binaryDxf(input, cache, version);
 #else
-        f::binaryDxf(input, cache, DRW::AC1032);
+        f::binaryDxf(input, cache, version);
 #endif
-        const auto outcome = stagedImport(input, dwg ? Lane::Eed18 : Lane::Binary18);
+        const auto outcome = stagedImport(input, lane);
         REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
         REQUIRE(outcome.graphic);
         CHECK(outcome.admitted == 0);
