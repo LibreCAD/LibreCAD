@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W412; chronological evidence follows): implementation slices
+Current status (W413; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16401,4 +16401,25 @@ imported duplicate polyline vertices`). This closes import-origin consecutive
 duplicate coverage for the tested 2D LWPOLYLINE formats; non-consecutive
 repeated vertices, zero-bulge near-degeneracy thresholds, 2D POLYLINE variants,
 non-axial OCS, and broader topology/side/distance cases remain distinct gaps.
-Push this test and roadmap update to PR #3193 and re-read exact-head checks.
+Test commit `5eec4c4dc` and roadmap checkpoint `286ef27e7` were pushed to the
+PR branch. Diagnostics for exact head `286ef27e76606c4cfe34b12c8c59f9014ffcf092`
+returned no checks immediately after the push; re-read after the next update.
+
+## 413. Legacy 2D POLYLINE Source Import (2026-11-05)
+
+Extended the real-file source fixture writer to emit legacy 2D `POLYLINE`
+records with owned `VERTEX` records, then added signed-bulge import coverage.
+The fixture has a positive-bulge arc, a negative-bulge arc, and straight
+segments. Staged imports from R14/AC1014 binary DXF, AC1032 DXF, and AC1032
+DWG must preserve the live `RS_Polyline`; typed source capture is compared
+against an equivalent native polyline for closure, endpoints, ordered segment
+types, arc centers/radii/angles, and orientation.
+
+The focused legacy-polyline case passes 109 assertions/1 case; the combined
+`[lc-offsetcurve][import-session][typed-source][polyline]` selection passes
+459 assertions/5 cases. Release `librecad_tests` rebuilt successfully and
+`git diff --check` passes. Test commit: `e159b6492` (`test(offset): cover
+legacy polyline source imports`). This closes representative valid 2D legacy
+POLYLINE import with signed bulges for those versions, not mesh/polyface/3D
+polyline support or every legacy DXF/DWG release. Push the test and roadmap
+update to PR #3193 and re-read exact-head checks.
