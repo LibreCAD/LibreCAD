@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W490; chronological evidence follows): implementation slices
+Current status (W491; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -19073,4 +19073,40 @@ passes 3,757 assertions. The incremental CMake Debug test targets build and
 `git diff --check` passes. Local tests, not exact-head CI or external CAD
 acceptance. Test commit `452fae8b9` (`test(offset): qualify thin ellipse
 curvature boundary`); roadmap receipt is separate. Further ellipse sweep,
+reversal, and curvature/topology combinations remain open.
+
+## 491. Reversed High-Eccentricity Ellipse Side and File Matrix
+
+W490 covers the curvature threshold only for a non-reversed full ellipse. Add
+the reversed full-ellipse representation and verify that reversal flips which
+signed offset side is inward. Exercise worker generation and operation-8 cache
+validation around the same 0.08 curvature radius; require the inward 0.09
+multi-branch result to refuse single-cache admission. Carry both orientations
+through five-version DXF/DWG cache promotion at `±0.05`, `±0.07`, and `±0.08`,
+through multi-branch staged-import downgrade at inward magnitudes 0.09, 0.1,
+and 0.4, and through five-version schema-2 source save/reopen/second-save.
+Assert exact typed-source/cache preservation and non-mutating fallback. This
+qualifies these two full-ellipse orientations only; other sweep and curvature
+topologies remain open.
+
+### Completion receipt
+
+The worker matrix now includes a reversed full ratio-0.2 ellipse and identifies
+the inward side from signed distance and source reversal. Both orientations
+produce a single operation-8-valid cache through the threshold magnitudes;
+the inward 0.09 case splits and is rejected as `NotCacheRepresentable`.
+Real-file promotion passes at signed distances `±0.05`, `±0.07`, and `±0.08`
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Multi-branch partial-cache
+imports downgrade at inward 0.09, 0.1, and 0.4 for both orientations in those
+same five lanes, retaining exact schema-2 source data. The reversed source was
+also added to the five-version typed-source save/reopen/second-save matrix.
+
+Validation: focused worker conic test passes 1,053 assertions; the full worker
+kernel suite passes 8,462 assertions across 31 cases. The real-file source
+family promotion matrix passes 115,976 assertions; source persistence passes
+4,868 assertions; the high-eccentricity refusal matrix passes 7,543
+assertions. Incremental CMake Debug test targets build and `git diff --check`
+passes. These are local results, not exact-head CI or external CAD acceptance.
+Product test commit `0dce0c02e` (`test(offset): qualify reversed thin ellipse
+variants`); roadmap receipt is committed separately. Broader ellipse sweep,
 reversal, and curvature/topology combinations remain open.
