@@ -7465,7 +7465,33 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
     CHECK(std::abs(directedSweep(*negativeMinorArc)) < std::acos(-1.0));
     CHECK(std::holds_alternative<RS_LineData>(majorMinorBulgeData.segments[2]));
     CHECK(std::holds_alternative<RS_LineData>(majorMinorBulgeData.segments[3]));
-    const std::array<LC_OffsetPolylineData, 6> variants{{
+    RS_Polyline reversedMajorMinorBulgeEntity;
+    reversedMajorMinorBulgeEntity.addVertex({0, 0});
+    reversedMajorMinorBulgeEntity.addVertex({0, 10});
+    reversedMajorMinorBulgeEntity.addVertex({10, 10}, 0.2);
+    reversedMajorMinorBulgeEntity.addVertex({10, 0}, -2.0);
+    reversedMajorMinorBulgeEntity.setClosed(true);
+    reversedMajorMinorBulgeEntity.endPolyline();
+    const auto reversedMajorMinorBulgeSource =
+        LC_OffsetSourceGeometry::capture(reversedMajorMinorBulgeEntity);
+    REQUIRE(reversedMajorMinorBulgeSource);
+    REQUIRE(reversedMajorMinorBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    const auto& reversedMajorMinorBulgeData =
+        std::get<LC_OffsetPolylineData>(reversedMajorMinorBulgeSource->value);
+    REQUIRE(reversedMajorMinorBulgeData.closed);
+    REQUIRE(reversedMajorMinorBulgeData.segments.size() == 4);
+    CHECK(std::holds_alternative<RS_LineData>(reversedMajorMinorBulgeData.segments[0]));
+    CHECK(std::holds_alternative<RS_LineData>(reversedMajorMinorBulgeData.segments[1]));
+    const auto* reversedPositiveMinorArc =
+        std::get_if<RS_ArcData>(&reversedMajorMinorBulgeData.segments[2]);
+    const auto* reversedNegativeMajorArc =
+        std::get_if<RS_ArcData>(&reversedMajorMinorBulgeData.segments[3]);
+    REQUIRE(reversedPositiveMinorArc);
+    REQUIRE(reversedNegativeMajorArc);
+    CHECK(directedSweep(*reversedPositiveMinorArc) > 0.0);
+    CHECK(std::abs(directedSweep(*reversedPositiveMinorArc)) < std::acos(-1.0));
+    CHECK(directedSweep(*reversedNegativeMajorArc) < -std::acos(-1.0));
+    const std::array<LC_OffsetPolylineData, 7> variants{{
         {{0, 0}, {2, 2}, false,
          {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
         {{2, 2}, {0, 0}, false,
@@ -7479,7 +7505,8 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
           RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
           RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}},
         std::get<LC_OffsetPolylineData>(mixedBulgeSource->value),
-        majorMinorBulgeData}};
+        majorMinorBulgeData,
+        reversedMajorMinorBulgeData}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
