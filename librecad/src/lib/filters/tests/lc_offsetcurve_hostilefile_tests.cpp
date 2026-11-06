@@ -2236,6 +2236,126 @@ TEST_CASE("bulged LWPOLYLINE import preserves signed arc geometry for offset sou
     }
 }
 
+TEST_CASE("closed major-minor bulge imports generate and validate typed offset caches",
+          "[lc-offsetcurve][import-session][typed-source][polyline][major-bulge]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-imported-major-minor-bulge-worker");
+    namespace req = LC_OffsetWorkerRequest;
+    namespace result = LC_OffsetWorkerResult;
+
+    DRW_LWPolyline raw;
+    raw.flags = 1;
+    raw.vertexnum = 4;
+    raw.addVertex(DRW_Vertex2D(0, 0, 2.0));
+    raw.addVertex(DRW_Vertex2D(10, 0, -0.2));
+    raw.addVertex(DRW_Vertex2D(10, 10, 0));
+    raw.addVertex(DRW_Vertex2D(0, 10, 0));
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
+
+    LC_OffsetWorkerClient worker;
+    qint64 requestId = 1;
+    const auto runWorker = [&](req::Request request) {
+        std::optional<LC_OffsetWorkerClient::Outcome> outcome;
+        REQUIRE(worker.submit(request, LC_OffsetWorkerClient::Mode::Commit,
+            [&](LC_OffsetWorkerClient::Outcome completed) { outcome.emplace(std::move(completed)); }));
+        QElapsedTimer elapsed;
+        elapsed.start();
+        while (!outcome) {
+            REQUIRE(elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(outcome->status == LC_OffsetWorkerClient::Status::Completed);
+        REQUIRE(outcome->completed);
+        CHECK(outcome->completed->isJoined());
+        CHECK(worker.healthyAndIdle());
+        return std::move(outcome->completed);
+    };
+    const auto asSpline = [](const req::Cutter& item) {
+        if (const auto* spline = std::get_if<RS_SplineData>(&item)) return *spline;
+        const auto& segment = std::get<req::Segment>(item);
+        RS_SplineData line{1, false};
+        line.controlPoints = {segment.start, segment.end};
+        line.knotslist = {0, 0, 1, 1};
+        line.weights = {1, 1};
+        return line;
+    };
+
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        CAPTURE(format.dwg, format.version);
+        const auto path = directory.file(std::string("imported-source-") + format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwgPolylineFile(path, raw, format.version);
+        else f::binaryDxfPolyline(path, raw, format.version);
+#else
+        f::binaryDxfPolyline(path, raw, format.version);
+#endif
+        const auto imported = stagedImport(path, format.lane);
+        REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(imported.graphic);
+        const auto* polyline = dynamic_cast<const RS_Polyline*>(f::sole(*imported.graphic));
+        REQUIRE(polyline);
+        const auto source = LC_OffsetSourceGeometry::capture(*polyline);
+        REQUIRE(source);
+        REQUIRE(source->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+        const auto& data = std::get<LC_OffsetPolylineData>(source->value);
+        REQUIRE(data.closed);
+        REQUIRE(data.segments.size() == 4);
+        const auto* positiveMajor = std::get_if<RS_ArcData>(&data.segments[0]);
+        const auto* negativeMinor = std::get_if<RS_ArcData>(&data.segments[1]);
+        REQUIRE(positiveMajor);
+        REQUIRE(negativeMinor);
+        CHECK(positiveMajor->reversed == false);
+        CHECK(negativeMinor->reversed == true);
+        CHECK(std::holds_alternative<RS_LineData>(data.segments[2]));
+        CHECK(std::holds_alternative<RS_LineData>(data.segments[3]));
+
+        for (const double signedDistance : {-0.25, 0.25}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+            const auto generationCompletion = runWorker({
+                {requestId++, 1, 1, 1}, req::GenerateSource{definition, {}}});
+            const auto& generationReply = generationCompletion->reply();
+            REQUIRE(generationReply.failure == result::Failure::None);
+            REQUIRE(generationReply.operation == 7);
+            REQUIRE(std::holds_alternative<result::Native>(generationReply.result));
+            const auto& generated = std::get<result::Native>(generationReply.result);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+            for (const auto& item : generated.ordinary) {
+                auto cache = asSpline(item);
+                const auto fingerprint = RS_Spline::geometryFingerprint(cache);
+                const auto validationCompletion = runWorker({
+                    {requestId++, 1, 1, 1}, req::ValidateSourceCache{cache, definition, {}}});
+                const auto& validationReply = validationCompletion->reply();
+                REQUIRE(validationReply.failure == result::Failure::None);
+                REQUIRE(validationReply.operation == 8);
+                REQUIRE(std::holds_alternative<result::Native>(validationReply.result));
+                const auto& validation = std::get<result::Native>(validationReply.result);
+                if (generated.ordinary.size() == 1) {
+                    CHECK(validation.refusal == LC_OffsetCurveRefusal::None);
+                    CHECK(validation.changed);
+                } else {
+                    CHECK(validation.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                    CHECK_FALSE(validation.changed);
+                    CHECK(RS_Spline::geometryFingerprint(cache) == fingerprint);
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("imported duplicate LWPOLYLINE vertices remain ordinary and are not offset sources",
           "[lc-offsetcurve][import-session][typed-source][polyline][malformed]") {
     Setup setup;
