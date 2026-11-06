@@ -1562,7 +1562,7 @@ TEST_CASE("imported repeated and near-coincident polyline vertices are refused a
     Setup setup;
     lc::test::OutputDirectory directory("offset-polyline-repeated-vertex-topology-import");
     struct Shape { DRW_LWPolyline polyline; bool closed; const char* name; };
-    std::array<Shape, 3> shapes{};
+    std::array<Shape, 4> shapes{};
     shapes[0].closed = false;
     shapes[0].name = "open-return";
     shapes[0].polyline.vertexnum = 3;
@@ -1586,6 +1586,14 @@ TEST_CASE("imported repeated and near-coincident polyline vertices are refused a
     shapes[2].polyline.addVertex(DRW_Vertex2D(2, 2, 0));
     shapes[2].polyline.addVertex(DRW_Vertex2D(1.0e-15, 1.0e-15, 0));
     shapes[2].polyline.addVertex(DRW_Vertex2D(0, 2, 0));
+    shapes[3].closed = false;
+    shapes[3].name = "near-coincident-exponent-boundary";
+    shapes[3].polyline.vertexnum = 5;
+    shapes[3].polyline.addVertex(DRW_Vertex2D(2, 2, 0));
+    shapes[3].polyline.addVertex(DRW_Vertex2D(4, 2, 0));
+    shapes[3].polyline.addVertex(DRW_Vertex2D(4, 4, 0));
+    shapes[3].polyline.addVertex(DRW_Vertex2D(std::nextafter(2.0, 0.0), 2, 0));
+    shapes[3].polyline.addVertex(DRW_Vertex2D(2, 4, 0));
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 3> formats{{
@@ -1620,6 +1628,8 @@ TEST_CASE("imported repeated and near-coincident polyline vertices are refused a
             const auto vertices = imported.getVertexes();
             CHECK(vertices.size() == shape.polyline.vertlist.size() + (shape.closed ? 1U : 0U));
             if (shape.name == std::string("near-coincident-nonconsecutive"))
+                CHECK(vertices[0].distanceTo(vertices[3]) < 1.0e-14);
+            if (shape.name == std::string("near-coincident-exponent-boundary"))
                 CHECK(vertices[0].distanceTo(vertices[3]) < 1.0e-14);
             CHECK_FALSE(LC_OffsetSourceGeometry::capture(imported));
         }
