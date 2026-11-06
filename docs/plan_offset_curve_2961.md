@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W428; chronological evidence follows): implementation slices
+Current status (W429; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -119,6 +119,18 @@ closure seam. R14 DXF, AC1032 DXF, and AC1032 DWG retain the closed four-segment
 entity, but typed source capture refuses its crossing. The focused case passes
 57 assertions; the full imported typed-source/polyline selection passes 1,255
 assertions/13 cases. Test commit `e661bc523` adds no production behavior.
+
+W429 fixes a confirmed topology false negative: the arc intersection solver
+returns no discrete points for concentric arcs, allowing positively
+overlapping same-circle polyline segments through source validation. A new
+angular-span overlap check now rejects positive-length coincident arc overlap
+and ambiguous precision while accepting spans that only meet at their join.
+Direct tests cover both overlap and endpoint-only contact; a real bulge
+LWPOLYLINE overlap imports but is refused as an offset source in R14 DXF,
+AC1032 DXF, and AC1032 DWG. Direct polyline source tests pass 47 assertions/3
+cases, imported polyline tests pass 1,315 assertions/14 cases, and worker
+source-cache polyline tests pass 309 assertions/4 cases. CMake Release tests
+and the full qmake6 app/plugin build pass. Product commit `d32646440`.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -16793,3 +16805,32 @@ closed mixed/bulged intersection or legacy 2D/3D polyline variant. OCS
 transforms, broader distance/side eligibility, and visible GUI acceptance
 remain open. Push the test and roadmap commits to PR #3193 and qualify the
 exact head.
+
+## 429. Coincident Arc-Span Overlap Refusal (2026-11-06)
+
+Static review found that `RS_Information::getIntersectionArcArc()` returns no
+discrete intersections for concentric arcs. The topology validator had
+treated an empty result as proof of no crossing, so adjacent arcs on the same
+circle could overlap over a positive angular span and still be accepted.
+Added circular-interval overlap detection for coincident arc centers/radii,
+accounting for orientation and wraparound. Positive-span overlap and
+numerically ambiguous comparisons now refuse the source; arcs meeting only at
+their expected endpoint remain valid.
+
+Regression coverage includes a direct overlapping same-circle arc pair, a
+direct endpoint-only touching pair, and an actual two-bulge LWPOLYLINE whose
+arcs overlap on one circle. The real file imports as two ordinary arcs but is
+refused as an offset source in R14/AC1014 DXF, AC1032 DXF, and AC1032 DWG.
+Focused source topology passes 8 assertions/1 case; the full direct
+`[lc-offsetcurve][source][polyline]` selection passes 47 assertions/3 cases;
+the imported `[import-session][typed-source][polyline]` suite passes 1,315
+assertions/14 cases; and worker `[source-cache][polyline]` passes 309
+assertions/4 cases. CMake Release `librecad_tests` and the full qmake6 app and
+plugin build succeed; `git diff --check` passes.
+
+Product commit: `d32646440` (`fix(offset): reject overlapping coincident arc
+segments`). This closes same-circle overlapping circular arc topology in the
+supported 2D snapshot model. Non-axial OCS, mesh/polyface/3D legacy POLYLINE,
+broader distance/side eligibility, visible GUI acceptance, and the remaining
+cross-platform/review gates stay open. Push this product commit and roadmap
+checkpoint to PR #3193, then inspect checks for the exact head.
