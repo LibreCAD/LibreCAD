@@ -909,6 +909,22 @@ TEST_CASE("Native source picker refuses unrepresentable source variants atomical
     auto* source = polyline.get();
     f.graphic.addEntity(source);
     polyline.release();
+    RS_Polyline mixedBulgePolyline;
+    mixedBulgePolyline.addVertex({0, 0}, 0.2);
+    mixedBulgePolyline.addVertex({8, 0}, -0.2);
+    mixedBulgePolyline.addVertex({8, 6});
+    mixedBulgePolyline.addVertex({0, 6});
+    mixedBulgePolyline.setClosed(true);
+    mixedBulgePolyline.endPolyline();
+    const auto mixedBulgeSource =
+        LC_OffsetSourceGeometry::capture(mixedBulgePolyline);
+    REQUIRE(mixedBulgeSource);
+    auto mixedPolylineEntity = mixedBulgeSource->makeEntity();
+    REQUIRE(mixedPolylineEntity);
+    auto* mixedPolyline = dynamic_cast<RS_Polyline*>(mixedPolylineEntity.get());
+    REQUIRE(mixedPolyline);
+    f.graphic.addEntity(mixedPolyline);
+    mixedPolylineEntity.release();
     LC_SplinePointsData smoothFitData{false, false};
     smoothFitData.splinePoints = {{0, 0}, {1, 2}, {2, 0}};
     auto smoothFit = LC_OffsetSourceGeometry{smoothFitData}.makeEntity();
@@ -954,6 +970,7 @@ TEST_CASE("Native source picker refuses unrepresentable source variants atomical
         CHECK_FALSE(refusal->text().isEmpty());
     };
     verifyRefusal(LC_OffsetSourceGeometry::Kind::Polyline, *source);
+    verifyRefusal(LC_OffsetSourceGeometry::Kind::Polyline, *mixedPolyline);
 
     const int splinePointsType = typeBox->findData(
         static_cast<int>(LC_OffsetSourceGeometry::Kind::SplinePoints));
