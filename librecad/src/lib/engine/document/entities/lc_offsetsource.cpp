@@ -70,6 +70,67 @@ RS_VectorSolutions segmentIntersections(const LC_OffsetPolylineSegment& lhs,
     }, lhs, rhs);
 }
 
+std::optional<RS_VectorSolutions> lineArcIntersections(const RS_LineData& line,
+                                                       const RS_ArcData& arc) noexcept {
+    const double dx = line.endpoint.x - line.startpoint.x;
+    const double dy = line.endpoint.y - line.startpoint.y;
+    const double qx = arc.center.x - line.startpoint.x;
+    const double qy = arc.center.y - line.startpoint.y;
+    const double coordinateScale = std::max({1.0, std::abs(line.startpoint.x),
+        std::abs(line.startpoint.y), std::abs(line.endpoint.x), std::abs(line.endpoint.y),
+        std::abs(arc.center.x), std::abs(arc.center.y), arc.radius});
+    const double coordinateTolerance = 128.0 * std::numeric_limits<double>::epsilon() *
+                                       coordinateScale;
+    if (!std::isfinite(dx) || !std::isfinite(dy) || !std::isfinite(qx) ||
+        !std::isfinite(qy) || !std::isfinite(arc.radius) || arc.radius <= 0.0 ||
+        !std::isfinite(coordinateTolerance)) return std::nullopt;
+
+    const double scale = std::max({std::abs(dx), std::abs(dy), std::abs(qx),
+                                   std::abs(qy), arc.radius});
+    if (!std::isfinite(scale) || scale <= 0.0) return std::nullopt;
+    const double sx = dx / scale;
+    const double sy = dy / scale;
+    const double cx = qx / scale;
+    const double cy = qy / scale;
+    const double radius = arc.radius / scale;
+    const double lengthSquared = sx * sx + sy * sy;
+    if (!std::isfinite(lengthSquared) || lengthSquared <= 0.0) return std::nullopt;
+
+    const double projection = (cx * sx + cy * sy) / lengthSquared;
+    const double perpendicularX = cx - projection * sx;
+    const double perpendicularY = cy - projection * sy;
+    const double perpendicularSquared = perpendicularX * perpendicularX +
+                                        perpendicularY * perpendicularY;
+    const double radiusSquared = radius * radius;
+    const double discriminant = radiusSquared - perpendicularSquared;
+    const double discriminantTolerance = 256.0 * std::numeric_limits<double>::epsilon() *
+        std::max({radiusSquared, perpendicularSquared,
+                  std::numeric_limits<double>::min()});
+    if (!std::isfinite(projection) || !std::isfinite(perpendicularSquared) ||
+        !std::isfinite(discriminant) || !std::isfinite(discriminantTolerance))
+        return std::nullopt;
+    if (discriminant < -discriminantTolerance) return RS_VectorSolutions{};
+
+    const auto pointAt = [&](const double parameter) -> std::optional<RS_Vector> {
+        const RS_Vector point{line.startpoint.x + dx * parameter,
+                              line.startpoint.y + dy * parameter};
+        if (!LC_OffsetSourceDetail::finite(point)) return std::nullopt;
+        return point;
+    };
+    if (discriminant <= discriminantTolerance) {
+        auto tangent = pointAt(projection);
+        if (!tangent) return std::nullopt;
+        return RS_VectorSolutions{*tangent};
+    }
+
+    const double root = std::sqrt(discriminant / lengthSquared);
+    if (!std::isfinite(root)) return std::nullopt;
+    auto first = pointAt(projection - root);
+    auto second = pointAt(projection + root);
+    if (!first || !second) return std::nullopt;
+    return RS_VectorSolutions{*first, *second};
+}
+
 std::optional<RS_VectorSolutions> arcArcIntersections(const RS_ArcData& lhs,
                                                      const RS_ArcData& rhs) noexcept {
     const double dx = rhs.center.x - lhs.center.x;
@@ -131,13 +192,23 @@ std::optional<RS_VectorSolutions> arcArcIntersections(const RS_ArcData& lhs,
 std::optional<RS_VectorSolutions> intersectionsOnSegments(
     const LC_OffsetPolylineSegment& lhs, const LC_OffsetPolylineSegment& rhs) {
     RS_VectorSolutions points;
-    if (const auto* firstArc = std::get_if<RS_ArcData>(&lhs)) {
+    if (const auto* firstLine = std::get_if<RS_LineData>(&lhs)) {
         if (const auto* secondArc = std::get_if<RS_ArcData>(&rhs)) {
-            auto intersections = arcArcIntersections(*firstArc, *secondArc);
+            auto intersections = lineArcIntersections(*firstLine, *secondArc);
             if (!intersections) return std::nullopt;
             points = std::move(*intersections);
         } else {
             points = segmentIntersections(lhs, rhs);
+        }
+    } else if (const auto* firstArc = std::get_if<RS_ArcData>(&lhs)) {
+        if (const auto* secondLine = std::get_if<RS_LineData>(&rhs)) {
+            auto intersections = lineArcIntersections(*secondLine, *firstArc);
+            if (!intersections) return std::nullopt;
+            points = std::move(*intersections);
+        } else if (const auto* secondArc = std::get_if<RS_ArcData>(&rhs)) {
+            auto intersections = arcArcIntersections(*firstArc, *secondArc);
+            if (!intersections) return std::nullopt;
+            points = std::move(*intersections);
         }
     } else {
         points = segmentIntersections(lhs, rhs);

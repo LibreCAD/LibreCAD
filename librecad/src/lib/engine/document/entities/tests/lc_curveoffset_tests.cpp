@@ -271,6 +271,30 @@ TEST_CASE("Polyline source topology validation rejects segment self-intersection
          RS_ArcData{{0, 0}, 1.0, 2.0 * M_PI / 3.0, M_PI, false}}};
     CHECK(LC_OffsetSourceGeometry{touchingArcs}.isWellFormed());
 
+    const double nearTangentOffset = 1.0e-10;
+    const double nearTangentY = 1.0 - nearTangentOffset;
+    const double nearTangentX = std::sqrt(1.0 - nearTangentY * nearTangentY);
+    const double nearTangentJoin = std::atan2(nearTangentY, nearTangentX);
+    const double nearTangentStart = nearTangentJoin - 1.0e-6;
+    const double nearTangentEnd = nearTangentJoin + 1.0e-3;
+    constexpr double lineHalfLength = 1.0e-6;
+    const LC_OffsetPolylineData nearTangentCrossing{
+        {nearTangentX - lineHalfLength, nearTangentY},
+        {std::cos(nearTangentEnd), std::sin(nearTangentEnd)}, false,
+        {RS_LineData{{nearTangentX - lineHalfLength, nearTangentY},
+                     {nearTangentX + lineHalfLength, nearTangentY}},
+         RS_LineData{{nearTangentX + lineHalfLength, nearTangentY},
+                     {std::cos(nearTangentStart), std::sin(nearTangentStart)}},
+         RS_ArcData{{0, 0}, 1.0, nearTangentStart, nearTangentEnd, false}}};
+    const RS_Line nearTangentLine{nullptr,
+        std::get<RS_LineData>(nearTangentCrossing.segments[0])};
+    const RS_Arc nearTangentArc{nullptr,
+        std::get<RS_ArcData>(nearTangentCrossing.segments[2])};
+    const RS_Vector nearTangentIntersection{nearTangentX, nearTangentY};
+    CHECK(nearTangentLine.isPointOnEntity(nearTangentIntersection, 1.0e-12));
+    CHECK(nearTangentArc.isPointOnEntity(nearTangentIntersection, 1.0e-12));
+    CHECK_FALSE(LC_OffsetSourceGeometry{nearTangentCrossing}.isWellFormed());
+
     const double nearConcentricShift = 1.0e-8;
     const double nearConcentricRadius = std::hypot(nearConcentricShift, 1.0);
     double nearConcentricJoinAngle = std::atan2(-1.0, -nearConcentricShift);
