@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W507; chronological evidence follows): implementation slices
+Current status (W508; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -77,7 +77,10 @@ layouts, scales, and normalized distances.
 W507 adds centered-versus-translated worker geometry/cache checks for all eight
 bounded hyperbola layouts at six curvature-neighborhood settings; the focused
 case passes 15,088 assertions and the worker-kernel suite passes 42,085 across
-39 cases. Staged import at translated coordinates remains open.
+39 cases. W508 carries those sources through five DXF/DWG lanes; the focused
+import case passes 121,025 assertions and the full typed-source import suite
+passes 600,512 assertions across 35 cases. These qualify only the recorded
+translation, interval layouts, and distances.
 W439 adds bulged LWPOLYLINE and legacy 2D POLYLINE input coverage across R14
 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
@@ -19518,6 +19521,28 @@ carrier must downgrade to ordinary spline while preserving schema-2 source
 metadata. Require both outcomes in the aggregate matrix when the worker
 topology produces both. Run the focused import case, full typed-source import
 selection, CMake Debug test build, roadmap parser, and diff check.
+
+### Completion receipt
+
+The eight bounded interval/branch layouts translated to `(1e9, -1e9)` now
+traverse staged import at signed distances `±1.05`, `±1.08`, and `±1.09` in
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG: 240 imports. Full generated output
+topology controls admission. Native promotions preserve exact typed-source
+metadata; multi-output first-branch carriers become ordinary visible splines
+and preserve exact schema-2 source metadata without native promotion. Imported
+cache geometry is sampled against generated geometry at 129 normalized
+parameters; maximum deviation remains within four times the requested geometry
+tolerance plus the explicit 64-ULP world-coordinate allowance.
+
+Validation: focused `[hyperbola][precision]` staged-import case passes 121,025
+assertions; the full `[lc-offsetcurve][import-session][typed-source]`
+selection passes 600,512 assertions across 35 cases; CMake Debug
+`librecad_tests` builds; roadmap parser passes 5/5; `git diff --check` passes.
+These are local results, not exact-head CI, visible-GUI, or external-CAD
+acceptance. Product test commit `8b9f901fa`
+(`test(offset): import translated hyperbola variants`); this roadmap receipt
+is committed separately. Other translation magnitudes, scales combined with
+translation, and arbitrary interval/tolerance cases remain open.
 
 ### Completion receipt
 
