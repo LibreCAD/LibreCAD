@@ -3132,6 +3132,7 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
                std::string{value->c_str()} == appName;
       });
     };
+    const auto checkBulgedOcsFormat = [&](double bulge, const char *variant) {
     for (const auto &format : formats) {
 #ifndef DWGSUPPORT
       if (format.dwg)
@@ -3140,6 +3141,7 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
       DRW_Polyline fixture = bulged;
       for (auto &vertex : fixture.vertlist)
         vertex = std::make_shared<DRW_Vertex>(*vertex);
+      fixture.vertlist.front()->bulge = bulge;
       const auto path = directory.file(std::string("bulged-") + format.suffix);
 #ifdef DWGSUPPORT
       if (format.dwg)
@@ -3150,7 +3152,7 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
       f::binaryDxf2dPolyline(path, fixture, format.version);
 #endif
       const auto imported = stagedImport(path, format.lane);
-      INFO(format.suffix);
+      INFO(variant << " " << format.suffix);
       REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
       REQUIRE(imported.graphic);
       REQUIRE(std::distance(imported.graphic->begin(),
@@ -3170,13 +3172,20 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
       }
       REQUIRE(ellipse);
       REQUIRE(line);
-      CHECK(ellipse->getMajorRadius() == Catch::Approx(std::sqrt(2.0)));
+      CHECK(ellipse->getAngleLength() ==
+            Catch::Approx(std::abs(4.0 * std::atan(bulge))));
+      CHECK(std::isfinite(ellipse->getMajorRadius()));
+      CHECK(ellipse->getMajorRadius() > 0.0);
       CHECK(ellipse->getRatio() == Catch::Approx(0.8));
       CHECK(samePoint(ellipse->getStartpoint(), straightPoints[0]));
       CHECK(samePoint(ellipse->getEndpoint(), straightPoints[1]));
       CHECK(samePoint(line->getStartpoint(), straightPoints[1]));
       CHECK(samePoint(line->getEndpoint(), straightPoints[2]));
     }
+    };
+    checkBulgedOcsFormat(std::tan(M_PI / 8.0), "positive-minor");
+    checkBulgedOcsFormat(-std::tan(M_PI / 8.0), "negative-minor");
+    checkBulgedOcsFormat(2.0, "positive-major");
 
     const auto projectedDxf = directory.file("bulged-roundtrip.dxf");
     REQUIRE(lc::test::exportDrawing(*unsupportedOutcome.graphic, projectedDxf,
