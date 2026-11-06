@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W479; chronological evidence follows): implementation slices
+Current status (W480; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W479. Historical results from
+No exact-head CI result is claimed for W441-W480. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18789,3 +18789,29 @@ new interval shapes have not yet been exercised through DXF/DWG staged import.
 Test commit `3fa9cb455` (`test(offset): cover hyperbola interval bound
 variants`); roadmap receipt is separate. Remaining: real-file promotion for
 these added bounds and intervals near curvature/topology refusal thresholds.
+
+## 480. Hyperbola Interval DXF/DWG Promotion
+
+W479 verifies four additional bounded interval shapes through worker
+generation and cache validation. Extend the real-file matrix to all eight
+worker-qualified layouts across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG,
+using the six signed distances `±0.1`, `±0.3`, and `±0.5`. Require native
+operation-8 admission plus exact source and canonical-cache comparisons after
+each import.
+
+### Completion receipt
+
+All eight bounded hyperbola layouts promote through all five real file/version
+lanes at all six signed distances: 240 staged imports. Every import admits a
+native editable offset, preserves exact source bounds/branch identity, and
+matches the generated cache fingerprint. This closes these representative
+interval layouts and magnitudes only; it does not prove all legal finite
+bounds, behavior near curvature singularities, or arbitrary output topology.
+
+Validation: incremental CMake Debug `librecad_tests` build passes. The focused
+`typed source families promote from real DXF and DWG cache carriers` test passes
+87,659 assertions. `git diff --check` passes. These are local results, not
+exact-head CI or external CAD acceptance. Test commit `3652c4c86`
+(`test(offset): promote hyperbola interval bounds from files`); roadmap receipt
+is separate. Remaining: hyperbola ranges near numeric/curvature limits and
+dynamic multi-branch/refusal cases.
