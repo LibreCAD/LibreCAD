@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W427; chronological evidence follows): implementation slices
+Current status (W428; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -113,6 +113,12 @@ AC1032 DXF, and AC1032 DWG. All three retain ordinary two-arc polylines while
 offset-source capture refuses them. The focused fixture passes 60 assertions;
 the full imported typed-source/polyline suite passes 1,198 assertions/12
 cases. Test commit `f3d7697ec` adds no production behavior.
+
+W428 adds a closed bow-tie LWPOLYLINE import case to exercise the implicit
+closure seam. R14 DXF, AC1032 DXF, and AC1032 DWG retain the closed four-segment
+entity, but typed source capture refuses its crossing. The focused case passes
+57 assertions; the full imported typed-source/polyline selection passes 1,255
+assertions/13 cases. Test commit `e661bc523` adds no production behavior.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -16768,3 +16774,22 @@ bulges and file versions, not all arc sweep magnitudes or OCS transforms.
 Non-axial OCS, mesh/polyface/3D legacy POLYLINE, broad distance/side admission,
 and visible GUI acceptance remain open. Push the test and plan commits to PR
 #3193 and query checks for the exact resulting head.
+
+## 428. Closed Self-Crossing Polyline Import (2026-11-06)
+
+Added a closed bow-tie LWPOLYLINE fixture to exercise the special first/last
+segment adjacency at the implicit closure seam. The closed entity imports and
+retains four segments through R14/AC1014 binary DXF, AC1032 DXF, and AC1032
+DWG, while typed source capture rejects the non-simple boundary. This confirms
+that seam allowance does not mask the bow-tie's non-adjacent intersection.
+
+The focused case passes 57 assertions/1 case. The full
+`[import-session][typed-source][polyline]` selection passes 1,255 assertions
+in 13 cases. Release `librecad_tests` builds and `git diff --check` passes.
+Test commit: `e661bc523` (`test(offset): cover closed crossing polylines`).
+
+This closes one representative closed line-only crossing fixture, not every
+closed mixed/bulged intersection or legacy 2D/3D polyline variant. OCS
+transforms, broader distance/side eligibility, and visible GUI acceptance
+remain open. Push the test and roadmap commits to PR #3193 and qualify the
+exact head.
