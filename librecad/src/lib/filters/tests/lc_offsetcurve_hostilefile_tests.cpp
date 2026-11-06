@@ -1557,12 +1557,12 @@ TEST_CASE("imported non-consecutive repeated LWPOLYLINE vertices are not offset 
     }
 }
 
-TEST_CASE("imported open returns and closed repeated polyline vertices are refused as offset sources",
+TEST_CASE("imported repeated and near-coincident polyline vertices are refused as offset sources",
           "[lc-offsetcurve][import-session][typed-source][polyline][malformed][topology]") {
     Setup setup;
-    lc::test::OutputDirectory directory("offset-polyline-return-and-closed-repeat-import");
+    lc::test::OutputDirectory directory("offset-polyline-repeated-vertex-topology-import");
     struct Shape { DRW_LWPolyline polyline; bool closed; const char* name; };
-    std::array<Shape, 2> shapes{};
+    std::array<Shape, 3> shapes{};
     shapes[0].closed = false;
     shapes[0].name = "open-return";
     shapes[0].polyline.vertexnum = 3;
@@ -1578,6 +1578,14 @@ TEST_CASE("imported open returns and closed repeated polyline vertices are refus
     shapes[1].polyline.addVertex(DRW_Vertex2D(2, 2, 0));
     shapes[1].polyline.addVertex(DRW_Vertex2D(0, 0, 0));
     shapes[1].polyline.addVertex(DRW_Vertex2D(0, 2, 0));
+    shapes[2].closed = false;
+    shapes[2].name = "near-coincident-nonconsecutive";
+    shapes[2].polyline.vertexnum = 5;
+    shapes[2].polyline.addVertex(DRW_Vertex2D(0, 0, 0));
+    shapes[2].polyline.addVertex(DRW_Vertex2D(2, 0, 0));
+    shapes[2].polyline.addVertex(DRW_Vertex2D(2, 2, 0));
+    shapes[2].polyline.addVertex(DRW_Vertex2D(1.0e-15, 1.0e-15, 0));
+    shapes[2].polyline.addVertex(DRW_Vertex2D(0, 2, 0));
 
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 3> formats{{
@@ -1609,8 +1617,10 @@ TEST_CASE("imported open returns and closed repeated polyline vertices are refus
             REQUIRE(polylines.size() == 1);
             const RS_Polyline& imported = *polylines.front();
             CHECK(imported.isClosed() == shape.closed);
-            CHECK(imported.getVertexes().size() ==
-                  shape.polyline.vertlist.size() + (shape.closed ? 1U : 0U));
+            const auto vertices = imported.getVertexes();
+            CHECK(vertices.size() == shape.polyline.vertlist.size() + (shape.closed ? 1U : 0U));
+            if (shape.name == std::string("near-coincident-nonconsecutive"))
+                CHECK(vertices[0].distanceTo(vertices[3]) < 1.0e-14);
             CHECK_FALSE(LC_OffsetSourceGeometry::capture(imported));
         }
     }

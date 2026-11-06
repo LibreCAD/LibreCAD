@@ -9,14 +9,17 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstdint>
+#include <map>
 #include <memory>
 #include <cstddef>
 #include <limits>
 #include <optional>
-#include <set>
 #include <type_traits>
+#include <tuple>
 #include <utility>
 #include <variant>
+#include <vector>
 
 #include "lc_hyperbola.h"
 #include "lc_parabola.h"
@@ -106,6 +109,67 @@ inline bool sameEndpoint(const RS_Vector& lhs, const RS_Vector& rhs,
                                    geometricScale});
     return std::hypot(lhs.x - rhs.x, lhs.y - rhs.y) <=
            128.0 * std::numeric_limits<double>::epsilon() * scale;
+}
+
+using PolylineVertexBuckets =
+    std::map<std::tuple<int, std::int64_t, std::int64_t>, std::vector<RS_Vector>>;
+
+inline int vertexScaleExponent(const RS_Vector& point) noexcept {
+    const double scale = std::max({1.0, std::abs(point.x), std::abs(point.y)});
+    int exponent = 0;
+    std::frexp(scale, &exponent);
+    return exponent;
+}
+
+inline double vertexBucketWidth(const int exponent) noexcept {
+    return std::ldexp(128.0 * std::numeric_limits<double>::epsilon(), exponent);
+}
+
+inline std::int64_t vertexBucketCoordinate(const double coordinate, const double width) noexcept {
+    return static_cast<std::int64_t>(std::floor(coordinate / width));
+}
+
+inline bool insertUniqueVertex(PolylineVertexBuckets& buckets, const RS_Vector& point) noexcept {
+    const int exponent = vertexScaleExponent(point);
+    for (int candidateExponent = exponent - 1; candidateExponent <= exponent + 1; ++candidateExponent) {
+        const double width = vertexBucketWidth(candidateExponent);
+        const auto x = vertexBucketCoordinate(point.x, width);
+        const auto y = vertexBucketCoordinate(point.y, width);
+        for (std::int64_t dx = -1; dx <= 1; ++dx) {
+            for (std::int64_t dy = -1; dy <= 1; ++dy) {
+                const auto found = buckets.find({candidateExponent, x + dx, y + dy});
+                if (found == buckets.end()) continue;
+                if (std::any_of(found->second.begin(), found->second.end(),
+                                [&](const RS_Vector& existing) { return sameEndpoint(existing, point); }))
+                    return false;
+            }
+        }
+    }
+
+    const double width = vertexBucketWidth(exponent);
+    try {
+        buckets[{exponent, vertexBucketCoordinate(point.x, width),
+                 vertexBucketCoordinate(point.y, width)}].push_back(point);
+    } catch (...) {
+        return false;
+    }
+    return true;
+}
+
+inline bool eraseVertex(PolylineVertexBuckets& buckets, const RS_Vector& point) noexcept {
+    const int exponent = vertexScaleExponent(point);
+    const double width = vertexBucketWidth(exponent);
+    const auto found = buckets.find({exponent, vertexBucketCoordinate(point.x, width),
+                                     vertexBucketCoordinate(point.y, width)});
+    if (found == buckets.end()) return false;
+    auto& vertices = found->second;
+    const auto vertex = std::find_if(vertices.begin(), vertices.end(), [&](const RS_Vector& existing) {
+        return existing.x == point.x && existing.y == point.y;
+    });
+    if (vertex == vertices.end()) return false;
+    vertices.erase(vertex);
+    if (vertices.empty()) buckets.erase(found);
+    return true;
 }
 
 inline double segmentScale(const LC_OffsetPolylineSegment& segment) noexcept {
@@ -305,10 +369,7 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             RS_Vector previousEnd;
             RS_Vector lastStart;
             RS_Vector lastEnd;
-            const auto vertexKey = [](const RS_Vector& point) {
-                return std::pair{point.x, point.y};
-            };
-            std::set<std::pair<double, double>> uniqueVertices;
+            PolylineVertexBuckets uniqueVertices;
             double firstScale = 1.0;
             double previousScale = 1.0;
             double lastScale = 1.0;
@@ -316,13 +377,7 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
                 RS_Vector start;
                 RS_Vector end;
                 if (!endpoints(data.segments[i], start, end)) return false;
-                bool inserted = false;
-                try {
-                    inserted = uniqueVertices.insert(vertexKey(start)).second;
-                } catch (...) {
-                    return false;
-                }
-                if (!inserted) return false;
+                if (!insertUniqueVertex(uniqueVertices, start)) return false;
                 const double scale = segmentScale(data.segments[i]);
                 if (i == 0) {
                     firstStart = start;
@@ -341,18 +396,12 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             if (data.closed) {
                 if (!sameEndpoint(lastEnd, data.startpoint,
                                   std::max(lastScale, firstScale))) return false;
-                uniqueVertices.erase(vertexKey(firstStart));
-                if (uniqueVertices.count(vertexKey(lastEnd))) return false;
+                if (!eraseVertex(uniqueVertices, firstStart) ||
+                    !insertUniqueVertex(uniqueVertices, lastEnd)) return false;
                 return sameEndpoint(data.endpoint, lastStart, lastScale) ||
                        sameEndpoint(data.endpoint, lastEnd, lastScale);
             }
-            bool inserted = false;
-            try {
-                inserted = uniqueVertices.insert(vertexKey(lastEnd)).second;
-            } catch (...) {
-                return false;
-            }
-            if (!inserted) return false;
+            if (!insertUniqueVertex(uniqueVertices, lastEnd)) return false;
             return sameEndpoint(lastEnd, data.endpoint, lastScale);
         }
     }, value);
