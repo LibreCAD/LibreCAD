@@ -19252,3 +19252,30 @@ passes. These are local results, not exact-head CI, visible-GUI, or external
 CAD acceptance. Product commit `3c522a472` (`fix(offset): refuse
 tangent-constrained fit sources`). Exact tangent interpolation semantics and
 their native cache admission remain open.
+
+## 496. Parabola Worker Scale Qualification
+
+W492/W493 exercise finite parabola control nets near the apex-curvature
+threshold at one characteristic size. Extend worker operation-7 generation
+and operation-8 cache validation to uniformly scaled copies at `1e-3` and
+`1e3`. Scale the signed offset magnitudes with the geometry and sample both
+sides below, at, and above the same normalized curvature neighborhood. Derive
+admission from the generated topology: accept only a single canonical cache;
+refuse multi-piece first-branch carriers without mutation. Do not infer
+arbitrary-scale or near-degenerate support from this bounded scale sweep.
+
+### Completion receipt
+
+The parabola worker matrix now tests 16 operation-7/8 settings across the
+`1e-3` and `1e3` uniform scales, with signed magnitudes `0.5`, `2.0`, `2.5`,
+and `3.0` times each scale. Every setting is classified from generated output:
+single-branch output is admitted only when operation 8 confirms it; multi-piece
+output returns `NotCacheRepresentable` without changing state. Both admission
+and refusal outcomes occur across the matrix.
+
+Validation: the focused scale case passes 405 assertions; the full worker
+kernel suite passes 9,666 assertions across 34 cases; incremental CMake Debug
+build and `git diff --check` pass. These are local worker results, not real-file
+DXF/DWG round trips, exact-head CI, visible-GUI, or external-CAD acceptance.
+Test commit `9ee90c804` (`test(offset): qualify parabola worker scales`).
+Other source scales, degeneracies, and precision limits remain open.
