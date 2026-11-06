@@ -1557,6 +1557,65 @@ TEST_CASE("imported non-consecutive repeated LWPOLYLINE vertices are not offset 
     }
 }
 
+TEST_CASE("imported open returns and closed repeated polyline vertices are refused as offset sources",
+          "[lc-offsetcurve][import-session][typed-source][polyline][malformed][topology]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-polyline-return-and-closed-repeat-import");
+    struct Shape { DRW_LWPolyline polyline; bool closed; const char* name; };
+    std::array<Shape, 2> shapes{};
+    shapes[0].closed = false;
+    shapes[0].name = "open-return";
+    shapes[0].polyline.vertexnum = 3;
+    shapes[0].polyline.addVertex(DRW_Vertex2D(0, 0, 0));
+    shapes[0].polyline.addVertex(DRW_Vertex2D(2, 0, 0));
+    shapes[0].polyline.addVertex(DRW_Vertex2D(0, 0, 0));
+    shapes[1].closed = true;
+    shapes[1].name = "closed-interior-repeat";
+    shapes[1].polyline.flags = 1;
+    shapes[1].polyline.vertexnum = 5;
+    shapes[1].polyline.addVertex(DRW_Vertex2D(0, 0, 0));
+    shapes[1].polyline.addVertex(DRW_Vertex2D(2, 0, 0));
+    shapes[1].polyline.addVertex(DRW_Vertex2D(2, 2, 0));
+    shapes[1].polyline.addVertex(DRW_Vertex2D(0, 0, 0));
+    shapes[1].polyline.addVertex(DRW_Vertex2D(0, 2, 0));
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& shape : shapes) {
+        for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+            if (format.dwg) continue;
+#endif
+            const auto path = directory.file(std::string(shape.name) + "-" + format.suffix);
+#ifdef DWGSUPPORT
+            if (format.dwg) f::dwgPolylineFile(path, shape.polyline, format.version);
+            else f::binaryDxfPolyline(path, shape.polyline, format.version);
+#else
+            f::binaryDxfPolyline(path, shape.polyline, format.version);
+#endif
+
+            auto outcome = stagedImport(path, format.lane);
+            REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(outcome.graphic);
+            std::vector<const RS_Polyline*> polylines;
+            for (const RS_Entity* entity : *outcome.graphic) {
+                if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity))
+                    polylines.push_back(polyline);
+            }
+            REQUIRE(polylines.size() == 1);
+            const RS_Polyline& imported = *polylines.front();
+            CHECK(imported.isClosed() == shape.closed);
+            CHECK(imported.getVertexes().size() ==
+                  shape.polyline.vertlist.size() + (shape.closed ? 1U : 0U));
+            CHECK_FALSE(LC_OffsetSourceGeometry::capture(imported));
+        }
+    }
+}
+
 TEST_CASE("legacy 2D POLYLINE import preserves signed bulge source geometry",
           "[lc-offsetcurve][import-session][typed-source][polyline][legacy]") {
     Setup setup;
