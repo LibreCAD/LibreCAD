@@ -2113,6 +2113,7 @@ bool DRW_Header::parseDwgImpl(DRW::Version version, dwgBuffer *buf,
     handSeed = HANDSEED.ref;
     dwgHandle CLAYER = hBbuf->getHandle();
     DRW_DBG("\nCLAYER: "); DRW_DBGHL(CLAYER.code, CLAYER.size, CLAYER.ref);
+    clayerHandle = CLAYER.ref;
     dwgHandle TEXTSTYLE = hBbuf->getHandle();
     DRW_DBG("\nTEXTSTYLE: "); DRW_DBGHL(TEXTSTYLE.code, TEXTSTYLE.size, TEXTSTYLE.ref);
     dwgHandle CELTYPE = hBbuf->getHandle();
@@ -2911,7 +2912,8 @@ bool DRW_Header::encodeDwg(DRW::Version version, dwgBufferW *buf, dwgBufferW *hB
     buf->putFixedHandle(0, static_cast<std::uint8_t>(sizeof(handSeed)), handSeed);
     // The following 5 handles emit to the HANDLE stream.  For R2000 the
     // handle stream is inline (buf == hBbuf in our usage).
-    hBbuf->putHandle(makeHardPtr(DRW::DwgLayer0Handle));  // CLAYER
+    hBbuf->putHandle(makeHardPtr(clayerHandle != 0 ? clayerHandle
+                                                   : DRW::DwgLayer0Handle));  // CLAYER
     hBbuf->putHandle(makeHardPtr(DRW::DwgStandardTextStyleHandle));  // TEXTSTYLE
     hBbuf->putHandle(makeHardPtr(DRW::DwgLtypeByLayerHandle));  // CELTYPE
     if (version > DRW::AC1018) {       // 2007+: CMATERIAL (parseDwg:1960-1963)

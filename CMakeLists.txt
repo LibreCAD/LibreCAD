@@ -2710,6 +2710,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/dwg_pre_r13_section_size_tests.cpp
         librecad/src/lib/filters/tests/dwg_pre_r13_record_layout_tests.cpp
         librecad/src/lib/filters/tests/dwg_textcodec_tables_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_layer_flags_tests.cpp
         librecad/src/lib/filters/tests/dxf_cjk_codepage_tests.cpp
         librecad/src/lib/math/tests/lc_archparser_tests.cpp
         librecad/src/lib/math/tests/rs_math_tests.cpp
@@ -2727,6 +2728,7 @@ if (BUILD_TESTS)
         librecad/src/lib/modification/tests/lc_offsetresultchecktests.cpp
         librecad/src/lib/modification/tests/rs_modification_attributes_tests.cpp
         librecad/src/lib/filters/tests/dwg_buffer_round_trip_tests.cpp
+        librecad/src/lib/filters/tests/lc_layer_off_state_tests.cpp
         librecad/src/lib/filters/tests/spline_offset_representation_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_line_parallel_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_fast_tests.cpp
@@ -2741,6 +2743,7 @@ if (BUILD_TESTS)
         librecad/src/lib/filters/tests/lc_attrib_embedded_mtext_dwg_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_encode_round_trip_tests.cpp
         librecad/src/lib/filters/tests/dwg_handseed_tests.cpp
+        librecad/src/lib/filters/tests/lc_dwg_current_layer_tests.cpp
         librecad/src/lib/filters/tests/dwg_header_app_vars_tests.cpp
         librecad/src/lib/filters/tests/dwg_visibility_read_tests.cpp
         librecad/src/lib/filters/tests/libdxfrw_debug_tests.cpp
