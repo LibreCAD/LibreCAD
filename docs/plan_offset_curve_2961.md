@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W440; chronological evidence follows): implementation slices
+Current status (W441; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,10 +67,9 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-The latest live diagnostics for exact PR head
-`e0c0084bd8027781d71348640c8167030a8db4bd` showed five build_with_pixi checks
-in progress (macOS 15 Intel, macOS latest, Ubuntu latest, Windows latest, and
-Ubuntu 24.04 ARM); no conclusion is inherited from prior heads.
+No exact-head CI result is claimed for the new W441 test commit. Historical
+results from W440 or earlier heads are not inherited; query the current PR head
+after the roadmap checkpoint is pushed.
 W436 adds marked XY display projections for straight non-axial LWPOLYLINE and
 legacy 2D POLYLINE imports, with typed offset-source refusal and DXF/DWG
 provenance round-trips. Legacy POLYLINE coverage now includes R14, R2000, and
@@ -17556,3 +17555,37 @@ side can form a single native cache.
 This entry consolidates the repeated picker requests into the existing
 eligibility roadmap; it does not reopen completed type-selector, highlighting,
 or parabola-identity work.
+
+## 441. Ellipse, Arc, and Circle Cache Side/Distance Matrix
+
+The worker family suite already covers generation for every modeled source
+family, while operation-8 side sweeps explicitly cover splines, bounded
+hyperbolas, and polylines. Add a focused conic cache matrix for full and partial
+ellipses, reversed partial ellipse and circular arc geometry, plus a circle.
+For each, generate and validate signed offsets at small and larger magnitudes;
+single-cache results must pass exact op-8 validation, while any non-single-cache
+result must refuse promotion without mutation.
+
+### Completion receipt
+
+The new worker-kernel case exercises five conic source values (full ellipse,
+ordinary partial ellipse, reversed partial ellipse, reversed circular arc, and
+circle) at signed distances `-0.4`, `-0.1`, `0.1`, and `0.4`. All 20 generations
+complete and produce exactly one canonical cache; all 20 pass operation-8
+validation, with no refusal or changed-state discrepancy. The test asserts the
+cache is a spline (or the exact line-segment adapter where applicable) and the
+worker actually ran once. This matrix does not exercise multi-cache refusal;
+that behavior remains covered by the existing polyline and spline cases.
+
+Validation: CMake Debug kernel test target builds. The focused selector
+`[lc-offsetcurve][worker-kernel][source-cache][conic][side]` passes 507
+assertions/1 case; the complete `librecad_offset_worker_kernel_tests` suite
+passes 4,687 assertions/30 cases. The roadmap parser passes 5/5 and the H6
+refusal inventory passes 94/94, with 93 obligations, zero production
+mismatches, and zero pending declarations. `git diff --check` passes.
+Test commit: `b167811a1` (`test(offset): qualify conic cache sides and distances`).
+
+This closes only representative ellipse/arc/circle source/cache cases at four
+signed distances. It does not establish every legal ellipse sweep/reversal,
+distance-to-curvature singularity, arbitrary OCS, all-source exact-head
+persistence, or external CAD acceptance.
