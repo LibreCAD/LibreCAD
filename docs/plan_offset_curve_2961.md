@@ -32,6 +32,8 @@ matrix; W528 mixed-sign bulge polyline scale/translation qualification
 complete for its defined matrix;
 W529 closed major/minor mixed-bulge source qualification complete for its
 defined matrix;
+W530 reversed major/minor mixed-bulge qualification complete for its defined
+matrix;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -20733,3 +20735,37 @@ three scales, two translations, four distances, and five file/version lanes.
 Other major-bulge sign/order combinations, arbitrary multi-bulge chains,
 self-intersection, OCS variants, external-CAD, and visible-GUI behavior remain
 open. Update exact-head CI after pushing; do not inherit earlier checks.
+
+## 530. Reversed Closed Major/Minor Mixed-Bulge Persistence
+
+W529 qualifies one forward closed chain with a positive major bulge followed
+by a negative minor bulge. Add the same geometric chain in reverse traversal,
+which reverses both directed arc signs and places the minor arc before the
+major arc in the segment sequence. Assert captured closure, ordered arc/line
+types, and the expected negative-major/positive-minor directed sweeps.
+
+Carry the reversed definition through the same bounded matrix as W529:
+scales `1e-3`, `1`, and `1e3`; translation ratios `1e4` and `1e6`; normalized
+signed distances `-0.25`, `-0.1`, `0.1`, and `0.25`; operation-7 centered and
+translated comparisons; operation-8 validation of every generated branch; and
+staged import through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Require
+order/traversal-independent sampled geometry parity within requested
+tolerance plus coordinate ULP, exact source CBOR, canonical cache match on
+promotion, and diagnosed non-mutating fallback for multi-branch first-cache
+carriers. Account for every cell/lane; do not infer reverse-direction support
+from W529's forward chain.
+
+The reversed closed chain is captured as two lines followed by a positive
+minor arc and a negative major arc. The seven-layout matrix (the five W528
+layouts plus forward and reversed major/minor layouts) covers the same three
+scales, two translation ratios, four signed distances, and five format lanes:
+168 accounted cells. The focused case passes 482,562 assertions; polyline
+worker-kernel tests pass 82,644 assertions across six cases; the full
+`[lc-offsetcurve][import-session][typed-source][polyline]` selection passes
+489,386 assertions across 22 cases. Release `librecad_tests` builds and
+`git diff --check` passes.
+
+Product/test commit and completion receipt are to be committed separately and
+pushed to PR #3193; exact-head checks must be re-read after push. This finite
+matrix does not qualify other major-bulge orders, arbitrary bulge chains,
+self-intersection, OCS variants, external CAD, or visible GUI behavior.
