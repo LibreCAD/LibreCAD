@@ -70,6 +70,42 @@ RS_VectorSolutions segmentIntersections(const LC_OffsetPolylineSegment& lhs,
     }, lhs, rhs);
 }
 
+std::optional<RS_VectorSolutions> lineLineIntersections(const RS_LineData& lhs,
+                                                        const RS_LineData& rhs) noexcept {
+    const double rx = lhs.endpoint.x - lhs.startpoint.x;
+    const double ry = lhs.endpoint.y - lhs.startpoint.y;
+    const double sx = rhs.endpoint.x - rhs.startpoint.x;
+    const double sy = rhs.endpoint.y - rhs.startpoint.y;
+    const double qx = rhs.startpoint.x - lhs.startpoint.x;
+    const double qy = rhs.startpoint.y - lhs.startpoint.y;
+    const double scale = std::max({std::abs(rx), std::abs(ry), std::abs(sx),
+                                   std::abs(sy), std::abs(qx), std::abs(qy)});
+    if (!std::isfinite(scale) || scale <= 0.0) return std::nullopt;
+
+    const double nrx = rx / scale;
+    const double nry = ry / scale;
+    const double nsx = sx / scale;
+    const double nsy = sy / scale;
+    const double nqx = qx / scale;
+    const double nqy = qy / scale;
+    const double denominator = nrx * nsy - nry * nsx;
+    const double denominatorTolerance = 256.0 * std::numeric_limits<double>::epsilon() *
+        std::hypot(nrx, nry) * std::hypot(nsx, nsy);
+    if (!std::isfinite(denominator) || !std::isfinite(denominatorTolerance))
+        return std::nullopt;
+    if (std::abs(denominator) <= denominatorTolerance) {
+        if (denominator == 0.0) return RS_VectorSolutions{};
+        return std::nullopt;
+    }
+
+    const double firstParameter = (nqx * nsy - nqy * nsx) / denominator;
+    if (!std::isfinite(firstParameter)) return std::nullopt;
+    const RS_Vector point{lhs.startpoint.x + rx * firstParameter,
+                          lhs.startpoint.y + ry * firstParameter};
+    if (!LC_OffsetSourceDetail::finite(point)) return std::nullopt;
+    return RS_VectorSolutions{point};
+}
+
 std::optional<RS_VectorSolutions> lineArcIntersections(const RS_LineData& line,
                                                        const RS_ArcData& arc) noexcept {
     const double dx = line.endpoint.x - line.startpoint.x;
@@ -193,12 +229,14 @@ std::optional<RS_VectorSolutions> intersectionsOnSegments(
     const LC_OffsetPolylineSegment& lhs, const LC_OffsetPolylineSegment& rhs) {
     RS_VectorSolutions points;
     if (const auto* firstLine = std::get_if<RS_LineData>(&lhs)) {
-        if (const auto* secondArc = std::get_if<RS_ArcData>(&rhs)) {
+        if (const auto* secondLine = std::get_if<RS_LineData>(&rhs)) {
+            auto intersections = lineLineIntersections(*firstLine, *secondLine);
+            if (!intersections) return std::nullopt;
+            points = std::move(*intersections);
+        } else if (const auto* secondArc = std::get_if<RS_ArcData>(&rhs)) {
             auto intersections = lineArcIntersections(*firstLine, *secondArc);
             if (!intersections) return std::nullopt;
             points = std::move(*intersections);
-        } else {
-            points = segmentIntersections(lhs, rhs);
         }
     } else if (const auto* firstArc = std::get_if<RS_ArcData>(&lhs)) {
         if (const auto* secondLine = std::get_if<RS_LineData>(&rhs)) {

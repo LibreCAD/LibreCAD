@@ -295,6 +295,13 @@ TEST_CASE("Polyline source topology validation rejects segment self-intersection
     CHECK(nearTangentArc.isPointOnEntity(nearTangentIntersection, 1.0e-12));
     CHECK_FALSE(LC_OffsetSourceGeometry{nearTangentCrossing}.isWellFormed());
 
+    constexpr double shallowCrossing = 1.0e-10;
+    const LC_OffsetPolylineData nearParallelCrossing{{0, 0}, {1, -shallowCrossing}, false,
+        {RS_LineData{{0, 0}, {3, 0}},
+         RS_LineData{{3, 0}, {2, shallowCrossing}},
+         RS_LineData{{2, shallowCrossing}, {1, -shallowCrossing}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{nearParallelCrossing}.isWellFormed());
+
     const double nearConcentricShift = 1.0e-8;
     const double nearConcentricRadius = std::hypot(nearConcentricShift, 1.0);
     double nearConcentricJoinAngle = std::atan2(-1.0, -nearConcentricShift);
