@@ -303,6 +303,41 @@ inline void dwgPolylineFile(const std::filesystem::path& file, const DRW_LWPolyl
 }
 #endif
 
+template <typename Writer> struct Emit2dPolyline final : NullDrwInterface {
+    Writer& writer;
+    DRW_Polyline polyline;
+    bool wrote = false;
+    explicit Emit2dPolyline(Writer& writer, const DRW_Polyline& polyline)
+        : writer(writer), polyline(polyline) {}
+    void writeHeader(DRW_Header& header) override { header.addStr("$DWGCODEPAGE", "ANSI_1252", 3); }
+    void writeLayers() override {
+        DRW_Layer layer; layer.name = "FixtureOffsets"; layer.color = 3;
+        if constexpr (std::is_same_v<Writer, dxfRW>) REQUIRE(writer.writeLayer(&layer));
+        else REQUIRE(writer.addLayer(&layer));
+    }
+    void writeAppId() override {
+        DRW_AppId app; app.name = "LibreCad";
+        if constexpr (std::is_same_v<Writer, dxfRW>) REQUIRE(writer.writeAppId(&app));
+        else REQUIRE(writer.addAppId(&app));
+    }
+    void writeEntities() override { wrote = writer.writePolyline(&polyline); REQUIRE(wrote); }
+};
+inline void binaryDxf2dPolyline(const std::filesystem::path& file, const DRW_Polyline& polyline,
+                                DRW::Version version) {
+    dxfRW writer(file.string().c_str()); Emit2dPolyline<dxfRW> source(writer, polyline);
+    REQUIRE(writer.write(&source, version, true)); REQUIRE(source.wrote);
+    const std::string signature("AutoCAD Binary DXF\r\n\x1a\0", 22);
+    REQUIRE(fileBytes(file).compare(0, signature.size(), signature) == 0);
+}
+#ifdef DWGSUPPORT
+inline void dwg2dPolylineFile(const std::filesystem::path& file, const DRW_Polyline& polyline,
+                              DRW::Version version) {
+    dwgRW writer(file.string().c_str()); Emit2dPolyline<dwgRW> source(writer, polyline);
+    REQUIRE(writer.write(&source, version, false)); REQUIRE(source.wrote);
+    REQUIRE(fileBytes(file).substr(0, 2) == "AC");
+}
+#endif
+
 inline std::vector<RS_Entity*> live(RS_EntityContainer& container) {
     std::vector<RS_Entity*> result;
     for (auto* entity : container) if (entity && !entity->isDeleted()) result.push_back(entity);

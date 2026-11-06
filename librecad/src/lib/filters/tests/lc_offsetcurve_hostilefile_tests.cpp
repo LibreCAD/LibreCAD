@@ -1509,6 +1509,82 @@ TEST_CASE("imported duplicate LWPOLYLINE vertices remain ordinary and are not of
     }
 }
 
+TEST_CASE("legacy 2D POLYLINE import preserves signed bulge source geometry",
+          "[lc-offsetcurve][import-session][typed-source][polyline][legacy]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-legacy-polyline-source-import");
+    const double positiveBulge = std::tan(M_PI / 16.0);
+    const double negativeBulge = -std::tan(M_PI / 8.0);
+    DRW_Polyline raw;
+    raw.addVertex(DRW_Vertex(0, 0, 0, positiveBulge));
+    raw.addVertex(DRW_Vertex(2, 0, 0, negativeBulge));
+    raw.addVertex(DRW_Vertex(4, 0, 0, 0));
+    raw.addVertex(DRW_Vertex(6, 1, 0, 0));
+
+    RS_Polyline expected;
+    expected.addVertex({0, 0}, positiveBulge);
+    expected.addVertex({2, 0}, negativeBulge);
+    expected.addVertex({4, 0});
+    expected.addVertex({6, 1});
+    const auto expectedSource = LC_OffsetSourceGeometry::capture(expected);
+    REQUIRE(expectedSource);
+    const auto& expectedData = std::get<LC_OffsetPolylineData>(expectedSource->value);
+
+    struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
+    const std::array<Format, 3> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.dwg) continue;
+#endif
+        const auto path = directory.file(std::string("legacy-polyline-") + format.suffix);
+#ifdef DWGSUPPORT
+        if (format.dwg) f::dwg2dPolylineFile(path, raw, format.version);
+        else f::binaryDxf2dPolyline(path, raw, format.version);
+#else
+        f::binaryDxf2dPolyline(path, raw, format.version);
+#endif
+
+        auto outcome = stagedImport(path, format.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        std::vector<const RS_Polyline*> polylines;
+        for (const RS_Entity* entity : *outcome.graphic) {
+            if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity))
+                polylines.push_back(polyline);
+        }
+        REQUIRE(polylines.size() == 1);
+        const auto actualSource = LC_OffsetSourceGeometry::capture(*polylines.front());
+        REQUIRE(actualSource);
+        REQUIRE(actualSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+        const auto& actualData = std::get<LC_OffsetPolylineData>(actualSource->value);
+        CHECK(actualData.closed == expectedData.closed);
+        CHECK(actualData.startpoint.distanceTo(expectedData.startpoint) < 1.0e-12);
+        CHECK(actualData.endpoint.distanceTo(expectedData.endpoint) < 1.0e-12);
+        REQUIRE(actualData.segments.size() == expectedData.segments.size());
+        for (std::size_t i = 0; i < expectedData.segments.size(); ++i) {
+            REQUIRE(actualData.segments[i].index() == expectedData.segments[i].index());
+            if (std::holds_alternative<RS_LineData>(expectedData.segments[i])) {
+                const auto& actual = std::get<RS_LineData>(actualData.segments[i]);
+                const auto& wanted = std::get<RS_LineData>(expectedData.segments[i]);
+                CHECK(actual.startpoint.distanceTo(wanted.startpoint) < 1.0e-12);
+                CHECK(actual.endpoint.distanceTo(wanted.endpoint) < 1.0e-12);
+            } else {
+                const auto& actual = std::get<RS_ArcData>(actualData.segments[i]);
+                const auto& wanted = std::get<RS_ArcData>(expectedData.segments[i]);
+                CHECK(actual.center.distanceTo(wanted.center) < 1.0e-12);
+                CHECK(actual.radius == Catch::Approx(wanted.radius).margin(1.0e-12));
+                CHECK(actual.angle1 == Catch::Approx(wanted.angle1).margin(1.0e-12));
+                CHECK(actual.angle2 == Catch::Approx(wanted.angle2).margin(1.0e-12));
+                CHECK(actual.reversed == wanted.reversed);
+            }
+        }
+    }
+}
+
 TEST_CASE("closed bulged LWPOLYLINE import preserves its closing arc in DXF and DWG",
           "[lc-offsetcurve][import-session][typed-source][polyline][bulge]") {
     Setup setup;
