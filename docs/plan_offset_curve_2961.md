@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W482; chronological evidence follows): implementation slices
+Current status (W483; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W482. Historical results from
+No exact-head CI result is claimed for W441-W483. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-picker clarification (2026-11-06) is incorporated in
@@ -18863,3 +18863,24 @@ evidence, not exact-head CI or external CAD acceptance. Test commit
 `6a1cba71a` (`test(offset): refuse partial hyperbola file carriers`); roadmap
 receipt is separate. Remaining hyperbola work is broader bounds/distance
 qualification, not a claim that this one explicit refusal exhausts topology.
+
+## 483. Combined Typed-Source Import Regression
+
+After W480-W482 add the hyperbola interval promotion and multi-branch refusal
+cases, rerun the complete `[lc-offsetcurve][import-session][typed-source]`
+selection at their combined source head. This broad run checks that the new
+hyperbola coverage coexists with the existing spline, polyline, conic, schema,
+historical-format, and OCS import fixtures.
+
+### Completion receipt
+
+The complete typed-source import selection passes 155,457 assertions across
+31 test cases at the current worktree head, including the expanded 240-carrier
+hyperbola admission matrix and the five-lane three-branch refusal case. The
+incremental CMake Debug `librecad_tests` target is used. This result does not
+substitute for exact PR-head CI or external CAD acceptance.
+
+Validation: `QT_QPA_PLATFORM=offscreen librecad_tests
+"[lc-offsetcurve][import-session][typed-source]"` passes with zero failed
+assertions; `git diff --check` passes. This roadmap-only checkpoint captures
+local combined-suite evidence; no product code changed in this slice.
