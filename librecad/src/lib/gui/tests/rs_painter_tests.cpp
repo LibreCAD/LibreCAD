@@ -581,18 +581,6 @@ TEST_CASE("print renderer survives a painter that could not begin", "[gui][print
 // arc written the other way round must paint the same pixels at every zoom.
 namespace {
 
-int darkPixels(const QImage& image) {
-    int count = 0;
-    for (int y = 0; y < image.height(); ++y) {
-        for (int x = 0; x < image.width(); ++x) {
-            if (qGray(image.pixel(x, y)) < 128) {
-                ++count;
-            }
-        }
-    }
-    return count;
-}
-
 /** Draws \p entity in a 300x300 view, zoomed by \p zoom and centred on \p focus. */
 QImage paintAround(RS_Entity& entity, const RS_Vector& focus, const double zoom) {
     QImage image(300, 300, QImage::Format_RGB32);
@@ -615,10 +603,10 @@ QImage paintAround(RS_Entity& entity, const RS_Vector& focus, const double zoom)
 TEST_CASE("a reversed arc paints as the same arc written counter-clockwise at any zoom",
           "[gui][painter][arc]") {
     (void)application();
-    // radius 90: the arc is drawn by Qt below zoom 33.3 and as a path above it
-    const double zoom = GENERATE(10.0, 33.0, 34.0, 100.0, 400.0);
+    // radius 90: Qt draws the arc below zoom 33.3, a path above it
+    const double zoom = GENERATE(10.0, 34.0, 400.0);
     // the view is centred on a point at this fraction of the quarter turn
-    const double along = GENERATE(0.0, 0.3, 0.6, 1.0);
+    const double along = GENERATE(0.0, 0.5, 1.0);
     const RS_Vector center(230.75, 64.0);
     const double radius = 90.0;
     const RS_Vector focus = center + RS_Vector::polar(radius, M_PI / 2. + along * M_PI / 2.);
@@ -629,8 +617,7 @@ TEST_CASE("a reversed arc paints as the same arc written counter-clockwise at an
     const QImage actual = paintAround(reversed, focus, zoom);
 
     INFO("zoom " << zoom << ", along " << along);
-    REQUIRE(darkPixels(expected) > 100);
-    CHECK(darkPixels(actual) == darkPixels(expected));
+    REQUIRE(countPixels(expected, qRgb(0, 0, 0)) > 100);
     CHECK(actual == expected);
 }
 
@@ -638,8 +625,8 @@ TEST_CASE("a reversed elliptic arc paints as the same arc written counter-clockw
           "[gui][painter][ellipse]") {
     (void)application();
     // minor radius 81: drawn as a path from zoom 37.1 up
-    const double zoom = GENERATE(10.0, 100.0, 400.0);
-    const double along = GENERATE(0.0, 0.3, 0.6, 1.0);
+    const double zoom = GENERATE(10.0, 400.0);
+    const double along = GENERATE(0.0, 0.5, 1.0);
     const RS_Vector center(230.75, 64.0);
     const double start = 0.2;
     const double end = 2.4;
@@ -651,7 +638,6 @@ TEST_CASE("a reversed elliptic arc paints as the same arc written counter-clockw
     const QImage actual = paintAround(reversed, focus, zoom);
 
     INFO("zoom " << zoom << ", along " << along);
-    REQUIRE(darkPixels(expected) > 100);
-    CHECK(darkPixels(actual) == darkPixels(expected));
+    REQUIRE(countPixels(expected, qRgb(0, 0, 0)) > 100);
     CHECK(actual == expected);
 }

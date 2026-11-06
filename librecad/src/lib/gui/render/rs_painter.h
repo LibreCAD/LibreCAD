@@ -313,6 +313,8 @@ public:
      * respect to this base.
      *      * @param fullParamLength   Total parameter range covered by the
      * entity (e.g. 2*M_PI for full circle/ellipse, getAngleLength() for arcs).
+     * Negative for a reversed arc, which runs from baseParam towards smaller
+     * parameters.
      *      * @param getParamFromPoint Function that converts a world point →
      * parameter value on the curve. Example for arc/circle:    [](const
      * RS_Vector& p){ return (p - center).angle(); } Example for ellipse:
