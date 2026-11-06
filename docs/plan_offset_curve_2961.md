@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W454; chronological evidence follows): implementation slices
+Current status (W455; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -67,7 +67,7 @@ DXF, R2000 DXF/DWG, and R2018 DXF/DWG. W440 reconfirms type-changing source
 selection and the nine-family Properties picker with 3,194 assertions across
 six GUI cases; a worker/cache-dependent refusal remains for closed-polyline
 variants, and the broader family/variant persistence matrix remains open.
-No exact-head CI result is claimed for W441-W454. Historical results from
+No exact-head CI result is claimed for W441-W455. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
 The latest source-widget requests (2026-11-06) reconfirm the same interaction:
@@ -17438,10 +17438,10 @@ Validation: the complete focused polyline OCS selector passes 668 assertions/3
 cases, covering both encodings, open and closed chains, mixed line/arc
 segments, positive/negative/major bulges, reflected normals, source refusal,
 zero-normal and rank-deficient refusal, direct AC1032 DWG input, and DXF/DWG
-save-reopen with XDATA preservation. The direct AC1032 DWG input fixtures omit
-unrelated input XDATA because the low-level fixture writer refuses XDATA-bearing
-bulged input;
-DXF-imported source XDATA is independently verified through both output formats.
+save-reopen with XDATA preservation. At this checkpoint, the direct AC1032 DWG
+bulged-input fixture omitted unrelated XDATA; W455 below closes that specific
+fixture limitation. DXF-imported source XDATA is independently verified
+through both output formats.
 The fixture writer cannot encode non-finite coordinates for an import fixture;
 the reader validates them, but serialized non-finite rejection is not claimed.
 Bulged input is not yet fixture-tested for R14/R2000. The AC1032 conic selector
@@ -17473,9 +17473,11 @@ For each lane, tests verify the emitted ellipse and line count, projected
 segment endpoints, and rejection of every generated fragment as a typed offset
 source. The existing AC1032 cases additionally cover negative bulges, a
 greater-than-semicircle bulge, closed-polyline closure, reflected normals,
-malformed geometry, and XDATA-preserving output save/reopen. DWG input fixtures
-omit unrelated source XDATA; its preservation is independently verified from
-DXF import through DXF and DWG save/reopen. No requested version lane was
+malformed geometry, and XDATA-preserving output save/reopen. At this
+checkpoint, DWG input fixtures omitted unrelated source XDATA; W455 below
+adds direct XDATA-bearing DWG inputs for AC1015 straight legacy POLYLINE and
+AC1032 bulged LWPOLYLINE. Other version/encoding/geometry combinations still
+need their own XDATA-bearing fixture coverage. No requested version lane was
 unavailable in the local fixture writer.
 
 Validation: CMake Debug `librecad_tests` builds; the focused selection
@@ -18012,3 +18014,35 @@ This closes the specific reserved-handle-gap rejection for the tested
 AC1015 POLYLINE chains. It does not establish every legacy entity-chain
 ordering, arbitrary preserved-handle layout, or external R2000 CAD
 interoperability.
+
+## 455. Preserve Unrelated XDATA in DWG OCS-Projection Fixtures
+
+The W438/W439 direct DWG import fixtures stripped `FixtureSourceData` from
+bulged LWPOLYLINE input and from AC1015 legacy POLYLINE input. This made DXF
+XDATA preservation stronger than the equivalent DWG evidence and hid whether
+projection preserved unrelated application data. Register the fixture APPID
+in the lightweight-polyline writer, retain the existing XDATA payload in both
+DWG inputs, and assert it survives import on every projected fragment/entity.
+Do not treat these samples as exhaustive XDATA coverage for every DWG version,
+polyline encoding, or bulge topology.
+
+### Completion receipt
+
+The generic LWPOLYLINE fixture writer now registers `FixtureSourceData`. The
+AC1032 bulged LWPOLYLINE DWG fixture and AC1015 legacy 2D POLYLINE DWG fixture
+retain their original unrelated XDATA instead of clearing it before writing.
+Assertions verify the application/value pair survives import alongside the
+projection provenance and that projected geometry remains ineligible as a
+typed offset source.
+
+Validation: the focused `[lc-offsetcurve][import-session][typed-source][polyline][ocs]`
+selection passes 923 assertions/3 cases. The full
+`[lc-offsetcurve][import-session][typed-source]` selection passes 96,156
+assertions/29 cases. The incremental CMake Debug `librecad_tests` build passes;
+these are local results, not exact-head CI or external CAD acceptance. Test
+commit `8eb45187a` (`test(dwg): retain XDATA in OCS polyline fixtures`).
+The roadmap checkpoint is committed separately below.
+
+This closes XDATA-bearing input for these two specific DWG fixtures. It does
+not qualify every older DWG bulge, open/closed topology, or projected-fragment
+round-trip combination.
