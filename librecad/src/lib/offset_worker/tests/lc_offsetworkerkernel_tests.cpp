@@ -1268,7 +1268,7 @@ TEST_CASE("bounded hyperbola worker classifies relative translation boundaries",
 TEST_CASE("ellipse worker preserves detail across combined scale and translation",
           "[lc-offsetcurve][worker-kernel][source-cache][ellipse][precision][combined]") {
     constexpr double tau = 2.0 * M_PI;
-    const std::array<RS_EllipseData, 17> variants{
+    const std::array<RS_EllipseData, 25> variants{
         RS_EllipseData{{2, -3}, {4, 0}, .6, .2, 2.1, false},
         RS_EllipseData{{-1, 2}, {3, 1}, .8, 1.8, .1, true},
         RS_EllipseData{{3, 1}, {2, -1}, 1.4, .3, 2.3, false},
@@ -1285,7 +1285,15 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
         RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, .4, false},
         RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, .4, true},
         RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, M_PI + .2, false},
-        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, M_PI + .2, true}};
+        RS_EllipseData{{0, 0}, {2, 0}, .2, tau - .2, M_PI + .2, true},
+        RS_EllipseData{{0, 0}, {std::sqrt(3.0), 1}, .2, .2, M_PI - .2, false},
+        RS_EllipseData{{0, 0}, {std::sqrt(3.0), 1}, .2, .2, M_PI - .2, true},
+        RS_EllipseData{{0, 0}, {std::sqrt(3.0), 1}, .2, .2, M_PI + .2, false},
+        RS_EllipseData{{0, 0}, {std::sqrt(3.0), 1}, .2, .2, M_PI + .2, true},
+        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, .4, false},
+        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, .4, true},
+        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, M_PI + .2, false},
+        RS_EllipseData{{0, 0}, {1, std::sqrt(3.0)}, .2, tau - .2, M_PI + .2, true}};
     constexpr std::array<double, 3> scales{1e-3, 1.0, 1e12};
     constexpr std::array<double, 3> translationRatios{1e6, 1e9, 1e12};
     constexpr std::array<double, 4> ordinaryNormalizedDistances{-.4, -.1, .1, .4};
@@ -1460,7 +1468,7 @@ TEST_CASE("ellipse worker preserves detail across combined scale and translation
     CHECK(completedPairs + generationOrToleranceRefusals == scales.size() *
           translationRatios.size() *
           (3 * ordinaryNormalizedDistances.size() + 6 * thinNormalizedDistances.size() +
-           8 * partialThinNormalizedDistances.size()));
+           16 * partialThinNormalizedDistances.size()));
     CHECK(completedPairs > 0);
     CHECK(acceptedCaches > 0);
 }
