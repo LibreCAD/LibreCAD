@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W430; chronological evidence follows): implementation slices
+Current status (W431; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16875,3 +16875,37 @@ polyline snapshot model. Non-axial OCS, mesh/polyface/3D legacy POLYLINE,
 broader distance/side eligibility, visible GUI acceptance, and cross-platform
 review gates remain open. Push product and roadmap commits to PR #3193, then
 inspect checks for the exact new head.
+
+## 431. Near-Tangent Line/Arc Crossing Detection (2026-11-06)
+
+The shared `RS_Information::getIntersectionLineArc()` helper classifies a
+wide `1e-5 * radius` band as tangent and returns only the perpendicular
+projection. For a short finite segment containing one of two very close
+near-tangent roots, that projection can lie outside the segment or outside
+the arc sweep. The offset-source validator then sees no intersection and can
+admit a self-crossing source.
+
+Added a normalized segment/circle solver for source-topology checks. It
+computes both distinct roots when numerically resolved, preserves tangency,
+rejects non-finite/ambiguous calculations fail-closed, then applies the
+existing finite-segment and arc-sweep filters. This leaves the shared general
+intersection API unchanged. Direct geometry assertions reproduce the false
+acceptance. A corresponding real LWPOLYLINE fixture imports as two lines and
+an arc but is rejected as an offset source in R14 DXF, AC1032 DXF, and AC1032
+DWG.
+
+Validation: focused imported case passes 63 assertions/1 case; direct
+`[lc-offsetcurve][source][polyline]` passes 53 assertions/3 cases; imported
+`[import-session][typed-source][polyline]` passes 1,450 assertions/16 cases;
+worker `[lc-offsetcurve][polyline][source-cache][worker-kernel]` passes 309
+assertions/4 cases. CMake Release `librecad_lib`, `librecad_tests`, and
+`librecad_offset_worker_kernel_tests` build; the full qmake6 application and
+plugin build succeeds; `git diff --check` passes. Product commit:
+`98d6ce2d1` (`fix(offset): detect near-tangent line-arc crossings`).
+
+This closes representative near-tangent line/arc crossing detection for
+supported 2D polyline snapshots and the three listed file lanes. It does not
+complete all line/arc numerical conditioning, non-axial OCS, mesh/polyface/3D
+legacy POLYLINE, broad distance/side eligibility, visible GUI acceptance, or
+cross-platform review gates. Push product and roadmap commits to PR #3193 and
+inspect the exact-head checks.
