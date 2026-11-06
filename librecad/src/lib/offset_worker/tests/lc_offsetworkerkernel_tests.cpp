@@ -6,6 +6,7 @@
 #include "../lc_offsetworkerkernel.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
+#include "rs_spline.h"
 #include <catch2/catch_test_macros.hpp>
 #include <algorithm>
 #include <cmath>
@@ -652,6 +653,81 @@ TEST_CASE("parabola worker cache validation is stable across uniform scales",
     CHECK(acceptedCaches + refusedCaches == 16);
     CHECK(acceptedCaches > 0);
     CHECK(refusedCaches > 0);
+}
+
+TEST_CASE("parabola worker cache validation preserves local detail at large coordinates",
+          "[lc-offsetcurve][worker-kernel][source-cache][parabola][precision]") {
+    const RS_Vector translation{1e9, -1e9};
+    const LC_OffsetSourceGeometry centered{LC_ParabolaData{{
+        RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}};
+    const LC_OffsetSourceGeometry translated{LC_ParabolaData{{
+        RS_Vector{0, 0} + translation, RS_Vector{5, 10} + translation,
+        RS_Vector{10, 0} + translation}}};
+    REQUIRE(centered.isWellFormed());
+    REQUIRE(translated.isWellFormed());
+
+    for (const double signedDistance : {-.5, .5, -2.5, 2.5, -3.0, 3.0}) {
+        CAPTURE(signedDistance);
+        const LC_OffsetSourceDefinition centeredDefinition{
+            centered, signedDistance, 1e-4, false};
+        const LC_OffsetSourceDefinition translatedDefinition{
+            translated, signedDistance, 1e-4, false};
+        const auto centeredReply = LC_OffsetWorkerKernel::run({token,
+            req::GenerateSource{centeredDefinition, {}}});
+        const auto translatedReply = LC_OffsetWorkerKernel::run({token,
+            req::GenerateSource{translatedDefinition, {}}});
+        const auto& centeredOutput = native(centeredReply, 7);
+        const auto& translatedOutput = native(translatedReply, 7);
+        REQUIRE(centeredOutput.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(translatedOutput.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(centeredOutput.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(translatedOutput.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE_FALSE(centeredOutput.ordinary.empty());
+        REQUIRE_FALSE(translatedOutput.ordinary.empty());
+        REQUIRE(centeredOutput.ordinary.size() == translatedOutput.ordinary.size());
+
+        const auto firstCache = [](const result::Native& output) {
+            if (const auto* spline = std::get_if<RS_SplineData>(&output.ordinary.front()))
+                return *spline;
+            const auto& segment = std::get<req::Segment>(output.ordinary.front());
+            RS_SplineData cache{1, false};
+            cache.controlPoints = {segment.start, segment.end};
+            cache.knotslist = {0, 0, 1, 1};
+            cache.weights = {1, 1};
+            return cache;
+        };
+        const RS_SplineData centeredCache = firstCache(centeredOutput);
+        const RS_SplineData translatedCache = firstCache(translatedOutput);
+        const RS_Spline centeredSpline{nullptr, centeredCache};
+        const RS_Spline translatedSpline{nullptr, translatedCache};
+        double maximumLocalDeviation = 0.0;
+        for (int sample = 0; sample <= 128; ++sample) {
+            const double parameter = static_cast<double>(sample) / 128.0;
+            const RS_Vector local = centeredSpline.getPointAt(parameter);
+            const RS_Vector world = translatedSpline.getPointAt(parameter);
+            REQUIRE(local.valid);
+            REQUIRE(world.valid);
+            maximumLocalDeviation = std::max(maximumLocalDeviation,
+                std::hypot((world.x - translation.x) - local.x,
+                           (world.y - translation.y) - local.y));
+        }
+        CHECK(maximumLocalDeviation < 1e-3);
+
+        for (const auto& [definition, cache] : {
+                 std::pair{centeredDefinition, centeredCache},
+                 std::pair{translatedDefinition, translatedCache}}) {
+            const auto validation = LC_OffsetWorkerKernel::run({token,
+                req::ValidateSourceCache{cache, definition, {}}});
+            const auto& validated = native(validation, 8);
+            if (centeredOutput.ordinary.size() == 1) {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                CHECK(validated.changed);
+            } else {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+            }
+        }
+    }
 }
 
 TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across offset sides",
