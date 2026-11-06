@@ -593,6 +593,62 @@ TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains
     }
 }
 
+TEST_CASE("closed mixed-bulge source promotes only the cache-representable side",
+          "[lc-offsetcurve][worker-kernel][source-cache][polyline][mixed-bulge]") {
+    RS_Polyline polyline;
+    polyline.addVertex({0, 0}, 0.2);
+    polyline.addVertex({8, 0}, -0.2);
+    polyline.addVertex({8, 6});
+    polyline.addVertex({0, 6});
+    polyline.setClosed(true);
+    polyline.endPolyline();
+
+    const auto source = LC_OffsetSourceGeometry::capture(polyline);
+    REQUIRE(source);
+    REQUIRE(source->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    REQUIRE(source->isWellFormed());
+    for (const double signedDistance : {-.25, .25}) {
+        CAPTURE(signedDistance);
+        const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
+        const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
+        const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+        const auto& generated = native(generationReply, 7);
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        RS_SplineData cache;
+        if (signedDistance < 0.0) {
+            REQUIRE(generated.ordinary.size() == 1);
+            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+            cache = std::get<RS_SplineData>(generated.ordinary.front());
+        } else {
+            REQUIRE(generated.ordinary.size() > 1);
+            if (const auto* spline =
+                    std::get_if<RS_SplineData>(&generated.ordinary.front())) {
+                cache = *spline;
+            } else {
+                const auto& segment = std::get<req::Segment>(generated.ordinary.front());
+                cache.degree = 1;
+                cache.controlPoints = {segment.start, segment.end};
+                cache.knotslist = {0, 0, 1, 1};
+                cache.weights = {1, 1};
+            }
+        }
+        const req::Request validationRequest{token,
+            req::ValidateSourceCache{cache, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+        const auto& validated = native(validationReply, 8);
+        if (signedDistance < 0.0) {
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validated.changed);
+            CHECK(validated.engineRuns == 1);
+        } else {
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+            CHECK_FALSE(validated.changed);
+            CHECK(validated.engineRuns == 1);
+        }
+    }
+}
+
 TEST_CASE("polyline source validation rejects degenerate and inconsistent chains",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
     const std::array<LC_OffsetPolylineData, 4> invalidVariants{
