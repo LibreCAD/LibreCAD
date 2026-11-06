@@ -456,20 +456,23 @@ bool hasUnsupportedPolylineProjectionProvenance(
     return false;
 }
 
-bool hasUnsupportedConicProjectionProvenance(const RS_Entity& entity) noexcept {
-    static constexpr std::string_view marker{"LibreCAD_CONIC_OCS"};
+bool hasUnsupportedProjectionProvenance(const RS_Entity& entity) noexcept {
+    static constexpr std::array<std::string_view, 2> markers{
+        "LibreCAD_CONIC_OCS", "LibreCAD_POLYLINE_OCS"};
     for (const auto& value : entity.getDrwExtData()) {
         if (!value) return true;
         if (value->code() != 1001) continue;
         if (value->type() != DRW_Variant::STRING || value->c_str() == nullptr)
             return true;
         const std::string_view app{value->c_str()};
-        if (app.size() != marker.size()) continue;
-        if (std::equal(app.begin(), app.end(), marker.begin(),
-                       [](unsigned char lhs, unsigned char rhs) {
-                           return std::tolower(lhs) == std::tolower(rhs);
-                       }))
-            return true;
+        for (const auto marker : markers) {
+            if (app.size() == marker.size() &&
+                std::equal(app.begin(), app.end(), marker.begin(),
+                           [](unsigned char lhs, unsigned char rhs) {
+                               return std::tolower(lhs) == std::tolower(rhs);
+                           }))
+                return true;
+        }
     }
     return false;
 }

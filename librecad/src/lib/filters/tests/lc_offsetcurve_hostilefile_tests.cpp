@@ -2320,18 +2320,197 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
         if (!format.dwg) sourceDrawing = std::move(outcome.graphic);
     }
 
+    REQUIRE(sourceDrawing);
+    const auto *straightSource =
+        dynamic_cast<const RS_Polyline *>(f::sole(*sourceDrawing));
+    REQUIRE(straightSource);
+    const auto straightPoints = straightSource->getVertexes();
+    REQUIRE(straightPoints.size() == 3);
+
     DRW_LWPolyline bulged = raw;
     bulged.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+    bulged.extData.push_back(std::make_shared<DRW_Variant>(
+        1001, std::string("FixtureSourceData")));
+    bulged.extData.push_back(std::make_shared<DRW_Variant>(
+        1000, std::string("preserve-this-xdata")));
     const auto unsupportedArc = directory.file("non-axial-bulge.dxf");
     f::binaryDxfPolyline(unsupportedArc, bulged, DRW::AC1032);
     const auto unsupportedOutcome = stagedImport(unsupportedArc, Lane::Binary18);
     REQUIRE(unsupportedOutcome.status == LC_OffsetImportSession::Status::Complete);
     REQUIRE(unsupportedOutcome.graphic);
-    CHECK(std::none_of(
-        unsupportedOutcome.graphic->begin(), unsupportedOutcome.graphic->end(),
-        [](const RS_Entity* entity) {
-            return dynamic_cast<const RS_Polyline*>(entity) != nullptr;
-        }));
+    REQUIRE(std::distance(unsupportedOutcome.graphic->begin(),
+                          unsupportedOutcome.graphic->end()) == 2);
+    const RS_Ellipse *projectedArc = nullptr;
+    const RS_Line *projectedLine = nullptr;
+    for (const RS_Entity *entity : *unsupportedOutcome.graphic) {
+      if (const auto *ellipse = dynamic_cast<const RS_Ellipse *>(entity))
+        projectedArc = ellipse;
+      if (const auto *line = dynamic_cast<const RS_Line *>(entity))
+        projectedLine = line;
+    }
+    REQUIRE(projectedArc);
+    REQUIRE(projectedLine);
+    CHECK(std::isfinite(projectedArc->getCenter().x));
+    CHECK(std::isfinite(projectedArc->getCenter().y));
+    CHECK(projectedArc->getMajorRadius() == Catch::Approx(std::sqrt(2.0)));
+    CHECK(projectedArc->getRatio() == Catch::Approx(0.8));
+    const auto samePoint = [](const RS_Vector &lhs, const RS_Vector &rhs) {
+      return std::hypot(lhs.x - rhs.x, lhs.y - rhs.y) < 1e-8;
+    };
+    CHECK(samePoint(projectedArc->getStartpoint(), RS_Vector{1.8, 0.0}));
+    CHECK(samePoint(projectedArc->getEndpoint(), RS_Vector{1.8, 2.0}));
+    CHECK(samePoint(projectedLine->getStartpoint(), RS_Vector{1.8, 2.0}));
+    CHECK(samePoint(projectedLine->getEndpoint(), RS_Vector{0.2, 2.0}));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*projectedArc));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*projectedLine));
+    const auto hasFragmentXData = [](const RS_Entity &entity) {
+      const auto &ext = entity.getDrwExtData();
+      const auto app = std::find_if(ext.begin(), ext.end(), [](const auto &value) {
+        return value && value->code() == 1001 &&
+               value->type() == DRW_Variant::STRING &&
+               std::string{value->c_str()} == "FixtureSourceData";
+      });
+      return app != ext.end() && std::next(app) != ext.end() &&
+             (*std::next(app))->code() == 1000 &&
+             (*std::next(app))->type() == DRW_Variant::STRING &&
+             std::string{(*std::next(app))->c_str()} == "preserve-this-xdata";
+    };
+    CHECK(hasFragmentXData(*projectedArc));
+    CHECK(hasFragmentXData(*projectedLine));
+
+    const auto bulgedDwgInput = directory.file("bulged-input.dwg");
+    DRW_LWPolyline bulgedDwgFixture = bulged;
+    bulgedDwgFixture.extData.clear();
+    f::dwgPolylineFile(bulgedDwgInput, bulgedDwgFixture, DRW::AC1032);
+    auto importedBulgedDwg = stagedImport(bulgedDwgInput, Lane::Eed18);
+    REQUIRE(importedBulgedDwg.status == LC_OffsetImportSession::Status::Complete);
+    REQUIRE(importedBulgedDwg.graphic);
+    REQUIRE(std::distance(importedBulgedDwg.graphic->begin(),
+                          importedBulgedDwg.graphic->end()) == 2);
+    for (const RS_Entity *entity : *importedBulgedDwg.graphic)
+      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+
+    const auto projectedDxf = directory.file("bulged-roundtrip.dxf");
+    REQUIRE(lc::test::exportDrawing(*unsupportedOutcome.graphic, projectedDxf,
+                                    RS2::FormatDXFRW2018));
+    const auto projectedAppIds = lc::test::dxfRecords(projectedDxf, "APPID");
+    CHECK(std::any_of(projectedAppIds.begin(), projectedAppIds.end(),
+                      [](const auto &record) {
+      const auto names = record.own(2);
+      return names.size() == 1 && names.front() == "LibreCAD_POLYLINE_OCS";
+    }));
+    RS_Graphic reopenedBulged;
+    REQUIRE(lc::test::importDrawing(reopenedBulged, projectedDxf,
+                                    RS2::FormatDXFRW2018));
+    REQUIRE(std::distance(reopenedBulged.begin(), reopenedBulged.end()) == 2);
+    for (const RS_Entity *entity : reopenedBulged)
+      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+    for (const RS_Entity *entity : reopenedBulged)
+      CHECK(hasFragmentXData(*entity));
+#ifdef DWGSUPPORT
+    const auto projectedDwg = directory.file("bulged-roundtrip.dwg");
+    RS_FilterDXFRW projectedWriter;
+    REQUIRE(projectedWriter.fileExport(*unsupportedOutcome.graphic,
+                                       lc::test::toQString(projectedDwg),
+                                       RS2::FormatDWG2018));
+    RS_Graphic reopenedBulgedDwg;
+    REQUIRE(lc::test::importDrawing(reopenedBulgedDwg, projectedDwg,
+                                    RS2::FormatDWG2018));
+    REQUIRE(std::distance(reopenedBulgedDwg.begin(),
+                          reopenedBulgedDwg.end()) == 2);
+    for (const RS_Entity *entity : reopenedBulgedDwg)
+      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+    for (const RS_Entity *entity : reopenedBulgedDwg)
+      CHECK(hasFragmentXData(*entity));
+    CHECK(reopenedBulgedDwg.dwgAdvancedMetadata().findAppIdTableEntryByName(
+              "LibreCAD_POLYLINE_OCS") != nullptr);
+#endif
+
+    const auto checkBulgeVariant = [&](double bulge, bool closed,
+                                       const char *name) {
+      DRW_LWPolyline variant = raw;
+      variant.flags = closed ? 1 : 0;
+      variant.vertlist.front()->bulge = bulge;
+      const auto path = directory.file(name);
+      f::binaryDxfPolyline(path, variant, DRW::AC1032);
+      auto imported = stagedImport(path, Lane::Binary18);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == (closed ? 3 : 2));
+      const RS_Ellipse *ellipse = nullptr;
+      std::size_t lineCount = 0;
+      for (const RS_Entity *entity : *imported.graphic) {
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity))
+          ellipse = candidate;
+        if (dynamic_cast<const RS_Line *>(entity)) ++lineCount;
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+      }
+      REQUIRE(ellipse);
+      CHECK(lineCount == (closed ? 2 : 1));
+      CHECK(ellipse->getAngleLength() ==
+            Catch::Approx(std::abs(4.0 * std::atan(bulge))));
+      CHECK(samePoint(ellipse->getStartpoint(), RS_Vector{1.8, 0.0}));
+      CHECK(samePoint(ellipse->getEndpoint(), RS_Vector{1.8, 2.0}));
+    };
+    checkBulgeVariant(-std::tan(M_PI / 8.0), false, "negative-bulge.dxf");
+    checkBulgeVariant(2.0, true, "closed-major-bulge.dxf");
+
+    DRW_LWPolyline reflectedBulge = raw;
+    reflectedBulge.extPoint = {0.6, 0.0, -0.8};
+    reflectedBulge.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+    const auto reflectedBulgePath = directory.file("reflected-bulge.dxf");
+    f::binaryDxfPolyline(reflectedBulgePath, reflectedBulge, DRW::AC1032);
+    const auto reflectedBulgeImport =
+        stagedImport(reflectedBulgePath, Lane::Binary18);
+    REQUIRE(reflectedBulgeImport.status ==
+            LC_OffsetImportSession::Status::Complete);
+    REQUIRE(reflectedBulgeImport.graphic);
+    REQUIRE(std::distance(reflectedBulgeImport.graphic->begin(),
+                          reflectedBulgeImport.graphic->end()) == 2);
+    const RS_Ellipse *reflectedEllipse = nullptr;
+    const RS_Line *reflectedLine = nullptr;
+    for (const RS_Entity *entity : *reflectedBulgeImport.graphic) {
+      if (const auto *ellipse = dynamic_cast<const RS_Ellipse *>(entity))
+        reflectedEllipse = ellipse;
+      if (const auto *line = dynamic_cast<const RS_Line *>(entity))
+        reflectedLine = line;
+      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+    }
+    REQUIRE(reflectedEllipse);
+    REQUIRE(reflectedLine);
+    CHECK(reflectedEllipse->isReversed());
+    CHECK(reflectedEllipse->getAngleLength() == Catch::Approx(M_PI / 2.0));
+    CHECK(std::hypot(reflectedEllipse->getEndpoint().x -
+                     reflectedLine->getStartpoint().x,
+                     reflectedEllipse->getEndpoint().y -
+                     reflectedLine->getStartpoint().y) < 1e-8);
+
+    DRW_LWPolyline rankDeficient = raw;
+    rankDeficient.extPoint = {1.0, 0.0, 0.0};
+    rankDeficient.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+    const auto rankDeficientPath = directory.file("rank-deficient-bulge.dxf");
+    f::binaryDxfPolyline(rankDeficientPath, rankDeficient, DRW::AC1032);
+    const auto rankDeficientImport =
+        stagedImport(rankDeficientPath, Lane::Binary18);
+    REQUIRE(rankDeficientImport.status ==
+            LC_OffsetImportSession::Status::Complete);
+    REQUIRE(rankDeficientImport.graphic);
+    CHECK(rankDeficientImport.graphic->begin() ==
+          rankDeficientImport.graphic->end());
+
+    DRW_LWPolyline zeroNormalBulge = raw;
+    zeroNormalBulge.extPoint = {0.0, 0.0, 0.0};
+    zeroNormalBulge.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+    const auto zeroNormalBulgePath = directory.file("zero-normal-bulge.dxf");
+    f::binaryDxfPolyline(zeroNormalBulgePath, zeroNormalBulge, DRW::AC1032);
+    const auto zeroNormalBulgeImport =
+        stagedImport(zeroNormalBulgePath, Lane::Binary18);
+    REQUIRE(zeroNormalBulgeImport.status ==
+            LC_OffsetImportSession::Status::Complete);
+    REQUIRE(zeroNormalBulgeImport.graphic);
+    CHECK(zeroNormalBulgeImport.graphic->begin() ==
+          zeroNormalBulgeImport.graphic->end());
 
     REQUIRE(sourceDrawing);
     const auto dxf = directory.file("roundtrip.dxf");
@@ -2378,8 +2557,8 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     raw.extData.push_back(std::make_shared<DRW_Variant>(
         1000, std::string("preserve-this-xdata")));
 
-    const auto hasFixtureXData = [](const RS_Polyline& polyline) {
-        const auto& ext = polyline.getDrwExtData();
+    const auto hasFixtureXData = [](const RS_Entity& entity) {
+        const auto& ext = entity.getDrwExtData();
         const auto app = std::find_if(ext.begin(), ext.end(), [](const auto& value) {
             return value && value->code() == 1001 &&
                    value->type() == DRW_Variant::STRING &&
@@ -2459,6 +2638,13 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
         if (!format.dwg) sourceDrawing = std::move(outcome.graphic);
     }
 
+    REQUIRE(sourceDrawing);
+    const auto *straightSource =
+        dynamic_cast<const RS_Polyline *>(f::sole(*sourceDrawing));
+    REQUIRE(straightSource);
+    const auto straightPoints = straightSource->getVertexes();
+    REQUIRE(straightPoints.size() == 3);
+
     DRW_Polyline bulged = raw;
     for (auto& vertex : bulged.vertlist) {
         vertex = std::make_shared<DRW_Vertex>(*vertex);
@@ -2469,10 +2655,130 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     const auto unsupportedOutcome = stagedImport(unsupportedArc, Lane::Binary18);
     REQUIRE(unsupportedOutcome.status == LC_OffsetImportSession::Status::Complete);
     REQUIRE(unsupportedOutcome.graphic);
-    CHECK(std::none_of(unsupportedOutcome.graphic->begin(),
-                       unsupportedOutcome.graphic->end(), [](const RS_Entity* entity) {
-        return dynamic_cast<const RS_Polyline*>(entity) != nullptr;
+    REQUIRE(std::distance(unsupportedOutcome.graphic->begin(),
+                          unsupportedOutcome.graphic->end()) == 2);
+    const RS_Ellipse *projectedArc = nullptr;
+    const RS_Line *projectedLine = nullptr;
+    for (const RS_Entity *entity : *unsupportedOutcome.graphic) {
+      if (const auto *ellipse = dynamic_cast<const RS_Ellipse *>(entity))
+        projectedArc = ellipse;
+      if (const auto *line = dynamic_cast<const RS_Line *>(entity))
+        projectedLine = line;
+    }
+    REQUIRE(projectedArc);
+    REQUIRE(projectedLine);
+    CHECK(std::isfinite(projectedArc->getCenter().x));
+    CHECK(std::isfinite(projectedArc->getCenter().y));
+    CHECK(projectedArc->getMajorRadius() == Catch::Approx(std::sqrt(2.0)));
+    CHECK(projectedArc->getRatio() == Catch::Approx(0.8));
+    const auto samePoint = [](const RS_Vector &lhs, const RS_Vector &rhs) {
+      return std::hypot(lhs.x - rhs.x, lhs.y - rhs.y) < 1e-8;
+    };
+    CHECK(samePoint(projectedArc->getStartpoint(), straightPoints[0]));
+    CHECK(samePoint(projectedArc->getEndpoint(), straightPoints[1]));
+    CHECK(samePoint(projectedLine->getStartpoint(), straightPoints[1]));
+    CHECK(samePoint(projectedLine->getEndpoint(), straightPoints[2]));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*projectedArc));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(*projectedLine));
+    CHECK(hasFixtureXData(*projectedArc));
+    CHECK(hasFixtureXData(*projectedLine));
+
+    const auto bulgedDwgInput = directory.file("bulged-input.dwg");
+    DRW_Polyline bulgedDwgFixture = bulged;
+    bulgedDwgFixture.extData.clear();
+    f::dwg2dPolylineFile(bulgedDwgInput, bulgedDwgFixture, DRW::AC1032);
+    auto importedBulgedDwg = stagedImport(bulgedDwgInput, Lane::Eed18);
+    REQUIRE(importedBulgedDwg.status == LC_OffsetImportSession::Status::Complete);
+    REQUIRE(importedBulgedDwg.graphic);
+    REQUIRE(std::distance(importedBulgedDwg.graphic->begin(),
+                          importedBulgedDwg.graphic->end()) == 2);
+    for (const RS_Entity *entity : *importedBulgedDwg.graphic)
+      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+
+    const auto projectedDxf = directory.file("bulged-roundtrip.dxf");
+    REQUIRE(lc::test::exportDrawing(*unsupportedOutcome.graphic, projectedDxf,
+                                    RS2::FormatDXFRW2018));
+    const auto projectedAppIds = lc::test::dxfRecords(projectedDxf, "APPID");
+    CHECK(std::any_of(projectedAppIds.begin(), projectedAppIds.end(),
+                      [](const auto &record) {
+      const auto names = record.own(2);
+      return names.size() == 1 && names.front() == "LibreCAD_POLYLINE_OCS";
     }));
+    RS_Graphic reopenedBulged;
+    REQUIRE(lc::test::importDrawing(reopenedBulged, projectedDxf,
+                                    RS2::FormatDXFRW2018));
+    REQUIRE(std::distance(reopenedBulged.begin(), reopenedBulged.end()) == 2);
+    for (const RS_Entity *entity : reopenedBulged)
+      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+    for (const RS_Entity *entity : reopenedBulged)
+      CHECK(hasFixtureXData(*entity));
+#ifdef DWGSUPPORT
+    const auto projectedDwg = directory.file("bulged-roundtrip.dwg");
+    RS_FilterDXFRW projectedWriter;
+    REQUIRE(projectedWriter.fileExport(*unsupportedOutcome.graphic,
+                                       lc::test::toQString(projectedDwg),
+                                       RS2::FormatDWG2018));
+    RS_Graphic reopenedBulgedDwg;
+    REQUIRE(lc::test::importDrawing(reopenedBulgedDwg, projectedDwg,
+                                    RS2::FormatDWG2018));
+    REQUIRE(std::distance(reopenedBulgedDwg.begin(),
+                          reopenedBulgedDwg.end()) == 2);
+    for (const RS_Entity *entity : reopenedBulgedDwg)
+      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+    for (const RS_Entity *entity : reopenedBulgedDwg)
+      CHECK(hasFixtureXData(*entity));
+    CHECK(reopenedBulgedDwg.dwgAdvancedMetadata().findAppIdTableEntryByName(
+              "LibreCAD_POLYLINE_OCS") != nullptr);
+#endif
+
+    const auto checkBulgeVariant = [&](double bulge, bool closed,
+                                       const char *name) {
+      DRW_Polyline variant = raw;
+      for (auto &vertex : variant.vertlist)
+        vertex = std::make_shared<DRW_Vertex>(*vertex);
+      variant.flags = closed ? 1 : 0;
+      variant.vertlist.front()->bulge = bulge;
+      const auto path = directory.file(name);
+      f::binaryDxf2dPolyline(path, variant, DRW::AC1032);
+      auto imported = stagedImport(path, Lane::Binary18);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == (closed ? 3 : 2));
+      const RS_Ellipse *ellipse = nullptr;
+      std::size_t lineCount = 0;
+      for (const RS_Entity *entity : *imported.graphic) {
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity))
+          ellipse = candidate;
+        if (dynamic_cast<const RS_Line *>(entity)) ++lineCount;
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+      }
+      REQUIRE(ellipse);
+      CHECK(lineCount == (closed ? 2 : 1));
+      CHECK(ellipse->getAngleLength() ==
+            Catch::Approx(std::abs(4.0 * std::atan(bulge))));
+      CHECK(samePoint(ellipse->getStartpoint(), straightPoints[0]));
+      CHECK(samePoint(ellipse->getEndpoint(), straightPoints[1]));
+    };
+    checkBulgeVariant(-std::tan(M_PI / 8.0), false, "negative-bulge.dxf");
+    checkBulgeVariant(2.0, true, "closed-major-bulge.dxf");
+
+    DRW_Polyline rankDeficientBulge = raw;
+    for (auto &vertex : rankDeficientBulge.vertlist)
+      vertex = std::make_shared<DRW_Vertex>(*vertex);
+    rankDeficientBulge.extPoint = {1.0, 0.0, 0.0};
+    rankDeficientBulge.vertlist.front()->bulge = std::tan(M_PI / 8.0);
+    const auto rankDeficientBulgePath =
+        directory.file("rank-deficient-bulge.dxf");
+    f::binaryDxf2dPolyline(rankDeficientBulgePath, rankDeficientBulge,
+                           DRW::AC1032);
+    const auto rankDeficientBulgeImport =
+        stagedImport(rankDeficientBulgePath, Lane::Binary18);
+    REQUIRE(rankDeficientBulgeImport.status ==
+            LC_OffsetImportSession::Status::Complete);
+    REQUIRE(rankDeficientBulgeImport.graphic);
+    CHECK(rankDeficientBulgeImport.graphic->begin() ==
+          rankDeficientBulgeImport.graphic->end());
 
     DRW_Polyline zeroNormal = raw;
     zeroNormal.extPoint = {0.0, 0.0, 0.0};

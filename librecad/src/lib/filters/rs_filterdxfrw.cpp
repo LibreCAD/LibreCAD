@@ -7363,6 +7363,7 @@ void appendTypeSidecar(RS_Entity *entity, const char *marker,
 bool projectConicToEllipse(const DRW_Coord &center, const DRW_Coord &axisU,
                            const DRW_Coord &axisV, const double start,
                            const double end, const bool full,
+                           const bool sourceReversed,
                            RS_EllipseData &result) {
   const double values[]{center.x, center.y, center.z, axisU.x, axisU.y,
                         axisU.z, axisV.x, axisV.y, axisV.z, start, end};
@@ -7403,7 +7404,8 @@ bool projectConicToEllipse(const DRW_Coord &center, const DRW_Coord &axisU,
   result = {RS_Vector{center.x, center.y},
             RS_Vector{majorRadius * cosine, majorRadius * sine},
             minorRadius / majorRadius, full ? 0.0 : parameterAt(start),
-            full ? 0.0 : parameterAt(end), determinant < 0.0};
+            full ? 0.0 : parameterAt(end),
+            (determinant < 0.0) != sourceReversed};
   return std::isfinite(result.ratio) && result.ratio > 0.0 &&
          std::isfinite(result.angle1) && std::isfinite(result.angle2);
 }
@@ -7417,6 +7419,29 @@ bool ocsBasis(const DRW_Coord &normal, DRW_Coord &axisX,
   axisX = x;
   axisY = y;
   return true;
+}
+
+bool unprojectPolylineOcsPoint(const DRW_Coord &normal, double elevation,
+                               double x, double y, DRW_Coord &source) {
+  DRW_Coord axisX, axisY;
+  if (!ocsBasis(normal, axisX, axisY) || !std::isfinite(elevation) ||
+      !std::isfinite(x) || !std::isfinite(y))
+    return false;
+  const double length = std::hypot(normal.x, normal.y, normal.z);
+  if (!std::isfinite(length) || length == 0.0) return false;
+  const double nx = normal.x / length;
+  const double ny = normal.y / length;
+  const double determinant = axisX.x * axisY.y - axisY.x * axisX.y;
+  if (!std::isfinite(determinant) ||
+      std::abs(determinant) <= 1024.0 *
+          std::numeric_limits<double>::epsilon())
+    return false;
+  const double projectedX = x - nx * elevation;
+  const double projectedY = y - ny * elevation;
+  source.x = (projectedX * axisY.y - axisY.x * projectedY) / determinant;
+  source.y = (axisX.x * projectedY - projectedX * axisX.y) / determinant;
+  source.z = 0.0;
+  return std::isfinite(source.x) && std::isfinite(source.y);
 }
 
 void appendConicProjectionMarker(RS_Entity *entity, int sourceKind,
@@ -7435,6 +7460,134 @@ void appendConicProjectionMarker(RS_Entity *entity, int sourceKind,
   payload.push_back(std::make_shared<DRW_Variant>(1041, end));
   appendTypeSidecar(entity, kConicOcsProjectionMarker, std::move(payload));
 }
+
+struct ProjectedPolylineSegment {
+  std::unique_ptr<RS_Entity> entity;
+  std::size_t ordinal = 0;
+  double bulge = 0.0;
+  bool conic = false;
+  DRW_Coord center{};
+  DRW_Coord axisU{};
+  DRW_Coord axisV{};
+  double start = 0.0;
+  double end = 0.0;
+};
+
+struct PolylineVertexInput {
+  double x = 0.0;
+  double y = 0.0;
+  double bulge = 0.0;
+};
+
+std::optional<std::vector<ProjectedPolylineSegment>>
+projectBulgedPolylineOcs(const DRW_Coord &normal, double elevation,
+                        const std::vector<PolylineVertexInput> &vertices,
+                        bool closed, bool verticesAreProjected,
+                        RS_EntityContainer *parent) {
+  if (vertices.size() < 2 || vertices.size() > 65536 ||
+      !std::isfinite(elevation))
+    return std::nullopt;
+
+  DRW_Coord axisX, axisY;
+  if (!ocsBasis(normal, axisX, axisY)) return std::nullopt;
+  std::vector<PolylineVertexInput> sourceVertices;
+  sourceVertices.reserve(vertices.size());
+  for (const auto &vertex : vertices) {
+    if (!std::isfinite(vertex.x) || !std::isfinite(vertex.y) ||
+        !std::isfinite(vertex.bulge))
+      return std::nullopt;
+    if (!verticesAreProjected) {
+      sourceVertices.push_back(vertex);
+      continue;
+    }
+    DRW_Coord source;
+    if (!unprojectPolylineOcsPoint(normal, elevation, vertex.x, vertex.y,
+                                   source))
+      return std::nullopt;
+    sourceVertices.push_back({source.x, source.y, vertex.bulge});
+  }
+  const std::size_t segmentCount = closed ? vertices.size() : vertices.size() - 1;
+  std::vector<ProjectedPolylineSegment> result;
+  result.reserve(segmentCount);
+
+  for (std::size_t i = 0; i < segmentCount; ++i) {
+    const auto &first = sourceVertices[i];
+    const auto &second = sourceVertices[(i + 1) % sourceVertices.size()];
+    if (!std::isfinite(first.x) || !std::isfinite(first.y) ||
+        !std::isfinite(first.bulge) || !std::isfinite(second.x) ||
+        !std::isfinite(second.y))
+      return std::nullopt;
+
+    const double dx = second.x - first.x;
+    const double dy = second.y - first.y;
+    const double chord = std::hypot(dx, dy);
+    if (!std::isfinite(chord) || chord == 0.0) return std::nullopt;
+
+    ProjectedPolylineSegment segment;
+    segment.ordinal = i;
+    segment.bulge = first.bulge;
+    if (first.bulge == 0.0) {
+      DRW_Coord start, end;
+      if (!projectPolylineOcsPoint(normal, elevation, first.x, first.y, start) ||
+          !projectPolylineOcsPoint(normal, elevation, second.x, second.y, end))
+        return std::nullopt;
+      const double projectedLength = std::hypot(end.x - start.x, end.y - start.y);
+      if (!std::isfinite(projectedLength) || projectedLength == 0.0)
+        return std::nullopt;
+      segment.entity = std::make_unique<RS_Line>(
+          parent, RS_LineData{RS_Vector{start.x, start.y},
+                              RS_Vector{end.x, end.y}});
+    } else {
+      const double inverseBulge = 1.0 / first.bulge;
+      const double radius = 0.25 * chord *
+                            (std::abs(first.bulge) + std::abs(inverseBulge));
+      const double centerOffset = 0.25 * chord *
+                                  (inverseBulge - first.bulge);
+      const double startX = (first.x + second.x) / 2.0 - (dy / chord) * centerOffset;
+      const double startY = (first.y + second.y) / 2.0 + (dx / chord) * centerOffset;
+      if (!std::isfinite(radius) || radius <= 0.0 ||
+          !std::isfinite(startX) || !std::isfinite(startY))
+        return std::nullopt;
+
+      DRW_Coord center;
+      if (!projectPolylineOcsPoint(normal, elevation, startX, startY, center))
+        return std::nullopt;
+      segment.center = center;
+      segment.axisU = {axisX.x * radius, axisX.y * radius, axisX.z * radius};
+      segment.axisV = {axisY.x * radius, axisY.y * radius, axisY.z * radius};
+      segment.start = std::atan2(first.y - startY, first.x - startX);
+      segment.end = segment.start + 4.0 * std::atan(first.bulge);
+      RS_EllipseData projected;
+      if (!projectConicToEllipse(center, segment.axisU, segment.axisV,
+                                 segment.start, segment.end, false,
+                                 first.bulge < 0.0, projected))
+        return std::nullopt;
+      segment.entity = std::make_unique<RS_Ellipse>(parent, projected);
+      segment.conic = true;
+    }
+    result.push_back(std::move(segment));
+  }
+  return result;
+}
+
+void appendPolylineProjectionMarker(RS_Entity *entity,
+                                    const DRW_Coord &normal,
+                                    double elevation,
+                                    std::size_t ordinal,
+                                    std::size_t segmentCount,
+                                    double bulge) {
+  auto ext = entity->getDrwExtData();
+  ext.push_back(std::make_shared<DRW_Variant>(
+      1001, std::string("LibreCAD_POLYLINE_OCS")));
+  ext.push_back(std::make_shared<DRW_Variant>(
+      1071, static_cast<std::int32_t>(ordinal)));
+  ext.push_back(std::make_shared<DRW_Variant>(
+      1071, static_cast<std::int32_t>(segmentCount)));
+  ext.push_back(std::make_shared<DRW_Variant>(1010, normal));
+  ext.push_back(std::make_shared<DRW_Variant>(1040, elevation));
+  ext.push_back(std::make_shared<DRW_Variant>(1041, bulge));
+  entity->setDrwExtData(std::move(ext));
+}
 } // namespace
 
 void RS_FilterDXFRW::addCircle(const DRW_Circle &data) {
@@ -7451,7 +7604,7 @@ void RS_FilterDXFRW::addCircle(const DRW_Circle &data) {
     axisY.x *= data.radious; axisY.y *= data.radious; axisY.z *= data.radious;
     RS_EllipseData projection;
     if (!projectConicToEllipse(data.basePoint, axisX, axisY, 0.0,
-                               2.0 * M_PI, true, projection)) {
+                               2.0 * M_PI, true, false, projection)) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW::addCircle: degenerate XY projection");
       return;
@@ -7498,7 +7651,7 @@ void RS_FilterDXFRW::addArc(const DRW_Arc &data) {
     axisY.x *= data.radious; axisY.y *= data.radious; axisY.z *= data.radious;
     RS_EllipseData projection;
     if (!projectConicToEllipse(data.basePoint, axisX, axisY, data.staangle,
-                               data.endangle, false, projection)) {
+                               data.endangle, false, false, projection)) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW::addArc: degenerate XY projection");
       return;
@@ -7554,7 +7707,7 @@ void RS_FilterDXFRW::addEllipse(const DRW_Ellipse &data) {
                       data.endparam == data.staparam;
     RS_EllipseData projection;
     if (!projectConicToEllipse(data.basePoint, axisU, axisV, data.staparam,
-                               data.endparam, full, projection)) {
+                               data.endparam, full, false, projection)) {
       RS_DEBUG->print(RS_Debug::D_WARNING,
                       "RS_FilterDXFRW::addEllipse: degenerate XY projection");
       return;
@@ -7958,9 +8111,36 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline &data) {
                                   [](const auto& vertex) {
                                     return vertex && vertex->bulge != 0.0;
                                   })) {
-    RS_DEBUG->print(
-        RS_Debug::D_WARNING,
-        "RS_FilterDXFRW::addLWPolyline: skipped non-axial bulged projection");
+    std::vector<PolylineVertexInput> vertices;
+    vertices.reserve(data.vertlist.size());
+    for (const auto &vertex : data.vertlist) {
+      if (!vertex) return;
+      vertices.push_back({vertex->x, vertex->y, vertex->bulge});
+    }
+    auto projected = projectBulgedPolylineOcs(
+        data.extPoint, data.elevation, vertices, (data.flags & 0x1) != 0,
+        true,
+        m_currentContainer);
+    if (!projected) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addLWPolyline: invalid bulged OCS projection");
+      return;
+    }
+    const auto segmentCount = projected->size();
+    for (auto &segment : *projected) {
+      setEntityAttributes(segment.entity.get(), &data);
+      segment.entity->setSourceHandle(0);
+      segment.entity->setReactorHandles({});
+      segment.entity->setXDictHandle(0);
+      if (segment.conic)
+        appendConicProjectionMarker(segment.entity.get(), 3, data.extPoint,
+                                    segment.center, segment.axisU,
+                                    segment.axisV, segment.start, segment.end);
+      appendPolylineProjectionMarker(segment.entity.get(), data.extPoint,
+                                     data.elevation, segment.ordinal,
+                                     segmentCount, segment.bulge);
+      m_currentContainer->addEntity(segment.entity.release());
+    }
     return;
   }
   const bool reflectedOcs = data.extPoint.z < 0.0;
@@ -8506,6 +8686,43 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   const bool is2dPolyline = (data.flags & (8 | 16 | 64)) == 0;
   const bool projectedOcs =
       is2dPolyline && !hasNormalizedAxialExtrusion(data);
+  if (projectedOcs && std::any_of(data.vertlist.cbegin(), data.vertlist.cend(),
+                                  [](const auto &vertex) {
+                                    return vertex && vertex->bulge != 0.0;
+                                  })) {
+    std::vector<PolylineVertexInput> vertices;
+    vertices.reserve(data.vertlist.size());
+    for (const auto &vertex : data.vertlist) {
+      if (!vertex) return;
+      vertices.push_back({vertex->basePoint.x, vertex->basePoint.y,
+                          vertex->bulge});
+    }
+    auto projected = projectBulgedPolylineOcs(
+        data.extPoint, data.basePoint.z, vertices, (data.flags & 0x1) != 0,
+        false,
+        m_currentContainer);
+    if (!projected) {
+      RS_DEBUG->print(RS_Debug::D_WARNING,
+                      "RS_FilterDXFRW::addPolyline: invalid bulged OCS projection");
+      return;
+    }
+    const auto segmentCount = projected->size();
+    for (auto &segment : *projected) {
+      setEntityAttributes(segment.entity.get(), &data);
+      segment.entity->setSourceHandle(0);
+      segment.entity->setReactorHandles({});
+      segment.entity->setXDictHandle(0);
+      if (segment.conic)
+        appendConicProjectionMarker(segment.entity.get(), 3, data.extPoint,
+                                    segment.center, segment.axisU,
+                                    segment.axisV, segment.start, segment.end);
+      appendPolylineProjectionMarker(segment.entity.get(), data.extPoint,
+                                     data.basePoint.z, segment.ordinal,
+                                     segmentCount, segment.bulge);
+      m_currentContainer->addEntity(segment.entity.release());
+    }
+    return;
+  }
   std::vector<RS_Vector> positions;
   if (projectedOcs) {
     if (std::any_of(data.vertlist.cbegin(), data.vertlist.cend(),
