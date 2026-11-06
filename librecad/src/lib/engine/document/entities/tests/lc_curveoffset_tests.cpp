@@ -36,6 +36,7 @@
 #include "lc_offsetsource.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
+#include "drw_base.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_line.h"
@@ -223,6 +224,52 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     CHECK(definition.isWellFormed());
     definition.signedDistance = std::numeric_limits<double>::infinity();
     CHECK_FALSE(definition.isWellFormed());
+}
+
+TEST_CASE("Offset source capture rejects lossy polyline preview projections",
+          "[lc-offsetcurve][source][polyline][provenance]") {
+    const auto makePolyline = [] {
+        RS_Polyline polyline;
+        polyline.addVertex({0.0, 0.0}, 0.0);
+        polyline.addVertex({2.0, 0.0}, 0.0);
+        return polyline;
+    };
+
+    auto ordinary = makePolyline();
+    CHECK(LC_OffsetSourceGeometry::capture(ordinary));
+
+    auto nativeLwpolyline = makePolyline();
+    nativeLwpolyline.setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "LibreCAD_LWPOLYLINE"),
+        std::make_shared<DRW_Variant>(1040, 0.0)});
+    CHECK(LC_OffsetSourceGeometry::capture(nativeLwpolyline));
+
+    for (const char* marker : {"LibreCAD_POLYLINE_MESH",
+                               "LibreCAD_POLYLINE_PFACE",
+                               "LibreCAD_MLINE",
+                               "LibreCAD_UNDERLAY",
+                               "librecad_polyline_mesh"}) {
+        CAPTURE(marker);
+        auto projection = makePolyline();
+        projection.setDrwExtData({
+            std::make_shared<DRW_Variant>(1001, marker),
+            std::make_shared<DRW_Variant>(1000, "unrelated payload")});
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(projection));
+    }
+
+    auto unrelatedXData = makePolyline();
+    unrelatedXData.setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "CUSTOM_APP"),
+        std::make_shared<DRW_Variant>(1000, "LibreCAD_POLYLINE_MESH")});
+    CHECK(LC_OffsetSourceGeometry::capture(unrelatedXData));
+
+    auto malformedAppId = makePolyline();
+    malformedAppId.setDrwExtData({std::make_shared<DRW_Variant>(1001, 42)});
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(malformedAppId));
+
+    auto nullXData = makePolyline();
+    nullXData.setDrwExtData({nullptr});
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(nullXData));
 }
 
 TEST_CASE("Polyline source topology validation accepts its maximum bounded segment count",

@@ -92,6 +92,9 @@ struct LC_OffsetSourceDefinition {
 namespace LC_OffsetSourceDetail {
 inline constexpr std::size_t MaximumSourceItems = 65536;
 
+bool hasUnsupportedPolylineProjectionProvenance(
+    const RS_Polyline& polyline) noexcept;
+
 inline bool finite(const RS_Vector& point) noexcept {
     return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
            std::isfinite(point.z) && point.z == 0.0;
@@ -241,6 +244,8 @@ inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(c
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* polyline = dynamic_cast<const RS_Polyline*>(&entity)) {
+        if (LC_OffsetSourceDetail::hasUnsupportedPolylineProjectionProvenance(*polyline))
+            return std::nullopt;
         LC_OffsetPolylineData data;
         data.startpoint = polyline->getStartpoint();
         data.endpoint = polyline->getEndpoint();

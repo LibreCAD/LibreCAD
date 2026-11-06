@@ -6,10 +6,13 @@
 #include "lc_offsetsource.h"
 
 #include <algorithm>
+#include <array>
+#include <cctype>
 #include <cmath>
 #include <iterator>
 #include <limits>
 #include <optional>
+#include <string_view>
 #include <type_traits>
 #include <vector>
 
@@ -17,6 +20,7 @@
 #include <boost/geometry/index/rtree.hpp>
 
 #include "rs_information.h"
+#include "drw_base.h"
 
 namespace {
 namespace bg = boost::geometry;
@@ -428,6 +432,29 @@ bool segmentsIntersectOnlyAtJoin(const LC_OffsetPolylineData& data,
 }
 
 namespace LC_OffsetSourceDetail {
+bool hasUnsupportedPolylineProjectionProvenance(
+    const RS_Polyline& polyline) noexcept {
+    static constexpr std::array<std::string_view, 4> unsupportedMarkers{
+        "LibreCAD_POLYLINE_MESH", "LibreCAD_POLYLINE_PFACE",
+        "LibreCAD_MLINE", "LibreCAD_UNDERLAY"};
+    for (const auto& value : polyline.getDrwExtData()) {
+        if (!value) return true;
+        if (value->code() != 1001) continue;
+        if (value->type() != DRW_Variant::STRING) return true;
+        const std::string_view marker{value->c_str()};
+        for (const std::string_view unsupported : unsupportedMarkers) {
+            if (marker.size() != unsupported.size()) continue;
+            const bool equalIgnoringCase = std::equal(
+                marker.begin(), marker.end(), unsupported.begin(),
+                [](unsigned char lhs, unsigned char rhs) {
+                    return std::tolower(lhs) == std::tolower(rhs);
+                });
+            if (equalIgnoringCase) return true;
+        }
+    }
+    return false;
+}
+
 bool hasNoNonAdjacentSegmentIntersections(const LC_OffsetPolylineData& data) noexcept {
     constexpr std::size_t MaximumCandidatePairsPerSegment = 64;
     try {
