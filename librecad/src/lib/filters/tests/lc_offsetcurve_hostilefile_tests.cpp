@@ -3123,17 +3123,60 @@ TEST_CASE("non-axial legacy 2D POLYLINEs project straight segments safely",
     CHECK(hasFixtureXData(*projectedArc));
     CHECK(hasFixtureXData(*projectedLine));
 
-    const auto bulgedDwgInput = directory.file("bulged-input.dwg");
-    DRW_Polyline bulgedDwgFixture = bulged;
-    bulgedDwgFixture.extData.clear();
-    f::dwg2dPolylineFile(bulgedDwgInput, bulgedDwgFixture, DRW::AC1032);
-    auto importedBulgedDwg = stagedImport(bulgedDwgInput, Lane::Eed18);
-    REQUIRE(importedBulgedDwg.status == LC_OffsetImportSession::Status::Complete);
-    REQUIRE(importedBulgedDwg.graphic);
-    REQUIRE(std::distance(importedBulgedDwg.graphic->begin(),
-                          importedBulgedDwg.graphic->end()) == 2);
-    for (const RS_Entity *entity : *importedBulgedDwg.graphic)
-      CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+    const auto hasProjectionApp = [](const RS_Entity &entity,
+                                     const std::string &appName) {
+      const auto &ext = entity.getDrwExtData();
+      return std::any_of(ext.begin(), ext.end(), [&appName](const auto &value) {
+        return value && value->code() == 1001 &&
+               value->type() == DRW_Variant::STRING &&
+               std::string{value->c_str()} == appName;
+      });
+    };
+    for (const auto &format : formats) {
+#ifndef DWGSUPPORT
+      if (format.dwg)
+        continue;
+#endif
+      DRW_Polyline fixture = bulged;
+      for (auto &vertex : fixture.vertlist)
+        vertex = std::make_shared<DRW_Vertex>(*vertex);
+      const auto path = directory.file(std::string("bulged-") + format.suffix);
+#ifdef DWGSUPPORT
+      if (format.dwg)
+        f::dwg2dPolylineFile(path, fixture, format.version);
+      else
+        f::binaryDxf2dPolyline(path, fixture, format.version);
+#else
+      f::binaryDxf2dPolyline(path, fixture, format.version);
+#endif
+      const auto imported = stagedImport(path, format.lane);
+      INFO(format.suffix);
+      REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+      REQUIRE(imported.graphic);
+      REQUIRE(std::distance(imported.graphic->begin(),
+                            imported.graphic->end()) == 2);
+      const RS_Ellipse *ellipse = nullptr;
+      const RS_Line *line = nullptr;
+      for (const RS_Entity *entity : *imported.graphic) {
+        CHECK(hasFixtureXData(*entity));
+        CHECK(hasProjectionApp(*entity, "LibreCAD_POLYLINE_OCS"));
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(*entity));
+        if (const auto *candidate = dynamic_cast<const RS_Ellipse *>(entity)) {
+          ellipse = candidate;
+          CHECK(hasProjectionApp(*entity, "LibreCAD_CONIC_OCS"));
+        }
+        if (const auto *candidate = dynamic_cast<const RS_Line *>(entity))
+          line = candidate;
+      }
+      REQUIRE(ellipse);
+      REQUIRE(line);
+      CHECK(ellipse->getMajorRadius() == Catch::Approx(std::sqrt(2.0)));
+      CHECK(ellipse->getRatio() == Catch::Approx(0.8));
+      CHECK(samePoint(ellipse->getStartpoint(), straightPoints[0]));
+      CHECK(samePoint(ellipse->getEndpoint(), straightPoints[1]));
+      CHECK(samePoint(line->getStartpoint(), straightPoints[1]));
+      CHECK(samePoint(line->getEndpoint(), straightPoints[2]));
+    }
 
     const auto projectedDxf = directory.file("bulged-roundtrip.dxf");
     REQUIRE(lc::test::exportDrawing(*unsupportedOutcome.graphic, projectedDxf,
