@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W411; chronological evidence follows): implementation slices
+Current status (W412; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16382,3 +16382,23 @@ external GUI, review, deployment, and integration gates. Product commit
 immediately after push. The GitHub comment integration rejected the attempted
 PR update with HTTP 403, and the local `gh` credential is invalid; the branch
 push is the only successfully published PR update so far.
+
+## 412. Import-Origin Duplicate Polyline Refusal (2026-11-05)
+
+Added real-file LWPOLYLINE fixtures with consecutive duplicate vertices for
+R14/AC1014 binary DXF, AC1032 DXF, and AC1032 DWG. Staged import must complete
+and retain the ordinary `RS_Polyline`, including the repeated vertex and
+zero-length segment, while `LC_OffsetSourceGeometry::capture()` refuses it.
+This pins the safety boundary at the actual import path, not only at direct
+construction of malformed source data. No production behavior change was
+needed.
+
+The focused case passes 60 assertions/1 case; the broader
+`[lc-offsetcurve][import-session][typed-source][polyline]` selection passes
+350 assertions/4 cases. Release `librecad_tests` rebuilt successfully and
+`git diff --check` passes. Test commit: `5eec4c4dc` (`test(offset): reject
+imported duplicate polyline vertices`). This closes import-origin consecutive
+duplicate coverage for the tested 2D LWPOLYLINE formats; non-consecutive
+repeated vertices, zero-bulge near-degeneracy thresholds, 2D POLYLINE variants,
+non-axial OCS, and broader topology/side/distance cases remain distinct gaps.
+Push this test and roadmap update to PR #3193 and re-read exact-head checks.
