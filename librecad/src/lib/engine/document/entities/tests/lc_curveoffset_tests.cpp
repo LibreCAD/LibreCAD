@@ -252,6 +252,15 @@ TEST_CASE("Polyline source topology validation rejects segment self-intersection
          RS_LineData{{-1, 0}, {-2, 0}}, RS_LineData{{-2, 0}, {0, 0.5}}}};
     CHECK_FALSE(LC_OffsetSourceGeometry{arcCrossing}.isWellFormed());
 
+    const double intersectionY = std::sqrt(3.0) / 2.0;
+    const LC_OffsetPolylineData arcArcCrossing{{1, 0}, {2, 0}, false,
+        {RS_ArcData{{0, 0}, 1.0, 0.0, M_PI / 3.0, true},
+         RS_ArcData{{1, 0}, 1.0, 2.0 * M_PI / 3.0, 0.0, false}}};
+    CHECK(LC_OffsetSourceDetail::sameEndpoint(
+        {0.5, intersectionY}, {1.0 + std::cos(2.0 * M_PI / 3.0),
+                               std::sin(2.0 * M_PI / 3.0)}));
+    CHECK_FALSE(LC_OffsetSourceGeometry{arcArcCrossing}.isWellFormed());
+
     const LC_OffsetPolylineData simpleChain{{0, 0}, {3, 1}, false,
         {RS_LineData{{0, 0}, {1, 0}}, RS_LineData{{1, 0}, {2, 1}},
          RS_LineData{{2, 1}, {3, 1}}}};
