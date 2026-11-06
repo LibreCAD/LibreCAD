@@ -24,7 +24,8 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W508; chronological evidence follows): implementation slices
+Current status (W509 complete; W511 is the next open qualification slice;
+chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -19727,3 +19728,75 @@ derived from the translated coordinate ULP. Require operation-8 admission or
 topology outcomes per scale where generated. Keep this worker evidence
 separate from file import; add a later staged-file slice only if the combined
 matrix passes.
+
+### Completion receipt
+
+All eight bounded interval/branch layouts now run centered and translated
+worker generation at scales `1e-3`, `1`, `1e3`, and `1e12`; the translated
+copy is offset by `(1e9 * scale, -1e9 * scale)`. Six signed normalized
+curvature distances (`±1.05`, `±1.08`, and `±1.09`) produce matching output
+topology. The first branch is sampled at 129 normalized parameters and its
+local deviation is bounded by four times the larger requested geometry
+tolerance plus a 64-ULP translation allowance. Requested tolerances are
+compared with an allowance for coordinate-rounding contribution times the
+relative factor. Operation 8 matches admission/refusal for centered and
+translated caches; refusals are `NotCacheRepresentable` and leave cache
+fingerprints unchanged. Each scale exercises both admission and refusal.
+
+Validation: the focused `[combined]` worker case passes 60,265 assertions;
+the full worker-kernel suite passes 102,350 assertions across 40 cases; the
+CMake Debug worker target builds; `git diff --check` passes. These are local
+worker results, not file round trips, exact-head CI, visible-GUI, or
+external-CAD acceptance. Product test commit `2954af89e` (`test(offset):
+qualify combined hyperbola precision`).
+
+## 511. Combined Hyperbola Scale and Translation Through DXF/DWG Import
+
+W509 establishes worker parity when hyperbolas are both scaled and translated,
+but has not tested the serialized source/cache across staged import. Carry all
+eight bounded interval/branch layouts through R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG at scales `1e-3`, `1`, `1e3`, and `1e12`. At each scale
+translate the source by `(1e9 * scale, -1e9 * scale)`, and test signed
+normalized distances `±1.05`, `±1.08`, and `±1.09`. This yields 960 staged
+imports when DWG support is enabled.
+
+Derive promotion versus fallback from the complete generated output topology
+at that placement; do not assume centered topology if floating-point
+rounding changes it. For a single canonical cache, require native promotion,
+exact schema-2 source parity, and cache geometry within requested geometry
+tolerance plus the scale-specific coordinate ULP allowance. For multi-output
+first-branch carriers, require ordinary visible spline fallback, no native
+offset, and exact preserved source metadata. Require both promotion and
+fallback at every scale across the aggregate matrix. Run the focused case, the
+full typed-source import selection, CMake Debug `librecad_tests`, roadmap
+parser, and `git diff --check`. Keep this finite matrix distinct from arbitrary
+hyperbola bounds, scales, translations, and tolerance limits.
+
+## 510. Source Picker Request Reconciliation (2026-11-06)
+
+The latest request again requires changing the source-curve type before
+selecting a replacement and expanding the picker to supported types, including
+parabola. This is already implemented: the Properties widget exposes an
+editable family selector for line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline; candidate picking
+filters by the selected family; a still-existing source is selected and can
+be highlighted; and parabola identity is tested separately from its
+`LC_SplinePoints` base class. The existing evidence is recorded in W359,
+W396-W397, W440, W474, and W504, with implementation in
+`librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.cpp`
+and GUI integration coverage in
+`librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp`
+and `librecad/src/ui/components/utils/tests/lc_offsetcurve_source_ui_tests.cpp`.
+
+No duplicate selector or parabola-specific UI branch is needed. Keep the
+selector inventory and type-change/highlight behavior as regression
+requirements. Interpret “all supported types” as the nine modeled families,
+not every entity class and not a guarantee that every geometry/settings
+variant is offsettable or cache-representable. The remaining implementation
+work is variant-level: preserve typed source identity, generate and validate
+worker caches, replace source/cache atomically, and exercise applicable DXF/DWG
+round trips. Unsupported variants must report an explicit refusal and leave
+the prior source/cache and drawing selection unchanged. W509 and the subsequent
+family-specific worker/import slices remain open; this request adds no new
+product-code scope and does not close visible-GUI, exact-head CI, or external
+CAD acceptance.
