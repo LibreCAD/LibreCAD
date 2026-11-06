@@ -17432,3 +17432,81 @@ Completion boundary: this is marked display projection, not native arbitrary-
 OCS round-trip, editing, or offsetting. Mesh/polyface offsets, full DWG-version
 bulge input coverage, and external CAD visual review remain separate gates.
 Product commit: `f9d25cdf7` (`fix(dxf): project non-axial bulged polylines`).
+
+## 439. Older-Version Bulged OCS Input Matrix
+
+W438 established the decomposition on AC1032 DXF/DWG; this slice extends the
+input-format matrix to older DXF/DWG versions for both LWPOLYLINE and legacy
+2D POLYLINE. The version matrix exercises a positive bulge on a tilted OCS;
+negative sweep, major arc, and closed-chain cases remain covered by the
+existing AC1032 tests. This deliberately distinguishes version/encoding
+coverage from the independent geometry-variant coverage.
+
+### Completion receipt
+
+Both LWPOLYLINE and legacy 2D POLYLINE bulged inputs are now generated and
+imported in R14 DXF, AC1015/R2000 DXF and DWG, and AC1032/R2018 DXF and DWG.
+For each lane, tests verify the emitted ellipse and line count, projected
+segment endpoints, and rejection of every generated fragment as a typed offset
+source. The existing AC1032 cases additionally cover negative bulges, a
+greater-than-semicircle bulge, closed-polyline closure, reflected normals,
+malformed geometry, and XDATA-preserving output save/reopen. DWG input fixtures
+omit unrelated source XDATA; its preservation is independently verified from
+DXF import through DXF and DWG save/reopen. No requested version lane was
+unavailable in the local fixture writer.
+
+Validation: CMake Debug `librecad_tests` builds; the focused selection
+`[lc-offsetcurve][import-session][typed-source][polyline][ocs]` passes 903
+assertions across 3 cases. `git diff --check` passes. The qmake6 build was not
+rerun because this slice changes test code and documentation only; W438's
+production implementation already passed that build.
+Test commit: `717271429` (`test(offset): cover older bulged OCS input versions`).
+
+## 440. Source Picker Requirement: Type Switching and Full Supported-Curve Coverage
+
+The Properties source widget must let the user choose a different source curve
+type before selecting a replacement entity. The type choice filters the entity
+picker; selecting a candidate atomically updates the typed source definition
+and regenerated offset. If the current source entity still exists in the
+drawing, the widget must show that entity as selected and support highlighting
+it in the canvas. A missing/deleted source must be reported without silently
+substituting another candidate.
+
+The family inventory is line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. `LC_Parabola` must remain a distinct
+parabola choice even though it derives from `LC_SplinePoints`. “All supported
+types” means all families and variants proven by the production offset path,
+not just types representable by the worker codec or displayed by the combo.
+Before enabling a candidate family, verify its ordinary-offset admission,
+source capture, worker generation, cache validation, edit/transform behavior,
+and DXF/DWG persistence. Unsupported variants must be disabled or omitted with
+a clear reason and must fail atomically if encountered through stale data.
+
+The type-switching UI, candidate filtering, existing-source selection and
+canvas highlighting have prior implementation/test receipts (including W350,
+W359, W396, and W397). Do not duplicate those controls or parabola identity
+handling. The remaining work is to close the family/variant eligibility matrix
+in the “Typed Source Eligibility and Properties Picker” plan section, enable
+every proven supported candidate, and test same-type/cross-type replacement,
+empty buckets, cancellation, stale sources, worker failure, cache parity, and
+per-family DXF/DWG round trips. Update that matrix and this receipt after each
+implementation slice; do not claim completion from the picker inventory alone.
+
+### Completion criteria
+
+- A user can switch the requested source type before invoking entity selection;
+  the candidate list follows the selected type and changing the filter alone
+  does not mutate the existing source or cache.
+- Every production-supported family/variant can be selected, highlighted when
+  it is the current live source, replaced atomically, edited, and persisted;
+  parabola identity survives independently of generic spline-points.
+- Unsupported or ambiguous variants are explicitly unavailable and cannot
+  leave a partially changed source/cache after selection, cancellation, or
+  worker failure.
+- Focused UI, worker, cache, and DXF/DWG persistence tests pass for every
+  enabled family, and the plan records remaining exclusions rather than
+  describing the widget's visible family list as complete support.
+
+This entry consolidates the repeated picker requests into the existing
+eligibility roadmap; it does not reopen completed type-selector, highlighting,
+or parabola-identity work.
