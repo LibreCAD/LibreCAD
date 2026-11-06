@@ -289,6 +289,61 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
     }
 }
 
+TEST_CASE("offset worker refuses tangent-constrained fit interpolation for generation and cache validation",
+          "[lc-offsetcurve][worker-kernel][source-generation][fit-points]") {
+    LC_SplinePointsData constrained{false, false};
+    constrained.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    constrained.fitTangentsConstrained = true;
+    constrained.fitTolerance = 1e-10;
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{constrained}, 0.5, 1e-4, false};
+
+    const req::Request generate{token, req::GenerateSource{definition, {}}};
+    LC_OffsetWorkerKernel::Trace generateTrace;
+    const auto generatedReply = LC_OffsetWorkerKernel::run(generate, &generateTrace);
+    const auto& generated = native(generatedReply, 7);
+    CHECK(generated.refusal == LC_OffsetCurveRefusal::Engine);
+    CHECK(generated.engineRuns == 1);
+    CHECK(generated.engineStatus == LC_CurveOffsetStatus::InvalidSource);
+    CHECK(generated.ordinaryStatus == result::OrdinaryStatus::None);
+    CHECK(generated.ordinary.empty());
+    CHECK_FALSE(generated.changed);
+    CHECK_FALSE(generated.curve);
+    CHECK(generateTrace.nativePrepareEntered);
+    CHECK(generateTrace.computationCompleted);
+
+    // This is the cache the unconstrained display approximation would produce.
+    // It must not certify the source whose exact interpolation uses tangents.
+    LC_SplinePointsData displayApproximation = constrained;
+    displayApproximation.fitTangentsConstrained = false;
+    auto displaySource = LC_OffsetSourceGeometry{displayApproximation}.makeEntity();
+    REQUIRE(displaySource);
+    const auto options = LC_CurveOffset::makeDirectOptions(*displaySource, 0.5, 1e-4);
+    const auto branches = LC_CurveOffset::buildDirectBranches(*displaySource,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(branches.status == LC_CurveOffsetStatus::Ok);
+    auto materialized = LC_CurveOffset::materializeBranches(*displaySource, branches, options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(materialized.entities.size() == 1);
+    const auto* displayCache = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+    REQUIRE(displayCache);
+
+    const req::Request validate{token, req::ValidateSourceCache{
+        displayCache->getData(), definition, {}}};
+    LC_OffsetWorkerKernel::Trace validateTrace;
+    const auto validatedReply = LC_OffsetWorkerKernel::run(validate, &validateTrace);
+    const auto& validated = native(validatedReply, 8);
+    CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+    CHECK(validated.engineRuns == 1);
+    CHECK(validated.engineStatus == LC_CurveOffsetStatus::InvalidSource);
+    CHECK_FALSE(validated.changed);
+    CHECK_FALSE(validated.curve);
+    CHECK(validateTrace.nativePrepareEntered);
+    CHECK(validateTrace.computationCompleted);
+}
+
 TEST_CASE("offset worker op8 accepts only the exact canonical source cache",
           "[lc-offsetcurve][worker-kernel][source-cache]") {
     const LC_OffsetSourceDefinition definition{

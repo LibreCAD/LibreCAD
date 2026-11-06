@@ -5259,7 +5259,10 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         const double signedDistance = side == LC_CurveOffsetSide::Left ? magnitude : -magnitude;
         const LC_OffsetSourceDefinition definition{
             LC_OffsetSourceGeometry{fitVariants[variant]}, signedDistance, 1e-4, false};
-        auto source = definition.source.makeEntity();
+        const bool tangentConstrained = fitVariants[variant].fitTangentsConstrained;
+        LC_SplinePointsData displayedGeometry = fitVariants[variant];
+        displayedGeometry.fitTangentsConstrained = false;
+        auto source = LC_OffsetSourceGeometry{displayedGeometry}.makeEntity();
         REQUIRE(source);
         const auto options = LC_CurveOffset::makeDirectOptions(*source, magnitude,
             definition.relativeTolerance);
@@ -5271,7 +5274,7 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             LC_CurveOffset::makeDirectSourceBudget());
         REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
         REQUIRE_FALSE(materialized.entities.empty());
-        const bool singleCache = materialized.entities.size() == 1;
+        const bool singleCache = !tangentConstrained && materialized.entities.size() == 1;
         const auto* expectedSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
         REQUIRE(expectedSpline);
         const RS_SplineData expectedCache = expectedSpline->getData();

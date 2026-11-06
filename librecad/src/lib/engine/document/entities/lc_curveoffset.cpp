@@ -5443,6 +5443,16 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         result.status = LC_CurveOffsetStatus::InvalidRequest;
         return result;
     }
+    if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&source);
+        points && points->getData().fitTangentsConstrained) {
+        result.status = LC_CurveOffsetStatus::InvalidSource;
+        return result;
+    }
+    if (const auto* spline = dynamic_cast<const RS_Spline*>(&source);
+        spline && spline->getData().fitTangentsConstrained) {
+        result.status = LC_CurveOffsetStatus::InvalidSource;
+        return result;
+    }
 
     const std::unique_ptr<OffsetSource> adapter = makeSource(source);
     SourceScale scale;

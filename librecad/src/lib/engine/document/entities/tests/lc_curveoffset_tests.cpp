@@ -472,6 +472,18 @@ RS_Spline quarterCircle(const RS_Vector& center = RS_Vector{0.0, 0.0}, const dou
                       {0, 0, 0, 1, 1, 1}, {1.0, std::sqrt(0.5), 1.0});
 }
 
+TEST_CASE("Tangent-constrained RS spline interpolation is refused",
+          "[curve-offset][direct][validation][fit-points]") {
+    RS_Spline source = makeSpline(1, {{0, 0}, {4, 0}}, {0, 0, 1, 1});
+    source.getData().fitPoints = {{0, 0}, {4, 0}};
+    source.getData().fitTangentsConstrained = true;
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
+    const auto request = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
+
+    CHECK(LC_CurveOffset::buildDirectBranches(source, request, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
+}
+
 // A cubic with an inflection.
 RS_Spline sCurve(const RS_Vector& shift = RS_Vector{0.0, 0.0}) {
     return makeSpline(3, {shift + RS_Vector{0, 0}, shift + RS_Vector{4, 6}, shift + RS_Vector{8, -6},
@@ -632,6 +644,21 @@ TEST_CASE("Default and partial requests are rejected before any evaluation",
     CHECK(again.tolerance.requestedGeometry == good.tolerance.requestedGeometry);
     const LC_CurveOffsetTolerances& t = good.tolerance;
     CHECK(t.evaluation + t.fit + t.nodeMerge == Approx(t.requestedGeometry));
+}
+
+TEST_CASE("Tangent-constrained spline-point interpolation is refused",
+          "[curve-offset][direct][validation][fit-points]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    data.fitTangentsConstrained = true;
+    data.fitTolerance = 1e-10;
+    const LC_SplinePoints source{nullptr, data};
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
+    const auto request = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
+
+    CHECK(LC_CurveOffset::buildDirectBranches(source, request, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
+
 }
 
 TEST_CASE("A straight source offsets exactly to either side", "[curve-offset][direct]") {
