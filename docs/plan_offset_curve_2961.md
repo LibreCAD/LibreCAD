@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W405; chronological evidence follows): implementation slices
+Current status (W406; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16232,3 +16232,30 @@ writer can preserve both the constrained curve and tangent vectors. Next:
 update PR #3193 and validate current-head checks, then continue the remaining
 tangent/closed-layout and broader offset-roadmap gaps rather than treating
 W404/W405 as completion of the full plan.
+
+## 406. Tangent-Constrained Cubic Fit SPLINE Export Refusal (2026-11-05)
+
+The importer now marks fit-point SPLINEs with nonzero endpoint tangent vectors
+as constrained metadata in `RS_SplineData`. Since the native interpolator does
+not apply those tangent constraints, scenario-2 output is not eligible for
+these entities. The writer instead emits the current control net as scenario
+1, preventing an export from silently substituting zero tangents while still
+preserving the geometry LibreCAD currently displays. This is a deliberate
+bounded fallback, not lossless preservation of the source tangent semantics.
+
+Added a fit-only cubic DXF fixture with explicit start and end tangents and
+round-tripped it through DXF, AC1015/R2000 DWG, and AC1032/R2018 DWG. Assertions
+verify the imported constraint marker, scenario-1/control-net output, and 101
+sampled positions matching the imported native curve after reopen. The focused
+`[fit-points][roundtrip]` selection passes 783 assertions/4 cases; the
+`[dxf][filter][spline]` selection passes 2,599 assertions/17 cases. Release
+`librecad_tests` builds; `git diff --check` passes. Product commit:
+`8fc8059fa` (`fix(dwg): avoid dropping spline tangent constraints`).
+
+Open limitations: the native curve still does not honor source tangent
+constraints, and the original tangent vectors are not preserved by a
+scenario-1 rewrite. Implementing true constrained interpolation, including
+editing/reverse/transform semantics and exact cross-CAD comparison, remains a
+separate feature. Closed cubic fit-point conversion is also unqualified. The
+current fallback is considered correct only as preservation of LibreCAD's
+imported control-net geometry, not as an exact source-DWG/DXF round trip.
