@@ -100,7 +100,7 @@ public:
 };
 #endif
 
-enum class Lane { Ascii, Binary14, Binary18, Eed2000, Eed18 };
+enum class Lane { Ascii, Binary14, Binary2000, Binary18, Eed2000, Eed18 };
 std::vector<Lane> lanes() {
     std::vector<Lane> result{Lane::Ascii, Lane::Binary14, Lane::Binary18};
 #ifdef DWGSUPPORT
@@ -114,12 +114,14 @@ RS2::FormatType format(Lane lane) {
     if (lane == Lane::Eed2000) return RS2::FormatDWG;
     if (lane == Lane::Eed18) return RS2::FormatDWG2018;
 #endif
+    if (lane == Lane::Binary2000) return RS2::FormatDXFRW2000;
     return lane == Lane::Binary14 ? RS2::FormatDXFRW14 : RS2::FormatDXFRW2018;
 }
 void writeInput(const std::filesystem::path& path, Lane lane, const DRW_Spline& raw) {
     switch (lane) {
     case Lane::Ascii: f::put(path, f::ascii(raw)); return;
     case Lane::Binary14: f::binaryDxf(path, raw, DRW::AC1014); return;
+    case Lane::Binary2000: f::binaryDxf(path, raw, DRW::AC1015); return;
     case Lane::Binary18: f::binaryDxf(path, raw, DRW::AC1032); return;
 #ifdef DWGSUPPORT
     case Lane::Eed2000: f::dwgFile(path, raw, DRW::AC1015); return;
@@ -1989,10 +1991,11 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
         const RS_SplineData expectedCache = expectedSpline->getData();
         REQUIRE(expectedSpline->validate());
 
-        for (const int format : {0, 1, 2, 3}) {
-            const bool dwg = format >= 2;
+        for (const int format : {0, 1, 2, 3, 4}) {
+            const bool dwg = format == 2 || format == 3;
             const bool r14 = format == 1;
             const bool r2000 = format == 3;
+            const bool r2000Dxf = format == 4;
 #ifndef DWGSUPPORT
             if (dwg) continue;
 #endif
@@ -2029,18 +2032,22 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             const std::string suffix = std::to_string(variant + 3);
             const std::string extension = dwg ? ".dwg" : ".dxf";
             const std::string version = r14 ? "-r14" :
-                (r2000 ? "-r2000-dwg" : (dwg ? "-dwg" : "-r2018"));
+                (r2000Dxf ? "-r2000-dxf" :
+                    (r2000 ? "-r2000-dwg" : (dwg ? "-dwg" : "-r2018")));
             const std::string sideName = side == LC_CurveOffsetSide::Left ? "-left" : "-right";
             const std::string distanceName = magnitude == .25 ? "-025" : "-050";
             const auto input = directory.file("fit-points-" + suffix + sideName + distanceName + version + extension);
 #ifdef DWGSUPPORT
             if (dwg) f::dwgFile(input, cache, r2000 ? DRW::AC1015 : DRW::AC1032);
-            else f::binaryDxf(input, cache, r14 ? DRW::AC1014 : DRW::AC1032);
+            else f::binaryDxf(input, cache,
+                r2000Dxf ? DRW::AC1015 : (r14 ? DRW::AC1014 : DRW::AC1032));
 #else
-            f::binaryDxf(input, cache, r14 ? DRW::AC1014 : DRW::AC1032);
+            f::binaryDxf(input, cache,
+                r2000Dxf ? DRW::AC1015 : (r14 ? DRW::AC1014 : DRW::AC1032));
 #endif
             const Lane lane = dwg ? (r2000 ? Lane::Eed2000 : Lane::Eed18)
-                                  : (r14 ? Lane::Binary14 : Lane::Binary18);
+                                  : (r14 ? Lane::Binary14 :
+                                      (r2000Dxf ? Lane::Binary2000 : Lane::Binary18));
             const auto outcome = stagedImport(input, lane);
             REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
             REQUIRE(outcome.graphic);
