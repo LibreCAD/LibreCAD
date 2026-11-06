@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-05. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W422; chronological evidence follows): implementation slices
+Current status (W424; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -81,6 +81,17 @@ validation and persistence, signed-bulge capture/materialization, and actual
 AC1032 DXF/DWG signed-bulge import into offset-source geometry. CI outcomes are
 head-specific and must be read from PR #3193; older statuses below are
 historical and are not inherited by newer heads.
+
+W424 adds bounded 2D polyline segment-intersection validation to offset-source
+capture, including line/line and line/arc/arc crossings, conservative
+collinear-overlap refusal, and real imported self-crossing LWPOLYLINE coverage
+in R14 DXF, AC1032 DXF, and AC1032 DWG. Product commit
+`f4c3459e1` is verified by Release test builds, the qmake6 application/plugin
+build, focused source/import/worker tests, and `git diff --check`. This closes
+only intersecting topology detection for supported 2D line/arc polyline
+snapshots; candidate-density caps intentionally refuse ambiguous dense cases,
+and non-axial OCS, mesh/polyface/3D legacy POLYLINE, broad distance/side
+qualification, and visible GUI acceptance remain open.
 
 At the start of W352, the pushed PR head was W351
 `9586fc2f5d5ff0d4ddef3937c8a9cc22692f9c9a`; W351 is a roadmap-only commit, and
@@ -16624,3 +16635,56 @@ Release `librecad_tests` builds and `git diff --check` passes. Test commit:
 bounded acceptance and exercises the non-quadratic implementation, but does
 not replace broad side/distance tests or arbitrary line/arc intersection
 detection. Commit and push W422, then qualify the exact PR head.
+
+## 423. Source Picker Type-Switching Requirement Reconfirmation (2026-11-05)
+
+Rechecked the requested source-widget behavior against the current code and
+coverage. The picker must allow choosing a different source family before
+selecting an entity, then restrict the live candidate list to that family.
+Changing the family alone must not mutate the offset definition, source,
+generated cache, or drawing selection. Choosing a replacement must preserve
+the candidate's concrete source kind and go through the guarded worker-backed
+replacement path. The family list remains ellipse, spline, spline-points,
+parabola, bounded hyperbola, line, arc, circle, and polyline; parabola must
+remain distinct from its `LC_SplinePoints` base class and must be matchable,
+selectable, and highlighted as a parabola.
+
+This behavior is already implemented and tested by W356/W359 (nine-family
+replacement and family inventory), W396 (cross-type parabola identity and
+highlighting), and W397 (deleted-source handling). No duplicate picker or
+parabola implementation is needed. Preserve those tests while completing the
+remaining variant-level worker, cache, persistence, import, and signed
+distance/side admission matrix. A family being selectable does not imply that
+every legal entity variant is representable by one editable native cache;
+unsupported variants must fail visibly and atomically, preserving the prior
+source and cache. Broader DXF/DWG round-trip and visible GUI acceptance remain
+separate gates. This is a roadmap clarification only and makes no new product
+or validation claim.
+
+## 424. Intersecting Polyline Source Refusal (2026-11-05)
+
+Offset-source validation now checks candidate segment pairs with a Boost
+Geometry R-tree broad phase, then evaluates line-line, line-arc, and arc-arc
+intersections on supported 2D polyline segments. Intersections are allowed
+only at the expected adjacent join; collinear line overlap is refused
+conservatively. The candidate-pair budget is bounded by 64 times segment
+count, and non-finite bounds, allocation/index exceptions, or budget
+exhaustion refuse offset-source capture without rejecting the ordinary
+imported entity. Added source tests cover a bow-tie, a line crossing an arc, a
+valid open chain, overlapping collinear lines, and the valid closed triangle.
+Real self-crossing LWPOLYLINE files remain importable but fail typed source
+capture across R14 DXF, AC1032 DXF, and AC1032 DWG.
+
+Validation: focused direct polyline source tests pass 43 assertions/3 cases;
+the full `[import-session][typed-source][polyline]` suite passes 1,078
+assertions/10 cases; `[lc-offsetcurve][worker-kernel][source-cache][polyline]`
+passes 309 assertions/4 cases; the minimum-sweep bulge regression passes 216
+assertions/1 case. Release `librecad_tests` builds, the full qmake6 application
+and plugin build exits successfully, and `git diff --check` passes. Product
+commit: `f4c3459e1` (`fix(offset): reject crossing polyline sources`).
+
+This covers intersections for supported 2D line/arc polyline snapshots only.
+Dense candidate sets beyond the explicit work cap are refused; non-axial OCS,
+mesh/polyface/3D legacy POLYLINE, broader distance/side admission, and visible
+GUI behavior remain open. Push product and roadmap commits to PR #3193, then
+inspect exact-head CI/checks rather than inheriting older statuses.
