@@ -7434,7 +7434,38 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
     const auto mixedBulgeSource = LC_OffsetSourceGeometry::capture(mixedBulgeEntity);
     REQUIRE(mixedBulgeSource);
     REQUIRE(mixedBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
-    const std::array<LC_OffsetPolylineData, 5> variants{{
+    RS_Polyline majorMinorBulgeEntity;
+    majorMinorBulgeEntity.addVertex({0, 0}, 2.0);
+    majorMinorBulgeEntity.addVertex({10, 0}, -0.2);
+    majorMinorBulgeEntity.addVertex({10, 10});
+    majorMinorBulgeEntity.addVertex({0, 10});
+    majorMinorBulgeEntity.setClosed(true);
+    majorMinorBulgeEntity.endPolyline();
+    const auto majorMinorBulgeSource = LC_OffsetSourceGeometry::capture(majorMinorBulgeEntity);
+    REQUIRE(majorMinorBulgeSource);
+    REQUIRE(majorMinorBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    const auto& majorMinorBulgeData =
+        std::get<LC_OffsetPolylineData>(majorMinorBulgeSource->value);
+    REQUIRE(majorMinorBulgeData.closed);
+    REQUIRE(majorMinorBulgeData.segments.size() == 4);
+    const auto* positiveMajorArc =
+        std::get_if<RS_ArcData>(&majorMinorBulgeData.segments[0]);
+    const auto* negativeMinorArc =
+        std::get_if<RS_ArcData>(&majorMinorBulgeData.segments[1]);
+    REQUIRE(positiveMajorArc);
+    REQUIRE(negativeMinorArc);
+    const auto directedSweep = [](const RS_ArcData& arc) {
+        double sweep = arc.angle2 - arc.angle1;
+        if (arc.reversed && sweep > 0.0) sweep -= 2.0 * std::acos(-1.0);
+        if (!arc.reversed && sweep < 0.0) sweep += 2.0 * std::acos(-1.0);
+        return sweep;
+    };
+    CHECK(directedSweep(*positiveMajorArc) > std::acos(-1.0));
+    CHECK(directedSweep(*negativeMinorArc) < 0.0);
+    CHECK(std::abs(directedSweep(*negativeMinorArc)) < std::acos(-1.0));
+    CHECK(std::holds_alternative<RS_LineData>(majorMinorBulgeData.segments[2]));
+    CHECK(std::holds_alternative<RS_LineData>(majorMinorBulgeData.segments[3]));
+    const std::array<LC_OffsetPolylineData, 6> variants{{
         {{0, 0}, {2, 2}, false,
          {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
         {{2, 2}, {0, 0}, false,
@@ -7447,7 +7478,8 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
           RS_ArcData{{0, 0}, 2, pi / 2, pi, false},
           RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
           RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}},
-        std::get<LC_OffsetPolylineData>(mixedBulgeSource->value)}};
+        std::get<LC_OffsetPolylineData>(mixedBulgeSource->value),
+        majorMinorBulgeData}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
@@ -7522,15 +7554,54 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
         if (!centeredSpline.validate() || !translatedSpline.validate() ||
             !centeredSpline.getParameterDomain(centeredFirst, centeredLast) ||
             !translatedSpline.getParameterDomain(translatedFirst, translatedLast)) return false;
+        constexpr std::size_t intervals = 1024;
+        const auto sampleByLength = [&](const RS_Spline& spline, const double first,
+                                        const double last)
+            -> std::optional<std::array<RS_Vector, 129>> {
+            std::array<double, intervals + 1> parameters{};
+            std::array<double, intervals + 1> lengths{};
+            std::array<RS_Vector, intervals + 1> points{};
+            for (std::size_t i = 0; i <= intervals; ++i) {
+                const double fraction = static_cast<double>(i) /
+                    static_cast<double>(intervals);
+                parameters[i] = first + (last - first) * fraction;
+                const auto point = spline.getPointAt(parameters[i]);
+                if (!point.valid) return std::nullopt;
+                points[i] = {point.x, point.y};
+                if (i > 0) lengths[i] = lengths[i - 1] + std::hypot(
+                    points[i].x - points[i - 1].x, points[i].y - points[i - 1].y);
+            }
+            if (!(lengths.back() > 0.0) || !std::isfinite(lengths.back())) return std::nullopt;
+            std::array<RS_Vector, 129> samples{};
+            for (std::size_t i = 0; i < samples.size(); ++i) {
+                const double target = lengths.back() * static_cast<double>(i) /
+                    static_cast<double>(samples.size() - 1);
+                const auto upper = std::lower_bound(lengths.begin(), lengths.end(), target);
+                const std::size_t high = static_cast<std::size_t>(upper - lengths.begin());
+                if (high == 0) {
+                    samples[i] = points.front();
+                    continue;
+                }
+                const std::size_t low = high - 1;
+                const double span = lengths[high] - lengths[low];
+                const double ratio = span > 0.0 ? (target - lengths[low]) / span : 0.0;
+                const double parameter = parameters[low] +
+                    (parameters[high] - parameters[low]) * ratio;
+                const auto point = spline.getPointAt(parameter);
+                if (!point.valid) return std::nullopt;
+                samples[i] = {point.x, point.y};
+            }
+            return samples;
+        };
+        const auto centeredSamples = sampleByLength(centeredSpline, centeredFirst, centeredLast);
+        const auto translatedSamples = sampleByLength(
+            translatedSpline, translatedFirst, translatedLast);
+        if (!centeredSamples || !translatedSamples) return false;
         const auto matchesDirection = [&](const bool reverse) {
-            for (int sample = 0; sample <= 128; ++sample) {
-                const double fraction = static_cast<double>(sample) / 128.0;
-                const auto local = centeredSpline.getPointAt(
-                    centeredFirst + (centeredLast - centeredFirst) * fraction);
-                const double otherFraction = reverse ? 1.0 - fraction : fraction;
-                const auto world = translatedSpline.getPointAt(
-                    translatedFirst + (translatedLast - translatedFirst) * otherFraction);
-                if (!local.valid || !world.valid) return false;
+            for (std::size_t i = 0; i < centeredSamples->size(); ++i) {
+                const auto& local = (*centeredSamples)[i];
+                const std::size_t other = reverse ? centeredSamples->size() - 1 - i : i;
+                const auto& world = (*translatedSamples)[other];
                 const double expectedX = local.x + translation.x;
                 const double expectedY = local.y + translation.y;
                 const double magnitude = std::max({std::abs(expectedX), std::abs(expectedY),
