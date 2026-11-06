@@ -65,9 +65,10 @@ and final R integration.
 W436 adds marked XY display projections for straight non-axial LWPOLYLINE and
 legacy 2D POLYLINE imports, with typed offset-source refusal and DXF/DWG
 provenance round-trips. Legacy POLYLINE coverage now includes R14, R2000, and
-R2018 DXF plus R2018 DWG; the non-axial R2000 DWG fixture writer currently
-refuses generation. This does not implement non-axial bulged-curve projection,
-native 3D/mesh offsets, or close the independent acceptance gates.
+R2018 DXF plus R2000/R2018 DWG; the R2000 DWG geometry fixture uses no source
+XDATA because the fixture writer refuses that variant. This does not implement
+non-axial bulged-curve projection, native 3D/mesh offsets, or close the
+independent acceptance gates.
 The source Properties widget requirement to change curve family before
 choosing a replacement is implemented and covered for the nine currently
 modeled families: ellipse, spline, spline-points, parabola, bounded hyperbola,
@@ -17163,9 +17164,8 @@ native planar offset source:
 ### Required validation
 
 - Add real import fixtures for straight non-axial legacy 2D POLYLINE in R14
-  DXF, AC1015/R2000 DXF, AC1032 DXF, and AC1032 DWG. Assert the transformed
-  XY coordinates, retained visibility, marker payload, and typed-source
-  refusal.
+  DXF, AC1015/R2000 DXF and DWG, and AC1032 DXF and DWG. Assert transformed XY
+  coordinates, retained visibility, marker payload, and typed-source refusal.
 - Exercise a non-axial bulged legacy POLYLINE and assert it is not imported as
   an incorrect straight or circular approximation. Add invalid/zero normal
   and non-finite coordinate coverage where the fixture layer can encode them.
@@ -17174,9 +17174,10 @@ native planar offset source:
 - Re-run the existing axial/reflected legacy POLYLINE, closed-bulge, 3D,
   mesh/polyface, APPID, and OCS test selections to detect dispatch or metadata
   regressions. Run CMake and qmake6 builds plus `git diff --check`.
-- Treat R2000/AC1015 DWG legacy POLYLINE coverage as an independent fixture
-  question. If the existing writer cannot generate it, record that lane as
-  unverified; do not infer it from AC1032 DWG.
+- Treat pre-existing-XDATA coverage in the R2000/AC1015 DWG legacy POLYLINE
+  fixture as a separate question. The geometry-only fixture is covered; if the
+  writer refuses the XDATA-bearing variant, record that XDATA limitation and
+  do not infer old-DWG XDATA behavior from AC1032 DWG.
 
 ### Completion receipt and boundaries
 
@@ -17191,13 +17192,16 @@ they reach the reader, so non-finite import rejection is not claimed as
 fixture-tested; the importer still checks every normal/elevation/vertex and
 projected component for finiteness.
 
-Validation on the final test binary: the focused legacy OCS case passes 183
-assertions/1 case across R14 DXF, AC1015/R2000 DXF, AC1032 DXF, and AC1032 DWG,
-including projection coordinates, original OCS payload, source refusal,
-existing XDATA preservation, save/reopen, bulged-curve refusal, and zero-normal
-rejection.
+Validation on the final test binary: the focused legacy OCS case passes 216
+assertions/1 case across R14 DXF, AC1015/R2000 DXF and DWG, and AC1032 DXF and
+DWG, including projection coordinates, original OCS payload, source refusal,
+existing XDATA preservation on the lanes where the fixture writer emits it,
+save/reopen, bulged-curve refusal, and zero-normal rejection. The AC1015 DWG
+fixture is built without input XDATA; with the test's existing XDATA payload,
+`dwgRW::write` returns false before import. AC1015 DWG XDATA import coverage is
+therefore not claimed.
 The complete `[lc-offsetcurve][import-session][typed-source][polyline]`
-selection passes 2,234 assertions/20 cases; `[dxf][appid-registration]`
+selection passes 2,267 assertions/20 cases; `[dxf][appid-registration]`
 passes 846 assertions/7 cases. CMake Debug `librecad_tests` builds, the qmake6
 application/plugins build exits successfully, and `git diff --check` passes.
 The qmake6 build reports existing missing-field-initializer, sign-compare,
@@ -17209,11 +17213,12 @@ from OCS`). XDATA preservation test commit: `6a707326f` (`test(offset): verify
 legacy OCS XDATA preservation`). Malformed-input test commit: `752f99642`
 (`test(offset): reject malformed legacy OCS polylines`). AC1015/R2000 DXF
 coverage commit: `41dd1bd3d` (`test(offset): cover R2000 non-axial polyline
-import`).
+import`). AC1015/R2000 DWG geometry import commit: `b0dc8638c`
+(`test(offset): cover R2000 DWG OCS polyline import`).
 
-Only AC1032 DWG is qualified here. The AC1015 DWG fixture attempt returned
-false from `dwgRW::write` before import, so R2000 non-axial legacy POLYLINE
-DWG behavior remains unverified; do not infer it from AC1015 DXF or AC1032 DWG.
-Non-axial bulged curves, exact 3D geometry, mesh/polyface offsets,
-external CAD visual validation, and non-finite serialized fixtures remain
-open. This is not full arbitrary OCS support.
+AC1015 DWG geometry import is now qualified only for the fixture without
+pre-existing XDATA; the XDATA-bearing fixture attempt returned false from
+`dwgRW::write` before import. Do not infer R2000 DWG XDATA coverage from the
+geometry-only case. Non-axial bulged curves, exact 3D geometry, mesh/polyface
+offsets, external CAD visual validation, and non-finite serialized fixtures
+remain open. This is not full arbitrary OCS support.
