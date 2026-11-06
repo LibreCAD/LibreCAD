@@ -1027,6 +1027,34 @@ template <typename T> bool hasNormalizedAxialExtrusion(const T &entity) {
          (entity.extPoint.z == 1.0 || entity.extPoint.z == -1.0);
 }
 
+bool projectPolylineOcsPoint(const DRW_Coord &normal, double elevation,
+                             double x, double y, DRW_Coord &projected) {
+  const double length = std::hypot(normal.x, normal.y, normal.z);
+  if (!std::isfinite(length) || length == 0.0 || !std::isfinite(elevation) ||
+      !std::isfinite(x) || !std::isfinite(y))
+    return false;
+
+  const DRW_Coord n{normal.x / length, normal.y / length, normal.z / length};
+  DRW_Coord axisX;
+  if (std::abs(n.x) < 0.015625 && std::abs(n.y) < 0.015625)
+    axisX = {n.z, 0.0, -n.x};
+  else
+    axisX = {-n.y, n.x, 0.0};
+
+  const double axisLength = std::hypot(axisX.x, axisX.y, axisX.z);
+  if (!std::isfinite(axisLength) || axisLength == 0.0) return false;
+  axisX = {axisX.x / axisLength, axisX.y / axisLength,
+           axisX.z / axisLength};
+  const DRW_Coord axisY{n.y * axisX.z - n.z * axisX.y,
+                        n.z * axisX.x - n.x * axisX.z,
+                        n.x * axisX.y - n.y * axisX.x};
+  projected = {axisX.x * x + axisY.x * y + n.x * elevation,
+               axisX.y * x + axisY.y * y + n.y * elevation,
+               axisX.z * x + axisY.z * y + n.z * elevation};
+  return std::isfinite(projected.x) && std::isfinite(projected.y) &&
+         std::isfinite(projected.z);
+}
+
 bool layerExtStringEmpty(const DRW_Variant *v) {
   if (v == nullptr || v->type() != DRW_Variant::STRING)
     return false;
@@ -8316,17 +8344,56 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
     return;
   }
 
-  RS_PolylineData pd(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
   const bool is2dPolyline = (data.flags & (8 | 16 | 64)) == 0;
-  if (is2dPolyline && !hasNormalizedAxialExtrusion(data)) {
-    RS_DEBUG->print(
-        RS_Debug::D_WARNING,
-        "RS_FilterDXFRW::addPolyline: skipped non-axial 2D extrusion");
-    return;
+  const bool projectedOcs =
+      is2dPolyline && !hasNormalizedAxialExtrusion(data);
+  std::vector<RS_Vector> positions;
+  if (projectedOcs) {
+    if (std::any_of(data.vertlist.cbegin(), data.vertlist.cend(),
+                    [](const auto& vertex) {
+                      return !vertex || vertex->bulge != 0.0;
+                    })) {
+      RS_DEBUG->print(
+          RS_Debug::D_WARNING,
+          "RS_FilterDXFRW::addPolyline: skipped non-axial bulged projection");
+      return;
+    }
+    positions.reserve(data.vertlist.size());
+    for (const auto& vertex : data.vertlist) {
+      DRW_Coord projected;
+      if (!vertex ||
+          !projectPolylineOcsPoint(data.extPoint, data.basePoint.z,
+                                   vertex->basePoint.x, vertex->basePoint.y,
+                                   projected)) {
+        RS_DEBUG->print(
+            RS_Debug::D_WARNING,
+            "RS_FilterDXFRW::addPolyline: invalid non-axial OCS projection");
+        return;
+      }
+      positions.emplace_back(projected.x, projected.y);
+    }
+  } else {
+    positions.reserve(data.vertlist.size());
+    for (const auto& vertex : data.vertlist) {
+      if (!vertex) return;
+      positions.emplace_back(vertex->basePoint.x, vertex->basePoint.y);
+    }
   }
-  const bool reflectedOcs = is2dPolyline && data.extPoint.z < 0.0;
+
+  RS_PolylineData pd(RS_Vector{}, RS_Vector{}, data.flags & 0x1);
+  const bool reflectedOcs =
+      is2dPolyline && !projectedOcs && data.extPoint.z < 0.0;
   auto polyline = std::make_unique<RS_Polyline>(m_currentContainer, pd);
   setEntityAttributes(polyline.get(), &data);
+  if (projectedOcs) {
+    auto ext = polyline->getDrwExtData();
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1001, std::string("LibreCAD_POLYLINE_OCS")));
+    ext.push_back(std::make_shared<DRW_Variant>(
+        1010, DRW_Coord{data.extPoint.x, data.extPoint.y, data.extPoint.z}));
+    ext.push_back(std::make_shared<DRW_Variant>(1040, data.basePoint.z));
+    polyline->setDrwExtData(std::move(ext));
+  }
   if (data.flags & 8) {
     auto ext = polyline->getDrwExtData();
     ext.push_back(std::make_shared<DRW_Variant>(
@@ -8342,9 +8409,9 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   }
 
   auto vert0 = data.vertlist[0];
-  RS_Vector first_pos(reflectedOcs ? -vert0->basePoint.x : vert0->basePoint.x,
-                      vert0->basePoint.y);
-  const double firstBulge = reflectedOcs ? -vert0->bulge : vert0->bulge;
+  RS_Vector first_pos = positions[0];
+  const double firstBulge =
+      projectedOcs ? 0.0 : reflectedOcs ? -vert0->bulge : vert0->bulge;
   polyline->addVertex(first_pos, firstBulge, false);
   RS_Vector prev_pos = first_pos;
 
@@ -8355,14 +8422,14 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
   for (size_t i = 0; i < num_segments; ++i) {
     size_t vert_idx = (i + 1) % data.vertlist.size();
     auto vert = data.vertlist[vert_idx];
-    RS_Vector curr_pos(reflectedOcs ? -vert->basePoint.x : vert->basePoint.x,
-                       vert->basePoint.y);
+    RS_Vector curr_pos = positions[vert_idx];
 
     size_t bulge_idx = i % data.vertlist.size();
-    double segmentBulge = data.vertlist[bulge_idx]->bulge;
+    double segmentBulge =
+        projectedOcs ? 0.0 : data.vertlist[bulge_idx]->bulge;
     if (reflectedOcs)
       segmentBulge = -segmentBulge;
-    double nextBulge = vert->bulge;
+    double nextBulge = projectedOcs ? 0.0 : vert->bulge;
     if (reflectedOcs)
       nextBulge = -nextBulge;
     const auto &extData = data.vertlist[bulge_idx]->extData;
@@ -8388,16 +8455,21 @@ void RS_FilterDXFRW::addPolyline(const DRW_Polyline &data) {
       break;
     }
   }
-  if (is2dPolyline && (data.basePoint.z != 0.0 || data.thickness != 0.0 ||
-                       reflectedOcs || hasVertexMetadata)) {
+  if (is2dPolyline && (projectedOcs || data.basePoint.z != 0.0 ||
+                       data.thickness != 0.0 || reflectedOcs ||
+                       hasVertexMetadata)) {
     auto ext = polylineXDataWithoutSidecar(*polyline);
     ext.push_back(std::make_shared<DRW_Variant>(
         1001, std::string("LibreCAD_LWPOLYLINE")));
     ext.push_back(std::make_shared<DRW_Variant>(1040, 0.0));
     ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.basePoint.z : data.basePoint.z));
+        1040, projectedOcs ? 0.0
+                           : reflectedOcs ? -data.basePoint.z
+                                          : data.basePoint.z));
     ext.push_back(std::make_shared<DRW_Variant>(
-        1040, reflectedOcs ? -data.thickness : data.thickness));
+        1040, projectedOcs ? 0.0
+                           : reflectedOcs ? -data.thickness
+                                          : data.thickness));
     ext.push_back(
         std::make_shared<DRW_Variant>(1010, DRW_Coord{0.0, 0.0, 1.0}));
     ext.push_back(std::make_shared<DRW_Variant>(
