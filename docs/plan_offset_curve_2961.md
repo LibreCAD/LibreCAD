@@ -17492,6 +17492,33 @@ empty buckets, cancellation, stale sources, worker failure, cache parity, and
 per-family DXF/DWG round trips. Update that matrix and this receipt after each
 implementation slice; do not claim completion from the picker inventory alone.
 
+### Current implementation evidence
+
+The Properties selector contains all nine modeled kinds, and the widget
+integration test `Native source picker replaces every modeled source family
+without filter side effects` exercises ellipse, spline, spline-points (control
+and fit representations), parabola, bounded hyperbola, line, arc, circle, and
+polyline replacement. It also verifies filtering alone leaves the existing
+definition unchanged, then exercises side and distance edits on each accepted
+kind. The complete `[gui][dialog][offsetcurve][source]` selection passes 3,194
+assertions across 6 cases. Existing source-selection tests cover selecting and
+highlighting the matched live source; parabola is recognized before the
+spline-points base class.
+
+Statically unrepresentable shapes such as degree-4 splines and unbounded
+hyperbolas are omitted because source capture fails, and empty buckets report
+“No supported source entities.” There is a narrower dynamic gap: a well-formed
+closed polyline can appear in the candidate list, but the joined worker may
+reject its result as not representable by the native editable cache. The
+transaction is atomic and leaves the existing definition unchanged, as tested
+by `Native source picker refuses unrepresentable source variants atomically`,
+but the candidate is not pre-disabled with that reason. Eligibility depends on
+generation/cache shape (and may depend on offset settings), so do not add a
+static family-wide exclusion. Either provide a correct preflight/disabled
+reason tied to the exact proposed settings, or retain explicit worker refusal
+with no publication and document the behavior before declaring this matrix
+closed.
+
 ### Completion criteria
 
 - A user can switch the requested source type before invoking entity selection;
@@ -17500,9 +17527,11 @@ implementation slice; do not claim completion from the picker inventory alone.
 - Every production-supported family/variant can be selected, highlighted when
   it is the current live source, replaced atomically, edited, and persisted;
   parabola identity survives independently of generic spline-points.
-- Unsupported or ambiguous variants are explicitly unavailable and cannot
-  leave a partially changed source/cache after selection, cancellation, or
-  worker failure.
+- Statically unsupported variants are omitted; dynamic worker/cache refusal is
+  surfaced for the attempted candidate and cannot leave a partially changed
+  source/cache after selection, cancellation, or worker failure. Before
+  completion, decide and test whether exact-settings preflight is required to
+  disable dynamic failures before selection.
 - Focused UI, worker, cache, and DXF/DWG persistence tests pass for every
   enabled family, and the plan records remaining exclusions rather than
   describing the widget's visible family list as complete support.
