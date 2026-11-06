@@ -24,7 +24,7 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
-Current status (W432; chronological evidence follows): implementation slices
+Current status (W433; chronological evidence follows): implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
 preview/commit, staged GUI drawing/template imports, bounded worker validation
@@ -16942,3 +16942,23 @@ conditioning envelope, non-axial OCS, mesh/polyface/3D legacy POLYLINE, broad
 distance/side eligibility, visible GUI acceptance, or cross-platform review
 gates. Push product and roadmap commits to PR #3193 and inspect exact-head
 checks.
+
+## 433. R2000 Polyline Topology Import Coverage (2026-11-06)
+
+Extended six real-file polyline cases to include AC1015/R2000 binary DXF and
+DWG alongside the existing R14 DXF and AC1032 DXF/DWG lanes. The cases cover
+signed-bulge source import, duplicate and repeated-vertex refusal, and the
+near-concentric arc/arc, near-tangent line/arc, and near-parallel line/line
+crossing regressions. Each file must import as ordinary geometry and preserve
+the expected typed-source admission/refusal result.
+
+The complete `[import-session][typed-source][polyline]` selection passes
+1,827 assertions/17 cases with all five applicable file lanes. CMake Release
+`librecad_tests` builds, `git diff --check` passes, and no production code
+changed. Test commit: `5b8e32a85` (`test(offset): cover R2000 polyline topology
+imports`).
+
+This adds R2000 evidence only for these six representative topology/source
+cases; it is not full historical-version coverage, complete OCS/legacy
+POLYLINE support, exhaustive source-variant distance/side admission, or GUI
+acceptance. Push the test and roadmap commits and inspect exact-head checks.
