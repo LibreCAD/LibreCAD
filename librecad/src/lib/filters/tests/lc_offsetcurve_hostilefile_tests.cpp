@@ -3001,6 +3001,10 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
       }
     }
 
+    const std::array<std::pair<const char *, double>, 2> closedNegativeBulges{{
+        {"negative-minor", -std::tan(M_PI / 8.0)},
+        {"negative-major", -2.0}}};
+    for (const auto &variant : closedNegativeBulges) {
     for (const auto &format : bulgeFormats) {
 #ifndef DWGSUPPORT
       if (format.dwg)
@@ -3008,9 +3012,10 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
 #endif
       DRW_LWPolyline fixture = bulged;
       fixture.flags = 1;
-      const double bulge = -std::tan(M_PI / 8.0);
+      const double bulge = variant.second;
       fixture.vertlist.front()->bulge = bulge;
-      const auto path = directory.file(std::string("closed-negative-") +
+      const auto path = directory.file(std::string("closed-") + variant.first +
+                                       "-" +
                                        format.suffix);
 #ifdef DWGSUPPORT
       if (format.dwg)
@@ -3054,6 +3059,7 @@ TEST_CASE("non-axial LWPOLYLINEs remain visible as marked XY projections",
                  samePoint(line->getEndpoint(), expected.second);
         }));
       }
+    }
     }
 
     for (const auto &format : bulgeFormats) {
