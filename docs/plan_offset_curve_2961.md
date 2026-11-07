@@ -22280,6 +22280,14 @@ is resolved and highlighted in the drawing. Parabola remains a distinct source
 choice ahead of its `LC_SplinePoints` base type. Do not add another selector or
 parabola-only branch.
 
+“All supported types” here means all nine modeled source families are available
+as choices while replacing a source; it does not mean every valid geometric
+variant is accepted by every offset, worker-cache, or persistence path. Variant
+eligibility and fail-closed behavior remain defined by W563a and the following
+matrix receipts. Changing the family filter is non-mutating; choosing a matching
+candidate performs the source replacement and retains the existing transaction,
+cancel, undo/redo, and highlight semantics.
+
 Evidence already recorded in W563a-W563j includes the nine-family typed
 replacement matrix, filter purity, parabola identity, source resolution and
 highlighting after reopen, eligibility variants, and five-format persistence.
