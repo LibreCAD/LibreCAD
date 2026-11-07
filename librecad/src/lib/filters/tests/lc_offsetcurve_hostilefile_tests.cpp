@@ -5735,11 +5735,15 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
 
+    const double scale = GENERATE(1e-3, 1.0, 1e3);
+    const double distanceFactor = GENERATE(0.0625, 0.125, 0.25);
+    CAPTURE(scale, distanceFactor);
     RS_Spline periodic{nullptr, RS_SplineData{1, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10},
                                    RS_Vector{60, 30}, RS_Vector{55, 45},
                                    RS_Vector{20, 50}, RS_Vector{-15, 25}})
-        periodic.addControlPoint(point);
+        periodic.addControlPoint({point.x * scale + 1000.0 * scale,
+                                  point.y * scale - 2000.0 * scale});
     periodic.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
     REQUIRE(periodic.validate());
     periodic.setClosed(true);
@@ -5763,7 +5767,7 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
                                        endJet));
     CHECK(startJet.point.distanceTo(endJet.point) < 1e-8);
     const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
-    const double magnitude = GENERATE(0.0625, 0.125, 0.25);
+    const double magnitude = distanceFactor * scale;
     const double signedDistance = side == LC_CurveOffsetSide::Left
         ? magnitude : -magnitude;
     CAPTURE(static_cast<int>(side), signedDistance);
@@ -5854,7 +5858,9 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
         raw.nfit = 0;
 
         const auto input = directory.file(
-            std::string(side == LC_CurveOffsetSide::Left ? "left-" : "right-") +
+            "scale-" + std::to_string(scale) + "-distance-" +
+            std::to_string(distanceFactor) +
+            (side == LC_CurveOffsetSide::Left ? "-left-" : "-right-") +
             fileFormat.suffix);
 #ifdef DWGSUPPORT
         if (fileFormat.dwg) {
