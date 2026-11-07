@@ -23953,3 +23953,29 @@ factors, and worker/cache paths. It does not establish staged-import or ODA
 round-trip behavior for the extreme weights, nor arbitrary periodic spline
 support. Exact-head CI, visible GUI acceptance, independent CAD geometry, and
 the remaining source-family/variant gates remain open.
+
+#### W563cg. Qualify a 10^12 Periodic Weight Ratio in the Worker (2026-11-07)
+
+Extended the periodic quadratic worker/cache matrix with the seven-control
+positive weight vector `{1e-6, 1e6, 1e-4, 1e4, 1e-2, 1e2, 1}`, matching the
+weight ratio exercised by the DWG spline-weight round-trip suite. The source
+passes spline validation, wrapped-control checks,
+and the periodic seam checks. Across all six signed distances, operation 7
+returns `UndefinedTangent`; the worker must return no ordinary partial
+geometry, leave the source unchanged, and preserve a valid request-bound
+encoded/decoded refusal reply. The test distinguishes this from the less
+conditioned stress case's `ToleranceNotMet`/`SingularOffset` refusals.
+
+The focused `[periodic][nonuniform]` worker case passes 1,604 assertions. The
+full `[lc-offsetcurve][worker-kernel][source-cache][spline-variant]`
+selection passes 71,688 assertions across six cases; the Release worker target
+builds and `git diff --check` passes. Test commit `b3e84a916`
+(`test(offset): cover conditioned periodic worker refusal`).
+
+This is fail-closed behavior evidence, not successful offset/cache support for
+the `1e12` ratio. The next spline investigation must determine whether
+`UndefinedTangent` is the appropriate tolerance-floor classification for this
+valid but highly conditioned source or an overly conservative refusal, using
+independent geometry/range evidence before changing kernel behavior. Staged
+offset-cache persistence for this ratio, other periodic layouts, visible GUI,
+external-CAD beyond ODA, and exact-head CI remain open.
