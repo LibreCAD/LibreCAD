@@ -23386,3 +23386,35 @@ tested 4/5/7/9/11-point layouts and split fractions. It does not establish
 round-trip of original fit-point authoring data, tangent-constrained or closed
 fit-point inputs, arbitrary cut locations, other source families, visible GUI
 acceptance, or exact-head CI; those remain open.
+
+#### W563bi. Preserve Wrapped Periodic RS_Spline Payloads (2026-11-07)
+
+Added a direct DXF/DWG round-trip for a weighted, nonuniform-knot
+`RS_SplineData::WrappedClosed` source. The initial external ODA check found a
+real writer defect: emitting the shortened (unwrapped) controls, weights, and
+knots beside closed+periodic flags caused ODA File Converter 27.1 to downgrade
+the spline to an open clamped curve, with `37.032260240179603` drawing units of
+sampled deviation. The writer now emits the complete wrapped control and weight
+tails and the full knot extension for `WrappedClosed` splines. The other
+`RS_Spline` representations retain the prior unwrapped serialization.
+
+The Release native matrix passes all six DWG versions plus DXF. It checks
+closed/rational flags, exact emitted wrapped controls and knots, successful
+reopen as a wrapped spline, and 2,001 sampled positions within `1e-9`; the
+focused case passes 267 assertions when external fixtures are not enabled. The
+broader `[dxf][dwg][filter][spline][roundtrip]` selection passes 5,652
+assertions across eight cases. ODA converted all six DWG fixtures to R2018 DXF
+with zero `.err` files; the opt-in geometry gate passes all six at `1e-5`, for
+303 total assertions including native checks. Fixture paths are
+`/private/tmp/offset-nonuniform-periodic-dwg` and
+`/private/tmp/offset-nonuniform-periodic-oda-full`; run the external gate with
+`LIBRECAD_TANGENT_SPLINE_DWG_DIR=/private/tmp/offset-nonuniform-periodic-dwg
+LIBRECAD_NONUNIFORM_PERIODIC_ODA_DXF_DIR=/private/tmp/offset-nonuniform-periodic-oda-full
+librecad_tests '[dxf][dwg][filter][spline][periodic][roundtrip]'`.
+Product/test commit `9d17def0b` (`fix(dwg): preserve wrapped periodic spline
+payloads`).
+
+This closes the tested rational nonuniform periodic `RS_Spline` layout only.
+Other periodic knot/weight patterns and counts, closed fit-point sources, cuts,
+visible-GUI acceptance, external CAD checks beyond ODA, and exact-head CI remain
+open.
