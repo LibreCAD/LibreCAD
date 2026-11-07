@@ -23855,3 +23855,26 @@ This checks ODA conversion and carrier values for the enumerated cache matrix,
 not full geometry comparison in another CAD kernel or all spline layouts and
 DWG versions. Independent CAD geometry, additional layouts/versions, visible
 GUI, exact-head CI, and remaining family-variant gates remain open.
+
+#### W563cc. Compare ODA-converted Wrapped Periodic Cache Geometry (2026-11-07)
+
+Strengthened W563cb's ODA gate by reconstructing the converted SPLINE as an
+`RS_Spline` and comparing 129 evaluated positions against the expected cache
+for each of the 192 DWG fixtures. The test also requires matching parameter
+domains and valid reconstructed curves. A strict model-scale-only tolerance
+initially exposed four R2000/R2018 degree-3 unit-weight cases at scale `1e3`
+and translation `(1e9, -2e9)`, with maximum sampled deviations around
+`1.07e-6` to `1.22e-6`. The accepted tolerance now adds an eight-epsilon term
+scaled by the largest control coordinate to the `1e-9` model-scale term,
+accounting for floating-point serialization at large translated coordinates.
+
+The native-plus-ODA focused case passes 173,186 assertions over the full
+matrix, including the sampled geometry comparisons. All 192 ODA-converted DXFs
+have zero `.err` files; the Release test target builds and `git diff --check`
+passes. Test commit `5e9d412a9`
+(`test(offset): compare ODA periodic spline geometry`).
+
+This is bounded geometry evidence for the recorded degree-2/3 layouts and
+format matrix, not equivalence across all CAD kernels or arbitrary spline
+layouts. Additional geometric variants, GUI acceptance, exact-head CI, and
+the remaining plan gates stay open.
