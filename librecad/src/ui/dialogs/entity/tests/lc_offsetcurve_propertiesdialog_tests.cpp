@@ -840,6 +840,10 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
     REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
     REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
+    for (std::size_t i = 0; i < LC_OffsetSourceGeometry::SupportedKinds.size(); ++i) {
+        CHECK(typeBox->itemData(static_cast<int>(i)).toInt() ==
+              static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds[i]));
+    }
 
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
