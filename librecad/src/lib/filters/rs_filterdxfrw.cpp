@@ -9265,16 +9265,52 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
   };
   const bool hasFitTangents = nonzeroTangent(data->tgStart) ||
                               nonzeroTangent(data->tgEnd);
+  const bool splineClosed = (data->flags & 0x1) != 0;
+  const bool splinePeriodic = (data->flags & 0x2) != 0;
+  size_t splineControlCount = data->controllist.size();
+  bool validPeriodicControlNet = !splinePeriodic;
+  if (splinePeriodic && splineClosed && data->degree == 2 &&
+      splineControlCount > 2 &&
+      data->knotslist.size() == splineControlCount + 3) {
+    validPeriodicControlNet = true;
+    const auto samePoint = [&](size_t a, size_t b) {
+      const auto& lhs = data->controllist[a];
+      const auto& rhs = data->controllist[b];
+      if (!lhs || !rhs) return false;
+      const double scale = std::max({1.0, std::abs(lhs->x), std::abs(lhs->y),
+                                     std::abs(rhs->x), std::abs(rhs->y)});
+      return std::hypot(lhs->x - rhs->x, lhs->y - rhs->y) <= 1.0e-12 * scale;
+    };
+    for (size_t i = 0; i < 2; ++i) {
+      validPeriodicControlNet = validPeriodicControlNet &&
+          samePoint(i, splineControlCount - 2 + i);
+    }
+    if (validPeriodicControlNet) {
+      const double knotStep = data->knotslist[1] - data->knotslist[0];
+      validPeriodicControlNet = std::isfinite(knotStep) && knotStep > 0.0;
+      for (size_t i = 1; validPeriodicControlNet &&
+                          i < data->knotslist.size(); ++i) {
+        const double step = data->knotslist[i] - data->knotslist[i - 1];
+        validPeriodicControlNet = std::isfinite(step) &&
+            std::abs(step - knotStep) <= 1.0e-12 * std::max(1.0, knotStep);
+      }
+    }
+    if (validPeriodicControlNet)
+      splineControlCount -= 2;
+  }
+  const bool validSplinePointsLayout = validPeriodicControlNet &&
+      (!splineClosed || splinePeriodic || data->controllist.empty());
   if (data->degree == 2 && !hasRationalSplineWeights(data) &&
+      validSplinePointsLayout &&
       (!hasFitTangents || data->controllist.empty())) {
-    bool closed = (data->flags & 0x1) == 0x1;
     bool controlOnly = data->nfit == 0;
 
-    const LC_SplinePointsData d(closed, controlOnly);
+    const LC_SplinePointsData d(splineClosed, controlOnly);
     const auto splinePoints = new LC_SplinePoints(m_currentContainer, d);
     applyImportedSplineAttributes(splinePoints, data, remaining);
 
-    for (const auto &vert : data->controllist) {
+    for (size_t i = 0; i < splineControlCount; ++i) {
+      const auto& vert = data->controllist[i];
       if (vert) {
         splinePoints->addControlPoint({vert->x, vert->y});
       }
@@ -32951,8 +32987,8 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     sp.tgStart = DRW_Coord{startTangent.x, startTangent.y, 0.0};
     sp.tgEnd = DRW_Coord{endTangent.x, endTangent.y, 0.0};
   } else {
-    sp.ncontrol = nCtrls;
-    sp.nknots = nCtrls + 3;
+    sp.ncontrol = nCtrls + (s->isClosed() ? 2 : 0);
+    sp.nknots = sp.ncontrol + 3;
     if (data.fitTangentsConstrained && !m_dwgW) {
       sp.nfit = static_cast<std::int32_t>(fitPoints.size());
       for (const RS_Vector &point : fitPoints)
@@ -32962,13 +32998,18 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
 
   // write spline knots:
   if (!writeFitScenario) {
-    for (int i = 1; i <= sp.nknots; i++) {
-      if (i <= 3) {
-        sp.knotslist.push_back(0.0);
-      } else if (i <= nCtrls) {
-        sp.knotslist.push_back((i - 3.0) / (nCtrls - 2.0));
-      } else {
-        sp.knotslist.push_back(1.0);
+    if (s->isClosed()) {
+      for (int i = 0; i < sp.nknots; ++i)
+        sp.knotslist.push_back(static_cast<double>(i));
+    } else {
+      for (int i = 1; i <= sp.nknots; i++) {
+        if (i <= 3) {
+          sp.knotslist.push_back(0.0);
+        } else if (i <= nCtrls) {
+          sp.knotslist.push_back((i - 3.0) / (nCtrls - 2.0));
+        } else {
+          sp.knotslist.push_back(1.0);
+        }
       }
     }
   }
@@ -32977,6 +33018,13 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
   if (!writeFitScenario) {
     for (auto const &v : cp) {
       sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+    }
+    if (s->isClosed()) {
+      for (size_t i = 0; i < 2; ++i) {
+        const RS_Vector& point = cp.at(i);
+        sp.controllist.push_back(
+            std::make_shared<DRW_Coord>(point.x, point.y));
+      }
     }
   }
 
