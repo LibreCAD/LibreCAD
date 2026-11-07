@@ -21886,6 +21886,47 @@ duplicate the widget or add a second type control. This milestone audits and
 closes the end-to-end behavior behind every advertised choice rather than
 equating selector presence with feature support.
 
+#### W563a. Current Code-Backed Family Baseline (2026-11-07)
+
+Re-audited the production source model and current Release regressions. The
+family selector and family identity order are present; specifically,
+`LC_Parabola` capture precedes `LC_SplinePoints` because the parabola is a
+subclass. The current code-backed admission boundaries are:
+
+| Family | Current source-model boundary |
+|---|---|
+| `RS_Ellipse` | Finite planar center/major axis, positive axis ratio, finite parameters; distinct ellipse identity is retained. |
+| `RS_Spline` | LibreCAD's entity implementation supports degree 1-3; control/knot cardinality and ordered finite knots must agree; optional weights must be finite and positive. Tangent constraints require the verified curve-consistent subset. Degree >3 is not currently representable by `RS_Spline` and is rejected. |
+| `LC_SplinePoints` | Active control- or fit-point data must have at least two finite planar points and positive finite fit tolerance. Tangent-constrained admission is limited by W562 to curve-consistent open, uncut fit-point mode. |
+| `LC_Parabola` | Valid three-point-derived parabola remains a distinct tagged source before the spline-points base check. |
+| Bounded `LC_Hyperbola` | Valid finite, non-degenerate parameter interval only; the source model rejects infinite forms and extreme bounds. |
+| `RS_Line` | Finite planar, nonzero endpoints. |
+| `RS_Arc` | Valid finite center/radius/angles with positive radius. |
+| `RS_Circle` | Valid finite center and positive radius. |
+| `RS_Polyline` | Finite, connected ordered line/arc segments with consistent open/closed endpoints; degenerate/repeated-vertex, self-intersecting, unsupported child and lossy projected-OCS cases are rejected. |
+
+This table is a current code boundary, not a claim that every valid instance
+has an exact single-cache offset for every distance. Multi-output and
+cache-unrepresentable outcomes remain ordinary fallback/refusal cases.
+
+Current Release requalification on the W562 product head: the nine-family
+Properties filter/replacement/edit/highlight test passes 2,765 assertions;
+the empty-bucket unsupported-variant test passes 321; atomic refusal passes
+256; all-family source snapshot/reconstruction passes 119; typed operation-7
+generation/transport passes 470 assertions over 15 representative geometries;
+and the real five-format typed-source save/reopen/second-save matrix passes
+6,180. The real DXF/DWG cache-carrier promotion matrix passes 71,091 assertions
+for its 20 documented conic/line fixtures. Spline, spline-points, and polyline
+operation-8 promotion are covered by their dedicated tangent, fit/control,
+parabola/hyperbola, and polyline import cases; these must continue to be
+tracked independently rather than inferred from the conic matrix.
+
+This closes the requested UI type-switch and representative nine-family
+selection/replacement behavior. It does not close exhaustive per-variant
+admission, all-output-cardinality combinations, all family/format imports, or
+visible GUI and independent-CAD acceptance. Keep W563 open until the remainder
+of the family/variant inventory below is qualified.
+
 Inventory candidates in the production drawing and check `capture`, family
 identity, variant eligibility, direct offset, worker generation, operation-8
 cache validation, replacement commit/undo, and supported DXF/DWG persistence
