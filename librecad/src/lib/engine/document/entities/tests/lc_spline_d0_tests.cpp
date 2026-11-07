@@ -199,6 +199,8 @@ TEST_CASE("Rational spline product bounds normalize conditioned active weights",
     REQUIRE(spline.tryBoundJet(a, b, bounds, true));
     REQUIRE(bounds.speedSquaredProduct.isValid());
     REQUIRE(bounds.crossProduct.isValid());
+    constexpr double signedDistance = 0.005;
+    const LC_Interval factor = bounds.offsetFactorNumerator(signedDistance);
     double maxSpeedSquared = 0.0;
     for (int i = 0; i <= 16; ++i) {
         const double t = a + (b - a) * i / 16.0;
@@ -209,7 +211,12 @@ TEST_CASE("Rational spline product bounds normalize conditioned active weights",
         const double rounding = 1e-10 * std::max(1.0, speedSquared);
         CHECK(bounds.speedSquared().lo() <= speedSquared + rounding);
         CHECK(bounds.speedSquared().hi() >= speedSquared - rounding);
-        CHECK(bounds.cross().contains(jet.first.x * jet.second.y - jet.first.y * jet.second.x));
+        const double cross = jet.first.x * jet.second.y - jet.first.y * jet.second.x;
+        CHECK(bounds.cross().contains(cross));
+        const double factorValue = speedSquared * std::sqrt(speedSquared) - signedDistance * cross;
+        const double factorRounding = 1e-10 * std::max(1.0, std::abs(factorValue));
+        CHECK(factor.lo() <= factorValue + factorRounding);
+        CHECK(factor.hi() >= factorValue - factorRounding);
     }
     CHECK(bounds.speedSquared().isPositive());
     CHECK(bounds.speedSquared().width() < maxSpeedSquared * 0.02);
