@@ -70,9 +70,10 @@ W562 admits and qualifies a curve-consistent tangent-constrained
 and AC1032 staged-import paths; W563az/W563ba structurally qualify
 tangent-constrained DWG fit-point chains of 3, 4, 5, 6, and 8 points, but
 W563bb's independent curve comparison found that structural acceptance does
-not establish geometry equivalence, so the constrained
-`LC_SplinePoints` DWG writer is changed to fail closed pending an exact
-encoding; remaining family/variant and acceptance work is open;
+not establish geometry equivalence; follow-up commit `3989d8512` instead writes
+the exact degree-2 control-net representation and verifies evaluated geometry,
+while fit-point/tangent authoring metadata is not retained; remaining
+family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
 must allow choosing a different source family before selecting a live entity,
@@ -23174,24 +23175,29 @@ geometry tests through those stages, and unsupported or lossy variants must
 be filtered or refused without changing the existing source/cache.
 
 New validation supersedes any interpretation of W563az/W563ba as proof of
-DWG curve equivalence. A temporary geometry comparison imported ODA-converted
-R2018 DXF and compared evaluated curves against the source
-`LC_SplinePoints`; the 3-point case showed maximum directed sampled deviation
-`0.05682145538738505` drawing units. ODA retained fit points/tangent state but
-rewrote the SPLINE as a cubic representation, so the prior independent-reader
-checks established structural/data retention only. The tangent-constrained
-`LC_SplinePoints` DWG scenario-2 writer now refuses this case rather than
-emitting a geometry-changing representation; the DXF path and the separate
-`RS_Spline` path are unchanged. Do not describe this fit-point writer as
-verified geometry-preserving support. Commit `9a4d38d4a` contains the guard
-and refusal-matrix test.
+DWG curve equivalence. Importing ODA-converted R2018 DXF and comparing
+evaluated curves against the source `LC_SplinePoints` showed maximum directed
+sampled deviation `0.05682145538738505` drawing units for the 3-point
+scenario-2 case. ODA retained fit points/tangent state but rewrote the SPLINE
+as a cubic representation; the earlier scenario-2 receipts therefore prove
+only structural/data retention. A temporary fail-closed guard was committed
+as `9a4d38d4a`, then superseded by `3989d8512`: constrained
+`LC_SplinePoints` now exports its degree-2 control net as scenario 1 with the
+clamped uniform knot vector already used for its quadratic B-spline segments.
+The DWG preserves evaluated shape, but does not preserve fit-point lists or
+the explicit fit-tangent authoring metadata. DXF and the separate `RS_Spline`
+path are unchanged.
 
-The refusal matrix passes 225 assertions across 3/4/5/6/8-point chains,
-both/start-only/end-only tangents, and all six DWG versions. The Release
-`librecad_tests` target builds; `[spline][LC_SplinePoints]` passes 615
-assertions in 10 cases, `[fit-points][roundtrip]` passes 1,780 assertions in
-7 cases, and `[dxf][filter][spline][fit-points]` passes 2,180 assertions in
-9 cases, including DXF and `RS_Spline` tangent-fit paths. `git diff --check`
-passes. Retain the explicit refusal unless a future encoding passes
-independent evaluated-geometry comparison. Visible-GUI and exact-head CI gates
-remain separate.
+Validation: the exact-source Release DWG matrix passes 29,313 assertions over
+3/4/5/6/8 fit points, both/start-only/end-only tangent constraints, and all
+six DWG versions; after reopen, each case checks scenario, degree, control
+points, loss of unsupported fit metadata, and 101 evaluated positions.
+LibreDWG 0.14 parses all 90 emitted files as degree-2 scenario-1 SPLINEs with
+control points and no fit points. ACadSharp accepts all 30 R2000/R2004 files
+with finite degree-2 control data. ODA File Converter could not be rerun in
+this environment because its macOS process aborts during pasteboard service
+initialization; no ODA claim is made for the control-net output. The earlier
+ODA geometry discrepancy is the evidence for avoiding scenario 2. Remaining
+work includes external evaluated-geometry comparison when ODA is runnable,
+visible-GUI and exact-head CI gates, and broader variants/families outside
+this tested matrix.
