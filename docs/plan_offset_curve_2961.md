@@ -46,8 +46,17 @@ W536 sign-reflected unequal-major-bulge qualification complete for its defined
 matrix;
 W537 source-picker constrained-fit eligibility correction complete;
 W538 explicit-control-net quadratic fit SPLINE import correction complete;
+W539 tangent-vector model and DXF preservation complete with fail-closed DWG
+export for constrained variants;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
+The latest source-picker clarification is incorporated: replacing a source
+must allow choosing a different source family before selecting a live entity,
+and the picker must cover every modeled offset-source family, including the
+distinct parabola type. This is already implemented at the UI-contract level;
+remaining work is end-to-end support for each advertised family and geometry
+variant, with unsupported variants excluded or refused without mutating the
+current source/cache. Do not add another selector or duplicate parabola UI.
 implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -21102,11 +21111,11 @@ case passes 109 assertions; `[spline][fit-points]` passes 1,347 assertions in
 8 cases; `[source][eligibility]` passes 577 assertions in 2 cases; and
 `git diff --check` passes. Product/test commit and plan receipt are pending.
 
-This is only an import-geometry correction. Current `RS_SplineData` stores a
-boolean rather than the actual endpoint vectors, so DXF/DWG export still loses
-those vectors, fit-point-only geometry remains approximate, and both
-tangent-constrained representations remain ineligible for editable offsets.
-Next, implement tangent support in compatibility-preserving slices:
+At the W538 checkpoint this was only an import-geometry correction:
+`RS_SplineData` stored a boolean rather than the actual endpoint vectors, so
+DXF/DWG export lost those vectors. Fit-point-only geometry remained
+approximate, and both tangent-constrained representations remained ineligible
+for editable offsets. The following compatibility-preserving work was queued:
 
 1. Store actual start/end vectors (including zero for an unconstrained end) in
    both spline data types; import and test them without inferring vectors from
@@ -21140,3 +21149,29 @@ Do not remove picker/worker refusals until these gates pass. “Tangent
 constrained” is not equivalent to “has a control net”: the model must prove
 that the live curve represented by the controls is the same curve whose
 fit-point/tangent semantics are exported and used for offsets.
+
+### W539 Completion Receipt
+
+Both `RS_SplineData` and `LC_SplinePointsData` now retain endpoint tangent
+vectors. Translation leaves them unchanged; rotation, scale, mirror, and shear
+transform them as directions; reversal swaps and negates the endpoint vectors;
+geometry edits that invalidate the constraints clear the vectors and marker.
+DXF import/export preserves tangent vectors and constrained explicit control
+nets. DWG export now fails explicitly for tangent-constrained variants rather
+than silently writing a control-net-only scenario that loses fit/tangent data.
+Those variants remain excluded from offset-source selection and worker/cache
+admission.
+
+Validation: Release `librecad_tests` build passes; `[spline][fit-points]`
+passes 1,134 assertions across 8 cases, including DXF round-trip and the DWG
+refusal checks; `[fit-tangents]` passes 15 assertions; `[source][eligibility]`
+passes 577 assertions across 2 cases; roadmap/refusal inventory passes 94/94
+tests with 93 obligations, zero pending declarations, and zero production
+mismatches; and `git diff --check` passes. Product commit `b967334c8`
+(`fix(spline): preserve fit tangent vectors`).
+
+Remaining: schema-3 typed-source persistence with schema-1/2 compatibility,
+tangent-constrained fit interpolation, standards-verified lossless DWG
+encoding, and only then worker/cache/picker enablement. The current DWG refusal
+is an intentional loss-prevention boundary, not DWG tangent support. Recheck
+the exact PR #3193 head after pushing this receipt.
