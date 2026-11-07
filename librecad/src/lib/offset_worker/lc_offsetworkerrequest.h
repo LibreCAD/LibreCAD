@@ -137,7 +137,9 @@ bool scanPreview(const QCborArray&);
  * No attributes, document identity, cache import or publication authority is transported.
  * Cutter [ordinal 0..4,record]; vector [x,y,z,valid]; pick [point,hint-or-null,seed-or-null].
  * Definition [basis,distance,towardCentre,cacheReversed,relTolerance].
- * Spline [controls,knots,weights,fit,degree,type,savedOpenType,savedOpenKnots,closed,periodic].
+ * Source-definition spline adds fitTolerance,fitTangentsConstrained,startTangent,endTangent
+ * to [controls,knots,weights,fit,degree,type,savedOpenType,savedOpenKnots,closed,periodic].
+ * Ordinary cache splines keep the ten-field form and never carry source metadata.
  * Arc/ellipse/circle and budget arrays follow their native data member order,
  * including rendering caches. Run [outputBudget,maxSamples,maxIntersectionPairs,check].
  * Record arrays have exact arity; collection arrays have bounded counts.

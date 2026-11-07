@@ -122,6 +122,8 @@ void same(const RS_SplineData& a, const RS_SplineData& b) {
     same(a.fitPoints, b.fitPoints); CHECK(a.degree == b.degree); CHECK(a.type == b.type);
     CHECK(a.savedOpenType == b.savedOpenType); same(a.savedOpenKnots, b.savedOpenKnots);
     CHECK(a.m_closedFlag == b.m_closedFlag); CHECK(a.m_periodicFlag == b.m_periodicFlag);
+    same(a.fitTolerance, b.fitTolerance); CHECK(a.fitTangentsConstrained == b.fitTangentsConstrained);
+    same(a.fitStartTangent, b.fitStartTangent); same(a.fitEndTangent, b.fitEndTangent);
 }
 void same(const LC_EllipseOffsetDefinition& a, const LC_EllipseOffsetDefinition& b) {
     same(a.basis, b.basis); same(a.distance, b.distance); same(a.relTolerance, b.relTolerance);
@@ -359,7 +361,7 @@ TEST_CASE("offset worker request has exact version two positional shapes",
           "[lc-offsetcurve][worker-protocol][request]") {
     for (const auto& value : fixtures()) {
         const auto root = encoded(value);
-        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 5);
+        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 6);
         CHECK_FALSE(request::decode(changed(root, {0}, 4)));
         const auto t = root.at(1).toArray();
         REQUIRE(t.size() == 4); CHECK(t.at(0).toInteger() == value.token.requestId);
@@ -776,11 +778,16 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     splineData.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
     splineData.knotslist = {0, 0, 0, 1, 1, 1};
     splineData.weights = {1, .7, 1};
+    splineData.fitTangentsConstrained = true;
+    splineData.fitStartTangent = point(1, 2);
+    splineData.fitEndTangent = point(-2, 1);
     LC_SplinePointsData pointsData{false, false};
     pointsData.useControlPoints = true;
     pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
     pointsData.fitTangentsConstrained = true;
     pointsData.fitTolerance = 1e-10;
+    pointsData.fitStartTangent = point(1, 2);
+    pointsData.fitEndTangent = point(-2, 1);
     const std::array<LC_OffsetSourceGeometry, 10> sources{
         LC_OffsetSourceGeometry{ellipse()},
         LC_OffsetSourceGeometry{splineData},
@@ -797,6 +804,7 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
              RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}}
     };
     for (std::size_t i = 0; i < sources.size(); ++i) {
+        CAPTURE(i);
         const auto encodedSource = values::encodeSourceGeometry(sources[i]);
         REQUIRE(encodedSource);
         CHECK(encodedSource->at(0).toInteger() == static_cast<qint64>(sources[i].kind()));
@@ -807,10 +815,40 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
             const auto& decodedPoints = std::get<LC_SplinePointsData>(decodedSource->value);
             CHECK(decodedPoints.fitTangentsConstrained);
             CHECK(decodedPoints.fitTolerance == 1e-10);
+            same(decodedPoints.fitStartTangent, pointsData.fitStartTangent);
+            same(decodedPoints.fitEndTangent, pointsData.fitEndTangent);
+        } else if (i == 1) {
+            const auto& decodedSpline = std::get<RS_SplineData>(decodedSource->value);
+            CHECK(decodedSpline.fitTangentsConstrained);
+            CHECK(decodedSpline.fitTolerance == splineData.fitTolerance);
+            same(decodedSpline.fitStartTangent, splineData.fitStartTangent);
+            same(decodedSpline.fitEndTangent, splineData.fitEndTangent);
         }
         const auto reencodedSource = values::encodeSourceGeometry(*decodedSource);
         REQUIRE(reencodedSource);
         CHECK(QCborValue(*encodedSource).toCbor() == QCborValue(*reencodedSource).toCbor());
+        if (i == 1 || i == 2) {
+            auto changedTangent = sources[i];
+            std::visit([](auto& data) {
+                using T = std::decay_t<decltype(data)>;
+                if constexpr (std::is_same_v<T, RS_SplineData> || std::is_same_v<T, LC_SplinePointsData>)
+                    data.fitStartTangent.x += 0.125;
+            }, changedTangent.value);
+            const auto changedEncoding = values::encodeSourceGeometry(changedTangent);
+            REQUIRE(changedEncoding);
+            CHECK(QCborValue(*encodedSource).toCbor() != QCborValue(*changedEncoding).toCbor());
+            const LC_OffsetSourceDefinition definition{sources[i], -.75, .00025, true};
+            const LC_OffsetSourceDefinition changedDefinition{changedTangent, -.75, .00025, true};
+            CHECK(values::encodeSourceDefinition(definition) != values::encodeSourceDefinition(changedDefinition));
+            if (i == 1) {
+                const auto cacheEncoding = values::encodeCache(std::get<RS_SplineData>(sources[i].value));
+                const auto changedCacheEncoding = values::encodeCache(std::get<RS_SplineData>(changedTangent.value));
+                REQUIRE(cacheEncoding);
+                REQUIRE(changedCacheEncoding);
+                CHECK(cacheEncoding->size() == 10);
+                CHECK(*cacheEncoding == *changedCacheEncoding);
+            }
+        }
 
         const LC_OffsetSourceDefinition definition{sources[i], -.75, .00025, true};
         const auto encodedDefinition = values::encodeSourceDefinition(definition);
@@ -826,8 +864,7 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
 
     auto legacyPoints = *values::encodeSourceGeometry(sources[2]);
     auto legacyFields = legacyPoints.at(1).toArray();
-    legacyFields.removeAt(6);
-    legacyFields.removeAt(5);
+    while (legacyFields.size() > 5) legacyFields.removeAt(legacyFields.size() - 1);
     legacyPoints[1] = legacyFields;
     const auto decodedLegacyPoints = values::decodeSourceGeometry(legacyPoints);
     REQUIRE(decodedLegacyPoints);
@@ -851,6 +888,13 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     auto invalidFitMetadata = sources[2];
     std::get<LC_SplinePointsData>(invalidFitMetadata.value).fitTolerance = 0.0;
     CHECK_FALSE(values::encodeSourceGeometry(invalidFitMetadata));
+    auto invalidTangent = sources[1];
+    std::get<RS_SplineData>(invalidTangent.value).fitStartTangent.z = 1.0;
+    CHECK_FALSE(values::encodeSourceGeometry(invalidTangent));
+    invalidTangent = sources[2];
+    std::get<LC_SplinePointsData>(invalidTangent.value).fitEndTangent.x =
+        std::numeric_limits<double>::infinity();
+    CHECK_FALSE(values::encodeSourceGeometry(invalidTangent));
     const auto validFitSource = values::encodeSourceGeometry(sources[2]);
     REQUIRE(validFitSource);
     CHECK_FALSE(values::decodeSourceGeometry(changed(*validFitSource, {1, 6}, -1.0)));
@@ -970,7 +1014,7 @@ TEST_CASE("Produce requests freeze protocol five raw sources context bounds and 
     op.fallback = point(8, 9); op.distance = -.125; op.copies = 100; op.asOffsetCurve = true;
     const request::Request input{{71, 73, 79, 83}, op};
     const auto wire = request::encode(input); REQUIRE(wire);
-    CHECK(wire->at(0).toInteger() == 5); CHECK(wire->at(2).toInteger() == 5);
+    CHECK(wire->at(0).toInteger() == 6); CHECK(wire->at(2).toInteger() == 5);
     REQUIRE(wire->at(3).toArray().size() == 10);
     const auto decoded = request::decode(*wire); REQUIRE(decoded);
     CHECK(request::encode(*decoded) == wire); same(input, *decoded);
@@ -1028,7 +1072,7 @@ TEST_CASE("Cached Produce appends operation six with owned bounded ordinary prev
     op.cache.entries.push_back(entry);
     const request::Request input{token(), op};
     const auto wire = request::encode(input); REQUIRE(wire);
-    CHECK(wire->at(0).toInteger() == 5); CHECK(wire->at(2).toInteger() == 6);
+    CHECK(wire->at(0).toInteger() == 6); CHECK(wire->at(2).toInteger() == 6);
     REQUIRE(wire->at(3).toArray().size() == 2);
     CHECK(at(*wire, {3, 0}).toArray().size() == 10);
     CHECK(at(*wire, {3, 1}).toArray().size() == 4);

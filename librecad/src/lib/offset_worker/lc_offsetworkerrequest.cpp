@@ -172,26 +172,46 @@ bool readNumbers(const QCborArray& a, std::vector<double>& out) {
     for (const auto& item : a) { number(item, value); out.push_back(value); }
     return true;
 }
-bool read(const QCborValue& value, RS_SplineData& d) {
+bool readSpline(const QCborValue& value, RS_SplineData& d, const bool withSourceMetadata) {
     QCborArray a, controls, knots, weights, fit, saved;
     // Admit ALL five counts before reserving any native array.
-    return array(value, 10, a) && boundedArray(a.at(0), ControlCap, controls) &&
-        boundedArray(a.at(1), KnotCap, knots) && boundedArray(a.at(2), ControlCap, weights) &&
-        boundedArray(a.at(3), FitCap, fit) && boundedArray(a.at(7), KnotCap, saved) &&
-        count(a.at(4), std::numeric_limits<std::size_t>::max(), d.degree) &&
-        splineType(a.at(5), d.type) && splineType(a.at(6), d.savedOpenType) &&
-        boolean(a.at(8), d.m_closedFlag) && boolean(a.at(9), d.m_periodicFlag) &&
-        readPoints(controls, d.controlPoints) && readNumbers(knots, d.knotslist) &&
-        readNumbers(weights, d.weights) && readPoints(fit, d.fitPoints) &&
-        readNumbers(saved, d.savedOpenKnots);
+    if (!array(value, withSourceMetadata ? 14 : 10, a) || !boundedArray(a.at(0), ControlCap, controls) ||
+        !boundedArray(a.at(1), KnotCap, knots) || !boundedArray(a.at(2), ControlCap, weights) ||
+        !boundedArray(a.at(3), FitCap, fit) || !boundedArray(a.at(7), KnotCap, saved)) return false;
+    if (!count(a.at(4), std::numeric_limits<std::size_t>::max(), d.degree) ||
+        !splineType(a.at(5), d.type) || !splineType(a.at(6), d.savedOpenType) ||
+        !boolean(a.at(8), d.m_closedFlag) || !boolean(a.at(9), d.m_periodicFlag) ||
+        !readPoints(controls, d.controlPoints) || !readNumbers(knots, d.knotslist) ||
+        !readNumbers(weights, d.weights) || !readPoints(fit, d.fitPoints) ||
+        !readNumbers(saved, d.savedOpenKnots)) return false;
+    return !withSourceMetadata ||
+        (number(a.at(10), d.fitTolerance) && boolean(a.at(11), d.fitTangentsConstrained) &&
+         read(a.at(12), d.fitStartTangent) && read(a.at(13), d.fitEndTangent));
 }
-bool valid(const LC_OffsetSourceGeometry& source) { return source.isWellFormed(); }
+bool read(const QCborValue& value, RS_SplineData& d) {
+    return readSpline(value, d, false);
+}
+bool readSourceSpline(const QCborValue& value, RS_SplineData& d) {
+    return readSpline(value, d, true);
+}
+bool valid(const LC_OffsetSourceGeometry& source) {
+    if (!source.isWellFormed()) return false;
+    return std::visit([](const auto& data) {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_SplineData>)
+            return std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0 &&
+                valid(data.fitStartTangent) && valid(data.fitEndTangent);
+        if constexpr (std::is_same_v<T, LC_SplinePointsData>)
+            return valid(data.fitStartTangent) && valid(data.fitEndTangent);
+        return true;
+    }, source.value);
+}
 bool valid(const LC_OffsetSourceDefinition& definition) { return definition.isWellFormed(); }
 bool read(const QCborValue& value, LC_SplinePointsData& data) {
     QCborArray a, splinePoints, controlPoints;
     if (!value.isArray()) return false;
     a = value.toArray();
-    if ((a.size() != 5 && a.size() != 7) || !boolean(a.at(0), data.closed) ||
+    if ((a.size() != 5 && a.size() != 7 && a.size() != 9) || !boolean(a.at(0), data.closed) ||
         !boolean(a.at(1), data.cut) || !boolean(a.at(2), data.useControlPoints) ||
         !boundedArray(a.at(3), ControlCap, splinePoints) ||
         !boundedArray(a.at(4), ControlCap, controlPoints) ||
@@ -199,6 +219,9 @@ bool read(const QCborValue& value, LC_SplinePointsData& data) {
         !readPoints(controlPoints, data.controlPoints)) return false;
     if (a.size() == 7 && (!boolean(a.at(5), data.fitTangentsConstrained) ||
                           !number(a.at(6), data.fitTolerance))) return false;
+    if (a.size() == 9 && (!boolean(a.at(5), data.fitTangentsConstrained) ||
+                          !number(a.at(6), data.fitTolerance) ||
+                          !read(a.at(7), data.fitStartTangent) || !read(a.at(8), data.fitEndTangent))) return false;
     return true;
 }
 bool read(const QCborValue& value, LC_ParabolaData& data) {
@@ -221,7 +244,7 @@ bool read(const QCborValue& value, LC_OffsetSourceGeometry& source) {
     if (!array(value, 2, a) || !integer(a.at(0), tag)) return false;
     switch (tag) {
     case 0: { RS_EllipseData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
-    case 1: { RS_SplineData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
+    case 1: { RS_SplineData data; if (!readSourceSpline(a.at(1), data)) return false; source.value = std::move(data); break; }
     case 2: { LC_SplinePointsData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     case 3: { LC_ParabolaData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     case 4: { LC_HyperbolaData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
@@ -587,7 +610,7 @@ QCborArray fields(const RS_SplineData& d) {
 }
 QCborArray fields(const LC_SplinePointsData& d) {
     return {d.closed, d.cut, d.useControlPoints, fields(d.splinePoints), fields(d.controlPoints),
-        d.fitTangentsConstrained, d.fitTolerance};
+        d.fitTangentsConstrained, d.fitTolerance, fields(d.fitStartTangent), fields(d.fitEndTangent)};
 }
 QCborArray fields(const LC_ParabolaData& d) {
     QCborArray points;
@@ -598,7 +621,18 @@ QCborArray fields(const LC_HyperbolaData& d) {
     return {fields(d.center), fields(d.majorP), d.ratio, d.angle1, d.angle2, d.reversed};
 }
 QCborArray fields(const LC_OffsetSourceGeometry& source) {
-    return {qint64(source.kind()), std::visit([](const auto& data) { return fields(data); }, source.value)};
+    return {qint64(source.kind()), std::visit([](const auto& data) -> QCborArray {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_SplineData>) {
+            auto a = fields(data);
+            a.append(data.fitTolerance);
+            a.append(data.fitTangentsConstrained);
+            a.append(fields(data.fitStartTangent));
+            a.append(fields(data.fitEndTangent));
+            return a;
+        }
+        return fields(data);
+    }, source.value)};
 }
 QCborArray fields(const LC_OffsetSourceDefinition& definition) {
     return {fields(definition.source), definition.signedDistance, definition.relativeTolerance,
@@ -759,14 +793,14 @@ std::optional<QCborArray> encode(const Request& request) {
     // No CBOR arrays are populated until the entire caller-owned value is admitted.
     if (!admitted(request)) return std::nullopt;
     const auto& t = request.token;
-    return QCborArray{5, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{6, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(request.operation.index()), std::visit([](const auto& op) { return fields(op); }, request.operation)};
 }
 
 std::optional<Request> decode(const QCborArray& a) {
     qint64 version, tag;
     Token token;
-    if (a.size() != 4 || !integer(a.at(0), version) || version != 5 ||
+    if (a.size() != 4 || !integer(a.at(0), version) || version != 6 ||
         !read(a.at(1), token) || !integer(a.at(2), tag) || !a.at(3).isArray()) return std::nullopt;
     const auto body = a.at(3).toArray();
     switch (tag) {

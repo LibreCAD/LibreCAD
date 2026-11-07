@@ -89,7 +89,7 @@ public:
     }
 
     Completion exchange(const QByteArray& input,
-                        const QStringList& arguments = {QStringLiteral("--protocol=5")},
+                        const QStringList& arguments = {QStringLiteral("--protocol=6")},
                         bool partial = false) {
         REQUIRE(input.size() <= InputCap);
         ScopedProcess child;
@@ -148,7 +148,7 @@ public:
         REQUIRE(fields);
         const auto input = Wire::encode(*fields);
         REQUIRE_FALSE(input.isEmpty());
-        const auto completed = exchange(input, {QStringLiteral("--protocol=5")}, partial);
+        const auto completed = exchange(input, {QStringLiteral("--protocol=6")}, partial);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
         REQUIRE(completed.status == QProcess::NormalExit);
         REQUIRE(completed.code == 0);
@@ -171,7 +171,7 @@ public:
     }
 
     void reject(const QByteArray& input,
-                const QStringList& arguments = {QStringLiteral("--protocol=5")}) {
+                const QStringList& arguments = {QStringLiteral("--protocol=6")}) {
         INFO("rejected bytes=" << input.size() << " arguments=" << arguments.join(' ').toStdString());
         const auto completed = exchange(input, arguments);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
@@ -534,7 +534,8 @@ TEST_CASE("Built native offset helper qualifies computations and one-request pro
         helper.reject(frame, {QStringLiteral("--protocol=2")});
         helper.reject(frame, {QStringLiteral("--protocol=3")});
         helper.reject(frame, {QStringLiteral("--protocol=4")});
-        helper.reject({}, {QStringLiteral("--protocol=5"), QStringLiteral("extra")});
+        helper.reject(frame, {QStringLiteral("--protocol=5")});
+        helper.reject({}, {QStringLiteral("--protocol=6"), QStringLiteral("extra")});
     }
 }
 

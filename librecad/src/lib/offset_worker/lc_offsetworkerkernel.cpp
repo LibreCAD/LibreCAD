@@ -40,7 +40,7 @@ result::Curve value(const LC_OffsetCurve& curve) {
 bool ordinarySpline(const RS_SplineData& data) {
     const auto degree = data.degree;
     const auto controls = data.controlPoints.size();
-    if ((degree != 1 && degree != 3) || controls < degree + 1 || controls > 16384 ||
+    if (data.fitTangentsConstrained || (degree != 1 && degree != 3) || controls < degree + 1 || controls > 16384 ||
         (controls - 1) % degree || data.knotslist.size() != controls + degree + 1 ||
         data.weights.size() != controls || data.type != RS_SplineData::SplineType::ClampedOpen ||
         data.savedOpenType != data.type || !data.fitPoints.empty() || !data.savedOpenKnots.empty()) return false;
