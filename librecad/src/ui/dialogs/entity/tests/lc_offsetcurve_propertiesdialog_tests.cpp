@@ -798,6 +798,25 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
         before.geometry(*clone);
         CHECK_FALSE(widget.isPreparing());
 
+        std::size_t matchingFamilyCount = 0;
+        for (const auto& candidate : sources)
+            if (candidate.kind() == kind) ++matchingFamilyCount;
+        std::size_t candidateCount = 0;
+        for (int j = 0; j < sourceBox->count(); ++j) {
+            bool hasCandidateId = false;
+            const auto candidateId = sourceBox->itemData(j).toULongLong(&hasCandidateId);
+            if (!hasCandidateId) continue;
+            std::size_t candidateIndex = sourceIds.size();
+            for (std::size_t k = 0; k < sourceIds.size(); ++k)
+                if (sourceIds[k] == candidateId) candidateIndex = k;
+            REQUIRE(candidateIndex < sourceIds.size());
+            const auto candidateGeometry = LC_OffsetSourceGeometry::capture(*sourceEntities[candidateIndex]);
+            REQUIRE(candidateGeometry);
+            CHECK(candidateGeometry->kind() == kind);
+            ++candidateCount;
+        }
+        CHECK(candidateCount == matchingFamilyCount);
+
         int entityIndex = -1;
         for (int j = 0; j < sourceBox->count(); ++j) {
             if (sourceBox->itemData(j).toULongLong() == sourceIds[i]) entityIndex = j;
