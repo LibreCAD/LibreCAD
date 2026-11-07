@@ -21495,6 +21495,7 @@ eligibility, and standards-verified DWG representation remain open. Keep
 constrained variants refused for generation/cache promotion and keep DWG
 writing fail-closed until those independent gates pass.
 
+
 ### W550. Reject Conflicting Schema-3 Tangent Copies (2026-11-06)
 
 Added hostile-input coverage that edits only the tangent vectors embedded in
@@ -21527,18 +21528,24 @@ cover translated tangent xdata`). This qualifies only the tested
 conditioning, exact control-net/fit/tangent consistency, worker/cache
 eligibility, and DWG representation remain open.
 
-### W550. Reject Conflicting Schema-3 Tangent Copies (2026-11-06)
+### W552. Recenter Tangent Fit-Point Interpolation (2026-11-06)
 
-Added hostile-input coverage that edits only the tangent vectors embedded in
-the protocol-6 source-definition array while leaving the schema-3 tangent
-envelope unchanged. Both the explicit-control-net `RS_Spline` and
-spline-points source forms are exercised through DXF XDATA and EED encoding.
-The parser must reject each conflict as invalid; it must not accept one copy
-as authoritative. This protects the consistency rule implemented in W549.
+The expanded conditioning matrix exposed loss of endpoint direction when the
+cubic fit-point solver assembled its control net and linear system directly at
+large drawing coordinates. The interpolator now subtracts the first fit point
+before forming fixed controls and solving the fit equations, then restores the
+origin only after every solved control is finite. This preserves failure
+atomicity. The short-span matrix covers `1e-4`, `1e-6`, and `1e-8` first spans
+at local and `(1e8, -1e8)` origins. Endpoint direction error is bounded using
+the coordinate ULP relative to the stored tangent-handle length, rather than
+claiming precision that the world-coordinate representation cannot provide.
 
-Validation: Release `librecad_tests` builds; `[schema3][hostile]` passes 30
-assertions; `[offset-xdata]` passes 334,042 assertions across 58 cases; and
-`git diff --check` passes. Test commit `dbf4ae235` (`test(offset): reject
-conflicting tangent xdata`). This closes only duplicated-metadata conflict
-refusal. Broader source/cache identity, exact control-net/fit/tangent
-consistency, worker/cache eligibility, and DWG representation remain open.
+Validation: Release `librecad_tests` builds; `[conditioning][matrix]` passes
+66 assertions; `[fitpoints][tangents]` passes 159 assertions across six cases;
+`[RS_Spline]` passes 571 assertions across 21 cases; `[dxf][spline]` passes
+3,464 assertions across 26 cases; and `git diff --check` passes. Product commit
+`8edc71024` (`fix(spline): recenter tangent interpolation`). This qualifies
+only the tested short-span/origin grid; more extreme and degenerate
+parameterization, explicit control-net/fit/tangent consistency, tangent-aware
+worker/cache eligibility, and standards-verified DWG representation remain
+open.
