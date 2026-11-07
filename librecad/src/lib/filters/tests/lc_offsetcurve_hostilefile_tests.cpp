@@ -5370,15 +5370,17 @@ TEST_CASE("tangent-constrained spline sources promote through operation-8 valida
     REQUIRE(sourceSpline.fitTangentsMatchCurve());
 
     const auto importVariant = [&](const LC_OffsetSourceGeometry& sourceGeometry,
-                                   const std::string& variantName) {
+                                   const std::string& variantName,
+                                   const LC_CurveOffsetSide side) {
+    const double signedDistance = side == LC_CurveOffsetSide::Left ? .05 : -.05;
     const LC_OffsetSourceDefinition definition{
-        sourceGeometry, .05, 1e-4, false};
+        sourceGeometry, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
     const auto options = LC_OffsetWorkerTolerance::directOptions(
-        *source, .05, definition.relativeTolerance).value();
+        *source, std::abs(signedDistance), definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(*source,
-        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .05), options,
+        LC_CurveOffset::makeSideRequest(side, std::abs(signedDistance)), options,
         LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
     auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
@@ -5438,7 +5440,8 @@ TEST_CASE("tangent-constrained spline sources promote through operation-8 valida
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(variantName + "-" + suffix +
+        const auto input = directory.file(variantName +
+            (side == LC_CurveOffsetSide::Left ? "-left-" : "-right-") + suffix +
             (dwg ? ".dwg" : ".dxf"));
 #ifdef DWGSUPPORT
         if (dwg) f::dwgFile(input, cache, version);
@@ -5486,7 +5489,12 @@ TEST_CASE("tangent-constrained spline sources promote through operation-8 valida
         }
     }
     };
-    importVariant(LC_OffsetSourceGeometry{splineData}, "cubic");
+    const auto forBothSides = [&](const LC_OffsetSourceGeometry& geometry,
+                                  const std::string& name) {
+        for (const auto side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right})
+            importVariant(geometry, name, side);
+    };
+    forBothSides(LC_OffsetSourceGeometry{splineData}, "cubic");
 
     RS_SplineData quadraticData{2, false};
     quadraticData.controlPoints = {{0, 0}, {2, 3}, {5, 0}};
@@ -5506,7 +5514,7 @@ TEST_CASE("tangent-constrained spline sources promote through operation-8 valida
     }
     RS_Spline quadraticSpline{nullptr, quadraticData};
     REQUIRE(quadraticSpline.fitTangentsMatchCurve());
-    importVariant(LC_OffsetSourceGeometry{quadraticData}, "quadratic");
+    forBothSides(LC_OffsetSourceGeometry{quadraticData}, "quadratic");
 
     RS_SplineData linearData{1, false};
     linearData.controlPoints = {{0, 0}, {4, 0}};
@@ -5519,14 +5527,14 @@ TEST_CASE("tangent-constrained spline sources promote through operation-8 valida
     linearData.fitEndTangent = {2, 0};
     RS_Spline linearSpline{nullptr, linearData};
     REQUIRE(linearSpline.fitTangentsMatchCurve());
-    importVariant(LC_OffsetSourceGeometry{linearData}, "linear");
+    forBothSides(LC_OffsetSourceGeometry{linearData}, "linear");
 
     RS_SplineData oneEndedLinearData = linearData;
     oneEndedLinearData.fitEndTangent = {0, 0};
     RS_Spline oneEndedLinearSpline{nullptr, oneEndedLinearData};
     REQUIRE(oneEndedLinearSpline.fitTangentsMatchCurve());
-    importVariant(LC_OffsetSourceGeometry{oneEndedLinearData},
-                  "linear-one-ended");
+    forBothSides(LC_OffsetSourceGeometry{oneEndedLinearData},
+                 "linear-one-ended");
 
     LC_SplinePointsData tangentPointsData{false, false};
     tangentPointsData.splinePoints = {
@@ -5545,8 +5553,7 @@ TEST_CASE("tangent-constrained spline sources promote through operation-8 valida
     tangentPoints.getData().fitEndTangent = pointsEnd.first;
     tangentPointsData = tangentPoints.getData();
     REQUIRE(tangentPoints.fitTangentsMatchCurve());
-    importVariant(LC_OffsetSourceGeometry{tangentPointsData},
-                  "spline-points");
+    forBothSides(LC_OffsetSourceGeometry{tangentPointsData}, "spline-points");
 }
 
 TEST_CASE("wrapped periodic spline source imports through operation-8 validation in DXF and DWG",
