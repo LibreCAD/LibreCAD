@@ -22661,3 +22661,30 @@ topology sides`). This qualifies only the recorded rational knot/control
 layout and distance in these five file lanes. Other rational layouts,
 distance/scale/transform neighborhoods, external-CAD review, visible-GUI
 acceptance, and exact-head CI remain open.
+
+#### W563af. Independently Decode Rational-spline and Hyperbola DWG Carriers (2026-11-07)
+
+Added opt-in preservation using `LIBRECAD_TYPED_SOURCE_DWG_DIR` to the both-side
+rational multi-branch and hyperbola topology import tests. The default tests
+remain hermetic; with the variable set, the focused rebuilt Release tests pass
+2,538 assertions and preserve eight DWGs: left/right cases in R2000 and R2018
+for each family.
+
+LibreDWG `dwgread -O DXF` successfully decoded all eight files. ODA File
+Converter 27.1 converted all eight to R2018 DXF. Pair-wise group-code
+inspection confirms exactly one SPLINE per converted carrier and one each of
+the `LibreCad` APPID and `LC_OFFSET_CURVE` marker in every file. This adds
+independent-reader evidence for these rational/hyperbola cache carriers and
+preserved metadata, not full semantic source reconstruction, geometry-fidelity
+comparison, or validation by every CAD implementation. The outputs and logs
+are local under `/private/tmp/PR3193-rational-hyperbola-dwg` and
+`/private/tmp/PR3193-rational-hyperbola-oda`.
+
+The rebuilt broad `[lc-offsetcurve][typed-source]` selection was also
+re-attempted but intentionally interrupted after exceeding the known
+multi-minute gate: 25 cases and 3,130,388 assertions had passed when SIGINT
+stopped case 26 at a separate scale/translation matrix. This is partial
+execution evidence only and is not counted as a union pass. Product commits
+`e23aa6b52` and `c52a3038c` cover the both-side rational import behavior and
+the opt-in DWG preservation hook respectively. Exact-head CI and the remaining
+visible-GUI and external-CAD acceptance gates remain open.
