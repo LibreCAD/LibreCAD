@@ -101,11 +101,11 @@ QString entryKey(const QString& context, const QString& source) {
     return context + QChar(0x1f) + source;
 }
 
-// True when the catalog's <TS> element names a target language. lupdate leaves a
-// catalog without one alone ("won't be updated: it does not specify any target
+// True when the catalog is in the current format (<TS version="2.1">). lupdate leaves
+// the old-format catalogs alone ("won't be updated: it does not specify any target
 // languages"); the regional Spanish catalogs (librecad_es_bo.ts and the like) are
-// such old-format files, so no refresh can reach them.
-bool hasTargetLanguage(const QString& name) {
+// such version 2.0 files, so no refresh can reach them.
+bool isCurrentFormat(const QString& name) {
     QFile file(sourceTreePath(QStringLiteral("librecad/ts/") + name));
     if (!file.open(QIODevice::ReadOnly)) {
         return false;
@@ -114,16 +114,15 @@ bool hasTargetLanguage(const QString& name) {
     while (!xml.atEnd()) {
         xml.readNext();
         if (xml.isStartElement()) {
-            return xml.name() == u"TS" && !xml.attributes().value(QStringLiteral("language")).isEmpty();
+            return xml.name() == u"TS" && xml.attributes().value(QStringLiteral("version")) == u"2.1";
         }
     }
     return false;
 }
 
-// The catalogs that `lupdate` keeps up to date: the files TRANSLATIONS lists in
-// librecad/src/src.pro that name a target language, as names relative to the
+// The catalogs librecad/src/src.pro lists in TRANSLATIONS, as names relative to the
 // librecad/ts directory.
-QStringList maintainedCatalogs() {
+QStringList listedCatalogs() {
     QFile pro(sourceTreePath(QStringLiteral("librecad/src/src.pro")));
     if (!pro.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return {};
@@ -142,12 +141,20 @@ QStringList maintainedCatalogs() {
         if (!match.hasMatch()) {
             break;
         }
-        const bool last = match.captured(2).isEmpty();
-        if (hasTargetLanguage(match.captured(1))) {
-            names << match.captured(1);
-        }
-        if (last) {
+        names << match.captured(1);
+        if (match.captured(2).isEmpty()) {
             break;
+        }
+    }
+    return names;
+}
+
+// The listed catalogs that `lupdate` keeps up to date: the ones in the current format.
+QStringList maintainedCatalogs() {
+    QStringList names;
+    for (const QString& name : listedCatalogs()) {
+        if (isCurrentFormat(name)) {
+            names << name;
         }
     }
     return names;
@@ -236,14 +243,27 @@ TEST_CASE("The strings of issue 3235 are in the program", "[translation][catalog
 }
 
 TEST_CASE("The maintained catalogs are found", "[translation][catalog]") {
-    const QStringList names = maintainedCatalogs();
+    const QStringList listed = listedCatalogs();
 
-    // 49 catalogs when this test was written; a drop means src.pro changed shape and
-    // the next test would pass for want of catalogs to check.
-    REQUIRE(names.size() >= 40);
-    for (const QString& name : names) {
+    // 66 catalogs when this test was written; a drop means src.pro changed shape and
+    // the tests below would pass for want of catalogs to check.
+    REQUIRE(listed.size() >= 60);
+    for (const QString& name : listed) {
         INFO(name.toStdString());
         CHECK(QFile::exists(sourceTreePath(QStringLiteral("librecad/ts/") + name)));
+    }
+    CHECK(maintainedCatalogs().size() >= 40);
+}
+
+TEST_CASE("Only the old regional Spanish catalogs are in the old format", "[translation][catalog]") {
+    // lupdate skips an old-format catalog, and so do the tests here: a new catalog that
+    // was left in the old format would never be refreshed or checked, which is how
+    // strings go missing without anyone noticing.
+    for (const QString& name : listedCatalogs()) {
+        if (!isCurrentFormat(name)) {
+            INFO(name.toStdString() << " is not <TS version=\"2.1\">: open it in Qt Linguist and save it");
+            CHECK(name.startsWith(QStringLiteral("librecad_es_")));
+        }
     }
 }
 
