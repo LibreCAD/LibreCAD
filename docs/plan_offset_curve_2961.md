@@ -24,12 +24,17 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-07. Project: **LibreCAD**, not LibreCAD_3.
-Latest clarification: the Properties source widget must permit changing the
-requested source family before picking a replacement, and all currently
-modeled source families must remain available. This picker contract is already
-implemented; remaining support work is per-family/per-variant geometry through
-generation, worker/cache, import/export, and round-trip paths. A family being
-selectable is not evidence that all its geometric variants are supported.
+Latest clarification: when replacing the offset source, the Properties widget
+must let the user choose a different source family before selecting a live
+entity. The selector covers every currently supported family: line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola is a distinct source kind. The type-changing picker,
+candidate refresh, replacement, and existing-source resolution/highlighting
+contract is already implemented and tested. Remaining support work is
+per-family/per-variant geometry through generation, worker/cache, import/export,
+and round-trip paths; a family being selectable is not evidence that all its
+geometric variants are supported. Do not add a duplicate selector or a
+parabola-only UI branch.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
@@ -24015,3 +24020,29 @@ This proves worker generation/cache support for the recorded control net,
 knots, weight profiles, and distances only. DXF/DWG staged import and ODA
 conversion are the next slice; arbitrary high-ratio NURBS and W563cg's
 near-stationary periodic geometry remain unqualified.
+
+#### W563cj. Round-trip Conditioned Open Rational Spline Imports (2026-11-07)
+
+Added staged DXF/DWG import coverage for W563ci's two nine-control,
+degree-2 open rational splines with seven nonuniform spans and gradual weight
+profiles from `1e-6` to `1e6`, in both forward and reverse order. Both signed
+offsets (`+/-0.005`) pass through R14/R2000/R2018 DXF and R2000/R2018 DWG.
+The matrix checks the emitted one-spline cache and its canonical typed-source
+metadata through file round-trip and staged import/cache promotion.
+
+The focused `[lc-offsetcurve][import-session][typed-source][spline-variant]`
+selection passes 195,623 assertions across 10 cases. The Release test target
+builds and `git diff --check` passes. Test commit `364d4bb12`
+(`test(offset): round trip conditioned rational spline imports`). ODA
+conversion was not verified: the installed ODA File Converter aborts in this
+macOS environment during Cocoa pasteboard/XPC initialization, so no independent
+CAD geometry or metadata claim is made for these fixtures.
+
+This closes staged native DXF/DWG import/cache promotion only for the recorded
+control net, weight profiles, versions, and distances. It does not establish
+arbitrary high-ratio NURBS support, external-CAD equivalence, or resolution of
+W563cg's periodic near-stationary refusal. The source-family picker contract
+remains as stated above: change family before choosing a candidate across all
+nine modeled kinds, with parabola distinct; further work belongs to geometry
+variant support, not another picker control. Exact-head CI, visible GUI, and
+remaining source-family/variant gates remain open.
