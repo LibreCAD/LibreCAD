@@ -22805,3 +22805,20 @@ Test commit `3b37297af` (`test(offset): qualify linear periodic imports`). This
 closes only the recorded degree-1 control layout, offset distance, and five
 file lanes. Other degree-1 layouts/distances, periodic knots, and broader
 variant, visible-GUI, independent-CAD, and exact-head CI gates remain open.
+
+#### W563an. Qualify Nonuniform Periodic Knot Seam and Import (2026-11-07)
+
+Added a rational degree-3, six-control periodic source whose clamped precursor
+uses knot vector `[0, 0, 0, 0, 0.5, 2, 3, 3, 3, 3]`. LibreCAD's wrap
+conversion preserves its unequal knot intervals. The test verifies valid
+wrapped controls/weights and matching seam point and first derivative before
+running both signed offsets at magnitude `0.125`. Both results promote through
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG with exact source-definition and cache
+fingerprint checks. The ten side/lane combinations pass 1,255 assertions; the
+Release test target builds and `git diff --check` passes.
+
+Test commit `59a6cfdd5` (`test(offset): qualify nonuniform periodic spline
+imports`). This covers the stated degree, control layout, knot vector, weights,
+distance, and lanes only. Other nonuniform periodic knot sequences, degrees,
+control counts and weight patterns, broader topology/transform neighborhoods,
+visible-GUI acceptance, independent-CAD review, and exact-head CI remain open.
