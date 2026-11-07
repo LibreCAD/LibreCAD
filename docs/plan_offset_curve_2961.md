@@ -24179,3 +24179,35 @@ pass. It does not establish arbitrary periodic weight-ratio support, formally
 certify offset topology, or close W563cg. Keep unresolved periodic layouts
 fail-closed. Other source-family/variant matrices, visible-GUI acceptance,
 external CAD comparison, and exact-head CI remain open.
+
+#### W563co. Compare Periodic Cusp Topology at the Worker Geometry Tolerance (2026-11-07)
+
+Extended the 256-bit periodic worker oracle from locus comparison to cusp
+topology. It brackets strict sign changes and exact zeros of the offset
+regularity factor, evaluates the resulting offset cusp points independently,
+and compares them with generated spline-branch endpoints. The comparison uses
+the worker-derived `requestedGeometry` budget for the fixture rather than a
+fixed world-unit threshold. Root pairs that share one generated endpoint are
+accepted only when their separation is within that same geometry budget; the
+number of tolerance-merged roots must be even. Bidirectional generated/oracle
+polyline distance is checked against the same budget.
+
+For the translated shifted-alternating weight profile at signed distance
+`+0.0625`, the sampled oracle identifies 12 distinct cusp points, with the
+closest pair separated by `2.84548e-5`; 10 cusp locations match independently
+represented generated endpoints, while the remaining two lie within the
+geometry budget of a retained cusp endpoint. The sampled polyline distances
+for this fixture are `6.20702e-4` forward and
+`2.18686e-5` reverse. The focused `[periodic][nonuniform]` case passes 7,818
+assertions; the full worker/cache/spline-variant selection passes 78,024
+assertions across seven cases. The Release worker target builds and
+`git diff --check` passes. Test commit `ea27aa954`
+(`test(offset): qualify periodic cusp topology`).
+
+This is tolerance-aware sampled topology evidence for the recorded translated
+profile and signed distances. It is not a certified count of every possible
+even-multiplicity curvature root, does not validate a canonical operation-8
+cache for multi-branch outputs, and does not establish staged DXF/DWG or
+independent-CAD equivalence. W563cg remains open for arbitrary periodic weight
+layouts, editable-cache support, continuous root/topology certification,
+visible GUI, and exact-head CI.
