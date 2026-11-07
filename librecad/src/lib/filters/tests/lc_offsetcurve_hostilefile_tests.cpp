@@ -5580,16 +5580,30 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
 
+    const bool sixControlLayout = GENERATE(false, true);
     RS_Spline periodic{nullptr, RS_SplineData{3, false}};
-    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
-                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
-        periodic.addControlPoint(point);
+    if (sixControlLayout) {
+        for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
+                                       RS_Vector{60, 0}, RS_Vector{55, 35},
+                                       RS_Vector{20, 50}, RS_Vector{-15, 25}})
+            periodic.addControlPoint(point);
+    } else {
+        for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10},
+                                       RS_Vector{60, 30}, RS_Vector{20, 50},
+                                       RS_Vector{-15, 25}})
+            periodic.addControlPoint(point);
+    }
     periodic.setClosed(true);
     auto wrapped = periodic.getData();
     const bool rational = GENERATE(false, true);
     if (rational) {
-        REQUIRE(wrapped.controlPoints.size() == 8);
-        wrapped.weights = {1.0, 0.9, 1.1, 0.95, 1.05, 1.0, 0.9, 1.1};
+        if (sixControlLayout) {
+            REQUIRE(wrapped.controlPoints.size() == 9);
+            wrapped.weights = {1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.0, 0.9, 1.1};
+        } else {
+            REQUIRE(wrapped.controlPoints.size() == 8);
+            wrapped.weights = {1.0, 0.9, 1.1, 0.95, 1.05, 1.0, 0.9, 1.1};
+        }
     } else {
         wrapped.weights.clear();
     }
@@ -5610,7 +5624,7 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
     const double magnitude = distanceFactor * scale;
     const double signedDistance = side == LC_CurveOffsetSide::Left ? magnitude : -magnitude;
-    CAPTURE(rational, distanceFactor, static_cast<int>(side), signedDistance);
+    CAPTURE(sixControlLayout, rational, distanceFactor, static_cast<int>(side), signedDistance);
     const LC_OffsetSourceDefinition definition{
         LC_OffsetSourceGeometry{wrapped}, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
@@ -5674,6 +5688,7 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
 
         const auto input = directory.file(std::string("scale-") +
             std::to_string(scale) + "-distance-" + std::to_string(distanceFactor) +
+            (sixControlLayout ? "-six-control" : "-five-control") +
             (rational ? "-rational" : "-unit") +
             (side == LC_CurveOffsetSide::Left
                 ? "-wrapped-left-" : "-wrapped-right-") + suffix);
