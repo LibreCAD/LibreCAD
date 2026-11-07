@@ -113,6 +113,55 @@ TEST_CASE("RS_Spline transforms rebuild the lines it is drawn with", "[RS_Spline
     requireRebuilt(*spline);
 }
 
+TEST_CASE("RS_Spline transforms fit tangent vectors without translating them", "[RS_Spline]")
+{
+    RS_SplineData data{1, false};
+    data.controlPoints = {{0.0, 0.0}, {4.0, 2.0}};
+    data.knotslist = {0.0, 0.0, 1.0, 1.0};
+    data.fitTangentsConstrained = true;
+    data.fitStartTangent = {1.0, 2.0, 0.0};
+    data.fitEndTangent = {-2.0, 3.0, 0.0};
+    RS_Spline spline{nullptr, data};
+
+    spline.move({10.0, -7.0});
+    CHECK(spline.getData().fitStartTangent.x == 1.0);
+    CHECK(spline.getData().fitStartTangent.y == 2.0);
+
+    spline.rotate({3.0, 4.0}, M_PI_2);
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 2.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y - 1.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x + 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.y + 2.0) < 1e-12);
+
+    spline.scale({100.0, 100.0}, {2.0, 3.0});
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 4.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y - 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x + 6.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.y + 6.0) < 1e-12);
+
+    spline.mirror({0.0, 0.0}, {1.0, 0.0});
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 4.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y + 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x + 6.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.y - 6.0) < 1e-12);
+
+    spline.shear(0.5);
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 5.5) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x + 3.0) < 1e-12);
+
+    spline.revertDirection();
+    CHECK(std::abs(spline.getData().fitStartTangent.x - 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y + 6.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.x - 5.5) < 1e-12);
+    CHECK(std::abs(spline.getData().fitEndTangent.y - 3.0) < 1e-12);
+    CHECK(spline.getData().fitTangentsConstrained);
+
+    spline.setControlPoint(0, {20.0, 20.0});
+    CHECK_FALSE(spline.getData().fitTangentsConstrained);
+    CHECK(spline.getData().fitStartTangent.magnitude() == 0.0);
+    CHECK(spline.getData().fitEndTangent.magnitude() == 0.0);
+}
+
 TEST_CASE("RS_Spline::setDegree keeps the spline drawable", "[RS_Spline]")
 {
     for (const bool closed : {false, true}) {

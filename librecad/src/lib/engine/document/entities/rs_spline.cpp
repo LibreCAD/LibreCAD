@@ -47,6 +47,21 @@
 namespace {
 constexpr double g_knotTolerance = 5e-6;
 
+void transformTangentByMirror(RS_Vector &tangent, const RS_Vector &axisStart,
+                              const RS_Vector &axisEnd) {
+  RS_Vector origin{0.0, 0.0, 0.0};
+  RS_Vector mirroredOrigin = origin;
+  mirroredOrigin.mirror(axisStart, axisEnd);
+  tangent.mirror(axisStart, axisEnd);
+  tangent -= mirroredOrigin;
+}
+
+void transformTangentByScale(RS_Vector &tangent, const RS_Vector &factor) {
+  tangent.x *= factor.x;
+  tangent.y *= factor.y;
+  tangent.z *= factor.z;
+}
+
 // update() draws a spline with at least this many segments, more where it bends
 // by more than the relative tolerance. The cap stops the refinement: past it
 // each remaining knot span still gets the vertex it cannot be drawn without,
@@ -576,6 +591,7 @@ void RS_Spline::setDegree(const int degree) {
   if (m_data.degree == static_cast<size_t>(degree)) {
       return;
   }
+  m_data.clearFitTangents();
   // The knot vector, and the control points a closed spline wraps, are sized by the degree: a closed
   // spline is unwrapped with its old degree and wrapped again with the new one, and knots made for
   // the old degree are replaced by uniform knots for the spline's type. Setting the degree alone left
@@ -1001,6 +1017,8 @@ void RS_Spline::rotate(const RS_Vector &center, const double angle) {
   for (auto &fp : m_data.fitPoints) {
       fp.rotate(center, angle);
   }
+  m_data.fitStartTangent.rotate(RS_Vector{0.0, 0.0, 0.0}, angle);
+  m_data.fitEndTangent.rotate(RS_Vector{0.0, 0.0, 0.0}, angle);
   update();
 }
 
@@ -1011,6 +1029,8 @@ void RS_Spline::rotate(const RS_Vector &center, const RS_Vector &angleVector) {
   for (auto &fp : m_data.fitPoints) {
       fp.rotate(center, angleVector);
   }
+  m_data.fitStartTangent.rotate(RS_Vector{0.0, 0.0, 0.0}, angleVector);
+  m_data.fitEndTangent.rotate(RS_Vector{0.0, 0.0, 0.0}, angleVector);
   update();
 }
 
@@ -1021,6 +1041,8 @@ void RS_Spline::scale(const RS_Vector &center, const RS_Vector &factor) {
   for (auto &fp : m_data.fitPoints) {
       fp.scale(center, factor);
   }
+  transformTangentByScale(m_data.fitStartTangent, factor);
+  transformTangentByScale(m_data.fitEndTangent, factor);
   update();
 }
 
@@ -1031,6 +1053,8 @@ RS_Entity &RS_Spline::shear(const double k) {
   for (auto &fp : m_data.fitPoints) {
       fp.shear(k);
   }
+  m_data.fitStartTangent.shear(k);
+  m_data.fitEndTangent.shear(k);
   update();
   return *this;
 }
@@ -1042,6 +1066,8 @@ void RS_Spline::mirror(const RS_Vector &a1, const RS_Vector &a2) {
   for (auto &fp : m_data.fitPoints) {
       fp.mirror(a1, a2);
   }
+  transformTangentByMirror(m_data.fitStartTangent, a1, a2);
+  transformTangentByMirror(m_data.fitEndTangent, a1, a2);
   update();
 }
 
@@ -1059,6 +1085,7 @@ void RS_Spline::moveRef(const RS_Vector &ref, const RS_Vector &offset) {
   if (!moved) {
       return;
   }
+  m_data.clearFitTangents();
   if (isClosed()) {
       updateControlAndWeightWrapping();
   }
@@ -1084,6 +1111,9 @@ void RS_Spline::revertDirection() {
   std::reverse(m_data.controlPoints.begin(), m_data.controlPoints.end());
   std::reverse(m_data.weights.begin(), m_data.weights.end());
   std::reverse(m_data.fitPoints.begin(), m_data.fitPoints.end());
+  std::swap(m_data.fitStartTangent, m_data.fitEndTangent);
+  m_data.fitStartTangent *= -1.0;
+  m_data.fitEndTangent *= -1.0;
   mirror(m_data.knotslist);
   mirror(m_data.savedOpenKnots);
   update();
@@ -1109,6 +1139,7 @@ double RS_Spline::getWeight(const size_t i) const {
 
 /** Add control point */
 void RS_Spline::addControlPoint(const RS_Vector &v, const double w) {
+  m_data.clearFitTangents();
   const RS_SplineData::SplineType newType = m_data.type;
   changeType(RS_SplineData::SplineType::Standard);
   addControlPointRaw(v, w);
@@ -1135,6 +1166,7 @@ void RS_Spline::addControlPointRaw(const RS_Vector &v, const double w) {
 /** Remove last */
 void RS_Spline::removeLastControlPoint() {
   if (!m_data.controlPoints.empty()) {
+    m_data.clearFitTangents();
     m_data.controlPoints.pop_back();
     m_data.weights.pop_back();
   }
@@ -1147,6 +1179,7 @@ void RS_Spline::removeLastControlPoint() {
 /** Set weights/control/knots */
 void RS_Spline::setWeight(const size_t i, const double w) {
   if (i < m_data.weights.size()) {
+    m_data.clearFitTangents();
     m_data.weights[i] = w;
     if (isClosed()) {
         updateControlAndWeightWrapping();
@@ -1158,6 +1191,7 @@ void RS_Spline::setWeight(const size_t i, const double w) {
   }
 }
 void RS_Spline::setWeights(const std::vector<double> &w) {
+  m_data.clearFitTangents();
   m_data.weights = w;
   if (isClosed()) {
       updateControlAndWeightWrapping();
@@ -1166,6 +1200,7 @@ void RS_Spline::setWeights(const std::vector<double> &w) {
 }
 void RS_Spline::setControlPoint(const size_t i, const RS_Vector &v) {
   if (i < m_data.controlPoints.size()) {
+    m_data.clearFitTangents();
     m_data.controlPoints[i] = v;
     if (isClosed()) {
         updateControlAndWeightWrapping();
@@ -1175,6 +1210,7 @@ void RS_Spline::setControlPoint(const size_t i, const RS_Vector &v) {
 }
 void RS_Spline::setKnot(const size_t i, const double k) {
   if (i < m_data.knotslist.size()) {
+    m_data.clearFitTangents();
     m_data.knotslist[i] = k;
     LC_SplineHelper::ensureMonotonic(m_data.knotslist);
     if (isClosed()) {
@@ -1186,6 +1222,7 @@ void RS_Spline::setKnot(const size_t i, const double k) {
 
 /** Insert/remove control point */
 void RS_Spline::insertControlPoint(const size_t i, const RS_Vector &v, const double w, const bool preserve) {
+  m_data.clearFitTangents();
   m_data.controlPoints.insert(m_data.controlPoints.begin() + i, v);
   m_data.weights.insert(m_data.weights.begin() + i, w);
   if (!preserve) {
@@ -1199,6 +1236,7 @@ void RS_Spline::insertControlPoint(const size_t i, const RS_Vector &v, const dou
 
 void RS_Spline::removeControlPoint(const size_t i) {
   if (i < m_data.controlPoints.size()) {
+    m_data.clearFitTangents();
     m_data.controlPoints.erase(m_data.controlPoints.begin() + i);
     m_data.weights.erase(m_data.weights.begin() + i);
     m_data.knotslist.clear();
@@ -1466,6 +1504,7 @@ std::vector<double> RS_Spline::rbasis(const int c, const double t, const int npt
 // Updated setFitPoints (now uses the file-local solveSystem)
 
 void RS_Spline::setFitPoints(const std::vector<RS_Vector> &fitPoints, const bool useCentripetal /*= true*/) {
+  m_data.clearFitTangents();
   m_data.fitPoints = fitPoints;
   if (m_data.fitPoints.size() < 2) {
     update();

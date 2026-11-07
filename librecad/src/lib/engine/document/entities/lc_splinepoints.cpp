@@ -38,6 +38,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_painter.h"
 
 namespace {
+    void transformTangentByMirror(RS_Vector& tangent, const RS_Vector& axisStart,
+                                  const RS_Vector& axisEnd) {
+        RS_Vector origin{0.0, 0.0, 0.0};
+        RS_Vector mirroredOrigin = origin;
+        mirroredOrigin.mirror(axisStart, axisEnd);
+        tangent.mirror(axisStart, axisEnd);
+        tangent -= mirroredOrigin;
+    }
+
+    void transformTangentByScale(RS_Vector& tangent, const RS_Vector& factor) {
+        tangent.x *= factor.x;
+        tangent.y *= factor.y;
+        tangent.z *= factor.z;
+    }
+
     RS_Vector getQuadPoint(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2, const double dt) {
         return x1 * (1.0 - dt) * (1.0 - dt) + c1 * 2.0 * dt * (1.0 - dt) + x2 * dt * dt;
     }
@@ -1331,6 +1346,8 @@ void LC_SplinePoints::rotate(const RS_Vector& center, const RS_Vector& angleVect
     for (auto& v : m_data.controlPoints) {
         v.rotate(center, angleVector);
     }
+    m_data.fitStartTangent.rotate(RS_Vector{0.0, 0.0, 0.0}, angleVector);
+    m_data.fitEndTangent.rotate(RS_Vector{0.0, 0.0, 0.0}, angleVector);
     update();
 }
 
@@ -1341,6 +1358,8 @@ void LC_SplinePoints::scale(const RS_Vector& center, const RS_Vector& factor) {
     for (auto& v : m_data.controlPoints) {
         v.scale(center, factor);
     }
+    transformTangentByScale(m_data.fitStartTangent, factor);
+    transformTangentByScale(m_data.fitEndTangent, factor);
     update();
 }
 
@@ -1351,6 +1370,8 @@ void LC_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisP
     for (auto& v : m_data.controlPoints) {
         v.mirror(axisPoint1, axisPoint2);
     }
+    transformTangentByMirror(m_data.fitStartTangent, axisPoint1, axisPoint2);
+    transformTangentByMirror(m_data.fitEndTangent, axisPoint1, axisPoint2);
     update();
 }
 
@@ -1361,23 +1382,29 @@ RS_Entity& LC_SplinePoints::shear(const double k) {
     for (auto& v : m_data.controlPoints) {
         v.shear(k);
     }
+    m_data.fitStartTangent.shear(k);
+    m_data.fitEndTangent.shear(k);
     update();
     return *this;
 }
 
 void LC_SplinePoints::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
+    bool moved = false;
     for (auto& v : m_data.splinePoints) {
         // fixme - magic value - replace by constant
         if (ref.distanceTo(v) < 1.0e-4) {
             v.move(offset);
+            moved = true;
         }
     }
     for (auto& v : m_data.controlPoints) {
         // fixme - magic value - replace by constant
         if (ref.distanceTo(v) < 1.0e-4) {
             v.move(offset);
+            moved = true;
         }
     }
+    if (moved) m_data.clearFitTangents();
     update();
 }
 
@@ -1390,6 +1417,9 @@ void LC_SplinePoints::revertDirection() {
     for (size_t k = 0; k < m_data.controlPoints.size() / 2; ++k) {
         std::swap(m_data.controlPoints[k], m_data.controlPoints[j--]);
     }
+    std::swap(m_data.fitStartTangent, m_data.fitEndTangent);
+    m_data.fitStartTangent *= -1.0;
+    m_data.fitEndTangent *= -1.0;
     update();
 }
 
@@ -1446,6 +1476,7 @@ bool LC_SplinePoints::addPoint(const RS_Vector& v) {
     }
 
     if (m_data.splinePoints.empty() || (v - m_data.splinePoints.back()).squared() > RS_TOLERANCE2) {
+        m_data.clearFitTangents();
         m_data.splinePoints.push_back(v);
         return true;
     }
@@ -1456,10 +1487,14 @@ bool LC_SplinePoints::addPoint(const RS_Vector& v) {
  * Removes the control point that was last added.
  */
 void LC_SplinePoints::removeLastPoint() {
-    m_data.splinePoints.pop_back();
+    if (!m_data.splinePoints.empty()) {
+        m_data.clearFitTangents();
+        m_data.splinePoints.pop_back();
+    }
 }
 
 void LC_SplinePoints::addControlPoint(const RS_Vector& v) {
+    m_data.clearFitTangents();
     m_data.controlPoints.push_back(v);
 }
 

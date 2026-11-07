@@ -717,6 +717,10 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
   LC_SplinePoints *sourceSpline = onlySplinePoints(graphic);
   REQUIRE_FALSE(sourceSpline->getData().useControlPoints);
   REQUIRE(sourceSpline->getData().fitTangentsConstrained);
+  CHECK(sourceSpline->getData().fitStartTangent.x == source.m_tangentStart.x);
+  CHECK(sourceSpline->getData().fitStartTangent.y == source.m_tangentStart.y);
+  CHECK(sourceSpline->getData().fitEndTangent.x == source.m_tangentEnd.x);
+  CHECK(sourceSpline->getData().fitEndTangent.y == source.m_tangentEnd.y);
   const auto sourceControls = sourceSpline->getControlPoints();
   REQUIRE(sourceControls.size() >= 3);
 
@@ -731,6 +735,13 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
     INFO(suffix);
     const std::string path = tempPath("tangent_quadratic_fit_point_" + suffix);
     std::remove(path.c_str());
+    if (format != RS2::FormatDXFRW) {
+      RS_FilterDXFRW writer;
+      CHECK_FALSE(writer.fileExport(graphic, QString::fromStdString(path), format));
+      std::filesystem::remove(path);
+      CHECK_FALSE(std::filesystem::exists(path));
+      continue;
+    }
     {
       RS_FilterDXFRW writer;
       REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
@@ -744,16 +755,23 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
     std::filesystem::remove(path);
 
     REQUIRE(written.size() == 1);
-    CHECK(written.front().m_fitPoints.empty());
     CHECK_FALSE(written.front().m_controlPoints.empty());
-    CHECK(written.front().m_tangentStart.magnitude() == 0.0);
-    CHECK(written.front().m_tangentEnd.magnitude() == 0.0);
-    if (format != RS2::FormatDXFRW)
+    if (format == RS2::FormatDXFRW) {
+      checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
+      CHECK(written.front().m_tangentStart.x == source.m_tangentStart.x);
+      CHECK(written.front().m_tangentEnd.y == source.m_tangentEnd.y);
+      RS_Spline *reopenedSpline = onlySpline(reopened);
+      CHECK(reopenedSpline->getData().fitTangentsConstrained);
+      checkSameVectors(reopenedSpline->getData().fitPoints, source.m_fitPoints);
+    } else {
+      CHECK(written.front().m_fitPoints.empty());
+      CHECK(written.front().m_tangentStart.magnitude() == 0.0);
+      CHECK(written.front().m_tangentEnd.magnitude() == 0.0);
       CHECK(written.front().m_scenario == 1);
-
-    LC_SplinePoints *reopenedSpline = onlySplinePoints(reopened);
-    checkSameVectors(reopenedSpline->getControlPoints(), sourceControls);
-    CHECK_FALSE(reopenedSpline->getData().fitTangentsConstrained);
+      LC_SplinePoints *reopenedSpline = onlySplinePoints(reopened);
+      checkSameVectors(reopenedSpline->getControlPoints(), sourceControls);
+      CHECK_FALSE(reopenedSpline->getData().fitTangentsConstrained);
+    }
   }
 }
 
@@ -782,6 +800,10 @@ TEST_CASE("Tangent-constrained quadratic SPLINE keeps its explicit control net",
   CHECK(data.knotslist == source.m_knots);
   CHECK(data.fitPoints.size() == source.m_fitPoints.size());
   CHECK(data.fitTangentsConstrained);
+  CHECK(data.fitStartTangent.x == source.m_tangentStart.x);
+  CHECK(data.fitStartTangent.y == source.m_tangentStart.y);
+  CHECK(data.fitEndTangent.x == source.m_tangentEnd.x);
+  CHECK(data.fitEndTangent.y == source.m_tangentEnd.y);
 
   RS_SplineData expected(2, false);
   expected.degree = 2;
@@ -796,6 +818,26 @@ TEST_CASE("Tangent-constrained quadratic SPLINE keeps its explicit control net",
     REQUIRE(reference.valid);
     CHECK(actual.distanceTo(reference) <= 1.0e-12);
   }
+
+  const std::string path = tempPath("tangent_quadratic_explicit_control_net_roundtrip.dxf");
+  {
+    RS_FilterDXFRW writer;
+    REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), RS2::FormatDXFRW));
+  }
+  RS_Graphic reopened;
+  std::vector<SplineRecord> written;
+  importFile(reopened, path, RS2::FormatDXFRW, &written);
+  std::filesystem::remove(path);
+  REQUIRE(written.size() == 1);
+  CHECK(written.front().m_tangentStart.x == source.m_tangentStart.x);
+  CHECK(written.front().m_tangentStart.y == source.m_tangentStart.y);
+  CHECK(written.front().m_tangentEnd.x == source.m_tangentEnd.x);
+  CHECK(written.front().m_tangentEnd.y == source.m_tangentEnd.y);
+  const RS_SplineData &reopenedData = onlySpline(reopened)->getData();
+  CHECK(reopenedData.fitStartTangent.x == source.m_tangentStart.x);
+  CHECK(reopenedData.fitStartTangent.y == source.m_tangentStart.y);
+  CHECK(reopenedData.fitEndTangent.x == source.m_tangentEnd.x);
+  CHECK(reopenedData.fitEndTangent.y == source.m_tangentEnd.y);
 }
 
 TEST_CASE("Cubic fit-point SPLINE intent survives file round trips",
@@ -1023,6 +1065,13 @@ TEST_CASE("Tangent-constrained cubic fit SPLINE falls back to its control net",
     INFO(suffix);
     const std::string path = tempPath("tangent_cubic_fit_point_" + suffix);
     std::remove(path.c_str());
+    if (format != RS2::FormatDXFRW) {
+      RS_FilterDXFRW writer;
+      CHECK_FALSE(writer.fileExport(graphic, QString::fromStdString(path), format));
+      std::filesystem::remove(path);
+      CHECK_FALSE(std::filesystem::exists(path));
+      continue;
+    }
     {
       RS_FilterDXFRW writer;
       REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
@@ -1035,7 +1084,13 @@ TEST_CASE("Tangent-constrained cubic fit SPLINE falls back to its control net",
     std::filesystem::remove(path);
 
     REQUIRE(written.size() == 1);
-    CHECK(written.front().m_fitPoints.empty());
+    if (format == RS2::FormatDXFRW) {
+      checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
+      CHECK(written.front().m_tangentStart.x == source.m_tangentStart.x);
+      CHECK(written.front().m_tangentEnd.y == source.m_tangentEnd.y);
+    } else {
+      CHECK(written.front().m_fitPoints.empty());
+    }
     CHECK_FALSE(written.front().m_controlPoints.empty());
     if (format != RS2::FormatDXFRW)
       CHECK(written.front().m_scenario == 1);

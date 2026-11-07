@@ -240,3 +240,39 @@ TEST_CASE("LC_SplinePoints keeps its control points when fit points cannot be so
         CHECK(near(spline.getControlPoints()[i], before[i]));
     }
 }
+
+TEST_CASE("LC_SplinePoints transforms fit tangent vectors as directions",
+          "[spline][LC_SplinePoints][fit-tangents]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0.0, 0.0}, {2.0, 1.0}, {4.0, 0.0}};
+    data.fitTangentsConstrained = true;
+    data.fitStartTangent = {1.0, 2.0, 0.0};
+    data.fitEndTangent = {-2.0, 3.0, 0.0};
+    LC_SplinePoints spline{nullptr, data};
+
+    spline.move({10.0, -7.0});
+    CHECK(spline.getData().fitStartTangent.x == 1.0);
+    CHECK(spline.getData().fitStartTangent.y == 2.0);
+
+    spline.rotate({3.0, 4.0}, M_PI_2);
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 2.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y - 1.0) < 1e-12);
+    spline.scale({100.0, 100.0}, {2.0, 3.0});
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 4.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y - 3.0) < 1e-12);
+    spline.mirror({0.0, 0.0}, {1.0, 0.0});
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 4.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y + 3.0) < 1e-12);
+    spline.shear(0.5);
+    CHECK(std::abs(spline.getData().fitStartTangent.x + 5.5) < 1e-12);
+    spline.revertDirection();
+    CHECK(std::abs(spline.getData().fitStartTangent.x - 3.0) < 1e-12);
+    CHECK(std::abs(spline.getData().fitStartTangent.y + 6.0) < 1e-12);
+    CHECK(spline.getData().fitTangentsConstrained);
+
+    const RS_Vector firstPoint = spline.getData().splinePoints.front();
+    spline.moveRef(firstPoint, {1.0, 0.0});
+    CHECK_FALSE(spline.getData().fitTangentsConstrained);
+    CHECK(spline.getData().fitStartTangent.magnitude() == 0.0);
+    CHECK(spline.getData().fitEndTangent.magnitude() == 0.0);
+}

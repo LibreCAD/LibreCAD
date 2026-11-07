@@ -84,6 +84,16 @@ struct RS_SplineData {
   /** True when source endpoint tangents cannot be represented by this spline. */
   bool fitTangentsConstrained = false;
 
+  /** Source endpoint tangent vectors; zero means that endpoint is unconstrained. */
+  RS_Vector fitStartTangent{0.0, 0.0, 0.0};
+  RS_Vector fitEndTangent{0.0, 0.0, 0.0};
+
+  void clearFitTangents() {
+    fitTangentsConstrained = false;
+    fitStartTangent = {0.0, 0.0, 0.0};
+    fitEndTangent = {0.0, 0.0, 0.0};
+  }
+
   /** Degree (1-3) */
   size_t degree = 3;
 

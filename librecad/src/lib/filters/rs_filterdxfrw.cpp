@@ -9233,6 +9233,10 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
       splinePoints->getData().fitTolerance = data->tolfit;
     splinePoints->getData().fitTangentsConstrained =
         hasFitTangents;
+    splinePoints->getData().fitStartTangent =
+        {data->tgStart.x, data->tgStart.y, data->tgStart.z};
+    splinePoints->getData().fitEndTangent =
+        {data->tgEnd.x, data->tgEnd.y, data->tgEnd.z};
 
     splinePoints->update();
     m_currentContainer->addEntity(splinePoints);
@@ -9278,6 +9282,13 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
   }
 
   const auto preserveFitMetadata = [data, hasFitTangents](RS_Spline *spline) {
+    RS_SplineData &target = spline->getData();
+    target.fitTangentsConstrained =
+        hasFitTangents;
+    target.fitStartTangent =
+        {data->tgStart.x, data->tgStart.y, data->tgStart.z};
+    target.fitEndTangent =
+        {data->tgEnd.x, data->tgEnd.y, data->tgEnd.z};
     if (data->fitlist.empty())
       return;
     std::vector<RS_Vector> fitPoints;
@@ -9287,12 +9298,9 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
         return;
       fitPoints.emplace_back(coord->x, coord->y);
     }
-    RS_SplineData &target = spline->getData();
     target.fitPoints = std::move(fitPoints);
     if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
       target.fitTolerance = data->tolfit;
-    target.fitTangentsConstrained =
-        hasFitTangents;
   };
 
   if (numCtrl != 0) {
@@ -32460,6 +32468,13 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
   const auto degree = s->getDegree();
   const auto &sourceData = s->getData();
+  if (m_dwgW && sourceData.fitTangentsConstrained) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW::writeSpline: refusing DWG export of a "
+                    "tangent-constrained spline without a lossless encoding");
+    m_writeFailed = true;
+    return;
+  }
   const auto invalidNativeControls = [s, &sourceData] {
     return s->rtti() == RS2::EntityOffsetCurve &&
         std::any_of(sourceData.controlPoints.begin(), sourceData.controlPoints.end(),
@@ -32522,6 +32537,14 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
   // ends still meet.
   sp.flags = (s->isClosed()) ? 0b1011 : 0b1000;
   const RS_SplineData &splineData = s->getData();
+  if (splineData.fitTangentsConstrained) {
+    sp.tgStart = DRW_Coord{splineData.fitStartTangent.x,
+                           splineData.fitStartTangent.y,
+                           splineData.fitStartTangent.z};
+    sp.tgEnd = DRW_Coord{splineData.fitEndTangent.x,
+                         splineData.fitEndTangent.y,
+                         splineData.fitEndTangent.z};
+  }
   if (!s->isClosed() &&
       (splineData.m_closedFlag || splineData.m_periodicFlag) &&
       splineCurveCloses(splineData)) {
@@ -32605,6 +32628,11 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     // knot vector from RS_Spline
     sp.knotslist = s->getUnwrappedKnotVector();
     sp.nknots = static_cast<std::int32_t>(sp.knotslist.size());
+    if (splineData.fitTangentsConstrained && !m_dwgW) {
+      sp.nfit = static_cast<std::int32_t>(splineData.fitPoints.size());
+      for (const RS_Vector &point : splineData.fitPoints)
+        sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y));
+    }
   }
 
   getEntityAttributes(&sp, s);
@@ -32621,6 +32649,16 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
  * Writes the given spline entity to the file.
  */
 void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
+  LC_SplinePointsData &data = s->getData();
+  if (m_dwgW && data.fitTangentsConstrained) {
+    RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterDXFRW::writeSplinePoints: refusing DWG export "
+                    "of a tangent-constrained spline without a lossless "
+                    "encoding");
+    m_writeFailed = true;
+    return;
+  }
+
   int nCtrls = s->getNumberOfControlPoints();
   auto const &cp = s->getControlPoints();
 
@@ -32667,8 +32705,13 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     sp.flags = 8;
   }
 
-  LC_SplinePointsData &data = s->getData();
   auto const &fitPoints = data.splinePoints;
+  if (data.fitTangentsConstrained) {
+    sp.tgStart = DRW_Coord{data.fitStartTangent.x, data.fitStartTangent.y,
+                           data.fitStartTangent.z};
+    sp.tgEnd = DRW_Coord{data.fitEndTangent.x, data.fitEndTangent.y,
+                         data.fitEndTangent.z};
+  }
   const bool writeFitScenario = !data.useControlPoints &&
                                 !data.fitTangentsConstrained &&
                                 fitPoints.size() >= 2;
@@ -32686,11 +32729,18 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     const RS_Vector startTangent = fitPoints[1] - fitPoints[0];
     const RS_Vector endTangent =
         fitPoints.back() - fitPoints[fitPoints.size() - 2];
-    sp.tgStart = DRW_Coord{startTangent.x, startTangent.y, 0.0};
-    sp.tgEnd = DRW_Coord{endTangent.x, endTangent.y, 0.0};
+    if (!data.fitTangentsConstrained) {
+      sp.tgStart = DRW_Coord{startTangent.x, startTangent.y, 0.0};
+      sp.tgEnd = DRW_Coord{endTangent.x, endTangent.y, 0.0};
+    }
   } else {
     sp.ncontrol = nCtrls;
     sp.nknots = nCtrls + 3;
+    if (data.fitTangentsConstrained && !m_dwgW) {
+      sp.nfit = static_cast<std::int32_t>(fitPoints.size());
+      for (const RS_Vector &point : fitPoints)
+        sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y));
+    }
   }
 
   // write spline knots:

@@ -60,6 +60,14 @@ struct LC_SplinePointsData {
     bool useControlPoints = false;
     /** Source fit SPLINE had endpoint tangent constraints not modeled here. */
     bool fitTangentsConstrained = false;
+    /** Source endpoint tangent vectors; zero means that endpoint is unconstrained. */
+    RS_Vector fitStartTangent{0.0, 0.0, 0.0};
+    RS_Vector fitEndTangent{0.0, 0.0, 0.0};
+    void clearFitTangents() {
+        fitTangentsConstrained = false;
+        fitStartTangent = {0.0, 0.0, 0.0};
+        fitEndTangent = {0.0, 0.0, 0.0};
+    }
     /** points on the spline. */
     std::vector<RS_Vector> splinePoints;
     /** Fit-point tolerance from the source SPLINE, when available. */
