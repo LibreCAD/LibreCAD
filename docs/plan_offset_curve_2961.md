@@ -23833,3 +23833,25 @@ This covers only the recorded quadratic control/knot/weight pattern, scale,
 translation ratio, distance factors, and signed sides. Other degree-2
 periodic layouts, broader numeric extremes, exact-head CI, and the remaining
 source-family variant gates remain open.
+
+#### W563cb. Verify Wrapped Periodic DWG Offset Caches Through ODA (2026-11-07)
+
+Added opt-in fixture preservation and independent conversion checks to the
+wrapped periodic spline staged-import matrix. The preserved DWGs span degrees
+2 and 3, five- and six-distinct-control layouts, rational and unit weights,
+three scales, two distance factors, both signed sides, and R2000/R2018 output.
+ODA File Converter 27.1 converted all 192 fixtures to R2018 DXF with zero
+`.err` files. The optional `LIBRECAD_WRAPPED_PERIODIC_ODA_DXF_DIR` gate checks
+that each converted carrier retains one SPLINE with matching control points,
+knots and weights; native staged-import checks continue to validate typed
+source and cache identity.
+
+The focused native case passes 56,932 assertions. The focused native-plus-ODA
+case passes 88,319 assertions. Test commit `1dd4a6968`
+(`test(offset): verify wrapped spline caches with ODA`); the Release test
+target builds and `git diff --check` passes.
+
+This checks ODA conversion and carrier values for the enumerated cache matrix,
+not full geometry comparison in another CAD kernel or all spline layouts and
+DWG versions. Independent CAD geometry, additional layouts/versions, visible
+GUI, exact-head CI, and remaining family-variant gates remain open.
