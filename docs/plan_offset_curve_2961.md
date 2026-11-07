@@ -22072,8 +22072,10 @@ typed curve` covers changing the requested family before choosing a candidate;
 effects` covers all nine families and candidate-filter purity; the W563b real
 Properties transaction matrix covers Accept/Undo/Redo; the W563d matrix covers
 Cancel atomicity; W563e/W563g cover malformed or lossy candidates. The current
-source-picker union passes 6,791 assertions across 9 Catch2 cases on the
-current product tree.
+source-picker union passes 6,883 assertions across 10 Catch2 cases at the
+requalified PR head (W563ag). This supersedes the earlier 6,791-assertion
+W563g snapshot; W563i separately records source resolution/highlighting after
+reopening Properties.
 
 Remaining implementation/validation work is not another selector: continue
 the W563 inventory of per-family variants through direct offset, worker/cache
@@ -22703,3 +22705,19 @@ and malformed/unsupported candidate refusal at this local PR head. It is
 headless widget integration evidence, not visible-GUI, exhaustive geometric
 variant, or external-CAD acceptance. Exact-head remote CI was still active
 when queried and must be checked again after future pushes.
+
+#### W563ah. Qualify Wrapped-periodic Spline Import Across Scales and Translation (2026-11-07)
+
+Extended the wrapped-periodic closed degree-3 spline staged-import matrix to
+uniform scales `1e-3`, `1`, and `1e3`, applying a translation of
+`(1e6, -2e6)` times the scale. For every source size, both signed offset sides
+are generated and promoted through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+Each of the 30 file cases retains the exact typed source definition and
+matches the generated cache fingerprint. The focused Release case passes
+3,581 assertions.
+
+Test commit `47ba81cf4` (`test(offset): qualify periodic spline import
+scales`). This closes only the recorded wrapped-periodic layout, distance,
+three scales, and relative translation. Other periodic knot/control layouts,
+distances, transform neighborhoods, external-CAD semantic/visual review,
+visible-GUI acceptance, and exact-head CI remain open.
