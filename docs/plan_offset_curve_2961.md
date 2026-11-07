@@ -21992,6 +21992,21 @@ qualifies modal cancellation after successful preparation for representative
 variants; helper failure, stale document mutation, and all-variant atomicity
 remain covered by their existing focused tests or open W563 inventory.
 
+#### W563e. Lossy Projected Polyline Picker Exclusion (2026-11-07)
+
+Extended the unsupported-variant Properties test with a polyline carrying the
+`LibreCAD_POLYLINE_OCS` provenance marker. Switching the source type to
+Polyline now has an explicit UI assertion that this lossy projection is not
+offered, the empty-bucket diagnostic appears, and the entity is not selected.
+This ties the existing source-capture rejection for projected OCS polylines to
+the actual picker eligibility path.
+
+The focused unsupported-variant test passes 430 assertions; `librecad_tests`
+builds and `git diff --check` passes. Test commit `41ae68512`
+(`test(offset): reject lossy polyline picker sources`). This only qualifies
+the OCS projection exclusion; other source-specific eligibility and full
+external acceptance remain open.
+
 This closes the requested UI type-switch and representative nine-family
 selection/replacement behavior. The follow-up requirement is specifically to
 change the source type as part of choosing a new source, then pick an entity of
