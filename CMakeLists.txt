@@ -2849,6 +2849,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
         librecad/src/ui/dialogs/tests/lc_translation_catalog_tests.cpp
+        librecad/src/ui/dock_widgets/block_widget/tests/lc_blockwidget_filter_tests.cpp
         librecad/src/ui/dialogs/settings/options_drawing/tests/lc_dlgoptionsdrawingtests.cpp
         librecad/src/ui/dialogs/settings/options_widget/tests/lc_stylesheetoptiontests.cpp
         librecad/src/ui/dock_widgets/layers_tree/tests/lc_layertreewidget_tests.cpp

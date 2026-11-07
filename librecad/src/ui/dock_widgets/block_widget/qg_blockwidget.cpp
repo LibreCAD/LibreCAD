@@ -448,6 +448,30 @@ void QG_BlockWidget::blockAdded(RS_Block*) {
 }
 
 
+QRegularExpression QG_BlockWidget::blockNameFilter(const QString& input) {
+    if (input.isEmpty()) {
+        return QRegularExpression("");
+    }
+    // QRegularExpression::wildcardToRegularExpression() would also read [..] as a character class,
+    // so a name like "[0041]" (as the blocks of a font being edited have) never matched itself
+    const bool hasPattern = input.contains('*') || input.contains('?');
+    QString pattern;
+    for (const QChar c : input) {
+        if (c == '*') {
+            pattern += ".*";
+        } else if (c == '?') {
+            pattern += '.';
+        } else {
+            pattern += QRegularExpression::escape(QString(c));
+        }
+    }
+    if (!hasPattern) {
+        pattern = ".*" + pattern + ".*";  // "contains" matching
+    }
+    return QRegularExpression(QRegularExpression::anchoredPattern(pattern),
+                              QRegularExpression::CaseInsensitiveOption | QRegularExpression::DotMatchesEverythingOption);
+}
+
 /**
  * Called when reg-expression matchBlockName->text changed
  */
@@ -456,17 +480,8 @@ void QG_BlockWidget::slotUpdateBlockList() const {
         return;
     }
 
-    QString input = m_matchBlockName->text();
-    if (input.isEmpty()) {
-        m_proxyModel->setFilterRegularExpression(QRegularExpression(""));  // Clear filter to show all
-    } else {
-        const bool hasPattern = input.contains('*') || input.contains('?');
-        if (!hasPattern) {
-            input = "*" + input + "*";  // Wrap for "contains" matching
-        }
-        const QRegularExpression rx(QRegularExpression::wildcardToRegularExpression(input), QRegularExpression::CaseInsensitiveOption);
-        m_proxyModel->setFilterRegularExpression(rx);
-    }
+    const QString input = m_matchBlockName->text();
+    m_proxyModel->setFilterRegularExpression(blockNameFilter(input));  // empty input: show all
 
     restoreSelections();  // Restore after filter change
 }

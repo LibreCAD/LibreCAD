@@ -27,6 +27,7 @@
 #ifndef QG_BLOCKWIDGET_H
 #define QG_BLOCKWIDGET_H
 
+#include <QRegularExpression>
 #include <QSortFilterProxyModel>
 
 #include "lc_graphicviewawarewidget.h"
@@ -93,6 +94,10 @@ public:
     }
     void updateWidget();
     void activateBlock(RS_Block* block);
+    /// The expression the filter box uses for what was typed: only * and ? are wildcards, every
+    /// other character stands for itself, so names with [ ] ( ) < > can be found. Typed text without
+    /// a wildcard matches anywhere in the name, with a wildcard it must match the whole name.
+    static QRegularExpression blockNameFilter(const QString& input);
     void blockAdded(RS_Block*) override;
     void blockEdited(RS_Block*) override{
         updateWidget();
