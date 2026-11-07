@@ -93,6 +93,15 @@ distinct parabola type. This is already implemented at the UI-contract level;
 remaining work is end-to-end support for each advertised family and geometry
 variant, with unsupported variants excluded or refused without mutating the
 current source/cache. Do not add another selector or duplicate parabola UI.
+The repeated 2026-11-07 request confirms that changing the family is part of
+the replacement flow itself, not a separate source-type edit after selection.
+The picker contract is the exact `SupportedKinds` inventory: line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+Parabola remains independently selectable and must retain its dynamic type
+through candidate filtering and replacement. The UI contract is complete;
+"expand support to all supported types" continues as geometry-path work across
+the listed families (eligibility, generation, worker/cache, import/export, and
+round-trip), with explicit refusal coverage for unsupported variants.
 The 2026-11-07 follow-up reconfirms that the editable Properties source widget
 must change source type before selection and expose every currently modeled
 family: line, arc, circle, ellipse, spline, spline-points, parabola, bounded
