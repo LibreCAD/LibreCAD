@@ -794,8 +794,8 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
 }
 
 #ifdef DWGSUPPORT
-TEST_CASE("DWG refuses tangent-constrained spline-points without exact fit geometry",
-          "[dwg][filter][spline-points][fit-points][refusal]") {
+TEST_CASE("DWG preserves tangent-constrained spline-points as exact control splines",
+          "[dwg][filter][spline-points][fit-points][roundtrip]") {
   ensureSettings();
   const std::vector<std::vector<RS_Vector>> fitPointSets{
       {{0.0, 0.0}, {2.0, 3.0}, {5.0, 0.0}},
@@ -855,11 +855,43 @@ TEST_CASE("DWG refuses tangent-constrained spline-points without exact fit geome
         std::remove(path.c_str());
         {
           RS_FilterDXFRW writer;
-          CHECK_FALSE(writer.fileExport(graphic, QString::fromStdString(path),
-                                        format));
+          REQUIRE(writer.fileExport(graphic, QString::fromStdString(path),
+                                    format));
         }
+        preserveTangentSplineDwg(
+            path, "control-net-mode" + std::to_string(tangentMode) + "-" +
+                      pointSuffix + "-" + suffix + ".dwg");
+        RS_Graphic reopened;
+        std::vector<SplineRecord> written;
+        importFile(reopened, path, RS2::FormatDWG, &written);
         std::filesystem::remove(path);
+
+        REQUIRE(written.size() == 1);
+        CHECK(written.front().m_scenario == 1);
+        CHECK(written.front().m_degree == 2);
+        CHECK(written.front().m_fitPoints.empty());
+        checkSameVectors(written.front().m_controlPoints,
+                         source.getControlPoints());
+        CHECK_FALSE(written.front().m_tangentStart.magnitude() > 0.0);
+        CHECK_FALSE(written.front().m_tangentEnd.magnitude() > 0.0);
+
+        REQUIRE(reopened.count() == 1);
+        auto* reopenedSpline = dynamic_cast<LC_SplinePoints*>(*reopened.begin());
+        REQUIRE(reopenedSpline != nullptr);
+        CHECK_FALSE(reopenedSpline->getData().fitTangentsConstrained);
         CHECK(stored->fitTangentsMatchCurve());
+        REQUIRE(reopenedSpline->getSegmentCount() == source.getSegmentCount());
+        for (int i = 0; i <= 100; ++i) {
+          const double parameter = static_cast<double>(source.getSegmentCount()) *
+                                   i / 100.0;
+          const auto side = i == 100 ? LC_CurveEvaluationSide::Left
+                                     : LC_CurveEvaluationSide::Right;
+          LC_CurveJet sourceJet;
+          LC_CurveJet reopenedJet;
+          REQUIRE(source.tryEvaluateJet(parameter, side, sourceJet));
+          REQUIRE(reopenedSpline->tryEvaluateJet(parameter, side, reopenedJet));
+          CHECK(reopenedJet.point.distanceTo(sourceJet.point) < 1.0e-10);
+        }
       }
     }
   }

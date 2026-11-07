@@ -32877,14 +32877,6 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
  */
 void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
   LC_SplinePointsData &data = s->getData();
-  if (m_dwgW && data.fitTangentsConstrained) {
-    RS_DEBUG->print(RS_Debug::D_WARNING,
-                    "RS_FilterDXFRW::writeSplinePoints: refusing DWG export "
-                    "of tangent-constrained spline-points geometry because "
-                    "the DWG fit-point interpolation is not curve-equivalent");
-    m_writeFailed = true;
-    return;
-  }
 
   int nCtrls = s->getNumberOfControlPoints();
   auto const &cp = s->getControlPoints();
