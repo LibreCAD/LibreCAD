@@ -5828,6 +5828,19 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
                 REQUIRE(deviation);
                 CHECK(*deviation <=
                       periodicSplineGeometryTolerance(expectedCache, scale));
+
+                xd::Options dxfEncoding;
+                dxfEncoding.asciiDxf = true;
+                const auto convertedMetadata = xd::parseAndStrip(
+                    convertedSpline.extData, dxfEncoding);
+                REQUIRE(convertedMetadata.status == xd::Status::Schema2);
+                REQUIRE(convertedMetadata.definition);
+                REQUIRE(convertedMetadata.definition->source);
+                const auto convertedSource = values::encodeSourceDefinition(
+                    *convertedMetadata.definition->source);
+                REQUIRE(convertedSource);
+                CHECK(QCborValue(*expectedSource).toCbor() ==
+                      QCborValue(*convertedSource).toCbor());
             }
         }
     }
