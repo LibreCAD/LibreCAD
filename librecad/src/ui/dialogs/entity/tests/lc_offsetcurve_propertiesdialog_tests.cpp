@@ -904,10 +904,17 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     constrainedPointsData.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
     constrainedPointsData.fitTangentsConstrained = true;
     auto* constrainedPoints = new LC_SplinePoints(nullptr, constrainedPointsData);
+    auto* lossyProjectedPolyline = new RS_Polyline;
+    lossyProjectedPolyline->addVertex({0, 0});
+    lossyProjectedPolyline->addVertex({2, 0});
+    lossyProjectedPolyline->setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "LibreCAD_POLYLINE_OCS"),
+        std::make_shared<DRW_Variant>(1040, .125)});
     f.graphic.addEntity(unsupportedSpline);
     f.graphic.addEntity(unboundedHyperbola);
     f.graphic.addEntity(constrainedFit);
     f.graphic.addEntity(constrainedPoints);
+    f.graphic.addEntity(lossyProjectedPolyline);
 
     std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
     NativeWidget widget;
@@ -921,7 +928,8 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
 
     for (const auto kind : {LC_OffsetSourceGeometry::Kind::Spline,
                             LC_OffsetSourceGeometry::Kind::SplinePoints,
-                            LC_OffsetSourceGeometry::Kind::BoundedHyperbola}) {
+                            LC_OffsetSourceGeometry::Kind::BoundedHyperbola,
+                            LC_OffsetSourceGeometry::Kind::Polyline}) {
         CAPTURE(kind);
         const int typeIndex = typeBox->findData(static_cast<int>(kind));
         REQUIRE(typeIndex >= 0);
@@ -934,6 +942,7 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
         CHECK_FALSE(unboundedHyperbola->getFlag(RS2::FlagSelected));
         CHECK_FALSE(constrainedFit->getFlag(RS2::FlagSelected));
         CHECK_FALSE(constrainedPoints->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(lossyProjectedPolyline->getFlag(RS2::FlagSelected));
         before.geometry(*clone);
     }
 }
