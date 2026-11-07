@@ -22772,3 +22772,20 @@ This qualifies these two control layouts only; arbitrary periodic knot vectors,
 other control counts and weight patterns, broader topology/distance/transform
 neighborhoods, visible GUI, independent-CAD review, and exact-head CI remain
 open.
+
+#### W563al. Qualify Wrapped-periodic Degree-2 and Degree-3 Imports (2026-11-07)
+
+Generalized the same staged-import matrix to closed periodic degree-2 and
+degree-3 splines. Each degree is tested with five and six independent control
+points, implicit unit weights and a positive nonuniform rational weight layout
+whose repeated seam weights are derived from the independent controls. Both
+relative distances, both signed sides, three scaled/translated source sizes,
+and all five DXF/DWG lanes are retained. All 480 combinations preserve exact
+typed source data and match the generated cache fingerprints. The focused
+Release test passes 61,109 assertions; the test target builds and
+`git diff --check` passes.
+
+Test commit `c5190aa36` (`test(offset): cover periodic spline degrees`). Degree
+1, other periodic control counts/weights/knot layouts, broader topology and
+distance/transform neighborhoods, visible-GUI acceptance, independent-CAD
+review, and exact-head CI remain open.
