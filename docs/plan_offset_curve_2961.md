@@ -24081,9 +24081,11 @@ The observed candidates are approximately `2.33238e-10` at the periodic start,
 `2.55365e-10` near the end for the gradual ordering, and `2.48043e-10` near
 the end for the reverse ordering. Native-jet differences are at most about
 `4.1e-15`. The oracle test passes 21 assertions; the unchanged periodic worker
-matrix passes 1,708 assertions, and the broader existing worker/cache/spline
-selection passes 71,914 assertions. Release worker-test target builds and
-`git diff --check` passes. Product/test commit is recorded below when pushed.
+matrix passes 1,708 assertions. The earlier worker/cache/spline selection
+passed 71,914 assertions across seven cases; after adding the oracle, the
+combined selection passes 71,935 assertions across eight cases. Release
+worker-test target builds and `git diff --check` passes. Test commit
+`e0f292f39` (`test(offset): measure periodic spline speed with high precision`).
 
 This is a high-precision sampled minimum, not a certified lower bound over
 each rational span, nor a high-precision offset/topology comparison. It
