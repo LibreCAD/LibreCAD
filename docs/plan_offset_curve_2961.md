@@ -22308,3 +22308,24 @@ assertions across 7 cases. The focused worker-kernel test target builds on the
 merged Release tree. This closes the tested open-polyline worker generation and
 cache-admission cases only; other per-variant direct/cache/import cross-products,
 visible GUI acceptance, and independent-CAD checks remain open.
+
+#### W563p. Source-family Worker Cache Admission Matrix (2026-11-07)
+
+Extended the typed operation-7 source-generation matrix's 15 fixtures across
+ellipse, rational spline, both spline-points representations, degree-1 and
+cubic splines, parabola, bounded hyperbola, line, arc, circle, open and closed
+polyline, and wrapped-periodic spline variants. Each generated ordinary result
+is now submitted unchanged as an operation-8 candidate against the original
+typed source definition. A single spline or line candidate must receive exact
+cache admission; non-spline output, multiple entities, or an otherwise
+unrepresentable topology must be refused without mutation. Both admission and
+refusal replies are encoded and decoded against their original requests, and
+the transported status must match the local result.
+
+Validation: rebuilt `librecad_offset_worker_kernel_tests`; the focused
+`[lc-offsetcurve][worker-kernel][source-generation]` selection passes 1,207
+assertions across 7 cases. This extends the prior operation-7-only evidence
+(W563k) with exact operation-8 decisions for these representative family
+fixtures. It does not establish every family variant or tolerance/scale, full
+document-import promotion, direct GUI picking, visible GUI acceptance, or
+independent-CAD interoperability; those remain open.

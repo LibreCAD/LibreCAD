@@ -257,8 +257,8 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
             REQUIRE(splineEntity);
             CHECK(splineEntity->getData().weights == std::vector<double>{1.0, 1.0, 1.0});
         }
-        const req::Request input{token, req::GenerateSource{
-            LC_OffsetSourceDefinition{sources[i], .25, 1e-4, false}, {}}};
+        const LC_OffsetSourceDefinition definition{sources[i], .25, 1e-4, false};
+        const req::Request input{token, req::GenerateSource{definition, {}}};
         LC_OffsetWorkerKernel::Trace trace;
         const auto reply = LC_OffsetWorkerKernel::run(input, &trace);
         const auto& output = native(reply, 7);
@@ -282,6 +282,41 @@ TEST_CASE("offset worker op7 generates and transports a typed source without cac
         CHECK_FALSE(transported.curve);
         CHECK(transported.ordinary.size() == output.ordinary.size());
         CHECK(transported.ordinaryUsage.outputEntities == output.ordinaryUsage.outputEntities);
+
+        RS_SplineData candidate;
+        bool cacheCandidateRepresentable = output.ordinary.size() == 1;
+        if (cacheCandidateRepresentable) {
+            if (const auto* splineOutput = std::get_if<RS_SplineData>(&output.ordinary.front())) {
+                candidate = *splineOutput;
+            } else if (const auto* segment = std::get_if<req::Segment>(&output.ordinary.front())) {
+                candidate.degree = 1;
+                candidate.controlPoints = {segment->start, segment->end};
+                candidate.knotslist = {0, 0, 1, 1};
+                candidate.weights = {1, 1};
+            } else {
+                cacheCandidateRepresentable = false;
+            }
+        }
+        const req::Request validationInput{token,
+            req::ValidateSourceCache{candidate, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validationInput);
+        const auto& validation = native(validationReply, 8);
+        if (cacheCandidateRepresentable) {
+            CHECK(validation.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validation.changed);
+        } else {
+            CHECK(validation.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+            CHECK_FALSE(validation.changed);
+        }
+        CHECK_FALSE(validation.curve);
+        CHECK(validation.ordinary.empty());
+        const auto validationWire = result::encode(validationReply, validationInput);
+        REQUIRE(validationWire);
+        const auto validationRoundTrip = result::decode(*validationWire, validationInput);
+        REQUIRE(validationRoundTrip);
+        const auto& transportedValidation = native(*validationRoundTrip, 8);
+        CHECK(transportedValidation.refusal == validation.refusal);
+        CHECK(transportedValidation.changed == validation.changed);
         if (i == 4) {
             auto equivalent = std::get<RS_SplineData>(sources[i].value);
             equivalent.weights.assign(equivalent.controlPoints.size(), 1.0);
