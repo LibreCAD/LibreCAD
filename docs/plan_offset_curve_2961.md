@@ -24127,7 +24127,8 @@ selection passes 71,914 assertions across seven cases; conditioned periodic
 offsets now classify as `SingularOffset` or `AmbiguousRegularity`, with no
 partial ordinary output, rather than a translation-driven `UndefinedTangent`.
 `[curve-offset][d0]` passes 15,343 assertions across 19 cases, and `[spline]`
-passes 28,390 assertions across 77 cases. Release CMake targets
+passes 28,390 assertions across 77 cases. The DXF/DWG spline round-trip
+selection passes 7,076 assertions across eight cases. Release CMake targets
 `librecad_offset_worker_kernel_tests` and `librecad_tests` build; `git diff
 --check` passes. Implementation commit `3c80a2edd` (`fix(offset): stabilize
 rational spline tangent checks`).
