@@ -22007,6 +22007,19 @@ builds and `git diff --check` passes. Test commit `41ae68512`
 the OCS projection exclusion; other source-specific eligibility and full
 external acceptance remain open.
 
+#### W563f. Combined Source-picker Properties Requalification (2026-11-07)
+
+After the replacement/undo, family-filter, cancellation, and lossy-OCS cases
+were added, reran the complete
+`[gui][dialog][offsetcurve][source]` Release selection on the current product
+tree. All 9 matching Catch2 cases pass, totaling 6,144 assertions. This union
+cross-checks the new cases with existing source-picker eligibility, tangent
+admission, refusal-atomicity, parabola identity, and source replacement tests.
+It does not imply full source-variant or persistence coverage. The exact command
+was `QT_QPA_PLATFORM=offscreen
+/private/tmp/LibreCAD-offset-merge-build/librecad_tests
+'[gui][dialog][offsetcurve][source]'`.
+
 This closes the requested UI type-switch and representative nine-family
 selection/replacement behavior. The follow-up requirement is specifically to
 change the source type as part of choosing a new source, then pick an entity of
