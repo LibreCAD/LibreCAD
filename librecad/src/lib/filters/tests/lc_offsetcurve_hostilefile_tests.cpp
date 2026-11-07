@@ -6107,6 +6107,174 @@ TEST_CASE("nonuniform rational periodic spline import follows output topology",
     }
 }
 
+TEST_CASE("high-ratio open rational spline offsets round trip through DXF and DWG",
+          "[lc-offsetcurve][import-session][typed-source][spline-variant][rational][conditioned]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-conditioned-open-rational-spline");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+
+    const std::array<std::vector<double>, 2> weightProfiles{{
+        {1e-6, 3.162277660168379e-5, 1e-3, 0.03162277660168379, 1.0,
+         31.622776601683793, 1e3, 31622.776601683792, 1e6},
+        {1e6, 31622.776601683792, 1e3, 31.622776601683793, 1.0,
+         0.03162277660168379, 1e-3, 3.162277660168379e-5, 1e-6}
+    }};
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+
+    for (std::size_t profileIndex = 0; profileIndex < weightProfiles.size();
+         ++profileIndex) {
+        CAPTURE(profileIndex);
+        RS_SplineData source{2, false};
+        source.controlPoints = {{0, 0}, {10, 5}, {20, 12}, {30, 20},
+                                {40, 28}, {50, 35}, {60, 40}, {70, 42},
+                                {80, 40}};
+        source.knotslist = {0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7};
+        source.weights = weightProfiles[profileIndex];
+        RS_Spline sourceCheck{nullptr, source};
+        REQUIRE(sourceCheck.validate());
+
+        for (const double signedDistance : {-.005, .005}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{
+                LC_OffsetSourceGeometry{source}, signedDistance, 1e-4, false};
+            auto sourceEntity = definition.source.makeEntity();
+            REQUIRE(sourceEntity);
+            const auto options = LC_OffsetWorkerTolerance::directOptions(
+                *sourceEntity, std::abs(signedDistance), definition.relativeTolerance);
+            REQUIRE(options);
+            const auto generated = LC_CurveOffset::buildDirectBranches(
+                *sourceEntity,
+                LC_CurveOffset::makeSideRequest(
+                    signedDistance > 0 ? LC_CurveOffsetSide::Left
+                                       : LC_CurveOffsetSide::Right,
+                    std::abs(signedDistance)),
+                *options, LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+            const auto materialized = LC_CurveOffset::materializeBranches(
+                *sourceEntity, generated, *options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(materialized.entities.size() == 1);
+            const auto* cacheEntity = dynamic_cast<const RS_Spline*>(
+                materialized.entities.front().get());
+            REQUIRE(cacheEntity);
+            REQUIRE(cacheEntity->validate());
+            const RS_SplineData cache = cacheEntity->getData();
+
+            for (const auto& format : formats) {
+#ifndef DWGSUPPORT
+                if (format.dwg) continue;
+#endif
+                xd::Definition carrier;
+                carrier.source = definition;
+                xd::Options encoding;
+                if (format.dwg) {
+                    encoding.eed = true;
+                    encoding.textEncoding = xd::TextEncoding::Utf16;
+                } else {
+                    encoding.asciiDxf = false;
+                }
+                const auto tags = xd::forExport(
+                    {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+                    carrier, encoding);
+                REQUIRE(tags);
+                DRW_Spline raw = f::raw(1, *tags);
+                raw.controllist.clear();
+                for (const auto& point : cache.controlPoints)
+                    raw.controllist.push_back(
+                        std::make_shared<DRW_Coord>(point.x, point.y, 0));
+                raw.knotslist = cache.knotslist;
+                raw.weightlist = cache.weights;
+                raw.degree = cache.degree;
+                raw.flags = 8;
+                raw.m_scenario = 1;
+                raw.ncontrol = raw.controllist.size();
+                raw.nknots = raw.knotslist.size();
+                raw.nfit = 0;
+
+                const std::string basename = "profile-" +
+                    std::to_string(profileIndex) +
+                    (signedDistance > 0 ? "-left-" : "-right-");
+                const auto input = directory.file(basename + format.suffix);
+#ifdef DWGSUPPORT
+                if (format.dwg) {
+                    f::dwgFile(input, raw, format.version);
+                    preserveTypedSourceDwg(input, "conditioned-open-" +
+                        basename + format.suffix);
+                } else {
+                    f::binaryDxf(input, raw, format.version);
+                }
+#else
+                f::binaryDxf(input, raw, format.version);
+#endif
+                const auto outcome = stagedImport(input, format.lane);
+                REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+                REQUIRE(outcome.graphic);
+                CHECK(outcome.admitted == 1);
+                CHECK(outcome.downgraded == 0);
+                const auto* imported = dynamic_cast<const LC_OffsetCurve*>(
+                    f::sole(*outcome.graphic));
+                REQUIRE(imported);
+                REQUIRE(imported->sourceDefinition());
+                const auto expectedSource = values::encodeSourceDefinition(definition);
+                const auto importedSource = values::encodeSourceDefinition(
+                    *imported->sourceDefinition());
+                REQUIRE(expectedSource);
+                REQUIRE(importedSource);
+                CHECK(QCborValue(*expectedSource).toCbor() ==
+                      QCborValue(*importedSource).toCbor());
+                CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+                      RS_Spline::geometryFingerprint(cache));
+
+                if (format.dwg) {
+                    const char* odaDirectory = std::getenv(
+                        "LIBRECAD_CONDITIONED_RATIONAL_ODA_DXF_DIR");
+                    if (odaDirectory != nullptr && *odaDirectory != '\0') {
+                        auto odaPath = std::filesystem::path(odaDirectory) /
+                            ("conditioned-open-" + basename + format.suffix);
+                        odaPath.replace_extension(".dxf");
+                        INFO(odaPath.string());
+                        REQUIRE(std::filesystem::is_regular_file(odaPath));
+                        const auto converted = f::readCodec(odaPath);
+                        REQUIRE(converted.splines.size() == 1);
+                        const auto& convertedSpline = converted.splines.front();
+                        const auto deviation = sampledSplineDeviation(
+                            cache, convertedSpline, 256);
+                        REQUIRE(deviation);
+                        CHECK(*deviation <= 1e-5);
+
+                        xd::Options dxfEncoding;
+                        dxfEncoding.asciiDxf = true;
+                        const auto convertedMetadata = xd::parseAndStrip(
+                            convertedSpline.extData, dxfEncoding);
+                        REQUIRE(convertedMetadata.status == xd::Status::Schema2);
+                        REQUIRE(convertedMetadata.definition);
+                        REQUIRE(convertedMetadata.definition->source);
+                        const auto convertedSource = values::encodeSourceDefinition(
+                            *convertedMetadata.definition->source);
+                        REQUIRE(convertedSource);
+                        CHECK(QCborValue(*expectedSource).toCbor() ==
+                              QCborValue(*convertedSource).toCbor());
+                    }
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("nonuniform periodic spline knots preserve seam through staged import",
           "[lc-offsetcurve][import-session][typed-source][spline-variant]") {
     Setup setup;
