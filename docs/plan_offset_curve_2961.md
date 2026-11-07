@@ -23336,16 +23336,17 @@ remain open.
 
 #### W563bg. Reconcile Latest Source-curve Type-switch Request (2026-11-07)
 
-The latest request is satisfied by the existing source replacement widget and
-must not be interpreted as requiring another widget or a parabola-only patch.
-When replacing a source, the user can select its curve family before selecting
-the drawing entity. The selector is derived from the canonical
-`LC_OffsetSourceGeometry::SupportedKinds` list and includes all nine modeled
+The authoritative picker contract is: while replacing a source, the user can
+change the source-curve family first; the candidate set then refreshes to that
+family; selecting a matching drawing entity replaces the stored typed source;
+and an existing eligible source remains resolvable and highlightable. The
+selector is derived from the canonical
+`LC_OffsetSourceGeometry::SupportedKinds` list and exposes all nine modeled
 families: line, arc, circle, ellipse, `RS_Spline`, `LC_SplinePoints`, distinct
-`LC_Parabola`, bounded `LC_Hyperbola`, and `RS_Polyline`. Choosing a family
-filters candidates; choosing a matching candidate replaces the typed source.
-An existing source remains resolvable and highlightable, and parabola must be
-classified before its `LC_SplinePoints` base class.
+`LC_Parabola`, bounded `LC_Hyperbola`, and `RS_Polyline`. Parabola must be
+classified before its `LC_SplinePoints` base class. This repeated request
+confirms the existing contract; it does not require another widget or a
+parabola-only patch.
 
 The implementation and automated acceptance evidence are already recorded in
 W563au: the selector is compared entry-by-entry with `SupportedKinds`, and the
@@ -23356,11 +23357,14 @@ The focused selector test passed 2,890 assertions; commits
 picker variants) are recorded above. Therefore no new product-code slice is
 opened by this repeated request. The visible-GUI gate remains open.
 
-Scope boundary: selector membership means a family can be selected as a
-replacement candidate; it does not claim every geometric variant works through
-offset construction, native worker/cache, import/export, or DXF/DWG round-trip.
-Those per-variant gaps remain in their respective roadmap matrices. Reject an
-unsupported candidate without mutating the current source or its cache.
+Acceptance boundary: picker completion requires a type switch before selection,
+candidate refresh, typed replacement, and existing-source highlighting for all
+nine listed families. Selector membership only means that a family can be
+selected as a replacement candidate; it does not claim every geometric variant
+works through offset construction, native worker/cache, import/export, or
+DXF/DWG round-trip. Those per-variant gaps remain in their respective roadmap
+matrices. Reject an unsupported candidate without mutating the current source
+or its cache.
 
 #### W563bh. Extend Fit-point Cut Round-trips to Longer Chains (2026-11-07)
 
@@ -23536,3 +23540,29 @@ This preserves closed curve geometry, not original fit-point authoring data;
 closed sources are exported as control nets. Other closed shapes, constrained
 tangents, other output versions/consumers, visible-GUI acceptance, and
 exact-head CI remain open.
+
+#### W563bo. Extend Closed Periodic Spline-point Counts to 11 and 12 (2026-11-07)
+
+Extended the shared closed periodic `LC_SplinePoints` control-set matrix with
+11- and 12-control layouts. Because the fixture set feeds both closed-source
+round-trip and cut coverage, the new cases exercise six DWG versions for
+periodic closed geometry and the existing cut fractions; native reopen checks
+preserve both output piece geometries. The focused native closed-roundtrip/cut
+selection passes 359,962 assertions across five cases.
+
+The expanded fixture directory contains 498 DWGs. ODA File Converter 27.1
+converted all 498 to R2018 DXF with zero `.err` files. The ODA-converted
+spline-point geometry selection passes 231,030 assertions; the external cut
+geometry selection passes 411,282 assertions. Both compare evaluated curves
+against native source geometry, with the closed periodic comparison bounded at
+`1e-5`. Test commit `3b80f94a6` (`test(dwg): extend closed periodic
+spline-point counts`).
+
+This qualifies the tested 11/12-control periodic layouts and cut cases, not
+arbitrary periodic knots, weights, degree, topology, or closed fit-point
+authoring. Visible-GUI acceptance, independent CAD beyond ODA, and exact-head
+CI remain open. Separately, W563bg is the authoritative source-picker contract:
+type switching before selection, refreshed family candidates, typed
+replacement, highlighting of an eligible current source, and nine modeled
+families including distinct parabola. Picker family coverage does not imply
+complete per-variant geometry, worker/cache, or DXF/DWG support.
