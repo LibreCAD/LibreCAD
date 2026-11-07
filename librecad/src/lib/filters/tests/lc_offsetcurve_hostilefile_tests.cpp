@@ -103,6 +103,61 @@ void preserveTypedSourceDwg(const std::filesystem::path& source,
     REQUIRE_FALSE(error);
 }
 
+std::optional<double> sampledSplineDeviation(const RS_SplineData& expected,
+                                             const DRW_Spline& converted,
+                                             const int intervals) {
+    if (intervals <= 0) return std::nullopt;
+    RS_SplineData convertedData{converted.degree, false};
+    for (const auto& control : converted.controllist) {
+        if (!control) return std::nullopt;
+        convertedData.controlPoints.emplace_back(control->x, control->y, control->z);
+    }
+    convertedData.knotslist = converted.knotslist;
+    convertedData.weights = converted.weightlist;
+    if (convertedData.weights.empty())
+        convertedData.weights.assign(convertedData.controlPoints.size(), 1.0);
+
+    RS_Spline expectedCurve{nullptr, expected};
+    RS_Spline convertedCurve{nullptr, std::move(convertedData)};
+    if (!expectedCurve.validate() || !convertedCurve.validate()) return std::nullopt;
+    double expectedStart = 0.0;
+    double expectedEnd = 0.0;
+    double convertedStart = 0.0;
+    double convertedEnd = 0.0;
+    if (!expectedCurve.getParameterDomain(expectedStart, expectedEnd) ||
+        !convertedCurve.getParameterDomain(convertedStart, convertedEnd) ||
+        convertedStart != expectedStart || convertedEnd != expectedEnd)
+        return std::nullopt;
+
+    double maximumDeviation = 0.0;
+    for (int sample = 0; sample <= intervals; ++sample) {
+        const double fraction = static_cast<double>(sample) / intervals;
+        const double parameter = expectedStart +
+            fraction * (expectedEnd - expectedStart);
+        const auto side = sample == intervals
+            ? LC_CurveEvaluationSide::Left
+            : LC_CurveEvaluationSide::Right;
+        LC_CurveJet expectedJet;
+        LC_CurveJet convertedJet;
+        if (!expectedCurve.tryEvaluateJet(parameter, side, expectedJet) ||
+            !convertedCurve.tryEvaluateJet(parameter, side, convertedJet))
+            return std::nullopt;
+        maximumDeviation = std::max(maximumDeviation,
+                                    expectedJet.point.distanceTo(convertedJet.point));
+    }
+    return maximumDeviation;
+}
+
+double periodicSplineGeometryTolerance(const RS_SplineData& expected,
+                                       const double modelScale) {
+    double coordinateScale = 1.0;
+    for (const RS_Vector& point : expected.controlPoints)
+        coordinateScale = std::max({coordinateScale,
+                                    std::abs(point.x), std::abs(point.y)});
+    return 1e-9 * std::max(1.0, modelScale) +
+           8.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
+}
+
 struct Setup {
     const bool ready{lc::test::ensureSettings()};
     lc::test::QuietLog quiet;
@@ -5768,49 +5823,11 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
                 for (std::size_t i = 0; i < expectedCache.knotslist.size(); ++i)
                     CHECK(convertedSpline.knotslist[i] == expectedCache.knotslist[i]);
 
-                RS_SplineData convertedData{convertedSpline.degree, false};
-                for (const auto& control : convertedSpline.controllist) {
-                    REQUIRE(control);
-                    convertedData.controlPoints.emplace_back(
-                        control->x, control->y, control->z);
-                }
-                convertedData.knotslist = convertedSpline.knotslist;
-                convertedData.weights = convertedSpline.weightlist;
-                if (convertedData.weights.empty())
-                    convertedData.weights.assign(convertedData.controlPoints.size(), 1.0);
-                RS_Spline convertedCurve{nullptr, std::move(convertedData)};
-                RS_Spline expectedCurve{nullptr, expectedCache};
-                REQUIRE(convertedCurve.validate());
-                REQUIRE(expectedCurve.validate());
-                double expectedStart = 0.0;
-                double expectedEnd = 0.0;
-                double convertedStart = 0.0;
-                double convertedEnd = 0.0;
-                REQUIRE(expectedCurve.getParameterDomain(expectedStart, expectedEnd));
-                REQUIRE(convertedCurve.getParameterDomain(convertedStart, convertedEnd));
-                CHECK(convertedStart == expectedStart);
-                CHECK(convertedEnd == expectedEnd);
-                double coordinateScale = 1.0;
-                for (const RS_Vector& point : expectedCache.controlPoints)
-                    coordinateScale = std::max({coordinateScale,
-                        std::abs(point.x), std::abs(point.y)});
-                const double geometryTolerance =
-                    1e-9 * std::max(1.0, scale) +
-                    8.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
-                for (int sample = 0; sample <= 128; ++sample) {
-                    const double fraction = static_cast<double>(sample) / 128.0;
-                    const double parameter = expectedStart +
-                        fraction * (expectedEnd - expectedStart);
-                    const auto side = sample == 128
-                        ? LC_CurveEvaluationSide::Left
-                        : LC_CurveEvaluationSide::Right;
-                    LC_CurveJet expectedJet;
-                    LC_CurveJet convertedJet;
-                    REQUIRE(expectedCurve.tryEvaluateJet(parameter, side, expectedJet));
-                    REQUIRE(convertedCurve.tryEvaluateJet(parameter, side, convertedJet));
-                    CHECK(expectedJet.point.distanceTo(convertedJet.point) <=
-                          geometryTolerance);
-                }
+                const auto deviation =
+                    sampledSplineDeviation(expectedCache, convertedSpline, 128);
+                REQUIRE(deviation);
+                CHECK(*deviation <=
+                      periodicSplineGeometryTolerance(expectedCache, scale));
             }
         }
     }
@@ -6053,6 +6070,12 @@ TEST_CASE("nonuniform rational periodic spline import follows output topology",
                 }
                 for (std::size_t i = 0; i < carrierCache.knotslist.size(); ++i)
                     CHECK(convertedSpline.knotslist[i] == carrierCache.knotslist[i]);
+
+                const auto deviation =
+                    sampledSplineDeviation(carrierCache, convertedSpline, 128);
+                REQUIRE(deviation);
+                CHECK(*deviation <=
+                      periodicSplineGeometryTolerance(carrierCache, scale));
 
                 xd::Options dxfEncoding;
                 dxfEncoding.asciiDxf = true;
