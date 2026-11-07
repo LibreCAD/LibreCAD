@@ -32877,11 +32877,16 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
  */
 void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
   LC_SplinePointsData &data = s->getData();
-  if (m_dwgW && data.fitTangentsConstrained) {
+  const bool writeTangentFitScenario = m_dwgW &&
+      data.fitTangentsConstrained && !data.useControlPoints &&
+      !data.closed && !data.cut && data.splinePoints.size() == 3 &&
+      s->fitTangentsMatchCurve();
+  if (m_dwgW && data.fitTangentsConstrained &&
+      !writeTangentFitScenario) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXFRW::writeSplinePoints: refusing DWG export "
-                    "of a tangent-constrained spline without a lossless "
-                    "encoding");
+                    "of a tangent-constrained spline-points entity without "
+                    "a verified fit-point encoding");
     m_writeFailed = true;
     return;
   }
@@ -32933,15 +32938,15 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
   }
 
   auto const &fitPoints = data.splinePoints;
-  if (data.fitTangentsConstrained) {
+  if (data.fitTangentsConstrained && !writeTangentFitScenario) {
     sp.tgStart = DRW_Coord{data.fitStartTangent.x, data.fitStartTangent.y,
                            data.fitStartTangent.z};
     sp.tgEnd = DRW_Coord{data.fitEndTangent.x, data.fitEndTangent.y,
                          data.fitEndTangent.z};
   }
   const bool writeFitScenario = !data.useControlPoints &&
-                                !data.fitTangentsConstrained &&
-                                fitPoints.size() >= 2;
+      fitPoints.size() >= 2 &&
+      (!data.fitTangentsConstrained || writeTangentFitScenario);
   sp.degree = 2;
   sp.nfit = writeFitScenario ? static_cast<std::int32_t>(fitPoints.size()) : 0;
 
@@ -32953,10 +32958,19 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
     sp.tolfit = std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0
                     ? data.fitTolerance
                     : 0.0000001;
-    const RS_Vector startTangent = fitPoints[1] - fitPoints[0];
-    const RS_Vector endTangent =
-        fitPoints.back() - fitPoints[fitPoints.size() - 2];
-    if (!data.fitTangentsConstrained) {
+    if (data.fitTangentsConstrained) {
+      const auto normalized = [](const RS_Vector &tangent) {
+        const double magnitude = tangent.magnitude();
+        return magnitude > 0.0 ? tangent / magnitude : RS_Vector{0.0, 0.0, 0.0};
+      };
+      const RS_Vector start = normalized(data.fitStartTangent);
+      const RS_Vector end = normalized(data.fitEndTangent);
+      sp.tgStart = DRW_Coord{start.x, start.y, start.z};
+      sp.tgEnd = DRW_Coord{end.x, end.y, end.z};
+    } else {
+      const RS_Vector startTangent = fitPoints[1] - fitPoints[0];
+      const RS_Vector endTangent =
+          fitPoints.back() - fitPoints[fitPoints.size() - 2];
       sp.tgStart = DRW_Coord{startTangent.x, startTangent.y, 0.0};
       sp.tgEnd = DRW_Coord{endTangent.x, endTangent.y, 0.0};
     }
