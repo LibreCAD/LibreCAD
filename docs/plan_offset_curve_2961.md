@@ -24104,3 +24104,38 @@ refusal is geometrically necessary. Keep the production guards and worker
 refusals. The follow-up must certify derivative minima and tangent error near
 the cut, then compare both offset sides against an independent high-precision
 geometry/topology oracle before changing eligibility.
+
+#### W563cm. Stabilize Translated Rational Tangents and Certify Speed (2026-11-07)
+
+Rational spline `tryEvaluateJet()` now evaluates homogeneous numerators relative
+to the active span's first control point, avoiding cancellation of a small
+tangent against a large translated drawing origin. `tryBoundJet(products=true)`
+also encloses rational `|C'|^2` from Bernstein coefficients of
+`A'W - AW'`, divided by a positive `W^4` enclosure. Offset tangent recovery
+uses a feature-scale floor, while coordinate-sensitive position tests retain
+the origin-aware numeric floor.
+
+The 256-bit oracle fixture uses the actual `(1000,-2000)` translated control
+coordinates. Adaptive interval subdivision certifies every nonzero span of all
+three tested `10^12` periodic weight profiles above the tangent floor in 12,
+15, and 15 boxes. Their certified speed-squared lower bounds are
+`2.75394e-21`, `3.34408e-21`, and `3.37902e-21`; independent sampled minima are
+approximately `2.33238e-10`, `2.55365e-10`, and `2.48043e-10`.
+
+The focused oracle passes 27 assertions. The worker/cache/spline-variant
+selection passes 71,914 assertions across seven cases; conditioned periodic
+offsets now classify as `SingularOffset` or `AmbiguousRegularity`, with no
+partial ordinary output, rather than a translation-driven `UndefinedTangent`.
+`[curve-offset][d0]` passes 15,343 assertions across 19 cases, and `[spline]`
+passes 28,390 assertions across 77 cases. Release CMake targets
+`librecad_offset_worker_kernel_tests` and `librecad_tests` build; `git diff
+--check` passes. Implementation commit `3c80a2edd` (`fix(offset): stabilize
+rational spline tangent checks`).
+
+This proves nonvanishing source tangents for these three translated profiles;
+it does not prove their offset branches are regular or geometrically
+equivalent. Do not relax the offset-regularity guard or claim successful cache
+generation. W563cg remains open until high-precision curvature/offset and
+topology comparisons distinguish genuine singularities from unresolved
+regularity. Broader periodic weight layouts, other source-family variants,
+visible-GUI acceptance, and exact-head CI remain open.
