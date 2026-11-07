@@ -23294,5 +23294,21 @@ representation carries resulting curve geometry, not LibreCAD's internal
 `eca5154c9` (initial open cut), `542663ad2` (open-cut control-count matrix),
 `94febc2c6` (initial ODA geometry gate), `7062fa9c6` (closed-cut coverage),
 and `5a3b4c11f` (all three cut locations for open and closed sources).
-Remaining work includes fit-point cut representations, other source topologies,
-the cut bookkeeping contract, visible-GUI acceptance, and exact-head CI.
+
+Closed the fit-point cut writer gap: after `LC_SplinePoints::cut()`, the
+modified control net is authoritative even though the original fit-point list
+remains attached to the data. DWG writing now selects scenario 1 for cut data
+instead of exporting stale fit-point scenario 2. The regression covers 3 fit
+point counts × 3 cut fractions × six DWG versions; the focused native test
+passes 51,588 assertions and the full `[dwg][filter][spline-points][cut]`
+selection passes 170,814 across three cases. `[spline][LC_SplinePoints]`
+remains green at 615 assertions. ODA converted all 54 fit-point cut DWGs to
+R2018 DXF with zero `.err` files; their two pieces match the source under
+`5e-6` symmetric sampled distance (126,684 assertions). Fixtures are in
+`/private/tmp/offset-fit-cut-dwg` and `/private/tmp/offset-fit-cut-oda`; the
+opt-in check is
+`LIBRECAD_OFFSET_CUT_ODA_DXF_DIR=/private/tmp/offset-fit-cut-oda
+librecad_tests '[external][oda][dwg][spline-points][fit-points][cut][geometry]'`.
+Product/test commit `2cfe6380a` (`fix(dwg): preserve cut spline-point
+geometry`). Remaining work includes other source topologies, the internal cut
+bookkeeping contract, visible-GUI acceptance, and exact-head CI.
