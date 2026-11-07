@@ -21494,3 +21494,19 @@ matrices, exact control-net/fit/tangent consistency, tangent-aware worker/cache
 eligibility, and standards-verified DWG representation remain open. Keep
 constrained variants refused for generation/cache promotion and keep DWG
 writing fail-closed until those independent gates pass.
+
+### W550. Reject Conflicting Schema-3 Tangent Copies (2026-11-06)
+
+Added hostile-input coverage that edits only the tangent vectors embedded in
+the protocol-6 source-definition array while leaving the schema-3 tangent
+envelope unchanged. Both the explicit-control-net `RS_Spline` and
+spline-points source forms are exercised through DXF XDATA and EED encoding.
+The parser must reject each conflict as invalid; it must not accept one copy
+as authoritative. This protects the consistency rule implemented in W549.
+
+Validation: Release `librecad_tests` builds; `[schema3][hostile]` passes 30
+assertions; `[offset-xdata]` passes 334,042 assertions across 58 cases; and
+`git diff --check` passes. Test commit `dbf4ae235` (`test(offset): reject
+conflicting tangent xdata`). This closes only duplicated-metadata conflict
+refusal. Broader source/cache identity, exact control-net/fit/tangent
+consistency, worker/cache eligibility, and DWG representation remain open.
