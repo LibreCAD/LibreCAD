@@ -234,6 +234,38 @@ branch (`DwgReader.readFileHeaderAC21`, negative `ComprLen`); that is not a
 failure of every R2007 reader path. ODA inspection is required for that actual
 output representation. ODA/libreDWG are not invoked by this recipe.
 
+## ODA Typed-source Round-trip Inputs
+
+`oda_typed_source/` contains 18 LibreCAD-produced second-save DWGs and their 18
+R2018 DXF outputs after ODA File Converter 27.1.0.0 conversion. The source files
+exercise schema-2 metadata for one representative of every modeled source
+family (source-array indices 0, 5, 14, 16, 19, 28, 29, 30, and 31: ellipse,
+spline, spline-points, parabola, bounded hyperbola, line, arc, circle, and
+polyline). Each is present as R2000 and R2018 DWG. `oda_typed_source/SHA256SUMS`
+pins all original DWGs and converted DXFs.
+The ASCII DXFs were normalized from CRLF to LF for repository consistency
+before their committed hashes were recorded; their DXF records and values are
+unchanged by this line-ending normalization.
+
+The DWGs were emitted by the typed-source five-format persistence test with
+`LIBRECAD_TYPED_SOURCE_DWG_DIR`, then converted to ACAD2018 DXF using:
+
+```sh
+/Applications/ODAFileConverter.app/Contents/MacOS/ODAFileConverter \
+  /private/tmp/PR3193-typed-source-dwg-823 \
+  /private/tmp/PR3193-typed-source-oda-dxf ACAD2018 DXF 0 1 '*.dwg'
+```
+
+These are LibreCAD-originated semantic payloads independently reserialized by
+ODA, not independently authored drawings. The registered
+`[lc-offsetcurve][persistence][typed-source][external][oda]` test reads both
+representations and compares typed-source CBOR, reserved flags, tail cardinality
+and foreign XDATA, then runs every converted DXF through staged application
+import. Their deliberately unrelated cache geometry must be downgraded without
+losing source metadata. This proves the external round-trip and fail-closed
+fallback for these nine representatives; it is not evidence of successful
+native-cache promotion for every family or geometric variant.
+
 The following batch handoff runs the actual compiled ACadSharp inspector once
 for every retained output, keeps failed-file diagnostics, refuses an empty input
 set or reused report directory, and returns nonzero if any inspection fails:

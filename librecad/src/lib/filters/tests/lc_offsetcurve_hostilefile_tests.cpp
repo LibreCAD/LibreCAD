@@ -1462,14 +1462,18 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
 TEST_CASE("ODA-round-tripped typed-source DWGs retain all modeled source families",
           "[lc-offsetcurve][persistence][typed-source][external][oda]") {
     Setup setup;
-    const char* sourceDirectory = std::getenv("LIBRECAD_TYPED_SOURCE_DWG_DIR");
-    const char* directory = std::getenv("LIBRECAD_TYPED_SOURCE_ODA_DXF_DIR");
-    if (sourceDirectory == nullptr || *sourceDirectory == '\0' ||
-        directory == nullptr || *directory == '\0')
-        SKIP("set both typed-source DWG and ODA-converted DXF fixture directories");
 #ifndef DWGSUPPORT
     SKIP("requires DWGSUPPORT to read the original EED fixtures");
 #endif
+
+    const auto fixtureRoot = std::filesystem::path(__FILE__).parent_path() /
+        "testdata" / "offsetcurve_independent" / "oda_typed_source";
+    const char* sourceOverride = std::getenv("LIBRECAD_TYPED_SOURCE_DWG_DIR");
+    const char* dxfOverride = std::getenv("LIBRECAD_TYPED_SOURCE_ODA_DXF_DIR");
+    const auto sourceDirectory = sourceOverride != nullptr && *sourceOverride != '\0'
+        ? std::filesystem::path(sourceOverride) : fixtureRoot / "dwg";
+    const auto directory = dxfOverride != nullptr && *dxfOverride != '\0'
+        ? std::filesystem::path(dxfOverride) : fixtureRoot / "dxf";
 
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
@@ -1487,10 +1491,10 @@ TEST_CASE("ODA-round-tripped typed-source DWGs retain all modeled source familie
         CAPTURE(representative.sourceIndex, static_cast<int>(representative.kind));
         for (const char* release : {"r2000", "r2018"}) {
             CAPTURE(release);
-            const auto sourcePath = std::filesystem::path(sourceDirectory) /
+            const auto sourcePath = sourceDirectory /
                 ("typed-source-" + std::to_string(representative.sourceIndex) + "-" +
                  release + ".dwg");
-            const auto path = std::filesystem::path(directory) /
+            const auto path = directory /
                 ("typed-source-" + std::to_string(representative.sourceIndex) + "-" +
                  release + ".dxf");
             REQUIRE(std::filesystem::is_regular_file(sourcePath));
