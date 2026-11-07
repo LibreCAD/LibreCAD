@@ -23418,3 +23418,26 @@ This closes the tested rational nonuniform periodic `RS_Spline` layout only.
 Other periodic knot/weight patterns and counts, closed fit-point sources, cuts,
 visible-GUI acceptance, external CAD checks beyond ODA, and exact-head CI remain
 open.
+
+#### W563bj. Broaden Nonuniform Rational Periodic Spline Layouts (2026-11-07)
+
+Expanded W563bi's direct `RS_Spline` writer matrix to 5, 6, and 8 unique
+control points, each closed from clamped cubic input with a nonuniform knot
+layout and a distinct positive rational weight sequence. All three layouts
+round-trip through DXF and the six DWG versions. Tests assert the full wrapped
+control/weight-associated control tail and knot vector are emitted, the spline
+reopens as `WrappedClosed`, and 2,001 evaluated samples stay within `1e-9`.
+The focused native case passes 815 assertions; the broader spline round-trip
+selection passes 6,164 assertions across eight cases.
+
+ODA File Converter 27.1 converted all 18 DWGs to R2018 DXF with zero `.err`
+files. The same test imports the converted files and compares each evaluated
+curve within `1e-5`; the native plus ODA matrix passes 923 assertions. Fixtures
+are under `/private/tmp/offset-nonuniform-periodic-dwg-expanded` and
+`/private/tmp/offset-nonuniform-periodic-oda-expanded`. Test commit
+`79a2a4d33` (`test(dwg): broaden periodic rational spline matrix`).
+
+This broadens only these three nonuniform-knot, positive-weight, cubic periodic
+layouts. Broader knot families, randomized/adversarial weights, other degrees,
+closed fit-point sources, cuts, visible-GUI acceptance, independent CAD beyond
+ODA, and exact-head CI remain open.
