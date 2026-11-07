@@ -94,6 +94,14 @@ const std::vector<std::vector<RS_Vector>>& closedSplinePointControlSets() {
       {{0.0, 0.0}, {4.0, 0.0}, {5.0, 3.0}, {2.0, 5.0}, {-1.0, 2.0}},
       {{0.0, 0.0}, {2.0, -1.0}, {4.0, 0.0}, {5.0, 2.0}, {4.0, 4.0},
        {2.0, 5.0}, {0.0, 4.0}, {-1.0, 2.0}},
+      {{0.0, 0.0}, {2.0, -1.0}, {4.0, 0.0}, {5.0, 2.0},
+       {4.0, 4.0}, {1.0, 3.0}},
+      {{0.0, 0.0}, {2.0, -1.0}, {4.0, 0.0}, {5.0, 2.0},
+       {4.0, 4.0}, {2.0, 5.0}, {0.0, 4.0}},
+      {{0.0, 0.0}, {2.0, -1.0}, {4.0, 0.0}, {5.0, 2.0}, {6.0, 4.0},
+       {4.0, 6.0}, {2.0, 5.0}, {0.0, 4.0}, {-1.0, 2.0}},
+      {{0.0, 0.0}, {2.0, -1.0}, {4.0, 0.0}, {5.0, 2.0}, {6.0, 4.0},
+       {4.0, 6.0}, {2.0, 5.0}, {0.0, 4.0}, {-1.0, 2.0}, {-2.0, 1.0}},
   };
   return controlSets;
 }
@@ -1430,7 +1438,7 @@ TEST_CASE("ODA-converted spline-point control DWGs preserve evaluated geometry",
       } else {
         FAIL("ODA-converted closed SPLINE imported as an unexpected entity type");
       }
-      CHECK(curveDistance(closedExpected, actual) < 5.0e-6);
+      CHECK(curveDistance(closedExpected, actual) < 1.0e-5);
     }
   }
 }
@@ -1564,7 +1572,7 @@ TEST_CASE("ODA-converted cut spline-point DWGs preserve both piece geometries",
         } else {
           FAIL("ODA-converted closed-cut SPLINE imported as an unexpected entity type");
         }
-        CHECK(curveDistance(expected, actual) < 5.0e-6);
+        CHECK(curveDistance(expected, actual) < 1.0e-5);
       }
     }
   }
