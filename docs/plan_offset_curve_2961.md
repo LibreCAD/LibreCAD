@@ -50,8 +50,9 @@ W539 tangent-vector model and DXF preservation complete with fail-closed DWG
 export for constrained variants;
 W540 schema-3 tangent metadata persistence complete;
 W542/W543 cubic fit-point interpolation, W544 transform/reversal
-qualification, and W545's bounded translation-conditioning probe are complete
-for selected open planar `RS_Spline` tangent cases;
+qualification, W545's bounded translation-conditioning probe, and W546's
+one-ended DXF persistence checks are complete for selected open planar
+`RS_Spline` tangent cases;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21378,3 +21379,21 @@ exact PR head. Remaining tangent gates include more extreme/degenerate knot
 parameterization, control-net plus fitpoint/tangent agreement, transformed
 schema-3 round trips and source/cache identity, and tangent-aware worker/cache
 support or continued explicit refusal; DWG writing remains fail-closed.
+
+### W546 Completion Receipt
+
+Extended the one-ended cubic fit SPLINE importer regression through actual DXF
+save/reopen for both start-only and end-only tangent constraints. It verifies
+the serialized fit points and raw endpoint vectors, reopened metadata, and
+sampled curve geometry. The same constrained variants are checked against the
+DWG writer's explicit refusal and absence of a partial output file. This
+confirms DXF round-trip for the tested cubic/no-control-net import path; it
+does not extend DWG writing or other SPLINE scenarios.
+
+Validation: Release `librecad_tests` builds; the focused one-ended DXF round
+trip/refusal case passes 274 assertions; `[dxf][spline]` passes 3,464
+assertions across 26 cases; and `git diff --check` passes. Product test commit
+`af428e220` (`test(dxf): round-trip one-ended spline tangents`). Push and query
+the exact PR head. Remaining tangent gates are listed in W545 and still
+include broader knot conditioning, explicit-net consistency, schema-3 source
+identity/transforms, and the deliberately refused DWG tangent writer path.
