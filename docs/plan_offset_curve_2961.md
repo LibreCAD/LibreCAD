@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-06. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-07. Project: **LibreCAD**, not LibreCAD_3.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
@@ -65,7 +65,10 @@ verified tangent-constrained SPLINE support to degree 1 with worker, Properties,
 five-lane persistence and AC1032 staged-import coverage; W561 further
 qualifies one-ended degree-1 tangents through transform/reversal, both offset
 sides, Properties replacement and the same DXF/DWG file lanes;
-remaining family/variant and acceptance work is open;
+W562 admits and qualifies a curve-consistent tangent-constrained
+`LC_SplinePoints` subset through worker/cache, Properties, DXF/DWG persistence,
+and AC1032 staged-import paths; remaining family/variant and acceptance work is
+open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
 must allow choosing a different source family before selecting a live entity,
@@ -21839,3 +21842,83 @@ DXF/DWG staged-import case passes 1,025 assertions; and `git diff --check`
 passes. Native DWG tangent writing, tangent-constrained `LC_SplinePoints`, and
 independent-CAD interoperability remain open.
 Test commit `d7c45426e` (`test(offset): qualify one-ended linear tangents`).
+
+### W562. Admit Only Curve-Consistent Tangent `LC_SplinePoints` (2026-11-07)
+
+The source picker already has a type selector and the nine modeled families;
+this slice does not add another control. Implement a shared eligibility check
+for tangent-constrained `LC_SplinePoints` that admits only open, uncut,
+fit-point-mode data whose retained fit points and constrained endpoint
+directions agree with the existing represented curve. Never rebuild a
+different interpolant from tangent metadata. Keep control-only, cut, closed,
+nonplanar, degenerate, or inconsistent variants fail-closed.
+
+Added `LC_SplinePoints::fitTangentsMatchCurve()` and use the same fail-closed
+eligibility in direct offset generation and Properties candidate selection.
+Only constrained, open, uncut, fit-point-mode planar curves with finite
+positive tolerance, valid points, on-curve retained fit points, and endpoint
+directions matching the represented curve are admitted. The implementation
+does not reconstruct or alter the interpolated curve. Control-only, cut,
+closed, nonplanar, degenerate, and inconsistent forms remain refused.
+
+The worker operation-7 generation and operation-8 cache validation use the
+shared engine gate. Properties replacement preserves the `LC_SplinePoints`
+tag and tangent values. Typed-source metadata now covers the source in
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen/second-save tests;
+AC1032 DXF and DWG staged imports regenerate/validate the cache and promote the
+same source variant. Native DWG tangent SPLINE writing remains explicitly
+fail-closed and is not claimed by this slice.
+
+Validation: Release builds of `librecad_tests` and
+`librecad_offset_worker_kernel_tests` succeed. The validator passes 6
+assertions; direct offsets pass 7; worker generation/cache validation passes
+40; Properties type-change/replacement passes 189; the five-format typed-source
+save/reopen/second-save matrix passes 6,180; AC1032 DXF/DWG staged import and
+cache promotion passes 1,284; and `git diff --check` passes. Implementation
+commit `4e9dbe4c6` (`feat(offset): admit consistent tangent spline-points`).
+
+### W563. Close the Type-Changing Picker and Source-Family Support Matrix
+
+The UI requirement is that a user may change the requested source family
+before picking a replacement entity. The current Properties widget already
+implements this nine-choice selector and distinct parabola choice, so do not
+duplicate the widget or add a second type control. This milestone audits and
+closes the end-to-end behavior behind every advertised choice rather than
+equating selector presence with feature support.
+
+Inventory candidates in the production drawing and check `capture`, family
+identity, variant eligibility, direct offset, worker generation, operation-8
+cache validation, replacement commit/undo, and supported DXF/DWG persistence
+for: `RS_Line`, `RS_Arc`, `RS_Circle`, `RS_Ellipse`, `RS_Spline`,
+`LC_SplinePoints`, `LC_Parabola`, bounded `LC_Hyperbola`, and `RS_Polyline`.
+Preserve parabola identity before testing its `LC_SplinePoints` base class.
+For every family, switching the filter must refresh only matching candidates;
+selecting one must atomically update the tagged, value-owned source; cancelling
+or selecting an invalid/unrepresentable variant must leave source and cache
+unchanged. When the active source exists in the drawing, retain its matching
+highlight/selection behavior. Exercise both direct canvas picking and the
+Properties replacement route where available.
+
+For each family, explicitly enumerate supported geometry variants and their
+format/worker limitations (including spline degree, rational weights, fit vs
+control representation and tangent constraints; hyperbola bounds; polyline
+segment/bulge/closure cases). A family remains selectable only when at least
+one production-supported variant exists, and unsupported variants must be
+filtered or rejected with a stable diagnostic. Do not silently flatten,
+coerce, or change entity identity. If ordinary Modify Offset supports a family
+or variant that the editable-source path cannot represent, record the exact
+boundary and implement source capture/worker/persistence support or document
+the intentional limitation explicitly; do not call the nine-family matrix
+complete based on UI enumeration alone.
+
+Implementation order: (1) derive a code-backed family/variant matrix from
+capture, engine, worker and writer paths; (2) close shared identity and
+eligibility discrepancies; (3) add table-driven cross-family selector,
+highlight, replace, cancel and failure-atomicity tests; (4) add missing
+per-family worker/cache and DXF/DWG round-trip tests; (5) run focused tests,
+Release builds and `git diff --check`; (6) commit each coherent slice and
+record exact completed rows and remaining exclusions here. Acceptance requires
+every advertised family to have a passing end-to-end representative, every
+known unsupported variant to have a tested refusal, and parabola to remain
+distinct from generic spline-points throughout selection, worker transport,
+and persistence. Visible GUI and independent-CAD checks remain separate gates.
