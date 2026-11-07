@@ -910,11 +910,18 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     lossyProjectedPolyline->setDrwExtData({
         std::make_shared<DRW_Variant>(1001, "LibreCAD_POLYLINE_OCS"),
         std::make_shared<DRW_Variant>(1040, .125)});
+    auto* projectedEllipse = new RS_Ellipse(nullptr,
+        RS_EllipseData{{4, -2}, {3, 1}, .4, 0, 0, false});
+    projectedEllipse->setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "LibreCAD_CONIC_OCS"),
+        std::make_shared<DRW_Variant>(1070, 0),
+        std::make_shared<DRW_Variant>(1010, DRW_Coord{.3, .4, .8660254037844386})});
     f.graphic.addEntity(unsupportedSpline);
     f.graphic.addEntity(unboundedHyperbola);
     f.graphic.addEntity(constrainedFit);
     f.graphic.addEntity(constrainedPoints);
     f.graphic.addEntity(lossyProjectedPolyline);
+    f.graphic.addEntity(projectedEllipse);
 
     std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
     NativeWidget widget;
@@ -926,7 +933,8 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
     const Snapshot before(*clone);
 
-    for (const auto kind : {LC_OffsetSourceGeometry::Kind::Spline,
+    for (const auto kind : {LC_OffsetSourceGeometry::Kind::Ellipse,
+                            LC_OffsetSourceGeometry::Kind::Spline,
                             LC_OffsetSourceGeometry::Kind::SplinePoints,
                             LC_OffsetSourceGeometry::Kind::BoundedHyperbola,
                             LC_OffsetSourceGeometry::Kind::Polyline}) {
@@ -935,7 +943,10 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
         REQUIRE(typeIndex >= 0);
         typeBox->setCurrentIndex(typeIndex);
         CHECK(sourceBox->count() == 1);
-        CHECK(sourceBox->itemText(0) == QStringLiteral("No supported source entities"));
+        const QString expectedPlaceholder = kind == LC_OffsetSourceGeometry::Kind::Ellipse
+            ? QStringLiteral("Embedded source (not found)")
+            : QStringLiteral("No supported source entities");
+        CHECK(sourceBox->itemText(0) == expectedPlaceholder);
         CHECK_FALSE(sourceBox->itemData(0).isValid());
         CHECK_FALSE(selectSource->isEnabled());
         CHECK_FALSE(unsupportedSpline->getFlag(RS2::FlagSelected));
@@ -943,6 +954,7 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
         CHECK_FALSE(constrainedFit->getFlag(RS2::FlagSelected));
         CHECK_FALSE(constrainedPoints->getFlag(RS2::FlagSelected));
         CHECK_FALSE(lossyProjectedPolyline->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(projectedEllipse->getFlag(RS2::FlagSelected));
         before.geometry(*clone);
     }
 }
