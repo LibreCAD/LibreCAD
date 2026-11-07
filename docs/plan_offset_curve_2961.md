@@ -24,17 +24,21 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-07. Project: **LibreCAD**, not LibreCAD_3.
-Latest clarification: when replacing the offset source, the Properties widget
-must let the user choose a different source family before selecting a live
-entity. The selector covers every currently supported family: line, arc,
-circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
-polyline. Parabola is a distinct source kind. The type-changing picker,
-candidate refresh, replacement, and existing-source resolution/highlighting
-contract is already implemented and tested. Remaining support work is
-per-family/per-variant geometry through generation, worker/cache, import/export,
-and round-trip paths; a family being selectable is not evidence that all its
-geometric variants are supported. Do not add a duplicate selector or a
-parabola-only UI branch.
+Latest source-picker acceptance contract: in the offset Properties widget, a
+user can change the source-curve family before choosing a replacement entity;
+the live candidate list follows that family, replacement preserves the selected
+entity's actual kind, and an existing source can be resolved and highlighted.
+The selector is driven by `LC_OffsetSourceGeometry::SupportedKinds` and covers
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline. Parabola is a distinct kind despite inheriting from
+`LC_SplinePoints`. This widget behavior, including parabola selection and
+highlighting, is implemented and tested; do not add another selector or a
+parabola-only UI branch. “Support all listed types” remains an end-to-end
+geometry requirement: each family's eligible variants still need independently
+validated generation, worker/cache, DXF/DWG import/export, and round-trip paths,
+with unsupported variants explicitly refused without mutating the current
+source or cache. A type appearing in the picker is not proof that every one of
+its geometric variants is supported.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
@@ -24140,3 +24144,38 @@ generation. W563cg remains open until high-precision curvature/offset and
 topology comparisons distinguish genuine singularities from unresolved
 regularity. Broader periodic weight layouts, other source-family variants,
 visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563cn. Bound Rational Curvature Products and Compare Periodic Offsets (2026-11-07)
+
+Added Bernstein-product enclosures for rational spline `C' x C''` using
+`N = A'W - AW'`, `N' = A''W - AW''`, and
+`cross(C', C'') = cross(N, N') / W^4`. The offset cusp classifier now uses the
+product-derived speed and curvature bounds for regularity decisions, while
+the component bounds remain in use for fitting/intersection subdivision. The
+quarter-circle regression now requires a positive product cross enclosure.
+
+The 256-bit periodic oracle samples the signed offset regularity factor for
+three translated seven-control, degree-2 periodic weight profiles. The
+worker fixture compares every emitted multi-spline result in its conditioned
+weight matrix bidirectionally against a high-precision oracle polyline, using
+1024 samples per source span, knot-edge samples, and 32 samples per generated
+spline span; the asserted sampled distance bound is `< 5e-3`. Product-derived
+speed-squared and cross-product interval hulls are also checked against native
+jets at 31 interior samples per nonzero span. These are bounded sampled checks,
+not a formal proof of the sampled oracle's continuous Hausdorff/topology
+coverage.
+
+The focused periodic worker case passes 7,767 assertions; the combined worker,
+cache, and spline-variant selection passes 77,973 assertions across seven
+cases. The high-precision periodic oracle passes 3,348 assertions. The rebuilt
+Release spline/offset/DXF/DWG selection passes 43,733 assertions across 96
+cases. CMake targets `librecad_offset_worker_kernel_tests` and `librecad_tests`
+build, and `git diff --check` passes. Implementation/test commit `94e84e3c3`
+(`fix(offset): bound rational spline curvature products`).
+
+This strengthens W563cg's evidence and permits successful geometry only where
+the worker's product-bound regularity checks and sampled geometry comparison
+pass. It does not establish arbitrary periodic weight-ratio support, formally
+certify offset topology, or close W563cg. Keep unresolved periodic layouts
+fail-closed. Other source-family/variant matrices, visible-GUI acceptance,
+external CAD comparison, and exact-head CI remain open.
