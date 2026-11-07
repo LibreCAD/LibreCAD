@@ -23010,3 +23010,23 @@ not geometry equivalence in LibreDWG or ODA acceptance.
 This closes only the exact tangent-constrained cubic representation above.
 Other tangent/degree/rational variants, broad external geometry comparison,
 visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563aw. Qualify Fit-point SPLINE DWG Versions (2026-11-07)
+
+Expanded both ordinary fit-point and verified tangent-constrained cubic
+round-trip matrices across every DWG writer version exposed by LibreCAD:
+R2000/AC1015, R2004/AC1018, R2007/AC1021, R2010/AC1024, R2013/AC1027, and
+R2018/AC1032. Ordinary fit-point SPLINE coverage passes 1,780 assertions in
+seven cases; the tangent-constrained scenario-2 case passes 833 assertions for
+DXF and all six DWG versions. Preserved files for all six versions decode with
+LibreDWG 0.14.
+
+ACadSharp independently accepts the R2000 and R2004 files and reconstructs
+the expected scenario, fit points, and endpoint tangents. Its current reader
+throws `NotImplementedException` when reading AC1021/R2007, so no ACadSharp
+acceptance claim is made for R2007 or later. Test commit `134b14530`
+(`test(dwg): cover fit splines across all versions`).
+
+This qualifies only the tested fit-point fixtures and version lanes. It does
+not establish all spline variants, all content in the DWGs, geometry
+equivalence across external readers, or exact-head CI.
