@@ -23361,3 +23361,28 @@ replacement candidate; it does not claim every geometric variant works through
 offset construction, native worker/cache, import/export, or DXF/DWG round-trip.
 Those per-variant gaps remain in their respective roadmap matrices. Reject an
 unsupported candidate without mutating the current source or its cache.
+
+#### W563bh. Extend Fit-point Cut Round-trips to Longer Chains (2026-11-07)
+
+Extended the fit-point `LC_SplinePoints` cut round-trip matrix from 4/5/7 to
+4/5/7/9/11 input fit points. For every chain, cuts at 25%, 50%, and 75% are
+exported through all six DWG versions (R2000, R2004, R2007, R2010, R2013,
+R2018). Reopened output is required to use scenario 1 with no stale fit-point
+list, contain both pieces, and match each authoritative post-cut geometry
+within `1e-10` symmetric sampled distance. The focused matrix passes 85,980
+assertions; the full native `[dwg][filter][spline-points][cut]` selection passes
+257,124 assertions across three cases.
+
+The test stages 90 DWGs under `/private/tmp/offset-fit-cut-expanded`. ODA File
+Converter 27.1 converted all 90 to R2018 DXF with zero `.err` files. The
+external geometry test passes 211,140 assertions, matching both converted
+pieces to their native post-cut source curves within `5e-6`. Re-run with
+`LIBRECAD_OFFSET_CUT_ODA_DXF_DIR=/private/tmp/offset-fit-cut-expanded-oda
+librecad_tests '[external][oda][dwg][spline-points][fit-points][cut][geometry]'`.
+Test commit `cefc62465` (`test(dwg): cover longer fit-point spline cuts`).
+
+This qualifies only open, planar, unit-weight fit-point spline-points in the
+tested 4/5/7/9/11-point layouts and split fractions. It does not establish
+round-trip of original fit-point authoring data, tangent-constrained or closed
+fit-point inputs, arbitrary cut locations, other source families, visible GUI
+acceptance, or exact-head CI; those remain open.
