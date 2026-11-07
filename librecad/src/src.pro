@@ -466,6 +466,7 @@ HEADERS += \
     lib/engine/document/entities/lc_offsetsource.h \
     lib/engine/document/entities/lc_offsetworkerwire.h \
     lib/offset_worker/lc_offsetworkerrequest.h \
+    lib/offset_worker/lc_offsetworkersourcecache.h \
     lib/offset_worker/lc_offsetworkerresult.h \
     lib/offset_worker/lc_offsetworkerclient.h \
     lib/offset_worker/lc_offsetworkeredit.h \
@@ -1085,6 +1086,7 @@ SOURCES += \
     lib/engine/document/entities/lc_offsetsource.cpp \
     lib/engine/document/entities/lc_offsetworkerwire.cpp \
     lib/offset_worker/lc_offsetworkerrequest.cpp \
+    lib/offset_worker/lc_offsetworkersourcecache.cpp \
     lib/offset_worker/lc_offsetworkerresult.cpp \
     lib/offset_worker/lc_offsetworkerclient.cpp \
     lib/offset_worker/lc_offsetworkercompletion.cpp \

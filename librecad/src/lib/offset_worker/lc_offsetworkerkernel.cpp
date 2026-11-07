@@ -5,6 +5,7 @@
  */
 #include "lc_offsetworkerkernel.h"
 #include "lc_offsetworkertolerance.h"
+#include "lc_offsetworkersourcecache.h"
 
 #include "rs_line.h"
 #include <algorithm>
@@ -305,19 +306,13 @@ result::Native LC_OffsetWorkerKernel::validateSourceCache(const req::ValidateSou
     output.attemptedOutputUsage = generated.attemptedOutputUsage;
     output.attemptedDeepCountComplete = generated.attemptedDeepCountComplete;
     if (generated.engineStatus != LC_CurveOffsetStatus::Ok ||
-        generated.ordinaryStatus != result::OrdinaryStatus::Complete || generated.ordinary.size() != 1)
+        generated.ordinaryStatus != result::OrdinaryStatus::Complete)
         return output;
 
     RS_SplineData expected;
-    if (const auto* spline = std::get_if<RS_SplineData>(&generated.ordinary.front())) expected = *spline;
-    else if (const auto* line = std::get_if<req::Segment>(&generated.ordinary.front())) {
-        expected.degree = 1;
-        expected.controlPoints = {line->start, line->end};
-        expected.knotslist = {0, 0, 1, 1};
-        expected.weights = {1, 1};
-    } else return output;
+    if (!LC_OffsetWorkerSourceCache::combine(generated.ordinary, expected)) return output;
 
-    if (!ordinarySpline(expected) || !same(input.cache, expected)) return output;
+    if (!same(input.cache, expected)) return output;
     RS_Spline checked{nullptr, input.cache};
     if (!checked.validate() || !same(checked.getData(), input.cache)) return output;
     output.refusal = LC_OffsetCurveRefusal::None;

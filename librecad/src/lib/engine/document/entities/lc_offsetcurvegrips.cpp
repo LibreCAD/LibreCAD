@@ -46,10 +46,11 @@ Exact distanceSquared(const Point &a, const Point &b) {
 Point blend(const Point &a, const Point &b, const Exact &u) {
     return {Exact(a.x + u*(b.x - a.x)), Exact(a.y + u*(b.y - a.y))};
 }
-Net spanNet(const RS_SplineData &data, const std::size_t span) {
+Net spanNet(const geo::CacheLayoutResult &layout, const std::size_t span) {
     Net net{};
-    for (std::size_t i = 0; i <= data.degree; ++i)
-        net[i] = exactPoint(data.controlPoints[data.degree*span + i]);
+    const auto &saved = layout.spans[span];
+    for (std::size_t i = 0; i <= saved.degree; ++i)
+        net[i] = exactPoint(saved.controls[i]);
     return net;
 }
 Point evaluate(Net net, const std::size_t degree, const double u) {
@@ -75,27 +76,11 @@ RS_Vector rounded(const Point &point, const Exact &squaredTolerance) {
     return out;
 }
 
-std::optional<std::size_t> layout(const RS_SplineData &data) {
-    const auto count = geo::cacheLayoutCountsFromControls(data.degree, data.controlPoints.size());
-    const LC_OffsetCheckLimits limits;
-    if (!count || count->spans > maxSpans || count->spans > limits.maxCacheSpans || count->controls > limits.maxVertices ||
-        data.type != RS_SplineData::SplineType::ClampedOpen ||
-        data.savedOpenType != RS_SplineData::SplineType::ClampedOpen ||
-        !data.fitPoints.empty() || !data.savedOpenKnots.empty() ||
-        data.knotslist.size() != count->knots || data.weights.size() != count->controls) return {};
-    for (std::size_t i = 0; i < count->controls; ++i)
-        if (!geo::isFinite2D(data.controlPoints[i]) || data.weights[i] != 1) return {};
-    std::size_t index = 0;
-    double previous = 0;
-    for (std::size_t group = 0; group <= count->spans; ++group) {
-        const double knot = data.knotslist[index];
-        if (!std::isfinite(knot) || (group && !(previous < knot))) return {};
-        const auto multiplicity = group == 0 || group == count->spans ? data.degree + 1 : data.degree;
-        for (std::size_t i = 0; i < multiplicity; ++i)
-            if (data.knotslist[index++] != knot) return {};
-        previous = knot;
-    }
-    return count->spans;
+std::optional<geo::CacheLayoutResult> layout(const RS_SplineData &data) {
+    geo::WorkBudget budget;
+    auto result = geo::inspectCacheLayout(data, budget);
+    if (result.status != geo::CacheLayoutStatus::Ok || result.spanCount() > maxSpans) return {};
+    return result;
 }
 
 Exact boxDistanceSquared(const Net &net, const std::size_t degree, const Point &target) {
@@ -109,26 +94,27 @@ Exact boxDistanceSquared(const Net &net, const std::size_t degree, const Point &
     return Exact(dx*dx + dy*dy);
 }
 
-std::optional<Location> witness(const RS_SplineData &data, const std::size_t spans,
+std::optional<Location> witness(const geo::CacheLayoutResult &layout,
                                 const RS_Vector &candidate, const Exact &squaredTolerance, Work &work) {
+    const std::size_t degree = layout.spans.front().degree;
     if (!geo::isFinite2D(candidate)) return {};
     const auto target = exactPoint(candidate);
     struct Cell { Net net; double a, b; unsigned depth; };
     std::vector<Cell> pending;
     pending.reserve(maxDepth + 2);
-    for (std::size_t span = 0; span < spans; ++span) {
+    for (std::size_t span = 0; span < layout.spanCount(); ++span) {
         if (!work.take()) return {};
-        pending.push_back({spanNet(data, span), 0, 1, 0});
+        pending.push_back({spanNet(layout, span), 0, 1, 0});
         while (!pending.empty()) {
             auto cell = std::move(pending.back()); pending.pop_back();
             if (!work.take()) return {};
-            if (boxDistanceSquared(cell.net, data.degree, target) > squaredTolerance) continue;
+            if (boxDistanceSquared(cell.net, degree, target) > squaredTolerance) continue;
             if (distanceSquared(cell.net[0], target) <= squaredTolerance) return Location{span, cell.a};
-            if (distanceSquared(cell.net[data.degree], target) <= squaredTolerance) return Location{span, cell.b};
+            if (distanceSquared(cell.net[degree], target) <= squaredTolerance) return Location{span, cell.b};
             if (!work.take()) return {};
-            auto halves = split(std::move(cell.net), data.degree);
+            auto halves = split(std::move(cell.net), degree);
             const double mid = .5*cell.a + .5*cell.b;
-            if (distanceSquared(halves.first[data.degree], target) <= squaredTolerance) return Location{span, mid};
+            if (distanceSquared(halves.first[degree], target) <= squaredTolerance) return Location{span, mid};
             if (cell.depth == maxDepth) continue;
             pending.push_back({std::move(halves.second), mid, cell.b, cell.depth + 1});
             pending.push_back({std::move(halves.first), cell.a, mid, cell.depth + 1});
@@ -154,20 +140,20 @@ Order endpointOrder(const std::size_t span, const double u, const std::size_t sp
     return closed && span + 1 == spans && u == 1 ? Order{0, 0} : at({span, u});
 }
 
-std::optional<Order> lineCorrespondence(const RS_SplineData &data, const std::size_t spans,
+std::optional<Order> lineCorrespondence(const geo::CacheLayoutResult &layout,
                                       const Point &target, const bool closed, Work &work) {
     std::optional<Exact> best;
     std::optional<Order> order;
-    for (std::size_t span = 0; span < spans; ++span) {
+    for (std::size_t span = 0; span < layout.spanCount(); ++span) {
         if (!work.take()) return {};
-        const auto net = spanNet(data, span);
+        const auto net = spanNet(layout, span);
         const Exact dx = net[1].x - net[0].x, dy = net[1].y - net[0].y;
         const Exact denominator = dx*dx + dy*dy;
         if (denominator == 0) return {};
         const Exact projection = ((target.x - net[0].x)*dx + (target.y - net[0].y)*dy)/denominator;
         const Exact u = std::max(Exact(0), std::min(Exact(1), projection));
         const auto squared = distanceSquared(blend(net[0], net[1], u), target);
-        const Exact position = closed && span + 1 == spans && u == 1 ? Exact(0) : Exact(Exact(span) + u);
+        const Exact position = closed && span + 1 == layout.spanCount() && u == 1 ? Exact(0) : Exact(Exact(span) + u);
         if (!best || squared < *best) { best = squared; order = Order{position, position}; }
         else if (squared == *best) include(order, {position, position});
     }
@@ -198,14 +184,15 @@ DistanceSlope cubicDistanceSlope(const Net &net, const Point &target) {
     return DistanceSlope::Unresolved;
 }
 
-bool cubicCorrespondencePass(const RS_SplineData &data, const std::size_t spans, const Point &target,
+bool cubicCorrespondencePass(const geo::CacheLayoutResult &layout, const Point &target,
                              const bool closed, Exact &best, std::optional<Order> *order, Work &work) {
+    const std::size_t spans = layout.spanCount();
     struct Cell { Net net; double a, b; unsigned depth; };
     std::vector<Cell> pending;
     pending.reserve(maxDepth + 2);
-    for (std::size_t span = 0; span < spans; ++span) {
+    for (std::size_t span = 0; span < layout.spanCount(); ++span) {
         if (!work.take()) return false;
-        pending.push_back({spanNet(data, span), 0, 1, 0});
+        pending.push_back({spanNet(layout, span), 0, 1, 0});
         while (!pending.empty()) {
             auto cell = std::move(pending.back()); pending.pop_back();
             if (!work.take()) return false;
@@ -242,18 +229,18 @@ bool cubicCorrespondencePass(const RS_SplineData &data, const std::size_t spans,
     return true;
 }
 
-std::optional<Order> correspondence(const RS_SplineData &data, const std::size_t spans,
+std::optional<Order> correspondence(const geo::CacheLayoutResult &layout,
                                    const RS_Vector &candidate, const Location &visible,
                                    const bool closed, Work &work) {
     const auto target = exactPoint(candidate);
-    if (data.degree == 1) return lineCorrespondence(data, spans, target, closed, work);
+    if (layout.spans.front().degree == 1) return lineCorrespondence(layout, target, closed, work);
     if (!work.take()) return {};
-    Exact best = distanceSquared(evaluate(spanNet(data, visible.span), 3, visible.u), target);
-    if (!cubicCorrespondencePass(data, spans, target, closed, best, nullptr, work)) return {};
+    Exact best = distanceSquared(evaluate(spanNet(layout, visible.span), 3, visible.u), target);
+    if (!cubicCorrespondencePass(layout, target, closed, best, nullptr, work)) return {};
     std::optional<Order> order;
     // Freeze the upper bound before collecting: no previously retained domain
     // can become stale when a later actual curve evaluation improves the bound.
-    if (!cubicCorrespondencePass(data, spans, target, closed, best, &order, work)) return {};
+    if (!cubicCorrespondencePass(layout, target, closed, best, &order, work)) return {};
     const Exact width = Exact(2)/Exact(std::size_t{1} << maxDepth);
     return order && order->hi - order->lo <= width ? order : std::nullopt;
 }
@@ -280,7 +267,8 @@ bool append(std::vector<Grip> &grips, Grip grip, const Exact &duplicateSquared) 
     return true;
 }
 
-std::optional<std::vector<Sample>> samples(const RS_SplineData &data, const std::size_t spans) {
+std::optional<std::vector<Sample>> samples(const RS_SplineData &data,
+                                           const geo::CacheLayoutResult &layout) {
     const auto origin = exactPoint(data.controlPoints.front());
     Exact divisor = 0;
     for (const auto &control : data.controlPoints) {
@@ -288,12 +276,12 @@ std::optional<std::vector<Sample>> samples(const RS_SplineData &data, const std:
         divisor = std::max(divisor, std::max(dx, dy));
     }
     if (divisor == 0) return {};
-    const std::size_t steps = data.degree == 1 ? 1 : std::min<std::size_t>(32, maxSegments/spans);
+    const std::size_t steps = data.degree == 1 ? 1 : std::min<std::size_t>(32, maxSegments/layout.spanCount());
     std::vector<Sample> out;
-    out.reserve(spans*steps + 1);
+    out.reserve(layout.spanCount()*steps + 1);
     out.push_back({exactPoint(data.controlPoints.front()), {0, 0}, 0});
-    for (std::size_t span = 0; span < spans; ++span) {
-        const auto net = spanNet(data, span);
+    for (std::size_t span = 0; span < layout.spanCount(); ++span) {
+        const auto net = spanNet(layout, span);
         for (std::size_t i = 1; i <= steps; ++i) {
             const double u = static_cast<double>(i)/static_cast<double>(steps);
             auto point = evaluate(net, data.degree, u);
@@ -307,7 +295,7 @@ std::optional<std::vector<Sample>> samples(const RS_SplineData &data, const std:
     return out;
 }
 
-Grip middle(const RS_SplineData &data, const std::vector<Sample> &points,
+Grip middle(const geo::CacheLayoutResult &layout, const std::vector<Sample> &points,
             const Exact &squaredTolerance, const bool closed) {
     const long double half = points.back().length/2;
     const auto found = std::lower_bound(points.begin(), points.end(), half,
@@ -318,7 +306,8 @@ Grip middle(const RS_SplineData &data, const std::vector<Sample> &points,
         const auto fraction = width > 0 ? (half - previous.length)/width : 0;
         const double start = previous.location.span == found->location.span ? previous.location.u : 0;
         const double u = std::clamp(start + (found->location.u - start)*static_cast<double>(fraction), start, found->location.u);
-        const auto point = rounded(evaluate(spanNet(data, found->location.span), data.degree, u), squaredTolerance);
+        const auto point = rounded(evaluate(spanNet(layout, found->location.span),
+                                             layout.spans.front().degree, u), squaredTolerance);
         if (point.valid) return {point, at({found->location.span, u})};
     }
     Grip best{RS_Vector{false}, {0, 0}};
@@ -346,16 +335,17 @@ Grip nearestSample(const std::vector<Sample> &points, const RS_Vector &target,
     return best;
 }
 
-bool corners(const RS_SplineData &data, const std::size_t spans, const bool reversed, const bool closed,
+bool corners(const geo::CacheLayoutResult &layout, const bool reversed, const bool closed,
              const geo::CacheTopologyAnalysis &topology, const Exact &squaredTolerance,
              const Exact &duplicateSquared, std::vector<Grip> &out) {
+    const std::size_t spans = layout.spanCount();
     if (topology.closed() != closed || topology.layout().spanCount() != spans ||
         topology.joins().size() > maxWork || topology.endpoints().size() > maxWork) return false;
     for (std::size_t span = 0; span < spans; ++span) {
         const auto &saved = topology.layout().spans[span];
-        if (saved.degree != data.degree) return false;
-        for (std::size_t i = 0; i <= data.degree; ++i) {
-            const auto &a = saved.controls[i], &b = data.controlPoints[data.degree*span + i];
+        if (saved.degree != layout.spans[span].degree) return false;
+        for (std::size_t i = 0; i <= saved.degree; ++i) {
+            const auto &a = saved.controls[i], &b = layout.spans[span].controls[i];
             if (a.x != b.x || a.y != b.y || a.z != b.z || a.valid != b.valid) return false;
         }
     }
@@ -367,7 +357,8 @@ bool corners(const RS_SplineData &data, const std::size_t spans, const bool reve
         if (endpoint.span >= spans || !std::isfinite(endpoint.candidateParameter) ||
             endpoint.candidateParameter < 0 || endpoint.candidateParameter > 1 || out.size() == maxGrips) return false;
         const double u = reversed ? 1 - endpoint.candidateParameter : endpoint.candidateParameter;
-        const auto point = rounded(evaluate(spanNet(data, endpoint.span), data.degree, u), squaredTolerance);
+        const auto point = rounded(evaluate(spanNet(layout, endpoint.span),
+                                             layout.spans[endpoint.span].degree, u), squaredTolerance);
         if (!point.valid || !append(out, {point, endpointOrder(endpoint.span, u, spans, closed)}, duplicateSquared)) return false;
     }
     return true;
@@ -390,38 +381,38 @@ LC_OffsetCurveGrips::Prepared LC_OffsetCurveGrips::prepare(const RS_SplineData &
     const Exact squaredTolerance = Exact(tolerance)*Exact(tolerance);
     const auto sampled = samples(cache, *spans);
     if (!sampled) return out;
-    const auto midpoint = middle(cache, *sampled, squaredTolerance, closed);
+    const auto midpoint = middle(*spans, *sampled, squaredTolerance, closed);
     const double ulp = scale - std::nextafter(scale, 0.0);
     const Exact localAllowance = Exact(ulp)*4, toleranceAllowance = Exact(tolerance)/16;
     const Exact duplicateDistance = std::min(localAllowance, toleranceAllowance);
     const Exact duplicateSquared = duplicateDistance*duplicateDistance;
     std::vector<Grip> grips;
     grips.reserve(maxGrips);
-    if (topology && !corners(cache, *spans, definition.cacheReversed, closed, *topology, squaredTolerance, duplicateSquared, grips)) return out;
+    if (topology && !corners(*spans, definition.cacheReversed, closed, *topology, squaredTolerance, duplicateSquared, grips)) return out;
     Work work;
     const Exact admittedBandSquared = 4*squaredTolerance;
     const auto analyticGrip = [&](const RS_Vector &candidate, const bool projectQuarter = false) {
-        auto visible = witness(cache, *spans, candidate, squaredTolerance, work);
+        auto visible = witness(*spans, candidate, squaredTolerance, work);
         const bool needsProjection = !visible && projectQuarter;
-        if (needsProjection) visible = witness(cache, *spans, candidate, admittedBandSquared, work);
+        if (needsProjection) visible = witness(*spans, candidate, admittedBandSquared, work);
         if (!visible) return false;
-        auto order = correspondence(cache, *spans, candidate, *visible, closed, work);
+        auto order = correspondence(*spans, candidate, *visible, closed, work);
         if (!order) return false;
         auto point = candidate;
         if (needsProjection) {
             if (!work.take()) return false;
             const Exact parameter = (order->lo + order->hi)/2;
-            if (parameter < 0 || parameter > Exact(*spans)) return false;
-            const auto span = std::min(parameter.convert_to<std::size_t>(), *spans - 1);
+            if (parameter < 0 || parameter > Exact(spans->spanCount())) return false;
+            const auto span = std::min(parameter.convert_to<std::size_t>(), spans->spanCount() - 1);
             const double u = Exact(parameter - Exact(span)).convert_to<double>();
             if (!std::isfinite(u) || u < 0 || u > 1) return false;
-            const auto actual = evaluate(spanNet(cache, span), cache.degree, u);
+            const auto actual = evaluate(spanNet(*spans, span), spans->spans[span].degree, u);
             if (distanceSquared(actual, exactPoint(candidate)) > admittedBandSquared) return false;
             point = rounded(actual, squaredTolerance);
             if (!geo::isFinite2D(point)) return false;
             // This is a rounded, checked actual cache point with a known
             // parameter, not the unproved ideal quarter seed.
-            order = endpointOrder(span, u, *spans, closed);
+            order = endpointOrder(span, u, spans->spanCount(), closed);
         }
         return append(grips, {point, *order, true}, duplicateSquared);
     };
@@ -472,5 +463,5 @@ RS_Vector LC_OffsetCurveGrips::prepareMiddle(const RS_SplineData &cache, const d
     const auto sampled = samples(cache, *spans);
     if (!sampled) return RS_Vector{false};
     const Exact squaredTolerance = Exact(tolerance)*Exact(tolerance);
-    return middle(cache, *sampled, squaredTolerance, closed).point;
+    return middle(*spans, *sampled, squaredTolerance, closed).point;
 }

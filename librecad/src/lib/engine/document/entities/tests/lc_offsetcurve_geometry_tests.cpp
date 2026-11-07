@@ -5767,6 +5767,35 @@ TEST_CASE("Cache layout extracts each linear and cubic span with its own shared 
     }
 }
 
+TEST_CASE("Cache layout extracts bounded full-multiplicity disconnected spline branches",
+          "[lc-offsetcurve][geometry][cache-layout][disconnected]") {
+    RS_SplineData data;
+    data.degree = 3;
+    data.type = RS_SplineData::SplineType::ClampedOpen;
+    data.savedOpenType = data.type;
+    data.controlPoints = {{0, 0}, {1, 0}, {2, 0}, {3, 0},
+                          {10, 5}, {11, 5}, {12, 5}, {13, 5}};
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    data.weights.assign(data.controlPoints.size(), 1.0);
+
+    geo::WorkBudget budget;
+    const auto layout = geo::inspectCacheLayout(data, budget);
+    REQUIRE(layout.status == geo::CacheLayoutStatus::Ok);
+    REQUIRE(layout.spanCount() == 2);
+    CHECK(layout.spans[0].controlOffset == 0);
+    CHECK(layout.spans[0].parameter.lo() == 0);
+    CHECK(layout.spans[0].parameter.hi() == 1);
+    CHECK(layout.spans[1].controlOffset == 4);
+    CHECK(layout.spans[1].parameter.lo() == 1);
+    CHECK(layout.spans[1].parameter.hi() == 2);
+    CHECK(layout.spans[0].controls[3].x == 3);
+    CHECK(layout.spans[1].controls[0].x == 10);
+
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 2};
+    geo::WorkBudget malformedBudget;
+    CHECK(geo::inspectCacheLayout(data, malformedBudget).status == geo::CacheLayoutStatus::InvalidLayout);
+}
+
 TEST_CASE("Cache layout retains affine narrow subnormal and extreme finite knot domains exactly",
           "[lc-offsetcurve][geometry][cache-layout]") {
     const double tiny = std::numeric_limits<double>::denorm_min();

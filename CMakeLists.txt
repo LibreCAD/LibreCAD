@@ -911,6 +911,8 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_offsetworkerwire.h
      librecad/src/lib/offset_worker/lc_offsetworkerrequest.cpp
      librecad/src/lib/offset_worker/lc_offsetworkerrequest.h
+     librecad/src/lib/offset_worker/lc_offsetworkersourcecache.cpp
+     librecad/src/lib/offset_worker/lc_offsetworkersourcecache.h
      librecad/src/lib/offset_worker/lc_offsetworkerresult.cpp
      librecad/src/lib/offset_worker/lc_offsetworkerresult.h
      librecad/src/lib/offset_worker/lc_offsetworkerclient.cpp

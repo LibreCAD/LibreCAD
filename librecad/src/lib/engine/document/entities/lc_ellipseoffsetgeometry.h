@@ -74,6 +74,7 @@ public:
 
     BudgetStatus status() const;
     const CheckWork& consumed() const;
+    const LC_OffsetCheckLimits& limits() const;
     std::size_t remainingPieces() const;
     std::size_t remainingVertices() const;
     std::size_t remainingPairs() const;
@@ -119,6 +120,8 @@ enum class CacheLayoutStatus { Ok, InvalidInput, InvalidLayout, LimitExceeded };
 
 struct CacheSpan {
     std::size_t degree = 0;
+    /** Index of the first control in the original knot/control arrays. */
+    std::size_t controlOffset = 0;
     /** First degree+1 entries are the exact line/Bezier controls, without refitting. */
     std::array<RS_Vector, 4> controls;
     LC_Interval parameter;

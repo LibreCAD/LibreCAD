@@ -286,6 +286,10 @@ const CheckWork& WorkBudget::consumed() const {
     return m_work;
 }
 
+const LC_OffsetCheckLimits& WorkBudget::limits() const {
+    return m_limits;
+}
+
 std::size_t WorkBudget::remainingPieces() const {
     return m_status == BudgetStatus::Ok ? m_limits.maxCacheSpans - m_work.cacheSpans : 0;
 }
@@ -490,46 +494,83 @@ CacheLayoutResult inspectCacheLayout(const RS_SplineData& cache, WorkBudget& bud
         return finish();
     }
     result.status = CacheLayoutStatus::InvalidLayout;
-    const auto counts = cacheLayoutCountsFromControls(cache.degree, cache.controlPoints.size());
-    if (!counts || cache.type != RS_SplineData::SplineType::ClampedOpen || !cache.fitPoints.empty() ||
-        cache.savedOpenType != RS_SplineData::SplineType::ClampedOpen || !cache.savedOpenKnots.empty() ||
-        cache.knotslist.size() != counts->knots || cache.weights.size() != counts->controls) { return finish(); }
-    // Count/array checks above inspect no elements; admit both budgets together before traversal.
-    if (counts->spans > result.spans.max_size()) {
+    const std::size_t degree = cache.degree;
+    const std::size_t controls = cache.controlPoints.size();
+    if ((degree != 1 && degree != 3) || controls < degree + 1 ||
+        cache.knotslist.size() != controls + degree + 1 || cache.weights.size() != controls ||
+        cache.type != RS_SplineData::SplineType::ClampedOpen || !cache.fitPoints.empty() ||
+        cache.savedOpenType != RS_SplineData::SplineType::ClampedOpen || !cache.savedOpenKnots.empty())
+        return finish();
+    if (controls > budget.limits().maxVertices) {
         budget.latchLimitExceeded(); result.status = CacheLayoutStatus::LimitExceeded;
         return finish();
     }
-    if (!budget.adoptWork({counts->spans, counts->controls})) {
+
+    std::size_t groupCount = 1;
+    bool hasDiscontinuousJoin = false;
+    for (std::size_t begin = 0; begin < cache.knotslist.size();) {
+        std::size_t end = begin + 1;
+        while (end < cache.knotslist.size() && cache.knotslist[end] == cache.knotslist[begin]) ++end;
+        if (begin != 0 && end != cache.knotslist.size() && end - begin == degree + 1)
+            hasDiscontinuousJoin = true;
+        if (end < cache.knotslist.size()) ++groupCount;
+        begin = end;
+    }
+    if (groupCount < 2) return finish();
+    const auto standardCounts = cacheLayoutCountsFromControls(degree, controls);
+    const std::size_t spanCount = standardCounts && !hasDiscontinuousJoin
+        ? standardCounts->spans : groupCount - 1;
+    if (spanCount > budget.limits().maxCacheSpans || spanCount > result.spans.max_size() ||
+        controls > budget.limits().maxVertices) {
+        budget.latchLimitExceeded(); result.status = CacheLayoutStatus::LimitExceeded;
+        return finish();
+    }
+    if (!budget.adoptWork({spanCount, controls})) {
         result.status = CacheLayoutStatus::LimitExceeded;
         return finish();
     }
-    for (std::size_t i = 0; i < counts->controls; ++i) {
-        if (!isFinite2D(cache.controlPoints[i]) || !std::isfinite(cache.weights[i]) || cache.weights[i] != 1.0) {
+
+    struct KnotGroup { std::size_t begin; std::size_t end; double value; };
+    std::vector<KnotGroup> groups;
+    groups.reserve(std::min(cache.knotslist.size(), budget.limits().maxCacheSpans + 1));
+    for (std::size_t begin = 0; begin < cache.knotslist.size();) {
+        const double value = cache.knotslist[begin];
+        if (!std::isfinite(value) || (!groups.empty() && !(groups.back().value < value))) return finish();
+        std::size_t end = begin + 1;
+        while (end < cache.knotslist.size() && cache.knotslist[end] == value) ++end;
+        const std::size_t multiplicity = end - begin;
+        const bool endpoint = groups.empty() || end == cache.knotslist.size();
+        if ((endpoint && multiplicity != degree + 1) ||
+            (!endpoint && multiplicity != degree && multiplicity != degree + 1)) return finish();
+        groups.push_back({begin, end, value});
+        begin = end;
+    }
+    if (groups.size() < 2 || groups.size() - 1 != spanCount) return finish();
+
+    std::size_t controlOffset = 0;
+    for (std::size_t group = 1; group + 1 < groups.size(); ++group) {
+        const std::size_t multiplicity = groups[group].end - groups[group].begin;
+        if (controlOffset > controls - (degree + 1) || multiplicity > controls) return finish();
+        controlOffset += multiplicity;
+    }
+    if (controlOffset + degree + 1 != controls) return finish();
+    for (std::size_t i = 0; i < controls; ++i) {
+        if (!isFinite2D(cache.controlPoints[i]) || !std::isfinite(cache.weights[i]) || cache.weights[i] != 1.0)
             return finish();
-        }
     }
-    std::size_t knot = 0;
-    double previous = 0.0;
-    for (std::size_t group = 0; group <= counts->spans; ++group) {
-        const double value = cache.knotslist[knot];
-        if (!std::isfinite(value) || (group != 0 && !(previous < value))) { return finish(); }
-        const std::size_t multiplicity = group == 0 || group == counts->spans ? cache.degree + 1 : cache.degree;
-        for (std::size_t i = 0; i < multiplicity; ++i) {
-            if (cache.knotslist[knot++] != value) { return finish(); }
-        }
-        previous = value;
-    }
-    // All groups are valid before any output allocation; each span keeps its actual affine domain.
-    result.spans.reserve(counts->spans);
-    for (std::size_t k = 0; k < counts->spans; ++k) {
+
+    result.spans.reserve(groups.size() - 1);
+    controlOffset = 0;
+    for (std::size_t group = 0; group + 1 < groups.size(); ++group) {
         CacheSpan span;
-        span.degree = cache.degree;
-        for (std::size_t i = 0; i <= cache.degree; ++i) {
-            span.controls[i] = cache.controlPoints[cache.degree * k + i];
-        }
-        const std::size_t end = cache.degree * (k + 1);
-        span.parameter = LC_Interval::hull(cache.knotslist[end], cache.knotslist[end + 1]);
+        span.degree = degree;
+        span.controlOffset = controlOffset;
+        for (std::size_t i = 0; i <= degree; ++i)
+            span.controls[i] = cache.controlPoints[controlOffset + i];
+        span.parameter = LC_Interval::hull(groups[group].value, groups[group + 1].value);
         result.spans.push_back(std::move(span));
+        if (group + 1 < groups.size() - 1)
+            controlOffset += groups[group + 1].end - groups[group + 1].begin;
     }
     result.status = CacheLayoutStatus::Ok;
     return finish();

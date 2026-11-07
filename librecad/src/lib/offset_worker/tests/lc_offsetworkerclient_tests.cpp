@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "../lc_offsetworkerclient.h"
+#include "../lc_offsetworkersourcecache.h"
 #include "../lc_offsetworkertolerance.h"
 #include "../lc_offsetworkeredit.h"
 #include "lc_offsetcurvexdata.h"
@@ -19,6 +20,7 @@
 #include <QEventLoop>
 #include <QFileInfo>
 #include <QThread>
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <cstring>
@@ -515,13 +517,21 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     periodic.setClosed(true);
     auto wrapped = periodic.getData();
     wrapped.weights.clear();
+    RS_Spline periodicLinear{nullptr, RS_SplineData{1, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15}, RS_Vector{60, 0},
+                                   RS_Vector{55, 35}, RS_Vector{20, 50}, RS_Vector{-15, 25}})
+        periodicLinear.addControlPoint(point);
+    periodicLinear.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
+    periodicLinear.setClosed(true);
+    auto wrappedLinear = periodicLinear.getData();
+    wrappedLinear.weights.clear();
     const double pi = std::acos(-1.0);
     LC_OffsetPolylineData closedArcPolyline{{2, 0}, {2, 0}, true, {
         RS_ArcData{{0, 0}, 2, 0, pi / 2, false},
         RS_ArcData{{0, 0}, 2, pi / 2, pi, false},
         RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
         RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}};
-    const std::array<LC_OffsetSourceGeometry, 15> sources{
+    const std::array<LC_OffsetSourceGeometry, 16> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
@@ -539,10 +549,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
              RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}},
         LC_OffsetSourceGeometry{wrapped},
-        LC_OffsetSourceGeometry{closedArcPolyline}
+        LC_OffsetSourceGeometry{closedArcPolyline},
+        LC_OffsetSourceGeometry{wrappedLinear}
     };
 
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
+    std::size_t multiBranchCacheCount = 0;
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
@@ -553,6 +565,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         rt.until([&] { return receipts.calls[0] != 0; });
         const auto& completion = completed(receipts.at(0), requestId, 7);
         const auto& result = std::get<Reply::Native>(completion.reply().result);
+        CAPTURE(i, result.ordinary.size());
         REQUIRE(result.engineStatus);
         CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
@@ -599,12 +612,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             CHECK((entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline));
         }
         auto editable = completion.nativeSource(attributes);
-        if (result.ordinary.size() == 1 &&
-            (std::holds_alternative<RS_SplineData>(result.ordinary.front()) ||
-             std::holds_alternative<Req::Segment>(result.ordinary.front()))) {
+        RS_SplineData canonicalCache;
+        const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(
+            result.ordinary, canonicalCache);
+        CHECK(static_cast<bool>(editable) == cacheRepresentable);
+        if (cacheRepresentable) {
+            if (result.ordinary.size() > 1) ++multiBranchCacheCount;
             REQUIRE(editable);
             REQUIRE(editable->hasGeneralizedSourceDefinition());
             CHECK_FALSE(editable->hasEditableDefinition());
+            exactCache(editable->getData(), canonicalCache);
             REQUIRE(editable->sourceDefinition());
             cacheCandidates.emplace_back(*editable->sourceDefinition(), editable->getData());
             auto toleranceSource = editable->sourceDefinition()->source.makeEntity();
@@ -642,11 +659,29 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) == sourceBeforeMove);
             }
             const auto previousDirection = editable->sourceDefinition()->cacheReversed;
+            if (result.ordinary.size() > 1) {
+                Geo::WorkBudget layoutBudget;
+                const auto layout = Geo::inspectCacheLayout(editable->getData(), layoutBudget);
+                CHECK(layout.status == Geo::CacheLayoutStatus::Ok);
+                INFO("composite layout=" << static_cast<int>(layout.status)
+                     << " controls=" << editable->getData().controlPoints.size()
+                     << " knots=" << editable->getData().knotslist.size()
+                     << " midpoint valid=" << Geo::isFinite2D(editable->getMiddlePoint()));
+                auto reversedData = editable->getData();
+                const double knotSum = reversedData.knotslist.front() + reversedData.knotslist.back();
+                for (double& knot : reversedData.knotslist) knot = knotSum - knot;
+                std::reverse(reversedData.knotslist.begin(), reversedData.knotslist.end());
+                std::reverse(reversedData.controlPoints.begin(), reversedData.controlPoints.end());
+                std::reverse(reversedData.weights.begin(), reversedData.weights.end());
+                RS_Spline reversedCheck{nullptr, reversedData};
+                CHECK(reversedCheck.validate());
+            }
             editable->revertDirection();
             REQUIRE(editable->hasGeneralizedSourceDefinition());
             CHECK(editable->sourceDefinition()->cacheReversed == !previousDirection);
         } else CHECK_FALSE(editable);
     }
+    CHECK(multiBranchCacheCount > 0);
 
     // A dyadic linear spline and offset have exactly representable geometry,
     // so this case proves typed movement succeeds when the cache certificate

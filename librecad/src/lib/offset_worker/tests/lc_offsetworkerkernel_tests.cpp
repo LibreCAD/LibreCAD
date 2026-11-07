@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 #include "../lc_offsetworkerkernel.h"
+#include "../lc_offsetworkersourcecache.h"
 #include "../lc_offsetworkertolerance.h"
 #include "rs_ellipse.h"
 #include "rs_arc.h"
@@ -1478,46 +1479,21 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     CHECK(nearestRetainedCusp < geometryTolerance);
                 }
                 CHECK(toleranceMergedCusps % 2 == 0);
-                if (generated.ordinary.size() > 1) continue;
             }
 
-            if ((degree == 1 || wideWeights) && generated.ordinary.size() != 1) {
+            if ((degree == 1 || wideWeights) && generated.ordinary.size() > 1) {
                 REQUIRE(generated.ordinary.size() == (degree == 1 ? 6 : 8));
                 for (const auto& item : generated.ordinary) {
                     CAPTURE(item.index());
                     CHECK((std::holds_alternative<req::Segment>(item) ||
                            std::holds_alternative<RS_SplineData>(item)));
                 }
-
-                RS_SplineData singlePiece;
-                if (const auto* segment =
-                        std::get_if<req::Segment>(&generated.ordinary.front())) {
-                    singlePiece.degree = 1;
-                    singlePiece.controlPoints = {segment->start, segment->end};
-                    singlePiece.knotslist = {0, 0, 1, 1};
-                    singlePiece.weights = {1, 1};
-                } else {
-                    const auto* spline =
-                        std::get_if<RS_SplineData>(&generated.ordinary.front());
-                    REQUIRE(spline);
-                    singlePiece = *spline;
-                }
-                const req::Request validationRequest{token,
-                    req::ValidateSourceCache{singlePiece, definition, {}}};
-                const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
-                const auto& validated = native(validationReply, 8);
-                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
-                CHECK_FALSE(validated.changed);
-                const auto validationWire = result::encode(validationReply, validationRequest);
-                REQUIRE(validationWire);
-                CHECK(result::decode(*validationWire, validationRequest));
-                continue;
             }
 
-            REQUIRE(generated.ordinary.size() == 1);
-            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
-
-            const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+            RS_SplineData cache;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+            RS_Spline checkedCache{nullptr, cache};
+            REQUIRE(checkedCache.validate());
             const req::Request validationRequest{token,
                 req::ValidateSourceCache{cache, definition, {}}};
             const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);

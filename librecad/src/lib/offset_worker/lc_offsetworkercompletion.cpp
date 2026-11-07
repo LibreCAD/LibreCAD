@@ -5,6 +5,7 @@
  */
 #include "lc_offsetworkerclient.h"
 #include "lc_offsetcurvexdata.h"
+#include "lc_offsetworkersourcecache.h"
 #include "lc_offsetworkertolerance.h"
 #include "rs_line.h"
 
@@ -51,18 +52,11 @@ std::unique_ptr<LC_OffsetCurve> LC_OffsetWorkerCompletion::nativeSource(const RS
     if (!request || !request->definition.isWellFormed() || !result || result->curve || result->changed ||
         result->engineRuns != 1 || result->engineStatus != LC_CurveOffsetStatus::Ok ||
         result->ordinaryStatus != LC_OffsetWorkerResult::OrdinaryStatus::Complete ||
-        result->refusal != LC_OffsetCurveRefusal::NotCacheRepresentable || result->ordinary.size() != 1)
+        result->refusal != LC_OffsetCurveRefusal::NotCacheRepresentable)
         return {};
 
     RS_SplineData cache;
-    if (const auto* data = std::get_if<RS_SplineData>(&result->ordinary.front())) cache = *data;
-    else if (const auto* line = std::get_if<LC_OffsetWorkerRequest::Segment>(&result->ordinary.front())) {
-        cache.degree = 1;
-        cache.controlPoints = {line->start, line->end};
-        cache.knotslist = {0, 0, 1, 1};
-        cache.weights = {1, 1};
-    } else return {};
-    if (cache.controlPoints.size() > 256) return {};
+    if (!LC_OffsetWorkerSourceCache::combine(result->ordinary, cache)) return {};
     RS_Spline checked{nullptr, cache};
     if (!checked.validate() || RS_Spline::geometryFingerprint(checked.getData()) !=
         RS_Spline::geometryFingerprint(cache)) return {};

@@ -76,8 +76,9 @@ LC_OffsetSourceBudget clampedOutputBudget(const LC_OffsetSourceBudget &budget) {
 
 bool fitsOutputBudget(const RS_Spline &cache, const LC_OffsetSourceBudget &budget) {
     if (!isValidOffsetBudget(budget) || budget.maxDeepEntities < kOffsetDeepEntitiesPerOutputSpline - 1) return false;
-    const auto count = geo::cacheLayoutCountsFromControls(cache.getData().degree, cache.getData().controlPoints.size());
-    return count && count->spans <= budget.maxCubicPieces &&
+    geo::WorkBudget layoutBudget;
+    const auto layout = geo::inspectCacheLayout(cache.getData(), layoutBudget);
+    return layout.status == geo::CacheLayoutStatus::Ok && layout.spanCount() <= budget.maxCubicPieces &&
         measureOffsetOutput({&cache}, budget.maxDeepEntities).status == LC_OffsetTreeStatus::Ok;
 }
 
@@ -158,10 +159,8 @@ bool containsThroughPoint(const RS_Spline &cache, const RS_Vector &point, const 
 }
 
 bool boundedCache(const RS_SplineData &data, const LC_OffsetCheckLimits &limits) {
-    const auto counts = geo::cacheLayoutCountsFromControls(data.degree, data.controlPoints.size());
-    return counts && counts->spans <= limits.maxCacheSpans && counts->controls <= limits.maxVertices &&
-        data.knotslist.size() == counts->knots && data.weights.size() == counts->controls &&
-        data.fitPoints.empty() && data.savedOpenKnots.empty();
+    geo::WorkBudget budget{limits};
+    return geo::inspectCacheLayout(data, budget).status == geo::CacheLayoutStatus::Ok;
 }
 
 bool boundedRepresentation(const RS_SplineData &data) noexcept {
@@ -821,7 +820,9 @@ void LC_OffsetCurve::revertDirection() {
         [](double knot) { return std::isfinite(knot); })) return;
     auto data = current;
     const Exact sum = Exact(data.knotslist.front()) + Exact(data.knotslist.back());
-    for (auto &knot : data.knotslist) if (!exactValue(sum - Exact(knot), knot, defined)) return;
+    const bool preserveExactParameters = defined && !typed;
+    for (auto &knot : data.knotslist)
+        if (!exactValue(sum - Exact(knot), knot, preserveExactParameters)) return;
     std::reverse(data.knotslist.begin(), data.knotslist.end());
     std::reverse(data.controlPoints.begin(), data.controlPoints.end());
     std::reverse(data.weights.begin(), data.weights.end());
@@ -831,6 +832,7 @@ void LC_OffsetCurve::revertDirection() {
     else if (defined) definition.cacheReversed = !definition.cacheReversed;
     auto grips = m_grips; std::reverse(grips.begin(), grips.end());
     RS_Spline prepared{nullptr, data};
+    if (!prepared.validate()) return;
     const auto midpoint = defined && !typed ?
         LC_OffsetCurveGrips::prepareMiddle(prepared.getData(), m_worldTolerance, m_closed) :
         typed ? m_cachedMiddlePoint : RS_Vector{false};
