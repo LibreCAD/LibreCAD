@@ -754,13 +754,16 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
 
 TEST_CASE("worker validates nonuniform periodic spline caches on both offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][spline-variant][periodic][nonuniform]") {
-    for (const int degree : {1, 2, 3}) {
-        CAPTURE(degree);
+    const std::vector<std::pair<int, double>> variants{
+        {1, 1e-3}, {1, 1.0}, {1, 1e3}, {2, 1.0}, {3, 1.0}};
+    for (const auto& [degree, scale] : variants) {
+        CAPTURE(degree, scale);
         RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
         for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
                                        RS_Vector{60, 0}, RS_Vector{55, 35},
                                        RS_Vector{20, 50}, RS_Vector{-15, 25}})
-            periodic.addControlPoint(point);
+            periodic.addControlPoint({point.x * scale + 1000.0 * scale,
+                                      point.y * scale - 2000.0 * scale});
         if (degree == 1)
             periodic.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
         else if (degree == 2)
@@ -793,7 +796,8 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
 
         const std::vector<double> signedDistances = degree == 1
-            ? std::vector<double>{.0625, -.0625, .125, -.125, .25, -.25}
+            ? std::vector<double>{.0625 * scale, -.0625 * scale, .125 * scale,
+                                  -.125 * scale, .25 * scale, -.25 * scale}
             : std::vector<double>{.125, -.125};
         for (const double signedDistance : signedDistances) {
             CAPTURE(signedDistance);
