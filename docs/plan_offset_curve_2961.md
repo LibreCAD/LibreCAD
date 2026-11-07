@@ -22822,3 +22822,23 @@ imports`). This covers the stated degree, control layout, knot vector, weights,
 distance, and lanes only. Other nonuniform periodic knot sequences, degrees,
 control counts and weight patterns, broader topology/transform neighborhoods,
 visible-GUI acceptance, independent-CAD review, and exact-head CI remain open.
+
+#### W563ao. Preserve Legal Repeated Knots in the Spline Setter (2026-11-07)
+
+The nonuniform-knot import work exposed that `RS_Spline::setKnotVector()` ran
+`ensureMonotonic()`, which changed valid repeated knots and could alter NURBS
+geometry. The setter now accepts finite nondecreasing knots without rewriting
+duplicates and rejects unsorted/non-finite or otherwise invalid vectors without
+mutating the previous valid spline. The nonuniform periodic import fixture now
+uses this public setter instead of mutating `RS_SplineData` directly.
+
+Validation: the new setter regression passes 6 assertions; the full
+`[RS_Spline]` suite passes 25 cases / 612 assertions; the nonuniform periodic
+five-lane staged-import case passes 1,549 assertions; `librecad_tests` builds
+and `git diff --check` passes. Product commit `92aad0093` (`fix(spline):
+preserve repeated knot vectors`).
+
+This fixes setter correctness for legal repeated knots and validates the
+recorded periodic example; it does not establish broad repeated-knot direct
+offset/worker/cache/file coverage. Additional knot multiplicities and layouts,
+external-CAD validation, visible-GUI acceptance, and exact-head CI remain open.
