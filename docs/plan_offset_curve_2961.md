@@ -50,9 +50,10 @@ W539 tangent-vector model and DXF preservation complete with fail-closed DWG
 export for constrained variants;
 W540 schema-3 tangent metadata persistence complete;
 W542/W543 cubic fit-point interpolation, W544 transform/reversal
-qualification, W545's bounded translation-conditioning probe, and W546's
-one-ended DXF persistence checks are complete for selected open planar
-`RS_Spline` tangent cases;
+qualification, W545's bounded translation-conditioning probe, W546's one-ended
+DXF persistence checks, and W553's verified tangent-constrained cubic
+`RS_Spline` worker/cache and UI replacement path are complete for their
+recorded cases;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21412,14 +21413,26 @@ an empty family must not silently fall back to another type. When the selected
 source still exists in the drawing, the widget/canvas selection must continue
 to identify and highlight it.
 
+“Change source type” means changing this family filter before picking, not
+changing an entity's geometric type or coercing one source representation into
+another. The candidate inventory and capture dispatch must agree exactly: a
+pick after selecting a family accepts only a live entity captured as that
+family, while parabola remains a distinct source kind even though its runtime
+class derives from `LC_SplinePoints`. A family choice must not imply support
+for every geometry variant in that family; unsupported variants must be
+excluded or refused by the variant gates below, with the current source/cache
+left intact.
+
 The picker inventory is the complete set of currently modeled source families:
 line, arc, circle, ellipse, `RS_Spline`, spline-points, parabola, bounded
 hyperbola, and polyline. Parabola must remain a distinct choice from its
-`LC_SplinePoints` base class. Keep a single inventory shared by the selector,
-candidate filtering, and tests so a newly modeled source family cannot be
-offsettable but absent from source replacement. Add a regression whenever a
-family is introduced; it must cover selector visibility, candidate matching,
-cross-family replacement, current-source highlight, and failure-atomicity.
+`LC_SplinePoints` base class through selector data, candidate matching, source
+capture, worker dispatch, replacement, persistence, and display. Keep a single
+inventory shared by the selector, candidate filtering, and tests so a newly
+modeled source family cannot be offsettable but absent from source
+replacement. Add a regression whenever a family is introduced; it must cover
+selector visibility, candidate matching, cross-family replacement,
+current-source highlight, and failure-atomicity.
 
 This is family-level discoverability only. A listed family is not a promise
 that every instance or geometric variant is currently offsettable. Continue
@@ -21427,16 +21440,25 @@ the variant eligibility matrices independently: capture/identity, exact or
 bounded offset generation, worker behavior, cache validation/admission,
 replacement refusal without mutation, and applicable DXF/DWG save/reopen.
 Unsupported variants must remain explicitly refused or excluded, without
-silently selecting a different source or promoting stale cache data. In
-particular, tangent-constrained spline variants remain refused until their
-interpolation, identity, and file-format gates are completed.
+silently selecting a different source or promoting stale cache data. At this
+W547 checkpoint, tangent-constrained spline variants were still refused
+pending interpolation, identity, and file-format gates. W553 below supersedes
+that blanket rule only for verified open, unit-weight cubic `RS_Spline`
+variants whose retained fit points and endpoint tangent directions match the
+represented curve. Spline-points tangent variants, rational or other-degree
+splines, inconsistent metadata, and DWG tangent writing remain refused or
+unqualified.
 
-Existing UI implementation and focused tests already cover the editable
-family selector, all nine choices, parabola identity, live candidate matching,
-current-source highlighting, and guarded replacement. Re-run those regressions
-after any picker or source-capture change; do not create a redundant UI slice.
-This checkpoint adds no product-code completion and does not close the
-remaining per-variant, visible-GUI, exact-head CI, or external-CAD gates.
+Existing UI implementation and focused tests already cover changing the
+family filter before a replacement pick, all nine choices, parabola identity,
+live candidate matching, current-source highlighting, and guarded replacement.
+Re-run those regressions after any picker or source-capture change; do not
+create a redundant UI slice. The requested picker behavior is therefore
+implemented, but “support all source types” is not complete merely because
+each family appears in the widget: remaining per-variant offset generation,
+worker/cache validation, replacement atomicity, and applicable DXF/DWG
+round-trip gates remain open. This checkpoint adds no product-code completion
+and does not close the visible-GUI, exact-head CI, or external-CAD gates.
 
 ### W548. Versioned Worker Source Identity for Fit Tangents (2026-11-06)
 
@@ -21549,3 +21571,36 @@ only the tested short-span/origin grid; more extreme and degenerate
 parameterization, explicit control-net/fit/tangent consistency, tangent-aware
 worker/cache eligibility, and standards-verified DWG representation remain
 open.
+
+### W553. Admit Verified Cubic Tangent-Constrained Spline Sources (2026-11-06)
+
+Added `RS_Spline::fitTangentsMatchCurve()` as a fail-closed semantic gate for
+the narrow tangent-constrained spline subset now supported by native editable
+offsets: open, clamped, nonperiodic, unit-weight cubic `RS_Spline` entities
+with finite planar geometry, fit points lying on the represented curve within
+the declared fit tolerance, and each nonzero endpoint tangent aligned with the
+curve's endpoint derivative within a coordinate-precision bound. Rational,
+noncubic, closed/periodic, malformed, and inconsistent variants remain
+unsupported. Tangent-constrained `LC_SplinePoints` remain refused.
+
+The direct offset engine and Properties source picker now share this gate. The
+worker generates and validates a canonical cache for an eligible source; the
+Properties replacement path retains the tangent metadata in its source
+definition. UI coverage also verifies that a candidate whose offset produces
+multiple cache pieces is refused without changing the prior definition/cache.
+This does not qualify arbitrary distances or guarantee a one-piece cache for
+every eligible source; the existing single-cache representability rule still
+applies. DWG writing for tangent-constrained SPLINE remains fail-closed pending
+a standards-verified representation. Broader knot conditioning, fit-point
+parameterization, spline-points tangents, and DXF/DWG matrices remain open.
+
+Validation: Release CMake builds of `librecad_tests` and
+`librecad_offset_worker_kernel_tests` succeed. `[eligibility][tangents]` passes
+240 assertions across two GUI cases; `[tangents]` passes 551 assertions across
+10 cases; `[RS_Spline]` passes 576 assertions across 22 cases;
+`[curve-offset][direct]` passes 42,070 assertions across 30 cases; and the
+worker-kernel suite passes 1,660,768 assertions across 45 cases.
+`git diff --check` passes. Product commit `7c5b79798` (`fix(offset): admit
+verified tangent spline sources`). This closes only the recorded cubic source,
+worker/cache, and replacement cases, not every tangent spline variant or the
+broader family/variant, exact-head CI, visible-GUI, or external-CAD gates.
