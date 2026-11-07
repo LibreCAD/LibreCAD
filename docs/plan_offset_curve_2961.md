@@ -22754,3 +22754,21 @@ import`). This qualifies the recorded wrapped control layout and positive
 weight pattern only. Other rational periodic layouts/weights, knot-vector
 variants, broader distance and transform neighborhoods, visible-GUI acceptance,
 external semantic/visual review, and exact-head CI remain open.
+
+#### W563ak. Qualify a Second Wrapped-periodic Control Layout (2026-11-07)
+
+Added a six-independent-control-point closed cubic layout alongside the
+existing five-point layout. Each is wrapped by the degree-3 repeated leading
+controls; rational mode uses positive weights that repeat consistently across
+that seam, while the implicit-unit mode remains covered. Both layouts run
+through the same two relative distances, three scale/translation pairs, both
+signed sides, and five DXF/DWG lanes. All 240 combinations preserve exact
+typed source definitions and match generated cache fingerprints. The focused
+Release test passes 30,288 assertions; the test target builds and
+`git diff --check` passes.
+
+Test commit `d7e4023fc` (`test(offset): cover second periodic spline layout`).
+This qualifies these two control layouts only; arbitrary periodic knot vectors,
+other control counts and weight patterns, broader topology/distance/transform
+neighborhoods, visible GUI, independent-CAD review, and exact-head CI remain
+open.
