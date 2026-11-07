@@ -23030,3 +23030,31 @@ acceptance claim is made for R2007 or later. Test commit `134b14530`
 This qualifies only the tested fit-point fixtures and version lanes. It does
 not establish all spline variants, all content in the DWGs, geometry
 equivalence across external readers, or exact-head CI.
+
+#### W563ax. Write Verified Three-point Tangent Spline-points DWGs (2026-11-07)
+
+Enabled DWG scenario-2 output for a verified `LC_SplinePoints` subset: open,
+uncut, fit-point mode with exactly three fit points, and endpoint tangent
+metadata accepted by `fitTangentsMatchCurve()`. This is one quadratic segment;
+the writer normalizes each constrained tangent and writes zero for an
+unconstrained end. Larger fit-point chains, control-point mode, closed/cut
+forms, and inconsistent tangent metadata still fail closed. DXF's prior
+control-net/fit-metadata path remains unchanged.
+
+Release round-trip passes 2,240 assertions across both-, start-only, and
+end-only constraints and all six DWG output versions. It verifies scenario,
+fit points, tolerance, tangent fields, reconstructed type, and 101 sampled
+points. The four-point tangent-spline-points DWG refusal remains covered (33
+assertions); `[fit-points][roundtrip]` passes 3,930 assertions in eight cases,
+and `[spline][LC_SplinePoints]` passes 615 assertions in ten cases.
+
+LibreDWG 0.14 JSON confirms scenario-2 degree-2 data, all three fit points,
+and independently zero/unit tangent fields in all 18 preserved DWGs. ACadSharp
+accepts R2000 and R2004 files for both-, start-only, and end-only variants and
+recovers scenario 2 with the three fit points. This does not claim external
+curve equivalence or ACadSharp support for R2007 and later. Product commit
+`9ceacb5e9` (`feat(dwg): preserve verified spline-points tangents`).
+
+This closes only the verified single-quadratic spline-points variant. Broader
+piecewise spline-points chains, external geometry comparison, visible-GUI
+acceptance, and exact-head CI remain open.
