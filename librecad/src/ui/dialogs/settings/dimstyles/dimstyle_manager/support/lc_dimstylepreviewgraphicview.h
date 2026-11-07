@@ -53,5 +53,10 @@ protected:
     static LC_DimStylePreviewGraphicView* createAndSetupView(QWidget* parent,
             LC_PreviewGraphic* graphic, const RS_Graphic* originalGraphic, bool showInWCS);
     static void copyBlocks(RS_Graphic* originalGraphic, LC_PreviewGraphic* graphic);
+
+private:
+    friend class LC_DimStylePreviewGraphicViewTestAccess;
+    static LC_DimStylePreviewGraphicView* init(QWidget* parent, RS_Graphic* originalGraphic,
+                                               RS2::EntityType dimensionType, const QString& sampleFileName);
 };
 #endif

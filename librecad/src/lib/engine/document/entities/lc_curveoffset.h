@@ -268,6 +268,11 @@ struct LC_CurveOffsetMaterializationResult {
     LC_OffsetValidationLevel validationLevel{LC_OffsetValidationLevel::None};
     double maxObservedError{std::numeric_limits<double>::quiet_NaN()};
     double maxCertifiedError{std::numeric_limits<double>::quiet_NaN()};
+    /** Producer/materializer sample-budget demand, including a refused unit at exhaustion. */
+    std::size_t sampleUnits{0};
+    /** Completed fitted pieces, constructed roots, and bounded observed leaves, even on failure. */
+    LC_OffsetOutputUsage attemptedOutputUsage{};
+    bool attemptedDeepCountComplete = true;
 };
 
 /**
@@ -308,6 +313,10 @@ inline constexpr std::size_t kDefaultMaxIntersectionPairs = std::size_t{1} << 20
  *  an LC_SplinePoints, an LC_Hyperbola or an RS_Ellipse, subclasses included
  *  (an unbounded hyperbola is then refused as a source). */
 bool isSupportedSource(const RS_Entity& source);
+
+double relativeOffsetTolerance(const RS_Entity& source);
+/** Geometry tolerance including the numeric floor; NaN for invalid source/distance/factor. */
+double toleranceFor(const RS_Entity& source, double distanceMagnitude, double relativeFactor);
 
 /**
  * Direct-mode options with tolerances derived from the source's scale and the

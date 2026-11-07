@@ -74,8 +74,14 @@ void LC_ActionDrawLineParallel::doLoadOptions() {
     m_numberToCreate = loadInt("Number", 1);
 }
 
-void LC_ActionDrawLineParallel::doInitWithContextEntity(RS_Entity* contextEntity, [[maybe_unused]] const RS_Vector& clickPos) {
-    const auto entity = contextEntity;
+void LC_ActionDrawLineParallel::doInitWithContextEntity(RS_Entity* contextEntity, const RS_Vector& clickPos) {
+    auto entity = contextEntity;
+    if (entity != nullptr && entity->getParent() != nullptr &&
+        entity->getParent()->rtti() == RS2::EntityOffsetCurve) entity = entity->getParent();
+    if (entity != nullptr && entity->rtti() == RS2::EntityOffsetCurve) {
+        m_entity = entity;
+        *m_coord = clickPos;
+    }
     if (isPolyline(entity)) {
         // fixme - sand - investigate whether we can create parallel to polyline segment (arc or line)
     }
@@ -106,8 +112,9 @@ bool LC_ActionDrawLineParallel::doUpdateDistanceByInteractiveInput(const QString
 }
 
 bool LC_ActionDrawLineParallel::doTriggerModifications(LC_DocumentModificationBatch& ctx) {
+    const auto before = ctx.entitiesToAdd.size();
     RS_Creation::createParallel(*m_coord, m_distance, m_numberToCreate, m_entity, false, ctx.entitiesToAdd);
-    return true;
+    return m_entity == nullptr || m_entity->rtti() != RS2::EntityOffsetCurve || ctx.entitiesToAdd.size() > before;
 }
 
 void LC_ActionDrawLineParallel::onMouseMoveEvent(const int status, const LC_MouseEvent* e) {
@@ -117,7 +124,8 @@ void LC_ActionDrawLineParallel::onMouseMoveEvent(const int status, const LC_Mous
     // parallel is the spline's, not that line's.
     m_entity = catchEntityByEvent(e, RS2::ResolveAll);
     if (m_entity != nullptr && m_entity->getParent() != nullptr &&
-        m_entity->getParent()->rtti() == RS2::EntitySpline) {
+        (m_entity->getParent()->rtti() == RS2::EntitySpline ||
+         m_entity->getParent()->rtti() == RS2::EntityOffsetCurve)) {
         m_entity = m_entity->getParent();
     }
     if (m_entity != nullptr) {

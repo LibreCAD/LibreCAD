@@ -2405,7 +2405,7 @@ TEST_CASE("DXF filter normalizes TRACE and SOLID extrusion once",
   std::filesystem::remove(out2);
 }
 
-TEST_CASE("DXF filter rejects tilted planar entities before 2D creation",
+TEST_CASE("DXF filter projects tilted polylines and rejects tilted conics",
           "[dxf][roundtrip][filter][extrusion]") {
   ensureSettings();
   const std::string src = tmpFile("lwpolyline_tilted_src.dxf");
@@ -2443,7 +2443,7 @@ TEST_CASE("DXF filter rejects tilted planar entities before 2D creation",
   }
 
   CHECK(countRecords(out, "LINE") == 1);
-  CHECK(countRecords(out, "LWPOLYLINE") == 0);
+  CHECK(countRecords(out, "LWPOLYLINE") == 2);
   CHECK(countRecords(out, "POLYLINE") == 0);
   CHECK(countRecords(out, "CIRCLE") == 0);
   CHECK(countRecords(out, "ARC") == 0);

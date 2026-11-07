@@ -1374,6 +1374,11 @@ void RS_FilterDXF::writeEntity(DL_WriterA& dw, RS_Entity* e, const DL_Attributes
         case RS2::EntitySpline:
             writeSpline(dw, (RS_Spline*)e, attrib);
             break;
+        case RS2::EntityOffsetCurve:
+            // This legacy SPLINE writer regenerates knots. Keep the visible
+            // cache as ordinary primitives instead, including for R12.
+            writeAtomicEntities(dw, static_cast<RS_Spline*>(e), attrib, RS2::ResolveNone);
+            break;
         case RS2::EntitySplinePoints:
             writeSplinePoints(dw, (LC_SplinePoints*)e, attrib);
             break;

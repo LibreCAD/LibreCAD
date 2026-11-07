@@ -26,6 +26,8 @@
 
 #ifndef RS_ACTIONMODIFYENTITY_H
 #define RS_ACTIONMODIFYENTITY_H
+#include <memory>
+#include <QPointer>
 
 
 #include "lc_undoabledocumentmodificationaction.h"
@@ -33,6 +35,7 @@
 
 class LC_EntityPropertiesEditor;
 class RS_Entity;
+struct LC_EntityPropertiesEditSession;
 
 /**
  * This action class can handle user events to select entities.
@@ -45,6 +48,7 @@ public:
     explicit LC_ActionModifyEntity(LC_ActionContext *actionContext);
     ~LC_ActionModifyEntity() override;
     void init(int status) override;
+    void trigger() override;
     void notifyFinished() const;
     bool mayBeTerminatedExternally() override {return m_allowExternalTermination;}
     void onLateRequestCompleted(bool shouldBeSkipped) override;
@@ -61,15 +65,29 @@ protected:
     void onMouseRightButtonRelease(int status, const LC_MouseEvent* e) override;
     void onMouseMoveEvent(int status, const LC_MouseEvent* e) override;
     void updateActionPrompt() override;
+    void doTrigger() override;
     bool doTriggerModifications(LC_DocumentModificationBatch& ctx) override;
     void doTriggerCompletion(bool success) override;
 private:
+    struct NativeDocumentLifetime;
+    struct NativeDialogSource;
+    bool nativeDialogDocumentIsCurrent() const;
+    bool dialogSourceIsMember(const RS_Entity* source) const;
+    void abandonDialogEdit();
+    void nativeDialogDocumentDestroyed();
+    bool captureNativeDialogSource();
+    bool nativeDialogSourceIsCurrent() const;
+    void discardNativeDialogClone();
+    void finishNativeDialog(bool refused);
+    std::unique_ptr<NativeDocumentLifetime> m_nativeDocumentLifetime;
+    std::unique_ptr<NativeDialogSource> m_nativeDialogSource;
     RS_Entity* m_entity = nullptr;
     RS_Entity* m_clonedEntity = nullptr;
+    std::shared_ptr<LC_EntityPropertiesEditSession> m_pendingNativeClone;
     bool m_modifyCursor{true};
     bool m_invokedForSingleEntity{false};
     bool m_allowExternalTermination{true};
-    LC_EntityPropertiesEditor *m_propertiesEditor{nullptr};
+    QPointer<LC_EntityPropertiesEditor> m_propertiesEditor;
 };
 
 #endif

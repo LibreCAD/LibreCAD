@@ -123,11 +123,13 @@ void prepareForExport(RS_Graphic& graphic) {
     graphic.fitToPage();
 }
 
-void importDrawing(const QTemporaryDir& dir, RS_Graphic& graphic, const QByteArray& entities) {
+std::unique_ptr<RS_Graphic> importDrawing(const QTemporaryDir& dir, const QByteArray& entities) {
     const QByteArray dxf = QByteArray("0\nSECTION\n2\nENTITIES\n") + kFrameEntities + entities +
                            "0\nENDSEC\n0\nEOF\n";
-    REQUIRE(LC_Console::importGraphic(graphic, writeFile(dir, "drawing.dxf", dxf)));
-    prepareForExport(graphic);
+    auto graphic = LC_Console::importGraphic(writeFile(dir, "drawing.dxf", dxf));
+    REQUIRE(graphic);
+    prepareForExport(*graphic);
+    return graphic;
 }
 
 QByteArray readFile(const QString& path) {
@@ -204,12 +206,11 @@ TEST_CASE("console SVG export reports success and writes the file", "[console][s
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
 
-    RS_Graphic graphic;
-    importDrawing(dir, graphic, QByteArray(kTextEntity) + kMTextEntity);
-    REQUIRE(graphic.count() == 6);
+    auto graphic = importDrawing(dir, QByteArray(kTextEntity) + kMTextEntity);
+    REQUIRE(graphic->count() == 6);
     const QString out = dir.filePath("text.svg");
 
-    CHECK(slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5),
+    CHECK(slotFileExport(graphic.get(), out, "SVG", QSize(1200, 800), QSize(5, 5),
                           false, false));
     CHECK(QFileInfo(out).isFile());
     CHECK(QFileInfo(out).size() > 0);
@@ -221,13 +222,12 @@ TEST_CASE("console SVG export draws text", "[console][svg]") {
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
 
-    RS_Graphic graphic;
     const auto entity = GENERATE(kTextEntity, kMTextEntity);
-    importDrawing(dir, graphic, entity);
-    REQUIRE(graphic.count() == 5);
+    auto graphic = importDrawing(dir, entity);
+    REQUIRE(graphic->count() == 5);
     const QString out = dir.filePath("text.svg");
 
-    CHECK(slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5),
+    CHECK(slotFileExport(graphic.get(), out, "SVG", QSize(1200, 800), QSize(5, 5),
                           false, false));
 
     // Neither the frame nor the background produces a path.
@@ -239,11 +239,10 @@ TEST_CASE("console SVG export retains subpixel geometry", "[console][svg]") {
     SourceFonts fonts;
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
-    RS_Graphic graphic;
-    importDrawing(dir, graphic, kSmallEntities);
-    REQUIRE(graphic.count() == 8);
+    auto graphic = importDrawing(dir, kSmallEntities);
+    REQUIRE(graphic->count() == 8);
     const QString out = dir.filePath("small.svg");
-    REQUIRE(slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5), false, false));
+    REQUIRE(slotFileExport(graphic.get(), out, "SVG", QSize(1200, 800), QSize(5, 5), false, false));
     const auto svg = readFile(out);
     const auto counts = svgElementCounts(svg);
     CHECK(counts.value("circle") == 1);
@@ -276,14 +275,13 @@ TEST_CASE("console raster exports read back at the requested size", "[console][p
     SourceFonts fonts;
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
-    RS_Graphic graphic;
-    importDrawing(dir, graphic, kTextEntity);
+    auto graphic = importDrawing(dir, kTextEntity);
     const auto formats = rasterFormats();
     REQUIRE(formats.contains("png"));
     for (const auto& format : formats) {
         CAPTURE(format.toStdString());
         const QString out = dir.filePath("drawing." + QString::fromLatin1(format));
-        REQUIRE(slotFileExport(&graphic, out, QString::fromLatin1(format),
+        REQUIRE(slotFileExport(graphic.get(), out, QString::fromLatin1(format),
                                QSize(1200, 800), QSize(5, 5), false, false));
         CHECK(QImage(out).size() == QSize(1200, 800));
     }
@@ -362,8 +360,7 @@ TEST_CASE("console image export rolls back a short write", "[console][svg]") {
     SourceFonts fonts;
     const QTemporaryDir dir;
     REQUIRE(dir.isValid());
-    RS_Graphic graphic;
-    importDrawing(dir, graphic, kSmallEntities);
+    auto graphic = importDrawing(dir, kSmallEntities);
     const bool existing = GENERATE(false, true);
     CAPTURE(existing);
     const QByteArray previous("previous nonempty export\n");
@@ -378,7 +375,7 @@ TEST_CASE("console image export rolls back a short write", "[console][svg]") {
         bool result;
         {
             FileSizeLimit limit;
-            result = slotFileExport(&graphic, out, QString::fromLatin1(format), QSize(1200, 800), QSize(5, 5), false, false);
+            result = slotFileExport(graphic.get(), out, QString::fromLatin1(format), QSize(1200, 800), QSize(5, 5), false, false);
         }
         CHECK_FALSE(result);
         CHECK(QFileInfo::exists(out) == existing);
@@ -404,10 +401,9 @@ TEST_CASE("console SVG export preserves existing output after a short write of a
         lines += "0\nLINE\n8\n0\n10\n" + QByteArray::number(i % 200) + "\n20\n0.0\n11\n" +
                  QByteArray::number((i * 7) % 200) + "\n21\n100.0\n";
     }
-    RS_Graphic graphic;
-    importDrawing(dir, graphic, lines);
+    auto graphic = importDrawing(dir, lines);
     const QString complete = dir.filePath("complete.svg");
-    REQUIRE(slotFileExport(&graphic, complete, "SVG", QSize(1200, 800), QSize(5, 5), false, false));
+    REQUIRE(slotFileExport(graphic.get(), complete, "SVG", QSize(1200, 800), QSize(5, 5), false, false));
     REQUIRE(QFileInfo(complete).size() > 64 * 1024);
 
     const QByteArray previous("previous nonempty export\n");
@@ -415,7 +411,7 @@ TEST_CASE("console SVG export preserves existing output after a short write of a
     bool result;
     {
         FileSizeLimit limit;
-        result = slotFileExport(&graphic, out, "SVG", QSize(1200, 800), QSize(5, 5), false, false);
+        result = slotFileExport(graphic.get(), out, "SVG", QSize(1200, 800), QSize(5, 5), false, false);
     }
     CHECK_FALSE(result);
     CHECK(readFile(out) == previous);

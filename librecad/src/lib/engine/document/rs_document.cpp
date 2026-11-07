@@ -70,8 +70,8 @@ void RS_Document::endUndoCycle(){
 }
 
 void RS_Document::startUndoCycle() {
-    m_selectedSet->disableListeners();
     RS_Undo::startUndoCycle();
+    m_selectedSet->disableListeners();
     m_savedAutoUpdateBorders = getAutoUpdateBorders();
     setAutoUpdateBorders(false);
 }

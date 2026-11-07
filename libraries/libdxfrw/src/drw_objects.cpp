@@ -1715,9 +1715,13 @@ bool readTableStyleCellStyle(DRW::Version version, dwgBuffer *buf,
         return readBitDoubleWithinBody(buf, version, bodySize, value)
             && std::isfinite(value);
     };
-    const auto readColor = [buf, strBuf, version, bodySize, stringSize](int& value) {
+    // Cell-style colors use full CMC just like their content-format colors,
+    // including populated CELLSTYLEMAP records carried in legacy files.
+    const DRW::Version colorVersion =
+        version < DRW::AC1018 ? DRW::AC1018 : version;
+    const auto readColor = [buf, strBuf, colorVersion, bodySize, stringSize](int& value) {
         std::uint32_t parsed = 0;
-        if (!readCmColorWithinBounds(buf, strBuf ? strBuf : buf, version,
+        if (!readCmColorWithinBounds(buf, strBuf ? strBuf : buf, colorVersion,
                                      bodySize, stringSize, parsed))
             return false;
         value = static_cast<int>(parsed);
@@ -2226,8 +2230,16 @@ bool DRW_TableEntry::parseCode(int code, const std::unique_ptr<dxfReader>& reade
         return parseDxfGroups(code, reader);
     case 1000:
     case 1001:
-    case 1002:
     case 1003:
+        if (extData.size() >= kMaxExtendedDataItems
+            || reader->type != dxfReader::STRING
+            || reader->getRawString().size() > 255)
+            return false;
+        if (!appendExtData(std::make_unique<DRW_Variant>(
+                code, reader->getUtf8XDataString(code))))
+            return false;
+        break;
+    case 1002:
     case 1004:
     case 1005:
         if (!appendExtData(std::make_unique<DRW_Variant>(code, reader->getString())))
@@ -2488,19 +2500,43 @@ DRW_DBG("\n***************************** parsing table entry *******************
     std::vector<PendingHandleRef> parsedAppIdResolutions;
     std::vector<PendingHandleRef> parsedLayerRefResolutions;
     try {
+        const auto cap = kMaxExtendedDataItems;
+        if (extData.size() > cap) return false;
+        std::size_t itemCount = 0, appCount = 0, layerCount = 0;
+        std::uint32_t lastApp = 0;
         for (const DwgEedChunk& chunk : eedChunks) {
-            const std::size_t appIndex =
-                extData.size() + parsedExtData.size();
-            parsedExtData.push_back(
-                std::make_unique<DRW_Variant>(1001, std::string{}));
-            parsedAppIdResolutions.push_back({appIndex, chunk.appHandle});
+            if (!appCount || lastApp != chunk.appHandle) {
+                if (itemCount == cap - extData.size()) return false;
+                ++itemCount;
+                ++appCount;
+            }
+            if (chunk.items.size() > cap - extData.size() - itemCount) return false;
+            itemCount += chunk.items.size();
+            layerCount += chunk.layerRefs.size();
+            lastApp = chunk.appHandle;
+        }
+        parsedExtData.reserve(itemCount);
+        parsedAppIdResolutions.reserve(appCount);
+        parsedLayerRefResolutions.reserve(layerCount);
+        std::uint32_t previousAppHandle = 0;
+        for (const DwgEedChunk& chunk : eedChunks) {
+            // Adjacent packets of one application are one logical XDATA group.
+            // A marker and its following braced unit may occupy separate packets.
+            if (parsedExtData.empty() || previousAppHandle != chunk.appHandle) {
+                const auto appIndex = extData.size() + parsedExtData.size();
+                parsedExtData.push_back(
+                    std::make_unique<DRW_Variant>(1001, std::string{}));
+                parsedAppIdResolutions.push_back({appIndex, chunk.appHandle});
+            }
+            const auto itemBase = extData.size() + parsedExtData.size();
             for (const DRW_Variant& item : chunk.items) {
                 parsedExtData.push_back(std::make_unique<DRW_Variant>(item));
             }
             for (const DwgEedHandleRef& ref : chunk.layerRefs) {
                 parsedLayerRefResolutions.push_back(
-                    {appIndex + 1 + ref.itemIndex, ref.handleRef});
+                    {itemBase + ref.itemIndex, ref.handleRef});
             }
+            previousAppHandle = chunk.appHandle;
         }
     } catch (...) {
         return false;
@@ -5556,7 +5592,8 @@ bool DRW_PlotSettings::encodeDwg(DRW::Version version, dwgBufferW *buf,
     if (version >= DRW::AC1018) {
         buf->putBitShort(static_cast<std::uint16_t>(shadePlotMode));
         buf->putBitShort(static_cast<std::uint16_t>(shadePlotResLevel));
-        buf->putBitShort(static_cast<std::uint16_t>(shadePlotCustomDPI));
+        buf->putBitShort(static_cast<std::uint16_t>(
+            shadePlotCustomDPI == 0 ? 300 : shadePlotCustomDPI));
     }
 
     putCommonObjectHandlePrefix(
@@ -13574,6 +13611,15 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
         cellStyles.push_back(std::move(style));
     }
 
+    // Legacy handles share the body cursor. Check the data/string boundary
+    // before consuming the separately bounded common and cell-style handles.
+    const std::uint64_t bodyBitOffset =
+        bodyBuf->getPosition() * 8u + bodyBuf->getBitPos();
+    if (!bodyBuf->isGood() || !bodySBuf->isGood() || !hBuf->isGood()
+        || !objectBodyFitsSize(bodyBitOffset, bodyEnd)
+        || !objectBodyFitsSize(currentObjectDwgBit(bodySBuf), stringEnd))
+        return fail();
+
     if (version <= DRW::AC1018) {
         if (!this->readDwgObjectCommonHandles(version, bodyBuf, &parsedParentHandle, &parsedReactors, &parsedXDictHandle))
             return fail();
@@ -13583,11 +13629,7 @@ bool DRW_CellStyleMap::parseDwg(DRW::Version version, dwgBuffer *buf, std::uint3
         }
     }
 
-    const std::uint64_t bodyBitOffset =
-        bodyBuf->getPosition() * 8u + bodyBuf->getBitPos();
-    if (!bodyBuf->isGood() || !bodySBuf->isGood() || !hBuf->isGood()
-        || !objectBodyFitsSize(bodyBitOffset, bodyEnd)
-        || !objectBodyFitsSize(currentObjectDwgBit(bodySBuf), stringEnd))
+    if (!bodyBuf->isGood() || !bodySBuf->isGood() || !hBuf->isGood())
         return fail();
 
     m_cellStyles = std::move(cellStyles);
@@ -15204,7 +15246,8 @@ bool DRW_Layout::encodeDwg(DRW::Version version, dwgBufferW *buf,
     if (version >= DRW::AC1018) {  // R2004+
         buf->putBitShort(static_cast<std::uint16_t>(shadePlotMode));
         buf->putBitShort(static_cast<std::uint16_t>(shadePlotResLevel));
-        buf->putBitShort(static_cast<std::uint16_t>(shadePlotCustomDPI));
+        buf->putBitShort(static_cast<std::uint16_t>(
+            shadePlotCustomDPI == 0 ? 300 : shadePlotCustomDPI));
     }
 
     // --- LAYOUT-specific fields ---

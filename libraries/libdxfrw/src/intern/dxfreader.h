@@ -39,6 +39,9 @@ public:
     bool readRec(int *code);
 
     std::string getString() {return strData;}
+    // The actual source string in ASCII and binary DXF, before codepage or
+    // caret conversion. Check its byte length before allocating decoded XDATA.
+    const std::string& getRawString() const { return strData; }
     const std::string& getRawValue() const { return rawData; }
     // Convert a validated hexadecimal handle string representable by the
     // legacy 32-bit object model. Typed records must use this form.
@@ -63,6 +66,15 @@ public:
     }
     std::string toUtf8String(std::string t) {return decoder.toUtf8(t);}
     std::string getUtf8String() {return decoder.toUtf8(strData);}
+    std::string getUtf8XDataString(int code) {
+        if (code == 1001 || code == 1003)
+            return decoder.toUtf8(strData); // match APPID/layer table identities
+        if (code != 1000)
+            return strData; // braces, binary hex and handle lexemes are opaque
+        auto text = decoder.toUtf8Declared(strData);
+        return code == 1000 && skip
+            ? DRW_TextCodec::decodeDxfXDataString(text) : text;
+    }
     double getDouble() {return doubleData;}
     int getInt32() {return intData;}
     std::int64_t getInt64() {return int64;}

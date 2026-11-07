@@ -32,8 +32,11 @@
 #include "lc_curvejet.h"
 #include "lc_hyperbola.h"
 #include "lc_splinepoints.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 namespace {
@@ -160,6 +163,56 @@ public:
 
 private:
     const RS_Spline& m_spline;
+    std::vector<double> m_breaks;
+    std::vector<RS_Vector> m_hull;
+};
+
+class LineSource final : public OffsetSource {
+public:
+    static std::unique_ptr<OffsetSource> make(const RS_Line& line) {
+        const RS_Vector start = line.getStartpoint();
+        const RS_Vector end = line.getEndpoint();
+        const double length = start.distanceTo(end);
+        if (!isFinite(start) || !isFinite(end) || !std::isfinite(length) || !(length > 0.0)) return nullptr;
+        return std::make_unique<LineSource>(RS_LineData{start, end});
+    }
+
+    explicit LineSource(const RS_LineData& data)
+        : m_start{data.startpoint}, m_end{data.endpoint},
+          m_length{m_start.distanceTo(m_end)}, m_direction{(m_end - m_start) / m_length},
+          m_breaks{0.0, m_length}, m_hull{m_start, m_end} {}
+
+    bool closed() const override { return false; }
+    const std::vector<double>& breaks() const override { return m_breaks; }
+    bool jet(const double t, const LC_CurveEvaluationSide, LC_CurveJet& out) const override {
+        out = LC_CurveJet{};
+        if (!std::isfinite(t) || t < 0.0 || t > m_length) return false;
+        out.point = m_start + m_direction * t;
+        out.first = m_direction;
+        out.second = RS_Vector{0.0, 0.0};
+        return isFinite(out.point) && isFinite(out.first);
+    }
+    bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        out = LC_CurveJetBounds{};
+        if (!std::isfinite(a) || !std::isfinite(b) || a < 0.0 || b > m_length || a > b) return false;
+        const RS_Vector pa = m_start + m_direction * a;
+        const RS_Vector pb = m_start + m_direction * b;
+        out.x = LC_Interval::hull(pa.x, pb.x); out.y = LC_Interval::hull(pa.y, pb.y);
+        out.dx = LC_Interval::point(m_direction.x); out.dy = LC_Interval::point(m_direction.y);
+        out.ddx = LC_Interval::point(0.0); out.ddy = LC_Interval::point(0.0);
+        return out.isValid();
+    }
+    const std::vector<RS_Vector>& hull() const override { return m_hull; }
+    bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
+        start = m_start; end = m_end; return true;
+    }
+    bool cubicSpans() const override { return true; }
+
+private:
+    RS_Vector m_start;
+    RS_Vector m_end;
+    double m_length;
+    RS_Vector m_direction;
     std::vector<double> m_breaks;
     std::vector<RS_Vector> m_hull;
 };
@@ -361,7 +414,10 @@ private:
 class EllipseSource final : public OffsetSource {
 public:
     static std::unique_ptr<OffsetSource> make(const RS_Ellipse& ellipse) {
-        const RS_EllipseData& d = ellipse.getData();
+        return make(ellipse.getData(), !ellipse.isEllipticArc());
+    }
+
+    static std::unique_ptr<OffsetSource> make(const RS_EllipseData& d, const bool whole) {
         const RS_Vector major{d.majorP.x, d.majorP.y};
         const RS_Vector minor = RS_Vector{-d.majorP.y, d.majorP.x} * d.ratio;
         if (!isFinite(d.center) || !isFinite(major) || !std::isfinite(d.ratio) || !(d.ratio > 0.0) ||
@@ -371,7 +427,7 @@ public:
         const double s = d.reversed ? -1.0 : 1.0;
         double start = M_PI_4;
         double sweep = 2.0 * M_PI;
-        const bool closed = !ellipse.isEllipticArc();
+        const bool closed = whole;
         if (!closed) {
             // as RS_Ellipse keeps an arc: from angle1 towards angle2, the way it runs
             start = d.angle1;
@@ -575,7 +631,117 @@ private:
     std::vector<RS_Vector> m_hull;
 };
 
+std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity);
+
+class PolylineSource final : public OffsetSource {
+public:
+    static std::unique_ptr<OffsetSource> make(const RS_Polyline& polyline) {
+        auto result = std::unique_ptr<PolylineSource>{new PolylineSource{polyline.isClosed()}};
+        double cursor = 0.0;
+        for (const RS_Entity* child : polyline) {
+            if (!child) return nullptr;
+            auto source = makeSource(*child);
+            if (!source || source->breaks().size() < 2) return nullptr;
+            const auto& local = source->breaks();
+            const double span = local.back() - local.front();
+            if (!std::isfinite(span) || !(span > 0.0) || !std::isfinite(cursor + span)) return nullptr;
+            result->m_pieces.push_back({std::move(source), cursor, span});
+            for (std::size_t i = 0; i < local.size(); ++i) {
+                const double global = cursor + (local[i] - local.front());
+                if (result->m_breaks.empty() || global > result->m_breaks.back()) result->m_breaks.push_back(global);
+            }
+            const auto& hull = result->m_pieces.back().source->hull();
+            result->m_hull.insert(result->m_hull.end(), hull.begin(), hull.end());
+            cursor += span;
+        }
+        if (result->m_pieces.empty() || result->m_breaks.size() < 2) return nullptr;
+        return result;
+    }
+
+    bool closed() const override { return m_closed; }
+    const std::vector<double>& breaks() const override { return m_breaks; }
+    bool jet(const double t, const LC_CurveEvaluationSide side, LC_CurveJet& out) const override {
+        const double parameter = m_closed && t == m_breaks.back() && side != LC_CurveEvaluationSide::Left
+            ? m_breaks.front() : t;
+        const auto index = pieceAt(parameter, side);
+        if (!index) { out = LC_CurveJet{}; return false; }
+        const auto& piece = m_pieces[*index];
+        const auto local = localParameter(piece, parameter);
+        if (!local) { out = LC_CurveJet{}; return false; }
+        return piece.source->jet(*local, side, out);
+    }
+    bool boundJet(const double a, const double b, LC_CurveJetBounds& out) const override {
+        const auto index = pieceAt(a + (b - a) * .5, LC_CurveEvaluationSide::Interior);
+        if (!index) { out = LC_CurveJetBounds{}; return false; }
+        const auto& piece = m_pieces[*index];
+        const auto start = localParameter(piece, a);
+        const auto end = localParameter(piece, b);
+        if (!start || !end || *start > *end) {
+            out = LC_CurveJetBounds{};
+            return false;
+        }
+        return piece.source->boundJet(*start, *end, out);
+    }
+    bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
+        const auto index = pieceAt(a + (b - a) * .5, LC_CurveEvaluationSide::Interior);
+        if (!index) { out = LC_CurveJetBounds{}; return false; }
+        const auto& piece = m_pieces[*index];
+        const auto start = localParameter(piece, a);
+        const auto end = localParameter(piece, b);
+        if (!start || !end || *start > *end) {
+            out = LC_CurveJetBounds{};
+            return false;
+        }
+        return piece.source->boundJetWithProducts(*start, *end, out);
+    }
+    const std::vector<RS_Vector>& hull() const override { return m_hull; }
+    bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
+        if (m_closed || m_pieces.size() != 1) return false;
+        return m_pieces.front().source->straightSegment(start, end);
+    }
+    bool cubicSpans() const override {
+        return std::all_of(m_pieces.begin(), m_pieces.end(),
+            [](const Piece& piece) { return piece.source->cubicSpans(); });
+    }
+
+private:
+    struct Piece {
+        std::unique_ptr<OffsetSource> source;
+        double offset;
+        double span;
+    };
+    explicit PolylineSource(const bool closed) : m_closed{closed} {}
+
+    static std::optional<double> localParameter(const Piece& piece, const double parameter) {
+        const auto& breaks = piece.source->breaks();
+        const double first = breaks.front();
+        const double last = breaks.back();
+        const double mapped = first + (parameter - piece.offset);
+        const double slack = 16.0 * std::numeric_limits<double>::epsilon() *
+            std::max({1.0, std::abs(mapped), std::abs(first), std::abs(last)});
+        if (!std::isfinite(mapped) || mapped < first - slack || mapped > last + slack)
+            return std::nullopt;
+        return std::clamp(mapped, first, last);
+    }
+
+    std::optional<std::size_t> pieceAt(const double t, const LC_CurveEvaluationSide side) const {
+        if (!std::isfinite(t) || m_pieces.empty() || t < 0.0 || t > m_breaks.back()) return std::nullopt;
+        for (std::size_t i = 0; i < m_pieces.size(); ++i) {
+            const double end = m_pieces[i].offset + m_pieces[i].span;
+            if (t < end || (t == end && (side == LC_CurveEvaluationSide::Left || i + 1 == m_pieces.size())))
+                return i;
+        }
+        return m_pieces.size() - 1;
+    }
+
+    bool m_closed;
+    std::vector<Piece> m_pieces;
+    std::vector<double> m_breaks;
+    std::vector<RS_Vector> m_hull;
+};
+
 std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
+    if (const auto* line = dynamic_cast<const RS_Line*>(&entity)) return LineSource::make(*line);
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
         return std::make_unique<SplineSource>(*spline);
     }
@@ -584,6 +750,23 @@ std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
     }
     if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&entity)) {
         return HyperbolaSource::make(*hyperbola);
+    }
+    if (const auto* arc = dynamic_cast<const RS_Arc*>(&entity)) {
+        const RS_ArcData& source = arc->getData();
+        RS_EllipseData data;
+        data.center = source.center; data.majorP = {source.radius, 0.0}; data.ratio = 1.0;
+        data.angle1 = source.angle1; data.angle2 = source.angle2; data.reversed = source.reversed;
+        data.isArc = source.angle1 != source.angle2;
+        return EllipseSource::make(data, source.angle1 == source.angle2);
+    }
+    if (const auto* circle = dynamic_cast<const RS_Circle*>(&entity)) {
+        const RS_CircleData& source = circle->getData();
+        RS_EllipseData data;
+        data.center = source.center; data.majorP = {source.radius, 0.0}; data.ratio = 1.0;
+        return EllipseSource::make(data, true);
+    }
+    if (const auto* polyline = dynamic_cast<const RS_Polyline*>(&entity)) {
+        return PolylineSource::make(*polyline);
     }
     if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&entity)) {
         return EllipseSource::make(*ellipse);
@@ -595,7 +778,9 @@ std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
 struct SourceScale {
     double feature{0.0};
     double coordinate{0.0};
+    // Position comparisons include the drawing origin; tangent checks do not.
     double numericFloor{0.0};
+    double tangentFloor{0.0};
 };
 
 bool computeScale(const OffsetSource& source, const double distanceMagnitude, SourceScale& scale) {
@@ -618,6 +803,7 @@ bool computeScale(const OffsetSource& source, const double distanceMagnitude, So
     scale.feature = std::max(diagonal, std::abs(distanceMagnitude));
     scale.coordinate = std::max(coordinate, scale.feature);
     scale.numericFloor = 64.0 * g_eps * std::max(scale.coordinate, std::numeric_limits<double>::min());
+    scale.tangentFloor = 64.0 * g_eps * std::max(scale.feature, std::numeric_limits<double>::min());
     return std::isfinite(scale.feature) && std::isfinite(scale.coordinate) && scale.feature > 0.0;
 }
 
@@ -731,14 +917,14 @@ public:
             // tangent must be long enough for that to stay within an eighth of the
             // merge tolerance. Where it is not yet, the cut runs on as far as the
             // curve moves little, and the offset rounds its turn as a corner.
-            const double precise = radius * scale.numericFloor / (width * tolerance.nodeMerge);
+            const double precise = radius * scale.tangentFloor / (width * tolerance.nodeMerge);
             return (speed(at(h), inward) >= precise) ? h : longest(moves);
         };
 
         std::vector<std::pair<double, double>> cuts;
         // a tangent no longer than rounding can make it in the span vanishes
         const auto vanishing = [&](const size_t span) {
-            return 16.0 * scale.numericFloor / (breaks[span + 1] - breaks[span]);
+            return 16.0 * scale.tangentFloor / (breaks[span + 1] - breaks[span]);
         };
         for (size_t span = 0; span + 1 < breaks.size(); ++span) {
             const double a = breaks[span];
@@ -1796,7 +1982,11 @@ private:
                 const Leaf leaf = stack.back();
                 stack.pop_back();
                 LC_CurveJetBounds bounds;
-                const bool bounded = m_source.boundJet(leaf.t0, leaf.t1, bounds);
+                // Product bounds are only used to classify source/offset
+                // regularity. Keep the ordinary component bounds for later
+                // fitting and intersection work, where their narrower boxes
+                // produce more useful subdivisions.
+                const bool bounded = m_source.boundJetWithProducts(leaf.t0, leaf.t1, bounds);
                 const bool speedProved = bounded && bounds.speedSquared().isPositive();
                 const LC_Interval g = bounded ? bounds.offsetFactorNumerator(m_d) : LC_Interval{};
                 if (speedProved && g.excludesZero()) {
@@ -4859,11 +5049,19 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
             candidate.signedDistance = (dilate == fragment.regionOnLeft) ? -magnitude : magnitude;
             candidate.reverse = !fragment.regionOnLeft;
             double ignoredError = 0.0;
-            std::size_t ignoredSamples = 0;
+            std::size_t candidateSamples = 0;
+            if (result.exactSamples >= options.maxSamples) return LC_CurveOffsetStatus::LimitExceeded;
+            auto remainingOptions = options;
+            remainingOptions.maxSamples -= result.exactSamples;
             // the region's corners come from its circles, and a kink is refused
             const LC_CurveOffsetStatus status = directBranches(*candidate.part, scale, candidate.signedDistance,
-                                                               options, budget, KinkPolicy::Refuse,
-                                                               candidate.branches, ignoredError, ignoredSamples);
+                                                               remainingOptions, budget, KinkPolicy::Refuse,
+                                                               candidate.branches, ignoredError, candidateSamples);
+            if (candidateSamples > std::numeric_limits<std::size_t>::max() - result.exactSamples) {
+                result.exactSamples = std::numeric_limits<std::size_t>::max();
+                return LC_CurveOffsetStatus::LimitExceeded;
+            }
+            result.exactSamples += candidateSamples;
             if (status != LC_CurveOffsetStatus::Ok) {
                 return status;
             }
@@ -5148,6 +5346,23 @@ bool isSupportedSource(const RS_Entity& source) {
            dynamic_cast<const LC_Hyperbola*>(&source) != nullptr || dynamic_cast<const RS_Ellipse*>(&source) != nullptr;
 }
 
+double relativeOffsetTolerance(const RS_Entity& source) {
+    return dynamic_cast<const RS_Ellipse*>(&source) != nullptr ? kEllipseRelativeOffsetTolerance
+                                                             : kDefaultRelativeOffsetTolerance;
+}
+
+double toleranceFor(const RS_Entity& source, const double distanceMagnitude, const double relativeFactor) {
+    const std::unique_ptr<OffsetSource> adapter = makeSource(source);
+    SourceScale scale;
+    if (adapter == nullptr || !isPositiveFinite(distanceMagnitude) || !isPositiveFinite(relativeFactor) ||
+        !computeScale(*adapter, distanceMagnitude, scale) || adapter->breaks().size() < 2) {
+        return std::numeric_limits<double>::quiet_NaN();
+    }
+    const double requested = std::max(relativeFactor * scale.feature, scale.numericFloor);
+    return std::isfinite(requested) && requested > 0.0
+               ? requested : std::numeric_limits<double>::quiet_NaN();
+}
+
 LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double distanceMagnitude,
                                         const double requestedTolerance) {
     const std::unique_ptr<OffsetSource> adapter = makeSource(source);
@@ -5254,6 +5469,18 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     }
     if (request.side == LC_CurveOffsetSide::FromDirectionPoint && !isFinite(request.directionPoint)) {
         result.status = LC_CurveOffsetStatus::InvalidRequest;
+        return result;
+    }
+    if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&source);
+        points && points->getData().fitTangentsConstrained &&
+        !points->fitTangentsMatchCurve()) {
+        result.status = LC_CurveOffsetStatus::InvalidSource;
+        return result;
+    }
+    if (const auto* spline = dynamic_cast<const RS_Spline*>(&source);
+        spline && spline->getData().fitTangentsConstrained &&
+        !spline->fitTangentsMatchCurve()) {
+        result.status = LC_CurveOffsetStatus::InvalidSource;
         return result;
     }
 
@@ -5405,6 +5632,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                                                         const LC_CurveOffsetOptions& options,
                                                         const LC_OffsetSourceBudget& budget) {
     LC_CurveOffsetMaterializationResult result;
+    result.sampleUnits = geometry.exactSamples;
     if (!validDirectOptions(options) || !isValidOffsetBudget(budget)) {
         result.status = LC_CurveOffsetStatus::InvalidRequest;
         return result;
@@ -5447,12 +5675,14 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         std::vector<LC_OffsetCubicPiece> pieces;
         double branchError = 0.0;
         const LC_CurveOffsetStatus status = materializer.run(branch, pieces, branchError);
+        result.sampleUnits = materializer.samples();
         if (status != LC_CurveOffsetStatus::Ok) {
             result.status = status;
             return result;
         }
         samples = materializer.samples();
         pieceCount += pieces.size();
+        result.attemptedOutputUsage.cubicPieces = pieceCount;
         maxError = std::max(maxError, branchError);
         validated.push_back(std::move(pieces));
     }
@@ -5503,10 +5733,13 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             result.status = LC_CurveOffsetStatus::FitFailed;
             return result;
         }
+        ++result.attemptedOutputUsage.outputEntities;
         const LC_OffsetTreeCost cost =
             measureOffsetOutput({entity.get()}, budget.maxDeepEntities - std::min(budget.maxDeepEntities,
                                                                                 usage.deepEntities));
+        result.attemptedOutputUsage.deepEntities += cost.deepEntities;
         if (cost.status != LC_OffsetTreeStatus::Ok) {
+            result.attemptedDeepCountComplete = false;
             result.status = cost.status == LC_OffsetTreeStatus::LimitExceeded ? LC_CurveOffsetStatus::LimitExceeded
                                                                               : LC_CurveOffsetStatus::FitFailed;
             return result;
@@ -5536,6 +5769,7 @@ LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, cons
     if (geometry.status != LC_CurveOffsetStatus::Ok) {
         LC_CurveOffsetMaterializationResult result;
         result.status = geometry.status;
+        result.sampleUnits = geometry.exactSamples;
         return result;
     }
     return materializeBranches(source, geometry, options, budget);

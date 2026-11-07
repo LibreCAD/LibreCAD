@@ -29,21 +29,27 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <cstdint>
 #include <map>
 #include <memory>
+#include <optional>
 #include <tuple>
 #include <vector>
 
 #include <QList>
 
 #include "lc_copyutils.h"
+#include "lc_ellipseoffsetgeometry.h"
 #include "lc_offsetoutputbudget.h"
+#include "lc_offsetcurveagain.h"
+#include "lc_offsetcachetrim.h"
 #include "rs_pen.h"
 #include "rs_vector.h"
 
 class RS_Arc;
 class RS_AtomicEntity;
 class RS_Entity;
+enum class LC_OffsetCurveRefusal;
 class RS_EntityContainer;
 class RS_MText;
 class RS_Text;
@@ -55,12 +61,17 @@ class RS_Document;
 class RS_Graphic;
 class RS_GraphicView;
 class LC_GraphicViewport;
+class LC_OffsetWorkerCompletion;
+class LC_OffsetBatchPreparation;
+struct LC_OffsetPreviewSnapshot;
+namespace LC_OffsetWorkerRequest { struct Request; struct Token; }
 class LC_SelectedSet;
 class LC_UndoSection;
 struct LC_DocumentModificationBatch;
 struct LC_CurveOffsetMaterializationResult;
 enum class LC_CurveOffsetSide;
 enum class LC_CurveOffsetStatus;
+namespace LC_OffsetCurveTransform { class Steps; }
 
 struct LC_ModifyOperationFlags {
     int number = 0;
@@ -138,6 +149,8 @@ struct RS_OffsetData : LC_ModifyOperationFlags {
      */
     RS_Vector sideFallback{false};
     double distance = 0.;
+    /** Programmatic requests opt in; Modify Offset loads its saved interactive default separately. */
+    bool asOffsetCurve = false;
 };
 
 /**
@@ -160,6 +173,17 @@ struct LC_OffsetBatchLimits {
      * previewed; the commit uses the full limits.
      */
     static LC_OffsetBatchLimits preview();
+};
+
+/** Fixed source eligibility for owned geometry preparation, not a certificate.
+ * nativeDefinition is present only for an editable, consistent native source.
+ * A stored native cache may be an ordinary RS_Spline in the isolated helper;
+ * any new native output still requires the existing producer/checker admission.
+ */
+struct LC_OffsetSourceContext {
+    bool topLevel = false;
+    bool nativeSource = false;
+    std::optional<LC_EllipseOffsetDefinition> nativeDefinition;
 };
 
 enum class LC_OffsetSourceStatus {
@@ -197,6 +221,35 @@ enum class LC_OffsetFailureDetail {
     AmbiguousSide
 };
 
+enum class LC_OffsetPlainReason {
+    NotTopLevel, SeveralPieces, CheckFailed, NotCacheRepresentable, OutputBudget,
+    ZeroSum, RebaseRefused, UndefinedDefinition
+};
+struct LC_OffsetPlainOutcome {
+    int copy = 0;
+    LC_OffsetPlainReason reason = LC_OffsetPlainReason::NotCacheRepresentable;
+    std::optional<LC_OffsetCheckResult::Reason> checkReason;
+};
+
+struct LC_OffsetRebaseOutcome {
+    int copy = 0;
+    std::optional<LC_OffsetCurveAgain::Refusal> proposalRefusal;
+    std::optional<LC_OffsetCurveRefusal> nativeRefusal;
+    std::optional<LC_CurveOffsetStatus> engineStatus;
+    std::optional<LC_OffsetCheckResult::Reason> checkReason;
+    LC_EllipseOffsetGeometry::CheckWork checkWork{};
+    std::size_t engineRuns = 0;
+    std::size_t sampleUnits = 0;
+    /** Reserved per-query ceiling, not an observed or total intersection-box count. */
+    std::size_t intersectionPairAllowance = 0;
+    bool adopted = false;
+};
+
+struct LC_OffsetCacheReuse {
+    int copy = 0;
+    LC_OffsetSourceBudget budget{};
+};
+
 struct LC_OffsetSourceOutcome {
     /** Identity only: a source removed by a destructive offset must not be dereferenced. */
     const RS_Entity* source = nullptr;
@@ -224,12 +277,33 @@ struct LC_OffsetSourceOutcome {
      */
     int copiesMade = 0;
     int copiesRequested = 0;
+    /** One nonzero root count per completed copy, in source/copy order. */
+    std::vector<std::size_t> copyOutputCounts;
+    /** Actual engine side resolution; retained even if a later attempt refuses. */
+    std::optional<LC_CurveOffsetSide> resolvedSide;
     /**
      * The source goes from the drawing with this offset. One that succeeded
      * and stays (originals kept, copies short, a polyline's segment) is left
      * for the caller to unselect.
      */
     bool sourceRemoved = false;
+    int copiesKeptPlain = 0;
+    /** Bounded by kMaximumOffsetCopies; describes committed visible copies only. */
+    std::vector<LC_OffsetPlainOutcome> keptPlain;
+    /** Attempted work remains observable even if a later copy discards this source's outputs. */
+    std::size_t rebaseEngineRuns = 0, cacheEngineRuns = 0, reusedCacheCopies = 0;
+    std::vector<LC_OffsetCacheReuse> reusedCopies;
+    std::size_t sampleUnits = 0, intersectionPairAllowance = 0;
+    /** Actual adopt() invocations and their returned C work, including refusals.
+     * Additive counters sum across copies; depth is the maximum, not a sum.
+     * An exception can lose the current check prefix: callers retain reservations.
+     */
+    std::size_t adoptionAttempts = 0;
+    LC_EllipseOffsetGeometry::CheckWork adoptionCheckWork{};
+    LC_OffsetOutputUsage attemptedOutputUsage{};
+    bool attemptedDeepCountComplete = true;
+    /** At most one structural proposal and producer attempt per requested copy. */
+    std::vector<LC_OffsetRebaseOutcome> rebases;
 
     bool succeeded() const {
         return status == LC_OffsetSourceStatus::Succeeded;
@@ -264,9 +338,22 @@ public:
               const LC_CurveOffsetMaterializationResult& result);
     void clear();
 
+    /** Owned, pointer-free ordinary entries, or refusal before unbounded copying. */
+    std::unique_ptr<LC_OffsetPreviewSnapshot> snapshot(const RS_Entity* source) const;
+    /** Detached helper cache only; replaces all local state atomically. */
+    bool restore(const RS_Entity* source, const LC_OffsetPreviewSnapshot& snapshot);
+    /** Apply a joined helper's update only while its captured cache revision is
+     * current. The caller separately seals the live source and job generation.
+     */
+    bool merge(const RS_Entity* source, const LC_OffsetPreviewSnapshot& before,
+               const LC_OffsetPreviewSnapshot& after);
+
 private:
     struct Entry;
     std::map<std::tuple<const RS_Entity*, int, double>, std::unique_ptr<Entry>> m_entries;
+    std::size_t m_otherEntries = 0;
+    std::uint64_t m_revision = 0;
+    bool m_cleared = false;
 };
 
 /** The result of an offset request per source, in the order the sources were given. */
@@ -345,6 +432,52 @@ struct LC_TrimResult {
     RS_Vector intersection1;
     RS_Vector intersection2;
     bool result = false;
+    std::size_t nativeDemotions = 0;
+    std::optional<LC_OffsetCacheTrim::Refusal> cacheRefusal;
+    LC_OffsetCacheTrim::Work cacheWork;
+};
+
+struct LC_StoredCacheTrimOptions {
+    LC_OffsetCacheTrim::Limits kernel;
+    LC_OffsetCacheTrim::Cancellation cancellation;
+    std::size_t maxOutputEntities = 4;
+    std::size_t maxDisplayEntities = kDefaultOffsetDeepEntitiesPerSource;
+};
+
+/** Synchronous borrow for consuming already joined helper jobs, never stored.
+ * Retain the original submitted requests and their owning Completion values.
+ * The caller must first validate its captured document/source/view/action seal,
+ * including whether publicationUndoEpoch is unchanged or its own one-cycle
+ * increment. This record cannot authorize a document or an external undo.
+ * One op3 result serves a conic Trim Two; nonconic Trim Two consumes op2 twice
+ * in source order, the second request using the exact debited remainder.
+ */
+struct LC_StoredCacheTrimCompletions {
+    const LC_OffsetWorkerRequest::Request& firstRequest;
+    const LC_OffsetWorkerCompletion& first;
+    const LC_OffsetWorkerRequest::Request* secondRequest = nullptr;
+    const LC_OffsetWorkerCompletion* second = nullptr;
+    std::uint64_t publicationUndoEpoch = 0;
+};
+
+/** Owns the matched worker sequence only. Inputs must be privately owned and
+ * remain alive and unchanged until this object is destroyed; the caller still
+ * seals live document inputs and performs atomic publication independently.
+ */
+class LC_StoredCacheTrimPreparation final {
+public:
+    LC_StoredCacheTrimPreparation(const RS_Entity& target, const RS_Vector& targetPick,
+        const RS_Entity& cutter, const RS_Vector& cutterPick, bool both,
+        const LC_OffsetCacheTrim::Limits& limits);
+    ~LC_StoredCacheTrimPreparation();
+    std::unique_ptr<LC_OffsetWorkerRequest::Request> request(const LC_OffsetWorkerRequest::Token&);
+    bool accept(std::unique_ptr<LC_OffsetWorkerCompletion>);
+    bool ready() const noexcept;
+    /** Borrowed receipt remains valid while this preparation is alive. */
+    std::optional<LC_StoredCacheTrimCompletions> completions(std::uint64_t publicationUndoEpoch) const;
+private:
+    struct Data;
+    std::unique_ptr<Data> m_data;
 };
 
 struct LC_BevelResult {
@@ -481,6 +614,44 @@ public:
 
     static LC_TrimResult trim(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity, const RS_Vector& limitCoord, RS_Entity* limitEntity,
                               bool both, LC_DocumentModificationBatch& ctx);
+    /** Native-involved path only. Stages BOTH operands before a single batch
+     * publication. Ordinary lines retain their type; conics retain exact stored
+     * centers/axes/radii and use typed angular restrictions (circles become arcs).
+     * Plain normalized degree-1/3 spline caches are also supported when a native
+     * participates. Fit/rational/wrapped representations remain explicit refusals.
+     * Ordinary-only Trim, Trim Amount and Cut retain their existing paths.
+     */
+    static LC_TrimResult trimStoredCache(RS_Document& document, RS_Entity& target, const RS_Vector& targetPick,
+        RS_Entity& cutter, const RS_Vector& cutterPick, bool both, LC_DocumentModificationBatch& ctx,
+        const LC_StoredCacheTrimOptions& options = {});
+
+    /** Same admissions, attributes and final atomic handoff as trimStoredCache;
+     * never calls the numeric kernel, including on missing/mismatched receipts.
+     * Public decoded wire Result values are deliberately not accepted.
+     */
+    static LC_TrimResult trimStoredCachePrepared(RS_Document& document, RS_Entity& target,
+        const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, bool both,
+        LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimCompletions& completed,
+        const LC_StoredCacheTrimOptions& options = {});
+
+    /** Initial lowered limits, or the exact remainder after a successful op2.
+     * Numeric diagnostics only: this grants no publication or geometry authority.
+     * A failed/fatal/timed-out job cannot supply a remainder for a second job.
+     */
+    static std::optional<LC_OffsetCacheTrim::Limits> storedCacheTrimRemainingLimits(
+        const LC_OffsetCacheTrim::Limits& limits, const LC_OffsetWorkerCompletion* previous = nullptr) noexcept;
+
+    /** Bounded geometry-only request for asynchronous stored-cache Trim. The
+     * caller owns and seals source/document lifetime and publication. For a
+     * second nonconic Trim Two request, supply the retained first request and
+     * its joined completion; no failed or mismatched reply grants fresh work.
+     */
+    static std::unique_ptr<LC_OffsetWorkerRequest::Request> storedCacheTrimRequest(
+        const RS_Entity& target, const RS_Vector& targetPick, const RS_Entity& cutter,
+        const RS_Vector& cutterPick, bool both, const LC_OffsetWorkerRequest::Token& token,
+        const LC_OffsetCacheTrim::Limits& limits,
+        const LC_OffsetWorkerRequest::Request* previousRequest = nullptr,
+        const LC_OffsetWorkerCompletion* previous = nullptr);
 
     static RS_Entity* trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* entityToTrim, double dist, bool trimBoth, bool& trimStart,
                                  bool& trimEnd, LC_DocumentModificationBatch& ctx);
@@ -509,6 +680,20 @@ public:
                                                    bool forPreviewOnly, const LC_OffsetBatchLimits& limits,
                                                    LC_DocumentModificationBatch& ctx,
                                                    LC_OffsetPreviewCache* cache = nullptr);
+
+    /** Prepare one source's numeric copy series in caller-owned roots.
+     * The caller has already admitted visibility, target layer, finite nonzero
+     * distances and source/request limits. Pass empty roots and a fresh outcome.
+     * Eligibility is fixed input; this entry never discovers document membership.
+     * Sets copiesRequested and returns status; source identity, status assignment,
+     * document/list handoff remain the caller's job. A refusal or exception
+     * discards provisional roots/committed usage, retaining attempted-work data.
+     * Uses the existing preview cache and unchanged generation/C admission paths.
+     */
+    static LC_OffsetSourceStatus prepareOffsetSource(const RS_OffsetData& data, RS_Entity& source,
+        bool forPreviewOnly, const LC_OffsetBatchLimits& limits, std::size_t requestDeepLeft,
+        LC_OffsetSourceContext sourceContext, std::vector<std::unique_ptr<RS_Entity>>& roots,
+        LC_OffsetSourceOutcome& result, LC_OffsetPreviewCache* cache = nullptr);
 
     static bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity, LC_DocumentModificationBatch& ctx);
 
@@ -544,9 +729,25 @@ public:
                          LC_DocumentModificationBatch& ctx);
 
 private:
+    friend class LC_OffsetBatchPreparation;
+    static LC_OffsetBatchOutcome offsetWithOutcomeImpl(const RS_OffsetData&, const QList<RS_Entity*>&,
+        bool, const LC_OffsetBatchLimits&, LC_DocumentModificationBatch&, LC_OffsetPreviewCache*,
+        LC_OffsetBatchPreparation*);
+    static LC_TrimResult trimStoredCacheImpl(RS_Document& document, RS_Entity& target,
+        const RS_Vector& targetPick, RS_Entity& cutter, const RS_Vector& cutterPick, bool both,
+        LC_DocumentModificationBatch& ctx, const LC_StoredCacheTrimOptions& options,
+        const LC_StoredCacheTrimCompletions* completed);
     static bool trimAtomicByEnding(RS_AtomicEntity* atomicToTrim, const RS_Vector& trimPoint, RS2::Ending ending);
     static bool doExplodeTextIntoLetters(const RS_MText* text, LC_DocumentModificationBatch& ctx);
     static bool doExplodeTextIntoLetters(RS_Text* text, LC_DocumentModificationBatch& ctx);
+
+    /** Null context preserves the synchronous adapter's live eligibility reads
+     * at their original callback boundaries; copies were frozen before preflight.
+     */
+    static LC_OffsetSourceStatus prepareOffsetSourceImpl(const RS_OffsetData& data, RS_Entity& source,
+        bool forPreviewOnly, const LC_OffsetBatchLimits& limits, std::size_t requestDeepLeft,
+        std::vector<std::unique_ptr<RS_Entity>>& roots, LC_OffsetSourceOutcome& result,
+        LC_OffsetPreviewCache* cache, const LC_OffsetSourceContext* sourceContext, int numberOfCopies);
 
 protected:
     static void trimEnding(const RS_Vector& trimCoord, RS_AtomicEntity* trimmed1, const RS_Vector& is);
@@ -555,6 +756,8 @@ protected:
                                                        const RS_Vector& selectionPoint2);
 
     static RS_Entity* getClone(bool forPreviewOnly, const RS_Entity* e);
+    static RS_Entity* getTransformedClone(bool forPreviewOnly, const RS_Entity* e,
+        const LC_OffsetCurveTransform::Steps& steps, bool forcePlain = false);
     static void selectClone(const RS_Entity* original, RS_Entity* clone);
 };
 

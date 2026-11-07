@@ -29,7 +29,7 @@
 /// and by libdxfrw's own dwgReader18.
 class dwgWriter18 : public dwgWriter15 {
 public:
-    dwgWriter18(std::ofstream *stream, DRW_Header *header)
+    dwgWriter18(std::ostream *stream, DRW_Header *header)
         : dwgWriter15(stream, header)
     {
         m_version = DRW::AC1018;

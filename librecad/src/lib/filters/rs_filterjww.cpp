@@ -1261,7 +1261,8 @@ bool RS_FilterJWW::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
         DL_WriterA* dw = jww.out((const char*)QFile::encodeName(file), exportVersion);
 
 		if (!dw) {
-                RS_DEBUG->print("RS_FilterJWW::fileExport: can't write file");
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterJWW::fileExport: JWW export unavailable: jwwlib has no output writer; no geometry was written");
                 return false;
         }
 
@@ -1638,6 +1639,11 @@ void RS_FilterJWW::writeEntity(DL_WriterA& dw, RS_Entity* e,
                 break;
         case RS2::EntitySpline:
                 writeSpline(dw, (RS_Spline*)e, attrib);
+                break;
+        case RS2::EntityOffsetCurve:
+                // jwwlib's output methods are stubs, not a cache serializer.
+                RS_DEBUG->print(RS_Debug::D_WARNING,
+                    "RS_FilterJWW::writeEntity: native offset cache export unsupported by the JWW writer");
                 break;
         case RS2::EntitySplinePoints:
                 writeSplinePoints(dw, (LC_SplinePoints*)e, attrib);

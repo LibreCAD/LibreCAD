@@ -752,7 +752,7 @@ void RS_EntityContainer::updateSplines() {
     RS_DEBUG->print("RS_EntityContainer::updateSplines()");
     for (RS_Entity* e : *this) {
         //// Only update our own inserts and not inserts of inserts
-        if (e->rtti() == RS2::EntitySpline /*&& e->getParent()==this*/) {
+        if (e->rtti() == RS2::EntitySpline || e->rtti() == RS2::EntityOffsetCurve) {
             e->update();
         }
         else if (e->isContainer() && e->rtti() != RS2::EntityHatch) {

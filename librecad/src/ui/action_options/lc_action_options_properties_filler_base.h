@@ -124,7 +124,7 @@ public:
     void doSetValue(ValueType newValue, LC_PropertyChangeReason reason) override {
         LC_PropertyValueDelegated<ValueType>::doSetValue(newValue, reason);
         auto action = m_action;
-        QTimer::singleShot(10, [action] {
+        QTimer::singleShot(10, action, [action] {
             action->updateOptions();
         });
     }

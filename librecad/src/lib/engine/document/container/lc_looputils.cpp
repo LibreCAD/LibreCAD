@@ -28,6 +28,9 @@
 #include <cfloat>
 #include <cmath>
 #include <functional>
+#include <limits>
+#include <random>
+#include <set>
 #include <unordered_map>
 
 #include <QPen>
@@ -36,6 +39,7 @@
 #include "lc_looputils.h"
 #include "lc_loopclassifier.h"
 #include "lc_pathbuilder.h"
+#include "lc_offsetoutputbudget.h"
 #include "lc_parabola.h"
 #include "lc_rect.h"
 #include "lc_splinepoints.h"
@@ -49,11 +53,83 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
+#include "rs_pen.h"
 #include "rs_pattern.h"
 #include "rs_vector.h"
 
 namespace {
     using VertexMap = std::unordered_map<const RS_EntityContainer*, std::vector<RS_Vector>>;
+
+    template<typename Visitor>
+    bool visitBoundaryEdges(const RS_EntityContainer& container, Visitor visit) {
+        std::size_t nativeCount = 0;
+        for (const auto* entity : container) {
+            if (entity && entity->rtti() == RS2::EntityOffsetCurve) {
+                const auto count = static_cast<const RS_EntityContainer*>(entity)->count();
+                if (count > kDefaultOffsetDeepEntitiesPerSource - nativeCount) {
+                    RS_DEBUG->print(RS_Debug::D_WARNING, "LC_LoopUtils: Offset display cache limit reached");
+                    return false;
+                }
+                nativeCount += count;
+            }
+        }
+        // Counts precede cache walks and allocation; validity precedes visitors.
+        for (auto* entity : container) {
+            if (entity && entity->rtti() == RS2::EntityOffsetCurve) {
+                const auto& cache = *static_cast<const RS_EntityContainer*>(entity);
+                const bool usable = !entity->isDeleted() && !cache.empty() &&
+                    std::all_of(cache.begin(), cache.end(), [](const RS_Entity* edge) {
+                        if (!edge || edge->isDeleted() || edge->rtti() != RS2::EntityLine) return false;
+                        for (const auto& p : {edge->getStartpoint(), edge->getEndpoint()}) {
+                            if (!p.valid || !std::isfinite(p.x) || !std::isfinite(p.y) || p.z != 0) return false;
+                        }
+                        return true;
+                    });
+                if (!usable) {
+                    RS_DEBUG->print(RS_Debug::D_WARNING, "LC_LoopUtils: Unsupported offset display cache");
+                    return false;
+                }
+            }
+        }
+        std::map<RS_Entity*, bool> nativeEdges;
+        if (nativeCount) {
+            for (const auto* entity : container) {
+                if (entity && entity->rtti() == RS2::EntityOffsetCurve)
+                    for (auto* edge : *static_cast<const RS_EntityContainer*>(entity)) nativeEdges.emplace(edge, false);
+            }
+        }
+        const auto visitOnce = [&](RS_Entity* edge) {
+            if (auto found = nativeEdges.find(edge); found != nativeEdges.end()) {
+                if (found->second) return;
+                found->second = true;
+            }
+            visit(edge);
+        };
+        for (auto* entity : container) {
+            if (!entity) continue;
+            if (entity->rtti() == RS2::EntityOffsetCurve) {
+                const auto& cache = *static_cast<const RS_EntityContainer*>(entity);
+                // Borrow only during this operation. Results clone the edges,
+                // never the native container or an alias of its owned children.
+                for (auto* edge : cache) visitOnce(edge);
+            } else if (entity->isAtomic()) {
+                visitOnce(entity);
+            } else if (entity->rtti() == RS2::EntitySpline) {
+                RS_DEBUG->print(RS_Debug::D_WARNING, "LC_LoopUtils: Ordinary spline containers are unsupported boundaries");
+            }
+        }
+        return true;
+    }
+
+    RS_Entity* independentEdge(const RS_Entity& edge, RS_EntityContainer* parent) {
+        auto clone = std::unique_ptr<RS_Entity>{edge.clone()};
+        const auto* owner = edge.getParent();
+        // Spline display edges are painted with the containing curve's pen.
+        clone->setPen(owner && owner->rtti() == RS2::EntityOffsetCurve ? owner->getPen(true) : edge.getPen(true));
+        clone->setLayer(nullptr);
+        clone->reparent(parent);
+        return clone.release();
+    }
 
     // Definition for buildLC_Loops (moved to namespace level for accessibility)
     /**
@@ -68,20 +144,10 @@ namespace {
                                       const VertexMap* vertexMap,
                                       double eps) {
         const auto loopCopy = std::make_shared<RS_EntityContainer>(nullptr, true);
-        for (const RS_Entity* e : *cont) {
-            if (e && !e->isContainer()) {
-                RS_Entity* copy = e->clone(); // Clone atomics for independent ownership
-                // Clear the clone's parent and layer: both would otherwise
-                // keep pointing at the source container and its drawing, which
-                // can outlive the sorter result or disappear while the
-                // boundary cache is still read. RS_Hatch::validate wipes
-                // these on its own input, but every other caller of the
-                // LoopSorter has to be covered here.
-                copy->setParent(nullptr);
-                copy->setLayer(nullptr);
-                loopCopy->addEntity(copy);
-            }
-        }
+        if (!visitBoundaryEdges(*cont, [&](const RS_Entity* e) {
+            auto* copy = independentEdge(*e, nullptr);
+            loopCopy->addEntity(copy); // immutable hatch cache deliberately has no drawing parent/layer
+        })) return LC_LoopUtils::LC_Loops{loopCopy, true};
         LC_LoopUtils::LC_Loops lc(loopCopy, true);
         if (vertexMap != nullptr && eps > 0.0) {
             auto it = vertexMap->find(cont);
@@ -251,6 +317,12 @@ std::vector<SplitSubLoop> splitAtRepeatedVertices(
     return out;
 }
 
+bool hasEndpointKey(const RS_Vector& v) {
+  if (!v.valid || !std::isfinite(v.x) || !std::isfinite(v.y)) return false;
+  const double limit = std::nextafter(static_cast<double>(std::numeric_limits<long long>::max()), 0.);
+  return std::abs(std::round(v.x * 1e8)) <= limit && std::abs(std::round(v.y * 1e8)) <= limit;
+}
+
 }  // anonymous namespace
 
 namespace LC_LoopUtils {
@@ -303,16 +375,15 @@ LoopExtractor::LoopExtractor(const RS_EntityContainer& edges, double eps) :
 {
   // First pass: record container-order index and gather candidate atomic edges.
   std::vector<RS_Entity*> candidates;
-  {
-    std::size_t idx = 0;
-    for (RS_Entity* e : edges) {
+  std::size_t idx = 0;
+  const bool usable = visitBoundaryEdges(edges, [&](RS_Entity* e) {
       if (e && e->isAtomic()) {
         candidates.push_back(e);
         m_data->order[e] = idx;
       }
       ++idx;
-    }
-  }
+  });
+  if (!usable) return;
 
   // Derive eps from the input geometry when the caller did not provide one.
   if (!(eps > 0.0) || !std::isfinite(eps)) {
@@ -419,7 +490,7 @@ std::vector<ExtractedLoop> LoopExtractor::extractLoops() const {
     RS_Entity* first = choice.edge;
     if (!first) break;
 
-    RS_Entity* cloned_first = first->clone();
+    RS_Entity* cloned_first = independentEdge(*first, m_loop.get());
     // Walk the first edge in the direction we chose. For a closed atomic
     // entity (circle, full ellipse, closed spline) revertDirection() is a
     // no-op; for a line/arc/ellipse arc it swaps the stored traversal.
@@ -903,7 +974,7 @@ bool LoopExtractor::findNext() const {
   RS_Entity* next = (connected.size() == 1) ? connected[0] : findOutermost(connected);
 
   if (next) {
-    RS_Entity* cloned = next->clone();
+    RS_Entity* cloned = independentEdge(*next, m_loop.get());
     m_loop->addEntity(cloned);
     m_data->processed[next] = true;
     m_data->unprocessed.erase(std::remove(m_data->unprocessed.begin(), m_data->unprocessed.end(), next), m_data->unprocessed.end());
@@ -1416,11 +1487,7 @@ void LoopSorter::findParent(std::size_t child) {
         getAllLoops(loops);
         std::vector<RS_Entity*> bounds;
         for (auto* l : loops) {
-            for (RS_Entity* e : *l) {
-                if (e->isAtomic()) {
-                    bounds.push_back(e);
-                }
-            }
+            if (!visitBoundaryEdges(*l, [&](RS_Entity* e) { bounds.push_back(e); })) return {};
         }
         return bounds;
     }
@@ -1651,6 +1718,20 @@ std::unique_ptr<RS_EntityContainer> trimPatternEntities(
     bool interiorFastPath) {
     auto trimmed = std::make_unique<RS_EntityContainer>();
     auto boundaries = allBoundaryEntities(roots);
+    std::vector<RS_Entity*> patternEntities;
+    if (!visitBoundaryEdges(pattern, [&](RS_Entity* edge) {
+            patternEntities.push_back(edge);
+        })) {
+        return trimmed;
+    }
+    std::map<RS_Entity*, RS_Pen> nativeEdgePens;
+    for (const auto* entity : pattern) {
+        if (entity && entity->rtti() == RS2::EntityOffsetCurve) {
+            const auto pen = entity->getPen(true);
+            for (auto* edge : *static_cast<const RS_EntityContainer*>(entity))
+                nativeEdgePens.emplace(edge, pen);
+        }
+    }
     PointClassifier classifier = [&roots](const RS_Vector& q) {
         return classifyAll(q, roots);
     };
@@ -1687,11 +1768,10 @@ std::unique_ptr<RS_EntityContainer> trimPatternEntities(
     };
 
     for (const LC_TileSlot& slot : tiles) {
-        for (RS_Entity* e : pattern) {
-            if (!e->isAtomic()) {
-                continue;
-            }
-            auto cloned = std::unique_ptr<RS_Entity>(e->clone());
+        for (RS_Entity* e : patternEntities) {
+            auto cloned = std::unique_ptr<RS_Entity>(independentEdge(*e, nullptr));
+            if (const auto pen = nativeEdgePens.find(e); pen != nativeEdgePens.end())
+                cloned->setPen(pen->second);
             cloned->move(slot.offset);
 
             if (interiorFastPath && slot.interior) {
@@ -1740,6 +1820,7 @@ std::unique_ptr<RS_EntityContainer> trimPatternEntities(
                     continue;
                 }
                 auto sub = std::unique_ptr<RS_Entity>(subEntity(cloned.get(), p1, p2));
+                if (sub) sub->setPen(cloned->getPen(true));
                 if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
                     if (!emitPiece(std::move(sub))) return trimmed;
                 }
@@ -1749,6 +1830,7 @@ std::unique_ptr<RS_EntityContainer> trimPatternEntities(
                 RS_Vector pw2 = points[0];
                 if (pw1.distanceTo(pw2) >= RS_TOLERANCE) {
                     auto sub = std::unique_ptr<RS_Entity>(subEntity(cloned.get(), pw1, pw2));
+                    if (sub) sub->setPen(cloned->getPen(true));
                     if (sub && sub->getLength() > RS_TOLERANCE && keepPiece(*sub, classifier, epsOn)) {
                         if (!emitPiece(std::move(sub))) return trimmed;
                     }
@@ -1980,8 +2062,7 @@ QPainterPath buildLoopPath(RS_Painter* painter, const RS_EntityContainer& cont,
         return path;
     }
 
-    for (RS_Entity* e : cont) {
-        if (e->isAtomic()) {
+    if (!visitBoundaryEdges(cont, [&](RS_Entity* e) {
             RS_Vector start = e->getStartpoint();
             if (!path.isEmpty() && RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
                 if ((path.currentPosition() - builder.toGuiPoint({start.x, start.y})).manhattanLength() >= 3.) {
@@ -1989,7 +2070,8 @@ QPainterPath buildLoopPath(RS_Painter* painter, const RS_EntityContainer& cont,
                 }
             }
             builder.append(e);
-        }
+        })) {
+        return {};
     }
     builder.closeSubpath();
     if (RS_DEBUG->getLevel() > RS_Debug::D_WARNING) {

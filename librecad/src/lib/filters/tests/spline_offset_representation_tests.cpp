@@ -64,6 +64,7 @@
 #include <QStringList>
 
 #include "lc_curveoffset.h"
+#include "lc_filtertestsupport.h"
 #include "lc_makercamsvg.h"
 #include "lc_splinepoints.h"
 #include "lc_xmlwriterqxmlstreamwriter.h"
@@ -180,6 +181,21 @@ double displayDeviation(const RS_Spline& spline, const std::function<RS_Vector(d
     return worst;
 }
 
+RS2::FormatType readerFormat(const RS2::FormatType writeFormat) {
+    // DWG2007 was appended after unrelated formats to preserve enum values.
+    switch (writeFormat) {
+    case RS2::FormatDWG:
+    case RS2::FormatDWG2004:
+    case RS2::FormatDWG2007:
+    case RS2::FormatDWG2010:
+    case RS2::FormatDWG2013:
+    case RS2::FormatDWG2018:
+        return RS2::FormatDWG;
+    default:
+        return RS2::FormatDXFRW;
+    }
+}
+
 /** The splines of @p pieces written in @p format and read back, in order. */
 std::vector<RS_SplineData> roundTrip(const std::vector<RS_SplineData>& pieces, const RS2::FormatType format,
                                      const char* suffix, bool& exported) {
@@ -201,9 +217,7 @@ std::vector<RS_SplineData> roundTrip(const std::vector<RS_SplineData>& pieces, c
     }
     RS_Graphic reloaded;
     RS_FilterDXFRW filter;
-    const bool isDwg = format >= RS2::FormatDWG && format <= RS2::FormatDWG2018;
-    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path),
-                              isDwg ? RS2::FormatDWG : RS2::FormatDXFRW));
+    REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path), readerFormat(format)));
     for (RS_Entity* e : reloaded) {
         if (auto* spline = dynamic_cast<RS_Spline*>(e)) {
             result.push_back(spline->getData());
@@ -336,6 +350,7 @@ TEST_CASE("Cubic pieces, and composites of them, survive DXF and DWG unchanged",
     };
     for (const Format& format : {Format{RS2::FormatDXFRW, "pieces.dxf"}, Format{RS2::FormatDXFRW2000, "pieces_2000.dxf"},
                                  Format{RS2::FormatDWG, "pieces_r2000.dwg"},
+                                 Format{RS2::FormatDWG2007, "pieces_r2007.dwg"},
                                  Format{RS2::FormatDWG2018, "pieces_r2018.dwg"}}) {
         DYNAMIC_SECTION("format " << format.file) {
             bool exported = false;
@@ -367,6 +382,88 @@ TEST_CASE("Cubic pieces, and composites of them, survive DXF and DWG unchanged",
                     CHECK(y.first.distanceTo(x.first) <= 1e-11 * scale);
                 }
             }
+        }
+    }
+}
+
+TEST_CASE("Ordinary spline round trips route DWG2007 explicitly and keep ASCII DXF distinct",
+          "[curve-offset][representation][persistence][ordinary-reader-routing]") {
+    SECTION("All six DWG writers and all eight ASCII DXF writers select the correct reader") {
+        for (const auto format : {RS2::FormatDWG, RS2::FormatDWG2004, RS2::FormatDWG2007,
+                                  RS2::FormatDWG2010, RS2::FormatDWG2013, RS2::FormatDWG2018}) {
+            CAPTURE(format);
+            CHECK(readerFormat(format) == RS2::FormatDWG);
+        }
+        for (const auto format : {RS2::FormatDXFRW12, RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+                                  RS2::FormatDXFRW2004, RS2::FormatDXFRW, RS2::FormatDXFRW2010,
+                                  RS2::FormatDXFRW2013, RS2::FormatDXFRW2018}) {
+            CAPTURE(format);
+            CHECK(readerFormat(format) == RS2::FormatDXFRW);
+        }
+    }
+    struct Format {
+        RS2::FormatType writer;
+        RS2::FormatType reader;
+        const char* file;
+    };
+    for (const Format& format : {Format{RS2::FormatDWG2007, RS2::FormatDWG, "ordinary_r2007.dwg"},
+                                 Format{RS2::FormatDXFRW, RS2::FormatDXFRW, "ordinary_r2007.dxf"},
+                                 Format{RS2::FormatDXFRW2000, RS2::FormatDXFRW, "ordinary_r2000.dxf"}}) {
+        DYNAMIC_SECTION("Physical file and retained spline " << format.file) {
+            ensureSettings();
+            lc::test::OutputDirectory directory("spline_offset_reader_routing");
+            const auto path = directory.file(format.file);
+            const auto data = pieceData(g_piece);
+            const RS_Pen pen{RS_Color{255, 0, 0}, RS2::Width07, RS2::SolidLine};
+            RS_Graphic graphic;
+            auto* layer = new RS_Layer("Offsets");
+            graphic.addLayer(layer);
+            auto* spline = new RS_Spline(&graphic, data);
+            graphic.addEntity(spline);
+            spline->setLayer(layer);
+            spline->setPen(pen);
+            REQUIRE(spline->validate());
+            REQUIRE(lc::test::exportDrawing(graphic, path, format.writer));
+            const auto bytes = lc::test::fileBytes(path);
+            REQUIRE(bytes.size() > 6);
+            if (format.writer == RS2::FormatDWG2007) {
+                CHECK(bytes.substr(0, 6) == "AC1021");
+            } else {
+                CHECK(bytes.substr(0, 6) != "AC1021");
+                REQUIRE(lc::test::dxfRecords(path, "SPLINE").size() == 1);
+            }
+            REQUIRE(readerFormat(format.writer) == format.reader);
+            RS_Graphic reloaded;
+            REQUIRE(lc::test::importDrawing(reloaded, path, readerFormat(format.writer)));
+            REQUIRE(reloaded.count() == 1);
+            const auto* kept = dynamic_cast<const RS_Spline*>(reloaded.entityAt(0));
+            REQUIRE(kept != nullptr);
+            CHECK(kept->rtti() == RS2::EntitySpline);
+            const auto& actual = kept->getData();
+            CHECK(actual.degree == data.degree);
+            CHECK(actual.type == RS_SplineData::SplineType::ClampedOpen);
+            CHECK_FALSE(kept->isClosed());
+            CHECK_FALSE(actual.m_periodicFlag);
+            CHECK(actual.knotslist == data.knotslist);
+            CHECK(actual.weights == data.weights);
+            CHECK(actual.fitPoints.empty());
+            REQUIRE(actual.controlPoints.size() == data.controlPoints.size());
+            constexpr double scale = 1450.25;
+            for (size_t i = 0; i < data.controlPoints.size(); ++i) {
+                CHECK(actual.controlPoints[i].distanceTo(data.controlPoints[i]) <= 1e-12 * scale);
+                CHECK(actual.controlPoints[i].z == 0.0);
+            }
+            CHECK(kept->getStartpoint().distanceTo(g_piece.front()) <= 1e-12 * scale);
+            CHECK(kept->getEndpoint().distanceTo(g_piece.back()) <= 1e-12 * scale);
+            for (int i = 0; i <= 20; ++i) {
+                const double t = i / 20.0;
+                const auto jet = jetAt(*kept, t, LC_CurveEvaluationSide::Interior);
+                CHECK(jet.point.distanceTo(bezierAt(g_piece, t)) <= 1e-12 * scale);
+                CHECK(jet.first.distanceTo(bezierDerivative(g_piece, t)) <= 1e-11 * scale);
+            }
+            REQUIRE(kept->getLayer() != nullptr);
+            CHECK(kept->getLayer()->getName() == "Offsets");
+            CHECK(kept->getPen(false) == pen);
         }
     }
 }
@@ -626,6 +723,7 @@ TEST_CASE("The offset engine's spline comes back from DXF and DWG as the curve i
     };
     for (const Format& format : {Format{RS2::FormatDXFRW, "d1.dxf"}, Format{RS2::FormatDXFRW2000, "d1_2000.dxf"},
                                  Format{RS2::FormatDWG, "d1_r2000.dwg"},
+                                 Format{RS2::FormatDWG2007, "d1_r2007.dwg"},
                                  Format{RS2::FormatDWG2018, "d1_r2018.dwg"}}) {
         DYNAMIC_SECTION("format " << format.file) {
             const std::string path = tempPath(format.file);
@@ -664,9 +762,7 @@ TEST_CASE("The offset engine's spline comes back from DXF and DWG as the curve i
             RS_Graphic reloaded;
             {
                 RS_FilterDXFRW filter;
-                const bool isDwg = format.type >= RS2::FormatDWG && format.type <= RS2::FormatDWG2018;
-                REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path),
-                                          isDwg ? RS2::FormatDWG : RS2::FormatDXFRW));
+                REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path), readerFormat(format.type)));
             }
             std::filesystem::remove(path);
             std::vector<RS_Spline*> splines;
@@ -847,7 +943,7 @@ TEST_CASE("R12 writes a closed or rational spline within the export tolerance", 
     }
 }
 
-TEST_CASE("A spline R12 cannot hold within its vertex limit is written as it is drawn",
+TEST_CASE("A spline R12 cannot hold within its vertex limit refuses publication",
           "[curve-offset][d1][persistence][r12]") {
     RS_SplineData zigzag(3, false);
     const int count = 1000;
@@ -863,22 +959,36 @@ TEST_CASE("A spline R12 cannot hold within its vertex limit is written as it is 
     REQUIRE(RS_Spline(nullptr, zigzag).validate());
 
     ensureSettings();
-    // No polyline of at most 32767 vertices is within the export tolerance of
-    // this curve, so the file keeps the segments the spline is drawn with
-    // rather than losing the whole drawing over one entity.
-    RS_Graphic reloaded;
-    bool exported = false;
-    const std::vector<RS_Polyline*> polylines =
-        r12RoundTrip(reloaded, {zigzag}, "over_limit_r12.dxf", exported);
-    REQUIRE(exported);
-    REQUIRE(polylines.size() == 1);
-
-    RS_Spline drawn(nullptr, zigzag);
-    const size_t segments = static_cast<size_t>(drawn.count());
-    REQUIRE(segments > 1);
-    const std::vector<RS_Vector> vertices = polylineVertices(*polylines[0]);
-    CHECK(vertices.size() == segments + 1); // the ends of the drawn segments
-    CHECK(vertices.front().distanceTo(zigzag.controlPoints.front()) < 1e-9);
+    // An unbounded display substitute is not the requested approximation.
+    // Refusal must preserve both an existing file and an absent destination.
+    lc::test::OutputDirectory directory("spline_r12_limit_refusal");
+    RS_Graphic graphic;
+    auto* spline = new RS_Spline(&graphic, zigzag);
+    graphic.addEntity(spline);
+    const auto fingerprint = RS_Spline::geometryFingerprint(spline->getData());
+    const auto id = spline->getId();
+    const auto children = spline->count();
+    REQUIRE(children > 1);
+    for (const bool existing : {false, true}) {
+        CAPTURE(existing);
+        const auto file = directory.file(existing ? "existing.dxf" : "absent.dxf");
+        const std::string original = "existing drawing bytes\n";
+        if (existing) {
+            std::ofstream stream(file, std::ios::binary);
+            stream << original;
+            stream.close();
+            REQUIRE(stream.good());
+        }
+        RS_FilterDXFRW filter;
+        CHECK_FALSE(filter.fileExport(graphic, QString::fromStdString(file.string()), RS2::FormatDXFRW12));
+        if (existing) CHECK(lc::test::fileBytes(file) == original);
+        else CHECK_FALSE(std::filesystem::exists(file));
+        CHECK(RS_Spline::geometryFingerprint(spline->getData()) == fingerprint);
+        CHECK(spline->getId() == id);
+        CHECK(spline->getParent() == &graphic);
+        CHECK(spline->count() == children);
+        CHECK(graphic.entityAt(0) == spline);
+    }
 }
 
 // ---------------------------------------------------------------------------

@@ -28,6 +28,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_information.h"
 #include "rs_line.h"
 
+#include <algorithm>
+#include <cmath>
+#include <limits>
+
 namespace {
 
 // convert the parabola control points to SplinePoint control points
@@ -276,6 +280,15 @@ void LC_ParabolaData::calculatePrimitives()
     // the tangent at start point: 2 c1
     // the tangent: 2(1-2t) c1 + 2t c2
 
+    const auto finitePoint = [](const RS_Vector& point) {
+        return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+               std::isfinite(point.z) && point.z == 0.0;
+    };
+    if (!std::all_of(m_controlPoints.begin(), m_controlPoints.end(), finitePoint)) {
+        m_valid = false;
+        return;
+    }
+
     // control points
     RS_Vector c1 = m_controlPoints.at(1) - m_controlPoints.at(0);
     RS_Vector c2 = m_controlPoints.at(2) - m_controlPoints.at(0);
@@ -285,23 +298,38 @@ void LC_ParabolaData::calculatePrimitives()
     };
 
     m_axis = c2 * 0.5 - c1;
-    if(m_axis.squared() < RS_TOLERANCE2) {
+    const double localScale = std::max(std::hypot(c1.x, c1.y), std::hypot(c2.x, c2.y));
+    const double curvatureMagnitude = std::hypot(m_axis.x, m_axis.y);
+    const double degeneracyTolerance =
+        4.0 * std::numeric_limits<double>::epsilon() * localScale;
+    if (!std::isfinite(localScale) || !std::isfinite(curvatureMagnitude) ||
+        localScale == 0.0 || curvatureMagnitude <= degeneracyTolerance) {
         m_valid = false;
         return;
     }
+    const RS_Vector axisDirection{m_axis.x / curvatureMagnitude,
+                                  m_axis.y / curvatureMagnitude};
     // <c2 * 0.5 - c1 | c1 * (2. - 4. * t) + c2 * 2.*t> = 0
     // <c1|c2>-2<c1|c1> = (2<c1|c2>-4<c1|c1>-<c2|c2>+2<c1|c2>)t
     // =-|c2 - 2c1|^2t
-    double t = -0.5*m_axis.dotP(c1)/m_axis.squared();
+    double t = -0.5 * m_axis.dotP(c1) /
+               (curvatureMagnitude * curvatureMagnitude);
     auto localVertex = f0(t);
-    m_axis.normalize();
-    double dy = (c2 - localVertex).dotP(m_axis);
-    double dx = (c2 - localVertex).dotP({- m_axis.y, m_axis.x});
+    const double dy = (c2 - localVertex).dotP(axisDirection);
+    const double dx = (c2 - localVertex).dotP({-axisDirection.y, axisDirection.x});
     // dy = dx^2/(4h) , h = dx^2/(4dy)
     const double h = dx*dx/(4.*dy);
+    if (!std::isfinite(t) || !std::isfinite(dx) || !std::isfinite(dy) ||
+        dy == 0.0 || !std::isfinite(h) || h == 0.0) {
+        m_valid = false;
+        return;
+    }
     m_vertex = localVertex + m_controlPoints.front();
-    m_axis *= h;
+    m_axis = axisDirection * h;
     m_focus = m_vertex + m_axis;
+    if (!finitePoint(m_vertex) || !finitePoint(m_axis) || !finitePoint(m_focus)) {
+        m_valid = false;
+    }
 }
 
 RS_LineData LC_ParabolaData::getAxis() const

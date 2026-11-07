@@ -93,6 +93,7 @@ public:
                   int w, int h, QString name, int br, int con, int fade) override;
     void addInsert(QString name, QPointF ins, QPointF scale, qreal rot) override;
     QString addBlockfromFromdisk(QString fullName) override;
+    void addBlockFromDiskAsync(QString fullName, BlockImportCallback callback) override;
     void addEntity(Plug_Entity *handle) override;
     Plug_Entity *newEntity( enum DPI::ETYPE type) override;
     void removeEntity(Plug_Entity *ent) override;

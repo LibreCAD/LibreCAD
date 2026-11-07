@@ -36,6 +36,7 @@
 #include <QStringList>
 
 #include "lc_action_modify_offset.h"
+#include "lc_offsetcurveactiontestsupport.h"
 #include "lc_actiontestsupport.h"
 #include "lc_cursoroverlayinfo.h"
 #include "lc_splinepoints.h"
@@ -298,6 +299,7 @@ struct MatrixFixture {
         m_action->deletePreviewAndHighlights();
         const LC_MouseEvent move = eventAt(pick.x, pick.y);
         m_action->onMouseMoveEventSelected(MatrixProbe::SetReferencePoint, &move);
+        lc::test::awaitCreation(*m_action);
         m_action->drawPreviewAndHighlights();
         for (const RS_Entity* e : *m_action->m_preview) {
             result.preview.push_back(shapeOf(*e));
@@ -307,6 +309,7 @@ struct MatrixFixture {
         // the click, which triggers at a fixed distance
         const LC_MouseEvent click = eventAt(pick.x, pick.y);
         m_action->onMouseLeftButtonReleaseSelected(MatrixProbe::SetReferencePoint, &click);
+        lc::test::awaitCreation(*m_action);
         result.messages = m_context.messages;
         for (RS_Entity* e : m_graphic) {
             if (e != m_source && !e->isDeleted()) {

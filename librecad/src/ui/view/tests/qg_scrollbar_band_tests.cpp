@@ -30,23 +30,52 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <QCheckBox>
+#include <QApplication>
+#include <QDir>
 #include <QHelpEvent>
 #include <QImage>
+#include <QMessageBox>
 #include <QSettings>
 #include <QStyleFactory>
+#include <QTemporaryFile>
+#include <QTimer>
 
 #include "lc_dimstylepreviewgraphicview.h"
 #include "lc_navtest_support.h"
 #include "qg_dlg_hatch.h"
 #include "qg_dlgoptionsgeneral.h"
 #include "qg_scrollbar.h"
+#include "rs_block.h"
 #include "rs_color.h"
+#include "rs_blocklist.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "../../../lib/filters/tests/lc_offsetcurve_persistence_fixture.h"
 
 using namespace lc::navtest;
 
+class LC_DimStylePreviewGraphicViewTestAccess {
+public:
+    static LC_DimStylePreviewGraphicView* init(QWidget* parent, RS_Graphic* originalGraphic,
+                                               RS2::EntityType dimensionType, const QString& sampleFileName) {
+        return LC_DimStylePreviewGraphicView::init(parent, originalGraphic, dimensionType, sampleFileName);
+    }
+};
+
 namespace {
+    class PreviewMessageBoxProbe final : public QObject {
+    public:
+        bool shown{false};
+
+    protected:
+        bool eventFilter(QObject* watched, QEvent* event) override {
+            if (event->type() == QEvent::Show && qobject_cast<QMessageBox*>(watched) != nullptr) {
+                shown = true;
+            }
+            return false;
+        }
+    };
+
     QStyle* fusionStyle() {
         static std::unique_ptr<QStyle> style(QStyleFactory::create("Fusion"));
         return style.get();
@@ -1263,6 +1292,75 @@ TEST_CASE("Hatch and dimension style previews follow the setting, without toolti
             }
         }
     }
+}
+
+TEST_CASE("Dimension style preview rejects a partial sample without a modal dialog or partial entities",
+          "[navigation][dimstyle-preview][hostile]") {
+    REQUIRE(lc::test::application() != nullptr);
+    QTemporaryFile sample(QDir::tempPath() + QStringLiteral("/offset-dim-preview-XXXXXX.dxf"));
+    REQUIRE(sample.open());
+    const QByteArray truncated = "0\nSECTION\n2\nENTITIES\n0\nLINE\n8\n0\n10\n0.0\n";
+    REQUIRE(sample.write(truncated) == truncated.size());
+    REQUIRE(sample.flush());
+
+    RS_Graphic original;
+    original.initForNewDocument();
+    original.getBlockList()->add(
+        new RS_Block(&original, RS_BlockData(QStringLiteral("ARROW"), RS_Vector(0.0, 0.0), false)), false);
+    QWidget parent;
+    PreviewMessageBoxProbe probe;
+    qApp->installEventFilter(&probe);
+    QTimer closeUnexpectedDialog;
+    QObject::connect(&closeUnexpectedDialog, &QTimer::timeout, [] {
+        for (QWidget* widget : QApplication::topLevelWidgets()) {
+            if (auto* messageBox = qobject_cast<QMessageBox*>(widget)) messageBox->accept();
+        }
+    });
+    closeUnexpectedDialog.start(100);
+    auto* preview = LC_DimStylePreviewGraphicViewTestAccess::init(
+        &parent, &original, RS2::EntityDimLinear, sample.fileName());
+    closeUnexpectedDialog.stop();
+    qApp->removeEventFilter(&probe);
+
+    REQUIRE(preview != nullptr);
+    CHECK_FALSE(probe.shown);
+    REQUIRE(preview->getGraphic() != nullptr);
+    CHECK(preview->getGraphic()->empty());
+    CHECK(preview->getGraphic()->getBlockList()->find(QStringLiteral("ARROW")) != nullptr);
+}
+
+TEST_CASE("Dimension style preview renders native offset carriers as ordinary cache splines",
+          "[lc-offsetcurve][dimstyle-preview][hostile]") {
+    REQUIRE(lc::test::application() != nullptr);
+    namespace fixture = lc::test::offset_persistence;
+    lc::test::OutputDirectory directory("offset-dimstyle-preview-cache");
+    const auto path = directory.file("native-offset.dxf");
+    fixture::put(path, fixture::ascii(fixture::raw(3)));
+
+    RS_Graphic ordinary;
+    REQUIRE(lc::test::importDrawing(ordinary, path, RS2::FormatDXFRW2018));
+    REQUIRE(fixture::native(ordinary, 3));
+
+    RS_Graphic original;
+    original.initForNewDocument();
+    QWidget parent;
+    auto* preview = LC_DimStylePreviewGraphicViewTestAccess::init(
+        &parent, &original, RS2::EntityUnknown, lc::test::toQString(path));
+    REQUIRE(preview != nullptr);
+    RS_Graphic* previewGraphic = preview->getGraphic();
+    REQUIRE(previewGraphic != nullptr);
+
+    const RS_Spline* cachedSpline = nullptr;
+    for (auto* entity : *previewGraphic) {
+        if (entity == nullptr) continue;
+        CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+        if (entity->rtti() == RS2::EntitySpline)
+            cachedSpline = dynamic_cast<const RS_Spline*>(entity);
+    }
+    REQUIRE(cachedSpline != nullptr);
+    CHECK(cachedSpline->rtti() == RS2::EntitySpline);
+    CHECK(dynamic_cast<const LC_OffsetCurve*>(cachedSpline) == nullptr);
+    CHECK(fixture::markerCount(cachedSpline->getDrwExtData()) == 0);
 }
 
 TEST_CASE("Fresh profile: the options dialog shows Scrollbars checked and the band box enabled",

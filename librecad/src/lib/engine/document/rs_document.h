@@ -299,6 +299,7 @@ protected:
     QList<LC_DocumentModificationListener*> m_modificationListeners;
 
     friend class LC_UndoSection;
+    friend class LC_OffsetCurvePublication;
     friend class RS_Selection;
 };
 #endif

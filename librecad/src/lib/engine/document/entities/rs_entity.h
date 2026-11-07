@@ -28,7 +28,9 @@
 #ifndef RS_ENTITY_H
 #define RS_ENTITY_H
 
+#include <cstddef>
 #include <memory>
+#include <cstddef>
 #include <vector>
 
 #include <QString>
@@ -501,6 +503,10 @@ public:
     //    double getStyleFactor(RS_GraphicView *view);
     QString getUserDefVar(const QString& key) const;
     std::vector<QString> getAllKeys() const;
+    /** Nonallocating admission before a staged attribute copy. */
+    bool cloneMetadataFits(std::size_t variables, std::size_t stringUnits,
+                           std::size_t reactors) const noexcept;
+    std::size_t userDefVarCount() const;
     void setUserDefVar(QString key, QString val) const;
     void delUserDefVar(const QString& key) const;
 

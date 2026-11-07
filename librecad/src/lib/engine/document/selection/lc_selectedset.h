@@ -71,6 +71,7 @@ public:
     bool hasSelection();
 
 private:
+    friend class LC_OffsetCurvePublication;
     friend class RS_EntityContainer;
     struct PreparedRemoval {
         QList<RS_Entity*> remaining;

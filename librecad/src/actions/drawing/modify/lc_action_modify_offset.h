@@ -34,26 +34,40 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <memory>
 
 #include "lc_action_modify_base.h"
+#include "lc_selectedsetlistener.h"
+#include <QPointer>
 
 struct RS_OffsetData;
 struct LC_OffsetBatchOutcome;
 struct LC_OffsetSourceOutcome;
+struct LC_OffsetPlainOutcome;
 class LC_OffsetPreviewCache;
+class LC_OffsetWorkerClient;
+class LC_OffsetCreationSources;
+class QTimer;
+class RS_GraphicView;
 
 /**
  * This action class create entity by offset
  *
  * @author Dongxu Li
  */
-class LC_ActionModifyOffset : public LC_ActionModifyBase {
+class LC_ActionModifyOffset : public LC_ActionModifyBase, private LC_SelectedSetListener {
     Q_OBJECT
 public:
     explicit LC_ActionModifyOffset(LC_ActionContext *actionContext);
     ~LC_ActionModifyOffset() override;
+    void init(int status) override;
+    void trigger() override;
+    void suspend() override;
+    void keyPressEvent(QKeyEvent*) override;
+    bool isPreparing() const noexcept;
     double getDistance() const;
     void setDistance(double distance) const;
     bool isFixedDistance() const {return m_distanceIsFixed;}
     void setDistanceFixed(bool value);
+    bool isEditableOffsetCurve() const;
+    void setEditableOffsetCurve(bool enabled) const;
 protected:
     /**
      * Action States.
@@ -66,11 +80,12 @@ protected:
     bool m_distanceIsFixed = true;
     RS_Vector m_referencePoint = RS_Vector(false);
     std::unique_ptr<RS_OffsetData> m_offsetData;
-    /** The committed outcome, kept only until its selection update has used it. */
+    /** Keep committed source diagnostics through selection and completion messages. */
     std::unique_ptr<LC_OffsetBatchOutcome> m_pendingOutcome;
     /** Offsets the preview made, for the sources it made them for. */
     std::unique_ptr<LC_OffsetPreviewCache> m_previewCache;
     QList<RS_Entity*> m_previewSources;
+    std::unique_ptr<LC_OffsetBatchOutcome> m_workerReport;
 
     void previewOffset();
     /** Why a source was not offset, for the command line and the info cursor. */
@@ -79,6 +94,9 @@ protected:
     static QString stopReason(const LC_OffsetSourceOutcome& source);
     /** Why an offset, or the copy that stopped a series, could not be made. */
     static QString offsetFailureReason(const LC_OffsetSourceOutcome& source);
+    /** Committed native-request fallback only; never dereferences source identity pointers. */
+    static QString keptPlainReason(const LC_OffsetSourceOutcome& source, const LC_OffsetPlainOutcome& plain);
+    static QString keptPlainMessage(const LC_OffsetBatchOutcome& outcome);
     /** Appearance/MaxPreview, read signed: a non-positive value means none in detail. */
     static std::size_t maxPreviewDetail();
     void finish() override;
@@ -101,5 +119,24 @@ protected:
     void doSaveOptions() override;
     void doLoadOptions() override;
     bool isInVisualSnapStatus(int status) override;
+private:
+    friend class LC_OffsetCreationActionTestAccess;
+    struct Work;
+    bool currentContext() const;
+    bool selectionNeedsWorker() const;
+    bool currentWork(const std::shared_ptr<Work>&) const;
+    void beginPreparation(bool preview);
+    void advance(const std::shared_ptr<Work>&);
+    void completePreparation(const std::shared_ptr<Work>&);
+    void cancelPreparation(const QString& reason = {});
+    void detachContext();
+    void selectionChanged() override {}
+    void selectedSetDestroyed() override;
+    QPointer<RS_GraphicView> m_liveView;
+    std::unique_ptr<LC_OffsetWorkerClient> m_worker;
+    std::unique_ptr<QTimer> m_guardTimer;
+    std::shared_ptr<Work> m_work;
+    std::shared_ptr<LC_OffsetCreationSources> m_sourceInputs;
+    qint64 m_serial = 0, m_requestId = 0;
 };
 #endif

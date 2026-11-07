@@ -33,11 +33,421 @@
 
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
+#include "lc_offsetsource.h"
+#include "lc_parabola.h"
 #include "lc_splinepoints.h"
+#include "drw_base.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 using Catch::Approx;
+
+TEST_CASE("Offset source snapshots own every supported source type") {
+    RS_EllipseData ellipseData;
+    ellipseData.center = {1.0, 2.0};
+    ellipseData.majorP = {4.0, 0.0};
+    ellipseData.ratio = .5;
+    RS_Ellipse ellipse{nullptr, ellipseData};
+
+    RS_SplineData splineData{2, false};
+    splineData.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    splineData.knotslist = {0, 0, 0, 1, 1, 1};
+    splineData.weights = {1, .7, 1};
+    RS_Spline spline{nullptr, splineData};
+
+    LC_SplinePointsData pointsData{false, false};
+    pointsData.useControlPoints = true;
+    pointsData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    LC_SplinePoints points{nullptr, pointsData};
+
+    LC_Parabola parabola{nullptr, LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}};
+    LC_Hyperbola hyperbola{nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}};
+    LC_Hyperbola unbounded{nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5}};
+    RS_Line line{nullptr, RS_LineData{{0, 0}, {1, 0}}};
+    RS_Arc arc{nullptr, RS_ArcData{{2, 3}, 4.0, .25, 1.5, true}};
+    RS_Circle circle{nullptr, RS_CircleData{{-2, 3}, 5.0}};
+    RS_Polyline polyline;
+    polyline.addVertex({0, 0}, 1.0); polyline.addVertex({2, 0}); polyline.addVertex({2, 2});
+
+    const std::array<const RS_Entity*, 9> entities{&ellipse, &spline, &points, &parabola, &hyperbola,
+                                                    &line, &arc, &circle, &polyline};
+    const std::array<LC_OffsetSourceGeometry::Kind, 9> kinds{
+        LC_OffsetSourceGeometry::Kind::Ellipse,
+        LC_OffsetSourceGeometry::Kind::Spline,
+        LC_OffsetSourceGeometry::Kind::SplinePoints,
+        LC_OffsetSourceGeometry::Kind::Parabola,
+        LC_OffsetSourceGeometry::Kind::BoundedHyperbola,
+        LC_OffsetSourceGeometry::Kind::Line,
+        LC_OffsetSourceGeometry::Kind::Arc,
+        LC_OffsetSourceGeometry::Kind::Circle,
+        LC_OffsetSourceGeometry::Kind::Polyline};
+    for (std::size_t i = 0; i < entities.size(); ++i) {
+        auto snapshot = LC_OffsetSourceGeometry::capture(*entities[i]);
+        REQUIRE(snapshot);
+        CHECK(snapshot->kind() == kinds[i]);
+        CHECK(snapshot->isWellFormed());
+        auto restored = snapshot->makeEntity();
+        REQUIRE(restored);
+        CHECK(restored->rtti() == entities[i]->rtti());
+        auto recaptured = LC_OffsetSourceGeometry::capture(*restored);
+        REQUIRE(recaptured);
+        CHECK(recaptured->kind() == kinds[i]);
+        switch (kinds[i]) {
+        case LC_OffsetSourceGeometry::Kind::Ellipse: {
+            const auto* value = dynamic_cast<const RS_Ellipse*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().center == ellipseData.center);
+            CHECK(value->getData().majorP == ellipseData.majorP);
+            CHECK(value->getData().ratio == ellipseData.ratio);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Spline: {
+            const auto* value = dynamic_cast<const RS_Spline*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().controlPoints == splineData.controlPoints);
+            CHECK(value->getData().knotslist == splineData.knotslist);
+            CHECK(value->getData().weights == splineData.weights);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::SplinePoints: {
+            const auto* value = dynamic_cast<const LC_SplinePoints*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().controlPoints == pointsData.controlPoints);
+            CHECK(value->getData().useControlPoints == pointsData.useControlPoints);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Parabola: {
+            const auto* value = dynamic_cast<const LC_Parabola*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().m_controlPoints[0] == parabola.getData().m_controlPoints[0]);
+            CHECK(value->getData().m_controlPoints[1] == parabola.getData().m_controlPoints[1]);
+            CHECK(value->getData().m_controlPoints[2] == parabola.getData().m_controlPoints[2]);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::BoundedHyperbola: {
+            const auto* value = dynamic_cast<const LC_Hyperbola*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().center == hyperbola.getData().center);
+            CHECK(value->getData().majorP == hyperbola.getData().majorP);
+            CHECK(value->getData().angle1 == hyperbola.getData().angle1);
+            CHECK(value->getData().angle2 == hyperbola.getData().angle2);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Line: {
+            const auto* value = dynamic_cast<const RS_Line*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getStartpoint() == line.getStartpoint());
+            CHECK(value->getEndpoint() == line.getEndpoint());
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Arc: {
+            const auto* value = dynamic_cast<const RS_Arc*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().center == arc.getData().center);
+            CHECK(value->getData().radius == arc.getData().radius);
+            CHECK(value->getData().angle1 == arc.getData().angle1);
+            CHECK(value->getData().angle2 == arc.getData().angle2);
+            CHECK(value->getData().reversed == arc.getData().reversed);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Circle: {
+            const auto* value = dynamic_cast<const RS_Circle*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->getData().center == circle.getData().center);
+            CHECK(value->getData().radius == circle.getData().radius);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Polyline: {
+            const auto* value = dynamic_cast<const RS_Polyline*>(restored.get());
+            REQUIRE(value);
+            CHECK(value->isClosed() == polyline.isClosed());
+            CHECK(value->getStartpoint() == polyline.getStartpoint());
+            CHECK(value->getEndpoint() == polyline.getEndpoint());
+            CHECK(value->size() == polyline.size());
+            REQUIRE(value->size() == 2);
+            CHECK(value->entityAt(0)->rtti() == RS2::EntityArc);
+            CHECK(value->entityAt(1)->rtti() == RS2::EntityLine);
+            break;
+        }
+        case LC_OffsetSourceGeometry::Kind::Invalid:
+            FAIL("valid source snapshot has invalid kind");
+        }
+    }
+
+    auto capturedParabola = LC_OffsetSourceGeometry::capture(parabola);
+    REQUIRE(capturedParabola);
+    CHECK(std::holds_alternative<LC_ParabolaData>(capturedParabola->value));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(unbounded));
+    CHECK(LC_OffsetSourceGeometry::capture(line));
+    RS_Line degenerateLine{nullptr, RS_LineData{{1, 1}, {1, 1}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(degenerateLine));
+    auto nonPlanarEllipseData = ellipseData;
+    nonPlanarEllipseData.center.z = 1.0;
+    RS_Ellipse nonPlanarEllipse{nullptr, nonPlanarEllipseData};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(nonPlanarEllipse));
+    auto degenerateEllipseData = ellipseData;
+    degenerateEllipseData.majorP = {0, 0};
+    RS_Ellipse degenerateEllipse{nullptr, degenerateEllipseData};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(degenerateEllipse));
+
+    LC_OffsetPolylineData disconnected{{0, 0}, {2, 0}, false,
+        {RS_LineData{{0, 0}, {1, 0}}, RS_LineData{{1.1, 0}, {2, 0}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{disconnected}.isWellFormed());
+    LC_OffsetPolylineData inconsistentHeader{{0, 0}, {3, 0}, false,
+        {RS_LineData{{0, 0}, {2, 0}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{inconsistentHeader}.isWellFormed());
+    LC_OffsetPolylineData closedChain{{0, 0}, {1, 1}, true,
+        {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {1, 1}},
+         RS_LineData{{1, 1}, {0, 0}}}};
+    CHECK(LC_OffsetSourceGeometry{closedChain}.isWellFormed());
+
+    auto ownedSpline = LC_OffsetSourceGeometry::capture(spline);
+    REQUIRE(ownedSpline);
+    spline.getData().controlPoints[0] = {99, 99};
+    CHECK(std::get<RS_SplineData>(ownedSpline->value).controlPoints[0] == RS_Vector{0, 0});
+
+    RS_SplineData malformedSplineData = splineData;
+    malformedSplineData.knotslist.pop_back();
+    RS_Spline malformedSpline{nullptr, malformedSplineData};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(malformedSpline));
+
+    LC_SplinePointsData degeneratePointsData{false, false};
+    degeneratePointsData.useControlPoints = true;
+    degeneratePointsData.controlPoints = {{0, 0}};
+    LC_SplinePoints degeneratePoints{nullptr, degeneratePointsData};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(degeneratePoints));
+
+    LC_OffsetSourceDefinition definition{*ownedSpline, 2.0, 1e-4, false};
+    CHECK(definition.isWellFormed());
+    definition.signedDistance = std::numeric_limits<double>::infinity();
+    CHECK_FALSE(definition.isWellFormed());
+}
+
+TEST_CASE("Offset source capture rejects lossy polyline preview projections",
+          "[lc-offsetcurve][source][polyline][provenance]") {
+    const auto makePolyline = [] {
+        RS_Polyline polyline;
+        polyline.addVertex({0.0, 0.0}, 0.0);
+        polyline.addVertex({2.0, 0.0}, 0.0);
+        return polyline;
+    };
+
+    auto ordinary = makePolyline();
+    CHECK(LC_OffsetSourceGeometry::capture(ordinary));
+
+    auto nativeLwpolyline = makePolyline();
+    nativeLwpolyline.setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "LibreCAD_LWPOLYLINE"),
+        std::make_shared<DRW_Variant>(1040, 0.0)});
+    CHECK(LC_OffsetSourceGeometry::capture(nativeLwpolyline));
+
+    for (const char* marker : {"LibreCAD_POLYLINE_MESH",
+                               "LibreCAD_POLYLINE_PFACE",
+                               "LibreCAD_MLINE",
+                               "LibreCAD_UNDERLAY",
+                               "LibreCAD_POLYLINE_OCS",
+                               "librecad_polyline_mesh"}) {
+        CAPTURE(marker);
+        auto projection = makePolyline();
+        projection.setDrwExtData({
+            std::make_shared<DRW_Variant>(1001, marker),
+            std::make_shared<DRW_Variant>(1000, "unrelated payload")});
+        CHECK_FALSE(LC_OffsetSourceGeometry::capture(projection));
+    }
+
+    auto unrelatedXData = makePolyline();
+    unrelatedXData.setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "CUSTOM_APP"),
+        std::make_shared<DRW_Variant>(1000, "LibreCAD_POLYLINE_MESH")});
+    CHECK(LC_OffsetSourceGeometry::capture(unrelatedXData));
+
+    auto malformedAppId = makePolyline();
+    malformedAppId.setDrwExtData({std::make_shared<DRW_Variant>(1001, 42)});
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(malformedAppId));
+
+    auto nullXData = makePolyline();
+    nullXData.setDrwExtData({nullptr});
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(nullXData));
+}
+
+TEST_CASE("Offset source capture rejects projected arbitrary-OCS conics",
+          "[lc-offsetcurve][source][provenance][ocs]") {
+    RS_Ellipse projected{nullptr,
+        {RS_Vector{4.0, -2.0}, RS_Vector{3.0, 1.0}, 0.4, 0.0, 0.0, false}};
+    CHECK(LC_OffsetSourceGeometry::capture(projected));
+
+    projected.setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "LibreCAD_CONIC_OCS"),
+        std::make_shared<DRW_Variant>(1070, 0),
+        std::make_shared<DRW_Variant>(1010, DRW_Coord{0.3, 0.4, 0.8660254037844386})});
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(projected));
+
+    projected.setDrwExtData({
+        std::make_shared<DRW_Variant>(1001, "CUSTOM_APP"),
+        std::make_shared<DRW_Variant>(1000, "LibreCAD_CONIC_OCS")});
+    CHECK(LC_OffsetSourceGeometry::capture(projected));
+}
+
+TEST_CASE("Polyline source topology validation accepts its maximum bounded segment count",
+          "[lc-offsetcurve][source][polyline][bounded]") {
+    constexpr std::size_t segmentCount = 65536;
+    LC_OffsetPolylineData data;
+    data.startpoint = {0, 0};
+    data.endpoint = {static_cast<double>(segmentCount), 0};
+    data.segments.reserve(segmentCount);
+    for (std::size_t i = 0; i < segmentCount; ++i) {
+        const double start = static_cast<double>(i);
+        data.segments.emplace_back(RS_LineData{{start, 0}, {start + 1.0, 0}});
+    }
+
+    CHECK(LC_OffsetSourceGeometry{std::move(data)}.isWellFormed());
+}
+
+TEST_CASE("Polyline source topology validation rejects segment self-intersections",
+          "[lc-offsetcurve][source][polyline][topology]") {
+    const LC_OffsetPolylineData bowTie{{0, 0}, {2, 0}, false,
+        {RS_LineData{{0, 0}, {2, 2}}, RS_LineData{{2, 2}, {0, 2}},
+         RS_LineData{{0, 2}, {2, 0}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{bowTie}.isWellFormed());
+
+    const LC_OffsetPolylineData arcCrossing{{1, 0}, {0, 0.5}, false,
+        {RS_ArcData{{0, 0}, 1.0, 0.0, M_PI, false},
+         RS_LineData{{-1, 0}, {-2, 0}}, RS_LineData{{-2, 0}, {0, 0.5}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{arcCrossing}.isWellFormed());
+
+    const double intersectionY = std::sqrt(3.0) / 2.0;
+    const LC_OffsetPolylineData arcArcCrossing{{1, 0}, {2, 0}, false,
+        {RS_ArcData{{0, 0}, 1.0, 0.0, M_PI / 3.0, true},
+         RS_ArcData{{1, 0}, 1.0, 2.0 * M_PI / 3.0, 0.0, false}}};
+    CHECK(LC_OffsetSourceDetail::sameEndpoint(
+        {0.5, intersectionY}, {1.0 + std::cos(2.0 * M_PI / 3.0),
+                               std::sin(2.0 * M_PI / 3.0)}));
+    CHECK_FALSE(LC_OffsetSourceGeometry{arcArcCrossing}.isWellFormed());
+
+    const LC_OffsetPolylineData overlappingArcs{{1, 0}, {0.5, intersectionY}, false,
+        {RS_ArcData{{0, 0}, 1.0, 0.0, 2.0 * M_PI / 3.0, false},
+         RS_ArcData{{0, 0}, 1.0, 2.0 * M_PI / 3.0, M_PI / 3.0, false}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{overlappingArcs}.isWellFormed());
+
+    const LC_OffsetPolylineData touchingArcs{{1, 0}, {-1, 0}, false,
+        {RS_ArcData{{0, 0}, 1.0, 0.0, 2.0 * M_PI / 3.0, false},
+         RS_ArcData{{0, 0}, 1.0, 2.0 * M_PI / 3.0, M_PI, false}}};
+    CHECK(LC_OffsetSourceGeometry{touchingArcs}.isWellFormed());
+
+    const double nearTangentOffset = 1.0e-10;
+    const double nearTangentY = 1.0 - nearTangentOffset;
+    const double nearTangentX = std::sqrt(1.0 - nearTangentY * nearTangentY);
+    const double nearTangentJoin = std::atan2(nearTangentY, nearTangentX);
+    const double nearTangentStart = nearTangentJoin - 1.0e-6;
+    const double nearTangentEnd = nearTangentJoin + 1.0e-3;
+    constexpr double lineHalfLength = 1.0e-6;
+    const LC_OffsetPolylineData nearTangentCrossing{
+        {nearTangentX - lineHalfLength, nearTangentY},
+        {std::cos(nearTangentEnd), std::sin(nearTangentEnd)}, false,
+        {RS_LineData{{nearTangentX - lineHalfLength, nearTangentY},
+                     {nearTangentX + lineHalfLength, nearTangentY}},
+         RS_LineData{{nearTangentX + lineHalfLength, nearTangentY},
+                     {std::cos(nearTangentStart), std::sin(nearTangentStart)}},
+         RS_ArcData{{0, 0}, 1.0, nearTangentStart, nearTangentEnd, false}}};
+    const RS_Line nearTangentLine{nullptr,
+        std::get<RS_LineData>(nearTangentCrossing.segments[0])};
+    const RS_Arc nearTangentArc{nullptr,
+        std::get<RS_ArcData>(nearTangentCrossing.segments[2])};
+    const RS_Vector nearTangentIntersection{nearTangentX, nearTangentY};
+    CHECK(nearTangentLine.isPointOnEntity(nearTangentIntersection, 1.0e-12));
+    CHECK(nearTangentArc.isPointOnEntity(nearTangentIntersection, 1.0e-12));
+    CHECK_FALSE(LC_OffsetSourceGeometry{nearTangentCrossing}.isWellFormed());
+
+    constexpr double shallowCrossing = 1.0e-10;
+    const LC_OffsetPolylineData nearParallelCrossing{{0, 0}, {1, -shallowCrossing}, false,
+        {RS_LineData{{0, 0}, {3, 0}},
+         RS_LineData{{3, 0}, {2, shallowCrossing}},
+         RS_LineData{{2, shallowCrossing}, {1, -shallowCrossing}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{nearParallelCrossing}.isWellFormed());
+
+    const double nearConcentricShift = 1.0e-8;
+    const double nearConcentricRadius = std::hypot(nearConcentricShift, 1.0);
+    double nearConcentricJoinAngle = std::atan2(-1.0, -nearConcentricShift);
+    if (nearConcentricJoinAngle < 0.0) nearConcentricJoinAngle += 2.0 * M_PI;
+    const LC_OffsetPolylineData nearConcentricCrossing{{1, 0},
+        {nearConcentricShift + nearConcentricRadius, 0}, false,
+        {RS_ArcData{{0, 0}, 1.0, 0.0, 3.0 * M_PI / 2.0, false},
+         RS_ArcData{{nearConcentricShift, 0}, nearConcentricRadius,
+                    nearConcentricJoinAngle, 0.0, true}}};
+    const RS_Arc nearConcentricFirstArc{nullptr,
+        std::get<RS_ArcData>(nearConcentricCrossing.segments[0])};
+    const RS_Arc nearConcentricSecondArc{nullptr,
+        std::get<RS_ArcData>(nearConcentricCrossing.segments[1])};
+    CHECK(nearConcentricFirstArc.isPointOnEntity({0, 1}, 1.0e-12));
+    CHECK(nearConcentricSecondArc.isPointOnEntity({0, 1}, 1.0e-12));
+    CHECK_FALSE(LC_OffsetSourceGeometry{nearConcentricCrossing}.isWellFormed());
+
+    const LC_OffsetPolylineData simpleChain{{0, 0}, {3, 1}, false,
+        {RS_LineData{{0, 0}, {1, 0}}, RS_LineData{{1, 0}, {2, 1}},
+         RS_LineData{{2, 1}, {3, 1}}}};
+    CHECK(LC_OffsetSourceGeometry{simpleChain}.isWellFormed());
+
+    const LC_OffsetPolylineData overlappingLines{{0, 0}, {5, 0}, false,
+        {RS_LineData{{0, 0}, {4, 0}}, RS_LineData{{4, 0}, {2, 0}},
+         RS_LineData{{2, 0}, {5, 0}}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry{overlappingLines}.isWellFormed());
+}
+
+TEST_CASE("Offset polyline source snapshots preserve positive and negative bulge arcs",
+          "[lc-offsetcurve][source][polyline]") {
+    const double bulge = std::tan(M_PI / 16.0);
+    RS_Polyline source;
+    source.addVertex({0, 0}, bulge);
+    source.addVertex({2, 0}, -bulge);
+    source.addVertex({4, 0});
+    source.addVertex({6, 0});
+
+    REQUIRE(source.size() == 3);
+    REQUIRE(source.entityAt(0)->rtti() == RS2::EntityArc);
+    REQUIRE(source.entityAt(1)->rtti() == RS2::EntityArc);
+    REQUIRE(source.entityAt(2)->rtti() == RS2::EntityLine);
+    const auto* first = dynamic_cast<const RS_Arc*>(source.entityAt(0));
+    const auto* second = dynamic_cast<const RS_Arc*>(source.entityAt(1));
+    REQUIRE(first);
+    REQUIRE(second);
+    CHECK_FALSE(first->getData().reversed);
+    CHECK(second->getData().reversed);
+
+    const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(snapshot);
+    REQUIRE(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    const auto& data = std::get<LC_OffsetPolylineData>(snapshot->value);
+    REQUIRE(data.segments.size() == 3);
+    REQUIRE(std::holds_alternative<RS_ArcData>(data.segments[0]));
+    REQUIRE(std::holds_alternative<RS_ArcData>(data.segments[1]));
+    const auto checkArcData = [](const RS_ArcData& actual, const RS_ArcData& expected) {
+        CHECK(actual.center == expected.center);
+        CHECK(actual.radius == expected.radius);
+        CHECK(actual.angle1 == expected.angle1);
+        CHECK(actual.angle2 == expected.angle2);
+        CHECK(actual.reversed == expected.reversed);
+    };
+    checkArcData(std::get<RS_ArcData>(data.segments[0]), first->getData());
+    checkArcData(std::get<RS_ArcData>(data.segments[1]), second->getData());
+
+    auto restoredEntity = snapshot->makeEntity();
+    const auto* restored = dynamic_cast<const RS_Polyline*>(restoredEntity.get());
+    REQUIRE(restored);
+    REQUIRE(restored->size() == source.size());
+    for (std::size_t i = 0; i < source.size(); ++i) {
+        const auto* expected = dynamic_cast<const RS_Arc*>(source.entityAt(i));
+        const auto* actual = dynamic_cast<const RS_Arc*>(restored->entityAt(i));
+        if (expected) {
+            REQUIRE(actual);
+            checkArcData(actual->getData(), expected->getData());
+        } else {
+            CHECK(restored->entityAt(i)->rtti() == RS2::EntityLine);
+        }
+    }
+}
 
 namespace {
 
@@ -60,6 +470,98 @@ LC_SplinePoints fromControlPoints(const std::vector<RS_Vector>& controls, const 
 RS_Spline quarterCircle(const RS_Vector& center = RS_Vector{0.0, 0.0}, const double r = 1.0) {
     return makeSpline(2, {center + RS_Vector{r, 0.0}, center + RS_Vector{r, r}, center + RS_Vector{0.0, r}},
                       {0, 0, 0, 1, 1, 1}, {1.0, std::sqrt(0.5), 1.0});
+}
+
+TEST_CASE("Consistent tangent-constrained linear spline can be offset",
+          "[curve-offset][direct][fit-points][tangents][linear]") {
+    RS_Spline source = makeSpline(1, {{0, 0}, {4, 0}}, {0, 0, 1, 1});
+    source.getData().fitPoints = {{0, 0}, {4, 0}};
+    source.getData().fitTangentsConstrained = true;
+    source.getData().fitTolerance = 1e-8;
+    source.getData().fitStartTangent = {1, 0};
+    source.getData().fitEndTangent = {2, 0};
+    REQUIRE(source.fitTangentsMatchCurve());
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
+    const auto left = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
+    const auto right = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5);
+
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+    CHECK(LC_CurveOffset::buildDirectBranches(source, right, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+
+    source.getData().fitEndTangent = {0, 0};
+    REQUIRE(source.fitTangentsMatchCurve());
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+    CHECK(LC_CurveOffset::buildDirectBranches(source, right, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+
+    source.getData().fitEndTangent = {-1, 0};
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
+}
+
+TEST_CASE("Exact tangent-constrained cubic spline can be offset",
+          "[curve-offset][direct][fit-points][tangents]") {
+    RS_Spline source{nullptr, RS_SplineData{3, false}};
+    REQUIRE(source.setFitPointsWithTangents(
+        {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {2, 1}, {1, -3}));
+    REQUIRE(source.fitTangentsMatchCurve());
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+    const auto result = LC_CurveOffset::buildDirectBranches(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status == LC_CurveOffsetStatus::Ok);
+}
+
+TEST_CASE("Consistent rational tangent-constrained cubic spline can be offset",
+          "[curve-offset][direct][fit-points][tangents][rational]") {
+    RS_Spline source = makeSpline(3,
+        {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {0, 0, 0, 0, 1, 1, 1, 1},
+        {1.0, 0.75, 0.8, 1.0});
+    source.getData().fitTangentsConstrained = true;
+    source.getData().fitTolerance = 1e-2;
+    source.getData().fitStartTangent = {2, 3};
+    source.getData().fitEndTangent = {3, -4};
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        LC_CurveJet jet;
+        REQUIRE(source.tryEvaluateJet(parameter,
+            parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Right, jet));
+        source.getData().fitPoints.push_back(jet.point);
+    }
+    REQUIRE(source.fitTangentsMatchCurve());
+
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+    const auto result = LC_CurveOffset::buildDirectBranches(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status == LC_CurveOffsetStatus::Ok);
+}
+
+TEST_CASE("Consistent rational tangent-constrained quadratic spline can be offset",
+          "[curve-offset][direct][fit-points][tangents][rational][quadratic]") {
+    RS_Spline source = makeSpline(2, {{0, 0}, {2, 3}, {5, 0}},
+        {0, 0, 0, 1, 1, 1}, {1.0, 0.7, 1.0});
+    source.getData().fitTangentsConstrained = true;
+    source.getData().fitTolerance = 1e-2;
+    source.getData().fitStartTangent = {2, 3};
+    source.getData().fitEndTangent = {3, -3};
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        LC_CurveJet jet;
+        REQUIRE(source.tryEvaluateJet(parameter,
+            parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Right, jet));
+        source.getData().fitPoints.push_back(jet.point);
+    }
+    REQUIRE(source.fitTangentsMatchCurve());
+
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.1);
+    const auto result = LC_CurveOffset::buildDirectBranches(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.1), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status == LC_CurveOffsetStatus::Ok);
 }
 
 // A cubic with an inflection.
@@ -222,6 +724,36 @@ TEST_CASE("Default and partial requests are rejected before any evaluation",
     CHECK(again.tolerance.requestedGeometry == good.tolerance.requestedGeometry);
     const LC_CurveOffsetTolerances& t = good.tolerance;
     CHECK(t.evaluation + t.fit + t.nodeMerge == Approx(t.requestedGeometry));
+}
+
+TEST_CASE("Consistent tangent-constrained spline-points can be offset",
+          "[curve-offset][direct][fit-points][tangents][spline-points]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    data.fitTangentsConstrained = true;
+    data.fitTolerance = 1e-10;
+    LC_SplinePoints source{nullptr, data};
+    const double endParameter = static_cast<double>(source.getSegmentCount());
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(source.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(source.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, endJet));
+    source.getData().fitStartTangent = startJet.first;
+    source.getData().fitEndTangent = endJet.first;
+    REQUIRE(source.fitTangentsMatchCurve());
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
+    const auto left = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
+    const auto right = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5);
+
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+    CHECK(LC_CurveOffset::buildDirectBranches(source, right, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+
+    source.getData().fitEndTangent *= -1.0;
+    CHECK_FALSE(source.fitTangentsMatchCurve());
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
 }
 
 TEST_CASE("A straight source offsets exactly to either side", "[curve-offset][direct]") {

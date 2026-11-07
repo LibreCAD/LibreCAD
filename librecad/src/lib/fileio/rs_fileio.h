@@ -41,6 +41,11 @@
  */
 class RS_FileIO {
 public:
+    enum class OffsetCurveImportPolicy {
+        ValidateNative,
+        DisplayCacheOnly
+    };
+
     /**
      * @return Instance to the unique import object.
      */
@@ -58,7 +63,8 @@ public:
 
     bool fileImport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown,
         std::function<bool(bool /*partial*/, const QString& /*errorMsg*/)> errorCallback = nullptr,
-        RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared) const;
+        RS2::DxfTextEncoding encoding = RS2::DxfTextEncoding::Declared,
+        OffsetCurveImportPolicy offsetCurvePolicy = OffsetCurveImportPolicy::ValidateNative) const;
 
     bool fileExport(RS_Graphic& graphic, const QString& file, RS2::FormatType type = RS2::FormatUnknown) const;
     /** What the last fileExport() left out, one item per line (RS_FilterInterface::exportReport). */

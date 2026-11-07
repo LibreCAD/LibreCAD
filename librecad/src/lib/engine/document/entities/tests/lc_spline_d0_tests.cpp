@@ -191,16 +191,17 @@ TEST_CASE("Next to a vanishing tangent the products' own bounds keep the sign of
         CHECK(b.cross().isNegative());
         CHECK(b.speedSquared().isPositive());
     }
-    // unless asked for, and at a rational span, there are none: the components alone bound it
+    // unless asked for; rational speed uses the homogeneous derivative numerator.
     LC_CurveJetBounds plain;
     REQUIRE(doubled.tryBoundJet(1e-2, 2e-2, plain));
     CHECK_FALSE(plain.crossProduct.isValid());
     const RS_Spline arc = quarterCircle();
     LC_CurveJetBounds b;
     REQUIRE(arc.tryBoundJet(0.2, 0.4, b, true));
-    CHECK_FALSE(b.crossProduct.isValid());
-    CHECK_FALSE(b.speedSquaredProduct.isValid());
-    CHECK(b.cross().isValid());
+    CHECK(b.crossProduct.isPositive());
+    CHECK(b.speedSquaredProduct.isPositive());
+    CHECK(b.speedSquared().isPositive());
+    CHECK(b.cross().isPositive());
 }
 
 TEST_CASE("RS_Spline::tryBoundJet refuses a box it cannot bound", "[curve-offset][d0][bound]") {
