@@ -22559,3 +22559,16 @@ spline import lanes`). This closes only these five tangent variants in the
 five listed formats; unsupported tangent forms remain refused, and exhaustive
 other spline, spline-points, polyline, visible-GUI, CI, and independent-CAD
 gates remain open.
+
+#### W563z. Qualify Both Signed Sides for Tangent-spline File Promotion (2026-11-07)
+
+Extended W563y's five-format tangent import matrix to run both left and right
+offsets for every source variant. The 50 generated file cases (five source
+variants × two sides × five DXF/DWG lanes) all promote through operation 8 and
+retain exact typed-definition CBOR plus the generated cache fingerprint. The
+focused rebuilt test passes 6,400 assertions.
+
+Test commit `bc3529eba` (`test(offset): cover both tangent offset sides`). This
+closes side symmetry for the five tangent-constrained source variants and
+listed file lanes only; other source variants, distance/scale neighborhoods,
+and independent external-CAD output remain separate validation work.
