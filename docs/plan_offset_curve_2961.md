@@ -22541,3 +22541,21 @@ Command:
 This requalifies only the listed conic/line layouts and five format lanes. It
 does not close the separate spline/spline-points/polyline variant matrix,
 visible-GUI acceptance, exact-head CI, or independent-CAD interoperability.
+
+#### W563y. Qualify Tangent-constrained Spline Promotion in Five File Lanes (2026-11-07)
+
+Expanded the real staged-import operation-8 promotion case from AC1032 DXF/DWG
+to R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The matrix covers positive-weight
+rational cubic and quadratic SPLINEs, degree-one SPLINEs, one-ended degree-one
+tangents, and curve-consistent fit-point `LC_SplinePoints`. R2000 DWG EED uses
+the legacy text byte-count contract; R2018 uses UTF-16 EED.
+
+Each lane now requires successful native promotion, exact schema-3 typed
+definition CBOR equality (including source, signed distance, tolerance, and
+reversal state), and exact imported-versus-generated cache geometry
+fingerprints. The focused rebuilt `librecad_tests` case passes 3,238
+assertions. Product/test commit `bfb774018` (`test(offset): cover tangent
+spline import lanes`). This closes only these five tangent variants in the
+five listed formats; unsupported tangent forms remain refused, and exhaustive
+other spline, spline-points, polyline, visible-GUI, CI, and independent-CAD
+gates remain open.
