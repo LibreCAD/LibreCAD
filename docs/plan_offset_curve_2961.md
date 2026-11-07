@@ -22737,3 +22737,20 @@ distances`). This adds distance coverage only for the recorded wrapped-periodic
 control layout and relative transform matrix. Other periodic knot/control
 layouts, additional distance neighborhoods, independent semantic/visual review,
 visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563aj. Qualify Rational Wrapped-periodic Spline Import (2026-11-07)
+
+Extended the wrapped-periodic staged-import matrix with a rational source mode
+using positive nonuniform weights `1.0, 0.9, 1.1, 0.95, 1.05` and matching
+wrapped weights for the repeated leading controls. The existing implicit-unit
+mode remains covered. Both modes run at scales `1e-3`, `1`, and `1e3`, relative
+offset magnitudes `0.125` and `0.25`, both signed sides, and all five DXF/DWG
+lanes. The 120 combinations preserve exact typed source definitions and match
+the generated cache fingerprints. The focused Release test passes 16,812
+assertions; the test target builds and `git diff --check` passes.
+
+Test commit `8f96b9f1f` (`test(offset): qualify rational periodic spline
+import`). This qualifies the recorded wrapped control layout and positive
+weight pattern only. Other rational periodic layouts/weights, knot-vector
+variants, broader distance and transform neighborhoods, visible-GUI acceptance,
+external semantic/visual review, and exact-head CI remain open.
