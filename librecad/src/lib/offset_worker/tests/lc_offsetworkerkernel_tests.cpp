@@ -16,12 +16,71 @@
 #include <limits>
 #include <tuple>
 #include <vector>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 namespace req = LC_OffsetWorkerRequest;
 namespace result = LC_OffsetWorkerResult;
 namespace trim = LC_OffsetCacheTrim;
 namespace geo = LC_EllipseOffsetGeometry;
 namespace {
+using SplineOracle = boost::multiprecision::number<
+    boost::multiprecision::cpp_bin_float<256>>;
+
+// Independent homogeneous de Boor evaluation for conditioning diagnostics.
+struct HomogeneousPoint {
+    SplineOracle x;
+    SplineOracle y;
+    SplineOracle w;
+};
+
+std::pair<SplineOracle, SplineOracle> evaluateSplineOracle(
+    const RS_SplineData& data, const SplineOracle& parameter) {
+    const std::size_t degree = data.degree;
+    const std::size_t lastControl = data.controlPoints.size() - 1;
+    std::size_t low = degree;
+    std::size_t high = lastControl + 1;
+    while (high - low > 1) {
+        const std::size_t middle = (low + high) / 2;
+        if (parameter < SplineOracle{data.knotslist[middle]}) high = middle;
+        else low = middle;
+    }
+    const std::size_t span = low;
+    std::array<HomogeneousPoint, 4> work{};
+    for (std::size_t j = 0; j <= degree; ++j) {
+        const std::size_t index = span - degree + j;
+        const SplineOracle weight{data.weights[index]};
+        work[j] = {SplineOracle{data.controlPoints[index].x} * weight,
+                   SplineOracle{data.controlPoints[index].y} * weight,
+                   weight};
+    }
+    for (std::size_t r = 1; r <= degree; ++r) {
+        for (std::size_t j = degree; j >= r; --j) {
+            const std::size_t index = span - degree + j;
+            const SplineOracle denominator{
+                data.knotslist[index + degree - r + 1] - data.knotslist[index]};
+            const SplineOracle alpha =
+                (parameter - SplineOracle{data.knotslist[index]}) / denominator;
+            work[j] = {work[j - 1].x * (1 - alpha) + work[j].x * alpha,
+                       work[j - 1].y * (1 - alpha) + work[j].y * alpha,
+                       work[j - 1].w * (1 - alpha) + work[j].w * alpha};
+            if (j == r) break;
+        }
+    }
+    return {work[degree].x / work[degree].w,
+            work[degree].y / work[degree].w};
+}
+
+SplineOracle oracleSpeedSquared(const RS_SplineData& data,
+                                const SplineOracle& parameter,
+                                const SplineOracle& step) {
+    // High-precision finite differences avoid sharing the production jet path.
+    const auto before = evaluateSplineOracle(data, parameter - step);
+    const auto after = evaluateSplineOracle(data, parameter + step);
+    const SplineOracle dx = (after.first - before.first) / (2 * step);
+    const SplineOracle dy = (after.second - before.second) / (2 * step);
+    return dx * dx + dy * dy;
+}
+
 req::Token token{7, 11, 13, 17};
 LC_EllipseOffsetDefinition definition() {
     return {{{0, 0}, {1, 0}, 1, 0, .001, false}, 1, false, false, 1e-4};
@@ -70,6 +129,89 @@ void certified(const result::Curve& curve) {
     for (const auto& point : curve.grips) CHECK(geo::isFinite2D(point));
     CHECK(geo::isFinite2D(curve.midpoint));
 }
+}
+
+TEST_CASE("high precision oracle samples conditioned periodic spline tangent minima",
+          "[lc-offsetcurve][worker-kernel][spline-variant][periodic][rational][oracle]") {
+    const std::array<std::vector<double>, 3> profiles{{
+        {1e-6, 1e6, 1e-4, 1e4, 1e-2, 1e2, 1.0},
+        {1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6},
+        {1e6, 1e4, 1e2, 1.0, 1e-2, 1e-4, 1e-6}
+    }};
+    for (std::size_t profile = 0; profile < profiles.size(); ++profile) {
+        CAPTURE(profile);
+        RS_Spline source{nullptr, RS_SplineData{2, false}};
+        for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{25, -15},
+                                       RS_Vector{55, -5}, RS_Vector{70, 20},
+                                       RS_Vector{50, 45}, RS_Vector{15, 50},
+                                       RS_Vector{-15, 25}})
+            source.addControlPoint(point);
+        source.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+        REQUIRE(source.validate());
+        source.setClosed(true);
+        RS_SplineData data = source.getData();
+        data.weights = profiles[profile];
+        data.weights.insert(data.weights.end(), profiles[profile].begin(),
+                            profiles[profile].begin() + data.degree);
+        RS_Spline checked{nullptr, data};
+        REQUIRE(checked.validate());
+
+        SplineOracle minimumSquared = std::numeric_limits<SplineOracle>::infinity();
+        SplineOracle minimumParameter{};
+        const std::size_t lastControl = data.controlPoints.size() - 1;
+        const SplineOracle domainStart{data.knotslist[data.degree]};
+        const SplineOracle domainEnd{data.knotslist[lastControl + 1]};
+        const SplineOracle seamStep = (domainEnd - domainStart) * SplineOracle{"1e-20"};
+        const auto startPoint = evaluateSplineOracle(data, domainStart);
+        const auto afterStart = evaluateSplineOracle(data, domainStart + seamStep);
+        const SplineOracle startDx = (afterStart.first - startPoint.first) / seamStep;
+        const SplineOracle startDy = (afterStart.second - startPoint.second) / seamStep;
+        const SplineOracle startSpeedSquared = startDx * startDx + startDy * startDy;
+        const auto beforeEnd = evaluateSplineOracle(data, domainEnd - seamStep);
+        const auto endPoint = evaluateSplineOracle(data, domainEnd);
+        const SplineOracle endDx = (endPoint.first - beforeEnd.first) / seamStep;
+        const SplineOracle endDy = (endPoint.second - beforeEnd.second) / seamStep;
+        const SplineOracle endSpeedSquared = endDx * endDx + endDy * endDy;
+        if (startSpeedSquared < minimumSquared) {
+            minimumSquared = startSpeedSquared;
+            minimumParameter = domainStart;
+        }
+        if (endSpeedSquared < minimumSquared) {
+            minimumSquared = endSpeedSquared;
+            minimumParameter = domainEnd;
+        }
+        for (std::size_t span = data.degree; span <= lastControl; ++span) {
+            const SplineOracle start{data.knotslist[span]};
+            const SplineOracle end{data.knotslist[span + 1]};
+            if (!(start < end)) continue;
+            const SplineOracle width = end - start;
+            const SplineOracle step = width * SplineOracle{"1e-12"};
+            for (int sample = 1; sample < 1024; ++sample) {
+                const SplineOracle t = start + width * sample / 1024;
+                const SplineOracle speedSquared = oracleSpeedSquared(data, t, step);
+                if (speedSquared < minimumSquared) {
+                    minimumSquared = speedSquared;
+                    minimumParameter = t;
+                }
+            }
+        }
+        REQUIRE(minimumSquared > 0);
+        const double parameter = minimumParameter.convert_to<double>();
+        LC_CurveJet nativeJet;
+        const auto side = parameter == domainStart.convert_to<double>()
+            ? LC_CurveEvaluationSide::Right
+            : parameter == domainEnd.convert_to<double>()
+                ? LC_CurveEvaluationSide::Left
+                : LC_CurveEvaluationSide::Interior;
+        REQUIRE(checked.tryEvaluateJet(parameter, side, nativeJet));
+        const double oracleSpeed = sqrt(minimumSquared).convert_to<double>();
+        const double nativeSpeed = nativeJet.first.magnitude();
+        INFO("oracle sampled min speed=" << oracleSpeed << " at t=" << parameter);
+        CHECK(oracleSpeed > 2.2e-10);
+        CHECK(oracleSpeed < 2.7e-10);
+        CHECK(std::abs(oracleSpeed - nativeSpeed) <=
+              std::max(1e-12, oracleSpeed * 1e-5));
+    }
 }
 
 TEST_CASE("offset child kernel generates owned checked caches with actual stage counters",
