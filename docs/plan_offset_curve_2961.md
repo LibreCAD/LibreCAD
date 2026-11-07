@@ -22644,3 +22644,20 @@ while preserving the complete schema-2 typed source. The focused rebuilt
 topology transition and distance in these five lanes only; additional
 hyperbola bounds, distances, transforms, external-CAD review, visible GUI, and
 exact-head CI remain separate gates.
+
+#### W563ae. Cover Both Offset Sides for Rational Multi-branch Spline Import (2026-11-07)
+
+Extended the internal-knot rational degree-2 spline staged-import regression
+to both signed offset sides across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+The observed topology is asymmetric at the tested distance: the left side
+produces multiple branches and must downgrade the single-cache carrier to an
+ordinary SPLINE while retaining the exact schema-2 typed source; the right
+side produces one branch and promotes to `LC_OffsetCurve`. Both paths compare
+the imported cache fingerprint with the generated first branch and compare
+typed source CBOR exactly. The focused Release test passes 1,275 assertions.
+
+Test commit `e23aa6b52` (`test(offset): cover rational spline import
+topology sides`). This qualifies only the recorded rational knot/control
+layout and distance in these five file lanes. Other rational layouts,
+distance/scale/transform neighborhoods, external-CAD review, visible-GUI
+acceptance, and exact-head CI remain open.
