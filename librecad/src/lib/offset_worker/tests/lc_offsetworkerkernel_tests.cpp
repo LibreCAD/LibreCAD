@@ -758,16 +758,18 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         int degree;
         double scale;
         bool sevenControlQuadratic;
+        bool wideWeights = false;
     };
     const std::vector<Variant> variants{
         {1, 1e-3, false}, {1, 1.0, false}, {1, 1e3, false},
         {2, 1.0, false}, {2, 1e-3, true}, {2, 1.0, true},
-        {2, 1e3, true}, {3, 1.0, false}};
+        {2, 1e3, true}, {2, 1.0, true, true}, {3, 1.0, false}};
     for (const auto& variant : variants) {
         const int degree = variant.degree;
         const double scale = variant.scale;
         const bool sevenControlQuadratic = variant.sevenControlQuadratic;
-        CAPTURE(degree, scale, sevenControlQuadratic);
+        const bool wideWeights = variant.wideWeights;
+        CAPTURE(degree, scale, sevenControlQuadratic, wideWeights);
         RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
         const std::vector<RS_Vector> controls = sevenControlQuadratic
             ? std::vector<RS_Vector>{{0, 0}, {25, -15}, {55, -5}, {70, 20},
@@ -788,7 +790,9 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         REQUIRE(periodic.validate());
         periodic.setClosed(true);
         auto sourceData = periodic.getData();
-        const std::vector<double> independentWeights = sevenControlQuadratic
+        const std::vector<double> independentWeights = wideWeights
+            ? std::vector<double>{0.01, 100.0, 0.1, 10.0, 0.5, 2.0, 1.0}
+            : sevenControlQuadratic
             ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15}
             : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85};
         sourceData.weights = independentWeights;
@@ -824,14 +828,31 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 req::GenerateSource{definition, {}}};
             const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
             const auto& generated = native(generationReply, 7);
+            CAPTURE(generated.engineStatus.has_value(),
+                    generated.engineStatus
+                        ? static_cast<int>(*generated.engineStatus)
+                        : -1);
+            if (generated.engineStatus != LC_CurveOffsetStatus::Ok) {
+                REQUIRE(wideWeights);
+                CHECK((generated.engineStatus == LC_CurveOffsetStatus::ToleranceNotMet ||
+                       generated.engineStatus == LC_CurveOffsetStatus::SingularOffset));
+                CHECK(generated.refusal == LC_OffsetCurveRefusal::Engine);
+                CHECK(generated.ordinaryStatus == result::OrdinaryStatus::None);
+                CHECK(generated.ordinary.empty());
+                CHECK_FALSE(generated.changed);
+                const auto generatedWire = result::encode(generationReply, generationRequest);
+                REQUIRE(generatedWire);
+                CHECK(result::decode(*generatedWire, generationRequest));
+                continue;
+            }
             REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
             const auto generatedWire = result::encode(generationReply, generationRequest);
             REQUIRE(generatedWire);
             CHECK(result::decode(*generatedWire, generationRequest));
 
-            if (degree == 1 && generated.ordinary.size() != 1) {
-                REQUIRE(generated.ordinary.size() == 6);
+            if ((degree == 1 || wideWeights) && generated.ordinary.size() != 1) {
+                REQUIRE(generated.ordinary.size() == (degree == 1 ? 6 : 8));
                 for (const auto& item : generated.ordinary) {
                     CAPTURE(item.index());
                     CHECK((std::holds_alternative<req::Segment>(item) ||
