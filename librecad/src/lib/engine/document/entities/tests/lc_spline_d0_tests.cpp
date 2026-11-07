@@ -176,6 +176,45 @@ TEST_CASE("Derivative bounds stay tight on a tiny box far from the origin", "[cu
     CHECK(b.dy.width() < 1e-5);
 }
 
+TEST_CASE("Rational spline product bounds normalize conditioned active weights",
+          "[curve-offset][d0][bound][rational][conditioned]") {
+    RS_Spline periodic{nullptr, RS_SplineData{2, false}};
+    const std::vector<RS_Vector> controls{{1000, -2000}, {1025, -2015}, {1055, -2005}, {1070, -1980},
+                                          {1050, -1955}, {1015, -1950}, {985, -1975}};
+    for (const RS_Vector& point : controls) {
+        periodic.addControlPoint(point);
+    }
+    periodic.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+    REQUIRE(periodic.validate());
+    periodic.setClosed(true);
+    auto data = periodic.getData();
+    data.weights = {1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6,
+                    1e-6, 1e-4};
+    RS_Spline spline{nullptr, data};
+    REQUIRE(spline.validate());
+
+    constexpr double a = 5.5;
+    constexpr double b = 5.5000001;
+    LC_CurveJetBounds bounds;
+    REQUIRE(spline.tryBoundJet(a, b, bounds, true));
+    REQUIRE(bounds.speedSquaredProduct.isValid());
+    REQUIRE(bounds.crossProduct.isValid());
+    double maxSpeedSquared = 0.0;
+    for (int i = 0; i <= 16; ++i) {
+        const double t = a + (b - a) * i / 16.0;
+        LC_CurveJet jet;
+        REQUIRE(spline.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet));
+        const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+        maxSpeedSquared = std::max(maxSpeedSquared, speedSquared);
+        const double rounding = 1e-10 * std::max(1.0, speedSquared);
+        CHECK(bounds.speedSquared().lo() <= speedSquared + rounding);
+        CHECK(bounds.speedSquared().hi() >= speedSquared - rounding);
+        CHECK(bounds.cross().contains(jet.first.x * jet.second.y - jet.first.y * jet.second.x));
+    }
+    CHECK(bounds.speedSquared().isPositive());
+    CHECK(bounds.speedSquared().width() < maxSpeedSquared * 0.02);
+}
+
 TEST_CASE("Next to a vanishing tangent the products' own bounds keep the sign of the curvature",
           "[curve-offset][d0][bound]") {
     // A cubic whose first handle is doubled onto its start: C' = 0 there, and

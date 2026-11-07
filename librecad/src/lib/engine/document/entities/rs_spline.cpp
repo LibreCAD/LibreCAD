@@ -2057,6 +2057,7 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     return false; // the box crosses a knot
   }
   bool equalWeights = true;
+  double weightScale = 0.0;
   for (size_t i = span + 1 - p; i < span + p; ++i) {
     if (!(U[i] <= U[i + 1]) || !std::isfinite(U[i]) || !std::isfinite(U[i + 1])) {
       return false;
@@ -2068,6 +2069,18 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
       return false;
     }
     equalWeights = equalWeights && w == m_data.weights[span - p];
+    weightScale = std::max(weightScale, w);
+  }
+  // Homogeneous coordinates and their derivatives are unchanged by a common
+  // positive weight scale. Keeping the largest active weight near one reduces
+  // interval-rounding growth in products such as A'W - AW', especially for
+  // conditioned rational splines. Retain the original scale if normalization
+  // would erase a positive input weight in double precision.
+  bool normalizeWeights = std::isfinite(weightScale) && weightScale > 0.0;
+  if (normalizeWeights) {
+    for (size_t i = span - p; i <= span; ++i) {
+      normalizeWeights = normalizeWeights && m_data.weights[i] / weightScale > 0.0;
+    }
   }
 
   // The homogeneous control points of the span, and those of its first and
@@ -2080,7 +2093,8 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
   HomogeneousBox h[g_maxDegree + 1];
   for (size_t j = 0; j <= p; ++j) {
     const size_t i = span - p + j;
-    const LC_Interval w = LC_Interval::point(m_data.weights[i]);
+    const double scaledWeight = normalizeWeights ? m_data.weights[i] / weightScale : m_data.weights[i];
+    const LC_Interval w = LC_Interval::point(scaledWeight);
     h[j] = {(LC_Interval::point(m_data.controlPoints[i].x) - LC_Interval::point(origin.x)) * w,
             (LC_Interval::point(m_data.controlPoints[i].y) - LC_Interval::point(origin.y)) * w, w};
   }
