@@ -2093,8 +2093,10 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
   HomogeneousBox h[g_maxDegree + 1];
   for (size_t j = 0; j <= p; ++j) {
     const size_t i = span - p + j;
-    const double scaledWeight = normalizeWeights ? m_data.weights[i] / weightScale : m_data.weights[i];
-    const LC_Interval w = LC_Interval::point(scaledWeight);
+    const LC_Interval inputWeight = LC_Interval::point(m_data.weights[i]);
+    const LC_Interval w = normalizeWeights
+                              ? inputWeight / LC_Interval::point(weightScale)
+                              : inputWeight;
     h[j] = {(LC_Interval::point(m_data.controlPoints[i].x) - LC_Interval::point(origin.x)) * w,
             (LC_Interval::point(m_data.controlPoints[i].y) - LC_Interval::point(origin.y)) * w, w};
   }
