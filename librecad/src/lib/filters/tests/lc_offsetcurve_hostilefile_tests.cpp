@@ -5586,7 +5586,13 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
         periodic.addControlPoint(point);
     periodic.setClosed(true);
     auto wrapped = periodic.getData();
-    wrapped.weights.clear();
+    const bool rational = GENERATE(false, true);
+    if (rational) {
+        REQUIRE(wrapped.controlPoints.size() == 8);
+        wrapped.weights = {1.0, 0.9, 1.1, 0.95, 1.05, 1.0, 0.9, 1.1};
+    } else {
+        wrapped.weights.clear();
+    }
     const double scale = GENERATE(1e-3, 1.0, 1e3);
     const RS_Vector translation{1e6 * scale, -2e6 * scale};
     CAPTURE(scale, translation.x, translation.y);
@@ -5604,7 +5610,7 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
     const double magnitude = distanceFactor * scale;
     const double signedDistance = side == LC_CurveOffsetSide::Left ? magnitude : -magnitude;
-    CAPTURE(distanceFactor, static_cast<int>(side), signedDistance);
+    CAPTURE(rational, distanceFactor, static_cast<int>(side), signedDistance);
     const LC_OffsetSourceDefinition definition{
         LC_OffsetSourceGeometry{wrapped}, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
@@ -5668,6 +5674,7 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
 
         const auto input = directory.file(std::string("scale-") +
             std::to_string(scale) + "-distance-" + std::to_string(distanceFactor) +
+            (rational ? "-rational" : "-unit") +
             (side == LC_CurveOffsetSide::Left
                 ? "-wrapped-left-" : "-wrapped-right-") + suffix);
 #ifdef DWGSUPPORT
