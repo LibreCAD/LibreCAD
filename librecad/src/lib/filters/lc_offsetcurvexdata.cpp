@@ -527,11 +527,6 @@ std::optional<LC_OffsetSourceDefinition> decodeTypedSource(const XData& input, s
         sourceFields.at(0).toInteger() != kind || !sourceFields.at(1).isArray())
         return std::nullopt;
     const auto splineFields = sourceFields.at(1).toArray();
-    if (kind == 1 && splineFields.size() != 10) return std::nullopt;
-    if (kind == 2 &&
-        (splineFields.size() != 7 || !splineFields.at(5).isBool() ||
-         !splineFields.at(5).toBool() || !splineFields.at(6).isDouble() ||
-         splineFields.at(6).toDouble() != fitTolerance)) return std::nullopt;
     const auto readTangent = [](const QCborValue &value, RS_Vector &out) {
         if (!value.isArray()) return false;
         const auto coordinates = value.toArray();
@@ -549,13 +544,22 @@ std::optional<LC_OffsetSourceDefinition> decodeTypedSource(const XData& input, s
         envelope.at(1).toArray());
     if (!source) return std::nullopt;
     if (kind == 1) {
+        if (splineFields.size() != 14 || !splineFields.at(10).isDouble() ||
+            splineFields.at(10).toDouble() != fitTolerance ||
+            !splineFields.at(11).isBool() || !splineFields.at(11).toBool() ||
+            splineFields.at(12) != tangentFields.at(2) ||
+            splineFields.at(13) != tangentFields.at(3)) return std::nullopt;
         auto *spline = std::get_if<RS_SplineData>(&source->source.value);
-        if (!spline) return std::nullopt;
-        spline->fitTangentsConstrained = constrained;
-        spline->fitStartTangent = start;
-        spline->fitEndTangent = finish;
-        spline->fitTolerance = fitTolerance;
+        if (!spline || !spline->fitTangentsConstrained ||
+            spline->fitTolerance != fitTolerance ||
+            spline->fitStartTangent != start || spline->fitEndTangent != finish)
+            return std::nullopt;
     } else if (kind == 2) {
+        if (splineFields.size() != 9 || !splineFields.at(5).isBool() ||
+            !splineFields.at(5).toBool() || !splineFields.at(6).isDouble() ||
+            splineFields.at(6).toDouble() != fitTolerance ||
+            splineFields.at(7) != tangentFields.at(2) ||
+            splineFields.at(8) != tangentFields.at(3)) return std::nullopt;
         auto *spline = std::get_if<LC_SplinePointsData>(&source->source.value);
         if (!spline || !spline->fitTangentsConstrained ||
             spline->fitTolerance != fitTolerance) return std::nullopt;

@@ -21,7 +21,9 @@
 
 #include "intern/drw_textcodec.h"
 #include "librecad/src/lib/offset_worker/lc_offsetworkerrequest.h"
+#include "lc_splinepoints.h"
 #include "rs_line.h"
+#include "rs_spline.h"
 
 namespace xd = LC_OffsetCurveXData;
 namespace {
@@ -1265,6 +1267,58 @@ TEST_CASE("schema three preserves tangent vectors and keeps older schemas unchan
         ++insertPosition;
     }
     CHECK(xd::parseAndStrip(malformedReader).status == xd::Status::Invalid);
+}
+
+TEST_CASE("schema three preserves transformed spline tangent source identity",
+          "[offset-xdata][typed-source][schema3][transform]") {
+    RS_SplineData splineData{2, false};
+    splineData.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    splineData.knotslist = {0, 0, 0, 1, 1, 1};
+    splineData.weights = {1, 1, 1};
+    splineData.fitPoints = {{0, 0}, {1, 1}, {3, 0}};
+    splineData.fitTolerance = 2e-8;
+    splineData.fitTangentsConstrained = true;
+    splineData.fitStartTangent = {1, 2};
+    splineData.fitEndTangent = {2, -1};
+    RS_Spline spline{nullptr, splineData};
+    spline.rotate({0, 0}, 0.37);
+    spline.scale({0, 0}, {2, 3});
+    spline.revertDirection();
+
+    LC_SplinePointsData pointsData{false, false};
+    pointsData.splinePoints = {{0, 0}, {1, 2}, {3, 0}};
+    pointsData.fitTolerance = 3e-9;
+    pointsData.fitTangentsConstrained = true;
+    pointsData.fitStartTangent = {1, 0};
+    pointsData.fitEndTangent = {0, -1};
+    LC_SplinePoints splinePoints{nullptr, pointsData};
+    splinePoints.rotate({0, 0}, 0.37);
+    splinePoints.scale({0, 0}, {2, 3});
+    splinePoints.revertDirection();
+
+    const std::array<LC_OffsetSourceGeometry, 2> transformedSources{
+        LC_OffsetSourceGeometry{spline.getData()},
+        LC_OffsetSourceGeometry{splinePoints.getData()}
+    };
+    for (const auto& sourceGeometry : transformedSources) {
+        const LC_OffsetSourceDefinition source{sourceGeometry, .5, 1e-4, false};
+        const auto expected = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(source);
+        REQUIRE(expected);
+        for (const auto& options : {xd::Options{}, eed()}) {
+            xd::Definition carrier;
+            carrier.source = source;
+            const auto tags = xd::forExport({}, carrier, options);
+            REQUIRE(tags);
+            const auto parsed = xd::parseAndStrip(*tags, options);
+            REQUIRE(parsed.status == xd::Status::Schema3);
+            REQUIRE(parsed.definition);
+            REQUIRE(parsed.definition->source);
+            const auto actual = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
+                *parsed.definition->source);
+            REQUIRE(actual);
+            CHECK(QCborValue(*actual).toCbor() == QCborValue(*expected).toCbor());
+        }
+    }
 }
 
 TEST_CASE("schema two rejects malformed or oversized tagged-source binary payloads",
