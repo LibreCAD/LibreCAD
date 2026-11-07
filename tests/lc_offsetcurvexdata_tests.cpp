@@ -1284,6 +1284,7 @@ TEST_CASE("schema three preserves transformed spline tangent source identity",
     spline.rotate({0, 0}, 0.37);
     spline.scale({0, 0}, {2, 3});
     spline.revertDirection();
+    spline.move({1e8, -1e8});
 
     LC_SplinePointsData pointsData{false, false};
     pointsData.splinePoints = {{0, 0}, {1, 2}, {3, 0}};
@@ -1295,6 +1296,7 @@ TEST_CASE("schema three preserves transformed spline tangent source identity",
     splinePoints.rotate({0, 0}, 0.37);
     splinePoints.scale({0, 0}, {2, 3});
     splinePoints.revertDirection();
+    splinePoints.move({1e8, -1e8});
 
     const std::array<LC_OffsetSourceGeometry, 2> transformedSources{
         LC_OffsetSourceGeometry{spline.getData()},
