@@ -23812,3 +23812,24 @@ target builds and `git diff --check` passes. Test commit `882dadd97`
 This qualifies the recorded degree-2 layout and worker/cache flow, not all
 quadratic periodic knots, weights, scales, distances, or topologies. Other
 periodic variants and exact-head CI remain open.
+
+#### W563ca. Broaden Quadratic Periodic Worker Scale and Distance Coverage (2026-11-07)
+
+Extended W563bz's seven-distinct-control quadratic periodic worker case across
+uniform scales `1e-3`, `1`, and `1e3`, preserving the same relative translation
+`(1000, -2000)` and positive nonuniform periodic weights. Both signed sides run
+at distance factors `0.0625`, `0.125`, and `0.25`. Each generated cache is
+validated by operation 8 and both operation replies are checked through
+request-bound encode/decode. Existing degree-1 scale/distance and degree-2/3
+baseline variants remain included.
+
+The focused `[periodic][nonuniform]` worker case passes 1,337 assertions. The
+full `[lc-offsetcurve][worker-kernel][source-cache][spline-variant]`
+selection passes 71,421 assertions across six cases; the Release worker target
+builds and `git diff --check` passes. Test commit `900c01d29`
+(`test(offset): broaden quadratic periodic worker matrix`).
+
+This covers only the recorded quadratic control/knot/weight pattern, scale,
+translation ratio, distance factors, and signed sides. Other degree-2
+periodic layouts, broader numeric extremes, exact-head CI, and the remaining
+source-family variant gates remain open.
