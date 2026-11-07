@@ -22572,3 +22572,16 @@ Test commit `bc3529eba` (`test(offset): cover both tangent offset sides`). This
 closes side symmetry for the five tangent-constrained source variants and
 listed file lanes only; other source variants, distance/scale neighborhoods,
 and independent external-CAD output remain separate validation work.
+
+#### W563aa. Cover Both Offset Sides for Internal-knot Rational Spline Import (2026-11-07)
+
+Extended the single-cache degree-2 rational spline with an internal knot to
+run both left and right signed offsets through R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG. Every staged import promotes to `LC_OffsetCurve`, preserves the
+exact typed source definition, and matches the generated cache fingerprint.
+The focused `librecad_tests` case passes 1,212 assertions.
+
+Test commit `f5bf5289a` (`test(offset): cover rational spline import sides`).
+This closes only this internal-knot rational spline layout at the tested
+distance and five lanes; other rational knot layouts, distances, and scale
+neighborhoods remain open.
