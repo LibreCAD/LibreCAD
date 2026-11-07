@@ -83,7 +83,9 @@ The picker requirement itself is **complete**. Remaining implementation is
 steps 1-6 above, driven by the variant gaps recorded in the chronological
 entries; in particular, recent periodic high-weight tests preserve a
 fail-closed positive-side refusal and do not justify treating all periodic
-splines as supported.
+splines as supported. W563cq normalizes active rational weights while forming
+certified jet bounds; its enclosure and worker regressions pass, but the
+cusp-rich positive-side periodic offsets still refuse and W563cg remains open.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
@@ -24310,3 +24312,33 @@ Staged-file promotion is now
 qualified only for the two recorded gradual profiles, three recorded scales,
 proportionally scaled negative distance, and the enumerated format lanes; no
 broader periodic profile or distance claim is implied.
+
+#### W563cq. Normalize Active Rational Weights for Certified Jet Bounds (2026-11-07)
+
+`RS_Spline::tryBoundJet()` now divides the homogeneous control weights on the
+active knot span by their maximum positive weight before constructing the
+value and derivative Bernstein nets. This common scale leaves the rational
+curve and its derivatives unchanged, while reducing interval-rounding growth
+in products used to enclose rational speed and curvature. If any normalized
+weight would underflow to zero, the method retains the original input scale;
+the change therefore does not turn a positive source weight into a zero-weight
+curve.
+
+Added a translated wrapped quadratic spline regression with a gradual positive
+weight profile spanning `1e-6` through `1e6`. The test samples the tiny final
+knot-span box, checks speed and cross-product enclosure against evaluated
+jets, and requires the speed-squared interval width to remain below 2% of the
+largest sampled speed squared. The focused conditioned-bound case passes 75
+assertions; the full `[curve-offset][d0]` selection passes 15,418 assertions
+across 20 cases, and `[spline]` passes 28,390 assertions across 77 cases. The
+rebuilt periodic worker selection passes 15,416 assertions and continues to
+refuse the conditioned positive-side cases without partial geometry. Release
+targets `librecad_tests` and `librecad_offset_worker_kernel_tests` build, and
+`git diff --check` passes. Implementation commit `6dc876da0`
+(`fix(spline): normalize weights for interval bounds`).
+
+This improves the certified speed/cross enclosures for the recorded span and
+weight profile; it does not close W563cg, isolate every offset-factor root,
+prove cusp topology, or admit the periodic positive-side offset. Continue with
+a root-isolation method that provides complete coverage and independent
+geometry comparison; preserve the current refusal until both are established.
