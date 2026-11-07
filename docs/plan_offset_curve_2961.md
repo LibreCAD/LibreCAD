@@ -22599,3 +22599,16 @@ Test commit `ee7acbbe7` (`test(offset): cover unweighted spline import sides`).
 This qualifies the defined linear unweighted form only; other spline degrees,
 knot multiplicities, weights, distances, and transforms retain their own
 coverage requirements.
+
+#### W563ac. Cover Both Sides for Wrapped-periodic Spline Import (2026-11-07)
+
+Extended the wrapped-periodic spline staged-import case to generate and admit
+both left- and right-side caches across R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. All ten file cases promote through operation 8 and preserve the exact
+typed definition and expected cache fingerprint. The focused case passes 1,170
+assertions.
+
+Test commit `7250a31fd` (`test(offset): cover periodic spline import sides`).
+This closes the recorded wrapped-periodic layout and distance only; other
+periodic knots, sizes, side distances, and transform neighborhoods remain
+open.
