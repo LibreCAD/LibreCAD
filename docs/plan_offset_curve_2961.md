@@ -23001,6 +23001,11 @@ recovers a degree-3 scenario-2 SPLINE with all four fit points and both
 normalized endpoint tangents. `git diff --check` passes. Product commit:
 `996b87c68` (`feat(dwg): write verified cubic fit-point splines`).
 
+Additional independent-reader check: LibreDWG 0.14 decoded both preserved DWGs
+and exported DXF containing scenario-2 fit points and both endpoint tangent
+vectors. This confirms structural readability by a second independent reader,
+not geometry equivalence in LibreDWG or ODA acceptance.
+
 This closes only the exact tangent-constrained cubic representation above.
 Other tangent/degree/rational variants, broad external geometry comparison,
 visible-GUI acceptance, and exact-head CI remain open.
