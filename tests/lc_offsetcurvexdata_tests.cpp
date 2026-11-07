@@ -1321,6 +1321,89 @@ TEST_CASE("schema three preserves transformed spline tangent source identity",
     }
 }
 
+TEST_CASE("schema three rejects conflicting tangent source copies",
+          "[offset-xdata][typed-source][schema3][hostile]") {
+    RS_SplineData splineData{2, false};
+    splineData.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    splineData.knotslist = {0, 0, 0, 1, 1, 1};
+    splineData.weights = {1, 1, 1};
+    splineData.fitPoints = {{0, 0}, {1, 1}, {3, 0}};
+    splineData.fitTangentsConstrained = true;
+    splineData.fitStartTangent = {1, 2};
+    splineData.fitEndTangent = {2, -1};
+
+    LC_SplinePointsData pointsData{false, false};
+    pointsData.splinePoints = {{0, 0}, {1, 2}, {3, 0}};
+    pointsData.fitTangentsConstrained = true;
+    pointsData.fitStartTangent = {1, 0};
+    pointsData.fitEndTangent = {0, -1};
+
+    for (const LC_OffsetSourceGeometry sourceGeometry : {
+             LC_OffsetSourceGeometry{splineData},
+             LC_OffsetSourceGeometry{pointsData}}) {
+        xd::Definition definition;
+        definition.source = LC_OffsetSourceDefinition{
+            sourceGeometry, .5, 1e-4, false};
+        for (const auto &options : {xd::Options{}, eed()}) {
+            auto tags = xd::forExport({}, definition, options);
+            REQUIRE(tags);
+            QByteArray payload;
+            for (const auto &tag : *tags) {
+                if (tag && tag->code() == 1004) {
+                    REQUIRE(tag->type() == DRW_Variant::BINARY);
+                    const auto &chunk = *tag->binary();
+                    payload.append(reinterpret_cast<const char *>(chunk.data()),
+                                   static_cast<qsizetype>(chunk.size()));
+                }
+            }
+            QCborParserError error;
+            auto envelope = QCborValue::fromCbor(payload, &error).toArray();
+            REQUIRE(error.error == QCborError::NoError);
+            auto definitionFields = envelope.at(1).toArray();
+            auto sourceFields = definitionFields.at(0).toArray();
+            auto splineFields = sourceFields.at(1).toArray();
+            const auto tangentIndex = sourceGeometry.kind() ==
+                LC_OffsetSourceGeometry::Kind::Spline ? 12 : 7;
+            auto conflictingTangent = splineFields.at(tangentIndex).toArray();
+            conflictingTangent[0] = conflictingTangent.at(0).toDouble() + 0.25;
+            splineFields[tangentIndex] = conflictingTangent;
+            sourceFields[1] = splineFields;
+            definitionFields[0] = sourceFields;
+            envelope[1] = definitionFields;
+            const auto conflictingPayload = QCborValue(envelope).toCbor();
+
+            const auto firstChunk = std::find_if(tags->begin(), tags->end(),
+                [](const Tag &tag) { return tag && tag->code() == 1004; });
+            REQUIRE(firstChunk != tags->end());
+            const auto insertionIndex = static_cast<std::size_t>(
+                firstChunk - tags->begin());
+            auto afterChunks = firstChunk;
+            while (afterChunks != tags->end() && *afterChunks &&
+                   (*afterChunks)->code() == 1004) ++afterChunks;
+            const auto afterIndex = static_cast<std::size_t>(
+                afterChunks - tags->begin());
+            tags->erase(tags->begin() + static_cast<std::ptrdiff_t>(insertionIndex),
+                        tags->begin() + static_cast<std::ptrdiff_t>(afterIndex));
+            auto insertAt = tags->begin() + static_cast<std::ptrdiff_t>(insertionIndex);
+            for (std::size_t begin = 0;
+                 begin < static_cast<std::size_t>(conflictingPayload.size());
+                 begin += 127) {
+                const auto end = std::min(
+                    static_cast<std::size_t>(conflictingPayload.size()), begin + 127);
+                std::vector<std::uint8_t> bytes;
+                bytes.reserve(end - begin);
+                for (std::size_t i = begin; i < end; ++i)
+                    bytes.push_back(static_cast<std::uint8_t>(
+                        conflictingPayload.at(static_cast<qsizetype>(i))));
+                insertAt = tags->insert(insertAt,
+                    std::make_shared<DRW_Variant>(1004, std::move(bytes)));
+                ++insertAt;
+            }
+            CHECK(xd::parseAndStrip(*tags, options).status == xd::Status::Invalid);
+        }
+    }
+}
+
 TEST_CASE("schema two rejects malformed or oversized tagged-source binary payloads",
           "[offset-xdata][typed-source][hostile]") {
     auto malformed = Tags{str(1001, "LibreCad"), str(1000, "LC_OFFSET_CURVE"), str(1002, "{"),
