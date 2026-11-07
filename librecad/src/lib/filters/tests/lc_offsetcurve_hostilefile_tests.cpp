@@ -5728,36 +5728,47 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     }
 }
 
-TEST_CASE("degree-one nonuniform rational periodic spline import follows output topology",
+TEST_CASE("nonuniform rational periodic spline import follows output topology",
           "[lc-offsetcurve][import-session][typed-source][spline-variant][refusal]") {
     Setup setup;
-    lc::test::OutputDirectory directory("offset-periodic-linear-spline-import");
+    lc::test::OutputDirectory directory("offset-periodic-spline-import");
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
 
     const double scale = GENERATE(1e-3, 1.0, 1e3);
     const double distanceFactor = GENERATE(0.0625, 0.125, 0.25);
-    const int controlCount = GENERATE(6, 8);
-    CAPTURE(scale, distanceFactor, controlCount);
-    RS_Spline periodic{nullptr, RS_SplineData{1, false}};
-    const std::vector<RS_Vector> controlPoints = controlCount == 6
+    const int layout = GENERATE(0, 1, 2);
+    const int degree = layout == 2 ? 2 : 1;
+    const int controlCount = layout == 0 ? 6 : layout == 1 ? 8 : 7;
+    const std::string degreeName = "degree-" + std::to_string(degree);
+    CAPTURE(scale, distanceFactor, degree, controlCount);
+    RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
+    const std::vector<RS_Vector> controlPoints = layout == 0
         ? std::vector<RS_Vector>{{0, 0}, {40, -10}, {60, 30}, {55, 45},
                                  {20, 50}, {-15, 25}}
-        : std::vector<RS_Vector>{{0, 0}, {30, -15}, {60, 0}, {70, 20},
-                                 {55, 35}, {20, 50}, {-15, 25}, {-10, 10}};
+        : layout == 1
+            ? std::vector<RS_Vector>{{0, 0}, {30, -15}, {60, 0}, {70, 20},
+                                     {55, 35}, {20, 50}, {-15, 25}, {-10, 10}}
+            : std::vector<RS_Vector>{{0, 0}, {25, -15}, {55, -5}, {70, 20},
+                                     {50, 45}, {15, 50}, {-15, 25}};
+    REQUIRE(controlPoints.size() == static_cast<std::size_t>(controlCount));
     for (const RS_Vector& point : controlPoints)
         periodic.addControlPoint({point.x * scale + 1000.0 * scale,
                                   point.y * scale - 2000.0 * scale});
-    if (controlCount == 6)
+    if (layout == 0)
         periodic.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
-    else
+    else if (layout == 1)
         periodic.setKnotVector({0, 0, .4, 1.1, 1.8, 2.6, 3.4, 4.3, 5.5, 5.5});
+    else
+        periodic.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
     REQUIRE(periodic.validate());
     periodic.setClosed(true);
     auto periodicData = periodic.getData();
-    const std::vector<double> independentWeights = controlCount == 6
+    const std::vector<double> independentWeights = layout == 0
         ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85}
-        : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15, 0.8};
+        : layout == 1
+            ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15, 0.8}
+            : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15};
     periodicData.weights = independentWeights;
     periodicData.weights.insert(periodicData.weights.end(), independentWeights.begin(),
                                 independentWeights.begin() + periodicData.degree);
@@ -5774,6 +5785,8 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
     REQUIRE(sourceCheck.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left,
                                        endJet));
     CHECK(startJet.point.distanceTo(endJet.point) < 1e-8);
+    if (degree > 1)
+        CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
     const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
     const double magnitude = distanceFactor * scale;
     const double signedDistance = side == LC_CurveOffsetSide::Left
@@ -5874,7 +5887,7 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
 #ifdef DWGSUPPORT
         if (fileFormat.dwg) {
             f::dwgFile(input, raw, fileFormat.version);
-            preserveTypedSourceDwg(input, "degree-one-periodic-" + input.filename().string());
+            preserveTypedSourceDwg(input, degreeName + "-periodic-" + input.filename().string());
         } else f::binaryDxf(input, raw, fileFormat.version);
 #else
         f::binaryDxf(input, raw, fileFormat.version);
@@ -5918,10 +5931,10 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
 
         if (fileFormat.dwg) {
             const char* odaDirectory =
-                std::getenv("LIBRECAD_LINEAR_PERIODIC_ODA_DXF_DIR");
+                std::getenv("LIBRECAD_NONUNIFORM_PERIODIC_ODA_DXF_DIR");
             if (odaDirectory != nullptr && *odaDirectory != '\0') {
                 auto odaPath = std::filesystem::path(odaDirectory) /
-                    ("degree-one-periodic-" + input.filename().string());
+                    (degreeName + "-periodic-" + input.filename().string());
                 odaPath.replace_extension(".dxf");
                 INFO(odaPath.string());
                 REQUIRE(std::filesystem::is_regular_file(odaPath));
