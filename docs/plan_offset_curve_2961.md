@@ -22156,3 +22156,33 @@ the representative family fixtures. It does not close exhaustive supported
 variant combinations, direct canvas-pick transactions for every family,
 family-by-format persistence coverage, visible GUI acceptance, or
 independent-CAD acceptance; those remain open under W563.
+
+#### W563j. Picker Variant Eligibility and Five-format Inventory (2026-11-07)
+
+Added a focused source-picker eligibility test for degree-1 and rational
+degree-3 `RS_Spline` variants and an open mixed line/arc bulge polyline. The
+test verifies that the variants are offered in the matching family bucket,
+that no candidate leaks into another family, and that merely changing the
+filter starts no worker and mutates neither the offset definition nor its
+source definition. The focused test passes 22 assertions.
+
+Re-ran the existing typed-source file persistence test. Its 34 declared source
+layouts cover five ellipse variants; nine spline variants (including rational,
+nonuniform/repeated knots, periodic, and verified tangent-constrained cases);
+two spline-points forms; three parabola orientations/scales; eight bounded
+hyperbola interval/orientation forms; line, arc, and circle; and four open,
+closed, line, and mixed-bulge polyline forms. All 34 survive save, reopen, and
+second save through R14 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG.
+The Release test passes 6,180 assertions. This proves source-definition
+metadata encoding/decoding fidelity for these fixtures; it is not by itself
+proof of operation-7 worker generation, operation-8 cache promotion, or full
+document-import semantics for every layout.
+
+Validation: the complete
+`[gui][dialog][offsetcurve][source]` Release union passes 6,883 assertions
+across 10 cases, including W563i's reopen/highlight matrix and the new variant
+picker case. Product/test commit `dde484113` (`test(offset): cover spline and
+polyline picker variants`). Remaining work is per-variant worker/cache
+admission, import promotion and diagnostics, plus visible-GUI and
+independent-CAD acceptance; the 34-layout persistence matrix must not be used
+to infer those separate gates are closed.
