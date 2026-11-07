@@ -23973,9 +23973,16 @@ builds and `git diff --check` passes. Test commit `b3e84a916`
 (`test(offset): cover conditioned periodic worker refusal`).
 
 This is fail-closed behavior evidence, not successful offset/cache support for
-the `1e12` ratio. The next spline investigation must determine whether
-`UndefinedTangent` is the appropriate tolerance-floor classification for this
-valid but highly conditioned source or an overly conservative refusal, using
-independent geometry/range evidence before changing kernel behavior. Staged
-offset-cache persistence for this ratio, other periodic layouts, visible GUI,
-external-CAD beyond ODA, and exact-head CI remain open.
+the `1e12` ratio. Follow-up code inspection locates the refusal at the
+regularizer's post-cut tangent-recovery check: after cutting a detected
+near-stationary stretch, at least one remaining endpoint speed is still below
+the numerical vanishing threshold. A diagnostic sampled 16,384 positions per
+nonuniform knot span and measured a maximum span range of about `62.6487` and
+minimum speed about `2.32112e-10` near the seam. This rules out a globally
+stationary source, but finite sampling does not prove the true minimum speed
+or justify bypassing the endpoint guard. Keep the refusal until a
+geometry-preserving treatment is demonstrated against the exact rational
+curve and offset tolerance; do not relabel it as successful support by
+weakening the speed check. Staged offset-cache persistence for this ratio,
+other periodic layouts, visible GUI, external-CAD beyond ODA, and exact-head CI
+remain open.
