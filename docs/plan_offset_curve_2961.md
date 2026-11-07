@@ -22433,3 +22433,31 @@ LibreCAD-produced outputs through LibreDWG and ODA readers. Together these
 receipts qualify those cache-carrier forms in both reader and writer directions;
 they do not qualify other typed-source families or variants in external DWGs.
 Exact-head CI remains in progress, and visible-GUI acceptance remains open.
+
+#### W563u. ODA Round-trip Typed-source Metadata Across All Nine Families (2026-11-07)
+
+Extended the 34-layout typed-source save/reopen/second-save test with an
+opt-in `LIBRECAD_TYPED_SOURCE_DWG_DIR` preservation hook. It preserves only
+second-saved R2000 and R2018 DWGs for one representative of each modeled
+family, leaving default tests hermetic. The test target builds, and the full
+34-layout persistence case passes 6,234 assertions while emitting 18 files.
+
+ODA File Converter 27.1 converted the 18 DWGs to R2018 DXF with:
+
+```sh
+/Applications/ODAFileConverter.app/Contents/MacOS/ODAFileConverter \
+  /private/tmp/PR3193-typed-source-dwg-823 \
+  /private/tmp/PR3193-typed-source-oda-dxf ACAD2018 DXF 0 1 '*.dwg'
+```
+
+Added an opt-in `[external][oda]` reader test using
+`LIBRECAD_TYPED_SOURCE_DWG_DIR` and `LIBRECAD_TYPED_SOURCE_ODA_DXF_DIR`. It
+reads each source DWG and converted DXF through libdxfrw, then compares the
+decoded schema-2 source CBOR exactly, verifies the expected family and source
+validity, checks reserved flags and tail cardinality, and compares foreign
+XDATA. The test passes 432 assertions across all nine families and both DWG
+source versions. Build plus `git diff --check` pass. This closes ODA
+round-trip verification for the nine representative metadata carriers only;
+it does not prove each geometric variant, native cache promotion, visible-GUI
+behavior, or external support in other CAD applications. Test commit
+`f61172ac4` (`test(offset): verify ODA typed-source round trips`).
