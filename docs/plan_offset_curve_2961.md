@@ -24244,12 +24244,21 @@ Release `librecad_offset_worker_kernel_tests` and `librecad_tests` targets
 build, and `git diff --check` passes. These are tests only; production
 eligibility is unchanged.
 
+For external validation, ODA File Converter 27.1 converted the complete
+preserved 120-DWG fixture directory to R2018 DXF with zero `.err` files. The
+opt-in ODA geometry gate in the focused staged-import case passes 72,068
+assertions, checking converted spline control count, knots, weights, and
+sampled geometry against the emitted cache. This includes the gradual and
+reversed-gradual profiles at all three scales, plus neighboring fixtures from
+the same test matrix.
+
 These are sampled oracle and bounded geometry checks, not continuous proof of
 all roots, topology, or arbitrary periodic weight layouts. The positive-side
 refusal is preserved despite sampled curvature-factor sign changes; no
 partial geometry or cache is accepted. W563cg remains open for continuous
 root/topology certification, multi-branch editable-cache support, visible GUI,
-external-CAD comparison, and exact-head CI. Staged-file promotion is now
+external-CAD checks beyond the recorded ODA matrix, and exact-head CI.
+Staged-file promotion is now
 qualified only for the two recorded gradual profiles, three recorded scales,
 proportionally scaled negative distance, and the enumerated format lanes; no
 broader periodic profile or distance claim is implied.
