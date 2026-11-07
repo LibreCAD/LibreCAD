@@ -22721,3 +22721,19 @@ scales`). This closes only the recorded wrapped-periodic layout, distance,
 three scales, and relative translation. Other periodic knot/control layouts,
 distances, transform neighborhoods, external-CAD semantic/visual review,
 visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563ai. Qualify Wrapped-periodic Spline Import at Two Relative Distances (2026-11-07)
+
+Extended W563ah's wrapped-periodic closed degree-3 spline staged-import matrix
+to test relative offset magnitudes `0.125` and `0.25` times the uniform source
+scale. Both signed sides still run at scales `1e-3`, `1`, and `1e3`, with
+translation `(1e6, -2e6)` times scale, through R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG. All 60 combinations retain the exact typed source and match the
+generated cache fingerprint. The focused Release test passes 8,419 assertions;
+the `librecad_tests` target builds and `git diff --check` passes.
+
+Test commit `320d8b65b` (`test(offset): qualify periodic spline import
+distances`). This adds distance coverage only for the recorded wrapped-periodic
+control layout and relative transform matrix. Other periodic knot/control
+layouts, additional distance neighborhoods, independent semantic/visual review,
+visible-GUI acceptance, and exact-head CI remain open.
