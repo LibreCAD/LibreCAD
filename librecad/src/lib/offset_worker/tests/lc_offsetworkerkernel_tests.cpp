@@ -395,8 +395,8 @@ TEST_CASE("high precision oracle samples conditioned periodic spline tangent min
                 }
             }
         }
-        const std::array<double, 6> signedDistances{{-.25, -.125, -.0625,
-                                                       .0625, .125, .25}};
+        const std::array<double, 8> signedDistances{{-.25, -.125, -.0625, -.005,
+                                                       .005, .0625, .125, .25}};
         for (const double signedDistance : signedDistances) {
             const SplineOracle distance{signedDistance};
             unsigned signChanges = 0;
@@ -1149,29 +1149,43 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
 
 TEST_CASE("worker validates nonuniform periodic spline caches on both offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][spline-variant][periodic][nonuniform]") {
+    enum class WeightProfile {
+        Mild,
+        Wide,
+        Alternating,
+        ShiftedAlternating,
+        Gradual,
+        ReversedGradual
+    };
     struct Variant {
         int degree;
         double scale;
         bool sevenControlQuadratic;
-        bool wideWeights = false;
-        bool conditionedWeights = false;
-        bool shiftedConditionedWeights = false;
+        WeightProfile weights = WeightProfile::Mild;
     };
     const std::vector<Variant> variants{
         {1, 1e-3, false}, {1, 1.0, false}, {1, 1e3, false},
         {2, 1.0, false}, {2, 1e-3, true}, {2, 1.0, true},
-        {2, 1e3, true}, {2, 1.0, true, true},
-        {2, 1.0, true, false, true},
-        {2, 1.0, true, false, true, true}, {3, 1.0, false}};
+        {2, 1e3, true}, {2, 1.0, true, WeightProfile::Wide},
+        {2, 1.0, true, WeightProfile::Alternating},
+        {2, 1.0, true, WeightProfile::ShiftedAlternating},
+        {2, 1.0, true, WeightProfile::Gradual},
+        {2, 1.0, true, WeightProfile::ReversedGradual},
+        {3, 1.0, false}};
     for (const auto& variant : variants) {
         const int degree = variant.degree;
         const double scale = variant.scale;
         const bool sevenControlQuadratic = variant.sevenControlQuadratic;
-        const bool wideWeights = variant.wideWeights;
-        const bool conditionedWeights = variant.conditionedWeights;
-        const bool shiftedConditionedWeights = variant.shiftedConditionedWeights;
-        CAPTURE(degree, scale, sevenControlQuadratic, wideWeights,
-                conditionedWeights, shiftedConditionedWeights);
+        const WeightProfile weightProfile = variant.weights;
+        const bool wideWeights = weightProfile == WeightProfile::Wide;
+        const bool conditionedWeights =
+            weightProfile == WeightProfile::Alternating ||
+            weightProfile == WeightProfile::ShiftedAlternating ||
+            weightProfile == WeightProfile::Gradual ||
+            weightProfile == WeightProfile::ReversedGradual;
+        const bool gradualWeights = weightProfile == WeightProfile::Gradual ||
+                                    weightProfile == WeightProfile::ReversedGradual;
+        CAPTURE(degree, scale, sevenControlQuadratic, weightProfile);
         RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
         const std::vector<RS_Vector> controls = sevenControlQuadratic
             ? std::vector<RS_Vector>{{0, 0}, {25, -15}, {55, -5}, {70, 20},
@@ -1192,15 +1206,25 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         REQUIRE(periodic.validate());
         periodic.setClosed(true);
         auto sourceData = periodic.getData();
-        const std::vector<double> independentWeights = conditionedWeights
-            ? shiftedConditionedWeights
-                ? std::vector<double>{1e6, 1e-6, 1e4, 1e-4, 1e2, 1e-2, 1.0}
-                : std::vector<double>{1e-6, 1e6, 1e-4, 1e4, 1e-2, 1e2, 1.0}
-            : wideWeights
-            ? std::vector<double>{0.01, 100.0, 0.1, 10.0, 0.5, 2.0, 1.0}
-            : sevenControlQuadratic
-            ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15}
-            : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85};
+        const std::vector<double> independentWeights = [&] {
+            switch (weightProfile) {
+            case WeightProfile::Wide:
+                return std::vector<double>{0.01, 100.0, 0.1, 10.0, 0.5, 2.0, 1.0};
+            case WeightProfile::Alternating:
+                return std::vector<double>{1e-6, 1e6, 1e-4, 1e4, 1e-2, 1e2, 1.0};
+            case WeightProfile::ShiftedAlternating:
+                return std::vector<double>{1e6, 1e-6, 1e4, 1e-4, 1e2, 1e-2, 1.0};
+            case WeightProfile::Gradual:
+                return std::vector<double>{1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6};
+            case WeightProfile::ReversedGradual:
+                return std::vector<double>{1e6, 1e4, 1e2, 1.0, 1e-2, 1e-4, 1e-6};
+            case WeightProfile::Mild:
+                return sevenControlQuadratic
+                    ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15}
+                    : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85};
+            }
+            return std::vector<double>{};
+        }();
         sourceData.weights = independentWeights;
         sourceData.weights.insert(sourceData.weights.end(), independentWeights.begin(),
                                   independentWeights.begin() + sourceData.degree);
@@ -1221,7 +1245,9 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         if (degree > 1)
             CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
 
-        const std::vector<double> signedDistances = degree == 1 || sevenControlQuadratic
+        const std::vector<double> signedDistances = gradualWeights
+            ? std::vector<double>{.005 * scale, -.005 * scale}
+            : degree == 1 || sevenControlQuadratic
             ? std::vector<double>{.0625 * scale, -.0625 * scale, .125 * scale,
                                   -.125 * scale, .25 * scale, -.25 * scale}
             : std::vector<double>{.125, -.125};
@@ -1238,6 +1264,11 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     generated.engineStatus
                         ? static_cast<int>(*generated.engineStatus)
                         : -1);
+            if (gradualWeights) {
+                CHECK((signedDistance < 0.0
+                          ? generated.engineStatus == LC_CurveOffsetStatus::Ok
+                          : generated.engineStatus == LC_CurveOffsetStatus::SingularOffset));
+            }
             if (generated.engineStatus != LC_CurveOffsetStatus::Ok) {
                 REQUIRE((wideWeights || conditionedWeights));
                 if (conditionedWeights) {
@@ -1263,7 +1294,7 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             REQUIRE(generatedWire);
             CHECK(result::decode(*generatedWire, generationRequest));
 
-            if (conditionedWeights && generated.ordinary.size() > 1) {
+            if (conditionedWeights) {
                 CHECK(generated.ordinary.size() <= 256);
                 const auto offsetOptions =
                     LC_OffsetWorkerTolerance::directOptions(definition, sourceCheck);
@@ -1447,7 +1478,7 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     CHECK(nearestRetainedCusp < geometryTolerance);
                 }
                 CHECK(toleranceMergedCusps % 2 == 0);
-                continue;
+                if (generated.ordinary.size() > 1) continue;
             }
 
             if ((degree == 1 || wideWeights) && generated.ordinary.size() != 1) {
