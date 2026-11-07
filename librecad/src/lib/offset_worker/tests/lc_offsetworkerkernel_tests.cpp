@@ -754,63 +754,70 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
 
 TEST_CASE("worker validates nonuniform periodic spline caches on both offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][spline-variant][periodic][nonuniform]") {
-    RS_Spline periodic{nullptr, RS_SplineData{3, false}};
-    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
-                                   RS_Vector{60, 0}, RS_Vector{55, 35},
-                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
-        periodic.addControlPoint(point);
-    periodic.setKnotVector({0, 0, 0, 0, .5, 2, 3, 3, 3, 3});
-    REQUIRE(periodic.validate());
-    periodic.setClosed(true);
-    auto sourceData = periodic.getData();
-    const std::vector<double> independentWeights{1.0, 0.9, 1.1, 0.95, 1.05, 0.85};
-    sourceData.weights = independentWeights;
-    sourceData.weights.insert(sourceData.weights.end(), independentWeights.begin(),
-                              independentWeights.begin() + sourceData.degree);
-    RS_Spline sourceCheck{nullptr, sourceData};
-    REQUIRE(sourceCheck.validate());
-    REQUIRE(sourceCheck.hasWrappedControlPoints());
+    for (const int degree : {2, 3}) {
+        CAPTURE(degree);
+        RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
+        for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
+                                       RS_Vector{60, 0}, RS_Vector{55, 35},
+                                       RS_Vector{20, 50}, RS_Vector{-15, 25}})
+            periodic.addControlPoint(point);
+        if (degree == 2)
+            periodic.setKnotVector({0, 0, 0, .5, 1.75, 2.5, 3, 3, 3});
+        else
+            periodic.setKnotVector({0, 0, 0, 0, .5, 2, 3, 3, 3, 3});
+        REQUIRE(periodic.validate());
+        periodic.setClosed(true);
+        auto sourceData = periodic.getData();
+        const std::vector<double> independentWeights{1.0, 0.9, 1.1, 0.95,
+                                                     1.05, 0.85};
+        sourceData.weights = independentWeights;
+        sourceData.weights.insert(sourceData.weights.end(), independentWeights.begin(),
+                                  independentWeights.begin() + sourceData.degree);
+        RS_Spline sourceCheck{nullptr, sourceData};
+        REQUIRE(sourceCheck.validate());
+        REQUIRE(sourceCheck.hasWrappedControlPoints());
 
-    double startParameter = 0.0;
-    double endParameter = 0.0;
-    REQUIRE(sourceCheck.getParameterDomain(startParameter, endParameter));
-    LC_CurveJet startJet;
-    LC_CurveJet endJet;
-    REQUIRE(sourceCheck.tryEvaluateJet(startParameter, LC_CurveEvaluationSide::Right,
-                                       startJet));
-    REQUIRE(sourceCheck.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left,
-                                       endJet));
-    CHECK(startJet.point.distanceTo(endJet.point) < 1e-8);
-    CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
+        double startParameter = 0.0;
+        double endParameter = 0.0;
+        REQUIRE(sourceCheck.getParameterDomain(startParameter, endParameter));
+        LC_CurveJet startJet;
+        LC_CurveJet endJet;
+        REQUIRE(sourceCheck.tryEvaluateJet(startParameter, LC_CurveEvaluationSide::Right,
+                                           startJet));
+        REQUIRE(sourceCheck.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left,
+                                           endJet));
+        CHECK(startJet.point.distanceTo(endJet.point) < 1e-8);
+        CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
 
-    for (const double signedDistance : {.125, -.125}) {
-        CAPTURE(signedDistance);
-        const LC_OffsetSourceDefinition definition{
-            LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
-        REQUIRE(definition.isWellFormed());
-        const req::Request generationRequest{token,
-            req::GenerateSource{definition, {}}};
-        const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
-        const auto& generated = native(generationReply, 7);
-        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
-        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
-        REQUIRE(generated.ordinary.size() == 1);
-        REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
-        const auto generatedWire = result::encode(generationReply, generationRequest);
-        REQUIRE(generatedWire);
-        CHECK(result::decode(*generatedWire, generationRequest));
+        for (const double signedDistance : {.125, -.125}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{
+                LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
+            REQUIRE(definition.isWellFormed());
+            const req::Request generationRequest{token,
+                req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE(generated.ordinary.size() == 1);
+            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+            const auto generatedWire = result::encode(generationReply, generationRequest);
+            REQUIRE(generatedWire);
+            CHECK(result::decode(*generatedWire, generationRequest));
 
-        const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
-        const req::Request validationRequest{token,
-            req::ValidateSourceCache{cache, definition, {}}};
-        const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
-        const auto& validated = native(validationReply, 8);
-        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
-        CHECK(validated.changed);
-        CHECK(validated.engineRuns == 1);
-        const auto validationWire = result::encode(validationReply, validationRequest);
-        REQUIRE(validationWire);
-        CHECK(result::decode(*validationWire, validationRequest));
+            const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+            const req::Request validationRequest{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validated.changed);
+            CHECK(validated.engineRuns == 1);
+            const auto validationWire = result::encode(validationReply, validationRequest);
+            REQUIRE(validationWire);
+            CHECK(result::decode(*validationWire, validationRequest));
+        }
     }
 }
 
