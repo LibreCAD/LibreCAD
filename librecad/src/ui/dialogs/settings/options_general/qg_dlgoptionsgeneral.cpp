@@ -1307,15 +1307,15 @@ void QG_DlgOptionsGeneral::on_pbcbInfoOverlayAbsolutePositionColor_clicked(){
 }
 
 void QG_DlgOptionsGeneral::on_pbInfoOverlaySnapColor_clicked(){
-    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_SNAP));
+    set_color(cbInfoOverlaySnapColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_SNAP));
 }
 
 void QG_DlgOptionsGeneral::on_pbInfoOverlayRelativeColor_clicked(){
-    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_RELATIVE_POS));
+    set_color(cbInfoOverlayRelativeColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_RELATIVE_POS));
 }
 
 void QG_DlgOptionsGeneral::on_pbInfoOverlayCommandPromptColor_clicked(){
-    set_color(cbInfoOverlayAbsolutePositionColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_COMMAND_PROMPT));
+    set_color(cbInfoOverlayCommandPromptColor, QColor(RS_Settings::OVERLAY_INFO_CURSOR_COMMAND_PROMPT));
 }
 
 void QG_DlgOptionsGeneral::on_pbAnglesMarkDirection_clicked(){
