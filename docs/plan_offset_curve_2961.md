@@ -62,7 +62,9 @@ round-trip; W558 adds rational-quadratic AC1032 DXF/DWG staged-import and
 cache-promotion coverage; W559 reconfirms the existing type-changing,
 nine-family source-picker contract without adding duplicate UI; W560 extends
 verified tangent-constrained SPLINE support to degree 1 with worker, Properties,
-five-lane persistence and AC1032 staged-import coverage;
+five-lane persistence and AC1032 staged-import coverage; W561 further
+qualifies one-ended degree-1 tangents through transform/reversal, both offset
+sides, Properties replacement and the same DXF/DWG file lanes;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21810,3 +21812,30 @@ assertions; the five-format typed-source save/reopen/second-save matrix passes
 and `git diff --check` passes. Native tangent DWG writing and independent-CAD
 interoperability remain open. Product commit `f3a151d7f` (`feat(offset): admit
 verified linear tangent splines`).
+
+### W561. Qualify One-Ended Degree-One Tangent SPLINEs (2026-11-07)
+
+Extended the degree-one tangent matrix to cover a single constrained start
+tangent with a natural end. The source remains eligible after rotation,
+nonuniform scaling, and reversal; the unconstrained endpoint moves correctly
+and the constrained direction is swapped and negated on reversal. Direct offset
+generation succeeds on both signed sides. Worker generation and operation-8
+cache validation accept the source, and Properties lists and commits it as a
+replacement candidate. Opposing directions and fit points outside tolerance
+remain refused.
+
+The one-ended source is added to the five-format typed-source
+save/reopen/second-save matrix and AC1032 DXF/DWG staged import and promotion.
+This remains typed metadata plus an ordinary exact cache; no native DWG
+tangent-SPLINE body encoding is added.
+
+Validation: Release CMake builds of `librecad_tests` and
+`librecad_offset_worker_kernel_tests` succeed. The RS_Spline fit-point/tangent
+suite passes 194 assertions across 9 cases; direct tangent offsets pass 24
+assertions across 4 cases; worker generation/cache validation passes 61
+assertions; Properties candidate selection/replacement passes 171 assertions;
+the five-format file round-trip matrix passes 5,990 assertions; the AC1032
+DXF/DWG staged-import case passes 1,025 assertions; and `git diff --check`
+passes. Native DWG tangent writing, tangent-constrained `LC_SplinePoints`, and
+independent-CAD interoperability remain open.
+Test commit `d7c45426e` (`test(offset): qualify one-ended linear tangents`).
