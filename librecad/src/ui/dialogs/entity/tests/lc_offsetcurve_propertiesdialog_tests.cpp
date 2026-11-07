@@ -970,12 +970,25 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
         new RS_Spline(nullptr, rationalQuadraticData);
     REQUIRE(supportedRationalQuadratic->fitTangentsMatchCurve());
 
+    RS_SplineData linearTangentData{1, false};
+    linearTangentData.controlPoints = {{0, 0}, {4, 0}};
+    linearTangentData.knotslist = {0, 0, 1, 1};
+    linearTangentData.weights = {1.0, 1.0};
+    linearTangentData.fitPoints = {{0, 0}, {2, 0}, {4, 0}};
+    linearTangentData.fitTangentsConstrained = true;
+    linearTangentData.fitTolerance = 1e-8;
+    linearTangentData.fitStartTangent = {1, 0};
+    linearTangentData.fitEndTangent = {2, 0};
+    auto* supportedLinear = new RS_Spline(nullptr, linearTangentData);
+    REQUIRE(supportedLinear->fitTangentsMatchCurve());
+
     RS_SplineData inconsistent = matched.getData();
     inconsistent.fitPoints[1].y += 1.0;
     auto* refused = new RS_Spline(nullptr, inconsistent);
     f.graphic.addEntity(supported);
     f.graphic.addEntity(supportedRational);
     f.graphic.addEntity(supportedRationalQuadratic);
+    f.graphic.addEntity(supportedLinear);
     f.graphic.addEntity(refused);
 
     std::unique_ptr<LC_OffsetCurve> clone(
@@ -994,12 +1007,15 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
         static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
     REQUIRE(splineIndex >= 0);
     typeBox->setCurrentIndex(splineIndex);
-    CHECK(sourceBox->count() == 4);
+    CHECK(sourceBox->count() == 5);
     CHECK(sourceBox->isEnabled());
     CHECK(sourceBox->findData(
         QVariant::fromValue<qulonglong>(supported->getId())) > 0);
     CHECK(sourceBox->findData(
         QVariant::fromValue<qulonglong>(supportedRational->getId())) > 0);
+    const int linearCandidateIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(supportedLinear->getId()));
+    CHECK(linearCandidateIndex > 0);
     const int candidateIndex = sourceBox->findData(
         QVariant::fromValue<qulonglong>(supportedRationalQuadratic->getId()));
     CHECK(candidateIndex > 0);
@@ -1033,6 +1049,23 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
               rationalQuadraticData.fitEndTangent) == 0.0);
     CHECK(sourceBox->currentData().toULongLong() ==
           supportedRationalQuadratic->getId());
+
+    const int refreshedLinearIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(supportedLinear->getId()));
+    REQUIRE(refreshedLinearIndex > 0);
+    sourceBox->setCurrentIndex(refreshedLinearIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    const auto* committedLinear = std::get_if<RS_SplineData>(
+        &clone->sourceDefinition()->source.value);
+    REQUIRE(committedLinear);
+    CHECK(committedLinear->degree == 1);
+    CHECK(committedLinear->fitTangentsConstrained);
+    CHECK(committedLinear->fitStartTangent == linearTangentData.fitStartTangent);
+    CHECK(committedLinear->fitEndTangent == linearTangentData.fitEndTangent);
+    CHECK(sourceBox->currentData().toULongLong() == supportedLinear->getId());
 }
 
 TEST_CASE("Tangent spline replacement refusal preserves the current offset atomically",

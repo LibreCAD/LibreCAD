@@ -561,6 +561,32 @@ TEST_CASE("RS_Spline validates rational quadratic tangent metadata",
   CHECK_FALSE(opposing.fitTangentsMatchCurve());
 }
 
+TEST_CASE("RS_Spline validates degree-one tangent metadata",
+          "[RS_Spline][fitpoints][tangents][linear]") {
+  RS_SplineData data{1, false};
+  data.controlPoints = {{0, 0}, {4, 0}};
+  data.knotslist = {0, 0, 1, 1};
+  data.weights = {1.0, 0.5};
+  data.fitPoints = {{0, 0}, {2, 0}, {4, 0}};
+  data.fitTangentsConstrained = true;
+  data.fitTolerance = 1e-8;
+  data.fitStartTangent = {1, 0};
+  data.fitEndTangent = {3, 0};
+
+  RS_Spline matched{nullptr, data};
+  CHECK(matched.validate());
+  CHECK(matched.fitTangentsMatchCurve());
+
+  data.fitEndTangent = {-1, 0};
+  RS_Spline opposing{nullptr, data};
+  CHECK_FALSE(opposing.fitTangentsMatchCurve());
+
+  data.fitEndTangent = {1, 0};
+  data.fitPoints[1].y = 1e-3;
+  RS_Spline misplacedFit{nullptr, data};
+  CHECK_FALSE(misplacedFit.fitTangentsMatchCurve());
+}
+
 TEST_CASE("RS_Spline fit interpolation uses a natural unconstrained end",
           "[RS_Spline][fitpoints][tangents]") {
   const std::vector<RS_Vector> fitPoints = {

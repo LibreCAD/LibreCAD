@@ -472,14 +472,22 @@ RS_Spline quarterCircle(const RS_Vector& center = RS_Vector{0.0, 0.0}, const dou
                       {0, 0, 0, 1, 1, 1}, {1.0, std::sqrt(0.5), 1.0});
 }
 
-TEST_CASE("Unsupported tangent-constrained linear spline is refused",
-          "[curve-offset][direct][validation][fit-points]") {
+TEST_CASE("Consistent tangent-constrained linear spline can be offset",
+          "[curve-offset][direct][fit-points][tangents][linear]") {
     RS_Spline source = makeSpline(1, {{0, 0}, {4, 0}}, {0, 0, 1, 1});
     source.getData().fitPoints = {{0, 0}, {4, 0}};
     source.getData().fitTangentsConstrained = true;
+    source.getData().fitTolerance = 1e-8;
+    source.getData().fitStartTangent = {1, 0};
+    source.getData().fitEndTangent = {2, 0};
+    REQUIRE(source.fitTangentsMatchCurve());
     const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
     const auto request = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
 
+    CHECK(LC_CurveOffset::buildDirectBranches(source, request, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+
+    source.getData().fitEndTangent = {-1, 0};
     CHECK(LC_CurveOffset::buildDirectBranches(source, request, options,
         LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
 }

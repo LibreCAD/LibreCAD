@@ -1214,6 +1214,17 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     }
     RS_Spline rationalQuadraticCheck{nullptr, rationalTangentQuadratic};
     REQUIRE(rationalQuadraticCheck.fitTangentsMatchCurve());
+    RS_SplineData linearTangentSpline{1, false};
+    linearTangentSpline.controlPoints = {{0, 0}, {4, 0}};
+    linearTangentSpline.knotslist = {0, 0, 1, 1};
+    linearTangentSpline.weights = {1.0, 0.5};
+    linearTangentSpline.fitPoints = {{0, 0}, {2, 0}, {4, 0}};
+    linearTangentSpline.fitTangentsConstrained = true;
+    linearTangentSpline.fitTolerance = 1e-8;
+    linearTangentSpline.fitStartTangent = {1, 0};
+    linearTangentSpline.fitEndTangent = {2, 0};
+    RS_Spline linearTangentCheck{nullptr, linearTangentSpline};
+    REQUIRE(linearTangentCheck.fitTangentsMatchCurve());
     RS_Spline periodic{nullptr, RS_SplineData{3, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
                                    RS_Vector{20, 50}, RS_Vector{-15, 25}})
@@ -1250,7 +1261,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
-    const std::array<LC_OffsetSourceGeometry, 31> sources{
+    const std::array<LC_OffsetSourceGeometry, 32> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .2, 0, 2 * M_PI, false}},
@@ -1262,6 +1273,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{unweightedSpline},
         LC_OffsetSourceGeometry{rationalTangentCubic},
         LC_OffsetSourceGeometry{rationalTangentQuadratic},
+        LC_OffsetSourceGeometry{linearTangentSpline},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{2, 1}, RS_Vector{1, 0}, RS_Vector{0, 1}}}},
@@ -5032,7 +5044,7 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
     }
 }
 
-TEST_CASE("rational tangent cubic source imports through operation-8 validation in AC1032 DXF and DWG",
+TEST_CASE("tangent-constrained spline sources import through operation-8 validation in AC1032 DXF and DWG",
           "[lc-offsetcurve][import-session][typed-source][spline-variant][tangents][rational]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-rational-tangent-spline-import");
@@ -5075,7 +5087,18 @@ TEST_CASE("rational tangent cubic source imports through operation-8 validation 
     REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(materialized.entities.size() == 1);
     const auto* cacheSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
-    REQUIRE(cacheSpline);
+    RS_SplineData cacheData;
+    if (cacheSpline) {
+        cacheData = cacheSpline->getData();
+    } else if (const auto* cacheLine =
+                   dynamic_cast<const RS_Line*>(materialized.entities.front().get())) {
+        cacheData.degree = 1;
+        cacheData.controlPoints = {cacheLine->getStartpoint(), cacheLine->getEndpoint()};
+        cacheData.knotslist = {0.0, 0.0, 1.0, 1.0};
+        cacheData.weights = {1.0, 1.0};
+    } else {
+        FAIL("offset cache entity must be a spline or an exact line");
+    }
 
     for (const bool dwg : {false, true}) {
 #ifndef DWGSUPPORT
@@ -5097,12 +5120,12 @@ TEST_CASE("rational tangent cubic source imports through operation-8 validation 
 
         DRW_Spline cache = f::raw(1, *tags);
         cache.controllist.clear();
-        for (const auto& point : cacheSpline->getData().controlPoints)
+        for (const auto& point : cacheData.controlPoints)
             cache.controllist.push_back(
                 std::make_shared<DRW_Coord>(point.x, point.y, 0));
-        cache.knotslist = cacheSpline->getData().knotslist;
-        cache.weightlist = cacheSpline->getData().weights;
-        cache.degree = cacheSpline->getData().degree;
+        cache.knotslist = cacheData.knotslist;
+        cache.weightlist = cacheData.weights;
+        cache.degree = cacheData.degree;
         cache.flags = 8;
         cache.m_scenario = 1;
         cache.ncontrol = cache.controllist.size();
@@ -5159,6 +5182,19 @@ TEST_CASE("rational tangent cubic source imports through operation-8 validation 
     RS_Spline quadraticSpline{nullptr, quadraticData};
     REQUIRE(quadraticSpline.fitTangentsMatchCurve());
     importVariant(quadraticData, "quadratic");
+
+    RS_SplineData linearData{1, false};
+    linearData.controlPoints = {{0, 0}, {4, 0}};
+    linearData.knotslist = {0, 0, 1, 1};
+    linearData.weights = {1.0, 1.0};
+    linearData.fitPoints = {{0, 0}, {2, 0}, {4, 0}};
+    linearData.fitTangentsConstrained = true;
+    linearData.fitTolerance = 1e-8;
+    linearData.fitStartTangent = {1, 0};
+    linearData.fitEndTangent = {2, 0};
+    RS_Spline linearSpline{nullptr, linearData};
+    REQUIRE(linearSpline.fitTangentsMatchCurve());
+    importVariant(linearData, "linear");
 }
 
 TEST_CASE("wrapped periodic spline source imports through operation-8 validation in DXF and DWG",

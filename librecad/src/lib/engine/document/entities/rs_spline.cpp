@@ -2306,7 +2306,7 @@ bool RS_Spline::fitTangentsMatchCurve() const {
            std::isfinite(point.z) && std::abs(point.z) <= RS_TOLERANCE;
   };
   if (!data.fitTangentsConstrained ||
-      (data.degree != 2 && data.degree != 3) ||
+      (data.degree < 1 || data.degree > 3) ||
       data.type != RS_SplineData::SplineType::ClampedOpen ||
       data.savedOpenType != RS_SplineData::SplineType::ClampedOpen ||
       data.m_closedFlag || data.m_periodicFlag || data.fitPoints.size() < 2 ||
