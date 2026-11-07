@@ -21921,6 +21921,12 @@ operation-8 promotion are covered by their dedicated tangent, fit/control,
 parabola/hyperbola, and polyline import cases; these must continue to be
 tracked independently rather than inferred from the conic matrix.
 
+The complete `[lc-offsetcurve][typed-source]` Release union was also rerun on
+the W562 product head after tangent-constrained spline-points admission: all
+44 matching test cases passed, totaling 5,114,222 assertions. This strengthens
+cross-lane regression evidence but does not imply every legal DWG/DXF spline,
+hyperbola interval, polyline topology, or output cardinality is covered.
+
 This closes the requested UI type-switch and representative nine-family
 selection/replacement behavior. It does not close exhaustive per-variant
 admission, all-output-cardinality combinations, all family/format imports, or
