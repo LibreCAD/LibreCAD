@@ -5767,6 +5767,50 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
                 }
                 for (std::size_t i = 0; i < expectedCache.knotslist.size(); ++i)
                     CHECK(convertedSpline.knotslist[i] == expectedCache.knotslist[i]);
+
+                RS_SplineData convertedData{convertedSpline.degree, false};
+                for (const auto& control : convertedSpline.controllist) {
+                    REQUIRE(control);
+                    convertedData.controlPoints.emplace_back(
+                        control->x, control->y, control->z);
+                }
+                convertedData.knotslist = convertedSpline.knotslist;
+                convertedData.weights = convertedSpline.weightlist;
+                if (convertedData.weights.empty())
+                    convertedData.weights.assign(convertedData.controlPoints.size(), 1.0);
+                RS_Spline convertedCurve{nullptr, std::move(convertedData)};
+                RS_Spline expectedCurve{nullptr, expectedCache};
+                REQUIRE(convertedCurve.validate());
+                REQUIRE(expectedCurve.validate());
+                double expectedStart = 0.0;
+                double expectedEnd = 0.0;
+                double convertedStart = 0.0;
+                double convertedEnd = 0.0;
+                REQUIRE(expectedCurve.getParameterDomain(expectedStart, expectedEnd));
+                REQUIRE(convertedCurve.getParameterDomain(convertedStart, convertedEnd));
+                CHECK(convertedStart == expectedStart);
+                CHECK(convertedEnd == expectedEnd);
+                double coordinateScale = 1.0;
+                for (const RS_Vector& point : expectedCache.controlPoints)
+                    coordinateScale = std::max({coordinateScale,
+                        std::abs(point.x), std::abs(point.y)});
+                const double geometryTolerance =
+                    1e-9 * std::max(1.0, scale) +
+                    8.0 * std::numeric_limits<double>::epsilon() * coordinateScale;
+                for (int sample = 0; sample <= 128; ++sample) {
+                    const double fraction = static_cast<double>(sample) / 128.0;
+                    const double parameter = expectedStart +
+                        fraction * (expectedEnd - expectedStart);
+                    const auto side = sample == 128
+                        ? LC_CurveEvaluationSide::Left
+                        : LC_CurveEvaluationSide::Right;
+                    LC_CurveJet expectedJet;
+                    LC_CurveJet convertedJet;
+                    REQUIRE(expectedCurve.tryEvaluateJet(parameter, side, expectedJet));
+                    REQUIRE(convertedCurve.tryEvaluateJet(parameter, side, convertedJet));
+                    CHECK(expectedJet.point.distanceTo(convertedJet.point) <=
+                          geometryTolerance);
+                }
             }
         }
     }
