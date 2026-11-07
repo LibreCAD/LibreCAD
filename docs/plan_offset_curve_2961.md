@@ -23793,3 +23793,22 @@ This adds one quadratic layout and does not prove all degree-2 periodic knot,
 control, weight, or topology combinations. Higher-degree periodic cases,
 broader numeric ranges, independent-CAD geometry equivalence, visible-GUI
 acceptance, and exact-head CI remain open.
+
+#### W563bz. Validate Quadratic Periodic Layout Through Worker Generation and Cache Admission (2026-11-07)
+
+Extended the worker's nonuniform periodic spline matrix with the same
+seven-distinct-control, degree-2 rational layout used by the staged-import
+matrix. It checks positional and derivative seam continuity, operation-7
+generation on both signed sides, one-spline result topology, operation-8 cache
+admission, and request-bound result encode/decode. Existing degree-1 scale and
+distance cases and degree-2/3 six-control baselines remain in the test.
+
+The focused `[periodic][nonuniform]` worker case passes 825 assertions. The
+complete `[lc-offsetcurve][worker-kernel][source-cache][spline-variant]`
+selection passes 70,909 assertions across six cases; the Release worker test
+target builds and `git diff --check` passes. Test commit `882dadd97`
+(`test(offset): validate quadratic periodic worker caches`).
+
+This qualifies the recorded degree-2 layout and worker/cache flow, not all
+quadratic periodic knots, weights, scales, distances, or topologies. Other
+periodic variants and exact-head CI remain open.
