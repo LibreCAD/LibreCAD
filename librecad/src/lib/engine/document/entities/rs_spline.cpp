@@ -2305,12 +2305,13 @@ bool RS_Spline::fitTangentsMatchCurve() const {
     return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
            std::isfinite(point.z) && std::abs(point.z) <= RS_TOLERANCE;
   };
-  if (!data.fitTangentsConstrained || data.degree != 3 ||
+  if (!data.fitTangentsConstrained ||
+      (data.degree != 2 && data.degree != 3) ||
       data.type != RS_SplineData::SplineType::ClampedOpen ||
       data.savedOpenType != RS_SplineData::SplineType::ClampedOpen ||
       data.m_closedFlag || data.m_periodicFlag || data.fitPoints.size() < 2 ||
       !std::isfinite(data.fitTolerance) || data.fitTolerance <= 0.0 ||
-      data.controlPoints.size() < 4 ||
+      data.controlPoints.size() < data.degree + 1 ||
       !finitePlanar(data.fitStartTangent) ||
       !finitePlanar(data.fitEndTangent)) return false;
   if (std::any_of(data.weights.begin(), data.weights.end(),

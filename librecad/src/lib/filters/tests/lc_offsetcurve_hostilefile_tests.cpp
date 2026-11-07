@@ -1196,6 +1196,24 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     }
     RS_Spline rationalTangentCheck{nullptr, rationalTangentCubic};
     REQUIRE(rationalTangentCheck.fitTangentsMatchCurve());
+    RS_SplineData rationalTangentQuadratic{2, false};
+    rationalTangentQuadratic.controlPoints = {{0, 0}, {2, 3}, {5, 0}};
+    rationalTangentQuadratic.knotslist = {0, 0, 0, 1, 1, 1};
+    rationalTangentQuadratic.weights = {1.0, 0.7, 1.0};
+    rationalTangentQuadratic.fitTangentsConstrained = true;
+    rationalTangentQuadratic.fitTolerance = 1e-2;
+    rationalTangentQuadratic.fitStartTangent = {2, 3};
+    rationalTangentQuadratic.fitEndTangent = {3, -3};
+    RS_Spline rationalQuadraticEvaluator{nullptr, rationalTangentQuadratic};
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        LC_CurveJet jet;
+        REQUIRE(rationalQuadraticEvaluator.tryEvaluateJet(parameter,
+            parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Right, jet));
+        rationalTangentQuadratic.fitPoints.push_back(jet.point);
+    }
+    RS_Spline rationalQuadraticCheck{nullptr, rationalTangentQuadratic};
+    REQUIRE(rationalQuadraticCheck.fitTangentsMatchCurve());
     RS_Spline periodic{nullptr, RS_SplineData{3, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
                                    RS_Vector{20, 50}, RS_Vector{-15, 25}})
@@ -1232,7 +1250,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
-    const std::array<LC_OffsetSourceGeometry, 30> sources{
+    const std::array<LC_OffsetSourceGeometry, 31> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .2, 0, 2 * M_PI, false}},
@@ -1243,6 +1261,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{repeatedKnotCubic},
         LC_OffsetSourceGeometry{unweightedSpline},
         LC_OffsetSourceGeometry{rationalTangentCubic},
+        LC_OffsetSourceGeometry{rationalTangentQuadratic},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{2, 1}, RS_Vector{1, 0}, RS_Vector{0, 1}}}},
