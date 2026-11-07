@@ -1771,28 +1771,106 @@ TEST_CASE("Native dialog angle direction changes revoke pending helper adoption"
 
 TEST_CASE("Actual native Edit Properties commits once and undo redo preserve native state",
           "[gui][dialog][offsetcurve][action][undo]") {
-    ActionFixture f; const Snapshot before(*f.original);
-    std::unique_ptr<Snapshot> edited;
-    f.drive([&](LC_DlgEntityProperties& dialog, unsigned opening) {
-        REQUIRE(opening == 1); auto& widget = native(dialog);
-        enter(widget, "leDistance", ".3");
-        REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
-        CHECK(widget.lastEditResult()->engineRuns == 1);
-        REQUIRE(widget.editedEntity());
-        edited = std::make_unique<Snapshot>(*widget.editedEntity());
-        before.exact(f.current());
-        button(dialog, QDialogButtonBox::Ok);
-        CHECK(widget.editAttemptCount() == 1);
-    });
-    CHECK(f.graphic.countUndoCycles() == 1);
-    auto& committed = f.current();
-    CHECK(&committed != f.original); CHECK(committed.definition().distance == .3);
-    CHECK(committed.hasEditableDefinition()); CHECK(committed.getPen(false) == before.pen);
-    REQUIRE(edited); edited->geometry(committed); // Accept did not rebuild even the display children
-    const Snapshot after(committed);
-    REQUIRE(f.graphic.undo()); CHECK(&f.current() == f.original); before.geometry(f.current(), false);
-    REQUIRE(f.graphic.redo()); CHECK(&f.current() == &committed); after.geometry(f.current(), false);
-    CHECK(f.graphic.countUndoCycles() == 1);
+    RS_SplineData spline{2, false};
+    spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    spline.knotslist = {0, 0, 0, 1, 1, 1};
+    spline.weights = {1, .7, 1};
+    LC_SplinePointsData splinePoints{false, false};
+    splinePoints.useControlPoints = true;
+    splinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 9> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
+        LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{splinePoints},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{4, 1}, {8, 1}}},
+        LC_OffsetSourceGeometry{RS_ArcData{{4, 1}, 2, .25, 1.5, false}},
+        LC_OffsetSourceGeometry{RS_CircleData{{4, 1}, 2}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}}
+    };
+
+    for (const auto& source : sources) {
+        CAPTURE(source.kind());
+        ActionFixture f;
+        auto entity = source.makeEntity();
+        REQUIRE(entity);
+        auto* replacement = entity.get();
+        f.graphic.addEntity(replacement);
+        entity.release();
+        const auto replacementGeometry = LC_OffsetSourceGeometry::capture(*replacement);
+        REQUIRE(replacementGeometry);
+        REQUIRE(replacementGeometry->kind() == source.kind());
+        const Snapshot before(*f.original);
+        std::unique_ptr<Snapshot> edited;
+        LC_OffsetSourceDefinition committedSource;
+        f.drive([&](LC_DlgEntityProperties& dialog, unsigned opening) {
+            REQUIRE(opening == 1); auto& widget = native(dialog);
+            auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+            auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+            REQUIRE(typeBox); REQUIRE(sourceBox);
+            const int typeIndex = typeBox->findData(static_cast<int>(source.kind()));
+            REQUIRE(typeIndex >= 0);
+            typeBox->setCurrentIndex(typeIndex);
+            int sourceIndex = -1;
+            for (int i = 0; i < sourceBox->count(); ++i)
+                if (sourceBox->itemData(i).toULongLong() == replacement->getId()) sourceIndex = i;
+            REQUIRE(sourceIndex >= 0);
+            sourceBox->setCurrentIndex(sourceIndex);
+            awaitPreparation(widget);
+            REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+            CHECK(widget.lastEditResult()->engineRuns == 1);
+            REQUIRE(widget.editedEntity());
+            if (source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
+                CHECK(widget.editedEntity()->hasEditableDefinition());
+                const LC_OffsetSourceGeometry actual{widget.editedEntity()->definition().basis};
+                CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(actual) ==
+                      LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*replacementGeometry));
+            } else {
+                REQUIRE(widget.editedEntity()->sourceDefinition());
+                CHECK(widget.editedEntity()->sourceDefinition()->source.kind() == source.kind());
+            }
+            edited = std::make_unique<Snapshot>(*widget.editedEntity());
+            if (widget.editedEntity()->sourceDefinition())
+                committedSource = *widget.editedEntity()->sourceDefinition();
+            before.exact(f.current());
+            button(dialog, QDialogButtonBox::Ok);
+            CHECK(widget.editAttemptCount() == 1);
+        });
+        CHECK(f.graphic.countUndoCycles() == 1);
+        auto& committed = f.current();
+        CHECK(&committed != f.original);
+        if (source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
+            CHECK(committed.hasEditableDefinition());
+            CHECK_FALSE(committed.sourceDefinition());
+            const LC_OffsetSourceGeometry actual{committed.definition().basis};
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(actual) ==
+                  LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*replacementGeometry));
+        } else {
+            REQUIRE(committed.sourceDefinition());
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*committed.sourceDefinition()) ==
+                  LC_OffsetWorkerRequest::Values::encodeSourceDefinition(committedSource));
+            CHECK(committed.sourceDefinition()->source.kind() == source.kind());
+        }
+        CHECK(committed.getPen(false) == before.pen);
+        REQUIRE(edited); edited->geometry(committed); // Accept must not rebuild the display children.
+        const Snapshot after(committed);
+        REQUIRE(f.graphic.undo()); CHECK(&f.current() == f.original); before.geometry(f.current(), false);
+        CHECK_FALSE(f.current().sourceDefinition());
+        CHECK(f.current().hasEditableDefinition());
+        REQUIRE(f.graphic.redo()); CHECK(&f.current() == &committed); after.geometry(f.current(), false);
+        if (source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
+            CHECK_FALSE(f.current().sourceDefinition());
+            const LC_OffsetSourceGeometry actual{f.current().definition().basis};
+            CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(actual) ==
+                  LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*replacementGeometry));
+        } else {
+            REQUIRE(f.current().sourceDefinition());
+            CHECK(f.current().sourceDefinition()->source.kind() == source.kind());
+        }
+        CHECK(f.graphic.countUndoCycles() == 1);
+    }
 }
 
 namespace {
