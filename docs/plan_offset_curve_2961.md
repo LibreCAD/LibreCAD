@@ -21289,3 +21289,7 @@ Keep picker/worker/cache eligibility disabled until exact-curve and
 failure-atomicity gates pass.
 
 Product commit `17afe1754` (`feat(spline): interpolate cubic fit tangents`).
+Roadmap commit `5b2444c27` records this receipt. Both commits are pushed to
+PR #3193; its exact head is `5b2444c278c824b05449c2f18fedc629680400c9`.
+GitHub currently reports no combined statuses and no PR-triggered workflow
+runs for that head; no CI result is inferred from earlier commits.
