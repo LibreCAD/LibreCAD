@@ -5854,7 +5854,7 @@ TEST_CASE("nonuniform rational periodic spline import follows output topology",
     namespace values = LC_OffsetWorkerRequest::Values;
 
     const int layout = GENERATE(0, 1, 2, 3, 4);
-    const double scale = layout >= 3 ? 1.0 : GENERATE(1e-3, 1.0, 1e3);
+    const double scale = GENERATE(1e-3, 1.0, 1e3);
     const double distanceFactor = layout >= 3 ? 0.005 : GENERATE(0.0625, 0.125, 0.25);
     const int degree = layout >= 2 ? 2 : 1;
     const int controlCount = layout == 0 ? 6 : layout == 1 ? 8 : 7;
