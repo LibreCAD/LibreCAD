@@ -739,13 +739,28 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
   CHECK(sourceSpline->getData().fitStartTangent.y == source.m_tangentStart.y);
   CHECK(sourceSpline->getData().fitEndTangent.x == source.m_tangentEnd.x);
   CHECK(sourceSpline->getData().fitEndTangent.y == source.m_tangentEnd.y);
+  CHECK_FALSE(sourceSpline->fitTangentsMatchCurve());
   const auto sourceControls = sourceSpline->getControlPoints();
   REQUIRE(sourceControls.size() >= 3);
+  std::vector<RS_Vector> sourceCurve;
+  for (int i = 0; i <= 200; ++i) {
+    const double parameter =
+        static_cast<double>(sourceSpline->getSegmentCount()) * i / 200.0;
+    const auto side = i == 200 ? LC_CurveEvaluationSide::Left
+                               : LC_CurveEvaluationSide::Right;
+    LC_CurveJet jet;
+    REQUIRE(sourceSpline->tryEvaluateJet(parameter, side, jet));
+    sourceCurve.push_back(jet.point);
+  }
 
   const std::vector<std::pair<RS2::FormatType, std::string>> formats{
       {RS2::FormatDXFRW, "dxf"},
 #ifdef DWGSUPPORT
       {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2004, "dwg-r2004"},
+      {RS2::FormatDWG2007, "dwg-r2007"},
+      {RS2::FormatDWG2010, "dwg-r2010"},
+      {RS2::FormatDWG2013, "dwg-r2013"},
       {RS2::FormatDWG2018, "dwg-r2018"},
 #endif
   };
@@ -782,6 +797,19 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
       LC_SplinePoints *reopenedSpline = onlySplinePoints(reopened);
       checkSameVectors(reopenedSpline->getControlPoints(), sourceControls);
       CHECK_FALSE(reopenedSpline->getData().fitTangentsConstrained);
+      std::vector<RS_Vector> reopenedCurve;
+      for (int i = 0; i <= 200; ++i) {
+        const double parameter =
+            static_cast<double>(reopenedSpline->getSegmentCount()) * i / 200.0;
+        const auto side = i == 200 ? LC_CurveEvaluationSide::Left
+                                   : LC_CurveEvaluationSide::Right;
+        LC_CurveJet jet;
+        REQUIRE(reopenedSpline->tryEvaluateJet(parameter, side, jet));
+        reopenedCurve.push_back(jet.point);
+      }
+      REQUIRE(reopenedCurve.size() == sourceCurve.size());
+      for (size_t i = 0; i < sourceCurve.size(); ++i)
+        CHECK(reopenedCurve[i].distanceTo(sourceCurve[i]) < 1.0e-10);
     }
   }
 }
