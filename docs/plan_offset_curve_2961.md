@@ -42,6 +42,8 @@ W534 unequal-magnitude opposite-sign major-bulge qualification complete for
 its defined matrix;
 W535 reversed unequal-magnitude major-bulge qualification complete for its
 defined matrix;
+W536 sign-reflected unequal-major-bulge qualification complete for its defined
+matrix;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -20987,6 +20989,53 @@ production mismatches), and `git diff --check` passes. Product/test commit
 `e03cdb926` (`test(offset): qualify reversed unequal bulges`).
 
 This closes only the reversed `+2/-3` layout and its finite matrix. Other
+major-bulge magnitudes/orders, arbitrary sequences, self-intersection, OCS,
+external-CAD, and visible-GUI cases remain open. Push the product commit and
+this receipt to PR #3193 and query checks for the exact pushed head.
+
+## 536. Sign-Reflected Unequal Major-Bulge Matrix
+
+W534/W535 qualify an open chain with opposite-sign unequal major arcs and
+their reversed traversal. Add the reflected counterpart with a negative `-3`
+major arc followed by a positive `+2` major arc, straight connectors, and open
+endpoints. Assert segment order, directed sweep signs, centers/radii, and
+reflection of the source geometry; do not use reverse traversal as a proxy for
+sign reflection.
+
+Extend the same scale/translation/distance grid to eleven layouts and 264
+layout/cell combinations: scales `1e-3`, `1`, `1e3`; translation ratios
+`1e4`, `1e6`; signed normalized distances `-0.25`, `-0.1`, `0.1`, `0.25`.
+Require centered/translated operation-7 parity, topology-independent sampled
+geometry comparison, operation-8 validation/refusal without mutation, exact
+typed-source CBOR, and all five staged DXF/DWG lanes with promotion/fallback
+accounting.
+
+Run the focused matrix, full polyline worker and typed-source import
+selections, Release test/worker builds, roadmap parser/refusal tests, and diff
+check. Commit test and plan receipt separately, push both to PR #3193, and
+query diagnostics for the exact head. This finite reflection case does not
+claim arbitrary bulge sequences, magnitudes, self-intersections, OCS, or
+external-CAD compatibility.
+
+### W536 Completion Receipt
+
+The reflected open chain captures a negative `-3` major arc followed by a
+positive `+2` major arc and straight connectors. Assertions verify its
+directed sweeps, centers/radii, segment order, and open topology. The
+eleven-layout matrix accounts for 264 scale/translation/distance combinations
+through worker generation, operation-8 admission/refusal, and all five DXF/DWG
+lanes.
+
+Focused staged persistence passes 750,851 assertions in one case. The complete
+polyline worker selection passes 82,644 assertions across six cases; the full
+typed-source polyline staged-import selection passes 784,854 assertions across
+23 cases. Release `librecad_tests` and
+`librecad_offset_worker_kernel_tests` targets build. Roadmap inventory/refusal
+validation passes 99/99 tests (93 obligations, zero pending declarations, zero
+production mismatches), and `git diff --check` passes. Product/test commit
+`ccf64fb13` (`test(offset): qualify reflected major bulges`).
+
+This closes only the reflected `-3/+2` layout and its finite matrix. Other
 major-bulge magnitudes/orders, arbitrary sequences, self-intersection, OCS,
 external-CAD, and visible-GUI cases remain open. Push the product commit and
 this receipt to PR #3193 and query checks for the exact pushed head.
