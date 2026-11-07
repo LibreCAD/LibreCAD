@@ -23270,18 +23270,22 @@ GUI acceptance remain open.
 
 #### W563be. Round-trip Cut Spline-points Geometry (2026-11-07)
 
-Added a native cut-generated open `LC_SplinePoints` case. The test cuts a
-five-control quadratic chain at an interior curve point, exports the resulting
-left and right entities through all six DWG writer versions, reopens the file,
-and matches each reopened curve against the corresponding pre-export piece by
-symmetric sampled distance. Both pieces are retained as spline entities and
-match within `1e-10` drawing units. The focused Release case passes 5,691
-assertions; `git diff --check` passes. Test commit `eca5154c9`
-(`test(dwg): round-trip cut spline-point pieces`).
+Added a native cut-generated open `LC_SplinePoints` matrix for 3, 4, 5, and 7
+control points. Each shape is cut at an accepted interior parameter selected
+from 0.25, 0.5, and 0.75 of its parameter domain; the resulting left and right
+entities are exported through all six DWG writer versions and reopened. Each
+reopened curve is matched to its corresponding pre-export piece by symmetric
+sampled distance, within `1e-10` drawing units. The focused Release case passes
+22,764 assertions. With `LIBRECAD_TANGENT_SPLINE_DWG_DIR` set, it also stages
+the 24 DWGs for independent converters. Test commits `eca5154c9`
+(`test(dwg): round-trip cut spline-point pieces`) and `542663ad2`
+(`test(dwg): broaden cut spline-point matrix`).
 
-This proves geometric round-trip for this one control-net cut shape, not every
-cut location, source topology, fit-point representation, or closed-cut case.
-The DWG SPLINE representation carries the two resulting curves, not LibreCAD's
-internal `cut` bookkeeping bit; that bit is not claimed to round-trip. Expand
-cut-position/control-count coverage, validate ODA-converted geometry for cut
-pieces, and retain visible-GUI and exact-head CI acceptance as open gates.
+This proves geometric round-trip only for these four control counts and the
+accepted interior cut parameters. It does not cover every cut location,
+fit-point representation, or the one-entity closed-cut behavior. The DWG
+SPLINE representation carries the resulting curves, not LibreCAD's internal
+`cut` bookkeeping bit; that bit is not claimed to round-trip. Validate
+ODA-converted geometry for the staged 24 cut-piece DWGs, broaden the remaining
+cut/topology cases, and retain visible-GUI and exact-head CI acceptance as open
+gates.
