@@ -22212,3 +22212,22 @@ source-picker union remains 6,883 assertions/10 cases, and the five-format
 open for exhaustive family/variant cross-product coverage, actual import
 promotion and diagnostics, direct canvas/UI acceptance, and independent-CAD
 verification.
+
+#### W563l. Open Mixed-bulge Polyline Import Promotion Boundary (2026-11-07)
+
+Added a staged-import matrix for an open polyline containing a bulged arc and a
+line segment. For each signed side, it builds the actual offset branches and
+materializes the actual first cache carrier, then saves/reopens it in R14 DXF,
+R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Import must produce a native
+editable offset only when that generated result is exactly one canonical
+spline cache. When it is not, import must retain ordinary fallback geometry,
+refuse native promotion, and preserve the schema-2 source definition exactly.
+This complements W563k's operation-7 generation evidence and the closed
+mixed-bulge one-side-promotes/other-side-falls-back matrix.
+
+Validation: focused test passes 1,218 assertions; the combined typed-polyline
+cache-promotion/persistence selection passes 2 cases / 2,462 assertions;
+`librecad_tests` builds and `git diff --check` passes. Product/test commit
+`3b5f4d137` (`test(offset): validate open bulge source import fallback`).
+Remaining W563 work includes direct/worker/import cross-products for other
+family variants, visible GUI checks, and independent-CAD acceptance.
