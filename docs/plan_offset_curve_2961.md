@@ -22858,3 +22858,28 @@ imports`). This qualifies only the recorded cubic/rational control net, knot
 multiplicity and distance. Other repeated-knot multiplicities/layouts, source
 scales/transforms, external-CAD validation, visible-GUI acceptance, and
 exact-head CI remain open.
+
+#### W563aq. Reconcile the Source Widget's Type-change Requirement (2026-11-07)
+
+The latest request is specifically about the Properties source widget: while
+replacing a source, the user must be able to change the requested curve family
+and then select a matching drawing entity. The family selector must cover the
+complete current offset-source model: line, arc, circle, ellipse, `RS_Spline`,
+`LC_SplinePoints`, `LC_Parabola`, bounded `LC_Hyperbola`, and `RS_Polyline`.
+The active source remains resolvable/selectable in the drawing where applicable.
+
+This UI contract is already implemented and covered by W563v/W563ag: changing
+the family filters replacement candidates, replacement preserves the selected
+typed source, the current source can be highlighted, and the nine-family union
+includes parabola. `LC_Parabola` must continue to be classified before its
+`LC_SplinePoints` base class and retain `Kind::Parabola`. Therefore no new
+widget, selector, family, or parabola-specific UI branch is planned.
+
+Scope boundary: the nine choices describe source kinds modeled by the picker,
+not a promise that every geometric variant has complete direct-offset,
+worker/cache, document-import, or DXF/DWG read/write support. Continue those as
+separate per-variant implementation and validation slices; unsupported forms
+must remain excluded or fail closed without mutating the current source/cache.
+Visible-GUI and independent-CAD acceptance also remain open. Do not reopen the
+picker UI slice unless a regression breaks the selector, candidate filtering,
+replacement, source highlighting, or parabola identity contract.
