@@ -23267,3 +23267,21 @@ The open-chain control geometry matrix still passes 29,043 assertions;
 six DWG versions and ODA's R2018 DXF conversion. Other closed control counts,
 nonuniform periodic splines, closed fit-point inputs, cut forms, and independent
 GUI acceptance remain open.
+
+#### W563be. Round-trip Cut Spline-points Geometry (2026-11-07)
+
+Added a native cut-generated open `LC_SplinePoints` case. The test cuts a
+five-control quadratic chain at an interior curve point, exports the resulting
+left and right entities through all six DWG writer versions, reopens the file,
+and matches each reopened curve against the corresponding pre-export piece by
+symmetric sampled distance. Both pieces are retained as spline entities and
+match within `1e-10` drawing units. The focused Release case passes 5,691
+assertions; `git diff --check` passes. Test commit `eca5154c9`
+(`test(dwg): round-trip cut spline-point pieces`).
+
+This proves geometric round-trip for this one control-net cut shape, not every
+cut location, source topology, fit-point representation, or closed-cut case.
+The DWG SPLINE representation carries the two resulting curves, not LibreCAD's
+internal `cut` bookkeeping bit; that bit is not claimed to round-trip. Expand
+cut-position/control-count coverage, validate ODA-converted geometry for cut
+pieces, and retain visible-GUI and exact-head CI acceptance as open gates.
