@@ -130,8 +130,10 @@ RS2::CursorType QC_ActionGetPoint::doGetMouseCursor([[maybe_unused]] int status)
 }
 
 void QC_ActionGetPoint::setBasepoint(const QPointF* basepoint) {
-    m_actionData->referencePoint.x = basepoint->x();
-    m_actionData->referencePoint.y = basepoint->y();
+    // Build the vector rather than assigning its coordinates: a default
+    // RS_Vector is not valid, and mouseMoveEvent() draws the rubber-band line
+    // only from a valid reference point.
+    m_actionData->referencePoint = RS_Vector(basepoint->x(), basepoint->y());
     m_setTargetPoint = true;
 }
 
