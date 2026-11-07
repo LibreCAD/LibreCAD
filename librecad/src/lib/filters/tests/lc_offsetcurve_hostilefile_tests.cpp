@@ -5737,19 +5737,27 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
 
     const double scale = GENERATE(1e-3, 1.0, 1e3);
     const double distanceFactor = GENERATE(0.0625, 0.125, 0.25);
-    CAPTURE(scale, distanceFactor);
+    const int controlCount = GENERATE(6, 8);
+    CAPTURE(scale, distanceFactor, controlCount);
     RS_Spline periodic{nullptr, RS_SplineData{1, false}};
-    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10},
-                                   RS_Vector{60, 30}, RS_Vector{55, 45},
-                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
+    const std::vector<RS_Vector> controlPoints = controlCount == 6
+        ? std::vector<RS_Vector>{{0, 0}, {40, -10}, {60, 30}, {55, 45},
+                                 {20, 50}, {-15, 25}}
+        : std::vector<RS_Vector>{{0, 0}, {30, -15}, {60, 0}, {70, 20},
+                                 {55, 35}, {20, 50}, {-15, 25}, {-10, 10}};
+    for (const RS_Vector& point : controlPoints)
         periodic.addControlPoint({point.x * scale + 1000.0 * scale,
                                   point.y * scale - 2000.0 * scale});
-    periodic.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
+    if (controlCount == 6)
+        periodic.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
+    else
+        periodic.setKnotVector({0, 0, .4, 1.1, 1.8, 2.6, 3.4, 4.3, 5.5, 5.5});
     REQUIRE(periodic.validate());
     periodic.setClosed(true);
     auto periodicData = periodic.getData();
-    const std::vector<double> independentWeights{1.0, 0.9, 1.1, 0.95,
-                                                 1.05, 0.85};
+    const std::vector<double> independentWeights = controlCount == 6
+        ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85}
+        : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15, 0.8};
     periodicData.weights = independentWeights;
     periodicData.weights.insert(periodicData.weights.end(), independentWeights.begin(),
                                 independentWeights.begin() + periodicData.degree);
@@ -5858,7 +5866,8 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
         raw.nfit = 0;
 
         const auto input = directory.file(
-            "scale-" + std::to_string(scale) + "-distance-" +
+            "controls-" + std::to_string(controlCount) + "-scale-" +
+            std::to_string(scale) + "-distance-" +
             std::to_string(distanceFactor) +
             (side == LC_CurveOffsetSide::Left ? "-left-" : "-right-") +
             fileFormat.suffix);
