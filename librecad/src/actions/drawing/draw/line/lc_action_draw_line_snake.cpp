@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_line_snake_options_filler.h"
 #include "lc_line_snake_options_widget.h"
 #include "lc_linemath.h"
+#include "rs_commands.h"
 #include "rs_document.h"
 
 
@@ -476,7 +477,9 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(const int status, const QStri
 
 QStringList LC_ActionDrawLineSnake::getAvailableCommands() {
     QStringList cmd;
-    cmd += command("pl");
+    // "pl" has no entry in the command dictionary when it reads the same in the
+    // command language: command() would report "Command not found" and give "".
+    cmd += RS_Commands::localizedCommand("pl", "draw polyline");
     if (m_actionData->index() + 1 < m_actionData->history.size()) {
         cmd += command("redo");
     }
