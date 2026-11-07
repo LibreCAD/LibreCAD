@@ -21403,12 +21403,14 @@ identity/transforms, and the deliberately refused DWG tangent writer path.
 The latest source-widget clarification is a maintained product requirement,
 not a request to add a second selector or another source-replacement path. In
 Offset Curve Properties, the user must be able to change the source-family
-filter before picking a replacement; the next canvas pick must accept a live
-entity of that family and install it only through the existing guarded,
-worker-backed replacement flow. Changing the filter alone must leave the
-current source and generated cache unchanged. When the selected source still
-exists in the drawing, the widget/canvas selection must continue to identify
-and highlight it.
+filter as part of selecting a replacement source, before the canvas pick; the
+picker must not lock the user to the current source's type. The next canvas
+pick must accept a live entity of that chosen family and install it only
+through the existing guarded, worker-backed replacement flow. Changing the
+filter alone must leave the current source and generated cache unchanged, and
+an empty family must not silently fall back to another type. When the selected
+source still exists in the drawing, the widget/canvas selection must continue
+to identify and highlight it.
 
 The picker inventory is the complete set of currently modeled source families:
 line, arc, circle, ellipse, `RS_Spline`, spline-points, parabola, bounded
@@ -21469,3 +21471,26 @@ lossless DWG representation or documented continued refusal. Do not enable
 tangent-constrained worker generation, picker eligibility, or cache promotion
 until exact-curve and failure-atomicity gates pass. Other family/variant,
 visible-GUI, exact-head CI, and external-CAD acceptance remain open.
+
+### W549. Transformed Schema-3 Tangent Source Round-Trip (2026-11-06)
+
+Protocol 6 extended the tagged `RS_Spline` source array with fit tolerance,
+the constrained marker, and endpoint vectors, and the spline-points source
+array with endpoint vectors. The schema-3 XDATA decoder still expected the
+older shorter arrays, so valid tangent-aware source definitions failed to
+parse after export. The decoder now accepts the current protocol-6 shapes and
+requires the duplicated source-array and schema-envelope tangent metadata to
+agree exactly; disagreement is rejected rather than resolved by choosing one
+copy. A transformed and reversed fixture verifies canonical source identity
+survives both DXF XDATA and EED encode/parse for both spline representations.
+
+Validation: Release `librecad_tests` builds; `[schema3]` passes 287 assertions
+across two cases; `[offset-xdata]` passes 334,012 assertions across 57 cases;
+and `git diff --check` passes. Product commit `5033109fe` (`fix(offset):
+round-trip transformed spline tangent metadata`). This closes transformed
+schema-3 XDATA/EED source-identity round-trip for the tested constrained
+variants only. Drawing-level identity, broader transform and knot-conditioning
+matrices, exact control-net/fit/tangent consistency, tangent-aware worker/cache
+eligibility, and standards-verified DWG representation remain open. Keep
+constrained variants refused for generation/cache promotion and keep DWG
+writing fail-closed until those independent gates pass.
