@@ -22949,3 +22949,58 @@ periodic spline DWG fixtures`). These checks qualify only the listed spline
 layouts and R2000/R2018 outputs; external geometry comparison, other CAD
 versions, visible-GUI acceptance, and remaining family/variant matrices stay
 open.
+
+#### W563au. Confirm Source Widget Type Switching Across All Supported Families (2026-11-07)
+
+Reaffirmed acceptance requirement: while replacing an offset source, the user
+can change the requested source type first, then select a matching drawing
+entity. The selector must expose every family currently supported by
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse,
+`RS_Spline`, `LC_SplinePoints`, `LC_Parabola`, bounded `LC_Hyperbola`, and
+`RS_Polyline`. Changing the selector filters candidates; selecting a
+replacement updates the typed source, and the extant source remains resolvable
+and highlightable where present in the drawing. `LC_Parabola` remains distinct
+from its `LC_SplinePoints` base class.
+
+Current-code check: `LC_PropertiesEditingWidget_OffsetCurve` builds the type
+selector from `SupportedKinds` and refreshes the candidate picker on type
+change. The Properties tests cover the nine-family replacement matrix and
+current-source resolution/highlighting. Therefore this request does not open a
+new implementation slice unless those contracts regress. Keep completeness of
+each family's geometry operations, worker/cache behavior, import/export, and
+DXF/DWG round-tripping tracked independently; membership in the picker is not
+evidence that every geometric variant is fully supported end to end.
+
+Acceptance gate for future changes: assert the selector's choices equal the
+shared supported-kind list; for each kind, verify filtering, replacement, and
+typed identity; verify current-source resolution/highlighting; verify
+parabola is identified before the spline-points base-class check. Existing
+regressions include `Native source picker changes family and replaces the
+source with a typed curve` and `Native source picker replaces every modeled
+source family without filter side effects`. The visible-GUI acceptance gate
+remains open and is not replaced by these widget tests.
+
+#### W563av. Write Verified Cubic Tangent-constrained DWG Fit Splines (2026-11-07)
+
+Enabled the DWG SPLINE scenario-2 fit-point encoding for a strictly validated
+subset of tangent-constrained cubic splines. Eligibility requires an open,
+nonperiodic, clamped cubic; at least three fit points; unit control weights;
+both endpoint tangents; and a deterministic reconstruction from fit points
+and tangents that matches the current degree, control points, knots, and
+weights within tight tolerances. The writer emits normalized tangent
+directions. Any constrained spline outside this verified subset still fails
+closed; in particular one-ended, rational, quadratic, higher-degree, and
+non-clamped forms are not newly accepted.
+
+The native round-trip regression passes 357 assertions and verifies scenario
+2, fit points, endpoint directions, and sampled geometry for both DWG R2000
+and R2018. Existing `[fit-points][roundtrip]` tests pass 1,236 assertions in
+seven cases, including refusal paths; `[tangents]` passes 7,432 assertions in
+18 cases. An independent ACadSharp reader accepts both preserved DWGs and
+recovers a degree-3 scenario-2 SPLINE with all four fit points and both
+normalized endpoint tangents. `git diff --check` passes. Product commit:
+`996b87c68` (`feat(dwg): write verified cubic fit-point splines`).
+
+This closes only the exact tangent-constrained cubic representation above.
+Other tangent/degree/rational variants, broad external geometry comparison,
+visible-GUI acceptance, and exact-head CI remain open.
