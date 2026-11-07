@@ -24234,12 +24234,21 @@ sampled cusp endpoints are checked against the worker-derived geometry budget.
 
 The focused `[periodic][nonuniform]` worker case passes 15,416 assertions. The
 combined worker/cache/spline-variant selection passes 85,622 assertions across
-seven cases. The Release test target builds and `git diff --check` passes. This
-slice changes tests only; it does not expand production eligibility.
+seven cases. Extended the staged-import/output-topology fixture with both
+gradual profiles at the admissible negative distance, verifying typed-source
+promotion and exact cache geometry through R14, R2000, and R2018 DXF plus
+R2000/R2018 DWG. The focused staged-import case passes 42,558 assertions; the
+combined spline-variant import union passes 224,529 assertions across 10
+cases. The Release `librecad_offset_worker_kernel_tests` and `librecad_tests`
+targets build, and `git diff --check` passes. These are tests only; production
+eligibility is unchanged.
 
 These are sampled oracle and bounded geometry checks, not continuous proof of
 all roots, topology, or arbitrary periodic weight layouts. The positive-side
 refusal is preserved despite sampled curvature-factor sign changes; no
 partial geometry or cache is accepted. W563cg remains open for continuous
-root/topology certification, full editable-cache and staged-file coverage for
-new periodic profiles, visible GUI, external-CAD comparison, and exact-head CI.
+root/topology certification, multi-branch editable-cache support, visible GUI,
+external-CAD comparison, and exact-head CI. Staged-file promotion is now
+qualified only for the two recorded gradual profiles, the negative distance,
+and the enumerated format lanes; no broader periodic profile or distance claim
+is implied.
