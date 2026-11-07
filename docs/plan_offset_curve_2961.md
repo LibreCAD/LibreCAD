@@ -23589,3 +23589,24 @@ This qualifies only the recorded degree-1 control/knot layout, weights,
 distance, and side-dependent topology. Other degree-1 periodic layouts,
 distance/scale neighborhoods, staged DXF/DWG import cross-products, visible-GUI
 acceptance, independent-CAD validation, and exact-head CI remain open.
+
+#### W563bq. Stage Nonuniform Rational Degree-one Periodic Imports (2026-11-07)
+
+Extended the degree-1 periodic import topology test from a uniform unweighted
+source to a six-control rational periodic source with nonuniform clamped knots
+`[0, 0, 0.5, 1.5, 2.5, 4, 5, 5]` and positive nonuniform control weights. The
+source is validated after wrapping and its periodic seam positions are checked.
+Both signed offsets are imported through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. The single-spline side promotes to an editable offset; the
+multi-entity side safely downgrades while preserving the typed source metadata
+and the selected carrier geometry.
+
+The focused Release test passes 1,252 assertions across both sides and five
+format lanes; `librecad_tests` builds and `git diff --check` passes. Test
+commit `8eb100cec` (`test(offset): qualify linear periodic import with
+rational knots`).
+
+This covers only the stated degree-1 control layout, knot vector, weights,
+distance, and five lanes. Other degree-1 periodic layouts and distance/scale
+neighborhoods, independent-CAD validation, visible-GUI acceptance, and
+exact-head CI remain open.
