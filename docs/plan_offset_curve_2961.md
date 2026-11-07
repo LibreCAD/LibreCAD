@@ -22585,3 +22585,17 @@ Test commit `f5bf5289a` (`test(offset): cover rational spline import sides`).
 This closes only this internal-knot rational spline layout at the tested
 distance and five lanes; other rational knot layouts, distances, and scale
 neighborhoods remain open.
+
+#### W563ab. Cover Both Sides for Unweighted Degree-one Spline Import (2026-11-07)
+
+Extended the unweighted degree-one SPLINE source with three control points and
+an internal knot to cover left and right offsets across R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. Each of the ten staged files promotes through operation 8;
+the test now compares the complete typed definition and the imported cache
+fingerprint against the generated expected cache. The focused case passes 1,205
+assertions.
+
+Test commit `ee7acbbe7` (`test(offset): cover unweighted spline import sides`).
+This qualifies the defined linear unweighted form only; other spline degrees,
+knot multiplicities, weights, distances, and transforms retain their own
+coverage requirements.
