@@ -23900,3 +23900,21 @@ distances, scales and translations. They do not prove arbitrary spline
 geometry or CAD-kernel equivalence beyond ODA conversion. Other source-family
 variants, visible GUI, exact-head CI and remaining roadmap acceptance gates
 remain open.
+
+#### W563ce. Verify Wrapped Periodic Typed-source Metadata Through ODA (2026-11-07)
+
+Extended the 192-file wrapped degree-2/3 ODA gate to parse converted DXF XDATA
+and compare the recovered schema-2 typed source byte-for-byte, via canonical
+CBOR, with the expected source definition. This complements the sampled cache
+geometry comparison: independent conversion must preserve both the generated
+curve carrier and the source metadata needed for future editing/reimport.
+
+The focused geometry-plus-metadata case passes 89,417 assertions across all
+192 converted DWGs, with zero `.err` files. The Release `librecad_tests`
+target builds and `git diff --check` passes. Test commit `00e98bb94`
+(`test(offset): verify ODA periodic source metadata`).
+
+This verifies ODA conversion for the listed wrapped periodic layouts and
+versions only; it does not establish support for arbitrary spline definitions
+or other independent CAD implementations. Remaining source-family variants,
+GUI acceptance, exact-head CI and roadmap gates remain open.
