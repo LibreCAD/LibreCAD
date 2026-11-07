@@ -617,17 +617,29 @@ TEST_CASE(
   ensureSettings();
   struct Layout {
     std::string name;
+    int degree;
     std::vector<RS_Vector> controls;
     std::vector<double> knots;
   };
   const std::vector<Layout> layouts{
-      {"5ctrl",
+      {"linear-5ctrl",
+       1,
+       {{0, 0}, {20, -10}, {45, 5}, {30, 35}, {-10, 20}},
+       {0, 0, 0.5, 1.1, 2.5, 4, 4}},
+      {"quadratic-5ctrl",
+       2,
+       {{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}},
+       {0, 0, 0, 0.5, 1.5, 3, 3, 3}},
+      {"cubic-5ctrl",
+       3,
        {{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}},
        {0, 0, 0, 0, 0.4, 1, 1, 1, 1}},
-      {"6ctrl",
+      {"cubic-6ctrl",
+       3,
        {{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
        {0, 0, 0, 0, 0.5, 2, 3, 3, 3, 3}},
-      {"8ctrl",
+      {"cubic-8ctrl",
+       3,
        {{0, 0},
         {30, -15},
         {60, 0},
@@ -648,7 +660,7 @@ TEST_CASE(
   };
   for (const Layout &layout : layouts) {
     INFO(layout.name);
-    RS_Spline open{nullptr, RS_SplineData{3, false}};
+    RS_Spline open{nullptr, RS_SplineData{layout.degree, false}};
     for (const RS_Vector &point : layout.controls)
       open.addControlPoint(point);
     open.setKnotVector(layout.knots);
@@ -664,8 +676,16 @@ TEST_CASE(
     RS_Spline source{nullptr, sourceData};
     REQUIRE(source.validate());
     REQUIRE(source.hasWrappedControlPoints());
-    CHECK(sourceData.knotslist !=
-          std::vector<double>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+    bool hasNonuniformIntervals = false;
+    for (size_t i = 2; i < sourceData.knotslist.size(); ++i) {
+      if (std::abs((sourceData.knotslist[i] - sourceData.knotslist[i - 1]) -
+                   (sourceData.knotslist[1] - sourceData.knotslist[0])) >
+          1.0e-12) {
+        hasNonuniformIntervals = true;
+        break;
+      }
+    }
+    CHECK(hasNonuniformIntervals);
     const auto expected = splineCurve(source, 2000);
 
     RS_Graphic graphic;
