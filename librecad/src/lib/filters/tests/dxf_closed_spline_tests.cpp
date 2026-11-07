@@ -1732,6 +1732,92 @@ TEST_CASE("ODA-converted cut spline-point DWGs preserve both piece geometries",
   }
 }
 
+TEST_CASE(
+    "Closed fit-point spline-points preserve geometry in file round trips",
+    "[dxf][dwg][filter][spline-points][fit-points][closed][roundtrip]") {
+  ensureSettings();
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDXFRW, "dxf"},         {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2004, "dwg-r2004"}, {RS2::FormatDWG2007, "dwg-r2007"},
+      {RS2::FormatDWG2010, "dwg-r2010"}, {RS2::FormatDWG2013, "dwg-r2013"},
+      {RS2::FormatDWG2018, "dwg-r2018"},
+  };
+  LC_SplinePointsData data{true, false};
+  data.splinePoints = {
+      {0.0, 0.0}, {3.0, -1.0}, {5.0, 2.0}, {3.0, 5.0}, {-1.0, 3.0}};
+  LC_SplinePoints source{nullptr, data};
+  REQUIRE(source.isClosed());
+  const auto sampleFit = [](const LC_SplinePoints &spline, int count) {
+    std::vector<RS_Vector> points;
+    const double end = static_cast<double>(spline.getSegmentCount());
+    for (int i = 0; i <= count; ++i) {
+      LC_CurveJet jet;
+      REQUIRE(spline.tryEvaluateJet(end * i / count,
+                                    i == count ? LC_CurveEvaluationSide::Left
+                                               : LC_CurveEvaluationSide::Right,
+                                    jet));
+      points.push_back(jet.point);
+    }
+    return points;
+  };
+  const auto expected = sampleFit(source, 1200);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  graphic.addEntity(new LC_SplinePoints(&graphic, data));
+  for (const auto &[format, version] : formats) {
+    INFO(version);
+    const std::string path = tempPath("closed_fit_spline_points_" + version);
+    std::remove(path.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+    }
+    if (format != RS2::FormatDXFRW)
+      preserveSplineDwgFixture(path,
+                               "closed-fit-spline-points-" + version + ".dwg");
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    importFile(reopened, path,
+               format == RS2::FormatDXFRW ? RS2::FormatDXFRW : RS2::FormatDWG,
+               &written);
+    std::filesystem::remove(path);
+    REQUIRE(written.size() == 1);
+    if (format != RS2::FormatDXFRW)
+      CHECK(written.front().m_scenario == 1);
+    CHECK((written.front().m_flags & 0x3) == 0x3);
+    CHECK(written.front().m_fitPoints.empty());
+    REQUIRE(reopened.count() == 1);
+    auto *received = dynamic_cast<LC_SplinePoints *>(*reopened.begin());
+    REQUIRE(received);
+    CHECK(received->isClosed());
+    CHECK(curveDistance(expected, sampleFit(*received, 1200)) < 1.0e-9);
+
+    const char *odaDirectory =
+        std::getenv("LIBRECAD_CLOSED_SPLINEPOINTS_ODA_DXF_DIR");
+    if (format != RS2::FormatDXFRW && odaDirectory != nullptr &&
+        *odaDirectory != '\0') {
+      const auto converted = std::filesystem::path(odaDirectory) /
+                             ("closed-fit-spline-points-" + version + ".dxf");
+      REQUIRE(std::filesystem::exists(converted));
+      RS_Graphic external;
+      importFile(external, converted.string(), RS2::FormatDXFRW);
+      REQUIRE(external.count() == 1);
+      LC_SplinePoints *externalFit = nullptr;
+      RS_Spline *externalSpline = nullptr;
+      for (RS_Entity *entity : external) {
+        externalFit = dynamic_cast<LC_SplinePoints *>(entity);
+        externalSpline = dynamic_cast<RS_Spline *>(entity);
+      }
+      REQUIRE((externalFit != nullptr || externalSpline != nullptr));
+      const auto actual = externalFit != nullptr
+                              ? sampleFit(*externalFit, 1200)
+                              : splineCurve(*externalSpline, 1200);
+      CHECK(curveDistance(expected, actual) < 1.0e-5);
+    }
+  }
+}
+
 TEST_CASE("ODA-converted cut fit-point DWGs preserve both piece geometries",
           "[external][oda][dwg][spline-points][fit-points][cut][geometry]") {
   const char* outputDirectory = std::getenv("LIBRECAD_OFFSET_CUT_ODA_DXF_DIR");

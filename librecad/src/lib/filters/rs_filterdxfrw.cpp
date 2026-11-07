@@ -32975,8 +32975,8 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
                          data.fitEndTangent.z};
   }
   const bool writeFitScenario = !data.useControlPoints && !data.cut &&
-      fitPoints.size() >= 2 &&
-      !data.fitTangentsConstrained;
+                                fitPoints.size() >= 2 &&
+                                !data.fitTangentsConstrained && !s->isClosed();
   sp.degree = 2;
   sp.nfit = writeFitScenario ? static_cast<std::int32_t>(fitPoints.size()) : 0;
 
