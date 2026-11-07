@@ -25,20 +25,25 @@ USA.
 
 Updated: 2026-11-07. Project: **LibreCAD**, not LibreCAD_3.
 Latest source-picker acceptance contract: in the offset Properties widget, a
-user can change the source-curve family before choosing a replacement entity;
-the live candidate list follows that family, replacement preserves the selected
-entity's actual kind, and an existing source can be resolved and highlighted.
+user can change the source-curve family as part of choosing a replacement
+entity; changing the family refreshes the live candidate list before selection,
+and choosing a candidate atomically replaces the source while preserving the
+candidate's actual kind. An existing source remains resolvable and highlighted
+until replacement succeeds or is cancelled.
 The selector is driven by `LC_OffsetSourceGeometry::SupportedKinds` and covers
 line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
 and polyline. Parabola is a distinct kind despite inheriting from
 `LC_SplinePoints`. This widget behavior, including parabola selection and
 highlighting, is implemented and tested; do not add another selector or a
 parabola-only UI branch. “Support all listed types” remains an end-to-end
-geometry requirement: each family's eligible variants still need independently
-validated generation, worker/cache, DXF/DWG import/export, and round-trip paths,
-with unsupported variants explicitly refused without mutating the current
-source or cache. A type appearing in the picker is not proof that every one of
-its geometric variants is supported.
+geometry requirement. Picker-regression acceptance verifies the canonical
+inventory, family-dependent candidate filtering, successful typed replacement,
+and unchanged source/cache on cancellation or failed selection. Separately,
+each family's eligible geometric variants still need independently validated
+generation, worker/cache, DXF/DWG import/export, and round-trip paths, with
+unsupported variants explicitly refused without mutating the current source
+or cache. A type appearing in the picker is not proof that every one of its
+geometric variants is supported.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
@@ -24211,3 +24216,30 @@ cache for multi-branch outputs, and does not establish staged DXF/DWG or
 independent-CAD equivalence. W563cg remains open for arbitrary periodic weight
 layouts, editable-cache support, continuous root/topology certification,
 visible GUI, and exact-head CI.
+
+#### W563cp. Exercise Gradual Periodic Weight Profiles on Both Offset Sides (2026-11-07)
+
+Extended the translated seven-control, degree-2 periodic worker and 256-bit
+oracle matrices with gradual and reversed-gradual positive weights spanning
+`1e-6` to `1e6`, using signed distances `+/-0.005`. The oracle samples the
+offset regularity factor on both sides: negative offsets have no sampled sign
+changes and a positive minimum factor, while positive offsets have at least two
+sign changes and cross zero. Worker generation consequently admits the
+negative side as `Ok` and explicitly refuses the positive side as
+`SingularOffset`; refusal replies contain no partial ordinary geometry, leave
+the source unchanged, and survive request-bound encode/decode. For every
+successful conditioned profile, emitted spline geometry is compared
+bidirectionally with the independent 256-bit sampled offset polyline, and
+sampled cusp endpoints are checked against the worker-derived geometry budget.
+
+The focused `[periodic][nonuniform]` worker case passes 15,416 assertions. The
+combined worker/cache/spline-variant selection passes 85,622 assertions across
+seven cases. The Release test target builds and `git diff --check` passes. This
+slice changes tests only; it does not expand production eligibility.
+
+These are sampled oracle and bounded geometry checks, not continuous proof of
+all roots, topology, or arbitrary periodic weight layouts. The positive-side
+refusal is preserved despite sampled curvature-factor sign changes; no
+partial geometry or cache is accepted. W563cg remains open for continuous
+root/topology certification, full editable-cache and staged-file coverage for
+new periodic profiles, visible GUI, external-CAD comparison, and exact-head CI.
