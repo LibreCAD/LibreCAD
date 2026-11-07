@@ -497,6 +497,31 @@ TEST_CASE("Exact tangent-constrained cubic spline can be offset",
     CHECK(result.status == LC_CurveOffsetStatus::Ok);
 }
 
+TEST_CASE("Consistent rational tangent-constrained cubic spline can be offset",
+          "[curve-offset][direct][fit-points][tangents][rational]") {
+    RS_Spline source = makeSpline(3,
+        {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {0, 0, 0, 0, 1, 1, 1, 1},
+        {1.0, 0.75, 0.8, 1.0});
+    source.getData().fitTangentsConstrained = true;
+    source.getData().fitTolerance = 1e-2;
+    source.getData().fitStartTangent = {2, 3};
+    source.getData().fitEndTangent = {3, -4};
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        LC_CurveJet jet;
+        REQUIRE(source.tryEvaluateJet(parameter,
+            parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Right, jet));
+        source.getData().fitPoints.push_back(jet.point);
+    }
+    REQUIRE(source.fitTangentsMatchCurve());
+
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+    const auto result = LC_CurveOffset::buildDirectBranches(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status == LC_CurveOffsetStatus::Ok);
+}
+
 // A cubic with an inflection.
 RS_Spline sCurve(const RS_Vector& shift = RS_Vector{0.0, 0.0}) {
     return makeSpline(3, {shift + RS_Vector{0, 0}, shift + RS_Vector{4, 6}, shift + RS_Vector{8, -6},

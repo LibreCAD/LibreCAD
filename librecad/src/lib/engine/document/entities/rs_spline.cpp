@@ -2314,8 +2314,9 @@ bool RS_Spline::fitTangentsMatchCurve() const {
       !finitePlanar(data.fitStartTangent) ||
       !finitePlanar(data.fitEndTangent)) return false;
   if (std::any_of(data.weights.begin(), data.weights.end(),
-                  [](double weight) { return weight != 1.0; })) return false;
-
+                  [](double weight) {
+                    return !std::isfinite(weight) || !(weight > 0.0);
+                  })) return false;
   const double startMagnitude = data.fitStartTangent.magnitude();
   const double endMagnitude = data.fitEndTangent.magnitude();
   if (!std::isfinite(startMagnitude) || !std::isfinite(endMagnitude) ||

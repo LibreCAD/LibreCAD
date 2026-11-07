@@ -928,10 +928,33 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
     CHECK(matched.fitTangentsMatchCurve());
     auto* supported = new RS_Spline(nullptr, matched.getData());
 
+    RS_SplineData rationalData = matched.getData();
+    rationalData.weights.assign(rationalData.controlPoints.size(), 1.0);
+    rationalData.weights[1] = 0.75;
+    rationalData.weights[rationalData.weights.size() - 2] = 0.8;
+    rationalData.fitTolerance = 1e-2;
+    rationalData.fitPoints.clear();
+    RS_Spline rationalEvaluator{nullptr, rationalData};
+    double parameterStart = 0.0;
+    double parameterEnd = 0.0;
+    REQUIRE(rationalEvaluator.getParameterDomain(parameterStart, parameterEnd));
+    for (const double fraction : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        const double parameter = parameterStart +
+                                 (parameterEnd - parameterStart) * fraction;
+        LC_CurveJet jet;
+        REQUIRE(rationalEvaluator.tryEvaluateJet(
+            parameter, fraction == 1.0 ? LC_CurveEvaluationSide::Left
+                                       : LC_CurveEvaluationSide::Right, jet));
+        rationalData.fitPoints.push_back(jet.point);
+    }
+    auto* supportedRational = new RS_Spline(nullptr, rationalData);
+    REQUIRE(supportedRational->fitTangentsMatchCurve());
+
     RS_SplineData inconsistent = matched.getData();
     inconsistent.fitPoints[1].y += 1.0;
     auto* refused = new RS_Spline(nullptr, inconsistent);
     f.graphic.addEntity(supported);
+    f.graphic.addEntity(supportedRational);
     f.graphic.addEntity(refused);
 
     std::unique_ptr<LC_OffsetCurve> clone(
@@ -950,12 +973,15 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
         static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
     REQUIRE(splineIndex >= 0);
     typeBox->setCurrentIndex(splineIndex);
-    CHECK(sourceBox->count() == 2);
+    CHECK(sourceBox->count() == 3);
     CHECK(sourceBox->isEnabled());
+    CHECK(sourceBox->findData(
+        QVariant::fromValue<qulonglong>(supported->getId())) > 0);
     const int candidateIndex = sourceBox->findData(
-        QVariant::fromValue<qulonglong>(supported->getId()));
+        QVariant::fromValue<qulonglong>(supportedRational->getId()));
     CHECK(candidateIndex > 0);
     CHECK_FALSE(supported->getFlag(RS2::FlagSelected));
+    CHECK_FALSE(supportedRational->getFlag(RS2::FlagSelected));
     CHECK_FALSE(refused->getFlag(RS2::FlagSelected));
     before.geometry(*clone);
 
@@ -975,11 +1001,12 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
         &clone->sourceDefinition()->source.value);
     REQUIRE(committed);
     CHECK(committed->fitTangentsConstrained);
+    CHECK(committed->weights == rationalData.weights);
     CHECK(committed->fitStartTangent.distanceTo(
               matched.getData().fitStartTangent) == 0.0);
     CHECK(committed->fitEndTangent.distanceTo(
               matched.getData().fitEndTangent) == 0.0);
-    CHECK(sourceBox->currentData().toULongLong() == supported->getId());
+    CHECK(sourceBox->currentData().toULongLong() == supportedRational->getId());
 }
 
 TEST_CASE("Tangent spline replacement refusal preserves the current offset atomically",

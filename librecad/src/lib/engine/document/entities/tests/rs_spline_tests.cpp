@@ -487,8 +487,51 @@ TEST_CASE("RS_Spline validates constrained tangent metadata against its curve",
 
   RS_SplineData rational = spline.getData();
   rational.weights[1] = 0.75;
-  RS_Spline unsupportedWeights{nullptr, rational};
-  CHECK_FALSE(unsupportedWeights.fitTangentsMatchCurve());
+  rational.weights[2] = 0.8;
+  rational.fitPoints.clear();
+  rational.fitTolerance = 1e-2;
+  RS_Spline rationalCurve{nullptr, rational};
+  for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+    LC_CurveJet jet;
+    REQUIRE(rationalCurve.tryEvaluateJet(parameter,
+                                         parameter == 1.0
+                                             ? LC_CurveEvaluationSide::Left
+                                             : LC_CurveEvaluationSide::Right,
+                                         jet));
+    rational.fitPoints.push_back(jet.point);
+  }
+  rational.fitStartTangent = rational.controlPoints[1] - rational.controlPoints[0];
+  rational.fitEndTangent = rational.controlPoints.back() -
+                           rational.controlPoints[rational.controlPoints.size() - 2];
+  RS_Spline consistentRational{nullptr, rational};
+  CHECK(consistentRational.validate());
+  LC_CurveJet rationalStartJet;
+  LC_CurveJet rationalEndJet;
+  REQUIRE(consistentRational.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right,
+                                            rationalStartJet));
+  REQUIRE(consistentRational.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left,
+                                           rationalEndJet));
+  CHECK((rationalStartJet.first / rationalStartJet.first.magnitude()) ==
+        (rational.fitStartTangent / rational.fitStartTangent.magnitude()));
+  CHECK((rationalEndJet.first / rationalEndJet.first.magnitude()) ==
+        (rational.fitEndTangent / rational.fitEndTangent.magnitude()));
+  double maxFitResidual = 0.0;
+  for (const auto& point : rational.fitPoints) {
+    maxFitResidual = std::max(maxFitResidual,
+        consistentRational.getNearestPointOnEntity(point, true).distanceTo(point));
+  }
+  INFO("rational fit residual=" << maxFitResidual);
+  CHECK(maxFitResidual <= rational.fitTolerance);
+  CHECK(consistentRational.fitTangentsMatchCurve());
+
+  rational.fitEndTangent *= -1.0;
+  RS_Spline inconsistentRational{nullptr, rational};
+  CHECK_FALSE(inconsistentRational.fitTangentsMatchCurve());
+
+  rational.fitEndTangent *= -1.0;
+  rational.weights[2] = std::numeric_limits<double>::quiet_NaN();
+  RS_Spline invalidWeight{nullptr, rational};
+  CHECK_FALSE(invalidWeight.fitTangentsMatchCurve());
 }
 
 TEST_CASE("RS_Spline fit interpolation uses a natural unconstrained end",
