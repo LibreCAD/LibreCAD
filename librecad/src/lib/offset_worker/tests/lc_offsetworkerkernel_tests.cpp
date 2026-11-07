@@ -759,17 +759,21 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         double scale;
         bool sevenControlQuadratic;
         bool wideWeights = false;
+        bool conditionedWeights = false;
     };
     const std::vector<Variant> variants{
         {1, 1e-3, false}, {1, 1.0, false}, {1, 1e3, false},
         {2, 1.0, false}, {2, 1e-3, true}, {2, 1.0, true},
-        {2, 1e3, true}, {2, 1.0, true, true}, {3, 1.0, false}};
+        {2, 1e3, true}, {2, 1.0, true, true},
+        {2, 1.0, true, false, true}, {3, 1.0, false}};
     for (const auto& variant : variants) {
         const int degree = variant.degree;
         const double scale = variant.scale;
         const bool sevenControlQuadratic = variant.sevenControlQuadratic;
         const bool wideWeights = variant.wideWeights;
-        CAPTURE(degree, scale, sevenControlQuadratic, wideWeights);
+        const bool conditionedWeights = variant.conditionedWeights;
+        CAPTURE(degree, scale, sevenControlQuadratic, wideWeights,
+                conditionedWeights);
         RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
         const std::vector<RS_Vector> controls = sevenControlQuadratic
             ? std::vector<RS_Vector>{{0, 0}, {25, -15}, {55, -5}, {70, 20},
@@ -790,7 +794,9 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         REQUIRE(periodic.validate());
         periodic.setClosed(true);
         auto sourceData = periodic.getData();
-        const std::vector<double> independentWeights = wideWeights
+        const std::vector<double> independentWeights = conditionedWeights
+            ? std::vector<double>{1e-6, 1e6, 1e-4, 1e4, 1e-2, 1e2, 1.0}
+            : wideWeights
             ? std::vector<double>{0.01, 100.0, 0.1, 10.0, 0.5, 2.0, 1.0}
             : sevenControlQuadratic
             ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15}
@@ -833,9 +839,13 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                         ? static_cast<int>(*generated.engineStatus)
                         : -1);
             if (generated.engineStatus != LC_CurveOffsetStatus::Ok) {
-                REQUIRE(wideWeights);
-                CHECK((generated.engineStatus == LC_CurveOffsetStatus::ToleranceNotMet ||
-                       generated.engineStatus == LC_CurveOffsetStatus::SingularOffset));
+                REQUIRE((wideWeights || conditionedWeights));
+                if (conditionedWeights) {
+                    CHECK(generated.engineStatus == LC_CurveOffsetStatus::UndefinedTangent);
+                } else {
+                    CHECK((generated.engineStatus == LC_CurveOffsetStatus::ToleranceNotMet ||
+                           generated.engineStatus == LC_CurveOffsetStatus::SingularOffset));
+                }
                 CHECK(generated.refusal == LC_OffsetCurveRefusal::Engine);
                 CHECK(generated.ordinaryStatus == result::OrdinaryStatus::None);
                 CHECK(generated.ordinary.empty());
