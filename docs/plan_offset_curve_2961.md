@@ -23208,11 +23208,29 @@ librecad_tests '[external][oda][dwg][spline-points][geometry]'`. The converter
 requires macOS service access in this environment.
 
 Requalified regressions pass: `[spline][LC_SplinePoints]` has 615 assertions
-in 10 cases; `[fit-points][roundtrip]` has 30,851 assertions in 8 cases; and
-`[dxf][filter][spline][fit-points]` has 2,208 assertions in 9 cases, including
+in 10 cases; `[fit-points][roundtrip]` has 33,535 assertions in 8 cases; and
+`[dxf][filter][spline][fit-points]` has 4,892 assertions in 9 cases, including
 DXF and `RS_Spline` tangent-fit paths. This establishes external ODA conversion
 and evaluated geometry only for these tested open, uncut, unit-weight
 quadratic spline-point cases. Fit-point lists and explicit tangent authoring
 metadata remain absent from scenario-1 DWG output. Other fit layouts,
-closed/cut forms, tangent mismatches, visible-GUI acceptance, and exact-head CI
-remain open gates.
+closed/cut forms, visible-GUI acceptance, and exact-head CI remain open gates.
+
+#### W563bc. Preserve Geometry with Inconsistent Fit-tangent Metadata (2026-11-07)
+
+Extended the imported quadratic fit-point regression to include a source whose
+stored endpoint tangent vectors do not match its evaluated `LC_SplinePoints`
+curve. Across all six DWG output versions, export now succeeds as scenario 1;
+the decoded spline retains the exact control points, carries no misleading
+fit-point/tangent fields, and reopens as the same drawable spline-points or
+parabola geometry. Two hundred one samples compare within `1e-10` drawing
+units. This confirms that tangent metadata consistency is not required to
+preserve the actual control-net curve; the metadata itself is intentionally
+not round-tripped in DWG scenario 1.
+
+Validation: the focused mismatched-tangent case passes 2,745 assertions;
+`[fit-points][roundtrip]` passes 33,535 assertions in 8 cases; and
+`[dxf][filter][spline][fit-points]` passes 4,892 assertions in 9 cases. The
+Release `librecad_tests` target builds and `git diff --check` passes. This
+closes the tested open four-fit-point mismatch case only; closed/cut and other
+fit/control layouts, visible-GUI acceptance, and exact-head CI remain open.
