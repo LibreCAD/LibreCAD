@@ -2836,6 +2836,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucsviewsselectiondocks_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_layerstateproperties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheet_polyline_closed_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetarctests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
