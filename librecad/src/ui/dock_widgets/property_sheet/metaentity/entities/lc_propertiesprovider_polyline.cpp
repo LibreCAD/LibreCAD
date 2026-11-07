@@ -31,7 +31,9 @@ void LC_PropertiesProviderPolyline::doCreateEntitySpecificProperties(LC_Property
     addBoolean<RS_Polyline>({"closed", tr("Is Closed"), tr("Determines whether polyline is closed")}, [](const RS_Polyline* e) -> bool {
                                 return e->isClosed();
                             }, [](const bool& v, RS_Polyline* e) -> void {
-                                e->setClosed(v);
+                                // the two-argument form also adds or removes the segment that closes the outline;
+                                // setClosed(bool) alone only flips the flag, and the polyline kept being drawn open
+                                e->setClosed(v, 0.0);
                             }, list, contGeometry);
 
     addReadOnlyString<RS_Polyline>({"segmentsCount", tr("Segments Count"), tr("Amount of polyline segments")},
