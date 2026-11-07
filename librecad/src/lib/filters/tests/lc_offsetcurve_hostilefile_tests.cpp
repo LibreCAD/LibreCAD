@@ -5600,10 +5600,11 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
         point.y = point.y * scale + translation.y;
         point.z *= scale;
     }
+    const double distanceFactor = GENERATE(0.125, 0.25);
     const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
-    const double magnitude = .25 * scale;
+    const double magnitude = distanceFactor * scale;
     const double signedDistance = side == LC_CurveOffsetSide::Left ? magnitude : -magnitude;
-    CAPTURE(static_cast<int>(side), signedDistance);
+    CAPTURE(distanceFactor, static_cast<int>(side), signedDistance);
     const LC_OffsetSourceDefinition definition{
         LC_OffsetSourceGeometry{wrapped}, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
@@ -5666,7 +5667,8 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
         cache.nfit = 0;
 
         const auto input = directory.file(std::string("scale-") +
-            std::to_string(scale) + (side == LC_CurveOffsetSide::Left
+            std::to_string(scale) + "-distance-" + std::to_string(distanceFactor) +
+            (side == LC_CurveOffsetSide::Left
                 ? "-wrapped-left-" : "-wrapped-right-") + suffix);
 #ifdef DWGSUPPORT
         if (dwg) f::dwgFile(input, cache, version);
