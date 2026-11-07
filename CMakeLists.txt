@@ -2736,6 +2736,7 @@ if (BUILD_TESTS)
         librecad/src/lib/creation/tests/lc_action_draw_circle_2points_radius_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp
+        librecad/src/lib/creation/tests/lc_action_draw_line_snake_commands_tests.cpp
         librecad/src/lib/creation/tests/lc_closedshapetoolstests.cpp
         librecad/src/cmd/tests/rs_commands_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
@@ -2836,6 +2837,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dock_widgets/ucs_list/tests/lc_ucsviewsselectiondocks_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetlifetime_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_layerstateproperties_tests.cpp
+        librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheet_polyline_closed_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_property_copy_tests.cpp
         librecad/src/ui/dock_widgets/property_sheet/tests/lc_propertysheetarctests.cpp
         librecad/src/actions/dock_widgets/block/tests/lc_actionblockssave_tests.cpp
@@ -2849,6 +2851,7 @@ if (BUILD_TESTS)
         librecad/src/ui/dialogs/tests/lc_dialog_tests.cpp
         librecad/src/ui/dialogs/tests/lc_language_selection_tests.cpp
         librecad/src/ui/dialogs/tests/lc_translation_catalog_tests.cpp
+        librecad/src/ui/dialogs/tests/lc_infocursor_colors_tests.cpp
         librecad/src/ui/dock_widgets/block_widget/tests/lc_blockwidget_filter_tests.cpp
         librecad/src/ui/dialogs/settings/options_drawing/tests/lc_dlgoptionsdrawingtests.cpp
         librecad/src/ui/dialogs/settings/options_widget/tests/lc_stylesheetoptiontests.cpp
