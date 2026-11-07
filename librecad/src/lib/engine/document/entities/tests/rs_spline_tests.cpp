@@ -585,6 +585,25 @@ TEST_CASE("RS_Spline validates degree-one tangent metadata",
   data.fitPoints[1].y = 1e-3;
   RS_Spline misplacedFit{nullptr, data};
   CHECK_FALSE(misplacedFit.fitTangentsMatchCurve());
+
+  data = RS_SplineData{1, false};
+  data.controlPoints = {{0, 0}, {4, 2}};
+  data.knotslist = {0, 0, 1, 1};
+  data.weights = {1.0, 0.5};
+  data.fitPoints = {{0, 0}, {4, 2}};
+  data.fitTangentsConstrained = true;
+  data.fitTolerance = 1e-8;
+  data.fitStartTangent = {2, 1};
+  RS_Spline oneEnded{nullptr, data};
+  REQUIRE(oneEnded.fitTangentsMatchCurve());
+
+  oneEnded.rotate({0, 0}, 0.37);
+  oneEnded.scale({0, 0}, {2.0, 0.5});
+  CHECK(oneEnded.fitTangentsMatchCurve());
+  oneEnded.revertDirection();
+  CHECK(oneEnded.fitTangentsMatchCurve());
+  CHECK(oneEnded.getData().fitStartTangent.magnitude() == 0.0);
+  CHECK(oneEnded.getData().fitEndTangent.x < 0.0);
 }
 
 TEST_CASE("RS_Spline fit interpolation uses a natural unconstrained end",

@@ -981,6 +981,11 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
     linearTangentData.fitEndTangent = {2, 0};
     auto* supportedLinear = new RS_Spline(nullptr, linearTangentData);
     REQUIRE(supportedLinear->fitTangentsMatchCurve());
+    RS_SplineData oneEndedLinearData = linearTangentData;
+    oneEndedLinearData.fitEndTangent = {0, 0};
+    auto* supportedOneEndedLinear =
+        new RS_Spline(nullptr, oneEndedLinearData);
+    REQUIRE(supportedOneEndedLinear->fitTangentsMatchCurve());
 
     RS_SplineData inconsistent = matched.getData();
     inconsistent.fitPoints[1].y += 1.0;
@@ -989,6 +994,7 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
     f.graphic.addEntity(supportedRational);
     f.graphic.addEntity(supportedRationalQuadratic);
     f.graphic.addEntity(supportedLinear);
+    f.graphic.addEntity(supportedOneEndedLinear);
     f.graphic.addEntity(refused);
 
     std::unique_ptr<LC_OffsetCurve> clone(
@@ -1007,7 +1013,7 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
         static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
     REQUIRE(splineIndex >= 0);
     typeBox->setCurrentIndex(splineIndex);
-    CHECK(sourceBox->count() == 5);
+    CHECK(sourceBox->count() == 6);
     CHECK(sourceBox->isEnabled());
     CHECK(sourceBox->findData(
         QVariant::fromValue<qulonglong>(supported->getId())) > 0);
@@ -1016,6 +1022,8 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
     const int linearCandidateIndex = sourceBox->findData(
         QVariant::fromValue<qulonglong>(supportedLinear->getId()));
     CHECK(linearCandidateIndex > 0);
+    CHECK(sourceBox->findData(
+        QVariant::fromValue<qulonglong>(supportedOneEndedLinear->getId())) > 0);
     const int candidateIndex = sourceBox->findData(
         QVariant::fromValue<qulonglong>(supportedRationalQuadratic->getId()));
     CHECK(candidateIndex > 0);
@@ -1066,6 +1074,26 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
     CHECK(committedLinear->fitStartTangent == linearTangentData.fitStartTangent);
     CHECK(committedLinear->fitEndTangent == linearTangentData.fitEndTangent);
     CHECK(sourceBox->currentData().toULongLong() == supportedLinear->getId());
+
+    const int refreshedOneEndedIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(supportedOneEndedLinear->getId()));
+    REQUIRE(refreshedOneEndedIndex > 0);
+    sourceBox->setCurrentIndex(refreshedOneEndedIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    const auto* committedOneEnded = std::get_if<RS_SplineData>(
+        &clone->sourceDefinition()->source.value);
+    REQUIRE(committedOneEnded);
+    CHECK(committedOneEnded->degree == 1);
+    CHECK(committedOneEnded->fitTangentsConstrained);
+    CHECK(committedOneEnded->fitStartTangent ==
+          oneEndedLinearData.fitStartTangent);
+    CHECK(committedOneEnded->fitEndTangent ==
+          oneEndedLinearData.fitEndTangent);
+    CHECK(sourceBox->currentData().toULongLong() ==
+          supportedOneEndedLinear->getId());
 }
 
 TEST_CASE("Tangent spline replacement refusal preserves the current offset atomically",

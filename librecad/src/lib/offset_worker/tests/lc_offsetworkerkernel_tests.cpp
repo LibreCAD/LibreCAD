@@ -522,6 +522,25 @@ TEST_CASE("offset worker admits consistent degree-one tangent sources and valida
     CHECK(validated.changed);
     CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
 
+    data.fitEndTangent = {0, 0};
+    const LC_OffsetSourceDefinition oneEndedDefinition{
+        LC_OffsetSourceGeometry{data}, .05, 1e-4, false};
+    const req::Request oneEndedRequest{token,
+        req::GenerateSource{oneEndedDefinition, {}}};
+    const auto oneEndedReply = LC_OffsetWorkerKernel::run(oneEndedRequest);
+    const auto& oneEndedGenerated = native(oneEndedReply, 7);
+    REQUIRE(oneEndedGenerated.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(oneEndedGenerated.ordinary.size() == 1);
+    const req::Request oneEndedValidation{token,
+        req::ValidateSourceCache{
+            std::get<RS_SplineData>(oneEndedGenerated.ordinary.front()),
+            oneEndedDefinition, {}}};
+    const auto oneEndedValidationReply =
+        LC_OffsetWorkerKernel::run(oneEndedValidation);
+    const auto& oneEndedValidated = native(oneEndedValidationReply, 8);
+    CHECK(oneEndedValidated.refusal == LC_OffsetCurveRefusal::None);
+    CHECK(oneEndedValidated.engineStatus == LC_CurveOffsetStatus::Ok);
+
     data.fitEndTangent = {-1, 0};
     const LC_OffsetSourceDefinition inconsistent{
         LC_OffsetSourceGeometry{data}, .05, 1e-4, false};

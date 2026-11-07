@@ -482,13 +482,23 @@ TEST_CASE("Consistent tangent-constrained linear spline can be offset",
     source.getData().fitEndTangent = {2, 0};
     REQUIRE(source.fitTangentsMatchCurve());
     const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
-    const auto request = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
+    const auto left = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
+    const auto right = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5);
 
-    CHECK(LC_CurveOffset::buildDirectBranches(source, request, options,
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+    CHECK(LC_CurveOffset::buildDirectBranches(source, right, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+
+    source.getData().fitEndTangent = {0, 0};
+    REQUIRE(source.fitTangentsMatchCurve());
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+    CHECK(LC_CurveOffset::buildDirectBranches(source, right, options,
         LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
 
     source.getData().fitEndTangent = {-1, 0};
-    CHECK(LC_CurveOffset::buildDirectBranches(source, request, options,
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
         LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
 }
 

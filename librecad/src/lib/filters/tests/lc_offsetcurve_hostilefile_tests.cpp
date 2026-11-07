@@ -1225,6 +1225,10 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     linearTangentSpline.fitEndTangent = {2, 0};
     RS_Spline linearTangentCheck{nullptr, linearTangentSpline};
     REQUIRE(linearTangentCheck.fitTangentsMatchCurve());
+    RS_SplineData oneEndedLinearTangentSpline = linearTangentSpline;
+    oneEndedLinearTangentSpline.fitEndTangent = {0, 0};
+    RS_Spline oneEndedLinearTangentCheck{nullptr, oneEndedLinearTangentSpline};
+    REQUIRE(oneEndedLinearTangentCheck.fitTangentsMatchCurve());
     RS_Spline periodic{nullptr, RS_SplineData{3, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
                                    RS_Vector{20, 50}, RS_Vector{-15, 25}})
@@ -1261,7 +1265,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
-    const std::array<LC_OffsetSourceGeometry, 32> sources{
+    const std::array<LC_OffsetSourceGeometry, 33> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .2, 0, 2 * M_PI, false}},
@@ -1274,6 +1278,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{rationalTangentCubic},
         LC_OffsetSourceGeometry{rationalTangentQuadratic},
         LC_OffsetSourceGeometry{linearTangentSpline},
+        LC_OffsetSourceGeometry{oneEndedLinearTangentSpline},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{2, 1}, RS_Vector{1, 0}, RS_Vector{0, 1}}}},
@@ -5195,6 +5200,12 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
     RS_Spline linearSpline{nullptr, linearData};
     REQUIRE(linearSpline.fitTangentsMatchCurve());
     importVariant(linearData, "linear");
+
+    RS_SplineData oneEndedLinearData = linearData;
+    oneEndedLinearData.fitEndTangent = {0, 0};
+    RS_Spline oneEndedLinearSpline{nullptr, oneEndedLinearData};
+    REQUIRE(oneEndedLinearSpline.fitTangentsMatchCurve());
+    importVariant(oneEndedLinearData, "linear-one-ended");
 }
 
 TEST_CASE("wrapped periodic spline source imports through operation-8 validation in DXF and DWG",
