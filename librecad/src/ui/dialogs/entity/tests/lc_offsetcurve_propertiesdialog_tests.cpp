@@ -843,6 +843,20 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
         click(*selectSource);
         CHECK(sourceEntities[i]->getFlag(RS2::FlagSelected));
 
+        sourceEntities[i]->delFlag(RS2::FlagSelected);
+        NativeWidget reopenedWidget;
+        reopenedWidget.setGraphicViewport(f.view.getViewPort());
+        reopenedWidget.setEntity(clone.get());
+        auto* reopenedTypeBox = reopenedWidget.findChild<QComboBox*>("cbSourceType");
+        auto* reopenedSourceBox = reopenedWidget.findChild<QComboBox*>("cbSource");
+        auto* reopenedSelectSource = reopenedWidget.findChild<QToolButton*>("tbSelectSource");
+        REQUIRE(reopenedTypeBox); REQUIRE(reopenedSourceBox); REQUIRE(reopenedSelectSource);
+        CHECK(reopenedTypeBox->currentData().toInt() == static_cast<int>(kind));
+        CHECK(reopenedSourceBox->currentData().toULongLong() == sourceIds[i]);
+        CHECK(reopenedSelectSource->isEnabled());
+        click(*reopenedSelectSource);
+        CHECK(sourceEntities[i]->getFlag(RS2::FlagSelected));
+
         auto* distance = widget.findChild<QLineEdit*>("leDistance");
         REQUIRE(distance);
         CHECK(distance->isEnabled());
