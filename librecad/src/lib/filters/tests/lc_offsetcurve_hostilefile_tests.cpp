@@ -5696,7 +5696,11 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
             (side == LC_CurveOffsetSide::Left
                 ? "-wrapped-left-" : "-wrapped-right-") + suffix);
 #ifdef DWGSUPPORT
-        if (dwg) f::dwgFile(input, cache, version);
+        if (dwg) {
+            f::dwgFile(input, cache, version);
+            preserveTypedSourceDwg(input,
+                "wrapped-periodic-" + input.filename().string());
+        }
         else f::binaryDxf(input, cache, version);
 #else
         f::binaryDxf(input, cache, version);
@@ -5725,6 +5729,46 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
         CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*receivedSource).toCbor());
         CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
               RS_Spline::geometryFingerprint(expectedCache));
+
+        if (dwg) {
+            const char* odaDirectory =
+                std::getenv("LIBRECAD_WRAPPED_PERIODIC_ODA_DXF_DIR");
+            if (odaDirectory != nullptr && *odaDirectory != '\0') {
+                auto odaPath = std::filesystem::path(odaDirectory) /
+                    ("wrapped-periodic-" + input.filename().string());
+                odaPath.replace_extension(".dxf");
+                INFO(odaPath.string());
+                REQUIRE(std::filesystem::is_regular_file(odaPath));
+                const auto converted = f::readCodec(odaPath);
+                REQUIRE(converted.splines.size() == 1);
+                const auto& convertedSpline = converted.splines.front();
+                REQUIRE(convertedSpline.controllist.size() ==
+                        expectedCache.controlPoints.size());
+                REQUIRE(convertedSpline.knotslist.size() ==
+                        expectedCache.knotslist.size());
+                if (convertedSpline.weightlist.empty()) {
+                    CHECK(std::all_of(expectedCache.weights.begin(),
+                                      expectedCache.weights.end(),
+                                      [](double weight) { return weight == 1.0; }));
+                } else {
+                    REQUIRE(convertedSpline.weightlist.size() ==
+                            expectedCache.weights.size());
+                    for (std::size_t i = 0; i < expectedCache.weights.size(); ++i)
+                        CHECK(convertedSpline.weightlist[i] == expectedCache.weights[i]);
+                }
+                for (std::size_t i = 0; i < expectedCache.controlPoints.size(); ++i) {
+                    REQUIRE(convertedSpline.controllist[i]);
+                    const double tolerance = 1e-9 * std::max(1.0, scale);
+                    CHECK(std::hypot(
+                              convertedSpline.controllist[i]->x -
+                                  expectedCache.controlPoints[i].x,
+                              convertedSpline.controllist[i]->y -
+                                  expectedCache.controlPoints[i].y) <= tolerance);
+                }
+                for (std::size_t i = 0; i < expectedCache.knotslist.size(); ++i)
+                    CHECK(convertedSpline.knotslist[i] == expectedCache.knotslist[i]);
+            }
+        }
     }
 }
 
