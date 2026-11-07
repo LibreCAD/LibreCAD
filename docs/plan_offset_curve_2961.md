@@ -49,6 +49,8 @@ W538 explicit-control-net quadratic fit SPLINE import correction complete;
 W539 tangent-vector model and DXF preservation complete with fail-closed DWG
 export for constrained variants;
 W540 schema-3 tangent metadata persistence complete;
+W542 two-ended cubic fit-point interpolation is implemented for its bounded
+planar `RS_Spline` case;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21209,3 +21211,81 @@ encoding against the DWG scenario layout or continue explicit refusal; then
 only enable operation-7/8, picker, and cache variants after exact-curve and
 failure-atomicity validation. Push this receipt and query CI for its exact PR
 head.
+
+## 541. Source Picker Type Switching and Parabola Scope (2026-11-06)
+
+The latest clarification reiterates that the Properties source widget must let
+the user change the requested curve family before selecting a replacement,
+and that the picker should expose every currently supported source family,
+including parabola. The current UI already satisfies that interaction: the
+family selector is editable, candidate filtering follows it, changing the
+filter does not mutate the active source/cache, and a successful candidate is
+installed through the guarded worker-backed replacement path. The nine choices
+are line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline. Parabola remains a distinct source kind even though
+its native entity derives from `LC_SplinePoints`.
+
+No additional picker control or parabola UI implementation is required. Keep
+the family-switch, candidate-filter, current-source selection/highlight, and
+atomic replacement tests as regression gates. Interpret “all supported types”
+as all nine modeled families in the picker, not as proof that every geometric
+variant is offsettable. The implementation plan remains variant-driven:
+qualify capture, exact offset generation, cache validation/admission,
+replacement, failure/cancellation non-mutation, and applicable DXF/DWG
+save/reopen for each variant. Unsupported variants must be excluded or refused
+explicitly without replacing the existing source or cache. Tangent-constrained
+spline variants remain intentionally refused until their follow-on geometry,
+identity, and persistence gates are completed.
+
+Existing evidence: W440/W474/W504/W510/W513/W533 and the focused Properties
+and source-UI regressions already cover type switching, all nine family choices,
+parabola identity, and current-source highlighting. This update reconciles the
+request with that implementation; it adds no product-code slice and does not
+close the remaining family/variant matrix or visible-GUI, exact-head CI, and
+external-CAD acceptance gates.
+
+### W542 Completion Receipt
+
+The first tangent-aware interpolation slice is implemented for open cubic
+`RS_Spline` imports that contain fit points and two finite, non-zero planar
+endpoint tangent vectors but no control net. It constructs a clamped cubic
+control net from the normalized centripetal fit-point parameters, fixes the
+endpoint controls from the supplied derivative vectors and their knot spans,
+and solves the interior fit-point equations before publishing the result. A
+failed/degenerate solve leaves the previous spline data unchanged. The source
+fit tolerance is retained on successful import. This is exact for the accepted
+case: direct derivative-jet checks match both endpoint vectors, and every input
+fit point is interpolated.
+
+Spline import now retains the source knot values instead of rounding them to
+the declared knot tolerance. Tolerance remains available for closure
+classification; rewriting knot values was changing the actual curve on DXF
+reopen. This fixes the tangent-constrained control-net/fit-point DXF round trip
+without changing DWG behavior.
+
+Scope remains deliberately bounded. A missing/zero tangent at either endpoint,
+closed splines, non-planar or degenerate fit data, constrained `LC_SplinePoints`,
+and tangent-constrained variants with explicit control nets are not enabled by
+this interpolation entry point. Such inputs retain the existing import path
+and remain excluded from offset eligibility; constrained DWG export continues
+to refuse until a lossless scenario encoding is proven. Do not claim all
+tangent-constrained spline support from this slice.
+
+Validation: Release `librecad_tests` builds; `[fitpoints][tangents]` passes 25
+assertions across 2 cases; `[RS_Spline]` passes 437 assertions across 17 cases;
+`[spline][fit-points]` passes 1,134 assertions across 8 cases; and `[dxf][spline]`
+passes 3,190 assertions across 25 cases. `git diff --check` passes. The final
+fit-point suite was rerun after retaining imported fit tolerance; the broad DXF
+spline suite was run after the no-knot-rounding change. These are local results,
+not PR-head CI or external-CAD validation.
+
+Next: implement and verify one-ended tangent semantics (including the
+unconstrained-end rule), reject unsupported/closed cases without presenting
+approximate geometry as exact, and add equivalent fit/tangent-aware behavior or
+an explicit refusal representation for `LC_SplinePoints`. Then qualify
+rotation/reversal, scale and near-degenerate parameterization, control-net plus
+fit-point agreement, source/cache identity, and applicable DXF/DWG persistence.
+Keep picker/worker/cache eligibility disabled until exact-curve and
+failure-atomicity gates pass.
+
+Product commit `17afe1754` (`feat(spline): interpolate cubic fit tangents`).
