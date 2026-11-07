@@ -1024,32 +1024,6 @@ TEST_CASE("DWG round-trips both pieces of a cut spline-points curve",
       {RS2::FormatDWG2013, "dwg-r2013"},
       {RS2::FormatDWG2018, "dwg-r2018"},
   };
-  LC_SplinePointsData data{false, false};
-  data.useControlPoints = true;
-  data.controlPoints = {{0.0, 0.0}, {2.0, 4.0}, {5.0, -1.0},
-                        {8.0, 3.0}, {11.0, 0.0}};
-  LC_SplinePoints original{nullptr, data};
-
-  std::unique_ptr<LC_SplinePoints> left;
-  std::unique_ptr<LC_SplinePoints> right;
-  const double domain = static_cast<double>(original.getSegmentCount());
-  for (int i = 1; i < 20 && !right; ++i) {
-    LC_SplinePoints candidate{nullptr, data};
-    LC_CurveJet cutJet;
-    REQUIRE(candidate.tryEvaluateJet(domain * i / 20.0,
-                                     LC_CurveEvaluationSide::Right,
-                                     cutJet));
-    std::unique_ptr<LC_SplinePoints> candidateRight(candidate.cut(cutJet.point));
-    if (candidateRight) {
-      left = std::make_unique<LC_SplinePoints>(nullptr, candidate.getData());
-      right = std::move(candidateRight);
-    }
-  }
-  REQUIRE(left);
-  REQUIRE(right);
-  CHECK(left->getData().cut);
-  CHECK(right->getData().cut);
-
   const auto sample = [](const LC_SplinePoints& spline) {
     std::vector<RS_Vector> points;
     const double end = static_cast<double>(spline.getSegmentCount());
@@ -1063,41 +1037,83 @@ TEST_CASE("DWG round-trips both pieces of a cut spline-points curve",
     }
     return points;
   };
-  const std::array<std::vector<RS_Vector>, 2> expected{sample(*left), sample(*right)};
+  const std::vector<std::vector<RS_Vector>> controlSets{
+      {{0.0, 0.0}, {3.0, 4.0}, {7.0, 0.0}},
+      {{0.0, 0.0}, {2.0, 4.0}, {6.0, -1.0}, {10.0, 1.0}},
+      {{0.0, 0.0}, {2.0, 4.0}, {5.0, -1.0}, {8.0, 3.0}, {11.0, 0.0}},
+      {{0.0, 0.0}, {1.0, 3.0}, {3.0, 5.0}, {5.0, 1.0},
+       {7.0, -2.0}, {9.0, 3.0}, {12.0, 0.0}},
+  };
+  const std::array<double, 3> cutFractions{0.25, 0.5, 0.75};
+  for (size_t caseIndex = 0; caseIndex < controlSets.size(); ++caseIndex) {
+    CAPTURE(caseIndex, controlSets[caseIndex].size());
+    LC_SplinePointsData data{false, false};
+    data.useControlPoints = true;
+    data.controlPoints = controlSets[caseIndex];
+    LC_SplinePoints original{nullptr, data};
 
-  RS_Graphic graphic;
-  graphic.initForNewDocument();
-  graphic.addEntity(new LC_SplinePoints(&graphic, left->getData()));
-  graphic.addEntity(new LC_SplinePoints(&graphic, right->getData()));
-  for (const auto& [format, version] : formats) {
-    INFO(version);
-    const std::string path = tempPath("cut-control-net-" + version);
-    std::remove(path.c_str());
-    {
-      RS_FilterDXFRW writer;
-      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+    std::unique_ptr<LC_SplinePoints> left;
+    std::unique_ptr<LC_SplinePoints> right;
+    double usedFraction = 0.0;
+    const double domain = static_cast<double>(original.getSegmentCount());
+    for (const double fraction : cutFractions) {
+      LC_SplinePoints candidate{nullptr, data};
+      LC_CurveJet cutJet;
+      REQUIRE(candidate.tryEvaluateJet(domain * fraction,
+                                       LC_CurveEvaluationSide::Right,
+                                       cutJet));
+      std::unique_ptr<LC_SplinePoints> candidateRight(candidate.cut(cutJet.point));
+      if (candidateRight) {
+        left = std::make_unique<LC_SplinePoints>(nullptr, candidate.getData());
+        right = std::move(candidateRight);
+        usedFraction = fraction;
+        break;
+      }
     }
-    RS_Graphic reopened;
-    std::vector<SplineRecord> written;
-    importFile(reopened, path, RS2::FormatDWG, &written);
-    std::filesystem::remove(path);
+    REQUIRE(left);
+    REQUIRE(right);
+    CHECK(left->getData().cut);
+    CHECK(right->getData().cut);
+    const std::array<std::vector<RS_Vector>, 2> expected{sample(*left), sample(*right)};
 
-    REQUIRE(written.size() == 2);
-    REQUIRE(reopened.count() == 2);
-    std::array<bool, 2> matched{false, false};
-    for (RS_Entity* entity : reopened) {
-      auto* spline = dynamic_cast<LC_SplinePoints*>(entity);
-      REQUIRE(spline != nullptr);
-      const auto actual = sample(*spline);
-      const double d0 = curveDistance(expected[0], actual);
-      const double d1 = curveDistance(expected[1], actual);
-      const size_t match = d0 <= d1 ? 0 : 1;
-      CHECK_FALSE(matched[match]);
-      matched[match] = true;
-      CHECK(std::min(d0, d1) < 1.0e-10);
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.addEntity(new LC_SplinePoints(&graphic, left->getData()));
+    graphic.addEntity(new LC_SplinePoints(&graphic, right->getData()));
+    for (const auto& [format, version] : formats) {
+      INFO(version);
+      INFO(usedFraction);
+      const std::string path = tempPath("cut-control-net-" +
+          std::to_string(data.controlPoints.size()) + "pt-" + version);
+      std::remove(path.c_str());
+      {
+        RS_FilterDXFRW writer;
+        REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+      }
+      preserveTangentSplineDwg(path, "cut-control-" +
+          std::to_string(data.controlPoints.size()) + "pt-" + version + ".dwg");
+      RS_Graphic reopened;
+      std::vector<SplineRecord> written;
+      importFile(reopened, path, RS2::FormatDWG, &written);
+      std::filesystem::remove(path);
+
+      REQUIRE(written.size() == 2);
+      REQUIRE(reopened.count() == 2);
+      std::array<bool, 2> matched{false, false};
+      for (RS_Entity* entity : reopened) {
+        auto* spline = dynamic_cast<LC_SplinePoints*>(entity);
+        REQUIRE(spline != nullptr);
+        const auto actual = sample(*spline);
+        const double d0 = curveDistance(expected[0], actual);
+        const double d1 = curveDistance(expected[1], actual);
+        const size_t match = d0 <= d1 ? 0 : 1;
+        CHECK_FALSE(matched[match]);
+        matched[match] = true;
+        CHECK(std::min(d0, d1) < 1.0e-10);
+      }
+      CHECK(matched[0]);
+      CHECK(matched[1]);
     }
-    CHECK(matched[0]);
-    CHECK(matched[1]);
   }
 }
 
