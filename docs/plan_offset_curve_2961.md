@@ -22455,9 +22455,14 @@ Added an opt-in `[external][oda]` reader test using
 reads each source DWG and converted DXF through libdxfrw, then compares the
 decoded schema-2 source CBOR exactly, verifies the expected family and source
 validity, checks reserved flags and tail cardinality, and compares foreign
-XDATA. The test passes 432 assertions across all nine families and both DWG
-source versions. Build plus `git diff --check` pass. This closes ODA
-round-trip verification for the nine representative metadata carriers only;
-it does not prove each geometric variant, native cache promotion, visible-GUI
-behavior, or external support in other CAD applications. Test commit
-`f61172ac4` (`test(offset): verify ODA typed-source round trips`).
+XDATA. It then imports each ODA DXF through the staged application path. All 18
+synthetic carriers correctly refuse native promotion because their cache
+geometry does not match the typed source, and the ordinary fallback retains the
+exact source CBOR. The staged-reader matrix passes 2,432 assertions. The raw
+external-reader comparison alone passed 432 assertions before this extension.
+Build plus `git diff --check` pass. This closes ODA round-trip and application
+fallback verification for the nine representative metadata carriers only; it
+does not prove each geometric variant, successful native cache promotion,
+visible-GUI behavior, or external support in other CAD applications. Test
+commits `f61172ac4` (`test(offset): verify ODA typed-source round trips`) and
+`e16abe2b2` (`test(offset): verify ODA import fallback preservation`).
