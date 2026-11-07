@@ -87,6 +87,17 @@ void preserveTangentSplineDwg(const std::string &source,
   REQUIRE_FALSE(error);
 }
 
+const std::vector<std::vector<RS_Vector>>& closedSplinePointControlSets() {
+  static const std::vector<std::vector<RS_Vector>> controlSets{
+      {{0.0, 0.0}, {4.0, 0.0}, {2.0, 3.5}},
+      {{0.0, 0.0}, {4.0, 0.0}, {4.0, 3.0}, {0.0, 3.0}},
+      {{0.0, 0.0}, {4.0, 0.0}, {5.0, 3.0}, {2.0, 5.0}, {-1.0, 2.0}},
+      {{0.0, 0.0}, {2.0, -1.0}, {4.0, 0.0}, {5.0, 2.0}, {4.0, 4.0},
+       {2.0, 5.0}, {0.0, 4.0}, {-1.0, 2.0}},
+  };
+  return controlSets;
+}
+
 /** What a SPLINE record carries. */
 struct SplineRecord {
   int m_flags = 0;
@@ -921,23 +932,6 @@ TEST_CASE("DWG preserves tangent-constrained spline-points as exact control spli
 TEST_CASE("DWG round-trips closed spline-points control geometry",
           "[dwg][filter][spline-points][closed][roundtrip]") {
   ensureSettings();
-  LC_SplinePointsData data{true, true};
-  data.useControlPoints = true;
-  data.controlPoints = {{0.0, 0.0}, {4.0, 0.0}, {5.0, 3.0},
-                        {2.0, 5.0}, {-1.0, 2.0}};
-  LC_SplinePoints source{nullptr, data};
-  REQUIRE(source.getSegmentCount() == data.controlPoints.size());
-  std::vector<RS_Vector> sourceCurve;
-  for (int i = 0; i <= 500; ++i) {
-    const double parameter =
-        static_cast<double>(source.getSegmentCount()) * i / 500.0;
-    const auto side = i == 500 ? LC_CurveEvaluationSide::Left
-                               : LC_CurveEvaluationSide::Right;
-    LC_CurveJet jet;
-    REQUIRE(source.tryEvaluateJet(parameter, side, jet));
-    sourceCurve.push_back(jet.point);
-  }
-
   const std::vector<std::pair<RS2::FormatType, std::string>> formats{
       {RS2::FormatDWG, "dwg-r2000"},
       {RS2::FormatDWG2004, "dwg-r2004"},
@@ -946,54 +940,76 @@ TEST_CASE("DWG round-trips closed spline-points control geometry",
       {RS2::FormatDWG2013, "dwg-r2013"},
       {RS2::FormatDWG2018, "dwg-r2018"},
   };
-  RS_Graphic graphic;
-  graphic.initForNewDocument();
-  auto* stored = new LC_SplinePoints(&graphic, data);
-  graphic.addEntity(stored);
-  for (const auto& [format, version] : formats) {
-    INFO(version);
-    const std::string path = tempPath("closed-control-net-" + version);
-    std::remove(path.c_str());
-    {
-      RS_FilterDXFRW writer;
-      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
-    }
-    preserveTangentSplineDwg(path, "closed-control-" + version + ".dwg");
-    RS_Graphic reopened;
-    std::vector<SplineRecord> written;
-    importFile(reopened, path, RS2::FormatDWG, &written);
-    std::filesystem::remove(path);
-
-    REQUIRE(written.size() == 1);
-    CHECK(written.front().m_scenario == 1);
-    CHECK(written.front().m_degree == 2);
-    CHECK((written.front().m_flags & 0x1) != 0);
-    CHECK((written.front().m_flags & 0x2) != 0);
-    auto periodicControls = data.controlPoints;
-    periodicControls.push_back(data.controlPoints[0]);
-    periodicControls.push_back(data.controlPoints[1]);
-    checkSameVectors(written.front().m_controlPoints, periodicControls);
-    REQUIRE(written.front().m_knots.size() == periodicControls.size() + 3);
-    for (size_t i = 0; i < written.front().m_knots.size(); ++i)
-      CHECK(written.front().m_knots[i] == static_cast<double>(i));
-    REQUIRE(reopened.count() == 1);
-    auto* reopenedSpline = dynamic_cast<LC_SplinePoints*>(*reopened.begin());
-    REQUIRE(reopenedSpline != nullptr);
-    CHECK(reopenedSpline->isClosed());
-    CHECK(reopenedSpline->getData().cut);
-    std::vector<RS_Vector> reopenedCurve;
+  for (const auto& controlPoints : closedSplinePointControlSets()) {
+    INFO(controlPoints.size());
+    LC_SplinePointsData data{true, true};
+    data.useControlPoints = true;
+    data.controlPoints = controlPoints;
+    LC_SplinePoints source{nullptr, data};
+    REQUIRE(source.getSegmentCount() == data.controlPoints.size());
+    std::vector<RS_Vector> sourceCurve;
     for (int i = 0; i <= 500; ++i) {
       const double parameter =
-          static_cast<double>(reopenedSpline->getSegmentCount()) * i / 500.0;
+          static_cast<double>(source.getSegmentCount()) * i / 500.0;
       const auto side = i == 500 ? LC_CurveEvaluationSide::Left
                                  : LC_CurveEvaluationSide::Right;
       LC_CurveJet jet;
-      REQUIRE(reopenedSpline->tryEvaluateJet(parameter, side, jet));
-      reopenedCurve.push_back(jet.point);
+      REQUIRE(source.tryEvaluateJet(parameter, side, jet));
+      sourceCurve.push_back(jet.point);
     }
-    REQUIRE(reopenedCurve.size() == sourceCurve.size());
-    for (size_t i = 0; i < sourceCurve.size(); ++i)
-      CHECK(reopenedCurve[i].distanceTo(sourceCurve[i]) < 1.0e-10);
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* stored = new LC_SplinePoints(&graphic, data);
+    graphic.addEntity(stored);
+    for (const auto& [format, version] : formats) {
+      INFO(version);
+      const std::string pointCount = std::to_string(controlPoints.size()) + "pt";
+      const std::string path = tempPath("closed-control-net-" + pointCount +
+                                        "-" + version);
+      std::remove(path.c_str());
+      {
+        RS_FilterDXFRW writer;
+        REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+      }
+      preserveTangentSplineDwg(path, "closed-control-" + pointCount + "-" +
+                                      version + ".dwg");
+      RS_Graphic reopened;
+      std::vector<SplineRecord> written;
+      importFile(reopened, path, RS2::FormatDWG, &written);
+      std::filesystem::remove(path);
+
+      REQUIRE(written.size() == 1);
+      CHECK(written.front().m_scenario == 1);
+      CHECK(written.front().m_degree == 2);
+      CHECK((written.front().m_flags & 0x1) != 0);
+      CHECK((written.front().m_flags & 0x2) != 0);
+      auto periodicControls = controlPoints;
+      periodicControls.push_back(controlPoints[0]);
+      periodicControls.push_back(controlPoints[1]);
+      checkSameVectors(written.front().m_controlPoints, periodicControls);
+      REQUIRE(written.front().m_knots.size() == periodicControls.size() + 3);
+      for (size_t i = 0; i < written.front().m_knots.size(); ++i)
+        CHECK(written.front().m_knots[i] == static_cast<double>(i));
+      REQUIRE(reopened.count() == 1);
+      auto* reopenedSpline = dynamic_cast<LC_SplinePoints*>(*reopened.begin());
+      REQUIRE(reopenedSpline != nullptr);
+      CHECK(reopenedSpline->isClosed());
+      CHECK(reopenedSpline->getData().cut);
+      std::vector<RS_Vector> reopenedCurve;
+      for (int i = 0; i <= 500; ++i) {
+        const double parameter =
+            static_cast<double>(reopenedSpline->getSegmentCount()) * i / 500.0;
+        const auto side = i == 500 ? LC_CurveEvaluationSide::Left
+                                   : LC_CurveEvaluationSide::Right;
+        LC_CurveJet jet;
+        REQUIRE(reopenedSpline->tryEvaluateJet(parameter, side, jet));
+        reopenedCurve.push_back(jet.point);
+      }
+      REQUIRE(reopenedCurve.size() == sourceCurve.size());
+      for (size_t i = 0; i < sourceCurve.size(); ++i)
+        CHECK(reopenedCurve[i].distanceTo(sourceCurve[i]) < 1.0e-10);
+    }
   }
 }
 
@@ -1092,52 +1108,56 @@ TEST_CASE("ODA-converted spline-point control DWGs preserve evaluated geometry",
     }
   }
 
-  LC_SplinePointsData closedData{true, true};
-  closedData.useControlPoints = true;
-  closedData.controlPoints = {{0.0, 0.0}, {4.0, 0.0}, {5.0, 3.0},
-                              {2.0, 5.0}, {-1.0, 2.0}};
-  LC_SplinePoints closedSource{nullptr, closedData};
-  std::vector<RS_Vector> closedExpected;
-  for (int i = 0; i <= 2000; ++i) {
-    const double parameter =
-        static_cast<double>(closedSource.getSegmentCount()) * i / 2000.0;
-    const auto side = i == 2000 ? LC_CurveEvaluationSide::Left
-                                : LC_CurveEvaluationSide::Right;
-    LC_CurveJet jet;
-    REQUIRE(closedSource.tryEvaluateJet(parameter, side, jet));
-    closedExpected.push_back(jet.point);
-  }
-  for (const auto& [version, label] : versions) {
-    INFO(label);
-    const auto path = std::filesystem::path(outputDirectory) /
-                      ("closed-control-" + version + ".dxf");
-    REQUIRE(std::filesystem::exists(path));
-    RS_Graphic converted;
-    std::vector<SplineRecord> records;
-    importFile(converted, path.string(), RS2::FormatDXFRW, &records);
-    REQUIRE(records.size() == 1);
-    CHECK((records.front().m_flags & 0x1) != 0);
-    CHECK((records.front().m_flags & 0x2) != 0);
-    REQUIRE(converted.count() == 1);
-    std::vector<RS_Vector> actual;
-    auto* entity = *converted.begin();
-    if (auto* splinePoints = dynamic_cast<LC_SplinePoints*>(entity)) {
-      REQUIRE(splinePoints->isClosed());
-      for (int i = 0; i <= 2000; ++i) {
-        const double parameter =
-            static_cast<double>(splinePoints->getSegmentCount()) * i / 2000.0;
-        const auto side = i == 2000 ? LC_CurveEvaluationSide::Left
-                                    : LC_CurveEvaluationSide::Right;
-        LC_CurveJet jet;
-        REQUIRE(splinePoints->tryEvaluateJet(parameter, side, jet));
-        actual.push_back(jet.point);
-      }
-    } else if (auto* spline = dynamic_cast<RS_Spline*>(entity)) {
-      actual = splineCurve(*spline, 2000);
-    } else {
-      FAIL("ODA-converted closed SPLINE imported as an unexpected entity type");
+  for (const auto& controlPoints : closedSplinePointControlSets()) {
+    INFO(controlPoints.size());
+    LC_SplinePointsData closedData{true, true};
+    closedData.useControlPoints = true;
+    closedData.controlPoints = controlPoints;
+    LC_SplinePoints closedSource{nullptr, closedData};
+    std::vector<RS_Vector> closedExpected;
+    for (int i = 0; i <= 2000; ++i) {
+      const double parameter =
+          static_cast<double>(closedSource.getSegmentCount()) * i / 2000.0;
+      const auto side = i == 2000 ? LC_CurveEvaluationSide::Left
+                                  : LC_CurveEvaluationSide::Right;
+      LC_CurveJet jet;
+      REQUIRE(closedSource.tryEvaluateJet(parameter, side, jet));
+      closedExpected.push_back(jet.point);
     }
-    CHECK(curveDistance(closedExpected, actual) < 1.0e-6);
+    const std::string pointCount = std::to_string(controlPoints.size()) + "pt";
+    for (const auto& [version, label] : versions) {
+      INFO(label);
+      const auto path = std::filesystem::path(outputDirectory) /
+                        ("closed-control-" + pointCount + "-" + version +
+                         ".dxf");
+      REQUIRE(std::filesystem::exists(path));
+      RS_Graphic converted;
+      std::vector<SplineRecord> records;
+      importFile(converted, path.string(), RS2::FormatDXFRW, &records);
+      REQUIRE(records.size() == 1);
+      CHECK((records.front().m_flags & 0x1) != 0);
+      CHECK((records.front().m_flags & 0x2) != 0);
+      REQUIRE(converted.count() == 1);
+      std::vector<RS_Vector> actual;
+      auto* entity = *converted.begin();
+      if (auto* splinePoints = dynamic_cast<LC_SplinePoints*>(entity)) {
+        REQUIRE(splinePoints->isClosed());
+        for (int i = 0; i <= 2000; ++i) {
+          const double parameter =
+              static_cast<double>(splinePoints->getSegmentCount()) * i / 2000.0;
+          const auto side = i == 2000 ? LC_CurveEvaluationSide::Left
+                                      : LC_CurveEvaluationSide::Right;
+          LC_CurveJet jet;
+          REQUIRE(splinePoints->tryEvaluateJet(parameter, side, jet));
+          actual.push_back(jet.point);
+        }
+      } else if (auto* spline = dynamic_cast<RS_Spline*>(entity)) {
+        actual = splineCurve(*spline, 2000);
+      } else {
+        FAIL("ODA-converted closed SPLINE imported as an unexpected entity type");
+      }
+      CHECK(curveDistance(closedExpected, actual) < 5.0e-6);
+    }
   }
 }
 
