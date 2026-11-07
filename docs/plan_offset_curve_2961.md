@@ -24046,3 +24046,24 @@ remains as stated above: change family before choosing a candidate across all
 nine modeled kinds, with parabola distinct; further work belongs to geometry
 variant support, not another picker control. Exact-head CI, visible GUI, and
 remaining source-family/variant gates remain open.
+
+#### W563ck. Probe Gradual High-ratio Periodic Weight Orderings (2026-11-07)
+
+An exploratory worker-matrix probe applied two monotone seven-control weight
+profiles spanning `1e-6` to `1e6` (forward and reversed) to the periodic
+quadratic source, including signed distances `+/-0.005`. Neither ordering
+produced offset geometry: the forward ordering classified the two sides as
+`AmbiguousRegularity` and `SingularOffset`; the reverse ordering classified
+both as `UndefinedTangent`. This shows that the periodic refusal is not
+limited to the originally alternating weight order, and that status varies
+with weight ordering and side. It is not evidence that these inputs are
+intrinsically singular, because the probe did not independently establish the
+exact rational derivative or offset geometry.
+
+The temporary test expansion was removed; the committed periodic worker/cache
+matrix remains unchanged and passes 1,708 assertions. Do not accept any of
+these profiles or map the differing statuses to success. Keep the existing
+fail-closed guard while pursuing a rational-weight-conditioned tangent bound
+and an independent high-precision curve/offset comparison. The probe does not
+close W563cg, does not add a supported periodic weight profile, and adds no
+product-code claim.
