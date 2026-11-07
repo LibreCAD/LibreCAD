@@ -754,14 +754,16 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
 
 TEST_CASE("worker validates nonuniform periodic spline caches on both offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][spline-variant][periodic][nonuniform]") {
-    for (const int degree : {2, 3}) {
+    for (const int degree : {1, 2, 3}) {
         CAPTURE(degree);
         RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
         for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
                                        RS_Vector{60, 0}, RS_Vector{55, 35},
                                        RS_Vector{20, 50}, RS_Vector{-15, 25}})
             periodic.addControlPoint(point);
-        if (degree == 2)
+        if (degree == 1)
+            periodic.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
+        else if (degree == 2)
             periodic.setKnotVector({0, 0, 0, .5, 1.75, 2.5, 3, 3, 3});
         else
             periodic.setKnotVector({0, 0, 0, 0, .5, 2, 3, 3, 3, 3});
@@ -787,7 +789,8 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         REQUIRE(sourceCheck.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left,
                                            endJet));
         CHECK(startJet.point.distanceTo(endJet.point) < 1e-8);
-        CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
+        if (degree > 1)
+            CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
 
         for (const double signedDistance : {.125, -.125}) {
             CAPTURE(signedDistance);
@@ -800,11 +803,45 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             const auto& generated = native(generationReply, 7);
             REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
-            REQUIRE(generated.ordinary.size() == 1);
-            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
             const auto generatedWire = result::encode(generationReply, generationRequest);
             REQUIRE(generatedWire);
             CHECK(result::decode(*generatedWire, generationRequest));
+
+            if (degree == 1 && generated.ordinary.size() != 1) {
+                REQUIRE(generated.ordinary.size() == 6);
+                for (const auto& item : generated.ordinary) {
+                    CAPTURE(item.index());
+                    CHECK((std::holds_alternative<req::Segment>(item) ||
+                           std::holds_alternative<RS_SplineData>(item)));
+                }
+
+                RS_SplineData singlePiece;
+                if (const auto* segment =
+                        std::get_if<req::Segment>(&generated.ordinary.front())) {
+                    singlePiece.degree = 1;
+                    singlePiece.controlPoints = {segment->start, segment->end};
+                    singlePiece.knotslist = {0, 0, 1, 1};
+                    singlePiece.weights = {1, 1};
+                } else {
+                    const auto* spline =
+                        std::get_if<RS_SplineData>(&generated.ordinary.front());
+                    REQUIRE(spline);
+                    singlePiece = *spline;
+                }
+                const req::Request validationRequest{token,
+                    req::ValidateSourceCache{singlePiece, definition, {}}};
+                const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+                const auto& validated = native(validationReply, 8);
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+                const auto validationWire = result::encode(validationReply, validationRequest);
+                REQUIRE(validationWire);
+                CHECK(result::decode(*validationWire, validationRequest));
+                continue;
+            }
+
+            REQUIRE(generated.ordinary.size() == 1);
+            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
 
             const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
             const req::Request validationRequest{token,
