@@ -21934,8 +21934,43 @@ representative capture, direct computation, cache promotion and type-changing
 replacement across the currently modeled families, not every variant or
 distance/side combination.
 
+#### W563b. Real Properties Transaction and Undo/Redo Matrix (2026-11-07)
+
+Extended the actual `LC_DlgEntityProperties` workflow regression to switch the
+source-family control before selecting a replacement, wait for native worker
+preparation, Accept the replacement, and verify one undo/redo cycle for each
+of the nine advertised families: ellipse, spline, spline-points, parabola,
+bounded hyperbola, line, arc, circle, and polyline. The test checks source
+identity after preparation, after document commit, and after redo; undo restores
+the original editable ellipse state. Ellipse intentionally remains represented
+by the legacy editable ellipse definition, while the other families retain
+their tagged source definition. The distinct parabola source identity is
+asserted through the transaction and redo path. The test uses the same
+representative geometries as the passing all-family Properties picker matrix.
+
+On the current product head, the Release actual-dialog transaction matrix
+passes 6,601 assertions in one Catch2 test case, and the all-family widget
+picker/replacement matrix passes 2,765 assertions. `git diff --check` passes.
+Product/test commit `8fd1cc98b` (`test(offset): transact source replacements
+across families`). These tests close the explicit cross-family Properties
+commit/undo/redo requirement for representative geometries; they do not close
+all source variants, per-family file-format round trips, direct canvas pick
+transaction coverage, visible GUI acceptance, or independent-CAD acceptance.
+
 This closes the requested UI type-switch and representative nine-family
-selection/replacement behavior. It does not close exhaustive per-variant
+selection/replacement behavior. The follow-up requirement is specifically to
+change the source type as part of choosing a new source, then pick an entity of
+that newly selected type; it is not satisfied by merely displaying all nine
+families or by selecting within the current type. Keep a transition matrix in
+the Properties regression tests: for each source family, switch the family
+filter, verify the candidate list refreshes to matching entities, and commit a
+replacement of the newly selected family. Include parabola as its own choice
+and verify that its candidates/source identity are not treated as generic
+`LC_SplinePoints`. Current UI coverage for all nine choices and the parabola
+identity exists, but the full source-variant, worker/cache, replacement
+transaction, and format lanes remain independently required below.
+
+This does not close exhaustive per-variant
 admission, all-output-cardinality combinations, all family/format imports, or
 visible GUI and independent-CAD acceptance. Keep W563 open until the remainder
 of the family/variant inventory below is qualified.
@@ -21946,8 +21981,9 @@ cache validation, replacement commit/undo, and supported DXF/DWG persistence
 for: `RS_Line`, `RS_Arc`, `RS_Circle`, `RS_Ellipse`, `RS_Spline`,
 `LC_SplinePoints`, `LC_Parabola`, bounded `LC_Hyperbola`, and `RS_Polyline`.
 Preserve parabola identity before testing its `LC_SplinePoints` base class.
-For every family, switching the filter must refresh only matching candidates;
-selecting one must atomically update the tagged, value-owned source; cancelling
+For every family transition, switching the filter during source replacement
+must refresh only matching candidates for the newly selected type; selecting
+one must atomically update the tagged, value-owned source; cancelling
 or selecting an invalid/unrepresentable variant must leave source and cache
 unchanged. When the active source exists in the drawing, retain its matching
 highlight/selection behavior. Exercise both direct canvas picking and the
@@ -21967,8 +22003,9 @@ complete based on UI enumeration alone.
 
 Implementation order: (1) derive a code-backed family/variant matrix from
 capture, engine, worker and writer paths; (2) close shared identity and
-eligibility discrepancies; (3) add table-driven cross-family selector,
-highlight, replace, cancel and failure-atomicity tests; (4) add missing
+eligibility discrepancies; (3) add table-driven source-type transition tests
+that change the family before picking, plus highlight, replace, cancel and
+failure-atomicity tests; (4) add missing
 per-family worker/cache and DXF/DWG round-trip tests; (5) run focused tests,
 Release builds and `git diff --check`; (6) commit each coherent slice and
 record exact completed rows and remaining exclusions here. Acceptance requires
