@@ -22381,12 +22381,28 @@ reported a dictionary-string buffer-overflow warning while continuing and
 emitting the expected SPLINE; record that residual decoder warning rather than
 calling the full DWG parse warning-free.
 
-ODA File Converter 27.1 is installed, but both its normal launch and an
-offscreen launch failed before conversion: the normal Qt/Cocoa process could
-not connect to macOS PasteBoard/XPC, and the bundle contains no offscreen Qt
-plugin. LaunchServices also rejected the app bundle with `kLSNoExecutableErr`
-and the standalone executable with `kLSExecutableIncorrectFormat`. No ODA
-conversion result was produced. LibreDWG is an independent decoder check, not
-a substitute for ODA or GUI acceptance. The preserved outputs are under
-`/private/tmp/LibreCAD-PR3193-oda-inspection`; decoded DXFs and reader logs are
-under `/private/tmp/LibreCAD-PR3193-libredwg-out`.
+ODA File Converter 27.1 independently converted the preserved directory to
+R2018 DXF. The first sandboxed launches failed on PasteBoard/XPC, but running
+the converter with macOS service access succeeded. The input directory
+contained 60 DWGs (the 30 canonical files plus test-hook copies); all converted
+successfully with:
+
+```sh
+/Applications/ODAFileConverter.app/Contents/MacOS/ODAFileConverter \
+  /private/tmp/LibreCAD-PR3193-oda-inspection \
+  /private/tmp/LibreCAD-PR3193-oda-all ACAD2018 DXF 0 1 '*.dwg'
+```
+
+The 30 canonical output DXFs were checked by group-code pairs:
+all 12 base files have one SPLINE of the expected degree and retain the
+`LibreCad`/`LC_OFFSET_CURVE` schema plus foreign XDATA; all 12 edited files have
+one regenerated degree-3 SPLINE, the updated `0.5` distance, and the same
+foreign XDATA; all six controls are one ordinary LINE with foreign XDATA and no
+offset marker. ODA's requested target is R2018, so its converted `$ACADVER` is
+AC1032; the source-version matrix is checked independently from the original
+DWGs. ODA conversion plus structural inspection closes the independent DWG
+reader/writer gate for these 30 cases, not the broader family matrix or visible
+GUI acceptance. The preserved outputs are under
+`/private/tmp/LibreCAD-PR3193-oda-inspection`; ODA-converted DXFs and LibreDWG
+decoded DXFs/logs are under `/private/tmp/LibreCAD-PR3193-oda-all` and
+`/private/tmp/LibreCAD-PR3193-libredwg-out` respectively.
