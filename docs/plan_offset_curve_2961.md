@@ -22688,3 +22688,21 @@ execution evidence only and is not counted as a union pass. Product commits
 `e23aa6b52` and `c52a3038c` cover the both-side rational import behavior and
 the opt-in DWG preservation hook respectively. Exact-head CI and the remaining
 visible-GUI and external-CAD acceptance gates remain open.
+
+#### W563ag. Requalify the Nine-family Source Picker on Current PR Head (2026-11-07)
+
+Re-ran the complete Release source-picker dialog union on PR head
+`039b419d565c63d70099268d7b85866cfa275bdc`:
+
+```sh
+QT_QPA_PLATFORM=offscreen librecad_tests \
+  "[gui][dialog][offsetcurve][source]" --reporter compact
+```
+
+All ten cases pass with 6,883 assertions. This requalifies source-family
+switching before entity selection, all nine modeled families, distinct
+parabola identity, candidate filtering, replacement/highlighting, cancellation,
+and malformed/unsupported candidate refusal at this local PR head. It is
+headless widget integration evidence, not visible-GUI, exhaustive geometric
+variant, or external-CAD acceptance. Exact-head remote CI was still active
+when queried and must be checked again after future pushes.
