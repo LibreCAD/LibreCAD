@@ -21926,6 +21926,13 @@ the W562 product head after tangent-constrained spline-points admission: all
 44 matching test cases passed, totaling 5,114,222 assertions. This strengthens
 cross-lane regression evidence but does not imply every legal DWG/DXF spline,
 hyperbola interval, polyline topology, or output cardinality is covered.
+Adjacent current-head unions also pass: `[lc-offsetcurve][source]` 154
+assertions/6 cases; `[lc-offsetcurve][cache-promotion]` 72,352 assertions/2
+cases; and `[curve-offset][direct]` 42,096 assertions/32 cases. Together with
+the nine-family Properties and worker-generation matrices, these qualify
+representative capture, direct computation, cache promotion and type-changing
+replacement across the currently modeled families, not every variant or
+distance/side combination.
 
 This closes the requested UI type-switch and representative nine-family
 selection/replacement behavior. It does not close exhaustive per-variant
