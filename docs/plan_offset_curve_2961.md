@@ -4362,6 +4362,18 @@ recovery, stale source/selection/layer/UCS rejection, and one-cycle undo/redo
 publication. These are offscreen Qt action tests, not visible interactive
 acceptance.
 
+#### W563r. Direct Offset Engine Requalification (2026-11-07)
+
+Ran the current Release product's focused `[curve-offset][direct]` selection.
+It passes 42,096 assertions across 32 cases, covering direct side selection,
+representative conic/parabola and spline offsets, branch/regularity behavior,
+and materialization cases included by that tag. This is evidence for the
+tagged direct engine suite, not proof of every source-family variant or every
+variant's direct-operation/document transaction cross-product. The broader
+`[curve-offset]` selection lists 223 cases; that overbroad run was interrupted
+before a result and is not counted. Continue remaining family/variant lanes and
+the visible-GUI and independent-CAD gates.
+
 | W71b lane | Testcases / assertions | Result | SHA256 |
 |---|---:|---|---|
 | Creation/repeat Release | 13 / 318 | PASS | `431301b4020ce1dad423503772271d972cca5430335498be760da42dda975ce5` |
