@@ -21511,6 +21511,22 @@ conflicting tangent xdata`). This closes only duplicated-metadata conflict
 refusal. Broader source/cache identity, exact control-net/fit/tangent
 consistency, worker/cache eligibility, and DWG representation remain open.
 
+### W551. Large-Translation Schema-3 Round-Trip (2026-11-06)
+
+Extended the W549 transform sequence with a large world-coordinate translation
+after rotation, nonuniform scaling, and reversal, for both constrained
+`RS_Spline` and spline-points sources. The test compares the canonical
+worker-source encoding before and after DXF XDATA and EED round trips, so it
+checks that translated geometry and endpoint tangent identity survive together
+without treating the tangent vectors as points.
+
+Validation: Release `librecad_tests` builds; `[schema3][transform]` passes 26
+assertions; and `git diff --check` passes. Test commit `f94e14e60` (`test(offset):
+cover translated tangent xdata`). This qualifies only the tested
+`(1e8, -1e8)` translation and transform ordering; broad source/cache identity,
+conditioning, exact control-net/fit/tangent consistency, worker/cache
+eligibility, and DWG representation remain open.
+
 ### W550. Reject Conflicting Schema-3 Tangent Copies (2026-11-06)
 
 Added hostile-input coverage that edits only the tangent vectors embedded in
