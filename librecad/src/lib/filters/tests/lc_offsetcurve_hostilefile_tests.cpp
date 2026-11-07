@@ -5587,17 +5587,31 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     periodic.setClosed(true);
     auto wrapped = periodic.getData();
     wrapped.weights.clear();
+    const double scale = GENERATE(1e-3, 1.0, 1e3);
+    const RS_Vector translation{1e6 * scale, -2e6 * scale};
+    CAPTURE(scale, translation.x, translation.y);
+    for (auto& point : wrapped.controlPoints) {
+        point.x = point.x * scale + translation.x;
+        point.y = point.y * scale + translation.y;
+        point.z *= scale;
+    }
+    for (auto& point : wrapped.fitPoints) {
+        point.x = point.x * scale + translation.x;
+        point.y = point.y * scale + translation.y;
+        point.z *= scale;
+    }
     const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
-    const double signedDistance = side == LC_CurveOffsetSide::Left ? .25 : -.25;
+    const double magnitude = .25 * scale;
+    const double signedDistance = side == LC_CurveOffsetSide::Left ? magnitude : -magnitude;
     CAPTURE(static_cast<int>(side), signedDistance);
     const LC_OffsetSourceDefinition definition{
         LC_OffsetSourceGeometry{wrapped}, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
     const auto options = LC_OffsetWorkerTolerance::directOptions(
-        *source, std::abs(signedDistance), definition.relativeTolerance).value();
+        *source, magnitude, definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(*source,
-        LC_CurveOffset::makeSideRequest(side, std::abs(signedDistance)), options,
+        LC_CurveOffset::makeSideRequest(side, magnitude), options,
         LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
     auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
@@ -5651,8 +5665,9 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(std::string(side == LC_CurveOffsetSide::Left
-            ? "wrapped-left-" : "wrapped-right-") + suffix);
+        const auto input = directory.file(std::string("scale-") +
+            std::to_string(scale) + (side == LC_CurveOffsetSide::Left
+                ? "-wrapped-left-" : "-wrapped-right-") + suffix);
 #ifdef DWGSUPPORT
         if (dwg) f::dwgFile(input, cache, version);
         else f::binaryDxf(input, cache, version);
