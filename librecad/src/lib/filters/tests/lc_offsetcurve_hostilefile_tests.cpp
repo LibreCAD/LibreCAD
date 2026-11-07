@@ -5728,6 +5728,154 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     }
 }
 
+TEST_CASE("degree-one periodic spline import follows output cache topology across file lanes",
+          "[lc-offsetcurve][import-session][typed-source][spline-variant][refusal]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-periodic-linear-spline-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+
+    RS_Spline periodic{nullptr, RS_SplineData{1, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10},
+                                   RS_Vector{60, 30}, RS_Vector{20, 50},
+                                   RS_Vector{-15, 25}})
+        periodic.addControlPoint(point);
+    periodic.setClosed(true);
+    auto periodicData = periodic.getData();
+    periodicData.weights.clear();
+    const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
+    constexpr double magnitude = 0.125;
+    const double signedDistance = side == LC_CurveOffsetSide::Left
+        ? magnitude : -magnitude;
+    CAPTURE(static_cast<int>(side), signedDistance);
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{periodicData}, signedDistance, 1e-4, false};
+    auto source = definition.source.makeEntity();
+    REQUIRE(source);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        *source, magnitude, definition.relativeTolerance).value();
+    const auto generated = LC_CurveOffset::buildDirectBranches(
+        *source, LC_CurveOffset::makeSideRequest(side, magnitude), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+    const auto materialized = LC_CurveOffset::materializeBranches(
+        *source, generated, options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(materialized.entities.empty());
+    const auto* firstSpline = materialized.entities.size() == 1
+        ? dynamic_cast<const RS_Spline*>(materialized.entities.front().get())
+        : nullptr;
+    const bool singleSplineCache = firstSpline && firstSpline->validate();
+    RS_SplineData carrierCache;
+    if (singleSplineCache) {
+        carrierCache = firstSpline->getData();
+    } else {
+        for (const auto& entity : materialized.entities)
+            REQUIRE(dynamic_cast<const RS_Line*>(entity.get()));
+        const auto* firstLine =
+            dynamic_cast<const RS_Line*>(materialized.entities.front().get());
+        REQUIRE(firstLine);
+        carrierCache = RS_SplineData{1, false};
+        carrierCache.controlPoints = {
+            firstLine->getStartpoint(), firstLine->getEndpoint()};
+        carrierCache.knotslist = {0, 0, 1, 1};
+        carrierCache.weights = {1, 1};
+        RS_Spline cacheCheck{nullptr, carrierCache};
+        REQUIRE(cacheCheck.validate());
+    }
+
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
+    }};
+    for (const auto& fileFormat : formats) {
+#ifndef DWGSUPPORT
+        if (fileFormat.dwg) continue;
+#endif
+        xd::Definition carrier;
+        carrier.source = definition;
+        xd::Options encoding;
+        if (fileFormat.dwg) {
+            encoding.eed = true;
+            encoding.textEncoding = xd::TextEncoding::Utf16;
+        } else {
+            encoding.asciiDxf = false;
+        }
+        const auto tags = xd::forExport(
+            {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+            carrier, encoding);
+        REQUIRE(tags);
+        DRW_Spline raw = f::raw(1, *tags);
+        raw.controllist.clear();
+        for (const auto& point : carrierCache.controlPoints)
+            raw.controllist.push_back(
+                std::make_shared<DRW_Coord>(point.x, point.y, 0));
+        raw.knotslist = carrierCache.knotslist;
+        raw.weightlist = carrierCache.weights;
+        raw.degree = carrierCache.degree;
+        raw.flags = 8;
+        raw.m_scenario = 1;
+        raw.ncontrol = raw.controllist.size();
+        raw.nknots = raw.knotslist.size();
+        raw.nfit = 0;
+
+        const auto input = directory.file(
+            std::string(side == LC_CurveOffsetSide::Left ? "left-" : "right-") +
+            fileFormat.suffix);
+#ifdef DWGSUPPORT
+        if (fileFormat.dwg) f::dwgFile(input, raw, fileFormat.version);
+        else f::binaryDxf(input, raw, fileFormat.version);
+#else
+        f::binaryDxf(input, raw, fileFormat.version);
+#endif
+        const auto outcome = stagedImport(input, fileFormat.lane);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        const auto expected = values::encodeSourceDefinition(definition);
+        REQUIRE(expected);
+        const auto* imported = f::sole(*outcome.graphic);
+        REQUIRE(imported);
+        if (singleSplineCache) {
+            CHECK(outcome.admitted == 1);
+            CHECK(outcome.downgraded == 0);
+            const auto* native = dynamic_cast<const LC_OffsetCurve*>(imported);
+            REQUIRE(native);
+            REQUIRE(native->sourceDefinition());
+            const auto received = values::encodeSourceDefinition(
+                *native->sourceDefinition());
+            REQUIRE(received);
+            CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
+            CHECK(RS_Spline::geometryFingerprint(native->getData()) ==
+                  RS_Spline::geometryFingerprint(carrierCache));
+        } else {
+            CHECK(outcome.admitted == 0);
+            CHECK(outcome.downgraded == 1);
+            const auto* fallback = dynamic_cast<const RS_Spline*>(imported);
+            REQUIRE(fallback);
+            CHECK(dynamic_cast<const LC_OffsetCurve*>(fallback) == nullptr);
+            CHECK(RS_Spline::geometryFingerprint(fallback->getData()) ==
+                  RS_Spline::geometryFingerprint(carrierCache));
+            const auto parsed = xd::parseAndStrip(fallback->getDrwExtData(), encoding);
+            REQUIRE(parsed.status == xd::Status::Schema2);
+            REQUIRE(parsed.definition);
+            REQUIRE(parsed.definition->source);
+            const auto received = values::encodeSourceDefinition(
+                *parsed.definition->source);
+            REQUIRE(received);
+            CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
+        }
+    }
+}
+
 TEST_CASE("hyperbola import follows output topology on both sides across file lanes",
           "[lc-offsetcurve][import-session][typed-source][hyperbola][refusal]") {
     Setup setup;
