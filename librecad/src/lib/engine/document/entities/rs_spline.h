@@ -317,6 +317,12 @@ public:
   void setFitPoints(const std::vector<RS_Vector> &fitPoints,
                     bool useCentripetal = true);
 
+  /** Interpolate cubic fit points with exact non-zero endpoint derivatives. */
+  bool setFitPointsWithTangents(const std::vector<RS_Vector> &fitPoints,
+                                const RS_Vector &startTangent,
+                                const RS_Vector &endTangent,
+                                bool useCentripetal = true);
+
   /** Change spline type (Standard, ClampedOpen, WrappedClosed) */
   void changeType(RS_SplineData::SplineType newType);
 

@@ -1352,7 +1352,7 @@ std::unique_ptr<RS_Spline> makeSplineFromDrw(RS_EntityContainer *parent,
   RS_SplineData data(source.degree, false);
   const double knotTolerance = (source.tolknot > 0.0) ? source.tolknot : 1e-7;
   for (const double k : source.knotslist)
-    data.knotslist.push_back(RS_Math::round(k, knotTolerance));
+    data.knotslist.push_back(k);
   for (size_t i = 0; i < source.controllist.size(); ++i) {
     if (const auto &control = source.controllist[i]) {
       data.controlPoints.emplace_back(control->x, control->y);
@@ -1362,8 +1362,8 @@ std::unique_ptr<RS_Spline> makeSplineFromDrw(RS_EntityContainer *parent,
   const size_t count = data.controlPoints.size();
   if (data.knotslist.empty() && count > data.degree)
     data.knotslist = LC_SplineHelper::knot(count, data.degree + 1);
-  // whether the file's curve closes, from its knots before rounding: rounding
-  // moves the ends of a periodic curve apart
+  // Determine closure from the source knots using the declared tolerance, but
+  // keep the original knot values: rounding changes the curve itself.
   RS_SplineData unrounded = data;
   if (!source.knotslist.empty())
     unrounded.knotslist = source.knotslist;
@@ -9332,8 +9332,21 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                    [](const std::shared_ptr<DRW_Coord> &coord) {
                      return RS_Vector{coord->x, coord->y};
                    });
-    spline->setFitPoints(fitPoints);
-    preserveFitMetadata(spline);
+    const RS_Vector startTangent{data->tgStart.x, data->tgStart.y,
+                                 data->tgStart.z};
+    const RS_Vector endTangent{data->tgEnd.x, data->tgEnd.y,
+                               data->tgEnd.z};
+    const bool tangentInterpolationSucceeded =
+        data->degree == 3 && hasFitTangents &&
+        spline->setFitPointsWithTangents(fitPoints, startTangent,
+                                         endTangent);
+    if (tangentInterpolationSucceeded) {
+      if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
+        spline->getData().fitTolerance = data->tolfit;
+    } else {
+      spline->setFitPoints(fitPoints);
+      preserveFitMetadata(spline);
+    }
   }
 
   if (isClosed) {

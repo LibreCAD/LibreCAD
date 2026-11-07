@@ -1654,6 +1654,111 @@ void RS_Spline::setFitPoints(const std::vector<RS_Vector> &fitPoints, const bool
   update();
 }
 
+bool RS_Spline::setFitPointsWithTangents(
+    const std::vector<RS_Vector> &fitPoints, const RS_Vector &startTangent,
+    const RS_Vector &endTangent, const bool useCentripetal) {
+  const auto finitePlanar = [](const RS_Vector &v) {
+    return v.valid && std::isfinite(v.x) && std::isfinite(v.y) &&
+           std::isfinite(v.z) && std::abs(v.z) <= RS_TOLERANCE;
+  };
+  if (fitPoints.size() < 2 || !finitePlanar(startTangent) ||
+      !finitePlanar(endTangent) ||
+      startTangent.magnitude() == 0.0 || endTangent.magnitude() == 0.0 ||
+      !std::all_of(fitPoints.begin(), fitPoints.end(), finitePlanar) ||
+      fitPoints.front().distanceTo(fitPoints.back()) == 0.0) {
+    return false;
+  }
+
+  const size_t count = fitPoints.size();
+  std::vector<double> parameters(count, 0.0);
+  for (size_t i = 1; i < count; ++i) {
+    const double chord = fitPoints[i].distanceTo(fitPoints[i - 1]);
+    if (!(chord > 0.0) || !std::isfinite(chord)) {
+      return false;
+    }
+    const double step = useCentripetal ? std::sqrt(chord) : chord;
+    if (!(step > 0.0) || !std::isfinite(step)) {
+      return false;
+    }
+    parameters[i] = parameters[i - 1] + step;
+  }
+  const double total = parameters.back();
+  if (!(total > 0.0) || !std::isfinite(total)) {
+    return false;
+  }
+  for (double &parameter : parameters) {
+    parameter /= total;
+  }
+
+  constexpr size_t degree = 3;
+  const size_t controlCount = count + 2;
+  const size_t n = controlCount - 1;
+  std::vector<double> knots(controlCount + degree + 1, 0.0);
+  std::fill(knots.begin(), knots.begin() + degree + 1, 0.0);
+  for (size_t i = 1; i + 1 < count; ++i) {
+    knots[degree + i] = parameters[i];
+  }
+  std::fill(knots.end() - degree - 1, knots.end(), 1.0);
+
+  std::vector<RS_Vector> controls(controlCount, RS_Vector(false));
+  controls.front() = fitPoints.front();
+  controls[1] = fitPoints.front() +
+                startTangent * ((knots[degree + 1] - knots[degree]) / degree);
+  controls[n - 1] = fitPoints.back() -
+                    endTangent * ((knots[n + 1] - knots[n]) / degree);
+  controls[n] = fitPoints.back();
+
+  const size_t systemSize = count - 2;
+  std::vector<std::vector<double>> matrix(
+      systemSize, std::vector<double>(systemSize, 0.0));
+  std::vector<double> rhsX(systemSize), rhsY(systemSize);
+  for (size_t row = 0; row < systemSize; ++row) {
+    const size_t fitIndex = row + 1;
+    const size_t span = findSpan(n, degree, parameters[fitIndex], knots);
+    const std::vector<double> basis =
+        basisFunctions(span, parameters[fitIndex], degree, knots);
+    rhsX[row] = fitPoints[fitIndex].x;
+    rhsY[row] = fitPoints[fitIndex].y;
+    for (size_t j = 0; j <= degree; ++j) {
+      const size_t controlIndex = span - degree + j;
+      const double coefficient = basis[j];
+      if (controlIndex == 0 || controlIndex == 1 || controlIndex == n - 1 ||
+          controlIndex == n) {
+        rhsX[row] -= coefficient * controls[controlIndex].x;
+        rhsY[row] -= coefficient * controls[controlIndex].y;
+      } else {
+        matrix[row][controlIndex - 2] = coefficient;
+      }
+    }
+  }
+
+  std::vector<double> solutionX(systemSize), solutionY(systemSize);
+  if (!solveSystem(matrix, rhsX, solutionX) ||
+      !solveSystem(matrix, rhsY, solutionY)) {
+    return false;
+  }
+  for (size_t i = 0; i < systemSize; ++i) {
+    controls[i + 2] = {solutionX[i], solutionY[i]};
+    if (!finitePlanar(controls[i + 2])) {
+      return false;
+    }
+  }
+
+  m_data.clearFitTangents();
+  m_data.degree = degree;
+  m_data.type = RS_SplineData::SplineType::ClampedOpen;
+  m_data.controlPoints = std::move(controls);
+  m_data.knotslist = std::move(knots);
+  m_data.weights.assign(controlCount, 1.0);
+  m_data.fitPoints = fitPoints;
+  m_data.fitTangentsConstrained = true;
+  m_data.fitStartTangent = startTangent;
+  m_data.fitEndTangent = endTangent;
+  calculateBorders();
+  update();
+  return true;
+}
+
 /** B-spline basis */
 std::vector<double> RS_Spline::getBSplineBasis(const double t,
                                                const std::vector<double> &knots, const int degree, const size_t numControls) const {

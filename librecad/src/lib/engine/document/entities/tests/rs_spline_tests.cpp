@@ -437,6 +437,55 @@ TEST_CASE("RS_Spline::setFitPoints fills interior CPs for num == p+1",
   }
 }
 
+TEST_CASE("RS_Spline fit-point interpolation honors endpoint tangents",
+          "[RS_Spline][fitpoints][tangents]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {2.0, 3.0}, {6.0, 4.0}, {9.0, 0.0}};
+  const RS_Vector startTangent{2.0, 1.0};
+  const RS_Vector endTangent{1.0, -3.0};
+
+  RS_Spline spline{nullptr, RS_SplineData{3, false}};
+  REQUIRE(spline.setFitPointsWithTangents(fitPoints, startTangent, endTangent));
+  REQUIRE(spline.validate());
+  CHECK(spline.getData().fitTangentsConstrained);
+  CHECK(spline.getData().fitStartTangent == startTangent);
+  CHECK(spline.getData().fitEndTangent == endTangent);
+  CHECK(spline.getData().fitPoints == fitPoints);
+
+  LC_CurveJet startJet;
+  LC_CurveJet endJet;
+  REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+  REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+  CHECK(compareVector(startJet.point, fitPoints.front(), 1e-9));
+  CHECK(compareVector(endJet.point, fitPoints.back(), 1e-9));
+  CHECK(compareVector(startJet.first, startTangent, 1e-8));
+  CHECK(compareVector(endJet.first, endTangent, 1e-8));
+  for (const RS_Vector &fitPoint : fitPoints) {
+    CHECK(compareVector(spline.getNearestPointOnEntity(fitPoint, true), fitPoint,
+                        1e-7));
+  }
+}
+
+TEST_CASE("RS_Spline tangent interpolation rejects unsupported inputs atomically",
+          "[RS_Spline][fitpoints][tangents]") {
+  RS_Spline spline{nullptr, RS_SplineData{3, false}};
+  spline.setFitPoints({{0.0, 0.0}, {1.0, 2.0}, {3.0, 0.0}});
+  const RS_SplineData before = spline.getData();
+
+  CHECK_FALSE(spline.setFitPointsWithTangents(
+      {{0.0, 0.0}, {1.0, 2.0}}, {1.0, 0.0}, {}));
+  CHECK(spline.getData().controlPoints == before.controlPoints);
+  CHECK(spline.getData().knotslist == before.knotslist);
+  CHECK(spline.getData().fitPoints == before.fitPoints);
+  CHECK_FALSE(spline.getData().fitTangentsConstrained);
+
+  CHECK_FALSE(spline.setFitPointsWithTangents(
+      {{0.0, 0.0}, {1.0, 2.0}, {1.0, 2.0}}, {1.0, 0.0}, {0.0, 1.0}));
+  CHECK(spline.getData().controlPoints == before.controlPoints);
+  CHECK(spline.getData().knotslist == before.knotslist);
+  CHECK(spline.getData().fitPoints == before.fitPoints);
+}
+
 // ---------------------------------------------------------------------------
 // Checked jet evaluation (tryEvaluateJet). Analytic fixtures are the oracle;
 // central differences are only a secondary check away from knots.
