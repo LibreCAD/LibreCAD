@@ -67,9 +67,10 @@ qualifies one-ended degree-1 tangents through transform/reversal, both offset
 sides, Properties replacement and the same DXF/DWG file lanes;
 W562 admits and qualifies a curve-consistent tangent-constrained
 `LC_SplinePoints` subset through worker/cache, Properties, DXF/DWG persistence,
-and AC1032 staged-import paths; W563az extends the verified tangent-constrained
-DWG fit-point writer from a single quadratic segment to tested chains of 3, 4,
-and 5 points; remaining family/variant and acceptance work is open;
+and AC1032 staged-import paths; W563az/W563ba extend the verified
+tangent-constrained DWG fit-point writer from a single quadratic segment to
+tested chains of 3, 4, 5, 6, and 8 points; remaining family/variant and
+acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
 must allow choosing a different source family before selecting a live entity,
@@ -23129,3 +23130,29 @@ chains`). This qualifies the tested 3/4/5-point cases and DWG versions; broader
 fit-chain lengths, tangent/geometry variants outside the exact matcher,
 external geometry comparison, visible-GUI acceptance, and exact-head CI remain
 open. Roadmap clarification commit is recorded separately.
+
+#### W563ba. Extend Fit-chain Coverage Through Six and Eight Points (2026-11-07)
+
+Extended W563az's matrix with 6- and 8-point `LC_SplinePoints` chains, using
+the same both-, start-only-, and end-only-tangent variants across R2000, R2004,
+R2007, R2010, R2013, and R2018. The exact-source Release round-trip now passes
+11,418 assertions for 3/4/5/6/8-point chains. The mismatched-tangent DWG
+control-net refusal remains passing at 33 assertions, and `git diff --check`
+passes.
+
+Independent readers validate all 90 preserved DWGs: LibreDWG 0.14 confirms one
+degree-2 scenario-2 SPLINE with the expected finite fit-point count and
+zero/unit tangent vectors; ACadSharp accepts all 30 R2000/R2004 fixtures; ODA
+File Converter 27.1 converts all 90 to R2018 DXF, retaining one SPLINE per
+file, exact fit-point coordinates/count, and the expected tangent constraint
+state. ODA expresses its converted SPLINE in a cubic representation, so this
+is structural and fit-data acceptance, not evaluated-curve equivalence.
+Artifacts are under `/private/tmp/tangent-fit-dwg-large` and
+`/private/tmp/tangent-fit-dwg-large-oda-out`.
+
+Test-only commit `43d252953` (`test(dwg): cover longer spline-points fit
+chains`). Together with product commit `848ab20cd`, this covers the listed
+chain lengths and versions only. Seven-point and longer chains, additional
+fit-point distributions, tangent/geometry variants outside the exact matcher,
+external curve comparison, visible-GUI acceptance, and exact-head CI remain
+open.
