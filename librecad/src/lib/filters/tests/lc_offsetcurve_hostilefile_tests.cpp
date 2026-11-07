@@ -7648,7 +7648,32 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
     CHECK(secondNegativeMajor->radius == Catch::Approx(6.25));
     CHECK(std::holds_alternative<RS_LineData>(oppositeMajorBulgesData.segments[1]));
     CHECK(std::holds_alternative<RS_LineData>(oppositeMajorBulgesData.segments[3]));
-    const std::array<LC_OffsetPolylineData, 8> variants{{
+    RS_Polyline unequalMajorBulgesEntity;
+    unequalMajorBulgesEntity.addVertex({0, 0}, 3.0);
+    unequalMajorBulgesEntity.addVertex({10, 0});
+    unequalMajorBulgesEntity.addVertex({100, 100}, -2.0);
+    unequalMajorBulgesEntity.addVertex({110, 100});
+    unequalMajorBulgesEntity.addVertex({110, -100});
+    unequalMajorBulgesEntity.endPolyline();
+    const auto unequalMajorBulgesSource =
+        LC_OffsetSourceGeometry::capture(unequalMajorBulgesEntity);
+    REQUIRE(unequalMajorBulgesSource);
+    const auto& unequalMajorBulgesData =
+        std::get<LC_OffsetPolylineData>(unequalMajorBulgesSource->value);
+    CHECK_FALSE(unequalMajorBulgesData.closed);
+    REQUIRE(unequalMajorBulgesData.segments.size() == 4);
+    const auto* positiveLargerMajor =
+        std::get_if<RS_ArcData>(&unequalMajorBulgesData.segments[0]);
+    const auto* negativeMajor =
+        std::get_if<RS_ArcData>(&unequalMajorBulgesData.segments[2]);
+    REQUIRE(positiveLargerMajor);
+    REQUIRE(negativeMajor);
+    CHECK(directedSweep(*positiveLargerMajor) > std::acos(-1.0));
+    CHECK(directedSweep(*negativeMajor) < -std::acos(-1.0));
+    CHECK(positiveLargerMajor->center.x == Catch::Approx(5.0));
+    CHECK(positiveLargerMajor->center.y == Catch::Approx(-80.0 / 12.0));
+    CHECK(positiveLargerMajor->radius == Catch::Approx(100.0 / 12.0));
+    const std::array<LC_OffsetPolylineData, 9> variants{{
         {{0, 0}, {2, 2}, false,
          {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
         {{2, 2}, {0, 0}, false,
@@ -7664,7 +7689,8 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
         std::get<LC_OffsetPolylineData>(mixedBulgeSource->value),
         majorMinorBulgeData,
         reversedMajorMinorBulgeData,
-        oppositeMajorBulgesData}};
+        oppositeMajorBulgesData,
+        unequalMajorBulgesData}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
