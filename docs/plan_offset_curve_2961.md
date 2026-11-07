@@ -44,6 +44,46 @@ generation, worker/cache, DXF/DWG import/export, and round-trip paths, with
 unsupported variants explicitly refused without mutating the current source
 or cache. A type appearing in the picker is not proof that every one of its
 geometric variants is supported.
+
+Current implementation order for the remaining “all supported types” work:
+
+1. **Inventory and eligibility:** use `SupportedKinds` as the canonical set;
+   for each kind, list concrete source variants, validity constraints, and
+   whether the current direct engine, worker/cache, and DXF/DWG persistence can
+   represent them. Keep `LC_Parabola` distinct from `LC_SplinePoints` during
+   capture, filtering, dispatch, replacement, and serialization. Do not expand
+   the selector to advertise a kind absent from this inventory.
+2. **Geometry and refusal:** close variants family by family through direct
+   generation, both signed sides where meaningful, transforms/reversal, and
+   scale/translation conditioning. Compare successful output with an
+   independent geometry oracle. Invalid or unproved geometry must return a
+   typed refusal with no partial branches; do not weaken numerical guards to
+   make the matrix green.
+3. **Worker and editable cache:** for each admitted variant, prove bounded
+   request/reply round-trip, cache validation/admission, canonical
+   representation, replacement atomicity, and same-budget recovery after
+   failure. If the native cache cannot encode a valid multi-branch or source
+   variant, retain an explicit refusal rather than flattening it lossily.
+4. **Properties interaction:** the existing family selector is complete.
+   Verify family change refreshes candidates before picking, current-source
+   highlighting survives an unsuccessful or cancelled replacement, and a
+   successful pick publishes the matching tagged source and cache together.
+   No new selector or duplicate parabola branch is in scope.
+5. **Persistence:** for each admitted, serializable variant, round-trip the
+   source and cache through the applicable DXF/DWG versions, then reopen and
+   regenerate/validate the cache. Assert dynamic type, parameters, weights,
+   knots, orientation, and geometry as applicable; unsupported file lanes must
+   fail visibly without replacing existing state.
+6. **Closeout evidence:** record focused and aggregate test commands/results
+   per slice, run `git diff --check`, and check exact-head CI after pushes.
+   Mark a family/variant complete only for the exact matrix exercised; keep
+   GUI and independent-CAD acceptance separate from headless unit coverage.
+
+The picker requirement itself is **complete**. Remaining implementation is
+steps 1-6 above, driven by the variant gaps recorded in the chronological
+entries; in particular, recent periodic high-weight tests preserve a
+fail-closed positive-side refusal and do not justify treating all periodic
+splines as supported.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
