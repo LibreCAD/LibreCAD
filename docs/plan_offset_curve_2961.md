@@ -77,6 +77,14 @@ distinct parabola type. This is already implemented at the UI-contract level;
 remaining work is end-to-end support for each advertised family and geometry
 variant, with unsupported variants excluded or refused without mutating the
 current source/cache. Do not add another selector or duplicate parabola UI.
+The 2026-11-07 follow-up reconfirms that the editable Properties source widget
+must change source type before selection and expose every currently modeled
+family: line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline. `LC_Parabola` remains distinct from its
+`LC_SplinePoints` base type. The existing `cbSourceType`/`cbSource` implementation
+and Properties-dialog tests already satisfy that picker contract; remaining
+“all types” work belongs to the open source-variant generation, worker/cache,
+import/export, and round-trip matrix, not another UI control.
 implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -14507,10 +14515,11 @@ selected entity remains authoritative: changing the type filter cannot create
 a mismatched type/geometry pair, and selecting an entity updates both the
 displayed type and the value-owned geometry snapshot.
 
-The source model currently names nine candidate families. All nine must be
-audited against the production Modify Offset, worker, and cache paths; none is
-implicitly supported merely because it appears in the value variant. Any
-candidate accepted by the ordinary offset command is required end-to-end.
+The source model and current picker name nine candidate families. All nine
+must be audited against the production Modify Offset, worker, and cache paths;
+none is implicitly supported merely because it appears in the value variant
+or picker. Any candidate accepted by the ordinary offset command is required
+end-to-end.
 The matrix is:
 
 | Source family | Required scope | Important constraint |
@@ -14930,20 +14939,20 @@ interrupted at a long DWG trim stress case; it is partial evidence, not a full
 suite pass. ASan and exact-head CI have not yet been run for this slice.
 
 This closes W346's value capture/reconstruction and worker-generation scope,
-not polyline-native cache/edit/persistence or user-facing picker support.
-Transform exactness still needs dedicated tests. The source-type selector must
-continue to remain disabled for polyline until G2 cache/edit and G4 persistence
-are complete; the same rule applies to every other partially modeled family.
+not all polyline cache/edit/persistence variants. Transform exactness still
+needs dedicated tests. The source-type filter may expose a modeled family for
+cross-type selection, but candidate eligibility and replacement must remain
+guarded by the currently implemented capture/cache/persistence contract; do
+not infer full support merely from a family appearing in the selector.
 
-After that slice, resume the production source-kind inventory and carry each
-confirmed kind through the same chain before implementing G3's UI selector.
-The selector must support switching to ellipse, spline, spline-points,
-parabola, bounded hyperbola, line, arc, circle, polyline, and every additional
-single-curve family accepted by production dispatch. For any audited type that
-cannot be safely represented by the native offset entity, record the exact
-non-mutating refusal boundary and do not advertise it as selectable. Preserve
-the separate G2 cache/edit and G4 persistence requirements; a picker-only
-change does not complete source support.
+The source-family selector is implemented for ellipse, spline, spline-points,
+parabola, bounded hyperbola, line, arc, circle, and polyline. The remaining
+inventory work is to verify each family's production eligibility and carry
+each supported geometric variant through the full native-source chain. For
+any candidate that cannot be safely represented by the native offset entity,
+record the exact non-mutating refusal boundary and keep replacement guarded.
+Preserve the separate G2 cache/edit and G4 persistence requirements; a
+picker-only change does not complete source support.
 
 ## 347. Cross-Type Source Picker Readiness (2026-11-05)
 
@@ -14958,17 +14967,16 @@ replaces the source kind and immutable source geometry together. Include
 parabola as its own type, even though `LC_Parabola` derives from
 `LC_SplinePoints`.
 
-### Current implementation boundary
+### Historical implementation boundary (superseded by W559, W563v, and the
+2026-11-07 source-picker recheck)
 
-The production Properties widget remains ellipse-only. Its `cbSource` combo
-enumerates top-level live ellipses, compares the embedded basis, and selecting
-an entry copies `RS_EllipseData` into the ellipse edit definition. The nearby
-"Select in drawing" command resolves only `RS_Ellipse`. The tagged value model
-and op-7 worker generation now cover ellipse, spline, spline-points, parabola,
-bounded hyperbola, line, arc, circle, and polyline, but these capabilities do
-not yet make those types valid native `LC_OffsetCurve` sources. Generalized
-native cache validation/editing and DXF/DWG persistence remain prerequisites;
-do not expose worker-only families in the UI as supported choices.
+At the time this section was first recorded, the production Properties widget
+was ellipse-only. That is no longer current: the widget now has linked source
+type and entity selectors for all nine modeled families, and supports distinct
+parabola capture/replacement and source highlighting. See W559, W563v, and the
+2026-11-07 source-picker recheck below. The historical concern remains valid
+for any future family not yet modeled or not admitted by the native offset
+contract: do not advertise worker-only or unsupported families as supported.
 
 ### Implementation slices
 
@@ -14993,17 +15001,17 @@ do not expose worker-only families in the UI as supported choices.
    this slice.
 
 3. **P3 - Replace the ellipse-only control with linked type/entity controls.**
-   Add a source-type selector and an entity selector. Populate type choices
-   only from families that have passed P1/P2; include a distinct Parabola
-   choice. Changing the type must not mutate the edited offset and must
-   refresh the entity list, including an explicit empty state. Selecting an
-   entity captures its geometry by value and atomically updates the tagged
-   source definition; selecting across types must not leave a mismatched type
-   and payload. Preserve the current ellipse parameter editing only when the
-   active definition is an ellipse; other families show suitable read-only
-   source details until safe type-specific editing is designed.
+   **Complete for the nine currently modeled families (W559/W563v).** The
+   source-type selector and entity selector support line, arc, circle,
+   ellipse, spline, spline-points, distinct parabola, bounded hyperbola, and
+   polyline. Changing the type refreshes candidates without mutating the
+   edited source; choosing a candidate captures geometry by value and
+   replaces the tagged source. Preserve these tests and extend the selector
+   only when another family is explicitly added to the source model and its
+   production eligibility is reviewed.
 
-4. **P4 - Preserve resolution and drawing-selection semantics.** Match the
+4. **P4 - Preserve resolution and drawing-selection semantics.** **Picker
+   contract complete for current families (W563v).** Match the
    current embedded source by source-kind plus canonical geometry, not only
    approximate display properties. Distinguish matched, embedded/not found,
    replaced, deleted, stale ID, and unsupported states. The explicit
@@ -15013,26 +15021,25 @@ do not expose worker-only families in the UI as supported choices.
    drawing selection or the document. A replacement uses the existing guarded
    worker-edit path and remains cancelable/stale-result safe.
 
-5. **P5 - Verify the full interaction and source matrix.** Add widget and
-   owning integration tests for changing type before picking, direct
-   cross-type replacement, parabola-vs-spline-points identity, each admitted
-   type, empty buckets, deleted/stale entities, unmatched embedded sources,
-   selection highlighting, multi-selection behavior, cancel/no side effect,
-   worker refusal/busy/cancel, and preview/commit parity. Add per-family
-   DXF/DWG save, reopen, and second-save assertions. Run focused Properties,
-   worker, entity/action, and persistence suites plus supported build variants;
-   retain GUI screenshots and DPR evidence as separate acceptance gates.
+5. **P5 - Verify the full interaction and source matrix.** **Picker contract
+   covered; source-variant matrix remains open.** The Properties-dialog suite
+   covers changing type before picking, cross-type replacement, distinct
+   parabola identity, all nine current families, empty/ineligible candidates,
+   stale/deleted entities, source highlighting, cancellation/non-mutation, and
+   guarded replacement paths; W563v records the recheck. Continue adding
+   tests per geometric variant for generation, worker/cache validation and
+   admission, refusal/busy/cancel behavior, preview/commit parity, and
+   applicable DXF/DWG save/reopen/second-save. Keep GUI screenshots/DPR and
+   independent-CAD checks as separate acceptance gates.
 
-### Completion rule and status
+### Historical completion rule and status
 
-This request is complete only when the type can be changed before picking,
-every production-eligible source type is available and correctly identified,
-and the selected value survives native generation/editing and supported file
-round-trips. A visually working type combo, parabola-only addition, worker
-codec, or source snapshot is not completion. Current status: **not
-implemented**. P1-P5 are the required implementation order. W335 remains
-ellipse-only UI; W337-W346 are source-value/worker foundations only. No code
-change or validation result is claimed in this plan update.
+The original request's UI portion is complete as later verified by W559 and
+W563v. The broader end-to-end completion rule remains active: every
+production-eligible source variant must survive native generation/editing and
+supported file round-trips, with unsupported cases refused transactionally.
+W335's ellipse-only state and the initial **not implemented** status are
+historical; they must not be used as current implementation guidance.
 
 P1 audit is now partially evidenced from the current code: `RS_Creation::createParallel()`
 dispatches line, arc, circle, parabola, hyperbola, spline-points, spline, and
@@ -15044,7 +15051,8 @@ inheritance), and `LC_Hyperbola`. Source capture further refuses unbounded
 hyperbolas. The main `createParallel()` switch does not dispatch `EntityEllipse`
 or polylines, despite direct engine/virtual ellipse offset support and worker
 polyline adapters. P1 still needs an owning test matrix and explicit decisions
-about direct-vs-command eligibility before the UI type list can be finalized.
+about direct-vs-command eligibility; the existing picker family list does not
+itself grant those families ordinary Modify Offset or native-cache eligibility.
 
 ## 348. Exact Typed Source Cache Revalidation (2026-11-05)
 
@@ -22612,3 +22620,27 @@ Test commit `7250a31fd` (`test(offset): cover periodic spline import sides`).
 This closes the recorded wrapped-periodic layout and distance only; other
 periodic knots, sizes, side distances, and transform neighborhoods remain
 open.
+
+#### W563ad. Reconcile Picker Scope and Verify Hyperbola Topology on Both Sides (2026-11-07)
+
+The source-picker follow-up is reconciled with the current implementation:
+`cbSourceType` permits choosing among the nine modeled families before
+selecting an entity, and parabola remains a distinct source kind from its
+`LC_SplinePoints` base. The linked type/entity picker, replacement, and
+highlighting contract is complete for those modeled families (W559/W563v).
+The selector is not evidence that every geometric variant has end-to-end
+offset, worker/cache, or file-format support; those per-variant gates remain
+open. Historical ellipse-only and pre-selector statements in sections 336/347
+are now explicitly marked as superseded.
+
+Committed `a6e06a837` (`test(offset): verify hyperbola topology on both
+sides`) extends the staged hyperbola-import case to both signed sides across
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The tested left-side source produces
+one output branch and promotes to `LC_OffsetCurve` with exact typed-definition
+and cache-fingerprint checks. The right-side source produces three branches;
+the deliberately single-branch file cache is downgraded to ordinary SPLINE
+while preserving the complete schema-2 typed source. The focused rebuilt
+`librecad_tests` case passes 1,255 assertions. This qualifies the recorded
+topology transition and distance in these five lanes only; additional
+hyperbola bounds, distances, transforms, external-CAD review, visible GUI, and
+exact-head CI remain separate gates.
