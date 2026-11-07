@@ -5465,7 +5465,8 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
         return result;
     }
     if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&source);
-        points && points->getData().fitTangentsConstrained) {
+        points && points->getData().fitTangentsConstrained &&
+        !points->fitTangentsMatchCurve()) {
         result.status = LC_CurveOffsetStatus::InvalidSource;
         return result;
     }

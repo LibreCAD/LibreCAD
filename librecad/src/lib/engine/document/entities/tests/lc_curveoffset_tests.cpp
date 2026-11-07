@@ -726,19 +726,34 @@ TEST_CASE("Default and partial requests are rejected before any evaluation",
     CHECK(t.evaluation + t.fit + t.nodeMerge == Approx(t.requestedGeometry));
 }
 
-TEST_CASE("Tangent-constrained spline-point interpolation is refused",
-          "[curve-offset][direct][validation][fit-points]") {
+TEST_CASE("Consistent tangent-constrained spline-points can be offset",
+          "[curve-offset][direct][fit-points][tangents][spline-points]") {
     LC_SplinePointsData data{false, false};
     data.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
     data.fitTangentsConstrained = true;
     data.fitTolerance = 1e-10;
-    const LC_SplinePoints source{nullptr, data};
+    LC_SplinePoints source{nullptr, data};
+    const double endParameter = static_cast<double>(source.getSegmentCount());
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(source.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(source.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, endJet));
+    source.getData().fitStartTangent = startJet.first;
+    source.getData().fitEndTangent = endJet.first;
+    REQUIRE(source.fitTangentsMatchCurve());
     const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
-    const auto request = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
+    const auto left = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
+    const auto right = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5);
 
-    CHECK(LC_CurveOffset::buildDirectBranches(source, request, options,
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+    CHECK(LC_CurveOffset::buildDirectBranches(source, right, options,
+        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+
+    source.getData().fitEndTangent *= -1.0;
+    CHECK_FALSE(source.fitTangentsMatchCurve());
+    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
         LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
-
 }
 
 TEST_CASE("A straight source offsets exactly to either side", "[curve-offset][direct]") {

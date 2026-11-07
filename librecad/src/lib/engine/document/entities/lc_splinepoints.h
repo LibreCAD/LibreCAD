@@ -58,7 +58,7 @@ struct LC_SplinePointsData {
     bool cut = false;
     // directly use control points from data, instead of generating control points from splinePoints
     bool useControlPoints = false;
-    /** Source fit SPLINE had endpoint tangent constraints not modeled here. */
+    /** Source fit SPLINE endpoint tangent constraints, when consistent with this curve. */
     bool fitTangentsConstrained = false;
     /** Source endpoint tangent vectors; zero means that endpoint is unconstrained. */
     RS_Vector fitStartTangent{0.0, 0.0, 0.0};
@@ -116,6 +116,9 @@ public:
     /** @return Copy of data that defines the spline. */
     const LC_SplinePointsData& getData() const;
     LC_SplinePointsData& getData();
+
+    /** True only when retained fit points and endpoint tangents match this curve. */
+    bool fitTangentsMatchCurve() const;
 
     /** @return Number of control points. */
     size_t getNumberOfControlPoints() const;

@@ -1229,6 +1229,24 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     oneEndedLinearTangentSpline.fitEndTangent = {0, 0};
     RS_Spline oneEndedLinearTangentCheck{nullptr, oneEndedLinearTangentSpline};
     REQUIRE(oneEndedLinearTangentCheck.fitTangentsMatchCurve());
+    LC_SplinePointsData tangentSplinePointsData{false, false};
+    tangentSplinePointsData.splinePoints = {
+        {0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    LC_SplinePoints tangentSplinePointsEntity{nullptr,
+                                               tangentSplinePointsData};
+    LC_CurveJet tangentPointsStart;
+    LC_CurveJet tangentPointsEnd;
+    REQUIRE(tangentSplinePointsEntity.tryEvaluateJet(
+        0.0, LC_CurveEvaluationSide::Right, tangentPointsStart));
+    REQUIRE(tangentSplinePointsEntity.tryEvaluateJet(
+        static_cast<double>(tangentSplinePointsEntity.getSegmentCount()),
+        LC_CurveEvaluationSide::Left, tangentPointsEnd));
+    tangentSplinePointsEntity.getData().fitTangentsConstrained = true;
+    tangentSplinePointsEntity.getData().fitTolerance = 1e-7;
+    tangentSplinePointsEntity.getData().fitStartTangent = tangentPointsStart.first;
+    tangentSplinePointsEntity.getData().fitEndTangent = tangentPointsEnd.first;
+    tangentSplinePointsData = tangentSplinePointsEntity.getData();
+    REQUIRE(tangentSplinePointsEntity.fitTangentsMatchCurve());
     RS_Spline periodic{nullptr, RS_SplineData{3, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
                                    RS_Vector{20, 50}, RS_Vector{-15, 25}})
@@ -1265,7 +1283,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
-    const std::array<LC_OffsetSourceGeometry, 33> sources{
+    const std::array<LC_OffsetSourceGeometry, 34> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .2, 0, 2 * M_PI, false}},
@@ -1280,6 +1298,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{linearTangentSpline},
         LC_OffsetSourceGeometry{oneEndedLinearTangentSpline},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
+        LC_OffsetSourceGeometry{tangentSplinePointsData},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{2, 1}, RS_Vector{1, 0}, RS_Vector{0, 1}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{3, 4}, RS_Vector{-7, 9}, RS_Vector{3, 14}}}},
@@ -5050,7 +5069,7 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
 }
 
 TEST_CASE("tangent-constrained spline sources import through operation-8 validation in AC1032 DXF and DWG",
-          "[lc-offsetcurve][import-session][typed-source][spline-variant][tangents][rational]") {
+          "[lc-offsetcurve][import-session][typed-source][spline-variant][tangents][rational][spline-points]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-rational-tangent-spline-import");
     namespace xd = LC_OffsetCurveXData;
@@ -5075,10 +5094,10 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
     RS_Spline sourceSpline{nullptr, splineData};
     REQUIRE(sourceSpline.fitTangentsMatchCurve());
 
-    const auto importVariant = [&](const RS_SplineData& variant,
+    const auto importVariant = [&](const LC_OffsetSourceGeometry& sourceGeometry,
                                    const std::string& variantName) {
     const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{variant}, .05, 1e-4, false};
+        sourceGeometry, .05, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
     const auto options = LC_OffsetWorkerTolerance::directOptions(
@@ -5157,16 +5176,29 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
         CHECK(values::encodeSourceGeometry(
                   imported->sourceDefinition()->source) ==
               values::encodeSourceGeometry(definition.source));
-        const auto* importedSpline = std::get_if<RS_SplineData>(
-            &imported->sourceDefinition()->source.value);
-        REQUIRE(importedSpline);
-        CHECK(importedSpline->weights == variant.weights);
-        CHECK(importedSpline->fitTangentsConstrained);
-        CHECK(importedSpline->fitStartTangent == variant.fitStartTangent);
-        CHECK(importedSpline->fitEndTangent == variant.fitEndTangent);
+        const auto& importedGeometry = imported->sourceDefinition()->source;
+        REQUIRE(importedGeometry.kind() == sourceGeometry.kind());
+        if (const auto* expected = std::get_if<RS_SplineData>(&sourceGeometry.value)) {
+            const auto* actual = std::get_if<RS_SplineData>(&importedGeometry.value);
+            REQUIRE(actual);
+            CHECK(actual->weights == expected->weights);
+            CHECK(actual->fitTangentsConstrained);
+            CHECK(actual->fitStartTangent == expected->fitStartTangent);
+            CHECK(actual->fitEndTangent == expected->fitEndTangent);
+        } else if (const auto* expected =
+                       std::get_if<LC_SplinePointsData>(&sourceGeometry.value)) {
+            const auto* actual =
+                std::get_if<LC_SplinePointsData>(&importedGeometry.value);
+            REQUIRE(actual);
+            CHECK(actual->fitTangentsConstrained);
+            CHECK(actual->fitStartTangent == expected->fitStartTangent);
+            CHECK(actual->fitEndTangent == expected->fitEndTangent);
+        } else {
+            FAIL("test source must be a spline or spline-points variant");
+        }
     }
     };
-    importVariant(splineData, "cubic");
+    importVariant(LC_OffsetSourceGeometry{splineData}, "cubic");
 
     RS_SplineData quadraticData{2, false};
     quadraticData.controlPoints = {{0, 0}, {2, 3}, {5, 0}};
@@ -5186,7 +5218,7 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
     }
     RS_Spline quadraticSpline{nullptr, quadraticData};
     REQUIRE(quadraticSpline.fitTangentsMatchCurve());
-    importVariant(quadraticData, "quadratic");
+    importVariant(LC_OffsetSourceGeometry{quadraticData}, "quadratic");
 
     RS_SplineData linearData{1, false};
     linearData.controlPoints = {{0, 0}, {4, 0}};
@@ -5199,13 +5231,34 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
     linearData.fitEndTangent = {2, 0};
     RS_Spline linearSpline{nullptr, linearData};
     REQUIRE(linearSpline.fitTangentsMatchCurve());
-    importVariant(linearData, "linear");
+    importVariant(LC_OffsetSourceGeometry{linearData}, "linear");
 
     RS_SplineData oneEndedLinearData = linearData;
     oneEndedLinearData.fitEndTangent = {0, 0};
     RS_Spline oneEndedLinearSpline{nullptr, oneEndedLinearData};
     REQUIRE(oneEndedLinearSpline.fitTangentsMatchCurve());
-    importVariant(oneEndedLinearData, "linear-one-ended");
+    importVariant(LC_OffsetSourceGeometry{oneEndedLinearData},
+                  "linear-one-ended");
+
+    LC_SplinePointsData tangentPointsData{false, false};
+    tangentPointsData.splinePoints = {
+        {0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    LC_SplinePoints tangentPoints{nullptr, tangentPointsData};
+    LC_CurveJet pointsStart;
+    LC_CurveJet pointsEnd;
+    REQUIRE(tangentPoints.tryEvaluateJet(
+        0.0, LC_CurveEvaluationSide::Right, pointsStart));
+    REQUIRE(tangentPoints.tryEvaluateJet(
+        static_cast<double>(tangentPoints.getSegmentCount()),
+        LC_CurveEvaluationSide::Left, pointsEnd));
+    tangentPoints.getData().fitTangentsConstrained = true;
+    tangentPoints.getData().fitTolerance = 1e-7;
+    tangentPoints.getData().fitStartTangent = pointsStart.first;
+    tangentPoints.getData().fitEndTangent = pointsEnd.first;
+    tangentPointsData = tangentPoints.getData();
+    REQUIRE(tangentPoints.fitTangentsMatchCurve());
+    importVariant(LC_OffsetSourceGeometry{tangentPointsData},
+                  "spline-points");
 }
 
 TEST_CASE("wrapped periodic spline source imports through operation-8 validation in DXF and DWG",

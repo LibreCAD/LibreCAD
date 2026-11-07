@@ -987,6 +987,24 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
         new RS_Spline(nullptr, oneEndedLinearData);
     REQUIRE(supportedOneEndedLinear->fitTangentsMatchCurve());
 
+    LC_SplinePointsData tangentPointsData{false, false};
+    tangentPointsData.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    LC_SplinePoints tangentPointsEvaluator{nullptr, tangentPointsData};
+    LC_CurveJet tangentPointsStart;
+    LC_CurveJet tangentPointsEnd;
+    REQUIRE(tangentPointsEvaluator.tryEvaluateJet(
+        0.0, LC_CurveEvaluationSide::Right, tangentPointsStart));
+    REQUIRE(tangentPointsEvaluator.tryEvaluateJet(
+        static_cast<double>(tangentPointsEvaluator.getSegmentCount()),
+        LC_CurveEvaluationSide::Left, tangentPointsEnd));
+    tangentPointsData.fitTangentsConstrained = true;
+    tangentPointsData.fitTolerance = 1e-7;
+    tangentPointsData.fitStartTangent = tangentPointsStart.first;
+    tangentPointsData.fitEndTangent = tangentPointsEnd.first;
+    auto* supportedTangentPoints =
+        new LC_SplinePoints(nullptr, tangentPointsData);
+    REQUIRE(supportedTangentPoints->fitTangentsMatchCurve());
+
     RS_SplineData inconsistent = matched.getData();
     inconsistent.fitPoints[1].y += 1.0;
     auto* refused = new RS_Spline(nullptr, inconsistent);
@@ -995,6 +1013,7 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
     f.graphic.addEntity(supportedRationalQuadratic);
     f.graphic.addEntity(supportedLinear);
     f.graphic.addEntity(supportedOneEndedLinear);
+    f.graphic.addEntity(supportedTangentPoints);
     f.graphic.addEntity(refused);
 
     std::unique_ptr<LC_OffsetCurve> clone(
@@ -1094,6 +1113,29 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
           oneEndedLinearData.fitEndTangent);
     CHECK(sourceBox->currentData().toULongLong() ==
           supportedOneEndedLinear->getId());
+
+    const int splinePointsIndex = typeBox->findData(
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::SplinePoints));
+    REQUIRE(splinePointsIndex >= 0);
+    typeBox->setCurrentIndex(splinePointsIndex);
+    const int tangentPointsIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(supportedTangentPoints->getId()));
+    REQUIRE(tangentPointsIndex > 0);
+    sourceBox->setCurrentIndex(tangentPointsIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    const auto* committedTangentPoints = std::get_if<LC_SplinePointsData>(
+        &clone->sourceDefinition()->source.value);
+    REQUIRE(committedTangentPoints);
+    CHECK(committedTangentPoints->fitTangentsConstrained);
+    CHECK(committedTangentPoints->fitStartTangent ==
+          tangentPointsData.fitStartTangent);
+    CHECK(committedTangentPoints->fitEndTangent ==
+          tangentPointsData.fitEndTangent);
+    CHECK(sourceBox->currentData().toULongLong() ==
+          supportedTangentPoints->getId());
 }
 
 TEST_CASE("Tangent spline replacement refusal preserves the current offset atomically",

@@ -276,3 +276,30 @@ TEST_CASE("LC_SplinePoints transforms fit tangent vectors as directions",
     CHECK(spline.getData().fitStartTangent.magnitude() == 0.0);
     CHECK(spline.getData().fitEndTangent.magnitude() == 0.0);
 }
+
+TEST_CASE("LC_SplinePoints admits only tangent metadata matching its represented fit curve",
+          "[spline][LC_SplinePoints][fit-tangents][consistency]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0.0, 0.0}, {2.0, 1.0}, {4.0, 0.0}, {6.0, 2.0}};
+    LC_SplinePoints spline{nullptr, data};
+    const double endParameter = static_cast<double>(spline.getSegmentCount());
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(spline.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, endJet));
+    spline.getData().fitTangentsConstrained = true;
+    spline.getData().fitTolerance = 1e-7;
+    spline.getData().fitStartTangent = startJet.first;
+    spline.getData().fitEndTangent = endJet.first;
+    CHECK(spline.fitTangentsMatchCurve());
+
+    spline.getData().fitStartTangent *= -1.0;
+    CHECK_FALSE(spline.fitTangentsMatchCurve());
+
+    spline.getData().fitStartTangent = startJet.first;
+    spline.getData().fitEndTangent = {0.0, 0.0};
+    CHECK(spline.fitTangentsMatchCurve());
+
+    spline.getData().cut = true;
+    CHECK_FALSE(spline.fitTangentsMatchCurve());
+}

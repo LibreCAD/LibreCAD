@@ -3183,6 +3183,70 @@ const LC_SplinePointsData& LC_SplinePoints::getData() const {
     return m_data;
 }
 
+bool LC_SplinePoints::fitTangentsMatchCurve() const {
+    const auto finitePlanar = [](const RS_Vector& point) {
+        return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+               std::isfinite(point.z) && std::abs(point.z) <= RS_TOLERANCE;
+    };
+    if (!m_data.fitTangentsConstrained || m_data.closed || m_data.cut ||
+        m_data.useControlPoints || m_data.splinePoints.size() < 2 ||
+        m_data.controlPoints.size() < 2 || !std::isfinite(m_data.fitTolerance) ||
+        m_data.fitTolerance <= 0.0 || !finitePlanar(m_data.fitStartTangent) ||
+        !finitePlanar(m_data.fitEndTangent)) return false;
+    const double startMagnitude = m_data.fitStartTangent.magnitude();
+    const double endMagnitude = m_data.fitEndTangent.magnitude();
+    if (!std::isfinite(startMagnitude) || !std::isfinite(endMagnitude) ||
+        (startMagnitude == 0.0 && endMagnitude == 0.0)) return false;
+
+    double coordinateScale = 1.0;
+    for (const auto& point : m_data.controlPoints) {
+        if (!finitePlanar(point)) return false;
+        coordinateScale = std::max({coordinateScale, std::abs(point.x),
+                                    std::abs(point.y)});
+    }
+    for (const auto& point : m_data.splinePoints) {
+        if (!finitePlanar(point)) return false;
+        coordinateScale = std::max({coordinateScale, std::abs(point.x),
+                                    std::abs(point.y)});
+    }
+
+    const double endParameter = static_cast<double>(getSegmentCount());
+    if (!(endParameter > 0.0) || !std::isfinite(endParameter)) return false;
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    if (!tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet) ||
+        !tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, endJet))
+        return false;
+
+    const double pointTolerance = std::max(
+        m_data.fitTolerance, 128.0 * std::numeric_limits<double>::epsilon() *
+                                 coordinateScale);
+    for (std::size_t index = 0; index < m_data.splinePoints.size(); ++index) {
+        const auto& point = m_data.splinePoints[index];
+        if (point.distanceTo(index == 0 ? startJet.point :
+                             index + 1 == m_data.splinePoints.size()
+                                 ? endJet.point
+                                 : getNearestPointOnEntity(point, true)) >
+            pointTolerance) return false;
+    }
+
+    const auto matchesDirection = [coordinateScale](const RS_Vector& actual,
+                                                     const RS_Vector& expected) {
+        if (expected.magnitude() == 0.0) return true;
+        const double actualLength = actual.magnitude();
+        if (!std::isfinite(actualLength) || !(actualLength > 0.0)) return false;
+        const double representationalError =
+            16.0 * std::numeric_limits<double>::epsilon() * coordinateScale /
+            actualLength;
+        if (!std::isfinite(representationalError) ||
+            representationalError > 1e-3) return false;
+        return (actual / actualLength - expected / expected.magnitude()).magnitude() <=
+               std::max(1e-8, representationalError);
+    };
+    return matchesDirection(startJet.first, m_data.fitStartTangent) &&
+           matchesDirection(endJet.first, m_data.fitEndTangent);
+}
+
 /** @return Copy of m_data that defines the spline. */
 LC_SplinePointsData& LC_SplinePoints::getData() {
     return m_data;
