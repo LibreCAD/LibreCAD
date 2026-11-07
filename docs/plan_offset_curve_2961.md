@@ -36,6 +36,8 @@ W530 reversed major/minor mixed-bulge qualification complete for its defined
 matrix;
 W531 imported major/minor polyline-to-worker qualification complete for its
 defined lanes and signed distances;
+W532 opposite-sign major-bulge chain qualification complete for its defined
+matrix;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -20811,3 +20813,78 @@ and these five lanes only; it does not add carrier round-trip coverage or
 qualify other bulge signs/orders, arbitrary polylines, OCS, external CAD, or
 visible GUI behavior. Commit this receipt separately, push it with the test
 commit, and inspect exact-head CI.
+
+## 532. Open Opposite-Sign Major-Bulge Source Matrix
+
+W529-W531 cover a positive major arc paired with a negative minor arc and the
+reverse traversal of that chain. A closed four-edge candidate with two
+opposite-sign major arcs is rejected by current topology validation because
+the major arcs overshoot their chord endpoints into the closing edges. Keep
+that refusal intact. Add a distinct open five-vertex polyline with two
+greater-than-semicircle arcs of opposite signs separated by straight connector
+segments. Verify source capture retains both major sweeps, arc centers/radii,
+segment order, and open state.
+
+Exercise centered and translated operation-7 generation plus operation-8
+validation at scales `1e-3`, `1`, and `1e3`, translation ratios `1e4` and
+`1e6`, and signed normalized distances `-0.25`, `-0.1`, `0.1`, and `0.25`.
+Compare status, topology, and branch geometry independent of order or
+traversal using arc-length-normalized samples, requested tolerance, and
+coordinate ULP. Validate every branch and require non-mutating refusal for
+multi-branch partial-cache candidates. Carry generated single-cache results
+and multi-branch first-cache fallback through all five DXF/DWG lanes, checking
+exact schema-2 source CBOR, cache fingerprints, ordinary fallback geometry,
+and explicit promotion/downgrade counts.
+
+Run focused W532, complete polyline worker and typed-source import selections,
+Release test/worker builds, roadmap inventory/refusal tests, and
+`git diff --check`. Commit product/tests and the completion receipt separately,
+push to PR #3193, and read exact-head checks. This does not claim arbitrary
+major-bulge sequences, self-intersecting inputs, OCS variants, external CAD, or
+visible GUI acceptance.
+
+### W532 Completion Receipt
+
+The closed opposite-sign major-bulge fixture remains explicitly rejected by
+`LC_OffsetSourceGeometry::capture()`. The accepted open five-vertex chain
+contains a positive major arc, a straight connector, a negative major arc, and
+a trailing line; assertions retain its open state, segment order, directed
+sweeps, centers, and radii. The eight-layout matrix accounts for 192
+scale/translation/distance cells and carries admitted and fallback outcomes
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+
+Focused staged persistence passes 560,253 assertions in one case. The complete
+polyline worker selection passes 82,644 assertions across six cases; the full
+typed-source polyline staged-import selection passes 574,373 assertions across
+23 cases. Release `librecad_tests` and
+`librecad_offset_worker_kernel_tests` targets build. Roadmap inventory/refusal
+validation passes 99/99 tests (93 obligations, zero pending declarations, zero
+production mismatches), and `git diff --check` passes. Product/test commit
+`52c9aaf77` (`test(offset): qualify opposite major bulges`).
+
+This closes only the stated open chain, rejected closed counterpart, bounded
+matrix, and five interchange lanes. Other major-bulge orders, arbitrary
+sequences, self-intersection, OCS, external-CAD, and visible-GUI cases remain
+open. Push the product commit and this receipt to PR #3193 and inspect checks
+for the exact pushed head.
+
+## 533. Source Picker Request Recheck
+
+The latest request asks that the source-curve Properties widget allow changing
+the requested source family before picking a replacement and expose all
+currently supported source kinds. This behavior is already implemented by the
+editable `cbSourceType` selector and filtered `cbSource` picker. The picker
+uses `LC_OffsetSourceGeometry::SupportedKinds`, currently covering line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. It keeps parabola distinct from its `LC_SplinePoints` base class;
+selecting the current source highlights it, while choosing another family
+filters candidates to the requested kind and uses the existing worker-backed
+atomic replacement path.
+
+Re-ran the focused source-picker family-switch and all-family replacement
+regressions: 2,814 assertions pass in two cases. No duplicate widget or new
+family branch is needed. This closes only the picker interaction contract;
+the plan's per-variant capture, generation, operation-8 cache admission,
+failure/cancellation non-mutation, and applicable DXF/DWG round-trip matrices
+remain open. A family appearing in the selector does not imply that every
+geometric layout of that family is currently cache-representable.
