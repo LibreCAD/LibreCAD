@@ -32879,7 +32879,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s) {
   LC_SplinePointsData &data = s->getData();
   const bool writeTangentFitScenario = m_dwgW &&
       data.fitTangentsConstrained && !data.useControlPoints &&
-      !data.closed && !data.cut && data.splinePoints.size() == 3 &&
+      !data.closed && !data.cut && data.splinePoints.size() >= 3 &&
       s->fitTangentsMatchCurve();
   if (m_dwgW && data.fitTangentsConstrained &&
       !writeTangentFitScenario) {

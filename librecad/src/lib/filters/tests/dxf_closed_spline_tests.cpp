@@ -794,18 +794,14 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
 }
 
 #ifdef DWGSUPPORT
-TEST_CASE("Three-point tangent-constrained spline-points preserve DWG fit representation",
+TEST_CASE("Tangent-constrained spline-points preserve DWG fit representation",
           "[dwg][filter][spline-points][fit-points][roundtrip]") {
   ensureSettings();
-  const std::vector<RS_Vector> fitPoints{{0.0, 0.0}, {2.0, 3.0}, {5.0, 0.0}};
-  LC_SplinePointsData initialData{false, false};
-  initialData.splinePoints = fitPoints;
-  initialData.fitTolerance = 1.0e-8;
-  LC_SplinePoints initial{nullptr, initialData};
-  LC_CurveJet startJet;
-  LC_CurveJet endJet;
-  REQUIRE(initial.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
-  REQUIRE(initial.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+  const std::vector<std::vector<RS_Vector>> fitPointSets{
+      {{0.0, 0.0}, {2.0, 3.0}, {5.0, 0.0}},
+      {{0.0, 0.0}, {2.0, 3.0}, {5.0, 4.0}, {8.0, 0.0}},
+      {{0.0, 0.0}, {1.0, 4.0}, {3.0, 5.0}, {6.0, 2.0}, {8.0, 0.0}},
+  };
 
   const std::vector<std::pair<RS2::FormatType, std::string>> formats{
       {RS2::FormatDWG, "dwg-r2000"},
@@ -820,93 +816,111 @@ TEST_CASE("Three-point tangent-constrained spline-points preserve DWG fit repres
     const bool constrainEnd = tangentMode != 1;
     const std::string tangentName = tangentMode == 0 ? "both" :
         tangentMode == 1 ? "start-only" : "end-only";
-    LC_SplinePointsData sourceData = initial.getData();
-    sourceData.fitTangentsConstrained = true;
-    sourceData.fitStartTangent = constrainStart
-        ? startJet.first : RS_Vector{0.0, 0.0, 0.0};
-    sourceData.fitEndTangent = constrainEnd
-        ? endJet.first : RS_Vector{0.0, 0.0, 0.0};
-    LC_SplinePoints source{nullptr, sourceData};
-    REQUIRE(source.fitTangentsMatchCurve());
-    const auto sample = [](const LC_SplinePoints& spline) {
-      std::vector<RS_Vector> result;
-      constexpr int sampleCount = 100;
-      const double end = static_cast<double>(spline.getSegmentCount());
-      for (int i = 0; i <= sampleCount; ++i) {
-        LC_CurveJet jet;
-        const double t = end * i / sampleCount;
-        const auto side = i == sampleCount ? LC_CurveEvaluationSide::Left
-                                           : LC_CurveEvaluationSide::Right;
-        if (!spline.tryEvaluateJet(t, side, jet)) return std::vector<RS_Vector>{};
-        result.push_back(jet.point);
-      }
-      return result;
-    };
-    const auto sourceCurve = sample(source);
-    REQUIRE(sourceCurve.size() == 101);
-    RS_Graphic graphic;
-    graphic.initForNewDocument();
-    auto* stored = new LC_SplinePoints(&graphic, source.getData());
-    graphic.addEntity(stored);
+    for (const auto& fitPoints : fitPointSets) {
+      CAPTURE(fitPoints.size());
+      LC_SplinePointsData initialData{false, false};
+      initialData.splinePoints = fitPoints;
+      initialData.fitTolerance = 1.0e-8;
+      LC_SplinePoints initial{nullptr, initialData};
+      LC_CurveJet startJet;
+      LC_CurveJet endJet;
+      REQUIRE(initial.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right,
+                                     startJet));
+      const double endParameter = static_cast<double>(initial.getSegmentCount());
+      REQUIRE(initial.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left,
+                                     endJet));
 
-    for (const auto& [format, suffix] : formats) {
-      INFO(suffix);
-      INFO(tangentMode);
-      const std::string path = tempPath("tangent_spline_points_" + suffix +
-          "_" + tangentName);
-      std::remove(path.c_str());
-      {
-        RS_FilterDXFRW writer;
-        REQUIRE(writer.fileExport(graphic, QString::fromStdString(path),
-                                  format));
-      }
-      preserveTangentSplineDwg(path, tangentName + "-spline-points-" +
-          suffix + ".dwg");
+      LC_SplinePointsData sourceData = initial.getData();
+      sourceData.fitTangentsConstrained = true;
+      sourceData.fitStartTangent = constrainStart
+          ? startJet.first : RS_Vector{0.0, 0.0, 0.0};
+      sourceData.fitEndTangent = constrainEnd
+          ? endJet.first : RS_Vector{0.0, 0.0, 0.0};
+      LC_SplinePoints source{nullptr, sourceData};
+      REQUIRE(source.fitTangentsMatchCurve());
+      const auto sample = [](const LC_SplinePoints& spline) {
+        std::vector<RS_Vector> result;
+        constexpr int sampleCount = 100;
+        const double end = static_cast<double>(spline.getSegmentCount());
+        for (int i = 0; i <= sampleCount; ++i) {
+          LC_CurveJet jet;
+          const double t = end * i / sampleCount;
+          const auto side = i == sampleCount ? LC_CurveEvaluationSide::Left
+                                             : LC_CurveEvaluationSide::Right;
+          if (!spline.tryEvaluateJet(t, side, jet))
+            return std::vector<RS_Vector>{};
+          result.push_back(jet.point);
+        }
+        return result;
+      };
+      const auto sourceCurve = sample(source);
+      REQUIRE(sourceCurve.size() == 101);
+      RS_Graphic graphic;
+      graphic.initForNewDocument();
+      auto* stored = new LC_SplinePoints(&graphic, source.getData());
+      graphic.addEntity(stored);
 
-      RS_Graphic reopened;
-      std::vector<SplineRecord> written;
-      importFile(reopened, path, RS2::FormatDWG, &written);
-      std::filesystem::remove(path);
-      REQUIRE(written.size() == 1);
-      CHECK(written.front().m_scenario == 2);
-      CHECK(written.front().m_controlPoints.empty());
-      checkSameVectors(written.front().m_fitPoints, fitPoints);
-      CHECK(std::abs(written.front().m_tolFit - sourceData.fitTolerance) <
-            1.0e-15);
-      if (constrainStart) {
-        CHECK(written.front().m_tangentStart.distanceTo(
-                  startJet.first / startJet.first.magnitude()) < 1.0e-12);
-      } else {
-        CHECK(written.front().m_tangentStart.magnitude() == 0.0);
-      }
-      if (constrainEnd) {
-        CHECK(written.front().m_tangentEnd.distanceTo(
-                  endJet.first / endJet.first.magnitude()) < 1.0e-12);
-      } else {
-        CHECK(written.front().m_tangentEnd.magnitude() == 0.0);
-      }
+      for (const auto& [format, suffix] : formats) {
+        INFO(suffix);
+        INFO(tangentMode);
+        INFO(fitPoints.size());
+        const std::string pointSuffix = std::to_string(fitPoints.size()) + "pt";
+        const std::string path = tempPath("tangent_spline_points_" + suffix +
+            "_" + tangentName + "_" + pointSuffix);
+        std::remove(path.c_str());
+        {
+          RS_FilterDXFRW writer;
+          REQUIRE(writer.fileExport(graphic, QString::fromStdString(path),
+                                    format));
+        }
+        preserveTangentSplineDwg(path, tangentName + "-" + pointSuffix +
+            "-spline-points-" + suffix + ".dwg");
 
-      LC_SplinePoints* reopenedSpline = onlySplinePoints(reopened);
-      REQUIRE(reopenedSpline->fitTangentsMatchCurve());
-      CHECK(reopenedSpline->getData().fitTangentsConstrained);
-      CHECK(std::abs(reopenedSpline->getData().fitTolerance -
-                     sourceData.fitTolerance) < 1.0e-15);
-      if (constrainStart) {
-        CHECK(reopenedSpline->getData().fitStartTangent.distanceTo(
-                  startJet.first / startJet.first.magnitude()) < 1.0e-12);
-      } else {
-        CHECK(reopenedSpline->getData().fitStartTangent.magnitude() == 0.0);
+        RS_Graphic reopened;
+        std::vector<SplineRecord> written;
+        importFile(reopened, path, RS2::FormatDWG, &written);
+        std::filesystem::remove(path);
+        REQUIRE(written.size() == 1);
+        CHECK(written.front().m_scenario == 2);
+        CHECK(written.front().m_controlPoints.empty());
+        checkSameVectors(written.front().m_fitPoints, fitPoints);
+        CHECK(std::abs(written.front().m_tolFit - sourceData.fitTolerance) <
+              1.0e-15);
+        if (constrainStart) {
+          CHECK(written.front().m_tangentStart.distanceTo(
+                    startJet.first / startJet.first.magnitude()) < 1.0e-12);
+        } else {
+          CHECK(written.front().m_tangentStart.magnitude() == 0.0);
+        }
+        if (constrainEnd) {
+          CHECK(written.front().m_tangentEnd.distanceTo(
+                    endJet.first / endJet.first.magnitude()) < 1.0e-12);
+        } else {
+          CHECK(written.front().m_tangentEnd.magnitude() == 0.0);
+        }
+
+        LC_SplinePoints* reopenedSpline = onlySplinePoints(reopened);
+        REQUIRE(reopenedSpline->fitTangentsMatchCurve());
+        CHECK(reopenedSpline->getData().fitTangentsConstrained);
+        CHECK(std::abs(reopenedSpline->getData().fitTolerance -
+                       sourceData.fitTolerance) < 1.0e-15);
+        if (constrainStart) {
+          CHECK(reopenedSpline->getData().fitStartTangent.distanceTo(
+                    startJet.first / startJet.first.magnitude()) < 1.0e-12);
+        } else {
+          CHECK(reopenedSpline->getData().fitStartTangent.magnitude() == 0.0);
+        }
+        if (constrainEnd) {
+          CHECK(reopenedSpline->getData().fitEndTangent.distanceTo(
+                    endJet.first / endJet.first.magnitude()) < 1.0e-12);
+        } else {
+          CHECK(reopenedSpline->getData().fitEndTangent.magnitude() == 0.0);
+        }
+        const auto reopenedCurve = sample(*reopenedSpline);
+        REQUIRE(reopenedCurve.size() == sourceCurve.size());
+        for (std::size_t i = 0; i < sourceCurve.size(); ++i)
+          CHECK(reopenedCurve[i].distanceTo(sourceCurve[i]) < 1.0e-12);
       }
-      if (constrainEnd) {
-        CHECK(reopenedSpline->getData().fitEndTangent.distanceTo(
-                  endJet.first / endJet.first.magnitude()) < 1.0e-12);
-      } else {
-        CHECK(reopenedSpline->getData().fitEndTangent.magnitude() == 0.0);
-      }
-      const auto reopenedCurve = sample(*reopenedSpline);
-      REQUIRE(reopenedCurve.size() == sourceCurve.size());
-      for (std::size_t i = 0; i < sourceCurve.size(); ++i)
-        CHECK(reopenedCurve[i].distanceTo(sourceCurve[i]) < 1.0e-12);
     }
   }
 }
