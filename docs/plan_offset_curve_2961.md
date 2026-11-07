@@ -23878,3 +23878,25 @@ This is bounded geometry evidence for the recorded degree-2/3 layouts and
 format matrix, not equivalence across all CAD kernels or arbitrary spline
 layouts. Additional geometric variants, GUI acceptance, exact-head CI, and
 the remaining plan gates stay open.
+
+#### W563cd. Share ODA Curve Sampling Across Periodic Spline Degrees (2026-11-07)
+
+Factored ODA carrier reconstruction and sampled-deviation measurement into a
+shared test helper, then applied it to the degree-1/2 six-, seven-, and
+eight-control periodic staged-import matrix as well as W563cc's degree-2/3
+wrapped matrix. For each converted DWG carrier the helper requires a valid
+reconstructed spline and matching parameter domain, then measures maximum
+position deviation over 129 evenly spaced parameter samples. Structural
+control/knot/weight checks and exact typed-source checks remain in place.
+
+The degree-1/2 matrix passes 53,035 assertions across 108 ODA-converted DWGs;
+all have zero `.err` files. The degree-2/3 wrapped matrix passes 88,541
+assertions across 192 ODA-converted DWGs, also with zero `.err` files. The
+Release `librecad_tests` target builds and `git diff --check` passes. Test
+commit `9ed2a2ceb` (`test(offset): sample periodic ODA spline geometry`).
+
+These sampled checks are bounded to the enumerated layouts, versions,
+distances, scales and translations. They do not prove arbitrary spline
+geometry or CAD-kernel equivalence beyond ODA conversion. Other source-family
+variants, visible GUI, exact-head CI and remaining roadmap acceptance gates
+remain open.
