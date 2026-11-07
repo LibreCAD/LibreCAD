@@ -5686,29 +5686,36 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     }
 }
 
-TEST_CASE("multi-branch hyperbola import refuses partial cache and retains source data",
+TEST_CASE("hyperbola import follows output topology on both sides across file lanes",
           "[lc-offsetcurve][import-session][typed-source][hyperbola][refusal]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-hyperbola-multibranch-import");
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
 
+    const LC_OffsetSourceGeometry sourceGeometry{
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}};
+    const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
+    const double signedDistance = side == LC_CurveOffsetSide::Left ? 1.1 : -1.1;
+    CAPTURE(static_cast<int>(side), signedDistance);
     const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}},
-        -1.1, 1e-4, false};
+        sourceGeometry, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
     const double magnitude = std::abs(definition.signedDistance);
     const auto options = LC_OffsetWorkerTolerance::directOptions(
         *source, magnitude, definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(
-        *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, magnitude),
+        *source, LC_CurveOffset::makeSideRequest(side, magnitude),
         options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
     const auto materialized = LC_CurveOffset::materializeBranches(
         *source, generated, options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
-    REQUIRE(materialized.entities.size() == 3);
+    REQUIRE_FALSE(materialized.entities.empty());
+    const bool singleCache = materialized.entities.size() == 1;
+    CHECK(materialized.entities.size() ==
+          (side == LC_CurveOffsetSide::Left ? std::size_t{1} : std::size_t{3}));
     const auto* firstBranch =
         dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
     REQUIRE(firstBranch);
@@ -5759,7 +5766,8 @@ TEST_CASE("multi-branch hyperbola import refuses partial cache and retains sourc
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(format.suffix);
+        const auto input = directory.file(std::string(side == LC_CurveOffsetSide::Left
+            ? "left-" : "right-") + format.suffix);
 #ifdef DWGSUPPORT
         if (format.dwg) f::dwgFile(input, cache, format.version);
         else f::binaryDxf(input, cache, format.version);
@@ -5769,23 +5777,35 @@ TEST_CASE("multi-branch hyperbola import refuses partial cache and retains sourc
         const auto outcome = stagedImport(input, format.lane);
         REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
         REQUIRE(outcome.graphic);
-        CHECK(outcome.admitted == 0);
-        CHECK(outcome.downgraded == 1);
-        const auto* fallback = dynamic_cast<const RS_Spline*>(
-            f::sole(*outcome.graphic));
-        REQUIRE(fallback);
-        CHECK(dynamic_cast<const LC_OffsetCurve*>(f::sole(*outcome.graphic)) == nullptr);
-        CHECK(RS_Spline::geometryFingerprint(fallback->getData()) ==
-              RS_Spline::geometryFingerprint(firstBranchCache));
-        const auto parsed = xd::parseAndStrip(fallback->getDrwExtData(), encoding);
-        REQUIRE(parsed.status == xd::Status::Schema2);
-        REQUIRE(parsed.definition);
-        REQUIRE(parsed.definition->source);
         const auto expected = values::encodeSourceDefinition(definition);
-        const auto received = values::encodeSourceDefinition(*parsed.definition->source);
         REQUIRE(expected);
-        REQUIRE(received);
-        CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
+        CHECK(outcome.admitted == (singleCache ? 1 : 0));
+        CHECK(outcome.downgraded == (singleCache ? 0 : 1));
+        const auto* importedEntity = f::sole(*outcome.graphic);
+        REQUIRE(importedEntity);
+        if (singleCache) {
+            const auto* imported = dynamic_cast<const LC_OffsetCurve*>(importedEntity);
+            REQUIRE(imported);
+            REQUIRE(imported->sourceDefinition());
+            const auto received = values::encodeSourceDefinition(*imported->sourceDefinition());
+            REQUIRE(received);
+            CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
+            CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+                  RS_Spline::geometryFingerprint(firstBranchCache));
+        } else {
+            const auto* fallback = dynamic_cast<const RS_Spline*>(importedEntity);
+            REQUIRE(fallback);
+            CHECK(dynamic_cast<const LC_OffsetCurve*>(importedEntity) == nullptr);
+            CHECK(RS_Spline::geometryFingerprint(fallback->getData()) ==
+                  RS_Spline::geometryFingerprint(firstBranchCache));
+            const auto parsed = xd::parseAndStrip(fallback->getDrwExtData(), encoding);
+            REQUIRE(parsed.status == xd::Status::Schema2);
+            REQUIRE(parsed.definition);
+            REQUIRE(parsed.definition->source);
+            const auto received = values::encodeSourceDefinition(*parsed.definition->source);
+            REQUIRE(received);
+            CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
+        }
     }
 }
 
