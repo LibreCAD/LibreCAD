@@ -23285,7 +23285,16 @@ This proves geometric round-trip only for these four control counts and the
 accepted interior cut parameters. It does not cover every cut location,
 fit-point representation, or the one-entity closed-cut behavior. The DWG
 SPLINE representation carries the resulting curves, not LibreCAD's internal
-`cut` bookkeeping bit; that bit is not claimed to round-trip. Validate
-ODA-converted geometry for the staged 24 cut-piece DWGs, broaden the remaining
-cut/topology cases, and retain visible-GUI and exact-head CI acceptance as open
+`cut` bookkeeping bit; that bit is not claimed to round-trip. ODA File
+Converter 27.1 converted all 24 staged files (four control counts by six DWG
+versions) to R2018 DXF with zero `.err` files. A separate opt-in test imports
+those DXFs, confirms two entities per file, and compares each piece to its
+source with symmetric sampled distance below `5e-6`; it passes 56,308
+assertions. Re-run with
+`LIBRECAD_OFFSET_CUT_ODA_DXF_DIR=/private/tmp/offset-cut-oda
+librecad_tests '[external][oda][dwg][spline-points][cut][geometry]'`.
+External fixtures are staged in `/private/tmp/offset-cut-dwg` and converted
+DXFs in `/private/tmp/offset-cut-oda`. Test commit `94febc2c6`
+(`test(dwg): verify ODA cut spline geometry`). Broaden the remaining
+cut/topology cases and retain visible-GUI and exact-head CI acceptance as open
 gates.
