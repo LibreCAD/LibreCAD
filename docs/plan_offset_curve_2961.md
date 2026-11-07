@@ -23981,9 +23981,14 @@ the numerical vanishing threshold. A diagnostic sampled 16,384 positions per
 nonuniform knot span and measured a maximum span range of about `62.6487` and
 minimum speed about `2.32112e-10` near the seam. This rules out a globally
 stationary source, but finite sampling does not prove the true minimum speed
-or justify bypassing the endpoint guard. Keep the refusal until a
+or justify bypassing the endpoint guard. Diagnostic separation of the two
+recovery checks shows the first ordering fails at the retained piece's lower
+endpoint, while the cyclic ordering fails at its upper endpoint. Preserve both
+guards. Any attempt to support these cases needs a rational-weight-conditioned
+tangent reliability bound and an independent high-precision geometry
+comparison, followed by offset-error and topology checks; merely reducing the
+vanishing threshold is not acceptable. Keep the refusal until a
 geometry-preserving treatment is demonstrated against the exact rational
-curve and offset tolerance; do not relabel it as successful support by
-weakening the speed check. Staged offset-cache persistence for this ratio,
+curve and offset tolerance. Staged offset-cache persistence for this ratio,
 other periodic layouts, visible GUI, external-CAD beyond ODA, and exact-head CI
 remain open.
