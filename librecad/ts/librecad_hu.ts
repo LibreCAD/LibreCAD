@@ -55,6 +55,11 @@
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
+        <source> is not divided as it is part of another entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
         <translation>Nem osztható fel, mert része egy vonalnak. Először bontsa ki a vonalat.</translation>
     </message>
@@ -1159,6 +1164,78 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawLineDirect</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="350"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="510"/>
+        <source>Cannot open: draw at least one wall segment first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="371"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="551"/>
+        <source>Cannot place window: draw at least one wall segment first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="390"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="716"/>
+        <source>Cannot place door: draw at least one wall segment first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="412"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="422"/>
+        <source>Cannot undo: Begin of history reached</source>
+        <translation type="unfinished">Nem sikerült visszacsinálni: A történelem kezdete elérte</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="782"/>
+        <source>Specify first point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="789"/>
+        <source>Specify next point or type distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="797"/>
+        <source>Type opening width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="800"/>
+        <source>Click to choose marker side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="803"/>
+        <source>Type window width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="806"/>
+        <source>Click to choose window direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="809"/>
+        <source>Type door width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="812"/>
+        <source>Move to the swing side and desired hinge, then click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="815"/>
+        <source>Click near hinge end</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawLineFreehand</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp" line="121"/>
@@ -1637,6 +1714,12 @@ vagy [x-124; y-124; p-124; szám-124; szélek 124; távolság]</translation>
 [nincs 124; indítás 124; vége 124; mindkettő 124; távolság]</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
+        <source>Specify fixed distance between points
+or [x|y|p|number|edges]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -1660,6 +1743,12 @@ vagy [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
+        <source>Specify distance (angle %1 deg)
+or [%2]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -1818,6 +1907,11 @@ vagy [%2]</translation>
         <translation>Adja meg a szélességet</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
+        <source>Specify size (width, height)</source>
+        <translation type="unfinished">Adja meg a méretet (szélesség, magasság)</translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>Adja meg a referenciapontot [bal felső | felső | jobb felső | bal | középen | jobb | bal alsó | alsó | jobb alsó]</translation>
@@ -1883,6 +1977,11 @@ vagy [%2]</translation>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>Adja meg a magasságot</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
+        <source>Specify start point</source>
+        <translation type="unfinished">A kiindulási pont megadása</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -2018,6 +2117,11 @@ vagy [%2]</translation>
 <context>
     <name>LC_ActionDrawSpline</name>
     <message>
+        <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="150"/>
+        <source>Cannot finalize spline: at least %1 control points required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="240"/>
         <source>Specify first control point</source>
         <translation type="unfinished"></translation>
@@ -2030,6 +2134,11 @@ vagy [%2]</translation>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="255"/>
         <source>Specify next control point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="273"/>
+        <source>Cannot close spline: at least %1 control points required.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3217,6 +3326,11 @@ vagy [%2]</translation>
         <translation>Elem rétege nyomtatásának váltása</translation>
     </message>
     <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
+        <source>Draw Fast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
         <translation>Centerline</translation>
@@ -3460,6 +3574,11 @@ vagy [%2]</translation>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
         <translation>Szabad illesztés</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
+        <source>Polar Snap</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
@@ -3872,6 +3991,11 @@ vagy [%2]</translation>
         <translation>Ugrás a tetejére</translation>
     </message>
     <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
+        <source>Open Legacy LibreCAD DXF (UTF-8)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693"/>
         <source>Left Dock Area</source>
         <translation type="unfinished"></translation>
@@ -4098,6 +4222,13 @@ vagy [%2]</translation>
         <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="97"/>
         <source>Export as</source>
         <translation>Exportálás másként</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="112"/>
+        <source>Cannot write the file
+%1
+Please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4960,6 +5091,11 @@ Pont: (%8,%9)</translation>
 <context>
     <name>LC_ActionModifyBreakDivide</name>
     <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="181"/>
+        <source>The selected segment is the whole entity - with &quot;Remove selected&quot; off there is nothing to remove.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="151"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
         <translation>Érvénytelen jogalany - nincs olyan szegmens a kereszteződések között, amely törne / osztaná.</translation>
@@ -5346,6 +5482,11 @@ Pont: (%8,%9)</translation>
         <translation type="unfinished">Másolás létrehozása</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="218"/>
+        <source>Finish</source>
+        <translation type="unfinished">Vége</translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="216"/>
         <source>Select to move</source>
         <translation type="unfinished"></translation>
@@ -5431,6 +5572,135 @@ Pont: (%8,%9)</translation>
 <context>
     <name>LC_ActionModifyOffset</name>
     <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="109"/>
+        <source>hidden or locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="111"/>
+        <source>the current layer is missing, frozen or locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="128"/>
+        <source>nothing is left at this distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="115"/>
+        <source>too complex to preview; a click offsets it in full</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="115"/>
+        <source>the offset is too complex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="117"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="152"/>
+        <source>it cannot be offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="136"/>
+        <source>it has no length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="138"/>
+        <source>it is unbounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="140"/>
+        <source>it has elliptic segments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="142"/>
+        <source>its offset would cross itself, which polylines do not support yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
+        <source>it runs over itself</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="146"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="171"/>
+        <source>the distance is not valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="148"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="157"/>
+        <source>the point does not show which side to offset to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="154"/>
+        <source>it does not lie in the drawing plane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="159"/>
+        <source>the curve does not move, or has a point where its direction cannot be found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="161"/>
+        <source>the curve has a gap or a corner the offset cannot join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="164"/>
+        <source>the distance meets the curve&apos;s radius of curvature where that cannot be resolved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="166"/>
+        <source>the offset touches itself where it cannot be trimmed reliably</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="169"/>
+        <source>the offset cannot be fitted within the tolerance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="174"/>
+        <source>the offset could not be made</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="258"/>
+        <source>%1 of %2 selected entities could not be offset: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="264"/>
+        <source>Only %1 of %2 copies fit, since nothing is left at a larger distance; the original was kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="269"/>
+        <source>%1 selected entities got fewer than %2 copies, since nothing is left at a larger distance; their originals were kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="275"/>
+        <source>Only %1 of %2 copies were made: %3; the original was kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="281"/>
+        <source>%1 selected entities got fewer than %2 copies: %3; their originals were kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
         <source>Offset</source>
         <translation type="unfinished">Ellentmondás</translation>
@@ -5439,6 +5709,27 @@ Pont: (%8,%9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="145"/>
         <source>Distance:</source>
         <translation type="unfinished">Távolság:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="436"/>
+        <source>Not a valid expression</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="523"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="531"/>
+        <source>Specify direction of offset, or enter distance &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="527"/>
+        <source>Specify reference point for direction of offset, or enter distance &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="540"/>
+        <source>Select entities to offset</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
@@ -10085,6 +10376,21 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>Méret</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
+        <source>Measured value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="182"/>
+        <source>Unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="183"/>
+        <source>Geometric measurement in drawing units, or decimal degrees for angles; excludes dimension scale factor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
         <translation>Réteg</translation>
@@ -10931,9 +11237,19 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <translation>MEGJEGYZÉS: A menü megbízást figyelmen kívül hagyják. A &quot;Pan&quot; -nak van fenntartva.</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
+        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>Megjegyzés: Ez a kombináció az alapértelmezett kontextus menüre van fenntartva, és megakadályozhatja a meghívását!</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="248"/>
+        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -12451,9 +12767,30 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
 <context>
     <name>LC_DocumentsStorage</name>
     <message>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="113"/>
+        <source>The original legacy DXF is protected. Choose a different name for the recovered drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="121"/>
+        <source>LibreCAD cannot save &quot;%1&quot; in its own format. Choose a name to save the drawing as.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="148"/>
         <source>Unnamed</source>
         <translation>Név nélkül</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="281"/>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="380"/>
+        <source>The original legacy DXF is protected. Save the recovered drawing to a different file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="446"/>
+        <source>Skipped a backup that would replace the protected original legacy DXF.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13289,7 +13626,7 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
-        <source>Strech selection</source>
+        <source>Stretch selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -13413,6 +13750,11 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <source>Width of entity pen line</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.h" line="330"/>
+        <source>Unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ExportLayersService</name>
@@ -13439,6 +13781,23 @@ Biztos vagy benne, hogy el fogod dobni a változtatásokat?</translation>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Export failed!</source>
         <translation>Az export nem sikerült!</translation>
+    </message>
+</context>
+<context>
+    <name>LC_HatchDensity</name>
+    <message numerus="yes">
+        <location filename="../src/lib/gui/lc_hatchdensitytext.cpp" line="87"/>
+        <source>%n hatch(es) exceed the hatch pattern limit and are shown as fills.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/lib/gui/lc_hatchdensitytext.cpp" line="95"/>
+        <source>R12 export: %n hatch(es) are too dense; their pattern is not written and they will look empty in the file.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -14857,6 +15216,11 @@ Adjon meg másik értéket.</translation>
         <translation>Réteg elemeinek ki&amp;jelölése</translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="774"/>
+        <source>Restore Model/Paper Space Entity Visibility...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
         <translation>R&amp;étegmásolat létrehozása</translation>
@@ -14935,6 +15299,18 @@ Adjon meg másik értéket.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation>Üres rétegek &amp;keresése és eltávolítása</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1802"/>
+        <source>Make %1 individually invisible model/paper-space entities on layer &quot;%2&quot; visible?
+
+This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entities that were intentionally hidden.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1807"/>
+        <source>Restore Entity Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -17490,11 +17866,6 @@ Adjon meg másik értéket.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="210"/>
-        <source>Specified type of center mark on dimension (DIMCEN variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="211"/>
         <source>Mark</source>
         <translation type="unfinished">Jelölje</translation>
@@ -17725,11 +18096,6 @@ Adjon meg másik értéket.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="332"/>
-        <source>Specifies the color of the dimension of the text (DIMCLRT variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="336"/>
         <source>Text height</source>
         <translation type="unfinished"></translation>
@@ -17765,11 +18131,6 @@ Adjon meg másik értéket.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="353"/>
-        <source>Specified horizontal dimension text position (DIMJUST variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="354"/>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="365"/>
         <source>Centered</source>
@@ -17798,11 +18159,6 @@ Adjon meg másik értéket.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="364"/>
         <source>Text pos vert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="364"/>
-        <source>Specified vertical dimension text position (DIMTAD variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17871,16 +18227,6 @@ Adjon meg másik értéket.</translation>
         <translation type="unfinished">Arc hossz szimbólum</translation>
     </message>
     <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
-        <source>Specifies placement of the arch length dimension symbol (DIMARCSYM variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
-        <source>Preceeding dimension text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
         <translation type="unfinished">A dimenzió feletti szöveg</translation>
@@ -17924,11 +18270,6 @@ Adjon meg másik értéket.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
         <source>Text override</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
-        <source>Specified the text string of dimension (overrides Measurement string)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18007,8 +18348,43 @@ Adjon meg másik értéket.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="210"/>
+        <source>Specifies type of center mark on dimension (DIMCEN variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="332"/>
+        <source>Specifies the color of the dimension text (DIMCLRT variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="353"/>
+        <source>Specifies horizontal dimension text position (DIMJUST variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="364"/>
+        <source>Specifies vertical dimension text position (DIMTAD variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
+        <source>Specifies placement of the arc length dimension symbol (DIMARCSYM variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
+        <source>Preceding dimension text</source>
+        <translation type="unfinished">Korábbi dimenzió szövege</translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
+        <source>Specifies the text string of dimension (overrides Measurement string)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="507"/>
-        <source>Place bettween if has room</source>
+        <source>Place between if has room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18650,7 +19026,7 @@ Adjon meg másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="966"/>
-        <source>Sets suppression of zero inches for alterate units tolerance values in dimension (DIMALTTZ variable)</source>
+        <source>Sets suppression of zero inches for alternate units tolerance values in dimension (DIMALTTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -18781,12 +19157,12 @@ Adjon meg másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
-        <source>Obligue</source>
-        <translation type="unfinished"></translation>
+        <source>Oblique</source>
+        <translation type="unfinished">Kötelezettség</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
-        <source>Dimension obligue angle</source>
+        <source>Dimension oblique angle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -18904,7 +19280,7 @@ Adjon meg másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="71"/>
-        <source>Andle of horizontal direction for this dimension</source>
+        <source>Angle of horizontal direction for this dimension</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -19200,6 +19576,11 @@ Adjon meg másik értéket.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="47"/>
         <source>Focus 2 X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="43"/>
+        <source>Y coordinate for first focus point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19747,7 +20128,7 @@ Adjon meg másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="47"/>
-        <source>Name of the text style)</source>
+        <source>Name of the text style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -20343,7 +20724,7 @@ Adjon meg másik értéket.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="62"/>
-        <source>Name of the text style)</source>
+        <source>Name of the text style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -20608,6 +20989,16 @@ Adjon meg másik értéket.</translation>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="543"/>
         <source>Modify Generic</source>
         <translation type="unfinished">Generikus módosítása</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="573"/>
+        <source>Copy value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="578"/>
+        <source>Copy formatted</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="583"/>
@@ -22463,6 +22854,26 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="311"/>
+        <source>Hidden (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="312"/>
+        <source>Hidden (small)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="313"/>
+        <source>Hidden (large)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
         <source>Dash Dot</source>
         <translation>Vonal-pont</translation>
     </message>
@@ -22520,6 +22931,26 @@ Figyelem: ezt a műveletet NEM lehet visszavonni!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="321"/>
         <source>Center (large)</source>
         <translation>Középső (nagy)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
+        <source>Phantom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="327"/>
+        <source>Phantom (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="328"/>
+        <source>Phantom (small)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="329"/>
+        <source>Phantom (large)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="322"/>
@@ -23031,6 +23462,14 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>A tollfájl helye megváltozott, kérjük indítsa újra az alkalmazást, hogy az új tollfájl kerüljön felhasználásra.
 
 Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a szerkesztőn keresztül, a paletta aktuális tollai az új fájlba kerülnek mentésre, ezért annak meglévő tartalma felülíródik.</translation>
+    </message>
+</context>
+<context>
+    <name>LC_PluginInvoker</name>
+    <message>
+        <location filename="../src/plugins/lc_plugininvoker.cpp" line="113"/>
+        <source>Could not load plugin %1: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24187,6 +24626,11 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="85"/>
+        <source>Angle Length</source>
+        <translation type="unfinished">Szöghossz</translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
         <translation type="unfinished">Arc hossz</translation>
@@ -24195,12 +24639,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Total angle of arc</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
-        <source>Circumference</source>
-        <comment>arc</comment>
-        <translation type="unfinished">Kerület</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
@@ -24333,8 +24771,48 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
-        <source>Create tangental circle by 2 entitites and 1 point</source>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
+        <source>Create tangental circle by 2 entities and 1 point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
+        <source>Create tangental circle by 2 entities and radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
+        <source>Break or divide the arc by intersection points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="182"/>
+        <source>Create ellipse inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="187"/>
+        <source>Create diametric dimension for arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
+        <source>Create radial dimension for arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="191"/>
+        <source>Creation of dimension, ordinate or arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="192"/>
+        <source>Create ordinate dimension for arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="193"/>
+        <source>Create arc dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24355,11 +24833,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
         <source>Tangent Circle (2 E, R)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
-        <source>Create tangental circle by 2 points and radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24390,6 +24863,11 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="166"/>
+        <source>Creation of orthogonal lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Orthogonal</source>
         <translation type="unfinished"></translation>
@@ -24407,6 +24885,11 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Create arc tangental line orthogonal to line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="171"/>
+        <source>Creation of line with relative angle or fillet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24450,11 +24933,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished">Osztás / osztás</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
-        <source>Break or divide the arc by intesection points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
         <source>Creation of ellipse or bounding box</source>
         <translation type="unfinished"></translation>
@@ -24462,11 +24940,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
         <source>Ellipse inscribed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
-        <source>Create elipse inscribed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24490,23 +24963,8 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="183"/>
-        <source>Create of diametric dimension for arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
         <source>Dim Radial</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
-        <source>Create of radial dimension for arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="187"/>
-        <source>Creation of dimension, angular or ordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24515,18 +24973,8 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
-        <source>Create of ordinate dimension for arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
         <source>Dim Arc</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
-        <source>Create of arc dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24718,17 +25166,42 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="83"/>
-        <source>Create tangental circle 2 points</source>
+        <source>Create tangental circle by 2 points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
+        <source>Create tangental circle by 2 entities and 1 point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
+        <source>Create tangental circle by 2 entities and radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
+        <source>Break or divide the circle by intersection points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="107"/>
+        <source>Creation of line with relative angle or fillet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
+        <source>Create ellipse inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="122"/>
+        <source>Creation of ordinate dimension or leader</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
         <source>Tangent Circle (2 E, 1 P)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
-        <source>Create tangental circle by 2 entitites and 1 point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24749,11 +25222,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
         <source>Tangent Circle (2 E, R)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
-        <source>Create tangental circle by 2 points and radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24781,6 +25249,11 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Create line tangental to two circles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="97"/>
+        <source>Creation of orthogonal lines</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24824,11 +25297,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished">Osztás / osztás</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
-        <source>Break or divide the circle by intesection points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
         <source>Relative</source>
         <translation type="unfinished">Relatív</translation>
@@ -24856,11 +25324,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
         <source>Ellipse inscribed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
-        <source>Create elipse inscribed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24896,11 +25359,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="119"/>
         <source>Create radial dimension for circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="122"/>
-        <source>Creation of dimension, angular or ordinate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -25141,11 +25599,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="127"/>
-        <source>Manage styles..</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="128"/>
         <source>Invokes dimension styles management UI</source>
         <translation type="unfinished"></translation>
@@ -25183,11 +25636,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="235"/>
         <source>Lines and Arrows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="236"/>
-        <source>Dimensions lines and arrows setup</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -25240,11 +25688,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
         <source>Center mark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
-        <source>Specified type of center mark on dimension (DIMCEN variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -25474,11 +25917,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="586"/>
-        <source>Specifies the color of the dimension of the text (DIMCLRT variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="601"/>
         <source>Text height</source>
         <translation type="unfinished"></translation>
@@ -25540,11 +25978,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="641"/>
-        <source>Specified horizontal dimension text position (DIMJUST variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="652"/>
         <source>Above</source>
         <translation type="unfinished">Felül</translation>
@@ -25567,11 +26000,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="659"/>
         <source>Text pos vert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="659"/>
-        <source>Specified vertical dimension text position (DIMTAD variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -25605,11 +26033,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
-        <source>Preceeding dimension text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
         <translation type="unfinished">A dimenzió feletti szöveg</translation>
@@ -25618,11 +26041,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
         <source>Arc length symbol</source>
         <translation type="unfinished">Arc hossz szimbólum</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
-        <source>Specifies placement of the arch length dimension symbol (DIMARCSYM variable)</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="719"/>
@@ -25655,23 +26073,8 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="739"/>
-        <source>Text measurement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="739"/>
-        <source>Specified dimension measurement value</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="754"/>
         <source>Text override</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="755"/>
-        <source>Specified the text string of dimension (overrides Measurement string)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -25741,8 +26144,63 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="881"/>
-        <source>Place bettween if has room</source>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="127"/>
+        <source>Manage styles...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="236"/>
+        <source>Dimension lines and arrows setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
+        <source>Specifies type of center mark on dimension (DIMCEN variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="586"/>
+        <source>Specifies the color of the dimension text (DIMCLRT variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="641"/>
+        <source>Specifies horizontal dimension text position (DIMJUST variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="659"/>
+        <source>Specifies vertical dimension text position (DIMTAD variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
+        <source>Preceding dimension text</source>
+        <translation type="unfinished">Korábbi dimenzió szövege</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
+        <source>Specifies placement of the arc length dimension symbol (DIMARCSYM variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="739"/>
+        <source>Measured value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="740"/>
+        <source>Geometric measurement in drawing units, or decimal degrees for angles; excludes dimension scale factor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="746"/>
+        <source>Specifies the text string of dimension (overrides Measurement string)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="872"/>
+        <source>Place between if has room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -26278,8 +26736,8 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1620"/>
-        <source>Sets suppression of zero inches for alterate units tolerance values in dimension (DIMALTTZ variable)</source>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1593"/>
+        <source>Sets suppression of zero inches for alternate units tolerance values in dimension (DIMALTTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -26755,8 +27213,23 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="120"/>
+        <source>Creation of orthogonal lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="120"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="125"/>
         <source>Creation of line tangental to ellipse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
+        <source>Create line tangental for two entities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="130"/>
+        <source>Creation of line with relative angle or fillet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -26793,16 +27266,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Tangent (C,C)</source>
         <translation type="unfinished">Érintő (Kör,Kör)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
-        <source>Create line tangental for two entitiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="130"/>
-        <source>Creation of line with relative angle</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="131"/>
@@ -26914,7 +27377,7 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="112"/>
-        <source>Defines which time of grid should be drawn</source>
+        <source>Defines which type of grid should be drawn</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -27366,7 +27829,7 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="176"/>
-        <source>Set ucs that corresponds to selected ordinate dimension</source>
+        <source>Set UCS that corresponds to selected ordinate dimension</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -27454,7 +27917,17 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="115"/>
-        <source>Precision of linear units units used in drawing</source>
+        <source>Precision of linear units used in drawing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="137"/>
+        <source>Angles clockwise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="138"/>
+        <source>Direction of angles. If counterclockwise, 90 degrees is north, for clockwise - 90 degrees is south</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -27465,16 +27938,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="130"/>
         <source>Primary linear units used by drawing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="137"/>
-        <source>Angles clockwize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="138"/>
-        <source>Direction of angles. If counterclockwize, 90 degrees is north, for clockwise - 90 degrees is south</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -27611,6 +28074,11 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished">Állapotsor</translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
+        <source>Defines whether status bar is shown or not</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="118"/>
         <source>Save workspace...</source>
         <translation type="unfinished"></translation>
@@ -27676,6 +28144,16 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="67"/>
         <source>Area of hatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="78"/>
+        <source>Pattern lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="79"/>
+        <source>Whether the pattern lines were generated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27788,7 +28266,7 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="104"/>
-        <source>Ecentricity of hyperbola</source>
+        <source>Eccentricity of hyperbola</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -28140,7 +28618,7 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
-        <source>Vertext of leader with given index</source>
+        <source>Vertex of leader with given index</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -28236,6 +28714,11 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
         <translation type="unfinished">Vonalcsatlakozás</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
+        <source>Lengthen or shorten the line by a given distance</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
@@ -28349,22 +28832,47 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
-        <source>Create line orhtogonal to this line</source>
+        <source>Create line orthogonal to this line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
+        <source>Create line with relative angle to this line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
+        <source>Creation of line from point or tangental orthogonal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
+        <source>Create circle tangental by 2 points</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
+        <source>Create circle tangental by 2 entities and 1 point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
+        <source>Create ellipse inscribed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
+        <source>Create bounding box for line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
+        <source>Break or divide the line by intersection points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
         <source>Relative Angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
-        <source>Create line with related angle to this line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
-        <source>Creation line from point or tangental orthogonal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -28399,18 +28907,8 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
-        <source>Create circle tangental 2 points</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
         <source>Tangential Circle (2 E, 1 P)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
-        <source>Create circle tangental by 2 entitites and 1 point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -28425,12 +28923,12 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
-        <source>Tangential Cicle (2 E, R)</source>
+        <source>Create circle tangental by 2 entities and radius</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
-        <source>Create circle tangental by 2 entities and radius</source>
+        <source>Tangential Circle (2 E, R)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -28444,18 +28942,8 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
-        <source>Create elipse inscribed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
         <source>Bounding box</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
-        <source>Create of bounding box for line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -28502,11 +28990,6 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
         <translation type="unfinished">Osztás / osztás</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
-        <source>Break or divide the line by intesection points</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -28997,6 +29480,11 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
         <translation type="unfinished">Vertex</translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
+        <source>Vertex of polyline with given index</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="71"/>
         <source>Length</source>
         <translation type="unfinished">Hossz</translation>
@@ -29154,17 +29642,17 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="120"/>
-        <source>Creates equidistnat polyline</source>
+        <source>Creates equidistant polyline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="121"/>
+        <source>Revert direction of polyline, swapping start and end points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="121"/>
         <source>Revert direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="121"/>
-        <source>Reverst direction of polyline, swapping start and end points</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -29380,7 +29868,7 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="145"/>
-        <source>Exploding spline and creating rounding box</source>
+        <source>Exploding spline and creating bounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -29395,12 +29883,12 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="147"/>
-        <source>Rounding box</source>
+        <source>Create bounding box around spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="147"/>
-        <source>Create bounding box around spline</source>
+        <source>Bounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -29573,7 +30061,7 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="114"/>
-        <source>Tangent and rounding box</source>
+        <source>Tangent and bounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -29588,12 +30076,12 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="116"/>
-        <source>Rounding box</source>
+        <source>Create bounding box around spline</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="116"/>
-        <source>Create bounding box around spline</source>
+        <source>Bounding box</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -29712,7 +30200,7 @@ Kérjük, vegye figyelembe, hogy ha az újraindítás nélkül ment tollat a sze
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="83"/>
-        <source>Content text of MText</source>
+        <source>Content of the text</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -30872,6 +31360,11 @@ Réteg: </translation>
         <translation>Vezérlőpontok használata</translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1396"/>
+        <source>Pattern lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1505"/>
         <source>[Override]</source>
         <translation>[Override] [Felülírás]</translation>
@@ -31286,6 +31779,11 @@ p, li {white- space: pre- wrap;}
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="399"/>
         <source>&amp;Collect Coordinates</source>
         <translation>Koordináták gyűjtése</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="701"/>
+        <source>Layer &quot;%1&quot; is locked: unlock it to edit its entities.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
@@ -36243,6 +36741,11 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <translation>Mentés törölve</translation>
     </message>
     <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="952"/>
+        <source>Saved drawing: %1. Left out: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="406"/>
         <source>&amp;Save</source>
         <translation>Menté&amp;s</translation>
@@ -36261,6 +36764,46 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="412"/>
         <source>Save %1 &amp;as...</source>
         <translation>1 mentése &amp;másként...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1633"/>
+        <source>Use this only for known old LibreCAD R12–R2004 DXF files that contain UTF-8 text but declare the ANSI_1252 code page. This is not automatic encoding detection.
+
+The original opens in a separate document. Mixed encodings and raw metadata are not guaranteed to recover correctly. Review the result, then use Save As to save a corrected copy instead of replacing the original.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1640"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1777"/>
+        <source>Legacy LibreCAD DXF recovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1648"/>
+        <source>Open Legacy LibreCAD DXF (UTF-8)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1649"/>
+        <source>DXF drawings (*.dxf *.DXF)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1774"/>
+        <source>Legacy LibreCAD UTF-8 recovery opens DXF files only. Use ordinary Open for DWG and other formats.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
+        <source>Loaded with legacy LibreCAD UTF-8 recovery: %1. Use Save As to save a corrected copy. Mixed encodings and raw metadata are not guaranteed to recover correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1851"/>
+        <source> Modelspace is empty; %n block(s) in the Blocks dock contain geometry.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
@@ -36320,6 +36863,16 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <source>Current Layer</source>
         <translation>Aktuális réteg</translation>
     </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/qg_activelayername.cpp" line="90"/>
+        <source>The current layer is hidden: what is drawn on it is not shown until the layer is shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/qg_activelayername.cpp" line="93"/>
+        <source>The current layer is locked, as no other layer is unlocked: it cannot be selected or modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_BlockDialog</name>
@@ -36342,6 +36895,16 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
         <translation>Érvénytelen elnevezés. A &quot;%1 &quot; név már foglalt.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="354"/>
+        <source>Add Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="390"/>
+        <source>Rename Block</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -36404,6 +36967,11 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123"/>
         <source>Magenta</source>
         <translation>Lila</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="316"/>
+        <source>Select Color</source>
+        <translation type="unfinished">Szín kiválasztása</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="112"/>
@@ -36821,6 +37389,11 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
         <translation>Elzárt terület</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
+        <source>Preview: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -40859,6 +41432,16 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <translation>Külön menü / egység</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
+        <source>Marks the drawing&apos;s range along each scrollbar where it lies outside the view, and gives the ranges and the drawing&apos;s distance in the scrollbar&apos;s tooltip, so the drawing can be found again when panned far away</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="105"/>
+        <source>Show drawing extents on scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="376"/>
         <source>Overlay selection box boundary line type (normal mode)</source>
         <translation type="unfinished"></translation>
@@ -40891,6 +41474,26 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2034"/>
         <source> Snap to grid lines if &quot;Snap to Grid&quot; is active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2057"/>
+        <source>If selected, toolbar angle snap only snaps when the cursor is near the configured angle step.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2060"/>
+        <source>Soft Angle Snap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2067"/>
+        <source>Soft Snap sensitivity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2074"/>
+        <source>Maximum angular distance from the angle step before toolbar angle snap is applied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -41216,6 +41819,11 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
         <translation>Erősítés fájlnév utótag:</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5114"/>
+        <source>Hide backup and autosave files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
         <source>If selected, mouse up will finish ad-hock moving operations (so just one click is need). Otherwise, first click initiates move, and second one completes it.</source>
         <translation type="unfinished"></translation>
@@ -41258,6 +41866,71 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5556"/>
         <source>Promote command in Cmd widget</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5635"/>
+        <source>Draw Fast Defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5641"/>
+        <source>Opening marker depth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5648"/>
+        <source>Length of the perpendicular tick marks drawn on each side of a wall opening (Draw Fast &apos;o&apos; / &apos;opening&apos; command).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5670"/>
+        <source>Window offset width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5677"/>
+        <source>Distance between the wall line and the inner window line in Draw Fast window mode (&apos;w&apos; / &apos;window&apos; command).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5699"/>
+        <source>Door thickness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5706"/>
+        <source>Thickness of the door slab in Draw Fast door mode. Set to 0 for a single-line door leaf.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5728"/>
+        <source>Door swing angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5735"/>
+        <source>Arc sweep angle for the door swing in Draw Fast door mode. 90 degrees draws a quarter-circle; 45 degrees draws a shallower arc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5752"/>
+        <source>Door design:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5759"/>
+        <source>Door symbol style. &apos;Swing only&apos; draws the leaf and arc. &apos;Swing with opening line&apos; also draws a straight line across the full door opening.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5763"/>
+        <source>Swing only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5768"/>
+        <source>Swing with opening line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -41896,6 +42569,26 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="145"/>
         <source>Text to insert</source>
         <translation>A beillesztendő szöveg</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="151"/>
+        <source>Text Direction</source>
+        <translation type="unfinished">Szöveg iránya</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="155"/>
+        <source>Auto</source>
+        <translation type="unfinished">Automatikus</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="161"/>
+        <source>Left to Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="166"/>
+        <source>Right to Left</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
@@ -42622,6 +43315,21 @@ so default step value required for baking</source>
         <translation>Rajzcsere DXF 2007 %1</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="148"/>
+        <source>Drawing Exchange DXF 2018 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="149"/>
+        <source>Drawing Exchange DXF 2013 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="150"/>
+        <source>Drawing Exchange DXF 2010 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="134"/>
         <source>Drawing Exchange DXF 2004 %1</source>
         <translation>Rajzcsere DXF 2004 %1</translation>
@@ -42630,6 +43338,11 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="136"/>
         <source>Drawing Exchange DXF R14 %1</source>
         <translation>Rajzcsere DXF R14 %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="164"/>
+        <source>ESRI Shapefile %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="149"/>
@@ -42662,6 +43375,101 @@ so default step value required for baking</source>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="248"/>
         <source>Untitled</source>
         <translation>Névtelen</translation>
+    </message>
+</context>
+<context>
+    <name>QG_GraphicView</name>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1352"/>
+        <source>View X %1..%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1353"/>
+        <source>View Y %1..%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1358"/>
+        <source>The drawing is empty · %1</source>
+        <comment>scrollbar tooltip: %1 is the view&apos;s range</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1365"/>
+        <source>Drawing X %1..%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1366"/>
+        <source>Drawing Y %1..%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1372"/>
+        <source>less than 0.1 view widths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1372"/>
+        <source>less than 0.1 view heights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1376"/>
+        <source>≈%1 view widths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1376"/>
+        <source>≈%1 view heights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1381"/>
+        <source>view spans the drawing&apos;s X range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1381"/>
+        <source>view spans the drawing&apos;s Y range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1384"/>
+        <source>drawing&apos;s X range is in view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1384"/>
+        <source>drawing&apos;s Y range is in view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1388"/>
+        <source>drawing&apos;s X range is %1 to the left (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1389"/>
+        <source>drawing&apos;s Y range is %1 down (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1394"/>
+        <source>drawing&apos;s X range is %1 to the right (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1395"/>
+        <source>drawing&apos;s Y range is %1 up (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1399"/>
+        <source>%1 · %2 · %3</source>
+        <comment>scrollbar tooltip: the drawing&apos;s range, the view&apos;s range, where the drawing is</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -42881,6 +43689,26 @@ Az építési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="99"/>
+        <source>Hidden (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
+        <source>Hidden (small)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="101"/>
+        <source>Hidden (large)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
         <source>Dash Dot</source>
         <translation>Pontvonal</translation>
     </message>
@@ -42923,6 +43751,26 @@ Az építési rétegek tartalma nem kerül kinyomtatásra.</translation>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="109"/>
         <source>Center (large)</source>
         <translation>Közép (nagy)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="114"/>
+        <source>Phantom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="115"/>
+        <source>Phantom (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="116"/>
+        <source>Phantom (small)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="117"/>
+        <source>Phantom (large)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="110"/>
@@ -43549,6 +44397,11 @@ Lecseréli?</translation>
         <translation>Betűkészlet %1</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="496"/>
+        <source>ESRI Shapefile %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="500"/>
         <source>Open Drawing</source>
         <translation>Rajz megnyitása</translation>
@@ -43828,6 +44681,20 @@ Lecseréli?</translation>
         <translation>entitások</translation>
     </message>
     <message numerus="yes">
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4365"/>
+        <source>DWG load: the block table lists %n block record(s) that the file does not contain (erased). They were skipped.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4373"/>
+        <source>DWG load: %n entity(ies) belonged to block records that no longer exist (erased) and were skipped.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1151"/>
         <source>, and %n more class(es)</source>
         <translation>
@@ -43865,6 +44732,24 @@ Lecseréli?</translation>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1654"/>
         <source>XREF load failed for block &quot;%1&quot;: %2</source>
         <translation>Az XREF betöltése nem sikerült a(z) &quot;%1&quot; blokkhoz: %2</translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17114"/>
+        <source>%1 object(s) read from another DXF version, which this version cannot hold</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17123"/>
+        <source>annotation scale or column data of %1 multi-line attribute(s)</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17130"/>
+        <source>%1 object(s) DWG cannot hold</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12410"/>
@@ -45538,6 +46423,18 @@ Lecseréli?</translation>
         <translation>párhuzamos</translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="145"/>
+        <source>dfast</source>
+        <comment>draw fast</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="146"/>
+        <source>df</source>
+        <comment>draw fast</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="266"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
@@ -46252,16 +47149,34 @@ Lecseréli?</translation>
         <translation>modmove</translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="751"/>
+        <source>rotate</source>
+        <comment>modify - rotate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
         <translation>modrotát</translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="758"/>
+        <source>scale</source>
+        <comment>modify - scale</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="730"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
         <translation>modscale</translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="765"/>
+        <source>mirror</source>
+        <comment>modify -  mirror</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="736"/>
@@ -46304,6 +47219,12 @@ Lecseréli?</translation>
         <source>md</source>
         <comment>modify -  revert direction</comment>
         <translation>md</translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="791"/>
+        <source>trim</source>
+        <comment>modify - trim (extend)</comment>
+        <translation type="unfinished">letör</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
@@ -46366,6 +47287,24 @@ Lecseréli?</translation>
         <translation>filé</translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="813"/>
+        <source>o</source>
+        <comment>modify - offset</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="820"/>
+        <source>bevel</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="821"/>
+        <source>chamfer</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -46400,6 +47339,12 @@ Lecseréli?</translation>
         <source>xt</source>
         <comment>explode text strings</comment>
         <translation>xt</translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="870"/>
+        <source>explode</source>
+        <comment>explode block/polyline into entities</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="838"/>
@@ -47176,6 +48121,12 @@ Lecseréli?</translation>
         <translation>Figyelmen kívül hagyja a hibát, és megnyitja a fájlt?</translation>
     </message>
     <message>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="218"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="11655"/>
+        <source>The original legacy DXF is protected. Save the recovered drawing to a different file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1003"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
@@ -47376,6 +48327,16 @@ Lecseréli?</translation>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="145"/>
         <source>Target output directory.</source>
         <translation>Cél kimeneti könyvtár.</translation>
+    </message>
+    <message>
+        <location filename="../src/main/console_dxf2dwg.cpp" line="230"/>
+        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2010, r2013, r2018.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/console_dxf2dwg.cpp" line="236"/>
+        <source>DWG output version: r2000 (default), r2004, r2007, r2010, r2013, r2018.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
@@ -47618,6 +48579,36 @@ Lecseréli?</translation>
         <translation>WCS</translation>
     </message>
     <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="130"/>
+        <source>There is no layer &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="146"/>
+        <source>Layer &quot;%1&quot; is locked: unlock it to make it the current layer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="163"/>
+        <source>Layer &quot;%1&quot; is locked, so it cannot stay the current layer: &quot;%2&quot; is the current layer now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="168"/>
+        <source>Layer &quot;%1&quot; was not locked: it is the current layer, and no other layer is unlocked to take its place.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="357"/>
+        <source>Layer &quot;%1&quot; is being removed, so &quot;%2&quot; is the current layer now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="418"/>
+        <source>Layer &quot;0&quot; can never be removed.</source>
+        <translation type="unfinished">A &quot;0&quot; réteg soha nem távolítható el.</translation>
+    </message>
+    <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="668"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
         <translation>Érvénytelen nyomtatási skála:%1. A nyomtatási előnézet nem illeszkedik az oldalra</translation>
@@ -47631,6 +48622,23 @@ Lecseréli?</translation>
         <location filename="../src/lib/printing/lc_printing.cpp" line="165"/>
         <source>PDF files (*.pdf);;All files (*.*)</source>
         <translation>PDF fájlok (* .pdf);; Minden fájl (*. *)</translation>
+    </message>
+    <message>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="375"/>
+        <source>Cannot start printing on %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="376"/>
+        <source>Cannot write the file
+%1
+Please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="379"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="432"/>
@@ -47793,9 +48801,44 @@ Lecseréli?</translation>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="346"/>
+        <source>Layer &quot;%1&quot; was not removed: it is the current layer. Make another layer current to remove it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="354"/>
+        <source>Layer &quot;%1&quot; was not removed: it is the current layer, and no other layer is unlocked to take its place.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="517"/>
+        <source>The current layer cannot be locked: no other layer is unlocked to take its place.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/undo/lc_undosection.cpp" line="130"/>
+        <source>Layer &quot;%1&quot; is the current layer and it is locked: unlock it, or add a layer that is not locked, to draw.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filtershp.cpp" line="493"/>
+        <source>Cannot open shapefile %1 (missing or corrupt .shx?)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filtershp.cpp" line="623"/>
+        <source>Shapefile %1 contained %2 records but none were readable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
+    <message>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="61"/>
+        <source>Create Block</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
@@ -48218,6 +49261,13 @@ Lecseréli?</translation>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="131"/>
         <source>Hatch created successfully.</source>
         <translation>A sraffozás sikerült.</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
+        <source>Hatch has %n duplicate boundary loop(s); duplicates cancel each other and leave that area empty.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
