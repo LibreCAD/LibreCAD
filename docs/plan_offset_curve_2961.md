@@ -22186,3 +22186,29 @@ polyline picker variants`). Remaining work is per-variant worker/cache
 admission, import promotion and diagnostics, plus visible-GUI and
 independent-CAD acceptance; the 34-layout persistence matrix must not be used
 to infer those separate gates are closed.
+
+#### W563k. Requalify Source-generation and Polyline Cache Boundaries (2026-11-07)
+
+Ran the current Release worker-kernel suites on the exact product tree. The
+`[source-generation]` selection passes 727 assertions across 7 cases, covering
+operation-7 generation/transport for all modeled source families plus degree-1,
+quadratic, cubic, and wrapped-periodic spline examples. In particular, the
+test distinguishes a successful ordinary offset result from a native-cache
+promotion: operation 7 can return ordinary fallback geometry with
+`NotCacheRepresentable`, without granting cache authority.
+
+The `[polyline]` worker-kernel selection passes 82,644 assertions across 6
+cases. It includes closed line and arc chains, mixed bulges, both signed sides,
+open mixed line/arc generation, explicit refusal for multi-output or
+noncanonical native caches, malformed-chain rejection, and scale/translation
+checks. These checks establish representative worker behavior and the
+intentional cache-representability boundary; they do not prove every polyline
+topology/bulge combination or every direct-import promotion case.
+
+Validation executables: `/private/tmp/LibreCAD-offset-merge-build/librecad_offset_worker_kernel_tests`
+with filters `[source-generation]` and `[polyline]`; both pass. Current PR
+source-picker union remains 6,883 assertions/10 cases, and the five-format
+34-layout typed-source persistence matrix passes 6,180 assertions. W563 stays
+open for exhaustive family/variant cross-product coverage, actual import
+promotion and diagnostics, direct canvas/UI acceptance, and independent-CAD
+verification.
