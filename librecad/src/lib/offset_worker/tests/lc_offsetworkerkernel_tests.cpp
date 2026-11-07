@@ -761,7 +761,8 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
     };
     const std::vector<Variant> variants{
         {1, 1e-3, false}, {1, 1.0, false}, {1, 1e3, false},
-        {2, 1.0, false}, {2, 1.0, true}, {3, 1.0, false}};
+        {2, 1.0, false}, {2, 1e-3, true}, {2, 1.0, true},
+        {2, 1e3, true}, {3, 1.0, false}};
     for (const auto& variant : variants) {
         const int degree = variant.degree;
         const double scale = variant.scale;
@@ -810,7 +811,7 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         if (degree > 1)
             CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
 
-        const std::vector<double> signedDistances = degree == 1
+        const std::vector<double> signedDistances = degree == 1 || sevenControlQuadratic
             ? std::vector<double>{.0625 * scale, -.0625 * scale, .125 * scale,
                                   -.125 * scale, .25 * scale, -.25 * scale}
             : std::vector<double>{.125, -.125};
