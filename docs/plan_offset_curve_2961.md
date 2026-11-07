@@ -29,7 +29,11 @@ user can change the source-curve family as part of choosing a replacement
 entity; changing the family refreshes the live candidate list before selection,
 and choosing a candidate atomically replaces the source while preserving the
 candidate's actual kind. An existing source remains resolvable and highlighted
-until replacement succeeds or is cancelled.
+until replacement succeeds or is cancelled. The family selector remains
+available throughout the replacement flow, so the user can change type before
+choosing a new entity; changing the filter alone must not replace or clear the
+current source. The candidate list must cover every kind in the canonical
+supported-kind inventory, not only the type of the currently selected source.
 The selector is driven by `LC_OffsetSourceGeometry::SupportedKinds` and covers
 line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
 and polyline. Parabola is a distinct kind despite inheriting from
@@ -62,8 +66,11 @@ Current implementation order for the remaining “all supported types” work:
 3. **Worker and editable cache:** for each admitted variant, prove bounded
    request/reply round-trip, cache validation/admission, canonical
    representation, replacement atomicity, and same-budget recovery after
-   failure. If the native cache cannot encode a valid multi-branch or source
-   variant, retain an explicit refusal rather than flattening it lossily.
+   failure. The worker cache now canonicalizes bounded ordinary line/cubic
+   branches, including disconnected branches, into degree-3 SPLINE data with
+   full-multiplicity boundary knots; degree-1 segments are exactly elevated.
+   Other layouts remain fail-closed until their representation and exact
+   operation-8 validation are implemented; never flatten them lossily.
 4. **Properties interaction:** the existing family selector is complete.
    Verify family change refreshes candidates before picking, current-source
    highlighting survives an unsuccessful or cancelled replacement, and a
@@ -86,6 +93,10 @@ fail-closed positive-side refusal and do not justify treating all periodic
 splines as supported. W563cq normalizes active rational weights while forming
 certified jet bounds; its enclosure and worker regressions pass, but the
 cusp-rich positive-side periodic offsets still refuse and W563cg remains open.
+W563cr adds validated multi-branch ordinary line/cubic cache canonicalization
+and generic cache-layout/grip support for full-multiplicity boundaries; this
+closes that narrow representation gap, not unresolved periodic positive-side
+cases or all-source-variant cache support.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
@@ -24350,3 +24361,28 @@ weight profile; it does not close W563cg, isolate every offset-factor root,
 prove cusp topology, or admit the periodic positive-side offset. Continue with
 a root-isolation method that provides complete coverage and independent
 geometry comparison; preserve the current refusal until both are established.
+
+#### W563cr. Canonicalize Representable Multi-branch Worker Results (2026-11-07)
+
+Commit `ca36696e9` adds bounded canonical cache construction for complete
+ordinary worker output containing one or more finite line or validated cubic
+spline branches. A line is represented by its exact degree-3 Bezier elevation;
+existing degree-1 piecewise-linear output is elevated span-by-span, and cubic
+output retains its control geometry. Branch boundaries use full-multiplicity
+knots, so disconnected branches are not joined or discarded. The shared cache
+layout reader now extracts those piecewise Bezier spans by control offset;
+cache validation, grip preparation, direction reversal, and operation-8
+comparison consume the generalized layout. Unsupported degrees, rational
+weights, malformed knots, or out-of-budget branch structures remain refused.
+
+Fresh Release CMake build succeeded for `librecad_tests`,
+`librecad_offset_worker_client_tests`, and
+`librecad_offset_worker_kernel_tests`. Validation passed: `[cache-layout]`
+3,583 assertions/17 cases; complete worker client 19,526/20; complete worker
+kernel 1,680,610/53; `git diff --check`. Code/test commit: `ca36696e9`.
+
+This qualifies cache representation and validation for the tested ordinary
+multi-branch outputs, not every worker result or source variant. The
+cusp-rich positive-side periodic cases still fail closed; continuous root and
+topology certification, broader DXF/DWG import/persistence matrices, visible
+GUI, independent CAD acceptance, and exact-head CI remain open.
