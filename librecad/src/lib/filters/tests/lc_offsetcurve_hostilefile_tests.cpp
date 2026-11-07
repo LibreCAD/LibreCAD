@@ -5763,7 +5763,7 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
                                        endJet));
     CHECK(startJet.point.distanceTo(endJet.point) < 1e-8);
     const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
-    constexpr double magnitude = 0.125;
+    const double magnitude = GENERATE(0.0625, 0.125, 0.25);
     const double signedDistance = side == LC_CurveOffsetSide::Left
         ? magnitude : -magnitude;
     CAPTURE(static_cast<int>(side), signedDistance);
