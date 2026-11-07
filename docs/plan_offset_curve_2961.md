@@ -49,8 +49,8 @@ W538 explicit-control-net quadratic fit SPLINE import correction complete;
 W539 tangent-vector model and DXF preservation complete with fail-closed DWG
 export for constrained variants;
 W540 schema-3 tangent metadata persistence complete;
-W542 two-ended cubic fit-point interpolation is implemented for its bounded
-planar `RS_Spline` case;
+W542/W543 cubic fit-point interpolation is implemented for bounded open planar
+`RS_Spline` inputs with one or two endpoint tangent directions;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21293,3 +21293,41 @@ Roadmap commit `5b2444c27` records this receipt. Both commits are pushed to
 PR #3193; its exact head is `5b2444c278c824b05449c2f18fedc629680400c9`.
 GitHub currently reports no combined statuses and no PR-triggered workflow
 runs for that head; no CI result is inferred from earlier commits.
+
+### W543 Completion Receipt
+
+The DWG specification describes R2013+ SPLINE endpoint tangent fields as
+normalized direction vectors, not derivative magnitudes. The cubic fit-point
+interpolator now normalizes each supplied direction and preserves the original
+raw vectors in `RS_SplineData`. When exactly one direction is zero, that end is
+left unconstrained and a natural boundary condition (`C'' = 0`) closes the
+otherwise underdetermined interpolation system. The free-control-to-solver
+mapping is explicit, including the two-fit-point case. Non-finite magnitudes
+refuse without changing the existing spline. Closed splines do not enter this
+open-curve interpolation path; explicit control-net and unsupported cases
+retain their prior conservative handling.
+
+This natural-boundary rule is LibreCAD's deterministic choice for a missing
+endpoint constraint; neither the ODA field layout nor the tested ACadSharp
+reader specifies an equivalent reconstruction rule. The implementation
+therefore guarantees the supplied endpoint direction, all fit points, and the
+chosen zero-second-derivative boundary, but does not claim the same interior
+curve as every AutoCAD-compatible implementation when a tangent is absent.
+
+Validation: Release `librecad_tests` builds; `[fitpoints][tangents]` passes 64
+assertions across 3 cases, including both one-ended orientations, two fit
+points, exact raw metadata, and overflow refusal; `[RS_Spline]` passes 476
+assertions across 18 cases; `[spline][fit-points]` passes 1,134 assertions
+across 8 cases; `[dxf][spline]` passes 3,222 assertions across 26 cases,
+including importer-level one-ended direction and natural-boundary checks; and
+`git diff --check` passes. Product commit `607d12f74` (`feat(spline): support
+one-ended fit tangents`). These are local results and do not qualify PR CI or
+external-CAD acceptance.
+
+Remaining tangent work: define equivalent exact semantics or explicit refusal
+for constrained `LC_SplinePoints`; validate source/cache identity and schema-3
+metadata across transforms/reversal; establish a lossless DWG representation
+or retain explicit writer refusal; and only then qualify tangent-constrained
+picker, worker generation, cache promotion, and DXF/DWG round trips. Other
+family/variant matrices and visible-GUI/external-CAD gates remain open.
+Push this implementation and roadmap receipt, then query exact-head CI.
