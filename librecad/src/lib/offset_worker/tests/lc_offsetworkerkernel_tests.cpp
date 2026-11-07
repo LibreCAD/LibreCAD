@@ -350,6 +350,47 @@ TEST_CASE("offset worker refuses tangent-constrained fit interpolation for gener
     CHECK(validateTrace.computationCompleted);
 }
 
+TEST_CASE("offset worker admits cubic tangent sources only when metadata matches the curve",
+          "[lc-offsetcurve][worker-kernel][source-generation][fit-points][tangents]") {
+    RS_Spline spline{nullptr, RS_SplineData{3, false}};
+    REQUIRE(spline.setFitPointsWithTangents(
+        {{0, 0}, {1, 0.4}, {3, 0.4}, {4, 0}}, {1, 1}, {1, -1}));
+    REQUIRE(spline.fitTangentsMatchCurve());
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{spline.getData()}, .05, 1e-4, false};
+    const req::Request request{token, req::GenerateSource{definition, {}}};
+    const auto reply = LC_OffsetWorkerKernel::run(request);
+    const auto& generated = native(reply, 7);
+    REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+    REQUIRE(generated.ordinary.size() == 1);
+    const auto wire = result::encode(reply, request);
+    REQUIRE(wire);
+    CHECK(result::decode(*wire, request));
+
+    const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+    const req::Request validation{token,
+        req::ValidateSourceCache{cache, definition, {}}};
+    const auto validationReply = LC_OffsetWorkerKernel::run(validation);
+    const auto& checked = native(validationReply, 8);
+    CHECK(checked.refusal == LC_OffsetCurveRefusal::None);
+    CHECK(checked.changed);
+    CHECK(checked.engineStatus == LC_CurveOffsetStatus::Ok);
+
+    auto inconsistent = spline.getData();
+    inconsistent.fitPoints[1].y += 1.0;
+    const LC_OffsetSourceDefinition refusedDefinition{
+        LC_OffsetSourceGeometry{inconsistent}, .05, 1e-4, false};
+    const req::Request refusedRequest{token,
+        req::GenerateSource{refusedDefinition, {}}};
+    const auto refusedReply = LC_OffsetWorkerKernel::run(refusedRequest);
+    const auto& refused = native(refusedReply, 7);
+    CHECK(refused.engineStatus == LC_CurveOffsetStatus::InvalidSource);
+    CHECK(refused.ordinaryStatus == result::OrdinaryStatus::None);
+    CHECK(refused.ordinary.empty());
+    CHECK_FALSE(refused.changed);
+}
+
 TEST_CASE("offset worker op8 accepts only the exact canonical source cache",
           "[lc-offsetcurve][worker-kernel][source-cache]") {
     const LC_OffsetSourceDefinition definition{

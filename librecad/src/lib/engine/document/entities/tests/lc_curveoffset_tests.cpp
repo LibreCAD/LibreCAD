@@ -472,7 +472,7 @@ RS_Spline quarterCircle(const RS_Vector& center = RS_Vector{0.0, 0.0}, const dou
                       {0, 0, 0, 1, 1, 1}, {1.0, std::sqrt(0.5), 1.0});
 }
 
-TEST_CASE("Tangent-constrained RS spline interpolation is refused",
+TEST_CASE("Unsupported tangent-constrained linear spline is refused",
           "[curve-offset][direct][validation][fit-points]") {
     RS_Spline source = makeSpline(1, {{0, 0}, {4, 0}}, {0, 0, 1, 1});
     source.getData().fitPoints = {{0, 0}, {4, 0}};
@@ -482,6 +482,19 @@ TEST_CASE("Tangent-constrained RS spline interpolation is refused",
 
     CHECK(LC_CurveOffset::buildDirectBranches(source, request, options,
         LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
+}
+
+TEST_CASE("Exact tangent-constrained cubic spline can be offset",
+          "[curve-offset][direct][fit-points][tangents]") {
+    RS_Spline source{nullptr, RS_SplineData{3, false}};
+    REQUIRE(source.setFitPointsWithTangents(
+        {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {2, 1}, {1, -3}));
+    REQUIRE(source.fitTangentsMatchCurve());
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+    const auto result = LC_CurveOffset::buildDirectBranches(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status == LC_CurveOffsetStatus::Ok);
 }
 
 // A cubic with an inflection.

@@ -919,6 +919,104 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     }
 }
 
+TEST_CASE("Native source picker admits only tangent splines matching their exact curve",
+          "[gui][dialog][offsetcurve][source][eligibility][tangents]") {
+    Fixture f;
+    RS_Spline matched{nullptr, RS_SplineData{3, false}};
+    REQUIRE(matched.setFitPointsWithTangents(
+        {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {2, 1}, {1, -3}));
+    CHECK(matched.fitTangentsMatchCurve());
+    auto* supported = new RS_Spline(nullptr, matched.getData());
+
+    RS_SplineData inconsistent = matched.getData();
+    inconsistent.fitPoints[1].y += 1.0;
+    auto* refused = new RS_Spline(nullptr, inconsistent);
+    f.graphic.addEntity(supported);
+    f.graphic.addEntity(refused);
+
+    std::unique_ptr<LC_OffsetCurve> clone(
+        static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    REQUIRE(clone->setDistance(.05));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
+    const Snapshot before(*clone);
+
+    const int splineIndex = typeBox->findData(
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
+    REQUIRE(splineIndex >= 0);
+    typeBox->setCurrentIndex(splineIndex);
+    CHECK(sourceBox->count() == 2);
+    CHECK(sourceBox->isEnabled());
+    const int candidateIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(supported->getId()));
+    CHECK(candidateIndex > 0);
+    CHECK_FALSE(supported->getFlag(RS2::FlagSelected));
+    CHECK_FALSE(refused->getFlag(RS2::FlagSelected));
+    before.geometry(*clone);
+
+    sourceBox->setCurrentIndex(candidateIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    INFO("edit refusal=" << static_cast<int>(widget.lastEditResult()->refusal)
+         << ", worker refusal=" << (widget.lastWorkerResult()
+             ? static_cast<int>(widget.lastWorkerResult()->refusal) : -1)
+         << ", worker engine=" << (widget.lastWorkerResult() && widget.lastWorkerResult()->engineStatus
+             ? static_cast<int>(*widget.lastWorkerResult()->engineStatus) : -1));
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::Spline);
+    const auto* committed = std::get_if<RS_SplineData>(
+        &clone->sourceDefinition()->source.value);
+    REQUIRE(committed);
+    CHECK(committed->fitTangentsConstrained);
+    CHECK(committed->fitStartTangent.distanceTo(
+              matched.getData().fitStartTangent) == 0.0);
+    CHECK(committed->fitEndTangent.distanceTo(
+              matched.getData().fitEndTangent) == 0.0);
+    CHECK(sourceBox->currentData().toULongLong() == supported->getId());
+}
+
+TEST_CASE("Tangent spline replacement refusal preserves the current offset atomically",
+          "[gui][dialog][offsetcurve][source][eligibility][tangents][atomicity]") {
+    Fixture f;
+    RS_Spline spline{nullptr, RS_SplineData{3, false}};
+    REQUIRE(spline.setFitPointsWithTangents(
+        {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {2, 1}, {1, -3}));
+    auto* candidate = new RS_Spline(nullptr, spline.getData());
+    f.graphic.addEntity(candidate);
+
+    std::unique_ptr<LC_OffsetCurve> clone(
+        static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    const Snapshot before(*clone);
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    const int splineIndex = typeBox->findData(
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::Spline));
+    REQUIRE(splineIndex >= 0);
+    typeBox->setCurrentIndex(splineIndex);
+    const int candidateIndex = sourceBox->findData(
+        QVariant::fromValue<qulonglong>(candidate->getId()));
+    REQUIRE(candidateIndex > 0);
+    sourceBox->setCurrentIndex(candidateIndex);
+    awaitPreparation(widget);
+
+    REQUIRE(widget.lastEditResult());
+    CHECK(widget.lastEditResult()->refusal ==
+          LC_OffsetCurveRefusal::NotCacheRepresentable);
+    CHECK_FALSE(clone->sourceDefinition());
+    before.exact(*clone);
+}
+
 TEST_CASE("Native source picker refuses unrepresentable source variants atomically",
           "[gui][dialog][offsetcurve][source][eligibility]") {
     Fixture f;

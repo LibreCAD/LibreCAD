@@ -59,7 +59,8 @@ bool sourceVariantSelectable(const RS_Entity& entity) {
     if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&entity))
         return !points->getData().fitTangentsConstrained;
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity))
-        return !spline->getData().fitTangentsConstrained;
+        return !spline->getData().fitTangentsConstrained ||
+               spline->fitTangentsMatchCurve();
     return true;
 }
 

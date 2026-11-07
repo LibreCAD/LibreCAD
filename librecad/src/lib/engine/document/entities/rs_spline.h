@@ -371,6 +371,13 @@ public:
   bool tryEvaluateJet(double t, LC_CurveEvaluationSide side, LC_CurveJet &jet) const;
 
   /**
+   * Whether retained constrained fit metadata agrees with this exact curve.
+   * Only open, unweighted cubic splines with finite fit points and at least one
+   * verifiable endpoint direction are admitted.
+   */
+  bool fitTangentsMatchCurve() const;
+
+  /**
    * Conservative enclosures of the point and its first and second derivatives
    * over the parameter box [a, b], which must lie inside one knot span (between
    * consecutive break parameters). The span's homogeneous Bezier net over the

@@ -2299,6 +2299,78 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
   return true;
 }
 
+bool RS_Spline::fitTangentsMatchCurve() const {
+  const auto& data = m_data;
+  const auto finitePlanar = [](const RS_Vector& point) {
+    return point.valid && std::isfinite(point.x) && std::isfinite(point.y) &&
+           std::isfinite(point.z) && std::abs(point.z) <= RS_TOLERANCE;
+  };
+  if (!data.fitTangentsConstrained || data.degree != 3 ||
+      data.type != RS_SplineData::SplineType::ClampedOpen ||
+      data.savedOpenType != RS_SplineData::SplineType::ClampedOpen ||
+      data.m_closedFlag || data.m_periodicFlag || data.fitPoints.size() < 2 ||
+      !std::isfinite(data.fitTolerance) || data.fitTolerance <= 0.0 ||
+      data.controlPoints.size() < 4 ||
+      !finitePlanar(data.fitStartTangent) ||
+      !finitePlanar(data.fitEndTangent)) return false;
+  if (std::any_of(data.weights.begin(), data.weights.end(),
+                  [](double weight) { return weight != 1.0; })) return false;
+
+  const double startMagnitude = data.fitStartTangent.magnitude();
+  const double endMagnitude = data.fitEndTangent.magnitude();
+  if (!std::isfinite(startMagnitude) || !std::isfinite(endMagnitude) ||
+      (startMagnitude == 0.0 && endMagnitude == 0.0)) return false;
+  if (!validate()) return false;
+
+  double t0 = 0.0;
+  double t1 = 0.0;
+  if (!getParameterDomain(t0, t1)) return false;
+  LC_CurveJet startJet;
+  LC_CurveJet endJet;
+  if (!tryEvaluateJet(t0, LC_CurveEvaluationSide::Right, startJet) ||
+      !tryEvaluateJet(t1, LC_CurveEvaluationSide::Left, endJet)) return false;
+
+  double coordinateScale = 1.0;
+  for (const auto& point : data.controlPoints) {
+    if (!finitePlanar(point)) return false;
+    coordinateScale = std::max({coordinateScale, std::abs(point.x),
+                                std::abs(point.y)});
+  }
+  const double pointTolerance = std::max(
+      data.fitTolerance, 128.0 * std::numeric_limits<double>::epsilon() *
+                             coordinateScale);
+  for (const auto& point : data.fitPoints) {
+    if (!finitePlanar(point)) return false;
+    const RS_Vector nearest = getNearestPointOnEntity(point, true);
+    if (!finitePlanar(nearest) || nearest.distanceTo(point) > pointTolerance)
+      return false;
+  }
+
+  const auto matchesDirection = [coordinateScale](const RS_Vector& actual,
+                                                   const RS_Vector& expected,
+                                                   double handleLength) {
+    if (expected.magnitude() == 0.0) return true;
+    const double actualLength = actual.magnitude();
+    if (!std::isfinite(actualLength) || actualLength <= 0.0 ||
+        !std::isfinite(handleLength) || handleLength <= 0.0) return false;
+    const double representationalError =
+        16.0 * std::numeric_limits<double>::epsilon() * coordinateScale /
+        handleLength;
+    if (!std::isfinite(representationalError) || representationalError > 1e-3)
+      return false;
+    const RS_Vector actualDirection = actual / actualLength;
+    const RS_Vector expectedDirection = expected / expected.magnitude();
+    return actualDirection.distanceTo(expectedDirection) <=
+           std::max(1e-8, representationalError);
+  };
+  return matchesDirection(startJet.first, data.fitStartTangent,
+                          data.controlPoints[1].distanceTo(
+                              data.controlPoints.front())) &&
+         matchesDirection(endJet.first, data.fitEndTangent,
+                          data.controlPoints.back().distanceTo(
+                              data.controlPoints[data.controlPoints.size() - 2]));
+}
+
 double RS_Spline::getDerivative(const double t, const bool isX) const {
   const auto d = evaluateWithDerivs(t);
   return isX ? d.der1.x : d.der1.y;

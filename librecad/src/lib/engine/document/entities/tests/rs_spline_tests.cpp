@@ -467,6 +467,30 @@ TEST_CASE("RS_Spline fit-point interpolation honors endpoint tangents",
   }
 }
 
+TEST_CASE("RS_Spline validates constrained tangent metadata against its curve",
+          "[RS_Spline][fitpoints][tangents][consistency]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {2.0, 3.0}, {6.0, 4.0}, {9.0, 0.0}};
+  RS_Spline spline{nullptr, RS_SplineData{3, false}};
+  REQUIRE(spline.setFitPointsWithTangents(fitPoints, {2.0, 1.0}, {1.0, -3.0}));
+  CHECK(spline.fitTangentsMatchCurve());
+
+  RS_SplineData misplacedFit = spline.getData();
+  misplacedFit.fitPoints[1].y += 1.0;
+  RS_Spline badFit{nullptr, misplacedFit};
+  CHECK_FALSE(badFit.fitTangentsMatchCurve());
+
+  RS_SplineData opposingTangent = spline.getData();
+  opposingTangent.fitStartTangent *= -1.0;
+  RS_Spline badTangent{nullptr, opposingTangent};
+  CHECK_FALSE(badTangent.fitTangentsMatchCurve());
+
+  RS_SplineData rational = spline.getData();
+  rational.weights[1] = 0.75;
+  RS_Spline unsupportedWeights{nullptr, rational};
+  CHECK_FALSE(unsupportedWeights.fitTangentsMatchCurve());
+}
+
 TEST_CASE("RS_Spline fit interpolation uses a natural unconstrained end",
           "[RS_Spline][fitpoints][tangents]") {
   const std::vector<RS_Vector> fitPoints = {
