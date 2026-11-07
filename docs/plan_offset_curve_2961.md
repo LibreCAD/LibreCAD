@@ -23918,3 +23918,38 @@ This verifies ODA conversion for the listed wrapped periodic layouts and
 versions only; it does not establish support for arbitrary spline definitions
 or other independent CAD implementations. Remaining source-family variants,
 GUI acceptance, exact-head CI and roadmap gates remain open.
+
+#### W563cf. Qualify Wide Positive Weights for Quadratic Periodic Worker Cases (2026-11-07)
+
+The current worktree adds a seven-distinct-control, degree-2 periodic worker
+variant with positive weights spanning `0.01` to `100`, in addition to the
+already qualified moderate-weight layout. It runs through the existing signed
+distance matrix at unit scale and the operation-7 generation, operation-8
+cache admission, topology, and request-bound reply-transport checks. This is a
+bounded stress case, not a claim of arbitrary weight-ratio support.
+
+The offset kernel may explicitly refuse numerically ill-conditioned
+weight/distance combinations. The worker must preserve fail-closed behavior:
+only a classified `ToleranceNotMet` or `SingularOffset` engine refusal is
+accepted for this stress variant, with no ordinary partial output, no source
+mutation, and a valid encoded/decoded refusal reply. Successful combinations
+must satisfy the existing topology/cache checks. Before marking this slice
+complete, run the focused periodic worker case and the full worker-kernel,
+source-cache, and spline-variant selection; inspect any additional failure
+status rather than widening the accepted set indiscriminately. Then record
+assertion counts, `git diff --check`, commit the test slice, and add a separate
+roadmap receipt. Staged-import/ODA persistence for these extreme weights is
+not included and remains a follow-up only if the worker result is stable and
+the file-format matrix is justified.
+
+The focused `[periodic][nonuniform]` worker case passes 1,500 assertions. The
+full `[lc-offsetcurve][worker-kernel][source-cache][spline-variant]`
+selection passes 71,584 assertions across six cases; the Release worker test
+target builds and `git diff --check` passes. Test commit `f45624760`
+(`test(offset): cover wide-weight periodic worker cases`).
+
+This qualifies only the recorded positive-weight vector, scale, distance
+factors, and worker/cache paths. It does not establish staged-import or ODA
+round-trip behavior for the extreme weights, nor arbitrary periodic spline
+support. Exact-head CI, visible GUI acceptance, independent CAD geometry, and
+the remaining source-family/variant gates remain open.
