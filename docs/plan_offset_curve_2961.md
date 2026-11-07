@@ -23650,3 +23650,23 @@ This closes only the tested degree-1 source/layout/weight pattern, three
 distances, both sides, and five file lanes. Other periodic layouts, source
 scales/transforms, independent-CAD validation, visible-GUI acceptance, and
 exact-head CI remain open.
+
+#### W563bt. Qualify Periodic Import Across Scale and Translation (2026-11-07)
+
+Extended the same degree-1 nonuniform rational periodic source and three
+distance factors across uniform scales `1e-3`, `1`, and `1e3`. Each source is
+translated by `(1000, -2000)` times its scale, keeping the normalized shape and
+offset distances unchanged while exercising small, ordinary, and large
+coordinates. Both sides and all five R14/R2000/R2018 DXF/DWG lanes retain the
+existing promotion/downgrade and exact typed-source/cache checks.
+
+The focused Release case passes 11,355 assertions; the full
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` selection
+passes 170,631 assertions across nine cases. `librecad_tests` builds and
+`git diff --check` passes. Test commit `d110b7197` (`test(offset): qualify
+periodic import scales and translation`).
+
+This qualifies only the recorded degree-1 rational periodic layout, three
+distance factors, three scale/translation pairs, both sides, and five file
+lanes. Other layouts, broader numeric extremes, external-CAD validation,
+visible-GUI acceptance, and exact-head CI remain open.
