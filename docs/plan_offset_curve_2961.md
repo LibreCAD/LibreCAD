@@ -21957,6 +21957,24 @@ commit/undo/redo requirement for representative geometries; they do not close
 all source variants, per-family file-format round trips, direct canvas pick
 transaction coverage, visible GUI acceptance, or independent-CAD acceptance.
 
+#### W563c. Candidate-List Family Purity (2026-11-07)
+
+Strengthened the all-family picker matrix to inspect the candidate list after
+each source-type switch. Every concrete candidate must resolve to a test
+entity whose captured source kind equals the selected family, and the number
+of concrete candidates must match the number of fixtures for that family.
+The spline-points case includes both control-point and fit-point variants;
+non-candidate placeholder rows are intentionally excluded from the count.
+This confirms that switching the type filter refreshes the offered source
+entities without accepting a candidate from another family.
+
+The focused Release picker test passes 2,811 assertions in one Catch2 case;
+the `librecad_tests` target builds and `git diff --check` passes. Test commit
+`7495b8c62` (`test(offset): assert source picker family filtering`). This
+closes candidate-family purity for the representative fixtures, not
+exhaustive variant eligibility or cancellation/failure atomicity for every
+variant; those remain in the W563 inventory.
+
 This closes the requested UI type-switch and representative nine-family
 selection/replacement behavior. The follow-up requirement is specifically to
 change the source type as part of choosing a new source, then pick an entity of
