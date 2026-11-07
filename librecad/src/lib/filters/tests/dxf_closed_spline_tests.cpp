@@ -1265,6 +1265,99 @@ TEST_CASE("ODA-converted spline-point control DWGs preserve evaluated geometry",
   }
 }
 
+TEST_CASE("ODA-converted cut spline-point DWGs preserve both piece geometries",
+          "[external][oda][dwg][spline-points][cut][geometry]") {
+  const char* outputDirectory = std::getenv("LIBRECAD_OFFSET_CUT_ODA_DXF_DIR");
+  if (outputDirectory == nullptr || *outputDirectory == '\0')
+    SKIP("Set LIBRECAD_OFFSET_CUT_ODA_DXF_DIR to converted cut-spline DXFs");
+  ensureSettings();
+
+  const std::vector<std::vector<RS_Vector>> controlSets{
+      {{0.0, 0.0}, {3.0, 4.0}, {7.0, 0.0}},
+      {{0.0, 0.0}, {2.0, 4.0}, {6.0, -1.0}, {10.0, 1.0}},
+      {{0.0, 0.0}, {2.0, 4.0}, {5.0, -1.0}, {8.0, 3.0}, {11.0, 0.0}},
+      {{0.0, 0.0}, {1.0, 3.0}, {3.0, 5.0}, {5.0, 1.0},
+       {7.0, -2.0}, {9.0, 3.0}, {12.0, 0.0}},
+  };
+  const std::array<double, 3> cutFractions{0.25, 0.5, 0.75};
+  const std::vector<std::pair<std::string, std::string>> versions{
+      {"dwg-r2000", "R2000"}, {"dwg-r2004", "R2004"},
+      {"dwg-r2007", "R2007"}, {"dwg-r2010", "R2010"},
+      {"dwg-r2013", "R2013"}, {"dwg-r2018", "R2018"},
+  };
+  const auto sampleSplinePoints = [](const LC_SplinePoints& spline) {
+    std::vector<RS_Vector> points;
+    const double end = static_cast<double>(spline.getSegmentCount());
+    for (int i = 0; i <= 1000; ++i) {
+      LC_CurveJet jet;
+      REQUIRE(spline.tryEvaluateJet(end * i / 1000.0,
+          i == 1000 ? LC_CurveEvaluationSide::Left
+                    : LC_CurveEvaluationSide::Right, jet));
+      points.push_back(jet.point);
+    }
+    return points;
+  };
+
+  for (size_t caseIndex = 0; caseIndex < controlSets.size(); ++caseIndex) {
+    CAPTURE(caseIndex, controlSets[caseIndex].size());
+    LC_SplinePointsData data{false, false};
+    data.useControlPoints = true;
+    data.controlPoints = controlSets[caseIndex];
+    LC_SplinePoints source{nullptr, data};
+    const double domain = static_cast<double>(source.getSegmentCount());
+    std::unique_ptr<LC_SplinePoints> left;
+    std::unique_ptr<LC_SplinePoints> right;
+    for (const double fraction : cutFractions) {
+      LC_SplinePoints candidate{nullptr, data};
+      LC_CurveJet cutJet;
+      REQUIRE(candidate.tryEvaluateJet(domain * fraction,
+                                       LC_CurveEvaluationSide::Right, cutJet));
+      std::unique_ptr<LC_SplinePoints> candidateRight(candidate.cut(cutJet.point));
+      if (candidateRight) {
+        left = std::make_unique<LC_SplinePoints>(nullptr, candidate.getData());
+        right = std::move(candidateRight);
+        break;
+      }
+    }
+    REQUIRE(left);
+    REQUIRE(right);
+    const std::array<std::vector<RS_Vector>, 2> expected{
+        sampleSplinePoints(*left), sampleSplinePoints(*right)};
+    const std::string pointCount = std::to_string(data.controlPoints.size()) + "pt";
+
+    for (const auto& [version, label] : versions) {
+      INFO(label);
+      const auto path = std::filesystem::path(outputDirectory) /
+          ("cut-control-" + pointCount + "-" + version + ".dxf");
+      REQUIRE(std::filesystem::exists(path));
+      RS_Graphic converted;
+      std::vector<SplineRecord> records;
+      importFile(converted, path.string(), RS2::FormatDXFRW, &records);
+      REQUIRE(records.size() == 2);
+      REQUIRE(converted.count() == 2);
+      std::array<bool, 2> matched{false, false};
+      for (RS_Entity* entity : converted) {
+        std::vector<RS_Vector> actual;
+        if (auto* splinePoints = dynamic_cast<LC_SplinePoints*>(entity)) {
+          actual = sampleSplinePoints(*splinePoints);
+        } else if (auto* spline = dynamic_cast<RS_Spline*>(entity)) {
+          actual = splineCurve(*spline, 1000);
+        } else {
+          FAIL("ODA-converted cut SPLINE imported as an unexpected entity type");
+        }
+        const double d0 = curveDistance(expected[0], actual);
+        const double d1 = curveDistance(expected[1], actual);
+        const size_t match = d0 <= d1 ? 0 : 1;
+        CHECK_FALSE(matched[match]);
+        matched[match] = true;
+        CHECK(std::min(d0, d1) < 5.0e-6);
+      }
+      CHECK(matched[0]);
+      CHECK(matched[1]);
+    }
+  }
+}
+
 #endif
 
 TEST_CASE("Tangent-constrained quadratic SPLINE keeps its explicit control net",
