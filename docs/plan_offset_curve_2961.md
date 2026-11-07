@@ -23270,36 +23270,29 @@ GUI acceptance remain open.
 
 #### W563be. Round-trip Cut Spline-points Geometry (2026-11-07)
 
-Added a native cut-generated open `LC_SplinePoints` matrix for 3, 4, 5, and 7
-control points. Each shape is cut at an accepted interior parameter selected
-from 0.25, 0.5, and 0.75 of its parameter domain; the resulting left and right
-entities are exported through all six DWG writer versions and reopened. Each
-reopened curve is matched to its corresponding pre-export piece by symmetric
-sampled distance, within `1e-10` drawing units. The focused Release case passes
-22,764 assertions. With `LIBRECAD_TANGENT_SPLINE_DWG_DIR` set, it also stages
-the 24 DWGs for independent converters. Test commits `eca5154c9`
-(`test(dwg): round-trip cut spline-point pieces`) and `542663ad2`
-(`test(dwg): broaden cut spline-point matrix`).
+Expanded native cut-generated `LC_SplinePoints` coverage to three interior
+split locations (25%, 50%, and 75% of parameter domain) for each of four open
+control counts (3, 4, 5, and 7) and four closed control counts (3, 4, 5, and
+8). Open cuts produce two entities; closed seam cuts produce one open entity.
+Every layout is exported through all six DWG writer versions and reopened.
+The native Release matrix passes 119,820 assertions; each reopened piece is
+matched by symmetric sampled distance within `1e-10` drawing units.
 
-This proves geometric round-trip only for these four control counts and the
-accepted interior cut parameters. Added closed-source seam cuts for 3, 4, 5,
-and 8 independent controls. Each cut mutates the closed source into one open
-curve with a seam at the cut point; the six-version native round-trip passes
-17,100 assertions and compares 601 evaluated samples after reopen. The DWG
-SPLINE representation carries the resulting curves, not LibreCAD's internal
-`cut` bookkeeping bit; that bit is not claimed to round-trip.
-
-ODA File Converter 27.1 converted all 48 staged files (four open-cut and four
-closed-cut control counts by six DWG versions) to R2018 DXF with zero `.err`
-files. The opt-in external test imports both sets: open cuts remain two
-entities; ODA normalizes closed seam cuts to closed+periodic flags, while
-their evaluated geometry remains equivalent. All 48 files pass the symmetric
-sampled distance gate below `5e-6`, totaling 60,464 assertions. Re-run with
-`LIBRECAD_OFFSET_CUT_ODA_DXF_DIR=/private/tmp/offset-cut-oda
+With `LIBRECAD_TANGENT_SPLINE_DWG_DIR` set, the matrix stages 144 DWGs. ODA
+File Converter 27.1 converted all 144 (four open and four closed layouts ×
+three cut locations × six DWG versions) to R2018 DXF with zero `.err` files.
+The opt-in external test imports both sets: open cuts remain two entities;
+ODA normalizes closed seam cuts to closed+periodic flags, while their evaluated
+geometry remains equivalent. All 144 files pass the symmetric sampled
+distance gate below `5e-6`, totaling 181,404 assertions. Re-run with
+`LIBRECAD_OFFSET_CUT_ODA_DXF_DIR=/private/tmp/offset-cut-allfractions-oda
 librecad_tests '[external][oda][dwg][spline-points][cut][geometry]'`.
-External DWG fixtures are staged in `/private/tmp/offset-cut-dwg` and converted
-DXFs in `/private/tmp/offset-cut-oda`. Test commits: `eca5154c9` (initial open
-cut case), `542663ad2` (open-cut matrix), `94febc2c6` (open-cut ODA geometry),
-and `7062fa9c6` (closed-cut native/ODA coverage). Broaden the remaining
-cut/topology cases and retain visible-GUI and exact-head CI acceptance as open
-gates.
+External DWGs are staged in `/private/tmp/offset-cut-allfractions-dwg` and
+converted DXFs in `/private/tmp/offset-cut-allfractions-oda`. The DWG SPLINE
+representation carries resulting curve geometry, not LibreCAD's internal
+`cut` bookkeeping bit; that bit is not claimed to round-trip. Test commits:
+`eca5154c9` (initial open cut), `542663ad2` (open-cut control-count matrix),
+`94febc2c6` (initial ODA geometry gate), `7062fa9c6` (closed-cut coverage),
+and `5a3b4c11f` (all three cut locations for open and closed sources).
+Remaining work includes fit-point cut representations, other source topologies,
+the cut bookkeeping contract, visible-GUI acceptance, and exact-head CI.
