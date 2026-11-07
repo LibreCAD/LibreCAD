@@ -23769,3 +23769,27 @@ five format lanes. It does not establish arbitrary periodic layouts, general
 numeric extremes, complete support for every source family, independent-CAD
 geometry equivalence, visible-GUI acceptance, or exact-head CI; those remain
 open in their respective roadmap gates.
+
+#### W563by. Cover Quadratic Rational Periodic Spline Imports (2026-11-07)
+
+Extended the same staged-import matrix to a seven-control, degree-2 periodic
+rational spline with nonuniform knots and positive nonuniform weights. The
+existing degree-1 six/eight-control layouts remain included. All three layouts
+run across scales `1e-3`, `1`, and `1e3`, distance factors `0.0625`, `0.125`,
+and `0.25`, both signed sides, and R14/R2000/R2018 DXF plus R2000/R2018 DWG.
+The test checks positional closure for all degrees and first-derivative seam
+continuity for degree 2; after staged import it checks promotion/downgrade,
+typed-source equality, and the selected carrier geometry.
+
+The focused Release case passes 33,874 assertions. The staged matrix contains
+108 DWGs; ODA File Converter 27.1 converts all 108 to R2018 DXF with zero
+`.err` files, and the native-plus-ODA gate passes 52,768 assertions. The broad
+native `[lc-offsetcurve][import-session][typed-source][spline-variant]`
+selection passes 192,736 assertions across nine cases. The Release
+`librecad_tests` target builds and `git diff --check` passes. Test commit
+`56333ba4f` (`test(offset): cover quadratic periodic spline imports`).
+
+This adds one quadratic layout and does not prove all degree-2 periodic knot,
+control, weight, or topology combinations. Higher-degree periodic cases,
+broader numeric ranges, independent-CAD geometry equivalence, visible-GUI
+acceptance, and exact-head CI remain open.
