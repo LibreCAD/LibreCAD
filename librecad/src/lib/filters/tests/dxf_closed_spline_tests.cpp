@@ -682,6 +682,10 @@ TEST_CASE("Fit-point SPLINE intent survives DXF and DWG file round trips",
       {RS2::FormatDXFRW, "dxf"},
 #ifdef DWGSUPPORT
       {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2004, "dwg-r2004"},
+      {RS2::FormatDWG2007, "dwg-r2007"},
+      {RS2::FormatDWG2010, "dwg-r2010"},
+      {RS2::FormatDWG2013, "dwg-r2013"},
       {RS2::FormatDWG2018, "dwg-r2018"},
 #endif
   };
@@ -1072,6 +1076,10 @@ TEST_CASE("Tangent-constrained cubic fit SPLINE preserves its verified DWG fit r
       {RS2::FormatDXFRW, "dxf"},
 #ifdef DWGSUPPORT
       {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2004, "dwg-r2004"},
+      {RS2::FormatDWG2007, "dwg-r2007"},
+      {RS2::FormatDWG2010, "dwg-r2010"},
+      {RS2::FormatDWG2013, "dwg-r2013"},
       {RS2::FormatDWG2018, "dwg-r2018"},
 #endif
   };
