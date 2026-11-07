@@ -5906,6 +5906,58 @@ TEST_CASE("degree-one nonuniform rational periodic spline import follows output 
             REQUIRE(received);
             CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
         }
+
+        if (fileFormat.dwg) {
+            const char* odaDirectory =
+                std::getenv("LIBRECAD_LINEAR_PERIODIC_ODA_DXF_DIR");
+            if (odaDirectory != nullptr && *odaDirectory != '\0') {
+                auto odaPath = std::filesystem::path(odaDirectory) /
+                    ("degree-one-periodic-" + input.filename().string());
+                odaPath.replace_extension(".dxf");
+                INFO(odaPath.string());
+                REQUIRE(std::filesystem::is_regular_file(odaPath));
+                const auto converted = f::readCodec(odaPath);
+                REQUIRE(converted.splines.size() == 1);
+                const auto& convertedSpline = converted.splines.front();
+                REQUIRE(convertedSpline.controllist.size() ==
+                        carrierCache.controlPoints.size());
+                REQUIRE(convertedSpline.knotslist.size() == carrierCache.knotslist.size());
+                if (convertedSpline.weightlist.empty()) {
+                    CHECK(std::all_of(carrierCache.weights.begin(),
+                                      carrierCache.weights.end(),
+                                      [](double weight) { return weight == 1.0; }));
+                } else {
+                    REQUIRE(convertedSpline.weightlist.size() ==
+                            carrierCache.weights.size());
+                    for (std::size_t i = 0; i < carrierCache.weights.size(); ++i)
+                        CHECK(convertedSpline.weightlist[i] == carrierCache.weights[i]);
+                }
+                for (std::size_t i = 0; i < carrierCache.controlPoints.size(); ++i) {
+                    REQUIRE(convertedSpline.controllist[i]);
+                    const double tolerance = 1e-9 * std::max(1.0, scale);
+                    CHECK(std::hypot(
+                              convertedSpline.controllist[i]->x -
+                                  carrierCache.controlPoints[i].x,
+                              convertedSpline.controllist[i]->y -
+                                  carrierCache.controlPoints[i].y) <= tolerance);
+                }
+                for (std::size_t i = 0; i < carrierCache.knotslist.size(); ++i)
+                    CHECK(convertedSpline.knotslist[i] == carrierCache.knotslist[i]);
+
+                xd::Options dxfEncoding;
+                dxfEncoding.asciiDxf = true;
+                const auto convertedMetadata = xd::parseAndStrip(
+                    convertedSpline.extData, dxfEncoding);
+                REQUIRE(convertedMetadata.status == xd::Status::Schema2);
+                REQUIRE(convertedMetadata.definition);
+                REQUIRE(convertedMetadata.definition->source);
+                const auto convertedSource = values::encodeSourceDefinition(
+                    *convertedMetadata.definition->source);
+                REQUIRE(convertedSource);
+                CHECK(QCborValue(*expected).toCbor() ==
+                      QCborValue(*convertedSource).toCbor());
+            }
+        }
     }
 }
 
