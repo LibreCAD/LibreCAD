@@ -753,13 +753,6 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
     INFO(suffix);
     const std::string path = tempPath("tangent_quadratic_fit_point_" + suffix);
     std::remove(path.c_str());
-    if (format != RS2::FormatDXFRW) {
-      RS_FilterDXFRW writer;
-      CHECK_FALSE(writer.fileExport(graphic, QString::fromStdString(path), format));
-      std::filesystem::remove(path);
-      CHECK_FALSE(std::filesystem::exists(path));
-      continue;
-    }
     {
       RS_FilterDXFRW writer;
       REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
