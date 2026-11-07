@@ -24232,6 +24232,14 @@ successful conditioned profile, emitted spline geometry is compared
 bidirectionally with the independent 256-bit sampled offset polyline, and
 sampled cusp endpoints are checked against the worker-derived geometry budget.
 
+A bounded experiment raised the global subdivision depth from 20 to 24 and
+required these two weighted positive-side worker cases to succeed. Both still
+returned `SingularOffset` (status 9), so the global default change was reverted;
+depth alone is not a demonstrated remedy. Keep the fail-closed result while
+investigating rational root isolation/cusp separation on the exact weighted
+source. The successful unweighted-shell depth probe is not evidence for this
+weighted geometry and is intentionally excluded from the acceptance claim.
+
 The focused `[periodic][nonuniform]` worker case passes 15,416 assertions. The
 combined worker/cache/spline-variant selection passes 85,622 assertions across
 seven cases. Extended the staged-import/output-topology fixture with both
