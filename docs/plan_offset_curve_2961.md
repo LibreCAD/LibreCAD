@@ -22384,7 +22384,9 @@ calling the full DWG parse warning-free.
 ODA File Converter 27.1 is installed, but both its normal launch and an
 offscreen launch failed before conversion: the normal Qt/Cocoa process could
 not connect to macOS PasteBoard/XPC, and the bundle contains no offscreen Qt
-plugin. ODA inspection therefore remains open. LibreDWG is an independent
-decoder check, not a substitute for ODA or GUI acceptance. The preserved
-outputs are under `/private/tmp/LibreCAD-PR3193-oda-inspection`; decoded DXFs
-and reader logs are under `/private/tmp/LibreCAD-PR3193-libredwg-out`.
+plugin. LaunchServices also rejected the app bundle with `kLSNoExecutableErr`
+and the standalone executable with `kLSExecutableIncorrectFormat`. No ODA
+conversion result was produced. LibreDWG is an independent decoder check, not
+a substitute for ODA or GUI acceptance. The preserved outputs are under
+`/private/tmp/LibreCAD-PR3193-oda-inspection`; decoded DXFs and reader logs are
+under `/private/tmp/LibreCAD-PR3193-libredwg-out`.
