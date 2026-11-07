@@ -24,6 +24,12 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-07. Project: **LibreCAD**, not LibreCAD_3.
+Latest clarification: the Properties source widget must permit changing the
+requested source family before picking a replacement, and all currently
+modeled source families must remain available. This picker contract is already
+implemented; remaining support work is per-family/per-variant geometry through
+generation, worker/cache, import/export, and round-trip paths. A family being
+selectable is not evidence that all its geometric variants are supported.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
@@ -23713,3 +23719,53 @@ This proves conversion/readability and value preservation for the tested
 periodic carrier matrix, not independent-CAD offset rendering or promotion of
 every topology. Other layouts and numeric extremes, additional independent CAD,
 visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563bw. Reconfirm Type-changing Picker Scope and Separate Variant Support (2026-11-07)
+
+The latest request reiterates two requirements: the user can change the source
+family before selecting a replacement entity, and the widget exposes every
+currently modeled source family. The existing `cbSourceType`/`cbSource`
+Properties implementation satisfies this contract through the canonical
+`LC_OffsetSourceGeometry::SupportedKinds` inventory: line, arc, circle, ellipse,
+`RS_Spline`, `LC_SplinePoints`, distinct `LC_Parabola`, bounded
+`LC_Hyperbola`, and `RS_Polyline`. Type changes filter candidates; a valid
+selection replaces the typed source and eligible extant sources can be
+resolved/highlighted. Parabola identity must be detected before its
+`LC_SplinePoints` base class.
+
+No additional widget or family enum is needed. Continue the implementation
+plan by auditing each family's actual geometry variants independently across
+capture/validation, offset generation, native worker/cache, DXF/DWG import and
+export, and persistence/round-trip. Add explicit positive tests for supported
+variants and fail-closed, non-mutating tests for unsupported variants. Where a
+family has no implementation for a variant, keep it unavailable or reject it
+atomically rather than treating its picker entry as blanket support.
+
+The picker evidence and acceptance boundary remain those recorded in W563bg
+and W563au; this update adds no product-code change and does not close the
+visible-GUI gate. The separate periodic spline test expansion and its
+validation receipt are recorded in W563bx.
+
+#### W563bx. Broaden Degree-one Periodic Rational Control Layouts (2026-11-07)
+
+Extended the staged-import periodic spline matrix from six controls to both six
+and eight controls. Each layout has its own nonuniform clamped knot vector and
+positive nonuniform periodic weights; both run across scales `1e-3`, `1`, and
+`1e3`, distance factors `0.0625`, `0.125`, and `0.25`, both signed sides, and
+R14/R2000/R2018 DXF plus R2000/R2018 DWG lanes. The source is translated by
+`(1000, -2000)` times its scale. Promotion/downgrade behavior, exact typed
+source metadata, and carrier geometry remain checked after import.
+
+The focused native case passes 22,818 assertions. Staging both control layouts
+produces 72 DWGs; ODA File Converter 27.1 converted all 72 to R2018 DXF with
+zero `.err` files, and the native-plus-ODA gate passes 30,979 assertions. The
+broad native `[lc-offsetcurve][import-session][typed-source][spline-variant]`
+selection passes 181,994 assertions across nine cases. Test commit `7c4fb340e`
+(`test(offset): broaden periodic spline control layouts`).
+
+This qualifies only the two recorded degree-one layouts, their knot/weight
+patterns, the stated scales/translations and distances, both sides, and the
+five format lanes. It does not establish arbitrary periodic layouts, general
+numeric extremes, complete support for every source family, independent-CAD
+geometry equivalence, visible-GUI acceptance, or exact-head CI; those remain
+open in their respective roadmap gates.
