@@ -792,7 +792,10 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         if (degree > 1)
             CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
 
-        for (const double signedDistance : {.125, -.125}) {
+        const std::vector<double> signedDistances = degree == 1
+            ? std::vector<double>{.0625, -.0625, .125, -.125, .25, -.25}
+            : std::vector<double>{.125, -.125};
+        for (const double signedDistance : signedDistances) {
             CAPTURE(signedDistance);
             const LC_OffsetSourceDefinition definition{
                 LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
