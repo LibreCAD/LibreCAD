@@ -23566,3 +23566,26 @@ type switching before selection, refreshed family candidates, typed
 replacement, highlighting of an eligible current source, and nine modeled
 families including distinct parabola. Picker family coverage does not imply
 complete per-variant geometry, worker/cache, or DXF/DWG support.
+
+#### W563bp. Qualify Degree-one Nonuniform Periodic Worker Results (2026-11-07)
+
+Extended the nonuniform periodic spline worker/cache matrix to degree 1,
+completing the tested degree range 1-3. The degree-1 source checks closed
+position continuity (not derivative continuity, which is not expected at
+linear polygon corners) and runs both signed offsets. One side produces a
+single canonical spline cache that operation 8 admits; the other produces six
+ordinary pieces, and validation of a single piece is refused as
+`NotCacheRepresentable` without mutation. Both operation replies survive
+request-bound encode/decode.
+
+Validation: the focused `[periodic][nonuniform]` worker case passes 213
+assertions; the full
+`[lc-offsetcurve][worker-kernel][source-cache][spline-variant]` selection
+passes 70,297 assertions across six cases. The Release
+`librecad_offset_worker_kernel_tests` target builds. Test commit `8e46e89b1`
+(`test(offset): cover linear periodic worker cache boundary`).
+
+This qualifies only the recorded degree-1 control/knot layout, weights,
+distance, and side-dependent topology. Other degree-1 periodic layouts,
+distance/scale neighborhoods, staged DXF/DWG import cross-products, visible-GUI
+acceptance, independent-CAD validation, and exact-head CI remain open.
