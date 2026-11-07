@@ -144,6 +144,77 @@ std::pair<SplineOracle, SplineOracle> oracleOffsetPoint(
             point.second + signedDistance * first.first / speed};
 }
 
+std::vector<RS_Vector> oracleOffsetCusps(const RS_SplineData& data,
+                                         const SplineOracle& domainStart,
+                                         const SplineOracle& domainEnd,
+                                         const double signedDistance) {
+    const std::size_t lastControl = data.controlPoints.size() - 1;
+    std::vector<RS_Vector> cusps;
+    for (std::size_t span = data.degree; span <= lastControl; ++span) {
+        const SplineOracle start{data.knotslist[span]};
+        const SplineOracle end{data.knotslist[span + 1]};
+        if (!(start < end)) continue;
+        const SplineOracle width = end - start;
+        std::vector<SplineOracle> parameters;
+        parameters.reserve(1100);
+        for (int sample = 0; sample <= 1024; ++sample)
+            parameters.push_back(start + width * sample / 1024);
+        for (int exponent = 4; exponent <= 48; ++exponent) {
+            const SplineOracle fraction{std::ldexp(1.0, -exponent)};
+            parameters.push_back(start + width * fraction);
+            parameters.push_back(end - width * fraction);
+        }
+        std::sort(parameters.begin(), parameters.end());
+        parameters.erase(std::unique(parameters.begin(), parameters.end()), parameters.end());
+        const SplineOracle step = width * SplineOracle{"1e-20"};
+        SplineOracle previousParameter = parameters.front();
+        SplineOracle previousFactor = oracleOffsetFactor(
+            data, previousParameter, step, domainStart, domainEnd,
+            SplineOracle{signedDistance});
+        const auto addCusp = [&](const SplineOracle& root) {
+            const auto point = oracleOffsetPoint(
+                data, root, width * SplineOracle{"1e-30"},
+                domainStart, domainEnd, SplineOracle{signedDistance});
+            const RS_Vector cusp{point.first.convert_to<double>(),
+                                 point.second.convert_to<double>()};
+            if (std::none_of(cusps.begin(), cusps.end(), [&](const RS_Vector& existing) {
+                    return existing.distanceTo(cusp) < 1e-8;
+                }))
+                cusps.push_back(cusp);
+        };
+        for (std::size_t i = 1; i < parameters.size(); ++i) {
+            const SplineOracle parameter = parameters[i];
+            const SplineOracle factor = oracleOffsetFactor(
+                data, parameter, step, domainStart, domainEnd,
+                SplineOracle{signedDistance});
+            if (factor == 0) {
+                addCusp(parameter);
+            } else if (previousFactor != 0 &&
+                       ((previousFactor < 0) != (factor < 0))) {
+                SplineOracle lo = previousParameter;
+                SplineOracle hi = parameter;
+                SplineOracle loFactor = previousFactor;
+                for (int iteration = 0; iteration < 48; ++iteration) {
+                    const SplineOracle middle = (lo + hi) / 2;
+                    const SplineOracle middleFactor = oracleOffsetFactor(
+                        data, middle, step, domainStart, domainEnd,
+                        SplineOracle{signedDistance});
+                    if ((loFactor < 0) == (middleFactor < 0)) {
+                        lo = middle;
+                        loFactor = middleFactor;
+                    } else {
+                        hi = middle;
+                    }
+                }
+                addCusp((lo + hi) / 2);
+            }
+            previousParameter = parameter;
+            previousFactor = factor;
+        }
+    }
+    return cusps;
+}
+
 req::Token token{7, 11, 13, 17};
 LC_EllipseOffsetDefinition definition() {
     return {{{0, 0}, {1, 0}, 1, 0, .001, false}, 1, false, false, 1e-4};
@@ -1194,9 +1265,23 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
 
             if (conditionedWeights && generated.ordinary.size() > 1) {
                 CHECK(generated.ordinary.size() <= 256);
+                const auto offsetOptions =
+                    LC_OffsetWorkerTolerance::directOptions(definition, sourceCheck);
+                REQUIRE(offsetOptions);
+                const double geometryTolerance =
+                    offsetOptions->tolerance.requestedGeometry;
                 const std::size_t lastControl = sourceData.controlPoints.size() - 1;
                 const SplineOracle domainStart{startParameter};
                 const SplineOracle domainEnd{endParameter};
+                const std::vector<RS_Vector> expectedCusps =
+                    signedDistance > 0.0
+                        ? oracleOffsetCusps(sourceData, domainStart, domainEnd,
+                                            signedDistance)
+                        : std::vector<RS_Vector>{};
+                if (signedDistance > 0.0) {
+                    CHECK(expectedCusps.size() >= 2);
+                    CHECK(expectedCusps.size() % 2 == 0);
+                }
                 std::vector<RS_Vector> expectedPoints;
                 std::vector<std::array<RS_Vector, 2>> expectedSegments;
                 for (std::size_t span = sourceData.degree; span <= lastControl; ++span) {
@@ -1229,11 +1314,22 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     expectedPoints.insert(expectedPoints.end(), spanPoints.begin(), spanPoints.end());
                 }
                 std::vector<RS_Vector> generatedPoints;
+                std::vector<RS_Vector> generatedEndpoints;
                 std::vector<std::array<RS_Vector, 2>> generatedSegments;
                 for (const auto& item : generated.ordinary) {
                     REQUIRE(std::holds_alternative<RS_SplineData>(item));
                     RS_Spline piece{nullptr, std::get<RS_SplineData>(item)};
                     REQUIRE(piece.validate());
+                    double pieceStart = 0.0;
+                    double pieceEnd = 0.0;
+                    REQUIRE(piece.getParameterDomain(pieceStart, pieceEnd));
+                    LC_CurveJet endpoint;
+                    REQUIRE(piece.tryEvaluateJet(pieceStart, LC_CurveEvaluationSide::Right,
+                                                 endpoint));
+                    generatedEndpoints.push_back(endpoint.point);
+                    REQUIRE(piece.tryEvaluateJet(pieceEnd, LC_CurveEvaluationSide::Left,
+                                                 endpoint));
+                    generatedEndpoints.push_back(endpoint.point);
                     const std::vector<double> breaks = piece.getBreakParameters();
                     REQUIRE(breaks.size() >= 2);
                     for (std::size_t span = 0; span + 1 < breaks.size(); ++span) {
@@ -1299,8 +1395,58 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                      << reverse.point.y << " vs " << reverse.nearest.x << ", "
                      << reverse.nearest.y << "; points " << generatedPoints.size() << ", "
                      << expectedPoints.size());
-                CHECK(forward.distance < 5e-3);
-                CHECK(reverse.distance < 5e-3);
+                CHECK(forward.distance < geometryTolerance);
+                CHECK(reverse.distance < geometryTolerance);
+                double minimumCuspSeparation = std::numeric_limits<double>::infinity();
+                for (std::size_t i = 0; i < expectedCusps.size(); ++i)
+                    for (std::size_t j = i + 1; j < expectedCusps.size(); ++j)
+                        minimumCuspSeparation = std::min(
+                            minimumCuspSeparation,
+                            expectedCusps[i].distanceTo(expectedCusps[j]));
+                INFO("oracle cusps=" << expectedCusps.size()
+                     << ", minimum cusp separation=" << minimumCuspSeparation
+                     << ", generated spline endpoints=" << generatedEndpoints.size());
+                if (expectedCusps.size() > 1)
+                    CHECK(minimumCuspSeparation > 1e-8);
+                std::vector<RS_Vector> matchedGeneratedCusps;
+                for (const RS_Vector& endpoint : generatedEndpoints) {
+                    const auto cusp = std::find_if(
+                        expectedCusps.begin(), expectedCusps.end(),
+                        [&](const RS_Vector& candidate) {
+                            return endpoint.distanceTo(candidate) < geometryTolerance;
+                        });
+                    if (cusp != expectedCusps.end() &&
+                        std::none_of(matchedGeneratedCusps.begin(),
+                                     matchedGeneratedCusps.end(),
+                                     [&](const RS_Vector& existing) {
+                                         return existing.distanceTo(*cusp) < 1e-8;
+                                     }))
+                        matchedGeneratedCusps.push_back(*cusp);
+                }
+                for (const RS_Vector& cusp : expectedCusps) {
+                    double nearestEndpoint = std::numeric_limits<double>::infinity();
+                    for (const RS_Vector& endpoint : generatedEndpoints)
+                        nearestEndpoint = std::min(nearestEndpoint,
+                                                   cusp.distanceTo(endpoint));
+                    INFO("oracle cusp nearest branch endpoint=" << nearestEndpoint);
+                    CHECK(nearestEndpoint < geometryTolerance);
+                }
+                std::size_t toleranceMergedCusps = 0;
+                for (const RS_Vector& cusp : expectedCusps) {
+                    const bool matched = std::any_of(
+                        matchedGeneratedCusps.begin(), matchedGeneratedCusps.end(),
+                        [&](const RS_Vector& generatedCusp) {
+                            return cusp.distanceTo(generatedCusp) < 1e-8;
+                        });
+                    if (matched) continue;
+                    ++toleranceMergedCusps;
+                    double nearestRetainedCusp = std::numeric_limits<double>::infinity();
+                    for (const RS_Vector& generatedCusp : matchedGeneratedCusps)
+                        nearestRetainedCusp = std::min(
+                            nearestRetainedCusp, cusp.distanceTo(generatedCusp));
+                    CHECK(nearestRetainedCusp < geometryTolerance);
+                }
+                CHECK(toleranceMergedCusps % 2 == 0);
                 continue;
             }
 
