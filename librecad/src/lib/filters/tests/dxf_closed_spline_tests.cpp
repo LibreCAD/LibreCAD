@@ -1013,6 +1013,94 @@ TEST_CASE("DWG round-trips closed spline-points control geometry",
   }
 }
 
+TEST_CASE("DWG round-trips both pieces of a cut spline-points curve",
+          "[dwg][filter][spline-points][cut][roundtrip]") {
+  ensureSettings();
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2004, "dwg-r2004"},
+      {RS2::FormatDWG2007, "dwg-r2007"},
+      {RS2::FormatDWG2010, "dwg-r2010"},
+      {RS2::FormatDWG2013, "dwg-r2013"},
+      {RS2::FormatDWG2018, "dwg-r2018"},
+  };
+  LC_SplinePointsData data{false, false};
+  data.useControlPoints = true;
+  data.controlPoints = {{0.0, 0.0}, {2.0, 4.0}, {5.0, -1.0},
+                        {8.0, 3.0}, {11.0, 0.0}};
+  LC_SplinePoints original{nullptr, data};
+
+  std::unique_ptr<LC_SplinePoints> left;
+  std::unique_ptr<LC_SplinePoints> right;
+  const double domain = static_cast<double>(original.getSegmentCount());
+  for (int i = 1; i < 20 && !right; ++i) {
+    LC_SplinePoints candidate{nullptr, data};
+    LC_CurveJet cutJet;
+    REQUIRE(candidate.tryEvaluateJet(domain * i / 20.0,
+                                     LC_CurveEvaluationSide::Right,
+                                     cutJet));
+    std::unique_ptr<LC_SplinePoints> candidateRight(candidate.cut(cutJet.point));
+    if (candidateRight) {
+      left = std::make_unique<LC_SplinePoints>(nullptr, candidate.getData());
+      right = std::move(candidateRight);
+    }
+  }
+  REQUIRE(left);
+  REQUIRE(right);
+  CHECK(left->getData().cut);
+  CHECK(right->getData().cut);
+
+  const auto sample = [](const LC_SplinePoints& spline) {
+    std::vector<RS_Vector> points;
+    const double end = static_cast<double>(spline.getSegmentCount());
+    for (int i = 0; i <= 400; ++i) {
+      const bool atEnd = i == 400;
+      LC_CurveJet jet;
+      REQUIRE(spline.tryEvaluateJet(end * i / 400.0,
+          atEnd ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Right,
+          jet));
+      points.push_back(jet.point);
+    }
+    return points;
+  };
+  const std::array<std::vector<RS_Vector>, 2> expected{sample(*left), sample(*right)};
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  graphic.addEntity(new LC_SplinePoints(&graphic, left->getData()));
+  graphic.addEntity(new LC_SplinePoints(&graphic, right->getData()));
+  for (const auto& [format, version] : formats) {
+    INFO(version);
+    const std::string path = tempPath("cut-control-net-" + version);
+    std::remove(path.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+    }
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    importFile(reopened, path, RS2::FormatDWG, &written);
+    std::filesystem::remove(path);
+
+    REQUIRE(written.size() == 2);
+    REQUIRE(reopened.count() == 2);
+    std::array<bool, 2> matched{false, false};
+    for (RS_Entity* entity : reopened) {
+      auto* spline = dynamic_cast<LC_SplinePoints*>(entity);
+      REQUIRE(spline != nullptr);
+      const auto actual = sample(*spline);
+      const double d0 = curveDistance(expected[0], actual);
+      const double d1 = curveDistance(expected[1], actual);
+      const size_t match = d0 <= d1 ? 0 : 1;
+      CHECK_FALSE(matched[match]);
+      matched[match] = true;
+      CHECK(std::min(d0, d1) < 1.0e-10);
+    }
+    CHECK(matched[0]);
+    CHECK(matched[1]);
+  }
+}
+
 TEST_CASE("ODA-converted spline-point control DWGs preserve evaluated geometry",
           "[external][oda][dwg][spline-points][geometry]") {
   const char* outputDirectory =
