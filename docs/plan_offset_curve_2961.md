@@ -22466,3 +22466,61 @@ does not prove each geometric variant, successful native cache promotion,
 visible-GUI behavior, or external support in other CAD applications. Test
 commits `f61172ac4` (`test(offset): verify ODA typed-source round trips`) and
 `e16abe2b2` (`test(offset): verify ODA import fallback preservation`).
+
+#### W563v. Reconfirm Source-family Switching and Parabola Picker Contract (2026-11-07)
+
+The requested UI contract is that a user can change the source-curve type
+while choosing a replacement, then choose a matching entity; this must work
+for every source kind supported by the offset-source model. The source dialog's
+`cbSourceType` selector is expected to expose all nine modeled kinds: line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Changing the type refreshes the `cbSource` candidates, and selecting
+a candidate replaces the value-owned typed source with that exact kind.
+
+Parabola is a first-class picker type, not a generic spline-points alias:
+capture/classification must test `LC_Parabola` before its `LC_SplinePoints`
+base class, and replacement must preserve `Kind::Parabola`. When the current
+source is represented by a live drawing entity, the dialog must resolve that
+entity in the source list and its select-source action must select/highlight
+it. Invalid or unsupported variants remain excluded; changing the picker
+filter alone must not mutate the source.
+
+Current implementation and regression coverage were rechecked in
+`lc_offsetcurve_propertiesdialog_tests.cpp`: the type-changing picker test
+asserts nine choices and replacement/highlighting for line, parabola, and
+ellipse; the all-family replacement test covers the remaining modeled types;
+the variant eligibility and malformed-candidate tests define the fail-closed
+boundary. Thus no duplicate picker, selector, or parabola-only UI branch is
+planned. “Support all types” here means source-kind selection/capture and
+replacement; it does not assert that every geometry variant can be offset,
+admitted to a single-spline cache, serialized, or independently round-tripped.
+
+Implementation status: picker/type-switch and distinct parabola identity are
+closed by the existing code and tests. Keep the wider W563 per-variant direct,
+worker/cache, import, and DXF/DWG matrices open until independently qualified;
+visible-GUI and external-CAD acceptance also remain separate gates.
+
+#### W563w. Make the ODA Typed-source Round-trip Matrix Hermetic (2026-11-07)
+
+Committed 18 second-save DWGs and their 18 ODA 27.1 R2018 DXFs for one
+representative of each of the nine modeled source families, covering R2000 and
+R2018 DWG inputs. `SHA256SUMS` pins all 36 fixtures. The ASCII DXFs were
+normalized from CRLF to LF for repository consistency before checksums were
+recorded; DXF records and values are unchanged.
+
+Changed `ODA-round-tripped typed-source DWGs retain all modeled source families`
+to use these committed fixture directories by default, while retaining
+environment-variable overrides for local fixture investigation. The test
+compares schema-2 source CBOR from each source DWG with ODA's converted DXF,
+checks family identity, reserved flags, tail cardinality, and foreign XDATA,
+then exercises staged import and requires fail-closed cache downgrade without
+loss of typed-source CBOR. The repository-default run passes 2,456 assertions
+in one case, without external CAD software. The CMake `librecad_tests` target
+build succeeds and all 36 manifest checksums verify.
+
+Implementation commit: `3ffab5459` (`test(offset): commit ODA typed-source
+fixtures`). This closes default CI execution for the nine representative
+metadata-carrier round-trips and fallback behavior only. It does not establish
+successful native-cache promotion for these deliberate mismatches, exhaustive
+geometric variants, visible-GUI behavior, or interoperability with other CAD
+applications. Continue those open W563 gates.
