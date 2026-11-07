@@ -67,10 +67,12 @@ qualifies one-ended degree-1 tangents through transform/reversal, both offset
 sides, Properties replacement and the same DXF/DWG file lanes;
 W562 admits and qualifies a curve-consistent tangent-constrained
 `LC_SplinePoints` subset through worker/cache, Properties, DXF/DWG persistence,
-and AC1032 staged-import paths; W563az/W563ba extend the verified
-tangent-constrained DWG fit-point writer from a single quadratic segment to
-tested chains of 3, 4, 5, 6, and 8 points; remaining family/variant and
-acceptance work is open;
+and AC1032 staged-import paths; W563az/W563ba structurally qualify
+tangent-constrained DWG fit-point chains of 3, 4, 5, 6, and 8 points, but
+W563bb's independent curve comparison found that structural acceptance does
+not establish geometry equivalence, so the constrained
+`LC_SplinePoints` DWG writer is changed to fail closed pending an exact
+encoding; remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
 must allow choosing a different source family before selecting a live entity,
@@ -23156,3 +23158,40 @@ chain lengths and versions only. Seven-point and longer chains, additional
 fit-point distributions, tangent/geometry variants outside the exact matcher,
 external curve comparison, visible-GUI acceptance, and exact-head CI remain
 open.
+
+#### W563bb. Reconcile All-family Picker Scope and DWG Fit Geometry (2026-11-07)
+
+The latest source-widget request is already covered by W563au/W563ay: the
+Properties replacement flow allows choosing the family before selecting a
+candidate, and its canonical nine-family inventory is line, arc, circle,
+ellipse, `RS_Spline`, `LC_SplinePoints`, distinct `LC_Parabola`, bounded
+`LC_Hyperbola`, and `RS_Polyline`. Keep the parabola choice ahead of its
+`LC_SplinePoints` base-class classification. Do not add a second selector.
+“All supported types” means all families in that inventory; per-variant
+eligibility and end-to-end generation, worker/cache, import/export, and
+round-trip remain independently gated. Each family needs representative
+geometry tests through those stages, and unsupported or lossy variants must
+be filtered or refused without changing the existing source/cache.
+
+New validation supersedes any interpretation of W563az/W563ba as proof of
+DWG curve equivalence. A temporary geometry comparison imported ODA-converted
+R2018 DXF and compared evaluated curves against the source
+`LC_SplinePoints`; the 3-point case showed maximum directed sampled deviation
+`0.05682145538738505` drawing units. ODA retained fit points/tangent state but
+rewrote the SPLINE as a cubic representation, so the prior independent-reader
+checks established structural/data retention only. The tangent-constrained
+`LC_SplinePoints` DWG scenario-2 writer now refuses this case rather than
+emitting a geometry-changing representation; the DXF path and the separate
+`RS_Spline` path are unchanged. Do not describe this fit-point writer as
+verified geometry-preserving support. Commit `9a4d38d4a` contains the guard
+and refusal-matrix test.
+
+The refusal matrix passes 225 assertions across 3/4/5/6/8-point chains,
+both/start-only/end-only tangents, and all six DWG versions. The Release
+`librecad_tests` target builds; `[spline][LC_SplinePoints]` passes 615
+assertions in 10 cases, `[fit-points][roundtrip]` passes 1,780 assertions in
+7 cases, and `[dxf][filter][spline][fit-points]` passes 2,180 assertions in
+9 cases, including DXF and `RS_Spline` tangent-fit paths. `git diff --check`
+passes. Retain the explicit refusal unless a future encoding passes
+independent evaluated-geometry comparison. Visible-GUI and exact-head CI gates
+remain separate.
