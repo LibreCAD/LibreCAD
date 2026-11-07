@@ -23194,10 +23194,25 @@ six DWG versions; after reopen, each case checks scenario, degree, control
 points, loss of unsupported fit metadata, and 101 evaluated positions.
 LibreDWG 0.14 parses all 90 emitted files as degree-2 scenario-1 SPLINEs with
 control points and no fit points. ACadSharp accepts all 30 R2000/R2004 files
-with finite degree-2 control data. ODA File Converter could not be rerun in
-this environment because its macOS process aborts during pasteboard service
-initialization; no ODA claim is made for the control-net output. The earlier
-ODA geometry discrepancy is the evidence for avoiding scenario 2. Remaining
-work includes external evaluated-geometry comparison when ODA is runnable,
-visible-GUI and exact-head CI gates, and broader variants/families outside
-this tested matrix.
+with finite degree-2 control data. ODA File Converter 27.1 converted all 90
+R2000/R2004/R2007/R2010/R2013/R2018 control-net DWGs to R2018 DXF without any
+`.err` outputs. Commit `d450f2a21` adds an opt-in test that imports all 90
+converted DXFs and compares evaluated geometry against the original source
+for 3/4/5/6/8 fit points, all three tangent modes, and all six source versions;
+it passes 210,600 assertions with symmetric sampled curve distance below
+`1e-6`. The generated DWGs and converted DXFs are under
+`/private/tmp/tangent-fit-controlnet-dwg` and
+`/private/tmp/tangent-fit-controlnet-oda`; run it with
+`LIBRECAD_TANGENT_SPLINE_ODA_DXF_DIR=/private/tmp/tangent-fit-controlnet-oda
+librecad_tests '[external][oda][dwg][spline-points][geometry]'`. The converter
+requires macOS service access in this environment.
+
+Requalified regressions pass: `[spline][LC_SplinePoints]` has 615 assertions
+in 10 cases; `[fit-points][roundtrip]` has 30,851 assertions in 8 cases; and
+`[dxf][filter][spline][fit-points]` has 2,208 assertions in 9 cases, including
+DXF and `RS_Spline` tangent-fit paths. This establishes external ODA conversion
+and evaluated geometry only for these tested open, uncut, unit-weight
+quadratic spline-point cases. Fit-point lists and explicit tangent authoring
+metadata remain absent from scenario-1 DWG output. Other fit layouts,
+closed/cut forms, tangent mismatches, visible-GUI acceptance, and exact-head CI
+remain open gates.
