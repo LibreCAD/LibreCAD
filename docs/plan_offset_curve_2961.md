@@ -23610,3 +23610,23 @@ This covers only the stated degree-1 control layout, knot vector, weights,
 distance, and five lanes. Other degree-1 periodic layouts and distance/scale
 neighborhoods, independent-CAD validation, visible-GUI acceptance, and
 exact-head CI remain open.
+
+#### W563br. Broaden Degree-one Periodic Worker Distances (2026-11-07)
+
+Expanded the degree-1 nonuniform rational periodic worker/cache case to signed
+distances `0.0625`, `0.125`, and `0.25`. The topology-dependent contract is
+checked at all six signed values: operation 7 returns either one spline cache
+or six ordinary pieces; the former is admitted exactly by operation 8, while a
+single-piece approximation of the latter is refused as
+`NotCacheRepresentable`. Replies remain request-bound through encode/decode.
+
+The focused case passes 345 assertions, and the full
+`[lc-offsetcurve][worker-kernel][source-cache][spline-variant]` suite passes
+70,429 assertions across six cases. Release target build and `git diff
+--check` pass. Test commit `6b275a896` (`test(offset): broaden degree-one
+periodic worker distances`).
+
+This adds distance coverage only for the recorded degree-1 control/knot and
+weight layout. Additional periodic layouts, source scales, staged file lanes at
+these distances, visible-GUI acceptance, independent-CAD validation, and
+exact-head CI remain open.
