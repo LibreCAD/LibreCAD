@@ -22905,6 +22905,28 @@ and both signs for worker generation/cache admission. Other knot sequences,
 degrees, weights, scales/distances, direct-engine and document-transaction
 cross-products, visible-GUI behavior, and external-CAD acceptance remain open.
 
+#### W563at. Extend Nonuniform Periodic Worker Coverage to Quadratic Splines (2026-11-07)
+
+Extended W563ar's nonuniform periodic worker/cache regression from degree 3 to
+degrees 2 and 3. The quadratic source uses the nonuniform clamped knots
+`[0, 0, 0, 0.5, 1.75, 2.5, 3, 3, 3]`; both degrees use positive nonuniform
+weights with the wrapped seam weights derived from their independent controls.
+For each degree, the test verifies source validity and seam point/derivative,
+then exercises both signed offsets, operation-7 spline generation, operation-8
+exact cache admission, and encode/decode of both replies.
+
+Validation: focused case passes 140 assertions; the complete
+`[lc-offsetcurve][worker-kernel][source-cache][spline-variant]` selection
+passes 70,224 assertions across six cases; the Release worker-kernel target
+builds and `git diff --check` passes. Test commit `13f11cf5c` (`test(offset):
+cover quadratic periodic worker caches`).
+
+This closes only these degree-2/3 periodic knot/weight layouts at distance
+`0.125`. Other knot sequences, control counts, weights, distances/scales,
+external geometry-fidelity comparison, visible-GUI acceptance, and the
+remaining family/variant matrices remain open. W563as external DWG evidence
+still applies only to its preserved degree-one and degree-three fixtures.
+
 #### W563as. Independently Decode Periodic and Repeated-knot DWG Carriers (2026-11-07)
 
 Added opt-in DWG preservation to the staged-import regressions for degree-one
