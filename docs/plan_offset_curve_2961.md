@@ -21106,10 +21106,37 @@ This is only an import-geometry correction. Current `RS_SplineData` stores a
 boolean rather than the actual endpoint vectors, so DXF/DWG export still loses
 those vectors, fit-point-only geometry remains approximate, and both
 tangent-constrained representations remain ineligible for editable offsets.
-Next, add a bounded representation slice: store and round-trip the actual
-start/end tangent vectors in both spline data types, include them in typed
-source serialization/cache identity, and define invalidation/transform behavior
-when fit points or control points are edited. Do not remove picker/worker
-refusals until tests prove source interpolation, displayed geometry, and
-offset snapshots agree for directed, reversed, single-end, and degenerate
-tangent cases across applicable DXF/DWG lanes.
+Next, implement tangent support in compatibility-preserving slices:
+
+1. Store actual start/end vectors (including zero for an unconstrained end) in
+   both spline data types; import and test them without inferring vectors from
+   the constrained boolean. Transform them as vectors, swap and reverse them
+   when curve direction is reversed, and invalidate stale constraints after
+   control/fit edits that cannot maintain the original tangent condition.
+2. Preserve existing schema-1/schema-2 typed-source payloads byte-for-byte.
+   The current strict spline arrays are part of the persisted schema-2 CBOR,
+   not merely a private worker message. Define and test a schema-3 typed-source
+   payload for tangent vectors and associated fit metadata; continue decoding
+   old schema 1/2 files and reject malformed/non-finite new vectors before
+   allocation or promotion. Update source/cache fingerprints only in schema 3.
+3. Implement fit-point interpolation from exact endpoint vectors and prove the
+   resulting native curve matches the source control net when both are
+   present. Cover missing-one-end, zero, reversed, repeated/degenerate
+   endpoints, tolerance limits, and edit invalidation. For `LC_SplinePoints`,
+   either implement the same curve semantics or retain explicit refusal.
+4. Resolve file encoding against the SPLINE scenarios before writing. DXF may
+   carry control points, fit points, and tangents in one entity; DWG scenario 1
+   carries controls/knots, while scenario 2 carries fit points/tangents. Do not
+   force scenario 2 when it would replace exact control-net geometry, or claim
+   DWG round-trip until a standards- and ACadSharp-verified encoding preserves
+   both geometry and tangent metadata. Keep explicit refusal/raw preservation
+   for representations with no lossless encoding.
+5. Only then enable eligible picker/worker variants. Require exact curve
+   agreement before capture, operation-7 generation, operation-8 admission,
+   guarded replacement, cancellation/failure non-mutation, and applicable
+   DXF/DWG save/reopen/second-save across scale, orientation, and side cases.
+
+Do not remove picker/worker refusals until these gates pass. “Tangent
+constrained” is not equivalent to “has a control net”: the model must prove
+that the live curve represented by the controls is the same curve whose
+fit-point/tangent semantics are exported and used for offsets.
