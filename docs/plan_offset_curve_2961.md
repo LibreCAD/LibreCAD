@@ -48,6 +48,7 @@ W537 source-picker constrained-fit eligibility correction complete;
 W538 explicit-control-net quadratic fit SPLINE import correction complete;
 W539 tangent-vector model and DXF preservation complete with fail-closed DWG
 export for constrained variants;
+W540 schema-3 tangent metadata persistence complete;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21170,8 +21171,41 @@ tests with 93 obligations, zero pending declarations, and zero production
 mismatches; and `git diff --check` passes. Product commit `b967334c8`
 (`fix(spline): preserve fit tangent vectors`).
 
-Remaining: schema-3 typed-source persistence with schema-1/2 compatibility,
+At the W539 checkpoint, the next work was schema-3 typed-source persistence,
 tangent-constrained fit interpolation, standards-verified lossless DWG
-encoding, and only then worker/cache/picker enablement. The current DWG refusal
-is an intentional loss-prevention boundary, not DWG tangent support. Recheck
-the exact PR #3193 head after pushing this receipt.
+encoding, and only then worker/cache/picker enablement. W540 closes the schema-3
+XDATA payload requirement described below; the current DWG refusal remains an
+intentional loss-prevention boundary, not DWG tangent support.
+
+### W540 Completion Receipt
+
+Tangent-constrained typed source metadata now uses outer XDATA schema 3. Its
+bounded CBOR envelope retains the established schema-2 source value plus a
+strictly tagged record for source kind, constrained marker, both endpoint
+vectors, and fit tolerance. Schema 1/2 decoders and encoders remain on their
+original paths and keep their prior payload layouts. The reader admits only
+the exact schema-3 envelope, verifies family/type agreement, constrained
+state, fit-tolerance consistency, and finite planar vectors before decoding
+the native source arrays. Schema 3 participates in deferred import and retains
+the original metadata when operation-8 cache validation refuses promotion.
+
+The worker `Values::encodeSourceDefinition` layout and operation protocol were
+deliberately not changed. Tangent-constrained sources remain excluded from
+offset generation, picker eligibility, and cache promotion; schema 3 is
+metadata preservation, not proof of tangent-aware geometry or a source/cache
+fingerprint update.
+
+Validation: Release `librecad_tests` build passes; the full `[offset-xdata]`
+suite passes 333,962 assertions across 56 cases, including schema-1/2
+compatibility, schema-3 round trips in DXF/EED, fit tolerance, and malformed
+vector/version refusal; the real-file fit-point import matrix passes 25,068
+assertions across five DXF/DWG lanes; and `git diff --check` passes. Product
+commit `b86eb756f` (`feat(offset): persist constrained spline tangents`).
+
+Remaining: decide and implement a versioned source/cache identity that includes
+tangent metadata without changing schema-1/2 identities; implement fit-point
+interpolation that exactly honors endpoint vectors; qualify a lossless DWG
+encoding against the DWG scenario layout or continue explicit refusal; then
+only enable operation-7/8, picker, and cache variants after exact-curve and
+failure-atomicity validation. Push this receipt and query CI for its exact PR
+head.
