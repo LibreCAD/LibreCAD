@@ -23670,3 +23670,24 @@ This qualifies only the recorded degree-1 rational periodic layout, three
 distance factors, three scale/translation pairs, both sides, and five file
 lanes. Other layouts, broader numeric extremes, external-CAD validation,
 visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563bu. Validate Periodic Worker Caches Across Scale and Translation (2026-11-07)
+
+Extended the nonuniform periodic worker/cache test to degree-1 sources at
+scales `1e-3`, `1`, and `1e3`, each translated by `(1000, -2000)` times its
+scale. Both signed sides are checked at relative distances `0.0625`, `0.125`,
+and `0.25`. Operation 7 must return the observed one-cache or six-piece
+topology; operation 8 admits the exact single-cache result and rejects a
+single-piece approximation of a split result. The degree-2/3 baseline cases
+remain included.
+
+The focused worker case passes 755 assertions; the complete
+`[lc-offsetcurve][worker-kernel][source-cache][spline-variant]` selection
+passes 70,839 assertions across six cases. The Release test target builds and
+`git diff --check` passes. Test commit `958f3fd2b` (`test(offset): qualify
+periodic worker scale matrix`).
+
+This qualifies the recorded degree-1 layout, weight/knot pattern, distances,
+scales, and translation ratios only. Broader numeric extremes, other control
+layouts, independent-CAD validation, visible-GUI acceptance, and exact-head CI
+remain open.
