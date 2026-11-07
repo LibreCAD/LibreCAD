@@ -1178,6 +1178,24 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     RS_SplineData unweightedSpline{1, false};
     unweightedSpline.controlPoints = {{0, 0}, {1, 0}, {2, 0}};
     unweightedSpline.knotslist = {0, 0, .5, 1, 1};
+    RS_SplineData rationalTangentCubic{3, false};
+    rationalTangentCubic.controlPoints = {{0, 0}, {2, 3}, {6, 4}, {9, 0}};
+    rationalTangentCubic.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    rationalTangentCubic.weights = {1.0, 0.75, 0.8, 1.0};
+    rationalTangentCubic.fitTangentsConstrained = true;
+    rationalTangentCubic.fitTolerance = 1e-2;
+    rationalTangentCubic.fitStartTangent = {2, 3};
+    rationalTangentCubic.fitEndTangent = {3, -4};
+    RS_Spline rationalTangentEvaluator{nullptr, rationalTangentCubic};
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        LC_CurveJet jet;
+        REQUIRE(rationalTangentEvaluator.tryEvaluateJet(parameter,
+            parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Right, jet));
+        rationalTangentCubic.fitPoints.push_back(jet.point);
+    }
+    RS_Spline rationalTangentCheck{nullptr, rationalTangentCubic};
+    REQUIRE(rationalTangentCheck.fitTangentsMatchCurve());
     RS_Spline periodic{nullptr, RS_SplineData{3, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30},
                                    RS_Vector{20, 50}, RS_Vector{-15, 25}})
@@ -1214,7 +1232,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
-    const std::array<LC_OffsetSourceGeometry, 29> sources{
+    const std::array<LC_OffsetSourceGeometry, 30> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .2, 0, 2 * M_PI, false}},
@@ -1224,6 +1242,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{nonuniformQuadratic},
         LC_OffsetSourceGeometry{repeatedKnotCubic},
         LC_OffsetSourceGeometry{unweightedSpline},
+        LC_OffsetSourceGeometry{rationalTangentCubic},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{2, 1}, RS_Vector{1, 0}, RS_Vector{0, 1}}}},
@@ -1261,13 +1280,29 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     }};
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
+        const bool tangentSource = std::visit([](const auto& data) {
+            using T = std::decay_t<decltype(data)>;
+            if constexpr (std::is_same_v<T, RS_SplineData> ||
+                          std::is_same_v<T, LC_SplinePointsData>)
+                return data.fitTangentsConstrained;
+            return false;
+        }, sources[i].value);
+        const auto expectedSchema = tangentSource ? xd::Status::Schema3
+                                                  : xd::Status::Schema2;
         xd::Definition definition;
         definition.source = LC_OffsetSourceDefinition{sources[i], -.75, .00025, true};
         definition.reservedFlags = 0x10;
         definition.tail = {{1000, QStringLiteral("file roundtrip tail")}, {1070, std::int16_t{23}}};
+        if (tangentSource) {
+            const auto encodedSource = values::encodeSourceDefinition(*definition.source);
+            REQUIRE(encodedSource);
+            const auto decodedSource = values::decodeSourceDefinition(*encodedSource);
+            REQUIRE(decodedSource);
+        }
 
         const auto verify = [&](const std::filesystem::path &path, const Format& fileFormat,
                                 bool secondSave) {
+            CAPTURE(fileFormat.suffix);
             const auto captured = f::readCodec(path, fileFormat.dwg);
             REQUIRE(captured.splines.size() == 1);
             xd::Options options;
@@ -1279,7 +1314,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             }
             CAPTURE(f::tagsState(captured.splines.front().extData));
             const auto parsed = xd::parseAndStrip(captured.splines.front().extData, options);
-            REQUIRE(parsed.status == xd::Status::Schema2);
+            REQUIRE(parsed.status == expectedSchema);
             REQUIRE(parsed.definition);
             REQUIRE(parsed.definition->source);
             CHECK(parsed.definition->reservedFlags == definition.reservedFlags);
@@ -1304,7 +1339,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             const auto second = f::readCodec(repeat, fileFormat.dwg);
             REQUIRE(second.splines.size() == 1);
             const auto repeated = xd::parseAndStrip(second.splines.front().extData, options);
-            REQUIRE(repeated.status == xd::Status::Schema2);
+            REQUIRE(repeated.status == expectedSchema);
             REQUIRE(repeated.definition);
             REQUIRE(repeated.definition->source);
             const auto repeatedSource = values::encodeSourceDefinition(*repeated.definition->source);
@@ -1324,6 +1359,11 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             else options.asciiDxf = false;
             const auto tags = xd::forExport({app}, definition, options);
             REQUIRE(tags);
+            if (tangentSource) {
+                CAPTURE(fileFormat.suffix);
+                const auto immediate = xd::parseAndStrip(*tags, options);
+                CHECK(immediate.status == xd::Status::Schema3);
+            }
             auto entity = f::raw(1, *tags);
             const auto path = directory.file(std::to_string(i) + "-" + fileFormat.suffix);
 #ifdef DWGSUPPORT
@@ -4970,6 +5010,111 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
               values::encodeSourceGeometry(definition.source));
         REQUIRE(std::holds_alternative<RS_SplineData>(imported->sourceDefinition()->source.value));
         CHECK(std::get<RS_SplineData>(imported->sourceDefinition()->source.value).weights.empty());
+    }
+}
+
+TEST_CASE("rational tangent cubic source imports through operation-8 validation in AC1032 DXF and DWG",
+          "[lc-offsetcurve][import-session][typed-source][spline-variant][tangents][rational]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-rational-tangent-spline-import");
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+
+    RS_SplineData splineData{3, false};
+    splineData.controlPoints = {{0, 0}, {2, 3}, {6, 4}, {9, 0}};
+    splineData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    splineData.weights = {1.0, 0.75, 0.8, 1.0};
+    splineData.fitTangentsConstrained = true;
+    splineData.fitTolerance = 1e-2;
+    splineData.fitStartTangent = {2, 3};
+    splineData.fitEndTangent = {3, -4};
+    RS_Spline evaluator{nullptr, splineData};
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        LC_CurveJet jet;
+        REQUIRE(evaluator.tryEvaluateJet(parameter,
+            parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Right, jet));
+        splineData.fitPoints.push_back(jet.point);
+    }
+    RS_Spline sourceSpline{nullptr, splineData};
+    REQUIRE(sourceSpline.fitTangentsMatchCurve());
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{splineData}, .05, 1e-4, false};
+    auto source = definition.source.makeEntity();
+    REQUIRE(source);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        *source, .05, definition.relativeTolerance).value();
+    const auto generated = LC_CurveOffset::buildDirectBranches(*source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .05), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+    auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(materialized.entities.size() == 1);
+    const auto* cacheSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+    REQUIRE(cacheSpline);
+
+    for (const bool dwg : {false, true}) {
+#ifndef DWGSUPPORT
+        if (dwg) continue;
+#endif
+        xd::Definition carrier;
+        carrier.source = definition;
+        xd::Options encoding;
+        if (dwg) {
+            encoding.eed = true;
+            encoding.textEncoding = xd::TextEncoding::Utf16;
+        } else {
+            encoding.asciiDxf = false;
+        }
+        const auto tags = xd::forExport(
+            {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
+            carrier, encoding);
+        REQUIRE(tags);
+
+        DRW_Spline cache = f::raw(1, *tags);
+        cache.controllist.clear();
+        for (const auto& point : cacheSpline->getData().controlPoints)
+            cache.controllist.push_back(
+                std::make_shared<DRW_Coord>(point.x, point.y, 0));
+        cache.knotslist = cacheSpline->getData().knotslist;
+        cache.weightlist = cacheSpline->getData().weights;
+        cache.degree = cacheSpline->getData().degree;
+        cache.flags = 8;
+        cache.m_scenario = 1;
+        cache.ncontrol = cache.controllist.size();
+        cache.nknots = cache.knotslist.size();
+        cache.nfit = 0;
+
+        const auto input = directory.file(dwg ? "rational-tangent.dwg"
+                                               : "rational-tangent.dxf");
+#ifdef DWGSUPPORT
+        if (dwg) f::dwgFile(input, cache, DRW::AC1032);
+        else f::binaryDxf(input, cache, DRW::AC1032);
+#else
+        f::binaryDxf(input, cache, DRW::AC1032);
+#endif
+        const auto outcome = stagedImport(input, dwg ? Lane::Eed18 : Lane::Binary18);
+        REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(outcome.graphic);
+        CHECK(outcome.admitted == 1);
+        CHECK(outcome.downgraded == 0);
+        const auto* imported = dynamic_cast<const LC_OffsetCurve*>(
+            f::sole(*outcome.graphic));
+        REQUIRE(imported);
+        REQUIRE(imported->sourceDefinition());
+        CHECK(values::encodeSourceGeometry(
+                  imported->sourceDefinition()->source) ==
+              values::encodeSourceGeometry(definition.source));
+        const auto* importedSpline = std::get_if<RS_SplineData>(
+            &imported->sourceDefinition()->source.value);
+        REQUIRE(importedSpline);
+        CHECK(importedSpline->weights == splineData.weights);
+        CHECK(importedSpline->fitTangentsConstrained);
+        CHECK(importedSpline->fitStartTangent == splineData.fitStartTangent);
+        CHECK(importedSpline->fitEndTangent == splineData.fitEndTangent);
     }
 }
 
