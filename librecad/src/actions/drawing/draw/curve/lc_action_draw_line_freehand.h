@@ -62,5 +62,8 @@ protected:
     void doTriggerCompletion(bool success) override;
     RS_Entity* doTriggerCreateEntity() override;
     void onMouseLeftButtonPress(int status, const LC_MouseEvent* e) override;
+    /// the points of a freehand line are snapped, so the snap marker has to be shown
+    /// (it replaces the pointer when "Hide cursor when snapping" is on)
+    bool isSnapExpected() override { return true; }
 };
 #endif
