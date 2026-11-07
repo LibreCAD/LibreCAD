@@ -14501,7 +14501,7 @@ cancellation timing, physical stale-peer behavior, independent visual review,
 signed/deployed and minimum-macOS acceptance, approving review, and final R
 integration.
 
-## 336. Generalized Properties Source Selection and Native Source Support
+## 336. Generalized Properties Source Selection and Native Source Support (Historical Plan; Picker Superseded by W563)
 
 ### Goal and current boundary
 
@@ -14707,11 +14707,13 @@ line, arc, circle, and polyline as separate ordinary-path families. W346 now
 adds value-owned polyline data composed of ordered line/arc segments,
 closed-state and endpoint metadata, detached reconstruction, stable op-7 wire
 tag 8, and worker geometry support. It validates segment continuity and
-header agreement and rejects malformed/unsupported segments. This closes the
-source-value/worker-generation portion for polyline only. Source-specific
-cache revalidation, generalized edits, persistence, and the Properties type
-selector/cross-type picker remain unimplemented. Retain all existing W379
-acceptance gates.
+header agreement and rejects malformed/unsupported segments. At this historical
+checkpoint, source-specific cache revalidation, generalized edits,
+persistence, and the Properties type selector/cross-type picker remained
+unimplemented. Later receipts supersede that status: W559/W563v/W563ag close
+the nine-family type-changing picker contract, including distinct parabola
+identity. Current open work is per-variant direct/worker/cache/import and
+format qualification, plus the W379 GUI/platform/external acceptance gates.
 
 ## 337. Tagged Source Snapshot Foundation (2026-11-05)
 
@@ -15192,6 +15194,9 @@ second-save paths are independently tested.
 
 ## 352. Source Picker Contract Reaffirmed (2026-11-05)
 
+Historical checkpoint; picker implementation and current status are
+reconciled by W359 and W563v/W563ag below.
+
 The Properties replacement flow must expose source type as an independently
 changeable choice, not infer or lock it from the currently attached source.
 The user can change the type filter before choosing a replacement; the entity
@@ -15211,15 +15216,14 @@ identity ahead of its `LC_SplinePoints` base class. Unsupported or unbounded
 variants must be omitted or clearly unavailable, never silently coerced into a
 different family.
 
-Implementation order is unchanged: finish schema-2 DXF/DWG save/reopen and
-second-save qualification first; then complete the source-family eligibility
-matrix and reconcile the UI choices against it; add interaction tests for
-changing type before picking, empty candidate lists, cross-type replacement,
-parabola-vs-spline-points identity, cancellation/no side effects, and exact
-preview/commit parity; finally re-run the per-family persistence and worker
-validation suites. W350 demonstrates the current linked picker and parabola
-choice, but does not close these completion gates. No product behavior or test
-result is newly claimed by this roadmap update.
+At the time of this snapshot, the linked picker was present but later tests
+had not yet closed its complete interaction contract. W563v/W563ag now close
+the nine-family picker behavior, including family switching, distinct
+parabola identity, filtering, replacement, highlighting and non-mutation on
+filter changes. Schema-2 persistence has since been implemented and
+requalified for representative families; the still-open work is the
+variant-level production eligibility and direct/worker/cache/import/persistence
+matrix, plus external and visible-GUI acceptance.
 
 ## 353. Typed-Source Boundary Validation and Suite Triage (2026-11-05, in progress)
 
@@ -15289,7 +15293,7 @@ has the targeted local validation recorded in W353; the aggregate
 run did not produce a terminal summary. PR review approval and the wider
 roadmap acceptance gates also remain open.
 
-## 355. Source-Type Switching and Complete Production-Family Coverage (2026-11-05)
+## 355. Source-Type Switching and Complete Production-Family Coverage (2026-11-05; historical checkpoint)
 
 ### Refined user contract
 
@@ -15312,18 +15316,15 @@ against the family eligibility matrix; unsupported variants (including
 unbounded hyperbolas and unsupported spline/polyline shapes) must be refused
 explicitly and must not be silently coerced.
 
-### Current codebase status
+### Historical codebase status (superseded by W359 and W563)
 
-The Properties widget already exposes `cbSourceType` and `cbSource`, links the
-type filter to document entities, captures a selected entity into a tagged
-source definition, and uses the worker-edit path for generalized source
-replacement. Its current filter enumerates all nine tagged kinds
-unconditionally. Existing focused widget coverage demonstrates line,
-parabola identity, and ellipse replacement, but does not establish the full
-nine-family lifecycle or justify advertising every family. Earlier W347 text
-that describes the production widget as ellipse-only is superseded by this
-status; W352's contract remains valid, with the eligibility-gating detail
-below.
+At this checkpoint, the widget had linked source type/entity controls, but
+family and variant coverage was incomplete. W359 replaced enum-range discovery
+with the explicit `LC_OffsetSourceGeometry::SupportedKinds` list. W563v/W563ag
+requalified type switching, candidate filtering, replacement, highlighting,
+and fail-closed exclusions across the nine modeled families. These UI tests do
+not establish exhaustive geometric-variant support; see the current W563
+matrix.
 
 Commit `9dd1597b7` extends `RS_Creation::createParallel()` dispatch to ellipse
 and polyline, and adds a parity test comparing preview and committed output to
@@ -15359,16 +15360,14 @@ prove native editable-offset eligibility or persistence for those families.
    and second save in both formats. A family is not UI-eligible merely because
    its schema-2 tag can be encoded.
 
-4. **Reconcile the widget choices with the proven matrix.** Replace the
-   unconditional enum-range loop with a single explicit family inventory
-   shared with (or checked against) production eligibility. Either complete
-   all families before exposing them, or show unsupported choices as disabled
-   with a specific reason; never offer a selectable family that the
-   replacement transaction will silently reject. Keep the independent type
-   control usable when its candidate list is empty. Changing type alone must
-   have no side effects; selecting an entity must atomically update source kind,
-   source value, and cache. Type-specific details may remain read-only except
-   for the existing ellipse editor until safe editors are separately designed.
+4. **Reconcile the widget choices with the proven matrix.** **Family-level UI
+   inventory complete:** W359 provides the explicit nine-family
+   `SupportedKinds` list; W563 verifies filtering, replacement, and refusal
+   behavior. Preserve the explicit inventory and empty/ineligible states.
+   Continue fail-closed gating for unsupported concrete variants so an enabled
+   family filter never implies that every entity of that family is replaceable.
+   Type-specific details may remain read-only except for the existing ellipse
+   editor until safe editors are separately designed.
 
 5. **Exercise the full cross-type interaction matrix.** Test switching type
    before picking, empty candidate buckets, same-type and cross-type
@@ -15390,14 +15389,13 @@ prove native editable-offset eligibility or persistence for those families.
 
 ### Completion rule
 
-This work is complete only when the widget can change type before picking,
-every production-eligible family is correctly selectable and replaceable,
-parabola identity is preserved, all source/cache changes are atomic and
-validated, and each family passes supported DXF/DWG round-trips. The current
-nine-item combo, the representative nine-family widget test in W356, and
-ellipse/polyline ordinary-dispatch fix in `9dd1597b7` are partial evidence;
-variant-specific eligibility and exact-head persistence requalification are
-still open.
+The picker portion is complete at the family level: users can change type
+before selection; all nine modeled choices have filtering, replacement and
+highlighting coverage; and parabola identity is preserved (W359/W563v/W563ag).
+Overall source support remains open until production-eligible variants pass
+generation, exact cache validation, atomic editing, and applicable DXF/DWG
+round-trips. The selector alone is not evidence that every concrete source
+variant is supported.
 
 ## 357. Generic Typed-Source Distance and Side Editing (2026-11-05, in progress)
 
@@ -15431,7 +15429,7 @@ the broader roadmap gates. This slice is committed as `540c0b19e` and pushed
 to PR #3193; exact-head checks and subsequent persistence qualification are
 recorded in W358.
 
-## 356. Nine-Family Properties Replacement Matrix (2026-11-05, in progress)
+## 356. Nine-Family Properties Replacement Matrix (2026-11-05, historical checkpoint)
 
 Added a real Properties-widget integration test for ellipse, spline,
 spline-points, parabola, bounded hyperbola, line, arc, circle, and polyline.
@@ -15454,13 +15452,12 @@ eligibility and native-lifecycle matrix. Per-family DXF/DWG save/reopen/import/
 second-save evidence remains as recorded in W353 and still needs exact-head
 requalification after the upcoming PR push.
 
-The cross-type source-picker interaction is therefore covered for the nine
-base families, including type-filter no-side-effects and parabola identity.
-The unconditional type list is supported by these representative successful
-worker replacements, but its full advertised eligibility still depends on
-closing the variant-specific P1/P2 audit; unsupported variants must continue
-to fail atomically with an explicit reason. This does not complete the overall
-source-support plan or its external acceptance gates.
+This checkpoint covered representative cross-type replacement for the nine
+base families. Later W359/W563 receipts add explicit inventory, family-purity,
+invalid-candidate, cancellation, resolution/highlighting, and full picker-union
+coverage. The variant-specific P1/P2 production audit and external acceptance
+gates remain open; unsupported concrete variants must continue to fail
+atomically with an explicit reason.
 
 ## 358. Typed-Source Persistence and Worker Requalification (2026-11-05)
 
