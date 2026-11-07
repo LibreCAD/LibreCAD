@@ -25,7 +25,7 @@ inline constexpr std::size_t MaximumTailItems = 64;
 inline constexpr std::size_t MaximumTailBytes = 4096;
 inline constexpr unsigned MaximumTailDepth = 8;
 
-enum class Status { Invalid, Schema1, Schema2, Other, NoSubList };
+enum class Status { Invalid, Schema1, Schema2, Schema3, Other, NoSubList };
 enum class Reason {
     ResourceLimit, InvalidOptions, MalformedKnown, DuplicateKnown,
     MalformedUnknown, MalformedGroup, InvalidDefinition, TailUnsupported,

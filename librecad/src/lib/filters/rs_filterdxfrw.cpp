@@ -9054,13 +9054,16 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     for (const auto &diagnostic : parsed.diagnostics)
       m_offsetImportBudget->report(LC_OffsetImportDiagnostic::Kind::XData,
           int(diagnostic.reason), diagnostic.item);
-    const bool recognizedSchema = parsed.status == xd::Status::Schema1 || parsed.status == xd::Status::Schema2;
+    const bool recognizedSchema = parsed.status == xd::Status::Schema1 ||
+        parsed.status == xd::Status::Schema2 || parsed.status == xd::Status::Schema3;
     if (parsed.knownCandidates && !(context && recognizedSchema &&
         parsed.definition && parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE))
       ++m_offsetImportBudget->refused;
   }
   const xd::XData *remaining = parsed.remaining ? &*parsed.remaining : nullptr;
-  if (context && parsed.status == xd::Status::Schema2 && parsed.definition && parsed.definition->source &&
+  if (context && (parsed.status == xd::Status::Schema2 ||
+                  parsed.status == xd::Status::Schema3) &&
+      parsed.definition && parsed.definition->source &&
       parsed.remaining && parsed.knownCandidates == 1 && data->eType == DRW::SPLINE) {
     const auto raw = LC_OffsetCurveCarrier::fromRawSpline(*data);
     if (m_offsetCurveCacheOnlyImport) {

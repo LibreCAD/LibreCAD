@@ -382,11 +382,68 @@ std::optional<Definition> readKnown(const XData &input, std::size_t marker,
     return result;
 }
 
-std::optional<std::vector<std::uint8_t>> encodeTypedSource(const LC_OffsetSourceDefinition& source) {
+struct TangentMetadata {
+    std::int32_t kind = 0;
+    bool constrained = false;
+    RS_Vector start;
+    RS_Vector end;
+    double fitTolerance = 0.0;
+};
+
+bool finiteTangent(const RS_Vector &value) {
+    return value.valid && std::isfinite(value.x) && std::isfinite(value.y) &&
+        std::isfinite(value.z) && value.z == 0.0;
+}
+
+bool hasTangentConstraint(const LC_OffsetSourceDefinition &source) {
+    return std::visit([](const auto &data) {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_SplineData> ||
+                      std::is_same_v<T, LC_SplinePointsData>)
+            return data.fitTangentsConstrained;
+        return false;
+    }, source.source.value);
+}
+
+std::optional<TangentMetadata> tangentMetadata(
+    const LC_OffsetSourceDefinition &source) {
+    return std::visit([](const auto &data) -> std::optional<TangentMetadata> {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_SplineData> ||
+                      std::is_same_v<T, LC_SplinePointsData>) {
+            if (!data.fitTangentsConstrained) return std::nullopt;
+            if (!finiteTangent(data.fitStartTangent) ||
+                !finiteTangent(data.fitEndTangent) ||
+                !std::isfinite(data.fitTolerance) || data.fitTolerance <= 0.0)
+                return std::nullopt;
+            const std::int32_t kind =
+                std::is_same_v<T, RS_SplineData> ? 1 : 2;
+            return TangentMetadata{kind, true, data.fitStartTangent,
+                                   data.fitEndTangent, data.fitTolerance};
+        }
+        return std::nullopt;
+    }, source.source.value);
+}
+
+QCborArray tangentVector(const RS_Vector &value) {
+    return {value.x, value.y, value.z, value.valid};
+}
+
+std::optional<std::vector<std::uint8_t>> encodeTypedSource(
+    const LC_OffsetSourceDefinition &source) {
     if (!source.isWellFormed()) return std::nullopt;
     const auto fields = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(source);
     if (!fields) return std::nullopt;
-    const auto bytes = QCborValue(*fields).toCbor();
+    QCborValue encoded(*fields);
+    if (hasTangentConstraint(source)) {
+        const auto tangents = tangentMetadata(source);
+        if (!tangents) return std::nullopt;
+        encoded = QCborArray{3, *fields,
+            QCborArray{tangents->kind, tangents->constrained,
+                       tangentVector(tangents->start), tangentVector(tangents->end),
+                       tangents->fitTolerance}};
+    }
+    const auto bytes = encoded.toCbor();
     if (bytes.isEmpty() || static_cast<std::size_t>(bytes.size()) > MaximumTypedSourceBytes) return std::nullopt;
     std::vector<std::uint8_t> result;
     result.reserve(static_cast<std::size_t>(bytes.size()));
@@ -395,7 +452,7 @@ std::optional<std::vector<std::uint8_t>> encodeTypedSource(const LC_OffsetSource
 }
 
 std::optional<LC_OffsetSourceDefinition> decodeTypedSource(const XData& input, std::size_t begin,
-    std::size_t end) {
+    std::size_t end, std::int32_t schema) {
     const auto hexValue = [](unsigned char c) -> int {
         if (c >= '0' && c <= '9') return c - '0';
         if (c >= 'a' && c <= 'f') return c - 'a' + 10;
@@ -441,11 +498,76 @@ std::optional<LC_OffsetSourceDefinition> decodeTypedSource(const XData& input, s
     QCborParserError error;
     const auto value = QCborValue::fromCbor(payload, &error);
     if (error.error != QCborError::NoError || error.offset != payload.size() || !value.isArray()) return std::nullopt;
-    return LC_OffsetWorkerRequest::Values::decodeSourceDefinition(value.toArray());
+    if (schema == 2) return LC_OffsetWorkerRequest::Values::decodeSourceDefinition(value.toArray());
+    if (schema != 3) return std::nullopt;
+
+    const auto envelope = value.toArray();
+    if (envelope.size() != 3 || !envelope.at(0).isInteger() ||
+        envelope.at(0).toInteger() != 3 || !envelope.at(1).isArray() ||
+        !envelope.at(2).isArray()) return std::nullopt;
+    const auto tangentFields = envelope.at(2).toArray();
+    qint64 kind = -1;
+    bool constrained = false;
+    RS_Vector start, finish;
+    double fitTolerance = 0.0;
+    if (tangentFields.size() != 5 ||
+        !tangentFields.at(0).isInteger() || !tangentFields.at(1).isBool() ||
+        !tangentFields.at(4).isDouble())
+        return std::nullopt;
+    fitTolerance = tangentFields.at(4).toDouble();
+    if (!std::isfinite(fitTolerance) || fitTolerance <= 0.0) return std::nullopt;
+    kind = tangentFields.at(0).toInteger();
+    constrained = tangentFields.at(1).toBool();
+    if (!constrained || (kind != 1 && kind != 2)) return std::nullopt;
+    const auto definitionFields = envelope.at(1).toArray();
+    if (definitionFields.size() != 4 || !definitionFields.at(0).isArray())
+        return std::nullopt;
+    const auto sourceFields = definitionFields.at(0).toArray();
+    if (sourceFields.size() != 2 || !sourceFields.at(0).isInteger() ||
+        sourceFields.at(0).toInteger() != kind || !sourceFields.at(1).isArray())
+        return std::nullopt;
+    const auto splineFields = sourceFields.at(1).toArray();
+    if (kind == 1 && splineFields.size() != 10) return std::nullopt;
+    if (kind == 2 &&
+        (splineFields.size() != 7 || !splineFields.at(5).isBool() ||
+         !splineFields.at(5).toBool() || !splineFields.at(6).isDouble() ||
+         splineFields.at(6).toDouble() != fitTolerance)) return std::nullopt;
+    const auto readTangent = [](const QCborValue &value, RS_Vector &out) {
+        if (!value.isArray()) return false;
+        const auto coordinates = value.toArray();
+        if (coordinates.size() != 4 || !coordinates.at(0).isDouble() ||
+            !coordinates.at(1).isDouble() || !coordinates.at(2).isDouble() ||
+            !coordinates.at(3).isBool()) return false;
+        out = {coordinates.at(0).toDouble(), coordinates.at(1).toDouble(),
+               coordinates.at(2).toDouble()};
+        out.valid = coordinates.at(3).toBool();
+        return finiteTangent(out);
+    };
+    if (!readTangent(tangentFields.at(2), start) ||
+        !readTangent(tangentFields.at(3), finish)) return std::nullopt;
+    auto source = LC_OffsetWorkerRequest::Values::decodeSourceDefinition(
+        envelope.at(1).toArray());
+    if (!source) return std::nullopt;
+    if (kind == 1) {
+        auto *spline = std::get_if<RS_SplineData>(&source->source.value);
+        if (!spline) return std::nullopt;
+        spline->fitTangentsConstrained = constrained;
+        spline->fitStartTangent = start;
+        spline->fitEndTangent = finish;
+        spline->fitTolerance = fitTolerance;
+    } else if (kind == 2) {
+        auto *spline = std::get_if<LC_SplinePointsData>(&source->source.value);
+        if (!spline || !spline->fitTangentsConstrained ||
+            spline->fitTolerance != fitTolerance) return std::nullopt;
+        spline->fitStartTangent = start;
+        spline->fitEndTangent = finish;
+    } else return std::nullopt;
+    return source->isWellFormed() ? source : std::nullopt;
 }
 
 std::optional<Definition> readTyped(const XData& input, std::size_t marker,
-    const CandidateEnd& end, const Options& o, Diagnostics& diagnostics, bool decodeTail) {
+    const CandidateEnd& end, const Options& o, Diagnostics& diagnostics, bool decodeTail,
+    std::int32_t schema) {
     if (!end.closed || !end.validBraces || end.end - marker < 7 ||
         !literal(input[marker + 3].get(), 1000, "TYPED_SOURCE")) return std::nullopt;
     std::int32_t flags = 0;
@@ -453,7 +575,7 @@ std::optional<Definition> readTyped(const XData& input, std::size_t marker,
         (static_cast<unsigned>(flags) & ~ReservedFlags)) return std::nullopt;
     std::size_t payloadEnd = marker + 5;
     while (payloadEnd < end.end - 1 && input[payloadEnd] && input[payloadEnd]->code() == 1004) ++payloadEnd;
-    auto source = decodeTypedSource(input, marker + 5, payloadEnd);
+    auto source = decodeTypedSource(input, marker + 5, payloadEnd, schema);
     if (!source) return std::nullopt;
     Definition result;
     result.source = std::move(*source);
@@ -472,6 +594,7 @@ ParseResult parse(const XData &input, const Options &o, bool decodeTail = true) 
     XData remaining;
     remaining.reserve(input.size());
     bool invalid = false, other = false;
+    std::int32_t sourceSchema = 0;
     std::size_t start = 0;
     while (start < input.size()) {
         const bool isGroup = input[start] && input[start]->code() == 1001;
@@ -491,7 +614,8 @@ ParseResult parse(const XData &input, const Options &o, bool decodeTail = true) 
                 std::int32_t schema = 0;
                 const bool typed = i + 2 < end && integer16(input[i + 2].get(), schema);
                 const bool typedSourceKind = i + 3 < end && literal(input[i + 3].get(), 1000, "TYPED_SOURCE");
-                if (typed && schema != 1 && (schema != 2 || !typedSourceKind)) {
+                if (typed && schema != 1 &&
+                    ((schema != 2 && schema != 3) || !typedSourceKind)) {
                     other = true;
                     if (!boundary.closed || !boundary.validBraces)
                         diagnose(result.diagnostics, o, Reason::MalformedUnknown, i);
@@ -500,12 +624,16 @@ ParseResult parse(const XData &input, const Options &o, bool decodeTail = true) 
                     ++result.knownCandidates;
                     auto definition = typed && schema == 1
                         ? readKnown(input, i, boundary, o, result.diagnostics, decodeTail)
-                        : typed && schema == 2
-                        ? readTyped(input, i, boundary, o, result.diagnostics, decodeTail) : std::nullopt;
+                        : typed && (schema == 2 || schema == 3)
+                        ? readTyped(input, i, boundary, o, result.diagnostics,
+                                    decodeTail, schema) : std::nullopt;
                     if (!definition) {
                         invalid = true;
                         diagnose(result.diagnostics, o, Reason::MalformedKnown, i);
-                    } else if (result.knownCandidates == 1) result.definition = std::move(definition);
+                    } else if (result.knownCandidates == 1) {
+                        if (definition->source) sourceSchema = schema;
+                        result.definition = std::move(definition);
+                    }
                     if (result.knownCandidates > 1) {
                         invalid = true;
                         diagnose(result.diagnostics, o, Reason::DuplicateKnown, i);
@@ -528,7 +656,9 @@ ParseResult parse(const XData &input, const Options &o, bool decodeTail = true) 
         start = end;
     }
     result.status = invalid ? Status::Invalid : result.definition
-        ? (result.definition->source ? Status::Schema2 : Status::Schema1) :
+        ? (result.definition->source
+               ? (sourceSchema == 3 ? Status::Schema3 : Status::Schema2)
+               : Status::Schema1) :
         other ? Status::Other : Status::NoSubList;
     if (invalid) result.definition.reset();
     result.remaining = std::move(remaining);
@@ -589,6 +719,7 @@ std::optional<std::size_t> extensionBytes(const LC_OffsetCurveExtension &item, c
 struct CurrentSize {
     LC_EllipseOffsetDefinition geometry;
     std::vector<std::uint8_t> typedPayload;
+    std::int32_t typedSchema = 2;
     std::size_t items = 0, storage = 0, encoded = 0, markerEncoded = 0;
 };
 
@@ -600,6 +731,7 @@ std::optional<CurrentSize> currentStorage(const Definition &current, const Optio
         diagnose(diagnostics, o, Reason::InvalidDefinition, 0); return std::nullopt;
     }
     if (current.source) {
+        if (hasTangentConstraint(*current.source)) size.typedSchema = 3;
         auto payload = encodeTypedSource(*current.source);
         if (!payload) { diagnose(diagnostics, o, Reason::InvalidDefinition, 0); return std::nullopt; }
         size.typedPayload = std::move(*payload);
@@ -666,7 +798,7 @@ std::optional<XData> writeCurrent(const Definition &current, const CurrentSize &
         out.reserve(size.items);
         out.push_back(std::make_shared<DRW_Variant>(1000, std::string(Marker)));
         out.push_back(std::make_shared<DRW_Variant>(1002, std::string("{")));
-        out.push_back(std::make_shared<DRW_Variant>(1070, std::int32_t{2}));
+        out.push_back(std::make_shared<DRW_Variant>(1070, size.typedSchema));
         out.push_back(std::make_shared<DRW_Variant>(1000, std::string("TYPED_SOURCE")));
         out.push_back(std::make_shared<DRW_Variant>(1070, static_cast<std::int32_t>(current.reservedFlags)));
         for (std::size_t begin = 0; begin < size.typedPayload.size(); begin += TypedBinaryChunkBytes) {

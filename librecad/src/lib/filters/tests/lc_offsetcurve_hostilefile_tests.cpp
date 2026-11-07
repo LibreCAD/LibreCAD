@@ -6308,6 +6308,8 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
     fitVariants.back().splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
     fitVariants.back().fitTangentsConstrained = true;
     fitVariants.back().fitTolerance = 1e-10;
+    fitVariants.back().fitStartTangent = {1.0, 0.0};
+    fitVariants.back().fitEndTangent = {0.0, -1.0};
 
     for (size_t variant = 0; variant < fitVariants.size(); ++variant) {
       std::vector<double> magnitudes{.1, .25, .4};
@@ -6414,6 +6416,14 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
                 CHECK(fitSource->fitTangentsConstrained ==
                       fitVariants[variant].fitTangentsConstrained);
                 CHECK(fitSource->fitTolerance == fitVariants[variant].fitTolerance);
+                CHECK(fitSource->fitStartTangent.x ==
+                      fitVariants[variant].fitStartTangent.x);
+                CHECK(fitSource->fitStartTangent.y ==
+                      fitVariants[variant].fitStartTangent.y);
+                CHECK(fitSource->fitEndTangent.x ==
+                      fitVariants[variant].fitEndTangent.x);
+                CHECK(fitSource->fitEndTangent.y ==
+                      fitVariants[variant].fitEndTangent.y);
             };
             if (singleCache) {
                 REQUIRE(imported);
@@ -6432,7 +6442,8 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
                 actualSource = values::encodeSourceDefinition(*imported->sourceDefinition());
             } else {
                 const auto preserved = xd::parseAndStrip(importedEntity->getDrwExtData(), encoding);
-                REQUIRE(preserved.status == xd::Status::Schema2);
+                REQUIRE(preserved.status == (tangentConstrained
+                    ? xd::Status::Schema3 : xd::Status::Schema2));
                 REQUIRE(preserved.definition);
                 REQUIRE(preserved.definition->source);
                 checkFitMetadata(*preserved.definition->source);

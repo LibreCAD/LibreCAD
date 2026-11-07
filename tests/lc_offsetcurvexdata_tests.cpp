@@ -15,6 +15,10 @@
 #include <limits>
 #include <stdexcept>
 
+#include <QByteArray>
+#include <QCborArray>
+#include <QCborValue>
+
 #include "intern/drw_textcodec.h"
 #include "librecad/src/lib/offset_worker/lc_offsetworkerrequest.h"
 #include "rs_line.h"
@@ -1125,6 +1129,8 @@ TEST_CASE("schema two typed source definitions round-trip every source family in
             current.tail = {{1000, QStringLiteral("typed tail")}, {1070, std::int16_t{23}}};
             const auto encoded = xd::forExport({}, current, options);
             REQUIRE(encoded);
+            REQUIRE((*encoded)[3]->code() == 1070);
+            CHECK((*encoded)[3]->i_val() == 2);
             const auto parsed = xd::parseAndStrip(*encoded, options);
             REQUIRE(parsed.status == xd::Status::Schema2);
             REQUIRE(parsed.definition);
@@ -1141,6 +1147,124 @@ TEST_CASE("schema two typed source definitions round-trip every source family in
             sameTags(*reencoded, *encoded);
         }
     }
+}
+
+TEST_CASE("schema three preserves tangent vectors and keeps older schemas unchanged",
+          "[offset-xdata][typed-source][schema3]") {
+    RS_SplineData controlNet{2, false};
+    controlNet.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    controlNet.knotslist = {0, 0, 0, 1, 1, 1};
+    controlNet.weights = {1, 1, 1};
+    controlNet.fitPoints = {{0, 0}, {1, 1}, {3, 0}};
+    controlNet.fitTolerance = 2e-8;
+    controlNet.fitTangentsConstrained = true;
+    controlNet.fitStartTangent = {0, 0};
+    controlNet.fitEndTangent = {2, -1};
+
+    LC_SplinePointsData fitPoints{false, false};
+    fitPoints.splinePoints = {{0, 0}, {1, 2}, {3, 0}};
+    fitPoints.controlPoints = {{0, 0}, {1, 1}, {3, 0}};
+    fitPoints.fitTolerance = 3e-9;
+    fitPoints.fitTangentsConstrained = true;
+    fitPoints.fitStartTangent = {1, 0};
+    fitPoints.fitEndTangent = {0, 0};
+
+    for (const LC_OffsetSourceGeometry sourceGeometry : {
+             LC_OffsetSourceGeometry{controlNet},
+             LC_OffsetSourceGeometry{fitPoints}}) {
+        xd::Definition current;
+        current.source = LC_OffsetSourceDefinition{sourceGeometry, .5, 1e-4, false};
+        for (const auto &options : {xd::Options{}, eed()}) {
+            const auto encoded = xd::forExport({}, current, options);
+            REQUIRE(encoded);
+            REQUIRE(encoded->size() > 5);
+            REQUIRE((*encoded)[3]->code() == 1070);
+            CHECK((*encoded)[3]->i_val() == 3);
+            auto mismatchedVersion = *encoded;
+            mismatchedVersion[3] = integer(1070, 2);
+            CHECK(xd::parseAndStrip(mismatchedVersion, options).status ==
+                  xd::Status::Invalid);
+            const auto parsed = xd::parseAndStrip(*encoded, options);
+            REQUIRE(parsed.status == xd::Status::Schema3);
+            REQUIRE(parsed.definition);
+            REQUIRE(parsed.definition->source);
+            CHECK(parsed.definition->source->source.kind() == sourceGeometry.kind());
+            if (const auto *actual = std::get_if<RS_SplineData>(
+                    &parsed.definition->source->source.value)) {
+                CHECK(actual->fitTangentsConstrained);
+                CHECK(actual->fitStartTangent.x == controlNet.fitStartTangent.x);
+                CHECK(actual->fitStartTangent.y == controlNet.fitStartTangent.y);
+                CHECK(actual->fitEndTangent.x == controlNet.fitEndTangent.x);
+                CHECK(actual->fitEndTangent.y == controlNet.fitEndTangent.y);
+                CHECK(actual->fitTolerance == controlNet.fitTolerance);
+            } else {
+                const auto &actualPoints = std::get<LC_SplinePointsData>(
+                    parsed.definition->source->source.value);
+                CHECK(actualPoints.fitTangentsConstrained);
+                CHECK(actualPoints.fitStartTangent.x == fitPoints.fitStartTangent.x);
+                CHECK(actualPoints.fitStartTangent.y == fitPoints.fitStartTangent.y);
+                CHECK(actualPoints.fitEndTangent.x == fitPoints.fitEndTangent.x);
+                CHECK(actualPoints.fitEndTangent.y == fitPoints.fitEndTangent.y);
+                CHECK(actualPoints.fitTolerance == fitPoints.fitTolerance);
+            }
+            const auto reencoded = xd::forExport(*parsed.remaining,
+                                                  parsed.definition, options);
+            REQUIRE(reencoded);
+            sameTags(*reencoded, *encoded);
+        }
+    }
+
+    auto malformed = xd::Definition{};
+    malformed.source = LC_OffsetSourceDefinition{
+        LC_OffsetSourceGeometry{controlNet}, .5, 1e-4, false};
+    std::get<RS_SplineData>(malformed.source->source.value).fitStartTangent.x =
+        std::numeric_limits<double>::infinity();
+    CHECK_FALSE(xd::forExport({}, malformed));
+
+    xd::Definition tangentDefinition;
+    tangentDefinition.source = LC_OffsetSourceDefinition{
+        LC_OffsetSourceGeometry{controlNet}, .5, 1e-4, false};
+    const auto validEncoded = xd::forExport({}, tangentDefinition);
+    REQUIRE(validEncoded);
+    QByteArray payload;
+    for (const auto &tag : *validEncoded) {
+        if (tag && tag->code() == 1004)
+            payload.append(reinterpret_cast<const char *>(tag->binary()->data()),
+                           static_cast<qsizetype>(tag->binary()->size()));
+    }
+    QCborParserError cborError;
+    auto envelopeValue = QCborValue::fromCbor(payload, &cborError);
+    REQUIRE(cborError.error == QCborError::NoError);
+    auto envelope = envelopeValue.toArray();
+    auto tangentFields = envelope.at(2).toArray();
+    auto start = tangentFields.at(2).toArray();
+    start[0] = std::numeric_limits<double>::infinity();
+    tangentFields[2] = start;
+    envelope[2] = tangentFields;
+    const auto malformedBytes = QCborValue(envelope).toCbor();
+
+    Tags malformedReader = *validEncoded;
+    const auto chunk = std::find_if(malformedReader.begin(), malformedReader.end(),
+        [](const Tag &tag) { return tag && tag->code() == 1004; });
+    REQUIRE(chunk != malformedReader.end());
+    const auto insertAt = static_cast<std::size_t>(chunk - malformedReader.begin());
+    auto eraseEnd = chunk;
+    while (eraseEnd != malformedReader.end() && *eraseEnd && (*eraseEnd)->code() == 1004)
+        ++eraseEnd;
+    malformedReader.erase(chunk, eraseEnd);
+    auto insertPosition = malformedReader.begin() + static_cast<std::ptrdiff_t>(insertAt);
+    for (std::size_t begin = 0; begin < static_cast<std::size_t>(malformedBytes.size());
+         begin += 127) {
+        const auto end = std::min(static_cast<std::size_t>(malformedBytes.size()), begin + 127);
+        std::vector<std::uint8_t> bytes;
+        bytes.reserve(end - begin);
+        for (std::size_t i = begin; i < end; ++i)
+            bytes.push_back(static_cast<std::uint8_t>(malformedBytes.at(static_cast<qsizetype>(i))));
+        insertPosition = malformedReader.insert(insertPosition,
+            std::make_shared<DRW_Variant>(1004, std::move(bytes)));
+        ++insertPosition;
+    }
+    CHECK(xd::parseAndStrip(malformedReader).status == xd::Status::Invalid);
 }
 
 TEST_CASE("schema two rejects malformed or oversized tagged-source binary payloads",
