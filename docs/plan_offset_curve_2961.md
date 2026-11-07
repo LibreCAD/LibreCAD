@@ -22414,3 +22414,22 @@ GUI acceptance. The preserved outputs are under
 `/private/tmp/LibreCAD-PR3193-oda-inspection`; ODA-converted DXFs and LibreDWG
 decoded DXFs/logs are under `/private/tmp/LibreCAD-PR3193-oda-all` and
 `/private/tmp/LibreCAD-PR3193-libredwg-out` respectively.
+
+#### W563t. Requalify Independently Authored DWG Reader Fixtures (2026-11-07)
+
+Ran the committed independently generated ODA DWG reader matrix on the current
+Release test binary:
+
+```sh
+QT_QPA_PLATFORM=offscreen librecad_tests \
+  "G matrix independent ODA DWG fixtures reach adoption including genuine R13 R14 and R2007" \
+  --reporter compact
+```
+
+The parameterized case passes 3,196 assertions for degree-1 and degree-3 native
+cache carriers in R13, R14, R2000, R2004, R2007, R2010, R2013, and R2018 ODA
+DWGs. This independently generated input matrix complements W563s, which tests
+LibreCAD-produced outputs through LibreDWG and ODA readers. Together these
+receipts qualify those cache-carrier forms in both reader and writer directions;
+they do not qualify other typed-source families or variants in external DWGs.
+Exact-head CI remains in progress, and visible-GUI acceptance remains open.
