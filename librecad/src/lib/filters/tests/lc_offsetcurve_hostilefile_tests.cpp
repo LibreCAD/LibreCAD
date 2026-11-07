@@ -5228,14 +5228,17 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
     RS_SplineData unweighted{1, false};
     unweighted.controlPoints = {{0, 0}, {1, 0}, {2, 0}};
     unweighted.knotslist = {0, 0, .5, 1, 1};
+    const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
+    const double signedDistance = side == LC_CurveOffsetSide::Left ? .5 : -.5;
+    CAPTURE(static_cast<int>(side), signedDistance);
     const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{unweighted}, .5, 1e-4, false};
+        LC_OffsetSourceGeometry{unweighted}, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
     const auto options = LC_OffsetWorkerTolerance::directOptions(
-        *source, .5, definition.relativeTolerance).value();
+        *source, std::abs(signedDistance), definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(*source,
-        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .5), options,
+        LC_CurveOffset::makeSideRequest(side, std::abs(signedDistance)), options,
         LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
     auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
@@ -5274,7 +5277,12 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
         REQUIRE(tags);
         DRW_Spline cache = f::raw(1, *tags);
         cache.controllist.clear();
+        RS_SplineData expectedCache;
         if (line) {
+            expectedCache.degree = 1;
+            expectedCache.controlPoints = {line->getStartpoint(), line->getEndpoint()};
+            expectedCache.knotslist = {0, 0, 1, 1};
+            expectedCache.weights = {1, 1};
             cache.controllist.push_back(std::make_shared<DRW_Coord>(line->getStartpoint().x,
                 line->getStartpoint().y, 0));
             cache.controllist.push_back(std::make_shared<DRW_Coord>(line->getEndpoint().x,
@@ -5285,6 +5293,7 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
         } else {
             const auto& data = spline->getData();
             REQUIRE((data.degree == 1 || data.degree == 3));
+            expectedCache = data;
             for (const auto& point : data.controlPoints)
                 cache.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
             cache.knotslist = data.knotslist;
@@ -5297,7 +5306,8 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(std::string("unweighted-") + suffix);
+        const auto input = directory.file(std::string(side == LC_CurveOffsetSide::Left
+            ? "unweighted-left-" : "unweighted-right-") + suffix);
 #ifdef DWGSUPPORT
         if (dwg) f::dwgFile(input, cache, version);
         else f::binaryDxf(input, cache, version);
@@ -5322,10 +5332,17 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
         auto* imported = dynamic_cast<LC_OffsetCurve*>(f::sole(*outcome->graphic));
         REQUIRE(imported);
         REQUIRE(imported->sourceDefinition());
-        CHECK(values::encodeSourceGeometry(imported->sourceDefinition()->source) ==
-              values::encodeSourceGeometry(definition.source));
+        const auto expectedDefinition = values::encodeSourceDefinition(definition);
+        const auto importedDefinition = values::encodeSourceDefinition(
+            *imported->sourceDefinition());
+        REQUIRE(expectedDefinition);
+        REQUIRE(importedDefinition);
+        CHECK(QCborValue(*expectedDefinition).toCbor() ==
+              QCborValue(*importedDefinition).toCbor());
         REQUIRE(std::holds_alternative<RS_SplineData>(imported->sourceDefinition()->source.value));
         CHECK(std::get<RS_SplineData>(imported->sourceDefinition()->source.value).weights.empty());
+        CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+              RS_Spline::geometryFingerprint(expectedCache));
     }
 }
 
