@@ -1052,67 +1052,61 @@ TEST_CASE("DWG round-trips both pieces of a cut spline-points curve",
     data.controlPoints = controlSets[caseIndex];
     LC_SplinePoints original{nullptr, data};
 
-    std::unique_ptr<LC_SplinePoints> left;
-    std::unique_ptr<LC_SplinePoints> right;
-    double usedFraction = 0.0;
     const double domain = static_cast<double>(original.getSegmentCount());
-    for (const double fraction : cutFractions) {
+    for (const double usedFraction : cutFractions) {
       LC_SplinePoints candidate{nullptr, data};
       LC_CurveJet cutJet;
-      REQUIRE(candidate.tryEvaluateJet(domain * fraction,
+      REQUIRE(candidate.tryEvaluateJet(domain * usedFraction,
                                        LC_CurveEvaluationSide::Right,
                                        cutJet));
       std::unique_ptr<LC_SplinePoints> candidateRight(candidate.cut(cutJet.point));
-      if (candidateRight) {
-        left = std::make_unique<LC_SplinePoints>(nullptr, candidate.getData());
-        right = std::move(candidateRight);
-        usedFraction = fraction;
-        break;
-      }
-    }
-    REQUIRE(left);
-    REQUIRE(right);
-    CHECK(left->getData().cut);
-    CHECK(right->getData().cut);
-    const std::array<std::vector<RS_Vector>, 2> expected{sample(*left), sample(*right)};
+      REQUIRE(candidateRight);
+      LC_SplinePoints left{nullptr, candidate.getData()};
+      CHECK(left.getData().cut);
+      CHECK(candidateRight->getData().cut);
+      const std::array<std::vector<RS_Vector>, 2> expected{
+          sample(left), sample(*candidateRight)};
 
-    RS_Graphic graphic;
-    graphic.initForNewDocument();
-    graphic.addEntity(new LC_SplinePoints(&graphic, left->getData()));
-    graphic.addEntity(new LC_SplinePoints(&graphic, right->getData()));
-    for (const auto& [format, version] : formats) {
-      INFO(version);
-      INFO(usedFraction);
-      const std::string path = tempPath("cut-control-net-" +
-          std::to_string(data.controlPoints.size()) + "pt-" + version);
-      std::remove(path.c_str());
-      {
-        RS_FilterDXFRW writer;
-        REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
-      }
-      preserveTangentSplineDwg(path, "cut-control-" +
-          std::to_string(data.controlPoints.size()) + "pt-" + version + ".dwg");
-      RS_Graphic reopened;
-      std::vector<SplineRecord> written;
-      importFile(reopened, path, RS2::FormatDWG, &written);
-      std::filesystem::remove(path);
+      RS_Graphic graphic;
+      graphic.initForNewDocument();
+      graphic.addEntity(new LC_SplinePoints(&graphic, left.getData()));
+      graphic.addEntity(new LC_SplinePoints(&graphic, candidateRight->getData()));
+      for (const auto& [format, version] : formats) {
+        INFO(version);
+        INFO(usedFraction);
+        const std::string fractionLabel = std::to_string(static_cast<int>(usedFraction * 100));
+        const std::string pointCount = std::to_string(data.controlPoints.size()) + "pt";
+        const std::string path = tempPath("cut-control-net-" + pointCount + "-q" +
+                                           fractionLabel + "-" + version);
+        std::remove(path.c_str());
+        {
+          RS_FilterDXFRW writer;
+          REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+        }
+        preserveTangentSplineDwg(path, "cut-control-" + pointCount + "-q" +
+                                      fractionLabel + "-" + version + ".dwg");
+        RS_Graphic reopened;
+        std::vector<SplineRecord> written;
+        importFile(reopened, path, RS2::FormatDWG, &written);
+        std::filesystem::remove(path);
 
-      REQUIRE(written.size() == 2);
-      REQUIRE(reopened.count() == 2);
-      std::array<bool, 2> matched{false, false};
-      for (RS_Entity* entity : reopened) {
-        auto* spline = dynamic_cast<LC_SplinePoints*>(entity);
-        REQUIRE(spline != nullptr);
-        const auto actual = sample(*spline);
-        const double d0 = curveDistance(expected[0], actual);
-        const double d1 = curveDistance(expected[1], actual);
-        const size_t match = d0 <= d1 ? 0 : 1;
-        CHECK_FALSE(matched[match]);
-        matched[match] = true;
-        CHECK(std::min(d0, d1) < 1.0e-10);
+        REQUIRE(written.size() == 2);
+        REQUIRE(reopened.count() == 2);
+        std::array<bool, 2> matched{false, false};
+        for (RS_Entity* entity : reopened) {
+          auto* spline = dynamic_cast<LC_SplinePoints*>(entity);
+          REQUIRE(spline != nullptr);
+          const auto actual = sample(*spline);
+          const double d0 = curveDistance(expected[0], actual);
+          const double d1 = curveDistance(expected[1], actual);
+          const size_t match = d0 <= d1 ? 0 : 1;
+          CHECK_FALSE(matched[match]);
+          matched[match] = true;
+          CHECK(std::min(d0, d1) < 1.0e-10);
+        }
+        CHECK(matched[0]);
+        CHECK(matched[1]);
       }
-      CHECK(matched[0]);
-      CHECK(matched[1]);
     }
   }
 
@@ -1150,50 +1144,48 @@ TEST_CASE("DWG round-trips a closed spline-points curve cut at its seam",
     data.controlPoints = controlPoints;
     LC_SplinePoints original{nullptr, data};
     const double domain = static_cast<double>(original.getSegmentCount());
-    std::unique_ptr<LC_SplinePoints> cutSpline;
-    double usedFraction = 0.0;
-    for (const double fraction : cutFractions) {
+    for (const double usedFraction : cutFractions) {
       auto candidate = std::make_unique<LC_SplinePoints>(nullptr, data);
       LC_CurveJet cutJet;
-      REQUIRE(candidate->tryEvaluateJet(domain * fraction,
+      REQUIRE(candidate->tryEvaluateJet(domain * usedFraction,
                                        LC_CurveEvaluationSide::Right, cutJet));
       const auto* right = candidate->cut(cutJet.point);
-      if (right == nullptr && !candidate->isClosed() && candidate->getData().cut) {
-        cutSpline = std::move(candidate);
-        usedFraction = fraction;
-        break;
-      }
+      CHECK(right == nullptr);
       delete right;
-    }
-    REQUIRE(cutSpline);
-    INFO(usedFraction);
-    const auto expected = sample(*cutSpline);
+      REQUIRE_FALSE(candidate->isClosed());
+      CHECK(candidate->getData().cut);
+      INFO(usedFraction);
+      const auto expected = sample(*candidate);
 
-    RS_Graphic graphic;
-    graphic.initForNewDocument();
-    graphic.addEntity(new LC_SplinePoints(&graphic, cutSpline->getData()));
-    for (const auto& [format, version] : formats) {
-      INFO(version);
-      const std::string pointCount = std::to_string(controlPoints.size()) + "pt";
-      const std::string path = tempPath("closed-cut-control-" + pointCount + "-" + version);
-      std::remove(path.c_str());
-      {
-        RS_FilterDXFRW writer;
-        REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+      RS_Graphic graphic;
+      graphic.initForNewDocument();
+      graphic.addEntity(new LC_SplinePoints(&graphic, candidate->getData()));
+      for (const auto& [format, version] : formats) {
+        INFO(version);
+        const std::string pointCount = std::to_string(controlPoints.size()) + "pt";
+        const std::string fractionLabel = std::to_string(static_cast<int>(usedFraction * 100));
+        const std::string path = tempPath("closed-cut-control-" + pointCount + "-q" +
+                                           fractionLabel + "-" + version);
+        std::remove(path.c_str());
+        {
+          RS_FilterDXFRW writer;
+          REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+        }
+        preserveTangentSplineDwg(path, "closed-cut-control-" + pointCount + "-q" +
+                                      fractionLabel + "-" + version + ".dwg");
+        RS_Graphic reopened;
+        std::vector<SplineRecord> written;
+        importFile(reopened, path, RS2::FormatDWG, &written);
+        std::filesystem::remove(path);
+
+        REQUIRE(written.size() == 1);
+        CHECK((written.front().m_flags & 0x3) == 0);
+        REQUIRE(reopened.count() == 1);
+        auto* spline = dynamic_cast<LC_SplinePoints*>(*reopened.begin());
+        REQUIRE(spline != nullptr);
+        CHECK_FALSE(spline->isClosed());
+        CHECK(curveDistance(expected, sample(*spline)) < 1.0e-10);
       }
-      preserveTangentSplineDwg(path, "closed-cut-control-" + pointCount + "-" + version + ".dwg");
-      RS_Graphic reopened;
-      std::vector<SplineRecord> written;
-      importFile(reopened, path, RS2::FormatDWG, &written);
-      std::filesystem::remove(path);
-
-      REQUIRE(written.size() == 1);
-      CHECK((written.front().m_flags & 0x3) == 0);
-      REQUIRE(reopened.count() == 1);
-      auto* spline = dynamic_cast<LC_SplinePoints*>(*reopened.begin());
-      REQUIRE(spline != nullptr);
-      CHECK_FALSE(spline->isClosed());
-      CHECK(curveDistance(expected, sample(*spline)) < 1.0e-10);
     }
   }
 }
@@ -1386,55 +1378,50 @@ TEST_CASE("ODA-converted cut spline-point DWGs preserve both piece geometries",
     data.controlPoints = controlSets[caseIndex];
     LC_SplinePoints source{nullptr, data};
     const double domain = static_cast<double>(source.getSegmentCount());
-    std::unique_ptr<LC_SplinePoints> left;
-    std::unique_ptr<LC_SplinePoints> right;
     for (const double fraction : cutFractions) {
       LC_SplinePoints candidate{nullptr, data};
       LC_CurveJet cutJet;
       REQUIRE(candidate.tryEvaluateJet(domain * fraction,
                                        LC_CurveEvaluationSide::Right, cutJet));
       std::unique_ptr<LC_SplinePoints> candidateRight(candidate.cut(cutJet.point));
-      if (candidateRight) {
-        left = std::make_unique<LC_SplinePoints>(nullptr, candidate.getData());
-        right = std::move(candidateRight);
-        break;
-      }
-    }
-    REQUIRE(left);
-    REQUIRE(right);
-    const std::array<std::vector<RS_Vector>, 2> expected{
-        sampleSplinePoints(*left), sampleSplinePoints(*right)};
-    const std::string pointCount = std::to_string(data.controlPoints.size()) + "pt";
+      REQUIRE(candidateRight);
+      LC_SplinePoints left{nullptr, candidate.getData()};
+      const std::array<std::vector<RS_Vector>, 2> expected{
+          sampleSplinePoints(left), sampleSplinePoints(*candidateRight)};
+      const std::string pointCount = std::to_string(data.controlPoints.size()) + "pt";
+      const std::string fractionLabel = std::to_string(static_cast<int>(fraction * 100));
 
-    for (const auto& [version, label] : versions) {
-      INFO(label);
-      const auto path = std::filesystem::path(outputDirectory) /
-          ("cut-control-" + pointCount + "-" + version + ".dxf");
-      REQUIRE(std::filesystem::exists(path));
-      RS_Graphic converted;
-      std::vector<SplineRecord> records;
-      importFile(converted, path.string(), RS2::FormatDXFRW, &records);
-      REQUIRE(records.size() == 2);
-      REQUIRE(converted.count() == 2);
-      std::array<bool, 2> matched{false, false};
-      for (RS_Entity* entity : converted) {
-        std::vector<RS_Vector> actual;
-        if (auto* splinePoints = dynamic_cast<LC_SplinePoints*>(entity)) {
-          actual = sampleSplinePoints(*splinePoints);
-        } else if (auto* spline = dynamic_cast<RS_Spline*>(entity)) {
-          actual = splineCurve(*spline, 1000);
-        } else {
-          FAIL("ODA-converted cut SPLINE imported as an unexpected entity type");
+      for (const auto& [version, label] : versions) {
+        INFO(label);
+        INFO(fraction);
+        const auto path = std::filesystem::path(outputDirectory) /
+            ("cut-control-" + pointCount + "-q" + fractionLabel + "-" + version + ".dxf");
+        REQUIRE(std::filesystem::exists(path));
+        RS_Graphic converted;
+        std::vector<SplineRecord> records;
+        importFile(converted, path.string(), RS2::FormatDXFRW, &records);
+        REQUIRE(records.size() == 2);
+        REQUIRE(converted.count() == 2);
+        std::array<bool, 2> matched{false, false};
+        for (RS_Entity* entity : converted) {
+          std::vector<RS_Vector> actual;
+          if (auto* splinePoints = dynamic_cast<LC_SplinePoints*>(entity)) {
+            actual = sampleSplinePoints(*splinePoints);
+          } else if (auto* spline = dynamic_cast<RS_Spline*>(entity)) {
+            actual = splineCurve(*spline, 1000);
+          } else {
+            FAIL("ODA-converted cut SPLINE imported as an unexpected entity type");
+          }
+          const double d0 = curveDistance(expected[0], actual);
+          const double d1 = curveDistance(expected[1], actual);
+          const size_t match = d0 <= d1 ? 0 : 1;
+          CHECK_FALSE(matched[match]);
+          matched[match] = true;
+          CHECK(std::min(d0, d1) < 5.0e-6);
         }
-        const double d0 = curveDistance(expected[0], actual);
-        const double d1 = curveDistance(expected[1], actual);
-        const size_t match = d0 <= d1 ? 0 : 1;
-        CHECK_FALSE(matched[match]);
-        matched[match] = true;
-        CHECK(std::min(d0, d1) < 5.0e-6);
+        CHECK(matched[0]);
+        CHECK(matched[1]);
       }
-      CHECK(matched[0]);
-      CHECK(matched[1]);
     }
   }
 
@@ -1445,44 +1432,43 @@ TEST_CASE("ODA-converted cut spline-point DWGs preserve both piece geometries",
     data.controlPoints = controlPoints;
     LC_SplinePoints source{nullptr, data};
     const double domain = static_cast<double>(source.getSegmentCount());
-    std::unique_ptr<LC_SplinePoints> cutSpline;
     for (const double fraction : cutFractions) {
       auto candidate = std::make_unique<LC_SplinePoints>(nullptr, data);
       LC_CurveJet cutJet;
       REQUIRE(candidate->tryEvaluateJet(domain * fraction,
                                        LC_CurveEvaluationSide::Right, cutJet));
       const auto* right = candidate->cut(cutJet.point);
-      if (right == nullptr && !candidate->isClosed() && candidate->getData().cut) {
-        cutSpline = std::move(candidate);
-        break;
-      }
+      CHECK(right == nullptr);
       delete right;
-    }
-    REQUIRE(cutSpline);
-    const auto expected = sampleSplinePoints(*cutSpline);
-    const std::string pointCount = std::to_string(controlPoints.size()) + "pt";
+      REQUIRE_FALSE(candidate->isClosed());
+      CHECK(candidate->getData().cut);
+      const auto expected = sampleSplinePoints(*candidate);
+      const std::string pointCount = std::to_string(controlPoints.size()) + "pt";
+      const std::string fractionLabel = std::to_string(static_cast<int>(fraction * 100));
 
-    for (const auto& [version, label] : versions) {
-      INFO(label);
-      const auto path = std::filesystem::path(outputDirectory) /
-          ("closed-cut-control-" + pointCount + "-" + version + ".dxf");
-      REQUIRE(std::filesystem::exists(path));
-      RS_Graphic converted;
-      std::vector<SplineRecord> records;
-      importFile(converted, path.string(), RS2::FormatDXFRW, &records);
-      REQUIRE(records.size() == 1);
-      CHECK((records.front().m_flags & 0x3) == 0x3);
-      REQUIRE(converted.count() == 1);
-      std::vector<RS_Vector> actual;
-      if (auto* splinePoints = dynamic_cast<LC_SplinePoints*>(*converted.begin())) {
-        CHECK_FALSE(splinePoints->isClosed());
-        actual = sampleSplinePoints(*splinePoints);
-      } else if (auto* spline = dynamic_cast<RS_Spline*>(*converted.begin())) {
-        actual = splineCurve(*spline, 1000);
-      } else {
-        FAIL("ODA-converted closed-cut SPLINE imported as an unexpected entity type");
+      for (const auto& [version, label] : versions) {
+        INFO(label);
+        INFO(fraction);
+        const auto path = std::filesystem::path(outputDirectory) /
+            ("closed-cut-control-" + pointCount + "-q" + fractionLabel + "-" + version + ".dxf");
+        REQUIRE(std::filesystem::exists(path));
+        RS_Graphic converted;
+        std::vector<SplineRecord> records;
+        importFile(converted, path.string(), RS2::FormatDXFRW, &records);
+        REQUIRE(records.size() == 1);
+        CHECK((records.front().m_flags & 0x3) == 0x3);
+        REQUIRE(converted.count() == 1);
+        std::vector<RS_Vector> actual;
+        if (auto* splinePoints = dynamic_cast<LC_SplinePoints*>(*converted.begin())) {
+          CHECK_FALSE(splinePoints->isClosed());
+          actual = sampleSplinePoints(*splinePoints);
+        } else if (auto* spline = dynamic_cast<RS_Spline*>(*converted.begin())) {
+          actual = splineCurve(*spline, 1000);
+        } else {
+          FAIL("ODA-converted closed-cut SPLINE imported as an unexpected entity type");
+        }
+        CHECK(curveDistance(expected, actual) < 5.0e-6);
       }
-      CHECK(curveDistance(expected, actual) < 5.0e-6);
     }
   }
 }
