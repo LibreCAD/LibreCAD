@@ -620,6 +620,7 @@ TEST_CASE(
     int degree;
     std::vector<RS_Vector> controls;
     std::vector<double> knots;
+    std::vector<double> weights;
   };
   const std::vector<Layout> layouts{
       {"linear-5ctrl",
@@ -638,6 +639,11 @@ TEST_CASE(
        3,
        {{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
        {0, 0, 0, 0, 0.5, 2, 3, 3, 3, 3}},
+      {"cubic-6ctrl-wide-weights",
+       3,
+       {{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
+       {0, 0, 0, 0, 0.5, 2, 3, 3, 3, 3},
+       {0.01, 100.0, 0.1, 10.0, 0.5, 2.0}},
       {"cubic-8ctrl",
        3,
        {{0, 0},
@@ -667,9 +673,12 @@ TEST_CASE(
     REQUIRE(open.validate());
     open.setClosed(true);
     RS_SplineData sourceData = open.getData();
-    std::vector<double> baseWeights;
-    for (size_t i = 0; i < layout.controls.size(); ++i)
-      baseWeights.push_back(0.85 + 0.05 * static_cast<double>(i % 6));
+    std::vector<double> baseWeights = layout.weights;
+    if (baseWeights.empty()) {
+      for (size_t i = 0; i < layout.controls.size(); ++i)
+        baseWeights.push_back(0.85 + 0.05 * static_cast<double>(i % 6));
+    }
+    REQUIRE(baseWeights.size() == layout.controls.size());
     sourceData.weights = baseWeights;
     sourceData.weights.insert(sourceData.weights.end(), baseWeights.begin(),
                               baseWeights.begin() + sourceData.degree);
