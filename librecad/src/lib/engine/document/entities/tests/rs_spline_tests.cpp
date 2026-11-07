@@ -26,6 +26,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <cmath>
+#include <limits>
 #include <memory>
 #include <vector>
 
@@ -345,6 +346,32 @@ TEST_CASE("Non-uniform knot vectors - validation and type handling", "[RS_Spline
         RS_Spline s(nullptr, d);
         REQUIRE(s.validate());
     }
+}
+
+TEST_CASE("RS_Spline::setKnotVector preserves repeated knots and rejects invalid input",
+          "[RS_Spline][nonuniform][knots]") {
+    RS_SplineData data{3, false};
+    data.controlPoints = {{0, 0}, {10, 15}, {20, -5}, {30, 20}, {40, 0}, {50, 10}};
+    data.weights.assign(data.controlPoints.size(), 1.0);
+    RS_Spline spline{nullptr, data};
+
+    const std::vector<double> repeatedKnots{
+        0, 0, 0, 0, 1, 1, 2, 2, 2, 2};
+    spline.setKnotVector(repeatedKnots);
+    CHECK(spline.validate());
+    CHECK(spline.getData().knotslist == repeatedKnots);
+
+    auto descendingKnots = repeatedKnots;
+    descendingKnots[5] = 0.5;
+    spline.setKnotVector(descendingKnots);
+    CHECK(spline.validate());
+    CHECK(spline.getData().knotslist == repeatedKnots);
+
+    auto nonFiniteKnots = repeatedKnots;
+    nonFiniteKnots[4] = std::numeric_limits<double>::infinity();
+    spline.setKnotVector(nonFiniteKnots);
+    CHECK(spline.validate());
+    CHECK(spline.getData().knotslist == repeatedKnots);
 }
 
 // Regression: setFitPoints with num == p+1 (single Bezier patch) used to

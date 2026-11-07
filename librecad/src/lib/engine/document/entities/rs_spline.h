@@ -285,7 +285,7 @@ public:
   /** Get knot vector (unwrapped) */
   std::vector<double> getKnotVector() const;
 
-  /** Set knot vector, validate size and monotonicity */
+  /** Set a finite nondecreasing knot vector; valid repeated knots are preserved. */
   void setKnotVector(const std::vector<double> &knots);
 
   /** Generate open knot vector */

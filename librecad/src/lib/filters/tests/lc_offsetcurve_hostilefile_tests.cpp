@@ -5888,7 +5888,7 @@ TEST_CASE("nonuniform periodic spline knots preserve seam through staged import"
                                    RS_Vector{60, 0}, RS_Vector{55, 35},
                                    RS_Vector{20, 50}, RS_Vector{-15, 25}})
         periodic.addControlPoint(point);
-    periodic.getData().knotslist = {0, 0, 0, 0, 0.5, 2, 3, 3, 3, 3};
+    periodic.setKnotVector({0, 0, 0, 0, 0.5, 2, 3, 3, 3, 3});
     REQUIRE(periodic.validate());
     periodic.setClosed(true);
     auto periodicData = periodic.getData();

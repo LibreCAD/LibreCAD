@@ -1252,13 +1252,22 @@ std::vector<double> RS_Spline::getKnotVector() const {
   return getUnwrappedKnotVector();
 }
 void RS_Spline::setKnotVector(const std::vector<double> &k) {
+  if (!std::all_of(k.begin(), k.end(), [](const double knot) {
+        return std::isfinite(knot);
+      }) || !std::is_sorted(k.begin(), k.end())) {
+      RS_DEBUG->print(RS_Debug::D_WARNING, "invalid knot vector");
+      return;
+  }
+
+  const auto originalKnots = m_data.knotslist;
   m_data.knotslist = k;
-  LC_SplineHelper::ensureMonotonic(m_data.knotslist);
   if (isClosed()) {
       updateKnotWrapping();
   }
   if (!validate()) {
       RS_DEBUG->print(RS_Debug::D_WARNING, "invalid knot vector");
+      m_data.knotslist = originalKnots;
+      return;
   }
   update();
 }
