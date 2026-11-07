@@ -565,6 +565,27 @@ TEST_CASE("RS_Spline constrained fit directions survive transforms and reversal"
             RS_Vector{2.0 * transformedLast.x, 3.0 * transformedLast.y}) < 1e-7);
 }
 
+TEST_CASE("RS_Spline tangent interpolation is stable at large coordinates and short spans",
+          "[RS_Spline][fitpoints][tangents][conditioning]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {1.0e-6, 2.0e-6}, {2.0, 1.0}, {4.0, 0.0}};
+  const RS_Vector offset{1.0e8, -1.0e8};
+  std::vector<RS_Vector> translatedFitPoints;
+  for (const auto& point : fitPoints) translatedFitPoints.push_back(point + offset);
+
+  RS_Spline local{nullptr, RS_SplineData{3, false}};
+  RS_Spline translated{nullptr, RS_SplineData{3, false}};
+  REQUIRE(local.setFitPointsWithTangents(fitPoints, {1.0, 0.25}, {0.0, 0.0}));
+  REQUIRE(translated.setFitPointsWithTangents(translatedFitPoints, {1.0, 0.25}, {0.0, 0.0}));
+  REQUIRE(local.validate());
+  REQUIRE(translated.validate());
+  REQUIRE(local.getData().controlPoints.size() == translated.getData().controlPoints.size());
+  for (std::size_t i = 0; i < local.getData().controlPoints.size(); ++i) {
+    CHECK((translated.getData().controlPoints[i] - local.getData().controlPoints[i])
+              .distanceTo(offset) < 1e-4);
+  }
+}
+
 TEST_CASE("RS_Spline tangent interpolation rejects unsupported inputs atomically",
           "[RS_Spline][fitpoints][tangents]") {
   RS_Spline spline{nullptr, RS_SplineData{3, false}};
