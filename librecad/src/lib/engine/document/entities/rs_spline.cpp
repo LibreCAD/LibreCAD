@@ -1661,9 +1661,16 @@ bool RS_Spline::setFitPointsWithTangents(
     return v.valid && std::isfinite(v.x) && std::isfinite(v.y) &&
            std::isfinite(v.z) && std::abs(v.z) <= RS_TOLERANCE;
   };
+  const double startMagnitude = startTangent.magnitude();
+  const double endMagnitude = endTangent.magnitude();
+  if (!std::isfinite(startMagnitude) || !std::isfinite(endMagnitude)) {
+    return false;
+  }
+  const bool hasStartTangent = startMagnitude > 0.0;
+  const bool hasEndTangent = endMagnitude > 0.0;
   if (fitPoints.size() < 2 || !finitePlanar(startTangent) ||
       !finitePlanar(endTangent) ||
-      startTangent.magnitude() == 0.0 || endTangent.magnitude() == 0.0 ||
+      (!hasStartTangent && !hasEndTangent) ||
       !std::all_of(fitPoints.begin(), fitPoints.end(), finitePlanar) ||
       fitPoints.front().distanceTo(fitPoints.back()) == 0.0) {
     return false;
@@ -1702,17 +1709,46 @@ bool RS_Spline::setFitPointsWithTangents(
 
   std::vector<RS_Vector> controls(controlCount, RS_Vector(false));
   controls.front() = fitPoints.front();
-  controls[1] = fitPoints.front() +
-                startTangent * ((knots[degree + 1] - knots[degree]) / degree);
-  controls[n - 1] = fitPoints.back() -
-                    endTangent * ((knots[n + 1] - knots[n]) / degree);
   controls[n] = fitPoints.back();
+  if (hasStartTangent) {
+    const RS_Vector direction = startTangent / startMagnitude;
+    controls[1] = fitPoints.front() +
+                  direction * ((knots[degree + 1] - knots[degree]) / degree);
+  }
+  if (hasEndTangent) {
+    const RS_Vector direction = endTangent / endMagnitude;
+    controls[n - 1] = fitPoints.back() -
+                      direction * ((knots[n + 1] - knots[n]) / degree);
+  }
 
-  const size_t systemSize = count - 2;
+  std::vector<int> controlColumns(controlCount, -1);
+  std::vector<size_t> freeControls;
+  size_t freeControlCount = 0;
+  for (size_t i = 1; i < n; ++i) {
+    if ((i == 1 && hasStartTangent) || (i == n - 1 && hasEndTangent))
+      continue;
+    controlColumns[i] = static_cast<int>(freeControlCount++);
+    freeControls.push_back(i);
+  }
+  const bool hasNaturalStart = !hasStartTangent;
+  const bool hasNaturalEnd = !hasEndTangent;
+  const size_t systemSize = count - 2 + hasNaturalStart + hasNaturalEnd;
+  if (freeControlCount != systemSize) return false;
   std::vector<std::vector<double>> matrix(
       systemSize, std::vector<double>(systemSize, 0.0));
   std::vector<double> rhsX(systemSize), rhsY(systemSize);
+  const auto addCoefficient = [&](const size_t row, const size_t index,
+                                  const double coefficient) {
+    const int column = controlColumns[index];
+    if (column >= 0) {
+      matrix[row][static_cast<size_t>(column)] += coefficient;
+    } else {
+      rhsX[row] -= coefficient * controls[index].x;
+      rhsY[row] -= coefficient * controls[index].y;
+    }
+  };
   for (size_t row = 0; row < systemSize; ++row) {
+    if (row >= count - 2) break;
     const size_t fitIndex = row + 1;
     const size_t span = findSpan(n, degree, parameters[fitIndex], knots);
     const std::vector<double> basis =
@@ -1721,15 +1757,28 @@ bool RS_Spline::setFitPointsWithTangents(
     rhsY[row] = fitPoints[fitIndex].y;
     for (size_t j = 0; j <= degree; ++j) {
       const size_t controlIndex = span - degree + j;
-      const double coefficient = basis[j];
-      if (controlIndex == 0 || controlIndex == 1 || controlIndex == n - 1 ||
-          controlIndex == n) {
-        rhsX[row] -= coefficient * controls[controlIndex].x;
-        rhsY[row] -= coefficient * controls[controlIndex].y;
-      } else {
-        matrix[row][controlIndex - 2] = coefficient;
-      }
+      addCoefficient(row, controlIndex, basis[j]);
     }
+  }
+
+  size_t constraintRow = count - 2;
+  if (hasNaturalStart) {
+    const double startSpan = knots[degree + 1] - knots[1];
+    const double nextSpan = knots[degree + 2] - knots[2];
+    if (!(startSpan > 0.0) || !(nextSpan > 0.0)) return false;
+    addCoefficient(constraintRow, 0, 1.0 / startSpan);
+    addCoefficient(constraintRow, 1, -(1.0 / startSpan + 1.0 / nextSpan));
+    addCoefficient(constraintRow, 2, 1.0 / nextSpan);
+    ++constraintRow;
+  }
+  if (hasNaturalEnd) {
+    const double previousSpan = knots[n + degree - 1] - knots[n - 1];
+    const double endSpan = knots[n + degree] - knots[n];
+    if (!(previousSpan > 0.0) || !(endSpan > 0.0)) return false;
+    addCoefficient(constraintRow, n - 2, 1.0 / previousSpan);
+    addCoefficient(constraintRow, n - 1,
+                   -(1.0 / previousSpan + 1.0 / endSpan));
+    addCoefficient(constraintRow, n, 1.0 / endSpan);
   }
 
   std::vector<double> solutionX(systemSize), solutionY(systemSize);
@@ -1738,8 +1787,8 @@ bool RS_Spline::setFitPointsWithTangents(
     return false;
   }
   for (size_t i = 0; i < systemSize; ++i) {
-    controls[i + 2] = {solutionX[i], solutionY[i]};
-    if (!finitePlanar(controls[i + 2])) {
+    controls[freeControls[i]] = {solutionX[i], solutionY[i]};
+    if (!finitePlanar(controls[freeControls[i]])) {
       return false;
     }
   }

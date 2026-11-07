@@ -9337,7 +9337,7 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     const RS_Vector endTangent{data->tgEnd.x, data->tgEnd.y,
                                data->tgEnd.z};
     const bool tangentInterpolationSucceeded =
-        data->degree == 3 && hasFitTangents &&
+        data->degree == 3 && !isClosed && hasFitTangents &&
         spline->setFitPointsWithTangents(fitPoints, startTangent,
                                          endTangent);
     if (tangentInterpolationSucceeded) {

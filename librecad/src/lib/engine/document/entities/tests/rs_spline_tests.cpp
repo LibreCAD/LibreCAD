@@ -458,11 +458,70 @@ TEST_CASE("RS_Spline fit-point interpolation honors endpoint tangents",
   REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
   CHECK(compareVector(startJet.point, fitPoints.front(), 1e-9));
   CHECK(compareVector(endJet.point, fitPoints.back(), 1e-9));
-  CHECK(compareVector(startJet.first, startTangent, 1e-8));
-  CHECK(compareVector(endJet.first, endTangent, 1e-8));
+  CHECK(compareVector(startJet.first, startTangent / startTangent.magnitude(),
+                      1e-8));
+  CHECK(compareVector(endJet.first, endTangent / endTangent.magnitude(), 1e-8));
   for (const RS_Vector &fitPoint : fitPoints) {
     CHECK(compareVector(spline.getNearestPointOnEntity(fitPoint, true), fitPoint,
                         1e-7));
+  }
+}
+
+TEST_CASE("RS_Spline fit interpolation uses a natural unconstrained end",
+          "[RS_Spline][fitpoints][tangents]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {2.0, 3.0}, {6.0, 4.0}, {9.0, 0.0}};
+  for (const bool constrainStart : {true, false}) {
+    const RS_Vector requested{2.0, -1.0};
+    const RS_Vector absent{0.0, 0.0};
+    const RS_Vector start = constrainStart ? requested : absent;
+    const RS_Vector end = constrainStart ? absent : requested;
+    RS_Spline spline{nullptr, RS_SplineData{3, false}};
+    REQUIRE(spline.setFitPointsWithTangents(fitPoints, start, end));
+    REQUIRE(spline.validate());
+    CHECK(spline.getData().fitTangentsConstrained);
+    CHECK(spline.getData().fitStartTangent == start);
+    CHECK(spline.getData().fitEndTangent == end);
+
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right,
+                                  startJet));
+    REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+    const RS_Vector unit = requested / requested.magnitude();
+    if (constrainStart) {
+      CHECK(compareVector(startJet.first, unit, 1e-8));
+      CHECK(endJet.second.magnitude() < 1e-8);
+    } else {
+      CHECK(startJet.second.magnitude() < 1e-8);
+      CHECK(compareVector(endJet.first, unit, 1e-8));
+    }
+    for (const RS_Vector &fitPoint : fitPoints) {
+      CHECK(compareVector(spline.getNearestPointOnEntity(fitPoint, true),
+                          fitPoint, 1e-7));
+    }
+  }
+
+  for (const bool constrainStart : {true, false}) {
+    const RS_Vector requested{0.0, 3.0};
+    const RS_Vector absent{0.0, 0.0};
+    const RS_Vector start = constrainStart ? requested : absent;
+    const RS_Vector end = constrainStart ? absent : requested;
+    RS_Spline spline{nullptr, RS_SplineData{3, false}};
+    REQUIRE(spline.setFitPointsWithTangents({{0.0, 0.0}, {4.0, 2.0}}, start, end));
+    REQUIRE(spline.validate());
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+    const RS_Vector unit = requested / requested.magnitude();
+    if (constrainStart) {
+      CHECK(compareVector(startJet.first, unit, 1e-8));
+      CHECK(endJet.second.magnitude() < 1e-8);
+    } else {
+      CHECK(startJet.second.magnitude() < 1e-8);
+      CHECK(compareVector(endJet.first, unit, 1e-8));
+    }
   }
 }
 
@@ -473,7 +532,9 @@ TEST_CASE("RS_Spline tangent interpolation rejects unsupported inputs atomically
   const RS_SplineData before = spline.getData();
 
   CHECK_FALSE(spline.setFitPointsWithTangents(
-      {{0.0, 0.0}, {1.0, 2.0}}, {1.0, 0.0}, {}));
+      {{0.0, 0.0}, {1.0, 2.0}}, {}, {}));
+  CHECK_FALSE(spline.setFitPointsWithTangents(
+      {{0.0, 0.0}, {1.0, 2.0}}, {1.0e308, 1.0e308}, {}));
   CHECK(spline.getData().controlPoints == before.controlPoints);
   CHECK(spline.getData().knotslist == before.knotslist);
   CHECK(spline.getData().fitPoints == before.fitPoints);

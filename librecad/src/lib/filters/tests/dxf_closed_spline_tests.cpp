@@ -1101,3 +1101,42 @@ TEST_CASE("Tangent-constrained cubic fit SPLINE falls back to its control net",
       CHECK(sourceCurve[i].distanceTo(reopenedCurve[i]) < 1.0e-8);
   }
 }
+
+TEST_CASE("Cubic fit SPLINE import honors one tangent and naturally bounds the other",
+          "[dxf][filter][spline][fit-points][tangents]") {
+  ensureSettings();
+  const std::vector<RS_Vector> fitPoints{{0., 0.}, {2., 3.}, {6., 4.}, {9., 0.}};
+  for (const bool constrainStart : {true, false}) {
+    SplineRecord source;
+    source.m_flags = 8;
+    source.m_degree = 3;
+    source.m_fitPoints = fitPoints;
+    const RS_Vector requested{2., -1.};
+    source.m_tangentStart = constrainStart ? requested : RS_Vector{0., 0., 0.};
+    source.m_tangentEnd = constrainStart ? RS_Vector{0., 0., 0.} : requested;
+
+    RS_Graphic graphic;
+    importDxf(graphic, source, constrainStart ? "cubic_fit_start_tangent" : "cubic_fit_end_tangent");
+    RS_Spline* spline = onlySpline(graphic);
+    REQUIRE(spline->validate());
+    CHECK(spline->getData().fitTangentsConstrained);
+    CHECK(spline->getData().fitStartTangent == source.m_tangentStart);
+    CHECK(spline->getData().fitEndTangent == source.m_tangentEnd);
+    CHECK(spline->getData().fitPoints == fitPoints);
+
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(spline->tryEvaluateJet(0., LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(spline->tryEvaluateJet(1., LC_CurveEvaluationSide::Left, endJet));
+    const RS_Vector unit = requested / requested.magnitude();
+    if (constrainStart) {
+      CHECK(startJet.first.distanceTo(unit) < 1e-8);
+      CHECK(endJet.second.magnitude() < 1e-8);
+    } else {
+      CHECK(startJet.second.magnitude() < 1e-8);
+      CHECK(endJet.first.distanceTo(unit) < 1e-8);
+    }
+    for (const auto& point : fitPoints)
+      CHECK(spline->getNearestPointOnEntity(point, true).distanceTo(point) < 1e-7);
+  }
+}
