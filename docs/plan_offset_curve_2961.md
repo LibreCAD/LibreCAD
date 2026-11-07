@@ -23992,3 +23992,26 @@ geometry-preserving treatment is demonstrated against the exact rational
 curve and offset tolerance. Staged offset-cache persistence for this ratio,
 other periodic layouts, visible GUI, external-CAD beyond ODA, and exact-head CI
 remain open.
+
+#### W563ci. Admit a Regular Open Rational Spline at a 10^12 Weight Ratio (2026-11-07)
+
+Added a complementary open degree-2 NURBS case with nine controls, seven
+nonuniform knot spans, and positive weights that vary gradually across the
+control net from `1e-6` to `1e6`. The reverse weight ordering is also covered.
+Unlike W563cg's periodic source, these sources have no near-stationary seam;
+for signed offsets `+/-0.005`, operation 7 produces exactly one rational
+SPLINE cache and operation 8 admits it as canonical. Both replies survive
+request-bound encode/decode. This distinguishes the supported, regular
+high-ratio case from periodic high-ratio shapes whose tangent-recovery check
+correctly refuses.
+
+The focused `[rational][conditioned]` worker case passes 122 assertions. The
+full `[lc-offsetcurve][worker-kernel][source-cache][spline-variant]`
+selection passes 71,914 assertions across seven cases; the Release worker test
+target builds and `git diff --check` passes. Test commit `89b4dad9a`
+(`test(offset): admit conditioned rational spline cache`).
+
+This proves worker generation/cache support for the recorded control net,
+knots, weight profiles, and distances only. DXF/DWG staged import and ODA
+conversion are the next slice; arbitrary high-ratio NURBS and W563cg's
+near-stationary periodic geometry remain unqualified.
