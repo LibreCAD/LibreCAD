@@ -5853,12 +5853,14 @@ TEST_CASE("nonuniform rational periodic spline import follows output topology",
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
 
-    const double scale = GENERATE(1e-3, 1.0, 1e3);
-    const double distanceFactor = GENERATE(0.0625, 0.125, 0.25);
-    const int layout = GENERATE(0, 1, 2);
-    const int degree = layout == 2 ? 2 : 1;
+    const int layout = GENERATE(0, 1, 2, 3, 4);
+    const double scale = layout >= 3 ? 1.0 : GENERATE(1e-3, 1.0, 1e3);
+    const double distanceFactor = layout >= 3 ? 0.005 : GENERATE(0.0625, 0.125, 0.25);
+    const int degree = layout >= 2 ? 2 : 1;
     const int controlCount = layout == 0 ? 6 : layout == 1 ? 8 : 7;
     const std::string degreeName = "degree-" + std::to_string(degree);
+    const std::string profileName = layout == 3 ? "gradual" :
+                                    layout == 4 ? "reversed-gradual" : "mild";
     CAPTURE(scale, distanceFactor, degree, controlCount);
     RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
     const std::vector<RS_Vector> controlPoints = layout == 0
@@ -5882,7 +5884,11 @@ TEST_CASE("nonuniform rational periodic spline import follows output topology",
     REQUIRE(periodic.validate());
     periodic.setClosed(true);
     auto periodicData = periodic.getData();
-    const std::vector<double> independentWeights = layout == 0
+    const std::vector<double> independentWeights = layout == 3
+        ? std::vector<double>{1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6}
+        : layout == 4
+        ? std::vector<double>{1e6, 1e4, 1e2, 1.0, 1e-2, 1e-4, 1e-6}
+        : layout == 0
         ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85}
         : layout == 1
             ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15, 0.8}
@@ -5905,7 +5911,9 @@ TEST_CASE("nonuniform rational periodic spline import follows output topology",
     CHECK(startJet.point.distanceTo(endJet.point) < 1e-8);
     if (degree > 1)
         CHECK(startJet.first.distanceTo(endJet.first) < 1e-7);
-    const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
+    const auto side = layout >= 3
+        ? LC_CurveOffsetSide::Right
+        : GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
     const double magnitude = distanceFactor * scale;
     const double signedDistance = side == LC_CurveOffsetSide::Left
         ? magnitude : -magnitude;
@@ -5997,7 +6005,7 @@ TEST_CASE("nonuniform rational periodic spline import follows output topology",
         raw.nfit = 0;
 
         const auto input = directory.file(
-            "controls-" + std::to_string(controlCount) + "-scale-" +
+            profileName + "-controls-" + std::to_string(controlCount) + "-scale-" +
             std::to_string(scale) + "-distance-" +
             std::to_string(distanceFactor) +
             (side == LC_CurveOffsetSide::Left ? "-left-" : "-right-") +
