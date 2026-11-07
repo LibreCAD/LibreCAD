@@ -24330,15 +24330,18 @@ stored weights. Correctness follow-up commit `4442f5bfc`
 Added a translated wrapped quadratic spline regression with a gradual positive
 weight profile spanning `1e-6` through `1e6`. The test samples the tiny final
 knot-span box, checks speed and cross-product enclosure against evaluated
-jets, and requires the speed-squared interval width to remain below 2% of the
-largest sampled speed squared. The focused conditioned-bound case passes 75
-assertions; the full `[curve-offset][d0]` selection passes 15,418 assertions
-across 20 cases, and `[spline]` passes 28,390 assertions across 77 cases. The
-rebuilt periodic worker selection passes 15,416 assertions and continues to
-refuse the conditioned positive-side cases without partial geometry. Release
-targets `librecad_tests` and `librecad_offset_worker_kernel_tests` build, and
-`git diff --check` passes. Implementation commit `6dc876da0`
-(`fix(spline): normalize weights for interval bounds`).
+jets and the combined offset-factor enclosure against sampled
+`|C'|^3 - d(C' x C'')` values, and requires the speed-squared interval width to
+remain below 2% of the largest sampled speed squared. The focused
+conditioned-bound case passes 109 assertions; the full `[curve-offset][d0]`
+selection passes 15,452 assertions across 20 cases, and `[spline]` passes
+28,390 assertions across 77 cases. The rebuilt periodic worker selection
+passes 15,416 assertions and continues to refuse the conditioned positive-side
+cases without partial geometry. Release targets `librecad_tests` and
+`librecad_offset_worker_kernel_tests` build, and `git diff --check` passes.
+Implementation commits `6dc876da0` (`fix(spline): normalize weights for
+interval bounds`), `4442f5bfc` (`fix(spline): enclose normalized weight
+scaling`), and `e51254f38` (`test(spline): verify offset factor enclosures`).
 
 This improves the certified speed/cross enclosures for the recorded span and
 weight profile; it does not close W563cg, isolate every offset-factor root,
