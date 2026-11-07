@@ -67,8 +67,9 @@ qualifies one-ended degree-1 tangents through transform/reversal, both offset
 sides, Properties replacement and the same DXF/DWG file lanes;
 W562 admits and qualifies a curve-consistent tangent-constrained
 `LC_SplinePoints` subset through worker/cache, Properties, DXF/DWG persistence,
-and AC1032 staged-import paths; remaining family/variant and acceptance work is
-open;
+and AC1032 staged-import paths; W563az extends the verified tangent-constrained
+DWG fit-point writer from a single quadratic segment to tested chains of 3, 4,
+and 5 points; remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
 must allow choosing a different source family before selecting a live entity,
@@ -85,6 +86,17 @@ hyperbola, and polyline. `LC_Parabola` remains distinct from its
 and Properties-dialog tests already satisfy that picker contract; remaining
 “all types” work belongs to the open source-variant generation, worker/cache,
 import/export, and round-trip matrix, not another UI control.
+Implementation and review rule: `LC_OffsetSourceGeometry::SupportedKinds` is
+the single canonical picker inventory. Populate the selector from it rather
+than maintaining a second list. Changing the type filters live replacement
+candidates without mutating the current source/cache; choosing a candidate
+atomically replaces the tagged, value-owned source. A matched source remains
+resolvable and explicitly highlightable, including after import. `LC_Parabola`
+is its own choice and must be identified before its `LC_SplinePoints` base
+class. “All supported types” means every kind in this inventory; it does not
+certify every concrete geometry variant for generation, cache admission, or
+file round-trip. Track those separately with explicit eligibility/refusal
+tests.
 implementation slices
 A-core through T3 and the local A-core through C-check audit remain qualified.
 The shipped native geometry worker, Modify Offset creation/repeat, native Trim
@@ -23058,3 +23070,56 @@ curve equivalence or ACadSharp support for R2007 and later. Product commit
 This closes only the verified single-quadratic spline-points variant. Broader
 piecewise spline-points chains, external geometry comparison, visible-GUI
 acceptance, and exact-head CI remain open.
+
+#### W563ay. Resolve the Latest Source-widget Scope (2026-11-07)
+
+The latest request repeats and sharpens the source-widget contract: users can
+change the requested source-curve type before choosing a replacement, and the
+picker includes every currently supported source kind, including a distinct
+parabola choice. This is a type-changing source picker, not one locked to the
+embedded entity type and not merely a request to add another parabola special
+case.
+
+Code/plan reconciliation: W563au already verifies that the selector exactly
+matches `LC_OffsetSourceGeometry::SupportedKinds`; existing Properties tests
+cover type filtering, cross-family replacement, source resolution/highlighting,
+and parabola identity. The picker/UI slice is complete, so do not add a
+duplicate control or a second kind list. Derive UI choices from the canonical
+inventory. Treat picker membership as family support only; concrete geometry
+eligibility and end-to-end generation, worker/cache, import/export, and DXF/DWG
+round-trip support remain separate work. Unsupported candidate variants must
+be filtered or refused atomically with the current source/cache unchanged.
+Visible-GUI acceptance remains open; widget tests do not close it.
+
+This clarification adds no product-code change or test result beyond W563au.
+
+#### W563az. Extend Verified Tangent Spline-points DWG Chains (2026-11-07)
+
+Broadened the existing fail-closed DWG scenario-2 path for
+`LC_SplinePoints` from exactly three to at least three fit points, retaining
+the requirements for fit-point mode, open/uncut geometry, constrained tangent
+metadata, and `fitTangentsMatchCurve()`. The new round-trip matrix exercises
+3-, 4-, and 5-point chains with both, start-only, and end-only tangents across
+all six DWG writer versions (R2000, R2004, R2007, R2010, R2013, and R2018).
+It checks scenario, exact fit points, tolerance, normalized-or-zero endpoint
+tangents, reconstructed type, and 101 sampled curve positions. The existing
+mismatched-tangent case still refuses the fit-point encoding and falls back to
+the control net.
+
+Validation: the Release CMake `librecad_tests` target builds. The focused
+DWG matrix passes 6,624 assertions; the mismatched-tangent refusal passes 33;
+`[spline][LC_SplinePoints]` passes 615 assertions in 10 cases; and
+`[fit-points][roundtrip]` passes 8,404 assertions in 8 cases. LibreDWG 0.14
+successfully decodes and structurally validates all 54 preserved files (three
+chain lengths, three tangent modes, six versions), including degree-2 scenario
+and fit-point counts. ACadSharp independently accepts all 18 R2000/R2004
+fixtures for the same chain/mode matrix. Its reader does not support R2007+
+fixtures, so no ACadSharp acceptance claim is made for those versions. This is
+structural-reader validation, not a broad external geometry-equivalence or CAD
+interoperability claim. `git diff --check` passes.
+
+Product/test commit `848ab20cd` (`feat(dwg): preserve verified spline-point
+chains`). This qualifies the tested 3/4/5-point cases and DWG versions; broader
+fit-chain lengths, tangent/geometry variants outside the exact matcher,
+external geometry comparison, visible-GUI acceptance, and exact-head CI remain
+open. Roadmap clarification commit is recorded separately.
