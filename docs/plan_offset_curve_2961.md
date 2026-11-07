@@ -23509,3 +23509,30 @@ This proves only the tested `1e-6`–`1e6` interval and periodic layout; values
 near floating-point underflow/overflow, other knot families, and other
 topologies remain unqualified. Visible-GUI acceptance, independent CAD beyond
 ODA, and exact-head CI also remain open.
+
+#### W563bn. Preserve Closed Spline-points Geometry in DXF and DWG (2026-11-07)
+
+Qualified a closed, fit-point-mode `LC_SplinePoints` source through DXF and all
+six DWG versions. DWG scenario 2 cannot preserve the required closed semantics
+in pre-AC1027 output; the reader reopened those files as open curves with a
+`1.626`-unit deviation. AC1027+ carries a closed bit, but ODA File Converter
+27.1 converted its scenario-2 output to a degree-3 representation with
+`0.101884`-unit deviation. The writer now selects the exact generated
+control-net scenario for every closed spline-points source, in both DXF and
+DWG. Open, uncut fit-point sources and unconstrained scenario-2 output are
+unchanged.
+
+The test requires scenario 1 and no fit list in DWG, closed+periodic flags in
+all output formats, successful typed reopen, and 1,201 sampled positions within
+`1e-9`. Native DXF plus six-version DWG coverage passes 9,696 assertions. ODA
+converted all six DWGs to R2018 DXF with zero `.err` files; converted geometry
+passes within `1e-5`, for 9,726 assertions including native checks. The broader
+`[dxf][dwg][filter][spline-points][fit-points]` regression selection passes
+9,678 assertions. Fixtures are in `/private/tmp/closed-fit-splinepoints-dwg`
+and `/private/tmp/closed-fit-splinepoints-oda-controlnet`. Product/test commit
+`df9b118b2` (`fix(dwg): preserve closed spline-point fit geometry`).
+
+This preserves closed curve geometry, not original fit-point authoring data;
+closed sources are exported as control nets. Other closed shapes, constrained
+tangents, other output versions/consumers, visible-GUI acceptance, and
+exact-head CI remain open.
