@@ -58,7 +58,9 @@ DXF/DWG five-lane metadata round-trip plus AC1032 staged-import qualification
 are complete for their recorded cases; W557 additionally admits verified
 positive-weight rational quadratic tangent `RS_Spline` sources through direct
 generation, worker/cache validation, Properties replacement and typed-source
-round-trip;
+round-trip; W558 adds rational-quadratic AC1032 DXF/DWG staged-import and
+cache-promotion coverage; W559 reconfirms the existing type-changing,
+nine-family source-picker contract without adding duplicate UI;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21718,11 +21720,10 @@ tangent-constrained `LC_SplinePoints` remain refused.
 The direct engine, worker generation and operation-8 cache validator, and
 Properties picker/replacement now exercise a rational quadratic source. The
 five-lane DXF/DWG typed-source save/reopen/second-save matrix also includes the
-quadratic alongside the cubic. This does not yet prove AC1032 staged import and
-cache promotion for the quadratic source specifically; the separate staged
-import fixture remains the cubic variant. No native DWG tangent SPLINE layout
-was added, and writing tangent metadata in a native DWG SPLINE remains
-fail-closed.
+quadratic alongside the cubic. At this checkpoint, AC1032 staged import and
+cache promotion for the quadratic source had not yet been qualified; W558
+below closes that test gap. No native DWG tangent SPLINE layout was added, and
+writing tangent metadata in a native DWG SPLINE remains fail-closed.
 
 Validation: Release CMake builds of `librecad_tests` and
 `librecad_offset_worker_kernel_tests` succeed. The quadratic verifier passes 8
@@ -21735,7 +21736,43 @@ passes. Product commit `4f5d60ae3` (`fix(offset): admit verified rational
 quadratic tangents`).
 
 This closes only the recorded degree-2/3 positive-weight spline subset.
-Further parameter-domain/knot/fit conditioning, quadratic staged-import
-promotion, tangent-constrained spline-points, ordinary degree-1 tangent cases,
-DWG native writer interoperability, and all other open family/variant and
-acceptance gates remain on the roadmap.
+Further parameter-domain/knot/fit conditioning, tangent-constrained
+spline-points, ordinary degree-1 tangent cases, DWG native writer
+interoperability, and all other open family/variant and acceptance gates
+remain on the roadmap.
+
+### W558. Stage Rational Quadratic Sources from AC1032 DXF and DWG (2026-11-06)
+
+Extended the rational tangent staged-import fixture to run both the previously
+covered cubic and the verified rational quadratic source through AC1032 DXF
+and DWG imports. Each lane regenerates the offset cache, passes operation-8
+validation, promotes the typed source metadata, and checks that the encoded
+source, rational weights, tangent constraints, and endpoint tangent vectors
+survive unchanged. The DWG cache remains an ordinary spline; this does not add
+a tangent-aware native DWG SPLINE body layout.
+
+Validation: Release CMake `librecad_tests` build succeeds; the focused
+`[lc-offsetcurve][import-session][typed-source][spline-variant][tangents][rational]`
+case passes 521 assertions in one case; and `git diff --check` passes. Test
+commit `05717901c` (`test(offset): stage rational quadratic source imports`).
+This closes the explicit quadratic AC1032 staged-import/cache-promotion gap,
+not native tangent DWG writing or independent-CAD interoperability.
+
+### W559. Reconfirm Type-Changing Source Picker Coverage (2026-11-07)
+
+The latest source-picker request repeats the existing interaction contract:
+Properties must let the user choose a different source family before selecting
+a replacement entity, and the candidate list must cover the modeled families
+already supported by this workflow. The implementation and earlier W554
+reconciliation provide a family selector followed by live-entity selection
+for ellipse, spline, spline-points, distinct parabola, bounded hyperbola, line,
+arc, circle, and polyline. `LC_Parabola` remains recognized before its
+`LC_SplinePoints` base type, and the matched source can be highlighted.
+
+No duplicate widget, family enum, or parabola implementation is needed. The
+remaining requirement is behavioral completeness of each advertised family's
+eligible variants and atomic refusal of unsupported variants without changing
+the current source/cache; existing eligibility, cross-family replacement,
+highlighting, and parabola identity tests remain the regression gates. This
+request adds no new family beyond the nine already modeled and does not close
+remaining geometry-variant, persistence, visible-GUI, or external-CAD work.
