@@ -7703,7 +7703,35 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
     CHECK(reversedNegativeLargerMajor->center.x == Catch::Approx(5.0));
     CHECK(reversedNegativeLargerMajor->center.y == Catch::Approx(-80.0 / 12.0));
     CHECK(reversedNegativeLargerMajor->radius == Catch::Approx(100.0 / 12.0));
-    const std::array<LC_OffsetPolylineData, 10> variants{{
+    RS_Polyline reflectedUnequalMajorBulgesEntity;
+    reflectedUnequalMajorBulgesEntity.addVertex({0, 0}, -3.0);
+    reflectedUnequalMajorBulgesEntity.addVertex({10, 0});
+    reflectedUnequalMajorBulgesEntity.addVertex({100, -100}, 2.0);
+    reflectedUnequalMajorBulgesEntity.addVertex({110, -100});
+    reflectedUnequalMajorBulgesEntity.addVertex({110, 100});
+    reflectedUnequalMajorBulgesEntity.endPolyline();
+    const auto reflectedUnequalMajorBulgesSource =
+        LC_OffsetSourceGeometry::capture(reflectedUnequalMajorBulgesEntity);
+    REQUIRE(reflectedUnequalMajorBulgesSource);
+    const auto& reflectedUnequalMajorBulgesData =
+        std::get<LC_OffsetPolylineData>(reflectedUnequalMajorBulgesSource->value);
+    CHECK_FALSE(reflectedUnequalMajorBulgesData.closed);
+    REQUIRE(reflectedUnequalMajorBulgesData.segments.size() == 4);
+    const auto* negativeLargerMajor =
+        std::get_if<RS_ArcData>(&reflectedUnequalMajorBulgesData.segments[0]);
+    const auto* reflectedPositiveMajor =
+        std::get_if<RS_ArcData>(&reflectedUnequalMajorBulgesData.segments[2]);
+    REQUIRE(negativeLargerMajor);
+    REQUIRE(reflectedPositiveMajor);
+    CHECK(directedSweep(*negativeLargerMajor) < -std::acos(-1.0));
+    CHECK(directedSweep(*reflectedPositiveMajor) > std::acos(-1.0));
+    CHECK(negativeLargerMajor->center.x == Catch::Approx(5.0));
+    CHECK(negativeLargerMajor->center.y == Catch::Approx(80.0 / 12.0));
+    CHECK(negativeLargerMajor->radius == Catch::Approx(100.0 / 12.0));
+    CHECK(reflectedPositiveMajor->center.x == Catch::Approx(105.0));
+    CHECK(reflectedPositiveMajor->center.y == Catch::Approx(-103.75));
+    CHECK(reflectedPositiveMajor->radius == Catch::Approx(6.25));
+    const std::array<LC_OffsetPolylineData, 11> variants{{
         {{0, 0}, {2, 2}, false,
          {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
         {{2, 2}, {0, 0}, false,
@@ -7721,7 +7749,8 @@ TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG 
         reversedMajorMinorBulgeData,
         oppositeMajorBulgesData,
         unequalMajorBulgesData,
-        reversedUnequalMajorBulgesData}};
+        reversedUnequalMajorBulgesData,
+        reflectedUnequalMajorBulgesData}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
