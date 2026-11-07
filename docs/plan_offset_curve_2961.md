@@ -22965,19 +22965,20 @@ from its `LC_SplinePoints` base class.
 Current-code check: `LC_PropertiesEditingWidget_OffsetCurve` builds the type
 selector from `SupportedKinds` and refreshes the candidate picker on type
 change. The Properties tests cover the nine-family replacement matrix and
-current-source resolution/highlighting. Therefore this request does not open a
-new implementation slice unless those contracts regress. Keep completeness of
+current-source resolution/highlighting. The matrix now also compares every
+selector entry, in order, against `SupportedKinds`; the focused case passes
+2,890 assertions. Test commit `f4aff4074` (`test(offset): assert complete
+source type selector`). Therefore this request does not open a new UI
+implementation slice unless those contracts regress. Keep completeness of
 each family's geometry operations, worker/cache behavior, import/export, and
 DXF/DWG round-tripping tracked independently; membership in the picker is not
 evidence that every geometric variant is fully supported end to end.
 
-Acceptance gate for future changes: assert the selector's choices equal the
-shared supported-kind list; for each kind, verify filtering, replacement, and
-typed identity; verify current-source resolution/highlighting; verify
-parabola is identified before the spline-points base-class check. Existing
-regressions include `Native source picker changes family and replaces the
+The existing regressions `Native source picker changes family and replaces the
 source with a typed curve` and `Native source picker replaces every modeled
-source family without filter side effects`. The visible-GUI acceptance gate
+source family without filter side effects` verify filtering, replacement,
+typed identity, current-source resolution/highlighting, and parabola identity
+before the spline-points base-class check. The visible-GUI acceptance gate
 remains open and is not replaced by these widget tests.
 
 #### W563av. Write Verified Cubic Tangent-constrained DWG Fit Splines (2026-11-07)
