@@ -23466,3 +23466,25 @@ the current six DWG versions and ODA conversion. Other periodic knot and weight
 families, randomized/adversarial weights, closed fit-point sources, cuts,
 visible-GUI acceptance, independent CAD beyond ODA, and exact-head CI remain
 open.
+
+#### W563bl. Stress a Wide Positive-weight Periodic Spline (2026-11-07)
+
+Added a sixth periodic-rational layout with six unique cubic controls, the
+existing nonuniform knot pattern, and positive weights spanning `0.01` to
+`100.0` (10,000:1). This qualifies a substantially wider weight range than the
+moderate layouts in W563bk without changing production eligibility or
+serialization policy.
+
+The full degree/count/weight matrix now passes 1,531 focused native assertions
+and stages 36 DWGs. ODA File Converter 27.1 converted all 36 to R2018 DXF with
+zero `.err` files; native plus converted geometry comparisons pass 1,747
+assertions at the existing `1e-5` bound. The broad spline round-trip selection
+passes 6,826 assertions across eight cases. Fixtures are in
+`/private/tmp/offset-nonuniform-periodic-dwg-wide` and
+`/private/tmp/offset-nonuniform-periodic-oda-wide`. Test commit `6fb24b8b3`
+(`test(dwg): stress periodic spline weight ranges`).
+
+This proves only the listed positive-weight range and layout. Near-underflow,
+near-overflow, randomly distributed weights, additional nonuniform knot
+families, other periodic topologies, closed fit-point sources, cuts, visible-GUI
+acceptance, non-ODA interoperability, and exact-head CI remain open.
