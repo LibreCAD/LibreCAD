@@ -645,23 +645,21 @@ double RS_Circle::areaLineIntegral() const {
     return M_PI * r * r;
 }
 
-LC_FirstMoment RS_Circle::firstMomentLineIntegral() const {
-    const double area = areaLineIntegral();
-    return {getCenter().x * area, getCenter().y * area};
-}
-
-LC_SecondMoment RS_Circle::secondMomentLineIntegral() const {
-  const double r   = getRadius();
-  const double cx  = getCenter().x;
-  const double cy  = getCenter().y;
-  const double r2  = r * r;
-  const double pir2 = M_PI * r2;
-
-  return {
-      pir2 * (cx * cx + r2 / 4.0),   // Ixx
-      pir2 * (cy * cy + r2 / 4.0),   // Iyy
-      pir2 * cx * cy                 // Ixy
-  };
+LC_AreaMoments RS_Circle::momentLineIntegrals(const RS_Vector& origin) const {
+    // Full-circle region moments about `origin`; d = center - origin.
+    const double r = getRadius();
+    const double dx = getCenter().x - origin.x;
+    const double dy = getCenter().y - origin.y;
+    const double r2 = r * r;
+    const double area = M_PI * r2;
+    LC_AreaMoments out;
+    out.area = area;
+    out.first.mx = area * dx;
+    out.first.my = area * dy;
+    out.second.ixx = area * (dx * dx + r2 / 4.0);
+    out.second.iyy = area * (dy * dy + r2 / 4.0);
+    out.second.ixy = area * dx * dy;
+    return out;
 }
 
 /**

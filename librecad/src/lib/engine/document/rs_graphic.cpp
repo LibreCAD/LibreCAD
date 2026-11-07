@@ -118,6 +118,93 @@ void RS_Graphic::toggleLayer(RS_Layer* layer) {
     refreshLayerVisibility();
 }
 
+/**
+ * Makes the layer of the given name current, as the user chose it on the command line or in a
+ * plugin, saying on the command line why when it is not (see activateChosenLayer(RS_Layer*)).
+ *
+ * @return true if the layer is current now
+ */
+bool RS_Graphic::activateChosenLayer(const QString& name) {
+    RS_Layer* layer = m_layerList.find(name);
+    if (layer == nullptr) {
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("There is no layer \"%1\".").arg(name));
+        return false;
+    }
+    return activateChosenLayer(layer);
+}
+
+/**
+ * Makes the layer current, as the user chose it: a hidden layer becomes current and stays hidden,
+ * and a locked one is refused, as RS_LayerList::activate() does, with the reason on the command
+ * line. Listeners are notified.
+ *
+ * @return true if the layer is current now
+ */
+bool RS_Graphic::activateChosenLayer(RS_Layer* layer) {
+    if (layer != nullptr && m_layerList.contains(layer) && !m_layerList.canActivate(layer)) {
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("Layer \"%1\" is locked: unlock it to make it the current layer.").arg(layer->getName()));
+        return false;
+    }
+    return activateLayer(layer, true);
+}
+
+/**
+ * Says on the command line what locking layers did to the current layer, when it was among them: the
+ * current layer is never left locked, so another layer became current, or, there being no other
+ * unlocked layer, it was not locked.
+ */
+void RS_Graphic::reportCurrentLayerLock(const RS_LayerList::CurrentLayerLock& outcome) const {
+    if (outcome.m_asked == nullptr) {
+        return;
+    }
+    if (outcome.wasReplaced()) {
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("Layer \"%1\" is locked, so it cannot stay the current layer: \"%2\" is the current layer now.")
+                .arg(outcome.m_asked->getName(), outcome.m_replacement->getName()));
+    }
+    else {
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("Layer \"%1\" was not locked: it is the current layer, and no other layer is unlocked to take its place.")
+                .arg(outcome.m_asked->getName()));
+    }
+}
+
+/**
+ * Says on the command line why a lock control did nothing when it was used although
+ * RS_LayerList::canToggleLock() had disabled it: the current layer is not locked, as no other layer is
+ * unlocked to take its place.
+ */
+void RS_Graphic::reportLockUnavailable() const {
+    RS_LayerList::CurrentLayerLock outcome;
+    outcome.m_asked = m_layerList.getActive();
+    reportCurrentLayerLock(outcome);
+}
+
+void RS_Graphic::toggleLayerLock(RS_Layer* layer) {
+    const auto outcome = m_layerList.toggleLock(layer);
+    validateSelection();
+    reportCurrentLayerLock(outcome);
+}
+
+void RS_Graphic::lockAllLayers(const bool lock) {
+    const auto outcome = m_layerList.lockAll(lock);
+    validateSelection();
+    reportCurrentLayerLock(outcome);
+}
+
+void RS_Graphic::toggleLockLayers(const QList<RS_Layer*>& layers) {
+    const auto outcome = m_layerList.toggleLockMulti(layers);
+    validateSelection();
+    reportCurrentLayerLock(outcome);
+}
+
+void RS_Graphic::setLockLayers(const QList<RS_Layer*>& layersToUnlock, const QList<RS_Layer*>& layersToLock) {
+    const auto outcome = m_layerList.setLockMulti(layersToUnlock, layersToLock);
+    validateSelection();
+    reportCurrentLayerLock(outcome);
+}
+
 void RS_Graphic::freezeAllLayers(const bool freeze) {
     m_layerList.freezeAll(freeze);
     refreshLayerVisibility();
@@ -211,7 +298,7 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 RS_Graphic::~RS_Graphic() = default;
 
 void RS_Graphic::onLoadingCompleted() {
-    m_layerList.ensureActiveLayerIsVisible();
+    m_layerList.settleActiveLayer();
 
     const auto fallBackDimStyleFromVars = m_dimstyleList.getFallbackDimStyleFromVars();
     fallBackDimStyleFromVars->fillByDefaults(); // cleanup (is it redundant?)
@@ -252,13 +339,39 @@ unsigned RS_Graphic::countLayerEntities(RS_Layer* layer) const {
 }
 
 /**
- * Removes the given layer and undoes all m_entities on it.
+ * Removes the layer, as the user chose it in a dock, where choosing a layer makes it current: the
+ * current layer is removed too, another layer that is not locked becoming current in its place
+ * (and, as the command line says, no entity moves to it). With no other layer unlocked, or for layer "0",
+ * the layer stays, and the command line says why.
+ *
+ * @return true if the layer was removed
  */
-void RS_Graphic::removeLayer(RS_Layer* layer) {
+bool RS_Graphic::removeChosenLayer(RS_Layer* layer) {
+    if (layer != nullptr && layer == m_layerList.getActive() && layer->getName() != "0") {
+        if (!m_layerList.canRemoveChosen(layer)) {
+            RS_DIALOGFACTORY->commandMessage(RS_LayerList::removalNoTakeoverText(layer->getName()));
+            return false;
+        }
+        const RS_Layer* replacement = m_layerList.handOverCurrentLayer();
+        RS_DIALOGFACTORY->commandMessage(
+            QObject::tr("Layer \"%1\" is being removed, so \"%2\" is the current layer now.")
+                .arg(layer->getName(), replacement->getName()));
+    }
+    return removeLayer(layer);
+}
+
+/**
+ * Removes the given layer and undoes all m_entities on it. Layer "0" is not removed, and neither is
+ * the current layer (RS_LayerList::canRemove()): the command line says so.
+ *
+ * @return true if the layer was removed
+ */
+bool RS_Graphic::removeLayer(RS_Layer* layer) {
     // fixme - move to other class?
+    bool removed = false;
     if (layer != nullptr) {
         const QString& layerName = layer->getName();
-        if (layerName != "0") {
+        if (m_layerList.canRemove(layer)) {
             std::vector<RS_Entity*> toRemove;
             //find entities on layer
             for (RS_Entity* e : *this) {
@@ -299,9 +412,15 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
             }
 
             m_layerList.remove(layer);
+            removed = true;
+        }
+        else if (m_layerList.contains(layer)) {
+            RS_DIALOGFACTORY->commandMessage(layerName == "0" ? QObject::tr("Layer \"0\" can never be removed.")
+                                                              : RS_LayerList::removalRefusedText(layerName));
         }
         validateSelection();
     }
+    return removed;
 }
 
 /**

@@ -34,6 +34,21 @@ on:
       - 'librecad/src/lib/engine/undo/**'
       - 'librecad/src/lib/engine/rs.h'
       - 'librecad/src/lib/engine/document/entities/rs_entity.*'
+      - 'librecad/src/lib/engine/document/entities/rs_hatch.*'
+      - 'librecad/src/lib/engine/document/entities/lc_hatchdensity.*'
+      - 'librecad/src/lib/engine/document/entities/lc_parabola.*'
+      - 'librecad/src/lib/engine/document/entities/rs_polyline.*'
+      - 'librecad/src/lib/engine/document/entities/rs_arc.*'
+      - 'librecad/src/lib/engine/document/entities/rs_circle.*'
+      - 'librecad/src/lib/engine/document/entities/rs_ellipse.*'
+      - 'librecad/src/lib/engine/document/entities/rs_line.*'
+      - 'librecad/src/lib/engine/document/entities/lc_hyperbola.*'
+      - 'librecad/src/lib/engine/document/entities/lc_splinepoints.*'
+      - 'librecad/src/lib/engine/document/entities/lc_momentquadrature.*'
+      - 'librecad/src/lib/engine/document/entities/lc_secondmoment.h'
+      - 'librecad/src/lib/engine/document/container/**'
+      - 'librecad/src/lib/information/rs_information.*'
+      - 'librecad/src/lib/information/tests/lc_insidecontour_tests.cpp'
       - 'librecad/src/lib/engine/document/entities/rs_mtext.*'
       - 'librecad/src/lib/engine/document/entities/rs_text.*'
       - 'librecad/src/lib/engine/document/entities/rs_insert.*'
@@ -116,7 +131,7 @@ jobs:
               librecad_offset_worker_process_tests librecad_offset_worker_client_tests \
               librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests \
               librecad_offset_creation_action_tests librecad_offset_cache_trim_failure_tests \
-              librecad_offset_cache_check_failure_tests \
+              librecad_offset_cache_check_failure_tests librecad_hatch_tests \
             -j"$(nproc)"
 
       - name: Run bounded DWG/DXF test lanes
@@ -209,8 +224,7 @@ jobs:
           set "PATH=%VSPATH%\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%"
           ninja --version || exit /b 1
           cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=OFF -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
-          cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=OFF -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_OFFSET_WORKER_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
-          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_console_command_utils_tests librecad_offset_hostilefile_tests librecad_offset_adapter_tests librecad_offset_external_plugin_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests librecad_dimension_clipboard_tests librecad_offset_worker librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_creation_action_tests librecad_offset_cache_trim_failure_tests librecad_offset_cache_check_failure_tests || exit /b 1
+          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_console_command_utils_tests librecad_offset_hostilefile_tests librecad_offset_adapter_tests librecad_offset_external_plugin_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests librecad_dimension_clipboard_tests librecad_hatch_tests librecad_offset_worker librecad_offset_worker_wire_tests librecad_offset_worker_request_tests librecad_offset_worker_result_tests librecad_offset_worker_kernel_tests librecad_offset_worker_process_tests librecad_offset_worker_client_tests librecad_offset_worker_fault_tests librecad_offset_worker_geometry_timeout_tests librecad_offset_creation_action_tests librecad_offset_cache_trim_failure_tests librecad_offset_cache_check_failure_tests || exit /b 1
         shell: cmd
 
       - name: Run bounded DWG/DXF test lanes

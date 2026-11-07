@@ -518,6 +518,10 @@ void RS_Selection::conditionalSelection(const ConditionalSelectionOptions& optio
                 if (e->isInvisible()) {
                     continue;
                 }
+                if (e->isLocked()) {
+                    // the entities of a locked layer are not selected, as setSelected() does not
+                    continue;
+                }
                 if (funRttiMatch(e)) {
                     const bool matched = funEntityMatch(e);
                     if (matched) {
@@ -557,6 +561,11 @@ void RS_Selection::conditionalSelection(const ConditionalSelectionOptions& optio
                     continue;
                 }
                 if (e->isInvisible()) {
+                    continue;
+                }
+                if (e->isLocked()) {
+                    // locked after it was selected: it leaves the selection
+                    e->setSelectionFlag(false);
                     continue;
                 }
                 if (funRttiMatch(e)) {

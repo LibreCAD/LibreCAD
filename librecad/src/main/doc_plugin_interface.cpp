@@ -1239,7 +1239,7 @@ void Doc_plugin_interface::setLayer(const QString name) {
     }
     RS_Graphic* graphic = m_document->getGraphic();
     if (graphic != nullptr) {
-        graphic->activateLayer(lay, true);
+        graphic->activateChosenLayer(lay);
     }
 }
 
@@ -1268,8 +1268,7 @@ QStringList Doc_plugin_interface::getAllBlocks() {
 bool Doc_plugin_interface::deleteLayer(const QString name) {
     RS_Layer* layer = m_docGr->findLayer(name);
     if (layer != nullptr) {
-        m_docGr->removeLayer(layer);
-        return true;
+        return m_docGr->removeLayer(layer);
     }
     return false;
 }

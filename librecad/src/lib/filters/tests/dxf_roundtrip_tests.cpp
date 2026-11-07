@@ -1572,8 +1572,28 @@ TEST_CASE("DXF filter preserves raw HATCH OCS elevation and extrusion",
     REQUIRE(values.size() == 1);
     CHECK(std::stod(values.front()) == std::stod(expected));
   }
-  CHECK(recordGroupValues(out, "HATCH", "10")
-        == std::vector<std::string>{"0", "1", "3", "3", "1"});
+  {
+    // The leading HATCH 10 is the hatch base point ("0"); the remaining
+    // four 10 values come from the extracted boundary edges. The exporter
+    // now writes one boundary path per extracted loop, so the order of
+    // those edges depends on the loop extractor and is checked
+    // order-free. The 20 values ride with the 10 values and are compared
+    // in matching order so each (x, y) pair stays together.
+    const auto tenValues = recordGroupValues(out, "HATCH", "10");
+    const auto twentyValues = recordGroupValues(out, "HATCH", "20");
+    REQUIRE(tenValues.size() == 5u);
+    REQUIRE(twentyValues.size() == 5u);
+    CHECK(tenValues.front() == "0");
+    CHECK(twentyValues.front() == "0");
+    std::vector<std::pair<std::string, std::string>> edgePairs;
+    for (std::size_t i = 1; i < tenValues.size(); ++i) {
+      edgePairs.emplace_back(tenValues[i], twentyValues[i]);
+    }
+    std::sort(edgePairs.begin(), edgePairs.end());
+    const std::vector<std::pair<std::string, std::string>> expectedEdges{
+        {"1", "2"}, {"1", "4"}, {"3", "2"}, {"3", "4"}};
+    CHECK(edgePairs == expectedEdges);
+  }
 
   RS_Graphic graphic2;
   {

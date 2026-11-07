@@ -58,6 +58,7 @@ public:
     QModelIndex parent(const QModelIndex &index) const override;
     QModelIndex index(int row, int column, const QModelIndex &parent) const override;
     void setLayerList(const RS_LayerList *ll);
+    bool isLockAvailable(LC_LayerTreeItem *item) const;
     void proceedActiveLayerChanged(const RS_LayerList *ll) const;
     QList<RS_Layer *> collectLayers(const LC_LayerTreeItemAcceptor &acceptor) const;
     QModelIndexList getPersistentIndexList() const;
@@ -136,6 +137,8 @@ private:
 
     // root item for layers hierarchy
     std::unique_ptr<LC_LayerTreeItem> m_rootItem;
+    /// the list the layers are of, to ask whether they can be locked; null if there is none
+    const RS_LayerList* m_layers{nullptr};
 
     bool m_flatMode{false};
 

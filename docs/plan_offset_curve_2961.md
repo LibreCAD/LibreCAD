@@ -22231,3 +22231,39 @@ cache-promotion/persistence selection passes 2 cases / 2,462 assertions;
 `3b5f4d137` (`test(offset): validate open bulge source import fallback`).
 Remaining W563 work includes direct/worker/import cross-products for other
 family variants, visible GUI checks, and independent-CAD acceptance.
+
+#### W563m. Requalify Against Current Master and Native Hatch Boundaries (2026-11-07)
+
+Merged the six commits currently ahead on master, including the hatch/loop
+refactor. Resolved shared-file conflicts by retaining both projects' tests and
+workflow registrations, preserving the current layer/polyline fixes, and
+keeping offset display caches as atomic hatch/path boundaries. Updated the
+offset cache-dispatch regression tests to use the refactored loop-path and
+pattern-trimming APIs. The integration exposed and fixed two omissions in the
+refactored helpers: native offset containers were not traversed by
+`buildLoopPath` or `trimPatternEntities`, and trimmed children did not retain
+their source curve's effective pen. Both paths now use bounded, validated
+display-cache traversal; invalid caches still refuse whole publication.
+
+Validation on the merged Release tree:
+
+- `librecad_tests '[gui][dialog][offsetcurve][source]'`: 6,883 assertions / 10
+  cases passed.
+- `librecad_tests '[lc-offsetcurve][types][cached-dispatch]'`: 28,396
+  assertions / 21 cases passed.
+- `librecad_hatch_tests`: 129,518 assertions / 204 cases passed.
+- `librecad_dwg_fast_tests`: 364,079 assertions / 1,081 cases passed; 37
+  cases skipped because their external fixture files were unavailable.
+- `librecad_dxf_fast_tests`: 84,955 assertions / 835 cases passed; 4 cases
+  skipped.
+- Release build succeeded for `librecad_tests`, `librecad_hatch_tests`,
+  `librecad_dwg_fast_tests`, and `librecad_dxf_fast_tests`.
+- Focused `git diff --check` on the roadmap and offset loop/test changes passes;
+  the complete upstream merge diff reports inherited trailing whitespace in
+  translation and unrelated test files. All seven merge-conflict paths are
+  resolved.
+
+This requalification does not close W563's remaining per-variant direct,
+worker, cache-promotion and import cross-products, visible GUI acceptance, or
+independent-CAD interoperability checks. External-fixture skips remain an
+explicit validation gap.

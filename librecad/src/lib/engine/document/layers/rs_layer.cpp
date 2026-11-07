@@ -49,6 +49,7 @@ RS_Layer& RS_Layer::operator=(const RS_Layer& other) {
     setName(other.m_data.name);
     m_data = other.m_data;
     m_layerType = other.m_layerType;
+    m_hiddenAs = other.m_hiddenAs;
     return *this;
 }
 

@@ -482,6 +482,27 @@ void dwgWriter15::initHeaderControlHandles() {
     if (m_version < DRW::AC1018)
         fillIfZero(m_header->vpEntHeaderCtrl,
                    reservedHandle::VPORT_ENTITY_HEADER_CONTROL);
+
+    // CLAYER: the current layer by handle. Layer handles are minted as the
+    // layers are added, after the HEADER is written, so the layer $CLAYER
+    // names gets its handle now. A handle read from another file means nothing
+    // here: always set it.
+    if (m_currentLayerHandle == 0) {
+        auto var = m_header->vars.find("$CLAYER");
+        if (var == m_header->vars.end())
+            var = m_header->vars.find("CLAYER");
+        if (var != m_header->vars.end() && var->second != nullptr
+            && var->second->type() == DRW_Variant::STRING) {
+            const std::string name = *var->second->content.s;
+            const std::string upper = toUpperCase(name);
+            if (!upper.empty() && upper != "0") {
+                m_currentLayerName = name;
+                m_currentLayerHandle = m_handles.next();
+            }
+        }
+    }
+    m_header->clayerHandle = m_currentLayerHandle != 0 ? m_currentLayerHandle
+                                                       : DRW::DwgLayer0Handle;
 }
 
 bool dwgWriter15::writeDwgHeader() {
@@ -4074,7 +4095,10 @@ std::uint32_t dwgWriter15::addLayer(const DRW_Layer& lay) {
     if (const auto existing = m_writingCtx.layerMap.find(upper);
         existing != m_writingCtx.layerMap.end())
         return existing->second;
-    std::uint32_t h = m_handles.next();
+    // the current layer has the handle the HEADER gave it (CLAYER)
+    const std::uint32_t h = m_currentLayerHandle != 0
+            && upper == toUpperCase(m_currentLayerName)
+        ? m_currentLayerHandle : m_handles.next();
     m_writingCtx.layerMap[upper] = h;
     m_pendingLayers.emplace_back(h, lay);
     return h;
@@ -4740,6 +4764,17 @@ bool dwgWriter15::writeDwgObjects() {
 
     // --- LAYER section ---
     {
+        // CLAYER names a layer that was never added: write it, so that the
+        // HEADER does not point at nothing
+        if (m_currentLayerHandle != 0
+            && m_writingCtx.layerMap.find(toUpperCase(m_currentLayerName))
+                == m_writingCtx.layerMap.end()) {
+            DRW_Layer current;
+            current.name = m_currentLayerName;
+            m_writingCtx.layerMap[toUpperCase(m_currentLayerName)] =
+                m_currentLayerHandle;
+            m_pendingLayers.emplace_back(m_currentLayerHandle, current);
+        }
         std::vector<std::uint32_t> layerChildren = {DRW::DwgLayer0Handle};
         for (auto& p : m_pendingLayers) layerChildren.push_back(p.first);
         if (!emitControlObject(

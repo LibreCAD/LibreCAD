@@ -88,7 +88,7 @@ void LC_PropertiesProviderGraphicLayer::createActiveLayer(LC_PropertyContainer* 
         return e->getActiveLayer();
     };
     auto funSet = [](RS_Layer* l, RS_Graphic* e) -> void {
-        e->activateLayer(l, true);
+        e->activateChosenLayer(l);
     };
 
     createDirectDelegatedStorage<RS_Layer*, RS_Graphic>(funGet, funSet, graphic, activeLayerProperty);
@@ -190,9 +190,10 @@ void LC_PropertiesProviderGraphicLayer::createLayerType(LC_PropertyContainer* co
 }
 
 void LC_PropertiesProviderGraphicLayer::createVisible(RS_Graphic* graphic, LC_PropertyContainer* const cont) {
+    // checked when the layer is shown, as the eye of the Layer List and the Layer Tree is open
     auto funGet = [](const RS_Graphic* e) -> bool {
         const auto layer = e->getActiveLayer();
-        return layer->isFrozen();
+        return !layer->isFrozen();
     };
     auto funSet = []([[maybe_unused]] const bool& v, RS_Graphic* e) -> void {
         const auto layer = e->getActiveLayer();
@@ -213,8 +214,14 @@ void LC_PropertiesProviderGraphicLayer::createLocked(RS_Graphic* graphic, LC_Pro
         e->toggleLayerLock(layer);
     };
 
-    const LC_Property::Names names = {"layerLocked", tr("Locked"), tr("Defines whether active layer is locked or not")};
-    createDirectDelegatedBool<RS_Graphic>(cont, names, funGet, funSet, graphic);
+    // locking the current layer needs another layer that is not locked to take its place: without
+    // one the box is read-only, and says why (RS_LayerList::canLock())
+    const bool available = graphic->getLayerList()->canToggleLock(graphic->getActiveLayer());
+    const QString description = tr("Defines whether active layer is locked or not");
+    const LC_Property::Names names = {"layerLocked", tr("Locked"),
+                                      available ? description : description + "\n" + RS_LayerList::lockUnavailableText()};
+    auto* property = createDirectDelegatedBool<RS_Graphic>(cont, names, funGet, funSet, graphic);
+    property->setReadOnly(!available);
 }
 
 void LC_PropertiesProviderGraphicLayer::createPrintable(RS_Graphic* graphic, LC_PropertyContainer* const cont) {

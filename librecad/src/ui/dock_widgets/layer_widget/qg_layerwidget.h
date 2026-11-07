@@ -72,8 +72,12 @@ public:
     ~QG_LayerModel() override = default;
 
     Qt::ItemFlags flags(const QModelIndex& index) const override {
-        if (index.column() == 5) {
+        if (index.column() == COLUMN_NAME) {
             return Qt::ItemIsSelectable | Qt::ItemIsEnabled;
+        }
+        if (index.column() == COLUMN_LOCKED && !isLockAvailable(getLayer(index.row()))) {
+            // the lock icon of a layer that cannot be locked is shown disabled, and takes no click
+            return Qt::NoItemFlags;
         }
         return Qt::ItemIsEnabled;
     }
@@ -89,6 +93,7 @@ public:
     void setLayerList(const RS_LayerList* ll);
     RS_Layer* getLayer(int row) const;
     QModelIndex getIndex(RS_Layer* lay) const;
+    bool isLockAvailable(const RS_Layer* layer) const;
 
     RS_Layer* getActiveLayer() const {
         return m_activeLayer;
@@ -101,6 +106,8 @@ public:
 
 private:
     QList<RS_Layer*> m_listLayer;
+    /// the list the layers are of, to ask whether a layer can be locked; null if there is none
+    const RS_LayerList* m_layers{nullptr};
     QIcon m_iconLayerVisible;
     QIcon m_iconLayerHidden;
     QIcon m_iconLayerDefreeze;
@@ -127,6 +134,10 @@ public:
     void activateLayer(RS_Layer* layer, bool updateScroll = true) const;
 
     void layerActivated(RS_Layer* layer) override {
+        activateLayer(layer);
+    }
+    /// another layer became current, as the current one was locked
+    void activeLayerReplaced(RS_Layer* layer) override {
         activateLayer(layer);
     }
 
@@ -175,6 +186,8 @@ public
     void slotSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected) const;
     void slotUpdateLayerList();
     void activateLayer(int row) const;
+    /// Puts Lock all layers and Toggle layer lock in step with what the layer list would allow.
+    void updateLockActions() const;
 
 protected:
     void contextMenuEvent(QContextMenuEvent* e) override;

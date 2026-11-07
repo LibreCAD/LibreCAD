@@ -229,6 +229,9 @@ std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, const d
     RS_DEBUG->print("RS_Polyline::createVertex: %f/%f to %f/%f bulge: %f", m_data.endpoint.x, m_data.endpoint.y, v.x, v.y, bulge);
 
     // create line for the polyline:
+    // Bulges below the angular tolerance are straight. Otherwise a nearly
+    // flat arc can acquire an enormous radius and destabilize downstream
+    // geometry while remaining visually indistinguishable from its chord.
     if (isStraightBulge(bulge)) {
         entity = std::make_unique<RS_Line>(this, prepend ? v : m_data.endpoint, prepend ? m_data.startpoint : v);
     }

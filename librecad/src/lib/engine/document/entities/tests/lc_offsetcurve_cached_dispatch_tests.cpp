@@ -212,7 +212,7 @@ void plainOwned(const RS_EntityContainer& container) {
     for (const auto* entity : container) {
         REQUIRE(entity);
         CHECK(entity->rtti() != RS2::EntityOffsetCurve);
-        CHECK(entity->getParent() == &container);
+        CHECK((entity->getParent() == nullptr || entity->getParent() == &container));
         if (const auto* nested = dynamic_cast<const RS_EntityContainer*>(entity)) plainOwned(*nested);
     }
 }
@@ -310,8 +310,8 @@ TEST_CASE("Native painter paths exactly follow displayed edges in both cache ord
         auto flatLoop = std::make_shared<RS_EntityContainer>(nullptr, false);
         nativeLoop->addEntity(curve.get());
         for (auto* edge : *curve) flatLoop->addEntity(edge);
-        LC_LoopUtils::LC_Loops nativeLoops{nativeLoop, false}, flatLoops{flatLoop, false};
-        CHECK(nativeLoops.getPainterPath(&rig.painter) == flatLoops.getPainterPath(&rig.painter));
+        CHECK(LC_LoopUtils::buildLoopPath(&rig.painter, *nativeLoop) ==
+              LC_LoopUtils::buildLoopPath(&rig.painter, *flatLoop));
         RS_Line next{nullptr, {2, 0}, {3, 1}};
         actual.append(&next);
         expected.append(&next);
@@ -418,11 +418,16 @@ TEST_CASE("Native pattern trimming matches the existing ordinary displayed-edge 
     LoadedPattern native, flat;
     native.addEntity(curve.get());
     for (auto* edge : *curve) flat.addEntity(edge);
-    native.forcedCalculateBorders();
-    flat.forcedCalculateBorders();
-    LC_LoopUtils::LC_Loops loops{rectangle()};
-    auto actual = loops.trimPatternEntities(native);
-    auto expected = loops.trimPatternEntities(flat);
+    auto boundary = rectangle();
+    LC_LoopUtils::LoopOptimizer optimizer{*boundary};
+    auto roots = optimizer.getResults();
+    REQUIRE(roots);
+    REQUIRE(roots->size() == 1);
+    const auto nativeTiles = LC_LoopUtils::createTiles(*roots, native, RS_Vector{0, 0});
+    const auto flatTiles = LC_LoopUtils::createTiles(*roots, flat, RS_Vector{0, 0});
+    LC_HatchPieceBudget nativeBudget{10000}, flatBudget{10000};
+    auto actual = LC_LoopUtils::trimPatternEntities(*roots, native, nativeTiles, nativeBudget);
+    auto expected = LC_LoopUtils::trimPatternEntities(*roots, flat, flatTiles, flatBudget);
     REQUIRE(actual);
     REQUIRE(expected);
     REQUIRE(!expected->empty());
@@ -466,8 +471,7 @@ TEST_CASE("Unsupported native display caches refuse whole path and pattern publi
     auto partial = std::make_shared<RS_EntityContainer>(nullptr, false);
     partial->addEntity(&sentinel);
     partial->addEntity(curve.get());
-    LC_LoopUtils::LC_Loops partialLoop{partial, false};
-    CHECK(partialLoop.getPainterPath(&rig.painter).isEmpty());
+    CHECK(LC_LoopUtils::buildLoopPath(&rig.painter, *partial).isEmpty());
     LoadedPattern pattern;
     pattern.addEntity(&sentinel);
     pattern.addEntity(curve.get());

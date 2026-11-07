@@ -7455,6 +7455,11 @@ bool dwgReader::readDwgTables(DRW_Header &hdr, dwgBuffer *dbuf,
     }
   }
 
+  // the header names the current layer by handle (CLAYER): give it by name,
+  // as the DXF header does ($CLAYER)
+  if (const auto cl = layermap.find(hdr.clayerHandle); cl != layermap.end())
+    hdr.addStr("CLAYER", cl->second->name, 8);
+
   // parse text styles, start with style Control
   mit = ObjectMap.find(hdr.styleCtrl);
   if (mit == ObjectMap.end()) {

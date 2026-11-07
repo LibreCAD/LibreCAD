@@ -225,11 +225,6 @@ public slots:
     void slotImportBlock();
     /** shows an about dlg*/
     void showAboutWindow() const;
-    /**
-     * @brief slotUpdateActiveLayer
-     * update layer name when active layer changed
-     */
-    void slotUpdateActiveLayer() const;
     void toggleFullscreen(bool checked);
     void toggleMainMenu(bool toggle);
     void setPreviousZoomEnable(bool enable);

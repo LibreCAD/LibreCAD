@@ -47,6 +47,14 @@ public:
     virtual void layerActivated(RS_Layer*) {layerListModified(true);}
 
     /**
+     * Called when another layer was made current without the user choosing it (locking the current
+     * layer, which must not stay current, as a locked layer is not current), for the listeners that
+     * show the current layer. Unlike layerActivated() it does not mean that what is selected is
+     * to move to the layer.
+     */
+    virtual void activeLayerReplaced(RS_Layer*) {layerListModified(true);}
+
+    /**
      * Called when a new layer is added to the list.
      */
     virtual void layerAdded(RS_Layer*) {layerListModified(true);}

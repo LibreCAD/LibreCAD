@@ -531,6 +531,11 @@ protected:
     // linetype round-trip, instead of a default stub that loses them.
     DRW_Layer m_layer0;
     bool      m_haveLayer0{false};
+    // The layer the header's $CLAYER names, other than "0": the HEADER is
+    // written before the layers are added, so initHeaderControlHandles() gives
+    // it a handle that addLayer() then uses for it (0: none, CLAYER is "0").
+    std::string   m_currentLayerName;
+    std::uint32_t m_currentLayerHandle{0};
     std::vector<std::pair<std::uint32_t, DRW_Textstyle>> m_pendingStyles;
     std::vector<std::pair<std::uint32_t, DRW_UCS>>        m_pendingUcs;
     std::vector<std::pair<std::uint32_t, DRW_View>>      m_pendingViews;

@@ -116,6 +116,7 @@ public:
           ucsCtrl(h.ucsCtrl),
           vportCtrl(h.vportCtrl),
           vpEntHeaderCtrl(h.vpEntHeaderCtrl),
+          clayerHandle(h.clayerHandle),
           handSeed(h.handSeed),
           m_dwgHandseedBitOffset(h.m_dwgHandseedBitOffset) {
         h.curr = nullptr;
@@ -218,6 +219,7 @@ private:
         ucsCtrl = h.ucsCtrl;
         vportCtrl = h.vportCtrl;
         vpEntHeaderCtrl = h.vpEntHeaderCtrl;
+        clayerHandle = h.clayerHandle;
     }
 
     void swap(DRW_Header& other) noexcept {
@@ -239,6 +241,7 @@ private:
         swap(ucsCtrl, other.ucsCtrl);
         swap(vportCtrl, other.vportCtrl);
         swap(vpEntHeaderCtrl, other.vpEntHeaderCtrl);
+        swap(clayerHandle, other.clayerHandle);
         swap(handSeed, other.handSeed);
         swap(m_dwgHandseedBitOffset, other.m_dwgHandseedBitOffset);
     }
@@ -311,6 +314,10 @@ private:
     std::uint32_t ucsCtrl;
     std::uint32_t vportCtrl;
     std::uint32_t vpEntHeaderCtrl;
+    /// DWG CLAYER, the current layer by handle. parseDwg captures it, and the
+    /// DWG reader turns it into the "CLAYER" name once the LAYER table is read;
+    /// the DWG writer sets it to the handle it gives the layer $CLAYER names.
+    std::uint32_t clayerHandle {0};
     /// HANDSEED: the document's high-water-mark allocated handle.
     /// parseDwg captures it from the data stream; a fresh DWG encode writes a
     /// fixed-width placeholder and finalizes it after object handles exist.
