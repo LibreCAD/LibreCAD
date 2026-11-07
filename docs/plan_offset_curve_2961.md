@@ -22842,3 +22842,19 @@ This fixes setter correctness for legal repeated knots and validates the
 recorded periodic example; it does not establish broad repeated-knot direct
 offset/worker/cache/file coverage. Additional knot multiplicities and layouts,
 external-CAD validation, visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563ap. Qualify Repeated-knot Rational Spline Staged Import (2026-11-07)
+
+Added a document-import regression for a clamped degree-3 rational spline with
+an internal knot of multiplicity two at `0.4`. Both signed offsets at magnitude
+`0.05` produce one valid spline cache and promote through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. Each of the ten side/lane combinations compares
+the exact typed source definition and generated cache fingerprint. The focused
+Release test passes 1,195 assertions; `librecad_tests` builds and
+`git diff --check` passes.
+
+Test commit `b60c09c51` (`test(offset): qualify repeated knot spline
+imports`). This qualifies only the recorded cubic/rational control net, knot
+multiplicity and distance. Other repeated-knot multiplicities/layouts, source
+scales/transforms, external-CAD validation, visible-GUI acceptance, and
+exact-head CI remain open.
