@@ -45,6 +45,7 @@ defined matrix;
 W536 sign-reflected unequal-major-bulge qualification complete for its defined
 matrix;
 W537 source-picker constrained-fit eligibility correction complete;
+W538 explicit-control-net quadratic fit SPLINE import correction complete;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -112,41 +113,28 @@ variants, and the broader family/variant persistence matrix remains open.
 No exact-head CI result is claimed for W441-W490. Historical results from
 earlier heads are not inherited; query the current PR head after the roadmap
 checkpoint is pushed.
-The latest source-picker clarification (2026-11-06) is incorporated in
-section 440 and the typed-source eligibility work below: while replacing an
-offset source, the user can change the source-family selector first, then pick
-a matching live entity; the currently matched source remains selected and can
-be highlighted when present. The selector covers line, arc, circle, ellipse,
-spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
-distinct choice and must remain so through capture, worker dispatch, replacement,
-and persistence; it must not collapse into generic spline-points. These UI and
-identity requirements are implemented and covered by W359/W396/W397/W440/W474.
-This is not a request for another widget or another parabola entity branch.
-“Support all types” is an end-to-end requirement, not just an enumeration
-requirement: each advertised family/variant must be checked through ordinary
-offset generation, worker/cache validation and admission, edits, and real
-DXF/DWG round trips. Remaining work is to close that family/variant matrix and
-hide or atomically refuse variants those paths do not support. Do not equate
-the picker list with complete offset support.
-The latest source-widget request (2026-11-06) reconfirms that changing an
-existing offset's source must begin with an editable source-family choice:
-the candidate picker filters to that choice, and selecting a candidate
-replaces the source. The user must be able to change this choice as part of
-the replacement workflow, rather than being locked to the embedded source's
-current type. When that source still exists, it is shown selected/highlighted.
-The requested family inventory is ellipse, spline, spline-points, parabola,
-bounded hyperbola, line, arc, circle, and polyline. `LC_Parabola` remains a
-distinct choice even though it derives from `LC_SplinePoints`. These controls,
-cross-family replacement, highlighting, and parabola identity are already
-implemented and covered by W359/W396/W397/W440 and the nine-family integration
-matrix; do not add duplicate controls or another parabola implementation.
-Keep this behavior as a regression requirement. “All supported types” means
-families and variants that pass the production offset, worker/cache, and file
-round-trip paths, not merely types visible in the picker. The still-open work
-is per-variant worker/cache eligibility, persistence, and DXF/DWG behavior. A
-family appearing in the picker does not prove every geometry variant is
-supported; unsupported variants must refuse visibly without replacing the
-previous source or cache.
+The source-picker request is closed at the UI-contract level: while replacing
+an offset source, the user can change the source-family selector before
+picking a matching live entity; the current source remains selected and
+highlighted when it exists. The selector exposes the nine modeled families:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline. Parabola is a distinct kind and must stay distinct through
+capture, worker dispatch, replacement, and persistence. W359/W396/W397/W440/
+W474 and the nine-family integration matrix cover selector changes,
+highlighting, and replacement. W537 additionally filters tangent-constrained
+spline variants from eligible candidates while retaining both family choices
+and the worker refusal guard. Do not add another widget or parabola branch for
+this request.
+
+“Support all types” remains an end-to-end geometry obligation, not a picker
+enumeration claim. For each advertised family and geometry variant, qualify
+source capture, offset generation, worker/cache validation and admission,
+guarded replacement, failure/cancellation non-mutation, and applicable real
+DXF/DWG save/reopen behavior. Keep statically unsupported variants out of
+eligible candidates; for valid but unrepresentable inputs, refuse visibly and
+retain the previous source/cache. Continue closing the family/variant matrix
+below; a family appearing in the selector is not evidence of complete offset
+support.
 W436 adds marked XY display projections for straight non-axial LWPOLYLINE and
 legacy 2D POLYLINE imports, with typed offset-source refusal and DXF/DWG
 provenance round-trips. Legacy POLYLINE coverage now includes R14, R2000, and
@@ -21089,3 +21077,39 @@ constrained representations only. It does not implement tangent interpolation
 or make these variants valid offset sources; exact tangent semantics and
 native cache admission remain open. Push this receipt to PR #3193 and inspect
 exact-head checks.
+
+## 538. Preserve Explicit Control Nets for Tangent-Constrained Quadratic SPLINEs
+
+The importer previously mapped every unweighted degree-2 SPLINE to
+`LC_SplinePoints`, even when the file supplied an explicit control net and
+endpoint tangents. For this representation, keep the original control points,
+knots, fit points, fit tolerance, and constrained marker in `RS_Spline`; its
+NURBS control net is the exact drawable geometry. Keep the existing
+fit-point-only quadratic fallback unchanged because LibreCAD does not model
+its tangent-constrained interpolation. Keep both forms excluded from offset
+source selection and worker generation until tangent semantics are preserved
+and represented end to end.
+
+Regression coverage uses a four-control, degree-2 spline with an interior knot
+so it cannot be intercepted by the three-control conic classifier. Compare 33
+samples of the imported spline against the exact source control net, assert fit
+metadata and the constrained marker survive import, and rerun the existing
+fit-point-only constrained round-trip test to ensure it still falls back
+without claiming tangent preservation.
+
+Validation: Release `librecad_tests` build passes; the focused explicit-net
+case passes 109 assertions; `[spline][fit-points]` passes 1,347 assertions in
+8 cases; `[source][eligibility]` passes 577 assertions in 2 cases; and
+`git diff --check` passes. Product/test commit and plan receipt are pending.
+
+This is only an import-geometry correction. Current `RS_SplineData` stores a
+boolean rather than the actual endpoint vectors, so DXF/DWG export still loses
+those vectors, fit-point-only geometry remains approximate, and both
+tangent-constrained representations remain ineligible for editable offsets.
+Next, add a bounded representation slice: store and round-trip the actual
+start/end tangent vectors in both spline data types, include them in typed
+source serialization/cache identity, and define invalidation/transform behavior
+when fit points or control points are edited. Do not remove picker/worker
+refusals until tests prove source interpolation, displayed geometry, and
+offset snapshots agree for directed, reversed, single-end, and degenerate
+tangent cases across applicable DXF/DWG lanes.
