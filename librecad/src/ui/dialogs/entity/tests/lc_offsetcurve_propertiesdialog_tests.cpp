@@ -1892,6 +1892,66 @@ TEST_CASE("Actual native Edit Properties commits once and undo redo preserve nat
     }
 }
 
+TEST_CASE("Actual native Edit Properties cancellation discards prepared source-family replacements",
+          "[gui][dialog][offsetcurve][action][cancel][source][matrix]") {
+    RS_SplineData spline{2, false};
+    spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    spline.knotslist = {0, 0, 0, 1, 1, 1};
+    spline.weights = {1, .7, 1};
+    LC_SplinePointsData splinePoints{false, false};
+    splinePoints.useControlPoints = true;
+    splinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 9> sources{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
+        LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{splinePoints},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{4, 1}, {8, 1}}},
+        LC_OffsetSourceGeometry{RS_ArcData{{4, 1}, 2, .25, 1.5, false}},
+        LC_OffsetSourceGeometry{RS_CircleData{{4, 1}, 2}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}}
+    };
+
+    for (const auto& source : sources) {
+        CAPTURE(source.kind());
+        ActionFixture f;
+        auto entity = source.makeEntity();
+        REQUIRE(entity);
+        auto* candidate = entity.get();
+        f.graphic.addEntity(candidate);
+        entity.release();
+        const Snapshot before(*f.original);
+        f.drive([&](LC_DlgEntityProperties& dialog, unsigned opening) {
+            REQUIRE(opening == 1);
+            auto& widget = native(dialog);
+            auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+            auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+            REQUIRE(typeBox); REQUIRE(sourceBox);
+            const int typeIndex = typeBox->findData(static_cast<int>(source.kind()));
+            REQUIRE(typeIndex >= 0);
+            typeBox->setCurrentIndex(typeIndex);
+            int sourceIndex = -1;
+            for (int i = 0; i < sourceBox->count(); ++i)
+                if (sourceBox->itemData(i).toULongLong() == candidate->getId()) sourceIndex = i;
+            REQUIRE(sourceIndex >= 0);
+            sourceBox->setCurrentIndex(sourceIndex);
+            awaitPreparation(widget);
+            REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+            CHECK((widget.editedEntity()->sourceDefinition().has_value() ||
+                   widget.editedEntity()->hasEditableDefinition()));
+            before.exact(f.current());
+            button(dialog, QDialogButtonBox::Cancel);
+        });
+        CHECK(f.graphic.countUndoCycles() == 0);
+        CHECK(&f.current() == f.original);
+        before.exact(f.current());
+        CHECK_FALSE(f.current().sourceDefinition());
+        CHECK(f.current().hasEditableDefinition());
+    }
+}
+
 namespace {
 std::string dialogUndoHistory(const Graphic& graphic) {
     std::ostringstream out;
