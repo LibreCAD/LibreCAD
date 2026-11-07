@@ -5832,8 +5832,10 @@ TEST_CASE("degree-one periodic spline import follows output cache topology acros
             std::string(side == LC_CurveOffsetSide::Left ? "left-" : "right-") +
             fileFormat.suffix);
 #ifdef DWGSUPPORT
-        if (fileFormat.dwg) f::dwgFile(input, raw, fileFormat.version);
-        else f::binaryDxf(input, raw, fileFormat.version);
+        if (fileFormat.dwg) {
+            f::dwgFile(input, raw, fileFormat.version);
+            preserveTypedSourceDwg(input, "degree-one-periodic-" + input.filename().string());
+        } else f::binaryDxf(input, raw, fileFormat.version);
 #else
         f::binaryDxf(input, raw, fileFormat.version);
 #endif
@@ -5983,8 +5985,10 @@ TEST_CASE("nonuniform periodic spline knots preserve seam through staged import"
             std::string(side == LC_CurveOffsetSide::Left ? "left-" : "right-") +
             fileFormat.suffix);
 #ifdef DWGSUPPORT
-        if (fileFormat.dwg) f::dwgFile(input, raw, fileFormat.version);
-        else f::binaryDxf(input, raw, fileFormat.version);
+        if (fileFormat.dwg) {
+            f::dwgFile(input, raw, fileFormat.version);
+            preserveTypedSourceDwg(input, "nonuniform-periodic-" + input.filename().string());
+        } else f::binaryDxf(input, raw, fileFormat.version);
 #else
         f::binaryDxf(input, raw, fileFormat.version);
 #endif
@@ -6096,8 +6100,10 @@ TEST_CASE("repeated-knot rational spline imports preserve exact cache eligibilit
             std::string(side == LC_CurveOffsetSide::Left ? "left-" : "right-") +
             fileFormat.suffix);
 #ifdef DWGSUPPORT
-        if (fileFormat.dwg) f::dwgFile(input, raw, fileFormat.version);
-        else f::binaryDxf(input, raw, fileFormat.version);
+        if (fileFormat.dwg) {
+            f::dwgFile(input, raw, fileFormat.version);
+            preserveTypedSourceDwg(input, "repeated-knot-" + input.filename().string());
+        } else f::binaryDxf(input, raw, fileFormat.version);
 #else
         f::binaryDxf(input, raw, fileFormat.version);
 #endif
