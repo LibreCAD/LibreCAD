@@ -24067,3 +24067,29 @@ fail-closed guard while pursuing a rational-weight-conditioned tangent bound
 and an independent high-precision curve/offset comparison. The probe does not
 close W563cg, does not add a supported periodic weight profile, and adds no
 product-code claim.
+
+#### W563cl. Cross-check Periodic Seam Speed with a 256-bit Curve Oracle (2026-11-07)
+
+Added a test-only homogeneous de Boor evaluator using 256-bit binary
+multiprecision and high-precision finite differences, independent of the
+production `RS_Spline` jet path. It samples every nonzero knot span of the
+seven-control wrapped quadratic source for the alternating, gradual, and
+reversed-gradual `1e12` weight profiles, and compares the lowest sampled speed
+with LibreCAD's native jet at the same parameter.
+
+The observed candidates are approximately `2.33238e-10` at the periodic start,
+`2.55365e-10` near the end for the gradual ordering, and `2.48043e-10` near
+the end for the reverse ordering. Native-jet differences are at most about
+`4.1e-15`. The oracle test passes 21 assertions; the unchanged periodic worker
+matrix passes 1,708 assertions, and the broader existing worker/cache/spline
+selection passes 71,914 assertions. Release worker-test target builds and
+`git diff --check` passes. Product/test commit is recorded below when pushed.
+
+This is a high-precision sampled minimum, not a certified lower bound over
+each rational span, nor a high-precision offset/topology comparison. It
+confirms that the tested candidates are near-stationary and nonzero, but does
+not determine whether each side's `SingularOffset` or `AmbiguousRegularity`
+refusal is geometrically necessary. Keep the production guards and worker
+refusals. The follow-up must certify derivative minima and tangent error near
+the cut, then compare both offset sides against an independent high-precision
+geometry/topology oracle before changing eligibility.
