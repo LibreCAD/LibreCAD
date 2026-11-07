@@ -1677,6 +1677,17 @@ bool RS_Spline::setFitPointsWithTangents(
   }
 
   const size_t count = fitPoints.size();
+  // Keep interpolation arithmetic local; large drawing origins otherwise
+  // contaminate small tangent handles and the linear solve.
+  const RS_Vector origin = fitPoints.front();
+  std::vector<RS_Vector> localFitPoints;
+  localFitPoints.reserve(count);
+  for (const RS_Vector& point : fitPoints) {
+    const RS_Vector local = point - origin;
+    if (!finitePlanar(local)) return false;
+    localFitPoints.push_back(local);
+  }
+
   std::vector<double> parameters(count, 0.0);
   for (size_t i = 1; i < count; ++i) {
     const double chord = fitPoints[i].distanceTo(fitPoints[i - 1]);
@@ -1708,16 +1719,16 @@ bool RS_Spline::setFitPointsWithTangents(
   std::fill(knots.end() - degree - 1, knots.end(), 1.0);
 
   std::vector<RS_Vector> controls(controlCount, RS_Vector(false));
-  controls.front() = fitPoints.front();
-  controls[n] = fitPoints.back();
+  controls.front() = localFitPoints.front();
+  controls[n] = localFitPoints.back();
   if (hasStartTangent) {
     const RS_Vector direction = startTangent / startMagnitude;
-    controls[1] = fitPoints.front() +
+    controls[1] = localFitPoints.front() +
                   direction * ((knots[degree + 1] - knots[degree]) / degree);
   }
   if (hasEndTangent) {
     const RS_Vector direction = endTangent / endMagnitude;
-    controls[n - 1] = fitPoints.back() -
+    controls[n - 1] = localFitPoints.back() -
                       direction * ((knots[n + 1] - knots[n]) / degree);
   }
 
@@ -1753,8 +1764,8 @@ bool RS_Spline::setFitPointsWithTangents(
     const size_t span = findSpan(n, degree, parameters[fitIndex], knots);
     const std::vector<double> basis =
         basisFunctions(span, parameters[fitIndex], degree, knots);
-    rhsX[row] = fitPoints[fitIndex].x;
-    rhsY[row] = fitPoints[fitIndex].y;
+    rhsX[row] = localFitPoints[fitIndex].x;
+    rhsY[row] = localFitPoints[fitIndex].y;
     for (size_t j = 0; j <= degree; ++j) {
       const size_t controlIndex = span - degree + j;
       addCoefficient(row, controlIndex, basis[j]);
@@ -1791,6 +1802,10 @@ bool RS_Spline::setFitPointsWithTangents(
     if (!finitePlanar(controls[freeControls[i]])) {
       return false;
     }
+  }
+  for (RS_Vector& control : controls) {
+    control += origin;
+    if (!finitePlanar(control)) return false;
   }
 
   m_data.clearFitTangents();

@@ -586,6 +586,53 @@ TEST_CASE("RS_Spline tangent interpolation is stable at large coordinates and sh
   }
 }
 
+TEST_CASE("RS_Spline tangent interpolation covers representable short-span grid",
+          "[RS_Spline][fitpoints][tangents][conditioning][matrix]") {
+  for (const double firstSpan : {1.0e-4, 1.0e-6, 1.0e-8}) {
+    for (const RS_Vector offset : {RS_Vector{0.0, 0.0},
+                                   RS_Vector{1.0e8, -1.0e8}}) {
+      CAPTURE(firstSpan, offset.x, offset.y);
+      std::vector<RS_Vector> fitPoints{
+          offset,
+          offset + RS_Vector{firstSpan, firstSpan * 0.25},
+          offset + RS_Vector{2.0, 1.0},
+          offset + RS_Vector{4.0, 0.0}};
+      REQUIRE(fitPoints.front().distanceTo(fitPoints[1]) > 0.0);
+
+      RS_Spline spline{nullptr, RS_SplineData{3, false}};
+      REQUIRE(spline.setFitPointsWithTangents(
+          fitPoints, {1.0, 0.25}, {0.0, 0.0}));
+      REQUIRE(spline.validate());
+      LC_CurveJet startJet;
+      LC_CurveJet endJet;
+      REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right,
+                                    startJet));
+      REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left,
+                                    endJet));
+      const RS_Vector expectedDirection{1.0 / std::sqrt(1.0625),
+                                        0.25 / std::sqrt(1.0625)};
+      const RS_Vector actualDirection =
+          startJet.first / startJet.first.magnitude();
+      const double tangentHandle =
+          spline.getData().controlPoints[1].distanceTo(
+              spline.getData().controlPoints[0]);
+      const double coordinateScale = std::max(
+          {1.0, std::abs(offset.x), std::abs(offset.y)});
+      const double directionTolerance = std::max(
+          1e-7, 8.0 * std::numeric_limits<double>::epsilon() * coordinateScale /
+                    tangentHandle);
+      const double directionError = actualDirection.distanceTo(expectedDirection);
+      CAPTURE(directionTolerance, directionError);
+      CHECK(directionError <= directionTolerance);
+      CHECK(endJet.second.magnitude() < 1e-6);
+      for (const RS_Vector& fitPoint : fitPoints) {
+        CHECK(spline.getNearestPointOnEntity(fitPoint, true)
+                  .distanceTo(fitPoint) < 1e-5);
+      }
+    }
+  }
+}
+
 TEST_CASE("RS_Spline tangent interpolation rejects unsupported inputs atomically",
           "[RS_Spline][fitpoints][tangents]") {
   RS_Spline spline{nullptr, RS_SplineData{3, false}};
