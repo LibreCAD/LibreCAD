@@ -24322,7 +24322,10 @@ curve and its derivatives unchanged, while reducing interval-rounding growth
 in products used to enclose rational speed and curvature. If any normalized
 weight would underflow to zero, the method retains the original input scale;
 the change therefore does not turn a positive source weight into a zero-weight
-curve.
+curve. Each division is itself carried as an outward interval rather than
+rounded to a replacement `double`, preserving enclosure of the original
+stored weights. Correctness follow-up commit `4442f5bfc`
+(`fix(spline): enclose normalized weight scaling`).
 
 Added a translated wrapped quadratic spline regression with a gradual positive
 weight profile spanning `1e-6` through `1e6`. The test samples the tiny final
