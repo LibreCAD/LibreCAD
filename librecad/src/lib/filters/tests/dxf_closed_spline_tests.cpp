@@ -32,6 +32,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
 #include <cstdio>
 #include <filesystem>
 #include <fstream>
@@ -71,6 +72,19 @@ void ensureSettings() {
 std::string tempPath(const std::string &name) {
   return (std::filesystem::temp_directory_path() / ("closed_spline_" + name))
       .string();
+}
+
+void preserveTangentSplineDwg(const std::string &source,
+                              const std::string &fileName) {
+  const char *directory = std::getenv("LIBRECAD_TANGENT_SPLINE_DWG_DIR");
+  if (directory == nullptr || *directory == '\0') return;
+  std::error_code error;
+  std::filesystem::create_directories(directory, error);
+  REQUIRE_FALSE(error);
+  REQUIRE(std::filesystem::copy_file(
+      source, std::filesystem::path(directory) / fileName,
+      std::filesystem::copy_options::overwrite_existing, error));
+  REQUIRE_FALSE(error);
 }
 
 /** What a SPLINE record carries. */
@@ -1039,7 +1053,7 @@ TEST_CASE("Edited cubic fit-point SPLINE exports its current control net",
         1.0e-12);
 }
 
-TEST_CASE("Tangent-constrained cubic fit SPLINE falls back to its control net",
+TEST_CASE("Tangent-constrained cubic fit SPLINE preserves its verified DWG fit representation",
           "[dxf][dwg][filter][spline][fit-points][roundtrip]") {
   ensureSettings();
   SplineRecord source;
@@ -1065,17 +1079,12 @@ TEST_CASE("Tangent-constrained cubic fit SPLINE falls back to its control net",
     INFO(suffix);
     const std::string path = tempPath("tangent_cubic_fit_point_" + suffix);
     std::remove(path.c_str());
-    if (format != RS2::FormatDXFRW) {
-      RS_FilterDXFRW writer;
-      CHECK_FALSE(writer.fileExport(graphic, QString::fromStdString(path), format));
-      std::filesystem::remove(path);
-      CHECK_FALSE(std::filesystem::exists(path));
-      continue;
-    }
     {
       RS_FilterDXFRW writer;
       REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
     }
+    if (format != RS2::FormatDXFRW)
+      preserveTangentSplineDwg(path, "both-tangent-" + suffix + ".dwg");
     RS_Graphic reopened;
     std::vector<SplineRecord> written;
     const RS2::FormatType readFormat =
@@ -1089,11 +1098,14 @@ TEST_CASE("Tangent-constrained cubic fit SPLINE falls back to its control net",
       CHECK(written.front().m_tangentStart.x == source.m_tangentStart.x);
       CHECK(written.front().m_tangentEnd.y == source.m_tangentEnd.y);
     } else {
-      CHECK(written.front().m_fitPoints.empty());
+      CHECK(written.front().m_scenario == 2);
+      checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
+      CHECK(written.front().m_tangentStart.x == source.m_tangentStart.x);
+      CHECK(written.front().m_tangentEnd.y == source.m_tangentEnd.y);
+      CHECK(written.front().m_controlPoints.empty());
     }
-    CHECK_FALSE(written.front().m_controlPoints.empty());
-    if (format != RS2::FormatDXFRW)
-      CHECK(written.front().m_scenario == 1);
+    if (format == RS2::FormatDXFRW)
+      CHECK_FALSE(written.front().m_controlPoints.empty());
     RS_Spline *reopenedSpline = onlySpline(reopened);
     const auto reopenedCurve = splineCurve(*reopenedSpline, 100);
     REQUIRE(sourceCurve.size() == reopenedCurve.size());

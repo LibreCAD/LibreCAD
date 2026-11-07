@@ -32634,10 +32634,57 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
 
   const auto degree = s->getDegree();
   const auto &sourceData = s->getData();
-  if (m_dwgW && sourceData.fitTangentsConstrained) {
+  bool writeTangentFitPoints = false;
+  if (m_dwgW && sourceData.fitTangentsConstrained && degree == 3 &&
+      sourceData.type == RS_SplineData::SplineType::ClampedOpen &&
+      sourceData.savedOpenType == RS_SplineData::SplineType::ClampedOpen &&
+      !sourceData.m_closedFlag && !sourceData.m_periodicFlag &&
+      sourceData.fitPoints.size() >= 3 &&
+      sourceData.weights.size() == sourceData.controlPoints.size() &&
+      std::all_of(sourceData.weights.begin(), sourceData.weights.end(),
+                  [](double weight) { return weight == 1.0; }) &&
+      sourceData.fitStartTangent.magnitude() > 0.0 &&
+      sourceData.fitEndTangent.magnitude() > 0.0 &&
+      s->fitTangentsMatchCurve()) {
+    RS_SplineData reconstructedData{3, false};
+    RS_Spline reconstructed{nullptr, reconstructedData};
+    if (reconstructed.setFitPointsWithTangents(
+            sourceData.fitPoints, sourceData.fitStartTangent,
+            sourceData.fitEndTangent)) {
+      const auto samePoints = [](const std::vector<RS_Vector> &left,
+                                 const std::vector<RS_Vector> &right) {
+        if (left.size() != right.size()) return false;
+        for (std::size_t i = 0; i < left.size(); ++i) {
+          if (!left[i].valid || !right[i].valid ||
+              left[i].distanceTo(right[i]) > 1.0e-10)
+            return false;
+        }
+        return true;
+      };
+      const auto sameNumbers = [](const std::vector<double> &left,
+                                  const std::vector<double> &right) {
+        if (left.size() != right.size()) return false;
+        for (std::size_t i = 0; i < left.size(); ++i) {
+          if (!std::isfinite(left[i]) || !std::isfinite(right[i]) ||
+              std::abs(left[i] - right[i]) > 1.0e-12)
+            return false;
+        }
+        return true;
+      };
+      const auto &regenerated = reconstructed.getData();
+      writeTangentFitPoints = reconstructed.validate() &&
+          regenerated.degree == sourceData.degree &&
+          regenerated.type == sourceData.type &&
+          samePoints(regenerated.controlPoints, sourceData.controlPoints) &&
+          sameNumbers(regenerated.knotslist, sourceData.knotslist) &&
+          sameNumbers(regenerated.weights, sourceData.weights);
+    }
+  }
+  if (m_dwgW && sourceData.fitTangentsConstrained && !writeTangentFitPoints) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXFRW::writeSpline: refusing DWG export of a "
-                    "tangent-constrained spline without a lossless encoding");
+                    "tangent-constrained spline without a verified "
+                    "fit-point encoding");
     m_writeFailed = true;
     return;
   }
@@ -32770,7 +32817,21 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
         sameNumbers(splineData.weights, fitData.weights);
   }
 
-  if (writeFitPoints) {
+  if (writeTangentFitPoints) {
+    sp.m_scenario = 2;
+    sp.flags = 0x08;
+    sp.tolfit = splineData.fitTolerance;
+    const RS_Vector start = splineData.fitStartTangent /
+                            splineData.fitStartTangent.magnitude();
+    const RS_Vector end = splineData.fitEndTangent /
+                          splineData.fitEndTangent.magnitude();
+    sp.tgStart = DRW_Coord{start.x, start.y, start.z};
+    sp.tgEnd = DRW_Coord{end.x, end.y, end.z};
+    sp.nfit = static_cast<std::int32_t>(splineData.fitPoints.size());
+    sp.fitlist.reserve(splineData.fitPoints.size());
+    for (const RS_Vector &point : splineData.fitPoints)
+      sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0.0));
+  } else if (writeFitPoints) {
     sp.m_scenario = 2;
     sp.flags = 0x08; // planar, non-rational fit-point spline
     sp.tolfit = splineData.fitTolerance;
