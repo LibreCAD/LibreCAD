@@ -760,20 +760,23 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         bool sevenControlQuadratic;
         bool wideWeights = false;
         bool conditionedWeights = false;
+        bool shiftedConditionedWeights = false;
     };
     const std::vector<Variant> variants{
         {1, 1e-3, false}, {1, 1.0, false}, {1, 1e3, false},
         {2, 1.0, false}, {2, 1e-3, true}, {2, 1.0, true},
         {2, 1e3, true}, {2, 1.0, true, true},
-        {2, 1.0, true, false, true}, {3, 1.0, false}};
+        {2, 1.0, true, false, true},
+        {2, 1.0, true, false, true, true}, {3, 1.0, false}};
     for (const auto& variant : variants) {
         const int degree = variant.degree;
         const double scale = variant.scale;
         const bool sevenControlQuadratic = variant.sevenControlQuadratic;
         const bool wideWeights = variant.wideWeights;
         const bool conditionedWeights = variant.conditionedWeights;
+        const bool shiftedConditionedWeights = variant.shiftedConditionedWeights;
         CAPTURE(degree, scale, sevenControlQuadratic, wideWeights,
-                conditionedWeights);
+                conditionedWeights, shiftedConditionedWeights);
         RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
         const std::vector<RS_Vector> controls = sevenControlQuadratic
             ? std::vector<RS_Vector>{{0, 0}, {25, -15}, {55, -5}, {70, 20},
@@ -795,7 +798,9 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         periodic.setClosed(true);
         auto sourceData = periodic.getData();
         const std::vector<double> independentWeights = conditionedWeights
-            ? std::vector<double>{1e-6, 1e6, 1e-4, 1e4, 1e-2, 1e2, 1.0}
+            ? shiftedConditionedWeights
+                ? std::vector<double>{1e6, 1e-6, 1e4, 1e-4, 1e2, 1e-2, 1.0}
+                : std::vector<double>{1e-6, 1e6, 1e-4, 1e4, 1e-2, 1e2, 1.0}
             : wideWeights
             ? std::vector<double>{0.01, 100.0, 0.1, 10.0, 0.5, 2.0, 1.0}
             : sevenControlQuadratic
