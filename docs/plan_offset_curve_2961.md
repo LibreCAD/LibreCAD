@@ -51,9 +51,10 @@ export for constrained variants;
 W540 schema-3 tangent metadata persistence complete;
 W542/W543 cubic fit-point interpolation, W544 transform/reversal
 qualification, W545's bounded translation-conditioning probe, W546's one-ended
-DXF persistence checks, and W553's verified tangent-constrained cubic
-`RS_Spline` worker/cache and UI replacement path are complete for their
-recorded cases;
+DXF persistence checks, W553's verified unit-weight tangent-constrained cubic
+`RS_Spline` path, and W555's verified positive-weight rational tangent-cubic
+generation/cache/Properties replacement path are complete for their recorded
+cases;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21604,3 +21605,67 @@ worker-kernel suite passes 1,660,768 assertions across 45 cases.
 verified tangent spline sources`). This closes only the recorded cubic source,
 worker/cache, and replacement cases, not every tangent spline variant or the
 broader family/variant, exact-head CI, visible-GUI, or external-CAD gates.
+
+### W554. Reconcile Source-Family Picker Requirement (2026-11-06)
+
+The latest request confirms that the Properties source widget must allow the
+user to change the source family before picking a replacement, and that the
+family inventory must include every currently modeled offset-source family,
+including a distinct parabola choice. This requirement is already implemented
+and covered: the selector offers line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline; the active source is
+selected/highlighted when present; changing the family filters live candidates
+without mutating the current definition/cache; and replacement uses the guarded
+worker-backed path.
+
+No additional picker, parabola UI branch, or source-type coercion is needed.
+Keep parabola distinct from its `LC_SplinePoints` base class throughout source
+matching and persistence. Treat the request's “all supported types” as this
+family inventory only: it does not certify every geometric variant. Continue
+the remaining work through variant-specific capture, bounded offset generation,
+worker/cache admission, failure-atomic replacement, and applicable DXF/DWG
+round-trip tests; unsupported variants remain excluded or fail closed. Existing
+family-switch, candidate-filter, current-source highlighting, parabola identity,
+and replacement tests remain regression gates.
+
+This checkpoint records scope and avoids duplicate UI work; it closes no
+additional geometry-variant or acceptance item. Full root qmake6 validation
+was started after W553 but interrupted during application moc compilation
+before a build result; record a completed run separately before claiming that
+build lane complete.
+
+### W555. Admit Verified Rational Tangent-Constrained Cubic Splines (2026-11-06)
+
+Extended `RS_Spline::fitTangentsMatchCurve()` from the unit-weight subset to
+positive-weight rational cubic splines. Admission remains fail-closed: the
+existing clamped-open, planar, nonperiodic and cubic requirements apply; every
+weight must be finite and strictly positive; retained fit points must remain on
+the represented rational curve within the declared fit tolerance; and every
+constrained endpoint tangent must agree in direction with the rational curve's
+endpoint derivative. Rational weights do not change the derivative direction
+for positive endpoint weights, but the verifier checks the actual evaluated
+jet rather than assuming metadata consistency.
+
+The direct offset engine and shared Properties candidate gate now admit a
+consistent rational tangent cubic. The worker test exercises generation,
+reply encoding/decoding, and canonical cache validation; the Properties test
+selects the rational candidate and verifies that the committed source retains
+its weights and tangent metadata. Inconsistent fit points or tangent direction
+remain refused. Nonpositive/nonfinite weights, noncubic, non-clamped, closed or
+periodic splines, and tangent-constrained `LC_SplinePoints` remain unsupported.
+
+Validation: Release CMake builds of `librecad_tests` and
+`librecad_offset_worker_kernel_tests` succeed. Rational metadata consistency
+passes 18 assertions; the direct offset suite passes 42,077 assertions across
+31 cases; tangent Properties picker/replacement passes 250 assertions across
+two cases; and the worker-kernel suite passes 1,660,811 assertions across 46
+cases. `git diff --check` passes. Product commit `6c25ba82a` (`fix(offset):
+admit verified rational tangent splines`).
+
+This closes only the recorded positive-weight rational cubic generation,
+cache-validation, and Properties replacement cases. DXF/DWG save/reopen and
+second-save identity for rational tangent sources remain unqualified; DWG
+tangent encoding remains fail-closed pending a standards-verified
+representation. Broader degree/knot/fit-point conditioning, tangent
+`LC_SplinePoints`, and remaining family/variant plus visible-GUI, exact-head CI
+and external-CAD acceptance gates remain open.
