@@ -22904,3 +22904,26 @@ This qualifies only the recorded degree-3 rational layout, seam, distance,
 and both signs for worker generation/cache admission. Other knot sequences,
 degrees, weights, scales/distances, direct-engine and document-transaction
 cross-products, visible-GUI behavior, and external-CAD acceptance remain open.
+
+#### W563as. Independently Decode Periodic and Repeated-knot DWG Carriers (2026-11-07)
+
+Added opt-in DWG preservation to the staged-import regressions for degree-one
+periodic, nonuniform rational periodic, and repeated-knot rational spline
+caches. With `LIBRECAD_TYPED_SOURCE_DWG_DIR` set, both signed sides in R2000
+and R2018 are retained (12 files); normal test runs remain hermetic. The three
+focused staged-import cases pass 3,776 assertions.
+
+LibreDWG `dwgread 0.14` decoded all 12 files successfully. ODA File Converter
+27.1 converted all 12 to R2018 DXF; structural inspection found exactly one
+SPLINE and one `LC_OFFSET_CURVE` marker in each converted file. This confirms
+independent-reader acceptance and preservation of the native cache carrier and
+typed-source marker for these fixtures. It is not a geometry/control-net
+fidelity comparison or broad AutoCAD interoperability claim. Artifacts are
+under `/private/tmp/offset-periodic-nurb-dwg` and
+`/private/tmp/offset-periodic-nurb-oda`.
+
+The opt-in fixture-hook commit is `7e6664689` (`test(offset): preserve
+periodic spline DWG fixtures`). These checks qualify only the listed spline
+layouts and R2000/R2018 outputs; external geometry comparison, other CAD
+versions, visible-GUI acceptance, and remaining family/variant matrices stay
+open.
