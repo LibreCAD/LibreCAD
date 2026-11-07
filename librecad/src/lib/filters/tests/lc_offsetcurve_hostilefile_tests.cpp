@@ -5329,12 +5329,26 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
     }
 }
 
-TEST_CASE("tangent-constrained spline sources import through operation-8 validation in AC1032 DXF and DWG",
+TEST_CASE("tangent-constrained spline sources promote through operation-8 validation across file lanes",
           "[lc-offsetcurve][import-session][typed-source][spline-variant][tangents][rational][spline-points]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-rational-tangent-spline-import");
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
+
+    struct Format {
+        Lane lane;
+        bool dwg;
+        DRW::Version version;
+        const char* suffix;
+    };
+    const std::array<Format, 5> formats{{
+        {Lane::Binary14, false, DRW::AC1014, "r14-dxf"},
+        {Lane::Binary2000, false, DRW::AC1015, "r2000-dxf"},
+        {Lane::Eed2000, true, DRW::AC1015, "r2000-dwg"},
+        {Lane::Binary18, false, DRW::AC1032, "r2018-dxf"},
+        {Lane::Eed18, true, DRW::AC1032, "r2018-dwg"}
+    }};
 
     RS_SplineData splineData{3, false};
     splineData.controlPoints = {{0, 0}, {2, 3}, {6, 4}, {9, 0}};
@@ -5385,7 +5399,8 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
         FAIL("offset cache entity must be a spline or an exact line");
     }
 
-    for (const bool dwg : {false, true}) {
+    for (const auto& fileFormat : formats) {
+        const auto [lane, dwg, version, suffix] = fileFormat;
 #ifndef DWGSUPPORT
         if (dwg) continue;
 #endif
@@ -5394,7 +5409,13 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
         xd::Options encoding;
         if (dwg) {
             encoding.eed = true;
-            encoding.textEncoding = xd::TextEncoding::Utf16;
+            if (version == DRW::AC1015) {
+                encoding.textEncoding = xd::TextEncoding::Legacy;
+                encoding.legacyEncodedBytes = [](std::string_view text)
+                    -> std::optional<std::size_t> { return text.size(); };
+            } else {
+                encoding.textEncoding = xd::TextEncoding::Utf16;
+            }
         } else {
             encoding.asciiDxf = false;
         }
@@ -5417,15 +5438,15 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(variantName +
-            (dwg ? "-rational-tangent.dwg" : "-rational-tangent.dxf"));
+        const auto input = directory.file(variantName + "-" + suffix +
+            (dwg ? ".dwg" : ".dxf"));
 #ifdef DWGSUPPORT
-        if (dwg) f::dwgFile(input, cache, DRW::AC1032);
-        else f::binaryDxf(input, cache, DRW::AC1032);
+        if (dwg) f::dwgFile(input, cache, version);
+        else f::binaryDxf(input, cache, version);
 #else
-        f::binaryDxf(input, cache, DRW::AC1032);
+        f::binaryDxf(input, cache, version);
 #endif
-        const auto outcome = stagedImport(input, dwg ? Lane::Eed18 : Lane::Binary18);
+        const auto outcome = stagedImport(input, lane);
         REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
         REQUIRE(outcome.graphic);
         CHECK(outcome.admitted == 1);
@@ -5434,9 +5455,15 @@ TEST_CASE("tangent-constrained spline sources import through operation-8 validat
             f::sole(*outcome.graphic));
         REQUIRE(imported);
         REQUIRE(imported->sourceDefinition());
-        CHECK(values::encodeSourceGeometry(
-                  imported->sourceDefinition()->source) ==
-              values::encodeSourceGeometry(definition.source));
+        const auto expectedDefinition = values::encodeSourceDefinition(definition);
+        const auto importedDefinition = values::encodeSourceDefinition(
+            *imported->sourceDefinition());
+        REQUIRE(expectedDefinition);
+        REQUIRE(importedDefinition);
+        CHECK(QCborValue(*expectedDefinition).toCbor() ==
+              QCborValue(*importedDefinition).toCbor());
+        CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
+              RS_Spline::geometryFingerprint(cacheData));
         const auto& importedGeometry = imported->sourceDefinition()->source;
         REQUIRE(importedGeometry.kind() == sourceGeometry.kind());
         if (const auto* expected = std::get_if<RS_SplineData>(&sourceGeometry.value)) {
