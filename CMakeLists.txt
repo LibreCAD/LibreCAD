@@ -2736,6 +2736,7 @@ if (BUILD_TESTS)
         librecad/src/lib/creation/tests/lc_action_draw_circle_2points_radius_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_polyline_tests.cpp
         librecad/src/lib/creation/tests/lc_action_draw_spline_tests.cpp
+        librecad/src/lib/creation/tests/lc_action_draw_line_snake_commands_tests.cpp
         librecad/src/lib/creation/tests/lc_closedshapetoolstests.cpp
         librecad/src/cmd/tests/rs_commands_tests.cpp
         librecad/src/lib/engine/undo/tests/rs_undo_tests.cpp
