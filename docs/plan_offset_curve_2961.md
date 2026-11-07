@@ -22048,6 +22048,35 @@ Validation command:
 This still does not certify every source variant, persistence lane, or
 external-CAD/visible-GUI acceptance.
 
+#### W563h. Reconcile the Requested Source-type Picker Behavior (2026-11-07)
+
+The requested widget behavior is: choose/change the source-curve family in the
+Properties dialog, then pick a drawing entity of that family; the candidate
+list refreshes to the newly chosen family, and an existing active source is
+shown as selected/highlighted when it is eligible. “All supported types” means
+the nine modeled source kinds listed in W563a: line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. The current
+widget and the family-transition tests already implement and exercise this
+behavior; parabola is a distinct choice and must not collapse into its
+`LC_SplinePoints` base type. No second widget, type control, or parabola-only
+UI branch is needed.
+
+Evidence: `Native source picker changes family and replaces the source with a
+typed curve` covers changing the requested family before choosing a candidate;
+`Native source picker replaces every modeled source family without filter side
+effects` covers all nine families and candidate-filter purity; the W563b real
+Properties transaction matrix covers Accept/Undo/Redo; the W563d matrix covers
+Cancel atomicity; W563e/W563g cover malformed or lossy candidates. The current
+source-picker union passes 6,791 assertions across 9 Catch2 cases on the
+current product tree.
+
+Remaining implementation/validation work is not another selector: continue
+the W563 inventory of per-family variants through direct offset, worker/cache
+generation, replacement transactions, and DXF/DWG persistence; retain tested
+refusals for unsupported variants; and keep visible-GUI and independent-CAD
+acceptance as separate gates. Update the matrix if source-model support changes
+or a new family is added.
+
 This closes the requested UI type-switch and representative nine-family
 selection/replacement behavior. The follow-up requirement is specifically to
 change the source type as part of choosing a new source, then pick an entity of
@@ -22104,3 +22133,26 @@ every advertised family to have a passing end-to-end representative, every
 known unsupported variant to have a tested refusal, and parabola to remain
 distinct from generic spline-points throughout selection, worker transport,
 and persistence. Visible GUI and independent-CAD checks remain separate gates.
+
+#### W563i. Reopen Resolution and Highlight Across Source Families (2026-11-07)
+
+Extended `Native source picker replaces every modeled source family without
+filter side effects` to reconstruct the Properties widget after each accepted
+replacement. For all nine modeled families (including both control-point and
+fit-point spline-points fixtures), the reconstructed widget must resolve the
+committed source family, select the corresponding drawing entity in the source
+candidate control, enable source selection, and highlight that entity when the
+source-pick button is activated. This verifies the existing-source UX after
+reopening Properties, not only immediately after replacement.
+
+Validation: focused case passes 2,881 assertions; the complete
+`[gui][dialog][offsetcurve][source]` Release union passes 6,861 assertions
+across 9 cases; the `librecad_tests` target builds and `git diff --check`
+passes. Test commit `c4e167bf2` (`test(offset): resolve and highlight typed
+sources on reopen`).
+
+This closes existing-source resolution and explicit selection/highlighting for
+the representative family fixtures. It does not close exhaustive supported
+variant combinations, direct canvas-pick transactions for every family,
+family-by-format persistence coverage, visible GUI acceptance, or
+independent-CAD acceptance; those remain open under W563.
