@@ -6783,14 +6783,17 @@ TEST_CASE("single-cache internal-knot rational spline imports as native offset c
     rational.controlPoints = {{0, 0}, {1, .25}, {3, .25}, {4, 0}};
     rational.knotslist = {0, 0, 0, .5, 1, 1, 1};
     rational.weights = {1, .9, 1.1, 1};
+    const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
+    const double signedDistance = side == LC_CurveOffsetSide::Left ? .05 : -.05;
+    CAPTURE(static_cast<int>(side), signedDistance);
     const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{rational}, .05, 1e-4, false};
+        LC_OffsetSourceGeometry{rational}, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
     const auto options = LC_OffsetWorkerTolerance::directOptions(
-        *source, .05, definition.relativeTolerance).value();
+        *source, std::abs(signedDistance), definition.relativeTolerance).value();
     const auto generated = LC_CurveOffset::buildDirectBranches(*source,
-        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .05), options,
+        LC_CurveOffset::makeSideRequest(side, std::abs(signedDistance)), options,
         LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
     auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options,
@@ -6841,7 +6844,8 @@ TEST_CASE("single-cache internal-knot rational spline imports as native offset c
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(std::string("single-cache-") + suffix);
+        const auto input = directory.file(std::string(side == LC_CurveOffsetSide::Left
+            ? "single-cache-left-" : "single-cache-right-") + suffix);
 #ifdef DWGSUPPORT
         if (dwg) f::dwgFile(input, cache, version);
         else f::binaryDxf(input, cache, version);
