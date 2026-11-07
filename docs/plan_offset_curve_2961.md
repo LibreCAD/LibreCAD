@@ -49,9 +49,9 @@ W538 explicit-control-net quadratic fit SPLINE import correction complete;
 W539 tangent-vector model and DXF preservation complete with fail-closed DWG
 export for constrained variants;
 W540 schema-3 tangent metadata persistence complete;
-W542/W543 cubic fit-point interpolation and W544 transform/reversal
-qualification are complete for bounded open planar `RS_Spline` inputs with
-one or two endpoint tangent directions;
+W542/W543 cubic fit-point interpolation, W544 transform/reversal
+qualification, and W545's bounded translation-conditioning probe are complete
+for selected open planar `RS_Spline` tangent cases;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21358,3 +21358,23 @@ does not validate transformed schema-3 round trips, near-degenerate knot
 conditioning, explicit-control-net tangent consistency, worker/cache identity
 for tangent-constrained splines, or DWG tangent writing. Push the qualification
 and refresh exact-head CI.
+
+### W545 Completion Receipt
+
+Added a translation-conditioning regression for a short first fit-point span
+(`1e-6`) at a large world-coordinate offset (`1e8`). The constrained cubic
+interpolator succeeds, validates its result, and produces control points that
+match the local solution translated to the large coordinates within `1e-4`.
+This checks one meaningful short-span/large-origin case and demonstrates no
+need for coordinate recentering for that fixture; it is not a general
+ill-conditioning bound or a guarantee for arbitrarily close/repeated points.
+
+Validation: Release `librecad_tests` builds; the new conditioning case passes 11
+assertions; `[fitpoints][tangents]` passes 93 assertions across 5 cases; and
+`[RS_Spline]` passes 505 assertions across 20 cases. Product test commit
+`de469860d` (`test(spline): cover tangent interpolation conditioning`).
+`git diff --check` passes. Push the test and roadmap update, then query the new
+exact PR head. Remaining tangent gates include more extreme/degenerate knot
+parameterization, control-net plus fitpoint/tangent agreement, transformed
+schema-3 round trips and source/cache identity, and tangent-aware worker/cache
+support or continued explicit refusal; DWG writing remains fail-closed.
