@@ -21992,22 +21992,25 @@ qualifies modal cancellation after successful preparation for representative
 variants; helper failure, stale document mutation, and all-variant atomicity
 remain covered by their existing focused tests or open W563 inventory.
 
-#### W563e. Projected OCS Picker Exclusions (2026-11-07)
+#### W563e. Unsupported Geometry Picker Exclusions (2026-11-07)
 
 Extended the unsupported-variant Properties test with both a polyline carrying
 `LibreCAD_POLYLINE_OCS` provenance and an ellipse carrying
 `LibreCAD_CONIC_OCS` plus arbitrary-OCS metadata. Switching to the matching
 family confirms neither lossy projected entity is offered as a source, the
 appropriate empty/embedded-source placeholder is shown, and neither entity is
-selected. This ties source-capture refusal for projected OCS polylines and
-conics to the actual picker eligibility path.
+selected. The same picker case now includes a malformed degree-2 spline with
+incorrect knot/control cardinality and nonplanar spline-points data. These are
+also excluded from their respective family buckets. This ties the source
+model's OCS provenance, finite planar point, and spline-shape validation
+boundaries to actual picker eligibility.
 
-The focused unsupported-variant test passes 541 assertions; `librecad_tests`
-builds and `git diff --check` passes. Product/test commit `522a0e535`
-(`test(offset): reject projected conic picker sources`) extends `41ae68512`
-(`test(offset): reject lossy polyline picker sources`). These cases qualify
-the two OCS projection exclusions; other source-specific eligibility and full
-external acceptance remain open.
+The focused unsupported-variant test passes 551 assertions; `librecad_tests`
+builds and `git diff --check` passes. Product/test commit `b75f04179`
+(`test(offset): reject malformed spline picker sources`) extends
+`522a0e535` (`test(offset): reject projected conic picker sources`) and
+`41ae68512` (`test(offset): reject lossy polyline picker sources`). Other
+source-specific eligibility and full external acceptance remain open.
 
 #### W563f. Combined Source-picker Properties Requalification (2026-11-07)
 
@@ -22024,12 +22027,12 @@ was `QT_QPA_PLATFORM=offscreen
 
 #### W563g. Source-picker Union After Conic OCS Exclusion (2026-11-07)
 
-Reran the same complete source-picker Properties union after adding projected
-conic OCS exclusion coverage. All 9 matching Catch2 cases pass with 6,255
-assertions on the current product tree. This supersedes the W563f assertion
-total; the earlier receipt remains as the preceding checkpoint. The conic and
-polyline OCS cases both run in the empty-bucket test, together with the
-unsupported spline and hyperbola variants.
+Reran the same complete source-picker Properties union after adding conic and
+polyline projected-OCS, malformed-spline, and nonplanar spline-points
+exclusions. All 9 matching Catch2 cases pass with 6,265 assertions on the
+current product tree. This supersedes the W563f and preceding W563g assertion
+totals; those receipts remain as checkpoints. The expanded empty-bucket case
+also includes unsupported hyperbola and tangent variants.
 
 Validation command:
 `QT_QPA_PLATFORM=offscreen /private/tmp/LibreCAD-offset-merge-build/librecad_tests '[gui][dialog][offsetcurve][source]'`.
