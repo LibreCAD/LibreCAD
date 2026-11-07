@@ -1978,6 +1978,74 @@ TEST_CASE("polyline cache promotion preserves mixed segment orientation and offs
     }
 }
 
+TEST_CASE("open polyline worker generation and cache admission follow output topology",
+          "[lc-offsetcurve][worker-kernel][source-cache][polyline][open][side]") {
+    const double pi = std::acos(-1.0);
+    const std::array<LC_OffsetPolylineData, 4> variants{
+        LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, pi, 0, false}, RS_LineData{{2, 0}, {2, 2}}}},
+        LC_OffsetPolylineData{{2, 2}, {0, 0}, false,
+            {RS_LineData{{2, 2}, {2, 0}}, RS_ArcData{{1, 0}, 1, 0, pi, true}}},
+        LC_OffsetPolylineData{{0, 0}, {4, 2}, false,
+            {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
+             RS_LineData{{2, 2}, {4, 2}}}},
+        LC_OffsetPolylineData{{1, 0}, {-1, 0}, false,
+            {RS_ArcData{{0, 0}, 1, 0, pi / 2, false},
+             RS_ArcData{{0, 0}, 1, pi / 2, pi, false}}}
+    };
+
+    for (std::size_t variant = 0; variant < variants.size(); ++variant) {
+        const LC_OffsetSourceGeometry source{variants[variant]};
+        CAPTURE(variant);
+        REQUIRE(source.isWellFormed());
+        for (const double signedDistance : {-.25, .25}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const req::Request generationRequest{token,
+                req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+
+            const auto generatedWire = result::encode(generationReply, generationRequest);
+            REQUIRE(generatedWire);
+            const auto generatedRoundTrip = result::decode(*generatedWire, generationRequest);
+            REQUIRE(generatedRoundTrip);
+
+            RS_SplineData candidate;
+            const bool singleSpline = generated.ordinary.size() == 1 &&
+                std::holds_alternative<RS_SplineData>(generated.ordinary.front());
+            if (singleSpline) {
+                candidate = std::get<RS_SplineData>(generated.ordinary.front());
+            } else if (const auto* segment =
+                           std::get_if<req::Segment>(&generated.ordinary.front())) {
+                candidate.degree = 1;
+                candidate.controlPoints = {segment->start, segment->end};
+                candidate.knotslist = {0, 0, 1, 1};
+                candidate.weights = {1, 1};
+            }
+
+            const req::Request validationRequest{token,
+                req::ValidateSourceCache{candidate, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            CHECK(validated.engineRuns == 1);
+            if (singleSpline && validated.refusal == LC_OffsetCurveRefusal::None) {
+                CHECK(validated.changed);
+            } else {
+                CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                CHECK_FALSE(validated.changed);
+                CHECK_FALSE(validated.curve);
+            }
+            const auto validationWire = result::encode(validationReply, validationRequest);
+            REQUIRE(validationWire);
+            CHECK(result::decode(*validationWire, validationRequest));
+        }
+    }
+}
+
 TEST_CASE("closed polyline cache promotion or refusal covers line and arc chains on both sides",
           "[lc-offsetcurve][worker-kernel][source-cache][polyline]") {
     const double quarterTurn = M_PI / 2.0;

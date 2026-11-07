@@ -22267,3 +22267,44 @@ This requalification does not close W563's remaining per-variant direct,
 worker, cache-promotion and import cross-products, visible GUI acceptance, or
 independent-CAD interoperability checks. External-fixture skips remain an
 explicit validation gap.
+
+#### W563n. Reconcile the Reaffirmed Type-Changing Source Picker Request (2026-11-07)
+
+The latest request reiterates that the Properties source widget must allow
+changing the selected source curve's type and support every modeled source
+family, explicitly including parabola. This is already the current product
+contract and implementation: the family selector covers line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline; a
+replacement pick is constrained to the selected family; and an existing source
+is resolved and highlighted in the drawing. Parabola remains a distinct source
+choice ahead of its `LC_SplinePoints` base type. Do not add another selector or
+parabola-only branch.
+
+Evidence already recorded in W563a-W563j includes the nine-family typed
+replacement matrix, filter purity, parabola identity, source resolution and
+highlighting after reopen, eligibility variants, and five-format persistence.
+The merged-tree source-picker suite still passes 6,883 assertions across 10
+cases. These checks establish the requested widget behavior; they do not close
+W563's remaining per-variant direct/worker/cache/import cross-products, visible
+GUI acceptance, or independent-CAD interoperability. Continue those gates
+without reopening the completed selector/parabola scope.
+
+#### W563o. Open-polyline Worker Generation and Cache Admission (2026-11-07)
+
+Added a worker-kernel matrix for four open-polyline layouts: reversed
+line/arc orientation, a three-line chain, and two consecutive arc segments,
+with both signed offset distances. Every operation-7 result must be complete,
+nonempty, and survive request-bound transport encode/decode. Each case then
+submits an operation-8 cache candidate against the original tagged polyline
+definition. Exact single-spline candidates may be admitted; multi-entity or
+other-entity output topologies must be refused without changing the cache.
+This explicitly separates ordinary output success from proof that one native
+spline can exactly represent the result.
+
+Validation: `librecad_offset_worker_kernel_tests
+'[lc-offsetcurve][worker-kernel][source-cache][polyline][open][side]'` passes
+232 assertions in 1 case; the broader `[polyline]` selection passes 82,876
+assertions across 7 cases. The focused worker-kernel test target builds on the
+merged Release tree. This closes the tested open-polyline worker generation and
+cache-admission cases only; other per-variant direct/cache/import cross-products,
+visible GUI acceptance, and independent-CAD checks remain open.
