@@ -23333,3 +23333,31 @@ round-trip tolerance, not exact CAD-kernel equivalence. Test commit
 `f226c8a92` (`test(dwg): broaden periodic spline-point layouts`). Other
 periodic knot vectors/weights and visible-GUI and exact-head CI acceptance
 remain open.
+
+#### W563bg. Reconcile Latest Source-curve Type-switch Request (2026-11-07)
+
+The latest request is satisfied by the existing source replacement widget and
+must not be interpreted as requiring another widget or a parabola-only patch.
+When replacing a source, the user can select its curve family before selecting
+the drawing entity. The selector is derived from the canonical
+`LC_OffsetSourceGeometry::SupportedKinds` list and includes all nine modeled
+families: line, arc, circle, ellipse, `RS_Spline`, `LC_SplinePoints`, distinct
+`LC_Parabola`, bounded `LC_Hyperbola`, and `RS_Polyline`. Choosing a family
+filters candidates; choosing a matching candidate replaces the typed source.
+An existing source remains resolvable and highlightable, and parabola must be
+classified before its `LC_SplinePoints` base class.
+
+The implementation and automated acceptance evidence are already recorded in
+W563au: the selector is compared entry-by-entry with `SupportedKinds`, and the
+replacement matrix covers type switching, candidate filtering, typed
+replacement, current-source resolution/highlighting, and parabola identity.
+The focused selector test passed 2,890 assertions; commits
+`f4aff4074` (selector inventory assertion) and `dde484113` (spline/polyline
+picker variants) are recorded above. Therefore no new product-code slice is
+opened by this repeated request. The visible-GUI gate remains open.
+
+Scope boundary: selector membership means a family can be selected as a
+replacement candidate; it does not claim every geometric variant works through
+offset construction, native worker/cache, import/export, or DXF/DWG round-trip.
+Those per-variant gaps remain in their respective roadmap matrices. Reject an
+unsupported candidate without mutating the current source or its cache.
