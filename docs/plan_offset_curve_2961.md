@@ -69,8 +69,10 @@ Current implementation order for the remaining “all supported types” work:
    failure. The worker cache now canonicalizes bounded ordinary line/cubic
    branches, including disconnected branches, into degree-3 SPLINE data with
    full-multiplicity boundary knots; degree-1 segments are exactly elevated.
-   Other layouts remain fail-closed until their representation and exact
-   operation-8 validation are implemented; never flatten them lossily.
+   The raw DXF/DWG spline-carrier reader accepts the same bounded
+   full-multiplicity layout, and staged import promotes only after operation-8
+   validates the exact source/cache pair. Other layouts remain fail-closed;
+   never flatten them lossily.
 4. **Properties interaction:** the existing family selector is complete.
    Verify family change refreshes candidates before picking, current-source
    highlighting survives an unsuccessful or cancelled replacement, and a
@@ -80,7 +82,10 @@ Current implementation order for the remaining “all supported types” work:
    source and cache through the applicable DXF/DWG versions, then reopen and
    regenerate/validate the cache. Assert dynamic type, parameters, weights,
    knots, orientation, and geometry as applicable; unsupported file lanes must
-   fail visibly without replacing existing state.
+   fail visibly without replacing existing state. Fixture-generated carrier
+   import/promotion is covered for one open mixed-bulge polyline through R14,
+   R2000, and R2018 DXF plus R2000 and R2018 DWG; native product export and
+   broader branch/source matrices remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24386,3 +24391,27 @@ multi-branch outputs, not every worker result or source variant. The
 cusp-rich positive-side periodic cases still fail closed; continuous root and
 topology certification, broader DXF/DWG import/persistence matrices, visible
 GUI, independent CAD acceptance, and exact-head CI remain open.
+
+#### W563cs. Promote Disconnected Worker Caches from DXF/DWG Carriers (2026-11-07)
+
+Commit `0151b3e3d` extends raw spline-carrier parsing to accept bounded
+clamped degree-1/degree-3 polynomial Bezier chains whose interior knots have
+multiplicity equal to the degree (joined spans) or degree+1 (disconnected
+spans). It checks knot/control cardinality, finite strictly increasing knot
+groups, endpoint multiplicity, control-count consistency, and span/vertex
+limits before allocating copied geometry. Malformed groups and over-budget
+inputs still refuse without repairing the carrier.
+
+The open mixed-bulge polyline staged-import test now constructs its carrier from
+the joined worker's full canonical cache, not one selected branch. The
+representable multi-branch case promotes only after operation-8 validation and
+preserves the typed source across fixture-generated R14/R2000/R2018 DXF and
+R2000/R2018 DWG carriers. Release validation: raw carrier suite 32,923
+assertions/34 cases; focused five-lane mixed-bulge import 2,185 assertions;
+polyline cache-promotion/persistence union 3,255 assertions/2 cases; target
+`librecad_tests` builds and `git diff --check` passes.
+
+This is carrier-reader and staged-import coverage, not native `RS_FilterDXFRW`
+export/reopen coverage or universal disconnected-cache support. Other spline
+degrees/weights, non-polyline source variants, visible GUI, independent CAD,
+and exact-head CI remain open. Implementation commit: `0151b3e3d`.
