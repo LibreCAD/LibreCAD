@@ -49,8 +49,9 @@ W538 explicit-control-net quadratic fit SPLINE import correction complete;
 W539 tangent-vector model and DXF preservation complete with fail-closed DWG
 export for constrained variants;
 W540 schema-3 tangent metadata persistence complete;
-W542/W543 cubic fit-point interpolation is implemented for bounded open planar
-`RS_Spline` inputs with one or two endpoint tangent directions;
+W542/W543 cubic fit-point interpolation and W544 transform/reversal
+qualification are complete for bounded open planar `RS_Spline` inputs with
+one or two endpoint tangent directions;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21331,3 +21332,29 @@ or retain explicit writer refusal; and only then qualify tangent-constrained
 picker, worker generation, cache promotion, and DXF/DWG round trips. Other
 family/variant matrices and visible-GUI/external-CAD gates remain open.
 Push this implementation and roadmap receipt, then query exact-head CI.
+
+### W544 Completion Receipt
+
+Added a transform/reversal regression for a cubic fit-point spline with one
+constrained endpoint and one natural endpoint. It checks endpoint direction
+after rotation and nonuniform scale, zero second derivative at the
+unconstrained endpoint, transformed raw tangent metadata, fit-point retention,
+and reversal's endpoint swap/negation with the natural condition moving to the
+opposite end. Direction assertions compare normalized jets because affine
+transforms change derivative magnitude while preserving tangent orientation.
+
+Existing refusal evidence was also rechecked in the current tree: constrained
+`LC_SplinePoints` sources are not listed as selectable candidates, direct
+generation returns `InvalidSource`, and the worker refuses both generation and
+cache validation rather than certifying the untangent-aware display
+approximation. This is the planned explicit-refusal alternative; it does not
+make that approximation exact.
+
+Validation: Release `librecad_tests` builds; the new transform case passes 18
+assertions; `[fitpoints][tangents]` passes 82 assertions across 4 cases; and
+`[RS_Spline]` passes 494 assertions across 19 cases. Product test commit
+`235044130` (`test(spline): qualify tangent transforms and reversal`). This
+does not validate transformed schema-3 round trips, near-degenerate knot
+conditioning, explicit-control-net tangent consistency, worker/cache identity
+for tangent-constrained splines, or DWG tangent writing. Push the qualification
+and refresh exact-head CI.
