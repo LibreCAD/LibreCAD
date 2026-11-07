@@ -778,7 +778,9 @@ std::unique_ptr<OffsetSource> makeSource(const RS_Entity& entity) {
 struct SourceScale {
     double feature{0.0};
     double coordinate{0.0};
+    // Position comparisons include the drawing origin; tangent checks do not.
     double numericFloor{0.0};
+    double tangentFloor{0.0};
 };
 
 bool computeScale(const OffsetSource& source, const double distanceMagnitude, SourceScale& scale) {
@@ -801,6 +803,7 @@ bool computeScale(const OffsetSource& source, const double distanceMagnitude, So
     scale.feature = std::max(diagonal, std::abs(distanceMagnitude));
     scale.coordinate = std::max(coordinate, scale.feature);
     scale.numericFloor = 64.0 * g_eps * std::max(scale.coordinate, std::numeric_limits<double>::min());
+    scale.tangentFloor = 64.0 * g_eps * std::max(scale.feature, std::numeric_limits<double>::min());
     return std::isfinite(scale.feature) && std::isfinite(scale.coordinate) && scale.feature > 0.0;
 }
 
@@ -914,14 +917,14 @@ public:
             // tangent must be long enough for that to stay within an eighth of the
             // merge tolerance. Where it is not yet, the cut runs on as far as the
             // curve moves little, and the offset rounds its turn as a corner.
-            const double precise = radius * scale.numericFloor / (width * tolerance.nodeMerge);
+            const double precise = radius * scale.tangentFloor / (width * tolerance.nodeMerge);
             return (speed(at(h), inward) >= precise) ? h : longest(moves);
         };
 
         std::vector<std::pair<double, double>> cuts;
         // a tangent no longer than rounding can make it in the span vanishes
         const auto vanishing = [&](const size_t span) {
-            return 16.0 * scale.numericFloor / (breaks[span + 1] - breaks[span]);
+            return 16.0 * scale.tangentFloor / (breaks[span + 1] - breaks[span]);
         };
         for (size_t span = 0; span + 1 < breaks.size(); ++span) {
             const double a = breaks[span];

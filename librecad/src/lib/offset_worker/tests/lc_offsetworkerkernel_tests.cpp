@@ -145,7 +145,7 @@ TEST_CASE("high precision oracle samples conditioned periodic spline tangent min
                                        RS_Vector{55, -5}, RS_Vector{70, 20},
                                        RS_Vector{50, 45}, RS_Vector{15, 50},
                                        RS_Vector{-15, 25}})
-            source.addControlPoint(point);
+            source.addControlPoint({point.x + 1000.0, point.y - 2000.0});
         source.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
         REQUIRE(source.validate());
         source.setClosed(true);
@@ -161,6 +161,54 @@ TEST_CASE("high precision oracle samples conditioned periodic spline tangent min
         const std::size_t lastControl = data.controlPoints.size() - 1;
         const SplineOracle domainStart{data.knotslist[data.degree]};
         const SplineOracle domainEnd{data.knotslist[lastControl + 1]};
+        RS_Vector hullLow = data.controlPoints.front();
+        RS_Vector hullHigh = hullLow;
+        for (const RS_Vector& point : data.controlPoints) {
+            hullLow = RS_Vector::minimum(hullLow, point);
+            hullHigh = RS_Vector::maximum(hullHigh, point);
+        }
+        const double feature = std::hypot(hullHigh.x - hullLow.x,
+                                          hullHigh.y - hullLow.y);
+        const double tangentFloor = 64.0 * std::numeric_limits<double>::epsilon() * feature;
+        double certifiedSpeedSquared = std::numeric_limits<double>::infinity();
+        std::size_t certifiedBoxes = 0;
+        bool regularityCertified = true;
+        struct SpeedBox { double lo; double hi; unsigned depth; };
+        for (std::size_t span = data.degree; span <= lastControl; ++span) {
+            const double start = data.knotslist[span];
+            const double end = data.knotslist[span + 1];
+            if (!(start < end)) continue;
+            std::vector<SpeedBox> pending{{start, end, 0}};
+            while (!pending.empty()) {
+                const SpeedBox box = pending.back();
+                pending.pop_back();
+                LC_CurveJetBounds bounds;
+                if (!checked.tryBoundJet(box.lo, box.hi, bounds, true)) {
+                    regularityCertified = false;
+                    break;
+                }
+                const LC_Interval speedSquared = bounds.speedSquared();
+                if (speedSquared.isValid() && speedSquared.lo() >
+                        std::pow(16.0 * tangentFloor / (end - start), 2)) {
+                    certifiedSpeedSquared = std::min(certifiedSpeedSquared, speedSquared.lo());
+                    ++certifiedBoxes;
+                    continue;
+                }
+                const double middle = box.lo + 0.5 * (box.hi - box.lo);
+                if (box.depth >= 48 || !(box.lo < middle && middle < box.hi) ||
+                    certifiedBoxes + pending.size() >= 100000) {
+                    regularityCertified = false;
+                    break;
+                }
+                pending.push_back({middle, box.hi, box.depth + 1});
+                pending.push_back({box.lo, middle, box.depth + 1});
+            }
+            if (!regularityCertified) break;
+        }
+        INFO("certified minimum speed squared lower bound=" << certifiedSpeedSquared
+             << ", boxes=" << certifiedBoxes);
+        REQUIRE(regularityCertified);
+        CHECK(certifiedSpeedSquared > 0.0);
         const SplineOracle seamStep = (domainEnd - domainStart) * SplineOracle{"1e-20"};
         const auto startPoint = evaluateSplineOracle(data, domainStart);
         const auto afterStart = evaluateSplineOracle(data, domainStart + seamStep);
@@ -988,7 +1036,8 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             if (generated.engineStatus != LC_CurveOffsetStatus::Ok) {
                 REQUIRE((wideWeights || conditionedWeights));
                 if (conditionedWeights) {
-                    CHECK(generated.engineStatus == LC_CurveOffsetStatus::UndefinedTangent);
+                    CHECK((generated.engineStatus == LC_CurveOffsetStatus::SingularOffset ||
+                           generated.engineStatus == LC_CurveOffsetStatus::AmbiguousRegularity));
                 } else {
                     CHECK((generated.engineStatus == LC_CurveOffsetStatus::ToleranceNotMet ||
                            generated.engineStatus == LC_CurveOffsetStatus::SingularOffset));

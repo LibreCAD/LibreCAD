@@ -432,8 +432,8 @@ double binomial(const size_t n, const size_t k) {
  * @p product(i, j) is the product of f[i] and g[j].
  */
 template <typename Product>
-LC_Interval productHull(const size_t n, const size_t m, const Product &product) {
-  LC_Interval coefficients[2 * g_maxDegree + 1];
+void productNet(const size_t n, const size_t m, const Product &product,
+                LC_Interval *coefficients) {
   for (size_t k = 0; k <= n + m; ++k) {
     LC_Interval sum = LC_Interval::point(0.0);
     for (size_t i = (k > m) ? k - m : 0; i <= std::min(k, n); ++i) {
@@ -443,6 +443,12 @@ LC_Interval productHull(const size_t n, const size_t m, const Product &product) 
     }
     coefficients[k] = sum;
   }
+}
+
+template <typename Product>
+LC_Interval productHull(const size_t n, const size_t m, const Product &product) {
+  LC_Interval coefficients[4 * g_maxDegree + 1];
+  productNet(n, m, product, coefficients);
   return hullOf(coefficients, n + m + 1);
 }
 } // namespace
@@ -2142,6 +2148,27 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     result.dy = (ay1 - w1 * result.y) / w;
     result.ddx = (ax2 - two * w1 * result.dx - w2 * result.x) / w;
     result.ddy = (ay2 - two * w1 * result.dy - w2 * result.y) / w;
+    if (products) {
+      // The rational derivative is (A'W - AW') / W^2. Bound its squared
+      // magnitude from that polynomial's own Bernstein coefficients; the
+      // component quotient intervals can be needlessly broad near a slow
+      // but regular tangent.
+      const size_t numeratorDegree = 2 * p - 1;
+      LC_Interval nx[2 * g_maxDegree + 1];
+      LC_Interval ny[2 * g_maxDegree + 1];
+      productNet(p - 1, p, [&](const size_t i, const size_t j) {
+        return firstNet[i].x * valueNet[j].w - valueNet[j].x * firstNet[i].w;
+      }, nx);
+      productNet(p - 1, p, [&](const size_t i, const size_t j) {
+        return firstNet[i].y * valueNet[j].w - valueNet[j].y * firstNet[i].w;
+      }, ny);
+      const LC_Interval speedNumerator = productHull(
+          numeratorDegree, numeratorDegree, [&](const size_t i, const size_t j) {
+            return nx[i] * nx[j] + ny[i] * ny[j];
+          });
+      const LC_Interval w2 = sqr(w);
+      result.speedSquaredProduct = speedNumerator / sqr(w2);
+    }
   }
   result.x = result.x + LC_Interval::point(origin.x);
   result.y = result.y + LC_Interval::point(origin.y);
@@ -2273,7 +2300,10 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
     return false;
   }
 
-  // Homogeneous numerator A and denominator W with their derivatives.
+  // Homogeneous numerator A and denominator W with their derivatives. Work
+  // relative to a local control point so translation does not turn a small
+  // rational tangent into a subtraction of large absolute coordinates.
+  const RS_Vector origin = m_data.controlPoints[span - p];
   RS_Vector a[3]{RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}};
   double w[3]{0.0, 0.0, 0.0};
   for (size_t j = 0; j <= p; ++j) {
@@ -2283,8 +2313,9 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
     if (!std::isfinite(wi) || !(wi > 0.0) || !isFinite(pi)) {
       return false;
     }
+    const RS_Vector relative = pi - origin;
     for (int k = 0; k <= 2; ++k) {
-      a[k] += pi * (wi * ders[k][j]);
+      a[k] += relative * (wi * ders[k][j]);
       w[k] += wi * ders[k][j];
     }
   }
@@ -2292,13 +2323,14 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
     return false;
   }
 
-  // C = A/W, C' = (A' - W'C)/W, C'' = (A'' - 2W'C' - W''C)/W
-  // by the reciprocal: RS_Vector's operator/ leaves a vector undivided by
-  // anything below RS_TOLERANCE, and uniform tiny weights are a valid curve
+  // C = origin + A/W, C' = (A' - W'(C-origin))/W, and
+  // C'' = (A'' - 2W'C' - W''(C-origin))/W. Multiplying by the reciprocal
+  // keeps uniform tiny weights valid instead of using RS_Vector's guarded /.
   const double inverse = 1.0 / w[0];
-  const RS_Vector point = a[0] * inverse;
-  const RS_Vector first = (a[1] - point * w[1]) * inverse;
-  const RS_Vector second = (a[2] - first * (2.0 * w[1]) - point * w[2]) * inverse;
+  const RS_Vector relativePoint = a[0] * inverse;
+  const RS_Vector point = origin + relativePoint;
+  const RS_Vector first = (a[1] - relativePoint * w[1]) * inverse;
+  const RS_Vector second = (a[2] - first * (2.0 * w[1]) - relativePoint * w[2]) * inverse;
   if (!isFinite(point) || !isFinite(first) || !isFinite(second)) {
     return false;
   }
