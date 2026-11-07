@@ -1461,6 +1461,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
 
 TEST_CASE("ODA-round-tripped typed-source DWGs retain all modeled source families",
           "[lc-offsetcurve][persistence][typed-source][external][oda]") {
+    Setup setup;
     const char* sourceDirectory = std::getenv("LIBRECAD_TYPED_SOURCE_DWG_DIR");
     const char* directory = std::getenv("LIBRECAD_TYPED_SOURCE_ODA_DXF_DIR");
     if (sourceDirectory == nullptr || *sourceDirectory == '\0' ||
@@ -1526,6 +1527,23 @@ TEST_CASE("ODA-round-tripped typed-source DWGs retain all modeled source familie
             REQUIRE(original.remaining);
             REQUIRE(converted.remaining);
             CHECK(f::tagsState(*converted.remaining) == f::tagsState(*original.remaining));
+
+            const auto imported = stagedImport(path, Lane::Binary18);
+            REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(imported.graphic);
+            CHECK(imported.admitted == 0);
+            CHECK(imported.downgraded == 1);
+            auto* fallback = f::sole(*imported.graphic);
+            REQUIRE(fallback);
+            const auto retained = xd::parseAndStrip(fallback->getDrwExtData(), dxfEncoding);
+            REQUIRE(retained.status == xd::Status::Schema2);
+            REQUIRE(retained.definition);
+            REQUIRE(retained.definition->source);
+            const auto retainedSource = values::encodeSourceDefinition(
+                *retained.definition->source);
+            REQUIRE(retainedSource);
+            CHECK(QCborValue(*originalSource).toCbor() ==
+                  QCborValue(*retainedSource).toCbor());
         }
     }
 }
