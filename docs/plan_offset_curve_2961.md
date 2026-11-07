@@ -22789,3 +22789,19 @@ Test commit `c5190aa36` (`test(offset): cover periodic spline degrees`). Degree
 1, other periodic control counts/weights/knot layouts, broader topology and
 distance/transform neighborhoods, visible-GUI acceptance, independent-CAD
 review, and exact-head CI remain open.
+
+#### W563am. Qualify Degree-one Periodic Import Topology and Fallback (2026-11-07)
+
+Added a five-lane staged-import test for a wrapped degree-1 closed spline on
+both offset sides. The generated result is topology-dependent: the side whose
+result is one valid SPLINE cache promotes to a native offset; the side whose
+result is multiple line entities must not promote from a single-line carrier
+and instead downgrades to ordinary SPLINE. Both paths retain the exact typed
+source; the fallback path verifies schema-2 metadata survives stripping and
+reopening. All ten side/lane combinations pass, totaling 1,282 assertions;
+the Release test target builds and `git diff --check` passes.
+
+Test commit `3b37297af` (`test(offset): qualify linear periodic imports`). This
+closes only the recorded degree-1 control layout, offset distance, and five
+file lanes. Other degree-1 layouts/distances, periodic knots, and broader
+variant, visible-GUI, independent-CAD, and exact-head CI gates remain open.
