@@ -27,6 +27,8 @@
 #include "rs_document.h"
 #include "rs_ellipse.h"
 #include "rs_math.h"
+#include "rs_spline.h"
+#include "lc_splinepoints.h"
 #include "ui_lc_propertieseditingwidget_offsetcurve.h"
 
 namespace {
@@ -51,6 +53,14 @@ std::optional<LC_OffsetSourceGeometry::Kind> sourceKind(const RS_Entity& entity)
     const auto geometry = LC_OffsetSourceGeometry::capture(entity);
     if (!geometry) return std::nullopt;
     return geometry->kind();
+}
+
+bool sourceVariantSelectable(const RS_Entity& entity) {
+    if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&entity))
+        return !points->getData().fitTangentsConstrained;
+    if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity))
+        return !spline->getData().fitTangentsConstrained;
+    return true;
 }
 
 struct OffsetDialogContext {
@@ -122,7 +132,8 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
         auto* source = validId ? findSourceEntity(id) : nullptr;
         if (source == nullptr) return;
         const auto geometry = LC_OffsetSourceGeometry::capture(*source);
-        if (!geometry || static_cast<int>(geometry->kind()) != ui->cbSourceType->currentData().toInt()) return;
+        if (!geometry || !sourceVariantSelectable(*source) ||
+            static_cast<int>(geometry->kind()) != ui->cbSourceType->currentData().toInt()) return;
         if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(source);
             ellipse && m_entity->hasEditableDefinition()) {
             auto next = proposedDefinition();
@@ -347,28 +358,35 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
     ui->cbSource->clear();
     int matchedIndex = -1;
     bool hasMatchingSource = false;
+    bool embeddedSourceUnsupported = false;
+    std::optional<QCborArray> embeddedEncoding;
+    if (embedded) embeddedEncoding =
+        LC_OffsetWorkerRequest::Values::encodeSourceGeometry(embedded->source);
     for (auto* entity : document->getEntityList()) {
         if (entity == nullptr || entity->getFlag(RS2::FlagDeleted)) continue;
-        const auto kind = sourceKind(*entity);
-        if (!kind || *kind != wantedKind) continue;
+        const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
+        if (!geometry || geometry->kind() != wantedKind) continue;
+        std::optional<QCborArray> candidateEncoding;
+        if (embedded && selectedKind == actualKind)
+            candidateEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
+        const bool matchesEmbedded = embeddedEncoding && candidateEncoding &&
+            *embeddedEncoding == *candidateEncoding;
+        if (!sourceVariantSelectable(*entity)) {
+            embeddedSourceUnsupported |= matchesEmbedded;
+            continue;
+        }
         const auto id = static_cast<qulonglong>(entity->getId());
-        const auto label = tr("%1 %2").arg(sourceKindName(*kind)).arg(id);
+        const auto label = tr("%1 %2").arg(sourceKindName(geometry->kind())).arg(id);
         ui->cbSource->addItem(label, QVariant::fromValue<qulonglong>(id));
-        if (!hasMatchingSource && embedded && selectedKind == actualKind) {
-            const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
-            if (geometry) {
-                const auto candidate = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
-                const auto current = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(embedded->source);
-                if (candidate && current && *candidate == *current) {
-                    matchedIndex = ui->cbSource->count() - 1;
-                    hasMatchingSource = true;
-                }
-            }
+        if (!hasMatchingSource && matchesEmbedded) {
+            matchedIndex = ui->cbSource->count() - 1;
+            hasMatchingSource = true;
         }
     }
     if (!hasMatchingSource) {
         const QString placeholder = embedded && selectedKind == wantedKind
-            ? tr("Embedded source (not found)")
+            ? embeddedSourceUnsupported ? tr("Embedded source (unsupported)")
+                                        : tr("Embedded source (not found)")
             : ui->cbSource->count() == 0 ? tr("No supported source entities") : tr("Choose a source");
         ui->cbSource->insertItem(0, placeholder);
         matchedIndex = 0;
@@ -383,7 +401,8 @@ RS_Entity* LC_PropertiesEditingWidgetOffsetCurve::findSourceEntity(qulonglong id
     for (auto* entity : document->getEntityList()) {
         if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) || entity->getId() != id) continue;
         const auto kind = sourceKind(*entity);
-        if (kind && static_cast<int>(*kind) == ui->cbSourceType->currentData().toInt()) return entity;
+        if (kind && sourceVariantSelectable(*entity) &&
+            static_cast<int>(*kind) == ui->cbSourceType->currentData().toInt()) return entity;
     }
     return nullptr;
 }

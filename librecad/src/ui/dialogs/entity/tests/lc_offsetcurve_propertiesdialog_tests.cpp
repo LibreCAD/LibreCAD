@@ -52,6 +52,8 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_math.h"
+#include "rs_spline.h"
+#include "lc_splinepoints.h"
 #include "rs_system.h"
 #include "rs_undo.h"
 
@@ -873,8 +875,20 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     highDegree.knotslist = {0, 0, 0, 0, 0, 1, 1, 1, 1, 1};
     auto* unsupportedSpline = new RS_Spline(nullptr, highDegree);
     auto* unboundedHyperbola = new LC_Hyperbola(nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5});
+    RS_SplineData constrainedFitSpline{1, false};
+    constrainedFitSpline.controlPoints = {{0, 0}, {4, 0}};
+    constrainedFitSpline.knotslist = {0, 0, 1, 1};
+    constrainedFitSpline.fitPoints = {{0, 0}, {4, 0}};
+    constrainedFitSpline.fitTangentsConstrained = true;
+    auto* constrainedFit = new RS_Spline(nullptr, constrainedFitSpline);
+    LC_SplinePointsData constrainedPointsData{false, false};
+    constrainedPointsData.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    constrainedPointsData.fitTangentsConstrained = true;
+    auto* constrainedPoints = new LC_SplinePoints(nullptr, constrainedPointsData);
     f.graphic.addEntity(unsupportedSpline);
     f.graphic.addEntity(unboundedHyperbola);
+    f.graphic.addEntity(constrainedFit);
+    f.graphic.addEntity(constrainedPoints);
 
     std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
     NativeWidget widget;
@@ -887,6 +901,7 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     const Snapshot before(*clone);
 
     for (const auto kind : {LC_OffsetSourceGeometry::Kind::Spline,
+                            LC_OffsetSourceGeometry::Kind::SplinePoints,
                             LC_OffsetSourceGeometry::Kind::BoundedHyperbola}) {
         CAPTURE(kind);
         const int typeIndex = typeBox->findData(static_cast<int>(kind));
@@ -898,6 +913,8 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
         CHECK_FALSE(selectSource->isEnabled());
         CHECK_FALSE(unsupportedSpline->getFlag(RS2::FlagSelected));
         CHECK_FALSE(unboundedHyperbola->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(constrainedFit->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(constrainedPoints->getFlag(RS2::FlagSelected));
         before.geometry(*clone);
     }
 }
