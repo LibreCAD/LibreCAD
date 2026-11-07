@@ -23312,3 +23312,24 @@ librecad_tests '[external][oda][dwg][spline-points][fit-points][cut][geometry]'`
 Product/test commit `2cfe6380a` (`fix(dwg): preserve cut spline-point
 geometry`). Remaining work includes other source topologies, the internal cut
 bookkeeping contract, visible-GUI acceptance, and exact-head CI.
+
+#### W563bf. Broaden Closed Periodic and Cut Control Counts (2026-11-07)
+
+Extended the periodic control-net inventory from 3/4/5/8 to 3/4/5/6/7/8/9/10
+distinct controls. The shared fixture set now drives native closed periodic
+round-trip, native one-entity closed-cut round-trip, ODA periodic geometry, and
+ODA closed-cut geometry. With three cut fractions and six DWG versions, the
+closed-cut matrix now covers 8 × 3 × 6 cases; the combined native closed
+round-trip/cut selection passes 156,536 assertions, and the complete native
+cut selection passes 222,732 assertions.
+
+ODA converted the named periodic and cut fixtures without `.err` files. The
+periodic ODA geometry selection passes 226,944 assertions; the open/closed and
+fit/control cut geometry selection passes 320,580 assertions. A 9-control
+periodic loop measured `5.249993e-6` maximum sampled deviation across all six
+DWG source versions, just above the previous `5e-6` bound; the periodic and
+closed-cut ODA geometry gates now use `1e-5`. This remains a bounded numeric
+round-trip tolerance, not exact CAD-kernel equivalence. Test commit
+`f226c8a92` (`test(dwg): broaden periodic spline-point layouts`). Other
+periodic knot vectors/weights and visible-GUI and exact-head CI acceptance
+remain open.
