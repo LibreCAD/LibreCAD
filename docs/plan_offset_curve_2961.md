@@ -22883,3 +22883,24 @@ must remain excluded or fail closed without mutating the current source/cache.
 Visible-GUI and independent-CAD acceptance also remain open. Do not reopen the
 picker UI slice unless a regression breaks the selector, candidate filtering,
 replacement, source highlighting, or parabola identity contract.
+
+#### W563ar. Validate Nonuniform Periodic Splines Through the Worker (2026-11-07)
+
+Added a worker-kernel regression for the six-control rational periodic spline
+layout already used by W563an's staged-import test. Its clamped precursor has
+the nonuniform knot vector `[0, 0, 0, 0, 0.5, 2, 3, 3, 3, 3]`; the test checks
+the wrapped controls, source validity, and matching seam point/first derivative.
+For both signed offsets at magnitude `0.125`, operation 7 must produce one
+spline cache and operation 8 must admit that exact cache. Both replies are
+encoded and decoded against their originating requests.
+
+Validation: focused case passes 70 assertions; the complete
+`[lc-offsetcurve][worker-kernel][source-cache][spline-variant]` selection
+passes 70,154 assertions across six cases; the Release worker-kernel target
+builds and `git diff --check` passes. Test commit `049c86c49` (`test(offset):
+cover nonuniform periodic worker caches`).
+
+This qualifies only the recorded degree-3 rational layout, seam, distance,
+and both signs for worker generation/cache admission. Other knot sequences,
+degrees, weights, scales/distances, direct-engine and document-transaction
+cross-products, visible-GUI behavior, and external-CAD acceptance remain open.
