@@ -52,9 +52,10 @@ W540 schema-3 tangent metadata persistence complete;
 W542/W543 cubic fit-point interpolation, W544 transform/reversal
 qualification, W545's bounded translation-conditioning probe, W546's one-ended
 DXF persistence checks, W553's verified unit-weight tangent-constrained cubic
-`RS_Spline` path, and W555's verified positive-weight rational tangent-cubic
-generation/cache/Properties replacement path are complete for their recorded
-cases;
+`RS_Spline` path, W555's verified positive-weight rational tangent-cubic
+generation/cache/Properties replacement path, and W556's typed-source
+DXF/DWG five-lane metadata round-trip plus AC1032 staged-import qualification
+are complete for their recorded cases;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21663,9 +21664,39 @@ cases. `git diff --check` passes. Product commit `6c25ba82a` (`fix(offset):
 admit verified rational tangent splines`).
 
 This closes only the recorded positive-weight rational cubic generation,
-cache-validation, and Properties replacement cases. DXF/DWG save/reopen and
-second-save identity for rational tangent sources remain unqualified; DWG
-tangent encoding remains fail-closed pending a standards-verified
+cache-validation, and Properties replacement cases. W556 below qualifies
+typed-source schema persistence, not a tangent-aware native DWG SPLINE body;
+DWG tangent encoding remains fail-closed pending a standards-verified
 representation. Broader degree/knot/fit-point conditioning, tangent
 `LC_SplinePoints`, and remaining family/variant plus visible-GUI, exact-head CI
 and external-CAD acceptance gates remain open.
+
+### W556. Round-Trip Rational Tangent Source Metadata (2026-11-06)
+
+Added a rational tangent-constrained cubic to the actual typed-source file
+save/reopen/second-save matrix. The test derives the expected schema from the
+source metadata (schema 3 for tangent-constrained sources, schema 2 otherwise),
+then compares the canonical worker source definition after the first reopen
+and second save. It covers R14 DXF, R2000 DXF, R2000 DWG EED, R2018 DXF, and
+R2018 DWG EED. This confirms rational weights, fit points, fit tolerance,
+constraint state, and endpoint tangent vectors remain identical in the typed
+metadata envelope.
+
+Added a separate AC1032 DXF/DWG staged-import case that regenerates the
+rational tangent offset cache, imports the real file through operation-8
+validation, and verifies the typed source is promoted with weights and tangent
+metadata unchanged. This tests the cache/source join and admission path in
+addition to codec identity.
+
+Validation: Release `librecad_tests` builds; the five-lane source
+save/reopen/second-save matrix passes 5,421 assertions; the AC1032 DXF/DWG
+staged-import and cache-validation case passes 250 assertions; and
+`git diff --check` passes. Test commit `62e4da047` (`test(offset): round-trip
+rational tangent source metadata`).
+
+This does not validate a new tangent-aware native DWG SPLINE body layout: the
+offset cache remains an ordinary spline and the source's tangent semantics are
+carried in the typed XDATA/EED payload. Native DWG tangent writing remains
+fail-closed. Broader distance/side and transform matrices, DWG native writer
+interoperability, and the remaining family/variant plus independent acceptance
+gates stay open.
