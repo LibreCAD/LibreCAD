@@ -175,6 +175,42 @@ TEST_CASE("raw offset carrier keeps the exact open cubic Bezier chain with expli
     before.check(raw);
 }
 
+TEST_CASE("raw offset carrier preserves full-multiplicity disconnected Bezier branches", "[offset-carrier]") {
+    auto cubicBranches = cubic();
+    cubicBranches.controllist.clear();
+    for (const auto &point : std::array<DRW_Coord, 8>{{
+             {0, 0}, {1, 0}, {2, 0}, {3, 0}, {10, 5}, {11, 5}, {12, 5}, {13, 5}}})
+        cubicBranches.controllist.push_back(std::make_shared<DRW_Coord>(point));
+    cubicBranches.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    counts(cubicBranches);
+    expected(carrier::fromRawSpline(cubicBranches), 3,
+        {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {10, 5}, {11, 5}, {12, 5}, {13, 5}},
+        {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2});
+
+    DRW_Spline linearBranches;
+    linearBranches.degree = 1;
+    linearBranches.flags = 8;
+    for (const auto &point : std::array<DRW_Coord, 4>{{{0, 0}, {1, 0}, {5, 2}, {6, 2}}})
+        linearBranches.controllist.push_back(std::make_shared<DRW_Coord>(point));
+    linearBranches.knotslist = {0, 0, 1, 1, 2, 2};
+    counts(linearBranches);
+    const auto linearResult = carrier::fromRawSpline(linearBranches);
+    REQUIRE(linearResult);
+    geo::WorkBudget linearBudget;
+    const auto linearLayout = geo::inspectCacheLayout(*linearResult.data, linearBudget);
+    REQUIRE(linearLayout.status == geo::CacheLayoutStatus::Ok);
+    REQUIRE(linearLayout.spanCount() == 2);
+    CHECK(linearLayout.spans[0].controlOffset == 0);
+    CHECK(linearLayout.spans[1].controlOffset == 2);
+    CHECK(linearLayout.spans[0].controls[1].x == 1);
+    CHECK(linearLayout.spans[1].controls[0].x == 5);
+
+    auto malformed = cubicBranches;
+    malformed.knotslist = {0, 0, 0, 0, 1, 1, 1.5, 1.5, 2, 2, 2, 2};
+    counts(malformed);
+    refusal(malformed, carrier::Refusal::InvalidKnots, 6);
+}
+
 TEST_CASE("raw offset carrier retains closed and periodic bits without wrapping either degree", "[offset-carrier]") {
     for (const auto flags : {1, 3}) {
         auto linear = line(true); linear.flags = flags;
@@ -277,7 +313,7 @@ TEST_CASE("raw offset carrier requires a genuine complete line or cubic control 
     auto tooFew = line(); tooFew.controllist.resize(1); tooFew.knotslist = {0, 0, 0}; counts(tooFew);
     refusal(tooFew, carrier::Refusal::InvalidLayout);
     auto incompleteCubic = cubic(); incompleteCubic.controllist.resize(5); incompleteCubic.knotslist.resize(9); counts(incompleteCubic);
-    refusal(incompleteCubic, carrier::Refusal::InvalidLayout);
+    refusal(incompleteCubic, carrier::Refusal::InvalidKnots, 7);
 }
 
 TEST_CASE("raw offset carrier rejects unclamped and incorrectly repeated knots rather than clamping", "[offset-carrier]") {
@@ -428,7 +464,8 @@ TEST_CASE("raw offset carrier preflights all storage before walking hostile arra
 TEST_CASE("raw offset carrier cannot raise C hard caps with SIZE_MAX caller limits", "[offset-carrier]") {
     constexpr LC_OffsetCheckLimits hard{};
     DRW_Spline raw; raw.degree = 1;
-    raw.controllist.resize(hard.maxCacheSpans + 2); raw.knotslist.resize(raw.controllist.size() + 2); counts(raw);
+    raw.controllist.resize(2 * hard.maxCacheSpans + 2);
+    raw.knotslist.resize(raw.controllist.size() + 2); counts(raw);
     LC_OffsetCheckLimits raised; raised.maxVertices = std::numeric_limits<std::size_t>::max();
     raised.maxCacheSpans = std::numeric_limits<std::size_t>::max();
     refusal(raw, carrier::Refusal::ResourceLimit, {}, raised);

@@ -71,14 +71,14 @@ Result fromRawSpline(const DRW_Spline &raw, const LC_OffsetCheckLimits &limits) 
         return refused(Refusal::InvalidAuxiliaryData);
     if (!zero(raw.tgStart) || !zero(raw.tgEnd)) return refused(Refusal::FitData);
 
-    const auto counts = LC_EllipseOffsetGeometry::cacheLayoutCountsFromControls(degree, count);
-    if (!counts) return refused(Refusal::InvalidLayout);
-    if (counts->spans > maximumSpans) return refused(Refusal::ResourceLimit);
-    if (raw.knotslist.size() != counts->knots) return refused(Refusal::InvalidKnots);
+    if (count < degree + 1) return refused(Refusal::InvalidLayout);
+    if (raw.knotslist.size() != count + degree + 1) return refused(Refusal::InvalidKnots);
+    const std::size_t minimumSpans = count / (degree + 1) + (count % (degree + 1) != 0);
+    if (minimumSpans > maximumSpans) return refused(Refusal::ResourceLimit);
     if (!raw.weightlist.empty() && raw.weightlist.size() != count) return refused(Refusal::InvalidWeights);
     RS_SplineData data;
     if (count > data.controlPoints.max_size() || count > data.weights.max_size() ||
-        counts->knots > data.knotslist.max_size()) return refused(Refusal::ResourceLimit);
+        raw.knotslist.size() > data.knotslist.max_size()) return refused(Refusal::ResourceLimit);
 
     // Validate every original coordinate before accepting an unspecified plane.
     for (std::size_t i = 0; i < count; ++i) {
@@ -91,15 +91,34 @@ Result fromRawSpline(const DRW_Spline &raw, const LC_OffsetCheckLimits &limits) 
         return refused(Refusal::IncompatibleNormal);
 
     std::size_t knot = 0;
+    std::size_t groups = 0;
+    std::size_t interiorControls = 0;
     double previous = 0;
-    for (std::size_t group = 0; group <= counts->spans; ++group) {
-        const auto value = raw.knotslist[knot];
-        if (!std::isfinite(value) || (group != 0 && !(previous < value))) return refused(Refusal::InvalidKnots, knot);
-        const auto multiplicity = group == 0 || group == counts->spans ? degree + 1 : degree;
-        for (std::size_t i = 0; i < multiplicity; ++i, ++knot)
-            if (raw.knotslist[knot] != value) return refused(Refusal::InvalidKnots, knot);
+    while (knot < raw.knotslist.size()) {
+        const std::size_t begin = knot;
+        const double value = raw.knotslist[knot];
+        if (!std::isfinite(value) || (groups != 0 && !(previous < value)))
+            return refused(Refusal::InvalidKnots, knot);
+        while (knot < raw.knotslist.size() && raw.knotslist[knot] == value) ++knot;
+        const std::size_t multiplicity = knot - begin;
+        const bool endpoint = groups == 0 || knot == raw.knotslist.size();
+        if (endpoint && multiplicity != degree + 1) {
+            const std::size_t bad = multiplicity > degree + 1 ? begin + degree + 1
+                : (groups == 0 ? begin + multiplicity : begin);
+            return refused(Refusal::InvalidKnots, bad);
+        }
+        if (!endpoint && multiplicity != degree && multiplicity != degree + 1) {
+            const std::size_t bad = multiplicity > degree + 1 ? begin + degree + 1
+                : begin + multiplicity;
+            return refused(Refusal::InvalidKnots, bad);
+        }
+        if (!endpoint) interiorControls += multiplicity;
         previous = value;
+        ++groups;
     }
+    if (groups < 2 || interiorControls + degree + 1 != count)
+        return refused(Refusal::InvalidLayout);
+    if (groups - 1 > maximumSpans) return refused(Refusal::ResourceLimit);
     for (std::size_t i = 0; i < raw.weightlist.size(); ++i)
         if (!std::isfinite(raw.weightlist[i]) || raw.weightlist[i] != 1.0) return refused(Refusal::InvalidWeights, i);
 
@@ -114,7 +133,7 @@ Result fromRawSpline(const DRW_Spline &raw, const LC_OffsetCheckLimits &limits) 
     data.m_closedFlag = closedFlag;
     data.m_periodicFlag = periodicFlag;
     data.controlPoints.reserve(count);
-    data.knotslist.reserve(counts->knots);
+    data.knotslist.reserve(raw.knotslist.size());
     data.weights.reserve(count);
     for (const auto &point : raw.controllist) data.controlPoints.emplace_back(point->x, point->y, point->z);
     data.knotslist.assign(raw.knotslist.begin(), raw.knotslist.end());

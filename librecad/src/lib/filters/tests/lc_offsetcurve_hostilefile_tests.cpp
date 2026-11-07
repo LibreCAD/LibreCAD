@@ -21,6 +21,7 @@
 #include "lc_offsetcurve_persistence_fixture.h"
 #include "../../offset_worker/lc_offsetworkertolerance.h"
 #include "../../offset_worker/lc_offsetworkerclient.h"
+#include "../../offset_worker/lc_offsetworkersourcecache.h"
 #include "lc_offsetimportsession.h"
 #include "intern/dwg_dxf_output_transaction.h"
 #include <QElapsedTimer>
@@ -2320,7 +2321,7 @@ TEST_CASE("closed mixed-bulge polyline promotes only its representable side acro
     }
 }
 
-TEST_CASE("open mixed-bulge polyline imports only a single canonical cache across file lanes",
+TEST_CASE("open mixed-bulge polyline promotes complete worker caches across file lanes",
           "[lc-offsetcurve][import-session][typed-source][polyline][cache-promotion][persistence]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-open-mixed-bulge-polyline-promotion");
@@ -2349,6 +2350,9 @@ TEST_CASE("open mixed-bulge polyline imports only a single canonical cache acros
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
 
+    LC_OffsetWorkerClient generationWorker;
+    qint64 nextRequestId = 1;
+    std::size_t multiBranchPromotions = 0;
     for (const double signedDistance : {-.25, .25}) {
         CAPTURE(signedDistance);
         const LC_OffsetSourceDefinition definition{*source, signedDistance, 1e-4, false};
@@ -2368,18 +2372,52 @@ TEST_CASE("open mixed-bulge polyline imports only a single canonical cache acros
         REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
         REQUIRE_FALSE(materialized.entities.empty());
 
+        std::vector<LC_OffsetWorkerRequest::Cutter> branches;
+        for (const auto& entity : materialized.entities) {
+            if (const auto* spline = dynamic_cast<const RS_Spline*>(entity.get())) {
+                branches.emplace_back(spline->getData());
+            } else if (const auto* segment = dynamic_cast<const RS_Line*>(entity.get())) {
+                branches.emplace_back(LC_OffsetWorkerRequest::Segment{
+                    segment->getStartpoint(), segment->getEndpoint()});
+            } else {
+                FAIL("unexpected materialized offset branch type " << entity->rtti());
+            }
+        }
+        REQUIRE_FALSE(branches.empty());
+
+        LC_OffsetWorkerRequest::Request request;
+        request.token = {nextRequestId++, 1, 1, 1};
+        request.operation = LC_OffsetWorkerRequest::GenerateSource{definition, {}};
+        std::optional<LC_OffsetWorkerClient::Outcome> generatedOutcome;
+        REQUIRE(generationWorker.submit(request, LC_OffsetWorkerClient::Mode::Commit,
+            [&](LC_OffsetWorkerClient::Outcome outcome) {
+                generatedOutcome.emplace(std::move(outcome));
+            }));
+        QElapsedTimer elapsed;
+        elapsed.start();
+        while (!generatedOutcome) {
+            REQUIRE(elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+            QCoreApplication::processEvents(QEventLoop::AllEvents);
+            QThread::msleep(1);
+        }
+        REQUIRE(generatedOutcome->status == LC_OffsetWorkerClient::Status::Completed);
+        REQUIRE(generatedOutcome->completed);
+        REQUIRE(generatedOutcome->completed->isJoined());
+        const auto& workerReply = generatedOutcome->completed->reply();
+        REQUIRE(workerReply.operation == 7);
+        REQUIRE(std::holds_alternative<LC_OffsetWorkerResult::Native>(workerReply.result));
+        const auto& workerGenerated = std::get<LC_OffsetWorkerResult::Native>(workerReply.result);
+        REQUIRE(workerGenerated.ordinaryStatus ==
+                LC_OffsetWorkerResult::OrdinaryStatus::Complete);
+        auto workerNative = generatedOutcome->completed->nativeSource(*sourceEntity);
+
         RS_SplineData expectedCache;
-        const bool singleSpline = materialized.entities.size() == 1 &&
-            dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
-        if (const auto* spline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get())) {
-            expectedCache = spline->getData();
+        const bool cacheRepresentable = static_cast<bool>(workerNative);
+        if (workerNative) {
+            expectedCache = workerNative->getData();
+            if (workerGenerated.ordinary.size() > 1) ++multiBranchPromotions;
         } else {
-            const auto* segment = dynamic_cast<const RS_Line*>(materialized.entities.front().get());
-            REQUIRE(segment);
-            expectedCache.degree = 1;
-            expectedCache.controlPoints = {segment->getStartpoint(), segment->getEndpoint()};
-            expectedCache.knotslist = {0, 0, 1, 1};
-            expectedCache.weights = {1, 1};
+            REQUIRE(LC_OffsetWorkerSourceCache::combine({branches.front()}, expectedCache));
         }
         RS_Spline cacheCheck{nullptr, expectedCache};
         REQUIRE(cacheCheck.validate());
@@ -2427,7 +2465,11 @@ TEST_CASE("open mixed-bulge polyline imports only a single canonical cache acros
             INFO(format.suffix << " " << signedDistance);
             REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
             REQUIRE(outcome.graphic);
-            if (singleSpline) {
+            CAPTURE(branches.size(), workerGenerated.ordinary.size(), cacheRepresentable);
+            for (const auto& diagnostic : outcome.diagnostics)
+                INFO("import diagnostic kind=" << static_cast<int>(diagnostic.kind)
+                     << " reason=" << diagnostic.reason << " detail=" << diagnostic.detail);
+            if (cacheRepresentable) {
                 CHECK(outcome.admitted == 1);
                 CHECK(outcome.downgraded == 0);
                 const auto* imported = dynamic_cast<const LC_OffsetCurve*>(
@@ -2459,6 +2501,7 @@ TEST_CASE("open mixed-bulge polyline imports only a single canonical cache acros
             }
         }
     }
+    CHECK(multiBranchPromotions > 0);
 }
 
 TEST_CASE("control-point spline-points source promotes through DXF and DWG import",

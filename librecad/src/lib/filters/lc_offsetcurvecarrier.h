@@ -44,8 +44,9 @@ struct Result {
 };
 
 /** Inspect the ORIGINAL carrier, before any projection, rounding or converter repair.
- * Only clamped degree-1/3 polynomial Bezier chains are eligible. Controls and
- * knots are copied unchanged; absent unit weights are materialized. File closure
+ * Only clamped degree-1/3 polynomial Bezier chains are eligible, with interior
+ * knot multiplicity equal to the degree (joined) or degree+1 (disconnected).
+ * Controls and knots are copied unchanged; absent unit weights are materialized. File closure
  * flags are retained on ClampedOpen data, never by synthesizing wrapped controls.
  * The zero normal sentinel and any finite normal parallel to the Z axis are
  * compatible only after every original control passes the exact raw 2D check.
