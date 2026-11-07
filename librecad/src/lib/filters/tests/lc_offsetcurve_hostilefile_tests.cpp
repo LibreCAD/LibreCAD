@@ -5728,7 +5728,7 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     }
 }
 
-TEST_CASE("degree-one periodic spline import follows output cache topology across file lanes",
+TEST_CASE("degree-one nonuniform rational periodic spline import follows output topology",
           "[lc-offsetcurve][import-session][typed-source][spline-variant][refusal]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-periodic-linear-spline-import");
@@ -5737,12 +5737,31 @@ TEST_CASE("degree-one periodic spline import follows output cache topology acros
 
     RS_Spline periodic{nullptr, RS_SplineData{1, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10},
-                                   RS_Vector{60, 30}, RS_Vector{20, 50},
-                                   RS_Vector{-15, 25}})
+                                   RS_Vector{60, 30}, RS_Vector{55, 45},
+                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
         periodic.addControlPoint(point);
+    periodic.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
+    REQUIRE(periodic.validate());
     periodic.setClosed(true);
     auto periodicData = periodic.getData();
-    periodicData.weights.clear();
+    const std::vector<double> independentWeights{1.0, 0.9, 1.1, 0.95,
+                                                 1.05, 0.85};
+    periodicData.weights = independentWeights;
+    periodicData.weights.insert(periodicData.weights.end(), independentWeights.begin(),
+                                independentWeights.begin() + periodicData.degree);
+    RS_Spline sourceCheck{nullptr, periodicData};
+    REQUIRE(sourceCheck.validate());
+    REQUIRE(sourceCheck.hasWrappedControlPoints());
+    double startParameter = 0.0;
+    double endParameter = 0.0;
+    REQUIRE(sourceCheck.getParameterDomain(startParameter, endParameter));
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(sourceCheck.tryEvaluateJet(startParameter, LC_CurveEvaluationSide::Right,
+                                       startJet));
+    REQUIRE(sourceCheck.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left,
+                                       endJet));
+    CHECK(startJet.point.distanceTo(endJet.point) < 1e-8);
     const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
     constexpr double magnitude = 0.125;
     const double signedDistance = side == LC_CurveOffsetSide::Left
@@ -5771,15 +5790,21 @@ TEST_CASE("degree-one periodic spline import follows output cache topology acros
         carrierCache = firstSpline->getData();
     } else {
         for (const auto& entity : materialized.entities)
-            REQUIRE(dynamic_cast<const RS_Line*>(entity.get()));
-        const auto* firstLine =
-            dynamic_cast<const RS_Line*>(materialized.entities.front().get());
-        REQUIRE(firstLine);
-        carrierCache = RS_SplineData{1, false};
-        carrierCache.controlPoints = {
-            firstLine->getStartpoint(), firstLine->getEndpoint()};
-        carrierCache.knotslist = {0, 0, 1, 1};
-        carrierCache.weights = {1, 1};
+            CHECK((dynamic_cast<const RS_Line*>(entity.get()) ||
+                   dynamic_cast<const RS_Spline*>(entity.get())));
+        if (const auto* firstLine =
+                dynamic_cast<const RS_Line*>(materialized.entities.front().get())) {
+            carrierCache = RS_SplineData{1, false};
+            carrierCache.controlPoints = {
+                firstLine->getStartpoint(), firstLine->getEndpoint()};
+            carrierCache.knotslist = {0, 0, 1, 1};
+            carrierCache.weights = {1, 1};
+        } else {
+            const auto* firstPiece =
+                dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
+            REQUIRE(firstPiece);
+            carrierCache = firstPiece->getData();
+        }
         RS_Spline cacheCheck{nullptr, carrierCache};
         REQUIRE(cacheCheck.validate());
     }
