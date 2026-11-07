@@ -30028,7 +30028,7 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="114"/>
         <source>Tangent and bounding box</source>
-        <translation type="unfinished">Камательная и рамка вокруг</translation>
+        <translation type="unfinished">Касательная и рамка вокруг</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
