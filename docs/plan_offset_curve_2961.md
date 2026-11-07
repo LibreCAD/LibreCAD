@@ -23691,3 +23691,25 @@ This qualifies the recorded degree-1 layout, weight/knot pattern, distances,
 scales, and translation ratios only. Broader numeric extremes, other control
 layouts, independent-CAD validation, visible-GUI acceptance, and exact-head CI
 remain open.
+
+#### W563bv. Verify Periodic DWGs Through ODA Conversion (2026-11-07)
+
+Added an opt-in external check to the degree-1 nonuniform rational periodic
+staged-import test. With `LIBRECAD_TYPED_SOURCE_DWG_DIR` enabled, it retains
+the 36 generated R2000/R2018 DWG fixtures across both sides, three distances,
+and three scale/translation pairs. ODA File Converter 27.1 converted all 36 to
+R2018 DXF with zero `.err` files. The test's
+`LIBRECAD_LINEAR_PERIODIC_ODA_DXF_DIR` gate reads each converted spline and
+checks control points, knots, normalized unit-weight encoding, and exact
+schema-2 typed-source metadata.
+
+The focused native-plus-ODA case passes 15,040 assertions. The broad native
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` union passes
+170,496 assertions across nine cases. The Release `librecad_tests` target
+builds and `git diff --check` passes. Test commit `d7c8cb587`
+(`test(offset): validate periodic DWG through ODA`).
+
+This proves conversion/readability and value preservation for the tested
+periodic carrier matrix, not independent-CAD offset rendering or promotion of
+every topology. Other layouts and numeric extremes, additional independent CAD,
+visible-GUI acceptance, and exact-head CI remain open.
