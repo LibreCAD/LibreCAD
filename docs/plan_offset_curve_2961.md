@@ -4362,18 +4362,6 @@ recovery, stale source/selection/layer/UCS rejection, and one-cycle undo/redo
 publication. These are offscreen Qt action tests, not visible interactive
 acceptance.
 
-#### W563r. Direct Offset Engine Requalification (2026-11-07)
-
-Ran the current Release product's focused `[curve-offset][direct]` selection.
-It passes 42,096 assertions across 32 cases, covering direct side selection,
-representative conic/parabola and spline offsets, branch/regularity behavior,
-and materialization cases included by that tag. This is evidence for the
-tagged direct engine suite, not proof of every source-family variant or every
-variant's direct-operation/document transaction cross-product. The broader
-`[curve-offset]` selection lists 223 cases; that overbroad run was interrupted
-before a result and is not counted. Continue remaining family/variant lanes and
-the visible-GUI and independent-CAD gates.
-
 | W71b lane | Testcases / assertions | Result | SHA256 |
 |---|---:|---|---|
 | Creation/repeat Release | 13 / 318 | PASS | `431301b4020ce1dad423503772271d972cca5430335498be760da42dda975ce5` |
@@ -22360,3 +22348,43 @@ counted as a pass. The three focused named cases above completed successfully.
 The remaining W563 work is still per-variant direct/worker/import coverage
 outside these enumerated layouts, plus visible-GUI and independent-CAD
 acceptance.
+
+#### W563r. Direct Offset Engine Requalification (2026-11-07)
+
+Ran the current Release product's focused `[curve-offset][direct]` selection.
+It passes 42,096 assertions across 32 cases, covering direct side selection,
+representative conic/parabola and spline offsets, branch/regularity behavior,
+and materialization cases included by that tag. This is evidence for the
+tagged direct engine suite, not proof of every source-family variant or every
+variant's direct-operation/document transaction cross-product. The broader
+`[curve-offset]` selection lists 223 cases; that overbroad run was interrupted
+before a result and is not counted. Continue remaining family/variant lanes and
+the visible-GUI and independent-CAD gates.
+
+#### W563s. Preserve and Independently Decode Actual DWG Writer Outputs (2026-11-07)
+
+Added `LIBRECAD_DWG_FIXTURE_DIR` preservation to the offset-curve writer matrix
+for native-cache DWGs and LINE controls. With that hook enabled, the current
+Release tests pass: base DWG writers, 5,858 assertions; edited-cache writers,
+5,450 assertions; LINE-control writers/reader checks, 766 assertions. This
+retains 12 base cache files (six physical versions times degree 1/3), 12 edited
+cache files, and six LINE-control files before their test-owned temporary
+directories are removed.
+
+LibreDWG `dwgread 0.14` independently decoded all 30 preserved files to DXF
+with successful process status. Parsed group-code records confirm the physical
+`$ACADVER` for all six versions, one degree-1/degree-3 SPLINE with the expected
+`LibreCad` APPID and `LC_OFFSET_CURVE` marker for base files, regenerated
+degree-3 caches with edited distance `0.5` for edited files, and one ordinary
+LINE with no offset marker for each control. The verbose R2018 reader run also
+reported a dictionary-string buffer-overflow warning while continuing and
+emitting the expected SPLINE; record that residual decoder warning rather than
+calling the full DWG parse warning-free.
+
+ODA File Converter 27.1 is installed, but both its normal launch and an
+offscreen launch failed before conversion: the normal Qt/Cocoa process could
+not connect to macOS PasteBoard/XPC, and the bundle contains no offscreen Qt
+plugin. ODA inspection therefore remains open. LibreDWG is an independent
+decoder check, not a substitute for ODA or GUI acceptance. The preserved
+outputs are under `/private/tmp/LibreCAD-PR3193-oda-inspection`; decoded DXFs
+and reader logs are under `/private/tmp/LibreCAD-PR3193-libredwg-out`.

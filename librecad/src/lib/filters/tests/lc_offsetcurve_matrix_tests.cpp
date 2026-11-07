@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
@@ -66,6 +67,17 @@ Path fixture(const std::string &name) {
 #else
     return Path(__FILE__).parent_path() / "testdata" / "offsetcurve_independent" / name;
 #endif
+}
+void preserveForExternalInspection(const Path &source, const std::string &fileName) {
+    const char *directory = std::getenv("LIBRECAD_DWG_FIXTURE_DIR");
+    if (directory == nullptr || *directory == '\0') return;
+    std::error_code error;
+    std::filesystem::create_directories(directory, error);
+    REQUIRE_FALSE(error);
+    const bool copied = std::filesystem::copy_file(source, Path(directory) / fileName,
+        std::filesystem::copy_options::overwrite_existing, error);
+    REQUIRE(copied);
+    REQUIRE_FALSE(error);
 }
 std::string boundedBytes(const Path &path) {
     std::ifstream in(path, std::ios::binary);
@@ -350,6 +362,9 @@ void writerRow(const Format &format, int degree, bool edited = false) {
     const Snapshot before(curve, graphic);
     const auto target = out.file(format.dwg ? "actual.dwg" : "actual.dxf");
     REQUIRE(lc::test::exportDrawing(graphic, target, format.app)); before.check();
+    if (format.dwg) preserveForExternalInspection(target,
+        "offset-" + std::string(format.release) + "-degree" + std::to_string(degree) +
+        (edited ? "-edited.dwg" : ".dwg"));
     inspectSpline(target, format, curve.getData(), handTag(degree), distance);
     RS_Graphic reopened; load(reopened, target, format);
     native(reopened, edited ? 0 : degree, handTag(degree), distance);
@@ -370,6 +385,8 @@ void lineWriter(const Format &format) {
     line(graphic, "hand-ascii-line-control");
     const auto target = out.file(format.dwg ? "actual-line.dwg" : "actual-line.dxf");
     REQUIRE(lc::test::exportDrawing(graphic, target, format.app));
+    if (format.dwg) preserveForExternalInspection(target,
+        "offset-" + std::string(format.release) + "-line-control.dwg");
     const auto captured = inspect(target, format);
     REQUIRE(captured.lines.size() == 1); CHECK(captured.splines.empty()); CHECK(captured.ellipses == 0);
     appIds(captured, false); checkForeign(captured.lines.front().extData, "hand-ascii-line-control");
