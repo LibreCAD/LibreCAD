@@ -22329,3 +22329,22 @@ assertions across 7 cases. This extends the prior operation-7-only evidence
 fixtures. It does not establish every family variant or tolerance/scale, full
 document-import promotion, direct GUI picking, visible GUI acceptance, or
 independent-CAD interoperability; those remain open.
+
+#### W563q. Requalify Typed-source DXF/DWG Import Promotion (2026-11-07)
+
+Rebuilt `librecad_tests` on the merged master/PR tree and ran the named import
+promotion matrices individually. The 20-layout conic/line case passes 71,208
+assertions across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, exercising both
+offset signs and the defined ellipse, arc, circle, parabola, bounded-hyperbola,
+and line variants. The fit-point spline-points case passes 24,803 assertions;
+the control-point spline-points case passes 2,491 assertions. Both check
+operation-8 promotion and typed-source preservation across the same five file
+lanes. These are LibreCAD-produced carrier/import round-trips, not external CAD
+producer interoperability evidence.
+
+The broader 44-case `[lc-offsetcurve][import-session][typed-source]` filter
+exceeded 19 minutes without returning a result and was interrupted; it is not
+counted as a pass. The three focused named cases above completed successfully.
+The remaining W563 work is still per-variant direct/worker/import coverage
+outside these enumerated layouts, plus visible-GUI and independent-CAD
+acceptance.
