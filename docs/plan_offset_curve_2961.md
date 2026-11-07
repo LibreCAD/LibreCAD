@@ -23441,3 +23441,28 @@ This broadens only these three nonuniform-knot, positive-weight, cubic periodic
 layouts. Broader knot families, randomized/adversarial weights, other degrees,
 closed fit-point sources, cuts, visible-GUI acceptance, independent CAD beyond
 ODA, and exact-head CI remain open.
+
+#### W563bk. Qualify Nonuniform Rational Periodic Writers for Degrees 1–3 (2026-11-07)
+
+Extended the periodic rational writer matrix to the full degree range modeled
+by `RS_Spline`: nonuniform clamped inputs of degree 1 (5 controls), degree 2
+(5 controls), and degree 3 (5, 6, and 8 controls). Each layout has distinct
+positive weights, is converted to wrapped periodic form, and round-trips
+through DXF and all six DWG writer versions. Native checks cover the complete
+wrapped arrays, periodic/closed/rational flags, successful re-import, and
+sampled geometry within `1e-9`.
+
+The focused native matrix passes 1,258 assertions and stages 30 DWGs. ODA File
+Converter 27.1 converts all 30 to R2018 DXF with zero `.err` files; evaluated
+geometry comparisons pass at `1e-5`, for 1,438 assertions including native
+checks. The broader `[dxf][dwg][filter][spline][roundtrip]` selection passes
+6,571 assertions across eight cases. Fixtures are in
+`/private/tmp/offset-nonuniform-periodic-dwg-degrees` and
+`/private/tmp/offset-nonuniform-periodic-oda-degrees`. Test commit `3b8f4b66f`
+(`test(dwg): cover periodic spline degrees one to three`).
+
+This closes only the five listed nonuniform rational periodic layouts across
+the current six DWG versions and ODA conversion. Other periodic knot and weight
+families, randomized/adversarial weights, closed fit-point sources, cuts,
+visible-GUI acceptance, independent CAD beyond ODA, and exact-head CI remain
+open.
