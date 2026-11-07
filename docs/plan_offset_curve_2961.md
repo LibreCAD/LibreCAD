@@ -44,6 +44,7 @@ W535 reversed unequal-magnitude major-bulge qualification complete for its
 defined matrix;
 W536 sign-reflected unequal-major-bulge qualification complete for its defined
 matrix;
+W537 source-picker constrained-fit eligibility correction complete;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -21017,6 +21018,31 @@ query diagnostics for the exact head. This finite reflection case does not
 claim arbitrary bulge sequences, magnitudes, self-intersections, OCS, or
 external-CAD compatibility.
 
+## 537. Exclude Semantically Unsupported Fit Sources from the Picker
+
+W495 intentionally refuses endpoint-tangent-constrained fit splines because
+the displayed interpolation does not model the source tangents. The source
+Properties picker currently filters by modeled family only, so constrained
+`LC_SplinePoints` and `RS_Spline` entities can appear selectable even though
+the worker must refuse them. Filter these known unsupported variants from the
+candidate list, preserve the existing worker-side refusal as the authoritative
+guard, and label a matching embedded source as unsupported instead of
+misreporting it as missing. All supported source families remain selectable;
+this is variant eligibility, not removal of either spline family.
+
+Add GUI integration coverage for both constrained entity representations.
+Switch the family selector to each relevant family, prove the candidate ID is
+absent and Select-in-drawing is disabled when no eligible source exists, and
+verify the existing offset definition/source/cache and drawing selection are
+unchanged. Also prove an ordinary fit-point spline and ordinary NURBS spline
+remain listed and selectable through existing tests. Keep worker operation-7
+and operation-8 refusal tests for constrained variants unchanged.
+
+Run focused Properties source-picker tests, existing constrained-fit refusal
+and round-trip tests, Release test target build, roadmap parser/refusal suite,
+and `git diff --check`. Commit implementation/tests first and the updated
+roadmap receipt separately; push both to PR #3193 and query exact-head checks.
+
 ### W536 Completion Receipt
 
 The reflected open chain captures a negative `-3` major arc followed by a
@@ -21039,3 +21065,27 @@ This closes only the reflected `-3/+2` layout and its finite matrix. Other
 major-bulge magnitudes/orders, arbitrary sequences, self-intersection, OCS,
 external-CAD, and visible-GUI cases remain open. Push the product commit and
 this receipt to PR #3193 and query checks for the exact pushed head.
+
+### W537 Completion Receipt
+
+The Properties picker now excludes tangent-constrained `RS_Spline` and
+`LC_SplinePoints` variants from candidate enumeration, entity-ID resolution,
+and the selection callback. A matching embedded variant is labeled
+`Embedded source (unsupported)` rather than missing. Both family choices
+remain in the selector; the all-nine-family matrix still proves ordinary
+unconstrained spline and spline-points sources remain selectable. The worker's
+operation-7/8 refusal is unchanged.
+
+Focused unsupported-variant GUI tests pass 577 assertions across two cases;
+family-switch/all-family replacement tests pass 2,814 assertions across two
+cases. The direct worker refusal tests pass, and the constrained fit-point
+five-lane staged-import case passes 27,644 assertions. Release
+`librecad_tests` builds, roadmap inventory/refusal validation passes 99/99, and
+`git diff --check` passes. Product commit `ee48406a0` (`fix(offset): filter
+unsupported spline sources`).
+
+This closes picker eligibility for the two explicitly refused tangent-
+constrained representations only. It does not implement tangent interpolation
+or make these variants valid offset sources; exact tangent semantics and
+native cache admission remain open. Push this receipt to PR #3193 and inspect
+exact-head checks.
