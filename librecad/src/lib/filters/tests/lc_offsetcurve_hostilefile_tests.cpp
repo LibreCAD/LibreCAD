@@ -6718,8 +6718,7 @@ TEST_CASE("hyperbola relative-translation boundaries round-trip admissible cache
     CHECK(refusedCases > 0);
 }
 
-TEST_CASE("multi-branch rational spline import refuses native promotion and "
-          "retains source data",
+TEST_CASE("multi-branch rational spline import refuses partial promotion on both sides",
           "[lc-offsetcurve][import-session][typed-source][spline-variant]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-rational-knot-spline-import");
@@ -6730,16 +6729,25 @@ TEST_CASE("multi-branch rational spline import refuses native promotion and "
     rational.controlPoints = {{0, 0}, {1, 2}, {2, -1}, {3, 2}, {4, 0}};
     rational.knotslist = {0, 0, 0, .3, .7, 1, 1, 1};
     rational.weights = {1, .6, 1.8, .8, 1};
-    const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{rational}, .2, 1e-4, false};
+    const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
+    const double signedDistance = side == LC_CurveOffsetSide::Left ? .2 : -.2;
+    CAPTURE(side, signedDistance);
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{rational}, signedDistance, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
-    const auto options = LC_OffsetWorkerTolerance::directOptions(*source, .2, definition.relativeTolerance).value();
-    const auto generated = LC_CurveOffset::buildDirectBranches(*source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .2),
+    const double magnitude = std::abs(signedDistance);
+    const auto options = LC_OffsetWorkerTolerance::directOptions(
+        *source, magnitude, definition.relativeTolerance).value();
+    const auto generated = LC_CurveOffset::buildDirectBranches(
+        *source, LC_CurveOffset::makeSideRequest(side, magnitude),
                                                                options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
     auto materialized = LC_CurveOffset::materializeBranches(*source, generated, options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
-    REQUIRE(materialized.entities.size() > 1);
+    REQUIRE_FALSE(materialized.entities.empty());
+    const bool singleCache = materialized.entities.size() == 1;
+    CHECK(singleCache == (side == LC_CurveOffsetSide::Right));
     const auto* expectedSpline = dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
     REQUIRE(expectedSpline);
     const RS_SplineData expectedCache = expectedSpline->getData();
@@ -6782,7 +6790,8 @@ TEST_CASE("multi-branch rational spline import refuses native promotion and "
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(std::string("rational-") + suffix);
+        const auto input = directory.file(std::string(
+            side == LC_CurveOffsetSide::Left ? "left-rational-" : "right-rational-") + suffix);
 #ifdef DWGSUPPORT
         if (dwg) f::dwgFile(input, cache, version);
         else f::binaryDxf(input, cache, version);
@@ -6792,22 +6801,31 @@ TEST_CASE("multi-branch rational spline import refuses native promotion and "
         const auto outcome = stagedImport(input, lane);
         REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
         REQUIRE(outcome.graphic);
-        CHECK(outcome.admitted == 0);
-        CHECK(outcome.downgraded == 1);
-        auto* imported = f::sole(*outcome.graphic);
+        CHECK(outcome.admitted == (singleCache ? 1 : 0));
+        CHECK(outcome.downgraded == (singleCache ? 0 : 1));
+        const auto* imported = f::sole(*outcome.graphic);
         REQUIRE(imported);
-        CHECK(dynamic_cast<const LC_OffsetCurve*>(imported) == nullptr);
-        const auto* fallback = dynamic_cast<const RS_Spline*>(imported);
-        REQUIRE(fallback);
-        CHECK(RS_Spline::geometryFingerprint(fallback->getData()) ==
+        const auto* importedOffset = dynamic_cast<const LC_OffsetCurve*>(imported);
+        CHECK((importedOffset != nullptr) == singleCache);
+        const auto* importedSpline = dynamic_cast<const RS_Spline*>(imported);
+        REQUIRE(importedSpline);
+        CHECK(RS_Spline::geometryFingerprint(importedSpline->getData()) ==
               RS_Spline::geometryFingerprint(expectedCache));
-        const auto parsed = xd::parseAndStrip(imported->getDrwExtData(), encoding);
-        REQUIRE(parsed.status == xd::Status::Schema2);
-        REQUIRE(parsed.definition);
-        REQUIRE(parsed.definition->source);
         const auto expectedSource = values::encodeSourceDefinition(definition);
-        const auto actualSource = values::encodeSourceDefinition(*parsed.definition->source);
         REQUIRE(expectedSource);
+        std::optional<LC_OffsetSourceDefinition> actualDefinition;
+        if (singleCache) {
+            REQUIRE(importedOffset);
+            REQUIRE(importedOffset->sourceDefinition());
+            actualDefinition = *importedOffset->sourceDefinition();
+        } else {
+            const auto parsed = xd::parseAndStrip(imported->getDrwExtData(), encoding);
+            REQUIRE(parsed.status == xd::Status::Schema2);
+            REQUIRE(parsed.definition);
+            REQUIRE(parsed.definition->source);
+            actualDefinition = *parsed.definition->source;
+        }
+        const auto actualSource = values::encodeSourceDefinition(*actualDefinition);
         REQUIRE(actualSource);
         CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
     }
