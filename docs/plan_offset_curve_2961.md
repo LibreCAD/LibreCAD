@@ -21975,6 +21975,23 @@ closes candidate-family purity for the representative fixtures, not
 exhaustive variant eligibility or cancellation/failure atomicity for every
 variant; those remain in the W563 inventory.
 
+#### W563d. Real-dialog Cancellation Atomicity (2026-11-07)
+
+Added a modal Edit Properties cancellation matrix covering all nine advertised
+source families. For each representative source, the test changes the family
+filter, selects the candidate, waits for successful worker preparation, then
+cancels the dialog. It verifies the original offset entity remains current and
+native-state unchanged, retains its editable ellipse definition, and creates
+no document undo cycle. This complements the W563b accepted commit/undo/redo
+matrix: prepared source replacements are not document edits until Accept.
+
+The focused Release cancellation case passes 2,241 assertions across the nine
+families; `librecad_tests` builds and `git diff --check` passes. Test commit
+`4919f5b01` (`test(offset): discard cancelled source replacements`). This
+qualifies modal cancellation after successful preparation for representative
+variants; helper failure, stale document mutation, and all-variant atomicity
+remain covered by their existing focused tests or open W563 inventory.
+
 This closes the requested UI type-switch and representative nine-family
 selection/replacement behavior. The follow-up requirement is specifically to
 change the source type as part of choosing a new source, then pick an entity of
