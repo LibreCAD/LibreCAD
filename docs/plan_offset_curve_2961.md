@@ -55,7 +55,10 @@ DXF persistence checks, W553's verified unit-weight tangent-constrained cubic
 `RS_Spline` path, W555's verified positive-weight rational tangent-cubic
 generation/cache/Properties replacement path, and W556's typed-source
 DXF/DWG five-lane metadata round-trip plus AC1032 staged-import qualification
-are complete for their recorded cases;
+are complete for their recorded cases; W557 additionally admits verified
+positive-weight rational quadratic tangent `RS_Spline` sources through direct
+generation, worker/cache validation, Properties replacement and typed-source
+round-trip;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21700,3 +21703,39 @@ carried in the typed XDATA/EED payload. Native DWG tangent writing remains
 fail-closed. Broader distance/side and transform matrices, DWG native writer
 interoperability, and the remaining family/variant plus independent acceptance
 gates stay open.
+
+### W557. Admit Verified Rational Quadratic Tangent Splines (2026-11-06)
+
+Expanded `RS_Spline::fitTangentsMatchCurve()` to degree 2 as well as degree 3.
+Both remain restricted to clamped-open, planar, nonperiodic splines with finite
+positive weights, finite fit tolerance, retained fit points within that
+tolerance of the represented curve, and constrained endpoint directions that
+match the evaluated endpoint derivatives. The check uses the curve's actual
+rational jets; it does not infer consistency from control-point layout alone.
+Degree 1, malformed weights, inconsistent fit/tangent metadata, and
+tangent-constrained `LC_SplinePoints` remain refused.
+
+The direct engine, worker generation and operation-8 cache validator, and
+Properties picker/replacement now exercise a rational quadratic source. The
+five-lane DXF/DWG typed-source save/reopen/second-save matrix also includes the
+quadratic alongside the cubic. This does not yet prove AC1032 staged import and
+cache promotion for the quadratic source specifically; the separate staged
+import fixture remains the cubic variant. No native DWG tangent SPLINE layout
+was added, and writing tangent metadata in a native DWG SPLINE remains
+fail-closed.
+
+Validation: Release CMake builds of `librecad_tests` and
+`librecad_offset_worker_kernel_tests` succeed. The quadratic verifier passes 8
+assertions; the full tangent spline suite passes 993 assertions across 15
+cases; direct offsets pass 42,084 assertions across 32 cases; Properties
+picker/replacement passes 259 assertions across two cases; the worker kernel
+passes 1,660,844 assertions across 47 cases; and the five-lane metadata
+save/reopen/second-save matrix passes 5,614 assertions. `git diff --check`
+passes. Product commit `4f5d60ae3` (`fix(offset): admit verified rational
+quadratic tangents`).
+
+This closes only the recorded degree-2/3 positive-weight spline subset.
+Further parameter-domain/knot/fit conditioning, quadratic staged-import
+promotion, tangent-constrained spline-points, ordinary degree-1 tangent cases,
+DWG native writer interoperability, and all other open family/variant and
+acceptance gates remain on the roadmap.
