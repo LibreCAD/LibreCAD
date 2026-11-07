@@ -5769,7 +5769,11 @@ TEST_CASE("hyperbola import follows output topology on both sides across file la
         const auto input = directory.file(std::string(side == LC_CurveOffsetSide::Left
             ? "left-" : "right-") + format.suffix);
 #ifdef DWGSUPPORT
-        if (format.dwg) f::dwgFile(input, cache, format.version);
+        if (format.dwg) {
+            f::dwgFile(input, cache, format.version);
+            preserveTypedSourceDwg(input, std::string("hyperbola-") +
+                (side == LC_CurveOffsetSide::Left ? "left-" : "right-") + format.suffix);
+        }
         else f::binaryDxf(input, cache, format.version);
 #else
         f::binaryDxf(input, cache, format.version);
@@ -6793,7 +6797,11 @@ TEST_CASE("multi-branch rational spline import refuses partial promotion on both
         const auto input = directory.file(std::string(
             side == LC_CurveOffsetSide::Left ? "left-rational-" : "right-rational-") + suffix);
 #ifdef DWGSUPPORT
-        if (dwg) f::dwgFile(input, cache, version);
+        if (dwg) {
+            f::dwgFile(input, cache, version);
+            preserveTypedSourceDwg(input, std::string("rational-") +
+                (side == LC_CurveOffsetSide::Left ? "left-" : "right-") + suffix);
+        }
         else f::binaryDxf(input, cache, version);
 #else
         f::binaryDxf(input, cache, version);
