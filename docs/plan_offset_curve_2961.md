@@ -23192,7 +23192,7 @@ Validation: the exact-source Release DWG matrix passes 29,313 assertions over
 3/4/5/6/8 fit points, both/start-only/end-only tangent constraints, and all
 six DWG versions; after reopen, each case checks scenario, degree, control
 points, loss of unsupported fit metadata, and 101 evaluated positions.
-LibreDWG 0.14 parses all 90 emitted files as degree-2 scenario-1 SPLINEs with
+LibreDWG 0.14 parses all 90 open-chain files as degree-2 scenario-1 SPLINEs with
 control points and no fit points. ACadSharp accepts all 30 R2000/R2004 files
 with finite degree-2 control data. ODA File Converter 27.1 converted all 90
 R2000/R2004/R2007/R2010/R2013/R2018 control-net DWGs to R2018 DXF without any
@@ -23213,8 +23213,9 @@ in 10 cases; `[fit-points][roundtrip]` has 33,535 assertions in 8 cases; and
 DXF and `RS_Spline` tangent-fit paths. This establishes external ODA conversion
 and evaluated geometry only for these tested open, uncut, unit-weight
 quadratic spline-point cases. Fit-point lists and explicit tangent authoring
-metadata remain absent from scenario-1 DWG output. Other fit layouts,
-closed/cut forms, visible-GUI acceptance, and exact-head CI remain open gates.
+metadata remain absent from scenario-1 DWG output. W563bd below adds closed
+periodic control-net coverage; cut and other fit layouts, visible-GUI
+acceptance, and exact-head CI remain open gates.
 
 #### W563bc. Preserve Geometry with Inconsistent Fit-tangent Metadata (2026-11-07)
 
@@ -23232,5 +23233,35 @@ Validation: the focused mismatched-tangent case passes 2,745 assertions;
 `[fit-points][roundtrip]` passes 33,535 assertions in 8 cases; and
 `[dxf][filter][spline][fit-points]` passes 4,892 assertions in 9 cases. The
 Release `librecad_tests` target builds and `git diff --check` passes. This
-closes the tested open four-fit-point mismatch case only; closed/cut and other
+closes the tested open four-fit-point mismatch case only; cut and other
 fit/control layouts, visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563bd. Encode Closed Spline-points as Periodic Quadratic SPLINEs (2026-11-07)
+
+Corrected DWG/DXF writing of closed `LC_SplinePoints` control nets. Periodic
+degree-2 output now repeats the first two controls at the tail and emits an
+unclamped uniform knot vector, matching the cyclic quadratic Bezier spans used
+by LibreCAD. On import, the spline-points path validates closed+periodic flags,
+the two wrapped controls, knot cardinality, and uniform knot spacing before
+removing the repeated controls; invalid or unsupported periodic layouts remain
+on the general `RS_Spline` path instead of being coerced into a different
+cyclic curve.
+
+The six-version native regression passes 6,700 assertions and checks flags,
+expanded controls, knots, and 501 evaluated samples after reopen. ODA 27.1
+converted all six closed files along with the 90 open files (96 DXFs total,
+zero `.err` outputs). The external geometry test verifies that ODA keeps
+closed+periodic flags and compares the resulting curve; the combined 96-file
+matrix passes 212,643 assertions with symmetric sampled curve distance below
+`1e-6`. ACadSharp accepts the R2000/R2004 closed files with seven controls and
+ten knots. Rebuilt `librecad_tests`; the open-chain control geometry matrix
+still passes 29,043 assertions, `[fit-points][roundtrip]` passes 33,535, and
+`[spline][LC_SplinePoints]` passes 615. The ODA DWGs and DXFs are under
+`/private/tmp/tangent-fit-controlnet-dwg` and
+`/private/tmp/tangent-fit-controlnet-oda`. Product/test commit
+`6b23631f7` (`fix(dwg): preserve closed spline-points curves`).
+
+This closes only one five-control-point closed periodic layout across the six
+DWG versions and ODA's R2018 DXF conversion. Other closed control counts,
+nonuniform periodic splines, closed fit-point inputs, cut forms, and independent
+GUI acceptance remain open.
