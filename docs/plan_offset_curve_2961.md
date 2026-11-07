@@ -22022,6 +22022,20 @@ was `QT_QPA_PLATFORM=offscreen
 /private/tmp/LibreCAD-offset-merge-build/librecad_tests
 '[gui][dialog][offsetcurve][source]'`.
 
+#### W563g. Source-picker Union After Conic OCS Exclusion (2026-11-07)
+
+Reran the same complete source-picker Properties union after adding projected
+conic OCS exclusion coverage. All 9 matching Catch2 cases pass with 6,255
+assertions on the current product tree. This supersedes the W563f assertion
+total; the earlier receipt remains as the preceding checkpoint. The conic and
+polyline OCS cases both run in the empty-bucket test, together with the
+unsupported spline and hyperbola variants.
+
+Validation command:
+`QT_QPA_PLATFORM=offscreen /private/tmp/LibreCAD-offset-merge-build/librecad_tests '[gui][dialog][offsetcurve][source]'`.
+This still does not certify every source variant, persistence lane, or
+external-CAD/visible-GUI acceptance.
+
 This closes the requested UI type-switch and representative nine-family
 selection/replacement behavior. The follow-up requirement is specifically to
 change the source type as part of choosing a new source, then pick an entity of
