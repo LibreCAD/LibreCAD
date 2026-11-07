@@ -23247,21 +23247,23 @@ removing the repeated controls; invalid or unsupported periodic layouts remain
 on the general `RS_Spline` path instead of being coerced into a different
 cyclic curve.
 
-The six-version native regression passes 6,700 assertions and checks flags,
-expanded controls, knots, and 501 evaluated samples after reopen. ODA 27.1
-converted all six closed files along with the 90 open files (96 DXFs total,
-zero `.err` outputs). The external geometry test verifies that ODA keeps
-closed+periodic flags and compares the resulting curve; the combined 96-file
-matrix passes 212,643 assertions with symmetric sampled curve distance below
-`1e-6`. ACadSharp accepts the R2000/R2004 closed files with seven controls and
-ten knots. Rebuilt `librecad_tests`; the open-chain control geometry matrix
-still passes 29,043 assertions, `[fit-points][roundtrip]` passes 33,535, and
-`[spline][LC_SplinePoints]` passes 615. The ODA DWGs and DXFs are under
-`/private/tmp/tangent-fit-controlnet-dwg` and
-`/private/tmp/tangent-fit-controlnet-oda`. Product/test commit
-`6b23631f7` (`fix(dwg): preserve closed spline-points curves`).
+The six-version native regression now covers closed control nets with 3, 4, 5,
+and 8 distinct controls; it passes 26,872 assertions and checks flags, expanded
+controls, knots, and 501 evaluated samples after reopen. ODA 27.1 converted the
+24 closed files together with 90 open files (114 DXFs total, zero `.err`
+outputs). The external geometry test verifies retained closed+periodic flags
+and compares all output curves; the combined 114-file matrix passes 218,772
+assertions. The symmetric sampled-curve tolerance is `5e-6` drawing units;
+the observed maximum for the small 3-control layout is `1.75e-6`, consistent
+with ODA's DXF numeric rounding. ACadSharp accepts all 8 R2000/R2004 closed
+fixtures with degree-2 control data. The ODA DWGs and DXFs are under
+`/private/tmp/tangent-fit-controlnet-dwg-current` and
+`/private/tmp/tangent-fit-controlnet-oda-current`. Commits `6b23631f7` (periodic
+writer/import) and `1b2112437` (expanded count and ODA tests).
 
-This closes only one five-control-point closed periodic layout across the six
-DWG versions and ODA's R2018 DXF conversion. Other closed control counts,
+The open-chain control geometry matrix still passes 29,043 assertions;
+`[fit-points][roundtrip]` passes 33,535; and `[spline][LC_SplinePoints]` passes
+615. This closes only the tested 3/4/5/8-control periodic layouts across the
+six DWG versions and ODA's R2018 DXF conversion. Other closed control counts,
 nonuniform periodic splines, closed fit-point inputs, cut forms, and independent
 GUI acceptance remain open.
