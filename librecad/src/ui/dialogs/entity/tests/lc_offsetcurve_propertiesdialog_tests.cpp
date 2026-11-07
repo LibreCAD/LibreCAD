@@ -899,11 +899,19 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     constrainedFitSpline.knotslist = {0, 0, 1, 1};
     constrainedFitSpline.fitPoints = {{0, 0}, {4, 0}};
     constrainedFitSpline.fitTangentsConstrained = true;
+    RS_SplineData malformedSplineData{2, false};
+    malformedSplineData.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    malformedSplineData.knotslist = {0, 0, 0, 1, 1};
     auto* constrainedFit = new RS_Spline(nullptr, constrainedFitSpline);
     LC_SplinePointsData constrainedPointsData{false, false};
     constrainedPointsData.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
     constrainedPointsData.fitTangentsConstrained = true;
+    LC_SplinePointsData nonplanarPointsData{false, false};
+    nonplanarPointsData.useControlPoints = true;
+    nonplanarPointsData.controlPoints = {{0, 0}, {1, 1, .25}};
     auto* constrainedPoints = new LC_SplinePoints(nullptr, constrainedPointsData);
+    auto* nonplanarPoints = new LC_SplinePoints(nullptr, nonplanarPointsData);
+    auto* malformedSpline = new RS_Spline(nullptr, malformedSplineData);
     auto* lossyProjectedPolyline = new RS_Polyline;
     lossyProjectedPolyline->addVertex({0, 0});
     lossyProjectedPolyline->addVertex({2, 0});
@@ -920,6 +928,8 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     f.graphic.addEntity(unboundedHyperbola);
     f.graphic.addEntity(constrainedFit);
     f.graphic.addEntity(constrainedPoints);
+    f.graphic.addEntity(nonplanarPoints);
+    f.graphic.addEntity(malformedSpline);
     f.graphic.addEntity(lossyProjectedPolyline);
     f.graphic.addEntity(projectedEllipse);
 
@@ -953,6 +963,8 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
         CHECK_FALSE(unboundedHyperbola->getFlag(RS2::FlagSelected));
         CHECK_FALSE(constrainedFit->getFlag(RS2::FlagSelected));
         CHECK_FALSE(constrainedPoints->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(nonplanarPoints->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(malformedSpline->getFlag(RS2::FlagSelected));
         CHECK_FALSE(lossyProjectedPolyline->getFlag(RS2::FlagSelected));
         CHECK_FALSE(projectedEllipse->getFlag(RS2::FlagSelected));
         before.geometry(*clone);
