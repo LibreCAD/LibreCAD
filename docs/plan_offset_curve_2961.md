@@ -24339,6 +24339,8 @@ selection passes 15,452 assertions across 20 cases, and `[spline]` passes
 passes 15,416 assertions and continues to refuse the conditioned positive-side
 cases without partial geometry. Release targets `librecad_tests` and
 `librecad_offset_worker_kernel_tests` build, and `git diff --check` passes.
+The complete worker-kernel executable also passes 1,680,558 assertions across
+53 cases.
 Implementation commits `6dc876da0` (`fix(spline): normalize weights for
 interval bounds`), `4442f5bfc` (`fix(spline): enclose normalized weight
 scaling`), and `e51254f38` (`test(spline): verify offset factor enclosures`).
