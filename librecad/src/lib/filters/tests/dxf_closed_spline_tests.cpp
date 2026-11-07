@@ -1138,5 +1138,41 @@ TEST_CASE("Cubic fit SPLINE import honors one tangent and naturally bounds the o
     }
     for (const auto& point : fitPoints)
       CHECK(spline->getNearestPointOnEntity(point, true).distanceTo(point) < 1e-7);
+
+    const auto expectedCurve = splineCurve(*spline, 100);
+    const std::string dxfPath = tempPath(constrainStart
+        ? "cubic_fit_start_tangent_roundtrip" : "cubic_fit_end_tangent_roundtrip");
+    std::remove(dxfPath.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(graphic, QString::fromStdString(dxfPath), RS2::FormatDXFRW));
+    }
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    importFile(reopened, dxfPath, RS2::FormatDXFRW, &written);
+    std::filesystem::remove(dxfPath);
+    REQUIRE(written.size() == 1);
+    CHECK(written.front().m_tangentStart.x == source.m_tangentStart.x);
+    CHECK(written.front().m_tangentStart.y == source.m_tangentStart.y);
+    CHECK(written.front().m_tangentEnd.x == source.m_tangentEnd.x);
+    CHECK(written.front().m_tangentEnd.y == source.m_tangentEnd.y);
+    checkSameVectors(written.front().m_fitPoints, source.m_fitPoints);
+    RS_Spline* reopenedSpline = onlySpline(reopened);
+    REQUIRE(reopenedSpline->validate());
+    CHECK(reopenedSpline->getData().fitStartTangent == spline->getData().fitStartTangent);
+    CHECK(reopenedSpline->getData().fitEndTangent == spline->getData().fitEndTangent);
+    const auto reopenedCurve = splineCurve(*reopenedSpline, 100);
+    REQUIRE(expectedCurve.size() == reopenedCurve.size());
+    for (std::size_t i = 0; i < expectedCurve.size(); ++i)
+      CHECK(expectedCurve[i].distanceTo(reopenedCurve[i]) < 1e-8);
+
+#ifdef DWGSUPPORT
+    const std::string dwgPath = tempPath(constrainStart
+        ? "cubic_fit_start_tangent_refusal" : "cubic_fit_end_tangent_refusal");
+    std::remove(dwgPath.c_str());
+    RS_FilterDXFRW dwgWriter;
+    CHECK_FALSE(dwgWriter.fileExport(graphic, QString::fromStdString(dwgPath), RS2::FormatDWG2018));
+    CHECK_FALSE(std::filesystem::exists(dwgPath));
+#endif
   }
 }
