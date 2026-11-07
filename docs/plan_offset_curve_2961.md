@@ -23630,3 +23630,23 @@ This adds distance coverage only for the recorded degree-1 control/knot and
 weight layout. Additional periodic layouts, source scales, staged file lanes at
 these distances, visible-GUI acceptance, independent-CAD validation, and
 exact-head CI remain open.
+
+#### W563bs. Expand Periodic Import Across Three Distances (2026-11-07)
+
+Extended W563bq's staged degree-1 nonuniform rational periodic case to
+distances `0.0625`, `0.125`, and `0.25`, on both signed offset sides. All six
+side/distance combinations run through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. Each case validates generated cardinality, the appropriate promotion
+or safe downgrade behavior, exact typed-source preservation, and carrier
+geometry.
+
+The focused Release test passes 3,738 assertions. The broader
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` selection
+passes 162,874 assertions across nine cases; `librecad_tests` builds and
+`git diff --check` passes. Test commit `1b274cbd1` (`test(offset): broaden
+periodic import distance lanes`).
+
+This closes only the tested degree-1 source/layout/weight pattern, three
+distances, both sides, and five file lanes. Other periodic layouts, source
+scales/transforms, independent-CAD validation, visible-GUI acceptance, and
+exact-head CI remain open.
