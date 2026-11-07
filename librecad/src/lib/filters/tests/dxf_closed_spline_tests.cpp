@@ -890,6 +890,102 @@ TEST_CASE("DWG preserves tangent-constrained spline-points as exact control spli
   }
 }
 
+TEST_CASE("ODA-converted spline-point control DWGs preserve evaluated geometry",
+          "[external][oda][dwg][spline-points][geometry]") {
+  const char* outputDirectory =
+      std::getenv("LIBRECAD_TANGENT_SPLINE_ODA_DXF_DIR");
+  if (outputDirectory == nullptr || *outputDirectory == '\0')
+    SKIP("Set LIBRECAD_TANGENT_SPLINE_ODA_DXF_DIR to converted ODA DXFs");
+  ensureSettings();
+
+  const std::vector<std::vector<RS_Vector>> fitPointSets{
+      {{0.0, 0.0}, {2.0, 3.0}, {5.0, 0.0}},
+      {{0.0, 0.0}, {2.0, 3.0}, {5.0, 4.0}, {8.0, 0.0}},
+      {{0.0, 0.0}, {1.0, 4.0}, {3.0, 5.0}, {6.0, 2.0}, {8.0, 0.0}},
+      {{0.0, 0.0}, {1.0, 3.0}, {2.0, 4.0}, {4.0, 4.0}, {6.0, 2.0},
+       {8.0, 0.0}},
+      {{0.0, 0.0}, {1.0, 3.0}, {2.0, 4.0}, {3.0, 2.0}, {4.0, 1.0},
+       {5.0, 4.0}, {6.0, 3.0}, {8.0, 0.0}},
+  };
+  const std::vector<std::pair<std::string, std::string>> versions{
+      {"dwg-r2000", "R2000"}, {"dwg-r2004", "R2004"},
+      {"dwg-r2007", "R2007"}, {"dwg-r2010", "R2010"},
+      {"dwg-r2013", "R2013"}, {"dwg-r2018", "R2018"},
+  };
+
+  for (const int tangentMode : {0, 1, 2}) {
+    const bool constrainStart = tangentMode != 2;
+    const bool constrainEnd = tangentMode != 1;
+    for (const auto& fitPoints : fitPointSets) {
+      LC_SplinePointsData initialData{false, false};
+      initialData.splinePoints = fitPoints;
+      initialData.fitTolerance = 1.0e-8;
+      LC_SplinePoints initial{nullptr, initialData};
+      LC_CurveJet startJet;
+      LC_CurveJet endJet;
+      REQUIRE(initial.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right,
+                                     startJet));
+      const double endParameter = static_cast<double>(initial.getSegmentCount());
+      REQUIRE(initial.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left,
+                                     endJet));
+      LC_SplinePointsData sourceData = initial.getData();
+      sourceData.fitTangentsConstrained = true;
+      sourceData.fitStartTangent = constrainStart
+          ? startJet.first : RS_Vector{0.0, 0.0, 0.0};
+      sourceData.fitEndTangent = constrainEnd
+          ? endJet.first : RS_Vector{0.0, 0.0, 0.0};
+      LC_SplinePoints source{nullptr, sourceData};
+      REQUIRE(source.fitTangentsMatchCurve());
+
+      std::vector<RS_Vector> expected;
+      for (int i = 0; i <= 2000; ++i) {
+        const double parameter =
+            static_cast<double>(source.getSegmentCount()) * i / 2000.0;
+        const auto side = i == 2000 ? LC_CurveEvaluationSide::Left
+                                    : LC_CurveEvaluationSide::Right;
+        LC_CurveJet jet;
+        REQUIRE(source.tryEvaluateJet(parameter, side, jet));
+        expected.push_back(jet.point);
+      }
+
+      for (const auto& [version, label] : versions) {
+        INFO(label);
+        INFO(tangentMode);
+        INFO(fitPoints.size());
+        const std::string name = "control-net-mode" +
+            std::to_string(tangentMode) + "-" +
+            std::to_string(fitPoints.size()) + "pt-" + version + ".dxf";
+        const auto path = std::filesystem::path(outputDirectory) / name;
+        REQUIRE(std::filesystem::exists(path));
+        RS_Graphic converted;
+        std::vector<SplineRecord> records;
+        importFile(converted, path.string(), RS2::FormatDXFRW, &records);
+        REQUIRE(records.size() == 1);
+        REQUIRE(converted.count() == 1);
+
+        std::vector<RS_Vector> actual;
+        auto* entity = *converted.begin();
+        if (auto* splinePoints = dynamic_cast<LC_SplinePoints*>(entity)) {
+          for (int i = 0; i <= 2000; ++i) {
+            const double parameter =
+                static_cast<double>(splinePoints->getSegmentCount()) * i / 2000.0;
+            const auto side = i == 2000 ? LC_CurveEvaluationSide::Left
+                                        : LC_CurveEvaluationSide::Right;
+            LC_CurveJet jet;
+            REQUIRE(splinePoints->tryEvaluateJet(parameter, side, jet));
+            actual.push_back(jet.point);
+          }
+        } else if (auto* spline = dynamic_cast<RS_Spline*>(entity)) {
+          actual = splineCurve(*spline, 2000);
+        } else {
+          FAIL("ODA-converted SPLINE imported as an unexpected entity type");
+        }
+        CHECK(curveDistance(expected, actual) < 1.0e-6);
+      }
+    }
+  }
+}
+
 #endif
 
 TEST_CASE("Tangent-constrained quadratic SPLINE keeps its explicit control net",
