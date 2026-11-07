@@ -38,6 +38,8 @@ W531 imported major/minor polyline-to-worker qualification complete for its
 defined lanes and signed distances;
 W532 opposite-sign major-bulge chain qualification complete for its defined
 matrix;
+W534 unequal-magnitude opposite-sign major-bulge qualification complete for
+its defined matrix;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 implementation slices
@@ -20888,3 +20890,56 @@ the plan's per-variant capture, generation, operation-8 cache admission,
 failure/cancellation non-mutation, and applicable DXF/DWG round-trip matrices
 remain open. A family appearing in the selector does not imply that every
 geometric layout of that family is currently cache-representable.
+
+## 534. Unequal Opposite-Sign Major-Bulge Polyline Matrix
+
+W532 qualifies an open chain with equal-magnitude positive and negative major
+bulges (`+2`, `-2`). It does not prove that the bulge-to-arc conversion,
+worker/cache path, or interchange path retains independently sized major arcs.
+Add a second open five-vertex chain with a positive major bulge of `+3` and a
+negative major bulge of `-2`, separated by a long straight connector and
+followed by a line segment. Assert capture retains open topology, segment
+order, both major sweep signs, and the `+3` arc's distinct radius/center.
+
+Extend the W532 scale/translation/distance matrix to include this ninth layout:
+scales `1e-3`, `1`, and `1e3`; translation ratios `1e4` and `1e6`; and signed
+normalized distances `-0.25`, `-0.1`, `0.1`, and `0.25`. The resulting 216
+layout/cell combinations must compare centered and translated operation-7
+status/topology and arc-length-normalized branch geometry under tolerance plus
+coordinate-ULP bounds. Validate every branch with operation 8, require
+non-mutating refusal for non-cache-representable output, and carry only
+admitted single caches (plus intentional diagnosed fallback carriers) through
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Preserve exact typed-source CBOR,
+cache fingerprints, promotion/downgrade accounting, and reopened samples.
+
+Run the focused staged matrix, complete polyline worker and typed-source import
+selections, Release test/worker builds, roadmap parser/refusal suite, and
+`git diff --check`. Commit the product/test addition, then record exact local
+evidence in a separate roadmap commit; push both to PR #3193 and query
+checks for the exact pushed head. This qualifies only the stated `+3/-2`
+layout and finite grid; arbitrary bulge magnitudes, sequences, self-intersecting
+or OCS cases remain open.
+
+### W534 Completion Receipt
+
+The ninth polyline layout is an open five-vertex chain with `+3` and `-2`
+major bulges, separated and terminated by straight segments. Capture checks
+its open topology, segment sequence, signed major sweeps, and the larger arc's
+center/radius. The expanded matrix accounts for nine layouts over 216
+scale/translation/distance combinations and all five DXF/DWG lanes; only
+admitted single-cache outcomes are promoted, with fallback/refusal accounting
+and source/cache preservation checked on reopen.
+
+Focused staged persistence passes 640,810 assertions in one case. The complete
+polyline worker selection passes 82,644 assertions across six cases; the full
+typed-source polyline staged-import selection passes 650,841 assertions across
+23 cases. Release `librecad_tests` and
+`librecad_offset_worker_kernel_tests` targets build. Roadmap inventory/refusal
+validation passes 99/99 tests (93 obligations, zero pending declarations, zero
+production mismatches), and `git diff --check` passes. Product/test commit
+`19bbb1324` (`test(offset): qualify unequal major bulges`).
+
+This closes only the unequal `+3/-2` layout and the finite matrix here. Other
+major-bulge magnitudes/orders, arbitrary sequences, self-intersection, OCS,
+external-CAD, and visible-GUI cases remain open. Push the product commit and
+this receipt to PR #3193 and query checks for the exact pushed head.
