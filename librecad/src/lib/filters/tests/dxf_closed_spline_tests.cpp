@@ -170,13 +170,15 @@ void importFile(RS_Graphic &graphic, const std::string &path, RS2::FormatType fo
     *records = filter.m_records;
 }
 
-void importDxf(RS_Graphic &graphic, const SplineRecord &spline, const std::string &name) {
+void importDxf(RS_Graphic &graphic, const SplineRecord &spline,
+               const std::string &name,
+               std::vector<SplineRecord> *records = nullptr) {
   const std::string path = tempPath(name + ".dxf");
   {
     std::ofstream out(path);
     out << splineDxf(spline);
   }
-  importFile(graphic, path, RS2::FormatDXFRW);
+  importFile(graphic, path, RS2::FormatDXFRW, records);
   std::filesystem::remove(path);
 }
 
@@ -752,6 +754,47 @@ TEST_CASE("Tangent-constrained quadratic fit SPLINE falls back to its control ne
     LC_SplinePoints *reopenedSpline = onlySplinePoints(reopened);
     checkSameVectors(reopenedSpline->getControlPoints(), sourceControls);
     CHECK_FALSE(reopenedSpline->getData().fitTangentsConstrained);
+  }
+}
+
+TEST_CASE("Tangent-constrained quadratic SPLINE keeps its explicit control net",
+          "[dxf][filter][spline][fit-points][control-net]") {
+  ensureSettings();
+  SplineRecord source;
+  source.m_flags = 8;
+  source.m_degree = 2;
+  source.m_controlPoints = {{0., 0.}, {2., 8.}, {8., 8.}, {10., 0.}};
+  source.m_knots = {0., 0., 0., 0.5, 1., 1., 1.};
+  source.m_fitPoints = {{0., 0.}, {3., 4.}, {7., 4.}, {10., 0.}};
+  source.m_tangentStart = {1., 0., 0.};
+  source.m_tangentEnd = {0., -1., 0.};
+
+  RS_Graphic graphic;
+  std::vector<SplineRecord> parsed;
+  importDxf(graphic, source, "tangent_quadratic_explicit_control_net", &parsed);
+  REQUIRE(parsed.size() == 1);
+  CHECK(parsed.front().m_controlPoints.size() == source.m_controlPoints.size());
+
+  RS_Spline *spline = onlySpline(graphic);
+  const RS_SplineData &data = spline->getData();
+  CHECK(data.degree == 2);
+  CHECK(data.controlPoints.size() == source.m_controlPoints.size());
+  CHECK(data.knotslist == source.m_knots);
+  CHECK(data.fitPoints.size() == source.m_fitPoints.size());
+  CHECK(data.fitTangentsConstrained);
+
+  RS_SplineData expected(2, false);
+  expected.degree = 2;
+  expected.controlPoints = source.m_controlPoints;
+  expected.knotslist = source.m_knots;
+  expected.weights.assign(source.m_controlPoints.size(), 1.0);
+  for (int i = 0; i <= 32; ++i) {
+    const double t = static_cast<double>(i) / 32.0;
+    const RS_Vector actual = RS_Spline::evaluateNURBS(data, t);
+    const RS_Vector reference = RS_Spline::evaluateNURBS(expected, t);
+    REQUIRE(actual.valid);
+    REQUIRE(reference.valid);
+    CHECK(actual.distanceTo(reference) <= 1.0e-12);
   }
 }
 

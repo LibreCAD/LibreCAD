@@ -9205,7 +9205,13 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
 
   // Spline points case. Weighted degree-2 splines are exact rational conics
   // or NURBS segments; keep them on the RS_Spline path so weights survive.
-  if (data->degree == 2 && !hasRationalSplineWeights(data)) {
+  const auto nonzeroTangent = [](const DRW_Coord &tangent) {
+    return tangent.x != 0.0 || tangent.y != 0.0 || tangent.z != 0.0;
+  };
+  const bool hasFitTangents = nonzeroTangent(data->tgStart) ||
+                              nonzeroTangent(data->tgEnd);
+  if (data->degree == 2 && !hasRationalSplineWeights(data) &&
+      (!hasFitTangents || data->controllist.empty())) {
     bool closed = (data->flags & 0x1) == 0x1;
     bool controlOnly = data->nfit == 0;
 
@@ -9225,11 +9231,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     }
     if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
       splinePoints->getData().fitTolerance = data->tolfit;
-    const auto nonzero = [](const DRW_Coord &tangent) {
-      return tangent.x != 0.0 || tangent.y != 0.0 || tangent.z != 0.0;
-    };
     splinePoints->getData().fitTangentsConstrained =
-        nonzero(data->tgStart) || nonzero(data->tgEnd);
+        hasFitTangents;
 
     splinePoints->update();
     m_currentContainer->addEntity(splinePoints);
@@ -9274,8 +9277,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
                     numCtrl, data->weightlist.size());
   }
 
-  const auto preserveFitMetadata = [data](RS_Spline *spline) {
-    if (data->degree != 3 || data->fitlist.empty())
+  const auto preserveFitMetadata = [data, hasFitTangents](RS_Spline *spline) {
+    if (data->fitlist.empty())
       return;
     std::vector<RS_Vector> fitPoints;
     fitPoints.reserve(data->fitlist.size());
@@ -9288,11 +9291,8 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     target.fitPoints = std::move(fitPoints);
     if (std::isfinite(data->tolfit) && data->tolfit > 0.0)
       target.fitTolerance = data->tolfit;
-    const auto nonzero = [](const DRW_Coord &tangent) {
-      return tangent.x != 0.0 || tangent.y != 0.0 || tangent.z != 0.0;
-    };
     target.fitTangentsConstrained =
-        nonzero(data->tgStart) || nonzero(data->tgEnd);
+        hasFitTangents;
   };
 
   if (numCtrl != 0) {
