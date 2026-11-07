@@ -23488,3 +23488,24 @@ This proves only the listed positive-weight range and layout. Near-underflow,
 near-overflow, randomly distributed weights, additional nonuniform knot
 families, other periodic topologies, closed fit-point sources, cuts, visible-GUI
 acceptance, non-ODA interoperability, and exact-head CI remain open.
+
+#### W563bm. Qualify a 10^12 Periodic Weight Ratio (2026-11-07)
+
+Added a further six-control cubic periodic layout whose positive rational
+weights span `1e-6` to `1e6`, a ratio of `1e12`. The source retains the same
+nonuniform knot layout; this isolates increased weight conditioning from
+changes in topology or knot sequence.
+
+The focused native matrix passes 1,799 assertions and stages 42 DWGs. ODA File
+Converter 27.1 converts all 42 to R2018 DXF with zero `.err` files; sampled
+geometry validation passes at `1e-5`, for 2,051 assertions with native checks.
+The broader spline round-trip selection passes 7,076 assertions across eight
+cases. Fixtures are under
+`/private/tmp/offset-nonuniform-periodic-dwg-conditioned` and
+`/private/tmp/offset-nonuniform-periodic-oda-conditioned`. Test commit
+`fb9936bff` (`test(dwg): cover periodic spline weight conditioning`).
+
+This proves only the tested `1e-6`–`1e6` interval and periodic layout; values
+near floating-point underflow/overflow, other knot families, and other
+topologies remain unqualified. Visible-GUI acceptance, independent CAD beyond
+ODA, and exact-head CI also remain open.
