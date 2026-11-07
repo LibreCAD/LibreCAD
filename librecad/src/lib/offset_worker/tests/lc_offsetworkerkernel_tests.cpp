@@ -754,18 +754,32 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
 
 TEST_CASE("worker validates nonuniform periodic spline caches on both offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][spline-variant][periodic][nonuniform]") {
-    const std::vector<std::pair<int, double>> variants{
-        {1, 1e-3}, {1, 1.0}, {1, 1e3}, {2, 1.0}, {3, 1.0}};
-    for (const auto& [degree, scale] : variants) {
-        CAPTURE(degree, scale);
+    struct Variant {
+        int degree;
+        double scale;
+        bool sevenControlQuadratic;
+    };
+    const std::vector<Variant> variants{
+        {1, 1e-3, false}, {1, 1.0, false}, {1, 1e3, false},
+        {2, 1.0, false}, {2, 1.0, true}, {3, 1.0, false}};
+    for (const auto& variant : variants) {
+        const int degree = variant.degree;
+        const double scale = variant.scale;
+        const bool sevenControlQuadratic = variant.sevenControlQuadratic;
+        CAPTURE(degree, scale, sevenControlQuadratic);
         RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
-        for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
-                                       RS_Vector{60, 0}, RS_Vector{55, 35},
-                                       RS_Vector{20, 50}, RS_Vector{-15, 25}})
+        const std::vector<RS_Vector> controls = sevenControlQuadratic
+            ? std::vector<RS_Vector>{{0, 0}, {25, -15}, {55, -5}, {70, 20},
+                                     {50, 45}, {15, 50}, {-15, 25}}
+            : std::vector<RS_Vector>{{0, 0}, {30, -15}, {60, 0}, {55, 35},
+                                     {20, 50}, {-15, 25}};
+        for (const RS_Vector& point : controls)
             periodic.addControlPoint({point.x * scale + 1000.0 * scale,
                                       point.y * scale - 2000.0 * scale});
         if (degree == 1)
             periodic.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
+        else if (degree == 2 && sevenControlQuadratic)
+            periodic.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
         else if (degree == 2)
             periodic.setKnotVector({0, 0, 0, .5, 1.75, 2.5, 3, 3, 3});
         else
@@ -773,8 +787,9 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
         REQUIRE(periodic.validate());
         periodic.setClosed(true);
         auto sourceData = periodic.getData();
-        const std::vector<double> independentWeights{1.0, 0.9, 1.1, 0.95,
-                                                     1.05, 0.85};
+        const std::vector<double> independentWeights = sevenControlQuadratic
+            ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85, 1.15}
+            : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85};
         sourceData.weights = independentWeights;
         sourceData.weights.insert(sourceData.weights.end(), independentWeights.begin(),
                                   independentWeights.begin() + sourceData.degree);
