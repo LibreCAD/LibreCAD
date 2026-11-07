@@ -23116,7 +23116,13 @@ and fit-point counts. ACadSharp independently accepts all 18 R2000/R2004
 fixtures for the same chain/mode matrix. Its reader does not support R2007+
 fixtures, so no ACadSharp acceptance claim is made for those versions. This is
 structural-reader validation, not a broad external geometry-equivalence or CAD
-interoperability claim. `git diff --check` passes.
+interoperability claim. ODA File Converter 27.1 also converted all 54 inputs
+to R2018 DXF; inspection found one SPLINE in each output with the exact source
+fit-point count/coordinates and expected zero/unit endpoint-tangent state.
+ODA re-expresses these splines with a cubic DXF representation, so this proves
+structural conversion and fit-data retention only, not exact evaluated-curve
+equivalence. The converted outputs are under
+`/private/tmp/tangent-fit-dwg-oda-out`. `git diff --check` passes.
 
 Product/test commit `848ab20cd` (`feat(dwg): preserve verified spline-point
 chains`). This qualifies the tested 3/4/5-point cases and DWG versions; broader
