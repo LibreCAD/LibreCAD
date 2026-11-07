@@ -1596,6 +1596,58 @@ TEST_CASE("bounded hyperbola worker preserves detail across combined scale and t
     CHECK(acceptedCaches + refusedCaches == scales.size() * variants.size() * normalizedDistances.size() * 2);
 }
 
+TEST_CASE("worker generates and caches high-ratio rational spline offsets when tangents stay regular",
+          "[lc-offsetcurve][worker-kernel][source-cache][spline-variant][rational][conditioned]") {
+    const std::array<std::vector<double>, 2> weightProfiles{{
+        {1e-6, 3.162277660168379e-5, 1e-3, 0.03162277660168379, 1.0,
+         31.622776601683793, 1e3, 31622.776601683792, 1e6},
+        {1e6, 31622.776601683792, 1e3, 31.622776601683793, 1.0,
+         0.03162277660168379, 1e-3, 3.162277660168379e-5, 1e-6}
+    }};
+    for (const auto& weights : weightProfiles) {
+        RS_SplineData source{2, false};
+        source.controlPoints = {{0, 0}, {10, 5}, {20, 12}, {30, 20},
+                                {40, 28}, {50, 35}, {60, 40}, {70, 42},
+                                {80, 40}};
+        source.knotslist = {0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 7, 7};
+        source.weights = weights;
+        RS_Spline checkedSource{nullptr, source};
+        REQUIRE(checkedSource.validate());
+        for (const double signedDistance : {-.005, .005}) {
+            CAPTURE(weights.front(), weights.back(), signedDistance);
+            const LC_OffsetSourceDefinition definition{
+                LC_OffsetSourceGeometry{source}, signedDistance, 1e-4, false};
+            const req::Request generationRequest{token,
+                req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            CAPTURE(generated.engineStatus.has_value(),
+                    generated.engineStatus
+                        ? static_cast<int>(*generated.engineStatus)
+                        : -1);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE(generated.ordinary.size() == 1);
+            REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+            const auto generationWire = result::encode(generationReply, generationRequest);
+            REQUIRE(generationWire);
+            CHECK(result::decode(*generationWire, generationRequest));
+
+            const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+            const req::Request validationRequest{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validated.changed);
+            CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+            const auto validationWire = result::encode(validationReply, validationRequest);
+            REQUIRE(validationWire);
+            CHECK(result::decode(*validationWire, validationRequest));
+        }
+    }
+}
+
 TEST_CASE("bounded hyperbola worker classifies relative translation boundaries",
           "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][precision][translation-boundary]") {
     const std::array<LC_HyperbolaData, 8> variants{
