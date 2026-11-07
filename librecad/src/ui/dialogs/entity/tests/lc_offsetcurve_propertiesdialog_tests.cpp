@@ -695,6 +695,62 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse);
 }
 
+TEST_CASE("Native source picker offers supported spline and polyline variants",
+          "[gui][dialog][offsetcurve][source][eligibility][variants]") {
+    Fixture f;
+    RS_SplineData linear{1, false};
+    linear.controlPoints = {{0, 0}, {2, 1}, {4, 0}};
+    linear.knotslist = {0, 0, .5, 1, 1};
+    RS_SplineData cubic{3, false};
+    cubic.controlPoints = {{0, 0}, {1, 2}, {3, 2}, {4, 0}};
+    cubic.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    cubic.weights = {1, .8, 1.2, 1};
+    auto* degreeOne = new RS_Spline(nullptr, linear);
+    auto* degreeThree = new RS_Spline(nullptr, cubic);
+    auto* openBulgePolyline = new RS_Polyline;
+    openBulgePolyline->addVertex({0, 0}, .2);
+    openBulgePolyline->addVertex({8, 0});
+    openBulgePolyline->addVertex({8, 6});
+    openBulgePolyline->endPolyline();
+    f.graphic.addEntity(degreeOne);
+    f.graphic.addEntity(degreeThree);
+    f.graphic.addEntity(openBulgePolyline);
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+
+    const auto checkCandidates = [&](LC_OffsetSourceGeometry::Kind kind,
+                                     std::initializer_list<RS_Entity*> expected) {
+        const int typeIndex = typeBox->findData(static_cast<int>(kind));
+        REQUIRE(typeIndex >= 0);
+        typeBox->setCurrentIndex(typeIndex);
+        std::vector<qulonglong> actual;
+        for (int i = 0; i < sourceBox->count(); ++i) {
+            bool isEntityId = false;
+            const auto id = sourceBox->itemData(i).toULongLong(&isEntityId);
+            if (isEntityId) actual.push_back(id);
+        }
+        REQUIRE(actual.size() == expected.size());
+        for (auto* entity : expected) {
+            const auto captured = LC_OffsetSourceGeometry::capture(*entity);
+            REQUIRE(captured);
+            CHECK(captured->kind() == kind);
+            CHECK(std::find(actual.begin(), actual.end(),
+                            static_cast<qulonglong>(entity->getId())) != actual.end());
+        }
+        CHECK_FALSE(widget.isPreparing());
+        CHECK_FALSE(clone->sourceDefinition());
+    };
+
+    checkCandidates(LC_OffsetSourceGeometry::Kind::Spline, {degreeOne, degreeThree});
+    checkCandidates(LC_OffsetSourceGeometry::Kind::Polyline, {openBulgePolyline});
+}
+
 TEST_CASE("Native source picker disables a deleted source candidate",
           "[gui][dialog][offsetcurve][source][stale]") {
     Fixture f;
