@@ -525,6 +525,46 @@ TEST_CASE("RS_Spline fit interpolation uses a natural unconstrained end",
   }
 }
 
+TEST_CASE("RS_Spline constrained fit directions survive transforms and reversal",
+          "[RS_Spline][fitpoints][tangents][transform]") {
+  const std::vector<RS_Vector> fitPoints = {
+      {0.0, 0.0}, {2.0, 3.0}, {6.0, 4.0}, {9.0, 0.0}};
+  const RS_Vector requestedStart{2.0, -1.0};
+  RS_Spline spline{nullptr, RS_SplineData{3, false}};
+  REQUIRE(spline.setFitPointsWithTangents(fitPoints, requestedStart, {0.0, 0.0}));
+
+  constexpr double angle = 0.37;
+  RS_Vector expectedTangent = requestedStart;
+  expectedTangent.rotate({std::cos(angle), std::sin(angle)});
+  spline.rotate({0.0, 0.0}, angle);
+  expectedTangent = {2.0 * expectedTangent.x, 3.0 * expectedTangent.y};
+  spline.scale({0.0, 0.0}, {2.0, 3.0});
+
+  LC_CurveJet startJet;
+  LC_CurveJet endJet;
+  REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+  REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+  CHECK(compareVector(startJet.first / startJet.first.magnitude(),
+                      expectedTangent / expectedTangent.magnitude(), 1e-8));
+  CHECK(endJet.second.magnitude() < 1e-7);
+  CHECK(spline.getData().fitStartTangent.distanceTo(expectedTangent) < 1e-12);
+  CHECK(spline.getData().fitEndTangent.magnitude() == 0.0);
+  for (const auto& point : spline.getData().fitPoints)
+    CHECK(compareVector(spline.getNearestPointOnEntity(point, true), point, 1e-7));
+
+  spline.revertDirection();
+  REQUIRE(spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+  REQUIRE(spline.tryEvaluateJet(1.0, LC_CurveEvaluationSide::Left, endJet));
+  CHECK(startJet.second.magnitude() < 1e-7);
+  CHECK(compareVector(endJet.first / endJet.first.magnitude(),
+                      -expectedTangent / expectedTangent.magnitude(), 1e-8));
+  CHECK(spline.getData().fitStartTangent.magnitude() == 0.0);
+  CHECK(spline.getData().fitEndTangent.distanceTo(-expectedTangent) < 1e-12);
+  const RS_Vector transformedLast = fitPoints.back().rotated({std::cos(angle), std::sin(angle)});
+  CHECK(spline.getData().fitPoints.front().distanceTo(
+            RS_Vector{2.0 * transformedLast.x, 3.0 * transformedLast.y}) < 1e-7);
+}
+
 TEST_CASE("RS_Spline tangent interpolation rejects unsupported inputs atomically",
           "[RS_Spline][fitpoints][tangents]") {
   RS_Spline spline{nullptr, RS_SplineData{3, false}};
