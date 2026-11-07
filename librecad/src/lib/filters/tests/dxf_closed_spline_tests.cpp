@@ -74,7 +74,7 @@ std::string tempPath(const std::string &name) {
       .string();
 }
 
-void preserveTangentSplineDwg(const std::string &source,
+void preserveSplineDwgFixture(const std::string &source,
                               const std::string &fileName) {
   const char *directory = std::getenv("LIBRECAD_TANGENT_SPLINE_DWG_DIR");
   if (directory == nullptr || *directory == '\0') return;
@@ -611,6 +611,89 @@ TEST_CASE("Closed splines survive a DXF and DWG round trip",
   }
 }
 
+TEST_CASE(
+    "Nonuniform rational periodic RS_Spline survives DXF and DWG round trips",
+    "[dxf][dwg][filter][spline][periodic][roundtrip]") {
+  ensureSettings();
+  RS_Spline open{nullptr, RS_SplineData{3, false}};
+  for (const RS_Vector &point :
+       {RS_Vector{0, 0}, RS_Vector{30, -15}, RS_Vector{60, 0},
+        RS_Vector{55, 35}, RS_Vector{20, 50}, RS_Vector{-15, 25}})
+    open.addControlPoint(point);
+  open.setKnotVector({0, 0, 0, 0, 0.5, 2, 3, 3, 3, 3});
+  REQUIRE(open.validate());
+  open.setClosed(true);
+  RS_SplineData sourceData = open.getData();
+  const std::vector<double> baseWeights{1.0, 0.9, 1.1, 0.95, 1.05, 0.85};
+  sourceData.weights = baseWeights;
+  sourceData.weights.insert(sourceData.weights.end(), baseWeights.begin(),
+                            baseWeights.begin() + sourceData.degree);
+  RS_Spline source{nullptr, sourceData};
+  REQUIRE(source.validate());
+  REQUIRE(source.hasWrappedControlPoints());
+  CHECK(sourceData.knotslist !=
+        std::vector<double>{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+  const auto expected = splineCurve(source, 2000);
+
+  RS_Graphic graphic;
+  graphic.initForNewDocument();
+  graphic.addEntity(new RS_Spline(&graphic, sourceData));
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDXFRW, "dxf"},
+#ifdef DWGSUPPORT
+      {RS2::FormatDWG, "dwg-r2000"},     {RS2::FormatDWG2004, "dwg-r2004"},
+      {RS2::FormatDWG2007, "dwg-r2007"}, {RS2::FormatDWG2010, "dwg-r2010"},
+      {RS2::FormatDWG2013, "dwg-r2013"}, {RS2::FormatDWG2018, "dwg-r2018"},
+#endif
+  };
+  for (const auto &[format, suffix] : formats) {
+    INFO(suffix);
+    const std::string path = tempPath("nonuniform_periodic_rational_" + suffix);
+    std::remove(path.c_str());
+    {
+      RS_FilterDXFRW writer;
+      REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+    }
+#ifdef DWGSUPPORT
+    if (format != RS2::FormatDXFRW)
+      preserveSplineDwgFixture(path, "nonuniform-periodic-rational-" + suffix +
+                                           ".dwg");
+#endif
+    RS_Graphic reopened;
+    std::vector<SplineRecord> written;
+    importFile(reopened, path,
+               format == RS2::FormatDXFRW ? RS2::FormatDXFRW : RS2::FormatDWG,
+               &written);
+    std::filesystem::remove(path);
+    REQUIRE(written.size() == 1);
+    CHECK((written.front().m_flags & 0x3) == 0x3);
+    CHECK((written.front().m_flags & 0x4) != 0);
+    checkSameVectors(written.front().m_controlPoints, sourceData.controlPoints);
+    checkSameKnots(written.front().m_knots, sourceData.knotslist);
+    RS_Spline *received = onlySpline(reopened);
+    REQUIRE(received->validate());
+    CHECK(received->isClosed());
+    CHECK(received->hasWrappedControlPoints());
+    CHECK(curveDistance(expected, splineCurve(*received, 2000)) < 1.0e-9);
+
+    const char *odaDirectory =
+        std::getenv("LIBRECAD_NONUNIFORM_PERIODIC_ODA_DXF_DIR");
+    if (format != RS2::FormatDXFRW && odaDirectory != nullptr &&
+        *odaDirectory != '\0') {
+      const auto converted =
+          std::filesystem::path(odaDirectory) /
+          ("nonuniform-periodic-rational-" + suffix + ".dxf");
+      REQUIRE(std::filesystem::exists(converted));
+      RS_Graphic external;
+      importFile(external, converted.string(), RS2::FormatDXFRW);
+      RS_Spline *externalSpline = onlySpline(external);
+      REQUIRE(externalSpline->validate());
+      CHECK(curveDistance(expected, splineCurve(*externalSpline, 2000)) <
+            1.0e-5);
+    }
+  }
+}
+
 TEST_CASE("A spline read closed whose ends are moved apart is written open",
           "[dxf][filter][spline][roundtrip]") {
   ensureSettings();
@@ -898,7 +981,7 @@ TEST_CASE("DWG preserves tangent-constrained spline-points as exact control spli
           REQUIRE(writer.fileExport(graphic, QString::fromStdString(path),
                                     format));
         }
-        preserveTangentSplineDwg(
+        preserveSplineDwgFixture(
             path, "control-net-mode" + std::to_string(tangentMode) + "-" +
                       pointSuffix + "-" + suffix + ".dwg");
         RS_Graphic reopened;
@@ -980,8 +1063,8 @@ TEST_CASE("DWG round-trips closed spline-points control geometry",
         RS_FilterDXFRW writer;
         REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
       }
-      preserveTangentSplineDwg(path, "closed-control-" + pointCount + "-" +
-                                      version + ".dwg");
+      preserveSplineDwgFixture(path, "closed-control-" + pointCount + "-" +
+                                        version + ".dwg");
       RS_Graphic reopened;
       std::vector<SplineRecord> written;
       importFile(reopened, path, RS2::FormatDWG, &written);
@@ -1091,8 +1174,9 @@ TEST_CASE("DWG round-trips both pieces of a cut spline-points curve",
           RS_FilterDXFRW writer;
           REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
         }
-        preserveTangentSplineDwg(path, "cut-control-" + pointCount + "-q" +
-                                      fractionLabel + "-" + version + ".dwg");
+        preserveSplineDwgFixture(path, "cut-control-" + pointCount + "-q" +
+                                          fractionLabel + "-" + version +
+                                          ".dwg");
         RS_Graphic reopened;
         std::vector<SplineRecord> written;
         importFile(reopened, path, RS2::FormatDWG, &written);
@@ -1179,8 +1263,9 @@ TEST_CASE("DWG round-trips a closed spline-points curve cut at its seam",
           RS_FilterDXFRW writer;
           REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
         }
-        preserveTangentSplineDwg(path, "closed-cut-control-" + pointCount + "-q" +
-                                      fractionLabel + "-" + version + ".dwg");
+        preserveSplineDwgFixture(
+            path, "closed-cut-control-" + pointCount + "-q" + fractionLabel +
+                      "-" + version + ".dwg");
         RS_Graphic reopened;
         std::vector<SplineRecord> written;
         importFile(reopened, path, RS2::FormatDWG, &written);
@@ -1268,8 +1353,9 @@ TEST_CASE("DWG writes cut fit-point splines from their authoritative control net
           RS_FilterDXFRW writer;
           REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
         }
-        preserveTangentSplineDwg(path, "cut-fit-control-" + pointCount + "-q" +
-            fractionLabel + "-" + version + ".dwg");
+        preserveSplineDwgFixture(path, "cut-fit-control-" + pointCount + "-q" +
+                                          fractionLabel + "-" + version +
+                                          ".dwg");
         RS_Graphic reopened;
         std::vector<SplineRecord> written;
         importFile(reopened, path, RS2::FormatDWG, &written);
@@ -1973,7 +2059,7 @@ TEST_CASE("Tangent-constrained cubic fit SPLINE preserves its verified DWG fit r
       REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
     }
     if (format != RS2::FormatDXFRW)
-      preserveTangentSplineDwg(path, "both-tangent-" + suffix + ".dwg");
+      preserveSplineDwgFixture(path, "both-tangent-" + suffix + ".dwg");
     RS_Graphic reopened;
     std::vector<SplineRecord> written;
     const RS2::FormatType readFormat =

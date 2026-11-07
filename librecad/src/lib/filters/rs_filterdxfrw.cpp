@@ -32876,11 +32876,17 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     for (const RS_Vector &point : splineData.fitPoints)
       sp.fitlist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0.0));
   } else {
-    // write spline control points:
-    for (const RS_Vector &v : s->getUnwrappedControlPoints()) {
+    // A WrappedClosed spline is periodic: its stored control/weight tail and
+    // knot extension define the wrap. Keep that complete representation in
+    // the file instead of pairing the shortened arrays with periodic flags.
+    const std::vector<RS_Vector> controls =
+        s->isClosed() ? sourceData.controlPoints
+                      : s->getUnwrappedControlPoints();
+    for (const RS_Vector &v : controls) {
       sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
     }
-    sp.weightlist = s->getUnwrappedWeights();
+    sp.weightlist =
+        s->isClosed() ? sourceData.weights : s->getUnwrappedWeights();
     if (std::any_of(sp.weightlist.begin(), sp.weightlist.end(),
                     differsFromUnitWeight)) {
       sp.flags |= 0x04;
@@ -32889,7 +32895,8 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     sp.ncontrol = static_cast<std::int32_t>(sp.controllist.size());
 
     // knot vector from RS_Spline
-    sp.knotslist = s->getUnwrappedKnotVector();
+    sp.knotslist =
+        s->isClosed() ? sourceData.knotslist : s->getUnwrappedKnotVector();
     sp.nknots = static_cast<std::int32_t>(sp.knotslist.size());
     if (splineData.fitTangentsConstrained && !m_dwgW) {
       sp.nfit = static_cast<std::int32_t>(splineData.fitPoints.size());
