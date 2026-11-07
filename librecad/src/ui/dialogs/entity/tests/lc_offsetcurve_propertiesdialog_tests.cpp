@@ -944,6 +944,15 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
         std::make_shared<DRW_Variant>(1001, "LibreCAD_CONIC_OCS"),
         std::make_shared<DRW_Variant>(1070, 0),
         std::make_shared<DRW_Variant>(1010, DRW_Coord{.3, .4, .8660254037844386})});
+    auto* nonplanarEllipse = new RS_Ellipse(nullptr,
+        RS_EllipseData{{4, -2, .25}, {3, 1}, .4, 0, 1, false});
+    auto* degenerateEllipse = new RS_Ellipse(nullptr,
+        RS_EllipseData{{4, -2}, {0, 0}, .4, 0, 1, false});
+    auto* degenerateLine = new RS_Line(nullptr, RS_LineData{{1, 1}, {1, 1}});
+    auto* zeroRadiusArc = new RS_Arc(nullptr, RS_ArcData{{0, 0}, 0, .1, 1, false});
+    auto* zeroRadiusCircle = new RS_Circle(nullptr, RS_CircleData{{0, 0}, 0});
+    auto* invalidParabola = new LC_Parabola(nullptr,
+        LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{1, 0}, RS_Vector{2, 0}}});
     f.graphic.addEntity(unsupportedSpline);
     f.graphic.addEntity(unboundedHyperbola);
     f.graphic.addEntity(constrainedFit);
@@ -955,6 +964,12 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     f.graphic.addEntity(unsortedKnotSpline);
     f.graphic.addEntity(lossyProjectedPolyline);
     f.graphic.addEntity(projectedEllipse);
+    f.graphic.addEntity(nonplanarEllipse);
+    f.graphic.addEntity(degenerateEllipse);
+    f.graphic.addEntity(degenerateLine);
+    f.graphic.addEntity(zeroRadiusArc);
+    f.graphic.addEntity(zeroRadiusCircle);
+    f.graphic.addEntity(invalidParabola);
 
     std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
     NativeWidget widget;
@@ -969,7 +984,11 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     for (const auto kind : {LC_OffsetSourceGeometry::Kind::Ellipse,
                             LC_OffsetSourceGeometry::Kind::Spline,
                             LC_OffsetSourceGeometry::Kind::SplinePoints,
+                            LC_OffsetSourceGeometry::Kind::Parabola,
                             LC_OffsetSourceGeometry::Kind::BoundedHyperbola,
+                            LC_OffsetSourceGeometry::Kind::Line,
+                            LC_OffsetSourceGeometry::Kind::Arc,
+                            LC_OffsetSourceGeometry::Kind::Circle,
                             LC_OffsetSourceGeometry::Kind::Polyline}) {
         CAPTURE(kind);
         const int typeIndex = typeBox->findData(static_cast<int>(kind));
@@ -994,6 +1013,12 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
         CHECK_FALSE(selfIntersectingPolyline->getFlag(RS2::FlagSelected));
         CHECK_FALSE(lossyProjectedPolyline->getFlag(RS2::FlagSelected));
         CHECK_FALSE(projectedEllipse->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(nonplanarEllipse->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(degenerateEllipse->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(degenerateLine->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(zeroRadiusArc->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(zeroRadiusCircle->getFlag(RS2::FlagSelected));
+        CHECK_FALSE(invalidParabola->getFlag(RS2::FlagSelected));
         before.geometry(*clone);
     }
 }
