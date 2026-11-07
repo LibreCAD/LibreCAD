@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <cstdlib>
+#include <filesystem>
 #include <limits>
 #include <memory>
 #include <numeric>
@@ -86,6 +88,20 @@ public:
 
 namespace {
 namespace f = lc::test::offset_persistence;
+
+void preserveTypedSourceDwg(const std::filesystem::path& source,
+                            const std::string& fileName) {
+    const char* directory = std::getenv("LIBRECAD_TYPED_SOURCE_DWG_DIR");
+    if (directory == nullptr || *directory == '\0') return;
+    std::error_code error;
+    std::filesystem::create_directories(directory, error);
+    REQUIRE_FALSE(error);
+    const bool copied = std::filesystem::copy_file(source,
+        std::filesystem::path(directory) / fileName,
+        std::filesystem::copy_options::overwrite_existing, error);
+    REQUIRE(copied);
+    REQUIRE_FALSE(error);
+}
 
 struct Setup {
     const bool ready{lc::test::ensureSettings()};
@@ -1400,6 +1416,17 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             const auto repeatedSource = values::encodeSourceDefinition(*repeated.definition->source);
             REQUIRE(repeatedSource);
             CHECK(QCborValue(*before).toCbor() == QCborValue(*repeatedSource).toCbor());
+
+            // Keep one second-saved carrier per source family for optional
+            // independent CAD inspection; default tests remain hermetic.
+            constexpr std::array<std::size_t, 9> representativeSources{
+                0, 5, 14, 16, 19, 28, 29, 30, 31};
+            if (fileFormat.dwg &&
+                std::find(representativeSources.begin(), representativeSources.end(), i) !=
+                    representativeSources.end()) {
+                preserveTypedSourceDwg(repeat,
+                    "typed-source-" + std::to_string(i) + "-" + fileFormat.suffix);
+            }
         };
 
         for (const auto& fileFormat : formats) {
@@ -1428,6 +1455,77 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             f::binaryDxf(path, entity, fileFormat.version);
 #endif
             verify(path, fileFormat, true);
+        }
+    }
+}
+
+TEST_CASE("ODA-round-tripped typed-source DWGs retain all modeled source families",
+          "[lc-offsetcurve][persistence][typed-source][external][oda]") {
+    const char* sourceDirectory = std::getenv("LIBRECAD_TYPED_SOURCE_DWG_DIR");
+    const char* directory = std::getenv("LIBRECAD_TYPED_SOURCE_ODA_DXF_DIR");
+    if (sourceDirectory == nullptr || *sourceDirectory == '\0' ||
+        directory == nullptr || *directory == '\0')
+        SKIP("set both typed-source DWG and ODA-converted DXF fixture directories");
+#ifndef DWGSUPPORT
+    SKIP("requires DWGSUPPORT to read the original EED fixtures");
+#endif
+
+    namespace xd = LC_OffsetCurveXData;
+    namespace values = LC_OffsetWorkerRequest::Values;
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    struct Representative {
+        std::size_t sourceIndex;
+        Kind kind;
+    };
+    constexpr std::array<Representative, 9> representatives{{
+        {0, Kind::Ellipse}, {5, Kind::Spline}, {14, Kind::SplinePoints},
+        {16, Kind::Parabola}, {19, Kind::BoundedHyperbola}, {28, Kind::Line},
+        {29, Kind::Arc}, {30, Kind::Circle}, {31, Kind::Polyline}}};
+
+    for (const auto& representative : representatives) {
+        CAPTURE(representative.sourceIndex, static_cast<int>(representative.kind));
+        for (const char* release : {"r2000", "r2018"}) {
+            CAPTURE(release);
+            const auto sourcePath = std::filesystem::path(sourceDirectory) /
+                ("typed-source-" + std::to_string(representative.sourceIndex) + "-" +
+                 release + ".dwg");
+            const auto path = std::filesystem::path(directory) /
+                ("typed-source-" + std::to_string(representative.sourceIndex) + "-" +
+                 release + ".dxf");
+            REQUIRE(std::filesystem::is_regular_file(sourcePath));
+            REQUIRE(std::filesystem::is_regular_file(path));
+            const auto originalDrawing = f::readCodec(sourcePath, true);
+            REQUIRE(originalDrawing.splines.size() == 1);
+            const auto drawing = f::readCodec(path, false);
+            REQUIRE(drawing.splines.size() == 1);
+            xd::Options sourceEncoding;
+            sourceEncoding.eed = true;
+            sourceEncoding.textEncoding = xd::TextEncoding::Utf16;
+            const auto original = xd::parseAndStrip(
+                originalDrawing.splines.front().extData, sourceEncoding);
+            REQUIRE(original.status == xd::Status::Schema2);
+            REQUIRE(original.definition);
+            REQUIRE(original.definition->source);
+            xd::Options dxfEncoding;
+            dxfEncoding.asciiDxf = true;
+            const auto converted = xd::parseAndStrip(
+                drawing.splines.front().extData, dxfEncoding);
+            REQUIRE(converted.status == xd::Status::Schema2);
+            REQUIRE(converted.definition);
+            REQUIRE(converted.definition->source);
+            CHECK(converted.definition->source->source.kind() == representative.kind);
+            CHECK(converted.definition->source->isWellFormed());
+            const auto originalSource = values::encodeSourceDefinition(*original.definition->source);
+            const auto convertedSource = values::encodeSourceDefinition(*converted.definition->source);
+            REQUIRE(originalSource);
+            REQUIRE(convertedSource);
+            CHECK(QCborValue(*originalSource).toCbor() ==
+                  QCborValue(*convertedSource).toCbor());
+            CHECK(converted.definition->reservedFlags == original.definition->reservedFlags);
+            REQUIRE(converted.definition->tail.size() == original.definition->tail.size());
+            REQUIRE(original.remaining);
+            REQUIRE(converted.remaining);
+            CHECK(f::tagsState(*converted.remaining) == f::tagsState(*original.remaining));
         }
     }
 }
