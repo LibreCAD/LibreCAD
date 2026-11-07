@@ -60,7 +60,9 @@ positive-weight rational quadratic tangent `RS_Spline` sources through direct
 generation, worker/cache validation, Properties replacement and typed-source
 round-trip; W558 adds rational-quadratic AC1032 DXF/DWG staged-import and
 cache-promotion coverage; W559 reconfirms the existing type-changing,
-nine-family source-picker contract without adding duplicate UI;
+nine-family source-picker contract without adding duplicate UI; W560 extends
+verified tangent-constrained SPLINE support to degree 1 with worker, Properties,
+five-lane persistence and AC1032 staged-import coverage;
 remaining family/variant and acceptance work is open;
 chronological evidence follows):
 The latest source-picker clarification is incorporated: replacing a source
@@ -21776,3 +21778,35 @@ the current source/cache; existing eligibility, cross-family replacement,
 highlighting, and parabola identity tests remain the regression gates. This
 request adds no new family beyond the nine already modeled and does not close
 remaining geometry-variant, persistence, visible-GUI, or external-CAD work.
+
+### W560. Admit Verified Degree-One Tangent-Constrained SPLINEs (2026-11-07)
+
+Extended `RS_Spline::fitTangentsMatchCurve()` to admit degree 1 alongside
+degrees 2 and 3. Admission still requires clamped-open planar geometry,
+positive finite weights, finite fit tolerance, fit points on the represented
+curve within tolerance, and constrained endpoint vectors aligned with the
+evaluated endpoint derivatives. The direct offset engine, worker generation
+and operation-8 cache validator, and the Properties source candidate/replacement
+path now cover a valid degree-one source. Opposing endpoint tangents and
+off-curve fit points are explicitly rejected. Tangent-constrained
+`LC_SplinePoints`, malformed/nonpositive weights, and closed/periodic forms
+remain refused; native DWG tangent SPLINE body writing remains fail-closed.
+
+The typed-source save/reopen/second-save matrix now includes degree one across
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The AC1032 staged-import fixture
+also runs degree-one sources through DXF and DWG operation-8 cache validation
+and promotion. Its exact straight offset materializes as `RS_Line`; the
+staged-import fixture represents that same exact line as a degree-one SPLINE
+cache because offset-curve file carriers are SPLINEs.
+
+Validation: Release CMake builds of `librecad_tests` and
+`librecad_offset_worker_kernel_tests` succeed. Degree-one tangent metadata
+validation passes 7 assertions across two cases; the fit-point/tangent suite
+passes 189 assertions across 9 cases; direct tangent offsets pass 20
+assertions across 4 cases; worker generation/cache validation passes 38
+assertions; Properties candidate selection and replacement passes 154
+assertions; the five-format typed-source save/reopen/second-save matrix passes
+5,802 assertions; the AC1032 DXF/DWG staged-import case passes 759 assertions;
+and `git diff --check` passes. Native tangent DWG writing and independent-CAD
+interoperability remain open. Product commit `f3a151d7f` (`feat(offset): admit
+verified linear tangent splines`).
