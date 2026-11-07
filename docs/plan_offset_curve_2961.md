@@ -21397,3 +21397,75 @@ assertions across 26 cases; and `git diff --check` passes. Product test commit
 the exact PR head. Remaining tangent gates are listed in W545 and still
 include broader knot conditioning, explicit-net consistency, schema-3 source
 identity/transforms, and the deliberately refused DWG tangent writer path.
+
+### W547. Source-Family Picker Contract Reconfirmed (2026-11-06)
+
+The latest source-widget clarification is a maintained product requirement,
+not a request to add a second selector or another source-replacement path. In
+Offset Curve Properties, the user must be able to change the source-family
+filter before picking a replacement; the next canvas pick must accept a live
+entity of that family and install it only through the existing guarded,
+worker-backed replacement flow. Changing the filter alone must leave the
+current source and generated cache unchanged. When the selected source still
+exists in the drawing, the widget/canvas selection must continue to identify
+and highlight it.
+
+The picker inventory is the complete set of currently modeled source families:
+line, arc, circle, ellipse, `RS_Spline`, spline-points, parabola, bounded
+hyperbola, and polyline. Parabola must remain a distinct choice from its
+`LC_SplinePoints` base class. Keep a single inventory shared by the selector,
+candidate filtering, and tests so a newly modeled source family cannot be
+offsettable but absent from source replacement. Add a regression whenever a
+family is introduced; it must cover selector visibility, candidate matching,
+cross-family replacement, current-source highlight, and failure-atomicity.
+
+This is family-level discoverability only. A listed family is not a promise
+that every instance or geometric variant is currently offsettable. Continue
+the variant eligibility matrices independently: capture/identity, exact or
+bounded offset generation, worker behavior, cache validation/admission,
+replacement refusal without mutation, and applicable DXF/DWG save/reopen.
+Unsupported variants must remain explicitly refused or excluded, without
+silently selecting a different source or promoting stale cache data. In
+particular, tangent-constrained spline variants remain refused until their
+interpolation, identity, and file-format gates are completed.
+
+Existing UI implementation and focused tests already cover the editable
+family selector, all nine choices, parabola identity, live candidate matching,
+current-source highlighting, and guarded replacement. Re-run those regressions
+after any picker or source-capture change; do not create a redundant UI slice.
+This checkpoint adds no product-code completion and does not close the
+remaining per-variant, visible-GUI, exact-head CI, or external-CAD gates.
+
+### W548. Versioned Worker Source Identity for Fit Tangents (2026-11-06)
+
+Worker protocol 6 now carries spline fit tolerance, the constrained marker, and
+both endpoint tangent vectors in the tagged source-definition records for
+`RS_Spline` and spline-points. Thus two source definitions that differ only
+in fit-tangent metadata no longer alias during worker transport or the
+canonical source comparison used by worker-backed edits. The request and
+reply envelopes, helper invocation, client, and test fixtures moved together
+to protocol 6; a protocol-5 helper invocation is explicitly rejected.
+
+Ordinary cache-spline records remain the established ten-field form and do not
+carry source metadata. This keeps generated-cache validation and cache reply
+shapes separate from the richer source identity. Metadata vectors are checked
+for finite planar values at source admission. Tangent-constrained generation
+and cache promotion remain refused; protocol identity is not a claim of exact
+tangent-aware offset geometry. The existing output path also refuses to
+relabel a constrained spline as an ordinary worker-produced spline.
+
+Validation: Release worker build succeeds; request-codec suite passes 602,849
+assertions across 16 cases; result-codec suite passes 467,579 assertions
+across 26 cases; tangent-generation refusal passes 40 assertions; client
+integration passes 19,333 assertions across 20 cases; and real helper process
+framing passes 2,811 assertions across four cases, including protocol-5
+invocation rejection. `git diff --check` passes.
+
+This closes the worker source-identity transport item only. Still required are
+broader fit-point interpolation/conditioning, exact consistency validation
+for explicit control nets plus fit data/tangents, transformed schema-3
+round-trip and drawing-level identity qualification, and a standards-verified
+lossless DWG representation or documented continued refusal. Do not enable
+tangent-constrained worker generation, picker eligibility, or cache promotion
+until exact-curve and failure-atomicity gates pass. Other family/variant,
+visible-GUI, exact-head CI, and external-CAD acceptance remain open.
