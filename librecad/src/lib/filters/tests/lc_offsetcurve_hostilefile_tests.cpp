@@ -5058,8 +5058,10 @@ TEST_CASE("rational tangent cubic source imports through operation-8 validation 
     RS_Spline sourceSpline{nullptr, splineData};
     REQUIRE(sourceSpline.fitTangentsMatchCurve());
 
+    const auto importVariant = [&](const RS_SplineData& variant,
+                                   const std::string& variantName) {
     const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{splineData}, .05, 1e-4, false};
+        LC_OffsetSourceGeometry{variant}, .05, 1e-4, false};
     auto source = definition.source.makeEntity();
     REQUIRE(source);
     const auto options = LC_OffsetWorkerTolerance::directOptions(
@@ -5107,8 +5109,8 @@ TEST_CASE("rational tangent cubic source imports through operation-8 validation 
         cache.nknots = cache.knotslist.size();
         cache.nfit = 0;
 
-        const auto input = directory.file(dwg ? "rational-tangent.dwg"
-                                               : "rational-tangent.dxf");
+        const auto input = directory.file(variantName +
+            (dwg ? "-rational-tangent.dwg" : "-rational-tangent.dxf"));
 #ifdef DWGSUPPORT
         if (dwg) f::dwgFile(input, cache, DRW::AC1032);
         else f::binaryDxf(input, cache, DRW::AC1032);
@@ -5130,11 +5132,33 @@ TEST_CASE("rational tangent cubic source imports through operation-8 validation 
         const auto* importedSpline = std::get_if<RS_SplineData>(
             &imported->sourceDefinition()->source.value);
         REQUIRE(importedSpline);
-        CHECK(importedSpline->weights == splineData.weights);
+        CHECK(importedSpline->weights == variant.weights);
         CHECK(importedSpline->fitTangentsConstrained);
-        CHECK(importedSpline->fitStartTangent == splineData.fitStartTangent);
-        CHECK(importedSpline->fitEndTangent == splineData.fitEndTangent);
+        CHECK(importedSpline->fitStartTangent == variant.fitStartTangent);
+        CHECK(importedSpline->fitEndTangent == variant.fitEndTangent);
     }
+    };
+    importVariant(splineData, "cubic");
+
+    RS_SplineData quadraticData{2, false};
+    quadraticData.controlPoints = {{0, 0}, {2, 3}, {5, 0}};
+    quadraticData.knotslist = {0, 0, 0, 1, 1, 1};
+    quadraticData.weights = {1.0, 0.7, 1.0};
+    quadraticData.fitTangentsConstrained = true;
+    quadraticData.fitTolerance = 1e-2;
+    quadraticData.fitStartTangent = {2, 3};
+    quadraticData.fitEndTangent = {3, -3};
+    RS_Spline quadraticEvaluator{nullptr, quadraticData};
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        LC_CurveJet jet;
+        REQUIRE(quadraticEvaluator.tryEvaluateJet(parameter,
+            parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Right, jet));
+        quadraticData.fitPoints.push_back(jet.point);
+    }
+    RS_Spline quadraticSpline{nullptr, quadraticData};
+    REQUIRE(quadraticSpline.fitTangentsMatchCurve());
+    importVariant(quadraticData, "quadratic");
 }
 
 TEST_CASE("wrapped periodic spline source imports through operation-8 validation in DXF and DWG",
