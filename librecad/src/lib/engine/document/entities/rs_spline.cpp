@@ -2168,6 +2168,24 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
           });
       const LC_Interval w2 = sqr(w);
       result.speedSquaredProduct = speedNumerator / sqr(w2);
+      if (p < 2) {
+        result.crossProduct = LC_Interval::point(0.0);
+      } else {
+        const size_t derivativeDegree = 2 * p - 2;
+        LC_Interval mx[2 * g_maxDegree + 1];
+        LC_Interval my[2 * g_maxDegree + 1];
+        productNet(p - 2, p, [&](const size_t i, const size_t j) {
+          return secondNet[i].x * valueNet[j].w - valueNet[j].x * secondNet[i].w;
+        }, mx);
+        productNet(p - 2, p, [&](const size_t i, const size_t j) {
+          return secondNet[i].y * valueNet[j].w - valueNet[j].y * secondNet[i].w;
+        }, my);
+        const LC_Interval crossNumerator = productHull(
+            numeratorDegree, derivativeDegree, [&](const size_t i, const size_t j) {
+              return nx[i] * my[j] - ny[i] * mx[j];
+            });
+        result.crossProduct = crossNumerator / sqr(w2);
+      }
     }
   }
   result.x = result.x + LC_Interval::point(origin.x);

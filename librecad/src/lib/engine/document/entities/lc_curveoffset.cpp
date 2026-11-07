@@ -1982,7 +1982,11 @@ private:
                 const Leaf leaf = stack.back();
                 stack.pop_back();
                 LC_CurveJetBounds bounds;
-                const bool bounded = m_source.boundJet(leaf.t0, leaf.t1, bounds);
+                // Product bounds are only used to classify source/offset
+                // regularity. Keep the ordinary component bounds for later
+                // fitting and intersection work, where their narrower boxes
+                // produce more useful subdivisions.
+                const bool bounded = m_source.boundJetWithProducts(leaf.t0, leaf.t1, bounds);
                 const bool speedProved = bounded && bounds.speedSquared().isPositive();
                 const LC_Interval g = bounded ? bounds.offsetFactorNumerator(m_d) : LC_Interval{};
                 if (speedProved && g.excludesZero()) {

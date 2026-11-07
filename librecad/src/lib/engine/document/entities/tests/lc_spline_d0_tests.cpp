@@ -198,10 +198,10 @@ TEST_CASE("Next to a vanishing tangent the products' own bounds keep the sign of
     const RS_Spline arc = quarterCircle();
     LC_CurveJetBounds b;
     REQUIRE(arc.tryBoundJet(0.2, 0.4, b, true));
-    CHECK_FALSE(b.crossProduct.isValid());
+    CHECK(b.crossProduct.isPositive());
     CHECK(b.speedSquaredProduct.isPositive());
     CHECK(b.speedSquared().isPositive());
-    CHECK(b.cross().isValid());
+    CHECK(b.cross().isPositive());
 }
 
 TEST_CASE("RS_Spline::tryBoundJet refuses a box it cannot bound", "[curve-offset][d0][bound]") {

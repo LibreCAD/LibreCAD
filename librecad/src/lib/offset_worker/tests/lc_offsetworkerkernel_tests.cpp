@@ -81,6 +81,69 @@ SplineOracle oracleSpeedSquared(const RS_SplineData& data,
     return dx * dx + dy * dy;
 }
 
+SplineOracle oracleOffsetFactor(const RS_SplineData& data,
+                                const SplineOracle& parameter,
+                                const SplineOracle& step,
+                                const SplineOracle& domainStart,
+                                const SplineOracle& domainEnd,
+                                const SplineOracle& signedDistance) {
+    const auto point = evaluateSplineOracle(data, parameter);
+    std::pair<SplineOracle, SplineOracle> first;
+    std::pair<SplineOracle, SplineOracle> second;
+    if (parameter == domainStart) {
+        const auto one = evaluateSplineOracle(data, parameter + step);
+        const auto two = evaluateSplineOracle(data, parameter + 2 * step);
+        first = {(-3 * point.first + 4 * one.first - two.first) / (2 * step),
+                 (-3 * point.second + 4 * one.second - two.second) / (2 * step)};
+        second = {(point.first - 2 * one.first + two.first) / (step * step),
+                  (point.second - 2 * one.second + two.second) / (step * step)};
+    } else if (parameter == domainEnd) {
+        const auto one = evaluateSplineOracle(data, parameter - step);
+        const auto two = evaluateSplineOracle(data, parameter - 2 * step);
+        first = {(3 * point.first - 4 * one.first + two.first) / (2 * step),
+                 (3 * point.second - 4 * one.second + two.second) / (2 * step)};
+        second = {(point.first - 2 * one.first + two.first) / (step * step),
+                  (point.second - 2 * one.second + two.second) / (step * step)};
+    } else {
+        const auto before = evaluateSplineOracle(data, parameter - step);
+        const auto after = evaluateSplineOracle(data, parameter + step);
+        first = {(after.first - before.first) / (2 * step),
+                 (after.second - before.second) / (2 * step)};
+        second = {(after.first - 2 * point.first + before.first) / (step * step),
+                  (after.second - 2 * point.second + before.second) / (step * step)};
+    }
+    const SplineOracle speedSquared = first.first * first.first + first.second * first.second;
+    const SplineOracle cross = first.first * second.second - first.second * second.first;
+    return 1 - signedDistance * cross / (speedSquared * sqrt(speedSquared));
+}
+
+std::pair<SplineOracle, SplineOracle> oracleOffsetPoint(
+    const RS_SplineData& data, const SplineOracle& parameter,
+    const SplineOracle& step, const SplineOracle& domainStart,
+    const SplineOracle& domainEnd, const SplineOracle& signedDistance) {
+    const auto point = evaluateSplineOracle(data, parameter);
+    std::pair<SplineOracle, SplineOracle> first;
+    if (parameter == domainStart) {
+        const auto one = evaluateSplineOracle(data, parameter + step);
+        const auto two = evaluateSplineOracle(data, parameter + 2 * step);
+        first = {(-3 * point.first + 4 * one.first - two.first) / (2 * step),
+                 (-3 * point.second + 4 * one.second - two.second) / (2 * step)};
+    } else if (parameter == domainEnd) {
+        const auto one = evaluateSplineOracle(data, parameter - step);
+        const auto two = evaluateSplineOracle(data, parameter - 2 * step);
+        first = {(3 * point.first - 4 * one.first + two.first) / (2 * step),
+                 (3 * point.second - 4 * one.second + two.second) / (2 * step)};
+    } else {
+        const auto before = evaluateSplineOracle(data, parameter - step);
+        const auto after = evaluateSplineOracle(data, parameter + step);
+        first = {(after.first - before.first) / (2 * step),
+                 (after.second - before.second) / (2 * step)};
+    }
+    const SplineOracle speed = sqrt(first.first * first.first + first.second * first.second);
+    return {point.first - signedDistance * first.second / speed,
+            point.second + signedDistance * first.first / speed};
+}
+
 req::Token token{7, 11, 13, 17};
 LC_EllipseOffsetDefinition definition() {
     return {{{0, 0}, {1, 0}, 1, 0, .001, false}, 1, false, false, 1e-4};
@@ -178,6 +241,24 @@ TEST_CASE("high precision oracle samples conditioned periodic spline tangent min
             const double start = data.knotslist[span];
             const double end = data.knotslist[span + 1];
             if (!(start < end)) continue;
+            LC_CurveJetBounds productHull;
+            REQUIRE(checked.tryBoundJet(start, end, productHull, true));
+            for (int sample = 1; sample < 32; ++sample) {
+                LC_CurveJet jet;
+                REQUIRE(checked.tryEvaluateJet(
+                    start + (end - start) * sample / 32.0,
+                    LC_CurveEvaluationSide::Interior, jet));
+                const double speedSquared = jet.first.x * jet.first.x +
+                                            jet.first.y * jet.first.y;
+                const double cross = jet.first.x * jet.second.y -
+                                     jet.first.y * jet.second.x;
+                const double speedSlack = 1e-12 * std::max(1.0, std::abs(speedSquared));
+                const double crossSlack = 1e-12 * std::max(1.0, std::abs(cross));
+                CHECK(productHull.speedSquared().lo() <= speedSquared + speedSlack);
+                CHECK(productHull.speedSquared().hi() >= speedSquared - speedSlack);
+                CHECK(productHull.cross().lo() <= cross + crossSlack);
+                CHECK(productHull.cross().hi() >= cross - crossSlack);
+            }
             std::vector<SpeedBox> pending{{start, end, 0}};
             while (!pending.empty()) {
                 const SpeedBox box = pending.back();
@@ -241,6 +322,59 @@ TEST_CASE("high precision oracle samples conditioned periodic spline tangent min
                     minimumSquared = speedSquared;
                     minimumParameter = t;
                 }
+            }
+        }
+        const std::array<double, 6> signedDistances{{-.25, -.125, -.0625,
+                                                       .0625, .125, .25}};
+        for (const double signedDistance : signedDistances) {
+            const SplineOracle distance{signedDistance};
+            unsigned signChanges = 0;
+            double minimumFactor = std::numeric_limits<double>::infinity();
+            double maximumFactor = -std::numeric_limits<double>::infinity();
+            for (std::size_t span = data.degree; span <= lastControl; ++span) {
+                const SplineOracle start{data.knotslist[span]};
+                const SplineOracle end{data.knotslist[span + 1]};
+                if (!(start < end)) continue;
+                const SplineOracle width = end - start;
+                std::vector<SplineOracle> parameters;
+                parameters.reserve(1200);
+                for (int sample = 1; sample < 1024; ++sample)
+                    parameters.push_back(start + width * sample / 1024);
+                for (int exponent = 4; exponent <= 48; ++exponent) {
+                    const SplineOracle fraction{std::ldexp(1.0, -exponent)};
+                    parameters.push_back(start + width * fraction);
+                    parameters.push_back(end - width * fraction);
+                }
+                if (start == domainStart) parameters.push_back(start);
+                if (end == domainEnd) parameters.push_back(end);
+                std::sort(parameters.begin(), parameters.end());
+                parameters.erase(std::unique(parameters.begin(), parameters.end()),
+                                 parameters.end());
+                bool havePrevious = false;
+                SplineOracle previous{};
+                for (const SplineOracle& t : parameters) {
+                    const SplineOracle step = width * SplineOracle{"1e-20"};
+                    const SplineOracle factor = oracleOffsetFactor(
+                        data, t, step, domainStart, domainEnd, distance);
+                    const double factorValue = factor.convert_to<double>();
+                    minimumFactor = std::min(minimumFactor, factorValue);
+                    maximumFactor = std::max(maximumFactor, factorValue);
+                    if (havePrevious && factor != 0 && previous != 0 &&
+                        ((factor < 0) != (previous < 0)))
+                        ++signChanges;
+                    previous = factor;
+                    havePrevious = true;
+                }
+            }
+            CAPTURE(profile, signedDistance, signChanges,
+                    minimumFactor, maximumFactor);
+            if (signedDistance < 0.0) {
+                CHECK(signChanges == 0);
+                CHECK(minimumFactor > 0.0);
+            } else {
+                CHECK(signChanges >= 2);
+                CHECK(minimumFactor < 0.0);
+                CHECK(maximumFactor > 0.0);
             }
         }
         REQUIRE(minimumSquared > 0);
@@ -1037,7 +1171,8 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 REQUIRE((wideWeights || conditionedWeights));
                 if (conditionedWeights) {
                     CHECK((generated.engineStatus == LC_CurveOffsetStatus::SingularOffset ||
-                           generated.engineStatus == LC_CurveOffsetStatus::AmbiguousRegularity));
+                           generated.engineStatus == LC_CurveOffsetStatus::AmbiguousRegularity ||
+                           generated.engineStatus == LC_CurveOffsetStatus::ToleranceNotMet));
                 } else {
                     CHECK((generated.engineStatus == LC_CurveOffsetStatus::ToleranceNotMet ||
                            generated.engineStatus == LC_CurveOffsetStatus::SingularOffset));
@@ -1056,6 +1191,118 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             const auto generatedWire = result::encode(generationReply, generationRequest);
             REQUIRE(generatedWire);
             CHECK(result::decode(*generatedWire, generationRequest));
+
+            if (conditionedWeights && generated.ordinary.size() > 1) {
+                CHECK(generated.ordinary.size() <= 256);
+                const std::size_t lastControl = sourceData.controlPoints.size() - 1;
+                const SplineOracle domainStart{startParameter};
+                const SplineOracle domainEnd{endParameter};
+                std::vector<RS_Vector> expectedPoints;
+                std::vector<std::array<RS_Vector, 2>> expectedSegments;
+                for (std::size_t span = sourceData.degree; span <= lastControl; ++span) {
+                    const SplineOracle start{sourceData.knotslist[span]};
+                    const SplineOracle end{sourceData.knotslist[span + 1]};
+                    if (!(start < end)) continue;
+                    const SplineOracle width = end - start;
+                    std::vector<SplineOracle> parameters;
+                    parameters.reserve(1100);
+                    for (int sample = 0; sample <= 1024; ++sample)
+                        parameters.push_back(start + width * sample / 1024);
+                    for (int exponent = 4; exponent <= 48; ++exponent) {
+                        const SplineOracle fraction{std::ldexp(1.0, -exponent)};
+                        parameters.push_back(start + width * fraction);
+                        parameters.push_back(end - width * fraction);
+                    }
+                    std::sort(parameters.begin(), parameters.end());
+                    parameters.erase(std::unique(parameters.begin(), parameters.end()),
+                                     parameters.end());
+                    std::vector<RS_Vector> spanPoints;
+                    for (const SplineOracle& t : parameters) {
+                        const auto point = oracleOffsetPoint(
+                            sourceData, t, width * SplineOracle{"1e-20"},
+                            domainStart, domainEnd, SplineOracle{signedDistance});
+                        spanPoints.emplace_back(point.first.convert_to<double>(),
+                                                point.second.convert_to<double>());
+                    }
+                    for (std::size_t i = 1; i < spanPoints.size(); ++i)
+                        expectedSegments.push_back({spanPoints[i - 1], spanPoints[i]});
+                    expectedPoints.insert(expectedPoints.end(), spanPoints.begin(), spanPoints.end());
+                }
+                std::vector<RS_Vector> generatedPoints;
+                std::vector<std::array<RS_Vector, 2>> generatedSegments;
+                for (const auto& item : generated.ordinary) {
+                    REQUIRE(std::holds_alternative<RS_SplineData>(item));
+                    RS_Spline piece{nullptr, std::get<RS_SplineData>(item)};
+                    REQUIRE(piece.validate());
+                    const std::vector<double> breaks = piece.getBreakParameters();
+                    REQUIRE(breaks.size() >= 2);
+                    for (std::size_t span = 0; span + 1 < breaks.size(); ++span) {
+                        RS_Vector previousPoint;
+                        for (int sample = 0; sample <= 32; ++sample) {
+                            const double t = breaks[span] +
+                                (breaks[span + 1] - breaks[span]) * sample / 32.0;
+                            LC_CurveJet jet;
+                            const auto side = sample == 32 ? LC_CurveEvaluationSide::Left
+                                                           : LC_CurveEvaluationSide::Interior;
+                            REQUIRE(piece.tryEvaluateJet(t, side, jet));
+                            generatedPoints.push_back(jet.point);
+                            if (sample > 0)
+                                generatedSegments.push_back({previousPoint, jet.point});
+                            previousPoint = jet.point;
+                        }
+                    }
+                }
+                REQUIRE_FALSE(expectedPoints.empty());
+                REQUIRE_FALSE(generatedPoints.empty());
+                struct DistanceWitness {
+                    double distance = 0.0;
+                    RS_Vector point;
+                    RS_Vector nearest;
+                };
+                const auto pointToSegment = [](const RS_Vector& point,
+                                               const std::array<RS_Vector, 2>& segment) {
+                    const double dx = segment[1].x - segment[0].x;
+                    const double dy = segment[1].y - segment[0].y;
+                    const double lengthSquared = dx * dx + dy * dy;
+                    const double fraction = lengthSquared > 0.0
+                        ? std::clamp(((point.x - segment[0].x) * dx +
+                                      (point.y - segment[0].y) * dy) / lengthSquared,
+                                     0.0, 1.0)
+                        : 0.0;
+                    const RS_Vector nearest{segment[0].x + fraction * dx,
+                                            segment[0].y + fraction * dy};
+                    return std::pair{point.distanceTo(nearest), nearest};
+                };
+                const auto directedDistance = [&](const std::vector<RS_Vector>& from,
+                                                  const std::vector<std::array<RS_Vector, 2>>& to) {
+                    DistanceWitness witness;
+                    for (const RS_Vector& point : from) {
+                        double nearest = std::numeric_limits<double>::infinity();
+                        RS_Vector nearestPoint;
+                        for (const auto& segment : to)
+                            if (const auto [distance, candidate] = pointToSegment(point, segment);
+                                distance < nearest) {
+                                nearest = distance;
+                                nearestPoint = candidate;
+                            }
+                        if (nearest > witness.distance)
+                            witness = {nearest, point, nearestPoint};
+                    }
+                    return witness;
+                };
+                const DistanceWitness forward = directedDistance(generatedPoints, expectedSegments);
+                const DistanceWitness reverse = directedDistance(expectedPoints, generatedSegments);
+                INFO("sampled offset Hausdorff bounds " << forward.distance << " at "
+                     << forward.point.x << ", " << forward.point.y << " vs "
+                     << forward.nearest.x << ", " << forward.nearest.y << "; reverse "
+                     << reverse.distance << " at " << reverse.point.x << ", "
+                     << reverse.point.y << " vs " << reverse.nearest.x << ", "
+                     << reverse.nearest.y << "; points " << generatedPoints.size() << ", "
+                     << expectedPoints.size());
+                CHECK(forward.distance < 5e-3);
+                CHECK(reverse.distance < 5e-3);
+                continue;
+            }
 
             if ((degree == 1 || wideWeights) && generated.ordinary.size() != 1) {
                 REQUIRE(generated.ordinary.size() == (degree == 1 ? 6 : 8));
