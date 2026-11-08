@@ -2956,6 +2956,91 @@ TEST_CASE("rational quadratic interior tangent root obeys bounded tolerance",
     CHECK(regularDiagnostics.stallIntervals.empty());
 }
 
+TEST_CASE("rational quadratic tangent stalls map across binary scales",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][scale]") {
+    for (const double scale : {0.5, 2.0}) {
+        RS_SplineData data{2, false};
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.controlPoints = {{-2 * scale, 0}, {0, 2 * scale}, {2 * scale, 0}};
+        data.knotslist = {0, 0, 0, 1, 1, 1};
+        data.weights = {1, .5, 1};
+        const RS_Spline source{nullptr, data};
+        REQUIRE(source.validate());
+
+        const SplineOracle domainStart{0};
+        const SplineOracle domainEnd{1};
+        const SplineOracle root{"0.5"};
+        const SplineOracle step{"1e-24"};
+        const double signedDistance = -4.0 * scale;
+        const SplineOracle distance{signedDistance};
+        const SplineOracle tangent = oracleOffsetFactor(
+            data, root, step, domainStart, domainEnd, distance);
+        const SplineOracle leftNeighbor = oracleOffsetFactor(
+            data, root - SplineOracle{"1e-7"}, step, domainStart, domainEnd,
+            distance);
+        const SplineOracle rightNeighbor = oracleOffsetFactor(
+            data, root + SplineOracle{"1e-7"}, step, domainStart, domainEnd,
+            distance);
+        CAPTURE(scale, signedDistance, tangent, leftNeighbor, rightNeighbor);
+        CHECK(abs(tangent) < SplineOracle{"1e-10"});
+        CHECK(leftNeighbor != 0);
+        CHECK(rightNeighbor != 0);
+        CHECK((leftNeighbor < 0) == (rightNeighbor < 0));
+
+        const double requestedGeometry = 1e-4 * scale;
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{data}, signedDistance,
+            requestedGeometry, false};
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(options);
+        LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+        const auto built = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right,
+                                            std::abs(signedDistance)),
+            *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+        CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
+                diagnostics.failureStage, options->tolerance.nodeMerge);
+        REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(diagnostics.complete);
+        const auto tangentStall = std::find_if(
+            diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+            [](const std::pair<double, double>& interval) {
+                return interval.first <= .5 && .5 <= interval.second;
+            });
+        REQUIRE(tangentStall != diagnostics.stallIntervals.end());
+
+        const auto nearestPieceEndpoint = [&](const RS_Vector& point) {
+            double nearest = std::numeric_limits<double>::infinity();
+            for (const LC_OffsetBranch& branch : built.branches) {
+                for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                    nearest = std::min(
+                        nearest,
+                        std::min(piece.bezier.front().distanceTo(point),
+                                 piece.bezier.back().distanceTo(point)));
+                }
+            }
+            return nearest;
+        };
+        for (const auto& stall : diagnostics.stallIntervals) {
+            for (const double parameter : {stall.first, stall.second}) {
+                const auto point = oracleOffsetPoint(
+                    data, SplineOracle{parameter}, step, domainStart, domainEnd,
+                    distance, parameter == domainEnd);
+                const RS_Vector expected{point.first.convert_to<double>(),
+                                         point.second.convert_to<double>()};
+                CHECK(nearestPieceEndpoint(expected) <= requestedGeometry);
+            }
+        }
+        const auto tangentPoint = oracleOffsetPoint(
+            data, root, step, domainStart, domainEnd, distance);
+        const RS_Vector expectedTangentPoint{
+            tangentPoint.first.convert_to<double>(),
+            tangentPoint.second.convert_to<double>()};
+        CHECK(nearestPieceEndpoint(expectedTangentPoint) <= requestedGeometry);
+    }
+}
+
 TEST_CASE("nonuniform rational tangent root at a knot remains a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root]") {
     RS_SplineData data{2, false};
