@@ -25946,3 +25946,20 @@ quadratic root box narrows, or derive an independently certified root bracket
 whose aggregate offset motion is within `nodeMerge`; then test both offset
 sides/scales, require output endpoint or measured-collapse ownership, and
 retain fail-closed refusal for unproved or over-tolerance runs.
+
+#### W563ej Follow-up. Make the Quadratic Tangency Binary-exact (2026-11-08)
+
+Refined the characterization fixture to controls `(-2,0),(0,2),(2,0)`,
+weights `(1,0.5,1)`, and the exactly representable tangent distance `-4`.
+This removes the prior concern that rounding the reciprocal-curvature
+distance had converted the intended even root into a near-touch. The 256-bit
+oracle still confirms a same-sign tangent root at `t=0.5`; production still
+returns `AmbiguousRegularity` at the unresolved-run budget and emits no partial
+geometry. No production algorithm or budget was changed.
+
+Release validation: exact quadratic refusal, 19 assertions/1 case; full
+worker-kernel suite, 1,703,761 assertions/63 cases; `git diff --check` passes.
+Fixture refinement commit `8666d121a` (`test(offset): use exact quadratic
+tangent fixture`). The next implementation gate remains the proof-preserving
+root-bracket/collapse work stated above; this test is characterization, not
+resolution.
