@@ -219,6 +219,7 @@ std::pair<SplineOracle, SplineOracle> oracleOffsetPoint(
 }
 
 struct OracleSplineCusp {
+    std::size_t span{0};
     SplineOracle parameter{};
     RS_Vector point;
 };
@@ -260,7 +261,7 @@ std::vector<OracleSplineCusp> oracleOffsetCusps(const RS_SplineData& data,
                     return existing.parameter == root &&
                            existing.point.distanceTo(cusp) < 1e-8;
                 }))
-                cusps.push_back({root, cusp});
+                cusps.push_back({span, root, cusp});
         };
         for (std::size_t i = 1; i < parameters.size(); ++i) {
             const SplineOracle parameter = parameters[i];
@@ -1523,9 +1524,21 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             const SplineOracle domainStart{startParameter};
             const SplineOracle domainEnd{endParameter};
             const std::vector<OracleSplineCusp> expectedCusps =
-                conditionedWeights && signedDistance > 0.0
+                conditionedWeights
                     ? oracleOffsetCusps(sourceData, domainStart, domainEnd, signedDistance)
                     : std::vector<OracleSplineCusp>{};
+            if (degree > 1) {
+                const SplineOracle seamStep{"1e-20"};
+                const SplineOracle seamRight = oracleOffsetFactor(
+                    sourceData, domainStart, seamStep, domainStart, domainEnd,
+                    SplineOracle{signedDistance}, false);
+                const SplineOracle seamLeft = oracleOffsetFactor(
+                    sourceData, domainEnd, seamStep, domainStart, domainEnd,
+                    SplineOracle{signedDistance}, true);
+                CAPTURE(weightProfile, seamRight, seamLeft);
+                CHECK((seamRight == 0) == (seamLeft == 0));
+                CHECK((seamRight < 0) == (seamLeft < 0));
+            }
             if (weightProfile == WeightProfile::Gradual && signedDistance > 0.0) {
                 // This is a sampled sign-change inventory, not a completeness proof.
                 CHECK(expectedCusps.size() == 8);
@@ -1848,6 +1861,12 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     CHECK(minimumCuspSeparation > 1e-8);
                 for (const OracleSplineCusp& cusp : expectedCusps) {
                     CAPTURE(cusp.parameter, weightProfile, signedDistance);
+                    REQUIRE(cusp.span + 1 < sourceData.knotslist.size());
+                    const SplineOracle ownerStart{sourceData.knotslist[cusp.span]};
+                    const SplineOracle ownerEnd{sourceData.knotslist[cusp.span + 1]};
+                    REQUIRE(ownerStart < ownerEnd);
+                    CHECK(cusp.parameter >= ownerStart);
+                    CHECK(cusp.parameter <= ownerEnd);
                     double nearestEndpoint = std::numeric_limits<double>::infinity();
                     RS_Vector nearestEndpointPoint;
                     for (const RS_Vector& endpoint : generatedEndpoints) {
@@ -1912,6 +1931,111 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             CHECK(result::decode(*validationWire, validationRequest));
         }
     }
+}
+
+TEST_CASE("span-local spline oracle does not infer a root across a repeated knot",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][repeated-knot]") {
+    RS_SplineData data{3, false};
+    data.type = RS_SplineData::SplineType::ClampedOpen;
+    data.controlPoints = {{0, 0}, {1, 3}, {2, -2}, {3, 1}, {4, 4}, {5, -3}, {6, 0}};
+    data.knotslist = {0, 0, 0, 0, 1, 1, 2, 3, 3, 3, 3};
+    data.weights = {1.0, .8, 1.3, .9, 1.2, .7, 1.0};
+    const RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+
+    const SplineOracle domainStart{0};
+    const SplineOracle domainEnd{3};
+    const SplineOracle repeatedKnot{1};
+    bool observedOneSidedSignJump = false;
+    double signJumpDistance = 0.0;
+    for (const double signedDistance : {.1, .25, .5, 1.0, 2.0, 5.0,
+                                        -.1, -.25, -.5, -1.0, -2.0, -5.0}) {
+        CAPTURE(signedDistance);
+        const SplineOracle step{"1e-24"};
+        const SplineOracle leftFactor = oracleOffsetFactor(
+            data, repeatedKnot, step, domainStart, domainEnd,
+            SplineOracle{signedDistance}, true);
+        const SplineOracle rightFactor = oracleOffsetFactor(
+            data, repeatedKnot, step, domainStart, domainEnd,
+            SplineOracle{signedDistance}, false);
+        const SplineOracle leftRefined = oracleOffsetFactor(
+            data, repeatedKnot, step / 2, domainStart, domainEnd,
+            SplineOracle{signedDistance}, true);
+        const SplineOracle rightRefined = oracleOffsetFactor(
+            data, repeatedKnot, step / 2, domainStart, domainEnd,
+            SplineOracle{signedDistance}, false);
+        CHECK(abs(leftFactor - leftRefined) < SplineOracle{"1e-20"});
+        CHECK(abs(rightFactor - rightRefined) < SplineOracle{"1e-20"});
+        if (leftFactor == 0 || rightFactor == 0 ||
+            ((leftFactor < 0) == (rightFactor < 0))) {
+            continue;
+        }
+
+        observedOneSidedSignJump = true;
+        signJumpDistance = signedDistance;
+        const std::vector<OracleSplineCusp> candidates =
+            oracleOffsetCusps(data, domainStart, domainEnd, signedDistance);
+        CHECK(std::none_of(candidates.begin(), candidates.end(), [&](const OracleSplineCusp& cusp) {
+            return cusp.parameter == repeatedKnot;
+        }));
+        for (const OracleSplineCusp& cusp : candidates) {
+            const SplineOracle spanStart{data.knotslist[cusp.span]};
+            const SplineOracle spanEnd{data.knotslist[cusp.span + 1]};
+            CHECK(spanStart < spanEnd);
+            CHECK(cusp.parameter >= spanStart);
+            CHECK(cusp.parameter <= spanEnd);
+        }
+    }
+    CHECK(observedOneSidedSignJump);
+
+    REQUIRE(observedOneSidedSignJump);
+    const SplineOracle jetStep{"1e-24"};
+    const auto leftOffsetPoint = oracleOffsetPoint(
+        data, repeatedKnot, jetStep, domainStart, domainEnd,
+        SplineOracle{signJumpDistance}, true);
+    const auto rightOffsetPoint = oracleOffsetPoint(
+        data, repeatedKnot, jetStep, domainStart, domainEnd,
+        SplineOracle{signJumpDistance}, false);
+    const RS_Vector expectedJoinPoint{
+        ((leftOffsetPoint.first + rightOffsetPoint.first) / 2).convert_to<double>(),
+        ((leftOffsetPoint.second + rightOffsetPoint.second) / 2).convert_to<double>()};
+    CHECK(RS_Vector{leftOffsetPoint.first.convert_to<double>(),
+                    leftOffsetPoint.second.convert_to<double>()}.distanceTo(
+              RS_Vector{rightOffsetPoint.first.convert_to<double>(),
+                        rightOffsetPoint.second.convert_to<double>()}) < 1e-8);
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, std::abs(signJumpDistance), 1e-4, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(
+            signJumpDistance > 0.0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
+            std::abs(signJumpDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(signJumpDistance, built.status, diagnostics.candidateParameters);
+    REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+    CHECK(std::none_of(diagnostics.candidateParameters.begin(),
+                       diagnostics.candidateParameters.end(), [&](const double parameter) {
+        return std::abs(parameter - repeatedKnot.convert_to<double>()) < 1e-12;
+    }));
+    bool productionOwnsRepeatedKnotCusp = false;
+    for (const LC_OffsetBranch& branch : built.branches) {
+        if (branch.cubicPieces.empty()) continue;
+        if (branch.startEnd == LC_OffsetBranchEnd::Cusp) {
+            productionOwnsRepeatedKnotCusp |=
+                branch.cubicPieces.front().bezier.front().distanceTo(expectedJoinPoint) <=
+                options->tolerance.requestedGeometry;
+        }
+        if (branch.endEnd == LC_OffsetBranchEnd::Cusp) {
+            productionOwnsRepeatedKnotCusp |=
+                branch.cubicPieces.back().bezier.back().distanceTo(expectedJoinPoint) <=
+                options->tolerance.requestedGeometry;
+        }
+    }
+    CHECK(productionOwnsRepeatedKnotCusp);
 }
 
 TEST_CASE("ellipse, arc, and circle source caches validate across signed distances",
