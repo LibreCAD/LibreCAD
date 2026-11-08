@@ -7237,6 +7237,7 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
 
     std::size_t importedCases = 0;
     std::size_t refusedCases = 0;
+    std::size_t ellipseNativeWriterCases = 0;
     std::array<std::size_t, scales.size()> importsByScale{};
     std::array<std::size_t, scales.size()> refusalsByScale{};
     for (std::size_t scaleIndex = 0; scaleIndex < scales.size(); ++scaleIndex) {
@@ -7344,6 +7345,41 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                         const auto receivedSource = values::encodeSourceDefinition(*nativeOffset->sourceDefinition());
                         REQUIRE(receivedSource);
                         CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*receivedSource).toCbor());
+
+                        if (scaleIndex == 1 && ratioIndex == 0 && distanceIndex == 0) {
+                            const auto nativeOutput = directory.file(
+                                "native-" + std::to_string(variantIndex) + "-" +
+                                std::to_string(distanceIndex) + "-" +
+                                fileFormat.suffix);
+                            REQUIRE(lc::test::exportDrawing(
+                                *outcome.graphic, nativeOutput,
+                                ::format(fileFormat.lane)));
+                            const auto nativeRoundTrip = stagedImport(
+                                nativeOutput, fileFormat.lane);
+                            INFO("native translated-ellipse writer round-trip "
+                                 << variantIndex << " " << fileFormat.suffix);
+                            REQUIRE(nativeRoundTrip.status ==
+                                    LC_OffsetImportSession::Status::Complete);
+                            REQUIRE(nativeRoundTrip.graphic);
+                            CHECK(nativeRoundTrip.admitted == 1);
+                            CHECK(nativeRoundTrip.downgraded == 0);
+                            const auto* roundTripped =
+                                dynamic_cast<const LC_OffsetCurve*>(
+                                    f::sole(*nativeRoundTrip.graphic));
+                            REQUIRE(roundTripped);
+                            REQUIRE(roundTripped->sourceDefinition());
+                            const auto roundTripSource =
+                                values::encodeSourceDefinition(
+                                    *roundTripped->sourceDefinition());
+                            REQUIRE(roundTripSource);
+                            CHECK(QCborValue(*expectedSource).toCbor() ==
+                                  QCborValue(*roundTripSource).toCbor());
+                            CHECK(RS_Spline::geometryFingerprint(
+                                      roundTripped->getData()) ==
+                                  RS_Spline::geometryFingerprint(
+                                      *translatedCache));
+                            ++ellipseNativeWriterCases;
+                        }
                     } else {
                         CHECK_FALSE(outcome.diagnostics.empty());
                         const auto parsed = xd::parseAndStrip(imported->getDrwExtData(), encoding);
@@ -7385,6 +7421,7 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
     }
     CHECK(importedCases > 0);
     CHECK(refusedCases > 0);
+    CHECK(ellipseNativeWriterCases > 0);
     const std::size_t cellsPerRatio = 3 * ordinaryDistances.size() + 6 * thinDistances.size() +
         16 * partialThinDistances.size();
     const std::size_t expectedCells = scales.size() * translationRatios.size() * cellsPerRatio;
