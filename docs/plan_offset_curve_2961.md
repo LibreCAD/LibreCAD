@@ -25358,3 +25358,31 @@ map one-to-one root candidates for every failing periodic weight profile and
 both signs; and compare endpoints whenever a case produces branches. Preserve
 the fail-closed status meanwhile. Do not change root acceptance, expected
 refusal, or cache/file eligibility based on the partial seven-of-eight result.
+
+#### W563eh follow-up. Locate the First Unresolved Periodic Leaf (2026-11-08)
+
+Extended the opt-in direct-build diagnostic with the number of nonempty spans
+visited and the first failing span/parameter interval. This is diagnostic-only;
+ordinary callers retain the same behavior and failed builds still publish no
+branches. The periodic/nonuniform regression now checks that a refusal reports
+a valid span and a bounded, positive-width interval inside the source domain.
+
+The `d=+0.005`, degree-2, seven-control, weight-profile-4 fixture visits all
+seven spans and first fails in span 6 at `[5.9999995231628418, 6.0]`. This
+confirms the missing eighth oracle candidate is associated with the final
+seam-adjacent interval, rather than an earlier span being skipped. It does not
+show whether the terminal interval is unresolved because of a missed root,
+root multiplicity, or conservative bound ambiguity; no root acceptance change
+is justified yet.
+
+Next: inspect the terminal leaf's bound/classification and compare its bracket
+against the high-precision oracle root for all periodic profiles and both
+signs. Record whether candidate extraction fails before regularity proof, and
+only then choose a seam-specific isolation correction. Keep singular cases
+fail-closed until candidate completeness and output endpoint behavior are
+validated. The older one-sided `~29.19` endpoint estimate remains superseded
+and must be recomputed if a later implementation returns branches.
+
+Validation for this diagnostic follow-up: periodic/nonuniform selection,
+15,523 assertions; complete worker-kernel suite, 1,695,279 assertions/56
+cases; rebuilt `librecad_tests` and `[spline]`, 28,390 assertions/77 cases.
