@@ -2727,26 +2727,35 @@ TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][tangent-root]") {
   struct Fixture {
+    int degree;
     std::vector<RS_Vector> controls;
     std::vector<double> knots;
     std::vector<double> weights;
   };
   const std::vector<Fixture> fixtures{
-      {{{0, 0}, {30, -15}, {55, 15}, {15, 35}},
+      {3,
+       {{0, 0}, {30, -15}, {55, 15}, {15, 35}},
        {0, 0, 0, 0, 1, 1, 1, 1},
        {1, .8, 1.2, 1.5}},
-      {{{0, 0}, {30, -15}, {55, 15}, {15, 35}},
+      {3,
+       {{0, 0}, {30, -15}, {55, 15}, {15, 35}},
        {0, 0, 0, 0, 1, 1, 1, 1},
        {1, .7, 1.4, 1.1}},
-      {{{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
+      {3,
+       {{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
        {0, 0, 0, 0, .5, 2, 3, 3, 3, 3},
        {1, .8, 1.2, 1.5, 1.2, .8}},
-      {{{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
+      {3,
+       {{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
        {0, 0, 0, 0, .5, 2, 3, 3, 3, 3},
-       {1, .7, 1.4, 1.7, 1.4, .7}}};
+       {1, .7, 1.4, 1.7, 1.4, .7}},
+      {2,
+       {{0, 0}, {25, -10}, {55, 5}, {50, 35}, {15, 40}},
+       {0, 0, 0, .33, .66, 1, 1, 1},
+       {1, .8, 1.2, 1.5, 1.1}}};
   for (const Fixture &fixture : fixtures) {
     const std::vector<double> &baseWeights = fixture.weights;
-    RS_Spline source{nullptr, RS_SplineData{3, false}};
+    RS_Spline source{nullptr, RS_SplineData{fixture.degree, false}};
     for (const RS_Vector &point : fixture.controls)
       source.addControlPoint(point);
     source.setKnotVector(fixture.knots);
@@ -2864,7 +2873,11 @@ TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
     const SplineOracle seamRight =
         oracleOffsetFactor(data, domainStart, step, domainStart, domainEnd,
                            SplineOracle{1}, false);
-    CHECK(abs(seamLeft - seamRight) < SplineOracle{"1e-8"});
+    CAPTURE(fixture.degree, seamLeft, seamRight);
+    if (fixture.degree >= 3)
+      CHECK(abs(seamLeft - seamRight) < SplineOracle{"1e-8"});
+    else
+      CHECK(abs(seamLeft - seamRight) > SplineOracle{"1e-3"});
     const SplineOracle unitLeft = oracleOffsetFactor(
         data, root, step, domainStart, domainEnd, SplineOracle{1}, true);
     const SplineOracle unitRight = oracleOffsetFactor(
