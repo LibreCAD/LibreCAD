@@ -2525,13 +2525,27 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
 TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][tangent-root]") {
-    const std::array<std::vector<double>, 2> weightProfiles{{{1, .8, 1.2, 1.5}, {1, .7, 1.4, 1.1}}};
-    for (const std::vector<double>& baseWeights : weightProfiles) {
+    struct Fixture {
+        std::vector<RS_Vector> controls;
+        std::vector<double> knots;
+        std::vector<double> weights;
+    };
+    const std::vector<Fixture> fixtures{
+        {{{0, 0}, {30, -15}, {55, 15}, {15, 35}},
+         {0, 0, 0, 0, 1, 1, 1, 1},
+         {1, .8, 1.2, 1.5}},
+        {{{0, 0}, {30, -15}, {55, 15}, {15, 35}},
+         {0, 0, 0, 0, 1, 1, 1, 1},
+         {1, .7, 1.4, 1.1}},
+        {{{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
+         {0, 0, 0, 0, .5, 2, 3, 3, 3, 3},
+         {1, .8, 1.2, 1.5, 1.2, .8}}};
+    for (const Fixture& fixture : fixtures) {
+        const std::vector<double>& baseWeights = fixture.weights;
         RS_Spline source{nullptr, RS_SplineData{3, false}};
-        for (const RS_Vector& point :
-             {RS_Vector{0, 0}, RS_Vector{30, -15}, RS_Vector{55, 15}, RS_Vector{15, 35}})
+        for (const RS_Vector& point : fixture.controls)
             source.addControlPoint(point);
-        source.setKnotVector({0, 0, 0, 0, 1, 1, 1, 1});
+        source.setKnotVector(fixture.knots);
         REQUIRE(source.validate());
         source.setClosed(true);
         REQUIRE(source.isClosed());
