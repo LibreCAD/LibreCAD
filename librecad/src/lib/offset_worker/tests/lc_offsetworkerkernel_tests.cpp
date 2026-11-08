@@ -2760,9 +2760,9 @@ TEST_CASE("rational quadratic interior tangent root remains fail-closed",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root]") {
     RS_SplineData data{2, false};
     data.type = RS_SplineData::SplineType::ClampedOpen;
-    data.controlPoints = {{-4, 0}, {0, 8}, {4, 0}};
+    data.controlPoints = {{-2, 0}, {0, 2}, {2, 0}};
     data.knotslist = {0, 0, 0, 1, 1, 1};
-    data.weights = {1, .7, 1};
+    data.weights = {1, .5, 1};
     const RS_Spline source{nullptr, data};
     REQUIRE(source.validate());
 
@@ -2775,6 +2775,7 @@ TEST_CASE("rational quadratic interior tangent root remains fail-closed",
     const SplineOracle curvature = 1 - unitFactor;
     REQUIRE(abs(curvature) > SplineOracle{"1e-12"});
     const double signedDistance = (1 / curvature).convert_to<double>();
+    CHECK(signedDistance == -4.0);
     const SplineOracle distance{signedDistance};
     const SplineOracle tangent = oracleOffsetFactor(
         data, root, step, domainStart, domainEnd, distance);
