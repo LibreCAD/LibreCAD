@@ -26375,3 +26375,24 @@ runs cumulatively`). Release validation: focused weighted seam regression, 106
 assertions/1 case; full worker-kernel suite, 1,704,183 assertions/70 cases;
 `git diff --check` passes. This closes only the W563eq control/weight/knot
 profile and does not qualify broader periodic rational layouts or degrees.
+
+#### W563eq Follow-up. Qualify a Nonuniform Rational Seam Cusp (2026-11-08)
+
+Added a separate nonuniform periodic cubic rational fixture with six cyclic
+controls, mirrored end-span knot spacing, and positive non-unit symmetric
+weights. The 256-bit oracle verifies seam curvature continuity and the
+distance-derived offset factor vanishes on both seam sides. Its values just
+before and after the seam have opposite signs, so this is explicitly a simple
+seam cusp, not an even-root/tangent case.
+
+Isolation must report the seam as a candidate, not a stall. Its candidate box
+must remain within the canonical first or last source span corresponding to
+the selected seam representative. The emitted geometry must contain the
+oracle seam point as a cusp-marked endpoint within requested tolerance. This
+extends seam ownership evidence to one nonuniform rational layout; it does not
+close nonuniform even-root seams or broader knot/weight variants.
+
+Release validation: focused nonuniform seam cusp, 26 assertions/1 case; full
+worker-kernel suite, 1,704,209 assertions/71 cases; `git diff --check` passes.
+Test commits `e5ca9792e` (`test(offset): map nonuniform periodic seam cusps`)
+and `acf0a532c` (`test(offset): require simple seam cusp isolation`).
