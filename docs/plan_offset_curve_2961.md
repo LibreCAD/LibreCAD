@@ -25252,11 +25252,12 @@ This supersedes the earlier 12-cusp sampled count and removes the claimed exact
 internal-knot cusp from the evidence; it does not prove the sampled inventory
 complete or exclude even-multiplicity roots.
 
-Still open within W563eg: directly compare both one-sided oracle derivatives
-with evaluations strictly inside each adjacent span; add repeated-internal-knot
-and explicit periodic-seam ownership regressions; and persist a
-profile-by-profile candidate/sign inventory for both offset signs. W563eh below
-starts, but does not finish, the production-candidate mapping. In particular,
+Still open within W563eg: extend the direct one-sided derivative convergence
+checks to the high-ratio periodic profiles and persist a profile-by-profile
+candidate/sign inventory for both offset signs. The current repeated-knot and
+uniform periodic-seam regression below qualifies one fixture each; it does not
+establish all knot multiplicities or conditioned seam behavior. W563eh below
+starts, but does not finish, production-candidate mapping. In particular,
 re-measure the previously reported endpoint discrepancy against the corrected
 non-knot candidate set rather than carrying forward the old exact-knot
 comparison.
@@ -25266,6 +25267,26 @@ in 1 case; focused cusp/oracle selection 14,614 assertions in 3 cases; full
 worker-kernel suite 1,695,254 assertions in 56 cases; `[spline]` 28,390
 assertions in 77 cases; and `git diff --check`. Test commit `bed081127`
 (`test(offset): validate one-sided spline cusp oracle`).
+
+#### W563eg Follow-up. Compare One-sided Jets with Span-interior Evaluations (2026-11-08)
+
+Added an independent high-precision regression for a positive-weight cubic
+with a repeated internal knot and a periodic quadratic seam. At the repeated
+knot, the oracle computes forward and backward first/second derivative
+stencils separately; each is compared with central estimates strictly inside
+its own adjacent span at two shrinking distances, and both errors must
+converge. At the periodic seam, the endpoint positions and one-sided first
+derivatives agree, while the quadratic's second derivatives are explicitly
+shown to differ. Each one-sided seam second derivative is checked against
+interior estimates on its own span, so the oracle does not impose false C2
+continuity or average across the seam.
+
+This completes direct one-sided-jet comparison for these representative
+fixtures only. It does not establish high-ratio periodic seam conditioning or
+complete cusp inventories. Release validation: focused `[seam]`, 17
+assertions/1 case; full `librecad_offset_worker_kernel_tests`, 1,704,448
+assertions/77 cases; `git diff --check` passes. Test commit `25ae238a1`
+(`test(offset): verify one-sided spline oracle jets`).
 
 The production implementation remains fail-closed for the gradual
 positive-side periodic case. Continue with W563eh: complete candidate-to-root
