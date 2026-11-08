@@ -56,6 +56,15 @@ Use `SupportedKinds` as the authoritative picker list and continue with the
 variant-level implementation and validation steps below. The picker contract
 is complete; the broader all-family end-to-end requirement is not.
 
+2026-11-07 clarification: during source replacement, the user must be able to
+switch the source-family selector before choosing a candidate; the candidate
+list then refreshes to that family. The selector must expose every family in
+`SupportedKinds`, including parabola as a distinct kind. This is already
+implemented and requalified by W563db, so no additional picker widget or
+parabola-only branch is planned. Continue expanding actual eligible source
+variants through generation, worker/cache, DXF/DWG persistence, and the
+round-trip matrix; picker visibility alone does not count as source support.
+
 Current implementation order for the remaining “all supported types” work:
 
 1. **Inventory and eligibility:** use `SupportedKinds` as the canonical set;
@@ -24634,3 +24643,20 @@ Release CMake validation on the current implementation source:
 passes all 10 cases and 6,892 assertions. This requalifies the picker UI
 contract only; per-family variants, exact-head CI, and visible interaction
 remain independent acceptance gates.
+
+#### W563dc. Round-trip a Wrapped Periodic Spline Cache Through Product Writers (2026-11-07)
+
+The wrapped periodic spline source matrix now performs one representative
+native-writer/reopen check for a nonrational cubic source on the left side.
+The case runs through R14/R2000/R2018 DXF and R2000/R2018 DWG, requiring the
+typed source definition and exact cache fingerprint to survive staged import.
+The broader periodic import/worker matrix remains unchanged and continues to
+exercise additional source layouts and both offset signs.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"wrapped periodic spline source promotes on both sides across file lanes"`
+passes 46,273 assertions in one test case. The `librecad_tests` target rebuild
+and `git diff --check` pass. This is one nonrational cubic wrapped-periodic
+layout and one side for native writer/reopen; it does not establish general
+periodic spline persistence, arbitrary topology/weights, independent-CAD
+equivalence, visible-GUI acceptance, or exact-head CI.
