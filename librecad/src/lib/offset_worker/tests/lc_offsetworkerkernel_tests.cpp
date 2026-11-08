@@ -515,6 +515,7 @@ TEST_CASE("rational periodic derivative sign bounds agree with the high precisio
             const double b = breaks[span] + spanWidth * (piece + 1) / 32.0;
             LC_CurveJetBounds bounds;
             REQUIRE(checked.tryBoundJet(a, b, bounds, true));
+            CHECK_FALSE(bounds.rationalCuspNoRootCertified);
             const LC_Interval derivativeSign =
                 bounds.offsetFactorDerivativeSignNumerator(signedDistance);
             if (!derivativeSign.excludesZero()) continue;
@@ -539,6 +540,68 @@ TEST_CASE("rational periodic derivative sign bounds agree with the high precisio
         }
     }
     CHECK(certifiedBoxes > 0);
+}
+
+TEST_CASE("rational cusp polynomial no-root certificates agree with oracle samples",
+          "[lc-offsetcurve][worker-kernel][periodic][rational][oracle][cusp]") {
+    RS_Spline source{nullptr, RS_SplineData{2, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{25, -15},
+                                   RS_Vector{55, -5}, RS_Vector{70, 20},
+                                   RS_Vector{50, 45}, RS_Vector{15, 50},
+                                   RS_Vector{-15, 25}})
+        source.addControlPoint({point.x + 1000.0, point.y - 2000.0});
+    source.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+    REQUIRE(source.validate());
+    source.setClosed(true);
+    RS_SplineData data = source.getData();
+    const std::vector<double> weights{1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6};
+    data.weights = weights;
+    data.weights.insert(data.weights.end(), weights.begin(), weights.begin() + data.degree);
+    RS_Spline checked{nullptr, data};
+    REQUIRE(checked.validate());
+
+    double domainStartValue = 0.0;
+    double domainEndValue = 0.0;
+    REQUIRE(checked.getParameterDomain(domainStartValue, domainEndValue));
+    const SplineOracle domainStart{domainStartValue};
+    const SplineOracle domainEnd{domainEndValue};
+    const std::vector<double> breaks = checked.getBreakParameters();
+    constexpr std::array<double, 8> distances{{-0.25, -0.125, -0.0625, -0.005,
+                                               0.005, 0.0625, 0.125, 0.25}};
+    for (const double signedDistance : distances) {
+        std::size_t excludedBoxes = 0;
+        std::size_t tightenedBoxes = 0;
+        for (std::size_t span = 0; span + 1 < breaks.size(); ++span) {
+            const double spanWidth = breaks[span + 1] - breaks[span];
+            if (!(spanWidth > 0.0)) continue;
+            for (int piece = 0; piece < 32; ++piece) {
+                const double a = breaks[span] + spanWidth * piece / 32.0;
+                const double b = breaks[span] + spanWidth * (piece + 1) / 32.0;
+                LC_CurveJetBounds bounds;
+                REQUIRE(checked.tryBoundJetForCusp(a, b, bounds, signedDistance));
+                if (!bounds.rationalCuspNoRootCertified) continue;
+                ++excludedBoxes;
+                if (bounds.offsetFactorNumerator(signedDistance).containsZero()) {
+                    ++tightenedBoxes;
+                }
+
+                const SplineOracle derivativeStep{spanWidth * SplineOracle{"1e-20"}};
+                const SplineOracle distance{signedDistance};
+                for (const int sampleNumerator : {1, 3, 5, 7}) {
+                    const SplineOracle t{a + (b - a) * sampleNumerator / 8.0};
+                    const SplineOracle g = oracleOffsetFactorNumerator(
+                        data, t, derivativeStep, domainStart, domainEnd, distance);
+                    CAPTURE(span, piece, sampleNumerator, signedDistance);
+                    CHECK(g != 0);
+                }
+            }
+        }
+        INFO("signed distance=" << signedDistance << ", excluded boxes=" << excludedBoxes);
+        CHECK(excludedBoxes > 0);
+        if (signedDistance > 0.0) {
+            CHECK(tightenedBoxes > 0);
+        }
+    }
 }
 
 TEST_CASE("offset child kernel generates owned checked caches with actual stage counters",

@@ -81,6 +81,8 @@ struct LC_CurveJetBounds {
     /** Optional rational-spline Bernstein bounds for a positive-scaled g' numerator. */
     LC_Interval rationalFactorDerivativeBase;
     LC_Interval rationalFactorDerivativeDistanceTerm;
+    /** Set only by the explicit rational cusp-bound query when a no-root proof succeeds. */
+    bool rationalCuspNoRootCertified{false};
 
     bool isValid() const {
         return x.isValid() && y.isValid() && dx.isValid() && dy.isValid() && ddx.isValid() &&

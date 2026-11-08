@@ -392,6 +392,10 @@ public:
    */
   bool tryBoundJet(double a, double b, LC_CurveJetBounds &bounds, bool products = false) const;
 
+  /** Add a signed-distance-specific no-root certificate for rational cusp isolation. */
+  bool tryBoundJetForCusp(double a, double b, LC_CurveJetBounds &bounds,
+                          double signedDistance) const;
+
   /**
    * The vertices of a polyline within @p tolerance of the curve, independent
    * of the segments it is drawn with. Each chord lies in one knot span, and a
@@ -430,6 +434,9 @@ public:
   };
 
 private:
+  bool tryBoundJetImpl(double a, double b, LC_CurveJetBounds &bounds, bool products,
+                       bool cuspPolynomial, double signedDistance) const;
+
   /**
    * The table above for the spline's current data, tabulated on the first
    * call and kept until the data change: it costs 40 evaluations of the

@@ -86,6 +86,10 @@ public:
     virtual bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const {
         return boundJet(a, b, out);
     }
+    virtual bool boundJetForCusp(const double a, const double b, [[maybe_unused]] const double signedDistance,
+                                 LC_CurveJetBounds& out) const {
+        return boundJetWithProducts(a, b, out);
+    }
     /** Points whose convex hull contains the curve. */
     virtual const std::vector<RS_Vector>& hull() const = 0;
     /** True, with its ends, when the curve is exactly one straight segment. */
@@ -136,6 +140,11 @@ public:
 
     bool boundJetWithProducts(const double a, const double b, LC_CurveJetBounds& out) const override {
         return m_spline.tryBoundJet(a, b, out, true);
+    }
+
+    bool boundJetForCusp(const double a, const double b, const double signedDistance,
+                         LC_CurveJetBounds& out) const override {
+        return m_spline.tryBoundJetForCusp(a, b, out, signedDistance);
     }
 
     const std::vector<RS_Vector>& hull() const override {
@@ -693,6 +702,19 @@ public:
             return false;
         }
         return piece.source->boundJetWithProducts(*start, *end, out);
+    }
+    bool boundJetForCusp(const double a, const double b, const double signedDistance,
+                         LC_CurveJetBounds& out) const override {
+        const auto index = pieceAt(a + (b - a) * .5, LC_CurveEvaluationSide::Interior);
+        if (!index) { out = LC_CurveJetBounds{}; return false; }
+        const auto& piece = m_pieces[*index];
+        const auto start = localParameter(piece, a);
+        const auto end = localParameter(piece, b);
+        if (!start || !end || *start > *end) {
+            out = LC_CurveJetBounds{};
+            return false;
+        }
+        return piece.source->boundJetForCusp(*start, *end, signedDistance, out);
     }
     const std::vector<RS_Vector>& hull() const override { return m_hull; }
     bool straightSegment(RS_Vector& start, RS_Vector& end) const override {
@@ -2005,10 +2027,13 @@ private:
                 // regularity. Keep the ordinary component bounds for later
                 // fitting and intersection work, where their narrower boxes
                 // produce more useful subdivisions.
-                const bool bounded = m_source.boundJetWithProducts(leaf.t0, leaf.t1, bounds);
+                const bool bounded = m_source.boundJetForCusp(leaf.t0, leaf.t1, m_d, bounds);
                 const bool speedProved = bounded && bounds.speedSquared().isPositive();
                 const LC_Interval g = bounded ? bounds.offsetFactorNumerator(m_d) : LC_Interval{};
                 if (speedProved && g.excludesZero()) {
+                    continue;
+                }
+                if (speedProved && bounds.rationalCuspNoRootCertified) {
                     continue;
                 }
                 // If g' has one strict sign on this box, endpoint signs prove

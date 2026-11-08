@@ -93,6 +93,7 @@ bool solveSystem(const std::vector<std::vector<double>> &coef,
 }
 
 constexpr size_t g_maxDegree = 3;
+constexpr size_t g_maxRationalCuspPolynomialDegree = 30;
 
 /**
  * Whether the degree, control points, weights and knot vector have the sizes a
@@ -2037,7 +2038,19 @@ std::vector<double> RS_Spline::getBreakParameters() const {
   return breaks;
 }
 
-bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &bounds, const bool products) const {
+bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &bounds,
+                            const bool products) const {
+  return tryBoundJetImpl(a, b, bounds, products, false, 0.0);
+}
+
+bool RS_Spline::tryBoundJetForCusp(const double a, const double b, LC_CurveJetBounds &bounds,
+                                  const double signedDistance) const {
+  return tryBoundJetImpl(a, b, bounds, true, true, signedDistance);
+}
+
+bool RS_Spline::tryBoundJetImpl(const double a, const double b, LC_CurveJetBounds &bounds,
+                                const bool products, const bool cuspPolynomial,
+                                const double signedDistance) const {
   bounds = LC_CurveJetBounds{};
   double t0 = 0.0;
   double t1 = 0.0;
@@ -2228,6 +2241,66 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
               return nx[i] * my[j] - ny[i] * mx[j];
             });
         result.crossProduct = crossNumerator / sqr(w2);
+
+        // If g = |C'|^3 - d(C' x C''), every root also zeros
+        // P = q^3 - d^2 W^4 r^2, for q=N.N and r=N x N'. Keep the
+        // Bernstein coefficient nets so callers may prove only that P has no
+        // root on a box. Squaring can add roots, so it cannot certify a cusp.
+        constexpr size_t maxPolynomialDegree = g_maxRationalCuspPolynomialDegree;
+        const size_t qDegree = 2 * numeratorDegree;
+        const size_t polynomialDegree = 3 * qDegree;
+        if (cuspPolynomial && std::isfinite(signedDistance) &&
+            polynomialDegree <= maxPolynomialDegree && speedNumerator.hi() > 0.0) {
+          LC_Interval speedCoefficients[4 * g_maxDegree + 1];
+          productNet(numeratorDegree, numeratorDegree, [&](const size_t i, const size_t j) {
+            return nx[i] * nx[j] + ny[i] * ny[j];
+          }, speedCoefficients);
+          LC_Interval qSquared[maxPolynomialDegree + 1];
+          LC_Interval qCubed[maxPolynomialDegree + 1];
+          LC_Interval weightSquared[2 * g_maxDegree + 1];
+          LC_Interval weightFourth[4 * g_maxDegree + 1];
+          LC_Interval crossCoefficients[4 * g_maxDegree + 1];
+          LC_Interval crossSquared[maxPolynomialDegree + 1];
+          LC_Interval distanceSquaredTerm[maxPolynomialDegree + 1];
+          const size_t qSquaredDegree = 2 * qDegree;
+          const size_t weightSquaredDegree = 2 * p;
+          const size_t weightFourthDegree = 2 * weightSquaredDegree;
+          const size_t crossDegree = numeratorDegree + derivativeDegree;
+          const size_t crossSquaredDegree = 2 * crossDegree;
+          productNet(qDegree, qDegree, [&](const size_t i, const size_t j) {
+            return speedCoefficients[i] * speedCoefficients[j];
+          }, qSquared);
+          productNet(qSquaredDegree, qDegree, [&](const size_t i, const size_t j) {
+            return qSquared[i] * speedCoefficients[j];
+          }, qCubed);
+          productNet(p, p, [&](const size_t i, const size_t j) {
+            return valueNet[i].w * valueNet[j].w;
+          }, weightSquared);
+          productNet(weightSquaredDegree, weightSquaredDegree,
+                     [&](const size_t i, const size_t j) {
+                       return weightSquared[i] * weightSquared[j];
+                     }, weightFourth);
+          productNet(numeratorDegree, derivativeDegree, [&](const size_t i, const size_t j) {
+            return nx[i] * my[j] - ny[i] * mx[j];
+          }, crossCoefficients);
+          productNet(crossDegree, crossDegree, [&](const size_t i, const size_t j) {
+            return crossCoefficients[i] * crossCoefficients[j];
+          }, crossSquared);
+          productNet(weightFourthDegree, crossSquaredDegree,
+                     [&](const size_t i, const size_t j) {
+                       return weightFourth[i] * crossSquared[j];
+                     }, distanceSquaredTerm);
+          const LC_Interval distance = LC_Interval::point(signedDistance);
+          const LC_Interval distanceSquared = distance * distance;
+          bool allPositive = true;
+          bool allNegative = true;
+          for (size_t i = 0; i <= polynomialDegree; ++i) {
+            const LC_Interval coefficient = qCubed[i] - distanceSquared * distanceSquaredTerm[i];
+            if (!coefficient.isPositive()) allPositive = false;
+            if (!coefficient.isNegative()) allNegative = false;
+          }
+          result.rationalCuspNoRootCertified = allPositive || allNegative;
+        }
 
         if (p >= 2 && speedNumerator.hi() > 0.0) {
           // N = A'W - AW', N' = A''W - AW'', and
