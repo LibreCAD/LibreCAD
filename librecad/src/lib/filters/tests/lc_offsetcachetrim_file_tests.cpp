@@ -460,10 +460,9 @@ f::Tags savedForeign(const f::Tags& tags) {
 RS_Vector savedControl(const RS_Vector& point, const Format& format) {
     if (format.dwg) return point; // Binary doubles remain exact.
     const auto coordinate = [](double value) {
-        // Match the actual ASCII writer's precision(16) serialization exactly,
-        // rather than introducing a geometric epsilon or accepting arbitrary ULPs.
+        // SPLINE records use max_digits10 so native offset caches reopen bit-exactly.
         std::ostringstream text; text.imbue(std::locale::classic());
-        text << std::setprecision(16) << value;
+        text << std::setprecision(std::numeric_limits<double>::max_digits10) << value;
         std::istringstream parsed(text.str()); parsed.imbue(std::locale::classic());
         double result = 0; parsed >> result; REQUIRE_FALSE(parsed.fail());
         return result;
@@ -638,7 +637,8 @@ struct BinaryPlain final : lc::test::NullDrwInterface {
     }
 };
 void sameDefinition(const LC_EllipseOffsetDefinition& actual, const LC_EllipseOffsetDefinition& expected) {
-    close(actual.basis.center, expected.basis.center, 0); close(actual.basis.majorP, expected.basis.majorP, 0);
+    close(actual.basis.center, expected.basis.center, 0);
+    close(actual.basis.majorP, expected.basis.majorP, 0);
     CHECK(actual.basis.ratio == expected.basis.ratio);
     CHECK(actual.basis.angle1 == expected.basis.angle1); CHECK(actual.basis.angle2 == expected.basis.angle2);
     CHECK(actual.basis.reversed == expected.basis.reversed); CHECK(actual.basis.isArc == expected.basis.isArc);
@@ -942,8 +942,10 @@ Prepared trimClosed(RS_Graphic& graphic, LC_OffsetCurve& curve) {
     REQUIRE(actual.degree == degree); REQUIRE(actual.controlPoints.size() == half.controlPoints.size());
     CHECK(actual.knotslist == half.knotslist); CHECK(actual.weights == half.weights);
     CHECK_FALSE(actual.m_closedFlag); CHECK_FALSE(actual.m_periodicFlag);
-    for (std::size_t i = 0; i < half.controlPoints.size(); ++i) close(actual.controlPoints[i], half.controlPoints[i], 0);
-    close(actual.controlPoints.front(), half.controlPoints.front(), 0); close(actual.controlPoints.back(), half.controlPoints.back(), 0);
+    for (std::size_t i = 0; i < half.controlPoints.size(); ++i)
+        close(actual.controlPoints[i], half.controlPoints[i], 0);
+    close(actual.controlPoints.front(), half.controlPoints.front(), 0);
+    close(actual.controlPoints.back(), half.controlPoints.back(), 0);
     CHECK(actual.controlPoints.front().x == 0); CHECK(actual.controlPoints.back().x == 0);
     // Probe every retained span, not only the endpoints/control hull, with the
     // existing independent de Casteljau evaluator. Traversal/order are fixed.
