@@ -24929,3 +24929,31 @@ root set and generated offset topology against the independent high-precision
 oracle before changing eligibility. The picker clarification remains a closed
 UI gate: the type-changing selector lists all nine modeled source kinds,
 including distinct parabola; concrete source-variant support remains separate.
+
+#### W563cv. Isolate Simple Offset-factor Roots with Interval Proofs (2026-11-07)
+
+`isolateCusps()` now uses the third-derivative enclosure for boxes where the
+offset-factor interval contains zero. If the derivative interval excludes
+zero, the factor is strictly monotone on that box. Its endpoint signs are
+obtained from outward interval bounds over the adjacent representable
+parameter intervals; matching signs prove no root, while opposite signs prove
+exactly one simple root, which is then bisected. Root count is bounded by the
+existing cusp-run budget. Boxes without certified endpoint signs or derivative
+sign retain the prior subdivision/run path; possible tangencies are not
+reclassified as simple cusps. Exact duplicate cusp parameters are removed.
+
+Release validation passes: focused nonuniform periodic worker/cache matrix
+15,468 assertions/1 case; full worker-kernel suite 1,680,610 assertions/53
+cases; direct `[curve-offset][cusp]` 85,429 assertions/13 cases; and
+`[curve-offset][d0]` 16,910 assertions/20 cases. The updated engine and both
+test targets build, and `git diff --check` passes. Implementation commit
+`bc707abfd` (`fix(offset): isolate monotone cusp roots`).
+
+This does not close W563cg: the high-ratio/gradual periodic positive-side
+fixtures remain fail-closed, the isolated root set is not yet compared as a
+complete continuous topology certificate against the independent oracle, and
+no additional cache or file-persistence eligibility is claimed. Next validate
+root count and location against the high-precision oracle across every
+nonuniform periodic profile and both sides, exercise tangential/even-multiplicity
+roots and seam/knot roots explicitly, then prove complete generated branch
+topology and cache admission before changing any expected refusal.
