@@ -25252,14 +25252,14 @@ This supersedes the earlier 12-cusp sampled count and removes the claimed exact
 internal-knot cusp from the evidence; it does not prove the sampled inventory
 complete or exclude even-multiplicity roots.
 
-Still open within W563eg: extend direct one-sided derivative convergence to
-the alternating and shifted-alternating high-ratio periodic profiles and
-persist a profile-by-profile candidate/sign inventory for both offset signs.
-The repeated-knot and seam regressions below qualify only their recorded
-fixtures, not all multiplicities/weight conditioning. W563eh below starts, but
-does not finish, production-candidate mapping. In particular, re-measure the
-previously reported endpoint discrepancy against the corrected non-knot
-candidate set rather than carrying forward the old exact-knot comparison.
+Still open within W563eg: persist a profile-by-profile candidate/sign
+inventory for both offset signs, including the remaining root-to-endpoint
+checks tracked in W563eh. The repeated-knot and seam regressions below qualify
+only their recorded fixtures, not all multiplicities or root completeness.
+W563eh starts, but does not finish, production-candidate mapping. In
+particular, re-measure the previously reported endpoint discrepancy against
+the corrected non-knot candidate set rather than carrying forward the old
+exact-knot comparison.
 
 Release validation passes for the implemented slice: periodic/nonuniform worker matrix 15,498 assertions
 in 1 case; focused cusp/oracle selection 14,614 assertions in 3 cases; full
@@ -25282,8 +25282,8 @@ continuity or average across the seam.
 
 This completes direct one-sided-jet comparison for these representative
 fixtures only. At this checkpoint it did not establish high-ratio periodic
-seam conditioning or complete cusp inventories. Release validation: focused `[seam]`, 17
-assertions/1 case; full `librecad_offset_worker_kernel_tests`, 1,704,448
+seam conditioning or complete cusp inventories. Release validation: focused
+`[seam]`, 17 assertions/1 case; full `librecad_offset_worker_kernel_tests`, 1,704,448
 assertions/77 cases; `git diff --check` passes. Test commit `25ae238a1`
 (`test(offset): verify one-sided spline oracle jets`).
 
@@ -25301,6 +25301,7 @@ inventory.
 Release validation: focused `[seam]`, 17 assertions/1 case; full
 `librecad_offset_worker_kernel_tests`, 1,704,448 assertions/77 cases;
 `git diff --check` passes. Test commit `f784f17f4` (`test(offset): compare
+conditioned periodic seam jets`).
 
 #### W563eg Follow-up. Compare Reversed-gradual Periodic Seam Jets (2026-11-08)
 
@@ -25314,10 +25315,30 @@ within its own span. The profile-specific step sizes remain `1e-6` and
 
 This closes direct seam-jet convergence for the two gradual orderings only.
 Alternating/shifted-alternating profiles and complete cusp inventories for
-both offset signs remain open. Release validation: focused `[seam]`, 26
+both offset signs remain open at this checkpoint. Release validation: focused `[seam]`, 26
 assertions/1 case; full `librecad_offset_worker_kernel_tests`, 1,704,457
 assertions/77 cases; `git diff --check` passes. Test commit `b175a04cd`
 (`test(offset): compare reversed periodic seam jets`).
+
+#### W563eg Follow-up. Check All Conditioned Seam Weight Orders (2026-11-08)
+
+Expanded the high-precision seam-jet matrix to five positive-weight profiles:
+wide `(0.01, 100, 0.1, 10, 0.5, 2, 1)`, gradual, reversed-gradual,
+alternating, and shifted-alternating, each with its periodic wrap weights.
+For every profile, left/right seam positions and first derivatives agree, and
+each side's first/second derivative estimate converges against strictly
+interior evaluations at two shrinking distances without crossing the seam.
+The second derivative is required to be finite but is not assumed continuous;
+observed continuity differs by profile.
+
+This closes direct one-sided seam-jet convergence for the five listed weight
+orders, not cusp candidate completeness or every positive periodic weight
+vector. The profile-by-profile root/sign inventory for both offset signs and
+production root-to-endpoint mapping remain open in W563eg/W563eh. Release
+validation: focused `[seam]`, 53 assertions/1 case; full
+`librecad_offset_worker_kernel_tests`, 1,704,484 assertions/77 cases;
+`git diff --check` passes. Test commit `1c572dc15` (`test(offset): compare
+conditioned seam profile jets`).
 
 The production implementation remains fail-closed for the gradual
 positive-side periodic case. Continue with W563eh: complete candidate-to-root
