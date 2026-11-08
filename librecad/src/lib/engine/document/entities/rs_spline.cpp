@@ -2297,10 +2297,13 @@ bool RS_Spline::tryBoundJetImpl(const double a, const double b, LC_CurveJetBound
           bool allStrict = true;
           int previousSign = 0;
           int signVariations = 0;
+          LC_Interval polynomialRange;
           const size_t distanceTermDegree = weightFourthDegree + crossSquaredDegree;
           if (distanceTermDegree == polynomialDegree) {
             for (size_t i = 0; i <= polynomialDegree; ++i) {
               const LC_Interval coefficient = qCubed[i] - distanceSquared * distanceSquaredTerm[i];
+              polynomialRange = i == 0 ? coefficient
+                                        : LC_Interval::hull(polynomialRange, coefficient);
               if (!coefficient.isPositive()) allPositive = false;
               if (!coefficient.isNegative()) allNegative = false;
               const int sign = coefficient.isPositive() ? 1 : coefficient.isNegative() ? -1 : 0;
@@ -2313,6 +2316,22 @@ bool RS_Spline::tryBoundJetImpl(const double a, const double b, LC_CurveJetBound
             }
             if (allStrict) result.rationalCuspRootVariationUpperBound = signVariations;
             result.rationalCuspNoRootCertified = allPositive || allNegative;
+
+            // P = q^3 - d^2 W^4 r^2 factors as
+            // (q^(3/2) - d W^2 r)(q^(3/2) + d W^2 r). The first factor,
+            // divided by W^6, is the offset-factor numerator. Use this
+            // Bernstein enclosure only when the conjugate denominator is
+            // provably positive; otherwise retain the ordinary interval bound.
+            const LC_Interval conjugate =
+                speedNumerator * sqrt(speedNumerator) +
+                distance * crossNumerator * sqr(w);
+            const LC_Interval weight2 = sqr(w);
+            const LC_Interval weight6 = sqr(weight2) * weight2;
+            const LC_Interval denominator = weight6 * conjugate;
+            if (polynomialRange.isValid() && denominator.isPositive()) {
+              result.rationalCuspFactorNumerator = polynomialRange / denominator;
+              result.rationalCuspBoundDistance = signedDistance;
+            }
           }
         }
 

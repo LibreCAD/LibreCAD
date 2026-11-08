@@ -2198,8 +2198,11 @@ private:
                                   LC_CurveOffsetCuspFailureStage::SpeedUnproved);
                 }
                 // the offset moves at |Q'| = |1 - d kappa| |C'| = |g| / |C'|^2
+                const LC_Interval motionFactor =
+                    bounds.offsetFactorNumeratorForMotionBound(m_d);
                 const double extent =
-                    std::max(std::abs(g.lo()), std::abs(g.hi())) / bounds.speedSquared().lo() * (leaf.t1 - leaf.t0);
+                    std::max(std::abs(motionFactor.lo()), std::abs(motionFactor.hi())) /
+                    bounds.speedSquared().lo() * (leaf.t1 - leaf.t0);
                 if (continuesUnresolvedRun) {
                     Run& run = runs.back();
                     run.t1 = leaf.t1;
@@ -2243,7 +2246,8 @@ private:
                             !bounds.speedSquared().isPositive()) {
                             return false;
                         }
-                        const LC_Interval factor = bounds.offsetFactorNumerator(m_d);
+                        const LC_Interval factor =
+                            bounds.offsetFactorNumeratorForMotionBound(m_d);
                         if (!factor.isValid() || !std::isfinite(factor.lo()) ||
                             !std::isfinite(factor.hi())) {
                             return false;
@@ -2319,7 +2323,8 @@ private:
                     LC_CurveJetBounds tailBounds;
                     if (m_source.boundJetForCusp(run.t0, b, m_d, tailBounds) &&
                         tailBounds.speedSquared().isPositive()) {
-                        const LC_Interval tailFactor = tailBounds.offsetFactorNumerator(m_d);
+                        const LC_Interval tailFactor =
+                            tailBounds.offsetFactorNumeratorForMotionBound(m_d);
                         if (tailFactor.isValid() && std::isfinite(tailFactor.lo()) &&
                             std::isfinite(tailFactor.hi())) {
                             const double tailExtent =

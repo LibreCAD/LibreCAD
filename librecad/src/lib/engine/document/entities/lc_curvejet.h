@@ -25,6 +25,8 @@
 #include "lc_interval.h"
 #include "rs_vector.h"
 
+#include <limits>
+
 /**
  * Which one-sided limit a curve evaluation takes at a parameter where its
  * derivatives may jump: a knot of an RS_Spline or a segment join of an
@@ -81,6 +83,9 @@ struct LC_CurveJetBounds {
     /** Optional rational-spline Bernstein bounds for a positive-scaled g' numerator. */
     LC_Interval rationalFactorDerivativeBase;
     LC_Interval rationalFactorDerivativeDistanceTerm;
+    /** Tighter rational offset-factor bound, with the exact distance it uses. */
+    LC_Interval rationalCuspFactorNumerator;
+    double rationalCuspBoundDistance{std::numeric_limits<double>::quiet_NaN()};
     /** Set only by the explicit rational cusp-bound query when a no-root proof succeeds. */
     bool rationalCuspNoRootCertified{false};
     /** Sign variations of the strict Bernstein net for the squared cusp polynomial, or -1 if unresolved. */
@@ -110,6 +115,14 @@ struct LC_CurveJetBounds {
     LC_Interval offsetFactorNumerator(const double signedDistance) const {
         const LC_Interval s2 = speedSquared();
         return s2 * sqrt(s2) - LC_Interval::point(signedDistance) * cross();
+    }
+
+    /** A potentially tighter conservative enclosure for offset path-length bounds. */
+    LC_Interval offsetFactorNumeratorForMotionBound(const double signedDistance) const {
+        const LC_Interval ordinary = offsetFactorNumerator(signedDistance);
+        return signedDistance == rationalCuspBoundDistance
+                   ? narrowest(ordinary, rationalCuspFactorNumerator)
+                   : ordinary;
     }
 
     /** Derivative of |C'|^3 - d(C' x C'') on boxes with a C''' enclosure. */
