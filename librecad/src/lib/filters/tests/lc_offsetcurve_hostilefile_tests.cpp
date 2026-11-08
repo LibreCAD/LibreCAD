@@ -2042,6 +2042,7 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     }};
     std::size_t promotedCases = 0;
     std::size_t downgradedCases = 0;
+    std::size_t parabolaNativeWriterCases = 0;
     LC_OffsetWorkerClient worker;
     qint64 nextRequestId = 1;
     const auto runWorker = [&](req::Request request) {
@@ -2165,6 +2166,32 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
                     CHECK(QCborValue(*expectedSource).toCbor() ==
                           QCborValue(*importedSource).toCbor());
                 }
+
+                if (shouldPromote && sourceIndex == 0 && unitDistance == -2.5) {
+                    const auto nativeOutput = directory.file(
+                        "native-parabola-" + std::string(format.suffix));
+                    REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
+                                                     ::format(format.lane)));
+                    const auto nativeRoundTrip = stagedImport(nativeOutput, format.lane);
+                    INFO("native parabola writer round-trip " << format.suffix);
+                    REQUIRE(nativeRoundTrip.status ==
+                            LC_OffsetImportSession::Status::Complete);
+                    REQUIRE(nativeRoundTrip.graphic);
+                    CHECK(nativeRoundTrip.admitted == 1);
+                    CHECK(nativeRoundTrip.downgraded == 0);
+                    const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+                        f::sole(*nativeRoundTrip.graphic));
+                    REQUIRE(roundTripped);
+                    REQUIRE(roundTripped->sourceDefinition());
+                    const auto roundTripSource = values::encodeSourceDefinition(
+                        *roundTripped->sourceDefinition());
+                    REQUIRE(roundTripSource);
+                    CHECK(QCborValue(*expectedSource).toCbor() ==
+                          QCborValue(*roundTripSource).toCbor());
+                    CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+                          RS_Spline::geometryFingerprint(*expectedCache));
+                    ++parabolaNativeWriterCases;
+                }
             }
         }
         CHECK(sourcePromoted);
@@ -2172,6 +2199,11 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     }
     CHECK(promotedCases > 0);
     CHECK(downgradedCases > 0);
+#ifdef DWGSUPPORT
+    CHECK(parabolaNativeWriterCases == formats.size());
+#else
+    CHECK(parabolaNativeWriterCases == formats.size() - 2);
+#endif
 }
 
 TEST_CASE("closed mixed-bulge polyline promotes only its representable side across file lanes",
