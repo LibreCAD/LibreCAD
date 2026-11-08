@@ -91,10 +91,12 @@ Current implementation order for the remaining “all supported types” work:
    knots, orientation, and geometry as applicable; unsupported file lanes must
    fail visibly without replacing existing state. Fixture-generated carrier
    import/promotion and native product export/reopen are covered for one open
-   mixed-bulge polyline with a disconnected worker cache through R14, R2000,
-   and R2018 DXF plus R2000 and R2018 DWG. Product export/reopen now covers
-   every representable worker cache for this source fixture, including both
-   single- and multi-branch outputs; broader branch/source matrices remain open.
+   mixed-bulge polyline through R14, R2000, and R2018 DXF plus R2000 and R2018
+   DWG, covering every representable worker cache for the fixture, including
+   single- and multi-branch outputs. A separate control-point spline-points
+   source now has product export/reopen checks across those five lanes, for
+   both offset signs and four recorded distances. Broader branch/source matrices
+   remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24478,3 +24480,20 @@ do not add another picker control to address those geometry gaps.
 The native writer evidence is still one source fixture and its representable
 cache outputs, not universal native export support; other source families,
 cache variants, independent CAD, visible GUI, and exact-head CI remain open.
+
+#### W563cu. Round-trip Control-point Spline-points Caches Through Product Writers (2026-11-07)
+
+The control-point `LC_SplinePoints` staged-import regression now continues past
+initial cache admission and writes each admitted offset through LibreCAD's
+product writer before staged-importing it again. The second import must remain
+an admitted `LC_OffsetCurve`, retain byte-equivalent typed source metadata, and
+match the exact expected spline-cache fingerprint. The matrix covers both
+offset signs, magnitudes `0.1` and `0.4`, R14/R2000/R2018 DXF, and R2000/R2018
+DWG.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"control-point spline-points source promotes through DXF and DWG import"` passes
+3,699 assertions in one case. The rebuilt `librecad_tests` target succeeds and
+`git diff --check` passes. This is one control-point source fixture and the
+listed matrix; fit-point spline-points, other spline families, independent CAD,
+visible GUI, and exact-head CI remain open.
