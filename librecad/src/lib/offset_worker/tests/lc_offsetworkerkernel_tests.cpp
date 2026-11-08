@@ -2644,13 +2644,27 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
     REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(diagnostics.complete);
 
-    const auto ownsSeamCandidate = [&](const LC_CurveOffsetCuspCandidateBox& box) {
-        return std::abs(box.parameter - startValue) < 1e-6 ||
-               std::abs(box.parameter - endValue) < 1e-6;
-    };
-    const bool seamCandidate = std::any_of(
-        diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
-        ownsSeamCandidate);
+    const std::vector<double> sourceBreaks = source.getBreakParameters();
+    REQUIRE(sourceBreaks.size() >= 2);
+    bool seamCandidate = false;
+    bool seamOwnedByStart = false;
+    bool seamOwnedByEnd = false;
+    for (const LC_CurveOffsetCuspCandidateBox& box : diagnostics.candidateBoxes) {
+        if (box.span == std::numeric_limits<std::size_t>::max()) continue;
+        CHECK(box.span + 1 < sourceBreaks.size());
+        CHECK(sourceBreaks[box.span] <= box.t0);
+        CHECK(box.t1 <= sourceBreaks[box.span + 1]);
+        CHECK(box.t0 <= box.parameter);
+        CHECK(box.parameter <= box.t1);
+        const bool atStart = std::abs(box.parameter - startValue) < 1e-6;
+        const bool atEnd = std::abs(box.parameter - endValue) < 1e-6;
+        if (!atStart && !atEnd) continue;
+        seamCandidate = true;
+        seamOwnedByStart |= atStart && box.span == 0 &&
+                            box.t0 <= startValue && box.t1 >= startValue;
+        seamOwnedByEnd |= atEnd && box.span + 2 == sourceBreaks.size() &&
+                          box.t0 <= endValue && box.t1 >= endValue;
+    }
     const bool seamStall = std::any_of(
         diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
         [&](const std::pair<double, double>& interval) {
@@ -2659,6 +2673,7 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
         });
     CHECK(seamCandidate);
     CHECK_FALSE(seamStall);
+    CHECK((seamOwnedByStart || seamOwnedByEnd));
 
     const auto startPoint = oracleOffsetPoint(
         data, start, step, start, end, distance);
