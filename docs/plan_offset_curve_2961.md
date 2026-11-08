@@ -26472,7 +26472,7 @@ rational knot tangent`). Focused test: 46 assertions/1 case. Full
 `librecad_offset_worker_kernel_tests`: 1,704,339 assertions/73 cases;
 `git diff --check` passes.
 
-#### W563ep. Qualify Double-knot Tangency and Record the Rational Pair Boundary (2026-11-08)
+#### W563er. Qualify Double-knot Tangency and Record the Rational Pair Boundary (2026-11-08)
 
 Added a unit-weight clamped cubic with a double interior knot at `t=0.5` that
 represents `x=t`, `y=(t-0.5)^2/2`. A 256-bit independent oracle verifies the
