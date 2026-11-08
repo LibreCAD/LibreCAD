@@ -2185,6 +2185,116 @@ private:
                                        boundedVariation});
                 }
                 const Run& run = runs.back();
+                const bool extendsPrefixStall = run.boxes > maxRunBoxes && !stalls.empty() &&
+                                                stalls.back().second == run.t0 &&
+                                                stalls.back().first >= a && run.t1 > run.t0;
+                if (run.boxes > maxRunBoxes && (run.t0 == a || extendsPrefixStall) && run.t1 > a) {
+                    // A tangent/even root at the start of a knot span can
+                    // leave many tiny unresolved boxes. Grow the prefix while
+                    // bounding its complete offset path length, so the
+                    // collapse covers the whole numerically unresolved tail
+                    // instead of spending the global isolation budget one
+                    // small chunk at a time.
+                    const double prefixStart = extendsPrefixStall ? stalls.back().first : a;
+                    const auto boundedMotion = [&](const double end, double& motion) {
+                        LC_CurveJetBounds bounds;
+                        if (!(prefixStart < end) ||
+                            !m_source.boundJetForCusp(prefixStart, end, m_d, bounds) ||
+                            !bounds.speedSquared().isPositive()) {
+                            return false;
+                        }
+                        const LC_Interval factor = bounds.offsetFactorNumerator(m_d);
+                        if (!factor.isValid() || !std::isfinite(factor.lo()) ||
+                            !std::isfinite(factor.hi())) {
+                            return false;
+                        }
+                        motion = std::max(std::abs(factor.lo()), std::abs(factor.hi())) /
+                                 bounds.speedSquared().lo() * (end - prefixStart);
+                        return std::isfinite(motion) &&
+                               motion <= m_options.tolerance.nodeMerge;
+                    };
+                    double safeEnd = run.t1;
+                    double initialMotion = 0.0;
+                    if (boundedMotion(safeEnd, initialMotion)) {
+                        double unsafeEnd = b;
+                        double probe = safeEnd;
+                        while (probe < b) {
+                            const double width = safeEnd - prefixStart;
+                            probe = std::min(b, prefixStart + 2.0 * width);
+                            if (!(safeEnd < probe)) {
+                                break;
+                            }
+                            double motion = 0.0;
+                            if (!boundedMotion(probe, motion)) {
+                                unsafeEnd = probe;
+                                break;
+                            }
+                            safeEnd = probe;
+                            if (safeEnd == b) {
+                                break;
+                            }
+                        }
+                        if (safeEnd < b && unsafeEnd > safeEnd) {
+                            for (int iteration = 0; iteration < 24; ++iteration) {
+                                const double mid = safeEnd + 0.5 * (unsafeEnd - safeEnd);
+                                if (!(safeEnd < mid && mid < unsafeEnd)) {
+                                    break;
+                                }
+                                double motion = 0.0;
+                                if (boundedMotion(mid, motion)) {
+                                    safeEnd = mid;
+                                } else {
+                                    unsafeEnd = mid;
+                                }
+                            }
+                        }
+                        if (run.t1 <= safeEnd) {
+                            if (extendsPrefixStall) {
+                                stalls.back().second = safeEnd;
+                            } else {
+                                stalls.emplace_back(prefixStart, safeEnd);
+                            }
+                            std::vector<Leaf> remaining;
+                            remaining.reserve(stack.size());
+                            for (const Leaf& queued : stack) {
+                                if (queued.t1 <= safeEnd) {
+                                    continue;
+                                }
+                                remaining.push_back(queued.t0 < safeEnd
+                                                        ? Leaf{safeEnd, queued.t1, queued.depth + 1}
+                                                        : queued);
+                            }
+                            stack = std::move(remaining);
+                            runs.pop_back();
+                            continue;
+                        }
+                    }
+                }
+                if (run.boxes > maxRunBoxes && run.t0 >= a) {
+                    // A tangent/even root at a span endpoint can leave a large
+                    // unproved cluster even though the offset's entire tail is
+                    // smaller than one merge tolerance. Bound that tail as a
+                    // whole before collapsing it; this avoids both an
+                    // unbounded subdivision increase and a guessed root count.
+                    LC_CurveJetBounds tailBounds;
+                    if (m_source.boundJetForCusp(run.t0, b, m_d, tailBounds) &&
+                        tailBounds.speedSquared().isPositive()) {
+                        const LC_Interval tailFactor = tailBounds.offsetFactorNumerator(m_d);
+                        if (tailFactor.isValid() && std::isfinite(tailFactor.lo()) &&
+                            std::isfinite(tailFactor.hi())) {
+                            const double tailExtent =
+                                std::max(std::abs(tailFactor.lo()), std::abs(tailFactor.hi())) /
+                                tailBounds.speedSquared().lo() * (b - run.t0);
+                            if (std::isfinite(tailExtent) &&
+                                tailExtent <= m_options.tolerance.nodeMerge) {
+                                stalls.emplace_back(run.t0, b);
+                                runs.pop_back();
+                                stack.clear();
+                                break;
+                            }
+                        }
+                    }
+                }
                 if (run.boxes > maxRunBoxes || !(run.extent <= m_options.tolerance.fit)) {
                     if (cuspDiagnostics != nullptr) {
                         cuspDiagnostics->failingRunBoxes = run.boxes;
@@ -2302,13 +2412,14 @@ private:
         const bool rootCountCertified = !run.rationalRootVariationBounded ||
                                         changes == static_cast<std::size_t>(
                                                        run.rationalRootVariationUpperBound);
+        const bool boundedTouch = stalled && changes == 0;
         // an odd count turns the offset back; an even one within the merge
         // tolerance is a swallowtail too small to keep, and none a touch
         if (rootCountCertified && (changes % 2 == 1 || (changes > 0 && !stalled))) {
             cusps.insert(cusps.end(), found.begin(), found.end());
             return LC_CurveOffsetStatus::Ok;
         }
-        if (!stalled || !rootCountCertified) {
+        if (!stalled || (!rootCountCertified && !boundedTouch)) {
             if (cuspDiagnostics != nullptr) {
                 cuspDiagnostics->failingRunBoxes = run.boxes;
                 cuspDiagnostics->failingRunSignChanges = changes;
