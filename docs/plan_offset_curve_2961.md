@@ -25874,3 +25874,20 @@ layout and a second weighting, not all legal periodic knot multiplicities or
 rational degrees. Next: cover additional degrees/layouts and establish
 one-to-one output ownership for all certified candidate/stall boxes in the
 broader rational matrix.
+
+#### W563eh Follow-up. Map Every Reported Stall in the Tangent Fixtures (2026-11-08)
+
+Strengthened the four periodic rational profiles to check both ends of every
+reported stall interval against the 256-bit oracle offset curve. Each interval
+must be represented by retained cubic-piece endpoints within requested
+geometry tolerance; the root-owning interval must also remain in its owning
+source span. This verifies stall-to-output correspondence for every stall
+reported by these four completed fixtures, not every rational profile or all
+candidate boxes in the broader matrix.
+
+Release validation: periodic rational tangent matrix, 128 assertions/1 case;
+full worker suite, 1,703,742 assertions/62 cases; `git diff --check` passes.
+Test commit `dd26ef7bc` (`test(offset): map periodic rational stalls to
+output`). Next: add degree/layout coverage and apply the same per-event
+ownership checks to the conditioned periodic rational cusp matrix, including
+candidate boxes and measured tiny-reversal collapses.
