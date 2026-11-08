@@ -2821,6 +2821,27 @@ TEST_CASE("rational quadratic interior tangent root remains fail-closed",
     CHECK(built.branches.empty());
     CHECK(diagnostics.candidateParameters.empty());
     CHECK(diagnostics.stallIntervals.empty());
+
+    const LC_OffsetSourceDefinition regularDefinition{
+        LC_OffsetSourceGeometry{data}, -signedDistance, 1e-4, false};
+    const auto regularOptions =
+        LC_OffsetWorkerTolerance::directOptions(regularDefinition, source);
+    REQUIRE(regularOptions);
+    LC_CurveOffsetCuspIsolationDiagnostics regularDiagnostics;
+    const auto regular = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left,
+                                        -signedDistance),
+        *regularOptions, LC_CurveOffset::makeDirectSourceBudget(),
+        &regularDiagnostics);
+    CAPTURE(regular.status, regularDiagnostics.status,
+            regularDiagnostics.failureStage, regularDiagnostics.failureT0,
+            regularDiagnostics.failureT1);
+    CHECK(regular.status == LC_CurveOffsetStatus::Ok);
+    CHECK(regularDiagnostics.complete);
+    CHECK_FALSE(regular.branches.empty());
+    CHECK(regularDiagnostics.candidateParameters.empty());
+    CHECK(regularDiagnostics.stallIntervals.empty());
 }
 
 TEST_CASE("nonuniform rational tangent root at a knot remains a bounded stall",
