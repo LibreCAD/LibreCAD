@@ -25031,3 +25031,23 @@ high-precision oracle and isolate every simple, tangent, knot, and seam root;
 then compare the complete generated branch topology and cache geometry. Do not
 infer general rational-periodic support from the useful sign certificates on
 regular sub-boxes.
+
+#### W563cy. Cross-check Rational Cusp Derivative Signs with a 256-bit Oracle (2026-11-08)
+
+Added an independent high-precision regression for the derivative-sign bounds
+introduced in W563cx. It evaluates the rational periodic source through the
+test-only homogeneous de Boor oracle, estimates the derivative of the
+unnormalized offset factor in 256-bit arithmetic, and compares its sign with
+every tested production interval that excludes zero. The gradual positive
+weight profile spans `1e-6` to `1e6`; boxes without a strict interval sign are
+not treated as proofs. The focused oracle check passes 617 assertions/1 case,
+and the full worker-kernel suite passes 1,681,227 assertions/54 cases. The
+worker test target builds and `git diff --check` passes. Test commit
+`7f3c9951d` (`test(offset): verify rational cusp bounds with oracle`).
+
+This is independent sampled falsification coverage for strict sign claims, not
+a proof that the root search is complete: finite-difference oracle sampling can
+miss tangent/even roots, and the near-seam box remains unresolved. W563cg stays
+open; next isolate and compare all roots—including tangent roots and roots at
+knots/seams—then validate complete branch topology before changing the
+gradual positive-side refusal or admitting cache/file support.
