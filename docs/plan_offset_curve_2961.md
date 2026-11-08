@@ -25094,3 +25094,28 @@ prove the coefficient-net enclosure and root count independently, account for
 extraneous roots introduced by squaring, and compare every isolated root and
 the complete generated topology against the high-precision oracle, including
 seam, knot, and even-multiplicity roots.
+
+#### W563ea. Enclose Bernstein Product Weights Rigorously (2026-11-08)
+
+The spline Bernstein-product helper now computes its positive rational
+combinatorial weights through `LC_Interval` multiplication and division. It no
+longer rounds the numerator product to a `double` and then treats that rounded
+value as exact. This closes an under-enclosure in the shared product-bound
+foundation used by rational spline speed, cross-product, and offset-factor
+derivative bounds. It does not add cusp root counting or change any geometry
+eligibility.
+
+The 256-bit periodic derivative-sign oracle now checks four interior points
+inside every tested box whose production enclosure claims a strict sign: 1,781
+assertions/1 case. Release validation also passes the spline suite (28,390
+assertions/77 cases), `[curve-offset][d0]` (17,277 assertions/21 cases), the
+nonuniform periodic worker/cache matrix (15,468 assertions/1 case), and the
+full worker-kernel suite (1,682,391 assertions/54 cases). Both test targets
+build and `git diff --check` passes. Implementation commit `fc82166e8`
+(`fix(spline): enclose rational Bernstein product weights`).
+
+W563cg remains open. The derivative oracle is sampled falsification coverage,
+not a proof of root completeness; tangent/even roots and exact knot/seam roots
+still require explicit isolation and comparison. The gradual positive-side
+periodic case remains fail-closed, and no new cache or file-format eligibility
+is claimed.
