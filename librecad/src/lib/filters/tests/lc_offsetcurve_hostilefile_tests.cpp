@@ -2202,9 +2202,11 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
                           QCborValue(*importedSource).toCbor());
                 }
 
-                if (shouldPromote && sourceIndex == 0 && unitDistance == -2.5) {
+                if (shouldPromote) {
                     const auto nativeOutput = directory.file(
-                        "native-parabola-" + std::string(format.suffix));
+                        std::to_string(sourceIndex) + "-" +
+                        std::to_string(signedDistance) + "-native-parabola-" +
+                        format.suffix);
                     REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
                                                      ::format(format.lane)));
                     const auto nativeRoundTrip = stagedImport(nativeOutput, format.lane);
@@ -2235,9 +2237,9 @@ TEST_CASE("parabola curvature neighborhood admits only exact single-cache import
     CHECK(promotedCases > 0);
     CHECK(downgradedCases > 0);
 #ifdef DWGSUPPORT
-    CHECK(parabolaNativeWriterCases == formats.size());
+    CHECK(parabolaNativeWriterCases > formats.size());
 #else
-    CHECK(parabolaNativeWriterCases == formats.size() - 2);
+    CHECK(parabolaNativeWriterCases > formats.size() - 2);
 #endif
 }
 
