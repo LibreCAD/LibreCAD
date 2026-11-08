@@ -2038,6 +2038,76 @@ TEST_CASE("span-local spline oracle does not infer a root across a repeated knot
     CHECK(productionOwnsRepeatedKnotCusp);
 }
 
+TEST_CASE("quadratic offset-factor tangency is retained as a bounded stall",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][tangent-root]") {
+    RS_SplineData data{2, false};
+    data.type = RS_SplineData::SplineType::ClampedOpen;
+    data.controlPoints = {{-1, 1}, {0, -1}, {1, 1}};
+    data.knotslist = {0, 0, 0, 1, 1, 1};
+    data.weights = {1, 1, 1};
+    const RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+
+    const SplineOracle domainStart{0};
+    const SplineOracle domainEnd{1};
+    const SplineOracle tangentParameter{"0.5"};
+    const SplineOracle derivativeStep{"1e-30"};
+    const SplineOracle signedDistance{"0.5"};
+    const SplineOracle tangentFactor = oracleOffsetFactor(
+        data, tangentParameter, derivativeStep, domainStart, domainEnd, signedDistance);
+    const SplineOracle leftFactor = oracleOffsetFactor(
+        data, tangentParameter - SplineOracle{"1e-10"}, derivativeStep,
+        domainStart, domainEnd, signedDistance);
+    const SplineOracle rightFactor = oracleOffsetFactor(
+        data, tangentParameter + SplineOracle{"1e-10"}, derivativeStep,
+        domainStart, domainEnd, signedDistance);
+    CHECK(abs(tangentFactor) < SplineOracle{"1e-200"});
+    CHECK(leftFactor > 0);
+    CHECK(rightFactor > 0);
+    CHECK(leftFactor < SplineOracle{"1e-18"});
+    CHECK(rightFactor < SplineOracle{"1e-18"});
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, .5, 1e-4, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .5),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.stallIntervals, diagnostics.candidateParameters);
+    REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+    CHECK_FALSE(diagnostics.stallIntervals.empty());
+    CHECK(std::any_of(diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+                      [](const std::pair<double, double>& interval) {
+        return interval.first <= .5 && interval.second >= .5;
+    }));
+
+    const auto oraclePoint = oracleOffsetPoint(
+        data, tangentParameter, derivativeStep, domainStart, domainEnd, signedDistance);
+    const RS_Vector expectedPoint{oraclePoint.first.convert_to<double>(),
+                                  oraclePoint.second.convert_to<double>()};
+    double nearestOutput = std::numeric_limits<double>::infinity();
+    for (const LC_OffsetBranch& branch : built.branches) {
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            const auto& p = piece.bezier;
+            for (int sample = 0; sample <= 100; ++sample) {
+                const double t = sample / 100.0;
+                const double u = 1.0 - t;
+                const RS_Vector point = p[0] * (u * u * u) +
+                                        p[1] * (3.0 * u * u * t) +
+                                        p[2] * (3.0 * u * t * t) +
+                                        p[3] * (t * t * t);
+                nearestOutput = std::min(nearestOutput, point.distanceTo(expectedPoint));
+            }
+        }
+    }
+    CAPTURE(expectedPoint.x, expectedPoint.y, nearestOutput,
+            options->tolerance.requestedGeometry);
+    CHECK(nearestOutput <= options->tolerance.requestedGeometry);
+}
+
 TEST_CASE("ellipse, arc, and circle source caches validate across signed distances",
           "[lc-offsetcurve][worker-kernel][source-cache][conic][side]") {
     const double tau = 2.0 * M_PI;
