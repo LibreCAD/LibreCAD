@@ -25575,14 +25575,23 @@ tangent roots, and it does not resolve the profiles whose final branch build
 still returns `AmbiguousRegularity`. Those remain fail-closed; cache and file
 eligibility are unchanged.
 
-Release validation: periodic/nonuniform two-sided matrix, 23,007 assertions/1
-case; full worker-kernel suite, 1,702,823 assertions/58 cases; `git diff
---check` passes. Test commit `6c74b65f9` (`test(offset): map periodic cusp
-profiles to oracle`).
+The production candidate parameter is also required to lie strictly inside
+the same nonzero source-knot span as its uniquely matched oracle cusp. This
+checks ownership directly, including roots close to an adjacent knot or the
+periodic seam; exact-knot roots remain a separately owned boundary case.
+
+Release validation after the ownership assertion: periodic/nonuniform
+two-sided matrix, 23,129 assertions/1 case; full worker-kernel suite,
+1,702,945 assertions/58 cases; `git diff --check` passes. Test commits
+`6c74b65f9` (`test(offset): map periodic cusp profiles to oracle`) and
+`24bb7eef1` (`test(offset): assert periodic cusp span ownership`).
 
 Next: independently certify root counts on each open knot span and the
 periodic seam, including tangent/even roots that the sampled sign-change
-oracle cannot inventory. For each completed isolation, map every certified
-root box to one retained endpoint, an explicit seam/knot owner, or a measured
-in-tolerance tiny-reversal collapse; do not infer certification from the
-sampled inventory or from geometric proximity alone.
+oracle cannot inventory. Current diagnostics expose candidate parameters but
+not their certified isolating intervals; add bounded root-box diagnostics
+before claiming a one-to-one *certified box* mapping. For each completed
+isolation, map every certified root box to one retained endpoint, an explicit
+seam/knot owner, or a measured in-tolerance tiny-reversal collapse; do not
+infer certification from the sampled inventory or from geometric proximity
+alone.
