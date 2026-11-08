@@ -2294,13 +2294,24 @@ bool RS_Spline::tryBoundJetImpl(const double a, const double b, LC_CurveJetBound
           const LC_Interval distanceSquared = distance * distance;
           bool allPositive = true;
           bool allNegative = true;
+          bool allStrict = true;
+          int previousSign = 0;
+          int signVariations = 0;
           const size_t distanceTermDegree = weightFourthDegree + crossSquaredDegree;
           if (distanceTermDegree == polynomialDegree) {
             for (size_t i = 0; i <= polynomialDegree; ++i) {
               const LC_Interval coefficient = qCubed[i] - distanceSquared * distanceSquaredTerm[i];
               if (!coefficient.isPositive()) allPositive = false;
               if (!coefficient.isNegative()) allNegative = false;
+              const int sign = coefficient.isPositive() ? 1 : coefficient.isNegative() ? -1 : 0;
+              if (sign == 0) {
+                allStrict = false;
+              } else {
+                if (previousSign != 0 && sign != previousSign) ++signVariations;
+                previousSign = sign;
+              }
             }
+            if (allStrict) result.rationalCuspRootVariationUpperBound = signVariations;
             result.rationalCuspNoRootCertified = allPositive || allNegative;
           }
         }

@@ -571,6 +571,7 @@ TEST_CASE("rational cusp polynomial no-root certificates agree with oracle sampl
     for (const double signedDistance : distances) {
         std::size_t excludedBoxes = 0;
         std::size_t tightenedBoxes = 0;
+        std::size_t signedTurnVariationOneBoxes = 0;
         for (std::size_t span = 0; span + 1 < breaks.size(); ++span) {
             const double spanWidth = breaks[span + 1] - breaks[span];
             if (!(spanWidth > 0.0)) continue;
@@ -579,6 +580,21 @@ TEST_CASE("rational cusp polynomial no-root certificates agree with oracle sampl
                 const double b = breaks[span] + spanWidth * (piece + 1) / 32.0;
                 LC_CurveJetBounds bounds;
                 REQUIRE(checked.tryBoundJetForCusp(a, b, bounds, signedDistance));
+                const bool signedTurnPositive =
+                    (LC_Interval::point(signedDistance) * bounds.cross()).isPositive();
+                if (signedTurnPositive && bounds.rationalCuspRootVariationUpperBound == 1) {
+                    ++signedTurnVariationOneBoxes;
+                    const double t0 = std::nextafter(a, b);
+                    const double t1 = std::nextafter(b, a);
+                    const SplineOracle derivativeStep{spanWidth * SplineOracle{"1e-20"}};
+                    const SplineOracle distance{signedDistance};
+                    const SplineOracle g0 = oracleOffsetFactorNumerator(
+                        data, SplineOracle{t0}, derivativeStep, domainStart, domainEnd, distance);
+                    const SplineOracle g1 = oracleOffsetFactorNumerator(
+                        data, SplineOracle{t1}, derivativeStep, domainStart, domainEnd, distance);
+                    CAPTURE(span, piece, signedDistance);
+                    CHECK((g0 < 0) != (g1 < 0));
+                }
                 if (!bounds.rationalCuspNoRootCertified) continue;
                 ++excludedBoxes;
                 if (bounds.offsetFactorNumerator(signedDistance).containsZero()) {
@@ -601,6 +617,7 @@ TEST_CASE("rational cusp polynomial no-root certificates agree with oracle sampl
         if (signedDistance > 0.0) {
             CHECK(tightenedBoxes > 0);
         }
+        if (signedDistance > 0.0) CHECK(signedTurnVariationOneBoxes > 0);
     }
 }
 
