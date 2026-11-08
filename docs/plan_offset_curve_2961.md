@@ -26374,3 +26374,41 @@ Release validation: focused scale matrix, 64 assertions/1 case; full
 worker-kernel suite, 1,704,270 assertions/72 cases; `git diff --check` passes.
 Test commit `828d83db6` (`test(offset): characterize rational tangent scale
 bounds`).
+
+#### W563ej Follow-up. Tighten Certified Rational Tangent Motion Bounds (2026-11-08)
+
+Added an optional rational-spline enclosure for the offset-factor numerator
+used in path-motion bounds. With `q = N.N`, `r = N x N'`, positive weight `W`,
+and signed distance `d`, the existing Bernstein net encloses
+`P = q^3 - d^2 W^4 r^2`. Where the conjugate
+`q^(3/2) + d W^2 r` is strictly positive, the identity
+`g = P / (W^6 (q^(3/2) + d W^2 r))` gives a conservative enclosure for the
+offset-factor numerator `g`. The bound carries the exact `d` it was computed
+for and is used only for motion/path-length estimates; the existing interval
+still governs root regularity and sign classification. If positivity or the
+distance match is unavailable, the prior enclosure remains in force.
+
+The tighter bound resolves the exact open rational quadratic tangent at unit
+scale and requested geometry `1e-4` while retaining scale `0.5` and `2`
+coverage. Every accepted stall is bounded by `nodeMerge`; independent 256-bit
+oracle values at stall endpoints/midpoints remain enclosed, and root/stall
+points map to retained cubic endpoints within requested geometry tolerance.
+The degree-elevated rational cubic also resolves at requested geometry `1e-3`
+with the same motion and output-mapping checks. The periodic seam regression
+now permits diagnostic boxes for stall-owned roots that are not emitted as
+unique cusp parameters; every emitted candidate still has its source-span
+owned box and oracle mapping, and every oracle event continues to map to an
+output endpoint or stall.
+
+No run, work, or subdivision budget was raised, and no tolerance threshold was
+weakened. Cases whose certified whole-run motion still exceeds `nodeMerge`
+remain fail-closed. This closes the recorded unit-scale quadratic gap and one
+degree-elevated cubic profile only; arbitrary rational weights/knots/degrees,
+periodic seam/interior roots, and complete event-to-output coverage remain
+open.
+
+Release validation: focused rational tangent/seam/cubic matrix, 274
+assertions/5 cases; full worker-kernel suite, 1,704,282 assertions/72 cases;
+`[lc-offsetcurve][geometry]`, 1,576,310 assertions/374 cases;
+`git diff --check` passes. Implementation/test commit `f8e000886` (`fix(offset):
+tighten rational tangent motion bounds`).
