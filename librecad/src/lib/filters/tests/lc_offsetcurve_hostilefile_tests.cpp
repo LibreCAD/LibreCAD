@@ -5996,8 +5996,7 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
         CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
               RS_Spline::geometryFingerprint(expectedCache));
 
-        if (degree == 3 && !sixControlLayout && !rational && scale == 1.0 &&
-            distanceFactor == 0.25 && side == LC_CurveOffsetSide::Left) {
+        if (scale == 1.0 && distanceFactor == 0.25) {
             const auto nativeOutput = directory.file("native-" + input.filename().string());
             REQUIRE(lc::test::exportDrawing(*outcome->graphic, nativeOutput, format(lane)));
             const auto nativeRoundTrip = stagedImport(nativeOutput, lane);
