@@ -520,20 +520,22 @@ TEST_CASE("rational periodic derivative sign bounds agree with the high precisio
             if (!derivativeSign.excludesZero()) continue;
             ++certifiedBoxes;
 
-            const SplineOracle t{(a + b) / 2.0};
             const SplineOracle finiteDifferenceStep{(b - a) * SplineOracle{"1e-5"}};
             const SplineOracle splineDerivativeStep{spanWidth * SplineOracle{"1e-20"}};
-            const SplineOracle before = oracleOffsetFactorNumerator(
-                data, t - finiteDifferenceStep, splineDerivativeStep, domainStart,
-                domainEnd, SplineOracle{signedDistance});
-            const SplineOracle after = oracleOffsetFactorNumerator(
-                data, t + finiteDifferenceStep, splineDerivativeStep, domainStart,
-                domainEnd, SplineOracle{signedDistance});
-            const SplineOracle oracleDerivative =
-                (after - before) / (2 * finiteDifferenceStep);
-            CAPTURE(span, piece, derivativeSign.lo(), derivativeSign.hi());
-            CHECK((derivativeSign.lo() > 0.0) == (oracleDerivative > 0));
-            CHECK(oracleDerivative != 0);
+            for (const int sampleNumerator : {1, 3, 5, 7}) {
+                const SplineOracle t{a + (b - a) * sampleNumerator / 8.0};
+                const SplineOracle before = oracleOffsetFactorNumerator(
+                    data, t - finiteDifferenceStep, splineDerivativeStep, domainStart,
+                    domainEnd, SplineOracle{signedDistance});
+                const SplineOracle after = oracleOffsetFactorNumerator(
+                    data, t + finiteDifferenceStep, splineDerivativeStep, domainStart,
+                    domainEnd, SplineOracle{signedDistance});
+                const SplineOracle oracleDerivative =
+                    (after - before) / (2 * finiteDifferenceStep);
+                CAPTURE(span, piece, sampleNumerator, derivativeSign.lo(), derivativeSign.hi());
+                CHECK((derivativeSign.lo() > 0.0) == (oracleDerivative > 0));
+                CHECK(oracleDerivative != 0);
+            }
         }
     }
     CHECK(certifiedBoxes > 0);

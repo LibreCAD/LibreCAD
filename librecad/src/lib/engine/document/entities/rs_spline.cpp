@@ -438,8 +438,9 @@ void productNet(const size_t n, const size_t m, const Product &product,
   for (size_t k = 0; k <= n + m; ++k) {
     LC_Interval sum = LC_Interval::point(0.0);
     for (size_t i = (k > m) ? k - m : 0; i <= std::min(k, n); ++i) {
-      const LC_Interval weight = LC_Interval::point(binomial(n, i) * binomial(m, k - i)) /
-                                 LC_Interval::point(binomial(n + m, k));
+      const LC_Interval weight =
+          LC_Interval::point(binomial(n, i)) * LC_Interval::point(binomial(m, k - i)) /
+          LC_Interval::point(binomial(n + m, k));
       sum = sum + weight * product(i, k - i);
     }
     coefficients[k] = sum;
