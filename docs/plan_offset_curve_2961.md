@@ -24775,3 +24775,22 @@ passes 126,806 assertions in one test case. The `librecad_tests` target
 rebuild and `git diff --check` pass. Other hyperbola distances/scales,
 independent-CAD equivalence, visible-GUI acceptance, and exact-head CI remain
 open.
+
+#### W563dj. Round-trip Promotable Translated-ellipse Variants (2026-11-07)
+
+The translated-ellipse import matrix now includes native product
+writer/reopen checks for every ellipse variant admitted at the selected
+unit-scale, zero-translation-ratio, first-distance cell. Each admitted result
+is exported and staged-imported through R14/R2000/R2018 DXF and R2000/R2018
+DWG, preserving the typed source definition and exact generated cache
+fingerprint. The rest of the existing matrix continues to check import
+admission/refusal across its scales, translations, and distances; it is not
+claimed as writer/reopen coverage.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"translated ellipse scale matrix preserves typed source and cache through file import"`
+passes 1,836,399 assertions in one test case. The `librecad_tests` target
+rebuild and `git diff --check` pass. This qualifies only the recorded
+unit-scale/zero-translation/first-distance ellipse variants; other ellipse
+scales, translations, distances and variants, independent-CAD equivalence,
+visible-GUI acceptance, and exact-head CI remain open.
