@@ -97,7 +97,9 @@ Current implementation order for the remaining “all supported types” work:
    source now has product export/reopen checks across those five lanes, for
    both offset signs and four recorded distances; a smooth fit-point
    spline-points source is checked across the five lanes at one representative
-   signed offset. Broader branch/source matrices remain open.
+   signed offset; a promotable parabola/cache is checked across all five lanes
+   at one representative signed offset. Broader branch/source matrices remain
+   open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24478,8 +24480,8 @@ line, arc, circle, ellipse, spline, spline-points, distinct parabola, bounded
 hyperbola, and polyline. Further work is per-family/per-variant generation,
 worker/cache admission, DXF/DWG import/export, and round-trip qualification;
 do not add another picker control to address those geometry gaps.
-The native writer evidence is still one source fixture and its representable
-cache outputs, not universal native export support; other source families,
+The native writer evidence now covers one polyline fixture and representative
+spline-points and parabola fixtures, not universal native export support; other source families,
 cache variants, independent CAD, visible GUI, and exact-head CI remain open.
 
 #### W563cu. Round-trip Control-point Spline-points Caches Through Product Writers (2026-11-07)
@@ -24514,3 +24516,21 @@ Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
 20,430 assertions in one case. The rebuilt `librecad_tests` target succeeds and
 `git diff --check` passes. This does not qualify every fit-point/tangent
 variant, other source families, independent CAD, visible GUI, or exact-head CI.
+
+#### W563cw. Round-trip Parabola Cache Through Product Writers (2026-11-07)
+
+The parabola curvature-neighborhood import regression now also sends one
+promotable bounded parabola case (`sourceIndex == 0`, signed distance `-2.5`)
+through LibreCAD's native product writer for every enabled file lane. Each
+second import must remain an admitted editable offset, preserve the tagged
+parabola source definition, and match the exact generated cache fingerprint.
+The normal test still requires both promoted and downgraded cases across its
+larger source/curvature matrix; the added writer path is intentionally a
+representative persistence slice, not blanket parabola eligibility.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"parabola curvature neighborhood admits only exact single-cache imports"`
+passes 21,235 assertions in one case, including R14/R2000/R2018 DXF and
+R2000/R2018 DWG. The `librecad_tests` target rebuild and `git diff --check`
+pass. Other parabola/cache variants, other source families, independent CAD,
+visible GUI, and exact-head CI remain open.
