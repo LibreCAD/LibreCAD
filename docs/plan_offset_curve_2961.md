@@ -95,8 +95,9 @@ Current implementation order for the remaining “all supported types” work:
    DWG, covering every representable worker cache for the fixture, including
    single- and multi-branch outputs. A separate control-point spline-points
    source now has product export/reopen checks across those five lanes, for
-   both offset signs and four recorded distances. Broader branch/source matrices
-   remain open.
+   both offset signs and four recorded distances; a smooth fit-point
+   spline-points source is checked across the five lanes at one representative
+   signed offset. Broader branch/source matrices remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24495,5 +24496,21 @@ Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
 "control-point spline-points source promotes through DXF and DWG import"` passes
 3,699 assertions in one case. The rebuilt `librecad_tests` target succeeds and
 `git diff --check` passes. This is one control-point source fixture and the
-listed matrix; fit-point spline-points, other spline families, independent CAD,
-visible GUI, and exact-head CI remain open.
+listed matrix; other fit-point variants, other spline families, independent
+CAD, visible GUI, and exact-head CI remain open.
+
+#### W563cv. Round-trip Fit-point Spline-points Cache Through Product Writers (2026-11-07)
+
+The fit-point spline-points import matrix now includes a bounded native
+writer/reopen case for its smooth three-point fit source at left offset
+magnitude `0.25`. The emitted file is staged-imported again, and the test
+requires native cache admission, equivalent typed fit-source metadata, and an
+exact cache fingerprint. It runs in R14/R2000/R2018 DXF and R2000/R2018 DWG;
+the surrounding staged-import matrix continues to cover additional fit-point
+shapes, signs, distances, and refusal/fallback cases.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"fit-point spline-points source imports through operation-8 validation"` passes
+20,430 assertions in one case. The rebuilt `librecad_tests` target succeeds and
+`git diff --check` passes. This does not qualify every fit-point/tangent
+variant, other source families, independent CAD, visible GUI, or exact-head CI.
