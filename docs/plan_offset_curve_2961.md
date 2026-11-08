@@ -26522,3 +26522,24 @@ Release validation: focused regression, 30 assertions/1 case; full
 `[lc-offsetcurve][geometry]`, 1,576,310 assertions/374 cases;
 `git diff --check` passes. Implementation/test commit `a1e23ebae` (`fix(offset):
 refine rational roots at interior knots`).
+
+#### W563er Follow-up. Qualify an Alternate Rational Double-knot Profile (2026-11-08)
+
+Added a second positive-weight rational cubic with a double interior knot at
+`t=0.5`, produced by inserting the knot twice into a different single-span
+rational cubic with weights `(1, 0.75, 0.75, 1)`. A 256-bit oracle verifies
+the knot-inserted curve against its single-span source, derives the matching
+one-sided tangent distance, and confirms a near-zero knot factor with nonzero,
+same-sign neighbors. The direct offset completes at requested geometry
+`1e-4`; knot-owned stall bounds enclose one-sided endpoint factors, total
+certified motion is at most `nodeMerge`, and the knot plus both stall endpoints
+map to retained output within requested tolerance.
+
+This qualifies one additional geometry/weight profile for the existing
+knot-adjacent refinement. It does not prove arbitrary double-knot data,
+unequal one-sided curvature, other multiplicities, or general rational
+cross-knot root-pair handling. No production behavior changed. Release
+validation: focused `[multiplicity]`, 92 assertions/3 cases; full
+`librecad_offset_worker_kernel_tests`, 1,704,431 assertions/76 cases;
+`git diff --check` passes. Test commit `2e645cc31` (`test(offset): cover
+alternate rational double knot`).
