@@ -727,13 +727,22 @@ line numbers are navigation hints, never frozen test identities.
 
 ### 3.1 Geometry, Cache Validation and Resource Accounting
 
-1. Phase-1 editable sources are finite planar top-level `RS_Ellipse` objects,
-   whole or arc. Distance is finite and positive. Normalize raw axes/sweeps before
-   an `RS_Ellipse` constructor can erase tiny/full-turn distinctions. Preserve
+1. Editable source definitions are finite, planar, value-owned tagged geometry
+   from `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse,
+   spline, spline-points, distinct parabola, bounded hyperbola, and polyline.
+   Each variant keeps its native parameters and representation; parabola must
+   not collapse into its `LC_SplinePoints` base type. Apply the source model's
+   per-kind well-formedness and admission rules before generation. Signed offset
+   distance is finite and uses the source's left-normal convention; eligibility
+   may still refuse a side, distance, topology, or numerical profile. Preserve
    wrapped/reversed traversal, circle degeneracies and large-centre local detail.
-2. A definition holds normalized basis, distance, toward-centre, cache reversal
-   and saved relative tolerance. Original-whole, cache representation flags and
-   geometric chain closure are separate facts. Do not infer one from another.
+   Normalize raw ellipse axes/sweeps before an `RS_Ellipse` constructor can
+   erase tiny/full-turn distinctions.
+2. A schema-2 definition holds the typed source, finite signed distance,
+   relative tolerance, and cache reversal. Ellipse schema-1 compatibility maps
+   its normalized basis, positive magnitude, and toward-centre flag into that
+   common form. Source reversal, cache reversal, source closure, and cache
+   representation/closure are distinct facts; do not infer one from another.
 3. Admit only exact normalized degree-1 or degree-3 ClampedOpen cache layouts
    with complete unit weights (or genuine implied defaults). Preserve actual
    clamped knots/span multiplicities and controls; no repair, refit, coordinate
@@ -744,8 +753,10 @@ line numbers are navigation hints, never frozen test identities.
    occurrence/node incidence, source ends, cuts and seam/closure. A near-reference
    loop, repeated traversal, missing interval or wrong branch must fail. Local
    derivative/proximity success and dense sampling alone are insufficient.
-   `distanceToOriginal` measures the source ellipse, not the offset set; it
-   cannot certify the visible offset branch or replace the cache/reference metric.
+   For ellipse sources, `distanceToOriginal` measures the source ellipse, not the
+   offset set; it cannot certify the visible offset branch or replace the
+   cache/reference metric. Other source kinds require their own exact/reference
+   path proof and must not be routed through an ellipse-specific metric.
 5. Keep reference geometry independent of candidate cache subdivision. Distinct
    coordinate-near occurrences remain distinct until same-root identity is proved.
    Retain full root enclosures/fringes, one-sided ownership and endpoint provenance.
