@@ -1680,6 +1680,21 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     if (nearestPointError < diagnosticOptions->tolerance.requestedGeometry) {
                         CHECK_FALSE(matchedOracleCusps[nearestOracle]);
                         matchedOracleCusps[nearestOracle] = true;
+                        std::size_t productionSpan =
+                            std::numeric_limits<std::size_t>::max();
+                        for (std::size_t span = sourceData.degree;
+                             span < sourceData.controlPoints.size(); ++span) {
+                            const double spanStart = sourceData.knotslist[span];
+                            const double spanEnd = sourceData.knotslist[span + 1];
+                            if (spanStart < productionParameter &&
+                                productionParameter < spanEnd) {
+                                productionSpan = span;
+                                break;
+                            }
+                        }
+                        CAPTURE(productionSpan, refinedOracleCusps[nearestOracle].span);
+                        CHECK(productionSpan != std::numeric_limits<std::size_t>::max());
+                        CHECK(productionSpan == refinedOracleCusps[nearestOracle].span);
                     }
                 }
                 if (profileDiagnostics.complete) {
