@@ -26108,3 +26108,20 @@ passes. Test commit `accfd381d` (`test(offset): qualify cubic tangent at
 knot`). This qualifies one interior-knot layout and one tangent, not repeated
 knots, arbitrary knot vectors, periodic seam roots, or strict-tolerance
 acceptance for all cubic profiles.
+
+#### W563eh Follow-up. Map a Periodic Rational Root at the Seam (2026-11-08)
+
+Added a closed rational cubic seam fixture with a duplicated periodic weight
+sequence. A 256-bit oracle evaluates curvature from the left at the domain end
+and from the right at the domain start, derives one signed offset distance from
+their matching values, and confirms the offset factor vanishes from both owners.
+The worker must complete, identify the seam through a cusp-candidate box or a
+stall interval, and place the oracle seam-offset point at a retained output
+endpoint within requested geometry tolerance. This complements the existing
+periodic rational interior-root fixtures and the nonrational seam checks.
+
+Release validation: focused periodic rational seam case, 15 assertions/1 case;
+full worker-kernel suite, 1,703,876 assertions/67 cases; `git diff --check`
+passes. Test commit `5ab777e1b` (`test(offset): map periodic rational seam
+root`). This covers one rational closed cubic and one seam event, not every
+periodic weight/knot profile or all seam-crossing unresolved-run layouts.
