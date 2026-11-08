@@ -26485,16 +26485,40 @@ to retained geometry within requested tolerance.
 Also retained an atomic-refusal regression for a non-unit rational double-knot
 representation of the earlier symmetric cubic. The oracle verifies the same
 geometric curve to `1e-12` and a near-tangent root at the knot. Double
-arithmetic makes this distance a very close two-cusp profile across the knot;
-one adjacent span resolves one sign crossing while the remaining run has no
-certified aggregate root count. The current implementation returns
-`SingularOffset` at `RunResolution` with bounded run motion below `nodeMerge`,
-and publishes no branches or stalls. This remains a concrete rational
-cross-knot root-pair implementation gap; it is not accepted as completed
-support. Resolve only with certified combined root ownership/count or preserve
-the atomic refusal.
+arithmetic makes this distance a very close two-cusp profile across the knot.
+At this original checkpoint, one adjacent span resolved one sign crossing
+while the remaining run had no certified aggregate root count, so production
+returned `SingularOffset` at `RunResolution` and published no branches or
+stalls. The W563er follow-up below closes this recorded profile by refining
+knot-adjacent leaves within the existing limits; it does not establish general
+rational cross-knot root-pair support.
 
 No production behavior changed. Test commit `73803baa2` (`test(offset): cover
 double-knot tangent bounds`). The two focused cases pass 54 assertions; full
 `librecad_offset_worker_kernel_tests`: 1,704,393 assertions/75 cases;
 `git diff --check` passes.
+
+#### W563er Follow-up. Refine Rational Root Proofs at Interior Knots (2026-11-08)
+
+Changed cusp isolation so a rational leaf touching an interior knot is not
+immediately delegated to small-motion run resolution while its Bernstein root
+count remains unavailable. The leaf continues subdividing under the existing
+maximum depth and global isolation-box limit; only the existing strict root
+proofs can classify the resulting leaves, and unresolved work still fails
+closed at those limits. No work budget, motion threshold, or root-acceptance
+rule was increased or weakened.
+
+The non-unit rational cubic with a double knot now completes at requested
+geometry `1e-4`. The 256-bit oracle confirms the same-sign near-tangent profile;
+the returned stall contains the knot, each knot-owned factor enclosure
+contains both one-sided oracle values and its interval endpoint, summed motion
+is at most `nodeMerge`, and the knot plus both stall endpoints map to retained
+output within requested tolerance. This closes only the recorded double-knot
+profile. Other non-unit rational knot layouts, multiplicities, weights, and
+degrees remain open.
+
+Release validation: focused regression, 30 assertions/1 case; full
+`librecad_offset_worker_kernel_tests`, 1,704,402 assertions/75 cases;
+`[lc-offsetcurve][geometry]`, 1,576,310 assertions/374 cases;
+`git diff --check` passes. Implementation/test commit `a1e23ebae` (`fix(offset):
+refine rational roots at interior knots`).
