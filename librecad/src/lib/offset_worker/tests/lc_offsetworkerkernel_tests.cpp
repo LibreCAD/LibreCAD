@@ -3230,8 +3230,8 @@ TEST_CASE("nonuniform periodic rational seam cusp maps to retained output",
             return (interval.first <= startValue && interval.second >= startValue) ||
                    (interval.first <= endValue && interval.second >= endValue);
         });
-    REQUIRE((seamCandidate != diagnostics.candidateParameters.end()) !=
-            (seamStall != diagnostics.stallIntervals.end()));
+    REQUIRE(seamCandidate != diagnostics.candidateParameters.end());
+    CHECK(seamStall == diagnostics.stallIntervals.end());
 
     const auto startPoint = oracleOffsetPoint(
         data, start, step, start, end, distance);
