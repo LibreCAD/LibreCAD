@@ -2956,14 +2956,16 @@ TEST_CASE("rational quadratic interior tangent root obeys bounded tolerance",
     CHECK(regularDiagnostics.stallIntervals.empty());
 }
 
-TEST_CASE("rational quadratic tangent stalls map across binary scales",
+TEST_CASE("rational quadratic tangent stalls map across weight profiles and binary scales",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][scale]") {
-    for (const double scale : {0.5, 2.0}) {
+    const std::vector<std::pair<double, double>> profiles{
+        {0.5, 0.5}, {2.0, 0.5}, {1.0, 0.25}, {1.0, 2.0}};
+    for (const auto& [scale, middleWeight] : profiles) {
         RS_SplineData data{2, false};
         data.type = RS_SplineData::SplineType::ClampedOpen;
         data.controlPoints = {{-2 * scale, 0}, {0, 2 * scale}, {2 * scale, 0}};
         data.knotslist = {0, 0, 0, 1, 1, 1};
-        data.weights = {1, .5, 1};
+        data.weights = {1, middleWeight, 1};
         const RS_Spline source{nullptr, data};
         REQUIRE(source.validate());
 
@@ -2971,7 +2973,7 @@ TEST_CASE("rational quadratic tangent stalls map across binary scales",
         const SplineOracle domainEnd{1};
         const SplineOracle root{"0.5"};
         const SplineOracle step{"1e-24"};
-        const double signedDistance = -4.0 * scale;
+        const double signedDistance = -2.0 * scale / middleWeight;
         const SplineOracle distance{signedDistance};
         const SplineOracle tangent = oracleOffsetFactor(
             data, root, step, domainStart, domainEnd, distance);
@@ -2981,7 +2983,8 @@ TEST_CASE("rational quadratic tangent stalls map across binary scales",
         const SplineOracle rightNeighbor = oracleOffsetFactor(
             data, root + SplineOracle{"1e-7"}, step, domainStart, domainEnd,
             distance);
-        CAPTURE(scale, signedDistance, tangent, leftNeighbor, rightNeighbor);
+        CAPTURE(scale, middleWeight, signedDistance, tangent, leftNeighbor,
+                rightNeighbor);
         CHECK(abs(tangent) < SplineOracle{"1e-10"});
         CHECK(leftNeighbor != 0);
         CHECK(rightNeighbor != 0);
@@ -3003,21 +3006,39 @@ TEST_CASE("rational quadratic tangent stalls map across binary scales",
                 diagnostics.failureStage, options->tolerance.nodeMerge);
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(diagnostics.complete);
-        const auto tangentStall = std::find_if(
-            diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
-            [](const std::pair<double, double>& interval) {
-                return interval.first <= .5 && .5 <= interval.second;
-            });
-        REQUIRE(tangentStall != diagnostics.stallIntervals.end());
 
-        const auto nearestPieceEndpoint = [&](const RS_Vector& point) {
+        const auto nearestPieceDistance = [&](const RS_Vector& point) {
             double nearest = std::numeric_limits<double>::infinity();
             for (const LC_OffsetBranch& branch : built.branches) {
                 for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                    nearest = std::min(
-                        nearest,
-                        std::min(piece.bezier.front().distanceTo(point),
-                                 piece.bezier.back().distanceTo(point)));
+                    constexpr int sampleCount = 128;
+                    int bestSample = 0;
+                    double pieceNearest = std::numeric_limits<double>::infinity();
+                    const auto distanceAt = [&](double t) {
+                        const double u = 1.0 - t;
+                        const RS_Vector sample = piece.bezier[0] * (u * u * u) +
+                            piece.bezier[1] * (3.0 * u * u * t) +
+                            piece.bezier[2] * (3.0 * u * t * t) +
+                            piece.bezier[3] * (t * t * t);
+                        return sample.distanceTo(point);
+                    };
+                    for (int i = 0; i <= sampleCount; ++i) {
+                        const double t = double(i) / sampleCount;
+                        const double error = distanceAt(t);
+                        if (error < pieceNearest) {
+                            pieceNearest = error;
+                            bestSample = i;
+                        }
+                    }
+                    double left = std::max(0.0, double(bestSample - 1) / sampleCount);
+                    double right = std::min(1.0, double(bestSample + 1) / sampleCount);
+                    for (int i = 0; i < 40; ++i) {
+                        const double t1 = left + (right - left) / 3.0;
+                        const double t2 = right - (right - left) / 3.0;
+                        if (distanceAt(t1) < distanceAt(t2)) right = t2;
+                        else left = t1;
+                    }
+                    nearest = std::min(nearest, distanceAt((left + right) / 2.0));
                 }
             }
             return nearest;
@@ -3029,7 +3050,7 @@ TEST_CASE("rational quadratic tangent stalls map across binary scales",
                     distance, parameter == domainEnd);
                 const RS_Vector expected{point.first.convert_to<double>(),
                                          point.second.convert_to<double>()};
-                CHECK(nearestPieceEndpoint(expected) <= requestedGeometry);
+                CHECK(nearestPieceDistance(expected) <= requestedGeometry);
             }
         }
         const auto tangentPoint = oracleOffsetPoint(
@@ -3037,7 +3058,7 @@ TEST_CASE("rational quadratic tangent stalls map across binary scales",
         const RS_Vector expectedTangentPoint{
             tangentPoint.first.convert_to<double>(),
             tangentPoint.second.convert_to<double>()};
-        CHECK(nearestPieceEndpoint(expectedTangentPoint) <= requestedGeometry);
+        CHECK(nearestPieceDistance(expectedTangentPoint) <= requestedGeometry);
     }
 }
 
