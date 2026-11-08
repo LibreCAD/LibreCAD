@@ -2522,6 +2522,167 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
     }
 }
 
+TEST_CASE("periodic rational tangent root remains fail closed at the isolation limit",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic][rational][tangent-root]") {
+    RS_Spline source{nullptr, RS_SplineData{3, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
+                                   RS_Vector{60, 0}, RS_Vector{55, 35},
+                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
+        source.addControlPoint(point);
+    source.setKnotVector({0, 0, 0, 0, .5, 2, 3, 3, 3, 3});
+    REQUIRE(source.validate());
+    source.setClosed(true);
+    REQUIRE(source.isClosed());
+    RS_SplineData original = source.getData();
+    const std::vector<double> baseWeights{1, .8, 1.2, 1.5, 1.2, .8};
+    original.weights = baseWeights;
+    original.weights.insert(original.weights.end(), baseWeights.begin(),
+                            baseWeights.begin() + original.degree);
+    RS_Spline rationalSource{nullptr, original};
+    REQUIRE(rationalSource.validate());
+    REQUIRE(rationalSource.isClosed());
+
+    double domainStartValue = 0.0;
+    double domainEndValue = 0.0;
+    REQUIRE(rationalSource.getParameterDomain(domainStartValue, domainEndValue));
+    const SplineOracle domainStart{domainStartValue};
+    const SplineOracle domainEnd{domainEndValue};
+    const std::vector<double> originalBreaks = rationalSource.getBreakParameters();
+    SplineOracle bestParameter{};
+    SplineOracle bestMagnitude{0};
+    for (std::size_t span = 0; span + 1 < originalBreaks.size(); ++span) {
+        const double aValue = originalBreaks[span];
+        const double bValue = originalBreaks[span + 1];
+        if (!(aValue < bValue)) continue;
+        const SplineOracle a{aValue};
+        const SplineOracle width{bValue - aValue};
+        const SplineOracle derivativeStep = width * SplineOracle{"1e-20"};
+        const auto curvatureMagnitude = [&](const SplineOracle& t) {
+            return abs(1 - oracleOffsetFactor(
+                original, t, derivativeStep, domainStart, domainEnd, SplineOracle{1}));
+        };
+        constexpr int samples = 128;
+        int bestSample = 0;
+        SplineOracle spanBest{0};
+        for (int sample = 2; sample < samples - 1; ++sample) {
+            const SplineOracle t = a + width * sample / samples;
+            const SplineOracle magnitude = curvatureMagnitude(t);
+            if (magnitude > spanBest) {
+                spanBest = magnitude;
+                bestSample = sample;
+            }
+        }
+        if (bestSample == 0 || spanBest <= bestMagnitude) continue;
+        SplineOracle lo = a + width * (bestSample - 1) / samples;
+        SplineOracle hi = a + width * (bestSample + 1) / samples;
+        const SplineOracle golden{"0.61803398874989484820458683436563811772"};
+        SplineOracle x1 = hi - golden * (hi - lo);
+        SplineOracle x2 = lo + golden * (hi - lo);
+        SplineOracle f1 = curvatureMagnitude(x1);
+        SplineOracle f2 = curvatureMagnitude(x2);
+        for (int iteration = 0; iteration < 120; ++iteration) {
+            if (f1 < f2) {
+                lo = x1;
+                x1 = x2;
+                f1 = f2;
+                x2 = lo + golden * (hi - lo);
+                f2 = curvatureMagnitude(x2);
+            } else {
+                hi = x2;
+                x2 = x1;
+                f2 = f1;
+                x1 = hi - golden * (hi - lo);
+                f1 = curvatureMagnitude(x1);
+            }
+        }
+        const SplineOracle parameter = (lo + hi) / 2;
+        const SplineOracle magnitude = curvatureMagnitude(parameter);
+        if (magnitude > bestMagnitude) {
+            bestMagnitude = magnitude;
+            bestParameter = parameter;
+        }
+    }
+    REQUIRE(bestMagnitude > 0);
+    const RS_SplineData data = rationalSource.getData();
+    const SplineOracle root = bestParameter;
+    const SplineOracle step{"1e-24"};
+    const auto seamStart = evaluateSplineOracle(data, domainStart);
+    const auto seamEnd = evaluateSplineOracle(data, domainEnd);
+    CHECK(sqrt((seamStart.first - seamEnd.first) * (seamStart.first - seamEnd.first) +
+               (seamStart.second - seamEnd.second) * (seamStart.second - seamEnd.second)) <
+          SplineOracle{"1e-12"});
+    const SplineOracle startStep = oracleStencilStep(
+        data, domainStart, step, false, true, 2);
+    const SplineOracle endStep = oracleStencilStep(
+        data, domainEnd, step, true, false, 2);
+    const auto startOne = evaluateSplineOracle(data, domainStart + startStep);
+    const auto startTwo = evaluateSplineOracle(data, domainStart + 2 * startStep);
+    const auto endOne = evaluateSplineOracle(data, domainEnd - endStep);
+    const auto endTwo = evaluateSplineOracle(data, domainEnd - 2 * endStep);
+    const SplineOracle startDx =
+        (-3 * seamStart.first + 4 * startOne.first - startTwo.first) / (2 * startStep);
+    const SplineOracle startDy =
+        (-3 * seamStart.second + 4 * startOne.second - startTwo.second) / (2 * startStep);
+    const SplineOracle endDx =
+        (3 * seamEnd.first - 4 * endOne.first + endTwo.first) / (2 * endStep);
+    const SplineOracle endDy =
+        (3 * seamEnd.second - 4 * endOne.second + endTwo.second) / (2 * endStep);
+    CHECK(sqrt((startDx - endDx) * (startDx - endDx) +
+               (startDy - endDy) * (startDy - endDy)) < SplineOracle{"1e-8"});
+    const SplineOracle seamLeft = oracleOffsetFactor(
+        data, domainEnd, step, domainStart, domainEnd, SplineOracle{1}, true);
+    const SplineOracle seamRight = oracleOffsetFactor(
+        data, domainStart, step, domainStart, domainEnd, SplineOracle{1}, false);
+    CHECK(abs(seamLeft - seamRight) < SplineOracle{"1e-8"});
+    const SplineOracle unitLeft = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, SplineOracle{1}, true);
+    const SplineOracle unitRight = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, SplineOracle{1}, false);
+    const SplineOracle curvatureLeft = 1 - unitLeft;
+    const SplineOracle curvatureRight = 1 - unitRight;
+    REQUIRE(curvatureLeft != 0);
+    REQUIRE(curvatureRight != 0);
+    CHECK(abs(curvatureLeft - curvatureRight) < SplineOracle{"1e-8"});
+    const double signedDistance = (2 / (curvatureLeft + curvatureRight)).convert_to<double>();
+    const SplineOracle distance{signedDistance};
+    const SplineOracle tangentLeft = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, distance, true);
+    const SplineOracle tangentRight = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, distance, false);
+    const SplineOracle leftNeighbor = oracleOffsetFactor(
+        data, root - SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
+    const SplineOracle rightNeighbor = oracleOffsetFactor(
+        data, root + SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
+    const double rootValue = root.convert_to<double>();
+    CAPTURE(rootValue, signedDistance, tangentLeft, tangentRight, leftNeighbor, rightNeighbor);
+    CHECK(abs(tangentLeft) < SplineOracle{"1e-8"});
+    CHECK(abs(tangentRight) < SplineOracle{"1e-8"});
+    CHECK(leftNeighbor != 0);
+    CHECK(rightNeighbor != 0);
+    CHECK((leftNeighbor < 0) == (rightNeighbor < 0));
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, rationalSource);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        rationalSource,
+        LC_CurveOffset::makeSideRequest(signedDistance > 0 ? LC_CurveOffsetSide::Left
+                                                            : LC_CurveOffsetSide::Right,
+                                        std::abs(signedDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
+            diagnostics.candidateBoxes, diagnostics.failureSpan,
+            diagnostics.failureT0, diagnostics.failureT1, diagnostics.failureStage);
+    CHECK(built.status == LC_CurveOffsetStatus::AmbiguousRegularity);
+    CHECK(built.branches.empty());
+    CHECK_FALSE(diagnostics.complete);
+    CHECK(diagnostics.status == LC_CurveOffsetStatus::AmbiguousRegularity);
+    CHECK(diagnostics.failureStage == LC_CurveOffsetCuspFailureStage::IsolationWorkLimit);
+    CHECK(diagnostics.failureSpan < data.knotslist.size());
+}
+
 TEST_CASE("nonuniform rational tangent root at a knot remains a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root]") {
     RS_SplineData data{2, false};
