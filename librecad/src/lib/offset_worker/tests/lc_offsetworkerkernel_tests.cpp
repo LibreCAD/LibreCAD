@@ -2722,21 +2722,37 @@ TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
         REQUIRE(owningStall != diagnostics.stallIntervals.end());
         CHECK(spanStart <= owningStall->first);
         CHECK(owningStall->second <= spanEnd);
+        const auto nearestPieceEndpoint = [&](const RS_Vector& point) {
+            double nearest = std::numeric_limits<double>::infinity();
+            for (const LC_OffsetBranch& branch : built.branches) {
+                for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                    nearest = std::min(nearest,
+                        std::min(piece.bezier.front().distanceTo(point),
+                                 piece.bezier.back().distanceTo(point)));
+                }
+            }
+            return nearest;
+        };
+        for (const auto& stall : diagnostics.stallIntervals) {
+            const auto stallStart = oracleOffsetPoint(
+                data, SplineOracle{stall.first}, step, domainStart, domainEnd, distance);
+            const auto stallEnd = oracleOffsetPoint(
+                data, SplineOracle{stall.second}, step, domainStart, domainEnd, distance, true);
+            const RS_Vector expectedStart{stallStart.first.convert_to<double>(),
+                                          stallStart.second.convert_to<double>()};
+            const RS_Vector expectedEnd{stallEnd.first.convert_to<double>(),
+                                        stallEnd.second.convert_to<double>()};
+            CHECK(nearestPieceEndpoint(expectedStart) <= options->tolerance.requestedGeometry);
+            CHECK(nearestPieceEndpoint(expectedEnd) <= options->tolerance.requestedGeometry);
+        }
         const auto oraclePoint =
             oracleOffsetPoint(data, root, step, domainStart, domainEnd, distance);
         const RS_Vector expectedPoint{oraclePoint.first.convert_to<double>(),
                                       oraclePoint.second.convert_to<double>()};
-        double nearestPieceEndpoint = std::numeric_limits<double>::infinity();
-        for (const LC_OffsetBranch& branch : built.branches) {
-            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                nearestPieceEndpoint = std::min(
-                    nearestPieceEndpoint, std::min(piece.bezier.front().distanceTo(expectedPoint),
-                                                   piece.bezier.back().distanceTo(expectedPoint)));
-            }
-        }
-        CAPTURE(expectedPoint.x, expectedPoint.y, nearestPieceEndpoint,
+        const double nearestRootEndpoint = nearestPieceEndpoint(expectedPoint);
+        CAPTURE(expectedPoint.x, expectedPoint.y, nearestRootEndpoint,
                 options->tolerance.requestedGeometry, diagnostics.isolationBoxesVisited);
-        CHECK(nearestPieceEndpoint <= options->tolerance.requestedGeometry);
+        CHECK(nearestRootEndpoint <= options->tolerance.requestedGeometry);
     }
 }
 
