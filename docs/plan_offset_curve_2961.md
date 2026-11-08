@@ -26453,3 +26453,21 @@ changed. Test commit `321302ce3` (`test(offset): bound nonuniform rational
 knot tangent`). Focused test: 28 assertions/1 case. Full
 `librecad_offset_worker_kernel_tests`: 1,704,293 assertions/72 cases;
 `git diff --check` passes.
+
+#### W563eo. Scale the Nonuniform-knot Rational Tangent Qualification (2026-11-08)
+
+Extended the same cubic/knot profile to binary geometry scales `0.5` and `2`,
+with distance and requested geometry tolerance scaled consistently. For each
+scale, the independent high-precision oracle derives the offset from the
+one-sided curvature at `t=0.5`, confirms the same-sign tangent root, and checks
+both one-sided knot-factor values are enclosed by their respective knot-span
+bounds. The accumulated certified motion of the two stall halves remains at
+most `nodeMerge`; the root and both stall endpoints map to retained output
+within requested geometry tolerance.
+
+This is scale covariance evidence for the same single positive-weight cubic
+layout, not general rational-knot support. No production limits or acceptance
+rules changed. Test commit `fbfa85b20` (`test(offset): scale nonuniform
+rational knot tangent`). Focused test: 46 assertions/1 case. Full
+`librecad_offset_worker_kernel_tests`: 1,704,339 assertions/73 cases;
+`git diff --check` passes.
