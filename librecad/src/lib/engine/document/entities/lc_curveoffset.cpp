@@ -2069,9 +2069,20 @@ private:
                 const Leaf leaf = stack.back();
                 stack.pop_back();
                 if (++visitedBoxes > maxIsolationBoxes) {
+                    if (cuspDiagnostics != nullptr) {
+                        cuspDiagnostics->isolationBoxesVisited = visitedBoxes;
+                        if (!runs.empty() && runs.back().span == span) {
+                            cuspDiagnostics->failingRunBoxes = runs.back().boxes;
+                            cuspDiagnostics->failingRunExtent = runs.back().extent;
+                            cuspDiagnostics->failingRunObserved = true;
+                        }
+                    }
                     return failAt(LC_CurveOffsetStatus::AmbiguousRegularity, span,
                                   leaf.t0, leaf.t1,
                                   LC_CurveOffsetCuspFailureStage::IsolationWorkLimit);
+                }
+                if (cuspDiagnostics != nullptr) {
+                    cuspDiagnostics->isolationBoxesVisited = visitedBoxes;
                 }
                 LC_CurveJetBounds bounds;
                 // Product bounds are only used to classify source/offset

@@ -2526,15 +2526,14 @@ TEST_CASE("periodic rational tangent root remains fail closed at the isolation l
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic][rational][tangent-root]") {
     RS_Spline source{nullptr, RS_SplineData{3, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
-                                   RS_Vector{60, 0}, RS_Vector{55, 35},
-                                   RS_Vector{20, 50}, RS_Vector{-15, 25}})
+                                   RS_Vector{55, 15}, RS_Vector{15, 35}})
         source.addControlPoint(point);
-    source.setKnotVector({0, 0, 0, 0, .5, 2, 3, 3, 3, 3});
+    source.setKnotVector({0, 0, 0, 0, 1, 1, 1, 1});
     REQUIRE(source.validate());
     source.setClosed(true);
     REQUIRE(source.isClosed());
     RS_SplineData original = source.getData();
-    const std::vector<double> baseWeights{1, .8, 1.2, 1.5, 1.2, .8};
+    const std::vector<double> baseWeights{1, .8, 1.2, 1.5};
     original.weights = baseWeights;
     original.weights.insert(original.weights.end(), baseWeights.begin(),
                             baseWeights.begin() + original.degree);
@@ -2674,13 +2673,17 @@ TEST_CASE("periodic rational tangent root remains fail closed at the isolation l
         *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
     CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
             diagnostics.candidateBoxes, diagnostics.failureSpan,
-            diagnostics.failureT0, diagnostics.failureT1, diagnostics.failureStage);
+            diagnostics.failureT0, diagnostics.failureT1, diagnostics.failureStage,
+            diagnostics.isolationBoxesVisited, diagnostics.failingRunBoxes,
+            diagnostics.failingRunExtent, diagnostics.failingRunObserved);
     CHECK(built.status == LC_CurveOffsetStatus::AmbiguousRegularity);
     CHECK(built.branches.empty());
     CHECK_FALSE(diagnostics.complete);
     CHECK(diagnostics.status == LC_CurveOffsetStatus::AmbiguousRegularity);
     CHECK(diagnostics.failureStage == LC_CurveOffsetCuspFailureStage::IsolationWorkLimit);
     CHECK(diagnostics.failureSpan < data.knotslist.size());
+    CHECK(diagnostics.isolationBoxesVisited > 0);
+    CHECK(diagnostics.failingRunObserved);
 }
 
 TEST_CASE("nonuniform rational tangent root at a knot remains a bounded stall",

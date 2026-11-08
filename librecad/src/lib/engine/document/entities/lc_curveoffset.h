@@ -305,6 +305,7 @@ struct LC_CurveOffsetCuspIsolationDiagnostics {
     std::vector<std::pair<double, double>> stallIntervals;
     std::vector<LC_CurveOffsetTinyReversalCollapse> collapsedTinyReversals;
     std::size_t spansVisited{0};
+    std::size_t isolationBoxesVisited{0};
     std::size_t failureSpan{std::numeric_limits<std::size_t>::max()};
     double failureT0{std::numeric_limits<double>::quiet_NaN()};
     double failureT1{std::numeric_limits<double>::quiet_NaN()};
