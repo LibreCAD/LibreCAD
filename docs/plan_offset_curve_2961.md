@@ -24446,10 +24446,16 @@ run: `RS_Hatch::exportLoops` now preserves one spline-family boundary together
 with straight-line closing edges. The focused offset-hatch case passes 390
 assertions; `[hatch-export]` passes 15 cases/236 assertions. A fresh broad
 `[dxf]` run has 783 cases, 778 passed, 1 failed, and 4 skipped (531,718
-assertions; 11,040 failed). The remaining failure is exact zero-tolerance
-geometry in the R2018 closed-cache trim path. It is outside the changed hatch
-and SPLINE-writer paths but remains unclassified against the base commit; do
-not represent it as a baseline failure. Re-run and triage it before closeout.
+assertions; 11,040 failed). The remaining failure is an exact control
+comparison in the R2018 closed-cache trim path. A focused abort-first rerun
+measured the first differing x values as `1.24849432025646556` and
+`1.24849432025646601` (one ULP, zero tolerance) for a degree-1, 128-segment,
+forward cache. The current test helper does not identify whether the mismatch
+is in the standalone prepared fragment or after document publication, so that
+stage must be separated before changing kernel or materialization behavior. It
+is outside the changed hatch and SPLINE-writer paths and remains unclassified
+against the base commit; do not represent it as a baseline failure. Triage it
+before closeout.
 The native writer evidence is one disconnected polyline/cache matrix, not
 universal native export support; other source families, cache variants,
 independent CAD, visible GUI, and exact-head CI remain open.
