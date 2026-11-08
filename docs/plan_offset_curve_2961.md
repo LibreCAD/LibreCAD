@@ -25242,3 +25242,88 @@ across 56 cases, retaining the existing fail-closed periodic outcomes.
 `git diff --check` passes. W563cg remains open; the next diagnostic must map
 oracle root parameters, production-isolated roots, and generated branch
 endpoints for each failing periodic profile before any acceptance change.
+
+#### W563eg. Validate One-sided Oracle Derivatives at Spline Knots (2026-11-08)
+
+Before using the sampled 256-bit oracle's cusp count as ground truth, validate
+its derivative conventions at every internal knot and at the periodic seam.
+The current diagnostic investigation identified a possible oracle artifact:
+centered finite differences at an internal knot cross two polynomial spans
+whose second derivatives may differ. A reported cusp exactly at that knot may
+therefore be caused by averaging the two one-sided second derivatives rather
+than by a root on either side. This is a hypothesis to test, not grounds to
+discard the separate non-knot root candidate or to assume its prior endpoint
+mismatch remains numerically unchanged.
+
+Implementation and validation sequence:
+
+1. Make the test-only high-precision oracle explicitly side-aware. Evaluate
+   first and second derivatives with forward differences on the right side and
+   backward differences on the left side; never let a finite-difference stencil
+   cross a distinct knot. Bound the step by the adjacent nonzero knot spans and
+   the current smooth interval. At the domain start use the right limit; at the
+   domain end use the left limit. At an internal knot evaluate and report both
+   limits independently rather than selecting one implicitly.
+2. Add focused oracle checks on each side of representative simple and
+   repeated internal knots, plus the wrapped periodic seam. Verify the two
+   one-sided jets against high-precision evaluations strictly inside their
+   respective spans and confirm that a centered stencil is not used to classify
+   a knot root. Keep the oracle independent of production jet/bounds code.
+3. Make cusp scanning span-local. Check each span's open interior and its
+   one-sided endpoints separately; deduplicate a shared-knot cusp only when
+   both side evaluations establish the same geometric cusp within the oracle
+   error budget. Do not infer a cusp from a sign change across a knot. Detect
+   endpoint/tangent candidates separately so a sampled scan is not described
+   as complete root isolation.
+4. Re-run the gradual/high-ratio periodic profiles on both offset sides. Record
+   per-profile/per-span oracle parameters, one-sided factor signs, cusp points,
+   and minimum parameter/point separation. Confirm whether the exact-knot
+   candidates persist and retain the non-knot parameter-to-generated-endpoint
+   comparison. If the oracle implementation changes the previously reported
+   12-cusp count, supersede that count explicitly rather than carrying it
+   forward as established evidence.
+5. After this oracle qualification, add test-only production diagnostics for
+   candidate root boxes/parameters and map each independently isolated oracle
+   candidate to production candidates and generated branch endpoints. Check
+   missing, duplicate, extraneous, seam-owned, and knot-owned roots, with the
+   geometry budget applied to every match. Do not add a root-acceptance path or
+   change the expected fail-closed result in this diagnostic slice.
+6. Validate the focused oracle tests, the nonuniform periodic worker/cache
+   matrix, full worker-kernel suite, spline suite, and `git diff --check` in
+   Release. Remove diagnostic-only logging/hooks before committing unless a
+   bounded test-only interface is needed and documented.
+
+Status: partial; W563eg remains open. Implemented in `bed081127`: one-sided
+finite-difference derivatives at exact knots/domain endpoints, stencil bounds
+to adjacent distinct knots, span-local sign-change scanning, and
+multiprecision root parameters. The gradual positive-offset test checks its
+one-sided internal-knot stencils remain inside their spans and converge under
+step halving. Its sampled sign-change inventory is now eight candidates, none
+exactly at a knot, including a non-knot candidate near parameter `0.500122`.
+This supersedes the earlier 12-cusp sampled count and removes the claimed exact
+internal-knot cusp from the evidence; it does not prove the sampled inventory
+complete or exclude even-multiplicity roots.
+
+Still open within W563eg: directly compare both one-sided oracle derivatives
+with evaluations strictly inside each adjacent span; add repeated-internal-knot
+and explicit periodic-seam ownership regressions; persist a profile-by-profile
+candidate/sign inventory for both offset signs; and map the corrected candidate
+set to production root intervals and generated branch endpoints. In
+particular, re-measure the previously reported endpoint discrepancy against
+the corrected non-knot candidate set rather than carrying forward the old
+exact-knot comparison.
+
+Release validation passes for the implemented slice: periodic/nonuniform worker matrix 15,498 assertions
+in 1 case; focused cusp/oracle selection 14,614 assertions in 3 cases; full
+worker-kernel suite 1,695,254 assertions in 56 cases; `[spline]` 28,390
+assertions in 77 cases; and `git diff --check`. Test commit `bed081127`
+(`test(offset): validate one-sided spline cusp oracle`).
+
+The production implementation remains fail-closed for the gradual
+positive-side periodic case. Next expose bounded test-only diagnostics for
+production-isolated root intervals/parameters and compare them with this
+span-local oracle inventory and generated endpoints across every failing
+periodic profile. Include the periodic seam explicitly and keep sampled roots
+labelled as candidates until tangent/even-root completeness is independently
+established. Do not accept roots or expand geometry/cache/file eligibility in
+that slice. W563cg remains open.
