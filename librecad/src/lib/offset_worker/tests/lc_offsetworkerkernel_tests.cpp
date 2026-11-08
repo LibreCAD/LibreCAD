@@ -2444,7 +2444,24 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
         ((startPoint.first + endPoint.first) / 2).convert_to<double>(),
         ((startPoint.second + endPoint.second) / 2).convert_to<double>()};
     double nearestOutput = std::numeric_limits<double>::infinity();
+    double nearestBranchEndpoint = std::numeric_limits<double>::infinity();
+    double nearestCuspEndpoint = std::numeric_limits<double>::infinity();
     for (const LC_OffsetBranch& branch : built.branches) {
+        if (!branch.cubicPieces.empty()) {
+            const RS_Vector& start = branch.cubicPieces.front().bezier.front();
+            const RS_Vector& end = branch.cubicPieces.back().bezier.back();
+            nearestBranchEndpoint = std::min(
+                nearestBranchEndpoint,
+                std::min(start.distanceTo(expectedPoint), end.distanceTo(expectedPoint)));
+            if (branch.startEnd == LC_OffsetBranchEnd::Cusp) {
+                nearestCuspEndpoint = std::min(nearestCuspEndpoint,
+                                               start.distanceTo(expectedPoint));
+            }
+            if (branch.endEnd == LC_OffsetBranchEnd::Cusp) {
+                nearestCuspEndpoint = std::min(nearestCuspEndpoint,
+                                               end.distanceTo(expectedPoint));
+            }
+        }
         for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
             const auto& p = piece.bezier;
             for (int sample = 0; sample <= 100; ++sample) {
@@ -2459,8 +2476,15 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
         }
     }
     CAPTURE(expectedPoint.x, expectedPoint.y, nearestOutput,
+            nearestBranchEndpoint, nearestCuspEndpoint,
             options->tolerance.requestedGeometry, beforeSeam, afterSeam);
     CHECK(nearestOutput <= options->tolerance.requestedGeometry);
+    if (seamCandidate) {
+        CHECK(nearestCuspEndpoint <= options->tolerance.requestedGeometry);
+    }
+    if (seamStall) {
+        CHECK(nearestBranchEndpoint <= options->tolerance.requestedGeometry);
+    }
 }
 
 TEST_CASE("nonuniform rational tangent root at a knot remains a bounded stall",
