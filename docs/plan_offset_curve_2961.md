@@ -125,9 +125,11 @@ Current implementation order for the remaining “all supported types” work:
    ellipse writer matrix additionally covers every admitted first-distance
    case across 25 recorded shape variants, three scales, and three translation
    ratios, plus each recorded signed distance for all variants at nominal
-   scale/translation, in the five DXF/DWG lanes. Other per-family variants,
-   distances/sides, independent-CAD compatibility, and visible workflows
-   remain open.
+   scale/translation, in the five DXF/DWG lanes. LibreDWG independently parses
+   representative nominal R2000 and R2018 native ellipse-offset DWGs; this is
+   structural readability only, not external geometry equivalence. Other
+   per-family variants, distances/sides, independent-CAD compatibility, and
+   visible workflows remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24834,3 +24836,23 @@ passes 1,939,737 assertions in one test case. The rebuilt `librecad_tests`
 target and `git diff --check` pass. Remaining extreme scale/translation
 distance combinations and other family variants, independent-CAD equivalence,
 visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563dm. Read Native Ellipse-offset DWGs with LibreDWG (2026-11-07)
+
+The translated-ellipse persistence regression now optionally locates `dwgread`
+(or honors `DWGREAD`) and sends one representative native offset output to
+LibreDWG for each of R2000 and R2018. The test requires a normal process exit,
+zero return code, and nonempty minJSON output. When LibreDWG is absent, the
+native LibreCAD writer/reopen checks still run without making the external
+tool a mandatory build dependency. This verifies independent structural
+readability for these two emitted DWGs only; it does not compare geometry or
+typed metadata in LibreDWG, cover other ellipse variants/distances, or replace
+ODA/ACadSharp validation.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"translated ellipse scale matrix preserves typed source and cache through file import"`
+passes 1,889,894 assertions in one test case with LibreDWG available. The
+rebuilt `librecad_tests` target and `git diff --check` pass. Broader external
+geometry validation, remaining ellipse scale/translation/distance combinations,
+other source-family variants, visible-GUI acceptance, and exact-head CI remain
+open.
