@@ -26471,3 +26471,30 @@ rules changed. Test commit `fbfa85b20` (`test(offset): scale nonuniform
 rational knot tangent`). Focused test: 46 assertions/1 case. Full
 `librecad_offset_worker_kernel_tests`: 1,704,339 assertions/73 cases;
 `git diff --check` passes.
+
+#### W563ep. Qualify Double-knot Tangency and Record the Rational Pair Boundary (2026-11-08)
+
+Added a unit-weight clamped cubic with a double interior knot at `t=0.5` that
+represents `x=t`, `y=(t-0.5)^2/2`. A 256-bit independent oracle verifies the
+curve, the exact even root for signed distance `1`, and same-sign positive
+neighbors. The existing resolver accepts it as a bounded stall: each side of
+the knot is bounded separately, both one-sided oracle values are enclosed,
+summed offset motion is at most `nodeMerge`, and the knot/stall endpoints map
+to retained geometry within requested tolerance.
+
+Also retained an atomic-refusal regression for a non-unit rational double-knot
+representation of the earlier symmetric cubic. The oracle verifies the same
+geometric curve to `1e-12` and a near-tangent root at the knot. Double
+arithmetic makes this distance a very close two-cusp profile across the knot;
+one adjacent span resolves one sign crossing while the remaining run has no
+certified aggregate root count. The current implementation returns
+`SingularOffset` at `RunResolution` with bounded run motion below `nodeMerge`,
+and publishes no branches or stalls. This remains a concrete rational
+cross-knot root-pair implementation gap; it is not accepted as completed
+support. Resolve only with certified combined root ownership/count or preserve
+the atomic refusal.
+
+No production behavior changed. Test commit `73803baa2` (`test(offset): cover
+double-knot tangent bounds`). The two focused cases pass 54 assertions; full
+`librecad_offset_worker_kernel_tests`: 1,704,393 assertions/75 cases;
+`git diff --check` passes.
