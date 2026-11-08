@@ -124,8 +124,10 @@ Current implementation order for the remaining “all supported types” work:
    round-trips now exist for all nine modeled source families. The translated-
    ellipse writer matrix additionally covers every admitted first-distance
    case across 25 recorded shape variants, three scales, and three translation
-   ratios in the five DXF/DWG lanes. Other per-family variants, distances/sides,
-   independent-CAD compatibility, and visible workflows remain open.
+   ratios, plus each recorded signed distance for all variants at nominal
+   scale/translation, in the five DXF/DWG lanes. Other per-family variants,
+   distances/sides, independent-CAD compatibility, and visible workflows
+   remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24813,3 +24815,22 @@ passes 1,857,039 assertions in one test case. The rebuilt `librecad_tests`
 target and `git diff --check` pass. Remaining ellipse distances and other
 family variants, independent-CAD equivalence, visible-GUI acceptance, and
 exact-head CI remain open.
+
+#### W563dl. Cover Ellipse Signed-distance Variants in Product Writers (2026-11-07)
+
+Extended the translated-ellipse writer/reopen predicate to include every
+recorded signed-distance case for all 25 ellipse variants at nominal scale and
+zero translation ratio, in addition to the first-distance cases across all
+three scales and translation ratios from W563dk. Each admitted case is
+exported/reopened through R14/R2000/R2018 DXF and R2000/R2018 DWG, preserving
+typed source metadata and the exact generated cache fingerprint. This does
+not claim writer/reopen coverage for every distance at the extreme scales or
+translations; those continue through the existing carrier-import and
+admission/refusal checks.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"translated ellipse scale matrix preserves typed source and cache through file import"`
+passes 1,939,737 assertions in one test case. The rebuilt `librecad_tests`
+target and `git diff --check` pass. Remaining extreme scale/translation
+distance combinations and other family variants, independent-CAD equivalence,
+visible-GUI acceptance, and exact-head CI remain open.
