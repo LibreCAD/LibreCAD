@@ -26158,3 +26158,8 @@ full worker-kernel suite, 1,703,878 assertions/67 cases; `git diff --check`
 passes. Test commit `0c648b4a1` (`test(offset): tighten periodic seam cusp
 proof`). This closes only simple-root candidate ownership for the selected
 periodic rational cubic; tangent/even seam roots and other profiles remain open.
+
+Visible source-picker acceptance was also attempted on 2026-11-08. The CUA
+inventory reported the Mac locked and could not inspect the built application;
+this does not satisfy or close the GUI gate. Resume only after the desktop is
+available, then execute the nine-family/highlight/filter/cancel matrix above.
