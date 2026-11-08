@@ -7346,9 +7346,11 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                         REQUIRE(receivedSource);
                         CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*receivedSource).toCbor());
 
-                        if (scaleIndex == 1 && ratioIndex == 0 && distanceIndex == 0) {
+                        if (distanceIndex == 0) {
                             const auto nativeOutput = directory.file(
-                                "native-" + std::to_string(variantIndex) + "-" +
+                                "native-" + std::to_string(scaleIndex) + "-" +
+                                std::to_string(ratioIndex) + "-" +
+                                std::to_string(variantIndex) + "-" +
                                 std::to_string(distanceIndex) + "-" +
                                 fileFormat.suffix);
                             REQUIRE(lc::test::exportDrawing(
