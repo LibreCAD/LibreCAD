@@ -101,6 +101,10 @@ public:
     virtual bool cubicSpans() const {
         return false;
     }
+    /** True when cusp bounds can use the rational-spline polynomial certificates. */
+    virtual bool rationalCuspRootBounds() const {
+        return false;
+    }
     /**
      * True when nothing of the curve is left at @p signedDistance (positive to
      * its left), to within @p band: a closed curve shrunk by its inradius or
@@ -168,6 +172,13 @@ public:
         const std::vector<double>& weights = m_spline.getData().weights;
         return m_spline.getDegree() <= 3 &&
                std::all_of(weights.begin(), weights.end(), [&](const double w) { return w == weights.front(); });
+    }
+
+    bool rationalCuspRootBounds() const override {
+        const std::vector<double>& weights = m_spline.getData().weights;
+        return !weights.empty() &&
+               std::any_of(weights.begin() + 1, weights.end(),
+                           [&](const double w) { return w != weights.front(); });
     }
 
 private:
@@ -1564,6 +1575,7 @@ public:
             isolateCusps(barrier, arcStalls, cusps, stalls, cuspDiagnostics);
         if (cuspDiagnostics != nullptr) {
             cuspDiagnostics->candidateParameters = cusps;
+            cuspDiagnostics->stallIntervals = stalls;
             cuspDiagnostics->status = status;
             cuspDiagnostics->complete = status == LC_CurveOffsetStatus::Ok;
         }
@@ -1694,7 +1706,9 @@ public:
         joinCorners(branches, links);
         // trimming first cuts every swallowtail it can where its neighbours cross
         if (m_options.mode != LC_CurveOffsetMode::Trimmed) {
-            LC_CurveOffset::collapseTinyReversals(branches, m_options.tolerance.nodeMerge);
+            LC_CurveOffset::collapseTinyReversals(
+                branches, m_options.tolerance.nodeMerge,
+                cuspDiagnostics == nullptr ? nullptr : &cuspDiagnostics->collapsedTinyReversals);
         }
         return LC_CurveOffsetStatus::Ok;
     }
@@ -1988,6 +2002,8 @@ private:
         /** The span of the run's last box, and that box, for a failure report. */
         size_t span;
         Leaf last;
+        int rationalRootVariationUpperBound{0};
+        bool rationalRootVariationBounded{true};
     };
 
     /**
@@ -2017,14 +2033,25 @@ private:
         // thousand boxes at the default depth, depending on the curve's
         // orientation. The cap only stops a span that is unproved throughout.
         constexpr unsigned maxRunBoxes = 16384;
+        constexpr size_t maxIsolationBoxes = 262144;
+        constexpr unsigned maxCuspDepth = 48;
+        const unsigned subdivisionDepth =
+            m_source.rationalCuspRootBounds()
+                ? (m_options.maxSubdivisionDepth > maxCuspDepth - 28
+                       ? maxCuspDepth
+                       : m_options.maxSubdivisionDepth + 28)
+                : m_options.maxSubdivisionDepth;
         const std::vector<double>& breaks = m_source.breaks();
         std::vector<Run> runs;
+        size_t visitedBoxes = 0;
         const auto failAt = [&](const LC_CurveOffsetStatus status, const size_t span,
-                                const double t0, const double t1) {
+                                const double t0, const double t1,
+                                const LC_CurveOffsetCuspFailureStage stage) {
             if (cuspDiagnostics != nullptr) {
                 cuspDiagnostics->failureSpan = span;
                 cuspDiagnostics->failureT0 = t0;
                 cuspDiagnostics->failureT1 = t1;
+                cuspDiagnostics->failureStage = stage;
             }
             return status;
         };
@@ -2041,6 +2068,11 @@ private:
             while (!stack.empty()) {
                 const Leaf leaf = stack.back();
                 stack.pop_back();
+                if (++visitedBoxes > maxIsolationBoxes) {
+                    return failAt(LC_CurveOffsetStatus::AmbiguousRegularity, span,
+                                  leaf.t0, leaf.t1,
+                                  LC_CurveOffsetCuspFailureStage::IsolationWorkLimit);
+                }
                 LC_CurveJetBounds bounds;
                 // Product bounds are only used to classify source/offset
                 // regularity. Keep the ordinary component bounds for later
@@ -2054,6 +2086,34 @@ private:
                 }
                 if (speedProved && bounds.rationalCuspNoRootCertified) {
                     continue;
+                }
+                if (speedProved && bounds.rationalCuspRootVariationUpperBound == 1) {
+                    const double next = std::nextafter(leaf.t0, leaf.t1);
+                    const double previous = std::nextafter(leaf.t1, leaf.t0);
+                    int sign0 = 0;
+                    int sign1 = 0;
+                    if (factorNumeratorSignBounded(leaf.t0, next, sign0) &&
+                        factorNumeratorSignBounded(previous, leaf.t1, sign1)) {
+                        // Every cusp is a root of the squared rational cusp
+                        // polynomial. One Bernstein sign variation bounds it
+                        // by one root, so a proven sign change is the unique
+                        // cusp here; equal endpoint signs rule out a tangent
+                        // root too (which would have multiplicity at least 2).
+                        if (sign0 != sign1) {
+                            if (cusps.size() >= maxRunBoxes) {
+                                return failAt(LC_CurveOffsetStatus::AmbiguousRegularity,
+                                              span, leaf.t0, leaf.t1,
+                                              LC_CurveOffsetCuspFailureStage::CuspCandidateLimit);
+                            }
+                            const LC_CurveOffsetStatus status = bisectCertifiedCusp(
+                                leaf.t0, leaf.t1, sign0, sign1, cusps);
+                            if (status != LC_CurveOffsetStatus::Ok) {
+                                return failAt(status, span, leaf.t0, leaf.t1,
+                                              LC_CurveOffsetCuspFailureStage::CuspBisection);
+                            }
+                        }
+                        continue;
+                    }
                 }
                 // If g' has one strict sign on this box, endpoint signs prove
                 // its complete root count: zero roots when they agree, one
@@ -2073,25 +2133,28 @@ private:
                         if (sign0 != sign1) {
                             if (cusps.size() >= maxRunBoxes) {
                                 return failAt(LC_CurveOffsetStatus::AmbiguousRegularity,
-                                              span, leaf.t0, leaf.t1);
+                                              span, leaf.t0, leaf.t1,
+                                              LC_CurveOffsetCuspFailureStage::CuspCandidateLimit);
                             }
                             const LC_CurveOffsetStatus status = bisectCertifiedCusp(
                                 leaf.t0, leaf.t1, sign0, sign1, cusps);
                             if (status != LC_CurveOffsetStatus::Ok) {
-                                return failAt(status, span, leaf.t0, leaf.t1);
+                                return failAt(status, span, leaf.t0, leaf.t1,
+                                              LC_CurveOffsetCuspFailureStage::CuspBisection);
                             }
                         }
                         continue;
                     }
                 }
                 const double mid = leaf.t0 + 0.5 * (leaf.t1 - leaf.t0);
-                if (leaf.depth < m_options.maxSubdivisionDepth && mid > leaf.t0 && mid < leaf.t1) {
+                if (leaf.depth < subdivisionDepth && mid > leaf.t0 && mid < leaf.t1) {
                     split(stack, leaf, 0.5);
                     continue;
                 }
                 if (!speedProved) {
                     return failAt(irregularity(leaf, false, a, b), span,
-                                  leaf.t0, leaf.t1);
+                                  leaf.t0, leaf.t1,
+                                  LC_CurveOffsetCuspFailureStage::SpeedUnproved);
                 }
                 // the offset moves at |Q'| = |1 - d kappa| |C'| = |g| / |C'|^2
                 const double extent =
@@ -2104,14 +2167,33 @@ private:
                     ++run.boxes;
                     run.span = span;
                     run.last = leaf;
+                    if (run.rationalRootVariationBounded &&
+                        bounds.rationalCuspRootVariationUpperBound >= 0) {
+                        run.rationalRootVariationUpperBound +=
+                            bounds.rationalCuspRootVariationUpperBound;
+                    } else {
+                        run.rationalRootVariationBounded = false;
+                    }
                 }
                 else {
-                    runs.push_back(Run{leaf.t0, leaf.t1, extent, 1, span, leaf});
+                    const bool boundedVariation =
+                        bounds.rationalCuspRootVariationUpperBound >= 0;
+                    runs.push_back(Run{leaf.t0, leaf.t1, extent, 1, span, leaf,
+                                       boundedVariation
+                                           ? bounds.rationalCuspRootVariationUpperBound
+                                           : -1,
+                                       boundedVariation});
                 }
                 const Run& run = runs.back();
                 if (run.boxes > maxRunBoxes || !(run.extent <= m_options.tolerance.fit)) {
+                    if (cuspDiagnostics != nullptr) {
+                        cuspDiagnostics->failingRunBoxes = run.boxes;
+                        cuspDiagnostics->failingRunExtent = run.extent;
+                        cuspDiagnostics->failingRunObserved = true;
+                    }
                     return failAt(irregularity(leaf, true, a, b), span,
-                                  leaf.t0, leaf.t1);
+                                  leaf.t0, leaf.t1,
+                                  LC_CurveOffsetCuspFailureStage::UnresolvedRunBudget);
                 }
             }
         }
@@ -2125,7 +2207,8 @@ private:
                 const Run& run = runs.back();
                 return failAt(irregularity(run.last, true, breaks[run.span],
                                            breaks[run.span + 1]),
-                              run.span, run.last.t0, run.last.t1);
+                              run.span, run.last.t0, run.last.t1,
+                              LC_CurveOffsetCuspFailureStage::SeamRunBudget);
             }
         }
         for (size_t i = wraps ? 1 : 0; i < runs.size(); ++i) {
@@ -2137,9 +2220,11 @@ private:
                                                                     {runs.front().t0, runs.front().t1}}
                            : std::vector<std::pair<double, double>>{{run.t0, run.t1}};
             const double extent = acrossSeam ? run.extent + runs.front().extent : run.extent;
-            const LC_CurveOffsetStatus status = resolveRun(parts, run, extent, cusps, stalls);
+            const LC_CurveOffsetStatus status =
+                resolveRun(parts, run, extent, cusps, stalls, cuspDiagnostics);
             if (status != LC_CurveOffsetStatus::Ok) {
-                return failAt(status, run.span, run.last.t0, run.last.t1);
+                return failAt(status, run.span, run.last.t0, run.last.t1,
+                              LC_CurveOffsetCuspFailureStage::RunResolution);
             }
         }
         std::sort(cusps.begin(), cusps.end());
@@ -2157,11 +2242,21 @@ private:
      */
     LC_CurveOffsetStatus resolveRun(const std::vector<std::pair<double, double>>& parts, const Run& run,
                                     const double extent, std::vector<double>& cusps,
-                                    std::vector<std::pair<double, double>>& stalls) {
+                                    std::vector<std::pair<double, double>>& stalls,
+                                    LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics) {
         const std::vector<double>& breaks = m_source.breaks();
         const int count = static_cast<int>(std::min(256u, 4u * run.boxes + 4u));
         std::vector<double> found;
         std::size_t changes = 0;
+        const auto recordFailure = [&](const LC_CurveOffsetStatus status) {
+            if (cuspDiagnostics != nullptr) {
+                cuspDiagnostics->failingRunBoxes = run.boxes;
+                cuspDiagnostics->failingRunSignChanges = changes;
+                cuspDiagnostics->failingRunExtent = extent;
+                cuspDiagnostics->failingRunObserved = true;
+            }
+            return status;
+        };
         for (const auto& [a, b] : parts) {
             // the last sample with a nonzero value, and the first zero after it
             double lastT = a;
@@ -2174,7 +2269,7 @@ private:
                                                                    : LC_CurveEvaluationSide::Interior;
                 const double g = factorNumeratorAt(t, side);
                 if (!std::isfinite(g)) {
-                    return LC_CurveOffsetStatus::AmbiguousRegularity;
+                    return recordFailure(LC_CurveOffsetStatus::AmbiguousRegularity);
                 }
                 if (g == 0.0) {
                     if (std::isnan(zeroT)) {
@@ -2190,7 +2285,7 @@ private:
                     else {
                         const LC_CurveOffsetStatus status = bisectCusp(lastT, t, run, found);
                         if (status != LC_CurveOffsetStatus::Ok) {
-                            return status;
+                            return recordFailure(status);
                         }
                     }
                 }
@@ -2200,14 +2295,24 @@ private:
             }
         }
         const bool stalled = extent <= m_options.tolerance.nodeMerge;
+        const bool rootCountCertified = !run.rationalRootVariationBounded ||
+                                        changes == static_cast<std::size_t>(
+                                                       run.rationalRootVariationUpperBound);
         // an odd count turns the offset back; an even one within the merge
         // tolerance is a swallowtail too small to keep, and none a touch
-        if (changes % 2 == 1 || (changes > 0 && !stalled)) {
+        if (rootCountCertified && (changes % 2 == 1 || (changes > 0 && !stalled))) {
             cusps.insert(cusps.end(), found.begin(), found.end());
             return LC_CurveOffsetStatus::Ok;
         }
-        if (!stalled) {
-            return irregularity(run.last, true, breaks[run.span], breaks[run.span + 1]);
+        if (!stalled || !rootCountCertified) {
+            if (cuspDiagnostics != nullptr) {
+                cuspDiagnostics->failingRunBoxes = run.boxes;
+                cuspDiagnostics->failingRunSignChanges = changes;
+                cuspDiagnostics->failingRunExtent = extent;
+                cuspDiagnostics->failingRunObserved = true;
+            }
+            return recordFailure(
+                irregularity(run.last, true, breaks[run.span], breaks[run.span + 1]));
         }
         stalls.insert(stalls.end(), parts.begin(), parts.end());
         return LC_CurveOffsetStatus::Ok;
@@ -5926,7 +6031,9 @@ LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, cons
  * before noding, so that a crossing of the neighbours inside it is their
  * join, not a node.
  */
-void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, const double merge) {
+void collapseTinyReversals(
+        std::vector<LC_OffsetBranch>& branches, const double merge,
+        std::vector<LC_CurveOffsetTinyReversalCollapse>* diagnostics) {
     const auto extent = [](const LC_OffsetBranch& branch) {
         double e = 0.0;
         const RS_Vector& origin = branch.cubicPieces.front().bezier[0];
@@ -5950,6 +6057,16 @@ void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, const double 
             const size_t before = (k + n - 1) % n;
             const size_t after = (k + 1) % n;
             const RS_Vector middle = (r.cubicPieces.front().bezier[0] + r.cubicPieces.back().bezier[3]) * 0.5;
+            if (diagnostics != nullptr) {
+                diagnostics->push_back({
+                    r.cubicPieces.front().provenance.sourceT0,
+                    r.cubicPieces.back().provenance.sourceT1,
+                    size,
+                    r.cubicPieces.front().bezier[0],
+                    r.cubicPieces.back().bezier[3],
+                    middle,
+                    true});
+            }
             LC_OffsetBranch& a = branches[before];
             if (before == after) {
                 // the only other branch closes on itself
@@ -5975,6 +6092,16 @@ void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, const double 
             // the branch after it, which on a closed source's last branch is
             // the first one: every end of a cyclic chain is a cusp or a kink
             LC_OffsetBranch& after = branches[(k + 1) % n];
+            if (diagnostics != nullptr) {
+                diagnostics->push_back({
+                    r.cubicPieces.front().provenance.sourceT0,
+                    r.cubicPieces.back().provenance.sourceT1,
+                    size,
+                    r.cubicPieces.front().bezier[0],
+                    r.cubicPieces.back().bezier[3],
+                    r.cubicPieces.front().bezier[0],
+                    false});
+            }
             after.cubicPieces.front().bezier[0] = r.cubicPieces.front().bezier[0];
             after.startEnd = LC_OffsetBranchEnd::Free;
             branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(k));
@@ -5982,6 +6109,16 @@ void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, const double 
         }
         else if (cuspBefore && !cuspAfter && size <= merge) {
             LC_OffsetBranch& before = branches[(k + n - 1) % n];
+            if (diagnostics != nullptr) {
+                diagnostics->push_back({
+                    r.cubicPieces.front().provenance.sourceT0,
+                    r.cubicPieces.back().provenance.sourceT1,
+                    size,
+                    r.cubicPieces.front().bezier[0],
+                    r.cubicPieces.back().bezier[3],
+                    r.cubicPieces.back().bezier[3],
+                    false});
+            }
             before.cubicPieces.back().bezier[3] = r.cubicPieces.back().bezier[3];
             before.endEnd = LC_OffsetBranchEnd::Free;
             branches.erase(branches.begin() + static_cast<std::ptrdiff_t>(k));

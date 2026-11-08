@@ -260,14 +260,42 @@ struct LC_CurveOffsetGeometryResult {
     std::vector<LC_ParametricIntersection> intersections;
 };
 
+enum class LC_CurveOffsetCuspFailureStage {
+    None,
+    CuspCandidateLimit,
+    CuspBisection,
+    SpeedUnproved,
+    UnresolvedRunBudget,
+    SeamRunBudget,
+    RunResolution,
+    IsolationWorkLimit
+};
+
+struct LC_CurveOffsetTinyReversalCollapse {
+    double sourceT0{std::numeric_limits<double>::quiet_NaN()};
+    double sourceT1{std::numeric_limits<double>::quiet_NaN()};
+    double extent{std::numeric_limits<double>::quiet_NaN()};
+    RS_Vector startPoint;
+    RS_Vector endPoint;
+    RS_Vector replacementPoint;
+    bool boundedByCusps{false};
+};
+
 /** Test-only snapshot of cusp-isolation progress; candidates may be partial on failure. */
 struct LC_CurveOffsetCuspIsolationDiagnostics {
     LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
     std::vector<double> candidateParameters;
+    std::vector<std::pair<double, double>> stallIntervals;
+    std::vector<LC_CurveOffsetTinyReversalCollapse> collapsedTinyReversals;
     std::size_t spansVisited{0};
     std::size_t failureSpan{std::numeric_limits<std::size_t>::max()};
     double failureT0{std::numeric_limits<double>::quiet_NaN()};
     double failureT1{std::numeric_limits<double>::quiet_NaN()};
+    LC_CurveOffsetCuspFailureStage failureStage{LC_CurveOffsetCuspFailureStage::None};
+    std::size_t failingRunBoxes{0};
+    std::size_t failingRunSignChanges{0};
+    double failingRunExtent{std::numeric_limits<double>::quiet_NaN()};
+    bool failingRunObserved{false};
     bool complete{false};
 };
 
@@ -407,7 +435,8 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
  * its neighbour across the seam. Exposed for the tests: an offset request
  * cannot put a chosen branch at a chosen place in the ring.
  */
-void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, double merge);
+void collapseTinyReversals(std::vector<LC_OffsetBranch>& branches, double merge,
+                           std::vector<LC_CurveOffsetTinyReversalCollapse>* diagnostics = nullptr);
 
 std::vector<RS_Entity*> createLegacyOffset(const RS_Entity& source, const RS_Vector& coord, double distance);
 

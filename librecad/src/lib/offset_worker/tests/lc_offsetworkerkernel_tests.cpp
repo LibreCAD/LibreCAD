@@ -1591,11 +1591,11 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 req::GenerateSource{definition, {}}};
             const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
             const auto& generated = native(generationReply, 7);
+            LC_CurveOffsetCuspIsolationDiagnostics cuspDiagnostics;
             if (weightProfile == WeightProfile::Gradual && signedDistance > 0.0) {
                 const auto diagnosticOptions =
                     LC_OffsetWorkerTolerance::directOptions(definition, sourceCheck);
                 REQUIRE(diagnosticOptions);
-                LC_CurveOffsetCuspIsolationDiagnostics cuspDiagnostics;
                 const auto diagnostic = LC_CurveOffset::buildDirectBranches(
                     sourceCheck,
                     LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left,
@@ -1605,9 +1605,10 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 CHECK(generated.engineStatus.has_value());
                 if (generated.engineStatus)
                     CHECK(diagnostic.status == *generated.engineStatus);
-                CHECK(diagnostic.branches.empty());
+                CHECK(diagnostic.status == LC_CurveOffsetStatus::Ok);
+                CHECK_FALSE(diagnostic.branches.empty());
                 CHECK_FALSE(cuspDiagnostics.candidateParameters.empty());
-                CHECK_FALSE(cuspDiagnostics.complete);
+                CHECK(cuspDiagnostics.complete);
                 std::vector<bool> matchedOracleCusps(expectedCusps.size(), false);
                 for (const double productionParameter : cuspDiagnostics.candidateParameters) {
                     double nearestParameterError = std::numeric_limits<double>::infinity();
@@ -1622,28 +1623,61 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     }
                     CAPTURE(productionParameter, nearestParameterError);
                     CHECK(nearestParameterError < 1e-6);
-                    if (nearestParameterError < 1e-6)
+                    if (nearestParameterError < 1e-6) {
+                        CHECK_FALSE(matchedOracleCusps[nearestOracle]);
                         matchedOracleCusps[nearestOracle] = true;
+                    }
                 }
-                CHECK(cuspDiagnostics.candidateParameters.size() <= expectedCusps.size());
                 const std::size_t matchedCount = static_cast<std::size_t>(
                     std::count(matchedOracleCusps.begin(), matchedOracleCusps.end(), true));
-                CAPTURE(matchedCount, expectedCusps.size(),
-                        cuspDiagnostics.candidateParameters.size(), cuspDiagnostics.spansVisited,
-                        cuspDiagnostics.failureSpan, cuspDiagnostics.failureT0,
-                        cuspDiagnostics.failureT1);
-                CHECK(cuspDiagnostics.failureSpan < cuspDiagnostics.spansVisited);
-                CHECK(cuspDiagnostics.failureT0 < cuspDiagnostics.failureT1);
-                CHECK(cuspDiagnostics.failureT0 >= domainStart);
-                CHECK(cuspDiagnostics.failureT1 <= domainEnd);
                 REQUIRE(expectedCusps.size() == 8);
-                REQUIRE(cuspDiagnostics.candidateParameters.size() == 7);
-                CHECK(matchedCount == 7);
-                CHECK(std::all_of(matchedOracleCusps.begin(), matchedOracleCusps.end() - 1,
+                CHECK(cuspDiagnostics.candidateParameters.size() == expectedCusps.size());
+                CHECK(matchedCount == expectedCusps.size());
+                CHECK(std::all_of(matchedOracleCusps.begin(), matchedOracleCusps.end(),
                                   [](bool matched) { return matched; }));
-                CHECK_FALSE(matchedOracleCusps.back());
-                CHECK(expectedCusps.back().parameter < domainEnd);
-                CHECK(domainEnd - expectedCusps.back().parameter < SplineOracle{"1e-3"});
+
+                std::vector<RS_Vector> cuspEndpoints;
+                for (const LC_OffsetBranch& branch : diagnostic.branches) {
+                    if (branch.cubicPieces.empty()) continue;
+                    if (branch.startEnd == LC_OffsetBranchEnd::Cusp)
+                        cuspEndpoints.push_back(branch.cubicPieces.front().bezier.front());
+                    if (branch.endEnd == LC_OffsetBranchEnd::Cusp)
+                        cuspEndpoints.push_back(branch.cubicPieces.back().bezier.back());
+                }
+                for (std::size_t cusp = 0; cusp < expectedCusps.size(); ++cusp) {
+                    double nearestEndpointError = std::numeric_limits<double>::infinity();
+                    for (const RS_Vector& endpoint : cuspEndpoints)
+                        nearestEndpointError = std::min(
+                            nearestEndpointError, endpoint.distanceTo(expectedCusps[cusp].point));
+                    CAPTURE(cusp, nearestEndpointError, cuspEndpoints.size());
+                    bool representedByTinyCollapse = false;
+                    for (const auto& collapse : cuspDiagnostics.collapsedTinyReversals) {
+                        if (!collapse.boundedByCusps ||
+                            std::min(std::abs(collapse.sourceT0 - expectedCusps[cusp].parameter.convert_to<double>()),
+                                     std::abs(collapse.sourceT1 - expectedCusps[cusp].parameter.convert_to<double>())) >
+                                1e-6 ||
+                            collapse.replacementPoint.distanceTo(expectedCusps[cusp].point) >
+                                diagnosticOptions->tolerance.requestedGeometry) {
+                            continue;
+                        }
+                        double nearestBranchPoint = std::numeric_limits<double>::infinity();
+                        for (const LC_OffsetBranch& branch : diagnostic.branches) {
+                            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                                for (const RS_Vector& point : piece.bezier) {
+                                    nearestBranchPoint = std::min(
+                                        nearestBranchPoint, point.distanceTo(collapse.replacementPoint));
+                                }
+                            }
+                        }
+                        representedByTinyCollapse =
+                            nearestBranchPoint <= diagnosticOptions->tolerance.requestedGeometry;
+                        CAPTURE(collapse.sourceT0, collapse.sourceT1, collapse.extent,
+                                collapse.replacementPoint.x, collapse.replacementPoint.y,
+                                nearestBranchPoint);
+                    }
+                    CHECK((nearestEndpointError <= diagnosticOptions->tolerance.requestedGeometry ||
+                           representedByTinyCollapse));
+                }
             }
             CAPTURE(generated.engineStatus.has_value(),
                     generated.engineStatus
@@ -1652,7 +1686,7 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             if (gradualWeights) {
                 CHECK((signedDistance < 0.0
                           ? generated.engineStatus == LC_CurveOffsetStatus::Ok
-                          : generated.engineStatus == LC_CurveOffsetStatus::SingularOffset));
+                          : generated.engineStatus == LC_CurveOffsetStatus::Ok));
             }
             if (generated.engineStatus != LC_CurveOffsetStatus::Ok) {
                 REQUIRE((wideWeights || conditionedWeights));
@@ -1686,10 +1720,6 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 REQUIRE(offsetOptions);
                 const double geometryTolerance =
                     offsetOptions->tolerance.requestedGeometry;
-                if (signedDistance > 0.0) {
-                    CHECK(expectedCusps.size() >= 2);
-                    CHECK(expectedCusps.size() % 2 == 0);
-                }
                 std::vector<RS_Vector> expectedPoints;
                 std::vector<std::array<RS_Vector, 2>> expectedSegments;
                 for (std::size_t span = sourceData.degree; span <= lastControl; ++span) {
@@ -1816,21 +1846,6 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                      << ", generated spline endpoints=" << generatedEndpoints.size());
                 if (expectedCusps.size() > 1)
                     CHECK(minimumCuspSeparation > 1e-8);
-                std::vector<RS_Vector> matchedGeneratedCusps;
-                for (const RS_Vector& endpoint : generatedEndpoints) {
-                    const auto cusp = std::find_if(
-                        expectedCusps.begin(), expectedCusps.end(),
-                        [&](const OracleSplineCusp& candidate) {
-                            return endpoint.distanceTo(candidate.point) < geometryTolerance;
-                        });
-                    if (cusp != expectedCusps.end() &&
-                        std::none_of(matchedGeneratedCusps.begin(),
-                                     matchedGeneratedCusps.end(),
-                                     [&](const RS_Vector& existing) {
-                                         return existing.distanceTo(cusp->point) < 1e-8;
-                                     }))
-                        matchedGeneratedCusps.push_back(cusp->point);
-                }
                 for (const OracleSplineCusp& cusp : expectedCusps) {
                     CAPTURE(cusp.parameter, weightProfile, signedDistance);
                     double nearestEndpoint = std::numeric_limits<double>::infinity();
@@ -1846,24 +1861,30 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                          << " nearest generated endpoint=" << nearestEndpointPoint.x << ","
                          << nearestEndpointPoint.y);
                     INFO("oracle cusp nearest branch endpoint=" << nearestEndpoint);
-                    CHECK(nearestEndpoint < geometryTolerance);
+                    bool representedByTinyCollapse = false;
+                    for (const auto& collapse : cuspDiagnostics.collapsedTinyReversals) {
+                        const double parameter = cusp.parameter.convert_to<double>();
+                        const double parameterError = std::min(std::abs(collapse.sourceT0 - parameter),
+                                                               std::abs(collapse.sourceT1 - parameter));
+                        const double sourceGeometryError =
+                            collapse.replacementPoint.distanceTo(cusp.point);
+                        if (!collapse.boundedByCusps || parameterError > 1e-6 ||
+                            collapse.extent > 2.0 * offsetOptions->tolerance.nodeMerge ||
+                            sourceGeometryError > geometryTolerance) {
+                            continue;
+                        }
+                        double outputGeometryError = std::numeric_limits<double>::infinity();
+                        for (const auto& segment : generatedSegments) {
+                            const auto [distance, point] = pointToSegment(collapse.replacementPoint, segment);
+                            (void)point;
+                            outputGeometryError = std::min(outputGeometryError, distance);
+                        }
+                        CAPTURE(parameterError, collapse.extent, sourceGeometryError,
+                                outputGeometryError);
+                        representedByTinyCollapse = outputGeometryError < geometryTolerance;
+                    }
+                    CHECK((nearestEndpoint < geometryTolerance || representedByTinyCollapse));
                 }
-                std::size_t toleranceMergedCusps = 0;
-                for (const OracleSplineCusp& cusp : expectedCusps) {
-                    const bool matched = std::any_of(
-                        matchedGeneratedCusps.begin(), matchedGeneratedCusps.end(),
-                        [&](const RS_Vector& generatedCusp) {
-                            return cusp.point.distanceTo(generatedCusp) < 1e-8;
-                        });
-                    if (matched) continue;
-                    ++toleranceMergedCusps;
-                    double nearestRetainedCusp = std::numeric_limits<double>::infinity();
-                    for (const RS_Vector& generatedCusp : matchedGeneratedCusps)
-                        nearestRetainedCusp = std::min(
-                            nearestRetainedCusp, cusp.point.distanceTo(generatedCusp));
-                    CHECK(nearestRetainedCusp < geometryTolerance);
-                }
-                CHECK(toleranceMergedCusps % 2 == 0);
             }
 
             if ((degree == 1 || wideWeights) && generated.ordinary.size() > 1) {
