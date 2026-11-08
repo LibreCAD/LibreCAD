@@ -132,8 +132,18 @@ TEST_CASE("RS_Spline::tryBoundJet encloses the curve on the box", "[curve-offset
         const std::vector<double> breaks = spline->getBreakParameters();
         for (size_t i = 0; i + 1 < breaks.size(); ++i) {
             checkEncloses(bound, eval, breaks[i], breaks[i + 1]);
+            LC_CurveJetBounds spanBounds;
+            REQUIRE(bound(breaks[i], breaks[i + 1], spanBounds));
+            REQUIRE(spanBounds.dddx.isValid());
+            REQUIRE(spanBounds.dddy.isValid());
             const double third = (breaks[i + 1] - breaks[i]) / 3.0;
-            checkEncloses(bound, eval, breaks[i] + third, breaks[i] + 2.0 * third);
+            const double subspanStart = breaks[i] + third;
+            const double subspanEnd = breaks[i] + 2.0 * third;
+            checkEncloses(bound, eval, subspanStart, subspanEnd);
+            LC_CurveJetBounds subspanBounds;
+            REQUIRE(bound(subspanStart, subspanEnd, subspanBounds));
+            REQUIRE(subspanBounds.dddx.isValid());
+            REQUIRE(subspanBounds.dddy.isValid());
         }
     }
     const RS_Spline arc = quarterCircle();
