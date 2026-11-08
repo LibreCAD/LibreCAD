@@ -42,20 +42,22 @@ enum class LC_CurveEvaluationSide {
 };
 
 /**
- * A curve point with its first and second derivatives, all with respect to the
- * curve's own parameter. A failed evaluation leaves the three vectors invalid;
- * it never reports zero derivatives in place of an error.
+ * A curve point with its first three derivatives, all with respect to the
+ * curve's own parameter. A curve may leave the optional third derivative
+ * invalid; a failed evaluation leaves the required three vectors invalid.
  */
 struct LC_CurveJet {
     RS_Vector point{false};
     RS_Vector first{false};
     RS_Vector second{false};
+    RS_Vector third{false};
 };
 
 /**
  * Conservative enclosures of a curve's point and first two derivatives over a
- * parameter box, component by component. Each interval contains every value the
- * quantity takes on the box; it may be wider.
+ * parameter box, component by component. The third derivative is optional.
+ * Each valid interval contains every value the quantity takes on the box; it
+ * may be wider.
  */
 struct LC_CurveJetBounds {
     LC_Interval x;
@@ -73,6 +75,9 @@ struct LC_CurveJetBounds {
      */
     LC_Interval speedSquaredProduct;
     LC_Interval crossProduct;
+    /** Optional conservative enclosure of C''' for certified root isolation. */
+    LC_Interval dddx;
+    LC_Interval dddy;
 
     bool isValid() const {
         return x.isValid() && y.isValid() && dx.isValid() && dy.isValid() && ddx.isValid() &&
@@ -98,6 +103,17 @@ struct LC_CurveJetBounds {
     LC_Interval offsetFactorNumerator(const double signedDistance) const {
         const LC_Interval s2 = speedSquared();
         return s2 * sqrt(s2) - LC_Interval::point(signedDistance) * cross();
+    }
+
+    /** Derivative of |C'|^3 - d(C' x C'') on boxes with a C''' enclosure. */
+    LC_Interval offsetFactorDerivativeNumerator(const double signedDistance) const {
+        if (!dddx.isValid() || !dddy.isValid()) return {};
+        const LC_Interval s2 = speedSquared();
+        if (!s2.isPositive()) return {};
+        const LC_Interval tangentAcceleration = dx * ddx + dy * ddy;
+        const LC_Interval tangentJerkCross = dx * dddy - dy * dddx;
+        return LC_Interval::point(3.0) * sqrt(s2) * tangentAcceleration -
+               LC_Interval::point(signedDistance) * tangentJerkCross;
     }
 
 private:

@@ -77,6 +77,10 @@ void checkEncloses(const BoundFn& bound, const EvalFn& eval, const double a, con
         CHECK(bounds.dy.contains(jet.first.y));
         CHECK(bounds.ddx.contains(jet.second.x));
         CHECK(bounds.ddy.contains(jet.second.y));
+        if (bounds.dddx.isValid() && bounds.dddy.isValid()) {
+            CHECK(bounds.dddx.contains(jet.third.x));
+            CHECK(bounds.dddy.contains(jet.third.y));
+        }
         // the products, to the rounding of evaluating them from the jet
         const double speed2 = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
         const double cross = jet.first.x * jet.second.y - jet.first.y * jet.second.x;
@@ -138,6 +142,28 @@ TEST_CASE("RS_Spline::tryBoundJet encloses the curve on the box", "[curve-offset
                       return arc.tryEvaluateJet(t, side, out);
                   },
                   0.2, 0.7);
+
+    LC_CurveJetBounds arcBounds;
+    REQUIRE(arc.tryBoundJet(0.2, 0.7, arcBounds, true));
+    REQUIRE(arcBounds.dddx.isValid());
+    REQUIRE(arcBounds.dddy.isValid());
+    const double signedDistance = 0.37;
+    const LC_Interval factorDerivative = arcBounds.offsetFactorDerivativeNumerator(signedDistance);
+    REQUIRE(factorDerivative.isValid());
+    for (int i = 0; i <= 64; ++i) {
+        const double t = 0.2 + 0.5 * i / 64.0;
+        LC_CurveJet jet;
+        REQUIRE(arc.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, jet));
+        const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+        REQUIRE(speedSquared > 0.0);
+        const double firstDotSecond = jet.first.x * jet.second.x + jet.first.y * jet.second.y;
+        const double firstCrossThird = jet.first.x * jet.third.y - jet.first.y * jet.third.x;
+        const double derivative = 3.0 * std::sqrt(speedSquared) * firstDotSecond -
+                                  signedDistance * firstCrossThird;
+        const double rounding = 1e-12 * (std::abs(derivative) + 1.0);
+        CHECK(factorDerivative.lo() <= derivative + rounding);
+        CHECK(factorDerivative.hi() >= derivative - rounding);
+    }
 }
 
 TEST_CASE("RS_Spline::tryBoundJet narrows as the box shrinks", "[curve-offset][d0][bound]") {

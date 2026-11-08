@@ -107,7 +107,7 @@ bool hasEvaluableLayout(const RS_SplineData &d) {
 
 /**
  * The non-zero B-spline basis functions of degree p on knot span s, and their
- * first and second derivatives, at t (Piegl & Tiller, The NURBS Book, A2.3).
+ * first three derivatives, at t (Piegl & Tiller, The NURBS Book, A2.3).
  * ders[k][j] is the k-th derivative of N_{s-p+j,p}(t).
  *
  * The knot differences are kept in the lower triangle of ndu, because the
@@ -117,7 +117,7 @@ bool hasEvaluableLayout(const RS_SplineData &d) {
  * @return false if a knot difference is not positive or a value is not finite.
  */
 bool dersBasisFunctions(const size_t s, const double t, const size_t p,
-                        const std::vector<double> &U, double ders[3][g_maxDegree + 1]) {
+                        const std::vector<double> &U, double ders[4][g_maxDegree + 1]) {
   double ndu[g_maxDegree + 1][g_maxDegree + 1] = {};
   double left[g_maxDegree + 1] = {};
   double right[g_maxDegree + 1] = {};
@@ -142,12 +142,13 @@ bool dersBasisFunctions(const size_t s, const double t, const size_t p,
     ders[0][j] = ndu[j][p];
     ders[1][j] = 0.0;
     ders[2][j] = 0.0;
+    ders[3][j] = 0.0;
   }
 
   // derivatives above the degree vanish
-  const int nd = static_cast<int>(std::min<size_t>(2, p));
+  const int nd = static_cast<int>(std::min<size_t>(3, p));
   const int ip = static_cast<int>(p);
-  double a[2][g_maxDegree + 1] = {};
+  double a[3][g_maxDegree + 1] = {};
   for (int r = 0; r <= ip; ++r) {
     int s1 = 0;
     int s2 = 1;
@@ -183,7 +184,7 @@ bool dersBasisFunctions(const size_t s, const double t, const size_t p,
     factor *= static_cast<double>(ip - k);
   }
 
-  for (int k = 0; k <= 2; ++k) {
+  for (int k = 0; k <= 3; ++k) {
     for (size_t j = 0; j <= p; ++j) {
       if (!std::isfinite(ders[k][j])) {
         return false;
@@ -2110,10 +2111,18 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     const LC_Interval gap = LC_Interval::point(U[span + j + 1]) - LC_Interval::point(U[span - p + j + 2]);
     h2[j] = scaled(LC_Interval::point(static_cast<double>(p - 1)) / gap, difference(h1[j + 1], h1[j]));
   }
+  HomogeneousBox h3[g_maxDegree];
+  for (size_t j = 0; j + 2 < p; ++j) {
+    const LC_Interval gap = LC_Interval::point(U[span + j + 1]) -
+                            LC_Interval::point(U[span - p + j + 3]);
+    h3[j] = scaled(LC_Interval::point(static_cast<double>(p - 2)) / gap,
+                   difference(h2[j + 1], h2[j]));
+  }
   // a derivative spline's knots are the curve's without the first (and last)
   HomogeneousBox valueNet[g_maxDegree + 1];
   HomogeneousBox firstNet[g_maxDegree];
   HomogeneousBox secondNet[g_maxDegree];
+  HomogeneousBox thirdNet[g_maxDegree + 1];
   segmentNet(h, p, span, a, b, [&U](const size_t k) { return U[k]; }, valueNet);
   segmentNet(h1, p - 1, span - 1, a, b, [&U](const size_t k) { return U[k + 1]; }, firstNet);
   const HomogeneousBox zero{LC_Interval::point(0.0), LC_Interval::point(0.0), LC_Interval::point(0.0)};
@@ -2122,21 +2131,32 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
   } else {
     segmentNet(h2, p - 2, span - 2, a, b, [&U](const size_t k) { return U[k + 2]; }, secondNet);
   }
+  if (p < 3) {
+    thirdNet[0] = zero;
+  } else {
+    segmentNet(h3, p - 3, span - 3, a, b,
+               [&U](const size_t k) { return U[k + 3]; }, thirdNet);
+  }
   const HomogeneousBox value = hullOfNet(valueNet, p);
   const HomogeneousBox first = hullOfNet(firstNet, p - 1);
   const HomogeneousBox second = hullOfNet(secondNet, (p < 2) ? 0 : p - 2);
+  const HomogeneousBox third = hullOfNet(thirdNet, (p < 3) ? 0 : p - 3);
   const LC_Interval &ax = value.x;
   const LC_Interval &ay = value.y;
   const LC_Interval &ax1 = first.x;
   const LC_Interval &ay1 = first.y;
   const LC_Interval &ax2 = second.x;
   const LC_Interval &ay2 = second.y;
+  const LC_Interval &ax3 = third.x;
+  const LC_Interval &ay3 = third.y;
 
   LC_CurveJetBounds result;
   if (equalWeights) {
     // a polynomial curve: C = A / w with constant w
     const LC_Interval w = LC_Interval::point(m_data.weights[span - p]);
     result = {ax / w, ay / w, ax1 / w, ay1 / w, ax2 / w, ay2 / w, {}, {}};
+    result.dddx = ax3 / w;
+    result.dddy = ay3 / w;
     if (products) {
       // |C'|^2 and C' x C'' from the products of the derivatives' nets, which
       // cancel only by rounding where C' and C'' are parallel
@@ -2153,6 +2173,7 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     const LC_Interval &w = value.w;
     const LC_Interval &w1 = first.w;
     const LC_Interval &w2 = second.w;
+    const LC_Interval &w3 = third.w;
     if (!w.isPositive()) {
       return false;
     }
@@ -2164,6 +2185,11 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
     result.dy = (ay1 - w1 * result.y) / w;
     result.ddx = (ax2 - two * w1 * result.dx - w2 * result.x) / w;
     result.ddy = (ay2 - two * w1 * result.dy - w2 * result.y) / w;
+    const LC_Interval three = LC_Interval::point(3.0);
+    result.dddx = (ax3 - three * w1 * result.ddx -
+                   three * w2 * result.dx - w3 * result.x) / w;
+    result.dddy = (ay3 - three * w1 * result.ddy -
+                   three * w2 * result.dy - w3 * result.y) / w;
     if (products) {
       // The rational derivative is (A'W - AW') / W^2. Bound its squared
       // magnitude from that polynomial's own Bernstein coefficients; the
@@ -2329,7 +2355,7 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
     }
   }
 
-  double ders[3][g_maxDegree + 1];
+  double ders[4][g_maxDegree + 1];
   if (!dersBasisFunctions(span, t, p, U, ders)) {
     return false;
   }
@@ -2338,8 +2364,9 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
   // relative to a local control point so translation does not turn a small
   // rational tangent into a subtraction of large absolute coordinates.
   const RS_Vector origin = m_data.controlPoints[span - p];
-  RS_Vector a[3]{RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}};
-  double w[3]{0.0, 0.0, 0.0};
+  RS_Vector a[4]{RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0},
+                 RS_Vector{0.0, 0.0, 0.0}, RS_Vector{0.0, 0.0, 0.0}};
+  double w[4]{0.0, 0.0, 0.0, 0.0};
   for (size_t j = 0; j <= p; ++j) {
     const size_t i = span - p + j;
     const double wi = m_data.weights[i];
@@ -2348,7 +2375,7 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
       return false;
     }
     const RS_Vector relative = pi - origin;
-    for (int k = 0; k <= 2; ++k) {
+    for (int k = 0; k <= 3; ++k) {
       a[k] += relative * (wi * ders[k][j]);
       w[k] += wi * ders[k][j];
     }
@@ -2357,20 +2384,22 @@ bool RS_Spline::tryEvaluateJet(double t, const LC_CurveEvaluationSide side, LC_C
     return false;
   }
 
-  // C = origin + A/W, C' = (A' - W'(C-origin))/W, and
-  // C'' = (A'' - 2W'C' - W''(C-origin))/W. Multiplying by the reciprocal
-  // keeps uniform tiny weights valid instead of using RS_Vector's guarded /.
+  // Homogeneous quotient derivatives; multiplying by the reciprocal keeps
+  // uniform tiny weights valid instead of using RS_Vector's guarded /.
   const double inverse = 1.0 / w[0];
   const RS_Vector relativePoint = a[0] * inverse;
   const RS_Vector point = origin + relativePoint;
   const RS_Vector first = (a[1] - relativePoint * w[1]) * inverse;
   const RS_Vector second = (a[2] - first * (2.0 * w[1]) - relativePoint * w[2]) * inverse;
-  if (!isFinite(point) || !isFinite(first) || !isFinite(second)) {
+  const RS_Vector third = (a[3] - second * (3.0 * w[1]) -
+                           first * (3.0 * w[2]) - relativePoint * w[3]) * inverse;
+  if (!isFinite(point) || !isFinite(first) || !isFinite(second) || !isFinite(third)) {
     return false;
   }
   jet.point = point;
   jet.first = first;
   jet.second = second;
+  jet.third = third;
   return true;
 }
 
