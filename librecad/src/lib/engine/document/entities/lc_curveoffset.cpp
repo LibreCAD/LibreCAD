@@ -2106,7 +2106,7 @@ private:
                                               LC_CurveOffsetCuspFailureStage::CuspCandidateLimit);
                             }
                             const LC_CurveOffsetStatus status = bisectCertifiedCusp(
-                                leaf.t0, leaf.t1, sign0, sign1, cusps);
+                                leaf.t0, leaf.t1, sign0, sign1, cusps, cuspDiagnostics);
                             if (status != LC_CurveOffsetStatus::Ok) {
                                 return failAt(status, span, leaf.t0, leaf.t1,
                                               LC_CurveOffsetCuspFailureStage::CuspBisection);
@@ -2137,7 +2137,7 @@ private:
                                               LC_CurveOffsetCuspFailureStage::CuspCandidateLimit);
                             }
                             const LC_CurveOffsetStatus status = bisectCertifiedCusp(
-                                leaf.t0, leaf.t1, sign0, sign1, cusps);
+                                leaf.t0, leaf.t1, sign0, sign1, cusps, cuspDiagnostics);
                             if (status != LC_CurveOffsetStatus::Ok) {
                                 return failAt(status, span, leaf.t0, leaf.t1,
                                               LC_CurveOffsetCuspFailureStage::CuspBisection);
@@ -2281,9 +2281,13 @@ private:
                     ++changes;
                     if (!std::isnan(zeroT)) {
                         found.push_back(zeroT); // an exact root among the samples
+                        recordCuspCandidateBox(
+                            zeroT, zeroT, zeroT,
+                            LC_CurveOffsetCuspCandidateKind::ExactSample, cuspDiagnostics);
                     }
                     else {
-                        const LC_CurveOffsetStatus status = bisectCusp(lastT, t, run, found);
+                        const LC_CurveOffsetStatus status =
+                            bisectCusp(lastT, t, run, found, cuspDiagnostics);
                         if (status != LC_CurveOffsetStatus::Ok) {
                             return recordFailure(status);
                         }
@@ -2319,7 +2323,9 @@ private:
     }
 
     /** The root of 1 - d kappa in [lo, hi], a part of a run; it must change sign between them. */
-    LC_CurveOffsetStatus bisectCusp(double lo, double hi, const Run& run, std::vector<double>& cusps) {
+    LC_CurveOffsetStatus bisectCusp(
+        double lo, double hi, const Run& run, std::vector<double>& cusps,
+        LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics) {
         const std::vector<double>& breaks = m_source.breaks();
         const double g0 = factorNumeratorAt(lo, LC_CurveEvaluationSide::Right);
         const double g1 = factorNumeratorAt(hi, LC_CurveEvaluationSide::Left);
@@ -2344,13 +2350,18 @@ private:
             }
             (std::signbit(g) == std::signbit(gLo) ? lo : hi) = mid;
         }
-        cusps.push_back(lo + 0.5 * (hi - lo));
+        const double root = lo + 0.5 * (hi - lo);
+        cusps.push_back(root);
+        recordCuspCandidateBox(lo, hi, root,
+                               LC_CurveOffsetCuspCandidateKind::SampledSignChange,
+                               cuspDiagnostics);
         return LC_CurveOffsetStatus::Ok;
     }
 
     /** Bisect a unique root after interval bounds have certified its bracket signs. */
-    LC_CurveOffsetStatus bisectCertifiedCusp(double lo, double hi, const int signLo, const int signHi,
-                                             std::vector<double>& cusps) const {
+    LC_CurveOffsetStatus bisectCertifiedCusp(
+        double lo, double hi, const int signLo, const int signHi, std::vector<double>& cusps,
+        LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics) const {
         if (!(lo < hi) || signLo == signHi) {
             return LC_CurveOffsetStatus::AmbiguousRegularity;
         }
@@ -2385,7 +2396,35 @@ private:
             return LC_CurveOffsetStatus::AmbiguousRegularity;
         }
         cusps.push_back(root);
+        recordCuspCandidateBox(lo, hi, root,
+                               LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket,
+                               cuspDiagnostics);
         return LC_CurveOffsetStatus::Ok;
+    }
+
+    void recordCuspCandidateBox(
+        const double t0, const double t1, const double parameter,
+        const LC_CurveOffsetCuspCandidateKind kind,
+        LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics) const {
+        if (cuspDiagnostics == nullptr) return;
+        std::size_t span = std::numeric_limits<std::size_t>::max();
+        const std::vector<double>& breaks = m_source.breaks();
+        for (std::size_t index = 0; index + 1 < breaks.size(); ++index) {
+            if (breaks[index] < breaks[index + 1] && t0 >= breaks[index] &&
+                t1 <= breaks[index + 1]) {
+                span = index;
+                break;
+            }
+        }
+        if (span == std::numeric_limits<std::size_t>::max() && t0 == t1 &&
+            parameter >= breaks.front() && parameter <= breaks.back()) {
+            span = parameter == breaks.back()
+                       ? breaks.size() - 2
+                       : static_cast<std::size_t>(
+                             std::upper_bound(breaks.begin(), breaks.end(), parameter) -
+                             breaks.begin() - 1);
+        }
+        cuspDiagnostics->candidateBoxes.push_back({span, t0, t1, parameter, kind});
     }
 
     /**

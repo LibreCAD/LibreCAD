@@ -1682,10 +1682,11 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                         matchedOracleCusps[nearestOracle] = true;
                         std::size_t productionSpan =
                             std::numeric_limits<std::size_t>::max();
-                        for (std::size_t span = sourceData.degree;
-                             span < sourceData.controlPoints.size(); ++span) {
-                            const double spanStart = sourceData.knotslist[span];
-                            const double spanEnd = sourceData.knotslist[span + 1];
+                        const std::vector<double> sourceBreaks =
+                            sourceCheck.getBreakParameters();
+                        for (std::size_t span = 0; span + 1 < sourceBreaks.size(); ++span) {
+                            const double spanStart = sourceBreaks[span];
+                            const double spanEnd = sourceBreaks[span + 1];
                             if (spanStart < productionParameter &&
                                 productionParameter < spanEnd) {
                                 productionSpan = span;
@@ -1694,12 +1695,32 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                         }
                         CAPTURE(productionSpan, refinedOracleCusps[nearestOracle].span);
                         CHECK(productionSpan != std::numeric_limits<std::size_t>::max());
-                        CHECK(productionSpan == refinedOracleCusps[nearestOracle].span);
+                        const double oracleSpanStart = sourceData.knotslist[
+                            refinedOracleCusps[nearestOracle].span];
+                        const double oracleSpanEnd = sourceData.knotslist[
+                            refinedOracleCusps[nearestOracle].span + 1];
+                        CHECK(sourceBreaks[productionSpan] == oracleSpanStart);
+                        CHECK(sourceBreaks[productionSpan + 1] == oracleSpanEnd);
+                        std::vector<const LC_CurveOffsetCuspCandidateBox*> boxes;
+                        for (const auto& box : profileDiagnostics.candidateBoxes) {
+                            if (box.parameter == productionParameter)
+                                boxes.push_back(&box);
+                        }
+                        REQUIRE(boxes.size() == 1);
+                        const LC_CurveOffsetCuspCandidateBox& box = *boxes.front();
+                        CHECK(box.t0 <= productionParameter);
+                        CHECK(productionParameter <= box.t1);
+                        CHECK(box.t0 <= box.t1);
+                        CHECK(box.span == productionSpan);
+                        CHECK(box.t0 >= sourceBreaks[box.span]);
+                        CHECK(box.t1 <= sourceBreaks[box.span + 1]);
                     }
                 }
                 if (profileDiagnostics.complete) {
                     CHECK(profileDiagnostics.candidateParameters.size() ==
                           refinedOracleCusps.size());
+                    CHECK(profileDiagnostics.candidateBoxes.size() ==
+                          profileDiagnostics.candidateParameters.size());
                     CHECK(std::all_of(matchedOracleCusps.begin(), matchedOracleCusps.end(),
                                       [](bool matched) { return matched; }));
                 }
@@ -1721,6 +1742,21 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 CHECK_FALSE(diagnostic.branches.empty());
                 CHECK_FALSE(cuspDiagnostics.candidateParameters.empty());
                 CHECK(cuspDiagnostics.complete);
+                CHECK(cuspDiagnostics.candidateBoxes.size() ==
+                      cuspDiagnostics.candidateParameters.size());
+                const std::vector<double> sourceBreaks = sourceCheck.getBreakParameters();
+                for (const double candidate : cuspDiagnostics.candidateParameters) {
+                    std::vector<const LC_CurveOffsetCuspCandidateBox*> boxes;
+                    for (const auto& box : cuspDiagnostics.candidateBoxes)
+                        if (box.parameter == candidate) boxes.push_back(&box);
+                    REQUIRE(boxes.size() == 1);
+                    const LC_CurveOffsetCuspCandidateBox& box = *boxes.front();
+                    CHECK(box.span + 1 < sourceBreaks.size());
+                    CHECK(box.t0 <= candidate);
+                    CHECK(candidate <= box.t1);
+                    CHECK(sourceBreaks[box.span] <= box.t0);
+                    CHECK(box.t1 <= sourceBreaks[box.span + 1]);
+                }
                 std::vector<bool> matchedOracleCusps(expectedCusps.size(), false);
                 for (const double productionParameter : cuspDiagnostics.candidateParameters) {
                     double nearestParameterError = std::numeric_limits<double>::infinity();
@@ -2120,6 +2156,20 @@ TEST_CASE("span-local spline oracle does not infer a root across a repeated knot
                        diagnostics.candidateParameters.end(), [&](const double parameter) {
         return std::abs(parameter - repeatedKnot.convert_to<double>()) < 1e-12;
     }));
+    CHECK(diagnostics.candidateBoxes.size() == diagnostics.candidateParameters.size());
+    const std::vector<double> sourceBreaks = source.getBreakParameters();
+    for (const double candidate : diagnostics.candidateParameters) {
+        std::vector<const LC_CurveOffsetCuspCandidateBox*> boxes;
+        for (const auto& box : diagnostics.candidateBoxes)
+            if (box.parameter == candidate) boxes.push_back(&box);
+        REQUIRE(boxes.size() == 1);
+        const LC_CurveOffsetCuspCandidateBox& box = *boxes.front();
+        CHECK(box.span + 1 < sourceBreaks.size());
+        CHECK(box.t0 <= candidate);
+        CHECK(candidate <= box.t1);
+        CHECK(sourceBreaks[box.span] <= box.t0);
+        CHECK(box.t1 <= sourceBreaks[box.span + 1]);
+    }
     bool productionOwnsRepeatedKnotCusp = false;
     for (const LC_OffsetBranch& branch : built.branches) {
         if (branch.cubicPieces.empty()) continue;
@@ -2178,6 +2228,7 @@ TEST_CASE("quadratic offset-factor tangency is retained as a bounded stall",
     CAPTURE(built.status, diagnostics.stallIntervals, diagnostics.candidateParameters);
     REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
     CHECK_FALSE(diagnostics.stallIntervals.empty());
+    CHECK(diagnostics.candidateBoxes.empty());
     CHECK(std::any_of(diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
                       [](const std::pair<double, double>& interval) {
         return interval.first <= .5 && interval.second >= .5;

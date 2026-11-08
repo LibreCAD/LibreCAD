@@ -281,10 +281,27 @@ struct LC_CurveOffsetTinyReversalCollapse {
     bool boundedByCusps{false};
 };
 
+enum class LC_CurveOffsetCuspCandidateKind {
+    CertifiedUniqueBracket, ///< interval bounds prove one simple root in the box
+    SampledSignChange,      ///< a sampled sign change was bisected; uniqueness is unproved
+    ExactSample             ///< floating evaluation hit zero; this alone is not a proof
+};
+
+/** Test-only bracket and source-span provenance for one isolated cusp candidate. */
+struct LC_CurveOffsetCuspCandidateBox {
+    /** Index into the source's unique break parameters, or max() if the box crosses a span. */
+    std::size_t span{std::numeric_limits<std::size_t>::max()};
+    double t0{std::numeric_limits<double>::quiet_NaN()};
+    double t1{std::numeric_limits<double>::quiet_NaN()};
+    double parameter{std::numeric_limits<double>::quiet_NaN()};
+    LC_CurveOffsetCuspCandidateKind kind{LC_CurveOffsetCuspCandidateKind::ExactSample};
+};
+
 /** Test-only snapshot of cusp-isolation progress; candidates may be partial on failure. */
 struct LC_CurveOffsetCuspIsolationDiagnostics {
     LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
     std::vector<double> candidateParameters;
+    std::vector<LC_CurveOffsetCuspCandidateBox> candidateBoxes;
     std::vector<std::pair<double, double>> stallIntervals;
     std::vector<LC_CurveOffsetTinyReversalCollapse> collapsedTinyReversals;
     std::size_t spansVisited{0};
