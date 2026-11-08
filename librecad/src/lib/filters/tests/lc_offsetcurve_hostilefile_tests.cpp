@@ -6771,6 +6771,28 @@ TEST_CASE("hyperbola import follows output topology on both sides across file la
             CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
             CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
                   RS_Spline::geometryFingerprint(firstBranchCache));
+
+            const auto nativeOutput = directory.file(std::string("native-left-") +
+                                                       format.suffix);
+            REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
+                                             ::format(format.lane)));
+            const auto nativeRoundTrip = stagedImport(nativeOutput, format.lane);
+            INFO("native hyperbola writer round-trip " << format.suffix);
+            REQUIRE(nativeRoundTrip.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(nativeRoundTrip.graphic);
+            CHECK(nativeRoundTrip.admitted == 1);
+            CHECK(nativeRoundTrip.downgraded == 0);
+            const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+                f::sole(*nativeRoundTrip.graphic));
+            REQUIRE(roundTripped);
+            REQUIRE(roundTripped->sourceDefinition());
+            const auto roundTripSource = values::encodeSourceDefinition(
+                *roundTripped->sourceDefinition());
+            REQUIRE(roundTripSource);
+            CHECK(QCborValue(*expected).toCbor() ==
+                  QCborValue(*roundTripSource).toCbor());
+            CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+                  RS_Spline::geometryFingerprint(firstBranchCache));
         } else {
             const auto* fallback = dynamic_cast<const RS_Spline*>(importedEntity);
             REQUIRE(fallback);
