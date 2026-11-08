@@ -121,9 +121,11 @@ Current implementation order for the remaining “all supported types” work:
    nonuniform spans is also product-round-tripped for both `1e-6` to `1e6`
    weight orders and both signed `0.005` offsets across all five lanes.
    Representative product-writer
-   round-trips now exist for all nine modeled source families. Per-family
-   variants, wider distances/sides, independent-CAD compatibility, and visible
-   workflows remain open.
+   round-trips now exist for all nine modeled source families. The translated-
+   ellipse writer matrix additionally covers every admitted first-distance
+   case across 25 recorded shape variants, three scales, and three translation
+   ratios in the five DXF/DWG lanes. Other per-family variants, distances/sides,
+   independent-CAD compatibility, and visible workflows remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24794,3 +24796,20 @@ rebuild and `git diff --check` pass. This qualifies only the recorded
 unit-scale/zero-translation/first-distance ellipse variants; other ellipse
 scales, translations, distances and variants, independent-CAD equivalence,
 visible-GUI acceptance, and exact-head CI remain open.
+
+#### W563dk. Expand Translated-ellipse Writer Matrix Across Scale and Translation (2026-11-07)
+
+Supersedes the selected-cell writer scope in W563dj. Native product
+writer/reopen now runs for each admitted first-distance case across all 25
+recorded ellipse variants, scales `1e-3`, `1`, and `1e12`, and translation
+ratios `1e6`, `1e9`, and `1e12`. Every case is exported and staged-imported in
+R14/R2000/R2018 DXF and R2000/R2018 DWG, preserving the typed source definition
+and exact cache fingerprint. The other signed distances retain their existing
+full import/refusal checks but are not claimed as writer/reopen coverage.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"translated ellipse scale matrix preserves typed source and cache through file import"`
+passes 1,857,039 assertions in one test case. The rebuilt `librecad_tests`
+target and `git diff --check` pass. Remaining ellipse distances and other
+family variants, independent-CAD equivalence, visible-GUI acceptance, and
+exact-head CI remain open.
