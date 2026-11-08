@@ -4464,7 +4464,7 @@ TEST_CASE("nonuniform rational knot tangent bounds across binary scales",
     }
 }
 
-TEST_CASE("double nonuniform non-unit rational knot cusp pair refuses atomically",
+TEST_CASE("double nonuniform rational knot tangent maps to a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][knot][multiplicity]") {
     RS_SplineData data{3, false};
     data.type = RS_SplineData::SplineType::ClampedOpen;
@@ -4535,14 +4535,57 @@ TEST_CASE("double nonuniform non-unit rational knot cusp pair refuses atomically
             diagnostics.failingRunSignChanges, diagnostics.failingRunObserved,
             diagnostics.failureSpan, diagnostics.failureT0, diagnostics.failureT1,
             options->tolerance.nodeMerge);
-    REQUIRE(built.status == LC_CurveOffsetStatus::SingularOffset);
-    CHECK_FALSE(diagnostics.complete);
-    CHECK(diagnostics.failureStage == LC_CurveOffsetCuspFailureStage::RunResolution);
-    CHECK(diagnostics.failingRunObserved);
-    CHECK(diagnostics.failingRunSignChanges == 1);
-    CHECK(diagnostics.failingRunExtent <= options->tolerance.nodeMerge);
-    CHECK(built.branches.empty());
-    CHECK(diagnostics.stallIntervals.empty());
+    REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(diagnostics.complete);
+    const auto stall = std::find_if(
+        diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+        [](const std::pair<double, double>& interval) {
+            return interval.first <= .5 && .5 <= interval.second;
+        });
+    REQUIRE(stall != diagnostics.stallIntervals.end());
+
+    double motionBound = 0.0;
+    for (const auto [lo, hi, knotAtLeft] : {
+             std::tuple<double, double, bool>{stall->first, .5, false},
+             std::tuple<double, double, bool>{.5, stall->second, true}}) {
+        LC_CurveJetBounds bounds;
+        REQUIRE(source.tryBoundJetForCusp(lo, hi, bounds, signedDistance));
+        const LC_Interval factor =
+            bounds.offsetFactorNumeratorForMotionBound(signedDistance);
+        REQUIRE(factor.isValid());
+        REQUIRE(bounds.speedSquared().lo() > 0.0);
+        motionBound += std::max(std::abs(factor.lo()), std::abs(factor.hi())) /
+                       bounds.speedSquared().lo() * (hi - lo);
+        for (const double parameter : {lo, hi}) {
+            const bool leftLimit = parameter == .5 && !knotAtLeft;
+            const auto value = oracleOffsetFactor(
+                data, SplineOracle{parameter}, step, domainStart, domainEnd,
+                distance, leftLimit);
+            CHECK(factor.contains(value.convert_to<double>()));
+        }
+    }
+    CAPTURE(motionBound, options->tolerance.nodeMerge);
+    CHECK(motionBound <= options->tolerance.nodeMerge);
+
+    const auto nearestEndpoint = [&](const RS_Vector& point) {
+        double nearest = std::numeric_limits<double>::infinity();
+        for (const LC_OffsetBranch& branch : built.branches) {
+            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                nearest = std::min(
+                    nearest,
+                    std::min(piece.bezier.front().distanceTo(point),
+                             piece.bezier.back().distanceTo(point)));
+            }
+        }
+        return nearest;
+    };
+    for (const double parameter : {stall->first, .5, stall->second}) {
+        const auto point = oracleOffsetPoint(
+            data, SplineOracle{parameter}, step, domainStart, domainEnd, distance);
+        const RS_Vector expected{point.first.convert_to<double>(),
+                                 point.second.convert_to<double>()};
+        CHECK(nearestEndpoint(expected) <= options->tolerance.requestedGeometry);
+    }
 }
 
 TEST_CASE("unit-weight cubic tangent at a double knot maps as a bounded stall",

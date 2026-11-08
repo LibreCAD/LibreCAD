@@ -2165,6 +2165,16 @@ private:
                 const bool rationalRootCountUnavailable =
                     m_source.rationalCuspRootBounds() &&
                     bounds.rationalCuspRootVariationUpperBound < 0;
+                const bool knotAdjacent =
+                    (leaf.t0 == a && span > 0) ||
+                    (leaf.t1 == b && span + 2 < breaks.size());
+                // A small unresolved run touching an interior knot can hide
+                // one root on each side of the knot. Refine that boundary
+                // first so the two span-local root counts can become strict;
+                // the normal depth and global box limits still bound this
+                // work, and unresolved roots continue to fail closed.
+                const bool refineKnotAdjacentRoot =
+                    rationalRootCountUnavailable && knotAdjacent;
                 const bool continuesUnresolvedRun =
                     !runs.empty() && runs.back().t1 == leaf.t0 &&
                     !(leaf.t0 == a && joinCusps[span]);
@@ -2174,6 +2184,7 @@ private:
                         : boundedExtent;
                 const bool boundedSmallMotionRun =
                     speedProved &&
+                    !refineKnotAdjacentRoot &&
                     (bounds.rationalCuspRootVariationUpperBound >= 2 ||
                      rationalRootCountUnavailable) &&
                     std::isfinite(boundedExtent) &&
