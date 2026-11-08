@@ -108,9 +108,10 @@ Current implementation order for the remaining “all supported types” work:
    spline-points import-grid entry admitted as a single cache is checked across
    the five lanes at its recorded signed distance; every promotable single-cache
    parabola case in the six-source, six-distance, both-sign matrix is checked
-   across all five lanes; a bounded-hyperbola single-branch
-   cache is checked across all five lanes, while its multi-branch side remains
-   fallback-only; an unweighted spline is checked across all five lanes on both
+   across all five lanes; every promotable single-cache case in the eight-shape
+   bounded-hyperbola matrix is checked across all five lanes at unit scale and
+   normalized distances `+/-1.05`, while multi-branch cases remain fallback-
+   only; an unweighted spline is checked across all five lanes on both
    signed sides; a rational tangent-constrained cubic offset is product-
    round-tripped through all five lanes. Wrapped periodic spline caches are
    product-round-tripped through all five lanes across the complete 96-case
@@ -24755,5 +24756,22 @@ Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
 passes 41,726 assertions in one test case. The `librecad_tests` target rebuild
 and `git diff --check` pass. This qualifies only the recorded parabola source
 and distance matrix; other parabola parameterizations, topology boundaries,
+independent-CAD equivalence, visible-GUI acceptance, and exact-head CI remain
+open.
+
+#### W563di. Round-trip Promotable Bounded-hyperbola Variants (2026-11-07)
+
+Expanded hyperbola product writer/reopen checks across the eight existing
+bounded parameterizations at unit scale and normalized signed distances
+`+/-1.05`. Every case that produces one promotable cache is exported and
+staged-imported through R14/R2000/R2018 DXF and R2000/R2018 DWG. The checks
+preserve the typed bounded-hyperbola source, require native admission without
+downgrade, and compare the exact generated cache fingerprint. Multi-branch
+cases remain fallback-only with their source metadata preserved.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"hyperbola curvature-neighborhood imports follow topology across scales"`
+passes 126,806 assertions in one test case. The `librecad_tests` target
+rebuild and `git diff --check` pass. Other hyperbola distances/scales,
 independent-CAD equivalence, visible-GUI acceptance, and exact-head CI remain
 open.
