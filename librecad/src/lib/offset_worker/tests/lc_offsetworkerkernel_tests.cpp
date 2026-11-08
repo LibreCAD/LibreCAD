@@ -2258,6 +2258,86 @@ TEST_CASE("quadratic offset-factor tangency is retained as a bounded stall",
     CHECK(nearestOutput <= options->tolerance.requestedGeometry);
 }
 
+TEST_CASE("simple spline cusp at an interior knot has explicit boundary ownership",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][knot-root]") {
+    RS_SplineData data{3, false};
+    data.type = RS_SplineData::SplineType::ClampedOpen;
+    data.controlPoints = {{-1, .25}, {-2.0 / 3.0, 1.0 / 6.0}, {0, -1.0 / 6.0},
+                          {2.0 / 3.0, 1.0 / 6.0}, {1, .75}};
+    data.knotslist = {0, 0, 0, 0, .5, 1, 1, 1, 1};
+    data.weights = {1, 1, 1, 1, 1};
+    const RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+
+    const SplineOracle domainStart{0};
+    const SplineOracle domainEnd{1};
+    const SplineOracle knot{"0.5"};
+    const SplineOracle step{"1e-24"};
+    const SplineOracle distance{1};
+    const SplineOracle leftFactor = oracleOffsetFactor(
+        data, knot, step, domainStart, domainEnd, distance, true);
+    const SplineOracle rightFactor = oracleOffsetFactor(
+        data, knot, step, domainStart, domainEnd, distance, false);
+    const SplineOracle leftNeighbor = oracleOffsetFactor(
+        data, knot - SplineOracle{"1e-8"}, step, domainStart, domainEnd, distance);
+    const SplineOracle rightNeighbor = oracleOffsetFactor(
+        data, knot + SplineOracle{"1e-8"}, step, domainStart, domainEnd, distance);
+    CAPTURE(leftFactor, rightFactor, leftNeighbor, rightNeighbor);
+    CHECK(abs(leftFactor) < SplineOracle{"1e-16"});
+    CHECK(abs(rightFactor) < SplineOracle{"1e-16"});
+    CHECK(leftNeighbor > 0);
+    CHECK(rightNeighbor < 0);
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, 1.0, 1e-4, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.status, diagnostics.candidateParameters,
+            diagnostics.candidateBoxes, diagnostics.failureSpan,
+            diagnostics.failureT0, diagnostics.failureT1);
+    REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(diagnostics.complete);
+    const std::vector<double> sourceBreaks = source.getBreakParameters();
+    std::vector<const LC_CurveOffsetCuspCandidateBox*> knotBoxes;
+    for (const auto& box : diagnostics.candidateBoxes) {
+        if (std::abs(box.parameter - .5) < 1e-8)
+            knotBoxes.push_back(&box);
+    }
+    REQUIRE_FALSE(knotBoxes.empty());
+    for (const auto* box : knotBoxes) {
+        CHECK(box->t0 <= box->parameter);
+        CHECK(box->parameter <= box->t1);
+        CHECK(box->span + 1 < sourceBreaks.size());
+        CHECK(sourceBreaks[box->span] <= box->t0);
+        CHECK(box->t1 <= sourceBreaks[box->span + 1]);
+        CHECK((box->span == 0 || box->span == 1));
+    }
+
+    const auto leftPoint = oracleOffsetPoint(
+        data, knot, step, domainStart, domainEnd, distance, true);
+    const auto rightPoint = oracleOffsetPoint(
+        data, knot, step, domainStart, domainEnd, distance, false);
+    const RS_Vector expectedPoint{
+        ((leftPoint.first + rightPoint.first) / 2).convert_to<double>(),
+        ((leftPoint.second + rightPoint.second) / 2).convert_to<double>()};
+    bool representedByEndpoint = false;
+    for (const LC_OffsetBranch& branch : built.branches) {
+        if (branch.cubicPieces.empty()) continue;
+        if (branch.startEnd == LC_OffsetBranchEnd::Cusp)
+            representedByEndpoint |= branch.cubicPieces.front().bezier.front().distanceTo(
+                expectedPoint) <= options->tolerance.requestedGeometry;
+        if (branch.endEnd == LC_OffsetBranchEnd::Cusp)
+            representedByEndpoint |= branch.cubicPieces.back().bezier.back().distanceTo(
+                expectedPoint) <= options->tolerance.requestedGeometry;
+    }
+    CHECK(representedByEndpoint);
+}
+
 TEST_CASE("ellipse, arc, and circle source caches validate across signed distances",
           "[lc-offsetcurve][worker-kernel][source-cache][conic][side]") {
     const double tau = 2.0 * M_PI;
