@@ -24604,17 +24604,17 @@ or independent-CAD/visible acceptance gate.
 
 #### W563da. Round-trip Tangent-constrained Spline Caches Through Product Writers (2026-11-07)
 
-The tangent-constrained spline import matrix now exports the left-side editable
-offsets for both its rational cubic `RS_Spline` source and tangent-constrained
-`LC_SplinePoints` source through LibreCAD's product writer in R14, R2000, and
-R2018 DXF plus R2000 and R2018 DWG. Each subsequent staged import must preserve
-the schema-3 tangent source metadata and exact cache fingerprint. Existing
-left/right staged-import checks for cubic, quadratic, linear, one-ended linear,
-and spline-points remain in place.
+The tangent-constrained spline import matrix now exports a left-side editable
+offset for every represented source variant: rational cubic and quadratic
+`RS_Spline`, two-ended and one-ended linear `RS_Spline`, and tangent-constrained
+`LC_SplinePoints`. Each variant is written by LibreCAD in R14, R2000, and R2018
+DXF plus R2000 and R2018 DWG, staged-imported, and checked for schema-3 tangent
+metadata and exact cache fingerprint. Existing left/right carrier-import
+checks remain in place for the full set.
 
 Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
 "tangent-constrained spline sources promote through operation-8 validation across file lanes"`
-passes 6,078 assertions in one test case. The `librecad_tests` target rebuild
+passes 7,559 assertions in one test case. The `librecad_tests` target rebuild
 and `git diff --check` pass. This validates the editable cache-plus-metadata
 path, not writing a tangent-constrained source spline as a native DWG SPLINE;
 that remains fail-closed. Other tangent/weight variants, independent CAD,
