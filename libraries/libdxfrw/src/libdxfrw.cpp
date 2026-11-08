@@ -3835,6 +3835,19 @@ bool dxfRW::writeSpline(DRW_Spline *ent){
             m_writeError = true;
             return false;
         }
+        struct StreamPrecisionGuard {
+            std::ostream *stream;
+            std::streamsize previous;
+            explicit StreamPrecisionGuard(std::ostream *output)
+                : stream(output), previous(output ? output->precision() : 0) {
+                if (stream)
+                    stream->precision(std::numeric_limits<double>::max_digits10);
+            }
+            ~StreamPrecisionGuard() {
+                if (stream)
+                    stream->precision(previous);
+            }
+        } precisionGuard(writer->stream());
         EntityRecordScope scope(*this, ent);
         writer->writeString(0, "SPLINE");
         if (!writeEntity(ent))
