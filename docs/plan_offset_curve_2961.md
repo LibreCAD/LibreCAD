@@ -26278,3 +26278,20 @@ passes. Test commit `9f1ef2a0b` (`test(offset): qualify periodic rational
 quadratic tangent`). Remaining: other degree-2 control/knot/weight layouts,
 periodic seam even roots, higher degrees, and complete candidate/stall mapping
 across the rational periodic matrix.
+
+#### W563en. Add a Nonuniform Periodic Quadratic Tangent Profile (2026-11-08)
+
+Added a six-control degree-2 periodic rational fixture with a nonuniform knot
+vector and a distinct positive weight profile to the same independently
+oracle-checked matrix. It passes seam position/tangent checks, interior
+same-sign even-root characterization, root-interval variation bounds,
+source-span-bounded production stall isolation, and retained-output mapping for
+the oracle tangent point and every reported stall endpoint. The quadratic
+curvature discontinuity at the seam remains explicitly allowed and observed.
+
+Release validation: focused periodic tangent matrix, 192 assertions/1 case;
+full worker-kernel suite, 1,704,023 assertions/68 cases; `git diff --check`
+passes. Test commit `3e38d6aab` (`test(offset): cover nonuniform periodic
+quadratic tangent`). This adds one nonuniform six-control layout/profile only;
+other degree-2 knot/weight combinations, seam even roots, higher degrees, and
+broader candidate-to-output bijection remain open.
