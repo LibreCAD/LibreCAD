@@ -5744,6 +5744,30 @@ TEST_CASE("tangent-constrained spline sources promote through operation-8 valida
         } else {
             FAIL("test source must be a spline or spline-points variant");
         }
+
+        if (variantName == "cubic" && side == LC_CurveOffsetSide::Left) {
+            const auto nativeOutput = directory.file(variantName + "-native-" + suffix +
+                (dwg ? ".dwg" : ".dxf"));
+            REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
+                                             ::format(lane)));
+            const auto nativeRoundTrip = stagedImport(nativeOutput, lane);
+            INFO("native tangent-spline writer round-trip " << suffix);
+            REQUIRE(nativeRoundTrip.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(nativeRoundTrip.graphic);
+            CHECK(nativeRoundTrip.admitted == 1);
+            CHECK(nativeRoundTrip.downgraded == 0);
+            const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+                f::sole(*nativeRoundTrip.graphic));
+            REQUIRE(roundTripped);
+            REQUIRE(roundTripped->sourceDefinition());
+            const auto roundTripDefinition = values::encodeSourceDefinition(
+                *roundTripped->sourceDefinition());
+            REQUIRE(roundTripDefinition);
+            CHECK(QCborValue(*expectedDefinition).toCbor() ==
+                  QCborValue(*roundTripDefinition).toCbor());
+            CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+                  RS_Spline::geometryFingerprint(cacheData));
+        }
     }
     };
     const auto forBothSides = [&](const LC_OffsetSourceGeometry& geometry,
