@@ -25306,12 +25306,12 @@ complete or exclude even-multiplicity roots.
 
 Still open within W563eg: directly compare both one-sided oracle derivatives
 with evaluations strictly inside each adjacent span; add repeated-internal-knot
-and explicit periodic-seam ownership regressions; persist a profile-by-profile
-candidate/sign inventory for both offset signs; and map the corrected candidate
-set to production root intervals and generated branch endpoints. In
-particular, re-measure the previously reported endpoint discrepancy against
-the corrected non-knot candidate set rather than carrying forward the old
-exact-knot comparison.
+and explicit periodic-seam ownership regressions; and persist a
+profile-by-profile candidate/sign inventory for both offset signs. W563eh below
+starts, but does not finish, the production-candidate mapping. In particular,
+re-measure the previously reported endpoint discrepancy against the corrected
+non-knot candidate set rather than carrying forward the old exact-knot
+comparison.
 
 Release validation passes for the implemented slice: periodic/nonuniform worker matrix 15,498 assertions
 in 1 case; focused cusp/oracle selection 14,614 assertions in 3 cases; full
@@ -25320,10 +25320,41 @@ assertions in 77 cases; and `git diff --check`. Test commit `bed081127`
 (`test(offset): validate one-sided spline cusp oracle`).
 
 The production implementation remains fail-closed for the gradual
-positive-side periodic case. Next expose bounded test-only diagnostics for
-production-isolated root intervals/parameters and compare them with this
-span-local oracle inventory and generated endpoints across every failing
-periodic profile. Include the periodic seam explicitly and keep sampled roots
-labelled as candidates until tangent/even-root completeness is independently
-established. Do not accept roots or expand geometry/cache/file eligibility in
-that slice. W563cg remains open.
+positive-side periodic case. Continue with W563eh: complete candidate-to-root
+and candidate-to-endpoint mapping across the remaining failing periodic
+profiles, with explicit seam and unresolved-leaf diagnostics. Keep sampled
+roots labelled as candidates until tangent/even-root completeness is
+independently established. Do not accept roots or expand geometry/cache/file
+eligibility in that work. W563cg remains open.
+
+#### W563eh. Map Partial Production Cusp Candidates to the Span-local Oracle (2026-11-08)
+
+Added an optional test diagnostic to `buildDirectBranches` that returns cusp
+candidates collected by the existing isolation pass, including partial
+candidates when the engine refuses. Normal callers omit the pointer and retain
+the same behavior. The diagnostic does not label every candidate as certified
+and does not publish branches on failure.
+
+For the gradual positive-side periodic fixture at `d=0.005`, the qualified
+oracle scan reports eight sampled candidates. Production collects seven; all
+seven match the first seven oracle parameters within `1e-6`. The remaining
+oracle candidate lies less than `1e-3` before the domain end/seam and is not in
+the collected set. The direct build and worker both return `SingularOffset`
+with no branches, so there are no generated endpoints to compare for this
+refused result. This is direct evidence of a missing seam-adjacent candidate in
+the partial diagnostic set, not evidence that production accepted an invalid
+root. The earlier `~29.19` endpoint discrepancy must still be recomputed using
+the corrected cusp points; do not reuse the old endpoint number.
+
+Release validation: periodic/nonuniform matrix 15,518 assertions/1 case;
+focused cusp/oracle selection 14,614/3; full worker-kernel suite
+1,695,274/56; `librecad_tests` rebuild and `[spline]` 28,390/77; and
+`git diff --check`. Commits `2565f3275` (diagnostic/test) and `38b5cf992`
+(diagnostic contract wording).
+
+Remaining W563eh work: report the first unresolved leaf/span and traversal
+extent so the missing seam candidate can be attributed rather than inferred;
+map one-to-one root candidates for every failing periodic weight profile and
+both signs; and compare endpoints whenever a case produces branches. Preserve
+the fail-closed status meanwhile. Do not change root acceptance, expected
+refusal, or cache/file eligibility based on the partial seven-of-eight result.
