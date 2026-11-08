@@ -25252,15 +25252,15 @@ This supersedes the earlier 12-cusp sampled count and removes the claimed exact
 internal-knot cusp from the evidence; it does not prove the sampled inventory
 complete or exclude even-multiplicity roots.
 
-Still open within W563eg: persist fixed per-profile/per-sign candidate counts
-and completion/refusal outcomes, and detect tangent/even roots that the
-sign-change scan can miss. The checks below classify signs around candidates
-already sampled for the conditioned profiles; they do not prove inventory
-completeness. Root-to-endpoint checks tracked in W563eh also remain. The
-repeated-knot and seam regressions qualify only recorded fixtures, not all
-multiplicities. In particular, re-measure the earlier endpoint discrepancy
-against the corrected non-knot candidate set, not the superseded exact-knot
-comparison.
+Still open within W563eg: record completion/refusal outcomes alongside the
+sampled counts, detect tangent/even roots that the sign-change scan can miss,
+and map all candidates to production roots/output. The checks below classify
+signs around candidates already sampled for the conditioned profiles; they do
+not prove inventory completeness. Root-to-endpoint checks tracked in W563eh
+also remain. The repeated-knot and seam regressions qualify only recorded
+fixtures, not all multiplicities. In particular, re-measure the earlier
+endpoint discrepancy against the corrected non-knot candidate set, not the
+superseded exact-knot comparison.
 
 Release validation passes for the implemented slice: periodic/nonuniform worker matrix 15,498 assertions
 in 1 case; focused cusp/oracle selection 14,614 assertions in 3 cases; full
@@ -25353,12 +25353,41 @@ it does not probe across a knot or seam. Candidate neighborhoods at span
 boundaries are explicitly one-sided.
 
 This adds reproducible sign checks for the scan's current candidates, not a
-fixed complete root inventory: unobserved tangent/even roots, candidate counts
-per profile/sign, and production-to-output mapping remain open. Release
-validation: `[nonuniform]`, 24,076 assertions/2 cases; full
-`librecad_offset_worker_kernel_tests`, 1,704,829 assertions/77 cases;
-`git diff --check` passes. Test commit `a1fc97bc8` (`test(offset): record
-periodic cusp side signs`).
+complete root inventory. The subsequent fixed-count regression records the
+current sampled scan at scale 1:
+
+| Weight profile | Positive-distance candidates | Negative-distance candidates |
+| --- | ---: | ---: |
+| Alternating | 8 | 0 |
+| Shifted-alternating | 10 | 0 |
+| Gradual | 8 | 0 |
+| Reversed-gradual | 7 | 0 |
+
+For alternating profiles, the count is checked at each of `+/-0.0625`,
+`+/-0.125`, and `+/-0.25`; gradual profiles use `+/-0.005`. These are sampled
+sign-change inventory counts, not certified root counts. Unobserved
+tangent/even roots and production-to-output mapping remain open. Release
+validation for the sign-check slice: `[nonuniform]`, 24,076 assertions/2
+cases; full `librecad_offset_worker_kernel_tests`, 1,704,829 assertions/77
+cases; `git diff --check` passes. Test commit `a1fc97bc8` (`test(offset):
+record periodic cusp side signs`).
+
+#### W563eg Follow-up. Pin Conditioned Periodic Sample Counts (2026-11-08)
+
+Pinned the sign-change scanner's sampled candidate counts by weight profile
+and offset sign using the existing distance matrix, while retaining the
+span-local nonzero side-sign checks. The positive/negative count pairs are
+`8/0` alternating, `10/0` shifted-alternating, `8/0` gradual, and `7/0`
+reversed-gradual. The positive alternating counts are checked at all three
+listed magnitudes; gradual counts are checked at their single magnitude.
+
+This makes changes to the *sampled* inventory visible; it does not certify the
+absence of tangent/even roots, prove sampling completeness, record every
+production completion/refusal outcome in a separate manifest, or finish
+root-to-output mapping. Release validation: `[nonuniform]`, 24,092
+assertions/2 cases; full `librecad_offset_worker_kernel_tests`, 1,704,845
+assertions/77 cases; `git diff --check` passes. Test commit `5202f71a2`
+(`test(offset): pin periodic sampled cusp inventory`).
 
 The production implementation remains fail-closed for the gradual
 positive-side periodic case. Continue with W563eh: complete candidate-to-root
