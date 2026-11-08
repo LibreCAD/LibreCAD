@@ -71,14 +71,57 @@ std::pair<SplineOracle, SplineOracle> evaluateSplineOracle(
             work[degree].y / work[degree].w};
 }
 
+SplineOracle oracleStencilStep(const RS_SplineData& data,
+                               const SplineOracle& parameter,
+                               const SplineOracle& requested,
+                               const bool left,
+                               const bool right,
+                               const unsigned pointsOnSide) {
+    SplineOracle step = requested;
+    for (double knotValue : data.knotslist) {
+        const SplineOracle knot{knotValue};
+        const SplineOracle gap = parameter - knot;
+        if (left && gap > 0)
+            step = std::min(step, gap / pointsOnSide);
+        const SplineOracle rightGap = knot - parameter;
+        if (right && rightGap > 0)
+            step = std::min(step, rightGap / pointsOnSide);
+    }
+    return step;
+}
+
 SplineOracle oracleSpeedSquared(const RS_SplineData& data,
                                 const SplineOracle& parameter,
                                 const SplineOracle& step) {
     // High-precision finite differences avoid sharing the production jet path.
-    const auto before = evaluateSplineOracle(data, parameter - step);
-    const auto after = evaluateSplineOracle(data, parameter + step);
-    const SplineOracle dx = (after.first - before.first) / (2 * step);
-    const SplineOracle dy = (after.second - before.second) / (2 * step);
+    const std::size_t lastControl = data.controlPoints.size() - 1;
+    const SplineOracle domainEnd{data.knotslist[lastControl + 1]};
+    const bool atKnot = std::any_of(data.knotslist.begin(), data.knotslist.end(),
+                                    [&](double knot) { return parameter == SplineOracle{knot}; });
+    const bool useLeft = parameter == domainEnd;
+    const SplineOracle h = oracleStencilStep(data, parameter, step,
+                                              atKnot ? useLeft : true,
+                                              atKnot ? !useLeft : true, 2);
+    if (useLeft) {
+        const auto point = evaluateSplineOracle(data, parameter);
+        const auto one = evaluateSplineOracle(data, parameter - h);
+        const auto two = evaluateSplineOracle(data, parameter - 2 * h);
+        const SplineOracle dx = (3 * point.first - 4 * one.first + two.first) / (2 * h);
+        const SplineOracle dy = (3 * point.second - 4 * one.second + two.second) / (2 * h);
+        return dx * dx + dy * dy;
+    }
+    if (atKnot) {
+        const auto point = evaluateSplineOracle(data, parameter);
+        const auto one = evaluateSplineOracle(data, parameter + h);
+        const auto two = evaluateSplineOracle(data, parameter + 2 * h);
+        const SplineOracle dx = (-3 * point.first + 4 * one.first - two.first) / (2 * h);
+        const SplineOracle dy = (-3 * point.second + 4 * one.second - two.second) / (2 * h);
+        return dx * dx + dy * dy;
+    }
+    const auto before = evaluateSplineOracle(data, parameter - h);
+    const auto after = evaluateSplineOracle(data, parameter + h);
+    const SplineOracle dx = (after.first - before.first) / (2 * h);
+    const SplineOracle dy = (after.second - before.second) / (2 * h);
     return dx * dx + dy * dy;
 }
 
@@ -87,31 +130,41 @@ SplineOracle oracleOffsetFactor(const RS_SplineData& data,
                                 const SplineOracle& step,
                                 const SplineOracle& domainStart,
                                 const SplineOracle& domainEnd,
-                                const SplineOracle& signedDistance) {
+                                const SplineOracle& signedDistance,
+                                const bool leftLimit = false) {
     const auto point = evaluateSplineOracle(data, parameter);
     std::pair<SplineOracle, SplineOracle> first;
     std::pair<SplineOracle, SplineOracle> second;
-    if (parameter == domainStart) {
-        const auto one = evaluateSplineOracle(data, parameter + step);
-        const auto two = evaluateSplineOracle(data, parameter + 2 * step);
-        first = {(-3 * point.first + 4 * one.first - two.first) / (2 * step),
-                 (-3 * point.second + 4 * one.second - two.second) / (2 * step)};
-        second = {(point.first - 2 * one.first + two.first) / (step * step),
-                  (point.second - 2 * one.second + two.second) / (step * step)};
-    } else if (parameter == domainEnd) {
-        const auto one = evaluateSplineOracle(data, parameter - step);
-        const auto two = evaluateSplineOracle(data, parameter - 2 * step);
-        first = {(3 * point.first - 4 * one.first + two.first) / (2 * step),
-                 (3 * point.second - 4 * one.second + two.second) / (2 * step)};
-        second = {(point.first - 2 * one.first + two.first) / (step * step),
-                  (point.second - 2 * one.second + two.second) / (step * step)};
+    const bool atKnot = std::any_of(data.knotslist.begin(), data.knotslist.end(),
+                                    [&](double knot) { return parameter == SplineOracle{knot}; });
+    const bool useLeft = parameter == domainEnd || leftLimit;
+    const bool oneSided = parameter == domainStart || parameter == domainEnd || atKnot || leftLimit;
+    const SplineOracle h = oracleStencilStep(data, parameter, step,
+                                              useLeft || !oneSided,
+                                              !useLeft || !oneSided, 3);
+    if (oneSided && !useLeft) {
+        const auto one = evaluateSplineOracle(data, parameter + h);
+        const auto two = evaluateSplineOracle(data, parameter + 2 * h);
+        const auto three = evaluateSplineOracle(data, parameter + 3 * h);
+        first = {(-3 * point.first + 4 * one.first - two.first) / (2 * h),
+                 (-3 * point.second + 4 * one.second - two.second) / (2 * h)};
+        second = {(2 * point.first - 5 * one.first + 4 * two.first - three.first) / (h * h),
+                  (2 * point.second - 5 * one.second + 4 * two.second - three.second) / (h * h)};
+    } else if (oneSided) {
+        const auto one = evaluateSplineOracle(data, parameter - h);
+        const auto two = evaluateSplineOracle(data, parameter - 2 * h);
+        const auto three = evaluateSplineOracle(data, parameter - 3 * h);
+        first = {(3 * point.first - 4 * one.first + two.first) / (2 * h),
+                 (3 * point.second - 4 * one.second + two.second) / (2 * h)};
+        second = {(2 * point.first - 5 * one.first + 4 * two.first - three.first) / (h * h),
+                  (2 * point.second - 5 * one.second + 4 * two.second - three.second) / (h * h)};
     } else {
-        const auto before = evaluateSplineOracle(data, parameter - step);
-        const auto after = evaluateSplineOracle(data, parameter + step);
-        first = {(after.first - before.first) / (2 * step),
-                 (after.second - before.second) / (2 * step)};
-        second = {(after.first - 2 * point.first + before.first) / (step * step),
-                  (after.second - 2 * point.second + before.second) / (step * step)};
+        const auto before = evaluateSplineOracle(data, parameter - h);
+        const auto after = evaluateSplineOracle(data, parameter + h);
+        first = {(after.first - before.first) / (2 * h),
+                 (after.second - before.second) / (2 * h)};
+        second = {(after.first - 2 * point.first + before.first) / (h * h),
+                  (after.second - 2 * point.second + before.second) / (h * h)};
     }
     const SplineOracle speedSquared = first.first * first.first + first.second * first.second;
     const SplineOracle cross = first.first * second.second - first.second * second.first;
@@ -133,36 +186,49 @@ SplineOracle oracleOffsetFactorNumerator(const RS_SplineData& data,
 std::pair<SplineOracle, SplineOracle> oracleOffsetPoint(
     const RS_SplineData& data, const SplineOracle& parameter,
     const SplineOracle& step, const SplineOracle& domainStart,
-    const SplineOracle& domainEnd, const SplineOracle& signedDistance) {
+    const SplineOracle& domainEnd, const SplineOracle& signedDistance,
+    const bool leftLimit = false) {
     const auto point = evaluateSplineOracle(data, parameter);
     std::pair<SplineOracle, SplineOracle> first;
-    if (parameter == domainStart) {
-        const auto one = evaluateSplineOracle(data, parameter + step);
-        const auto two = evaluateSplineOracle(data, parameter + 2 * step);
-        first = {(-3 * point.first + 4 * one.first - two.first) / (2 * step),
-                 (-3 * point.second + 4 * one.second - two.second) / (2 * step)};
-    } else if (parameter == domainEnd) {
-        const auto one = evaluateSplineOracle(data, parameter - step);
-        const auto two = evaluateSplineOracle(data, parameter - 2 * step);
-        first = {(3 * point.first - 4 * one.first + two.first) / (2 * step),
-                 (3 * point.second - 4 * one.second + two.second) / (2 * step)};
+    const bool atKnot = std::any_of(data.knotslist.begin(), data.knotslist.end(),
+                                    [&](double knot) { return parameter == SplineOracle{knot}; });
+    const bool useLeft = parameter == domainEnd || leftLimit;
+    const bool oneSided = parameter == domainStart || parameter == domainEnd || atKnot || leftLimit;
+    const SplineOracle h = oracleStencilStep(data, parameter, step,
+                                              useLeft || !oneSided,
+                                              !useLeft || !oneSided, 2);
+    if (oneSided && !useLeft) {
+        const auto one = evaluateSplineOracle(data, parameter + h);
+        const auto two = evaluateSplineOracle(data, parameter + 2 * h);
+        first = {(-3 * point.first + 4 * one.first - two.first) / (2 * h),
+                 (-3 * point.second + 4 * one.second - two.second) / (2 * h)};
+    } else if (oneSided) {
+        const auto one = evaluateSplineOracle(data, parameter - h);
+        const auto two = evaluateSplineOracle(data, parameter - 2 * h);
+        first = {(3 * point.first - 4 * one.first + two.first) / (2 * h),
+                 (3 * point.second - 4 * one.second + two.second) / (2 * h)};
     } else {
-        const auto before = evaluateSplineOracle(data, parameter - step);
-        const auto after = evaluateSplineOracle(data, parameter + step);
-        first = {(after.first - before.first) / (2 * step),
-                 (after.second - before.second) / (2 * step)};
+        const auto before = evaluateSplineOracle(data, parameter - h);
+        const auto after = evaluateSplineOracle(data, parameter + h);
+        first = {(after.first - before.first) / (2 * h),
+                 (after.second - before.second) / (2 * h)};
     }
     const SplineOracle speed = sqrt(first.first * first.first + first.second * first.second);
     return {point.first - signedDistance * first.second / speed,
             point.second + signedDistance * first.first / speed};
 }
 
-std::vector<RS_Vector> oracleOffsetCusps(const RS_SplineData& data,
-                                         const SplineOracle& domainStart,
-                                         const SplineOracle& domainEnd,
-                                         const double signedDistance) {
+struct OracleSplineCusp {
+    SplineOracle parameter{};
+    RS_Vector point;
+};
+
+std::vector<OracleSplineCusp> oracleOffsetCusps(const RS_SplineData& data,
+                                                const SplineOracle& domainStart,
+                                                const SplineOracle& domainEnd,
+                                                const double signedDistance) {
     const std::size_t lastControl = data.controlPoints.size() - 1;
-    std::vector<RS_Vector> cusps;
+    std::vector<OracleSplineCusp> cusps;
     for (std::size_t span = data.degree; span <= lastControl; ++span) {
         const SplineOracle start{data.knotslist[span]};
         const SplineOracle end{data.knotslist[span + 1]};
@@ -183,25 +249,26 @@ std::vector<RS_Vector> oracleOffsetCusps(const RS_SplineData& data,
         SplineOracle previousParameter = parameters.front();
         SplineOracle previousFactor = oracleOffsetFactor(
             data, previousParameter, step, domainStart, domainEnd,
-            SplineOracle{signedDistance});
-        const auto addCusp = [&](const SplineOracle& root) {
+            SplineOracle{signedDistance}, false);
+        const auto addCusp = [&](const SplineOracle& root, const bool leftLimit) {
             const auto point = oracleOffsetPoint(
                 data, root, width * SplineOracle{"1e-30"},
-                domainStart, domainEnd, SplineOracle{signedDistance});
+                domainStart, domainEnd, SplineOracle{signedDistance}, leftLimit);
             const RS_Vector cusp{point.first.convert_to<double>(),
                                  point.second.convert_to<double>()};
-            if (std::none_of(cusps.begin(), cusps.end(), [&](const RS_Vector& existing) {
-                    return existing.distanceTo(cusp) < 1e-8;
+            if (std::none_of(cusps.begin(), cusps.end(), [&](const OracleSplineCusp& existing) {
+                    return existing.parameter == root &&
+                           existing.point.distanceTo(cusp) < 1e-8;
                 }))
-                cusps.push_back(cusp);
+                cusps.push_back({root, cusp});
         };
         for (std::size_t i = 1; i < parameters.size(); ++i) {
             const SplineOracle parameter = parameters[i];
             const SplineOracle factor = oracleOffsetFactor(
                 data, parameter, step, domainStart, domainEnd,
-                SplineOracle{signedDistance});
+                SplineOracle{signedDistance}, parameter == end);
             if (factor == 0) {
-                addCusp(parameter);
+                addCusp(parameter, parameter == end);
             } else if (previousFactor != 0 &&
                        ((previousFactor < 0) != (factor < 0))) {
                 SplineOracle lo = previousParameter;
@@ -219,7 +286,7 @@ std::vector<RS_Vector> oracleOffsetCusps(const RS_SplineData& data,
                         hi = middle;
                     }
                 }
-                addCusp((lo + hi) / 2);
+                addCusp((lo + hi) / 2, false);
             }
             previousParameter = parameter;
             previousFactor = factor;
@@ -439,7 +506,8 @@ TEST_CASE("high precision oracle samples conditioned periodic spline tangent min
                 for (const SplineOracle& t : parameters) {
                     const SplineOracle step = width * SplineOracle{"1e-20"};
                     const SplineOracle factor = oracleOffsetFactor(
-                        data, t, step, domainStart, domainEnd, distance);
+                        data, t, step, domainStart, domainEnd, distance,
+                        t == end && end != domainEnd);
                     const double factorValue = factor.convert_to<double>();
                     minimumFactor = std::min(minimumFactor, factorValue);
                     maximumFactor = std::max(maximumFactor, factorValue);
@@ -584,8 +652,8 @@ TEST_CASE("rational cusp polynomial no-root certificates agree with oracle sampl
                     (LC_Interval::point(signedDistance) * bounds.cross()).isPositive();
                 if (signedTurnPositive && bounds.rationalCuspRootVariationUpperBound == 1) {
                     ++signedTurnVariationOneBoxes;
-                    const double t0 = std::nextafter(a, b);
-                    const double t1 = std::nextafter(b, a);
+                    const double t0 = a + (b - a) * 1e-8;
+                    const double t1 = b - (b - a) * 1e-8;
                     const SplineOracle derivativeStep{spanWidth * SplineOracle{"1e-20"}};
                     const SplineOracle distance{signedDistance};
                     const SplineOracle g0 = oracleOffsetFactorNumerator(
@@ -1451,6 +1519,71 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             : std::vector<double>{.125, -.125};
         for (const double signedDistance : signedDistances) {
             CAPTURE(signedDistance);
+            const std::size_t lastControl = sourceData.controlPoints.size() - 1;
+            const SplineOracle domainStart{startParameter};
+            const SplineOracle domainEnd{endParameter};
+            const std::vector<OracleSplineCusp> expectedCusps =
+                conditionedWeights && signedDistance > 0.0
+                    ? oracleOffsetCusps(sourceData, domainStart, domainEnd, signedDistance)
+                    : std::vector<OracleSplineCusp>{};
+            if (weightProfile == WeightProfile::Gradual && signedDistance > 0.0) {
+                // This is a sampled sign-change inventory, not a completeness proof.
+                CHECK(expectedCusps.size() == 8);
+                CHECK(std::any_of(expectedCusps.begin(), expectedCusps.end(),
+                                  [](const OracleSplineCusp& cusp) {
+                                      return abs(cusp.parameter - SplineOracle{"0.500122"}) <
+                                             SplineOracle{"1e-5"};
+                                  }));
+                for (const auto& cusp : expectedCusps) {
+                    const bool atKnot = std::any_of(
+                        sourceData.knotslist.begin(), sourceData.knotslist.end(),
+                        [&](double knot) { return cusp.parameter == SplineOracle{knot}; });
+                    CHECK_FALSE(atKnot);
+                }
+
+                double previousKnot = -std::numeric_limits<double>::infinity();
+                for (std::size_t index = sourceData.degree + 1;
+                     index <= lastControl; ++index) {
+                    const double knotValue = sourceData.knotslist[index];
+                    if (knotValue == previousKnot) continue;
+                    previousKnot = knotValue;
+                    const SplineOracle knot{knotValue};
+                    SplineOracle leftWidth{};
+                    SplineOracle rightWidth{};
+                    for (double candidateValue : sourceData.knotslist) {
+                        const SplineOracle candidate{candidateValue};
+                        if (candidate < knot &&
+                            (leftWidth == 0 || knot - candidate < leftWidth))
+                            leftWidth = knot - candidate;
+                        if (candidate > knot &&
+                            (rightWidth == 0 || candidate - knot < rightWidth))
+                            rightWidth = candidate - knot;
+                    }
+                    if (leftWidth == 0 || rightWidth == 0) continue;
+                    const SplineOracle step = std::min(leftWidth, rightWidth) *
+                                              SplineOracle{"1e-20"};
+                    const SplineOracle leftStencil = oracleStencilStep(
+                        sourceData, knot, step, true, false, 3);
+                    const SplineOracle rightStencil = oracleStencilStep(
+                        sourceData, knot, step, false, true, 3);
+                    CHECK(3 * leftStencil < leftWidth);
+                    CHECK(3 * rightStencil < rightWidth);
+                    const SplineOracle left = oracleOffsetFactor(
+                        sourceData, knot, step, domainStart, domainEnd,
+                        SplineOracle{signedDistance}, true);
+                    const SplineOracle right = oracleOffsetFactor(
+                        sourceData, knot, step, domainStart, domainEnd,
+                        SplineOracle{signedDistance}, false);
+                    const SplineOracle leftRefined = oracleOffsetFactor(
+                        sourceData, knot, step / 2, domainStart, domainEnd,
+                        SplineOracle{signedDistance}, true);
+                    const SplineOracle rightRefined = oracleOffsetFactor(
+                        sourceData, knot, step / 2, domainStart, domainEnd,
+                        SplineOracle{signedDistance}, false);
+                    CHECK(abs(left - leftRefined) < SplineOracle{"1e-12"});
+                    CHECK(abs(right - rightRefined) < SplineOracle{"1e-12"});
+                }
+            }
             const LC_OffsetSourceDefinition definition{
                 LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
             REQUIRE(definition.isWellFormed());
@@ -1499,14 +1632,6 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 REQUIRE(offsetOptions);
                 const double geometryTolerance =
                     offsetOptions->tolerance.requestedGeometry;
-                const std::size_t lastControl = sourceData.controlPoints.size() - 1;
-                const SplineOracle domainStart{startParameter};
-                const SplineOracle domainEnd{endParameter};
-                const std::vector<RS_Vector> expectedCusps =
-                    signedDistance > 0.0
-                        ? oracleOffsetCusps(sourceData, domainStart, domainEnd,
-                                            signedDistance)
-                        : std::vector<RS_Vector>{};
                 if (signedDistance > 0.0) {
                     CHECK(expectedCusps.size() >= 2);
                     CHECK(expectedCusps.size() % 2 == 0);
@@ -1631,7 +1756,7 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     for (std::size_t j = i + 1; j < expectedCusps.size(); ++j)
                         minimumCuspSeparation = std::min(
                             minimumCuspSeparation,
-                            expectedCusps[i].distanceTo(expectedCusps[j]));
+                            expectedCusps[i].point.distanceTo(expectedCusps[j].point));
                 INFO("oracle cusps=" << expectedCusps.size()
                      << ", minimum cusp separation=" << minimumCuspSeparation
                      << ", generated spline endpoints=" << generatedEndpoints.size());
@@ -1641,38 +1766,47 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 for (const RS_Vector& endpoint : generatedEndpoints) {
                     const auto cusp = std::find_if(
                         expectedCusps.begin(), expectedCusps.end(),
-                        [&](const RS_Vector& candidate) {
-                            return endpoint.distanceTo(candidate) < geometryTolerance;
+                        [&](const OracleSplineCusp& candidate) {
+                            return endpoint.distanceTo(candidate.point) < geometryTolerance;
                         });
                     if (cusp != expectedCusps.end() &&
                         std::none_of(matchedGeneratedCusps.begin(),
                                      matchedGeneratedCusps.end(),
                                      [&](const RS_Vector& existing) {
-                                         return existing.distanceTo(*cusp) < 1e-8;
+                                         return existing.distanceTo(cusp->point) < 1e-8;
                                      }))
-                        matchedGeneratedCusps.push_back(*cusp);
+                        matchedGeneratedCusps.push_back(cusp->point);
                 }
-                for (const RS_Vector& cusp : expectedCusps) {
+                for (const OracleSplineCusp& cusp : expectedCusps) {
+                    CAPTURE(cusp.parameter, weightProfile, signedDistance);
                     double nearestEndpoint = std::numeric_limits<double>::infinity();
-                    for (const RS_Vector& endpoint : generatedEndpoints)
-                        nearestEndpoint = std::min(nearestEndpoint,
-                                                   cusp.distanceTo(endpoint));
+                    RS_Vector nearestEndpointPoint;
+                    for (const RS_Vector& endpoint : generatedEndpoints) {
+                        const double distance = cusp.point.distanceTo(endpoint);
+                        if (distance < nearestEndpoint) {
+                            nearestEndpoint = distance;
+                            nearestEndpointPoint = endpoint;
+                        }
+                    }
+                    INFO("oracle cusp point=" << cusp.point.x << "," << cusp.point.y
+                         << " nearest generated endpoint=" << nearestEndpointPoint.x << ","
+                         << nearestEndpointPoint.y);
                     INFO("oracle cusp nearest branch endpoint=" << nearestEndpoint);
                     CHECK(nearestEndpoint < geometryTolerance);
                 }
                 std::size_t toleranceMergedCusps = 0;
-                for (const RS_Vector& cusp : expectedCusps) {
+                for (const OracleSplineCusp& cusp : expectedCusps) {
                     const bool matched = std::any_of(
                         matchedGeneratedCusps.begin(), matchedGeneratedCusps.end(),
                         [&](const RS_Vector& generatedCusp) {
-                            return cusp.distanceTo(generatedCusp) < 1e-8;
+                            return cusp.point.distanceTo(generatedCusp) < 1e-8;
                         });
                     if (matched) continue;
                     ++toleranceMergedCusps;
                     double nearestRetainedCusp = std::numeric_limits<double>::infinity();
                     for (const RS_Vector& generatedCusp : matchedGeneratedCusps)
                         nearestRetainedCusp = std::min(
-                            nearestRetainedCusp, cusp.distanceTo(generatedCusp));
+                            nearestRetainedCusp, cusp.point.distanceTo(generatedCusp));
                     CHECK(nearestRetainedCusp < geometryTolerance);
                 }
                 CHECK(toleranceMergedCusps % 2 == 0);
