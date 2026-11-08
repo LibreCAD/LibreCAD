@@ -5745,8 +5745,9 @@ TEST_CASE("tangent-constrained spline sources promote through operation-8 valida
             FAIL("test source must be a spline or spline-points variant");
         }
 
-        if ((variantName == "cubic" || variantName == "spline-points") &&
-            side == LC_CurveOffsetSide::Left) {
+        if ((variantName == "cubic" || variantName == "quadratic" ||
+             variantName == "linear" || variantName == "linear-one-ended" ||
+             variantName == "spline-points") && side == LC_CurveOffsetSide::Left) {
             const auto nativeOutput = directory.file(variantName + "-native-" + suffix +
                 (dwg ? ".dwg" : ".dxf"));
             REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
