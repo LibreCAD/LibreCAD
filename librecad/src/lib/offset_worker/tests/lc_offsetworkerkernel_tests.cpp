@@ -2756,7 +2756,7 @@ TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
     }
 }
 
-TEST_CASE("rational quadratic interior tangent root remains fail-closed",
+TEST_CASE("rational quadratic interior tangent root obeys bounded tolerance",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root]") {
     RS_SplineData data{2, false};
     data.type = RS_SplineData::SplineType::ClampedOpen;
@@ -2815,12 +2815,71 @@ TEST_CASE("rational quadratic interior tangent root remains fail-closed",
     CHECK(built.status == LC_CurveOffsetStatus::AmbiguousRegularity);
     CHECK_FALSE(diagnostics.complete);
     CHECK(diagnostics.status == built.status);
-    CHECK(diagnostics.failureStage == LC_CurveOffsetCuspFailureStage::UnresolvedRunBudget);
+    CHECK(diagnostics.failureStage == LC_CurveOffsetCuspFailureStage::RunResolution);
     CHECK(diagnostics.failingRunObserved);
     CHECK(diagnostics.failingRunBoxes > 0);
+    CHECK(diagnostics.failingRunExtent > options->tolerance.nodeMerge);
     CHECK(built.branches.empty());
     CHECK(diagnostics.candidateParameters.empty());
     CHECK(diagnostics.stallIntervals.empty());
+
+    const LC_OffsetSourceDefinition boundedDefinition{
+        LC_OffsetSourceGeometry{data}, signedDistance, 1e-3, false};
+    const auto boundedOptions =
+        LC_OffsetWorkerTolerance::directOptions(boundedDefinition, source);
+    REQUIRE(boundedOptions);
+    LC_CurveOffsetCuspIsolationDiagnostics boundedDiagnostics;
+    const auto bounded = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right,
+                                        std::abs(signedDistance)),
+        *boundedOptions, LC_CurveOffset::makeDirectSourceBudget(),
+        &boundedDiagnostics);
+    CAPTURE(bounded.status, boundedDiagnostics.status,
+            boundedDiagnostics.stallIntervals,
+            boundedDiagnostics.candidateParameters,
+            boundedDiagnostics.failureStage);
+    REQUIRE(bounded.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(boundedDiagnostics.complete);
+    const auto tangentStall = std::find_if(
+        boundedDiagnostics.stallIntervals.begin(),
+        boundedDiagnostics.stallIntervals.end(),
+        [](const std::pair<double, double>& interval) {
+            return interval.first <= .5 && .5 <= interval.second;
+        });
+    REQUIRE(tangentStall != boundedDiagnostics.stallIntervals.end());
+
+    const auto nearestPieceEndpoint = [&](const RS_Vector& point) {
+        double nearest = std::numeric_limits<double>::infinity();
+        for (const LC_OffsetBranch& branch : bounded.branches) {
+            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                nearest = std::min(
+                    nearest,
+                    std::min(piece.bezier.front().distanceTo(point),
+                             piece.bezier.back().distanceTo(point)));
+            }
+        }
+        return nearest;
+    };
+    for (const auto& stall : boundedDiagnostics.stallIntervals) {
+        for (const double parameter : {stall.first, stall.second}) {
+            const auto point = oracleOffsetPoint(
+                data, SplineOracle{parameter}, step, domainStart, domainEnd, distance,
+                parameter == domainEnd);
+            const RS_Vector expected{point.first.convert_to<double>(),
+                                     point.second.convert_to<double>()};
+            const double endpointError = nearestPieceEndpoint(expected);
+            CAPTURE(parameter, expected.x, expected.y, endpointError,
+                    boundedOptions->tolerance.requestedGeometry);
+            CHECK(endpointError <= boundedOptions->tolerance.requestedGeometry);
+        }
+    }
+    const auto tangentPoint = oracleOffsetPoint(
+        data, root, step, domainStart, domainEnd, distance);
+    const RS_Vector expectedTangentPoint{tangentPoint.first.convert_to<double>(),
+                                         tangentPoint.second.convert_to<double>()};
+    CHECK(nearestPieceEndpoint(expectedTangentPoint) <=
+          boundedOptions->tolerance.requestedGeometry);
 
     const LC_OffsetSourceDefinition regularDefinition{
         LC_OffsetSourceGeometry{data}, -signedDistance, 1e-4, false};

@@ -2162,17 +2162,22 @@ private:
                         ? std::max(std::abs(g.lo()), std::abs(g.hi())) /
                               bounds.speedSquared().lo() * (leaf.t1 - leaf.t0)
                         : std::numeric_limits<double>::infinity();
-                const bool boundedMultipleRootRun =
-                    speedProved && bounds.rationalCuspRootVariationUpperBound >= 2 &&
+                const bool rationalRootCountUnavailable =
+                    m_source.rationalCuspRootBounds() &&
+                    bounds.rationalCuspRootVariationUpperBound < 0;
+                const bool boundedSmallMotionRun =
+                    speedProved &&
+                    (bounds.rationalCuspRootVariationUpperBound >= 2 ||
+                     rationalRootCountUnavailable) &&
                     std::isfinite(boundedExtent) &&
                     boundedExtent <= m_options.tolerance.nodeMerge;
-                // A rational even root can retain two Bernstein variations
-                // without changing sign. Hand a box to the bounded run
-                // resolver as soon as its complete offset motion is below
-                // nodeMerge; it still checks aggregate motion and sampled
-                // signs before classifying the interval as a stall.
+                // A rational tangent can lose strict Bernstein coefficient
+                // signs as its box narrows. Delegate only this rational
+                // uncertainty, and only under the complete-motion bound; the
+                // run resolver preserves refusal if its aggregate bound or
+                // sampled reversal check does not justify a collapse.
                 const double mid = leaf.t0 + 0.5 * (leaf.t1 - leaf.t0);
-                if (!boundedMultipleRootRun && leaf.depth < subdivisionDepth &&
+                if (!boundedSmallMotionRun && leaf.depth < subdivisionDepth &&
                     mid > leaf.t0 && mid < leaf.t1) {
                     split(stack, leaf, 0.5);
                     continue;
