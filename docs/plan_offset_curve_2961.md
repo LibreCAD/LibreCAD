@@ -25649,3 +25649,26 @@ Test commit `435b9717d` (`test(offset): cover cusp roots on spline knots`).
 Next: cover a root exactly at the periodic seam with both one-sided span
 owners, then exercise tangent/even roots at nonuniform rational knots and map
 the resulting boxes through branch joins or bounded collapses.
+
+#### W563eh Follow-up. Check Curvature and Offset Ownership at a Periodic Seam (2026-11-08)
+
+Added a closed periodic cubic fixture with independently computed left- and
+right-limit seam curvature. The 256-bit oracle confirms both one-sided
+curvatures agree within `1e-15`; the offset distance is selected from their
+mean reciprocal, and both seam offset factors are within `1e-12` of zero.
+The test also samples the factor immediately before and after the seam.
+
+Production must complete the direct build, record either a cusp candidate
+whose box explicitly owns the start/end seam span or a stall interval that
+contains the seam, and preserve the seam offset point in materialized branch
+geometry within the requested tolerance. This validates the recorded periodic
+cubic and chosen distance; it does not establish seam root-count completeness
+for other periodic weights, knot layouts, or even-multiplicity roots.
+
+Release validation: focused seam regression, 53 assertions/1 case; full
+worker-kernel suite, 1,703,580 assertions/60 cases; `git diff --check` passes.
+Test commit `4bb3da6d4` (`test(offset): verify periodic cusp seam ownership`).
+
+Next: extend the same seam and box-to-output checks to nonuniform rational
+weights and tangent/even roots, then verify every certified box maps
+one-to-one to a retained endpoint or a measured in-tolerance collapse.
