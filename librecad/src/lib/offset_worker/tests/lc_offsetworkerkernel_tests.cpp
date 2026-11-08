@@ -15,6 +15,7 @@
 #include <array>
 #include <cmath>
 #include <limits>
+#include <numeric>
 #include <tuple>
 #include <vector>
 #include <boost/multiprecision/cpp_bin_float.hpp>
@@ -2923,9 +2924,9 @@ TEST_CASE("periodic rational seam tangent root maps to a bounded stall",
     }
 }
 
-TEST_CASE("periodic rational seam tangent with interior roots refuses atomically",
+TEST_CASE("periodic rational seam tangent and interior roots map to output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
-          "rational][seam-root][refusal]") {
+          "rational][seam-root][even-root][candidate-mapping]") {
     RS_Spline base{nullptr, RS_SplineData{3, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{10, 0},
                                    RS_Vector{10, 10}, RS_Vector{0, 10}})
@@ -2987,15 +2988,160 @@ TEST_CASE("periodic rational seam tangent with interior roots refuses atomically
                                             : LC_CurveOffsetSide::Right,
                                         std::abs(signedDistance)),
         *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    const std::vector<OracleSplineCusp> expectedCusps =
+        oracleOffsetCusps(data, start, end, signedDistance, SplineOracle{"1e-25"});
+    std::vector<double> expectedParameters;
+    for (const OracleSplineCusp& cusp : expectedCusps)
+        expectedParameters.push_back(cusp.parameter.convert_to<double>());
     CAPTURE(built.status, diagnostics.status, diagnostics.candidateParameters,
-            diagnostics.candidateBoxes, diagnostics.failureStage,
-            diagnostics.failureSpan, diagnostics.failureT0,
-            diagnostics.failureT1);
-    CHECK(built.status == LC_CurveOffsetStatus::SingularOffset);
+            diagnostics.candidateBoxes, diagnostics.stallIntervals, expectedParameters,
+            diagnostics.failureStage, diagnostics.failureSpan,
+            diagnostics.failureT0, diagnostics.failureT1);
+    REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
     CHECK(diagnostics.status == built.status);
-    CHECK_FALSE(diagnostics.complete);
-    CHECK_FALSE(diagnostics.candidateParameters.empty());
-    CHECK(built.branches.empty());
+    REQUIRE(diagnostics.complete);
+    REQUIRE(diagnostics.candidateBoxes.size() == diagnostics.candidateParameters.size());
+
+    const std::vector<double> sourceBreaks = source.getBreakParameters();
+    std::vector<bool> matchedOracleCusps(expectedCusps.size(), false);
+    for (const double candidate : diagnostics.candidateParameters) {
+        double nearestParameterError = std::numeric_limits<double>::infinity();
+        double nearestPointError = std::numeric_limits<double>::infinity();
+        std::size_t nearestOracle = 0;
+        const auto candidatePoint = oracleOffsetPoint(
+            data, SplineOracle{candidate}, step, start, end, distance,
+            std::abs(candidate - endValue) < 1e-8);
+        const RS_Vector productionPoint{candidatePoint.first.convert_to<double>(),
+                                        candidatePoint.second.convert_to<double>()};
+        for (std::size_t i = 0; i < expectedCusps.size(); ++i) {
+            const double parameterError = std::abs(
+                candidate - expectedCusps[i].parameter.convert_to<double>());
+            if (parameterError < nearestParameterError) {
+                nearestParameterError = parameterError;
+                nearestPointError = productionPoint.distanceTo(expectedCusps[i].point);
+                nearestOracle = i;
+            }
+        }
+        CAPTURE(candidate, nearestParameterError, nearestPointError);
+        CHECK(nearestParameterError < 1e-5);
+        CHECK(nearestPointError < options->tolerance.requestedGeometry);
+        if (nearestPointError < options->tolerance.requestedGeometry) {
+            CHECK_FALSE(matchedOracleCusps[nearestOracle]);
+            matchedOracleCusps[nearestOracle] = true;
+        }
+
+        std::vector<const LC_CurveOffsetCuspCandidateBox*> boxes;
+        for (const LC_CurveOffsetCuspCandidateBox& box : diagnostics.candidateBoxes)
+            if (box.parameter == candidate) boxes.push_back(&box);
+        REQUIRE(boxes.size() == 1);
+        const LC_CurveOffsetCuspCandidateBox& box = *boxes.front();
+        REQUIRE(box.span != std::numeric_limits<std::size_t>::max());
+        REQUIRE(box.span + 1 < sourceBreaks.size());
+        CHECK(box.t0 <= candidate);
+        CHECK(candidate <= box.t1);
+        CHECK(sourceBreaks[box.span] <= box.t0);
+        CHECK(box.t1 <= sourceBreaks[box.span + 1]);
+    }
+    CHECK(static_cast<std::size_t>(std::count(matchedOracleCusps.begin(),
+                                              matchedOracleCusps.end(), true)) ==
+          diagnostics.candidateParameters.size());
+
+    std::vector<RS_Vector> outputCuspEndpoints;
+    std::vector<RS_Vector> outputEndpoints;
+    for (const LC_OffsetBranch& branch : built.branches) {
+        if (branch.cubicPieces.empty()) continue;
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            outputEndpoints.push_back(piece.bezier.front());
+            outputEndpoints.push_back(piece.bezier.back());
+        }
+        if (branch.startEnd == LC_OffsetBranchEnd::Cusp) {
+            outputCuspEndpoints.push_back(branch.cubicPieces.front().bezier.front());
+        }
+        if (branch.endEnd == LC_OffsetBranchEnd::Cusp) {
+            outputCuspEndpoints.push_back(branch.cubicPieces.back().bezier.back());
+        }
+    }
+    std::vector<RS_Vector> simpleCuspPoints;
+    for (const OracleSplineCusp& cusp : expectedCusps) {
+        const double parameter = cusp.parameter.convert_to<double>();
+        const double nearestOutputError = std::accumulate(
+            outputEndpoints.begin(), outputEndpoints.end(),
+            std::numeric_limits<double>::infinity(), [&](const double best, const RS_Vector& endpoint) {
+                return std::min(best, endpoint.distanceTo(cusp.point));
+            });
+        const auto stall = std::find_if(
+            diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+            [&](const std::pair<double, double>& interval) {
+                return interval.first <= parameter && parameter <= interval.second;
+            });
+        CAPTURE(parameter, cusp.span, nearestOutputError);
+        CHECK(nearestOutputError <= options->tolerance.requestedGeometry);
+
+        if (stall != diagnostics.stallIntervals.end()) {
+            for (const double stallParameter : {stall->first, stall->second}) {
+                const auto point = oracleOffsetPoint(
+                    data, SplineOracle{stallParameter}, step, start, end, distance,
+                    stallParameter == endValue);
+                const RS_Vector expectedStallPoint{point.first.convert_to<double>(),
+                                                   point.second.convert_to<double>()};
+                const double endpointError = std::accumulate(
+                    outputEndpoints.begin(), outputEndpoints.end(),
+                    std::numeric_limits<double>::infinity(), [&](const double best, const RS_Vector& endpoint) {
+                        return std::min(best, endpoint.distanceTo(expectedStallPoint));
+                    });
+                CAPTURE(stallParameter, endpointError);
+                CHECK(endpointError <= options->tolerance.requestedGeometry);
+            }
+            continue;
+        }
+
+        const double seamEpsilon = 1e-7;
+        const SplineOracle beforeParameter =
+            std::abs(parameter - startValue) < 1e-8
+                ? end - SplineOracle{seamEpsilon}
+                : SplineOracle{parameter - seamEpsilon};
+        const SplineOracle afterParameter =
+            std::abs(parameter - endValue) < 1e-8
+                ? start + SplineOracle{seamEpsilon}
+                : SplineOracle{parameter + seamEpsilon};
+        const SplineOracle beforeFactor = oracleOffsetFactor(
+            data, beforeParameter, step, start, end, distance);
+        const SplineOracle afterFactor = oracleOffsetFactor(
+            data, afterParameter, step, start, end, distance);
+        if ((beforeFactor < 0) != (afterFactor < 0)) {
+            const double nearestCuspError = std::accumulate(
+                outputCuspEndpoints.begin(), outputCuspEndpoints.end(),
+                std::numeric_limits<double>::infinity(), [&](const double best, const RS_Vector& endpoint) {
+                    return std::min(best, endpoint.distanceTo(cusp.point));
+                });
+            CAPTURE(parameter, beforeFactor, afterFactor, nearestCuspError);
+            CHECK(nearestCuspError <= options->tolerance.requestedGeometry);
+            if (std::none_of(simpleCuspPoints.begin(), simpleCuspPoints.end(),
+                             [&](const RS_Vector& point) {
+                                 return point.distanceTo(cusp.point) <=
+                                        options->tolerance.requestedGeometry;
+                             })) {
+                simpleCuspPoints.push_back(cusp.point);
+            }
+        }
+    }
+    CHECK(outputCuspEndpoints.size() == 2 * simpleCuspPoints.size());
+    for (const RS_Vector& point : simpleCuspPoints) {
+        const std::size_t matchingEnds = static_cast<std::size_t>(std::count_if(
+            outputCuspEndpoints.begin(), outputCuspEndpoints.end(),
+            [&](const RS_Vector& endpoint) {
+                return endpoint.distanceTo(point) <= options->tolerance.requestedGeometry;
+            }));
+        CHECK(matchingEnds == 2);
+    }
+    for (const RS_Vector& endpoint : outputCuspEndpoints) {
+        const std::size_t matchingEvents = static_cast<std::size_t>(std::count_if(
+            simpleCuspPoints.begin(), simpleCuspPoints.end(),
+            [&](const RS_Vector& point) {
+                return endpoint.distanceTo(point) <= options->tolerance.requestedGeometry;
+            }));
+        CHECK(matchingEvents == 1);
+    }
 }
 
 TEST_CASE("periodic rational tangent root is isolated as a bounded stall",

@@ -2165,12 +2165,22 @@ private:
                 const bool rationalRootCountUnavailable =
                     m_source.rationalCuspRootBounds() &&
                     bounds.rationalCuspRootVariationUpperBound < 0;
+                const bool continuesUnresolvedRun =
+                    !runs.empty() && runs.back().t1 == leaf.t0 &&
+                    !(leaf.t0 == a && joinCusps[span]);
+                const double aggregateRunExtent =
+                    continuesUnresolvedRun
+                        ? runs.back().extent + boundedExtent
+                        : boundedExtent;
                 const bool boundedSmallMotionRun =
                     speedProved &&
                     (bounds.rationalCuspRootVariationUpperBound >= 2 ||
                      rationalRootCountUnavailable) &&
                     std::isfinite(boundedExtent) &&
-                    boundedExtent <= m_options.tolerance.nodeMerge;
+                    (m_source.closed()
+                         ? std::isfinite(aggregateRunExtent) &&
+                               aggregateRunExtent <= m_options.tolerance.nodeMerge
+                         : boundedExtent <= m_options.tolerance.nodeMerge);
                 // A rational tangent can lose strict Bernstein coefficient
                 // signs as its box narrows. Delegate only this rational
                 // uncertainty, and only under the complete-motion bound; the
@@ -2190,8 +2200,7 @@ private:
                 // the offset moves at |Q'| = |1 - d kappa| |C'| = |g| / |C'|^2
                 const double extent =
                     std::max(std::abs(g.lo()), std::abs(g.hi())) / bounds.speedSquared().lo() * (leaf.t1 - leaf.t0);
-                const bool continues = !runs.empty() && runs.back().t1 == leaf.t0 && !(leaf.t0 == a && joinCusps[span]);
-                if (continues) {
+                if (continuesUnresolvedRun) {
                     Run& run = runs.back();
                     run.t1 = leaf.t1;
                     run.extent += extent;
