@@ -8232,10 +8232,9 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
             CHECK(RS_Spline::geometryFingerprint(*importedSpline) ==
                   RS_Spline::geometryFingerprint(expectedCache));
-            if (singleCache && variant == 0 && magnitude == .25 &&
-                side == LC_CurveOffsetSide::Left) {
+            if (singleCache) {
                 const auto nativeOutput = directory.file("native-fit-points-" +
-                    version + extension);
+                    suffix + sideName + distanceName + version + extension);
                 REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
                                                  ::format(lane)));
                 const auto nativeRoundTrip = stagedImport(nativeOutput, lane);
