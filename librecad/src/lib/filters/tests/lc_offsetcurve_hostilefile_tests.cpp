@@ -2483,39 +2483,37 @@ TEST_CASE("open mixed-bulge polyline promotes complete worker caches across file
                 REQUIRE(actualSource);
                 CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
 
-                if (workerGenerated.ordinary.size() > 1) {
-                    const std::string roundTripName = std::string("native-") +
-                        (signedDistance < 0 ? "right-" : "left-") + format.suffix;
-                    const auto nativeExport = directory.file(roundTripName);
-                    REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeExport,
-                                                     ::format(format.lane)));
-                    const auto nativeRoundTrip = stagedImport(nativeExport, format.lane);
-                    INFO("native export round-trip " << roundTripName);
-                    CAPTURE(nativeRoundTrip.diagnostics.size(),
-                            nativeRoundTrip.suppressedDiagnostics);
-                    const int diagnosticKind = nativeRoundTrip.diagnostics.empty()
-                        ? -1 : static_cast<int>(nativeRoundTrip.diagnostics.front().kind);
-                    const int diagnosticReason = nativeRoundTrip.diagnostics.empty()
-                        ? -1 : nativeRoundTrip.diagnostics.front().reason;
-                    const int diagnosticDetail = nativeRoundTrip.diagnostics.empty()
-                        ? -1 : nativeRoundTrip.diagnostics.front().detail;
-                    CAPTURE(diagnosticKind, diagnosticReason, diagnosticDetail);
-                    REQUIRE(nativeRoundTrip.status == LC_OffsetImportSession::Status::Complete);
-                    REQUIRE(nativeRoundTrip.graphic);
-                    CHECK(nativeRoundTrip.admitted == 1);
-                    CHECK(nativeRoundTrip.downgraded == 0);
-                    const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
-                        f::sole(*nativeRoundTrip.graphic));
-                    REQUIRE(roundTripped);
-                    REQUIRE(roundTripped->sourceDefinition());
-                    const auto roundTripSource = values::encodeSourceDefinition(
-                        *roundTripped->sourceDefinition());
-                    REQUIRE(roundTripSource);
-                    CHECK(QCborValue(*expectedSource).toCbor() ==
-                          QCborValue(*roundTripSource).toCbor());
-                    CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
-                          RS_Spline::geometryFingerprint(expectedCache));
-                }
+                const std::string roundTripName = std::string("native-") +
+                    (signedDistance < 0 ? "right-" : "left-") + format.suffix;
+                const auto nativeExport = directory.file(roundTripName);
+                REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeExport,
+                                                 ::format(format.lane)));
+                const auto nativeRoundTrip = stagedImport(nativeExport, format.lane);
+                INFO("native export round-trip " << roundTripName);
+                CAPTURE(nativeRoundTrip.diagnostics.size(),
+                        nativeRoundTrip.suppressedDiagnostics);
+                const int diagnosticKind = nativeRoundTrip.diagnostics.empty()
+                    ? -1 : static_cast<int>(nativeRoundTrip.diagnostics.front().kind);
+                const int diagnosticReason = nativeRoundTrip.diagnostics.empty()
+                    ? -1 : nativeRoundTrip.diagnostics.front().reason;
+                const int diagnosticDetail = nativeRoundTrip.diagnostics.empty()
+                    ? -1 : nativeRoundTrip.diagnostics.front().detail;
+                CAPTURE(diagnosticKind, diagnosticReason, diagnosticDetail);
+                REQUIRE(nativeRoundTrip.status == LC_OffsetImportSession::Status::Complete);
+                REQUIRE(nativeRoundTrip.graphic);
+                CHECK(nativeRoundTrip.admitted == 1);
+                CHECK(nativeRoundTrip.downgraded == 0);
+                const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+                    f::sole(*nativeRoundTrip.graphic));
+                REQUIRE(roundTripped);
+                REQUIRE(roundTripped->sourceDefinition());
+                const auto roundTripSource = values::encodeSourceDefinition(
+                    *roundTripped->sourceDefinition());
+                REQUIRE(roundTripSource);
+                CHECK(QCborValue(*expectedSource).toCbor() ==
+                      QCborValue(*roundTripSource).toCbor());
+                CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+                      RS_Spline::geometryFingerprint(expectedCache));
             } else {
                 CHECK(outcome.admitted == 0);
                 CHECK(outcome.downgraded == 1);
