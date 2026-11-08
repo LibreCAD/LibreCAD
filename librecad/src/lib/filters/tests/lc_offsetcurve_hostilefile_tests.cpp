@@ -1786,6 +1786,7 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
     }};
+    std::size_t representativeNativeWriterCases = 0;
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
         CAPTURE(sourceIndex, static_cast<int>(sources[sourceIndex].kind()));
         const std::vector<double> signedDistances =
@@ -1876,9 +1877,43 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
                       QCborValue(*importedSource).toCbor());
                 CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
                       RS_Spline::geometryFingerprint(expectedCache));
+
+                const bool representativeWriterCase = signedDistance == -.1 &&
+                    (sourceIndex == 0 || sourceIndex == 6 || sourceIndex == 7 ||
+                     sourceIndex == 19);
+                if (representativeWriterCase) {
+                    const auto nativeOutput = directory.file(
+                        "native-" + suffix);
+                    REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
+                                                     ::format(lane)));
+                    const auto nativeRoundTrip = stagedImport(nativeOutput, lane);
+                    INFO("native typed-source writer round-trip " << suffix);
+                    REQUIRE(nativeRoundTrip.status ==
+                            LC_OffsetImportSession::Status::Complete);
+                    REQUIRE(nativeRoundTrip.graphic);
+                    CHECK(nativeRoundTrip.admitted == 1);
+                    CHECK(nativeRoundTrip.downgraded == 0);
+                    const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+                        f::sole(*nativeRoundTrip.graphic));
+                    REQUIRE(roundTripped);
+                    REQUIRE(roundTripped->sourceDefinition());
+                    const auto roundTripSource = values::encodeSourceDefinition(
+                        *roundTripped->sourceDefinition());
+                    REQUIRE(roundTripSource);
+                    CHECK(QCborValue(*expectedSource).toCbor() ==
+                          QCborValue(*roundTripSource).toCbor());
+                    CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+                          RS_Spline::geometryFingerprint(expectedCache));
+                    ++representativeNativeWriterCases;
+                }
             }
         }
     }
+#ifdef DWGSUPPORT
+    CHECK(representativeNativeWriterCases == 4 * formats.size());
+#else
+    CHECK(representativeNativeWriterCases == 4 * (formats.size() - 2));
+#endif
 }
 
 TEST_CASE("high-eccentricity ellipse refuses partial cache promotion across file lanes",
