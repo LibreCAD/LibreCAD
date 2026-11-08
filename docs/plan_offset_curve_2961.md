@@ -25894,13 +25894,15 @@ candidate boxes and measured tiny-reversal collapses.
 
 #### W563ei. Reconcile the Source-type Picker Requirement (2026-11-08)
 
-The requested Properties workflow is: choose a source-curve type first, then
-select a replacement of that type; offer every source family currently
-modeled by the offset source system; retain and visibly identify the current
-source when it is present. The canonical nine-family inventory is line, arc,
-circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
-polyline. Parabola is a distinct choice even where its internal geometry is
-represented by spline-points.
+The requested Properties workflow is: while an existing source is loaded,
+keep the source-curve type control enabled; let the user choose a type first,
+then select a replacement of that type. Changing the type/filter alone must
+not replace or mutate the current source or generated result. Offer every
+source family currently modeled by the offset source system; retain and
+visibly identify the current source when it is present. The canonical
+nine-family inventory is line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. Parabola is a distinct choice even
+where its internal geometry is represented by spline-points.
 
 Current-code reconciliation: the type-changing selector, candidate filtering,
 cross-family replacement, source identity/highlighting, parabola identity,
@@ -25911,11 +25913,13 @@ means only that a family can be requested; it does not establish that every
 variant is eligible for generation, worker/cache reuse, or DXF/DWG persistence.
 
 Remaining acceptance is the visible-GUI check. On the built app, open Offset
-Properties for an existing source and verify the current source is highlighted;
-change the requested type before picking and verify the candidate list filters
-to that family; replace with one candidate from each of the nine families,
-including parabola; then verify Cancel and invalid/stale candidates leave the
-source and generated result unchanged. Record app/build identity and results.
+Properties for an existing source and verify the current source is highlighted
+and the type control is still enabled. Change the requested type before picking
+and verify the candidate list filters to that family without changing the
+source or generated result; replace with one candidate from each of the nine
+families, including parabola; then verify Cancel and invalid/stale candidates
+leave the source and generated result unchanged. Record app/build identity and
+results.
 If the visible run exposes a regression, add a focused failing widget test and
 fix it before closing this gate. Until that evidence exists, mark the GUI gate
 open; do not infer it from widget tests or picker inventory alone.
@@ -26044,3 +26048,23 @@ Test commit `fb8599ede` (`test(offset): map quadratic tangent stalls across
 scales`). Still open: additional rational weight profiles and knot layouts,
 higher degrees, periodic seam/interior root ownership, and per-event mapping
 for any newly accepted tangent or collapse cases.
+
+#### W563ej Follow-up. Map Quadratic Tangent Points Across Weight Profiles (2026-11-08)
+
+Expanded the exact rational-quadratic tangent matrix to four binary-representable
+scale/weight pairs: middle weights `0.5` at scales `0.5` and `2.0`, plus weights
+`0.25` and `2.0` at unit scale. The signed distance is derived from the analytic
+curvature radius at `t=0.5`. A 256-bit oracle confirms the even-root tangent
+factor and same-sign neighbors. For every case, the oracle tangent point must
+lie on retained cubic output within requested geometry tolerance; every stall
+interval that the production isolator reports must also map both endpoints
+within tolerance. The assertion intentionally does not require every even root
+to be represented as a reported stall: output correspondence is the invariant.
+
+Release validation: focused weight/scale matrix, 40 assertions/1 case; full
+worker-kernel suite, 1,703,825 assertions/64 cases; `git diff --check` passes.
+Test commit `0dbbc9871` (`test(offset): map rational tangencies across
+weights`). This qualifies one clamped single-span degree-2 control layout and
+these four positive weight/scale pairs only. Still open: further weight
+profiles, nonuniform and repeated-knot layouts, higher degrees, periodic seam
+and interior-root ownership, and broader per-event output correspondence.
