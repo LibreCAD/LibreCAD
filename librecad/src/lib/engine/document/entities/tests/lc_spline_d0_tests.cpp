@@ -176,6 +176,68 @@ TEST_CASE("RS_Spline::tryBoundJet encloses the curve on the box", "[curve-offset
     }
 }
 
+TEST_CASE("Rational periodic spline product bounds remain conservative near the seam",
+          "[curve-offset][d0][bound][periodic][rational]") {
+    RS_Spline periodic{nullptr, RS_SplineData{2, false}};
+    const std::vector<RS_Vector> controls{{0, 0}, {25, -15}, {55, -5}, {70, 20},
+                                          {50, 45}, {15, 50}, {-15, 25}};
+    for (const RS_Vector& point : controls) {
+        periodic.addControlPoint({point.x + 1000.0, point.y - 2000.0});
+    }
+    periodic.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+    REQUIRE(periodic.validate());
+    periodic.setClosed(true);
+    RS_SplineData sourceData = periodic.getData();
+    const std::vector<double> baseWeights{1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6};
+    sourceData.weights = baseWeights;
+    sourceData.weights.insert(sourceData.weights.end(), baseWeights.begin(),
+                              baseWeights.begin() + sourceData.degree);
+    RS_Spline source{nullptr, sourceData};
+    REQUIRE(source.validate());
+    REQUIRE(source.hasWrappedControlPoints());
+
+    const std::vector<double> breaks = source.getBreakParameters();
+    REQUIRE(breaks.size() >= 2);
+    const double spanStart = breaks[breaks.size() - 2];
+    const double spanEnd = breaks.back();
+    const double boxStart = spanEnd - (spanEnd - spanStart) / 1048576.0;
+    LC_CurveJetBounds bounds;
+    REQUIRE(source.tryBoundJet(boxStart, spanEnd, bounds, true));
+    REQUIRE(bounds.rationalFactorDerivativeBase.isValid());
+    REQUIRE(bounds.rationalFactorDerivativeDistanceTerm.isValid());
+
+    constexpr double signedDistance = 0.005;
+    const LC_Interval signBound = bounds.offsetFactorDerivativeSignNumerator(signedDistance);
+    REQUIRE(signBound.isValid());
+    // The near-stationary seam may remain unresolved, but boxes elsewhere in
+    // the spline should still produce useful monotonicity proofs. Every such
+    // proof must agree with an independently evaluated jet in that box.
+    size_t signProvedBoxes = 0;
+    for (size_t spanIndex = 0; spanIndex + 1 < breaks.size(); ++spanIndex) {
+        const double spanLength = breaks[spanIndex + 1] - breaks[spanIndex];
+        for (int piece = 0; piece < 16; ++piece) {
+            const double a = breaks[spanIndex] + spanLength * piece / 16.0;
+            const double b = breaks[spanIndex] + spanLength * (piece + 1) / 16.0;
+            LC_CurveJetBounds pieceBounds;
+            REQUIRE(source.tryBoundJet(a, b, pieceBounds, true));
+            const LC_Interval pieceSignBound =
+                pieceBounds.offsetFactorDerivativeSignNumerator(signedDistance);
+            if (!pieceSignBound.excludesZero()) continue;
+            ++signProvedBoxes;
+            LC_CurveJet jet;
+            REQUIRE(source.tryEvaluateJet((a + b) / 2.0, LC_CurveEvaluationSide::Interior, jet));
+            const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+            REQUIRE(speedSquared > 0.0);
+            const double derivative = 3.0 * std::sqrt(speedSquared) *
+                    (jet.first.x * jet.second.x + jet.first.y * jet.second.y) -
+                signedDistance * (jet.first.x * jet.third.y - jet.first.y * jet.third.x);
+            CHECK(((pieceSignBound.lo() > 0.0 && derivative > 0.0) ||
+                   (pieceSignBound.hi() < 0.0 && derivative < 0.0)));
+        }
+    }
+    CHECK(signProvedBoxes > 0);
+}
+
 TEST_CASE("RS_Spline::tryBoundJet narrows as the box shrinks", "[curve-offset][d0][bound]") {
     const RS_Spline bezier = makeSpline(3, {{0, 0}, {1, 3}, {2, -3}, {3, 0}}, {0, 0, 0, 0, 1, 1, 1, 1});
     LC_CurveJetBounds wide;

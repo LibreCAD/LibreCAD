@@ -2016,7 +2016,7 @@ private:
                 // simple root when they differ. This removes sampling from
                 // the easy part of cusp isolation without treating a possible
                 // tangency (where g' contains zero) as a cusp.
-                const LC_Interval dg = speedProved ? bounds.offsetFactorDerivativeNumerator(m_d)
+                const LC_Interval dg = speedProved ? bounds.offsetFactorDerivativeSignNumerator(m_d)
                                                    : LC_Interval{};
                 if (speedProved && dg.isValid() && dg.excludesZero()) {
                     const double next = std::nextafter(leaf.t0, leaf.t1);

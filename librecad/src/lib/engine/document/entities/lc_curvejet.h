@@ -78,6 +78,9 @@ struct LC_CurveJetBounds {
     /** Optional conservative enclosure of C''' for certified root isolation. */
     LC_Interval dddx;
     LC_Interval dddy;
+    /** Optional rational-spline Bernstein bounds for a positive-scaled g' numerator. */
+    LC_Interval rationalFactorDerivativeBase;
+    LC_Interval rationalFactorDerivativeDistanceTerm;
 
     bool isValid() const {
         return x.isValid() && y.isValid() && dx.isValid() && dy.isValid() && ddx.isValid() &&
@@ -114,6 +117,20 @@ struct LC_CurveJetBounds {
         const LC_Interval tangentJerkCross = dx * dddy - dy * dddx;
         return LC_Interval::point(3.0) * sqrt(s2) * tangentAcceleration -
                LC_Interval::point(signedDistance) * tangentJerkCross;
+    }
+
+    /**
+     * An enclosure with the same sign as g' for use in monotonicity proofs.
+     * Rational spline bounds store W^6 g' as Bernstein products to avoid the
+     * dependency growth of quotient component intervals; W is positive.
+     */
+    LC_Interval offsetFactorDerivativeSignNumerator(const double signedDistance) const {
+        if (rationalFactorDerivativeBase.isValid() &&
+            rationalFactorDerivativeDistanceTerm.isValid()) {
+            return rationalFactorDerivativeBase -
+                   LC_Interval::point(signedDistance) * rationalFactorDerivativeDistanceTerm;
+        }
+        return offsetFactorDerivativeNumerator(signedDistance);
     }
 
 private:

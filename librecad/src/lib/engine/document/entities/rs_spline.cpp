@@ -2227,6 +2227,75 @@ bool RS_Spline::tryBoundJet(const double a, const double b, LC_CurveJetBounds &b
               return nx[i] * my[j] - ny[i] * mx[j];
             });
         result.crossProduct = crossNumerator / sqr(w2);
+
+        if (p >= 2 && speedNumerator.hi() > 0.0) {
+          // N = A'W - AW', N' = A''W - AW'', and
+          // N'' = A'''W + A''W' - A'W'' - AW'''. With C' = N/W^2,
+          // g' has the sign of W^6 g' = 3 sqrt(N.N)(N.N')
+          // - 6(W'/W)(N.N)^(3/2) - d W^2 cross(N,N'')
+          // + 4 d W W' cross(N,N'), where g = |C'|^3 - d(C' x C'').
+          const size_t secondNumeratorDegree = 2 * p - 3;
+          LC_Interval n2x[4 * g_maxDegree + 1];
+          LC_Interval n2y[4 * g_maxDegree + 1];
+          LC_Interval n2aX[4 * g_maxDegree + 1];
+          LC_Interval n2aY[4 * g_maxDegree + 1];
+          LC_Interval n2bX[4 * g_maxDegree + 1];
+          LC_Interval n2bY[4 * g_maxDegree + 1];
+          LC_Interval n2cX[4 * g_maxDegree + 1];
+          LC_Interval n2cY[4 * g_maxDegree + 1];
+          LC_Interval n2dX[4 * g_maxDegree + 1];
+          LC_Interval n2dY[4 * g_maxDegree + 1];
+          for (size_t i = 0; i <= secondNumeratorDegree; ++i) {
+            n2aX[i] = n2aY[i] = n2dX[i] = n2dY[i] = LC_Interval::point(0.0);
+          }
+          if (p >= 3) {
+            productNet(p - 3, p, [&](const size_t j, const size_t k) {
+              return thirdNet[j].x * valueNet[k].w;
+            }, n2aX);
+            productNet(p - 3, p, [&](const size_t j, const size_t k) {
+              return thirdNet[j].y * valueNet[k].w;
+            }, n2aY);
+            productNet(p, p - 3, [&](const size_t j, const size_t k) {
+              return valueNet[j].x * thirdNet[k].w;
+            }, n2dX);
+            productNet(p, p - 3, [&](const size_t j, const size_t k) {
+              return valueNet[j].y * thirdNet[k].w;
+            }, n2dY);
+          }
+          productNet(p - 2, p - 1, [&](const size_t j, const size_t k) {
+            return secondNet[j].x * firstNet[k].w;
+          }, n2bX);
+          productNet(p - 2, p - 1, [&](const size_t j, const size_t k) {
+            return secondNet[j].y * firstNet[k].w;
+          }, n2bY);
+          productNet(p - 1, p - 2, [&](const size_t j, const size_t k) {
+            return firstNet[j].x * secondNet[k].w;
+          }, n2cX);
+          productNet(p - 1, p - 2, [&](const size_t j, const size_t k) {
+            return firstNet[j].y * secondNet[k].w;
+          }, n2cY);
+          for (size_t i = 0; i <= secondNumeratorDegree; ++i) {
+            n2x[i] = n2aX[i] + n2bX[i] - n2cX[i] - n2dX[i];
+            n2y[i] = n2aY[i] + n2bY[i] - n2cY[i] - n2dY[i];
+          }
+          const LC_Interval dotNumerator = productHull(
+              numeratorDegree, derivativeDegree, [&](const size_t i, const size_t j) {
+                return nx[i] * mx[j] + ny[i] * my[j];
+              });
+          const LC_Interval crossDerivativeNumerator = productHull(
+              numeratorDegree, secondNumeratorDegree, [&](const size_t i, const size_t j) {
+                return nx[i] * n2y[j] - ny[i] * n2x[j];
+              });
+          const LC_Interval nonnegativeSpeedNumerator =
+              LC_Interval::hull(std::max(0.0, speedNumerator.lo()), speedNumerator.hi());
+          const LC_Interval sqrtSpeedNumerator = sqrt(nonnegativeSpeedNumerator);
+          result.rationalFactorDerivativeBase =
+              LC_Interval::point(3.0) * sqrtSpeedNumerator * dotNumerator -
+              LC_Interval::point(6.0) * (w1 / w) * nonnegativeSpeedNumerator * sqrtSpeedNumerator;
+          result.rationalFactorDerivativeDistanceTerm =
+              sqr(w) * crossDerivativeNumerator -
+              LC_Interval::point(4.0) * w * w1 * crossNumerator;
+        }
       }
     }
   }
