@@ -26006,3 +26006,23 @@ per-event source-span and output ownership checks to every conditioned-periodic
 candidate and measured tiny-reversal collapse. Keep refusal for any case whose
 aggregate bound exceeds `nodeMerge` or whose resolver observes a reversal it
 cannot certify.
+
+#### W563eh Follow-up. Validate Every Conditioned-periodic Collapse Record (2026-11-08)
+
+Extended the conditioned, nonuniform periodic rational cache matrix to inspect
+each tiny-reversal collapse record on complete direct results. Every record is
+checked for finite in-domain source parameters, a measured extent within the
+existing cusp/non-cusp collapse bound, and a replacement point at a retained
+output endpoint. Bounded-by-cusps records must additionally be owned by an
+independently inventoried high-precision oracle cusp within requested geometry
+tolerance. Existing candidate-box checks continue to verify unique candidate
+records and source-span ownership.
+
+Release validation: conditioned periodic matrix, 23,708 assertions/1 case;
+full worker-kernel suite, 1,703,785 assertions/63 cases; `git diff --check`
+passes. Test commit `910a1ad07` (`test(offset): verify periodic collapse
+ownership`). This proves event ownership only for records emitted by the
+current conditioned fixture matrix. Next: broaden rational tangent isolation
+across spline degrees, weight profiles, knot layouts, and geometry scales;
+continue enforcing fail-closed behavior and output correspondence for every
+new accepted profile.
