@@ -27,6 +27,10 @@
 #include <QElapsedTimer>
 #include <QEventLoop>
 #include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <QProcess>
 #include <QStandardPaths>
 #include <QThread>
@@ -7375,7 +7379,49 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                                 INFO(reader.readAllStandardError().toStdString());
                                 CHECK(reader.exitStatus() == QProcess::NormalExit);
                                 CHECK(reader.exitCode() == 0);
-                                CHECK_FALSE(reader.readAllStandardOutput().isEmpty());
+                                const QByteArray output = reader.readAllStandardOutput();
+                                CHECK_FALSE(output.isEmpty());
+                                QJsonParseError parseError;
+                                const QJsonDocument document = QJsonDocument::fromJson(
+                                    output, &parseError);
+                                REQUIRE(parseError.error == QJsonParseError::NoError);
+                                REQUIRE(document.isObject());
+                                const QJsonArray objects = document.object()
+                                    .value("OBJECTS").toArray();
+                                QJsonObject externalSpline;
+                                for (const QJsonValue& object : objects) {
+                                    const QJsonObject candidate = object.toObject();
+                                    if (candidate.value("entity").toString() == "SPLINE") {
+                                        externalSpline = candidate;
+                                        break;
+                                    }
+                                }
+                                REQUIRE(!externalSpline.isEmpty());
+                                CHECK(externalSpline.value("degree").toInt() ==
+                                      translatedCache->degree);
+                                const QJsonArray knots =
+                                    externalSpline.value("knots").toArray();
+                                REQUIRE(knots.size() == static_cast<qsizetype>(
+                                    translatedCache->knotslist.size()));
+                                for (qsizetype i = 0; i < knots.size(); ++i)
+                                    CHECK(knots[i].toDouble() == Catch::Approx(
+                                        translatedCache->knotslist[static_cast<std::size_t>(i)])
+                                        .margin(1e-12));
+                                const QJsonArray controls =
+                                    externalSpline.value("ctrl_pts").toArray();
+                                REQUIRE(controls.size() == static_cast<qsizetype>(
+                                    translatedCache->controlPoints.size()));
+                                for (qsizetype i = 0; i < controls.size(); ++i) {
+                                    const auto& expected = translatedCache->controlPoints[
+                                        static_cast<std::size_t>(i)];
+                                    const QJsonObject actual = controls[i].toObject();
+                                    CHECK(actual.value("x").toDouble() ==
+                                          Catch::Approx(expected.x).margin(1e-11));
+                                    CHECK(actual.value("y").toDouble() ==
+                                          Catch::Approx(expected.y).margin(1e-11));
+                                    CHECK(actual.value("z").toDouble() ==
+                                          Catch::Approx(expected.z).margin(1e-11));
+                                }
                                 ++libreDwgCases;
                             }
 #endif
