@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-07. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-08. Project: **LibreCAD**, not LibreCAD_3.
 Latest source-picker acceptance contract: in the offset Properties widget, a
 user can change the source-curve family as part of choosing a replacement
 entity; changing the family refreshes the live candidate list before selection,
@@ -55,6 +55,28 @@ it does not expand the modeled-kind inventory or introduce a new UI slice.
 Use `SupportedKinds` as the authoritative picker list and continue with the
 variant-level implementation and validation steps below. The picker contract
 is complete; the broader all-family end-to-end requirement is not.
+
+2026-11-08 acceptance clarification: the source-type control must remain
+editable during replacement, including when an existing source is already
+shown. Changing its value refreshes the candidate entities before a pick; it
+must not clear, silently replace, or stop highlighting the existing source.
+Selecting a replacement commits its actual typed geometry atomically, while
+cancel or an invalid candidate leaves source and cache unchanged. The selector
+must include every current `SupportedKinds` entry. In particular,
+`LC_Parabola` remains selectable and identifiable as parabola rather than being
+collapsed into its `LC_SplinePoints` base class. These are picker-level
+acceptance conditions already covered by the current Properties regressions;
+do not add another widget or duplicate parabola-specific selector logic.
+
+The phrase “support all source types” is tracked as a separate end-to-end
+obligation: for each of the nine modeled kinds, establish concrete eligible
+variants and verify direct generation, worker/cache admission, replacement,
+and applicable DXF/DWG read/write round-trips. For parabola specifically, the
+existing six-source/six-distance/both-sign import grid and product-writer
+receipts qualify only their recorded promotable single-cache cases. They do
+not imply support for every parabola parameterization, transform, topology, or
+distance. Unqualified variants remain explicitly unsupported/fail-closed
+until their own oracle, cache, and persistence evidence is recorded.
 
 2026-11-07 implementation reconciliation: `LC_PropertiesEditingWidgetOffsetCurve`
 already populates `cbSourceType` from `LC_OffsetSourceGeometry::SupportedKinds`
@@ -24980,3 +25002,32 @@ still refuse, and the next required work is certified root-location error and
 complete root-set/topology comparison against the independent high-precision
 oracle, including tangencies and roots at knot/seam boundaries. No new
 periodic source/cache or DXF/DWG eligibility is claimed.
+
+#### W563cx. Bound Rational-spline Offset-factor Derivatives with Bernstein Products (2026-11-08)
+
+Rational `RS_Spline` span bounds now retain Bernstein enclosures for the
+positive-scaled numerator `W^6 g'`, where `g = |C'|^3 - d(C' x C'')`. The
+calculation forms the homogeneous derivative numerators and their products
+directly, avoiding the wider quotient-component interval expression where
+possible. Cusp isolation uses this sign-equivalent enclosure when available
+and retains the existing component-bound fallback for other curve families.
+Unresolved intervals remain unresolved; this slice does not accept a root,
+change worker status expectations, or widen geometry/cache/file eligibility.
+
+The new rational periodic regression requires valid product bounds near a
+near-stationary seam, and checks sampled jets against every interval that does
+prove a derivative sign elsewhere on the tested spline. Release validation:
+focused regression 367 assertions/1 case; `[curve-offset][d0]` 17,277
+assertions/21 cases; `[spline]` 28,390 assertions/77 cases; nonuniform
+periodic worker matrix 15,468 assertions/1 case; and full worker-kernel suite
+1,680,610 assertions/53 cases. Both test targets build. `git diff --check`
+passes. Implementation commit `d337f2341` (`fix(offset): bound rational spline
+cusp derivatives`).
+
+W563cg remains open: the gradual positive-side periodic case still refuses,
+and the seam box itself is not certified monotone. Before any eligibility
+change, validate the complete derivative enclosure against an independent
+high-precision oracle and isolate every simple, tangent, knot, and seam root;
+then compare the complete generated branch topology and cache geometry. Do not
+infer general rational-periodic support from the useful sign certificates on
+regular sub-boxes.
