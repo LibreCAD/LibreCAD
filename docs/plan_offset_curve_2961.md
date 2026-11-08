@@ -92,8 +92,9 @@ Current implementation order for the remaining “all supported types” work:
    fail visibly without replacing existing state. Fixture-generated carrier
    import/promotion and native product export/reopen are covered for one open
    mixed-bulge polyline with a disconnected worker cache through R14, R2000,
-   and R2018 DXF plus R2000 and R2018 DWG. Broader branch/source matrices
-   remain open.
+   and R2018 DXF plus R2000 and R2018 DWG. Product export/reopen now covers
+   every representable worker cache for this source fixture, including both
+   single- and multi-branch outputs; broader branch/source matrices remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -615,10 +616,16 @@ Shared source, attached draft/index and the earlier candidate branch are preserv
 
 ## 1. Scope and Sources of Truth
 
-Implement an editable ellipse-offset entity, its offset-specific worker path,
-normal document interactions, DXF/DWG persistence, source editing and trimming.
-Existing ordinary offsets of splines/parabolas/hyperbolas remain supported by
-the existing engine; extending editable definitions to those sources is excluded.
+Implement an editable offset entity with typed source definitions for every
+currently modeled source family: line, arc, circle, ellipse, spline,
+spline-points, distinct parabola, bounded hyperbola, and polyline. Include its
+offset-specific worker path, normal document interactions, DXF/DWG persistence,
+source editing, and trimming. The Properties replacement flow must allow the
+user to change source family before selecting the replacement and preserve the
+current source/cache until a replacement succeeds. This family-picker contract
+is implemented; per-family geometry-variant eligibility, worker/cache
+admission, file round-trips, and independent acceptance remain in scope and
+must not be inferred from picker presence.
 Also excluded: automatic live source links, extending/filleting offsets,
 LibreCAD_3, Vulkan/Metal/RHI, generic text/image/font rendering, Python bindings,
 and unrelated build, CI, DWG-object or infrastructure work.
@@ -892,7 +899,7 @@ candidate except the explicitly proposed native-worker tags.
 | F3 | Version/read/write/conversion, clipboard, independent fixtures and output inspection | F2 | candidate `79ae1930b`; W134 current full matrix passed Release/ASan; external CAD application validation and remote/final R acceptance remain | `[lc-offsetcurve][g-matrix]`, explicit per-row evidence |
 | U2 | Single/multi properties, busy state, async preparation and stale-result protection | E2,U1,W2 | dialog `705a0135b` and sheet `ac7c7646f`; W135 current-source dialog/sheet/async/batch-failure matrix passed Release/ASan; visible/platform/final R gates remain | `lc_offsetcurve_propertiesdialog_tests.cpp`, `lc_offsetcurve_properties_tests.cpp`, `lc_offsetcurve_batch_failure_tests.cpp`, UI-helper tests |
 | U3 | Grip drag, cancel, ownership, undo/redo and no late publication | E2,U2 | worker continuation `0e80b8540`; W136 current-source `[lc-offsetcurve][h-drag]` passed Release/ASan; visible/platform/final R gates remain | `[lc-offsetcurve][h-drag]` |
-| U4 | Ellipse-only persisted option, preview/commit parity and messages | G,F3,U2,U3 | candidate `3d7195631`; W139 current-source option lifecycle/preview/commit selector passed Release/ASan; W335 adds the ellipse source chooser; physical visible workflows remain. Generalized source selection is planned in Section 336, not closed here. | option-enable TU and visible workflows |
+| U4 | Ellipse-only persisted option, preview/commit parity and messages; typed source-family replacement picker | G,F3,U2,U3 | candidate `3d7195631`; W139 current-source option lifecycle/preview/commit selector passed Release/ASan; W335 adds the ellipse chooser; W563bg-W563bw and subsequent picker regressions complete the editable nine-family selector, type-changing replacement, filtering, typed identity, highlighting, cancellation atomicity, and invalid-candidate exclusion. The picker UI contract is closed; physical visible workflows and per-variant geometry/persistence remain open. | option lifecycle tests; `[gui][dialog][offsetcurve][source]`; visible workflows |
 | O1 | Transactional Update from legal live ellipse; no-op/refusal counts | U4 | worker batch `075038088`; W140 current-source `[lc-offsetcurve][i-update]` passed Release/ASan; visible/platform/final R gates remain | `lc_action_offsetcurve_source_tests.cpp` |
 | O2 | Restore Original, same-container dedup, attributes and all entry points | O1 | candidate `0d3fed653`, `4a231d243` plus final fixes; W141 action, UI dispatch, and R2018 DXF/DWG persistence matrix passed Release/ASan; visible/platform/final R gates remain | Restore/source-UI TUs |
 | T1 | Pure bounded trim prep and exact stored-cache fragments | C-check,E1,F2 | candidate `04c712069`; W104 requalifies standalone trim allocation/cancellation failures locally and adds both trim/cache fault executables to Linux/Windows CI; broader audit remains | `[lc-offsetcurve][trim-kernel]`, standalone trim fault target |
@@ -24426,12 +24433,16 @@ and exact-head CI remain open. Implementation commit: `0151b3e3d`.
 
 #### W563ct. Round-trip Disconnected Native Caches Through Product Writers (2026-11-07)
 
-Commit `732438725` adds native export/reopen checks to the disconnected
-mixed-bulge polyline worker-cache case. The imported result is exported by
-LibreCAD's product writer, staged-imported again, and required to remain an
-admitted `LC_OffsetCurve` with the same typed source definition and exact cache
+Commit `732438725` adds native export/reopen checks to the mixed-bulge polyline
+worker-cache case. The imported result is exported by LibreCAD's product
+writer, staged-imported again, and required to remain an admitted
+`LC_OffsetCurve` with the same typed source definition and exact cache
 fingerprint. Coverage exercises both offset sides in R14, R2000, and R2018
-DXF and R2000/R2018 DWG.
+DXF and R2000/R2018 DWG. The first condition ran this round-trip only when the
+worker emitted multiple branches. The regression now runs it for every
+cache-representable result, including single-branch output, and retains a
+separate assertion that the fixture still produces multi-branch output.
+Release CMake focused validation passes 1,995 assertions in one test case.
 
 The first integration run exposed ASCII DXF SPLINE coordinates changing by
 serialization rounding, which operation-8 correctly refused because its cache
@@ -24464,6 +24475,6 @@ line, arc, circle, ellipse, spline, spline-points, distinct parabola, bounded
 hyperbola, and polyline. Further work is per-family/per-variant generation,
 worker/cache admission, DXF/DWG import/export, and round-trip qualification;
 do not add another picker control to address those geometry gaps.
-The native writer evidence is one disconnected polyline/cache matrix, not
-universal native export support; other source families, cache variants,
-independent CAD, visible GUI, and exact-head CI remain open.
+The native writer evidence is still one source fixture and its representable
+cache outputs, not universal native export support; other source families,
+cache variants, independent CAD, visible GUI, and exact-head CI remain open.
