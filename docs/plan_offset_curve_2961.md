@@ -49,6 +49,13 @@ unsupported variants explicitly refused without mutating the current source
 or cache. A type appearing in the picker is not proof that every one of its
 geometric variants is supported.
 
+The latest repeated request to change source type before selecting a new curve
+and to expose all supported source families reconfirms this existing contract;
+it does not expand the modeled-kind inventory or introduce a new UI slice.
+Use `SupportedKinds` as the authoritative picker list and continue with the
+variant-level implementation and validation steps below. The picker contract
+is complete; the broader all-family end-to-end requirement is not.
+
 Current implementation order for the remaining “all supported types” work:
 
 1. **Inventory and eligibility:** use `SupportedKinds` as the canonical set;
@@ -83,9 +90,10 @@ Current implementation order for the remaining “all supported types” work:
    regenerate/validate the cache. Assert dynamic type, parameters, weights,
    knots, orientation, and geometry as applicable; unsupported file lanes must
    fail visibly without replacing existing state. Fixture-generated carrier
-   import/promotion is covered for one open mixed-bulge polyline through R14,
-   R2000, and R2018 DXF plus R2000 and R2018 DWG; native product export and
-   broader branch/source matrices remain open.
+   import/promotion and native product export/reopen are covered for one open
+   mixed-bulge polyline with a disconnected worker cache through R14, R2000,
+   and R2018 DXF plus R2000 and R2018 DWG. Broader branch/source matrices
+   remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24415,3 +24423,30 @@ This is carrier-reader and staged-import coverage, not native `RS_FilterDXFRW`
 export/reopen coverage or universal disconnected-cache support. Other spline
 degrees/weights, non-polyline source variants, visible GUI, independent CAD,
 and exact-head CI remain open. Implementation commit: `0151b3e3d`.
+
+#### W563ct. Round-trip Disconnected Native Caches Through Product Writers (2026-11-07)
+
+Commit `732438725` adds native export/reopen checks to the disconnected
+mixed-bulge polyline worker-cache case. The imported result is exported by
+LibreCAD's product writer, staged-imported again, and required to remain an
+admitted `LC_OffsetCurve` with the same typed source definition and exact cache
+fingerprint. Coverage exercises both offset sides in R14, R2000, and R2018
+DXF and R2000/R2018 DWG.
+
+The first integration run exposed ASCII DXF SPLINE coordinates changing by
+serialization rounding, which operation-8 correctly refused because its cache
+comparison is exact. `dxfRW::writeSpline` now scopes ASCII stream precision to
+`max_digits10` for the SPLINE record and restores the previous stream setting;
+the rest of DXF retains its existing precision/formatting. Release CMake build
+of `librecad_tests` succeeded, and the focused cross-lane test passed 2,129
+assertions. `git diff --check` passed before commit.
+
+The broad `[dxf]` suite was rerun with the scoped implementation: 783 cases,
+777 passed, 2 failed, and 4 skipped (531,840 assertions; 11,042 failed).
+Observed failures are two hatch-edge count assertions and exact trim-geometry
+assertions in the R2018 closed-cache trim path. They are outside the changed
+SPLINE writer path but remain unclassified against the base commit; do not
+represent them as baseline failures. Re-run and triage them before closeout.
+The native writer evidence is one disconnected polyline/cache matrix, not
+universal native export support; other source families, cache variants,
+independent CAD, visible GUI, and exact-head CI remain open.
