@@ -26125,3 +26125,19 @@ full worker-kernel suite, 1,703,876 assertions/67 cases; `git diff --check`
 passes. Test commit `5ab777e1b` (`test(offset): map periodic rational seam
 root`). This covers one rational closed cubic and one seam event, not every
 periodic weight/knot profile or all seam-crossing unresolved-run layouts.
+
+#### W563eh Follow-up. Check Every Stall Endpoint in the Seam Fixture (2026-11-08)
+
+Extended the periodic rational seam regression so every reported stall
+interval, if present, maps both oracle-evaluated interval endpoints to retained
+output endpoints within requested geometry tolerance. The current fixture
+represents the seam root as a candidate and emits no stall interval, so its
+active ownership assertion remains the seam candidate/output check; the loop
+keeps the per-event invariant in place for future fixture variants without
+claiming stall coverage from this case.
+
+Release validation: periodic rational seam case, 15 assertions/1 case; full
+worker-kernel suite, 1,703,876 assertions/67 cases; `git diff --check` passes.
+Test commit `75a218c9e` (`test(offset): check periodic seam stall
+endpoints`). This is a diagnostic-coverage refinement, not a new periodic
+profile or a claim that the current fixture exercised a stall record.
