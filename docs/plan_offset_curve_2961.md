@@ -111,7 +111,10 @@ Current implementation order for the remaining “all supported types” work:
    cache is checked across all five lanes, while its multi-branch side remains
    fallback-only; an unweighted spline is checked across all five lanes on both
    signed sides; a rational tangent-constrained cubic offset is product-
-   round-tripped through all five lanes. Representative product-writer
+   round-tripped through all five lanes. Wrapped periodic spline caches are
+   product-round-tripped at unit scale and quarter-offset for degree 2/3,
+   five/six-base-control layouts, unit/rational weights, and both sides across
+   all five lanes. Representative product-writer
    round-trips now exist for all nine modeled source families. Per-family
    variants, wider distances/sides, independent-CAD compatibility, and visible
    workflows remain open.
@@ -24660,3 +24663,19 @@ and `git diff --check` pass. This is one nonrational cubic wrapped-periodic
 layout and one side for native writer/reopen; it does not establish general
 periodic spline persistence, arbitrary topology/weights, independent-CAD
 equivalence, visible-GUI acceptance, or exact-head CI.
+
+#### W563dd. Broaden Wrapped Periodic Spline Writer Round-trips (2026-11-07)
+
+The native writer/reopen check now covers the periodic spline import matrix at
+unit scale and distance factor `0.25`: degrees 2 and 3, both five- and
+six-base-control wrapped layouts, unit and positive rational weights, and both
+offset sides. Each of the 16 source/side combinations is exported and
+staged-imported through R14/R2000/R2018 DXF and R2000/R2018 DWG, preserving the
+typed source definition and exact generated cache fingerprint.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"wrapped periodic spline source promotes on both sides across file lanes"`
+passes 63,135 assertions in one test case. The target rebuild and
+`git diff --check` pass. Other periodic scales/distances, wider weight ranges,
+periodic topologies, independent-CAD equivalence, visible-GUI acceptance, and
+exact-head CI remain open.
