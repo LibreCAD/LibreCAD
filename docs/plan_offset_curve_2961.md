@@ -25801,13 +25801,14 @@ closed.
 
 Replaced the invalid fixture attempt (which called private
 `RS_Spline::insertKnot()`) with a valid periodic rational cubic constructed
-through public APIs. The 256-bit oracle now confirms seam position, tangent,
-and curvature continuity, and refines an interior curvature extremum to a
-same-sign even root for the selected offset distance. This is useful
-qualifying evidence, but the production direct builder still reaches
-`IsolationWorkLimit` before it can complete that case. The regression asserts typed
-`AmbiguousRegularity`, incomplete diagnostics, and no partial branches; this is
-fail-closed coverage, not successful periodic rational tangent support. An
+through public APIs, minimized to four base controls. The 256-bit oracle
+confirms seam position, tangent, and curvature continuity, and refines an
+interior curvature extremum to a same-sign even root for the selected offset
+distance. This is useful qualifying evidence, but the production direct
+builder still reaches `IsolationWorkLimit` before it can complete that case.
+The regression asserts typed `AmbiguousRegularity`, incomplete diagnostics,
+and no partial branches; this is fail-closed coverage, not successful periodic
+rational tangent support. An
 experimental bounded-interior-stall change did not resolve this case and
 regressed the existing rational interior-knot test, so that change was
 removed. Next, improve tangent/even-root isolation without weakening the
@@ -25816,3 +25817,10 @@ bounded candidate/stall and maps to an output endpoint/collapse. Only then
 replace the refusal expectation with success and output-geometry assertions.
 Keep the committed rational interior-knot and periodic seam results as
 separate, narrower claims.
+
+The current diagnostic slice records total cusp-isolation boxes visited and,
+on the global work-limit refusal, the active unresolved run's box count and
+bounded motion extent. The focused periodic case and full worker suite pass
+(1,703,640 assertions/62 cases). Use these measurements to design the next
+bounded root-isolation step; do not raise the work cap without accounting for
+worst-case runtime and preserving fail-closed behavior.
