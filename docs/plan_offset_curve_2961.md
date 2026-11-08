@@ -26214,3 +26214,44 @@ cases; `librecad_tests` builds; `git diff --check` passes. Test commit
 automated widget evidence. The visible GUI acceptance remains open because CUA
 reported the Mac locked during this turn; do not infer visible completion from
 the offscreen tests.
+
+#### W563ek. Reconcile the Repeated All-source-types Picker Request (2026-11-08)
+
+The repeated requirement is that the user can change the requested source
+curve type before selecting a replacement and that the picker offers every
+currently supported source family, including parabola. The roadmap's current
+implementation evidence already closes this picker-level behavior: the type
+control remains enabled with an existing source, changing the family filters
+replacement candidates without mutating the source/result, and the canonical
+`LC_OffsetSourceGeometry::SupportedKinds` list supplies all nine choices.
+Parabola remains separately typed from `LC_SplinePoints`, and source
+highlighting/replacement behavior is covered by the existing widget tests.
+
+No new picker implementation slice is needed. Preserve the existing UI
+contract and avoid duplicate type controls or a parabola-only branch. Continue
+the actual support work at the per-variant level: eligibility, direct geometry,
+worker/cache behavior, source replacement, and applicable DXF/DWG read/write
+round-trips must each have evidence; unsupported variants must fail closed.
+The visible interactive acceptance gate remains open and is not satisfied by
+offscreen widget tests. This reconciliation does not mark the broader
+all-families support requirement complete.
+
+#### W563el. Requalify Rational Periodic Seam Mapping Across Weight Profiles (2026-11-08)
+
+Expanded the simple-root periodic rational seam regression to exercise two
+distinct positive weight profiles on the same closed cubic control/knot layout.
+For each profile, a 256-bit oracle derives the seam offset from matching
+one-sided curvature, verifies opposite one-sided offset-factor signs, and
+requires complete isolation. Every candidate box with span provenance must
+remain inside its source span; seam ownership must belong to the first or last
+span at the actual domain endpoint; and the oracle seam point must map to a
+retained cubic-piece endpoint within requested geometry tolerance. This
+qualifies the second profile without assuming identical candidate counts or
+diagnostic topology.
+
+Release validation: focused two-profile seam case, 88 assertions/1 case; full
+worker-kernel suite, 1,703,959 assertions/68 cases; `git diff --check` passes.
+Test commit `819d84ad7` (`test(offset): cover periodic seam weight profiles`).
+Remaining: other periodic control/knot layouts, even-multiplicity seam roots,
+higher degrees, and complete mapping of all certified candidate/stall events
+across the broader rational periodic matrix.
