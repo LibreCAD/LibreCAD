@@ -25119,3 +25119,34 @@ not a proof of root completeness; tangent/even roots and exact knot/seam roots
 still require explicit isolation and comparison. The gradual positive-side
 periodic case remains fail-closed, and no new cache or file-format eligibility
 is claimed.
+
+#### W563eb. Prune Rational Cusp Boxes with a Bernstein No-root Proof (2026-11-08)
+
+Rational spline cusp isolation can now request a signed-distance-specific
+certificate for the polynomial `P = q^3 - d^2 W^4 r^2`. The coefficient net
+is formed with outward interval arithmetic, including the rational Bernstein
+product weights fixed in W563ea. A box is pruned only if every coefficient is
+strictly positive or every coefficient is strictly negative; then `P` has no
+zero anywhere in the closed box, and therefore the unsquared offset factor has
+no cusp there. Because squaring introduces extraneous roots, this certificate
+never counts, locates, or accepts a cusp. Uncertain nets stay on the existing
+subdivision and fail-closed path. The coefficient arrays are temporary to the
+explicit cusp query, so normal spline bounds do not carry the storage or
+calculation cost.
+
+The 256-bit oracle regression checks four interior samples in every
+certificate-pruned box for both distance signs, across eight representative
+distance magnitudes. It also requires a positive-distance case where the new
+proof excludes a box even though the direct offset-factor interval still
+contains zero. The focused test passes 8,727 assertions/1 case. The
+nonuniform periodic worker/cache matrix passes 15,468 assertions/1 case; the
+direct cusp suite passes 85,429 assertions/13 cases; and the full worker-kernel
+suite passes 1,691,342 assertions/55 cases. Both test targets build and
+`git diff --check` passes. Implementation commit `e97c65e3f`
+(`fix(offset): prune cusp boxes with Bernstein no-root proof`).
+
+This advances only certified zero-free pruning. It does not isolate or count
+roots, prove tangent/even-root completeness, resolve exact knot/seam roots,
+change the gradual positive-side refusal, or expand cache and file eligibility.
+W563cg remains open; the next slice must address root isolation/completeness
+without interpreting roots of the squared polynomial as cusps.
