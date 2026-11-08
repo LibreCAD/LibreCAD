@@ -26,19 +26,24 @@ USA.
 Updated: 2026-11-08. Project: **LibreCAD**, not LibreCAD_3.
 ## Current Contract
 
-The latest request reconfirms the source replacement contract: while choosing
-a replacement, the user can change the source family before selecting an
-entity, and the candidate list refreshes to that family. The selector uses
+The latest follow-up, after the explicit parabola request, reconfirms the
+source replacement contract: while choosing a replacement, the user can
+change the source family before selecting an entity, and the candidate list
+refreshes to that family. The selector uses
 `LC_OffsetSourceGeometry::SupportedKinds` and includes every modeled kind:
 line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
 and polyline. `LC_Parabola` remains distinct from its `LC_SplinePoints` base.
 
 This Properties-widget behavior is implemented and covered by regressions;
 do not create another selector or a parabola-only UI branch. Changing the
-filter alone must preserve the current source and highlight. A successful
+filter alone must preserve the current source and highlight, and selecting a
+different family must expose only matching eligible candidates. A successful
 candidate pick atomically replaces it with the candidate's actual typed
 geometry; cancellation or an invalid candidate leaves source and cache
-unchanged. This closes only the picker-level requirement.
+unchanged. This closes only the picker-level requirement. The requested
+support expansion remains open until every production-supported family and
+eligible variant is qualified through geometry generation, worker/cache
+admission, replacement, and applicable DXF/DWG persistence.
 
 “Support all source types” remains an end-to-end obligation. For each listed
 family, inventory concrete eligible variants and independently validate direct
@@ -26691,3 +26696,28 @@ validation: focused `[multiplicity]`, 92 assertions/3 cases; full
 `librecad_offset_worker_kernel_tests`, 1,704,431 assertions/76 cases;
 `git diff --check` passes. Test commit `2e645cc31` (`test(offset): cover
 alternate rational double knot`).
+
+#### W563ep. Gate Open Rational Tangent Runs on Aggregate Motion (2026-11-08)
+
+Added symmetric rational-quadratic tangent profiles with middle weights `0.125`
+and `4.0` to the independent-oracle weight/scale matrix. The weight-4 case
+initially refused at `RunResolution`: individually delegated leaves passed the
+motion gate, but their combined certified motion exceeded `nodeMerge` by about
+1.7%. This exposed an inconsistency where open sources gated each leaf while
+closed sources gated the accumulated unresolved run, even though both resolve
+the combined run atomically.
+
+Changed the delegation predicate to require the accumulated certified motion
+of the unresolved run to be at most `nodeMerge` for open and closed sources.
+This preserves the existing root-count requirements, subdivision-depth and
+isolation-box budgets, and fail-closed behavior; it does not raise a limit or
+weaken a tolerance. The additional subdivision resolves the weight-4 tangent
+and keeps the root point and each stall endpoint within requested geometry
+tolerance. This qualifies only the two added profiles and this aggregate-run
+gate; arbitrary rational weights, knot layouts, degrees, and complete
+candidate-to-output mapping remain open.
+
+Release validation: focused expanded profile, 78 assertions/1 case;
+`[rational][tangent-root]`, 597 assertions/11 cases; full
+`librecad_offset_worker_kernel_tests`, 1,704,901 assertions/77 cases;
+`git diff --check` passes. Implementation/test commit pending.

@@ -2188,10 +2188,8 @@ private:
                     (bounds.rationalCuspRootVariationUpperBound >= 2 ||
                      rationalRootCountUnavailable) &&
                     std::isfinite(boundedExtent) &&
-                    (m_source.closed()
-                         ? std::isfinite(aggregateRunExtent) &&
-                               aggregateRunExtent <= m_options.tolerance.nodeMerge
-                         : boundedExtent <= m_options.tolerance.nodeMerge);
+                    std::isfinite(aggregateRunExtent) &&
+                    aggregateRunExtent <= m_options.tolerance.nodeMerge;
                 // A rational tangent can lose strict Bernstein coefficient
                 // signs as its box narrows. Delegate only this rational
                 // uncertainty, and only under the complete-motion bound; the

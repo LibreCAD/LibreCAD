@@ -4101,7 +4101,8 @@ TEST_CASE("binary rational quadratic tangent stalls are bounded across scales",
 TEST_CASE("rational quadratic tangent stalls map across weight profiles and binary scales",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][scale]") {
     const std::vector<std::pair<double, double>> profiles{
-        {0.5, 0.5}, {2.0, 0.5}, {1.0, 0.25}, {1.0, 2.0}};
+        {0.5, 0.5}, {2.0, 0.5}, {1.0, 0.25}, {1.0, 2.0},
+        {1.0, 0.125}, {1.0, 4.0}};
     for (const auto& [scale, middleWeight] : profiles) {
         RS_SplineData data{2, false};
         data.type = RS_SplineData::SplineType::ClampedOpen;
