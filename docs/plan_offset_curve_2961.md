@@ -25746,6 +25746,35 @@ one-to-one mapping for every candidate box in every spline profile. Periodic
 rational tangent/even roots remain unqualified; use the explicit seam-fixture
 preconditions above.
 
-Next: extend the mapping invariant to every isolated candidate/certified box
-in the conditioned periodic rational matrix, and map each bounded stall to a
-retained endpoint or independently measured in-tolerance collapse.
+The conditioned periodic rational mapping is extended in the W563eh
+follow-up below; the remaining next item is a qualified periodic rational
+tangent/even-root fixture.
+
+#### W563eh Follow-up. Map Conditioned Periodic Rational Roots to Output (2026-11-08)
+
+Extended the conditioned nonuniform periodic rational-spline oracle matrix.
+For every completed isolation case with a successful direct branch build, each
+production candidate is now associated one-to-one with the high-precision
+oracle cusp by parameter and offset-point geometry, checked against its
+source-span-owned candidate box, and mapped to either a cusp-marked output
+branch endpoint or a recorded tiny-reversal collapse. A collapse only counts
+when its source interval owns the candidate, its measured extent is within
+`nodeMerge`, and its replacement point is within requested geometry tolerance
+of the oracle cusp.
+
+This mapping is conditional on completed isolation and successful branch
+generation. It does not prove output ownership for incomplete/failed profiles,
+all legal periodic knot/weight layouts, or tangent roots missing from the
+oracle's sampled inventory. The separate smooth periodic rational
+tangent/even-root fixture remains open and must meet the seam continuity and
+same-sign oracle preconditions above.
+
+Release validation: conditioned periodic rational matrix, 23,698 assertions/1
+case; full worker-kernel suite, 1,703,614 assertions/61 cases;
+`git diff --check` passes. Test commit `364b29e65` (`test(offset): map
+periodic rational cusps to output`).
+
+Next: build and independently qualify a smooth nonuniform periodic rational
+tangent/even-root fixture; then require its seam/knot root to map to an owned
+endpoint or a measured in-tolerance collapse without relying on sign-change
+sampling.
