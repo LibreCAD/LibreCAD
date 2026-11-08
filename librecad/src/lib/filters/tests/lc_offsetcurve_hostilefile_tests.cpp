@@ -8051,6 +8051,30 @@ TEST_CASE("fit-point spline-points source imports through operation-8 validation
             CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*actualSource).toCbor());
             CHECK(RS_Spline::geometryFingerprint(*importedSpline) ==
                   RS_Spline::geometryFingerprint(expectedCache));
+            if (singleCache && variant == 0 && magnitude == .25 &&
+                side == LC_CurveOffsetSide::Left) {
+                const auto nativeOutput = directory.file("native-fit-points-" +
+                    version + extension);
+                REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
+                                                 ::format(lane)));
+                const auto nativeRoundTrip = stagedImport(nativeOutput, lane);
+                INFO("native fit-point writer round-trip " << version << extension);
+                REQUIRE(nativeRoundTrip.status == LC_OffsetImportSession::Status::Complete);
+                REQUIRE(nativeRoundTrip.graphic);
+                CHECK(nativeRoundTrip.admitted == 1);
+                CHECK(nativeRoundTrip.downgraded == 0);
+                const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+                    f::sole(*nativeRoundTrip.graphic));
+                REQUIRE(roundTripped);
+                REQUIRE(roundTripped->sourceDefinition());
+                const auto roundTripSource = values::encodeSourceDefinition(
+                    *roundTripped->sourceDefinition());
+                REQUIRE(roundTripSource);
+                CHECK(QCborValue(*expectedSource).toCbor() ==
+                      QCborValue(*roundTripSource).toCbor());
+                CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+                      RS_Spline::geometryFingerprint(expectedCache));
+            }
         }
       }
       }
