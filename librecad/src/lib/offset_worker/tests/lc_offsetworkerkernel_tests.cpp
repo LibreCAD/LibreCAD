@@ -2756,6 +2756,72 @@ TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
     }
 }
 
+TEST_CASE("rational quadratic interior tangent root remains fail-closed",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root]") {
+    RS_SplineData data{2, false};
+    data.type = RS_SplineData::SplineType::ClampedOpen;
+    data.controlPoints = {{-4, 0}, {0, 8}, {4, 0}};
+    data.knotslist = {0, 0, 0, 1, 1, 1};
+    data.weights = {1, .7, 1};
+    const RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+
+    const SplineOracle domainStart{0};
+    const SplineOracle domainEnd{1};
+    const SplineOracle root{"0.5"};
+    const SplineOracle step{"1e-24"};
+    const SplineOracle unitFactor = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, SplineOracle{1});
+    const SplineOracle curvature = 1 - unitFactor;
+    REQUIRE(abs(curvature) > SplineOracle{"1e-12"});
+    const double signedDistance = (1 / curvature).convert_to<double>();
+    const SplineOracle distance{signedDistance};
+    const SplineOracle tangent = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, distance);
+    const SplineOracle leftNeighbor = oracleOffsetFactor(
+        data, root - SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
+    const SplineOracle rightNeighbor = oracleOffsetFactor(
+        data, root + SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
+    CAPTURE(signedDistance, tangent, leftNeighbor, rightNeighbor);
+    CHECK(abs(tangent) < SplineOracle{"1e-10"});
+    CHECK(leftNeighbor != 0);
+    CHECK(rightNeighbor != 0);
+    CHECK((leftNeighbor < 0) == (rightNeighbor < 0));
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    LC_CurveJetBounds localBounds;
+    REQUIRE(source.tryBoundJetForCusp(.499, .501, localBounds, signedDistance));
+    REQUIRE(localBounds.rationalCuspRootVariationUpperBound >= 2);
+    CAPTURE(localBounds.rationalCuspRootVariationUpperBound,
+            localBounds.offsetFactorNumerator(signedDistance).lo(),
+            localBounds.offsetFactorNumerator(signedDistance).hi());
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(
+            signedDistance > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
+            std::abs(signedDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.status, diagnostics.candidateParameters,
+            diagnostics.candidateBoxes, diagnostics.stallIntervals,
+            diagnostics.failureSpan, diagnostics.failureT0, diagnostics.failureT1,
+            diagnostics.failureStage, diagnostics.isolationBoxesVisited,
+            diagnostics.failingRunBoxes, diagnostics.failingRunExtent,
+            diagnostics.failingRunObserved);
+    CHECK(built.status == LC_CurveOffsetStatus::AmbiguousRegularity);
+    CHECK_FALSE(diagnostics.complete);
+    CHECK(diagnostics.status == built.status);
+    CHECK(diagnostics.failureStage == LC_CurveOffsetCuspFailureStage::UnresolvedRunBudget);
+    CHECK(diagnostics.failingRunObserved);
+    CHECK(diagnostics.failingRunBoxes > 0);
+    CHECK(built.branches.empty());
+    CHECK(diagnostics.candidateParameters.empty());
+    CHECK(diagnostics.stallIntervals.empty());
+}
+
 TEST_CASE("nonuniform rational tangent root at a knot remains a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root]") {
     RS_SplineData data{2, false};
