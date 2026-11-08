@@ -4276,7 +4276,7 @@ TEST_CASE("rational cubic tangent at a nonuniform knot has bounded ownership",
     CHECK((leftNeighbor < 0) == (rightNeighbor < 0));
 
     const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{data}, signedDistance, 1e-2, false};
+        LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
     const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
     REQUIRE(options);
     LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
@@ -4300,6 +4300,37 @@ TEST_CASE("rational cubic tangent at a nonuniform knot has bounded ownership",
     REQUIRE(owningStall != diagnostics.stallIntervals.end());
     CHECK(owningStall->first <= .5);
     CHECK(.5 <= owningStall->second);
+
+    double stallMotion = 0.0;
+    const auto checkKnotOwnedSpan = [&](const double lo, const double hi,
+                                        const bool knotIsLeftEndpoint) {
+        LC_CurveJetBounds stallBounds;
+        REQUIRE(source.tryBoundJetForCusp(lo, hi, stallBounds, signedDistance));
+        const LC_Interval stallFactor =
+            stallBounds.offsetFactorNumeratorForMotionBound(signedDistance);
+        REQUIRE(stallFactor.isValid());
+        REQUIRE(stallBounds.speedSquared().lo() > 0.0);
+        stallMotion +=
+            std::max(std::abs(stallFactor.lo()), std::abs(stallFactor.hi())) /
+            stallBounds.speedSquared().lo() * (hi - lo);
+        for (const double parameter : {lo, hi}) {
+            if (parameter == .5) {
+                const auto value = oracleOffsetFactor(
+                    data, SplineOracle{parameter}, step, domainStart, domainEnd,
+                    distance, !knotIsLeftEndpoint);
+                CHECK(stallFactor.contains(value.convert_to<double>()));
+            } else {
+                const auto value = oracleOffsetFactor(
+                    data, SplineOracle{parameter}, step, domainStart, domainEnd,
+                    distance);
+                CHECK(stallFactor.contains(value.convert_to<double>()));
+            }
+        }
+    };
+    checkKnotOwnedSpan(owningStall->first, .5, false);
+    checkKnotOwnedSpan(.5, owningStall->second, true);
+    CAPTURE(stallMotion, options->tolerance.nodeMerge);
+    CHECK(stallMotion <= options->tolerance.nodeMerge);
 
     const auto offsetPoint = oracleOffsetPoint(
         data, root, step, domainStart, domainEnd, distance);
