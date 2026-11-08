@@ -839,6 +839,7 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
     REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
+    CHECK(typeBox->isEnabled());
     REQUIRE(typeBox->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
     for (std::size_t i = 0; i < LC_OffsetSourceGeometry::SupportedKinds.size(); ++i) {
         CHECK(typeBox->itemData(static_cast<int>(i)).toInt() ==
@@ -852,9 +853,11 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
         const auto expected = LC_OffsetSourceGeometry::capture(*sourceEntities[i]);
         REQUIRE(expected);
         REQUIRE(expected->kind() == kind);
+        CHECK(typeBox->isEnabled());
         const int typeIndex = typeBox->findData(static_cast<int>(kind));
         REQUIRE(typeIndex >= 0);
         typeBox->setCurrentIndex(typeIndex);
+        CHECK(typeBox->isEnabled());
         before.geometry(*clone);
         CHECK_FALSE(widget.isPreparing());
 
