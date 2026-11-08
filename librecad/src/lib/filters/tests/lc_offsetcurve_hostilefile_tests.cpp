@@ -5527,6 +5527,27 @@ TEST_CASE("unweighted spline source imports through operation-8 validation in DX
         CHECK(std::get<RS_SplineData>(imported->sourceDefinition()->source.value).weights.empty());
         CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
               RS_Spline::geometryFingerprint(expectedCache));
+
+        const auto nativeOutput = directory.file(std::string("native-unweighted-") +
+            (side == LC_CurveOffsetSide::Left ? "left-" : "right-") + suffix);
+        REQUIRE(lc::test::exportDrawing(*outcome->graphic, nativeOutput, format(lane)));
+        const auto nativeRoundTrip = stagedImport(nativeOutput, lane);
+        INFO("native unweighted-spline writer round-trip " << suffix);
+        REQUIRE(nativeRoundTrip.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(nativeRoundTrip.graphic);
+        CHECK(nativeRoundTrip.admitted == 1);
+        CHECK(nativeRoundTrip.downgraded == 0);
+        const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+            f::sole(*nativeRoundTrip.graphic));
+        REQUIRE(roundTripped);
+        REQUIRE(roundTripped->sourceDefinition());
+        const auto roundTripDefinition = values::encodeSourceDefinition(
+            *roundTripped->sourceDefinition());
+        REQUIRE(roundTripDefinition);
+        CHECK(QCborValue(*expectedDefinition).toCbor() ==
+              QCborValue(*roundTripDefinition).toCbor());
+        CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+              RS_Spline::geometryFingerprint(expectedCache));
     }
 }
 
