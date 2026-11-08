@@ -1678,6 +1678,27 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     : std::vector<OracleSplineCusp>{};
             if (conditionedWeights) {
                 CAPTURE(weightProfile, signedDistance, expectedCusps.size());
+                std::size_t expectedSampledCandidates = 0;
+                if (signedDistance > 0.0) {
+                    switch (weightProfile) {
+                    case WeightProfile::Alternating:
+                        expectedSampledCandidates = 8;
+                        break;
+                    case WeightProfile::ShiftedAlternating:
+                        expectedSampledCandidates = 10;
+                        break;
+                    case WeightProfile::Gradual:
+                        expectedSampledCandidates = 8;
+                        break;
+                    case WeightProfile::ReversedGradual:
+                        expectedSampledCandidates = 7;
+                        break;
+                    case WeightProfile::Mild:
+                    case WeightProfile::Wide:
+                        break;
+                    }
+                }
+                CHECK(expectedCusps.size() == expectedSampledCandidates);
                 for (const OracleSplineCusp& cusp : expectedCusps) {
                     REQUIRE(cusp.span + 1 < sourceData.knotslist.size());
                     const SplineOracle spanStart{sourceData.knotslist[cusp.span]};
