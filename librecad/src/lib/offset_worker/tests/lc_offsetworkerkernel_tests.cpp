@@ -2575,17 +2575,21 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
     }
 }
 
-TEST_CASE("periodic rational seam root has one-sided ownership and output mapping",
-          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic][rational][seam-root]") {
+TEST_CASE("periodic rational seam roots map across weight profiles",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
+          "rational][seam-root]") {
+  const std::array<std::vector<double>, 2> weightProfiles{
+      {{1, .8, 1.2, 1.5}, {1, .7, 1.4, 1.1}}};
+  for (const auto &weights : weightProfiles) {
+    CAPTURE(weights);
     RS_Spline base{nullptr, RS_SplineData{3, false}};
-    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
+    for (const RS_Vector &point : {RS_Vector{0, 0}, RS_Vector{30, -15},
                                    RS_Vector{55, 15}, RS_Vector{15, 35}})
-        base.addControlPoint(point);
+      base.addControlPoint(point);
     base.setKnotVector({0, 0, 0, 0, 1, 1, 1, 1});
     REQUIRE(base.validate());
     base.setClosed(true);
     RS_SplineData data = base.getData();
-    const std::vector<double> weights{1, .8, 1.2, 1.5};
     data.weights = weights;
     data.weights.insert(data.weights.end(), weights.begin(),
                         weights.begin() + data.degree);
@@ -2599,8 +2603,8 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
     const SplineOracle start{startValue};
     const SplineOracle end{endValue};
     const SplineOracle step{"1e-24"};
-    const SplineOracle unitLeft = oracleOffsetFactor(
-        data, end, step, start, end, SplineOracle{1}, true);
+    const SplineOracle unitLeft =
+        oracleOffsetFactor(data, end, step, start, end, SplineOracle{1}, true);
     const SplineOracle unitRight = oracleOffsetFactor(
         data, start, step, start, end, SplineOracle{1}, false);
     const SplineOracle curvatureLeft = 1 - unitLeft;
@@ -2610,25 +2614,26 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
     const double signedDistance =
         (2 / (curvatureLeft + curvatureRight)).convert_to<double>();
     const SplineOracle distance{signedDistance};
-    const SplineOracle seamLeft = oracleOffsetFactor(
-        data, end, step, start, end, distance, true);
-    const SplineOracle seamRight = oracleOffsetFactor(
-        data, start, step, start, end, distance, false);
+    const SplineOracle seamLeft =
+        oracleOffsetFactor(data, end, step, start, end, distance, true);
+    const SplineOracle seamRight =
+        oracleOffsetFactor(data, start, step, start, end, distance, false);
     const SplineOracle before = oracleOffsetFactor(
         data, end - SplineOracle{"1e-7"}, step, start, end, distance);
     const SplineOracle after = oracleOffsetFactor(
         data, start + SplineOracle{"1e-7"}, step, start, end, distance);
-    CAPTURE(startValue, endValue, signedDistance, seamLeft, seamRight,
-            before, after);
+    CAPTURE(startValue, endValue, signedDistance, seamLeft, seamRight, before,
+            after);
     CHECK(abs(seamLeft) < SplineOracle{"1e-8"});
     CHECK(abs(seamRight) < SplineOracle{"1e-8"});
     CHECK(before != 0);
     CHECK(after != 0);
     CHECK((before < 0) != (after < 0));
 
-    const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
-    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data},
+                                               signedDistance, 1e-4, false};
+    const auto options =
+        LC_OffsetWorkerTolerance::directOptions(definition, source);
     REQUIRE(options);
     LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
     const auto built = LC_CurveOffset::buildDirectBranches(
@@ -2638,9 +2643,10 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
                                             : LC_CurveOffsetSide::Right,
                                         std::abs(signedDistance)),
         *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
-    CAPTURE(built.status, diagnostics.failureStage, diagnostics.candidateParameters,
-            diagnostics.candidateBoxes, diagnostics.stallIntervals,
-            diagnostics.failingRunExtent, options->tolerance.nodeMerge);
+    CAPTURE(built.status, diagnostics.failureStage,
+            diagnostics.candidateParameters, diagnostics.candidateBoxes,
+            diagnostics.stallIntervals, diagnostics.failingRunExtent,
+            options->tolerance.nodeMerge);
     REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(diagnostics.complete);
 
@@ -2649,302 +2655,331 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
     bool seamCandidate = false;
     bool seamOwnedByStart = false;
     bool seamOwnedByEnd = false;
-    for (const LC_CurveOffsetCuspCandidateBox& box : diagnostics.candidateBoxes) {
-        if (box.span == std::numeric_limits<std::size_t>::max()) continue;
-        CHECK(box.span + 1 < sourceBreaks.size());
-        CHECK(sourceBreaks[box.span] <= box.t0);
-        CHECK(box.t1 <= sourceBreaks[box.span + 1]);
-        CHECK(box.t0 <= box.parameter);
-        CHECK(box.parameter <= box.t1);
-        const bool atStart = std::abs(box.parameter - startValue) < 1e-6;
-        const bool atEnd = std::abs(box.parameter - endValue) < 1e-6;
-        if (!atStart && !atEnd) continue;
-        seamCandidate = true;
-        seamOwnedByStart |= atStart && box.span == 0 &&
-                            box.t0 <= startValue && box.t1 >= startValue;
-        seamOwnedByEnd |= atEnd && box.span + 2 == sourceBreaks.size() &&
-                          box.t0 <= endValue && box.t1 >= endValue;
+    for (const LC_CurveOffsetCuspCandidateBox &box :
+         diagnostics.candidateBoxes) {
+      if (box.span == std::numeric_limits<std::size_t>::max())
+        continue;
+      CHECK(box.span + 1 < sourceBreaks.size());
+      CHECK(sourceBreaks[box.span] <= box.t0);
+      CHECK(box.t1 <= sourceBreaks[box.span + 1]);
+      CHECK(box.t0 <= box.parameter);
+      CHECK(box.parameter <= box.t1);
+      const bool atStart = std::abs(box.parameter - startValue) < 1e-6;
+      const bool atEnd = std::abs(box.parameter - endValue) < 1e-6;
+      if (!atStart && !atEnd)
+        continue;
+      seamCandidate = true;
+      seamOwnedByStart |= atStart && box.span == 0 && box.t0 <= startValue &&
+                          box.t1 >= startValue;
+      seamOwnedByEnd |= atEnd && box.span + 2 == sourceBreaks.size() &&
+                        box.t0 <= endValue && box.t1 >= endValue;
     }
     const bool seamStall = std::any_of(
         diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
-        [&](const std::pair<double, double>& interval) {
-            return (interval.first <= startValue && interval.second >= startValue) ||
-                   (interval.first <= endValue && interval.second >= endValue);
+        [&](const std::pair<double, double> &interval) {
+          return (interval.first <= startValue &&
+                  interval.second >= startValue) ||
+                 (interval.first <= endValue && interval.second >= endValue);
         });
     CHECK(seamCandidate);
     CHECK_FALSE(seamStall);
     CHECK((seamOwnedByStart || seamOwnedByEnd));
 
-    const auto startPoint = oracleOffsetPoint(
-        data, start, step, start, end, distance);
-    const auto endPoint = oracleOffsetPoint(
-        data, end, step, start, end, distance, true);
+    const auto startPoint =
+        oracleOffsetPoint(data, start, step, start, end, distance);
+    const auto endPoint =
+        oracleOffsetPoint(data, end, step, start, end, distance, true);
     const RS_Vector expected{
         ((startPoint.first + endPoint.first) / 2).convert_to<double>(),
         ((startPoint.second + endPoint.second) / 2).convert_to<double>()};
-    const auto nearestEndpoint = [&](const RS_Vector& point) {
-        double nearest = std::numeric_limits<double>::infinity();
-        for (const LC_OffsetBranch& branch : built.branches) {
-            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                nearest = std::min(
-                    nearest,
-                    std::min(piece.bezier.front().distanceTo(point),
-                             piece.bezier.back().distanceTo(point)));
-            }
+    const auto nearestEndpoint = [&](const RS_Vector &point) {
+      double nearest = std::numeric_limits<double>::infinity();
+      for (const LC_OffsetBranch &branch : built.branches) {
+        for (const LC_OffsetCubicPiece &piece : branch.cubicPieces) {
+          nearest = std::min(nearest,
+                             std::min(piece.bezier.front().distanceTo(point),
+                                      piece.bezier.back().distanceTo(point)));
         }
-        return nearest;
+      }
+      return nearest;
     };
     const double seamEndpointError = nearestEndpoint(expected);
     CAPTURE(expected.x, expected.y, seamEndpointError,
             options->tolerance.requestedGeometry);
     CHECK(seamEndpointError <= options->tolerance.requestedGeometry);
-    for (const auto& stall : diagnostics.stallIntervals) {
-        for (const double parameter : {stall.first, stall.second}) {
-            const auto point = oracleOffsetPoint(
-                data, SplineOracle{parameter}, step, start, end, distance,
-                parameter == endValue);
-            const RS_Vector stallEndpoint{point.first.convert_to<double>(),
-                                          point.second.convert_to<double>()};
-            const double error = nearestEndpoint(stallEndpoint);
-            CAPTURE(parameter, stallEndpoint.x, stallEndpoint.y, error,
-                    options->tolerance.requestedGeometry);
-            CHECK(error <= options->tolerance.requestedGeometry);
-        }
+    for (const auto &stall : diagnostics.stallIntervals) {
+      for (const double parameter : {stall.first, stall.second}) {
+        const auto point =
+            oracleOffsetPoint(data, SplineOracle{parameter}, step, start, end,
+                              distance, parameter == endValue);
+        const RS_Vector stallEndpoint{point.first.convert_to<double>(),
+                                      point.second.convert_to<double>()};
+        const double error = nearestEndpoint(stallEndpoint);
+        CAPTURE(parameter, stallEndpoint.x, stallEndpoint.y, error,
+                options->tolerance.requestedGeometry);
+        CHECK(error <= options->tolerance.requestedGeometry);
+      }
     }
+  }
 }
 
 TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][tangent-root]") {
-    struct Fixture {
-        std::vector<RS_Vector> controls;
-        std::vector<double> knots;
-        std::vector<double> weights;
-    };
-    const std::vector<Fixture> fixtures{
-        {{{0, 0}, {30, -15}, {55, 15}, {15, 35}},
-         {0, 0, 0, 0, 1, 1, 1, 1},
-         {1, .8, 1.2, 1.5}},
-        {{{0, 0}, {30, -15}, {55, 15}, {15, 35}},
-         {0, 0, 0, 0, 1, 1, 1, 1},
-         {1, .7, 1.4, 1.1}},
-        {{{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
-         {0, 0, 0, 0, .5, 2, 3, 3, 3, 3},
-         {1, .8, 1.2, 1.5, 1.2, .8}},
-        {{{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
-         {0, 0, 0, 0, .5, 2, 3, 3, 3, 3},
-         {1, .7, 1.4, 1.7, 1.4, .7}}};
-    for (const Fixture& fixture : fixtures) {
-        const std::vector<double>& baseWeights = fixture.weights;
-        RS_Spline source{nullptr, RS_SplineData{3, false}};
-        for (const RS_Vector& point : fixture.controls)
-            source.addControlPoint(point);
-        source.setKnotVector(fixture.knots);
-        REQUIRE(source.validate());
-        source.setClosed(true);
-        REQUIRE(source.isClosed());
-        RS_SplineData original = source.getData();
-        original.weights = baseWeights;
-        original.weights.insert(original.weights.end(), baseWeights.begin(),
-                                baseWeights.begin() + original.degree);
-        RS_Spline rationalSource{nullptr, original};
-        REQUIRE(rationalSource.validate());
-        REQUIRE(rationalSource.isClosed());
+  struct Fixture {
+    std::vector<RS_Vector> controls;
+    std::vector<double> knots;
+    std::vector<double> weights;
+  };
+  const std::vector<Fixture> fixtures{
+      {{{0, 0}, {30, -15}, {55, 15}, {15, 35}},
+       {0, 0, 0, 0, 1, 1, 1, 1},
+       {1, .8, 1.2, 1.5}},
+      {{{0, 0}, {30, -15}, {55, 15}, {15, 35}},
+       {0, 0, 0, 0, 1, 1, 1, 1},
+       {1, .7, 1.4, 1.1}},
+      {{{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
+       {0, 0, 0, 0, .5, 2, 3, 3, 3, 3},
+       {1, .8, 1.2, 1.5, 1.2, .8}},
+      {{{0, 0}, {30, -15}, {60, 0}, {55, 35}, {20, 50}, {-15, 25}},
+       {0, 0, 0, 0, .5, 2, 3, 3, 3, 3},
+       {1, .7, 1.4, 1.7, 1.4, .7}}};
+  for (const Fixture &fixture : fixtures) {
+    const std::vector<double> &baseWeights = fixture.weights;
+    RS_Spline source{nullptr, RS_SplineData{3, false}};
+    for (const RS_Vector &point : fixture.controls)
+      source.addControlPoint(point);
+    source.setKnotVector(fixture.knots);
+    REQUIRE(source.validate());
+    source.setClosed(true);
+    REQUIRE(source.isClosed());
+    RS_SplineData original = source.getData();
+    original.weights = baseWeights;
+    original.weights.insert(original.weights.end(), baseWeights.begin(),
+                            baseWeights.begin() + original.degree);
+    RS_Spline rationalSource{nullptr, original};
+    REQUIRE(rationalSource.validate());
+    REQUIRE(rationalSource.isClosed());
 
-        double domainStartValue = 0.0;
-        double domainEndValue = 0.0;
-        REQUIRE(rationalSource.getParameterDomain(domainStartValue, domainEndValue));
-        const SplineOracle domainStart{domainStartValue};
-        const SplineOracle domainEnd{domainEndValue};
-        const std::vector<double> originalBreaks = rationalSource.getBreakParameters();
-        SplineOracle bestParameter{};
-        SplineOracle bestMagnitude{0};
-        for (std::size_t span = 0; span + 1 < originalBreaks.size(); ++span) {
-            const double aValue = originalBreaks[span];
-            const double bValue = originalBreaks[span + 1];
-            if (!(aValue < bValue))
-                continue;
-            const SplineOracle a{aValue};
-            const SplineOracle width{bValue - aValue};
-            const SplineOracle derivativeStep = width * SplineOracle{"1e-20"};
-            const auto curvatureMagnitude = [&](const SplineOracle& t) {
-                return abs(1 - oracleOffsetFactor(original, t, derivativeStep, domainStart,
-                                                  domainEnd, SplineOracle{1}));
-            };
-            constexpr int samples = 128;
-            int bestSample = 0;
-            SplineOracle spanBest{0};
-            for (int sample = 2; sample < samples - 1; ++sample) {
-                const SplineOracle t = a + width * sample / samples;
-                const SplineOracle magnitude = curvatureMagnitude(t);
-                if (magnitude > spanBest) {
-                    spanBest = magnitude;
-                    bestSample = sample;
-                }
-            }
-            if (bestSample == 0 || spanBest <= bestMagnitude)
-                continue;
-            SplineOracle lo = a + width * (bestSample - 1) / samples;
-            SplineOracle hi = a + width * (bestSample + 1) / samples;
-            const SplineOracle golden{"0.61803398874989484820458683436563811772"};
-            SplineOracle x1 = hi - golden * (hi - lo);
-            SplineOracle x2 = lo + golden * (hi - lo);
-            SplineOracle f1 = curvatureMagnitude(x1);
-            SplineOracle f2 = curvatureMagnitude(x2);
-            for (int iteration = 0; iteration < 120; ++iteration) {
-                if (f1 < f2) {
-                    lo = x1;
-                    x1 = x2;
-                    f1 = f2;
-                    x2 = lo + golden * (hi - lo);
-                    f2 = curvatureMagnitude(x2);
-                } else {
-                    hi = x2;
-                    x2 = x1;
-                    f2 = f1;
-                    x1 = hi - golden * (hi - lo);
-                    f1 = curvatureMagnitude(x1);
-                }
-            }
-            const SplineOracle parameter = (lo + hi) / 2;
-            const SplineOracle magnitude = curvatureMagnitude(parameter);
-            if (magnitude > bestMagnitude) {
-                bestMagnitude = magnitude;
-                bestParameter = parameter;
-            }
+    double domainStartValue = 0.0;
+    double domainEndValue = 0.0;
+    REQUIRE(
+        rationalSource.getParameterDomain(domainStartValue, domainEndValue));
+    const SplineOracle domainStart{domainStartValue};
+    const SplineOracle domainEnd{domainEndValue};
+    const std::vector<double> originalBreaks =
+        rationalSource.getBreakParameters();
+    SplineOracle bestParameter{};
+    SplineOracle bestMagnitude{0};
+    for (std::size_t span = 0; span + 1 < originalBreaks.size(); ++span) {
+      const double aValue = originalBreaks[span];
+      const double bValue = originalBreaks[span + 1];
+      if (!(aValue < bValue))
+        continue;
+      const SplineOracle a{aValue};
+      const SplineOracle width{bValue - aValue};
+      const SplineOracle derivativeStep = width * SplineOracle{"1e-20"};
+      const auto curvatureMagnitude = [&](const SplineOracle &t) {
+        return abs(1 - oracleOffsetFactor(original, t, derivativeStep,
+                                          domainStart, domainEnd,
+                                          SplineOracle{1}));
+      };
+      constexpr int samples = 128;
+      int bestSample = 0;
+      SplineOracle spanBest{0};
+      for (int sample = 2; sample < samples - 1; ++sample) {
+        const SplineOracle t = a + width * sample / samples;
+        const SplineOracle magnitude = curvatureMagnitude(t);
+        if (magnitude > spanBest) {
+          spanBest = magnitude;
+          bestSample = sample;
         }
-        REQUIRE(bestMagnitude > 0);
-        const RS_SplineData data = rationalSource.getData();
-        const SplineOracle root = bestParameter;
-        const SplineOracle step{"1e-24"};
-        const auto seamStart = evaluateSplineOracle(data, domainStart);
-        const auto seamEnd = evaluateSplineOracle(data, domainEnd);
-        CHECK(sqrt((seamStart.first - seamEnd.first) * (seamStart.first - seamEnd.first) +
-                   (seamStart.second - seamEnd.second) * (seamStart.second - seamEnd.second)) <
-              SplineOracle{"1e-12"});
-        const SplineOracle startStep = oracleStencilStep(data, domainStart, step, false, true, 2);
-        const SplineOracle endStep = oracleStencilStep(data, domainEnd, step, true, false, 2);
-        const auto startOne = evaluateSplineOracle(data, domainStart + startStep);
-        const auto startTwo = evaluateSplineOracle(data, domainStart + 2 * startStep);
-        const auto endOne = evaluateSplineOracle(data, domainEnd - endStep);
-        const auto endTwo = evaluateSplineOracle(data, domainEnd - 2 * endStep);
-        const SplineOracle startDx =
-            (-3 * seamStart.first + 4 * startOne.first - startTwo.first) / (2 * startStep);
-        const SplineOracle startDy =
-            (-3 * seamStart.second + 4 * startOne.second - startTwo.second) / (2 * startStep);
-        const SplineOracle endDx =
-            (3 * seamEnd.first - 4 * endOne.first + endTwo.first) / (2 * endStep);
-        const SplineOracle endDy =
-            (3 * seamEnd.second - 4 * endOne.second + endTwo.second) / (2 * endStep);
-        CHECK(sqrt((startDx - endDx) * (startDx - endDx) + (startDy - endDy) * (startDy - endDy)) <
-              SplineOracle{"1e-8"});
-        const SplineOracle seamLeft = oracleOffsetFactor(data, domainEnd, step, domainStart,
-                                                         domainEnd, SplineOracle{1}, true);
-        const SplineOracle seamRight = oracleOffsetFactor(data, domainStart, step, domainStart,
-                                                          domainEnd, SplineOracle{1}, false);
-        CHECK(abs(seamLeft - seamRight) < SplineOracle{"1e-8"});
-        const SplineOracle unitLeft =
-            oracleOffsetFactor(data, root, step, domainStart, domainEnd, SplineOracle{1}, true);
-        const SplineOracle unitRight =
-            oracleOffsetFactor(data, root, step, domainStart, domainEnd, SplineOracle{1}, false);
-        const SplineOracle curvatureLeft = 1 - unitLeft;
-        const SplineOracle curvatureRight = 1 - unitRight;
-        REQUIRE(curvatureLeft != 0);
-        REQUIRE(curvatureRight != 0);
-        CHECK(abs(curvatureLeft - curvatureRight) < SplineOracle{"1e-8"});
-        const double signedDistance = (2 / (curvatureLeft + curvatureRight)).convert_to<double>();
-        const SplineOracle distance{signedDistance};
-        const SplineOracle tangentLeft =
-            oracleOffsetFactor(data, root, step, domainStart, domainEnd, distance, true);
-        const SplineOracle tangentRight =
-            oracleOffsetFactor(data, root, step, domainStart, domainEnd, distance, false);
-        const SplineOracle leftNeighbor = oracleOffsetFactor(
-            data, root - SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
-        const SplineOracle rightNeighbor = oracleOffsetFactor(
-            data, root + SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
-        const double rootValue = root.convert_to<double>();
-        CAPTURE(baseWeights, rootValue, signedDistance, tangentLeft, tangentRight, leftNeighbor,
-                rightNeighbor);
-        CHECK(abs(tangentLeft) < SplineOracle{"1e-8"});
-        CHECK(abs(tangentRight) < SplineOracle{"1e-8"});
-        CHECK(leftNeighbor != 0);
-        CHECK(rightNeighbor != 0);
-        CHECK((leftNeighbor < 0) == (rightNeighbor < 0));
-        const auto rootBreak =
-            std::upper_bound(originalBreaks.begin(), originalBreaks.end(), rootValue);
-        REQUIRE(rootBreak != originalBreaks.begin());
-        REQUIRE(rootBreak != originalBreaks.end());
-        const double spanStart = *(rootBreak - 1);
-        const double spanEnd = *rootBreak;
-        const double rootRadius = 0.25 * std::min(rootValue - spanStart, spanEnd - rootValue);
-        LC_CurveJetBounds rootBounds;
-        REQUIRE(rationalSource.tryBoundJetForCusp(rootValue - rootRadius, rootValue + rootRadius,
-                                                  rootBounds, signedDistance));
-        CAPTURE(rootBounds.rationalCuspRootVariationUpperBound,
-                rootBounds.offsetFactorNumerator(signedDistance).lo(),
-                rootBounds.offsetFactorNumerator(signedDistance).hi());
-        CHECK(rootBounds.rationalCuspRootVariationUpperBound >= 2);
-        CHECK(rootBounds.offsetFactorNumerator(signedDistance).lo() <= 0.0);
-        CHECK(rootBounds.offsetFactorNumerator(signedDistance).hi() >= 0.0);
-
-        const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data}, signedDistance,
-                                                   1e-4, false};
-        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, rationalSource);
-        REQUIRE(options);
-        LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
-        const auto built = LC_CurveOffset::buildDirectBranches(
-            rationalSource,
-            LC_CurveOffset::makeSideRequest(signedDistance > 0 ? LC_CurveOffsetSide::Left
-                                                               : LC_CurveOffsetSide::Right,
-                                            std::abs(signedDistance)),
-            *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
-        CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
-                diagnostics.candidateBoxes, diagnostics.failureSpan, diagnostics.failureT0,
-                diagnostics.failureT1, diagnostics.failureStage, diagnostics.isolationBoxesVisited,
-                diagnostics.failingRunBoxes, diagnostics.failingRunExtent,
-                diagnostics.failingRunObserved);
-        CHECK(built.status == LC_CurveOffsetStatus::Ok);
-        CHECK(diagnostics.complete);
-        const auto owningStall =
-            std::find_if(diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
-                         [&](const std::pair<double, double>& interval) {
-                             return interval.first <= rootValue && rootValue <= interval.second;
-                         });
-        REQUIRE(owningStall != diagnostics.stallIntervals.end());
-        CHECK(spanStart <= owningStall->first);
-        CHECK(owningStall->second <= spanEnd);
-        const auto nearestPieceEndpoint = [&](const RS_Vector& point) {
-            double nearest = std::numeric_limits<double>::infinity();
-            for (const LC_OffsetBranch& branch : built.branches) {
-                for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                    nearest = std::min(nearest,
-                        std::min(piece.bezier.front().distanceTo(point),
-                                 piece.bezier.back().distanceTo(point)));
-                }
-            }
-            return nearest;
-        };
-        for (const auto& stall : diagnostics.stallIntervals) {
-            const auto stallStart = oracleOffsetPoint(
-                data, SplineOracle{stall.first}, step, domainStart, domainEnd, distance);
-            const auto stallEnd = oracleOffsetPoint(
-                data, SplineOracle{stall.second}, step, domainStart, domainEnd, distance, true);
-            const RS_Vector expectedStart{stallStart.first.convert_to<double>(),
-                                          stallStart.second.convert_to<double>()};
-            const RS_Vector expectedEnd{stallEnd.first.convert_to<double>(),
-                                        stallEnd.second.convert_to<double>()};
-            CHECK(nearestPieceEndpoint(expectedStart) <= options->tolerance.requestedGeometry);
-            CHECK(nearestPieceEndpoint(expectedEnd) <= options->tolerance.requestedGeometry);
+      }
+      if (bestSample == 0 || spanBest <= bestMagnitude)
+        continue;
+      SplineOracle lo = a + width * (bestSample - 1) / samples;
+      SplineOracle hi = a + width * (bestSample + 1) / samples;
+      const SplineOracle golden{"0.61803398874989484820458683436563811772"};
+      SplineOracle x1 = hi - golden * (hi - lo);
+      SplineOracle x2 = lo + golden * (hi - lo);
+      SplineOracle f1 = curvatureMagnitude(x1);
+      SplineOracle f2 = curvatureMagnitude(x2);
+      for (int iteration = 0; iteration < 120; ++iteration) {
+        if (f1 < f2) {
+          lo = x1;
+          x1 = x2;
+          f1 = f2;
+          x2 = lo + golden * (hi - lo);
+          f2 = curvatureMagnitude(x2);
+        } else {
+          hi = x2;
+          x2 = x1;
+          f2 = f1;
+          x1 = hi - golden * (hi - lo);
+          f1 = curvatureMagnitude(x1);
         }
-        const auto oraclePoint =
-            oracleOffsetPoint(data, root, step, domainStart, domainEnd, distance);
-        const RS_Vector expectedPoint{oraclePoint.first.convert_to<double>(),
-                                      oraclePoint.second.convert_to<double>()};
-        const double nearestRootEndpoint = nearestPieceEndpoint(expectedPoint);
-        CAPTURE(expectedPoint.x, expectedPoint.y, nearestRootEndpoint,
-                options->tolerance.requestedGeometry, diagnostics.isolationBoxesVisited);
-        CHECK(nearestRootEndpoint <= options->tolerance.requestedGeometry);
+      }
+      const SplineOracle parameter = (lo + hi) / 2;
+      const SplineOracle magnitude = curvatureMagnitude(parameter);
+      if (magnitude > bestMagnitude) {
+        bestMagnitude = magnitude;
+        bestParameter = parameter;
+      }
     }
+    REQUIRE(bestMagnitude > 0);
+    const RS_SplineData data = rationalSource.getData();
+    const SplineOracle root = bestParameter;
+    const SplineOracle step{"1e-24"};
+    const auto seamStart = evaluateSplineOracle(data, domainStart);
+    const auto seamEnd = evaluateSplineOracle(data, domainEnd);
+    CHECK(sqrt((seamStart.first - seamEnd.first) *
+                   (seamStart.first - seamEnd.first) +
+               (seamStart.second - seamEnd.second) *
+                   (seamStart.second - seamEnd.second)) <
+          SplineOracle{"1e-12"});
+    const SplineOracle startStep =
+        oracleStencilStep(data, domainStart, step, false, true, 2);
+    const SplineOracle endStep =
+        oracleStencilStep(data, domainEnd, step, true, false, 2);
+    const auto startOne = evaluateSplineOracle(data, domainStart + startStep);
+    const auto startTwo =
+        evaluateSplineOracle(data, domainStart + 2 * startStep);
+    const auto endOne = evaluateSplineOracle(data, domainEnd - endStep);
+    const auto endTwo = evaluateSplineOracle(data, domainEnd - 2 * endStep);
+    const SplineOracle startDx =
+        (-3 * seamStart.first + 4 * startOne.first - startTwo.first) /
+        (2 * startStep);
+    const SplineOracle startDy =
+        (-3 * seamStart.second + 4 * startOne.second - startTwo.second) /
+        (2 * startStep);
+    const SplineOracle endDx =
+        (3 * seamEnd.first - 4 * endOne.first + endTwo.first) / (2 * endStep);
+    const SplineOracle endDy =
+        (3 * seamEnd.second - 4 * endOne.second + endTwo.second) /
+        (2 * endStep);
+    CHECK(sqrt((startDx - endDx) * (startDx - endDx) +
+               (startDy - endDy) * (startDy - endDy)) < SplineOracle{"1e-8"});
+    const SplineOracle seamLeft = oracleOffsetFactor(
+        data, domainEnd, step, domainStart, domainEnd, SplineOracle{1}, true);
+    const SplineOracle seamRight =
+        oracleOffsetFactor(data, domainStart, step, domainStart, domainEnd,
+                           SplineOracle{1}, false);
+    CHECK(abs(seamLeft - seamRight) < SplineOracle{"1e-8"});
+    const SplineOracle unitLeft = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, SplineOracle{1}, true);
+    const SplineOracle unitRight = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, SplineOracle{1}, false);
+    const SplineOracle curvatureLeft = 1 - unitLeft;
+    const SplineOracle curvatureRight = 1 - unitRight;
+    REQUIRE(curvatureLeft != 0);
+    REQUIRE(curvatureRight != 0);
+    CHECK(abs(curvatureLeft - curvatureRight) < SplineOracle{"1e-8"});
+    const double signedDistance =
+        (2 / (curvatureLeft + curvatureRight)).convert_to<double>();
+    const SplineOracle distance{signedDistance};
+    const SplineOracle tangentLeft = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, distance, true);
+    const SplineOracle tangentRight = oracleOffsetFactor(
+        data, root, step, domainStart, domainEnd, distance, false);
+    const SplineOracle leftNeighbor =
+        oracleOffsetFactor(data, root - SplineOracle{"1e-7"}, step, domainStart,
+                           domainEnd, distance);
+    const SplineOracle rightNeighbor =
+        oracleOffsetFactor(data, root + SplineOracle{"1e-7"}, step, domainStart,
+                           domainEnd, distance);
+    const double rootValue = root.convert_to<double>();
+    CAPTURE(baseWeights, rootValue, signedDistance, tangentLeft, tangentRight,
+            leftNeighbor, rightNeighbor);
+    CHECK(abs(tangentLeft) < SplineOracle{"1e-8"});
+    CHECK(abs(tangentRight) < SplineOracle{"1e-8"});
+    CHECK(leftNeighbor != 0);
+    CHECK(rightNeighbor != 0);
+    CHECK((leftNeighbor < 0) == (rightNeighbor < 0));
+    const auto rootBreak = std::upper_bound(originalBreaks.begin(),
+                                            originalBreaks.end(), rootValue);
+    REQUIRE(rootBreak != originalBreaks.begin());
+    REQUIRE(rootBreak != originalBreaks.end());
+    const double spanStart = *(rootBreak - 1);
+    const double spanEnd = *rootBreak;
+    const double rootRadius =
+        0.25 * std::min(rootValue - spanStart, spanEnd - rootValue);
+    LC_CurveJetBounds rootBounds;
+    REQUIRE(rationalSource.tryBoundJetForCusp(rootValue - rootRadius,
+                                              rootValue + rootRadius,
+                                              rootBounds, signedDistance));
+    CAPTURE(rootBounds.rationalCuspRootVariationUpperBound,
+            rootBounds.offsetFactorNumerator(signedDistance).lo(),
+            rootBounds.offsetFactorNumerator(signedDistance).hi());
+    CHECK(rootBounds.rationalCuspRootVariationUpperBound >= 2);
+    CHECK(rootBounds.offsetFactorNumerator(signedDistance).lo() <= 0.0);
+    CHECK(rootBounds.offsetFactorNumerator(signedDistance).hi() >= 0.0);
+
+    const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data},
+                                               signedDistance, 1e-4, false};
+    const auto options =
+        LC_OffsetWorkerTolerance::directOptions(definition, rationalSource);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        rationalSource,
+        LC_CurveOffset::makeSideRequest(signedDistance > 0
+                                            ? LC_CurveOffsetSide::Left
+                                            : LC_CurveOffsetSide::Right,
+                                        std::abs(signedDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
+            diagnostics.candidateBoxes, diagnostics.failureSpan,
+            diagnostics.failureT0, diagnostics.failureT1,
+            diagnostics.failureStage, diagnostics.isolationBoxesVisited,
+            diagnostics.failingRunBoxes, diagnostics.failingRunExtent,
+            diagnostics.failingRunObserved);
+    CHECK(built.status == LC_CurveOffsetStatus::Ok);
+    CHECK(diagnostics.complete);
+    const auto owningStall = std::find_if(
+        diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+        [&](const std::pair<double, double> &interval) {
+          return interval.first <= rootValue && rootValue <= interval.second;
+        });
+    REQUIRE(owningStall != diagnostics.stallIntervals.end());
+    CHECK(spanStart <= owningStall->first);
+    CHECK(owningStall->second <= spanEnd);
+    const auto nearestPieceEndpoint = [&](const RS_Vector &point) {
+      double nearest = std::numeric_limits<double>::infinity();
+      for (const LC_OffsetBranch &branch : built.branches) {
+        for (const LC_OffsetCubicPiece &piece : branch.cubicPieces) {
+          nearest = std::min(nearest,
+                             std::min(piece.bezier.front().distanceTo(point),
+                                      piece.bezier.back().distanceTo(point)));
+        }
+      }
+      return nearest;
+    };
+    for (const auto &stall : diagnostics.stallIntervals) {
+      const auto stallStart =
+          oracleOffsetPoint(data, SplineOracle{stall.first}, step, domainStart,
+                            domainEnd, distance);
+      const auto stallEnd =
+          oracleOffsetPoint(data, SplineOracle{stall.second}, step, domainStart,
+                            domainEnd, distance, true);
+      const RS_Vector expectedStart{stallStart.first.convert_to<double>(),
+                                    stallStart.second.convert_to<double>()};
+      const RS_Vector expectedEnd{stallEnd.first.convert_to<double>(),
+                                  stallEnd.second.convert_to<double>()};
+      CHECK(nearestPieceEndpoint(expectedStart) <=
+            options->tolerance.requestedGeometry);
+      CHECK(nearestPieceEndpoint(expectedEnd) <=
+            options->tolerance.requestedGeometry);
+    }
+    const auto oraclePoint =
+        oracleOffsetPoint(data, root, step, domainStart, domainEnd, distance);
+    const RS_Vector expectedPoint{oraclePoint.first.convert_to<double>(),
+                                  oraclePoint.second.convert_to<double>()};
+    const double nearestRootEndpoint = nearestPieceEndpoint(expectedPoint);
+    CAPTURE(expectedPoint.x, expectedPoint.y, nearestRootEndpoint,
+            options->tolerance.requestedGeometry,
+            diagnostics.isolationBoxesVisited);
+    CHECK(nearestRootEndpoint <= options->tolerance.requestedGeometry);
+  }
 }
 
 TEST_CASE("rational quadratic interior tangent root obeys bounded tolerance",
