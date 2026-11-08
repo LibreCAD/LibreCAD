@@ -25862,10 +25862,15 @@ same-sign even-root checks, two-variation interval probe, production stall
 ownership within the containing source span, and output-piece endpoint mapping.
 The prior four-control fixture continues to pass both weight profiles.
 
-Release validation: all three periodic rational tangent profiles, 90
-assertions/1 test case; full worker suite, 1,703,704 assertions/62 cases;
-`git diff --check` passes. Test commit `291aa68dd` (`test(offset): cover
-nonuniform periodic tangent roots`). This adds one nonuniform knot/control
-layout, not all legal periodic knot multiplicities or rational degrees. Next:
-cover additional degrees/layouts and establish one-to-one output ownership for
-all certified candidate/stall boxes in the broader rational matrix.
+Added a second positive weight profile to the nonuniform six-control layout.
+All four layout/weight combinations independently qualify and map the root.
+
+Release validation: all four periodic rational tangent profiles, 120
+assertions/1 test case; full worker suite, 1,703,734 assertions/62 cases;
+`git diff --check` passes. Test commits `291aa68dd` (`test(offset): cover
+nonuniform periodic tangent roots`) and `ba61dd58b` (`test(offset): add
+nonuniform rational tangent weights`). This adds one nonuniform knot/control
+layout and a second weighting, not all legal periodic knot multiplicities or
+rational degrees. Next: cover additional degrees/layouts and establish
+one-to-one output ownership for all certified candidate/stall boxes in the
+broader rational matrix.
