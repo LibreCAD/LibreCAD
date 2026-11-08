@@ -25963,3 +25963,17 @@ Fixture refinement commit `8666d121a` (`test(offset): use exact quadratic
 tangent fixture`). The next implementation gate remains the proof-preserving
 root-bracket/collapse work stated above; this test is characterization, not
 resolution.
+
+#### W563ej Follow-up. Check the Opposite Signed Offset (2026-11-08)
+
+Extended the exact degree-2 rational fixture to exercise the opposite signed
+offset as a control. The tangent-producing side continues to return a typed
+`AmbiguousRegularity` refusal with no partial branches/candidates/stalls; the
+opposite side completes with nonempty geometry and no false cusp or stall.
+This is one scale and does not resolve or map the tangent side to output.
+
+Release validation: exact quadratic tangent case, 25 assertions/1 case; full
+worker-kernel suite, 1,703,767 assertions/63 cases; `git diff --check` passes.
+Test commit `bd162c387` (`test(offset): qualify opposite quadratic offset
+side`). Remaining work is proof-preserving tangent isolation/collapse and
+output mapping on the tangent side, followed by scale/layout variation.
