@@ -25625,3 +25625,27 @@ periodic spans, give exact-knot/seam brackets explicit two-sided ownership,
 and establish the one-to-one certified-box-to-endpoint/collapse mapping.
 Keep any profile without those proofs fail-closed and out of cache/file
 eligibility.
+
+#### W563eh Follow-up. Verify a Simple Root Exactly at an Interior Knot (2026-11-08)
+
+Added a clamped cubic polynomial represented with a simple interior knot at
+`t=0.5`. Its analytic curvature makes the offset factor zero there with
+opposite signs on the two one-sided neighborhoods. The 256-bit oracle checks
+both one-sided values, plus positive/negative samples immediately around the
+knot. Production completes isolation, reports a candidate bracket owned by
+one of the adjacent nonzero spans, and materializes the corresponding offset
+point as a cusp branch endpoint within the geometry tolerance.
+
+This closes the simple interior-knot sign-change case for the recorded cubic
+fixture only. It does not establish canonical ownership for every repeated
+knot multiplicity, exact periodic-seam roots, or tangent roots at a knot.
+Those remain separate tests; general rational/periodic eligibility stays
+unchanged.
+
+Release validation: focused exact-knot regression, 16 assertions/1 case; full
+worker-kernel suite, 1,703,527 assertions/59 cases; `git diff --check` passes.
+Test commit `435b9717d` (`test(offset): cover cusp roots on spline knots`).
+
+Next: cover a root exactly at the periodic seam with both one-sided span
+owners, then exercise tangent/even roots at nonuniform rational knots and map
+the resulting boxes through branch joins or bounded collapses.
