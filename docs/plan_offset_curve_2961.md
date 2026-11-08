@@ -24441,12 +24441,15 @@ the rest of DXF retains its existing precision/formatting. Release CMake build
 of `librecad_tests` succeeded, and the focused cross-lane test passed 2,129
 assertions. `git diff --check` passed before commit.
 
-The broad `[dxf]` suite was rerun with the scoped implementation: 783 cases,
-777 passed, 2 failed, and 4 skipped (531,840 assertions; 11,042 failed).
-Observed failures are two hatch-edge count assertions and exact trim-geometry
-assertions in the R2018 closed-cache trim path. They are outside the changed
-SPLINE writer path but remain unclassified against the base commit; do not
-represent them as baseline failures. Re-run and triage them before closeout.
+Commit `fbe23eb94` fixes the hatch-edge omission found during the broad DXF
+run: `RS_Hatch::exportLoops` now preserves one spline-family boundary together
+with straight-line closing edges. The focused offset-hatch case passes 390
+assertions; `[hatch-export]` passes 15 cases/236 assertions. A fresh broad
+`[dxf]` run has 783 cases, 778 passed, 1 failed, and 4 skipped (531,718
+assertions; 11,040 failed). The remaining failure is exact zero-tolerance
+geometry in the R2018 closed-cache trim path. It is outside the changed hatch
+and SPLINE-writer paths but remains unclassified against the base commit; do
+not represent it as a baseline failure. Re-run and triage it before closeout.
 The native writer evidence is one disconnected polyline/cache matrix, not
 universal native export support; other source families, cache variants,
 independent CAD, visible GUI, and exact-head CI remain open.
