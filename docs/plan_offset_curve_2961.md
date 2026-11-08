@@ -24957,3 +24957,26 @@ root count and location against the high-precision oracle across every
 nonuniform periodic profile and both sides, exercise tangential/even-multiplicity
 roots and seam/knot roots explicitly, then prove complete generated branch
 topology and cache admission before changing any expected refusal.
+
+#### W563cw. Preserve Interval-proved Endpoint Signs During Cusp Bisection (2026-11-08)
+
+The monotone-root path now passes its interval-proved opposite endpoint signs
+directly into a dedicated bisection helper instead of re-evaluating the bracket
+endpoints with ordinary point jets. This keeps the root-existence proof intact
+through bracket initialization. Midpoint evaluations refine the representative
+parameter; if they fail or contradict the certified signs, the engine refuses
+as ambiguous rather than accepting a root. This does not improve the unresolved
+periodic positive-side outcomes and does not weaken fail-closed behavior.
+
+Release validation passes: nonuniform periodic worker/cache matrix 15,468
+assertions/1 case; full worker-kernel suite 1,680,610 assertions/53 cases;
+direct `[curve-offset][cusp]` 85,429 assertions/13 cases; and
+`[curve-offset][d0]` 16,910 assertions/20 cases. Both test targets build and
+`git diff --check` passes. Implementation commit `7cccf4ca6`
+(`fix(offset): retain certified cusp bracket signs`).
+
+W563cg remains open. The positive-side gradual/high-ratio periodic offsets
+still refuse, and the next required work is certified root-location error and
+complete root-set/topology comparison against the independent high-precision
+oracle, including tangencies and roots at knot/seam boundaries. No new
+periodic source/cache or DXF/DWG eligibility is claimed.
