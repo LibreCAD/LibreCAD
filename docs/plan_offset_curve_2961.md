@@ -25222,3 +25222,23 @@ The focused cubic case passes 388 assertions/1 case; the full worker-kernel
 suite passes 1,695,190 assertions/56 cases. `git diff --check` passes. This
 adds degree-three zero-free-certificate regression coverage but does not
 expand offset eligibility or close W563cg.
+
+#### W563ef. Oracle-check Strict-net Variation-one Endpoints (2026-11-08)
+
+Exposed the strict Bernstein sign-variation count from the explicit rational
+cusp-bound query as diagnostic metadata only; cusp isolation does not consume
+it. For boxes in the existing translated rational periodic oracle fixture
+where the variation count is one and `d(C' x C'')` is strictly positive, the
+256-bit oracle now checks the offset-factor signs at the box's inward-adjacent
+endpoint parameters. The selected boxes do have opposite signs, so this
+fixture confirms a real crossing locally. It does not test the full failed
+profile-4/profile-5 set, prove root-to-generated-branch correspondence, or
+justify accepting these roots in production.
+
+Test/diagnostic commit `69d933912` (`test(offset): verify strict cusp net
+endpoint signs`). The focused cusp/oracle selection passes 14,614 assertions
+across 3 cases; the full worker-kernel suite passes 1,695,224 assertions
+across 56 cases, retaining the existing fail-closed periodic outcomes.
+`git diff --check` passes. W563cg remains open; the next diagnostic must map
+oracle root parameters, production-isolated roots, and generated branch
+endpoints for each failing periodic profile before any acceptance change.
