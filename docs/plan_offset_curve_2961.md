@@ -25551,3 +25551,38 @@ Next: construct and oracle-check tangent/even-root cases for nonuniform
 rational and periodic splines, including roots adjacent to knots/seams; map
 each to a production stall interval or a certified endpoint/collapse, and
 retain fail-closed behavior wherever that mapping is incomplete.
+
+#### W563eh Follow-up. Map Conditioned Periodic Profiles on Both Sides (2026-11-08)
+
+Expanded the nonuniform periodic rational-spline test matrix to compare
+production cusp candidates against the independent oracle for all four
+conditioned weight profiles (`Alternating`, `ShiftedAlternating`, `Gradual`,
+and `ReversedGradual`) and both signed offset sides. The oracle inventory is
+computed with derivative stencil scales `1e-20` and `1e-25`; counts agree and
+each candidate parameter converges within `1e-8` between those evaluations.
+Production candidates are checked for one-to-one oracle association using
+both source parameter (within `1e-5`) and the independently evaluated offset
+point (within the requested geometry tolerance). Whenever isolation itself
+reports complete, candidate count and oracle-point correspondence must cover
+the full sampled inventory, even if later branch construction refuses.
+
+The largest observed seam-adjacent parameter discrepancy is about
+`4.43e-6`; its oracle offset point remains within the requested geometry
+tolerance. Therefore point-space correspondence is the acceptance criterion
+for these shallow roots, while the bounded parameter check prevents a remote
+root from matching. This is not a proof that finite sampling cannot miss
+tangent roots, and it does not resolve the profiles whose final branch build
+still returns `AmbiguousRegularity`. Those remain fail-closed; cache and file
+eligibility are unchanged.
+
+Release validation: periodic/nonuniform two-sided matrix, 23,007 assertions/1
+case; full worker-kernel suite, 1,702,823 assertions/58 cases; `git diff
+--check` passes. Test commit `6c74b65f9` (`test(offset): map periodic cusp
+profiles to oracle`).
+
+Next: independently certify root counts on each open knot span and the
+periodic seam, including tangent/even roots that the sampled sign-change
+oracle cannot inventory. For each completed isolation, map every certified
+root box to one retained endpoint, an explicit seam/knot owner, or a measured
+in-tolerance tiny-reversal collapse; do not infer certification from the
+sampled inventory or from geometric proximity alone.
