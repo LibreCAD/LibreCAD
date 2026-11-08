@@ -25977,3 +25977,32 @@ worker-kernel suite, 1,703,767 assertions/63 cases; `git diff --check` passes.
 Test commit `bd162c387` (`test(offset): qualify opposite quadratic offset
 side`). Remaining work is proof-preserving tangent isolation/collapse and
 output mapping on the tangent side, followed by scale/layout variation.
+
+#### W563ej Follow-up. Resolve the Bounded Quadratic Tangent Case (2026-11-08)
+
+The rational cusp isolator now hands a small-motion box to its existing run
+resolver when the source has rational cusp polynomial bounds but interval
+coefficient uncertainty has made the root-count bound unavailable. The handoff
+still requires positive speed and a finite whole-box offset-motion bound at or
+below `nodeMerge`; the resolver then checks aggregate motion and sampled sign
+changes. Nonrational sources and certified rational variation-one cases retain
+their previous paths. An attempted unrestricted small-motion handoff caused
+five full-suite regressions and was narrowed before commit.
+
+The exact quadratic fixture now proves the tolerance boundary: at requested
+geometry `1e-4`, the measured unresolved run exceeds `nodeMerge` and returns
+`AmbiguousRegularity` with no partial output; at `1e-3`, it resolves as a
+bounded stall and both stall endpoints plus the tangent point map to retained
+cubic-piece endpoints within requested tolerance. The opposite signed side
+continues to generate regular nonempty output without cusp/stall diagnostics.
+This qualifies one exact rational quadratic layout and one scale/tolerance
+pair; it does not establish the wider rational matrix.
+
+Release validation: focused tangent case, 33 assertions/1 case; full
+worker-kernel suite, 1,703,775 assertions/63 cases; `git diff --check` passes.
+Product commit `81627245e` (`fix(offset): bound rational quadratic tangent
+stalls`). Next: exercise scale/weight/layout variants on both sides, then apply
+per-event source-span and output ownership checks to every conditioned-periodic
+candidate and measured tiny-reversal collapse. Keep refusal for any case whose
+aggregate bound exceeds `nodeMerge` or whose resolver observes a reversal it
+cannot certify.
