@@ -104,9 +104,10 @@ Current implementation order for the remaining “all supported types” work:
    DWG, covering every representable worker cache for the fixture, including
    single- and multi-branch outputs. A separate control-point spline-points
    source now has product export/reopen checks across those five lanes, for
-   both offset signs and four recorded distances; a smooth fit-point
-   spline-points source is checked across the five lanes at one representative
-   signed offset; a promotable parabola/cache is checked across all five lanes
+   both offset signs and four recorded distances; every fit-point
+   spline-points import-grid entry admitted as a single cache is checked across
+   the five lanes at its recorded signed distance; a promotable parabola/cache
+   is checked across all five lanes
    at one representative signed offset; a bounded-hyperbola single-branch
    cache is checked across all five lanes, while its multi-branch side remains
    fallback-only; an unweighted spline is checked across all five lanes on both
@@ -24718,3 +24719,23 @@ and `git diff --check` pass. This does not establish arbitrary rational NURBS
 layouts, other weight distributions or distances, periodic high-ratio positive
 offset support, independent-CAD equivalence, visible-GUI acceptance, or
 exact-head CI.
+
+#### W563dg. Round-trip Admitted Fit-point Spline-point Caches (2026-11-07)
+
+Expanded product writer/reopen checks from one smooth fit-point fixture to
+every case in the existing fit-point `LC_SplinePoints` import matrix that
+promotes as a single editable cache. The matrix includes its recorded open and
+closed fit-point layouts, magnitudes and both signed sides across R14/R2000/
+R2018 DXF and R2000/R2018 DWG. Each promoted round-trip checks the typed source
+definition, native admission without downgrade, and exact cache fingerprint.
+Multi-branch and tangent-constrained cases continue through their explicit
+fallback/preserved-metadata assertions and are not claimed as native editable
+caches.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"fit-point spline-points source imports through operation-8 validation"`
+passes 40,919 assertions in one test case. The `librecad_tests` target rebuild
+and `git diff --check` pass. The result qualifies only the recorded source
+fixtures and distances; other fit-point layouts, arbitrary tangent metadata,
+independent-CAD equivalence, visible-GUI acceptance, and exact-head CI remain
+open.
