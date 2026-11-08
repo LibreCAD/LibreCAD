@@ -1813,6 +1813,25 @@ private:
         return s2 * std::sqrt(s2) - m_d * cross(c.first, c.second);
     }
 
+    /** A certified sign of the offset factor on a nonempty parameter interval. */
+    bool factorNumeratorSignBounded(const double a, const double b, int& sign) const {
+        LC_CurveJetBounds bounds;
+        if (!(a < b) || !m_source.boundJetWithProducts(a, b, bounds) ||
+            !bounds.speedSquared().isPositive()) {
+            return false;
+        }
+        const LC_Interval factor = bounds.offsetFactorNumerator(m_d);
+        if (factor.lo() > 0.0) {
+            sign = 1;
+            return true;
+        }
+        if (factor.hi() < 0.0) {
+            sign = -1;
+            return true;
+        }
+        return false;
+    }
+
     double speedAt(const double t, const LC_CurveEvaluationSide side) const {
         LC_CurveJet c;
         return m_source.jet(t, side, c) ? c.first.magnitude() : 0.0;
@@ -1992,6 +2011,34 @@ private:
                 if (speedProved && g.excludesZero()) {
                     continue;
                 }
+                // If g' has one strict sign on this box, endpoint signs prove
+                // its complete root count: zero roots when they agree, one
+                // simple root when they differ. This removes sampling from
+                // the easy part of cusp isolation without treating a possible
+                // tangency (where g' contains zero) as a cusp.
+                const LC_Interval dg = speedProved ? bounds.offsetFactorDerivativeNumerator(m_d)
+                                                   : LC_Interval{};
+                if (speedProved && dg.isValid() && dg.excludesZero()) {
+                    const double next = std::nextafter(leaf.t0, leaf.t1);
+                    const double previous = std::nextafter(leaf.t1, leaf.t0);
+                    int sign0 = 0;
+                    int sign1 = 0;
+                    const bool sign0Proved = factorNumeratorSignBounded(leaf.t0, next, sign0);
+                    const bool sign1Proved = factorNumeratorSignBounded(previous, leaf.t1, sign1);
+                    if (sign0Proved && sign1Proved) {
+                        if (sign0 != sign1) {
+                            if (cusps.size() >= maxRunBoxes) {
+                                return LC_CurveOffsetStatus::AmbiguousRegularity;
+                            }
+                            const Run isolated{leaf.t0, leaf.t1, 0.0, 1, span, leaf};
+                            const LC_CurveOffsetStatus status = bisectCusp(leaf.t0, leaf.t1, isolated, cusps);
+                            if (status != LC_CurveOffsetStatus::Ok) {
+                                return status;
+                            }
+                        }
+                        continue;
+                    }
+                }
                 const double mid = leaf.t0 + 0.5 * (leaf.t1 - leaf.t0);
                 if (leaf.depth < m_options.maxSubdivisionDepth && mid > leaf.t0 && mid < leaf.t1) {
                     split(stack, leaf, 0.5);
@@ -2047,6 +2094,7 @@ private:
             }
         }
         std::sort(cusps.begin(), cusps.end());
+        cusps.erase(std::unique(cusps.begin(), cusps.end()), cusps.end());
         std::sort(stalls.begin(), stalls.end());
         return LC_CurveOffsetStatus::Ok;
     }
