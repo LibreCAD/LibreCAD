@@ -26295,3 +26295,17 @@ passes. Test commit `3e38d6aab` (`test(offset): cover nonuniform periodic
 quadratic tangent`). This adds one nonuniform six-control layout/profile only;
 other degree-2 knot/weight combinations, seam even roots, higher degrees, and
 broader candidate-to-output bijection remain open.
+
+#### W563eo. Requalify the Nonuniform Quadratic with a Second Weight Profile (2026-11-08)
+
+Added a second distinct positive weight vector to the same six-control,
+nonuniform degree-2 periodic layout. The full oracle/stall/output checks rerun
+independently for both weightings; the second profile is not assumed to share
+the first profile's extremum, signed distance, stall interval, or output
+topology.
+
+Release validation: focused periodic tangent matrix, 224 assertions/1 case;
+full worker-kernel suite, 1,704,055 assertions/68 cases; `git diff --check`
+passes. Test commit `932b31d9f` (`test(offset): add quadratic periodic
+weight profile`). This qualifies two profiles on one nonuniform quadratic
+layout only; other knot multiplicities and seam-even-root coverage remain open.
