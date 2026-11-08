@@ -25720,3 +25720,10 @@ claimed.
 Next: extend the proof to tangent/even roots on nonuniform periodic rational
 spans and verify every certified box maps one-to-one to a retained endpoint,
 an explicitly owned seam/knot point, or a measured in-tolerance collapse.
+Before tuning a periodic tangent-root distance, qualify the fixture itself:
+the oracle must independently confirm positional, tangent, and curvature
+continuity across the seam, then confirm both one-sided factors and nearby
+samples form the intended same-sign even root. A source marked closed, or a
+clamped-to-wrapped conversion, is not sufficient evidence of a smooth seam.
+If those preconditions fail, reject the fixture and preserve the implementation
+as fail-closed; do not infer a periodic tangent case from the UI or entity flag.
