@@ -1549,7 +1549,8 @@ public:
      * piece before ends.
      */
     LC_CurveOffsetStatus build(std::vector<bool> joinCusps, const std::vector<SourceJoin>& joins,
-                               std::vector<LC_OffsetBranch>& branches) {
+                               std::vector<LC_OffsetBranch>& branches,
+                               std::vector<double>* isolatedCuspsForDiagnostics = nullptr) {
         const std::vector<double>& breaks = m_source.breaks();
         std::vector<double> cusps;
         std::vector<std::pair<double, double>> stalls;
@@ -1560,6 +1561,9 @@ public:
             barrier[i] = barrier[i] || joins[i].kind != SourceJoin::Kind::Smooth;
         }
         LC_CurveOffsetStatus status = isolateCusps(barrier, arcStalls, cusps, stalls);
+        if (isolatedCuspsForDiagnostics != nullptr) {
+            *isolatedCuspsForDiagnostics = cusps;
+        }
         if (status != LC_CurveOffsetStatus::Ok) {
             return status;
         }
@@ -3493,7 +3497,8 @@ std::unique_ptr<RS_Entity> chainEntity(std::vector<LC_OffsetCubicPiece> chain, c
 LC_CurveOffsetStatus directBranches(const OffsetSource& source, const SourceScale& scale, const double d,
                                     const LC_CurveOffsetOptions& options, const LC_OffsetSourceBudget& budget,
                                     const KinkPolicy policy, std::vector<LC_OffsetBranch>& branches,
-                                    double& maxError, std::size_t& samples) {
+                                    double& maxError, std::size_t& samples,
+                                    std::vector<double>* isolatedCuspsForDiagnostics = nullptr) {
     const std::vector<double>& breaks = source.breaks();
     const double domain = breaks.back() - breaks.front();
     branches.clear();
@@ -3529,7 +3534,8 @@ LC_CurveOffsetStatus directBranches(const OffsetSource& source, const SourceScal
         return joined;
     }
     BranchBuilder builder{source, d, options, budget, scale.numericFloor / domain};
-    const LC_CurveOffsetStatus status = builder.build(joinCusps, joins, branches);
+    const LC_CurveOffsetStatus status =
+        builder.build(joinCusps, joins, branches, isolatedCuspsForDiagnostics);
     samples = builder.samples();
     maxError = builder.maxObservedError();
     return status;
@@ -5570,7 +5576,11 @@ LC_OffsetSideResolution resolveSide(const RS_Entity& source, const RS_Vector& di
 
 LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const LC_CurveOffsetRequest& request,
                                                  const LC_CurveOffsetOptions& options,
-                                                 const LC_OffsetSourceBudget& budget) {
+                                                 const LC_OffsetSourceBudget& budget,
+                                                 std::vector<double>* isolatedCuspsForDiagnostics) {
+    if (isolatedCuspsForDiagnostics != nullptr) {
+        isolatedCuspsForDiagnostics->clear();
+    }
     LC_CurveOffsetGeometryResult result;
     if (!validDirectOptions(options) || !isValidOffsetBudget(budget)) {
         result.status = LC_CurveOffsetStatus::InvalidRequest;
@@ -5687,7 +5697,7 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     double maxError = 0.0;
     LC_CurveOffsetStatus status =
         directBranches(curve, scale, d, options, budget, KinkPolicy::Round, branches, maxError,
-                       result.exactSamples);
+                       result.exactSamples, isolatedCuspsForDiagnostics);
     if (status == LC_CurveOffsetStatus::Ok && trimmed) {
         std::size_t removed = 0;
         status = removeLocalLoops(curve, d, speedFloor, options, branches, removed);

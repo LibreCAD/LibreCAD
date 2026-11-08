@@ -1591,6 +1591,52 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 req::GenerateSource{definition, {}}};
             const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
             const auto& generated = native(generationReply, 7);
+            if (weightProfile == WeightProfile::Gradual && signedDistance > 0.0) {
+                const auto diagnosticOptions =
+                    LC_OffsetWorkerTolerance::directOptions(definition, sourceCheck);
+                REQUIRE(diagnosticOptions);
+                std::vector<double> isolatedCusps;
+                const auto diagnostic = LC_CurveOffset::buildDirectBranches(
+                    sourceCheck,
+                    LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left,
+                                                    signedDistance),
+                    *diagnosticOptions, LC_CurveOffset::makeDirectSourceBudget(),
+                    &isolatedCusps);
+                CHECK(generated.engineStatus.has_value());
+                if (generated.engineStatus)
+                    CHECK(diagnostic.status == *generated.engineStatus);
+                CHECK(diagnostic.branches.empty());
+                CHECK_FALSE(isolatedCusps.empty());
+                std::vector<bool> matchedOracleCusps(expectedCusps.size(), false);
+                for (const double productionParameter : isolatedCusps) {
+                    double nearestParameterError = std::numeric_limits<double>::infinity();
+                    std::size_t nearestOracle = 0;
+                    for (std::size_t i = 0; i < expectedCusps.size(); ++i) {
+                        const double error = std::abs(
+                            productionParameter - expectedCusps[i].parameter.convert_to<double>());
+                        if (error < nearestParameterError) {
+                            nearestParameterError = error;
+                            nearestOracle = i;
+                        }
+                    }
+                    CAPTURE(productionParameter, nearestParameterError);
+                    CHECK(nearestParameterError < 1e-6);
+                    if (nearestParameterError < 1e-6)
+                        matchedOracleCusps[nearestOracle] = true;
+                }
+                CHECK(isolatedCusps.size() <= expectedCusps.size());
+                const std::size_t matchedCount = static_cast<std::size_t>(
+                    std::count(matchedOracleCusps.begin(), matchedOracleCusps.end(), true));
+                CAPTURE(matchedCount, expectedCusps.size(), isolatedCusps.size());
+                REQUIRE(expectedCusps.size() == 8);
+                REQUIRE(isolatedCusps.size() == 7);
+                CHECK(matchedCount == 7);
+                CHECK(std::all_of(matchedOracleCusps.begin(), matchedOracleCusps.end() - 1,
+                                  [](bool matched) { return matched; }));
+                CHECK_FALSE(matchedOracleCusps.back());
+                CHECK(expectedCusps.back().parameter < domainEnd);
+                CHECK(domainEnd - expectedCusps.back().parameter < SplineOracle{"1e-3"});
+            }
             CAPTURE(generated.engineStatus.has_value(),
                     generated.engineStatus
                         ? static_cast<int>(*generated.engineStatus)
