@@ -2624,9 +2624,10 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
     CHECK(abs(seamRight) < SplineOracle{"1e-8"});
     CHECK(before != 0);
     CHECK(after != 0);
+    CHECK((before < 0) != (after < 0));
 
     const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{data}, signedDistance, 1e-2, false};
+        LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
     const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
     REQUIRE(options);
     LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
@@ -2656,7 +2657,8 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
             return (interval.first <= startValue && interval.second >= startValue) ||
                    (interval.first <= endValue && interval.second >= endValue);
         });
-    CHECK((seamCandidate || seamStall));
+    CHECK(seamCandidate);
+    CHECK_FALSE(seamStall);
 
     const auto startPoint = oracleOffsetPoint(
         data, start, step, start, end, distance);
