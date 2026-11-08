@@ -26026,3 +26026,21 @@ current conditioned fixture matrix. Next: broaden rational tangent isolation
 across spline degrees, weight profiles, knot layouts, and geometry scales;
 continue enforcing fail-closed behavior and output correspondence for every
 new accepted profile.
+
+#### W563ej Follow-up. Map Quadratic Tangent Stalls at Additional Scales (2026-11-08)
+
+Added exact binary-rational degree-2 fixtures at scales `0.5` and `2.0`, using
+the same positive weight profile and scale-proportional signed distance and
+requested tolerance. A 256-bit oracle verifies the same-sign even root at the
+interior parameter; the worker must report a bounded stall and map every
+reported stall endpoint and the oracle tangent point to retained cubic output
+within the corresponding geometry tolerance. Together with the unit-scale
+strict-refusal/looser-bounded case and opposite-side control, this now covers
+three geometric scales for one quadratic layout and one weight profile.
+
+Release validation: added scale matrix, 24 assertions/1 case; full
+worker-kernel suite, 1,703,809 assertions/64 cases; `git diff --check` passes.
+Test commit `fb8599ede` (`test(offset): map quadratic tangent stalls across
+scales`). Still open: additional rational weight profiles and knot layouts,
+higher degrees, periodic seam/interior root ownership, and per-event mapping
+for any newly accepted tangent or collapse cases.
