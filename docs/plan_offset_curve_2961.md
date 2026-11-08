@@ -26309,3 +26309,25 @@ full worker-kernel suite, 1,704,055 assertions/68 cases; `git diff --check`
 passes. Test commit `932b31d9f` (`test(offset): add quadratic periodic
 weight profile`). This qualifies two profiles on one nonuniform quadratic
 layout only; other knot multiplicities and seam-even-root coverage remain open.
+
+#### W563ep. Qualify an Even Root at a Smooth Periodic Rational Seam (2026-11-08)
+
+Added an independently qualified symmetric closed cubic spline with unit
+rational weights. A 256-bit oracle verifies seam position, one-sided tangent,
+and curvature continuity, then derives the offset from the matching one-sided
+curvature. The factor is zero at both seam owners and has same-sign values on
+both nearby sides, establishing the intended no-sign-change tangent root.
+
+The direct build must finish complete and represent the seam through exactly
+one of a bounded stall or a cusp candidate. Candidate classification must be
+owned by the first/last source span at its actual endpoint; stall endpoints
+must map to retained output endpoints. The oracle seam-offset point must also
+map within requested geometry tolerance. No production acceptance or cache
+eligibility was changed; this qualifies one symmetric unit-weight periodic
+cubic only.
+
+Release validation: focused periodic seam tangent case, 22 assertions/1 case;
+full worker-kernel suite, 1,704,077 assertions/69 cases; `git diff --check`
+passes. Test commit `91b62a9d1` (`test(offset): cover periodic rational seam
+tangent`). Other weights, knot layouts, degrees, and candidate-to-output
+mapping remain open.
