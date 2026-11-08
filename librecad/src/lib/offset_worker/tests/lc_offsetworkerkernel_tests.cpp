@@ -3144,20 +3144,29 @@ TEST_CASE("periodic rational seam tangent and interior roots map to output",
     }
 }
 
-TEST_CASE("nonuniform periodic rational seam cusp maps to retained output",
+TEST_CASE("nonuniform periodic rational seam tangent maps to retained output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
-          "rational][seam-root][nonuniform][simple-root]") {
+          "rational][seam-root][nonuniform][even-root]") {
     RS_Spline base{nullptr, RS_SplineData{3, false}};
-    for (const RS_Vector& point : {RS_Vector{10, 0}, RS_Vector{5, 8.660254037844386},
-                                   RS_Vector{-5, 8.660254037844386}, RS_Vector{-10, 0},
-                                   RS_Vector{-5, -8.660254037844386}, RS_Vector{5, -8.660254037844386}})
+    for (const RS_Vector& point : {RS_Vector{5, -8.660254037844386}, RS_Vector{10, 0},
+                                   RS_Vector{5, 8.660254037844386}, RS_Vector{-5, 8.660254037844386},
+                                   RS_Vector{-10, 0}, RS_Vector{-5, -8.660254037844386}})
         base.addControlPoint(point);
     base.setKnotVector({0, 0, 0, 0, .5, 2.5, 3, 3, 3, 3});
     REQUIRE(base.validate());
     base.setClosed(true);
 
     RS_SplineData data = base.getData();
-    const std::vector<double> baseWeights{1, .8, 1.2, 1.2, .8, 1};
+    data.knotslist = {-3, -2.5, -0.5, 0, 0.5, 2.5, 3,
+                      3.5, 5.5, 6, 6.5, 8.5, 9};
+    const std::vector<RS_Vector> controls{
+        {5, -8.660254037844386}, {10, 0},
+        {5, 8.660254037844386}, {-5, 8.660254037844386},
+        {-10, 0}, {-5, -8.660254037844386}};
+    data.controlPoints = controls;
+    data.controlPoints.insert(data.controlPoints.end(), controls.begin(),
+                              controls.begin() + data.degree);
+    const std::vector<double> baseWeights{1.2, 1, 1.2, .8, 1.5, .8};
     data.weights = baseWeights;
     data.weights.insert(data.weights.end(), baseWeights.begin(),
                         baseWeights.begin() + data.degree);
@@ -3196,7 +3205,7 @@ TEST_CASE("nonuniform periodic rational seam cusp maps to retained output",
     CHECK(abs(seamRight) < SplineOracle{"1e-8"});
     REQUIRE(before != 0);
     REQUIRE(after != 0);
-    REQUIRE((before < 0) != (after < 0));
+    REQUIRE((before < 0) == (after < 0));
 
     const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data},
                                                signedDistance, 1e-4, false};
@@ -3224,14 +3233,20 @@ TEST_CASE("nonuniform periodic rational seam cusp maps to retained output",
             return std::abs(parameter - startValue) < 1e-8 ||
                    std::abs(parameter - endValue) < 1e-8;
         });
-    const auto seamStall = std::find_if(
+    REQUIRE(seamCandidate == diagnostics.candidateParameters.end());
+    const auto seamStartStall = std::find_if(
         diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
         [&](const std::pair<double, double>& interval) {
-            return (interval.first <= startValue && interval.second >= startValue) ||
-                   (interval.first <= endValue && interval.second >= endValue);
+            return interval.first <= startValue && interval.second > startValue;
         });
-    REQUIRE(seamCandidate != diagnostics.candidateParameters.end());
-    CHECK(seamStall == diagnostics.stallIntervals.end());
+    const auto seamEndStall = std::find_if(
+        diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+        [&](const std::pair<double, double>& interval) {
+            return interval.first < endValue && interval.second >= endValue;
+        });
+    REQUIRE(seamStartStall != diagnostics.stallIntervals.end());
+    REQUIRE(seamEndStall != diagnostics.stallIntervals.end());
+    REQUIRE(seamStartStall != seamEndStall);
 
     const auto startPoint = oracleOffsetPoint(
         data, start, step, start, end, distance);
@@ -3241,16 +3256,11 @@ TEST_CASE("nonuniform periodic rational seam cusp maps to retained output",
         ((startPoint.first + endPoint.first) / 2).convert_to<double>(),
         ((startPoint.second + endPoint.second) / 2).convert_to<double>()};
     std::vector<RS_Vector> outputEndpoints;
-    std::vector<RS_Vector> outputCuspEndpoints;
     for (const LC_OffsetBranch& branch : built.branches) {
         for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
             outputEndpoints.push_back(piece.bezier.front());
             outputEndpoints.push_back(piece.bezier.back());
         }
-        if (!branch.cubicPieces.empty() && branch.startEnd == LC_OffsetBranchEnd::Cusp)
-            outputCuspEndpoints.push_back(branch.cubicPieces.front().bezier.front());
-        if (!branch.cubicPieces.empty() && branch.endEnd == LC_OffsetBranchEnd::Cusp)
-            outputCuspEndpoints.push_back(branch.cubicPieces.back().bezier.back());
     }
     const double nearestSeamEndpoint = std::accumulate(
         outputEndpoints.begin(), outputEndpoints.end(),
@@ -3261,35 +3271,8 @@ TEST_CASE("nonuniform periodic rational seam cusp maps to retained output",
             options->tolerance.requestedGeometry);
     CHECK(nearestSeamEndpoint <= options->tolerance.requestedGeometry);
 
-    if (seamCandidate != diagnostics.candidateParameters.end()) {
-        const double nearestCuspEndpoint = std::accumulate(
-            outputCuspEndpoints.begin(), outputCuspEndpoints.end(),
-            std::numeric_limits<double>::infinity(), [&](const double best, const RS_Vector& point) {
-                return std::min(best, point.distanceTo(expectedSeam));
-            });
-        CHECK(nearestCuspEndpoint <= options->tolerance.requestedGeometry);
-        const double candidate = *seamCandidate;
-        const auto box = std::find_if(
-            diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
-            [&](const LC_CurveOffsetCuspCandidateBox& candidateBox) {
-                return candidateBox.parameter == candidate;
-            });
-        REQUIRE(box != diagnostics.candidateBoxes.end());
-        REQUIRE(box->span != std::numeric_limits<std::size_t>::max());
-        const std::vector<double> breaks = source.getBreakParameters();
-        REQUIRE(box->span + 1 < breaks.size());
-        CHECK(box->t0 <= candidate);
-        CHECK(candidate <= box->t1);
-        CHECK(breaks[box->span] <= box->t0);
-        CHECK(box->t1 <= breaks[box->span + 1]);
-        const std::size_t expectedOwner =
-            std::abs(candidate - startValue) < 1e-8
-                ? 0
-                : breaks.size() - 2;
-        CHECK(box->span == expectedOwner);
-    }
-    if (seamStall != diagnostics.stallIntervals.end()) {
-        for (const double parameter : {seamStall->first, seamStall->second}) {
+    for (const auto stall : {seamStartStall, seamEndStall}) {
+        for (const double parameter : {stall->first, stall->second}) {
             const auto point = oracleOffsetPoint(
                 data, SplineOracle{parameter}, step, start, end, distance,
                 parameter == endValue);
