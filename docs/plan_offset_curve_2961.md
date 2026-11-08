@@ -26197,3 +26197,20 @@ Visible source-picker acceptance was also attempted on 2026-11-08. The CUA
 inventory reported the Mac locked and could not inspect the built application;
 this does not satisfy or close the GUI gate. Resume only after the desktop is
 available, then execute the nine-family/highlight/filter/cancel matrix above.
+
+#### W563ei Follow-up. Assert the Source-type Control Stays Enabled (2026-11-08)
+
+The all-family Properties regression now explicitly checks that `cbSourceType`
+is enabled while an offset entity with an existing embedded source is loaded,
+and remains enabled before and after every family-filter change. The existing
+snapshot assertion confirms changing the filter alone leaves source geometry
+and generated output unchanged; selection and replacement still occur only
+after a candidate is chosen.
+
+Release validation: focused all-family picker regression, 2,911 assertions/1
+case; complete `[gui][dialog][offsetcurve][source]` union, 6,913 assertions/10
+cases; `librecad_tests` builds; `git diff --check` passes. Test commit
+`e6c1e2633` (`test(offset): assert editable source type filter`). This is
+automated widget evidence. The visible GUI acceptance remains open because CUA
+reported the Mac locked during this turn; do not infer visible completion from
+the offscreen tests.
