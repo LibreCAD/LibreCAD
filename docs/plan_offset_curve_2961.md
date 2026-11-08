@@ -101,9 +101,11 @@ Current implementation order for the remaining “all supported types” work:
    at one representative signed offset; a bounded-hyperbola single-branch
    cache is checked across all five lanes, while its multi-branch side remains
    fallback-only; an unweighted spline is checked across all five lanes on both
-   signed sides. Representative product-writer round-trips now exist for all
-   nine modeled source families. Per-family variants, wider distances/sides,
-   independent-CAD compatibility, and visible workflows remain open.
+   signed sides; a rational tangent-constrained cubic offset is product-
+   round-tripped through all five lanes. Representative product-writer
+   round-trips now exist for all nine modeled source families. Per-family
+   variants, wider distances/sides, independent-CAD compatibility, and visible
+   workflows remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24588,3 +24590,20 @@ Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
 least one representative native-writer round-trip for every modeled source
 family. It does not complete every legal family variant, distance, topology,
 or independent-CAD/visible acceptance gate.
+
+#### W563da. Round-trip Tangent-constrained Rational Cubic Cache Through Product Writers (2026-11-07)
+
+The tangent-constrained spline import matrix now exports its rational cubic
+source's left-side editable offset through LibreCAD's product writer in R14,
+R2000, and R2018 DXF plus R2000 and R2018 DWG. The subsequent staged import
+must preserve the schema-3 tangent source metadata and exact cache fingerprint.
+Existing left/right staged-import checks for cubic, quadratic, linear,
+one-ended linear, and tangent-constrained spline-points remain unchanged.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"tangent-constrained spline sources promote through operation-8 validation across file lanes"`
+passes 5,635 assertions in one test case. The `librecad_tests` target rebuild
+and `git diff --check` pass. This validates the editable cache-plus-metadata
+path, not writing a tangent-constrained source spline as a native DWG SPLINE;
+that remains fail-closed. Other tangent/weight variants, independent CAD,
+visible GUI, and exact-head CI remain open.
