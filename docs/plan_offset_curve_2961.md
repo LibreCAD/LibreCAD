@@ -26109,6 +26109,24 @@ knot`). This qualifies one interior-knot layout and one tangent, not repeated
 knots, arbitrary knot vectors, periodic seam roots, or strict-tolerance
 acceptance for all cubic profiles.
 
+#### W563ej Follow-up. Qualify an Exactly Binary Rational Cubic Tangency (2026-11-08)
+
+Added a second clamped rational cubic formed by exact degree elevation of the
+quadratic with middle weight `1/4`. Its controls `(-6,0),(-4,2),(4,2),(6,0)`
+and weights `(1,1/2,1/2,1)` are exactly binary-representable, avoiding the
+rounded `2/3` weights in the preceding characterization. A 256-bit oracle
+derives the tangent distance at `t=0.5`, verifies the even root and same-sign
+neighbors, and checks the tangent point against the emitted cubic output. The
+worker accepts this profile at requested tolerance `1e-3`; thus the previous
+degree-3 refusal is specific to its less exact profile/run bound, not a blanket
+degree-3 limitation.
+
+Release validation: focused exact-binary cubic case, 10 assertions/1 case;
+full worker-kernel suite, 1,703,888 assertions/68 cases; `git diff --check`
+passes. Test commit `61ababe74` (`test(offset): qualify exact rational cubic
+tangency`). This does not close the rounded-profile strict refusal, arbitrary
+rational cubic weights, nonuniform knots, or periodic even-root ownership.
+
 #### W563eh Follow-up. Map a Periodic Rational Root at the Seam (2026-11-08)
 
 Added a closed rational cubic seam fixture with a duplicated periodic weight
