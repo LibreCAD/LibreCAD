@@ -26396,3 +26396,25 @@ Release validation: focused nonuniform seam cusp, 26 assertions/1 case; full
 worker-kernel suite, 1,704,209 assertions/71 cases; `git diff --check` passes.
 Test commits `e5ca9792e` (`test(offset): map nonuniform periodic seam cusps`)
 and `acf0a532c` (`test(offset): require simple seam cusp isolation`).
+
+#### W563eq Follow-up. Map a Nonuniform Periodic Even-root Seam (2026-11-08)
+
+Reworked the nonuniform six-control periodic fixture to use an explicitly
+wrapped knot vector whose active span widths mirror about the seam, with
+positive weights and control pairs chosen symmetrically across the wrapped
+support. The 256-bit oracle verifies one-sided curvature continuity, zero
+offset factor at both seam owners, and same-sign nonzero factors on either
+side, establishing an even-root/tangent event rather than a simple cusp.
+
+Production resolves this event without a seam candidate: it emits separate
+bounded stall intervals at the start and end of the periodic parameter domain.
+The regression requires both distinct intervals and maps both endpoints of
+each to retained output within requested geometry tolerance; the oracle seam
+offset point also maps to output. This closes one nonuniform periodic seam
+even-root layout, not arbitrary nonuniform knots, weights, degrees, or all
+candidate/stall-to-output cases.
+
+Release validation: focused nonuniform seam tangent, 23 assertions/1 case;
+full worker-kernel suite, 1,704,206 assertions/71 cases; `git diff --check`
+passes. Test commit `5922d9b55` (`test(offset): map nonuniform periodic seam
+tangencies`).
