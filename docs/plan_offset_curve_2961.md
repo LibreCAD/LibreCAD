@@ -26141,3 +26141,20 @@ worker-kernel suite, 1,703,876 assertions/67 cases; `git diff --check` passes.
 Test commit `75a218c9e` (`test(offset): check periodic seam stall
 endpoints`). This is a diagnostic-coverage refinement, not a new periodic
 profile or a claim that the current fixture exercised a stall record.
+
+#### W563eh Follow-up. Require Simple-root Seam Ownership at Tighter Tolerance (2026-11-08)
+
+Refined the same fixture after inspecting its high-precision values: the seam
+root is simple, with opposite signs immediately before and after the periodic
+seam, and production records it as a cusp candidate (not a stall). The test
+now requires candidate ownership specifically, rejects a stall-only
+classification, and tightens the requested tolerance from `1e-2` to `1e-4`.
+The independent seam point remains mapped to a retained output endpoint; any
+stall records, if a future variant emits them, also have both endpoints
+checked.
+
+Release validation: focused periodic rational seam case, 17 assertions/1 case;
+full worker-kernel suite, 1,703,878 assertions/67 cases; `git diff --check`
+passes. Test commit `0c648b4a1` (`test(offset): tighten periodic seam cusp
+proof`). This closes only simple-root candidate ownership for the selected
+periodic rational cubic; tangent/even seam roots and other profiles remain open.
