@@ -643,7 +643,10 @@ TEST_CASE("one-sided spline oracle jets converge at repeated knots and periodic 
     REQUIRE(periodic.validate());
     periodic.setClosed(true);
     RS_SplineData wrapped = periodic.getData();
-    wrapped.weights.assign(wrapped.controlPoints.size(), 1.0);
+    const std::vector<double> seamWeights{1e-6, 1e-4, 1e-2, 1.0, 1e2, 1e4, 1e6};
+    wrapped.weights = seamWeights;
+    wrapped.weights.insert(wrapped.weights.end(), seamWeights.begin(),
+                           seamWeights.begin() + wrapped.degree);
     REQUIRE(RS_Spline{nullptr, wrapped}.validate());
     const std::size_t lastControl = wrapped.controlPoints.size() - 1;
     const SplineOracle start{wrapped.knotslist[wrapped.degree]};
@@ -664,14 +667,14 @@ TEST_CASE("one-sided spline oracle jets converge at repeated knots and periodic 
         const auto atSeamSide = side < 0 ? leftAtEnd : rightAtStart;
         SplineOracle priorFirstError = std::numeric_limits<SplineOracle>::infinity();
         SplineOracle priorSecondError = std::numeric_limits<SplineOracle>::infinity();
-        for (const SplineOracle delta : {SplineOracle{"1e-4"}, SplineOracle{"5e-5"}}) {
+        for (const SplineOracle delta : {SplineOracle{"1e-6"}, SplineOracle{"5e-7"}}) {
             const SplineOracle interiorParameter = side < 0 ? end - delta : start + delta;
             const SplineOracle interiorStep = delta * SplineOracle{"1e-3"};
             const auto interior = jet(wrapped, interiorParameter, interiorStep, 0);
             const SplineOracle firstError = maxDifference(atSeamSide, interior, 0, 2);
             const SplineOracle secondError = maxDifference(atSeamSide, interior, 2, 4);
             CAPTURE(side, delta, firstError, secondError);
-            if (delta == SplineOracle{"1e-4"}) {
+            if (delta == SplineOracle{"1e-6"}) {
                 priorFirstError = firstError;
                 priorSecondError = secondError;
             } else {
