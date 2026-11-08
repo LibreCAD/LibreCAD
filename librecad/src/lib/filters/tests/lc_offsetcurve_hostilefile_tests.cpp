@@ -2637,6 +2637,28 @@ TEST_CASE("control-point spline-points source promotes through DXF and DWG impor
         CHECK(received->useControlPoints);
         CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
               RS_Spline::geometryFingerprint(expectedCache));
+
+        const auto nativeOutput = directory.file(std::string("native-control-points-") +
+            (signedDistance < 0 ? "right-" : "left-") +
+            std::to_string(magnitude) + "-" + formatSuffix);
+        REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput, ::format(lane)));
+        const auto nativeRoundTrip = stagedImport(nativeOutput, lane);
+        INFO("native writer round-trip " << formatSuffix << " " << signedDistance);
+        REQUIRE(nativeRoundTrip.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(nativeRoundTrip.graphic);
+        CHECK(nativeRoundTrip.admitted == 1);
+        CHECK(nativeRoundTrip.downgraded == 0);
+        const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+            f::sole(*nativeRoundTrip.graphic));
+        REQUIRE(roundTripped);
+        REQUIRE(roundTripped->sourceDefinition());
+        const auto roundTripSource = values::encodeSourceDefinition(
+            *roundTripped->sourceDefinition());
+        REQUIRE(roundTripSource);
+        CHECK(QCborValue(*expectedSource).toCbor() ==
+              QCborValue(*roundTripSource).toCbor());
+        CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+              RS_Spline::geometryFingerprint(expectedCache));
       }
     }
 }
