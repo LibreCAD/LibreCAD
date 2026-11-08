@@ -1676,6 +1676,41 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 conditionedWeights
                     ? oracleOffsetCusps(sourceData, domainStart, domainEnd, signedDistance)
                     : std::vector<OracleSplineCusp>{};
+            if (conditionedWeights) {
+                CAPTURE(weightProfile, signedDistance, expectedCusps.size());
+                for (const OracleSplineCusp& cusp : expectedCusps) {
+                    REQUIRE(cusp.span + 1 < sourceData.knotslist.size());
+                    const SplineOracle spanStart{sourceData.knotslist[cusp.span]};
+                    const SplineOracle spanEnd{sourceData.knotslist[cusp.span + 1]};
+                    const SplineOracle spanWidth = spanEnd - spanStart;
+                    REQUIRE(spanWidth > 0);
+                    const SplineOracle probe = spanWidth * SplineOracle{"1e-7"};
+                    const SplineOracle derivativeStep = spanWidth * SplineOracle{"1e-20"};
+                    const SplineOracle leftParameter = std::max(
+                        spanStart, cusp.parameter - probe);
+                    const SplineOracle rightParameter = std::min(
+                        spanEnd, cusp.parameter + probe);
+                    int leftSign = 0;
+                    int rightSign = 0;
+                    if (leftParameter < cusp.parameter) {
+                        const SplineOracle factor = oracleOffsetFactor(
+                            sourceData, leftParameter, derivativeStep, domainStart,
+                            domainEnd, SplineOracle{signedDistance});
+                        leftSign = factor < 0 ? -1 : factor > 0 ? 1 : 0;
+                        CHECK(leftSign != 0);
+                    }
+                    if (cusp.parameter < rightParameter) {
+                        const SplineOracle factor = oracleOffsetFactor(
+                            sourceData, rightParameter, derivativeStep, domainStart,
+                            domainEnd, SplineOracle{signedDistance});
+                        rightSign = factor < 0 ? -1 : factor > 0 ? 1 : 0;
+                        CHECK(rightSign != 0);
+                    }
+                    CAPTURE(cusp.span, cusp.parameter, leftSign, rightSign,
+                            leftParameter, rightParameter);
+                    CHECK(((leftSign != 0) || (rightSign != 0)));
+                }
+            }
             if (degree > 1) {
                 const SplineOracle seamStep{"1e-20"};
                 const SplineOracle seamRight = oracleOffsetFactor(
