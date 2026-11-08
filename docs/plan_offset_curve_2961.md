@@ -126,10 +126,11 @@ Current implementation order for the remaining “all supported types” work:
    case across 25 recorded shape variants, three scales, and three translation
    ratios, plus each recorded signed distance for all variants at nominal
    scale/translation, in the five DXF/DWG lanes. LibreDWG independently parses
-   representative nominal R2000 and R2018 native ellipse-offset DWGs; this is
-   structural readability only, not external geometry equivalence. Other
-   per-family variants, distances/sides, independent-CAD compatibility, and
-   visible workflows remain open.
+   representative nominal R2000 and R2018 native ellipse-offset DWGs and
+   matches their decoded degree, knots, and control points to the expected
+   cache within its JSON decimal precision. Other per-family variants,
+   distances/sides, independent-CAD compatibility, and visible workflows
+   remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24855,4 +24856,25 @@ passes 1,889,894 assertions in one test case with LibreDWG available. The
 rebuilt `librecad_tests` target and `git diff --check` pass. Broader external
 geometry validation, remaining ellipse scale/translation/distance combinations,
 other source-family variants, visible-GUI acceptance, and exact-head CI remain
+open.
+
+#### W563dn. Compare LibreDWG Ellipse SPLINE Data with the Native Cache (2026-11-07)
+
+Strengthened W563dm's independent-reader gate from nonempty JSON to semantic
+SPLINE checks. For one nominal ellipse-offset result, LibreDWG's minJSON output
+for both R2000 and R2018 DWG must contain an entity SPLINE with matching degree,
+knot count/values, control-point count, and XYZ coordinates. Knot values allow
+`1e-12` absolute error and coordinates `1e-11`, covering minJSON's decimal
+formatting; the source/cache also continues through LibreCAD staged reopen and
+exact fingerprint checks. This validates the serialized control net against
+the expected cache in these two representative files, not an independent
+curve evaluator, Hausdorff geometry equivalence, typed-source EED decoding,
+all ellipse variants, or ODA/ACadSharp compatibility.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"translated ellipse scale matrix preserves typed source and cache through file import"`
+passes 1,853,544 assertions in one test case with LibreDWG available. The
+rebuilt `librecad_tests` target and `git diff --check` pass. Broader independent
+geometry evaluation, other DWG versions/source variants, remaining extreme
+scale-distance combinations, visible-GUI acceptance, and exact-head CI remain
 open.
