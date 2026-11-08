@@ -26713,11 +26713,19 @@ This preserves the existing root-count requirements, subdivision-depth and
 isolation-box budgets, and fail-closed behavior; it does not raise a limit or
 weaken a tolerance. The additional subdivision resolves the weight-4 tangent
 and keeps the root point and each stall endpoint within requested geometry
-tolerance. This qualifies only the two added profiles and this aggregate-run
-gate; arbitrary rational weights, knot layouts, degrees, and complete
-candidate-to-output mapping remain open.
+tolerance. Direct-suite validation then exposed an existing exact unit-circle
+collapse that became a fully stalled result with no branches and was
+misreported as `InvalidSource`. Result validation now reports a wholly empty
+offset as `SingularOffset`, while a partial empty branch among emitted geometry
+returns `AmbiguousTopology`; neither path publishes partial geometry. This
+qualifies only the two added profiles and this aggregate-run gate; arbitrary
+rational weights, knot layouts, degrees, and complete candidate-to-output
+mapping remain open.
 
 Release validation: focused expanded profile, 78 assertions/1 case;
 `[rational][tangent-root]`, 597 assertions/11 cases; full
 `librecad_offset_worker_kernel_tests`, 1,704,901 assertions/77 cases;
-`git diff --check` passes. Implementation/test commit pending.
+`[curve-offset][direct]`, 42,096 assertions/32 cases; `git diff --check`
+passes. Aggregate-run implementation/test/roadmap commit `e08721c17`
+(`fix(offset): bound aggregate rational tangent runs`); collapsed-result
+classification follow-up commit pending.

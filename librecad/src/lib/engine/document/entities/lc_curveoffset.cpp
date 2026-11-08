@@ -1642,7 +1642,12 @@ public:
         }
         for (size_t i = 0; i < branches.size(); ++i) {
             if (branches[i].cubicPieces.empty()) {
-                return LC_CurveOffsetStatus::InvalidSource;
+                const bool noOffsetGeometry =
+                    std::all_of(branches.begin(), branches.end(), [](const LC_OffsetBranch& branch) {
+                        return branch.cubicPieces.empty();
+                    });
+                return noOffsetGeometry ? LC_CurveOffsetStatus::SingularOffset
+                                        : LC_CurveOffsetStatus::AmbiguousTopology;
             }
             if (i > 0 && after[i - 1] == cusp) {
                 // branches meet at their cusp exactly; across a join its two
