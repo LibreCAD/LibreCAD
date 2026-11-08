@@ -2923,6 +2923,81 @@ TEST_CASE("periodic rational seam tangent root maps to a bounded stall",
     }
 }
 
+TEST_CASE("periodic rational seam tangent with interior roots refuses atomically",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
+          "rational][seam-root][refusal]") {
+    RS_Spline base{nullptr, RS_SplineData{3, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{10, 0},
+                                   RS_Vector{10, 10}, RS_Vector{0, 10}})
+        base.addControlPoint(point);
+    base.setKnotVector({0, 0, 0, 0, 1, 1, 1, 1});
+    REQUIRE(base.validate());
+    base.setClosed(true);
+    RS_SplineData data = base.getData();
+    const std::vector<double> baseWeights{1, .7, 1.3, .7};
+    data.weights = baseWeights;
+    data.weights.insert(data.weights.end(), baseWeights.begin(),
+                        baseWeights.begin() + data.degree);
+    const RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+    REQUIRE(source.isClosed());
+
+    double startValue = 0.0;
+    double endValue = 0.0;
+    REQUIRE(source.getParameterDomain(startValue, endValue));
+    const SplineOracle start{startValue};
+    const SplineOracle end{endValue};
+    const SplineOracle step{"1e-24"};
+    const SplineOracle unitLeft = oracleOffsetFactor(
+        data, end, step, start, end, SplineOracle{1}, true);
+    const SplineOracle unitRight = oracleOffsetFactor(
+        data, start, step, start, end, SplineOracle{1}, false);
+    const SplineOracle curvatureLeft = 1 - unitLeft;
+    const SplineOracle curvatureRight = 1 - unitRight;
+    REQUIRE(abs(curvatureLeft - curvatureRight) < SplineOracle{"1e-8"});
+    REQUIRE(abs(curvatureLeft) > SplineOracle{"1e-12"});
+    const double signedDistance =
+        (2 / (curvatureLeft + curvatureRight)).convert_to<double>();
+    const SplineOracle distance{signedDistance};
+    const SplineOracle seamLeft =
+        oracleOffsetFactor(data, end, step, start, end, distance, true);
+    const SplineOracle seamRight =
+        oracleOffsetFactor(data, start, step, start, end, distance, false);
+    const SplineOracle before = oracleOffsetFactor(
+        data, end - SplineOracle{"1e-7"}, step, start, end, distance);
+    const SplineOracle after = oracleOffsetFactor(
+        data, start + SplineOracle{"1e-7"}, step, start, end, distance);
+    CAPTURE(baseWeights, signedDistance, seamLeft, seamRight, before, after);
+    CHECK(abs(seamLeft) < SplineOracle{"1e-8"});
+    CHECK(abs(seamRight) < SplineOracle{"1e-8"});
+    CHECK(before != 0);
+    CHECK(after != 0);
+    CHECK((before < 0) == (after < 0));
+
+    const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data},
+                                               signedDistance, 1e-4, false};
+    const auto options =
+        LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(signedDistance > 0
+                                            ? LC_CurveOffsetSide::Left
+                                            : LC_CurveOffsetSide::Right,
+                                        std::abs(signedDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.status, diagnostics.candidateParameters,
+            diagnostics.candidateBoxes, diagnostics.failureStage,
+            diagnostics.failureSpan, diagnostics.failureT0,
+            diagnostics.failureT1);
+    CHECK(built.status == LC_CurveOffsetStatus::SingularOffset);
+    CHECK(diagnostics.status == built.status);
+    CHECK_FALSE(diagnostics.complete);
+    CHECK_FALSE(diagnostics.candidateParameters.empty());
+    CHECK(built.branches.empty());
+}
+
 TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][tangent-root]") {
