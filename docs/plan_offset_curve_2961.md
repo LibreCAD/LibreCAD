@@ -25252,15 +25252,14 @@ This supersedes the earlier 12-cusp sampled count and removes the claimed exact
 internal-knot cusp from the evidence; it does not prove the sampled inventory
 complete or exclude even-multiplicity roots.
 
-Still open within W563eg: record completion/refusal outcomes alongside the
-sampled counts, detect tangent/even roots that the sign-change scan can miss,
-and map all candidates to production roots/output. The checks below classify
-signs around candidates already sampled for the conditioned profiles; they do
-not prove inventory completeness. Root-to-endpoint checks tracked in W563eh
-also remain. The repeated-knot and seam regressions qualify only recorded
-fixtures, not all multiplicities. In particular, re-measure the earlier
-endpoint discrepancy against the corrected non-knot candidate set, not the
-superseded exact-knot comparison.
+Still open within W563eg: broaden the outcome matrix beyond the recorded
+profile/distance fixture set, detect tangent/even roots that sign-change
+sampling can miss, and map all candidates to production roots/output. The
+checks below classify signs around candidates already sampled; they do not
+prove inventory completeness. Root-to-endpoint checks tracked in W563eh remain.
+The repeated-knot and seam regressions qualify only recorded fixtures, not all
+multiplicities. Re-measure the earlier endpoint discrepancy against the
+corrected non-knot candidate set, not the superseded exact-knot comparison.
 
 Release validation passes for the implemented slice: periodic/nonuniform worker matrix 15,498 assertions
 in 1 case; focused cusp/oracle selection 14,614 assertions in 3 cases; full
@@ -25382,20 +25381,47 @@ reversed-gradual. The positive alternating counts are checked at all three
 listed magnitudes; gradual counts are checked at their single magnitude.
 
 This makes changes to the *sampled* inventory visible; it does not certify the
-absence of tangent/even roots, prove sampling completeness, record every
-production completion/refusal outcome in a separate manifest, or finish
-root-to-output mapping. Release validation: `[nonuniform]`, 24,092
+absence of tangent/even roots or prove sampling completeness. Release
+validation: `[nonuniform]`, 24,092
 assertions/2 cases; full `librecad_offset_worker_kernel_tests`, 1,704,845
 assertions/77 cases; `git diff --check` passes. Test commit `5202f71a2`
 (`test(offset): pin periodic sampled cusp inventory`).
 
-The production implementation remains fail-closed for the gradual
-positive-side periodic case. Continue with W563eh: complete candidate-to-root
-and candidate-to-endpoint mapping across the remaining failing periodic
-profiles, with explicit seam and unresolved-leaf diagnostics. Keep sampled
-roots labelled as candidates until tangent/even-root completeness is
-independently established. Do not accept roots or expand geometry/cache/file
-eligibility in that work. W563cg remains open.
+#### W563eg Follow-up. Pin Periodic Generation Outcomes (2026-11-08)
+
+Pinned direct-build and worker outcomes for the conditioned weight-profile
+matrix:
+
+| Weight profile | Recorded distances | Expected outcome |
+| --- | --- | --- |
+| Alternating | `+/-0.0625`, `+/-0.125`, `+/-0.25` | `ToleranceNotMet` |
+| Shifted-alternating | `+0.0625` | `Ok` |
+| Shifted-alternating | `-0.0625`, `+/-0.125`, `+/-0.25` | `ToleranceNotMet` |
+| Gradual | `+/-0.005` | `Ok` |
+| Reversed-gradual | `+/-0.005` | `Ok` |
+
+Refusal cases publish no branches. Cusp-isolation diagnostics may still report
+`complete=true` when the later build stage returns `ToleranceNotMet`; the test
+checks the isolation status independently. The gradual positive-side case is
+`Ok` in the current code only with its cusp-bounded tiny-reversal collapse
+record and output-mapping checks from the later W563eh correction.
+
+This matrix covers only the listed degree-2, seven-control, scale-1 fixtures
+and distances. It does not generalize eligibility or replace root-to-output
+mapping. Release validation: `[nonuniform]`, 24,118 assertions/2 cases; full
+`librecad_offset_worker_kernel_tests`, 1,704,871 assertions/77 cases;
+`git diff --check` passes. Test commit `975fef4da` (`test(offset): pin
+periodic generation outcomes`).
+
+The earlier statement that the gradual positive-side periodic case remains
+fail-closed is superseded by W563eh's later tiny-reversal correction. The
+current recorded fixture returns `Ok` only with its cusp-bounded collapse
+diagnostic and output-mapping checks. Continue with W563eh to complete
+candidate-to-root and candidate-to-endpoint mapping across the remaining
+periodic profiles, with explicit seam and unresolved-leaf diagnostics. Keep
+sampled roots labelled as candidates until tangent/even-root completeness is
+independently established. Do not expand geometry/cache/file eligibility
+without that evidence. W563cg remains open.
 
 #### W563eh. Map Partial Production Cusp Candidates to the Span-local Oracle (2026-11-08)
 
