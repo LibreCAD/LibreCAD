@@ -106,9 +106,9 @@ Current implementation order for the remaining “all supported types” work:
    source now has product export/reopen checks across those five lanes, for
    both offset signs and four recorded distances; every fit-point
    spline-points import-grid entry admitted as a single cache is checked across
-   the five lanes at its recorded signed distance; a promotable parabola/cache
-   is checked across all five lanes
-   at one representative signed offset; a bounded-hyperbola single-branch
+   the five lanes at its recorded signed distance; every promotable single-cache
+   parabola case in the six-source, six-distance, both-sign matrix is checked
+   across all five lanes; a bounded-hyperbola single-branch
    cache is checked across all five lanes, while its multi-branch side remains
    fallback-only; an unweighted spline is checked across all five lanes on both
    signed sides; a rational tangent-constrained cubic offset is product-
@@ -24737,5 +24737,23 @@ Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
 passes 40,919 assertions in one test case. The `librecad_tests` target rebuild
 and `git diff --check` pass. The result qualifies only the recorded source
 fixtures and distances; other fit-point layouts, arbitrary tangent metadata,
+independent-CAD equivalence, visible-GUI acceptance, and exact-head CI remain
+open.
+
+#### W563dh. Round-trip Every Promotable Parabola Cache (2026-11-07)
+
+Expanded parabola product writer/reopen coverage from one source/distance to
+every case in the existing six-source scale/translation and six-distance,
+both-sign matrix that produces one promotable cache. Each eligible case is
+exported and staged-imported through R14/R2000/R2018 DXF and R2000/R2018 DWG;
+typed parabola identity, native admission without downgrade, and exact cache
+fingerprint are checked. Multi-branch outputs continue to verify fallback and
+preserved typed metadata rather than being reported as editable native caches.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"parabola curvature neighborhood admits only exact single-cache imports"`
+passes 41,726 assertions in one test case. The `librecad_tests` target rebuild
+and `git diff --check` pass. This qualifies only the recorded parabola source
+and distance matrix; other parabola parameterizations, topology boundaries,
 independent-CAD equivalence, visible-GUI acceptance, and exact-head CI remain
 open.
