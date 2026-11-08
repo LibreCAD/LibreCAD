@@ -25051,3 +25051,46 @@ miss tangent/even roots, and the near-seam box remains unresolved. W563cg stays
 open; next isolate and compare all roots—including tangent roots and roots at
 knots/seams—then validate complete branch topology before changing the
 gradual positive-side refusal or admitting cache/file support.
+
+#### W563cz. Reconfirm Type-changing Source Picker Scope (2026-11-08)
+
+The latest request confirms that the Properties source widget must let users
+change the requested source-curve type before selecting a replacement, and
+must offer every source family the offset model currently supports. The
+authoritative picker inventory remains line, arc, circle, ellipse, spline,
+spline-points, distinct parabola, bounded hyperbola, and polyline. Selecting a
+family filters the candidate list; selecting a valid candidate replaces the
+source with its typed geometry, while the current source remains resolved and
+visibly highlighted when present. Parabola must remain distinct from its
+`LC_SplinePoints` base representation.
+
+This is a scope confirmation, not a request for another widget or a new
+parabola-only branch. Existing type-switch/replacement, all-family candidate,
+identity, highlighting, filtering, and cancellation regressions already cover
+the picker contract (latest recorded union: 6,892 assertions/10 cases). Treat
+that UI requirement as complete unless a regression is found. Continue with
+verified per-variant geometry, cache, and DXF/DWG read/write gaps; picker
+membership alone is not evidence that a concrete variant is geometrically or
+persistently supported. Visible-GUI acceptance remains a separate open gate.
+
+#### W563da. Reject Unsound Rational Cusp Root-count Shortcut (2026-11-08)
+
+An experimental Bernstein sign-variation bound on the squared rational cusp
+equation was tried as a way to classify unresolved periodic seam boxes. The
+worker matrix falsified the resulting classification: for gradual positive
+offsets, the engine returned `Ok` where the established fail-closed expectation
+is `SingularOffset`, and the independent high-precision geometry oracle found
+cusps without matching generated branch endpoints (including an endpoint
+error of about 29.19 drawing units against a fit budget near 0.011). The
+shortcut and its supporting production data were removed; no eligibility or
+expected test status was changed.
+
+After removal, Release validation passes the nonuniform periodic matrix
+(15,468 assertions/1 case), the focused cusp suite (85,429 assertions/13
+cases), and the full worker-kernel suite (1,681,227 assertions/54 cases).
+This is a rejected approach, not implementation progress toward W563cg. Keep
+the gradual positive-side case fail-closed. Future root-count work must first
+prove the coefficient-net enclosure and root count independently, account for
+extraneous roots introduced by squaring, and compare every isolated root and
+the complete generated topology against the high-precision oracle, including
+seam, knot, and even-multiplicity roots.
