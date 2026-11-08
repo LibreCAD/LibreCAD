@@ -26177,6 +26177,22 @@ passes. Test commit `0c648b4a1` (`test(offset): tighten periodic seam cusp
 proof`). This closes only simple-root candidate ownership for the selected
 periodic rational cubic; tangent/even seam roots and other profiles remain open.
 
+#### W563eh Follow-up. Validate Periodic Seam Candidate Span Provenance (2026-11-08)
+
+Strengthened the rational seam case to validate every candidate box with a
+known span: its parameter remains inside the bracket, and its bracket remains
+inside that source span. The seam event must be owned by a first- or last-span
+box that actually contains the corresponding domain endpoint. This prevents a
+candidate merely near the seam from satisfying seam ownership. The same test
+continues to require opposite one-sided signs, candidate rather than stall
+classification, and output endpoint correspondence.
+
+Release validation: focused periodic rational seam case, 49 assertions/1 case;
+full worker-kernel suite, 1,703,920 assertions/68 cases; `git diff --check`
+passes. Test commit `cc195dd02` (`test(offset): verify periodic seam span
+ownership`). This checks the selected seam fixture only; other periodic
+profiles and even-root seam collapse remain open.
+
 Visible source-picker acceptance was also attempted on 2026-11-08. The CUA
 inventory reported the Mac locked and could not inspect the built application;
 this does not satisfy or close the GUI gate. Resume only after the desktop is
