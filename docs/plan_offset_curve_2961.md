@@ -26255,3 +26255,26 @@ Test commit `819d84ad7` (`test(offset): cover periodic seam weight profiles`).
 Remaining: other periodic control/knot layouts, even-multiplicity seam roots,
 higher degrees, and complete mapping of all certified candidate/stall events
 across the broader rational periodic matrix.
+
+#### W563em. Qualify a Periodic Rational-quadratic Tangent Root (2026-11-08)
+
+Added a degree-2 periodic rational fixture to the oracle-driven tangent/stall
+matrix. The 256-bit oracle refines an interior curvature extremum, derives the
+signed offset, checks the same-sign even-root neighbors and a root-containing
+interval with multiple Bernstein variations, then verifies production
+isolation reports a source-span-bounded stall. Both reported stall endpoints
+and the oracle tangent point must map to retained cubic output within requested
+geometry tolerance.
+
+The fixture separately checks seam position and tangent continuity. Its
+one-sided offset factors intentionally differ, documenting that this quadratic
+join is C1 but not curvature-continuous; the cubic seam-curvature assertion is
+therefore retained only for degree 3. This does not claim seam tangent-root
+coverage or general degree-2 support.
+
+Release validation: focused periodic tangent matrix, 160 assertions/1 case;
+full worker-kernel suite, 1,703,991 assertions/68 cases; `git diff --check`
+passes. Test commit `9f1ef2a0b` (`test(offset): qualify periodic rational
+quadratic tangent`). Remaining: other degree-2 control/knot/weight layouts,
+periodic seam even roots, higher degrees, and complete candidate/stall mapping
+across the rational periodic matrix.
