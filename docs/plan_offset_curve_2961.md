@@ -25919,3 +25919,30 @@ source and generated result unchanged. Record app/build identity and results.
 If the visible run exposes a regression, add a focused failing widget test and
 fix it before closing this gate. Until that evidence exists, mark the GUI gate
 open; do not infer it from widget tests or picker inventory alone.
+
+#### W563ej. Characterize an Interior Rational-quadratic Even-root Refusal (2026-11-08)
+
+Added an independent 256-bit oracle case for a clamped, single-span rational
+quadratic with an interior tangent/even root at `t=0.5`. The oracle verifies
+the offset factor is near zero at the root and has nonzero, same-sign values
+on both sides. A local interval also retains at least two Bernstein variations,
+so this is not merely a tangency inferred from sampling. The production
+isolator currently exhausts its bounded unresolved-run budget and returns
+`AmbiguousRegularity`; the test requires that it emit no partial branches,
+candidate roots, or stall intervals.
+
+This is an explicit support gap, not successful tangent-root resolution. Do
+not increase the isolation/run budgets or reinterpret the fail-closed result
+as an accepted output. The attempted generic small-motion routing was reverted:
+it merged adjacent unresolved boxes whose aggregate extent exceeded the
+configured collapse tolerance and still refused the case. Preserve the typed
+refusal until a proof-based change is validated.
+
+Release validation: tangent-root selector, 174 assertions/4 cases; full
+worker-kernel suite, 1,703,760 assertions/63 cases; `git diff --check` passes.
+Test commit `30e73f7a4` (`test(offset): cover rational quadratic tangent
+refusal`). Next: identify why interval root-count provenance is lost as the
+quadratic root box narrows, or derive an independently certified root bracket
+whose aggregate offset motion is within `nodeMerge`; then test both offset
+sides/scales, require output endpoint or measured-collapse ownership, and
+retain fail-closed refusal for unproved or over-tolerance runs.
