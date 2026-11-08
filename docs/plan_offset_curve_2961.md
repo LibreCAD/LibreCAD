@@ -100,7 +100,8 @@ Current implementation order for the remaining “all supported types” work:
    signed offset; a promotable parabola/cache is checked across all five lanes
    at one representative signed offset; a bounded-hyperbola single-branch
    cache is checked across all five lanes, while its multi-branch side remains
-   fallback-only. Broader branch/source matrices remain open.
+   fallback-only; an unweighted spline is checked across all five lanes on both
+   signed sides. Broader branch/source matrices remain open.
 6. **Closeout evidence:** record focused and aggregate test commands/results
    per slice, run `git diff --check`, and check exact-head CI after pushes.
    Mark a family/variant complete only for the exact matrix exercised; keep
@@ -24482,9 +24483,9 @@ hyperbola, and polyline. Further work is per-family/per-variant generation,
 worker/cache admission, DXF/DWG import/export, and round-trip qualification;
 do not add another picker control to address those geometry gaps.
 The native writer evidence now covers one polyline fixture and representative
-spline-points, parabola, and bounded-hyperbola fixtures, not universal native
-export support; other source families, cache variants, independent CAD, visible
-GUI, and exact-head CI remain open.
+spline-points, unweighted-spline, parabola, and bounded-hyperbola fixtures, not
+universal native export support; other source families, cache variants,
+independent CAD, visible GUI, and exact-head CI remain open.
 
 #### W563cu. Round-trip Control-point Spline-points Caches Through Product Writers (2026-11-07)
 
@@ -24552,4 +24553,20 @@ passes 1,405 assertions in one case, including R14/R2000/R2018 DXF and
 R2000/R2018 DWG. The `librecad_tests` target rebuild and `git diff --check`
 pass. This qualifies the recorded bounded source/distance only; additional
 hyperbola branches/distances, other families, independent CAD, visible GUI,
+and exact-head CI remain open.
+
+#### W563cy. Round-trip Unweighted Spline Cache Through Product Writers (2026-11-07)
+
+The unweighted degree-1 spline source import test now exports every admitted
+offset through LibreCAD's product writer and staged-imports it again. Both
+offset signs run through R14/R2000/R2018 DXF and R2000/R2018 DWG. Reopen must
+preserve the typed source with its implicit/default weights still absent and
+match the exact generated cache fingerprint. The test also retains the
+straight-line producer representation case.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"unweighted spline source imports through operation-8 validation in DXF and DWG"`
+passes 1,832 assertions in one case. The `librecad_tests` target rebuild and
+`git diff --check` pass. This is one unweighted degree-1 fixture; other degrees,
+rational/tangent variants, other source families, independent CAD, visible GUI,
 and exact-head CI remain open.
