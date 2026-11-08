@@ -25493,3 +25493,35 @@ certified production root boxes to either a retained branch endpoint or a
 recorded in-tolerance tiny-reversal collapse. Keep uncertain profiles
 fail-closed. Do not describe the sampled oracle inventory as complete until
 these checks establish that claim.
+
+#### W563eh Follow-up. Check Both Signs, Seam Ownership, and Repeated Knots (2026-11-08)
+
+Extended the independent spline oracle tests without changing production
+acceptance. Cusp candidates now retain their originating nonzero knot span;
+the periodic rational matrix runs the sampled cusp inventory for both signed
+offsets and checks each candidate belongs to that span. For degree-greater-than
+one periodic fixtures, high-precision one-sided offset-factor values at the
+domain seam agree in zero/nonzero classification and sign.
+
+Added a clamped rational cubic with a repeated interior knot. Its left and
+right one-sided factors are checked at successively smaller high-precision
+steps. When they have opposite nonzero signs, the span-local oracle must not
+invent a cusp at the knot, and every sampled candidate must remain owned by an
+open span. The production direct build is also checked: it reports no root
+candidate at the knot and emits a cusp endpoint at the one-sided oracle join
+within the requested geometry tolerance.
+
+Release validation: focused repeated-knot test, 49 assertions/1 case;
+periodic/nonuniform two-sided matrix, 22,658 assertions/1 case; full
+worker-kernel suite, 1,702,463 assertions/57 cases. The test target builds.
+Test commit `363ad468b` (`test(offset): verify spline cusp knot ownership`).
+The periodic fixture continues to print existing `RS_Spline::changeType:
+insufficient points` diagnostics while constructing intermediate test data;
+all assertions pass. These checks improve span/seam ownership coverage but do
+not prove sampled-root completeness or exclude tangent/even-multiplicity roots.
+
+Next: finish per-profile/per-sign oracle inventory and one-to-one mapping from
+production root boxes to retained endpoints or recorded in-tolerance tiny
+reversal collapses; separately search tangent/even roots and attribute any
+unresolved seam leaves. Keep ambiguous cases fail-closed and do not change
+geometry/cache/file eligibility based on these sampled checks alone.
