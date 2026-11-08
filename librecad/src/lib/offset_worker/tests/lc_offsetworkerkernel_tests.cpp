@@ -1751,6 +1751,59 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                         }
                     }
                 }
+                if (diagnostic.status == LC_CurveOffsetStatus::Ok &&
+                    profileDiagnostics.complete) {
+                    const double parameterStart = domainStart.convert_to<double>();
+                    const double parameterEnd = domainEnd.convert_to<double>();
+                    const double requestedGeometry =
+                        diagnosticOptions->tolerance.requestedGeometry;
+                    for (const auto& collapse : profileDiagnostics.collapsedTinyReversals) {
+                        CAPTURE(weightProfile, signedDistance, collapse.sourceT0,
+                                collapse.sourceT1, collapse.extent,
+                                collapse.boundedByCusps,
+                                collapse.replacementPoint.x,
+                                collapse.replacementPoint.y);
+                        CHECK(std::isfinite(collapse.sourceT0));
+                        CHECK(std::isfinite(collapse.sourceT1));
+                        CHECK(std::isfinite(collapse.extent));
+                        CHECK(parameterStart <= collapse.sourceT0);
+                        CHECK(collapse.sourceT0 <= parameterEnd);
+                        CHECK(parameterStart <= collapse.sourceT1);
+                        CHECK(collapse.sourceT1 <= parameterEnd);
+                        const double maximumExtent =
+                            (collapse.boundedByCusps ? 2.0 : 1.0) *
+                            diagnosticOptions->tolerance.nodeMerge;
+                        CHECK(collapse.extent <= maximumExtent);
+
+                        double nearestOutputEndpoint =
+                            std::numeric_limits<double>::infinity();
+                        for (const LC_OffsetBranch& branch : diagnostic.branches) {
+                            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                                nearestOutputEndpoint = std::min(
+                                    nearestOutputEndpoint,
+                                    std::min(
+                                        piece.bezier.front().distanceTo(
+                                            collapse.replacementPoint),
+                                        piece.bezier.back().distanceTo(
+                                            collapse.replacementPoint)));
+                            }
+                        }
+                        CHECK(nearestOutputEndpoint <= requestedGeometry);
+                        if (collapse.boundedByCusps) {
+                            const bool ownedByOracleCusp = std::any_of(
+                                expectedCusps.begin(), expectedCusps.end(),
+                                [&](const OracleSplineCusp& cusp) {
+                                    const double parameter =
+                                        cusp.parameter.convert_to<double>();
+                                    return collapse.sourceT0 <= parameter &&
+                                           parameter <= collapse.sourceT1 &&
+                                           collapse.replacementPoint.distanceTo(
+                                               cusp.point) <= requestedGeometry;
+                                });
+                            CHECK(ownedByOracleCusp);
+                        }
+                    }
+                }
                 if (profileDiagnostics.complete) {
                     CHECK(profileDiagnostics.candidateParameters.size() ==
                           refinedOracleCusps.size());
