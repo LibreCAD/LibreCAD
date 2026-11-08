@@ -25386,3 +25386,110 @@ and must be recomputed if a later implementation returns branches.
 Validation for this diagnostic follow-up: periodic/nonuniform selection,
 15,523 assertions; complete worker-kernel suite, 1,695,279 assertions/56
 cases; rebuilt `librecad_tests` and `[spline]`, 28,390 assertions/77 cases.
+
+#### W563eh Follow-up. Reject Deeper-Isolation Acceptance and Trace Branch Loss (2026-11-08)
+
+An uncommitted experiment increased cusp-isolation depth (up to 48), added a
+global isolation-box cap, and attempted to use rational Bernstein variation
+bounds to accept sampled run roots. It changes the gradual positive-side
+periodic profile from fail-closed to `Ok`, and the diagnostic now collects all
+eight span-local oracle candidates. That apparent root-count improvement is
+not a correct geometry result and must not be treated as completed support.
+
+The focused Release regression currently fails for weight profile 4 at
+`d=+0.005`: the oracle candidate near `t=0.50012229166437061` has no generated
+cusp endpoint within the requested geometry tolerance (`0.0107005`); the
+nearest endpoint is `29.1920` units away. The final output contains 10 branches
+(20 endpoints), while the branch builder snapshot before join/collapse has 12
+branches with alternating `reversed` state. The joined source ranges span
+`0.0002063` through `1.5`, crossing the missing `0.500122` candidate. This
+narrows the next investigation to the downstream branch join/collapse path,
+but does not yet prove which operation drops or absorbs that cusp. Sampled
+Hausdorff agreement is insufficient to accept the result because the local
+cusp topology is wrong.
+
+The same test also fails an assumed even candidate-count assertion for profile
+5. This confirms oracle candidate count parity is not a valid invariant for a
+periodic fixture (ownership, sampling, and seam behavior have not yet been
+fully qualified). Remove that assumption and report each profile/sign's
+candidate parameters and one-sided signs; do not pad or discard candidates to
+force an even count. The production endpoint correspondence remains the
+acceptance criterion, not parity or broad sampled Hausdorff distance.
+
+Next implementation sequence:
+
+1. Keep this deeper-isolation/root-acceptance experiment uncommitted and
+   unshipped. Reproduce the focused failure from the current source and retain
+   the exact profile/sign/root/endpoint evidence. Do not weaken the endpoint
+   assertions or expected topology to make the test pass.
+2. Instrument branch topology at each boundary: immediately after cusp split
+   assembly, after `joinCorners`, after `collapseTinyReversals`, and after
+   final branch filtering. Record each branch's source interval, reversed
+   state, endpoint kind and geometry, and the cusp candidate(s) it owns.
+   Identify the exact transition that removes or crosses `t≈0.500122` and
+   establish whether a branch is incorrectly merged, reversed, or discarded.
+3. Add a minimal regression for the identified transition, then fix only that
+   operation so every accepted cusp candidate remains represented by the
+   appropriate branch endpoint or by a separately proven tolerance-merged
+   singular feature. Keep candidate-to-endpoint matching one-to-one and check
+   both parameter and geometric tolerances.
+4. Remove the profile-5 even-count assertion. Qualify the oracle inventory
+   per profile and both offset signs using span-local one-sided factor signs,
+   explicit knot/seam ownership, and a separate search for tangent/even roots.
+   Label sampled candidates as incomplete until the latter is certified.
+5. Re-run direct branch, worker/cache, periodic profile, and downstream spline
+   regressions. Require every accepted profile to have complete candidate
+   coverage, correct cusp endpoints/topology, and no extraneous endpoints;
+   otherwise preserve fail-closed status for that profile.
+6. Only after those checks pass, reassess whether the increased depth/work cap
+   or Bernstein variation path is needed. Any retained certification must
+   prove its endpoint/root-count assumptions on open knot spans and handle
+   seam boundaries separately. Re-run full Release worker-kernel and spline
+   suites, then remove temporary diagnostics that are not part of the bounded
+   test interface.
+
+Current validation of the uncommitted experiment: the focused periodic matrix
+fails 5 assertions out of 22,499. Failures include the missing profile-4 cusp
+endpoint and the unjustified profile-5 even-candidate assumption. Therefore
+this experiment is not mergeable; the last validated fail-closed behavior
+documented above remains the support baseline until the branch transition and
+oracle inventory are corrected. W563eh remains open.
+
+#### W563eh Correction. Account for Certified Tiny-Reversal Collapse (2026-11-08)
+
+The follow-up branch snapshots resolved the apparent endpoint loss. The
+candidate at `t=0.50012229166437061` is a real span-local sign-change candidate.
+It survives `joinCorners`; its adjacent branch is a reversed cusp-to-cusp
+interval `[0.5, 0.50012229166437061]` with control-hull extent about
+`0.000144`, below the configured tiny-reversal collapse threshold. The
+`collapseTinyReversals` operation intentionally replaces that tiny loop by its
+midpoint and joins its neighboring branches. The candidate therefore ceases
+to be a *branch endpoint* by design; requiring every sampled cusp to remain a
+branch endpoint was the faulty test invariant. The replacement midpoint is
+checked against the oracle cusp and against the materialized output, both
+within the requested geometry tolerance. This is accepted only when the
+diagnostic records an actual cusp-bounded collapse and the source parameter
+matches one of its two ends.
+
+Implementation commit `a445bde0d` (`fix(offset): validate periodic rational
+cusp topology`) records actual tiny-reversal collapse metadata for opt-in
+diagnostics, scopes the deeper subdivision budget to nonuniform rational
+splines, and uses rational Bernstein root-variation counts only when available.
+If those counts are unavailable, existing run handling is preserved. The
+profile-5 even-candidate assertion was removed: a sampled oracle candidate
+inventory is not a parity/completeness proof.
+
+Release validation after the implementation: focused periodic/nonuniform
+matrix 22,470 assertions/1 case; complete worker-kernel suite 1,702,226
+assertions/56 cases; application `[spline]` suite 28,390 assertions/77 cases;
+`git diff --check` passes. The previous five-failure experiment result is
+superseded by this evidence.
+
+Remaining W563eh/W563eg work is not closed: qualify the oracle candidate/sign
+inventory per rational weight profile and both offset signs; add explicit
+repeated-knot and periodic-seam ownership checks; investigate tangent/even
+roots not found by sign-change sampling; and require a one-to-one mapping from
+certified production root boxes to either a retained branch endpoint or a
+recorded in-tolerance tiny-reversal collapse. Keep uncertain profiles
+fail-closed. Do not describe the sampled oracle inventory as complete until
+these checks establish that claim.
