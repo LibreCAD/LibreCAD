@@ -587,7 +587,7 @@ TEST_CASE("rational cusp polynomial no-root certificates agree with oracle sampl
 
                 const SplineOracle derivativeStep{spanWidth * SplineOracle{"1e-20"}};
                 const SplineOracle distance{signedDistance};
-                for (const int sampleNumerator : {1, 3, 5, 7}) {
+                for (const int sampleNumerator : {0, 1, 3, 5, 7, 8}) {
                     const SplineOracle t{a + (b - a) * sampleNumerator / 8.0};
                     const SplineOracle g = oracleOffsetFactorNumerator(
                         data, t, derivativeStep, domainStart, domainEnd, distance);

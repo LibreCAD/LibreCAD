@@ -2290,12 +2290,36 @@ bool RS_Spline::tryBoundJetImpl(const double a, const double b, LC_CurveJetBound
                      [&](const size_t i, const size_t j) {
                        return weightFourth[i] * crossSquared[j];
                      }, distanceSquaredTerm);
+          // q^3 has degree 12p-6, while W^4 r^2 has degree 12p-8.
+          // Elevate the latter twice before subtracting coefficient-wise;
+          // comparing different Bernstein degrees is not a valid net test.
+          LC_Interval elevatedDistanceTerm[maxPolynomialDegree + 1];
+          std::copy(distanceSquaredTerm,
+                    distanceSquaredTerm + weightFourthDegree + crossSquaredDegree + 1,
+                    elevatedDistanceTerm);
+          size_t elevatedDegree = weightFourthDegree + crossSquaredDegree;
+          for (; elevatedDegree < polynomialDegree; ++elevatedDegree) {
+            LC_Interval next[maxPolynomialDegree + 1];
+            for (size_t i = 0; i <= elevatedDegree + 1; ++i) {
+              if (i == 0) {
+                next[i] = elevatedDistanceTerm[0];
+              } else if (i == elevatedDegree + 1) {
+                next[i] = elevatedDistanceTerm[elevatedDegree];
+              } else {
+                const LC_Interval ratio = LC_Interval::point(static_cast<double>(i)) /
+                                          LC_Interval::point(static_cast<double>(elevatedDegree + 1));
+                next[i] = ratio * elevatedDistanceTerm[i - 1] +
+                          (LC_Interval::point(1.0) - ratio) * elevatedDistanceTerm[i];
+              }
+            }
+            std::copy(next, next + elevatedDegree + 2, elevatedDistanceTerm);
+          }
           const LC_Interval distance = LC_Interval::point(signedDistance);
           const LC_Interval distanceSquared = distance * distance;
           bool allPositive = true;
           bool allNegative = true;
           for (size_t i = 0; i <= polynomialDegree; ++i) {
-            const LC_Interval coefficient = qCubed[i] - distanceSquared * distanceSquaredTerm[i];
+            const LC_Interval coefficient = qCubed[i] - distanceSquared * elevatedDistanceTerm[i];
             if (!coefficient.isPositive()) allPositive = false;
             if (!coefficient.isNegative()) allNegative = false;
           }
