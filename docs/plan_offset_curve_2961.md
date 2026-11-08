@@ -24,6 +24,13 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-08. Project: **LibreCAD**, not LibreCAD_3.
+Latest request reconciliation: the source-type selector must remain editable
+while choosing a replacement, let the user choose a different family before
+selecting an entity, and include all currently modeled source kinds. This UI
+contract is already implemented and tested. The remaining request is broader
+end-to-end support for eligible variants in every listed family, including
+parabola; preserve parabola as a distinct type and do not count picker
+visibility as geometric support.
 Latest source-picker acceptance contract: in the offset Properties widget, a
 user can change the source-curve family as part of choosing a replacement
 entity; changing the family refreshes the live candidate list before selection,
@@ -25774,7 +25781,38 @@ case; full worker-kernel suite, 1,703,614 assertions/61 cases;
 `git diff --check` passes. Test commit `364b29e65` (`test(offset): map
 periodic rational cusps to output`).
 
-Next: build and independently qualify a smooth nonuniform periodic rational
-tangent/even-root fixture; then require its seam/knot root to map to an owned
+Next: isolate tangent/even roots on the independently qualified smooth
+nonuniform periodic rational fixture and map each resolved root to an owned
 endpoint or a measured in-tolerance collapse without relying on sign-change
 sampling.
+
+#### W563eh Follow-up. Reconcile Source Picker Request and Periodic Fixture Status (2026-11-08)
+
+The latest request to change source family before choosing a replacement,
+expose all modeled families, and support parabola does not reopen the completed
+picker UI slice. The selector already permits type-before-selection, refreshes
+eligible candidates, preserves the current source/highlight until a successful
+replacement, and exposes all nine `SupportedKinds`; `LC_Parabola` remains a
+distinct kind. Keep the remaining work focused on concrete per-family geometry,
+worker/cache, replacement, and DXF/DWG round-trip eligibility. For parabola,
+extend support only when independent geometry-oracle and persistence evidence
+qualifies the specific variant; unsupported variants must continue to fail
+closed.
+
+Replaced the invalid fixture attempt (which called private
+`RS_Spline::insertKnot()`) with a valid periodic rational cubic constructed
+through public APIs. The 256-bit oracle now confirms seam position, tangent,
+and curvature continuity, and refines an interior curvature extremum to a
+same-sign even root for the selected offset distance. This is useful
+qualifying evidence, but the production direct builder still reaches
+`IsolationWorkLimit` before it can complete that case. The regression asserts typed
+`AmbiguousRegularity`, incomplete diagnostics, and no partial branches; this is
+fail-closed coverage, not successful periodic rational tangent support. An
+experimental bounded-interior-stall change did not resolve this case and
+regressed the existing rational interior-knot test, so that change was
+removed. Next, improve tangent/even-root isolation without weakening the
+validated knot-stall path, so the oracle-qualified periodic root is owned by a
+bounded candidate/stall and maps to an output endpoint/collapse. Only then
+replace the refusal expectation with success and output-geometry assertions.
+Keep the committed rational interior-knot and periodic seam results as
+separate, narrower claims.
