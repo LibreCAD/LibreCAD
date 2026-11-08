@@ -56,6 +56,17 @@ Use `SupportedKinds` as the authoritative picker list and continue with the
 variant-level implementation and validation steps below. The picker contract
 is complete; the broader all-family end-to-end requirement is not.
 
+2026-11-08 follow-up: the source picker must remain editable during the
+replacement gesture, allow choosing the desired family before selecting a
+candidate, and refresh the eligible candidate list for that family. Its family
+set is all currently modeled source kinds, including parabola as a distinct
+kind; it is not limited to the source's current kind. The existing implementation
+and regression coverage already satisfy this UI contract, so this request does
+not justify another widget, picker state, or parabola-specific UI path. Continue
+the remaining work against the per-variant geometry, worker/cache, replacement,
+and DXF/DWG round-trip matrices below. Treat parabola picker support and
+parabola end-to-end geometric support as separate acceptance items.
+
 2026-11-08 acceptance clarification: the source-type control must remain
 editable during replacement, including when an existing source is already
 shown. Changing its value refreshes the candidate entities before a pick; it
@@ -25672,3 +25683,40 @@ Test commit `4bb3da6d4` (`test(offset): verify periodic cusp seam ownership`).
 Next: extend the same seam and box-to-output checks to nonuniform rational
 weights and tangent/even roots, then verify every certified box maps
 one-to-one to a retained endpoint or a measured in-tolerance collapse.
+
+#### W563eh Follow-up. Bound a Rational Tangent Stall at an Interior Knot (2026-11-08)
+
+Added a nonuniform rational quadratic fixture with a knot at `t=0.5`, positive
+weights `(1, 2, 2, 1)`, and an exact unit-distance curvature touch at the knot.
+The high-precision oracle confirms that both one-sided factors and their
+same-sign neighbors describe an even root rather than a sign-changing cusp.
+The first production run exposed two independent limits: the unresolved run
+exceeded its per-run box cap despite a zero offset-motion bound, and processing
+the knot-adjacent boxes then exhausted the global isolation budget.
+
+Isolation now extends a knot-endpoint stall only while an interval bound proves
+the complete offset path over the combined interval remains within
+`nodeMerge`. It prunes queued leaves only inside that proven interval and
+continues processing the rest of the span. A zero-sign-change run may resolve
+as a stall without a polynomial root-count certificate only when its complete
+offset-motion bound is within `nodeMerge`; candidate cusp emission still
+requires the existing root-count rules. The bounded-tail counterpart handles
+the other end of a knot span.
+
+The regression requires successful branch generation, a candidate or stall
+owning the knot, and materialized output within requested geometry tolerance of
+the oracle point. This qualifies the recorded rational quadratic and does not
+establish tangent-root completeness for other rational degrees, knot
+multiplicities, or periodic seams. Mapping every certified root box to a
+retained endpoint or measured collapse remains open.
+
+Release validation: focused tangent-at-knot regression, 16 assertions/1 case;
+full worker-kernel suite, 1,703,596 assertions/61 cases; `git diff --check`
+passes. Implementation commit `dd3f34a35` (`fix(offset): bound rational
+tangent stalls at knots`). The optional ASan build was not completed because
+its configured tree re-entered a fresh 1,113-step full build; no ASan result is
+claimed.
+
+Next: extend the proof to tangent/even roots on nonuniform periodic rational
+spans and verify every certified box maps one-to-one to a retained endpoint,
+an explicitly owned seam/knot point, or a measured in-tolerance collapse.
