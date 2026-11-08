@@ -1714,6 +1714,41 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                         CHECK(box.span == productionSpan);
                         CHECK(box.t0 >= sourceBreaks[box.span]);
                         CHECK(box.t1 <= sourceBreaks[box.span + 1]);
+                        if (diagnostic.status == LC_CurveOffsetStatus::Ok &&
+                            profileDiagnostics.complete) {
+                            double nearestCuspEndpoint = std::numeric_limits<double>::infinity();
+                            for (const LC_OffsetBranch& branch : diagnostic.branches) {
+                                if (branch.cubicPieces.empty()) continue;
+                                if (branch.startEnd == LC_OffsetBranchEnd::Cusp) {
+                                    nearestCuspEndpoint = std::min(
+                                        nearestCuspEndpoint,
+                                        branch.cubicPieces.front().bezier.front().distanceTo(
+                                            refinedOracleCusps[nearestOracle].point));
+                                }
+                                if (branch.endEnd == LC_OffsetBranchEnd::Cusp) {
+                                    nearestCuspEndpoint = std::min(
+                                        nearestCuspEndpoint,
+                                        branch.cubicPieces.back().bezier.back().distanceTo(
+                                            refinedOracleCusps[nearestOracle].point));
+                                }
+                            }
+                            const bool mappedToCollapse = std::any_of(
+                                profileDiagnostics.collapsedTinyReversals.begin(),
+                                profileDiagnostics.collapsedTinyReversals.end(),
+                                [&](const LC_CurveOffsetTinyReversalCollapse& collapse) {
+                                    return collapse.sourceT0 <= productionParameter &&
+                                           productionParameter <= collapse.sourceT1 &&
+                                           collapse.extent <= diagnosticOptions->tolerance.nodeMerge &&
+                                           collapse.replacementPoint.distanceTo(
+                                               refinedOracleCusps[nearestOracle].point) <=
+                                               diagnosticOptions->tolerance.requestedGeometry;
+                                });
+                            CAPTURE(weightProfile, signedDistance, productionParameter,
+                                    nearestCuspEndpoint, mappedToCollapse);
+                            CHECK((nearestCuspEndpoint <=
+                                       diagnosticOptions->tolerance.requestedGeometry ||
+                                   mappedToCollapse));
+                        }
                     }
                 }
                 if (profileDiagnostics.complete) {
