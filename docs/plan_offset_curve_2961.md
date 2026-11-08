@@ -24,100 +24,30 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-08. Project: **LibreCAD**, not LibreCAD_3.
-Latest request reconciliation: the source-type selector must remain editable
-while choosing a replacement, let the user choose a different family before
-selecting an entity, and include all currently modeled source kinds. This UI
-contract is already implemented and tested. The remaining request is broader
-end-to-end support for eligible variants in every listed family, including
-parabola; preserve parabola as a distinct type and do not count picker
-visibility as geometric support.
-Latest source-picker acceptance contract: in the offset Properties widget, a
-user can change the source-curve family as part of choosing a replacement
-entity; changing the family refreshes the live candidate list before selection,
-and choosing a candidate atomically replaces the source while preserving the
-candidate's actual kind. An existing source remains resolvable and highlighted
-until replacement succeeds or is cancelled. The family selector remains
-available throughout the replacement flow, so the user can change type before
-choosing a new entity; changing the filter alone must not replace or clear the
-current source. The candidate list must cover every kind in the canonical
-supported-kind inventory, not only the type of the currently selected source.
-The selector is driven by `LC_OffsetSourceGeometry::SupportedKinds` and covers
+## Current Contract
+
+The latest request reconfirms the source replacement contract: while choosing
+a replacement, the user can change the source family before selecting an
+entity, and the candidate list refreshes to that family. The selector uses
+`LC_OffsetSourceGeometry::SupportedKinds` and includes every modeled kind:
 line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
-and polyline. Parabola is a distinct kind despite inheriting from
-`LC_SplinePoints`. This widget behavior, including parabola selection and
-highlighting, is implemented and tested; do not add another selector or a
-parabola-only UI branch. “Support all listed types” remains an end-to-end
-geometry requirement. Picker-regression acceptance verifies the canonical
-inventory, family-dependent candidate filtering, successful typed replacement,
-and unchanged source/cache on cancellation or failed selection. Separately,
-each family's eligible geometric variants still need independently validated
-generation, worker/cache, DXF/DWG import/export, and round-trip paths, with
-unsupported variants explicitly refused without mutating the current source
-or cache. A type appearing in the picker is not proof that every one of its
-geometric variants is supported.
+and polyline. `LC_Parabola` remains distinct from its `LC_SplinePoints` base.
 
-The latest repeated request to change source type before selecting a new curve
-and to expose all supported source families reconfirms this existing contract;
-it does not expand the modeled-kind inventory or introduce a new UI slice.
-Use `SupportedKinds` as the authoritative picker list and continue with the
-variant-level implementation and validation steps below. The picker contract
-is complete; the broader all-family end-to-end requirement is not.
+This Properties-widget behavior is implemented and covered by regressions;
+do not create another selector or a parabola-only UI branch. Changing the
+filter alone must preserve the current source and highlight. A successful
+candidate pick atomically replaces it with the candidate's actual typed
+geometry; cancellation or an invalid candidate leaves source and cache
+unchanged. This closes only the picker-level requirement.
 
-2026-11-08 follow-up: the source picker must remain editable during the
-replacement gesture, allow choosing the desired family before selecting a
-candidate, and refresh the eligible candidate list for that family. Its family
-set is all currently modeled source kinds, including parabola as a distinct
-kind; it is not limited to the source's current kind. The existing implementation
-and regression coverage already satisfy this UI contract, so this request does
-not justify another widget, picker state, or parabola-specific UI path. Continue
-the remaining work against the per-variant geometry, worker/cache, replacement,
-and DXF/DWG round-trip matrices below. Treat parabola picker support and
-parabola end-to-end geometric support as separate acceptance items.
-
-2026-11-08 acceptance clarification: the source-type control must remain
-editable during replacement, including when an existing source is already
-shown. Changing its value refreshes the candidate entities before a pick; it
-must not clear, silently replace, or stop highlighting the existing source.
-Selecting a replacement commits its actual typed geometry atomically, while
-cancel or an invalid candidate leaves source and cache unchanged. The selector
-must include every current `SupportedKinds` entry. In particular,
-`LC_Parabola` remains selectable and identifiable as parabola rather than being
-collapsed into its `LC_SplinePoints` base class. These are picker-level
-acceptance conditions already covered by the current Properties regressions;
-do not add another widget or duplicate parabola-specific selector logic.
-
-The phrase “support all source types” is tracked as a separate end-to-end
-obligation: for each of the nine modeled kinds, establish concrete eligible
-variants and verify direct generation, worker/cache admission, replacement,
-and applicable DXF/DWG read/write round-trips. For parabola specifically, the
-existing six-source/six-distance/both-sign import grid and product-writer
-receipts qualify only their recorded promotable single-cache cases. They do
-not imply support for every parabola parameterization, transform, topology, or
-distance. Unqualified variants remain explicitly unsupported/fail-closed
-until their own oracle, cache, and persistence evidence is recorded.
-
-2026-11-07 implementation reconciliation: `LC_PropertiesEditingWidgetOffsetCurve`
-already populates `cbSourceType` from `LC_OffsetSourceGeometry::SupportedKinds`
-and rebuilds `cbSource` when the requested family changes. The Properties
-regressions `Native source picker changes family and replaces the source with a
-typed curve` and `Native source picker replaces every modeled source family
-without filter side effects` assert type-before-selection behavior, the full
-nine-kind inventory, typed replacement, and filter-only non-mutation; the
-parabola case asserts its distinct kind and highlighting. Keep this as a closed
-UI acceptance gate. The next work must inventory and implement eligible
-concrete variants per family through direct geometry, worker/cache, and
-DXF/DWG import/export; a family selector entry must not imply that every entity
-variant in that family is offsettable. Unsupported or unproved candidates must
-remain excluded or fail closed without changing the existing source/cache.
-
-2026-11-07 clarification: during source replacement, the user must be able to
-switch the source-family selector before choosing a candidate; the candidate
-list then refreshes to that family. The selector must expose every family in
-`SupportedKinds`, including parabola as a distinct kind. This is already
-implemented and requalified by W563db, so no additional picker widget or
-parabola-only branch is planned. Continue expanding actual eligible source
-variants through generation, worker/cache, DXF/DWG persistence, and the
-round-trip matrix; picker visibility alone does not count as source support.
+“Support all source types” remains an end-to-end obligation. For each listed
+family, inventory concrete eligible variants and independently validate direct
+generation, worker/cache admission, replacement, and applicable DXF/DWG
+read/write round-trips. Parabola picker support is not geometric support: the
+existing parabola receipts qualify only their recorded parameterizations,
+transforms, topologies, and distances. Unqualified variants must remain
+excluded or fail closed without mutating the current source/cache until their
+own geometry and persistence evidence is recorded.
 
 Current implementation order for the remaining “all supported types” work:
 
@@ -26418,3 +26348,29 @@ Release validation: focused nonuniform seam tangent, 23 assertions/1 case;
 full worker-kernel suite, 1,704,206 assertions/71 cases; `git diff --check`
 passes. Test commit `5922d9b55` (`test(offset): map nonuniform periodic seam
 tangencies`).
+
+#### W563ej. Characterize Open Rational Tangent Bounds Across Scales (2026-11-08)
+
+Added an open rational quadratic with a same-sign interior tangent root and
+checked geometrically similar fixtures at binary scales `0.5`, `1`, and `2`.
+The independent high-precision oracle confirms the root and same-sign
+neighbors. At scales `0.5` and `2`, production resolves a bounded stall; the
+test proves the aggregate interval motion is at most `nodeMerge` and maps the
+oracle root and every stall endpoint to retained output within requested
+geometry tolerance. At scale `1`, the aggregate unresolved run exceeds
+`nodeMerge`, so the expected behavior remains an incomplete `RunResolution`
+refusal with no partial branches, candidates, or stalls. The opposite offset
+side remains complete and regular at every scale.
+
+This records the current scale-sensitive tolerance boundary; it does not
+broaden production acceptance or resolve the strict-scale refusal. The next
+implementation gate is to determine whether root-count/provenance information
+can yield a tighter independently certified aggregate bracket at scale `1`
+without accepting unproved roots or weakening open-source fail-closed rules.
+If a proven bracket cannot satisfy the bound, preserve atomic refusal and mark
+that variant as unsupported at the requested tolerance.
+
+Release validation: focused scale matrix, 64 assertions/1 case; full
+worker-kernel suite, 1,704,270 assertions/72 cases; `git diff --check` passes.
+Test commit `828d83db6` (`test(offset): characterize rational tangent scale
+bounds`).
