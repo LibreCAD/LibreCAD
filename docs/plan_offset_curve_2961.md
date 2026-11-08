@@ -26068,3 +26068,24 @@ weights`). This qualifies one clamped single-span degree-2 control layout and
 these four positive weight/scale pairs only. Still open: further weight
 profiles, nonuniform and repeated-knot layouts, higher degrees, periodic seam
 and interior-root ownership, and broader per-event output correspondence.
+
+#### W563ej Follow-up. Qualify a Degree-elevated Rational Cubic Tangency (2026-11-08)
+
+Added a clamped-open rational cubic equivalent, up to binary storage of the
+`2/3` weights, to degree elevation of the exact quadratic tangent fixture. The
+256-bit oracle derives the signed distance from curvature at `t=0.5` and
+confirms an interior even root with same-sign neighbors. At requested geometry
+tolerance `1e-3`, the worker returns `AmbiguousRegularity` at `RunResolution`:
+the observed unresolved-run extent exceeds `nodeMerge`, and the result contains
+no branches or stall records. At tolerance `1e-2`, it resolves the bounded
+stall; both reported stall endpoints and the oracle tangent point map to
+retained cubic output within the requested tolerance. This records a real
+degree-specific tolerance boundary rather than weakening the collapse rule.
+
+Release validation: focused degree-3 case, 19 assertions/1 case; full
+worker-kernel suite, 1,703,844 assertions/65 cases; `git diff --check` passes.
+Test commit `5183fcf06` (`test(offset): qualify degree-elevated tangent
+cubic`). This does not qualify arbitrary degree-3 layouts or strict-tolerance
+acceptance. Remaining: derive tighter certified root/run bounds where possible,
+retain refusal when the requested collapse bound is exceeded, and continue
+nonuniform/repeated-knot and periodic ownership coverage.
