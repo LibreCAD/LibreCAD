@@ -25804,23 +25804,33 @@ Replaced the invalid fixture attempt (which called private
 through public APIs, minimized to four base controls. The 256-bit oracle
 confirms seam position, tangent, and curvature continuity, and refines an
 interior curvature extremum to a same-sign even root for the selected offset
-distance. This is useful qualifying evidence, but the production direct
-builder still reaches `IsolationWorkLimit` before it can complete that case.
-The regression asserts typed `AmbiguousRegularity`, incomplete diagnostics,
-and no partial branches; this is fail-closed coverage, not successful periodic
-rational tangent support. An
-experimental bounded-interior-stall change did not resolve this case and
-regressed the existing rational interior-knot test, so that change was
-removed. Next, improve tangent/even-root isolation without weakening the
-validated knot-stall path, so the oracle-qualified periodic root is owned by a
-bounded candidate/stall and maps to an output endpoint/collapse. Only then
-replace the refusal expectation with success and output-geometry assertions.
-Keep the committed rational interior-knot and periodic seam results as
-separate, narrower claims.
+distance. In a root-centered interval, the rational cusp polynomial has two
+Bernstein variations and the unsquared offset-factor enclosure contains zero.
+Isolation now routes a box with at least two possible rational roots into the
+existing unresolved-run resolver once a complete offset-motion bound proves
+that box is within `nodeMerge`. The resolver still requires the aggregate run
+motion bound and sign/root-count checks; the new path does not declare a root
+from sign sampling or relax the work limit.
 
-The current diagnostic slice records total cusp-isolation boxes visited and,
-on the global work-limit refusal, the active unresolved run's box count and
-bounded motion extent. The focused periodic case and full worker suite pass
-(1,703,640 assertions/62 cases). Use these measurements to design the next
-bounded root-isolation step; do not raise the work cap without accounting for
-worst-case runtime and preserving fail-closed behavior.
+The regression requires successful complete isolation, a stall interval that
+owns the oracle root and remains inside its source knot span, and a retained
+cubic-piece endpoint within requested geometry tolerance of the 256-bit oracle
+offset point. The four-control periodic rational fixture passes in 22
+isolation boxes. This establishes bounded-stall handling for this smooth cubic
+fixture and chosen distance only; other degrees, knot/weight layouts, multiple
+nearby roots, and one-to-one mapping of all candidate boxes remain open. The
+earlier experimental interior-run implementation was removed after it
+regressed the rational interior-knot case; the current route preserves that
+existing case.
+
+Release validation: focused periodic rational tangent, rational derivative,
+no-root certificate, and interior-knot union, 14,272 assertions/4 cases; full
+worker suite, 1,703,644 assertions/62 cases; `git diff --check` passes. The
+diagnostic snapshot now records total boxes visited and the active unresolved
+run on work-limit refusal, supporting future budget analysis without raising
+the bounded work cap.
+
+Next: extend the same bounded proof to additional rational degrees and
+nonuniform periodic knot/weight profiles; map every resolved candidate/stall
+to an owned output endpoint or measured in-tolerance collapse, and retain
+fail-closed behavior when aggregate motion or root counts cannot be proved.
