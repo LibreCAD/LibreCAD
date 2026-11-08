@@ -25852,3 +25852,20 @@ The production evidence now covers two weights on one degree-3 periodic
 geometry, not other degrees or periodic knot layouts. Next: qualify further
 profiles and degrees, then verify complete candidate/stall-to-output mapping
 for the broader rational periodic matrix.
+
+#### W563eh Follow-up. Qualify a Nonuniform Periodic Rational Layout (2026-11-08)
+
+Added a six-base-control degree-3 periodic fixture with a nonuniform knot
+vector to the tangent-root matrix. Its distinct positive weight profile passes
+the same independent seam position/tangent/curvature checks, oracle-refined
+same-sign even-root checks, two-variation interval probe, production stall
+ownership within the containing source span, and output-piece endpoint mapping.
+The prior four-control fixture continues to pass both weight profiles.
+
+Release validation: all three periodic rational tangent profiles, 90
+assertions/1 test case; full worker suite, 1,703,704 assertions/62 cases;
+`git diff --check` passes. Test commit `291aa68dd` (`test(offset): cover
+nonuniform periodic tangent roots`). This adds one nonuniform knot/control
+layout, not all legal periodic knot multiplicities or rational degrees. Next:
+cover additional degrees/layouts and establish one-to-one output ownership for
+all certified candidate/stall boxes in the broader rational matrix.
