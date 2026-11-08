@@ -25727,3 +25727,25 @@ samples form the intended same-sign even root. A source marked closed, or a
 clamped-to-wrapped conversion, is not sufficient evidence of a smooth seam.
 If those preconditions fail, reject the fixture and preserve the implementation
 as fail-closed; do not infer a periodic tangent case from the UI or entity flag.
+
+#### W563eh Follow-up. Map the Periodic Seam Root to a Retained Endpoint (2026-11-08)
+
+Strengthened the independently qualified periodic cubic seam regression. When
+isolation reports a seam candidate, the test now requires a cusp-marked output
+branch endpoint within requested geometry tolerance of the high-precision seam
+offset point. When the seam is represented as a bounded stall instead, a
+retained branch endpoint must still reach that point within the same tolerance.
+The existing test continues to check both one-sided curvature/factor values,
+candidate-box span ownership, and sampled branch geometry.
+
+Release validation: focused seam test, 54 assertions/1 case; full worker-kernel
+suite, 1,703,597 assertions/61 cases; `git diff --check` passes. Test commit
+`62a1f4f8e` (`test(offset): map periodic seam roots to output endpoints`).
+This proves endpoint correspondence for the one tested seam event, not a
+one-to-one mapping for every candidate box in every spline profile. Periodic
+rational tangent/even roots remain unqualified; use the explicit seam-fixture
+preconditions above.
+
+Next: extend the mapping invariant to every isolated candidate/certified box
+in the conditioned periodic rational matrix, and map each bounded stall to a
+retained endpoint or independently measured in-tolerance collapse.
