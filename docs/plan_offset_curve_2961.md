@@ -25252,15 +25252,14 @@ This supersedes the earlier 12-cusp sampled count and removes the claimed exact
 internal-knot cusp from the evidence; it does not prove the sampled inventory
 complete or exclude even-multiplicity roots.
 
-Still open within W563eg: extend the direct one-sided derivative convergence
-checks to the high-ratio periodic profiles and persist a profile-by-profile
-candidate/sign inventory for both offset signs. The current repeated-knot and
-uniform periodic-seam regression below qualifies one fixture each; it does not
-establish all knot multiplicities or conditioned seam behavior. W563eh below
-starts, but does not finish, production-candidate mapping. In particular,
-re-measure the previously reported endpoint discrepancy against the corrected
-non-knot candidate set rather than carrying forward the old exact-knot
-comparison.
+Still open within W563eg: extend direct one-sided derivative convergence to
+the other high-ratio periodic profiles and persist a profile-by-profile
+candidate/sign inventory for both offset signs. The repeated-knot and seam
+regressions below qualify only their recorded fixtures, not all
+multiplicities/weight conditioning. W563eh below starts, but does not finish,
+production-candidate mapping. In particular, re-measure the previously
+reported endpoint discrepancy against the corrected non-knot candidate set
+rather than carrying forward the old exact-knot comparison.
 
 Release validation passes for the implemented slice: periodic/nonuniform worker matrix 15,498 assertions
 in 1 case; focused cusp/oracle selection 14,614 assertions in 3 cases; full
@@ -25282,11 +25281,27 @@ interior estimates on its own span, so the oracle does not impose false C2
 continuity or average across the seam.
 
 This completes direct one-sided-jet comparison for these representative
-fixtures only. It does not establish high-ratio periodic seam conditioning or
-complete cusp inventories. Release validation: focused `[seam]`, 17
+fixtures only. At this checkpoint it did not establish high-ratio periodic
+seam conditioning or complete cusp inventories. Release validation: focused `[seam]`, 17
 assertions/1 case; full `librecad_offset_worker_kernel_tests`, 1,704,448
 assertions/77 cases; `git diff --check` passes. Test commit `25ae238a1`
 (`test(offset): verify one-sided spline oracle jets`).
+
+#### W563eg Follow-up. Compare a Conditioned Periodic Seam (2026-11-08)
+
+Extended the direct jet comparison to the gradual periodic quadratic weight
+profile `(1e-6, 1e-4, 1e-2, 1, 1e2, 1e4, 1e6)`. The high-precision oracle
+checks one-sided first and second derivatives against central estimates at
+`1e-6` and `5e-7` inside each adjacent seam span. The two one-sided tangents
+agree, while second derivatives remain distinct; each side independently
+converges rather than blending across the seam. This validates the recorded
+conditioned seam fixture, not all weight profiles or the complete cusp
+inventory.
+
+Release validation: focused `[seam]`, 17 assertions/1 case; full
+`librecad_offset_worker_kernel_tests`, 1,704,448 assertions/77 cases;
+`git diff --check` passes. Test commit `f784f17f4` (`test(offset): compare
+conditioned periodic seam jets`).
 
 The production implementation remains fail-closed for the gradual
 positive-side periodic case. Continue with W563eh: complete candidate-to-root
