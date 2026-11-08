@@ -115,6 +115,9 @@ Current implementation order for the remaining “all supported types” work:
    product-round-tripped through all five lanes across the complete 96-case
    tested import grid: degree 2/3, five/six-base-control layouts,
    unit/rational weights, three scales, two distances, and both sides.
+   A regular open degree-2 rational spline with nine controls and seven
+   nonuniform spans is also product-round-tripped for both `1e-6` to `1e6`
+   weight orders and both signed `0.005` offsets across all five lanes.
    Representative product-writer
    round-trips now exist for all nine modeled source families. Per-family
    variants, wider distances/sides, independent-CAD compatibility, and visible
@@ -24698,3 +24701,20 @@ passes 103,694 assertions in one test case. The target rebuild and
 `git diff --check` pass. Other periodic topologies, wider or extreme weight
 profiles, independent-CAD equivalence, visible-GUI acceptance, and exact-head
 CI remain open.
+
+#### W563df. Round-trip Conditioned Open Rational Spline Writers (2026-11-07)
+
+Extended the staged-import matrix for the regular open degree-2, nine-control
+rational spline with seven nonuniform spans and positive weights spanning
+`1e-6` through `1e6`. Both forward and reverse weight orders and signed
+offsets `+/-0.005` now pass LibreCAD product export and staged reopen through
+R14/R2000/R2018 DXF and R2000/R2018 DWG. Every case preserves the typed source
+definition and exact generated cache fingerprint.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"high-ratio open rational spline offsets round trip through DXF and DWG"`
+passes 3,926 assertions in one test case. The `librecad_tests` target rebuild
+and `git diff --check` pass. This does not establish arbitrary rational NURBS
+layouts, other weight distributions or distances, periodic high-ratio positive
+offset support, independent-CAD equivalence, visible-GUI acceptance, or
+exact-head CI.
