@@ -2157,8 +2157,23 @@ private:
                         continue;
                     }
                 }
+                const double boundedExtent =
+                    speedProved && g.isValid() && bounds.speedSquared().isPositive()
+                        ? std::max(std::abs(g.lo()), std::abs(g.hi())) /
+                              bounds.speedSquared().lo() * (leaf.t1 - leaf.t0)
+                        : std::numeric_limits<double>::infinity();
+                const bool boundedMultipleRootRun =
+                    speedProved && bounds.rationalCuspRootVariationUpperBound >= 2 &&
+                    std::isfinite(boundedExtent) &&
+                    boundedExtent <= m_options.tolerance.nodeMerge;
+                // A rational even root can retain two Bernstein variations
+                // without changing sign. Hand a box to the bounded run
+                // resolver as soon as its complete offset motion is below
+                // nodeMerge; it still checks aggregate motion and sampled
+                // signs before classifying the interval as a stall.
                 const double mid = leaf.t0 + 0.5 * (leaf.t1 - leaf.t0);
-                if (leaf.depth < subdivisionDepth && mid > leaf.t0 && mid < leaf.t1) {
+                if (!boundedMultipleRootRun && leaf.depth < subdivisionDepth &&
+                    mid > leaf.t0 && mid < leaf.t1) {
                     split(stack, leaf, 0.5);
                     continue;
                 }

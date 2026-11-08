@@ -2522,7 +2522,7 @@ TEST_CASE("periodic spline seam curvature is checked with both one-sided owners"
     }
 }
 
-TEST_CASE("periodic rational tangent root remains fail closed at the isolation limit",
+TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic][rational][tangent-root]") {
     RS_Spline source{nullptr, RS_SplineData{3, false}};
     for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
@@ -2659,6 +2659,21 @@ TEST_CASE("periodic rational tangent root remains fail closed at the isolation l
     CHECK(leftNeighbor != 0);
     CHECK(rightNeighbor != 0);
     CHECK((leftNeighbor < 0) == (rightNeighbor < 0));
+    const auto rootBreak = std::upper_bound(originalBreaks.begin(), originalBreaks.end(), rootValue);
+    REQUIRE(rootBreak != originalBreaks.begin());
+    REQUIRE(rootBreak != originalBreaks.end());
+    const double spanStart = *(rootBreak - 1);
+    const double spanEnd = *rootBreak;
+    const double rootRadius = 0.25 * std::min(rootValue - spanStart, spanEnd - rootValue);
+    LC_CurveJetBounds rootBounds;
+    REQUIRE(rationalSource.tryBoundJetForCusp(rootValue - rootRadius, rootValue + rootRadius,
+                                               rootBounds, signedDistance));
+    CAPTURE(rootBounds.rationalCuspRootVariationUpperBound,
+            rootBounds.offsetFactorNumerator(signedDistance).lo(),
+            rootBounds.offsetFactorNumerator(signedDistance).hi());
+    CHECK(rootBounds.rationalCuspRootVariationUpperBound >= 2);
+    CHECK(rootBounds.offsetFactorNumerator(signedDistance).lo() <= 0.0);
+    CHECK(rootBounds.offsetFactorNumerator(signedDistance).hi() >= 0.0);
 
     const LC_OffsetSourceDefinition definition{
         LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
@@ -2676,14 +2691,32 @@ TEST_CASE("periodic rational tangent root remains fail closed at the isolation l
             diagnostics.failureT0, diagnostics.failureT1, diagnostics.failureStage,
             diagnostics.isolationBoxesVisited, diagnostics.failingRunBoxes,
             diagnostics.failingRunExtent, diagnostics.failingRunObserved);
-    CHECK(built.status == LC_CurveOffsetStatus::AmbiguousRegularity);
-    CHECK(built.branches.empty());
-    CHECK_FALSE(diagnostics.complete);
-    CHECK(diagnostics.status == LC_CurveOffsetStatus::AmbiguousRegularity);
-    CHECK(diagnostics.failureStage == LC_CurveOffsetCuspFailureStage::IsolationWorkLimit);
-    CHECK(diagnostics.failureSpan < data.knotslist.size());
-    CHECK(diagnostics.isolationBoxesVisited > 0);
-    CHECK(diagnostics.failingRunObserved);
+    CHECK(built.status == LC_CurveOffsetStatus::Ok);
+    CHECK(diagnostics.complete);
+    const auto owningStall = std::find_if(
+        diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+        [&](const std::pair<double, double>& interval) {
+            return interval.first <= rootValue && rootValue <= interval.second;
+        });
+    REQUIRE(owningStall != diagnostics.stallIntervals.end());
+    CHECK(spanStart <= owningStall->first);
+    CHECK(owningStall->second <= spanEnd);
+    const auto oraclePoint = oracleOffsetPoint(
+        data, root, step, domainStart, domainEnd, distance);
+    const RS_Vector expectedPoint{oraclePoint.first.convert_to<double>(),
+                                  oraclePoint.second.convert_to<double>()};
+    double nearestPieceEndpoint = std::numeric_limits<double>::infinity();
+    for (const LC_OffsetBranch& branch : built.branches) {
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            nearestPieceEndpoint = std::min(
+                nearestPieceEndpoint,
+                std::min(piece.bezier.front().distanceTo(expectedPoint),
+                         piece.bezier.back().distanceTo(expectedPoint)));
+        }
+    }
+    CAPTURE(expectedPoint.x, expectedPoint.y, nearestPieceEndpoint,
+            options->tolerance.requestedGeometry, diagnostics.isolationBoxesVisited);
+    CHECK(nearestPieceEndpoint <= options->tolerance.requestedGeometry);
 }
 
 TEST_CASE("nonuniform rational tangent root at a knot remains a bounded stall",
