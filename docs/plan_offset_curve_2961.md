@@ -25525,3 +25525,29 @@ production root boxes to retained endpoints or recorded in-tolerance tiny
 reversal collapses; separately search tangent/even roots and attribute any
 unresolved seam leaves. Keep ambiguous cases fail-closed and do not change
 geometry/cache/file eligibility based on these sampled checks alone.
+
+#### W563eh Follow-up. Exercise an Even-multiplicity Offset-factor Root (2026-11-08)
+
+Added a clamped quadratic parabola whose curvature reaches its exact maximum
+at the interior parameter `t=0.5`. At signed offset distance `0.5`, the
+independent 256-bit finite-difference oracle encloses the offset factor at
+zero within `1e-200`, while samples at `t=0.5 +/- 1e-10` are both positive.
+This is a concrete no-sign-change/even-multiplicity root case, not part of the
+span-local sign-change candidate inventory.
+
+The production direct build succeeds, records a stall interval containing the
+tangent parameter, and its sampled branch output comes within the requested
+geometry tolerance of the oracle offset point. This validates the current
+bounded-stall treatment for this quadratic fixture; it does not prove tangent
+root completeness for rational cubics, higher-degree splines, periodic seams,
+or arbitrary knot layouts. No production acceptance or file/cache eligibility
+changed.
+
+Release validation: focused tangency regression, 11 assertions/1 case; full
+worker-kernel suite, 1,702,474 assertions/58 cases; `git diff --check` passes.
+Test commit `5b68c4c64` (`test(offset): cover tangent spline cusp roots`).
+
+Next: construct and oracle-check tangent/even-root cases for nonuniform
+rational and periodic splines, including roots adjacent to knots/seams; map
+each to a production stall interval or a certified endpoint/collapse, and
+retain fail-closed behavior wherever that mapping is incomplete.
