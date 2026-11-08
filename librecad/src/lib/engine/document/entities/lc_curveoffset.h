@@ -260,6 +260,17 @@ struct LC_CurveOffsetGeometryResult {
     std::vector<LC_ParametricIntersection> intersections;
 };
 
+/** Test-only snapshot of cusp-isolation progress; candidates may be partial on failure. */
+struct LC_CurveOffsetCuspIsolationDiagnostics {
+    LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
+    std::vector<double> candidateParameters;
+    std::size_t spansVisited{0};
+    std::size_t failureSpan{std::numeric_limits<std::size_t>::max()};
+    double failureT0{std::numeric_limits<double>::quiet_NaN()};
+    double failureT1{std::numeric_limits<double>::quiet_NaN()};
+    bool complete{false};
+};
+
 /** Fresh output entities, owned here until the caller releases them. Move-only. */
 struct LC_CurveOffsetMaterializationResult {
     LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
@@ -358,8 +369,7 @@ LC_OffsetSideResolution resolveSide(const RS_Entity& source, const RS_Vector& di
 LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const LC_CurveOffsetRequest& request,
                                                  const LC_CurveOffsetOptions& options,
                                                  const LC_OffsetSourceBudget& budget,
-                                                 /** Optional test diagnostic: cusp candidates collected so far; may be partial on refusal. */
-                                                 std::vector<double>* isolatedCuspsForDiagnostics = nullptr);
+                                                 LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics = nullptr);
 
 /**
  * Fresh, parentless entities for @p geometry, a successful result of

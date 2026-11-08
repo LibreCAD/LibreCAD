@@ -1595,20 +1595,21 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                 const auto diagnosticOptions =
                     LC_OffsetWorkerTolerance::directOptions(definition, sourceCheck);
                 REQUIRE(diagnosticOptions);
-                std::vector<double> isolatedCusps;
+                LC_CurveOffsetCuspIsolationDiagnostics cuspDiagnostics;
                 const auto diagnostic = LC_CurveOffset::buildDirectBranches(
                     sourceCheck,
                     LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left,
                                                     signedDistance),
                     *diagnosticOptions, LC_CurveOffset::makeDirectSourceBudget(),
-                    &isolatedCusps);
+                    &cuspDiagnostics);
                 CHECK(generated.engineStatus.has_value());
                 if (generated.engineStatus)
                     CHECK(diagnostic.status == *generated.engineStatus);
                 CHECK(diagnostic.branches.empty());
-                CHECK_FALSE(isolatedCusps.empty());
+                CHECK_FALSE(cuspDiagnostics.candidateParameters.empty());
+                CHECK_FALSE(cuspDiagnostics.complete);
                 std::vector<bool> matchedOracleCusps(expectedCusps.size(), false);
-                for (const double productionParameter : isolatedCusps) {
+                for (const double productionParameter : cuspDiagnostics.candidateParameters) {
                     double nearestParameterError = std::numeric_limits<double>::infinity();
                     std::size_t nearestOracle = 0;
                     for (std::size_t i = 0; i < expectedCusps.size(); ++i) {
@@ -1624,12 +1625,19 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                     if (nearestParameterError < 1e-6)
                         matchedOracleCusps[nearestOracle] = true;
                 }
-                CHECK(isolatedCusps.size() <= expectedCusps.size());
+                CHECK(cuspDiagnostics.candidateParameters.size() <= expectedCusps.size());
                 const std::size_t matchedCount = static_cast<std::size_t>(
                     std::count(matchedOracleCusps.begin(), matchedOracleCusps.end(), true));
-                CAPTURE(matchedCount, expectedCusps.size(), isolatedCusps.size());
+                CAPTURE(matchedCount, expectedCusps.size(),
+                        cuspDiagnostics.candidateParameters.size(), cuspDiagnostics.spansVisited,
+                        cuspDiagnostics.failureSpan, cuspDiagnostics.failureT0,
+                        cuspDiagnostics.failureT1);
+                CHECK(cuspDiagnostics.failureSpan < cuspDiagnostics.spansVisited);
+                CHECK(cuspDiagnostics.failureT0 < cuspDiagnostics.failureT1);
+                CHECK(cuspDiagnostics.failureT0 >= domainStart);
+                CHECK(cuspDiagnostics.failureT1 <= domainEnd);
                 REQUIRE(expectedCusps.size() == 8);
-                REQUIRE(isolatedCusps.size() == 7);
+                REQUIRE(cuspDiagnostics.candidateParameters.size() == 7);
                 CHECK(matchedCount == 7);
                 CHECK(std::all_of(matchedOracleCusps.begin(), matchedOracleCusps.end() - 1,
                                   [](bool matched) { return matched; }));

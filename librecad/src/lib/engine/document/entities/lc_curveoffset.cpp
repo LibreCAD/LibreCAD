@@ -1550,7 +1550,7 @@ public:
      */
     LC_CurveOffsetStatus build(std::vector<bool> joinCusps, const std::vector<SourceJoin>& joins,
                                std::vector<LC_OffsetBranch>& branches,
-                               std::vector<double>* isolatedCuspsForDiagnostics = nullptr) {
+                               LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics = nullptr) {
         const std::vector<double>& breaks = m_source.breaks();
         std::vector<double> cusps;
         std::vector<std::pair<double, double>> stalls;
@@ -1560,9 +1560,12 @@ public:
         for (size_t i = 0; i < barrier.size(); ++i) {
             barrier[i] = barrier[i] || joins[i].kind != SourceJoin::Kind::Smooth;
         }
-        LC_CurveOffsetStatus status = isolateCusps(barrier, arcStalls, cusps, stalls);
-        if (isolatedCuspsForDiagnostics != nullptr) {
-            *isolatedCuspsForDiagnostics = cusps;
+        LC_CurveOffsetStatus status =
+            isolateCusps(barrier, arcStalls, cusps, stalls, cuspDiagnostics);
+        if (cuspDiagnostics != nullptr) {
+            cuspDiagnostics->candidateParameters = cusps;
+            cuspDiagnostics->status = status;
+            cuspDiagnostics->complete = status == LC_CurveOffsetStatus::Ok;
         }
         if (status != LC_CurveOffsetStatus::Ok) {
             return status;
@@ -2004,9 +2007,10 @@ private:
      * tangent, or roots the samples cannot tell apart. The spans marked in
      * @p arcStalls are stalls as they are.
      */
-    LC_CurveOffsetStatus isolateCusps(const std::vector<bool>& joinCusps, const std::vector<bool>& arcStalls,
-                                      std::vector<double>& cusps,
-                                      std::vector<std::pair<double, double>>& stalls) {
+    LC_CurveOffsetStatus isolateCusps(
+        const std::vector<bool>& joinCusps, const std::vector<bool>& arcStalls,
+        std::vector<double>& cusps, std::vector<std::pair<double, double>>& stalls,
+        LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics) {
         // Interval bounds of 1 - d kappa widen with the box, so near a double
         // root, where the distance equals a radius of curvature, the unproved
         // run grows like the inverse square root of the finest box: about a
@@ -2015,9 +2019,20 @@ private:
         constexpr unsigned maxRunBoxes = 16384;
         const std::vector<double>& breaks = m_source.breaks();
         std::vector<Run> runs;
+        const auto failAt = [&](const LC_CurveOffsetStatus status, const size_t span,
+                                const double t0, const double t1) {
+            if (cuspDiagnostics != nullptr) {
+                cuspDiagnostics->failureSpan = span;
+                cuspDiagnostics->failureT0 = t0;
+                cuspDiagnostics->failureT1 = t1;
+            }
+            return status;
+        };
         for (size_t span = 0; span + 1 < breaks.size(); ++span) {
             const double a = breaks[span];
             const double b = breaks[span + 1];
+            if (cuspDiagnostics != nullptr && a < b)
+                ++cuspDiagnostics->spansVisited;
             if (arcStalls[span]) {
                 stalls.emplace_back(a, b);
                 continue;
@@ -2057,12 +2072,13 @@ private:
                     if (sign0Proved && sign1Proved) {
                         if (sign0 != sign1) {
                             if (cusps.size() >= maxRunBoxes) {
-                                return LC_CurveOffsetStatus::AmbiguousRegularity;
+                                return failAt(LC_CurveOffsetStatus::AmbiguousRegularity,
+                                              span, leaf.t0, leaf.t1);
                             }
                             const LC_CurveOffsetStatus status = bisectCertifiedCusp(
                                 leaf.t0, leaf.t1, sign0, sign1, cusps);
                             if (status != LC_CurveOffsetStatus::Ok) {
-                                return status;
+                                return failAt(status, span, leaf.t0, leaf.t1);
                             }
                         }
                         continue;
@@ -2074,7 +2090,8 @@ private:
                     continue;
                 }
                 if (!speedProved) {
-                    return irregularity(leaf, false, a, b);
+                    return failAt(irregularity(leaf, false, a, b), span,
+                                  leaf.t0, leaf.t1);
                 }
                 // the offset moves at |Q'| = |1 - d kappa| |C'| = |g| / |C'|^2
                 const double extent =
@@ -2093,7 +2110,8 @@ private:
                 }
                 const Run& run = runs.back();
                 if (run.boxes > maxRunBoxes || !(run.extent <= m_options.tolerance.fit)) {
-                    return irregularity(leaf, true, a, b);
+                    return failAt(irregularity(leaf, true, a, b), span,
+                                  leaf.t0, leaf.t1);
                 }
             }
         }
@@ -2105,7 +2123,9 @@ private:
             if (runs.front().boxes + runs.back().boxes > maxRunBoxes ||
                 !(runs.front().extent + runs.back().extent <= m_options.tolerance.fit)) {
                 const Run& run = runs.back();
-                return irregularity(run.last, true, breaks[run.span], breaks[run.span + 1]);
+                return failAt(irregularity(run.last, true, breaks[run.span],
+                                           breaks[run.span + 1]),
+                              run.span, run.last.t0, run.last.t1);
             }
         }
         for (size_t i = wraps ? 1 : 0; i < runs.size(); ++i) {
@@ -2119,7 +2139,7 @@ private:
             const double extent = acrossSeam ? run.extent + runs.front().extent : run.extent;
             const LC_CurveOffsetStatus status = resolveRun(parts, run, extent, cusps, stalls);
             if (status != LC_CurveOffsetStatus::Ok) {
-                return status;
+                return failAt(status, run.span, run.last.t0, run.last.t1);
             }
         }
         std::sort(cusps.begin(), cusps.end());
@@ -3498,7 +3518,7 @@ LC_CurveOffsetStatus directBranches(const OffsetSource& source, const SourceScal
                                     const LC_CurveOffsetOptions& options, const LC_OffsetSourceBudget& budget,
                                     const KinkPolicy policy, std::vector<LC_OffsetBranch>& branches,
                                     double& maxError, std::size_t& samples,
-                                    std::vector<double>* isolatedCuspsForDiagnostics = nullptr) {
+                                    LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics = nullptr) {
     const std::vector<double>& breaks = source.breaks();
     const double domain = breaks.back() - breaks.front();
     branches.clear();
@@ -3535,7 +3555,7 @@ LC_CurveOffsetStatus directBranches(const OffsetSource& source, const SourceScal
     }
     BranchBuilder builder{source, d, options, budget, scale.numericFloor / domain};
     const LC_CurveOffsetStatus status =
-        builder.build(joinCusps, joins, branches, isolatedCuspsForDiagnostics);
+        builder.build(joinCusps, joins, branches, cuspDiagnostics);
     samples = builder.samples();
     maxError = builder.maxObservedError();
     return status;
@@ -5577,9 +5597,9 @@ LC_OffsetSideResolution resolveSide(const RS_Entity& source, const RS_Vector& di
 LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const LC_CurveOffsetRequest& request,
                                                  const LC_CurveOffsetOptions& options,
                                                  const LC_OffsetSourceBudget& budget,
-                                                 std::vector<double>* isolatedCuspsForDiagnostics) {
-    if (isolatedCuspsForDiagnostics != nullptr) {
-        isolatedCuspsForDiagnostics->clear();
+                                                 LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics) {
+    if (cuspDiagnostics != nullptr) {
+        *cuspDiagnostics = {};
     }
     LC_CurveOffsetGeometryResult result;
     if (!validDirectOptions(options) || !isValidOffsetBudget(budget)) {
@@ -5697,7 +5717,7 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     double maxError = 0.0;
     LC_CurveOffsetStatus status =
         directBranches(curve, scale, d, options, budget, KinkPolicy::Round, branches, maxError,
-                       result.exactSamples, isolatedCuspsForDiagnostics);
+                       result.exactSamples, cuspDiagnostics);
     if (status == LC_CurveOffsetStatus::Ok && trimmed) {
         std::size_t removed = 0;
         status = removeLocalLoops(curve, d, speedFloor, options, branches, removed);
