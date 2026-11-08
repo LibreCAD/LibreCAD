@@ -25209,3 +25209,18 @@ This repairs the zero-free certificate's coefficient alignment; it does not
 isolate roots or close W563cg. Root acceptance still requires a separate
 proof and comparison against the continuous high-precision cusp/topology
 oracle. The gradual positive-side periodic case remains fail-closed.
+
+#### W563ee. Exercise Degree Elevation with Cubic Rational Cusp Bounds (2026-11-08)
+
+Added an independent 256-bit oracle regression for a positive-weight rational
+cubic Bezier source. It requires the degree-aligned no-root certificate to
+prune at least one box for both signed offset distances, then checks both box
+endpoints and three interior samples against the exact-rational offset-factor
+oracle. This exercises the cubic `12p-6` versus `12p-8` degree mismatch, not
+only the existing quadratic periodic case.
+
+Test commit `17325c641` (`test(offset): cover cubic rational cusp bounds`).
+The focused cubic case passes 388 assertions/1 case; the full worker-kernel
+suite passes 1,695,190 assertions/56 cases. `git diff --check` passes. This
+adds degree-three regression coverage but does not expand offset eligibility
+or close W563cg.
