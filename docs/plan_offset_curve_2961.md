@@ -56,6 +56,20 @@ Use `SupportedKinds` as the authoritative picker list and continue with the
 variant-level implementation and validation steps below. The picker contract
 is complete; the broader all-family end-to-end requirement is not.
 
+2026-11-07 implementation reconciliation: `LC_PropertiesEditingWidgetOffsetCurve`
+already populates `cbSourceType` from `LC_OffsetSourceGeometry::SupportedKinds`
+and rebuilds `cbSource` when the requested family changes. The Properties
+regressions `Native source picker changes family and replaces the source with a
+typed curve` and `Native source picker replaces every modeled source family
+without filter side effects` assert type-before-selection behavior, the full
+nine-kind inventory, typed replacement, and filter-only non-mutation; the
+parabola case asserts its distinct kind and highlighting. Keep this as a closed
+UI acceptance gate. The next work must inventory and implement eligible
+concrete variants per family through direct geometry, worker/cache, and
+DXF/DWG import/export; a family selector entry must not imply that every entity
+variant in that family is offsettable. Unsupported or unproved candidates must
+remain excluded or fail closed without changing the existing source/cache.
+
 2026-11-07 clarification: during source replacement, the user must be able to
 switch the source-family selector before choosing a candidate; the candidate
 list then refreshes to that family. The selector must expose every family in
@@ -24878,3 +24892,40 @@ rebuilt `librecad_tests` target and `git diff --check` pass. Broader independent
 geometry evaluation, other DWG versions/source variants, remaining extreme
 scale-distance combinations, visible-GUI acceptance, and exact-head CI remain
 open.
+
+#### W563cu. Add Certified Rational-spline Third-derivative Bounds (2026-11-07)
+
+`LC_CurveJet` now carries the optional third derivative, and `RS_Spline`
+evaluates the homogeneous quotient through order three. `tryBoundJet()` builds
+the third homogeneous derivative net for each active knot span and returns
+outward interval component bounds for polynomial and positive-weight rational
+splines. `LC_CurveJetBounds::offsetFactorDerivativeNumerator(d)` uses those
+bounds to enclose the derivative of `|C'|^3 - d(C' x C'')` whenever the speed
+interval is strictly positive. Other curve types may leave the third-derivative
+bounds invalid; no existing source family is newly admitted by this optional
+data.
+
+The spline bound regression now checks sampled third-derivative components on
+polynomial and rational spline spans, including a rational quarter-circle, and
+checks the offset-factor derivative enclosure against evaluated jets. Release
+CMake build `cmake --build
+/Users/dli/dev/LibreCAD/tmp/offset-2961-native-20261026/release --target
+librecad_tests -j8` passes. Focused validation passes: `RS_Spline::tryBoundJet
+encloses the curve on the box` (7,902 assertions), `[curve-offset][d0][bound]`
+(10,924 assertions/7 cases), `[curve-offset][d0]` (16,910 assertions/20
+cases), and `[spline]` (28,390 assertions/77 cases). `git diff --check`
+passes. Implementation commit `62eebe352` (`feat(spline): bound third
+derivatives for offset roots`), followed by regression-strengthening commit
+`9c4d4a7f1` (`test(spline): require third-derivative span bounds`).
+
+This is groundwork only: it does not yet isolate all roots of the offset
+regularity factor, certify root uniqueness/topology, admit the periodic
+positive-side fixtures, produce editable multi-branch caches for them, or
+validate their DXF/DWG persistence. Keep the existing fail-closed behavior.
+Next, design a bounded interval root isolator that uses the derivative
+enclosure to prove monotonicity where possible, handles unresolved/tangent
+roots without dropping them, and has explicit work/depth limits; compare its
+root set and generated offset topology against the independent high-precision
+oracle before changing eligibility. The picker clarification remains a closed
+UI gate: the type-changing selector lists all nine modeled source kinds,
+including distinct parabola; concrete source-variant support remains separate.
