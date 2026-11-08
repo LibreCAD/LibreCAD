@@ -26089,3 +26089,22 @@ cubic`). This does not qualify arbitrary degree-3 layouts or strict-tolerance
 acceptance. Remaining: derive tighter certified root/run bounds where possible,
 retain refusal when the requested collapse bound is exceeded, and continue
 nonuniform/repeated-knot and periodic ownership coverage.
+
+#### W563ej Follow-up. Qualify the Cubic Tangency at a Nonuniform Knot (2026-11-08)
+
+Added a positive-weight rational cubic with one interior knot at `t=0.5`,
+obtained by inserting that knot into the degree-elevated tangent fixture. An
+independent 256-bit oracle first compares the knot-inserted curve against the
+single-span cubic representation at five parameters. It then evaluates the
+curvature and tangent factor from both sides of the interior knot, verifies
+same-sign neighboring values, and derives the tangent distance from the
+two-sided curvature. At requested tolerance `1e-2`, the worker reports a
+bounded stall owning the knot, and the oracle tangent point maps to a retained
+output endpoint within tolerance.
+
+Release validation: focused nonuniform-knot cubic case, 17 assertions/1 case;
+full worker-kernel suite, 1,703,861 assertions/66 cases; `git diff --check`
+passes. Test commit `accfd381d` (`test(offset): qualify cubic tangent at
+knot`). This qualifies one interior-knot layout and one tangent, not repeated
+knots, arbitrary knot vectors, periodic seam roots, or strict-tolerance
+acceptance for all cubic profiles.
