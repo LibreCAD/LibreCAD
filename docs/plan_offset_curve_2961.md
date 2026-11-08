@@ -25891,3 +25891,31 @@ Test commit `dd26ef7bc` (`test(offset): map periodic rational stalls to
 output`). Next: add degree/layout coverage and apply the same per-event
 ownership checks to the conditioned periodic rational cusp matrix, including
 candidate boxes and measured tiny-reversal collapses.
+
+#### W563ei. Reconcile the Source-type Picker Requirement (2026-11-08)
+
+The requested Properties workflow is: choose a source-curve type first, then
+select a replacement of that type; offer every source family currently
+modeled by the offset source system; retain and visibly identify the current
+source when it is present. The canonical nine-family inventory is line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Parabola is a distinct choice even where its internal geometry is
+represented by spline-points.
+
+Current-code reconciliation: the type-changing selector, candidate filtering,
+cross-family replacement, source identity/highlighting, parabola identity,
+and cancellation/invalid-candidate atomicity are already covered by the
+recorded Properties regression matrix (W563ay/W563cz). Do not add a duplicate
+widget, parallel family list, or parabola-only selector path. Picker membership
+means only that a family can be requested; it does not establish that every
+variant is eligible for generation, worker/cache reuse, or DXF/DWG persistence.
+
+Remaining acceptance is the visible-GUI check. On the built app, open Offset
+Properties for an existing source and verify the current source is highlighted;
+change the requested type before picking and verify the candidate list filters
+to that family; replace with one candidate from each of the nine families,
+including parabola; then verify Cancel and invalid/stale candidates leave the
+source and generated result unchanged. Record app/build identity and results.
+If the visible run exposes a regression, add a focused failing widget test and
+fix it before closing this gate. Until that evidence exists, mark the GUI gate
+open; do not infer it from widget tests or picker inventory alone.
