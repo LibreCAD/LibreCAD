@@ -112,9 +112,10 @@ Current implementation order for the remaining “all supported types” work:
    fallback-only; an unweighted spline is checked across all five lanes on both
    signed sides; a rational tangent-constrained cubic offset is product-
    round-tripped through all five lanes. Wrapped periodic spline caches are
-   product-round-tripped at unit scale and quarter-offset for degree 2/3,
-   five/six-base-control layouts, unit/rational weights, and both sides across
-   all five lanes. Representative product-writer
+   product-round-tripped through all five lanes across the complete 96-case
+   tested import grid: degree 2/3, five/six-base-control layouts,
+   unit/rational weights, three scales, two distances, and both sides.
+   Representative product-writer
    round-trips now exist for all nine modeled source families. Per-family
    variants, wider distances/sides, independent-CAD compatibility, and visible
    workflows remain open.
@@ -23010,6 +23011,24 @@ imports`). This qualifies only the recorded cubic/rational control net, knot
 multiplicity and distance. Other repeated-knot multiplicities/layouts, source
 scales/transforms, external-CAD validation, visible-GUI acceptance, and
 exact-head CI remain open.
+
+#### W563de. Round-trip the Full Wrapped-periodic Import Grid (2026-11-07)
+
+The native product writer/reopen checks now run for every wrapped-periodic
+source in the existing staged-import grid: degrees 2 and 3; five- and
+six-base-control layouts; unit and positive rational weights; scales `1e-3`,
+`1`, and `1e3`; distance factors `0.125` and `0.25`; and both signed sides.
+All 96 combinations are exported and staged-imported through R14/R2000/R2018
+DXF and R2000/R2018 DWG. Each round-trip checks typed source-definition bytes,
+native admission without downgrade, and the exact generated cache fingerprint.
+This supersedes W563dd's unit-scale/quarter-offset subset.
+
+Release CMake validation: `QT_QPA_PLATFORM=offscreen ./librecad_tests
+"wrapped periodic spline source promotes on both sides across file lanes"`
+passes 103,694 assertions in one test case. The target rebuild and
+`git diff --check` pass. Other periodic topologies, wider or extreme weight
+profiles, independent-CAD equivalence, visible-GUI acceptance, and exact-head
+CI remain open.
 
 #### W563aq. Reconcile the Source Widget's Type-change Requirement (2026-11-07)
 
