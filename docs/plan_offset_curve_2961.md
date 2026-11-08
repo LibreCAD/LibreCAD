@@ -25588,10 +25588,40 @@ two-sided matrix, 23,129 assertions/1 case; full worker-kernel suite,
 
 Next: independently certify root counts on each open knot span and the
 periodic seam, including tangent/even roots that the sampled sign-change
-oracle cannot inventory. Current diagnostics expose candidate parameters but
-not their certified isolating intervals; add bounded root-box diagnostics
-before claiming a one-to-one *certified box* mapping. For each completed
-isolation, map every certified root box to one retained endpoint, an explicit
-seam/knot owner, or a measured in-tolerance tiny-reversal collapse; do not
-infer certification from the sampled inventory or from geometric proximity
-alone.
+oracle cannot inventory. For each completed isolation, map every certified
+root box to one retained endpoint, an explicit seam/knot owner, or a measured
+in-tolerance tiny-reversal collapse; do not infer certification from the
+sampled inventory or from geometric proximity alone.
+
+#### W563eh Follow-up. Record Cusp Candidate Brackets and Isolation Provenance (2026-11-08)
+
+Added opt-in diagnostic records for cusp candidates, without changing
+isolation decisions or output geometry. Each record contains the candidate
+parameter, final bracket, source-span index, and discovery kind:
+`CertifiedUniqueBracket` means interval bounds proved one simple root;
+`SampledSignChange` records a bisected sign change without claiming unique
+root count; `ExactSample` records a floating-point zero sample without
+claiming proof. Brackets wholly inside one source span carry its index in the
+unique break-parameter list. A nondegenerate bracket crossing spans retains
+the sentinel owner rather than being mislabeled; a point candidate at an exact
+break receives the canonical right-span owner, except at the domain end.
+
+Regression checks require exactly one bracket per candidate whenever
+isolation is complete, verify each bracket contains its candidate and remains
+inside its named span, and verify candidate-to-oracle one-to-one correspondence
+across the conditioned periodic profiles. The repeated-knot fixture checks the
+same bracket contract, while the even-root fixture confirms a bounded stall
+does not create a false cusp candidate. Root-box records are diagnostic
+evidence, not yet a complete topology proof: mapping each certified box to a
+retained output endpoint or a measured tiny-reversal collapse remains open.
+
+Release validation: periodic/nonuniform two-sided matrix, 23,681
+assertions/1 case; full worker-kernel suite, 1,703,511 assertions/58 cases;
+`git diff --check` passes. Commit `518668e2c` (`test(offset): expose cusp
+isolation root boxes`).
+
+Next: independently inventory tangent/even roots on nonuniform rational and
+periodic spans, give exact-knot/seam brackets explicit two-sided ownership,
+and establish the one-to-one certified-box-to-endpoint/collapse mapping.
+Keep any profile without those proofs fail-closed and out of cache/file
+eligibility.
