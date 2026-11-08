@@ -2665,18 +2665,35 @@ TEST_CASE("periodic rational seam root has one-sided ownership and output mappin
     const RS_Vector expected{
         ((startPoint.first + endPoint.first) / 2).convert_to<double>(),
         ((startPoint.second + endPoint.second) / 2).convert_to<double>()};
-    double nearestEndpoint = std::numeric_limits<double>::infinity();
-    for (const LC_OffsetBranch& branch : built.branches) {
-        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-            nearestEndpoint = std::min(
-                nearestEndpoint,
-                std::min(piece.bezier.front().distanceTo(expected),
-                         piece.bezier.back().distanceTo(expected)));
+    const auto nearestEndpoint = [&](const RS_Vector& point) {
+        double nearest = std::numeric_limits<double>::infinity();
+        for (const LC_OffsetBranch& branch : built.branches) {
+            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                nearest = std::min(
+                    nearest,
+                    std::min(piece.bezier.front().distanceTo(point),
+                             piece.bezier.back().distanceTo(point)));
+            }
+        }
+        return nearest;
+    };
+    const double seamEndpointError = nearestEndpoint(expected);
+    CAPTURE(expected.x, expected.y, seamEndpointError,
+            options->tolerance.requestedGeometry);
+    CHECK(seamEndpointError <= options->tolerance.requestedGeometry);
+    for (const auto& stall : diagnostics.stallIntervals) {
+        for (const double parameter : {stall.first, stall.second}) {
+            const auto point = oracleOffsetPoint(
+                data, SplineOracle{parameter}, step, start, end, distance,
+                parameter == endValue);
+            const RS_Vector stallEndpoint{point.first.convert_to<double>(),
+                                          point.second.convert_to<double>()};
+            const double error = nearestEndpoint(stallEndpoint);
+            CAPTURE(parameter, stallEndpoint.x, stallEndpoint.y, error,
+                    options->tolerance.requestedGeometry);
+            CHECK(error <= options->tolerance.requestedGeometry);
         }
     }
-    CAPTURE(expected.x, expected.y, nearestEndpoint,
-            options->tolerance.requestedGeometry);
-    CHECK(nearestEndpoint <= options->tolerance.requestedGeometry);
 }
 
 TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
