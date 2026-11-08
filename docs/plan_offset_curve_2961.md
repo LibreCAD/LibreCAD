@@ -25150,3 +25150,62 @@ roots, prove tangent/even-root completeness, resolve exact knot/seam roots,
 change the gradual positive-side refusal, or expand cache and file eligibility.
 W563cg remains open; the next slice must address root isolation/completeness
 without interpreting roots of the squared polynomial as cusps.
+
+#### W563ec. Reject Strict Bernstein Variation-one Cusp Acceptance (2026-11-08)
+
+A second attempt used strict coefficient signs of the squared rational cusp
+polynomial to derive a Bernstein sign-variation upper bound. When the bound was
+one, the implementation additionally required a strict sign for the unsquared
+factor at both box endpoints before accepting a bisection. This still does not
+provide a correct cusp/topology classification for the adversarial gradual,
+high-ratio periodic positive-offset fixture: the worker returned `Ok` where
+the established result is `SingularOffset`; the 256-bit oracle found 12 cusps,
+while generated branches had 20 endpoints and the nearest endpoint error was
+about 29.19 drawing units (fit budget about 0.011). The focused polynomial
+coefficient/oracle test passed 10,461 assertions, but that local pass did not
+validate root-to-geometry correspondence. The full worker suite was not run
+with this experiment.
+
+The variation-bound field, acceptance path, added assertion, and temporary
+diagnostic output have been removed. The preceding W563eb strict-sign no-root
+certificate remains unchanged; no eligibility or expected status is altered.
+Treat this as a rejected approach, not completed implementation. Do not use
+variation counts of the squared polynomial as a root count for the original
+factor, even with a one-sign condition on `d(C' x C'')` and endpoint signs.
+Before another acceptance path is proposed, independently establish the
+polynomial-to-factor equivalence on the entire box, including parameter
+endpoints, knot/seam ownership, coefficient enclosure, and root multiplicity;
+then compare isolated roots and generated branch endpoints against the
+high-precision oracle. Until then, preserve fail-closed behavior for the
+gradual positive-side periodic case. W563cg remains open.
+
+After removing the experiment, the restored implementation was rebuilt in
+Release and revalidated: the nonuniform periodic worker/cache matrix passes
+15,468 assertions/1 case, the focused cusp tests pass 10,732 assertions/2
+cases, and the full worker-kernel suite passes 1,691,342 assertions/55 cases.
+`git diff --check` passes. These results validate the retained baseline and
+rejection cleanup only; they do not resolve W563cg.
+
+#### W563ed. Align Rational Cusp Polynomial Bernstein Degrees (2026-11-08)
+
+Code review of W563eb found that the two terms in
+`P = q^3 - d^2 W^4 r^2` have different Bernstein degrees: `q^3` has degree
+`12p-6`, while `W^4 r^2` has degree `12p-8`. The old no-root certificate
+subtracted their coefficient arrays by index without degree elevation and
+read two entries beyond the lower-degree product net. That made the retained
+certificate unsound despite the earlier strict-sign logic. The lower-degree
+net is now elevated twice using outward `LC_Interval` arithmetic before the
+coefficient-wise subtraction. The 256-bit sample check now includes both
+ends of each certificate-pruned sub-box in addition to interior points.
+
+Implementation commit `e89a3b335` (`fix(spline): align rational cusp
+Bernstein degrees`). Release worker target and `librecad_tests` build. The
+focused cusp/oracle selection passes 14,192 assertions/2 cases; the
+nonuniform periodic worker/cache matrix passes 15,468 assertions/1 case; the
+full worker-kernel suite passes 1,694,802 assertions/55 cases; and the
+`[spline]` suite passes 28,390 assertions/77 cases. `git diff --check` passes.
+
+This repairs the zero-free certificate's coefficient alignment; it does not
+isolate roots or close W563cg. Root acceptance still requires a separate
+proof and comparison against the continuous high-precision cusp/topology
+oracle. The gradual positive-side periodic case remains fail-closed.
