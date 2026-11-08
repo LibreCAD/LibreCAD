@@ -227,7 +227,9 @@ struct OracleSplineCusp {
 std::vector<OracleSplineCusp> oracleOffsetCusps(const RS_SplineData& data,
                                                 const SplineOracle& domainStart,
                                                 const SplineOracle& domainEnd,
-                                                const double signedDistance) {
+                                                const double signedDistance,
+                                                const SplineOracle derivativeStepScale =
+                                                    SplineOracle{"1e-20"}) {
     const std::size_t lastControl = data.controlPoints.size() - 1;
     std::vector<OracleSplineCusp> cusps;
     for (std::size_t span = data.degree; span <= lastControl; ++span) {
@@ -246,7 +248,7 @@ std::vector<OracleSplineCusp> oracleOffsetCusps(const RS_SplineData& data,
         }
         std::sort(parameters.begin(), parameters.end());
         parameters.erase(std::unique(parameters.begin(), parameters.end()), parameters.end());
-        const SplineOracle step = width * SplineOracle{"1e-20"};
+        const SplineOracle step = width * derivativeStepScale;
         SplineOracle previousParameter = parameters.front();
         SplineOracle previousFactor = oracleOffsetFactor(
             data, previousParameter, step, domainStart, domainEnd,
@@ -1605,6 +1607,88 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
             const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
             const auto& generated = native(generationReply, 7);
             LC_CurveOffsetCuspIsolationDiagnostics cuspDiagnostics;
+            if (conditionedWeights &&
+                !(weightProfile == WeightProfile::Gradual && signedDistance > 0.0)) {
+                const auto diagnosticOptions =
+                    LC_OffsetWorkerTolerance::directOptions(definition, sourceCheck);
+                REQUIRE(diagnosticOptions);
+                LC_CurveOffsetCuspIsolationDiagnostics profileDiagnostics;
+                const auto diagnostic = LC_CurveOffset::buildDirectBranches(
+                    sourceCheck,
+                    LC_CurveOffset::makeSideRequest(
+                        signedDistance > 0.0 ? LC_CurveOffsetSide::Left
+                                             : LC_CurveOffsetSide::Right,
+                        std::abs(signedDistance)),
+                    *diagnosticOptions, LC_CurveOffset::makeDirectSourceBudget(),
+                    &profileDiagnostics);
+                CAPTURE(weightProfile, signedDistance, generated.engineStatus,
+                        diagnostic.status, expectedCusps.size(),
+                        profileDiagnostics.candidateParameters,
+                        profileDiagnostics.status,
+                        profileDiagnostics.failureSpan, profileDiagnostics.failureT0,
+                        profileDiagnostics.failureT1);
+                REQUIRE(generated.engineStatus.has_value());
+                CHECK(diagnostic.status == *generated.engineStatus);
+                CHECK(profileDiagnostics.complete ==
+                      (profileDiagnostics.status == LC_CurveOffsetStatus::Ok));
+
+                const std::vector<OracleSplineCusp> refinedOracleCusps =
+                    oracleOffsetCusps(sourceData, domainStart, domainEnd, signedDistance,
+                                      SplineOracle{"1e-25"});
+                CHECK(refinedOracleCusps.size() == expectedCusps.size());
+                for (const OracleSplineCusp& oracleCusp : expectedCusps) {
+                    double nearestRefinedParameter = std::numeric_limits<double>::infinity();
+                    for (const OracleSplineCusp& refinedCusp : refinedOracleCusps) {
+                        nearestRefinedParameter = std::min(
+                            nearestRefinedParameter,
+                            std::abs(oracleCusp.parameter.convert_to<double>() -
+                                     refinedCusp.parameter.convert_to<double>()));
+                    }
+                    CHECK(nearestRefinedParameter < 1e-8);
+                }
+                std::vector<bool> matchedOracleCusps(refinedOracleCusps.size(), false);
+                for (const double productionParameter : profileDiagnostics.candidateParameters) {
+                    double nearestParameterError = std::numeric_limits<double>::infinity();
+                    double nearestPointError = std::numeric_limits<double>::infinity();
+                    std::size_t nearestOracle = 0;
+                    for (std::size_t i = 0; i < refinedOracleCusps.size(); ++i) {
+                        const double error = std::abs(
+                            productionParameter -
+                            refinedOracleCusps[i].parameter.convert_to<double>());
+                        if (error < nearestParameterError) {
+                            nearestParameterError = error;
+                        }
+                    }
+                    const auto productionPoint = oracleOffsetPoint(
+                        sourceData, SplineOracle{productionParameter}, SplineOracle{"1e-25"},
+                        domainStart, domainEnd, SplineOracle{signedDistance});
+                    const RS_Vector productionOffsetPoint{
+                        productionPoint.first.convert_to<double>(),
+                        productionPoint.second.convert_to<double>()};
+                    for (std::size_t i = 0; i < refinedOracleCusps.size(); ++i) {
+                        const double error = productionOffsetPoint.distanceTo(
+                            refinedOracleCusps[i].point);
+                        if (error < nearestPointError) {
+                            nearestPointError = error;
+                            nearestOracle = i;
+                        }
+                    }
+                    CAPTURE(weightProfile, signedDistance, productionParameter,
+                            nearestParameterError, nearestPointError);
+                    CHECK(nearestParameterError < 1e-5);
+                    CHECK(nearestPointError < diagnosticOptions->tolerance.requestedGeometry);
+                    if (nearestPointError < diagnosticOptions->tolerance.requestedGeometry) {
+                        CHECK_FALSE(matchedOracleCusps[nearestOracle]);
+                        matchedOracleCusps[nearestOracle] = true;
+                    }
+                }
+                if (profileDiagnostics.complete) {
+                    CHECK(profileDiagnostics.candidateParameters.size() ==
+                          refinedOracleCusps.size());
+                    CHECK(std::all_of(matchedOracleCusps.begin(), matchedOracleCusps.end(),
+                                      [](bool matched) { return matched; }));
+                }
+            }
             if (weightProfile == WeightProfile::Gradual && signedDistance > 0.0) {
                 const auto diagnosticOptions =
                     LC_OffsetWorkerTolerance::directOptions(definition, sourceCheck);
