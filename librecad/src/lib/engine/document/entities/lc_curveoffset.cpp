@@ -2030,8 +2030,8 @@ private:
                             if (cusps.size() >= maxRunBoxes) {
                                 return LC_CurveOffsetStatus::AmbiguousRegularity;
                             }
-                            const Run isolated{leaf.t0, leaf.t1, 0.0, 1, span, leaf};
-                            const LC_CurveOffsetStatus status = bisectCusp(leaf.t0, leaf.t1, isolated, cusps);
+                            const LC_CurveOffsetStatus status = bisectCertifiedCusp(
+                                leaf.t0, leaf.t1, sign0, sign1, cusps);
                             if (status != LC_CurveOffsetStatus::Ok) {
                                 return status;
                             }
@@ -2191,6 +2191,46 @@ private:
             (std::signbit(g) == std::signbit(gLo) ? lo : hi) = mid;
         }
         cusps.push_back(lo + 0.5 * (hi - lo));
+        return LC_CurveOffsetStatus::Ok;
+    }
+
+    /** Bisect a unique root after interval bounds have certified its bracket signs. */
+    LC_CurveOffsetStatus bisectCertifiedCusp(double lo, double hi, const int signLo, const int signHi,
+                                             std::vector<double>& cusps) const {
+        if (!(lo < hi) || signLo == signHi) {
+            return LC_CurveOffsetStatus::AmbiguousRegularity;
+        }
+        int lowSign = signLo;
+        int highSign = signHi;
+        while (true) {
+            const double mid = lo + 0.5 * (hi - lo);
+            if (!(mid > lo && mid < hi)) {
+                break;
+            }
+            const double g = factorNumeratorAt(mid, LC_CurveEvaluationSide::Right);
+            if (!std::isfinite(g)) {
+                return LC_CurveOffsetStatus::AmbiguousRegularity;
+            }
+            if (g == 0.0) {
+                lo = hi = mid;
+                break;
+            }
+            const int midSign = std::signbit(g) ? -1 : 1;
+            if (midSign == lowSign) {
+                lo = mid;
+            }
+            else if (midSign == highSign) {
+                hi = mid;
+            }
+            else {
+                return LC_CurveOffsetStatus::AmbiguousRegularity;
+            }
+        }
+        const double root = lo + 0.5 * (hi - lo);
+        if (!std::isfinite(root)) {
+            return LC_CurveOffsetStatus::AmbiguousRegularity;
+        }
+        cusps.push_back(root);
         return LC_CurveOffsetStatus::Ok;
     }
 
