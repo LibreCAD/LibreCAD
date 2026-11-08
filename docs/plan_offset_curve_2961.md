@@ -26412,3 +26412,44 @@ assertions/5 cases; full worker-kernel suite, 1,704,282 assertions/72 cases;
 `[lc-offsetcurve][geometry]`, 1,576,310 assertions/374 cases;
 `git diff --check` passes. Implementation/test commit `f8e000886` (`fix(offset):
 tighten rational tangent motion bounds`).
+
+#### W563em. Reconfirm the Type-changing Source Picker Contract (2026-11-08)
+
+The latest request again requires changing source-curve type in the Properties
+widget before choosing a replacement, with the candidate picker covering all
+source kinds modeled by the offset feature. Keep the explicit nine-kind
+inventory synchronized with `LC_OffsetSourceGeometry::SupportedKinds`: line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. A family change filters eligible replacement entities; it must not
+mutate the embedded source or result until a replacement is selected. Keep
+parabola distinct from generic `LC_SplinePoints` during capture and display,
+and retain current-source resolution/highlighting and cancellation behavior.
+
+This clarifies the already implemented picker contract; it does not call for a
+new widget or for advertising geometries the model cannot represent. Existing
+all-family replacement and filter-purity regressions remain the automated
+gate. Keep visible interactive GUI acceptance open until observed. Picker
+membership does not imply that every source variant is eligible for every
+distance, supported by the worker/cache, or round-trippable through DXF and
+DWG. Track and validate those independently, with unsupported cases failing
+closed.
+
+#### W563en. Qualify a Rational Cubic Tangency at a Nonuniform Interior Knot (2026-11-08)
+
+The existing positive-weight, clamped cubic fixture has a same-sign tangent
+root at its nonuniform interior knot `t=0.5`. Tightened its requested geometry
+tolerance from `1e-2` to `1e-4`; the direct offset remains complete and maps the
+high-precision oracle point to retained output within that stricter tolerance.
+The test separately bounds the stall's two knot-owned halves because
+`tryBoundJetForCusp` correctly refuses a single jet interval spanning two knot
+spans. Both one-sided oracle factor values at the knot and both interval-end
+values are enclosed, and the sum of the two conservative motion bounds is at
+most `nodeMerge`.
+
+This qualifies one cubic layout and one nonuniform knot tangent; it does not
+establish arbitrary interior-knot multiplicities, rational weights, degrees,
+or multi-event run support. No production behavior or tolerance threshold was
+changed. Test commit `321302ce3` (`test(offset): bound nonuniform rational
+knot tangent`). Focused test: 28 assertions/1 case. Full
+`librecad_offset_worker_kernel_tests`: 1,704,293 assertions/72 cases;
+`git diff --check` passes.
