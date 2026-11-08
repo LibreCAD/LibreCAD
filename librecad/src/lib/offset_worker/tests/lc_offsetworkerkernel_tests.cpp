@@ -604,6 +604,50 @@ TEST_CASE("rational cusp polynomial no-root certificates agree with oracle sampl
     }
 }
 
+TEST_CASE("cubic rational cusp no-root certificate uses degree-aligned products",
+          "[lc-offsetcurve][worker-kernel][rational][oracle][cusp][cubic]") {
+    RS_Spline source{nullptr, RS_SplineData{3, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{10, 0},
+                                   RS_Vector{20, 10}, RS_Vector{30, 10}}) {
+        source.addControlPoint({point.x, point.y});
+    }
+    source.setKnotVector({0, 0, 0, 0, 1, 1, 1, 1});
+    REQUIRE(source.validate());
+    RS_SplineData data = source.getData();
+    data.weights = {1.0, 0.75, 1.25, 1.0};
+    RS_Spline checked{nullptr, data};
+    REQUIRE(checked.validate());
+
+    double domainStartValue = 0.0;
+    double domainEndValue = 0.0;
+    REQUIRE(checked.getParameterDomain(domainStartValue, domainEndValue));
+    const SplineOracle domainStart{domainStartValue};
+    const SplineOracle domainEnd{domainEndValue};
+    std::size_t certifiedBoxes = 0;
+    for (const double signedDistance : {-0.25, 0.25}) {
+        for (int piece = 0; piece < 32; ++piece) {
+            const double a = domainStartValue +
+                             (domainEndValue - domainStartValue) * piece / 32.0;
+            const double b = domainStartValue +
+                             (domainEndValue - domainStartValue) * (piece + 1) / 32.0;
+            LC_CurveJetBounds bounds;
+            REQUIRE(checked.tryBoundJetForCusp(a, b, bounds, signedDistance));
+            if (!bounds.rationalCuspNoRootCertified) continue;
+            ++certifiedBoxes;
+            const SplineOracle derivativeStep{SplineOracle{"1e-20"}};
+            const SplineOracle distance{signedDistance};
+            for (const int sampleNumerator : {0, 1, 4, 7, 8}) {
+                const SplineOracle t{a + (b - a) * sampleNumerator / 8.0};
+                const SplineOracle g = oracleOffsetFactorNumerator(
+                    data, t, derivativeStep, domainStart, domainEnd, distance);
+                CAPTURE(piece, sampleNumerator, signedDistance);
+                CHECK(g != 0);
+            }
+        }
+    }
+    CHECK(certifiedBoxes > 0);
+}
+
 TEST_CASE("offset child kernel generates owned checked caches with actual stage counters",
           "[lc-offsetcurve][worker-kernel]") {
     for (const bool inward : {false, true}) {
