@@ -26331,3 +26331,22 @@ full worker-kernel suite, 1,704,077 assertions/69 cases; `git diff --check`
 passes. Test commit `91b62a9d1` (`test(offset): cover periodic rational seam
 tangent`). Other weights, knot layouts, degrees, and candidate-to-output
 mapping remain open.
+
+#### W563eq. Preserve Atomic Refusal for a Mixed Periodic Seam-root Profile (2026-11-08)
+
+Added a second fixture with a positive, reflection-symmetric rational weight
+profile on the same periodic cubic control layout. The independent oracle
+confirms position/tangent/curvature continuity and an even offset-factor root
+at the seam with same-sign one-sided neighbors. However, the selected offset
+also exposes interior cusp candidates that the current bounded isolator cannot
+resolve completely. The direct build must return `SingularOffset`, keep
+diagnostics incomplete, and publish no partial branches. This records a
+fail-closed boundary, not successful support for the weighted profile; the
+eight-control exploratory profile was also rejected as it had additional
+sign-changing roots and did not meet the isolated seam-root fixture contract.
+
+Release validation: focused periodic seam tangent/refusal pair, 39 assertions/2
+cases; full worker-kernel suite, 1,704,094 assertions/70 cases;
+`git diff --check` passes. Test commit `cc8daddf3` (`test(offset): refuse mixed
+periodic seam cusp roots atomically`). Resolving the weighted profile, broader
+periodic weights/knots, and seam candidate-to-output mapping remain open.
