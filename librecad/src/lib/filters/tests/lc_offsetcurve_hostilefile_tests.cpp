@@ -28,6 +28,7 @@
 #include <QEventLoop>
 #include <QFile>
 #include <QProcess>
+#include <QStandardPaths>
 #include <QThread>
 #ifdef Q_OS_UNIX
 #include <cerrno>
@@ -7238,6 +7239,10 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
     std::size_t importedCases = 0;
     std::size_t refusedCases = 0;
     std::size_t ellipseNativeWriterCases = 0;
+    std::size_t libreDwgCases = 0;
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+        libreDwgReader = QStandardPaths::findExecutable("dwgread");
     std::array<std::size_t, scales.size()> importsByScale{};
     std::array<std::size_t, scales.size()> refusalsByScale{};
     for (std::size_t scaleIndex = 0; scaleIndex < scales.size(); ++scaleIndex) {
@@ -7358,6 +7363,22 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
                             REQUIRE(lc::test::exportDrawing(
                                 *outcome.graphic, nativeOutput,
                                 ::format(fileFormat.lane)));
+#ifdef DWGSUPPORT
+                            if (!libreDwgReader.isEmpty() && fileFormat.dwg &&
+                                scaleIndex == 1 && ratioIndex == 0 && variantIndex == 0 &&
+                                distanceIndex == 0) {
+                                QProcess reader;
+                                reader.start(libreDwgReader,
+                                    {"-O", "minJSON", lc::test::toQString(nativeOutput)});
+                                REQUIRE(reader.waitForStarted());
+                                REQUIRE(reader.waitForFinished(30000));
+                                INFO(reader.readAllStandardError().toStdString());
+                                CHECK(reader.exitStatus() == QProcess::NormalExit);
+                                CHECK(reader.exitCode() == 0);
+                                CHECK_FALSE(reader.readAllStandardOutput().isEmpty());
+                                ++libreDwgCases;
+                            }
+#endif
                             const auto nativeRoundTrip = stagedImport(
                                 nativeOutput, fileFormat.lane);
                             INFO("native translated-ellipse writer round-trip "
@@ -7426,6 +7447,9 @@ TEST_CASE("translated ellipse scale matrix preserves typed source and cache thro
     CHECK(importedCases > 0);
     CHECK(refusedCases > 0);
     CHECK(ellipseNativeWriterCases > 0);
+#ifdef DWGSUPPORT
+    if (!libreDwgReader.isEmpty()) CHECK(libreDwgCases == 2);
+#endif
     const std::size_t cellsPerRatio = 3 * ordinaryDistances.size() + 6 * thinDistances.size() +
         16 * partialThinDistances.size();
     const std::size_t expectedCells = scales.size() * translationRatios.size() * cellsPerRatio;
