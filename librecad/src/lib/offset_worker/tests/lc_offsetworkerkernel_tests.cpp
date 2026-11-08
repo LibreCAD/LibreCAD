@@ -3296,6 +3296,76 @@ TEST_CASE("degree-elevated rational cubic tangent maps to retained output",
           options->tolerance.requestedGeometry);
 }
 
+TEST_CASE("exact binary rational cubic tangent has bounded output mapping",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][degree][binary]") {
+    RS_SplineData data{3, false};
+    data.type = RS_SplineData::SplineType::ClampedOpen;
+    data.controlPoints = {{-6, 0}, {-4, 2}, {4, 2}, {6, 0}};
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    data.weights = {1, .5, .5, 1};
+    const RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+
+    const SplineOracle start{0};
+    const SplineOracle end{1};
+    const SplineOracle root{"0.5"};
+    const SplineOracle step{"1e-24"};
+    const SplineOracle unitFactor = oracleOffsetFactor(
+        data, root, step, start, end, SplineOracle{1});
+    const SplineOracle curvature = 1 - unitFactor;
+    REQUIRE(abs(curvature) > SplineOracle{"1e-12"});
+    const double signedDistance = (1 / curvature).convert_to<double>();
+    const SplineOracle distance{signedDistance};
+    const SplineOracle tangent = oracleOffsetFactor(
+        data, root, step, start, end, distance);
+    const SplineOracle left = oracleOffsetFactor(
+        data, root - SplineOracle{"1e-7"}, step, start, end, distance);
+    const SplineOracle right = oracleOffsetFactor(
+        data, root + SplineOracle{"1e-7"}, step, start, end, distance);
+    CAPTURE(signedDistance, tangent, left, right);
+    CHECK(abs(tangent) < SplineOracle{"1e-10"});
+    CHECK(left != 0);
+    CHECK(right != 0);
+    CHECK((left < 0) == (right < 0));
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, signedDistance, 1e-3, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(signedDistance > 0
+                                            ? LC_CurveOffsetSide::Left
+                                            : LC_CurveOffsetSide::Right,
+                                        std::abs(signedDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.failureStage, diagnostics.stallIntervals,
+            diagnostics.failingRunExtent, options->tolerance.nodeMerge);
+    REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(diagnostics.complete);
+    const auto oraclePoint = oracleOffsetPoint(data, root, step, start, end, distance);
+    const RS_Vector expected{oraclePoint.first.convert_to<double>(),
+                             oraclePoint.second.convert_to<double>()};
+    double nearest = std::numeric_limits<double>::infinity();
+    for (const LC_OffsetBranch& branch : built.branches) {
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            const auto& p = piece.bezier;
+            for (int i = 0; i <= 512; ++i) {
+                const double t = i / 512.0;
+                const double u = 1.0 - t;
+                const RS_Vector sample = p[0] * (u * u * u) +
+                    p[1] * (3.0 * u * u * t) + p[2] * (3.0 * u * t * t) +
+                    p[3] * (t * t * t);
+                nearest = std::min(nearest, sample.distanceTo(expected));
+            }
+        }
+    }
+    CAPTURE(expected.x, expected.y, nearest,
+            options->tolerance.requestedGeometry);
+    CHECK(nearest <= options->tolerance.requestedGeometry);
+}
+
 TEST_CASE("rational cubic tangent at a nonuniform knot has bounded ownership",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][knot]") {
     RS_SplineData data{3, false};
