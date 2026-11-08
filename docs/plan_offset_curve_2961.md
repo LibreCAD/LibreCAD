@@ -25252,14 +25252,15 @@ This supersedes the earlier 12-cusp sampled count and removes the claimed exact
 internal-knot cusp from the evidence; it does not prove the sampled inventory
 complete or exclude even-multiplicity roots.
 
-Still open within W563eg: persist a profile-by-profile candidate/sign
-inventory for both offset signs, including the remaining root-to-endpoint
-checks tracked in W563eh. The repeated-knot and seam regressions below qualify
-only their recorded fixtures, not all multiplicities or root completeness.
-W563eh starts, but does not finish, production-candidate mapping. In
-particular, re-measure the previously reported endpoint discrepancy against
-the corrected non-knot candidate set rather than carrying forward the old
-exact-knot comparison.
+Still open within W563eg: persist fixed per-profile/per-sign candidate counts
+and completion/refusal outcomes, and detect tangent/even roots that the
+sign-change scan can miss. The checks below classify signs around candidates
+already sampled for the conditioned profiles; they do not prove inventory
+completeness. Root-to-endpoint checks tracked in W563eh also remain. The
+repeated-knot and seam regressions qualify only recorded fixtures, not all
+multiplicities. In particular, re-measure the earlier endpoint discrepancy
+against the corrected non-knot candidate set, not the superseded exact-knot
+comparison.
 
 Release validation passes for the implemented slice: periodic/nonuniform worker matrix 15,498 assertions
 in 1 case; focused cusp/oracle selection 14,614 assertions in 3 cases; full
@@ -25339,6 +25340,25 @@ validation: focused `[seam]`, 53 assertions/1 case; full
 `librecad_offset_worker_kernel_tests`, 1,704,484 assertions/77 cases;
 `git diff --check` passes. Test commit `1c572dc15` (`test(offset): compare
 conditioned seam profile jets`).
+
+#### W563eg Follow-up. Check Signs Around Conditioned Periodic Candidates (2026-11-08)
+
+For every candidate returned by the span-local high-precision sign-change scan
+in the conditioned periodic worker matrix, the test now evaluates the offset
+factor on each available side within that candidate's owning nonzero knot
+span. It asserts nonzero side values and captures profile, signed distance,
+span, parameter, and the two side signs. This runs for both offset signs over
+the alternating, shifted-alternating, gradual, and reversed-gradual profiles;
+it does not probe across a knot or seam. Candidate neighborhoods at span
+boundaries are explicitly one-sided.
+
+This adds reproducible sign checks for the scan's current candidates, not a
+fixed complete root inventory: unobserved tangent/even roots, candidate counts
+per profile/sign, and production-to-output mapping remain open. Release
+validation: `[nonuniform]`, 24,076 assertions/2 cases; full
+`librecad_offset_worker_kernel_tests`, 1,704,829 assertions/77 cases;
+`git diff --check` passes. Test commit `a1fc97bc8` (`test(offset): record
+periodic cusp side signs`).
 
 The production implementation remains fail-closed for the gradual
 positive-side periodic case. Continue with W563eh: complete candidate-to-root
