@@ -25834,3 +25834,21 @@ Next: extend the same bounded proof to additional rational degrees and
 nonuniform periodic knot/weight profiles; map every resolved candidate/stall
 to an owned output endpoint or measured in-tolerance collapse, and retain
 fail-closed behavior when aggregate motion or root counts cannot be proved.
+
+#### W563eh Follow-up. Requalify a Second Periodic Rational Weight Profile (2026-11-08)
+
+Extended the four-control periodic cubic rational tangent-root test to run two
+distinct positive base-weight profiles. Each profile independently finds its
+curvature extremum with the 256-bit oracle, qualifies seam position/tangent/
+curvature continuity and a same-sign even root, then requires complete
+production isolation, a span-owned bounded stall, and an output piece endpoint
+within requested tolerance of the oracle point. The first profile remains the
+recorded 22-box case; no exact box count is claimed for the second profile.
+
+Release validation: periodic tangent regression, 60 assertions/1 case; full
+worker suite, 1,703,674 assertions/62 cases; `git diff --check` passes. Test
+commit `19237f97a` (`test(offset): cover rational tangent weight profiles`).
+The production evidence now covers two weights on one degree-3 periodic
+geometry, not other degrees or periodic knot layouts. Next: qualify further
+profiles and degrees, then verify complete candidate/stall-to-output mapping
+for the broader rational periodic matrix.
