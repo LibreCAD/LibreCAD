@@ -25186,41 +25186,39 @@ cases, and the full worker-kernel suite passes 1,691,342 assertions/55 cases.
 `git diff --check` passes. These results validate the retained baseline and
 rejection cleanup only; they do not resolve W563cg.
 
-#### W563ed. Align Rational Cusp Polynomial Bernstein Degrees (2026-11-08)
+#### W563ed. Correct the Cusp-polynomial Degree Audit (2026-11-08)
 
-Code review of W563eb found that the two terms in
-`P = q^3 - d^2 W^4 r^2` have different Bernstein degrees: `q^3` has degree
-`12p-6`, while `W^4 r^2` has degree `12p-8`. The old no-root certificate
-subtracted their coefficient arrays by index without degree elevation and
-read two entries beyond the lower-degree product net. That made the retained
-certificate unsound despite the earlier strict-sign logic. The lower-degree
-net is now elevated twice using outward `LC_Interval` arithmetic before the
-coefficient-wise subtraction. The 256-bit sample check now includes both
-ends of each certificate-pruned sub-box in addition to interior points.
+The prior degree-mismatch diagnosis was incorrect. With `N` degree `2p-1`,
+`q=N.N` has degree `4p-2`; `M=A''W-AW''` has degree `2p-2`, and
+`r=N x M` has degree `4p-3`. Therefore both `q^3` and `W^4 r^2` have degree
+`12p-6`. The original coefficient arrays were the same length; the
+certificate did not read beyond the lower-degree net. The earlier W563ed
+degree-elevation implementation added a redundant copy and no elevation
+iterations, so it did not repair a defect. That erroneous production change
+was removed. A guard now declines to certify if the computed degrees ever
+disagree, keeping the comparison conservative if these formulas change.
 
-Implementation commit `e89a3b335` (`fix(spline): align rational cusp
-Bernstein degrees`). Release worker target and `librecad_tests` build. The
-focused cusp/oracle selection passes 14,192 assertions/2 cases; the
-nonuniform periodic worker/cache matrix passes 15,468 assertions/1 case; the
-full worker-kernel suite passes 1,694,802 assertions/55 cases; and the
-`[spline]` suite passes 28,390 assertions/77 cases. `git diff --check` passes.
+Correction commit `a9389732b` (`fix(spline): guard cusp polynomial degree
+alignment`). The full Release worker-kernel suite passes 1,695,190 assertions
+across 56 cases, including the fail-closed periodic matrix; focused cusp and
+oracle selections pass 14,580 assertions/3 cases, plus the periodic matrix
+15,468/1. This correction does not establish root completeness or close
+W563cg. The earlier variation-one root acceptance experiment still fails the
+adversarial topology oracle after using the correctly degree-aligned
+polynomial, so it remains rejected. Diagnose the actual root-to-branch
+correspondence before changing eligibility.
 
-This repairs the zero-free certificate's coefficient alignment; it does not
-isolate roots or close W563cg. Root acceptance still requires a separate
-proof and comparison against the continuous high-precision cusp/topology
-oracle. The gradual positive-side periodic case remains fail-closed.
+#### W563ee. Cover Cubic Rational Cusp Polynomial Bounds (2026-11-08)
 
-#### W563ee. Exercise Degree Elevation with Cubic Rational Cusp Bounds (2026-11-08)
-
-Added an independent 256-bit oracle regression for a positive-weight rational
-cubic Bezier source. It requires the degree-aligned no-root certificate to
-prune at least one box for both signed offset distances, then checks both box
-endpoints and three interior samples against the exact-rational offset-factor
-oracle. This exercises the cubic `12p-6` versus `12p-8` degree mismatch, not
-only the existing quadratic periodic case.
+Added a 256-bit oracle regression for a positive-weight rational cubic Bezier
+source. It requires the strict-sign no-root certificate to prune at least one
+box for both signed offset distances, then checks both box endpoints and
+three interior samples against the exact-rational offset-factor oracle. This
+exercises the degree-three polynomial products and confirms both terms use
+degree `12p-6`; it does not demonstrate a degree mismatch or root counting.
 
 Test commit `17325c641` (`test(offset): cover cubic rational cusp bounds`).
 The focused cubic case passes 388 assertions/1 case; the full worker-kernel
 suite passes 1,695,190 assertions/56 cases. `git diff --check` passes. This
-adds degree-three regression coverage but does not expand offset eligibility
-or close W563cg.
+adds degree-three zero-free-certificate regression coverage but does not
+expand offset eligibility or close W563cg.
