@@ -552,6 +552,139 @@ TEST_CASE("high precision oracle samples conditioned periodic spline tangent min
     }
 }
 
+TEST_CASE("one-sided spline oracle jets converge at repeated knots and periodic seams",
+          "[lc-offsetcurve][worker-kernel][spline-variant][periodic][rational][oracle][knot][seam]") {
+    using OracleJet = std::array<SplineOracle, 4>;
+    const auto jet = [](const RS_SplineData& data, const SplineOracle& parameter,
+                        const SplineOracle& step, const int side) {
+        const auto point = evaluateSplineOracle(data, parameter);
+        if (side > 0) {
+            const auto one = evaluateSplineOracle(data, parameter + step);
+            const auto two = evaluateSplineOracle(data, parameter + 2 * step);
+            const auto three = evaluateSplineOracle(data, parameter + 3 * step);
+            return OracleJet{(-3 * point.first + 4 * one.first - two.first) / (2 * step),
+                             (-3 * point.second + 4 * one.second - two.second) / (2 * step),
+                             (2 * point.first - 5 * one.first + 4 * two.first - three.first) /
+                                 (step * step),
+                             (2 * point.second - 5 * one.second + 4 * two.second - three.second) /
+                                 (step * step)};
+        }
+        if (side < 0) {
+            const auto one = evaluateSplineOracle(data, parameter - step);
+            const auto two = evaluateSplineOracle(data, parameter - 2 * step);
+            const auto three = evaluateSplineOracle(data, parameter - 3 * step);
+            return OracleJet{(3 * point.first - 4 * one.first + two.first) / (2 * step),
+                             (3 * point.second - 4 * one.second + two.second) / (2 * step),
+                             (2 * point.first - 5 * one.first + 4 * two.first - three.first) /
+                                 (step * step),
+                             (2 * point.second - 5 * one.second + 4 * two.second - three.second) /
+                                 (step * step)};
+        }
+        const auto before = evaluateSplineOracle(data, parameter - step);
+        const auto after = evaluateSplineOracle(data, parameter + step);
+        return OracleJet{(after.first - before.first) / (2 * step),
+                         (after.second - before.second) / (2 * step),
+                         (after.first - 2 * point.first + before.first) / (step * step),
+                         (after.second - 2 * point.second + before.second) / (step * step)};
+    };
+    const auto maxDifference = [](const OracleJet& a, const OracleJet& b,
+                                  const std::size_t first, const std::size_t last) {
+        SplineOracle difference{};
+        for (std::size_t i = first; i < last; ++i)
+            difference = std::max(difference, abs(a[i] - b[i]));
+        return difference;
+    };
+
+    RS_SplineData repeated{3, false};
+    repeated.type = RS_SplineData::SplineType::ClampedOpen;
+    repeated.controlPoints = {{-3, 0}, {-18.0 / 7.0, 6.0 / 7.0},
+                              {-18.0 / 13.0, 18.0 / 13.0},
+                              {18.0 / 13.0, 18.0 / 13.0},
+                              {18.0 / 7.0, 6.0 / 7.0}, {3, 0}};
+    repeated.knotslist = {0, 0, 0, 0, .5, .5, 1, 1, 1, 1};
+    repeated.weights = {1, .875, .8125, .8125, .875, 1};
+    REQUIRE(RS_Spline{nullptr, repeated}.validate());
+    const SplineOracle repeatedKnot{"0.5"};
+    const auto repeatedLeft = jet(repeated, repeatedKnot, SplineOracle{"1e-10"}, -1);
+    const auto repeatedRight = jet(repeated, repeatedKnot, SplineOracle{"1e-10"}, 1);
+    CHECK(maxDifference(repeatedLeft, repeatedRight, 0, 2) < SplineOracle{"1e-7"});
+    CHECK(maxDifference(repeatedLeft, repeatedRight, 2, 4) < SplineOracle{"1e-5"});
+    for (const int side : {-1, 1}) {
+        const auto atKnot = side < 0 ? repeatedLeft : repeatedRight;
+        SplineOracle priorFirstError = std::numeric_limits<SplineOracle>::infinity();
+        SplineOracle priorSecondError = std::numeric_limits<SplineOracle>::infinity();
+        for (const SplineOracle delta : {SplineOracle{"1e-4"}, SplineOracle{"5e-5"}}) {
+            const SplineOracle interiorParameter = repeatedKnot + side * delta;
+            const SplineOracle interiorStep = delta * SplineOracle{"1e-3"};
+            const auto interior = jet(repeated, interiorParameter, interiorStep, 0);
+            const SplineOracle firstError = maxDifference(atKnot, interior, 0, 2);
+            const SplineOracle secondError = maxDifference(atKnot, interior, 2, 4);
+            CAPTURE(side, delta, firstError, secondError);
+            if (delta == SplineOracle{"1e-4"}) {
+                priorFirstError = firstError;
+                priorSecondError = secondError;
+            } else {
+                CHECK(firstError < priorFirstError * SplineOracle{"0.7"});
+                if (priorSecondError > SplineOracle{"1e-20"})
+                    CHECK(secondError < priorSecondError * SplineOracle{"0.7"});
+                else
+                    CHECK(secondError < SplineOracle{"1e-20"});
+            }
+        }
+    }
+
+    RS_Spline periodic{nullptr, RS_SplineData{2, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{25, -15},
+                                   RS_Vector{55, -5}, RS_Vector{70, 20},
+                                   RS_Vector{50, 45}, RS_Vector{15, 50},
+                                   RS_Vector{-15, 25}})
+        periodic.addControlPoint({point.x + 1000.0, point.y - 2000.0});
+    periodic.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+    REQUIRE(periodic.validate());
+    periodic.setClosed(true);
+    RS_SplineData wrapped = periodic.getData();
+    wrapped.weights.assign(wrapped.controlPoints.size(), 1.0);
+    REQUIRE(RS_Spline{nullptr, wrapped}.validate());
+    const std::size_t lastControl = wrapped.controlPoints.size() - 1;
+    const SplineOracle start{wrapped.knotslist[wrapped.degree]};
+    const SplineOracle end{wrapped.knotslist[lastControl + 1]};
+    const SplineOracle seamStep{"1e-10"};
+    const auto startPoint = evaluateSplineOracle(wrapped, start);
+    const auto endPoint = evaluateSplineOracle(wrapped, end);
+    const auto rightAtStart = jet(wrapped, start, seamStep, 1);
+    const auto leftAtEnd = jet(wrapped, end, seamStep, -1);
+    CAPTURE(startPoint.first, startPoint.second, endPoint.first, endPoint.second,
+            maxDifference(rightAtStart, leftAtEnd, 0, 2),
+            maxDifference(rightAtStart, leftAtEnd, 2, 4));
+    CHECK(abs(startPoint.first - endPoint.first) < SplineOracle{"1e-10"});
+    CHECK(abs(startPoint.second - endPoint.second) < SplineOracle{"1e-10"});
+    CHECK(maxDifference(rightAtStart, leftAtEnd, 0, 2) < SplineOracle{"1e-3"});
+    CHECK(maxDifference(rightAtStart, leftAtEnd, 2, 4) > SplineOracle{"1"});
+    for (const int side : {-1, 1}) {
+        const auto atSeamSide = side < 0 ? leftAtEnd : rightAtStart;
+        SplineOracle priorFirstError = std::numeric_limits<SplineOracle>::infinity();
+        SplineOracle priorSecondError = std::numeric_limits<SplineOracle>::infinity();
+        for (const SplineOracle delta : {SplineOracle{"1e-4"}, SplineOracle{"5e-5"}}) {
+            const SplineOracle interiorParameter = side < 0 ? end - delta : start + delta;
+            const SplineOracle interiorStep = delta * SplineOracle{"1e-3"};
+            const auto interior = jet(wrapped, interiorParameter, interiorStep, 0);
+            const SplineOracle firstError = maxDifference(atSeamSide, interior, 0, 2);
+            const SplineOracle secondError = maxDifference(atSeamSide, interior, 2, 4);
+            CAPTURE(side, delta, firstError, secondError);
+            if (delta == SplineOracle{"1e-4"}) {
+                priorFirstError = firstError;
+                priorSecondError = secondError;
+            } else {
+                CHECK(firstError < priorFirstError * SplineOracle{"0.7"});
+                if (priorSecondError > SplineOracle{"1e-20"})
+                    CHECK(secondError < priorSecondError * SplineOracle{"0.7"});
+                else
+                    CHECK(secondError < SplineOracle{"1e-20"});
+            }
+        }
+    }
+}
+
 TEST_CASE("rational periodic derivative sign bounds agree with the high precision oracle",
           "[lc-offsetcurve][worker-kernel][periodic][rational][oracle][cusp]") {
     RS_Spline source{nullptr, RS_SplineData{2, false}};
