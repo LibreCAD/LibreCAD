@@ -6478,6 +6478,31 @@ TEST_CASE("high-ratio open rational spline offsets round trip through DXF and DW
                 CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
                       RS_Spline::geometryFingerprint(cache));
 
+                const auto nativeOutput = directory.file(
+                    "native-" + basename + format.suffix);
+                REQUIRE(lc::test::exportDrawing(
+                    *outcome.graphic, nativeOutput, ::format(format.lane)));
+                const auto nativeRoundTrip = stagedImport(
+                    nativeOutput, format.lane);
+                INFO("conditioned open-rational native writer round-trip "
+                     << basename << format.suffix);
+                REQUIRE(nativeRoundTrip.status ==
+                        LC_OffsetImportSession::Status::Complete);
+                REQUIRE(nativeRoundTrip.graphic);
+                CHECK(nativeRoundTrip.admitted == 1);
+                CHECK(nativeRoundTrip.downgraded == 0);
+                const auto* roundTripped = dynamic_cast<const LC_OffsetCurve*>(
+                    f::sole(*nativeRoundTrip.graphic));
+                REQUIRE(roundTripped);
+                REQUIRE(roundTripped->sourceDefinition());
+                const auto roundTripSource = values::encodeSourceDefinition(
+                    *roundTripped->sourceDefinition());
+                REQUIRE(roundTripSource);
+                CHECK(QCborValue(*expectedSource).toCbor() ==
+                      QCborValue(*roundTripSource).toCbor());
+                CHECK(RS_Spline::geometryFingerprint(roundTripped->getData()) ==
+                      RS_Spline::geometryFingerprint(cache));
+
                 if (format.dwg) {
                     const char* odaDirectory = std::getenv(
                         "LIBRECAD_CONDITIONED_RATIONAL_ODA_DXF_DIR");
