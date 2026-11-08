@@ -26350,3 +26350,28 @@ cases; full worker-kernel suite, 1,704,094 assertions/70 cases;
 `git diff --check` passes. Test commit `cc8daddf3` (`test(offset): refuse mixed
 periodic seam cusp roots atomically`). Resolving the weighted profile, broader
 periodic weights/knots, and seam candidate-to-output mapping remain open.
+
+#### W563eq Follow-up. Resolve and Map the Weighted Periodic Profile (2026-11-08)
+
+Closed-source unresolved rational runs now use the accumulated bounded offset
+motion, not each leaf's bound in isolation, when deciding whether to stop
+subdivision and delegate to run resolution. The open-source decision remains
+unchanged; existing strict/open tangency refusal behavior is retained. This
+lets the recorded positive weighted periodic fixture resolve completely
+without broadening the acceptance of open rational tangencies.
+
+The fixture's independent high-precision oracle identifies seam roots at
+`t=0/4`, four sign-changing interior roots, and a knot event at `t=2`. The seam
+touch maps to emitted geometry but is not mislabeled as a cusp; the knot event
+is covered by the bounded stall `[1.998046875, 2.0009765625]`, whose output
+endpoints map within requested geometry tolerance. The four sign-changing
+events each map to exactly two cusp-marked branch ends, and every cusp-marked
+end maps to exactly one oracle event. Candidate boxes are checked for unique
+source-span ownership and containment; all candidates map one-to-one to
+oracle parameter/point records.
+
+Implementation/test commit `993b44411` (`fix(offset): bound periodic tangent
+runs cumulatively`). Release validation: focused weighted seam regression, 106
+assertions/1 case; full worker-kernel suite, 1,704,183 assertions/70 cases;
+`git diff --check` passes. This closes only the W563eq control/weight/knot
+profile and does not qualify broader periodic rational layouts or degrees.
