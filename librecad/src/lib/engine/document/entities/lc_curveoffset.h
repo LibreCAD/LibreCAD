@@ -358,7 +358,7 @@ LC_OffsetSideResolution resolveSide(const RS_Entity& source, const RS_Vector& di
 LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const LC_CurveOffsetRequest& request,
                                                  const LC_CurveOffsetOptions& options,
                                                  const LC_OffsetSourceBudget& budget,
-                                                 /** Optional test diagnostic: certified cusp parameters, including partial results on refusal. */
+                                                 /** Optional test diagnostic: cusp candidates collected so far; may be partial on refusal. */
                                                  std::vector<double>* isolatedCuspsForDiagnostics = nullptr);
 
 /**
