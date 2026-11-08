@@ -24618,3 +24618,18 @@ and `git diff --check` pass. This validates the editable cache-plus-metadata
 path, not writing a tangent-constrained source spline as a native DWG SPLINE;
 that remains fail-closed. Other tangent/weight variants, independent CAD,
 visible GUI, and exact-head CI remain open.
+
+#### W563db. Requalify Type-changing Source Picker on Current Product Head (2026-11-07)
+
+The complete Properties source-picker union was rerun after the native
+writer-matrix additions and typed-source contract correction. It exercises
+family changes before entity selection, refreshed candidate filtering, typed
+replacement, undo/redo, source highlighting/resolution, cancellation atomicity,
+and invalid-candidate exclusion for the nine modeled source kinds, including
+distinct parabola identity.
+
+Release CMake validation on the current implementation source:
+`QT_QPA_PLATFORM=offscreen ./librecad_tests '[gui][dialog][offsetcurve][source]'`
+passes all 10 cases and 6,892 assertions. This requalifies the picker UI
+contract only; per-family variants, exact-head CI, and visible interaction
+remain independent acceptance gates.
