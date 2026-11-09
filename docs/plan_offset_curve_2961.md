@@ -30312,12 +30312,12 @@ as its own geometric oracle.
 
 Validation: the focused Release test
 `Line offsets retain exact normals across orientation and scale boundaries`
-passes 1,729 assertions/1 case; `librecad_tests` rebuilt successfully and
+passes 1,739 assertions/1 case; `librecad_tests` rebuilt successfully and
 `git diff --check` passes. This closes only these direct-geometry fixtures.
-At this checkpoint the profiles still needed worker/cache and file-lane
-qualification; section 685 records that follow-up. Near-ULP/non-finite source
-refusal, visible GUI, external CAD, cross-platform/ASan, and exact-head CI
-remain open.
+At this checkpoint the scale profiles still needed worker/cache and file-lane
+qualification; sections 685-686 record that follow-up. The near-ULP and
+non-finite boundaries are recorded in section 688. Visible GUI, external CAD,
+cross-platform/ASan, and exact-head CI remain open.
 
 ## 685. Carry Line Scale Profiles Through Worker and File Lanes (2026-11-09)
 
@@ -30355,3 +30355,55 @@ DWG parses; all five internal DXF/DWG round-trip lanes and strict line endpoint
 checks pass. This is LibreDWG validation, not ODA/AutoCAD acceptance. The
 near-ULP/non-finite line refusal boundary, visible GUI, cross-platform/ASan,
 and exact-head CI remain open.
+
+## 687. Reconcile the Source-widget Type-change Request (2026-11-09)
+
+The source-curve widget requirement is that a user can change the requested
+source type before picking a replacement, and that the picker offers all
+families supported by the offset source model, including parabola. This does
+not require a second selector or conversion of the currently stored source.
+Changing the family only filters candidates; choosing a valid candidate
+replaces the typed source through the existing atomic edit path.
+
+Current-code check: `LC_PropertiesEditingWidget_OffsetCurve` builds its choices
+from `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. The
+Properties tests cover the complete list, cross-family replacement,
+filter-only non-mutation, source highlighting across family filters, and
+distinct parabola identity. The separate Update from Source action also uses
+the same supported-kind list. The picker-level request is implemented; no new
+widget/control or parabola-only UI work is planned.
+
+Implementation remains incomplete at the geometry-capability level: a family
+being selectable does not mean every concrete entity variant in that family
+can be offset or persisted. Continue with the eligibility matrix and only
+admit variants after direct geometry, worker/cache, replacement, and applicable
+DXF/DWG evidence is recorded. Retain fail-closed behavior for unqualified
+spline, polyline, and hyperbola variants. Visible GUI acceptance, external
+ODA/AutoCAD acceptance, cross-platform/ASan, and exact-head CI remain separate
+open gates.
+
+Code references: `librecad/src/ui/dialogs/entity/lc_propertieseditingwidget_offsetcurve.cpp`
+and `librecad/src/ui/dialogs/entity/tests/lc_offsetcurve_propertiesdialog_tests.cpp`.
+The focused automated tests establish the widget contract but do not close the
+visible-GUI acceptance gate.
+
+## 688. Record the Near-ULP Line Refusal Boundary (2026-11-09)
+
+Extended the direct line scale test with a line whose endpoints are adjacent
+binary64 values at `x = 1e16`. Typed source capture accepts this finite,
+noncollapsed geometry, but the normal direct-options factory cannot provide a
+requested error tolerance greater than the world-coordinate numeric floor at
+that origin. Both offset sides therefore return `InvalidRequest`, no branches,
+and a non-finite signed-distance result; they do not publish partial geometry.
+This deliberately distinguishes representable source storage from the
+generator's stricter numerical-admissibility boundary. A sub-ULP endpoint
+pair that rounds to the same double and an infinite endpoint are both refused
+at source capture.
+
+Validation: rebuilt the Release `librecad_tests` target; the focused case
+`Line offsets retain exact normals across orientation and scale boundaries`
+passes 1,739 assertions/1 case, including both refusal sides, collapsed and
+non-finite inputs. `git diff --check` passes. This does not relax numerical
+guards or qualify one-ULP geometry for worker/cache or persistence. Visible
+GUI, external CAD, cross-platform/ASan, and exact-head CI remain open.

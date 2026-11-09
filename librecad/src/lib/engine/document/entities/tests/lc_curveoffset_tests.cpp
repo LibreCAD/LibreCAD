@@ -969,8 +969,30 @@ TEST_CASE("Line offsets retain exact normals across orientation and scale bounda
         }
     }
 
-    const RS_Line collapsed{nullptr, RS_LineData{{1e16, -1e16}, {1e16, -1e16}}};
+    const double largeOrigin = 1e16;
+    const double nextRepresentable = std::nextafter(largeOrigin, std::numeric_limits<double>::infinity());
+    const RS_Line oneUlpLine{nullptr, RS_LineData{{largeOrigin, 0.0}, {nextRepresentable, 0.0}}};
+    const auto oneUlpSource = LC_OffsetSourceGeometry::capture(oneUlpLine);
+    REQUIRE(oneUlpSource);
+    CHECK(oneUlpSource->isWellFormed());
+    const double oneUlpLength = nextRepresentable - largeOrigin;
+    REQUIRE(oneUlpLength > 0.0);
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        const double distance = .25;
+        const auto options = LC_CurveOffset::makeDirectOptions(oneUlpLine, distance);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            oneUlpLine, LC_CurveOffset::makeSideRequest(side, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(result.status == LC_CurveOffsetStatus::InvalidRequest);
+        CHECK(result.branches.empty());
+        CHECK_FALSE(std::isfinite(result.signedDistance));
+    }
+
+    const RS_Line collapsed{nullptr, RS_LineData{{largeOrigin, -1e16}, {largeOrigin + .5, -1e16}}};
     CHECK_FALSE(LC_OffsetSourceGeometry::capture(collapsed));
+    const RS_Line nonfinite{nullptr, RS_LineData{{0.0, 0.0},
+        {std::numeric_limits<double>::infinity(), 0.0}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(nonfinite));
 }
 
 TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direct]") {
