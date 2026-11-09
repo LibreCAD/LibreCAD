@@ -26719,9 +26719,15 @@ collapse that became a fully stalled result with no branches and was
 misreported as `InvalidSource`. Result validation now reports a wholly empty
 offset as `SingularOffset`, while a partial empty branch among emitted geometry
 returns `AmbiguousTopology`; neither path publishes partial geometry. This
-qualifies only the two added profiles and this aggregate-run gate; arbitrary
-rational weights, knot layouts, degrees, and complete candidate-to-output
-mapping remain open.
+qualifies only the recorded symmetric quadratic profiles and aggregate-run
+gate; arbitrary rational weights, knot layouts, degrees, and complete
+candidate-to-output mapping remain open.
+
+Extended the same matrix to the opposite signed offset for every weight/scale
+pair. The oracle's five samples per source map to retained geometry within
+requested tolerance; the regular side reports no cusp candidates or stalls.
+This signed-side evidence is limited to the recorded clamped symmetric
+quadratic profile and does not establish other rational topologies.
 
 Release validation: focused expanded profile, 78 assertions/1 case;
 `[rational][tangent-root]`, 597 assertions/11 cases; full
@@ -26731,6 +26737,6 @@ passes. Aggregate-run implementation/test/roadmap commit `e08721c17`
 (`fix(offset): bound aggregate rational tangent runs`); collapsed-result
 classification follow-up commit `714d0d1a5` (`fix(offset): classify collapsed
 offset results`). The `0.0625`/`8.0` profiles and their scaled variants pass
-the focused matrix with 208 assertions, `[rational][tangent-root]` with 727
-assertions/11 cases, and the full worker-kernel suite with 1,705,031
+the focused matrix with 368 assertions, `[rational][tangent-root]` with 887
+assertions/11 cases, and the full worker-kernel suite with 1,705,191
 assertions/77 cases.

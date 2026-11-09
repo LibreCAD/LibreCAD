@@ -4163,9 +4163,10 @@ TEST_CASE("rational quadratic tangent stalls map across weight profiles and bina
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(diagnostics.complete);
 
-        const auto nearestPieceDistance = [&](const RS_Vector& point) {
+        const auto nearestPieceDistance = [](const LC_CurveOffsetGeometryResult& geometry,
+                                             const RS_Vector& point) {
             double nearest = std::numeric_limits<double>::infinity();
-            for (const LC_OffsetBranch& branch : built.branches) {
+            for (const LC_OffsetBranch& branch : geometry.branches) {
                 for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
                     constexpr int sampleCount = 128;
                     int bestSample = 0;
@@ -4206,7 +4207,7 @@ TEST_CASE("rational quadratic tangent stalls map across weight profiles and bina
                     distance, parameter == domainEnd);
                 const RS_Vector expected{point.first.convert_to<double>(),
                                          point.second.convert_to<double>()};
-                CHECK(nearestPieceDistance(expected) <= requestedGeometry);
+                CHECK(nearestPieceDistance(built, expected) <= requestedGeometry);
             }
         }
         const auto tangentPoint = oracleOffsetPoint(
@@ -4214,7 +4215,36 @@ TEST_CASE("rational quadratic tangent stalls map across weight profiles and bina
         const RS_Vector expectedTangentPoint{
             tangentPoint.first.convert_to<double>(),
             tangentPoint.second.convert_to<double>()};
-        CHECK(nearestPieceDistance(expectedTangentPoint) <= requestedGeometry);
+        CHECK(nearestPieceDistance(built, expectedTangentPoint) <= requestedGeometry);
+
+        const LC_OffsetSourceDefinition regularDefinition{
+            LC_OffsetSourceGeometry{data}, -signedDistance,
+            requestedGeometry, false};
+        const auto regularOptions =
+            LC_OffsetWorkerTolerance::directOptions(regularDefinition, source);
+        REQUIRE(regularOptions);
+        LC_CurveOffsetCuspIsolationDiagnostics regularDiagnostics;
+        const auto regular = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left,
+                                            std::abs(signedDistance)),
+            *regularOptions, LC_CurveOffset::makeDirectSourceBudget(),
+            &regularDiagnostics);
+        CAPTURE(scale, middleWeight, regular.status,
+                regularDiagnostics.failureStage);
+        REQUIRE(regular.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(regularDiagnostics.complete);
+        CHECK(regularDiagnostics.candidateParameters.empty());
+        CHECK(regularDiagnostics.stallIntervals.empty());
+        for (const double parameter : {0.0, 0.25, 0.5, 0.75, 1.0}) {
+            const auto point = oracleOffsetPoint(
+                data, SplineOracle{parameter}, step, domainStart, domainEnd,
+                SplineOracle{-signedDistance}, parameter == domainEnd);
+            const RS_Vector expected{point.first.convert_to<double>(),
+                                     point.second.convert_to<double>()};
+            CAPTURE(scale, middleWeight, parameter);
+            CHECK(nearestPieceDistance(regular, expected) <= requestedGeometry);
+        }
     }
 }
 
