@@ -26757,5 +26757,9 @@ does not qualify arbitrary knot vectors, knot multiplicities, unequal
 one-sided curvature, or general rational knot-adjacent root pairs. Release
 validation: focused case, 120 assertions/1 case; `[rational][tangent-root]`,
 1,007 assertions/12 cases; full `librecad_offset_worker_kernel_tests`,
-1,705,311 assertions/78 cases; `git diff --check` passes. Test/roadmap commit
-pending.
+1,705,311 assertions/78 cases; `git diff --check` passes. Initial test/roadmap
+commit `68000d547` (`test(offset): cover rational quadratic knot tangency`).
+A follow-up now enumerates every stall interval containing the knot and maps
+all such interval endpoints, not only the first matching interval; its focused
+case and full worker-kernel rerun pass with the same assertion totals. Test
+follow-up commit pending.

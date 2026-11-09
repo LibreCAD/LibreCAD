@@ -4328,12 +4328,14 @@ TEST_CASE("knot-inserted rational quadratic tangent maps across the interior kno
                 diagnostics.stallIntervals);
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(diagnostics.complete);
-        const auto knotStall = std::find_if(
-            diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
-            [](const std::pair<double, double>& interval) {
-                return interval.first <= 0.5 && 0.5 <= interval.second;
-            });
-        REQUIRE(knotStall != diagnostics.stallIntervals.end());
+        std::vector<std::pair<double, double>> knotStalls;
+        std::copy_if(diagnostics.stallIntervals.begin(),
+                     diagnostics.stallIntervals.end(),
+                     std::back_inserter(knotStalls),
+                     [](const std::pair<double, double>& interval) {
+                         return interval.first <= 0.5 && 0.5 <= interval.second;
+                     });
+        REQUIRE_FALSE(knotStalls.empty());
 
         std::vector<RS_Vector> endpoints;
         for (const LC_OffsetBranch& branch : built.branches) {
@@ -4342,8 +4344,12 @@ TEST_CASE("knot-inserted rational quadratic tangent maps across the interior kno
                 endpoints.push_back(piece.bezier.back());
             }
         }
-        for (const double parameter : {knotStall->first, 0.5,
-                                       knotStall->second}) {
+        std::vector<double> mappedParameters{0.5};
+        for (const auto& stall : knotStalls) {
+            mappedParameters.push_back(stall.first);
+            mappedParameters.push_back(stall.second);
+        }
+        for (const double parameter : mappedParameters) {
             const auto point = oracleOffsetPoint(
                 inserted, SplineOracle{parameter}, step, domainStart,
                 domainEnd, distance);
