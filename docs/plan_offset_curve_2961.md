@@ -83,6 +83,11 @@ rational degrees 4-6, including tested periodic profiles; other knot layouts
 and parameter ranges remain open. Properties
 picker/replacement now has focused degree-4/6 coverage for the tested clamped
 single-span, midpoint-knot, asymmetric rational, and wrapped periodic profiles.
+An additional strong positive-rational weight profile maps the oracle's simple
+periodic seam roots for degrees 4 and 5. Its degree-6 counterpart has an
+oracle root at interior knot `t=2` that current isolation does not own and
+refuses with empty output; this remains an explicit high-rational degree-6
+knot-event gap, not qualified support.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -27866,3 +27871,23 @@ end-to-end support.
 
 Validation status is unchanged by this documentation update: no code changed
 and no tests were rerun. The most recent production validation remains W589.
+
+## 591. Exercise Strong Periodic Rational Seam Profiles (2026-11-09)
+
+Added a second, stronger positive-rational weight profile to the independent
+oracle-backed degree-4/5/6 periodic seam test. Degrees 4 and 5 complete and
+their reported simple roots continue through the existing checks for
+high-precision zero, opposite one-sided signs, and mapping to a cusp endpoint
+or bounded cusp-to-cusp tiny-reversal collapse. The degree-6 profile has six
+oracle simple roots, including the seam and an interior knot root at `t=2`;
+production isolates four candidates, then refuses as `SingularOffset` during
+`RunResolution`, returning no branches. The test records this exact fail-closed
+boundary so it cannot be mistaken for degree-6 support or silently regress to
+partial geometry. Completing the knot-root certificate/ownership and mapping
+the missing event remains open; do not weaken the unresolved-run policy based
+on the oracle fixture alone.
+
+Validation: focused `higher-degree periodic spline seam roots map to output`
+passes 588 assertions/1 case; the complete Release worker-kernel executable
+passes 1,706,579 assertions/85 cases. No production geometry code changed in
+this slice. `git diff --check` is required before commit.

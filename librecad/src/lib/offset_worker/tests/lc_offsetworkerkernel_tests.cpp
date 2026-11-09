@@ -3575,7 +3575,8 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
     std::size_t unclassifiedWeightedSeams = 0;
     for (const auto [degree, weightProfile] : {
              std::pair{4, 0}, std::pair{4, 1}, std::pair{5, 0},
-             std::pair{5, 1}, std::pair{6, 0}, std::pair{6, 1}}) {
+             std::pair{4, 2}, std::pair{5, 1}, std::pair{5, 2},
+             std::pair{6, 0}, std::pair{6, 1}, std::pair{6, 2}}) {
         RS_Spline base{nullptr, RS_SplineData{degree, false}};
         const int controlCount = degree + 1;
         std::vector<RS_Vector> basePoints;
@@ -3609,6 +3610,23 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
                     std::distance(basePoints.begin(), original))];
             }
         }
+        if (weightProfile == 2) {
+            const std::vector<double> weights = degree == 4
+                ? std::vector<double>{1.0, 2.5, .35, .35, 2.5}
+                : degree == 5
+                    ? std::vector<double>{1.0, 2.5, .35, 1.8, .35, 2.5}
+                    : std::vector<double>{1.0, 2.5, .35, 1.8, 1.8, .35, 2.5};
+            REQUIRE(weights.size() == basePoints.size());
+            for (std::size_t i = 0; i < data.controlPoints.size(); ++i) {
+                const auto original = std::find_if(
+                    basePoints.begin(), basePoints.end(), [&](const RS_Vector& point) {
+                        return point.distanceTo(data.controlPoints[i]) < 1e-12;
+                    });
+                REQUIRE(original != basePoints.end());
+                data.weights[i] = weights[static_cast<std::size_t>(
+                    std::distance(basePoints.begin(), original))];
+            }
+        }
         const RS_Spline source{nullptr, data};
         REQUIRE(source.validate());
         REQUIRE(source.isClosed());
@@ -3631,6 +3649,13 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
         const double signedDistance =
             (2 / (curvatureLeft + curvatureRight)).convert_to<double>();
         const SplineOracle distance{signedDistance};
+        const auto oracleCandidates =
+            oracleOffsetCusps(data, start, end, signedDistance);
+        std::vector<double> oracleCandidateParameters;
+        oracleCandidateParameters.reserve(oracleCandidates.size());
+        for (const auto& candidate : oracleCandidates) {
+            oracleCandidateParameters.push_back(candidate.parameter.convert_to<double>());
+        }
         const SplineOracle seamLeft = oracleOffsetFactor(
             data, end, step, start, end, distance, true);
         const SplineOracle seamRight = oracleOffsetFactor(
@@ -3665,12 +3690,30 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
             *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
         CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
                 diagnostics.candidateParameters, diagnostics.candidateBoxes,
+                oracleCandidateParameters,
                 diagnostics.unclassifiedBoundaries,
                 diagnostics.failureStage, diagnostics.failureSpan,
                 diagnostics.failureT0, diagnostics.failureT1,
                 diagnostics.isolationBoxesVisited, diagnostics.failingRunBoxes,
                 diagnostics.failingRunSignChanges, diagnostics.failingRunExtent,
                 diagnostics.failingRunObserved, options->tolerance.nodeMerge);
+        if (degree == 6 && weightProfile == 2) {
+            CHECK(built.status == LC_CurveOffsetStatus::SingularOffset);
+            CHECK(diagnostics.status == built.status);
+            CHECK_FALSE(diagnostics.complete);
+            CHECK(built.branches.empty());
+            CHECK(std::any_of(oracleCandidateParameters.begin(),
+                              oracleCandidateParameters.end(), [](double parameter) {
+                                  return std::abs(parameter - 2.0) < 1e-12;
+                              }));
+            CHECK(std::none_of(diagnostics.candidateParameters.begin(),
+                               diagnostics.candidateParameters.end(), [](double parameter) {
+                                   return std::abs(parameter - 2.0) < 1e-12;
+                               }));
+            CHECK(diagnostics.failureStage ==
+                  LC_CurveOffsetCuspFailureStage::RunResolution);
+            continue;
+        }
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(diagnostics.complete);
         const auto builtWithoutDiagnostics = LC_CurveOffset::buildDirectBranches(
