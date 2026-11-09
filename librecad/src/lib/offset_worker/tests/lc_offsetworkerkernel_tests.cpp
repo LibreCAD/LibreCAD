@@ -73,6 +73,127 @@ std::pair<SplineOracle, SplineOracle> evaluateSplineOracle(
             work[degree].y / work[degree].w};
 }
 
+std::optional<HomogeneousPoint> evaluateHomogeneousSplineOracle(
+    const std::vector<HomogeneousPoint>& controls,
+    const std::vector<SplineOracle>& knots, const std::size_t degree,
+    const SplineOracle& parameter, const bool leftLimit) {
+    if (controls.empty() || degree >= controls.size() ||
+        knots.size() != controls.size() + degree + 1) {
+        return std::nullopt;
+    }
+    std::size_t span = controls.size();
+    for (std::size_t candidate = degree; candidate < controls.size(); ++candidate) {
+        const bool contains = leftLimit
+                                  ? knots[candidate] < parameter &&
+                                        parameter <= knots[candidate + 1]
+                                  : knots[candidate] <= parameter &&
+                                        parameter < knots[candidate + 1];
+        if (contains && knots[candidate] < knots[candidate + 1]) {
+            span = candidate;
+            break;
+        }
+    }
+    if (span == controls.size()) return std::nullopt;
+
+    std::vector<HomogeneousPoint> work(degree + 1);
+    for (std::size_t j = 0; j <= degree; ++j)
+        work[j] = controls[span - degree + j];
+    for (std::size_t order = 1; order <= degree; ++order) {
+        for (std::size_t j = degree; j >= order; --j) {
+            const std::size_t index = span - degree + j;
+            const SplineOracle denominator =
+                knots[index + degree - order + 1] - knots[index];
+            const SplineOracle alpha = denominator == 0
+                                           ? SplineOracle{0}
+                                           : (parameter - knots[index]) / denominator;
+            work[j] = {
+                work[j - 1].x * (1 - alpha) + work[j].x * alpha,
+                work[j - 1].y * (1 - alpha) + work[j].y * alpha,
+                work[j - 1].w * (1 - alpha) + work[j].w * alpha};
+            if (j == order) break;
+        }
+    }
+    return work[degree];
+}
+
+std::optional<SplineOracle> oracleSplineCurvatureLimit(
+    const RS_SplineData& data, const SplineOracle& parameter,
+    const bool leftLimit) {
+    if (data.degree < 2 || data.controlPoints.size() < data.degree + 1 ||
+        data.knotslist.size() != data.controlPoints.size() + data.degree + 1 ||
+        (!data.weights.empty() && data.weights.size() != data.controlPoints.size())) {
+        return std::nullopt;
+    }
+
+    std::vector<HomogeneousPoint> controls;
+    controls.reserve(data.controlPoints.size());
+    for (std::size_t i = 0; i < data.controlPoints.size(); ++i) {
+        const SplineOracle weight{data.weights.empty() ? 1.0 : data.weights[i]};
+        controls.push_back({SplineOracle{data.controlPoints[i].x} * weight,
+                            SplineOracle{data.controlPoints[i].y} * weight,
+                            weight});
+    }
+    std::vector<SplineOracle> knots;
+    knots.reserve(data.knotslist.size());
+    for (const double knot : data.knotslist) knots.emplace_back(knot);
+    std::size_t degree = data.degree;
+    std::array<std::vector<HomogeneousPoint>, 3> derivatives;
+    std::array<std::vector<SplineOracle>, 3> derivativeKnots;
+    derivatives[0] = controls;
+    derivativeKnots[0] = knots;
+    for (std::size_t order = 1; order <= 2; ++order) {
+        const auto& previous = derivatives[order - 1];
+        const auto& previousKnots = derivativeKnots[order - 1];
+        if (previous.size() < 2 || degree == 0) return std::nullopt;
+        auto& current = derivatives[order];
+        current.reserve(previous.size() - 1);
+        for (std::size_t i = 0; i + 1 < previous.size(); ++i) {
+            const SplineOracle denominator =
+                previousKnots[i + degree + 1] - previousKnots[i + 1];
+            const SplineOracle scale = denominator == 0
+                                           ? SplineOracle{0}
+                                           : SplineOracle{degree} / denominator;
+            current.push_back({(previous[i + 1].x - previous[i].x) * scale,
+                               (previous[i + 1].y - previous[i].y) * scale,
+                               (previous[i + 1].w - previous[i].w) * scale});
+        }
+        auto& currentKnots = derivativeKnots[order];
+        currentKnots.assign(previousKnots.begin() + 1, previousKnots.end() - 1);
+        --degree;
+    }
+
+    const auto position = evaluateHomogeneousSplineOracle(
+        derivatives[0], derivativeKnots[0], data.degree, parameter, leftLimit);
+    const auto first = evaluateHomogeneousSplineOracle(
+        derivatives[1], derivativeKnots[1], data.degree - 1, parameter, leftLimit);
+    const auto second = evaluateHomogeneousSplineOracle(
+        derivatives[2], derivativeKnots[2], data.degree - 2, parameter, leftLimit);
+    if (!position || !first || !second || position->w == 0) return std::nullopt;
+
+    const auto rationalDerivatives = [](const SplineOracle& coordinate,
+                                        const SplineOracle& firstCoordinate,
+                                        const SplineOracle& secondCoordinate,
+                                        const SplineOracle& weight,
+                                        const SplineOracle& firstWeight,
+                                        const SplineOracle& secondWeight) {
+        const SplineOracle firstValue =
+            (firstCoordinate * weight - coordinate * firstWeight) / (weight * weight);
+        const SplineOracle secondValue =
+            secondCoordinate / weight - coordinate * secondWeight / (weight * weight) -
+            2 * firstCoordinate * firstWeight / (weight * weight) +
+            2 * coordinate * firstWeight * firstWeight / (weight * weight * weight);
+        return std::pair<SplineOracle, SplineOracle>{firstValue, secondValue};
+    };
+    const auto x = rationalDerivatives(position->x, first->x, second->x,
+                                       position->w, first->w, second->w);
+    const auto y = rationalDerivatives(position->y, first->y, second->y,
+                                       position->w, first->w, second->w);
+    const SplineOracle speedSquared = x.first * x.first + y.first * y.first;
+    if (speedSquared <= 0) return std::nullopt;
+    return (x.first * y.second - y.first * x.second) /
+           (speedSquared * sqrt(speedSquared));
+}
+
 SplineOracle oracleStencilStep(const RS_SplineData& data,
                                const SplineOracle& parameter,
                                const SplineOracle& requested,
@@ -4311,12 +4432,12 @@ TEST_CASE("repeated C2 rational spline knot cusp maps to output",
     CHECK(endpointError <= options->tolerance.requestedGeometry);
 }
 
-TEST_CASE("C2 rational knot crossings map for degrees three through five and four knot positions",
+TEST_CASE("C2 rational knot crossings map for degrees three through five and five knot positions",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][degree-limit]") {
     const std::array<double, 7> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99};
-    const std::array<std::pair<double, double>, 8> orientationAndKnotCases{
-        {{-1.0, .25}, {-1.0, .37}, {-1.0, .5}, {-1.0, .75},
-         {1.0, .25},  {1.0, .37},  {1.0, .5},  {1.0, .75}}};
+    const std::array<std::pair<double, double>, 10> orientationAndKnotCases{
+        {{-1.0, .23}, {-1.0, .25}, {-1.0, .37}, {-1.0, .5}, {-1.0, .75},
+         {1.0, .23},  {1.0, .25},  {1.0, .37},  {1.0, .5},  {1.0, .75}}};
     for (const int degree : {3, 4, 5}) {
       for (const auto& [curvatureSign, knot] : orientationAndKnotCases) {
         RS_SplineData data{degree, false};
@@ -4354,13 +4475,21 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five and fou
         const SplineOracle end{1};
         const SplineOracle step{"1e-24"};
         const SplineOracle knotParameter{knot};
-        const SplineOracle leftKnotCurvature = 1 - oracleOffsetFactor(
-            data, knotParameter, step, start, end, SplineOracle{1}, true);
-        const SplineOracle rightKnotCurvature = 1 - oracleOffsetFactor(
-            data, knotParameter, step, start, end, SplineOracle{1});
-        REQUIRE(abs(leftKnotCurvature - rightKnotCurvature) < SplineOracle{"1e-30"});
+        const auto leftKnotCurvature =
+            oracleSplineCurvatureLimit(data, knotParameter, true);
+        const auto rightKnotCurvature =
+            oracleSplineCurvatureLimit(data, knotParameter, false);
+        REQUIRE(leftKnotCurvature);
+        REQUIRE(rightKnotCurvature);
+        REQUIRE(abs(*leftKnotCurvature - *rightKnotCurvature) < SplineOracle{"1e-30"});
+        const double oracleLeftCurvature = leftKnotCurvature->convert_to<double>();
+        const double oracleRightCurvature = rightKnotCurvature->convert_to<double>();
+        CHECK(std::abs(leftCurvature - oracleLeftCurvature) <=
+              1e-12 * std::max(1.0, std::abs(oracleLeftCurvature)));
+        CHECK(std::abs(rightCurvature - oracleRightCurvature) <=
+              1e-12 * std::max(1.0, std::abs(oracleRightCurvature)));
         const double signedDistance =
-            (2 / (leftKnotCurvature + rightKnotCurvature)).convert_to<double>();
+            (2 / (*leftKnotCurvature + *rightKnotCurvature)).convert_to<double>();
         const SplineOracle before = oracleOffsetFactor(
             data, knotParameter - SplineOracle{"1e-7"}, step,
             start, end, SplineOracle{signedDistance});
