@@ -4311,10 +4311,10 @@ TEST_CASE("repeated C2 rational spline knot cusp maps to output",
     CHECK(endpointError <= options->tolerance.requestedGeometry);
 }
 
-TEST_CASE("repeated C2 rational knot crossings map for degrees four and five",
+TEST_CASE("repeated C2 rational knot crossings map for degrees three through five",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][degree-limit]") {
     const std::array<double, 7> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99};
-    for (const int degree : {4, 5}) {
+    for (const int degree : {3, 4, 5}) {
         RS_SplineData data{degree, false};
         const int controlCount = 2 * degree - 1;
         for (int i = 0; i < controlCount; ++i) {
