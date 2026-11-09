@@ -232,10 +232,11 @@ the recorded degree-4/5/6 weighted periodic profiles.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid, extended by W647-W648 with positive- and negative-determinant affine
-source profiles through direct geometry, worker/cache validation, and five
-DXF/DWG lanes; W645 keeps broader parabola variants as an explicit end-to-end
-gate; W646 extends the ratio-1e6 rational four-knot support to `.12`, `.31`,
-and `.58` under its recorded proof/persistence limits; W526 polyline worker
+source profiles and by W649 with a tighter-curvature source through direct
+geometry, worker/cache validation, and five DXF/DWG lanes; W645 keeps broader
+parabola variants as an explicit end-to-end gate; W646 extends the ratio-1e6
+rational four-knot support to `.12`, `.31`, and `.58` under its recorded
+proof/persistence limits; W526 polyline worker
 scale/translation qualification complete for its
 defined matrix; W527 polyline staged-file persistence complete for its defined
 matrix; W528 mixed-sign bulge polyline scale/translation qualification
@@ -29168,3 +29169,23 @@ commit `89f2b2a40` (`test(offset): cover reflected parabola sources`). The two
 affine maps are bounded evidence, not exhaustive affine conditioning or
 arbitrary parabola support. Visible GUI, external-CAD acceptance, exact-head
 CI, and the remaining geometry variants remain open.
+
+## 649. Qualify a Tighter-curvature Parabola Through File Lanes (2026-11-09)
+
+Added the valid quadratic source with controls `(0,0)`, `(5,50)`, `(10,0)` to
+the typed direct and staged-import matrices. Its smaller vertex radius
+exercises both regular and cusp-producing distance cases on both offset sides.
+The direct test compares generated output with exact source-normal offsets.
+The scale/translation grid additionally checks worker generation, operation-8
+single-cache admission or explicit multi-branch refusal, and staged reopen in
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG while preserving the typed parabola
+source.
+
+Validation: focused direct affine/curvature test passes 7,695 assertions/1
+case. The expanded five-lane staged parabola matrix passes 2,243,630
+assertions/1 case; Release `librecad_tests` builds and `git diff --check`
+passes. Product/test commit `a7e052bb0` (`test(offset): qualify tighter
+parabola curvature`). This adds evidence for this exact curvature and recorded
+distance/scale grid; it does not certify arbitrary curvature or numeric
+conditioning. Visible GUI, external-CAD acceptance, and exact-head CI remain
+open.
