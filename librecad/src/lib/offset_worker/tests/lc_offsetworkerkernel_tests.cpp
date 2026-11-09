@@ -4438,6 +4438,26 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
         CHECK(decodedGenerated.refusal == generated.refusal);
         CHECK(decodedGenerated.ordinaryStatus == generated.ordinaryStatus);
         CHECK(decodedGenerated.ordinary.size() == generated.ordinary.size());
+
+        RS_SplineData cache;
+        REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+        const req::Request validationRequest{
+            token, req::ValidateSourceCache{cache, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+        const auto& validated = native(validationReply, 8);
+        CAPTURE(degree, curvatureSign, validated.refusal,
+                validated.engineStatus, validated.changed);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+        CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+        const auto validationWire = result::encode(validationReply, validationRequest);
+        REQUIRE(validationWire);
+        const auto decodedValidation = result::decode(*validationWire, validationRequest);
+        REQUIRE(decodedValidation);
+        const auto& transportedValidation = native(*decodedValidation, 8);
+        CHECK(transportedValidation.refusal == validated.refusal);
+        CHECK(transportedValidation.changed == validated.changed);
+        CHECK(transportedValidation.engineStatus == validated.engineStatus);
       }
     }
 }
