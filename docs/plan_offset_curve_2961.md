@@ -30032,14 +30032,22 @@ from explicit endpoint and tangent pairs, in addition to the existing
 control-point parabola profiles. The fixture must be valid, is serialized as
 the distinct typed `Parabola` source, and participates in the same worker
 generation, cache-admission, cache-validation, and translated source-replacement
-checks as the other matrix entries. This proves one endpoint/tangent
-representation through the native worker path; it does not qualify every
-endpoint/tangent conditioning, parameter range, signed distance, or DXF/DWG
-round-trip.
+checks as the other matrix entries. The existing staged parabola persistence
+matrix includes this same endpoint/tangent construction among seven profiles;
+it exercises scale/translation and signed-distance combinations through R14,
+R2000, and R2018 DXF/DWG lanes, checking staged import, typed source/cache
+promotion or explicit fallback. The same matrix independently checks two
+selected generated R2018 DWGs with LibreDWG (the first and final profiles; not
+the endpoint/tangent profile). Together these checks qualify this recorded
+endpoint/tangent profile through worker/cache and the tested file lanes, not
+every endpoint/tangent conditioning, parameter range, or signed distance.
 
 Validation: rebuilt `librecad_offset_worker_client_tests`; the focused
 "Worker client joins typed source generation for every modeled source family"
-case passes 78,186 assertions. `git diff --check` passes. The family matrix
-still has separate open direct-oracle variants, applicable persistence lanes,
-visible GUI acceptance, and ODA/AutoCAD acceptance; the picker contract alone
+case passes 78,186 assertions. The focused
+"scaled translated parabola caches persist through staged DXF and DWG import"
+case passes 4,012,775 assertions; the test independently parses its selected
+first and final-profile R2018 DWG fixtures with LibreDWG 0.14.
+`git diff --check` passes. Other parabola parameterizations and boundaries, visible GUI
+acceptance, and ODA/AutoCAD acceptance remain open; the picker contract alone
 does not imply complete family support.
