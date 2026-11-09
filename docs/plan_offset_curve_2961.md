@@ -29577,7 +29577,12 @@ matching defining spline data, endpoints, references, and length.
 
 Validation: focused all-family worker test passes 34,987 assertions; complete
 `librecad_offset_worker_client_tests` passes 42,246 assertions/21 cases.
-LibreDWG independently parses both generated DWGs successfully. This extends
-five-lane persistence evidence to the 16 captured fixture profiles only; it
-does not close untested knot/weight layouts, geometry boundaries/distances,
-other source variants, visible GUI, or ODA/AutoCAD acceptance.
+LibreDWG `dwgread -O JSON` independently parses both generated DWGs and reports
+the same model-space entity inventory for AC1015 and AC1032: one ARC, one
+CIRCLE, one LINE, three LWPOLYLINEs, and ten SPLINEs. Reproduce by running the
+focused client test with `LIBRECAD_DWG_FIXTURE_DIR` set, then applying
+`jq '[.OBJECTS[] | select(.entity != null and .entity != "BLOCK" and .entity != "ENDBLK") | .entity] | group_by(.) | map({entity: .[0], count: length})'`
+to each `dwgread -O JSON` output. This extends five-lane persistence evidence
+to the 16 captured fixture profiles only; it does not close untested
+knot/weight layouts, geometry boundaries/distances, other source variants,
+visible GUI, or ODA/AutoCAD acceptance.
