@@ -28421,3 +28421,23 @@ the recorded knots, degrees, weights, and offset distances only; it is not a
 general offset-error guarantee for arbitrary rational splines. Product-file
 serialization of the sampled-oracle checks, other layouts/multiplicities,
 external CAD, visible GUI, and exact-head CI remain open.
+
+## 616. Sweep C2-or-better Knot Multiplicities in the Worker (2026-11-09)
+
+Added midpoint C2-crossing fixtures for every positive-rational interior knot
+multiplicity from 1 through `degree - 2` for degrees 3/4/5/6, both curvature
+orientations (20 combinations). The high-precision homogeneous derivative
+oracle must prove one-sided curvature continuity below the unchanged `1e-30`
+threshold, then derives the offset distance; an independent factor check must
+prove a sign crossing at the knot. Direct generation must produce a
+`CertifiedUniqueBracket` mapped to the oracle offset point, and worker
+operation 7/result-wire plus operation 8/cache-validation/result-wire must
+pass. This covers a bounded multiplicity sweep at one midpoint, not arbitrary
+knot locations or layouts.
+
+Validation: focused Release test passes 800 assertions/1 case; full
+`librecad_offset_worker_kernel_tests` passes 1,715,232 assertions/89 cases;
+`git diff --check` passes. Test commit `56389bf1e` (`test(offset): cover C2
+knot multiplicities`). Product-writer persistence and independent DWG parsing
+for the newly added lower-multiplicity fixtures remain open; so do other knot
+layouts, weight/control profiles, external CAD, visible GUI, and exact-head CI.
