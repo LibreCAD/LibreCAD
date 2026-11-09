@@ -28945,17 +28945,27 @@ assertions/94 cases. The changed range passes clang-format using
 file persistence, external-CAD acceptance, visible GUI, and exact-head CI for
 this profile remain open.
 
-## 641. Revalidate the Editable Source Picker on the Current Product Head (2026-11-09)
+## 641. Revalidate the Editable Source-Family Picker on the Current Product Head (2026-11-09)
+
+The source-picker contract is explicit: while replacing an offset source, the
+Properties widget lets the user change the requested source family before
+picking an entity; changing the family refreshes the eligible live candidates,
+while the existing source remains selected/highlighted until a valid
+replacement is committed. Candidate families cover all nine kinds currently
+exposed by `SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
+distinct kind rather than being folded into generic spline-points.
 
 Re-ran the Properties source-picker regression set after the latest worker and
-file-persistence slices. The 12 `[gui][dialog][offsetcurve][source]` cases
-exercise family changes before selecting, refreshed candidate filtering,
-cross-family replacement, source-highlight retention, cancellation and
-invalid-candidate atomicity, and distinct parabola identity across the nine
-modeled source kinds. This confirms the picker request remains implemented;
-it does not expand per-family geometry eligibility or persistence coverage.
+file-persistence slices. Its 12 cases cover family changes before selection,
+candidate filtering, cross-family replacement, highlight retention,
+cancellation, invalid-candidate atomicity, and typed parabola identity. This
+closes the requested picker behavior only; picker membership does not imply
+that every geometric variant is eligible for offset generation, worker/cache
+processing, persistence, or DXF/DWG round-trip. Those remain separate plan
+gates, and no additional selector or parabola-only UI path is needed.
 
 Validation: Release `librecad_tests '[gui][dialog][offsetcurve][source]'`
 passes 12,155 assertions/12 cases. This is headless widget/model coverage only;
-visible desktop acceptance remains open. No new implementation commit was
-needed for this verification.
+visible desktop acceptance remains open. Documentation reconciliation only;
+no new implementation commit was needed for this verification.
