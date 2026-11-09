@@ -6998,6 +6998,29 @@ TEST_CASE("repeated-knot rational spline imports preserve exact cache eligibilit
         CHECK(QCborValue(*expected).toCbor() == QCborValue(*received).toCbor());
         CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
               RS_Spline::geometryFingerprint(cacheData));
+
+        const auto nativeOutput = directory.file(
+            std::string(side == LC_CurveOffsetSide::Left ? "native-left-" : "native-right-") +
+            fileFormat.suffix);
+        REQUIRE(lc::test::exportDrawing(*outcome.graphic, nativeOutput,
+                                        ::format(fileFormat.lane)));
+        const auto roundTrip = stagedImport(nativeOutput, fileFormat.lane);
+        INFO("repeated-knot native writer round-trip " << nativeOutput.filename().string());
+        REQUIRE(roundTrip.status == LC_OffsetImportSession::Status::Complete);
+        REQUIRE(roundTrip.graphic);
+        CHECK(roundTrip.admitted == 1);
+        CHECK(roundTrip.downgraded == 0);
+        const auto* copy = dynamic_cast<const LC_OffsetCurve*>(
+            f::sole(*roundTrip.graphic));
+        REQUIRE(copy);
+        REQUIRE(copy->sourceDefinition());
+        const auto roundTrippedSource = values::encodeSourceDefinition(
+            *copy->sourceDefinition());
+        REQUIRE(roundTrippedSource);
+        CHECK(QCborValue(*expected).toCbor() ==
+              QCborValue(*roundTrippedSource).toCbor());
+        CHECK(RS_Spline::geometryFingerprint(copy->getData()) ==
+              RS_Spline::geometryFingerprint(cacheData));
     }
 }
 
