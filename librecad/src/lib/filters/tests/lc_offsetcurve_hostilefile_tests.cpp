@@ -7288,20 +7288,23 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
     const std::array<double, 11> highContrastWeightPattern{.25, 2.0, .4, 2.5, .35, 2.2, .3, 2.8, 1.7, .45, 2.4};
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
-    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7);
+    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14);
     const std::array<std::vector<double>, 4> knotLayouts{{{.25, .5}, {.25, .65}, {.2, .45, .7}, {.12, .31, .58, .82}}};
-    const bool fourKnotWeightProfile = layoutProfile >= 4;
+    const bool fourKnotWeightProfile = layoutProfile >= 3;
     const auto& interiorKnots = knotLayouts[static_cast<std::size_t>(fourKnotWeightProfile ? 3 : layoutProfile)];
-    const std::size_t targetKnotIndex = layoutProfile == 6 ? 1 : layoutProfile == 7 ? 2 : interiorKnots.size() - 1;
+    const std::size_t targetKnotIndex = layoutProfile == 8 || layoutProfile == 11 || layoutProfile == 12 ? 0
+        : layoutProfile == 6 || layoutProfile == 9 || layoutProfile == 13                                ? 1
+        : layoutProfile == 7 || layoutProfile == 10 || layoutProfile == 14                               ? 2
+                                                                                                         : interiorKnots.size() - 1;
     const double targetKnot = interiorKnots[targetKnotIndex];
-    const auto& selectedWeightPattern = layoutProfile == 4 ? alternateWeightPattern
-        : layoutProfile == 5                               ? highContrastWeightPattern
-        : layoutProfile >= 6                               ? alternateWeightPattern
-                                                           : weightPattern;
-    const char* weightProfileName = layoutProfile == 4 ? "alternate-weights-"
-        : layoutProfile == 5                           ? "high-contrast-weights-"
-        : layoutProfile >= 6                           ? "alternate-weights-"
-                                                       : "default-weights-";
+    const bool alternateWeights = layoutProfile == 4 || layoutProfile == 6 || layoutProfile == 7 || layoutProfile == 11;
+    const bool highContrastWeights = layoutProfile == 5 || layoutProfile >= 12;
+    const auto& selectedWeightPattern = alternateWeights ? alternateWeightPattern
+        : highContrastWeights                            ? highContrastWeightPattern
+                                                         : weightPattern;
+    const char* weightProfileName = alternateWeights ? "alternate-weights-"
+        : highContrastWeights                        ? "high-contrast-weights-"
+                                                     : "default-weights-";
 
     for (const int degree : {3, 4, 5, 6}) {
         const int multiplicity = degree - 2;
