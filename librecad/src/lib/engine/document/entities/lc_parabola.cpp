@@ -289,42 +289,45 @@ void LC_ParabolaData::calculatePrimitives()
         return;
     }
 
-    // control points
-    RS_Vector c1 = m_controlPoints.at(1) - m_controlPoints.at(0);
-    RS_Vector c2 = m_controlPoints.at(2) - m_controlPoints.at(0);
-    // The parabola
-    auto f0 = [&c1, &c2](double t) {
-        return c1*(2. * t * (1. - t)) + c2 * ( t * t);
-    };
-
-    m_axis = c2 * 0.5 - c1;
+    const RS_Vector c1 = m_controlPoints.at(1) - m_controlPoints.at(0);
+    const RS_Vector c2 = m_controlPoints.at(2) - m_controlPoints.at(0);
     const double localScale = std::max(std::hypot(c1.x, c1.y), std::hypot(c2.x, c2.y));
-    const double curvatureMagnitude = std::hypot(m_axis.x, m_axis.y);
-    const double degeneracyTolerance =
-        4.0 * std::numeric_limits<double>::epsilon() * localScale;
-    if (!std::isfinite(localScale) || !std::isfinite(curvatureMagnitude) ||
-        localScale == 0.0 || curvatureMagnitude <= degeneracyTolerance) {
+    if (!std::isfinite(localScale) || localScale == 0.0) {
         m_valid = false;
         return;
     }
-    const RS_Vector axisDirection{m_axis.x / curvatureMagnitude,
-                                  m_axis.y / curvatureMagnitude};
+
+    // Keep dot products and squared lengths in a unit-scale frame. Valid
+    // finite control nets can otherwise overflow or underflow in the vertex
+    // and focal-distance calculations.
+    const RS_Vector normalizedC1{c1.x / localScale, c1.y / localScale};
+    const RS_Vector normalizedC2{c2.x / localScale, c2.y / localScale};
+    const RS_Vector normalizedAxis = normalizedC2 * 0.5 - normalizedC1;
+    const double curvatureMagnitude = std::hypot(normalizedAxis.x, normalizedAxis.y);
+    const double degeneracyTolerance = 4.0 * std::numeric_limits<double>::epsilon();
+    if (!std::isfinite(curvatureMagnitude) || curvatureMagnitude <= degeneracyTolerance) {
+        m_valid = false;
+        return;
+    }
+    const RS_Vector axisDirection{normalizedAxis.x / curvatureMagnitude,
+                                  normalizedAxis.y / curvatureMagnitude};
     // <c2 * 0.5 - c1 | c1 * (2. - 4. * t) + c2 * 2.*t> = 0
     // <c1|c2>-2<c1|c1> = (2<c1|c2>-4<c1|c1>-<c2|c2>+2<c1|c2>)t
     // =-|c2 - 2c1|^2t
-    double t = -0.5 * m_axis.dotP(c1) /
+    double t = -0.5 * normalizedAxis.dotP(normalizedC1) /
                (curvatureMagnitude * curvatureMagnitude);
-    auto localVertex = f0(t);
-    const double dy = (c2 - localVertex).dotP(axisDirection);
-    const double dx = (c2 - localVertex).dotP({-axisDirection.y, axisDirection.x});
+    const RS_Vector normalizedVertex =
+        normalizedC1 * (2. * t * (1. - t)) + normalizedC2 * (t * t);
+    const double dy = (normalizedC2 - normalizedVertex).dotP(axisDirection);
+    const double dx = (normalizedC2 - normalizedVertex).dotP({-axisDirection.y, axisDirection.x});
     // dy = dx^2/(4h) , h = dx^2/(4dy)
-    const double h = dx*dx/(4.*dy);
+    const double h = localScale * (dx * dx / (4. * dy));
     if (!std::isfinite(t) || !std::isfinite(dx) || !std::isfinite(dy) ||
         dy == 0.0 || !std::isfinite(h) || h == 0.0) {
         m_valid = false;
         return;
     }
-    m_vertex = localVertex + m_controlPoints.front();
+    m_vertex = normalizedVertex * localScale + m_controlPoints.front();
     m_axis = axisDirection * h;
     m_focus = m_vertex + m_axis;
     if (!finitePoint(m_vertex) || !finitePoint(m_axis) || !finitePoint(m_focus)) {

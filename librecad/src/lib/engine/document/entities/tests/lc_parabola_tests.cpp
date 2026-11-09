@@ -96,16 +96,17 @@ TEST_CASE("LC_Parabola: CalculatePrimitives derives focus/vertex/axis",
 
 TEST_CASE("LC_Parabola: primitive construction is scale-relative near degeneracy",
           "[parabola][primitives][scale]") {
-  for (const double scale : {1e-12, 1e-6, 1.0, 1e6, 1e12}) {
+  for (const double scale : {1e-160, 1e-12, 1e-6, 1.0, 1e6, 1e12, 1e155}) {
     CAPTURE(scale);
-    const auto parabola = makeCanonicalParabola(scale, scale);
+    const LC_ParabolaData sourceData{{RS_Vector{-scale, scale / 4.0}, RS_Vector{0.0, -scale / 4.0},
+                                      RS_Vector{scale, scale / 4.0}}};
+    const LC_Parabola parabola{nullptr, sourceData};
     const auto& data = parabola.getData();
     REQUIRE(data.isValid());
-    const double tolerance = scale * 1e-10;
-    CHECK(std::abs(data.m_vertex.x) <= tolerance);
-    CHECK(std::abs(data.m_vertex.y) <= tolerance);
-    CHECK(std::abs(data.m_focus.y - scale) <= tolerance);
-    CHECK(std::abs(data.m_axis.magnitude() - scale) <= tolerance);
+    CHECK(std::abs(data.m_vertex.x / scale) <= 1e-10);
+    CHECK(std::abs(data.m_vertex.y / scale) <= 1e-10);
+    CHECK(std::abs(data.m_focus.y / scale - 1.0) <= 1e-10);
+    CHECK(std::abs(std::hypot(data.m_axis.x, data.m_axis.y) / scale - 1.0) <= 1e-10);
     CHECK(std::isfinite(data.m_focus.x));
     CHECK(std::isfinite(data.m_focus.y));
   }
