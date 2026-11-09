@@ -29977,3 +29977,18 @@ SPLINE=19; all spline control/knot cardinalities are valid. This qualifies one
 large-origin, long-line, small-offset combination, not extreme coordinate
 limits, near-degenerate lengths, or every endpoint orientation. Visible GUI
 and ODA/AutoCAD acceptance remain open.
+
+## 675. Persist an Affine-transformed Typed Parabola (2026-11-09)
+
+Extended the real-worker matrix with a translated, rotated, non-symmetric typed
+parabola matching a representative case in the existing affine exact-normal
+suite. Its operation-8 cache is required, and the source passes translated
+replacement, Produce, and all five R14/R2000/R2018 DXF/DWG round-trip lanes.
+
+Validation: the focused affine parabola geometry case passes 23,647
+assertions; the focused worker family case passes 71,810 assertions; the full
+worker-client suite passes 78,467 assertions/21 cases. LibreDWG 0.14 reads
+both DWGs with ARC=2, CIRCLE=2, LINE=2, LWPOLYLINE=4, SPLINE=20 and no invalid
+spline control/knot cardinalities. This qualifies one translated/rotated
+parabola fixture, not broad focus/vertex conditioning, near-straight limits,
+extreme scales, visible GUI, or ODA/AutoCAD acceptance.
