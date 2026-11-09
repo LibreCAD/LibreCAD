@@ -28739,8 +28739,8 @@ cache validation.
 
 The fixture exploration did not prove a crossing for every knot/profile
 combination: the moderate-profile degree-3 negative case at `.12`, and the
-moderate-profile degree-5 negative case at `.31`, do not show an oracle sign
-change. They are deliberately not counted as cusp coverage; neither is
+high-contrast-profile degree-5 negative case at `.31`, do not show an oracle
+sign change. They are deliberately not counted as cusp coverage; neither is
 relabelled as a tangent cusp. Other profiles at `.12`, alternate-profile
 crossings at `.31`/`.58`, and persistence of the newly covered interior-knot
 fixtures remain open.
