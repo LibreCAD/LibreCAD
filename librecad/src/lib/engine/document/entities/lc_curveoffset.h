@@ -282,7 +282,7 @@ struct LC_CurveOffsetTinyReversalCollapse {
 };
 
 enum class LC_CurveOffsetCuspCandidateKind {
-    CertifiedUniqueBracket, ///< interval bounds prove one simple root in the box
+    CertifiedUniqueBracket, ///< interval/root-count bounds prove one simple root in the box
     SampledSignChange,      ///< a sampled sign change was bisected; uniqueness is unproved
     ExactSample             ///< floating evaluation hit zero; this alone is not a proof
 };

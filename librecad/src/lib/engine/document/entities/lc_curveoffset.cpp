@@ -2623,9 +2623,10 @@ private:
             }
         }
         const bool stalled = extent <= m_options.tolerance.nodeMerge;
-        const bool rootCountCertified = !run.rationalRootVariationBounded ||
-                                        changes == static_cast<std::size_t>(
-                                                       run.rationalRootVariationUpperBound);
+        const bool uniqueRootCountProven = run.rationalRootVariationBounded &&
+                                           changes == static_cast<std::size_t>(
+                                                          run.rationalRootVariationUpperBound);
+        const bool rootCountCertified = !run.rationalRootVariationBounded || uniqueRootCountProven;
         const bool boundedEvenRun = stalled && changes % 2 == 0 &&
                                     firstRunSign != 0 && firstRunSign == lastRunSign;
         if (boundedEvenRun) {
@@ -2640,7 +2641,7 @@ private:
         }
         for (const auto& [lo, hi] : signBrackets) {
             const LC_CurveOffsetStatus status =
-                bisectCusp(lo, hi, run, found, cuspDiagnostics);
+                bisectCusp(lo, hi, run, uniqueRootCountProven, found, cuspDiagnostics);
             if (status != LC_CurveOffsetStatus::Ok) {
                 return recordFailure(status);
             }
@@ -2669,7 +2670,8 @@ private:
 
     /** The root of 1 - d kappa in [lo, hi], a part of a run; it must change sign between them. */
     LC_CurveOffsetStatus bisectCusp(
-        double lo, double hi, const Run& run, std::vector<double>& cusps,
+        double lo, double hi, const Run& run, const bool uniqueRootProven,
+        std::vector<double>& cusps,
         LC_CurveOffsetCuspIsolationDiagnostics* cuspDiagnostics) {
         const std::vector<double>& breaks = m_source.breaks();
         const double g0 = factorNumeratorAt(lo, LC_CurveEvaluationSide::Right);
@@ -2698,7 +2700,8 @@ private:
         const double root = lo + 0.5 * (hi - lo);
         cusps.push_back(root);
         recordCuspCandidateBox(lo, hi, root,
-                               LC_CurveOffsetCuspCandidateKind::SampledSignChange,
+                               uniqueRootProven ? LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket
+                                                : LC_CurveOffsetCuspCandidateKind::SampledSignChange,
                                cuspDiagnostics);
         return LC_CurveOffsetStatus::Ok;
     }
