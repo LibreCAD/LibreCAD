@@ -923,6 +923,44 @@ TEST_CASE("Reversed circular arcs follow exact offset normals",
     }
 }
 
+TEST_CASE("Circular arc offsets preserve seam and near-full sweep geometry",
+          "[curve-offset][direct][arc][oracle][sweep]") {
+    constexpr double seam = 1e-4;
+    const std::array<RS_ArcData, 4> profiles{{
+        {{3.0, -4.0}, 4.0, 2.0 * M_PI - seam, seam, false},
+        {{3.0, -4.0}, 4.0, seam, 2.0 * M_PI - seam, false},
+        {{3.0, -4.0}, 4.0, seam, 2.0 * M_PI - seam, true},
+        {{3.0, -4.0}, 4.0, 2.0 * M_PI - seam, seam, true},
+    }};
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        const RS_ArcData data = profiles[profileIndex];
+        const RS_Arc source{nullptr, data};
+        CAPTURE(profileIndex, data.angle1, data.angle2, data.reversed);
+        REQUIRE(data.isValid());
+        const EvalFn exactArc = [data](const double parameter, LC_CurveEvaluationSide,
+                                       LC_CurveJet& jet) {
+            const double direction = data.reversed ? -1.0 : 1.0;
+            const double angle = data.angle1 + direction * parameter;
+            jet.point = data.center + RS_Vector{std::cos(angle), std::sin(angle)} * data.radius;
+            jet.first = RS_Vector{-std::sin(angle), std::cos(angle)} * (direction * data.radius);
+            jet.second = RS_Vector{-std::cos(angle), -std::sin(angle)} * data.radius;
+            return true;
+        };
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            constexpr double distance = 0.5;
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, exactArc) <= options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("Translated long lines keep exact offset normals at small relative distance",
           "[curve-offset][direct][line][oracle]") {
     const RS_LineData data{{1.0e9, -2.0e9}, {1.0e9 + 1000.0, -2.0e9 + 250.0}};
