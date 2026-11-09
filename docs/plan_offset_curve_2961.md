@@ -29144,3 +29144,22 @@ five-lane staged parabola matrix passes 1,378,068 assertions/1 case; Release
 affine profile, not every parabola transform, shape, distance, or precision
 boundary. External-CAD visual acceptance, visible GUI, exact-head CI, and the
 remaining end-to-end parabola variants stay open.
+
+## 648. Qualify Orientation-reversing Parabola Affine Transforms (2026-11-09)
+
+Extended W647 with a nonsingular negative-determinant affine transform,
+`x'=-1.2x+0.4y+7`, `y'=0.25x+0.8y-2`, alongside the positive-determinant
+shear/nonuniform-scale case. Direct offsets for both typed sources are checked
+against exact source-normal geometry on both sides at distances `0.05` and
+`0.25`. The staged W524 matrix carries both profiles through scale and
+translation, worker generation/cache validation, and all five DXF/DWG lanes.
+This checks left/right side behavior under orientation reversal and preserves
+the `LC_Parabola` source tag through reopen.
+
+Validation: focused direct affine-parabola test passes 3,900 assertions/1 case;
+the expanded five-lane staged matrix passes 1,633,007 assertions/1 case.
+Release `librecad_tests` builds and `git diff --check` passes. Product/test
+commit `89f2b2a40` (`test(offset): cover reflected parabola sources`). The two
+affine maps are bounded evidence, not exhaustive affine conditioning or
+arbitrary parabola support. Visible GUI, external-CAD acceptance, exact-head
+CI, and the remaining geometry variants remain open.
