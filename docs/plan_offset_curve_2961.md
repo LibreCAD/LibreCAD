@@ -29744,7 +29744,7 @@ these rows do not imply every parameter/domain is supported):
 
 | Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
 | --- | --- | --- | --- |
-| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; real worker, cache replacement, Produce, five file lanes | Direction/boundary and extreme scale/refusal matrix |
+| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed-line capture refusal; real worker/cache and five file lanes for existing fixtures | Carry the new scale/orientation profiles through worker/cache and persistence; near-ULP and non-finite source boundaries |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; typed worker output; five file lanes | Sweep seam, reversed/full-sweep limits and boundary matrix |
 | Circle | Finite nonzero-radius closed circle | Direct closed conic behavior; typed worker output; five file lanes | Inner collapse/zero-radius and large/small scale matrix |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
@@ -30299,3 +30299,21 @@ independent DWG parses; `git diff --check` passes. This is LibreDWG validation
 of the emitted DWG entity geometry, not ODA/AutoCAD acceptance, not independent
 DXF validation, and not proof of arbitrary source domains. Keep visible GUI,
 external CAD, cross-platform/ASan, and exact-head CI gates open.
+
+## 684. Qualify Line Orientation and Scale Boundaries Directly (2026-11-09)
+
+Added an independent exact-normal oracle for three nondegenerate line profiles:
+forward horizontal, diagonal, and reversed diagonal. It checks both offset
+sides at a distance scaled to the source across scales `1e-8`, `1`, and `1e8`,
+both at the origin and translated by `1e6 * scale`. A zero-length line at a
+large coordinate is rejected by typed source capture. This extends the
+single-profile long-line oracle in section 674 without using the offset engine
+as its own geometric oracle.
+
+Validation: the focused Release test
+`Line offsets retain exact normals across orientation and scale boundaries`
+passes 1,729 assertions/1 case; `librecad_tests` rebuilt successfully and
+`git diff --check` passes. This closes only these direct-geometry fixtures.
+The new profiles still need real-worker/cache admission and applicable
+five-format persistence; near-ULP/non-finite source refusal, visible GUI,
+external CAD, cross-platform/ASan, and exact-head CI remain open.
