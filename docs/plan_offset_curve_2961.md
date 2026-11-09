@@ -27364,11 +27364,11 @@ independent oracle for bounded clamped single-span rational degrees 4-6; W570
 extends it to the representative knot and periodic profiles.
 
 Periodic rational tangent/even-root handling now also has independently
-oracle-checked nonuniform degree-4 and degree-5 periodic profiles with bounded
-stall and retained-output endpoint mapping (W577-W578). The current
-root-variation diagnostic does not certify these higher-degree root counts;
-the fixtures' high-precision oracles and production output mapping qualify
-only those concrete cases, not general degree-4/5 root completeness.
+oracle-checked nonuniform degree-4, degree-5, and degree-6 periodic profiles
+with bounded stall and retained-output endpoint mapping (W577-W579). The
+current root-variation diagnostic does not certify these higher-degree root
+counts; the fixtures' high-precision oracles and production output mapping
+qualify only those concrete cases, not general degree-4/5/6 root completeness.
 
 ## 569. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
 
@@ -27569,3 +27569,24 @@ The combined degree-2-through-5 periodic tangent evidence is still limited to
 its concrete layouts and weights; other high-degree knot/weight profiles,
 general root-count certification, complete candidate-to-output bijection,
 visible GUI, external CAD, and exact-head CI remain open.
+
+## 579. Qualify a Nonuniform Periodic Rational Degree-6 Tangent Root (2026-11-09)
+
+Extended the independent-oracle periodic rational tangent/even-root matrix to
+a nonuniform degree-6 profile with positive rational weights. The test derives
+the maximum-curvature parameter and signed tangent distance independently,
+checks same-sign values around the even root, then requires complete
+production isolation with a bounded stall owning that root inside its source
+span. The oracle offset point and every reported stall endpoint must map to
+retained cubic-piece endpoints within requested geometry tolerance.
+
+The root-variation diagnostic remains unavailable for this higher degree, so
+the test preserves that explicit limitation and makes no general root-count
+claim or production budget change.
+
+Validation: focused `[tangent-root]` suite passes 1,268 assertions/14 cases;
+the full worker-kernel suite passes 1,705,971 assertions/84 cases; the Release
+worker-kernel test target builds and `git diff --check` passes. This qualifies
+one additional profile only; other high-degree knot/weight variants,
+certified general root counts, broad candidate-to-output mapping, visible GUI,
+external CAD, and exact-head CI stay open.

@@ -3979,7 +3979,11 @@ TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
       {5,
        {{0, 0}, {15, -18}, {38, -12}, {55, 4}, {58, 27}, {38, 46}, {10, 52}, {-14, 28}},
        {0, 0, 0, 0, 0, 0, .25, .75, 1, 1, 1, 1, 1, 1},
-       {1, .8, 1.2, 1.5, 1.1, .9, 1.3, 1.05}}};
+       {1, .8, 1.2, 1.5, 1.1, .9, 1.3, 1.05}},
+      {6,
+       {{0, 0}, {12, -18}, {32, -20}, {50, -8}, {60, 10}, {55, 32}, {38, 48}, {13, 53}, {-12, 35}},
+       {0, 0, 0, 0, 0, 0, 0, .25, .75, 1, 1, 1, 1, 1, 1, 1},
+       {1, .8, 1.2, 1.5, 1.1, .9, 1.3, 1.05, .95}}};
   for (const Fixture &fixture : fixtures) {
     const std::vector<double> &baseWeights = fixture.weights;
     RS_Spline source{nullptr, RS_SplineData{fixture.degree, false}};
