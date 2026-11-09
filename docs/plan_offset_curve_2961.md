@@ -27054,3 +27054,61 @@ offset-worker source/cache support (which remains line/cubic Bezier-chain
 based). Arbitrary rational knot layouts, degree >6, high-degree offset-source
 representation and generation, other asymmetric source shapes, periodic
 offset sources, external CAD, visible GUI, and exact-head CI remain open.
+
+## 505. Reconfirm Cross-family Source Replacement Scope (2026-11-08)
+
+The latest source-widget clarification is a requirement on the existing picker,
+not a request for another UI control: before choosing a replacement entity,
+the user must be able to change the source-family filter; the candidate list
+must then show eligible entities of that family. The current Properties picker
+already provides this behavior from `LC_OffsetSourceGeometry::SupportedKinds`,
+and regression coverage includes cross-family replacement and a distinct
+`LC_Parabola` option. Do not add a second selector or collapse parabola into
+spline-points.
+
+“All supported types” means the full current nine-family inventory: line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. The picker-level requirement is closed; it does not certify these
+families or all their variants for offset generation. Keep implementation
+focused on the remaining per-family chain: concrete eligibility and refusal,
+direct geometry generation, isolated worker request/result and cache
+validation, atomic Properties replacement, and applicable DXF/DWG
+round-trips. Each variant may be advertised as usable only after that chain is
+qualified; unsupported variants must fail closed and preserve the previous
+source and cache.
+
+The newly extended native spline persistence through degree six is not itself
+evidence for high-degree offset support. The recorded knot-inserted offset
+import fixtures currently cover rational quadratic/cubic profiles, while the
+offset-worker source/cache remains line/cubic-Bezier-chain based. Keep
+high-degree source representation/generation, other parabola parameterizations,
+and the remaining family/variant matrix as open work; do not infer coverage
+from picker presence or native SPLINE read/write alone. Continue with the
+source-model/worker contract first, then geometry and failure/refusal tests,
+then staged DXF/DWG persistence, updating this roadmap after each committed
+slice with exact tests and remaining boundaries.
+
+## 506. Admit Degree-4..6 Spline Sources in the Worker (2026-11-08)
+
+Raised the source-definition degree limit from cubic to
+`RS_Spline::MaxSupportedDegree` (six). Worker-protocol coverage now round-trips
+clamped, single-span rational Bezier source definitions of degree four, five,
+and six, and refuses degree seven. Kernel coverage generates each source
+through operation 7, encodes/decodes its reply, validates the resulting cache
+through operation 8, and confirms generated caches remain degree 1/3 rather
+than broadening output-cache formats.
+
+Validation: `librecad_offset_worker_request_tests` focused source-definition
+case, 657 assertions/1 case; `librecad_offset_worker_kernel_tests` high-degree
+case, 96 assertions/1 case; both targets build. The request CTest passes. The
+full `offset_worker_kernel` CTest exceeded its configured 30-second limit in
+this environment, so this is not recorded as a full-suite pass. `git diff
+--check` passes. Implementation commit `13f7ec9e0` (`feat(offset): admit
+high-degree spline sources`).
+
+This slice proves only the tested clamped one-span rational Bezier profiles
+through worker generation and cache validation. It does not yet qualify
+general high-degree knot vectors, larger source counts, independent offset
+geometry accuracy, native editable-definition construction, Properties
+replacement, or DXF/DWG persistence. Those remain sequential gates before
+claiming degree-4..6 spline source support end to end.
