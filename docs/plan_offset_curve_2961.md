@@ -116,11 +116,17 @@ Current implementation order for the remaining “all supported types” work:
    highlighting survives a family-filter change even when the current source
    is not a candidate in that family, and highlighting survives an
    unsuccessful or cancelled replacement. Verify the control stays enabled
-   for an existing source; candidate lists contain only matching eligible
-   entities from all nine families, including distinct parabola; and a
-   successful pick publishes the matching tagged source and cache together.
-   Keep visible-GUI acceptance separate from widget regressions. No new
-   selector or duplicate parabola branch is in scope.
+   for an existing source. Add/retain a table-driven replacement regression
+   that starts from a different current family, changes the filter, picks one
+   eligible entity of each of the nine modeled kinds (line, arc, circle,
+   ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline),
+   then verifies the published tagged source matches the picked entity's
+   actual type and geometry. Include duplicate-geometry identity, current
+   source highlight, invalid/stale candidate, and cancellation assertions;
+   filtering alone must leave the source and cache unchanged. Parabola must be
+   recognized before its `LC_SplinePoints` base type. Keep visible-GUI
+   acceptance separate from widget regressions. No new selector or duplicate
+   parabola branch is in scope.
 5. **Persistence:** for each admitted, serializable variant, round-trip the
    source and cache through the applicable DXF/DWG versions, then reopen and
    regenerate/validate the cache. Assert dynamic type, parameters, weights,
@@ -27700,3 +27706,21 @@ worker-kernel test target builds and `git diff --check` passes. This maps the
 reported seam-owning stall endpoints in the recorded symmetric profiles only;
 general candidate/stall-to-output bijection and other periodic profiles remain
 open.
+
+## 585. Verify Type-changing Replacement Across Every Modeled Family (2026-11-09)
+
+Revalidated the requested Properties workflow against all nine `SupportedKinds`
+entries. The matrix changes the family filter while editing an existing source,
+checks that filtering alone leaves its source/cache unchanged, restricts
+candidates to the selected family, then replaces with an eligible line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, or polyline.
+It checks the selected entity identity, typed source geometry, and source
+highlight. Parabola remains distinct from its spline-points base. Existing
+source-picker cases separately cover highlight persistence across filters,
+duplicate geometry identity, and invalid/stale or cancelled replacement.
+
+Validation: Release `librecad_tests` target rebuilt; focused all-family matrix
+passes 8,103 assertions/1 case; full `[gui][dialog][offsetcurve][source]`
+suite passes 12,155 assertions/12 cases. This closes only the picker-level
+type-changing workflow. End-to-end geometry, worker/cache, persistence, visible
+GUI, independent-CAD, and exact-head CI requirements remain open.
