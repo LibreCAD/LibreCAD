@@ -19,13 +19,70 @@
 #include "lc_actiontestsupport.h"
 #include "lc_offsetcurveactiontestsupport.h"
 #include "lc_filtertestsupport.h"
+#include "../../offset_worker/lc_offsetworkerrequest.h"
 #include "lc_offsetcurve.h"
+#include "lc_splinepoints.h"
+#include "lc_parabola.h"
+#include "lc_hyperbola.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_layer.h"
 #include "rs_line.h"
+#include "rs_polyline.h"
 
 namespace {
 namespace geo = LC_EllipseOffsetGeometry;
+using SourceKind = LC_OffsetSourceGeometry::Kind;
+
+LC_OffsetSourceGeometry sourceGeometry(SourceKind kind) {
+    switch (kind) {
+    case SourceKind::Line: return LC_OffsetSourceGeometry{RS_LineData{{-4, 0}, {4, 0}}};
+    case SourceKind::Arc: return LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 4, .2, 1.4, false}};
+    case SourceKind::Circle: return LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 4}};
+    case SourceKind::Ellipse: return LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .7, 0, 0, false}};
+    case SourceKind::Spline: {
+        RS_SplineData data{2, false};
+        data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+        data.knotslist = {0, 0, 0, 1, 1, 1};
+        data.weights = {1, .8, 1};
+        return LC_OffsetSourceGeometry{data};
+    }
+    case SourceKind::SplinePoints: {
+        LC_SplinePointsData data{false, false};
+        data.useControlPoints = true;
+        data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+        return LC_OffsetSourceGeometry{data};
+    }
+    case SourceKind::Parabola:
+        return LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}}};
+    case SourceKind::BoundedHyperbola:
+        return LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .5, -.4, .4}};
+    case SourceKind::Polyline:
+        return LC_OffsetSourceGeometry{LC_OffsetPolylineData{{-4, 0}, {4, 0}, false,
+            {RS_LineData{{-4, 0}, {0, 2}}, RS_LineData{{0, 2}, {4, 0}}}}};
+    case SourceKind::Invalid: break;
+    }
+    return LC_OffsetSourceGeometry{RS_LineData{}};
+}
+
+RS_Vector sourcePickPoint(SourceKind kind) {
+    switch (kind) {
+    case SourceKind::Line:
+        return {0, 0};
+    case SourceKind::Polyline: return {0, 2};
+    case SourceKind::Arc: return {4 * std::cos(.2), 4 * std::sin(.2)};
+    case SourceKind::Circle:
+    case SourceKind::Ellipse: return {4, 0};
+    case SourceKind::Spline:
+    case SourceKind::SplinePoints: return {0, 1.5};
+    case SourceKind::Parabola: return {0, -1};
+    case SourceKind::BoundedHyperbola: return {3, 0};
+    case SourceKind::Invalid: break;
+    }
+    return {};
+}
+
 class Context final : public LC_ActionContext {
 public:
     QStringList messages;
@@ -61,10 +118,15 @@ void basisEquals(const RS_EllipseData& actual, const RS_EllipseData& expected) {
     CHECK(actual.reversed == expected.reversed);
 }
 void certified(const LC_OffsetCurve& curve) {
-    REQUIRE(curve.hasEditableDefinition());
-    auto check = geo::checkCache(curve.getData(), curve.definition(), curve.checkedWorldTolerance());
-    CAPTURE(check.reason);
-    REQUIRE(check);
+    REQUIRE(curve.isConsistent());
+    if (curve.sourceDefinition()) {
+        CHECK(curve.sourceDefinition()->source.isWellFormed());
+    } else {
+        REQUIRE(curve.hasEditableDefinition());
+        auto check = geo::checkCache(curve.getData(), curve.definition(), curve.checkedWorldTolerance());
+        CAPTURE(check.reason);
+        REQUIRE(check);
+    }
 }
 void mouse(RS_ActionInterface& action, lc::test::TestGraphicView& view, const RS_Vector& point, bool click) {
     double x = 0, y = 0;
@@ -188,10 +250,7 @@ TEST_CASE("I UI registered source actions persist updated native and restored el
         REQUIRE(bytes.open(QIODevice::ReadOnly));
         const auto header = bytes.read(dwg ? 6 : bytes.size());
         if (dwg) CHECK(header == "AC1032");
-        else {
-            CHECK(header.contains("$ACADVER"));
-            CHECK(header.contains("AC1032"));
-        }
+        else { CHECK(header.contains("$ACADVER")); CHECK(header.contains("AC1032")); }
         RS_Graphic loaded;
         REQUIRE(lc::test::importDrawing(loaded, path, format));
         reopened(loaded, expected, ellipses, pen, layer->getName());
@@ -209,4 +268,110 @@ TEST_CASE("I UI registered source actions persist updated native and restored el
     CHECK(updated->isDeleted());
     basisEquals(curve->definition().basis, before.basis);
     CHECK_FALSE(graphic.undo());
+}
+
+TEST_CASE("I Update from Source preserves every typed source through five DXF and DWG formats",
+          "[lc-offsetcurve][i-ui][persistence][dxf][dwg][typed][matrix]") {
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    const auto kind = GENERATE(SourceKind::Line, SourceKind::Arc, SourceKind::Circle, SourceKind::Ellipse,
+        SourceKind::Spline, SourceKind::SplinePoints, SourceKind::Parabola,
+        SourceKind::BoundedHyperbola, SourceKind::Polyline);
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+        RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+    const QByteArray expectedVersion = (format == RS2::FormatDXFRW14) ? "AC1014" :
+        (format == RS2::FormatDXFRW2000 || format == RS2::FormatDWG) ? "AC1015" : "AC1032";
+    CAPTURE(static_cast<int>(kind), static_cast<int>(format));
+
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(20, 20, 30.);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    auto* target = native(graphic);
+    const auto originalDefinition = target->definition();
+    const double expectedSignedDistance = originalDefinition.towardCentre ?
+        -originalDefinition.distance : originalDefinition.distance;
+    const RS_Pen pen(RS_Color(255, 0, 0), RS2::WidthDefault, RS2::SolidLine);
+    target->setPen(pen);
+    auto geometry = sourceGeometry(kind);
+    REQUIRE(geometry.isWellFormed());
+    auto sourceOwner = geometry.makeEntity();
+    REQUIRE(sourceOwner);
+    auto* source = sourceOwner.get();
+    source->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(source);
+    sourceOwner.release();
+    const auto expectedSource = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(expectedSource);
+
+    graphic.select(QList<RS_Entity*>{target}, true);
+    auto update = LC_ActionsHandlerFactory::createActionInstance(RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(kind);
+    const auto pick = sourcePickPoint(kind);
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, pick, false);
+    const auto fingerprint = RS_Spline::geometryFingerprint(target->getData());
+    mouse(*update, view, pick, true);
+    lc::test::awaitUpdate(*updateAction);
+
+    CHECK(updateAction->lastReport().updated == 1);
+    CHECK(updateAction->lastReport().refused == 0);
+    REQUIRE(target->isDeleted());
+    auto* updated = onlyNative(graphic);
+    certified(*updated);
+    CHECK(updated->getPen(true) == pen);
+    const auto definition = updated->sourceDefinition();
+    if (kind == SourceKind::Ellipse) {
+        CHECK_FALSE(definition);
+        CHECK(updated->definition().distance == originalDefinition.distance);
+        basisEquals(updated->definition().basis, std::get<RS_EllipseData>(expectedSource->value));
+    } else {
+        REQUIRE(definition);
+        CHECK(definition->source.kind() == kind);
+        CHECK(definition->signedDistance == expectedSignedDistance);
+        CHECK(definition->relativeTolerance == originalDefinition.relTolerance);
+        CHECK(definition->cacheReversed == originalDefinition.cacheReversed);
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(definition->source) ==
+              LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expectedSource));
+    }
+
+    const auto file = std::filesystem::path(directory.filePath(
+        QStringLiteral("updated-%1").arg(static_cast<int>(kind)) + (dwg ? ".dwg" : ".dxf")).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, file, format));
+    QFile bytes(QString::fromStdString(file.string()));
+    REQUIRE(bytes.open(QIODevice::ReadOnly));
+    const auto header = bytes.read(dwg ? 6 : bytes.size());
+    if (dwg) CHECK(header == expectedVersion);
+    else { CHECK(header.contains("$ACADVER")); CHECK(header.contains(expectedVersion)); }
+    CHECK(RS_Spline::geometryFingerprint(updated->getData()) != fingerprint);
+    RS_Graphic loaded;
+    REQUIRE(lc::test::importDrawing(loaded, file, format));
+    auto* reopenedCurve = onlyNative(loaded);
+    certified(*reopenedCurve);
+    CHECK(reopenedCurve->getPen(true) == pen);
+    const auto reopenedDefinition = reopenedCurve->sourceDefinition();
+    if (kind == SourceKind::Ellipse) {
+        CHECK_FALSE(reopenedDefinition);
+        CHECK(reopenedCurve->definition().distance == originalDefinition.distance);
+        basisEquals(reopenedCurve->definition().basis, std::get<RS_EllipseData>(expectedSource->value));
+    } else {
+        REQUIRE(reopenedDefinition);
+        CHECK(reopenedDefinition->source.kind() == kind);
+        CHECK(reopenedDefinition->signedDistance == expectedSignedDistance);
+        CHECK(reopenedDefinition->relativeTolerance == originalDefinition.relTolerance);
+        CHECK(reopenedDefinition->cacheReversed == originalDefinition.cacheReversed);
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(reopenedDefinition->source) ==
+              LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expectedSource));
+    }
 }

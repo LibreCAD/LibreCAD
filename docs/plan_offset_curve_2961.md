@@ -30222,9 +30222,18 @@ Current Release-build evidence:
 | --- | --- |
 | `librecad_offset_update_source_tests` | PASS, 36 cases / 3,191 assertions |
 | Properties source-picker workflow (`[gui][dialog][offsetcurve][source]`) | PASS, 12 cases / 11,877 assertions |
+| Update from Source persistence matrix | PASS, 45 family/format combinations / 2,037 assertions (all nine kinds in five DXF/DWG formats) |
 | `librecad_offset_worker_edit_tests` | PASS, 15 cases / 101,553 assertions |
 | Main CMake `LibreCAD` target | PASS |
 | `git diff --check` | PASS |
+
+The action-level persistence matrix saves the result of the real Update from
+Source action and reopens it through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+for each supported kind. It checks typed source identity/encoding, signed
+distance, tolerance and reversal metadata, cache consistency, and target pen
+attributes representable in each format; ellipse remains on its legacy
+definition path. This supplements the broader five-format worker/source
+persistence matrix.
 
 Two broader adjacent suites still report failures outside the focused source
 workflow: the full Properties dialog suite has 3 failures (editor focus and
@@ -30238,12 +30247,8 @@ picker and worker-edit cases above pass.
 1. Run the exact-build visible GUI flow for type switching, candidate hover and
    pick, replacement, cancellation, and undo/redo. Automated widget/action
    coverage is not a substitute for this visible check.
-2. Exercise applicable geometry generation and DXF/DWG save/reopen/import
-   round-trips for every supported source kind, including distinct parabola
-   persistence; the action matrix proves typed worker replacement, not format
-   coverage.
-3. Run independent ODA/AutoCAD acceptance, cross-platform/ASan qualification,
+2. Run independent ODA/AutoCAD acceptance, cross-platform/ASan qualification,
    and exact-head CI. These are not verified by the current local Release
    build and remain open until results are available.
 
-Do not claim full external acceptance until all three gates have evidence.
+Do not claim full external acceptance until both remaining gates have evidence.
