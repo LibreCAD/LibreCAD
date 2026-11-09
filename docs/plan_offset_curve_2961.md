@@ -28924,3 +28924,23 @@ with `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release
 `097e66551` (`test(offset): persist wide weights at all knots`). This still
 qualifies only the recorded ratio-400 profile and knot positions; arbitrary
 weights, external-CAD acceptance, visible GUI, and exact-head CI remain open.
+
+## 640. Characterize a 1e12 Positive Weight Ratio at the Four-knot Target (2026-11-09)
+
+Added a positive profile spanning `1e-6` to `1e6` (ratio `1e12`) at the `.82`
+four-knot target for degrees 3/4/5/6 and both orientations. The independent
+oracle finds sign crossings in six of eight cases. Four return
+`ToleranceNotMet` with no partial branches. Two return geometry whose cusp
+diagnostic is only `SampledSignChange`, not a certified unique bracket; these
+cases intentionally stop before worker operation 7 or cache validation and
+are not considered supported. The other two have no oracle crossing. This
+records the current boundary and leaves high-ratio refinement/fail-closed
+behavior open; it does not claim support for arbitrary positive weights.
+
+Validation: focused Release worker case passes 4,034 assertions/1 case; the
+complete Release `librecad_offset_worker_kernel_tests` suite passes 1,720,482
+assertions/94 cases. The changed range passes clang-format using
+`code_style/.clang-format`, and `git diff --check` passes. Test commit
+`0135fa536` (`test(offset): characterize extreme rational weights`). Native
+file persistence, external-CAD acceptance, visible GUI, and exact-head CI for
+this profile remain open.
