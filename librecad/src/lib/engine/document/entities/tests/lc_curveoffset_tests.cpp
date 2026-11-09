@@ -892,6 +892,31 @@ TEST_CASE("Reversed circular arcs follow exact offset normals",
     }
 }
 
+TEST_CASE("Translated long lines keep exact offset normals at small relative distance",
+          "[curve-offset][direct][line][oracle]") {
+    const RS_LineData data{{1.0e9, -2.0e9}, {1.0e9 + 1000.0, -2.0e9 + 250.0}};
+    const RS_Line source{nullptr, data};
+    const RS_Vector direction = (data.endpoint - data.startpoint) / data.startpoint.distanceTo(data.endpoint);
+    const EvalFn exactLine = [data, direction](const double parameter, LC_CurveEvaluationSide,
+                                               LC_CurveJet& jet) {
+        jet.point = data.startpoint + direction * parameter;
+        jet.first = direction;
+        jet.second = {0.0, 0.0};
+        return true;
+    };
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        const double distance = 0.01;
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(side, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(maxDeviation(result, exactLine) <= options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direct]") {
     // B(u) = (10u, 20u(1-u)) turns clockwise, tightest at its apex: radius 2.5.
     const LC_SplinePoints parabola = fromControlPoints({{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}});

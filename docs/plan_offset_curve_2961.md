@@ -29959,3 +29959,21 @@ assertions; full client suite passes 76,015 assertions/21 cases. LibreDWG
 all spline control/knot cardinalities are valid. Exact traversal-direction
 round-trip remains format-limited; GUI visibility and ODA/AutoCAD acceptance
 remain open.
+
+## 674. Qualify Long Translated Line Offsets Through the Worker (2026-11-09)
+
+Added an independent exact-normal line oracle for a non-axis-aligned segment
+translated near `(1e9, -2e9)`, 1,030 units long, and offset by 0.01 on both
+sides. The identical typed line is required to admit its canonical operation-8
+cache and passes translated source replacement, Produce, and all five
+R14/R2000/R2018 DXF/DWG round-trip lanes.
+
+Validation: focused direct oracle passes 90 assertions; the ten `[oracle]`
+cases pass 53,488 assertions; complete `[curve-offset][direct]` passes
+119,231 assertions/43 cases. Focused worker family case passes 69,681
+assertions; full worker-client suite passes 76,738 assertions/21 cases.
+LibreDWG 0.14 reads both DWGs with ARC=2, CIRCLE=2, LINE=2, LWPOLYLINE=4,
+SPLINE=19; all spline control/knot cardinalities are valid. This qualifies one
+large-origin, long-line, small-offset combination, not extreme coordinate
+limits, near-degenerate lengths, or every endpoint orientation. Visible GUI
+and ODA/AutoCAD acceptance remain open.
