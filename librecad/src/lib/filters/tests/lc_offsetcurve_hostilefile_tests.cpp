@@ -8224,10 +8224,11 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         double middleWeight;
         std::size_t multiplicity;
     };
-    const std::array<Fixture, 12> fixtures{{
+    const std::array<Fixture, 16> fixtures{{
         {0.25, 0.25, 1}, {0.25, 0.5, 1}, {0.25, 2.0, 1}, {0.25, 4.0, 1},
         {0.5, 0.25, 1}, {0.5, 0.5, 1}, {0.5, 2.0, 1}, {0.5, 4.0, 1},
-        {0.25, 0.5, 2}, {0.25, 2.0, 2}, {0.5, 0.5, 2}, {0.5, 2.0, 2}}};
+        {0.25, 0.25, 2}, {0.25, 0.5, 2}, {0.25, 2.0, 2}, {0.25, 4.0, 2},
+        {0.5, 0.25, 2}, {0.5, 0.5, 2}, {0.5, 2.0, 2}, {0.5, 4.0, 2}}};
     constexpr std::array<double, 3> scales{0.5, 1.0, 2.0};
     constexpr std::array<std::pair<LC_CurveOffsetSide, double>, 6> offsets{{
         {LC_CurveOffsetSide::Left, 0.5},
