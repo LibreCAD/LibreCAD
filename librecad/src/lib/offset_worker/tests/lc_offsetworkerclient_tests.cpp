@@ -11,6 +11,7 @@
 #include "rs_entitycontainer.h"
 #include "rs_layer.h"
 #include "rs_line.h"
+#include "lc_parabola.h"
 #include "rs_pen.h"
 
 #include <catch2/catch_test_macros.hpp>
@@ -518,19 +519,20 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     auto wrapped = periodic.getData();
     wrapped.weights.clear();
     RS_Spline periodicLinear{nullptr, RS_SplineData{1, false}};
-    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15}, RS_Vector{60, 0},
-                                   RS_Vector{55, 35}, RS_Vector{20, 50}, RS_Vector{-15, 25}})
+    for (const RS_Vector& point :
+         {RS_Vector{0, 0}, RS_Vector{30, -15}, RS_Vector{60, 0}, RS_Vector{55, 35}, RS_Vector{20, 50}, RS_Vector{-15, 25}})
         periodicLinear.addControlPoint(point);
     periodicLinear.setKnotVector({0, 0, .5, 1.5, 2.5, 4, 5, 5});
     periodicLinear.setClosed(true);
     auto wrappedLinear = periodicLinear.getData();
     wrappedLinear.weights.clear();
     const double pi = std::acos(-1.0);
-    LC_OffsetPolylineData closedArcPolyline{{2, 0}, {2, 0}, true, {
-        RS_ArcData{{0, 0}, 2, 0, pi / 2, false},
-        RS_ArcData{{0, 0}, 2, pi / 2, pi, false},
-        RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
-        RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}};
+    LC_OffsetPolylineData closedArcPolyline{{2, 0},
+                                            {2, 0},
+                                            true,
+                                            {RS_ArcData{{0, 0}, 2, 0, pi / 2, false}, RS_ArcData{{0, 0}, 2, pi / 2, pi, false},
+                                             RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
+                                             RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}};
     const std::array<LC_OffsetSourceGeometry, 16> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
@@ -543,23 +545,23 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
         LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, .25, 1.5, false}},
         LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
-        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
-            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}},
-        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {0, 0}, true,
-            {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}},
-             RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}},
+        LC_OffsetSourceGeometry{
+            LC_OffsetPolylineData{{0, 0}, {2, 2}, false, {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{
+            {0, 0},
+            {0, 0},
+            true,
+            {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}}, RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}},
         LC_OffsetSourceGeometry{wrapped},
         LC_OffsetSourceGeometry{closedArcPolyline},
-        LC_OffsetSourceGeometry{wrappedLinear}
-    };
+        LC_OffsetSourceGeometry{wrappedLinear}};
 
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
-        const Req::Request input{token(requestId), Req::GenerateSource{
-            LC_OffsetSourceDefinition{sources[i], .25, 1e-4, false}, {}}};
+        const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], .25, 1e-4, false}, {}}};
         Receipts receipts;
         REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
         rt.until([&] { return receipts.calls[0] != 0; });
@@ -576,29 +578,25 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             auto directSource = sources[i].makeEntity();
             REQUIRE(directSource);
             const LC_OffsetSourceDefinition directDefinition{sources[i], .25, 1e-4, false};
-            const auto directOptionsValue = LC_OffsetWorkerTolerance::directOptions(
-                directDefinition, *directSource);
+            const auto directOptionsValue = LC_OffsetWorkerTolerance::directOptions(directDefinition, *directSource);
             REQUIRE(directOptionsValue);
             const auto directOptions = *directOptionsValue;
-            const auto directGeometry = LC_CurveOffset::buildDirectBranches(*directSource,
-                LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25), directOptions,
-                LC_CurveOffset::makeDirectSourceBudget());
+            const auto directGeometry =
+                LC_CurveOffset::buildDirectBranches(*directSource, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .25),
+                                                    directOptions, LC_CurveOffset::makeDirectSourceBudget());
             REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
-            const auto directMaterialized = LC_CurveOffset::materializeBranches(*directSource,
-                directGeometry, directOptions, LC_CurveOffset::makeDirectSourceBudget());
+            const auto directMaterialized =
+                LC_CurveOffset::materializeBranches(*directSource, directGeometry, directOptions, LC_CurveOffset::makeDirectSourceBudget());
             REQUIRE(directMaterialized.status == LC_CurveOffsetStatus::Ok);
             REQUIRE(directMaterialized.entities.size() == 1);
             const auto* directSpline = dynamic_cast<const RS_Spline*>(directMaterialized.entities.front().get());
             REQUIRE(directSpline);
             const auto& directCache = directSpline->getData();
-            INFO("direct controls=" << directCache.controlPoints.size()
-                 << " knots=" << directCache.knotslist.size()
-                 << " weights=" << directCache.weights.size()
-                 << " degree=" << directCache.degree
-                 << " type=" << static_cast<int>(directCache.type));
+            INFO("direct controls=" << directCache.controlPoints.size() << " knots=" << directCache.knotslist.size()
+                                    << " weights=" << directCache.weights.size() << " degree=" << directCache.degree
+                                    << " type=" << static_cast<int>(directCache.type));
             CHECK(directSpline->validate());
-            CHECK(directCache.knotslist.size() == directCache.controlPoints.size() +
-                  static_cast<std::size_t>(directCache.degree) + 1);
+            CHECK(directCache.knotslist.size() == directCache.controlPoints.size() + static_cast<std::size_t>(directCache.degree) + 1);
             CHECK(directCache.weights.size() == directCache.controlPoints.size());
             exactCache(directCache, *cache);
         }
@@ -613,11 +611,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
-        const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(
-            result.ordinary, canonicalCache);
+        const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
-            if (result.ordinary.size() > 1) ++multiBranchCacheCount;
+            if (result.ordinary.size() > 1)
+                ++multiBranchCacheCount;
             REQUIRE(editable);
             REQUIRE(editable->hasGeneralizedSourceDefinition());
             CHECK_FALSE(editable->hasEditableDefinition());
@@ -626,19 +624,17 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             cacheCandidates.emplace_back(*editable->sourceDefinition(), editable->getData());
             auto toleranceSource = editable->sourceDefinition()->source.makeEntity();
             REQUIRE(toleranceSource);
-            const auto expectedOptions = LC_OffsetWorkerTolerance::directOptions(
-                *editable->sourceDefinition(), *toleranceSource);
+            const auto expectedOptions = LC_OffsetWorkerTolerance::directOptions(*editable->sourceDefinition(), *toleranceSource);
             REQUIRE(expectedOptions);
-            CHECK(editable->checkedWorldTolerance() ==
-                  expectedOptions->tolerance.requestedGeometry);
+            CHECK(editable->checkedWorldTolerance() == expectedOptions->tolerance.requestedGeometry);
             CHECK(Req::Values::encodeSourceDefinition(*editable->sourceDefinition()) ==
-                Req::Values::encodeSourceDefinition(std::get<Req::GenerateSource>(input.operation).definition));
+                  Req::Values::encodeSourceDefinition(std::get<Req::GenerateSource>(input.operation).definition));
             std::unique_ptr<RS_Entity> cloned{editable->clone()};
             const auto* clonedOffset = dynamic_cast<const LC_OffsetCurve*>(cloned.get());
             REQUIRE(clonedOffset);
             CHECK(clonedOffset->hasGeneralizedSourceDefinition());
             CHECK(Req::Values::encodeSourceDefinition(*clonedOffset->sourceDefinition()) ==
-                Req::Values::encodeSourceDefinition(*editable->sourceDefinition()));
+                  Req::Values::encodeSourceDefinition(*editable->sourceDefinition()));
             const auto cacheStamp = RS_Spline::geometryFingerprint(editable->getData());
             const auto sourceBeforeMove = Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source);
             CHECK(editable->setDistance(.5).refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
@@ -653,8 +649,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             REQUIRE(expectedSource);
             if (movedExactly) {
                 CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) ==
-                    Req::Values::encodeSourceGeometry(*expectedSource));
-            } else {
+                      Req::Values::encodeSourceGeometry(*expectedSource));
+            }
+            else {
                 CHECK(RS_Spline::geometryFingerprint(editable->getData()) == cacheStamp);
                 CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) == sourceBeforeMove);
             }
@@ -663,13 +660,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 Geo::WorkBudget layoutBudget;
                 const auto layout = Geo::inspectCacheLayout(editable->getData(), layoutBudget);
                 CHECK(layout.status == Geo::CacheLayoutStatus::Ok);
-                INFO("composite layout=" << static_cast<int>(layout.status)
-                     << " controls=" << editable->getData().controlPoints.size()
-                     << " knots=" << editable->getData().knotslist.size()
-                     << " midpoint valid=" << Geo::isFinite2D(editable->getMiddlePoint()));
+                INFO("composite layout=" << static_cast<int>(layout.status) << " controls=" << editable->getData().controlPoints.size()
+                                         << " knots=" << editable->getData().knotslist.size()
+                                         << " midpoint valid=" << Geo::isFinite2D(editable->getMiddlePoint()));
                 auto reversedData = editable->getData();
                 const double knotSum = reversedData.knotslist.front() + reversedData.knotslist.back();
-                for (double& knot : reversedData.knotslist) knot = knotSum - knot;
+                for (double& knot : reversedData.knotslist)
+                    knot = knotSum - knot;
                 std::reverse(reversedData.knotslist.begin(), reversedData.knotslist.end());
                 std::reverse(reversedData.controlPoints.begin(), reversedData.controlPoints.end());
                 std::reverse(reversedData.weights.begin(), reversedData.weights.end());
@@ -679,7 +676,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             editable->revertDirection();
             REQUIRE(editable->hasGeneralizedSourceDefinition());
             CHECK(editable->sourceDefinition()->cacheReversed == !previousDirection);
-        } else CHECK_FALSE(editable);
+        }
+        else
+            CHECK_FALSE(editable);
     }
     CHECK(multiBranchCacheCount > 0);
 
@@ -691,16 +690,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     linear.controlPoints = {{0, 0}, {2, 0}};
     linear.knotslist = {0, 0, 1, 1};
     linear.weights = {1, 1};
-    const LC_OffsetSourceDefinition linearDefinition{
-        LC_OffsetSourceGeometry{linear}, .25, 0, false};
+    const LC_OffsetSourceDefinition linearDefinition{LC_OffsetSourceGeometry{linear}, .25, 0, false};
     REQUIRE_FALSE(cacheCandidates.empty());
     qint64 nextRequestId = static_cast<qint64>(sources.size() + 1);
     for (const auto& [sourceDefinition, cache] : cacheCandidates) {
-        const Req::Request validationInput{token(nextRequestId),
-            Req::ValidateSourceCache{cache, sourceDefinition, {}}};
+        const Req::Request validationInput{token(nextRequestId), Req::ValidateSourceCache{cache, sourceDefinition, {}}};
         Receipts validationReceipts;
-        REQUIRE(owned.get().submit(validationInput, Client::Mode::Commit,
-            validationReceipts.into(0)));
+        REQUIRE(owned.get().submit(validationInput, Client::Mode::Commit, validationReceipts.into(0)));
         rt.until([&] { return validationReceipts.calls[0] != 0; });
         auto& validationCompletion = completed(validationReceipts.at(0), nextRequestId, 8);
         const auto& validation = std::get<Reply::Native>(validationCompletion.reply().result);
@@ -711,15 +707,44 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         REQUIRE(validatedNative->sourceDefinition());
         auto toleranceSource = validatedNative->sourceDefinition()->source.makeEntity();
         REQUIRE(toleranceSource);
-        const auto expectedOptions = LC_OffsetWorkerTolerance::directOptions(
-            *validatedNative->sourceDefinition(), *toleranceSource);
+        const auto expectedOptions = LC_OffsetWorkerTolerance::directOptions(*validatedNative->sourceDefinition(), *toleranceSource);
         REQUIRE(expectedOptions);
-        CHECK(validatedNative->checkedWorldTolerance() ==
-              expectedOptions->tolerance.requestedGeometry);
+        CHECK(validatedNative->checkedWorldTolerance() == expectedOptions->tolerance.requestedGeometry);
         CHECK(Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition()) ==
               Req::Values::encodeSourceDefinition(sourceDefinition));
         exactCache(validatedNative->getData(), cache);
         ++nextRequestId;
+    }
+
+    for (std::size_t i = 0; i < sources.size(); ++i) {
+        CAPTURE(i, sources[i].kind());
+        auto entity = sources[i].makeEntity();
+        REQUIRE(entity);
+        RS_OffsetData offset;
+        offset.coord = {3, 2};
+        offset.distance = .25;
+        offset.number = 1;
+        offset.multipleCopies = true;
+        offset.keepOriginals = true;
+        LC_OffsetBatchPreparation prepared{offset, {entity.get()}, false, {}};
+        LC_DocumentModificationBatch batch;
+        REQUIRE_FALSE(prepared.advance(batch));
+        const auto workerRequest = prepared.request(token(nextRequestId++));
+        REQUIRE(workerRequest);
+        REQUIRE(std::holds_alternative<Req::Produce>(workerRequest->operation));
+        const auto& produce = std::get<Req::Produce>(workerRequest->operation);
+        if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
+            CHECK(produce.source.index() == 0);
+        } else if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Spline) {
+        CHECK(produce.source.index() == 1);
+      } else {
+        REQUIRE(produce.source.index() == 2);
+        const auto *typed =
+            std::get_if<LC_OffsetSourceGeometry>(&produce.source);
+        REQUIRE(typed);
+        CHECK(typed->kind() == sources[i].kind());
+      }
+      CHECK(Req::admitted(*workerRequest));
     }
 
     const qint64 linearRequestId = nextRequestId;
@@ -889,38 +914,66 @@ TEST_CASE("Worker Produce completions materialize ordered native copies without 
         const auto cost = measureOffsetOutput({curve}, makeDefaultOffsetSourceBudget().maxDeepEntities);
         REQUIRE(cost.status == LC_OffsetTreeStatus::Ok); actualDeep += cost.deepEntities;
     }
-    CHECK(outcome.usage.deepEntities == actualDeep); CHECK(owner.count() == 0);
+    CHECK(outcome.usage.deepEntities == actualDeep);
+    CHECK(owner.count() == 0);
     CHECK(attributes.sourceHandle() == 91);
-    CHECK(LC_OffsetCurveXData::parseAndStrip(attributes.getDrwExtData()).knownCandidates == 1);
-    auto again = completion.produced(attributes); REQUIRE(again);
+    CHECK(LC_OffsetCurveXData::parseAndStrip(attributes.getDrwExtData())
+              .knownCandidates == 1);
+    auto again = completion.produced(attributes);
+    REQUIRE(again);
     CHECK(again->entities[0]->getId() != materialized->entities[0]->getId());
     CHECK(outcome.cacheEngineRuns == receipt.source.cacheEngineRuns);
 }
 
-TEST_CASE("Worker Produce plain and preview copies retain only their original drawing attributes", Tags) {
-    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
-    RS_Layer layer{QStringLiteral("plain produce")};
-    RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
-    source.setLayer(&layer); source.setUserDefVar("not ordinary", "not copied"); source.setSourceHandle(67);
-    for (int mode = 0; mode < 2; ++mode) {
-        Req::Produce op; op.source = source.getData(); op.minimum = source.getMin(); op.maximum = source.getMax();
-        op.context.topLevel = true; op.coordinate = {3, 2}; op.distance = .25;
-        op.asOffsetCurve = mode == 1; op.preview = mode == 1;
-        REQUIRE(owned.get().submit({token(mode + 1), op}, Client::Mode::Commit, receipts.into(std::size_t(mode))));
-        rt.until([&] { return receipts.calls[std::size_t(mode)] != 0; });
-        const auto& completion = completed(receipts.at(std::size_t(mode)), mode + 1, 5);
-        auto made = completion.produced(source); REQUIRE(made); REQUIRE(made->outcome.succeeded());
-        CHECK(made->outcome.adoptionAttempts == 0); REQUIRE(made->entities.size() == 1);
-        const auto& entity = *made->entities[0]; CHECK_FALSE(dynamic_cast<const LC_OffsetCurve*>(&entity));
-        CHECK(entity.getParent() == nullptr); CHECK(entity.getLayer(false) == &layer);
-        CHECK(entity.getPen(false) == source.getPen(false)); CHECK(entity.getDrwExtData().empty());
-        CHECK(entity.getUserDefVar("not ordinary").isEmpty()); CHECK(entity.sourceHandle() == 0);
-        const auto& value = std::get<Reply::Produced>(completion.reply().result).outputs[0];
-        if (const auto* spline = std::get_if<RS_SplineData>(&value))
-            exactCache(static_cast<const RS_Spline&>(entity).getData(), *spline);
-        else { const auto& line = std::get<Req::Segment>(value);
-            CHECK(exact(entity.getStartpoint(), line.start)); CHECK(exact(entity.getEndpoint(), line.end)); }
+TEST_CASE("Worker Produce plain and preview copies retain only their original "
+          "drawing attributes",
+          Tags) {
+  auto &rt = runtime();
+  OwnedClient owned{rt};
+  Receipts receipts;
+  RS_Layer layer{QStringLiteral("plain produce")};
+  RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
+  source.setLayer(&layer);
+  source.setUserDefVar("not ordinary", "not copied");
+  source.setSourceHandle(67);
+  for (int mode = 0; mode < 2; ++mode) {
+    Req::Produce op;
+    op.source = source.getData();
+    op.minimum = source.getMin();
+    op.maximum = source.getMax();
+    op.context.topLevel = true;
+    op.coordinate = {3, 2};
+    op.distance = .25;
+    op.asOffsetCurve = mode == 1;
+    op.preview = mode == 1;
+    REQUIRE(owned.get().submit({token(mode + 1), op}, Client::Mode::Commit,
+                               receipts.into(std::size_t(mode))));
+    rt.until([&] { return receipts.calls[std::size_t(mode)] != 0; });
+    const auto &completion =
+        completed(receipts.at(std::size_t(mode)), mode + 1, 5);
+    auto made = completion.produced(source);
+    REQUIRE(made);
+    REQUIRE(made->outcome.succeeded());
+    CHECK(made->outcome.adoptionAttempts == 0);
+    REQUIRE(made->entities.size() == 1);
+    const auto &entity = *made->entities[0];
+    CHECK_FALSE(dynamic_cast<const LC_OffsetCurve *>(&entity));
+    CHECK(entity.getParent() == nullptr);
+    CHECK(entity.getLayer(false) == &layer);
+    CHECK(entity.getPen(false) == source.getPen(false));
+    CHECK(entity.getDrwExtData().empty());
+    CHECK(entity.getUserDefVar("not ordinary").isEmpty());
+    CHECK(entity.sourceHandle() == 0);
+    const auto &value =
+        std::get<Reply::Produced>(completion.reply().result).outputs[0];
+    if (const auto *spline = std::get_if<RS_SplineData>(&value))
+      exactCache(static_cast<const RS_Spline &>(entity).getData(), *spline);
+    else {
+      const auto &line = std::get<Req::Segment>(value);
+      CHECK(exact(entity.getStartpoint(), line.start));
+      CHECK(exact(entity.getEndpoint(), line.end));
     }
+  }
 }
 
 TEST_CASE("Worker Produce typed refusals materialize no prefix and cannot create native entities", Tags) {
@@ -1124,41 +1177,65 @@ TEST_CASE("Worker client owner destruction drops active queued and deferred call
 
 TEST_CASE("Joined cached Produce completions update only current caches and revoke moved-from authority",
           "[lc-offsetcurve][worker-client][preview-portable]") {
-    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    Receipts receipts;
     RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
-    source.setSourceHandle(91); source.setUserDefVar("cached-local", "retained");
+    source.setSourceHandle(91);
+    source.setUserDefVar("cached-local", "retained");
     LC_OffsetPreviewCache parent;
     Req::CachedProduce op;
-    op.produce.source = source.getData(); op.produce.minimum = source.getMin(); op.produce.maximum = source.getMax();
-    op.produce.context.topLevel = true; op.produce.coordinate = {3, 2}; op.produce.distance = .25;
-    op.produce.copies = 2; op.produce.preview = true; op.produce.asOffsetCurve = true;
-    auto snapshot = parent.snapshot(&source); REQUIRE(snapshot); op.cache = *snapshot;
+    op.produce.source = source.getData();
+    op.produce.minimum = source.getMin();
+    op.produce.maximum = source.getMax();
+    op.produce.context.topLevel = true;
+    op.produce.coordinate = {3, 2};
+    op.produce.distance = .25;
+    op.produce.copies = 2;
+    op.produce.preview = true;
+    op.produce.asOffsetCurve = true;
+    auto snapshot = parent.snapshot(&source);
+    REQUIRE(snapshot);
+    op.cache = *snapshot;
     REQUIRE(owned.get().submit({token(1), op}, Client::Mode::Preview, receipts.into(0)));
     rt.until([&] { return receipts.calls[0] != 0; });
     const auto& first = completed(receipts.at(0), 1, 6);
     REQUIRE(first.updatePreviewCache(parent, &source));
     CHECK_FALSE(first.updatePreviewCache(parent, &source)); // Its original revision is stale now.
-    snapshot = parent.snapshot(&source); REQUIRE(snapshot); REQUIRE(snapshot->entries.size() == 2);
-    op.cache = *snapshot; op.produce.preview = false;
-    op.produce.limits.maxSamples = 1; op.produce.limits.maxIntersectionPairs = 1;
+    snapshot = parent.snapshot(&source);
+    REQUIRE(snapshot);
+    REQUIRE(snapshot->entries.size() == 2);
+    op.cache = *snapshot;
+    op.produce.preview = false;
+    op.produce.limits.maxSamples = 1;
+    op.produce.limits.maxIntersectionPairs = 1;
     REQUIRE(owned.get().submit({token(2), op}, Client::Mode::Commit, receipts.into(1)));
     rt.until([&] { return receipts.calls[1] != 0; });
     completed(receipts.at(1), 2, 6);
     auto& original = *receipts.outcomes[1]->completed;
     Completion moved{std::move(original)};
-    CHECK_FALSE(original.updatePreviewCache(parent, &source)); CHECK_FALSE(original.produced(source));
-    auto prepared = moved.produced(source); REQUIRE(prepared); REQUIRE(prepared->outcome.complete());
-    CHECK(prepared->outcome.cacheEngineRuns == 0); CHECK(prepared->outcome.sampleUnits == 0);
-    CHECK(prepared->outcome.reusedCacheCopies == 2); CHECK(prepared->outcome.reusedCopies.size() == 2);
-    CHECK(prepared->outcome.adoptionAttempts == 2); CHECK(prepared->outcome.adoptionCheckWork.vertices > 0);
+    CHECK_FALSE(original.updatePreviewCache(parent, &source));
+    CHECK_FALSE(original.produced(source));
+    auto prepared = moved.produced(source);
+    REQUIRE(prepared);
+    REQUIRE(prepared->outcome.complete());
+    CHECK(prepared->outcome.cacheEngineRuns == 0);
+    CHECK(prepared->outcome.sampleUnits == 0);
+    CHECK(prepared->outcome.reusedCacheCopies == 2);
+    CHECK(prepared->outcome.reusedCopies.size() == 2);
+    CHECK(prepared->outcome.adoptionAttempts == 2);
+    CHECK(prepared->outcome.adoptionCheckWork.vertices > 0);
     for (const auto& entity : prepared->entities) {
-        const auto* curve = dynamic_cast<const LC_OffsetCurve*>(entity.get()); REQUIRE(curve);
-        CHECK(curve->getParent() == nullptr); CHECK(curve->sourceHandle() == 0);
+        const auto* curve = dynamic_cast<const LC_OffsetCurve*>(entity.get());
+        REQUIRE(curve);
+        CHECK(curve->getParent() == nullptr);
+        CHECK(curve->sourceHandle() == 0);
         CHECK(curve->getUserDefVar("cached-local") == "retained");
         REQUIRE(Geo::checkCache(curve->getData(), curve->definition(), curve->checkedWorldTolerance()));
     }
     RS_Line other;
-    LC_CurveOffsetMaterializationResult refused; refused.status = LC_CurveOffsetStatus::SingularOffset;
+    LC_CurveOffsetMaterializationResult refused;
+    refused.status = LC_CurveOffsetStatus::SingularOffset;
     parent.keep(&other, LC_CurveOffsetSide::Left, 1, makeDefaultOffsetSourceBudget(), refused);
     CHECK_FALSE(moved.updatePreviewCache(parent, &source));
     CHECK(parent.snapshot(&source)->otherEntries == 1);
@@ -1167,7 +1244,9 @@ TEST_CASE("Joined cached Produce completions update only current caches and revo
 
 TEST_CASE("Cached Produce carries action-wide eviction across a fresh helper process",
           "[lc-offsetcurve][worker-client][preview-portable]") {
-    auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    Receipts receipts;
     RS_Ellipse source{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
     LC_OffsetPreviewCache parent;
     const auto budget = makeDefaultOffsetSourceBudget();
@@ -1181,20 +1260,30 @@ TEST_CASE("Cached Produce carries action-wide eviction across a fresh helper pro
         parent.keep(otherSources.back().get(), LC_CurveOffsetSide::Left, 1, budget, refused);
     }
 
-    auto snapshot = parent.snapshot(&source); REQUIRE(snapshot);
-    REQUIRE(snapshot->entries.size() == 1); CHECK(snapshot->otherEntries == 255);
+    auto snapshot = parent.snapshot(&source);
+    REQUIRE(snapshot);
+    REQUIRE(snapshot->entries.size() == 1);
+    CHECK(snapshot->otherEntries == 255);
     Req::Produce produce;
-    produce.source = source.getData(); produce.minimum = source.getMin(); produce.maximum = source.getMax();
-    produce.context.topLevel = true; produce.coordinate = {3, 2}; produce.distance = .25;
-    produce.copies = 1; produce.preview = true;
+    produce.source = source.getData();
+    produce.minimum = source.getMin();
+    produce.maximum = source.getMax();
+    produce.context.topLevel = true;
+    produce.coordinate = {3, 2};
+    produce.distance = .25;
+    produce.copies = 1;
+    produce.preview = true;
     Req::CachedProduce cached{std::move(produce), *snapshot};
     REQUIRE(owned.get().submit({token(1), std::move(cached)}, Client::Mode::Preview, receipts.into(0)));
     rt.until([&] { return receipts.calls[0] != 0; });
     const auto& completion = completed(receipts.at(0), 1, 6);
     REQUIRE(completion.updatePreviewCache(parent, &source));
 
-    const auto after = parent.snapshot(&source); REQUIRE(after);
-    CHECK(after->cleared); CHECK(after->otherEntries == 0); REQUIRE(after->entries.size() == 1);
+    const auto after = parent.snapshot(&source);
+    REQUIRE(after);
+    CHECK(after->cleared);
+    CHECK(after->otherEntries == 0);
+    REQUIRE(after->entries.size() == 1);
     LC_CurveOffsetMaterializationResult found;
     CHECK_FALSE(parent.find(otherSources.front().get(), LC_CurveOffsetSide::Left, 1, budget, found));
     CHECK(parent.find(&source, after->entries.front().side, after->entries.front().magnitude, budget, found));
@@ -1203,7 +1292,9 @@ TEST_CASE("Cached Produce carries action-wide eviction across a fresh helper pro
 
 TEST_CASE("Ordered mixed offset batches retain numeric prefixes and bind exact helper requests",
           "[lc-offsetcurve][worker-client][ordered-preparation]") {
-    auto& rt = runtime(); OwnedClient client{rt}; Receipts receipts;
+    auto& rt = runtime();
+    OwnedClient client{rt};
+    Receipts receipts;
     class CountedLine final : public RS_Line {
     public:
         using RS_Line::RS_Line;
@@ -1244,4 +1335,44 @@ TEST_CASE("Ordered mixed offset batches retain numeric prefixes and bind exact h
     REQUIRE(prepared.advance(batch, &cache)); CHECK(batch.entitiesToAdd == outputs);
     CHECK(line.calls == 2); CHECK(last.calls == 2);
     CHECK_FALSE(source.isDeleted()); CHECK_FALSE(line.isDeleted()); CHECK_FALSE(last.isDeleted());
+}
+
+TEST_CASE("Typed parabola sources use bounded worker preparation",
+          "[lc-offsetcurve][worker-client][ordered-preparation][parabola]") {
+    auto& rt = runtime();
+    OwnedClient client{rt};
+    Receipts receipts;
+    LC_Parabola source{nullptr, LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10},
+                                                 RS_Vector{10, 0}}}};
+    RS_OffsetData data;
+    data.coord = {5, 8}; data.distance = .5; data.number = 1;
+    data.multipleCopies = true; data.keepOriginals = true;
+    LC_OffsetBatchPreparation prepared{data, {&source}, false, {}};
+    LC_DocumentModificationBatch batch;
+
+    REQUIRE_FALSE(prepared.advance(batch));
+    CHECK(prepared.pendingSource() == &source);
+    auto request = prepared.request(token(1));
+    REQUIRE(request);
+    REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
+    const auto& operation = std::get<Req::Produce>(request->operation);
+    REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
+    CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
+          LC_OffsetSourceGeometry::Kind::Parabola);
+    REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 1, 5);
+    REQUIRE(prepared.accept(completion));
+    REQUIRE(prepared.advance(batch));
+
+    REQUIRE(prepared.outcome().sources.size() == 1);
+    CHECK(prepared.outcome().sources.front().source == &source);
+    CHECK(prepared.outcome().sources.front().complete());
+    REQUIRE_FALSE(batch.entitiesToAdd.empty());
+    for (const RS_Entity* entity : batch.entitiesToAdd)
+        CHECK_FALSE(dynamic_cast<const LC_OffsetCurve*>(entity));
+    CHECK_FALSE(source.isDeleted());
+    prepared.release();
+    qDeleteAll(batch.entitiesToAdd);
+    batch.entitiesToAdd.clear();
 }

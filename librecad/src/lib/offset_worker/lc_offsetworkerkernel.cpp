@@ -361,17 +361,16 @@ result::Native LC_OffsetWorkerKernel::checkThrough(const req::CheckThrough& inpu
     result::Native output;
     const Snapshot observed{trace, output};
     auto definition = input.definition;
-    if (!std::isfinite(input.worldTolerance) || input.worldTolerance <= 0 ||
-        !geo::normaliseBasis(definition.basis)) return output;
+    if (!std::isfinite(input.worldTolerance) || input.worldTolerance <= 0 || !geo::normaliseBasis(definition.basis))
+        return output;
     trace.throughEntered = true;
-    output.refusal = LC_OffsetCurve::checkThroughCache(input.cache, input.worldTolerance, input.point,
-        input.limits, output.throughWork) ? LC_OffsetCurveRefusal::None : LC_OffsetCurveRefusal::ThroughNotOnCache;
+    output.refusal = LC_OffsetCurve::checkThroughCache(input.cache, input.worldTolerance, input.point, input.limits, output.throughWork)
+        ? LC_OffsetCurveRefusal::None
+        : LC_OffsetCurveRefusal::ThroughNotOnCache;
     return output;
 }
 
-
-result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace& trace,
-    const LC_OffsetPreviewSnapshot* seed) {
+result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace& trace, const LC_OffsetPreviewSnapshot* seed) {
     // Empty shells first: no update()/constructor may repair the transported raw arrays.
     class ProduceEllipse final : public RS_Ellipse {
     public:
@@ -390,14 +389,25 @@ result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace
         }
     };
     std::unique_ptr<RS_Entity> source;
-    if (input.source.index() == 0) source = std::make_unique<ProduceEllipse>(input);
-    else source = std::make_unique<ProduceSpline>(input);
+    if (input.source.index() == 0)
+        source = std::make_unique<ProduceEllipse>(input);
+    else if (input.source.index() == 1)
+        source = std::make_unique<ProduceSpline>(input);
+    else
+        source = std::get<LC_OffsetSourceGeometry>(input.source).makeEntity();
+    if (!source)
+        throw std::logic_error("Invalid typed offset source");
     LC_OffsetPreviewCache cache;
-    if (seed && !cache.restore(source.get(), *seed)) throw std::logic_error("Invalid ordinary preview cache");
+    if (seed && !cache.restore(source.get(), *seed))
+        throw std::logic_error("Invalid ordinary preview cache");
     RS_OffsetData data;
-    data.coord = input.coordinate; data.sideFallback = input.fallback.value_or(RS_Vector{false});
-    data.distance = input.distance; data.number = input.copies; data.multipleCopies = true;
-    data.asOffsetCurve = input.asOffsetCurve; data.keepOriginals = true;
+    data.coord = input.coordinate;
+    data.sideFallback = input.fallback.value_or(RS_Vector{false});
+    data.distance = input.distance;
+    data.number = input.copies;
+    data.multipleCopies = true;
+    data.asOffsetCurve = input.asOffsetCurve;
+    data.keepOriginals = true;
     LC_OffsetSourceOutcome observed;
     observed.copiesRequested = input.copies;
     std::vector<std::unique_ptr<RS_Entity>> roots;

@@ -103,27 +103,50 @@ void same(const std::vector<RS_Vector>& a, const std::vector<RS_Vector>& b) {
     for (std::size_t i = 0; i < a.size(); ++i) same(a[i], b[i]);
 }
 void same(const RS_EllipseData& a, const RS_EllipseData& b) {
-    same(a.center, b.center); same(a.majorP, b.majorP); same(a.ratio, b.ratio);
-    same(a.angle1, b.angle1); same(a.angle2, b.angle2); CHECK(a.reversed == b.reversed);
-    CHECK(a.isArc == b.isArc); same(a.angleDegrees, b.angleDegrees);
-    same(a.startAngleDegrees, b.startAngleDegrees); same(a.otherAngleDegrees, b.otherAngleDegrees);
+    same(a.center, b.center);
+    same(a.majorP, b.majorP);
+    same(a.ratio, b.ratio);
+    same(a.angle1, b.angle1);
+    same(a.angle2, b.angle2);
+    CHECK(a.reversed == b.reversed);
+    CHECK(a.isArc == b.isArc);
+    same(a.angleDegrees, b.angleDegrees);
+    same(a.startAngleDegrees, b.startAngleDegrees);
+    same(a.otherAngleDegrees, b.otherAngleDegrees);
     same(a.angularLength, b.angularLength);
 }
 void same(const RS_ArcData& a, const RS_ArcData& b) {
-    same(a.center, b.center); same(a.radius, b.radius); same(a.angle1, b.angle1); same(a.angle2, b.angle2);
-    CHECK(a.reversed == b.reversed); same(a.startAngleDegrees, b.startAngleDegrees);
-    same(a.otherAngleDegrees, b.otherAngleDegrees); same(a.angularLength, b.angularLength);
+    same(a.center, b.center);
+    same(a.radius, b.radius);
+    same(a.angle1, b.angle1);
+    same(a.angle2, b.angle2);
+    CHECK(a.reversed == b.reversed);
+    same(a.startAngleDegrees, b.startAngleDegrees);
+    same(a.otherAngleDegrees, b.otherAngleDegrees);
+    same(a.angularLength, b.angularLength);
 }
 void same(const RS_CircleData& a, const RS_CircleData& b) {
-    same(a.center, b.center); same(a.radius, b.radius);
+    same(a.center, b.center);
+    same(a.radius, b.radius);
 }
 void same(const RS_SplineData& a, const RS_SplineData& b) {
-    same(a.controlPoints, b.controlPoints); same(a.knotslist, b.knotslist); same(a.weights, b.weights);
-    same(a.fitPoints, b.fitPoints); CHECK(a.degree == b.degree); CHECK(a.type == b.type);
-    CHECK(a.savedOpenType == b.savedOpenType); same(a.savedOpenKnots, b.savedOpenKnots);
-    CHECK(a.m_closedFlag == b.m_closedFlag); CHECK(a.m_periodicFlag == b.m_periodicFlag);
-    same(a.fitTolerance, b.fitTolerance); CHECK(a.fitTangentsConstrained == b.fitTangentsConstrained);
-    same(a.fitStartTangent, b.fitStartTangent); same(a.fitEndTangent, b.fitEndTangent);
+    same(a.controlPoints, b.controlPoints);
+    same(a.knotslist, b.knotslist);
+    same(a.weights, b.weights);
+    same(a.fitPoints, b.fitPoints);
+    CHECK(a.degree == b.degree);
+    CHECK(a.type == b.type);
+    CHECK(a.savedOpenType == b.savedOpenType);
+    same(a.savedOpenKnots, b.savedOpenKnots);
+    CHECK(a.m_closedFlag == b.m_closedFlag);
+    CHECK(a.m_periodicFlag == b.m_periodicFlag);
+    same(a.fitTolerance, b.fitTolerance);
+    CHECK(a.fitTangentsConstrained == b.fitTangentsConstrained);
+    same(a.fitStartTangent, b.fitStartTangent);
+    same(a.fitEndTangent, b.fitEndTangent);
+}
+void same(const LC_OffsetSourceGeometry& a, const LC_OffsetSourceGeometry& b) {
+    CHECK(request::Values::encodeSourceGeometry(a) == request::Values::encodeSourceGeometry(b));
 }
 void same(const LC_EllipseOffsetDefinition& a, const LC_EllipseOffsetDefinition& b) {
     same(a.basis, b.basis); same(a.distance, b.distance); same(a.relTolerance, b.relTolerance);
@@ -361,7 +384,7 @@ TEST_CASE("offset worker request has exact version two positional shapes",
           "[lc-offsetcurve][worker-protocol][request]") {
     for (const auto& value : fixtures()) {
         const auto root = encoded(value);
-        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 6);
+        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 7);
         CHECK_FALSE(request::decode(changed(root, {0}, 4)));
         const auto t = root.at(1).toArray();
         REQUIRE(t.size() == 4); CHECK(t.at(0).toInteger() == value.token.requestId);
@@ -1104,7 +1127,7 @@ TEST_CASE("Produce requests freeze protocol five raw sources context bounds and 
     op.fallback = point(8, 9); op.distance = -.125; op.copies = 100; op.asOffsetCurve = true;
     const request::Request input{{71, 73, 79, 83}, op};
     const auto wire = request::encode(input); REQUIRE(wire);
-    CHECK(wire->at(0).toInteger() == 6); CHECK(wire->at(2).toInteger() == 5);
+    CHECK(wire->at(0).toInteger() == 7); CHECK(wire->at(2).toInteger() == 5);
     REQUIRE(wire->at(3).toArray().size() == 10);
     const auto decoded = request::decode(*wire); REQUIRE(decoded);
     CHECK(request::encode(*decoded) == wire); same(input, *decoded);
@@ -1162,7 +1185,7 @@ TEST_CASE("Cached Produce appends operation six with owned bounded ordinary prev
     op.cache.entries.push_back(entry);
     const request::Request input{token(), op};
     const auto wire = request::encode(input); REQUIRE(wire);
-    CHECK(wire->at(0).toInteger() == 6); CHECK(wire->at(2).toInteger() == 6);
+    CHECK(wire->at(0).toInteger() == 7); CHECK(wire->at(2).toInteger() == 6);
     REQUIRE(wire->at(3).toArray().size() == 2);
     CHECK(at(*wire, {3, 0}).toArray().size() == 10);
     CHECK(at(*wire, {3, 1}).toArray().size() == 4);

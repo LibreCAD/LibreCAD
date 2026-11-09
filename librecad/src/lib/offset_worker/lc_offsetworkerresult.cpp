@@ -1226,7 +1226,7 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
             fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
     }
     const auto& t = d.token;
-    return QCborArray{6, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{7, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(d.operation), fields(d.failure), payload};
 }
 
@@ -1235,7 +1235,7 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
     QCborArray t;
     std::size_t version;
     std::size_t items = 0;
-    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 6 || !array(a.at(1), 4, t) ||
+    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 7 || !array(a.at(1), 4, t) ||
         !read(t.at(0), d.token.requestId) || !read(t.at(1), d.token.generation) ||
         !read(t.at(2), d.token.sourceRevision) || !read(t.at(3), d.token.undoEpoch) ||
         !read(a.at(2), d.operation) || !read(a.at(3), d.failure) || !envelope(d, r)) return std::nullopt;

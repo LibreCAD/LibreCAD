@@ -2015,6 +2015,7 @@ struct LC_OffsetBatchPreparation::Data {
     LC_OffsetBatchLimits limits;
     std::map<const RS_Entity*, Row> rows;
     RS_Entity* pending = nullptr;
+    std::optional<LC_OffsetSourceGeometry> pendingTypedSource;
     std::size_t remaining = 0;
     LC_OffsetPreviewCache* pendingCache = nullptr;
     std::unique_ptr<LC_OffsetWorkerRequest::Request> expected;
@@ -2023,21 +2024,32 @@ struct LC_OffsetBatchPreparation::Data {
     QList<RS_Entity*> finalOrder;
 };
 
-LC_OffsetBatchPreparation::LC_OffsetBatchPreparation(const RS_OffsetData& data,
-    const QList<RS_Entity*>& sources, bool preview, const LC_OffsetBatchLimits& limits)
-    : m_data(std::make_unique<Data>()) {
-    if (sources.size() > maximumSources) throw std::length_error("Offset source inventory exceeded");
-    m_data->data = data; m_data->sources = sources; m_data->preview = preview; m_data->limits = limits;
+LC_OffsetBatchPreparation::LC_OffsetBatchPreparation(const RS_OffsetData& data, const QList<RS_Entity*>& sources, bool preview,
+                                                     const LC_OffsetBatchLimits& limits) : m_data(std::make_unique<Data>()) {
+    if (sources.size() > maximumSources)
+        throw std::length_error("Offset source inventory exceeded");
+    m_data->data = data;
+    m_data->sources = sources;
+    m_data->preview = preview;
+    m_data->limits = limits;
 }
 LC_OffsetBatchPreparation::~LC_OffsetBatchPreparation() = default;
 
 bool LC_OffsetBatchPreparation::advance(LC_DocumentModificationBatch& batch, LC_OffsetPreviewCache* cache) {
     auto& d = *m_data;
-    if (d.released) throw std::logic_error("Offset staging already published");
-    d.pending = nullptr; d.pendingCache = nullptr; d.expected.reset(); d.ready = false;
+    if (d.released)
+        throw std::logic_error("Offset staging already published");
+    d.pending = nullptr;
+    d.pendingTypedSource.reset();
+    d.pendingCache = nullptr;
+    d.expected.reset();
+    d.ready = false;
     batch = {};
     d.outcome = RS_Modification::offsetWithOutcomeImpl(d.data, d.sources, d.preview, d.limits, batch, cache, this);
-    if (d.pending) { batch = {}; return false; }
+    if (d.pending) {
+        batch = {};
+        return false;
+    }
     d.finalAdded.assign(batch.entitiesToAdd.begin(), batch.entitiesToAdd.end());
     d.finalOrder = batch.entitiesToAdd;
     std::sort(d.finalAdded.begin(), d.finalAdded.end(), std::less<RS_Entity*>{});
@@ -2046,91 +2058,144 @@ bool LC_OffsetBatchPreparation::advance(LC_DocumentModificationBatch& batch, LC_
     d.ready = true;
     return true;
 }
-const RS_Entity* LC_OffsetBatchPreparation::pendingSource() const noexcept { return m_data->pending; }
-const LC_OffsetBatchOutcome& LC_OffsetBatchPreparation::outcome() const noexcept { return m_data->outcome; }
+const RS_Entity* LC_OffsetBatchPreparation::pendingSource() const noexcept {
+    return m_data->pending;
+}
+const LC_OffsetBatchOutcome& LC_OffsetBatchPreparation::outcome() const noexcept {
+    return m_data->outcome;
+}
 
-std::unique_ptr<LC_OffsetWorkerRequest::Request> LC_OffsetBatchPreparation::request(
-    const LC_OffsetWorkerRequest::Token& token, LC_OffsetPreviewCache* cache) {
+std::unique_ptr<LC_OffsetWorkerRequest::Request> LC_OffsetBatchPreparation::request(const LC_OffsetWorkerRequest::Token& token,
+                                                                                    LC_OffsetPreviewCache* cache) {
     namespace req = LC_OffsetWorkerRequest;
     auto& d = *m_data;
-    if (!d.pending || d.released) return {};
+    if (!d.pending || d.released)
+        return {};
     auto& source = *d.pending;
     req::Produce op;
-    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source)) op.source = ellipse->getData();
+    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source))
+        op.source = ellipse->getData();
     else if (const auto* native = dynamic_cast<const LC_OffsetCurve*>(&source)) {
         const auto& raw = native->getData();
-        if (raw.controlPoints.size() > 16384 || raw.knotslist.size() > 32768 || raw.weights.size() > 16384 ||
-            raw.fitPoints.size() > 4096 || raw.savedOpenKnots.size() > 32768) return {};
-        op.source = raw; op.context.nativeSource = true;
-        if (native->hasEditableDefinition()) op.context.nativeDefinition = native->definition();
-    } else return {};
+        if (raw.controlPoints.size() > 16384 || raw.knotslist.size() > 32768 || raw.weights.size() > 16384 || raw.fitPoints.size() > 4096 ||
+            raw.savedOpenKnots.size() > 32768)
+            return {};
+        op.source = raw;
+        op.context.nativeSource = true;
+        if (native->hasEditableDefinition())
+            op.context.nativeDefinition = native->definition();
+    }
+    else if (const auto* spline = dynamic_cast<const RS_Spline*>(&source)) {
+        const auto& raw = spline->getData();
+        if (raw.controlPoints.size() > 16384 || raw.knotslist.size() > 32768 || raw.weights.size() > 16384 || raw.fitPoints.size() > 4096 ||
+            raw.savedOpenKnots.size() > 32768)
+            return {};
+        op.source = raw;
+    }
+    else if (d.pendingTypedSource) {
+        op.source = *d.pendingTypedSource;
+    }
+    else {
+        return {};
+    }
     auto* parent = source.getParent();
     op.context.topLevel = parent && parent->isDocument() && !source.isDeleted() && parent->findEntityIndex(&source) >= 0;
-    if (source.getMin().valid) op.minimum = source.getMin();
-    if (source.getMax().valid) op.maximum = source.getMax();
+    if (source.getMin().valid)
+        op.minimum = source.getMin();
+    if (source.getMax().valid)
+        op.maximum = source.getMax();
     op.coordinate = d.data.coord;
-    if (d.data.sideFallback.valid) op.fallback = d.data.sideFallback;
-    op.distance = d.data.distance; op.copies = d.data.obtainNumberOfCopies();
-    op.asOffsetCurve = d.data.asOffsetCurve; op.preview = d.preview; op.limits = d.limits;
+    if (d.data.sideFallback.valid)
+        op.fallback = d.data.sideFallback;
+    op.distance = d.data.distance;
+    op.copies = d.data.obtainNumberOfCopies();
+    op.asOffsetCurve = d.data.asOffsetCurve;
+    op.preview = d.preview;
+    op.limits = d.limits;
     op.limits.maxDeepEntitiesPerRequest = d.remaining;
-    auto value = std::make_unique<req::Request>(); value->token = token;
+    auto value = std::make_unique<req::Request>();
+    value->token = token;
     if (cache) {
         auto snapshot = cache->snapshot(d.pending);
-        if (!snapshot) return {};
+        if (!snapshot)
+            return {};
         value->operation = req::CachedProduce{std::move(op), std::move(*snapshot)};
-    } else value->operation = std::move(op);
-    if (!req::admitted(*value)) return {};
-    d.expected = std::make_unique<req::Request>(*value); d.pendingCache = cache;
+    }
+    else
+        value->operation = std::move(op);
+    if (!req::admitted(*value))
+        return {};
+    d.expected = std::make_unique<req::Request>(*value);
+    d.pendingCache = cache;
     return value;
 }
 
 bool LC_OffsetBatchPreparation::accept(const LC_OffsetWorkerCompletion& completion) {
     namespace req = LC_OffsetWorkerRequest;
     auto& d = *m_data;
-    if (!d.pending || !d.expected || d.released || !completion.isJoined()) return false;
-    if (req::encode(*d.expected) != req::encode(completion.request())) return false;
+    if (!d.pending || !d.expected || d.released || !completion.isJoined())
+        return false;
+    if (req::encode(*d.expected) != req::encode(completion.request()))
+        return false;
     auto prepared = completion.produced(*d.pending);
-    if (!prepared) return false;
-    Data::Row row; row.outcome = std::move(prepared->outcome); row.roots = std::move(prepared->entities);
-    row.outcome.source = d.pending; row.remaining = d.remaining;
-    decltype(d.rows) staged; staged.emplace(d.pending, std::move(row));
-    if (d.pendingCache && !completion.updatePreviewCache(*d.pendingCache, d.pending)) return false;
+    if (!prepared)
+        return false;
+    Data::Row row;
+    row.outcome = std::move(prepared->outcome);
+    row.roots = std::move(prepared->entities);
+    row.outcome.source = d.pending;
+    row.remaining = d.remaining;
+    decltype(d.rows) staged;
+    staged.emplace(d.pending, std::move(row));
+    if (d.pendingCache && !completion.updatePreviewCache(*d.pendingCache, d.pending))
+        return false;
     d.rows.insert(staged.extract(staged.begin()));
-    d.pending = nullptr; d.expected.reset(); d.pendingCache = nullptr;
+    d.pending = nullptr;
+    d.expected.reset();
+    d.pendingCache = nullptr;
     return true;
 }
 
 std::vector<std::unique_ptr<RS_Entity>> LC_OffsetBatchPreparation::take() {
     auto& d = *m_data;
-    if (!d.ready || d.released) throw std::logic_error("Offset batch is not privately ready");
+    if (!d.ready || d.released)
+        throw std::logic_error("Offset batch is not privately ready");
     std::map<RS_Entity*, std::unique_ptr<RS_Entity>*> owners;
-    for (auto& row : d.rows) for (auto& root : row.second.roots) owners.emplace(root.get(), &root);
-    std::vector<std::unique_ptr<RS_Entity>> result; result.reserve(d.finalOrder.size());
-    for (auto* address : std::as_const(d.finalOrder)) if (!owners.count(address))
-        throw std::logic_error("Offset output owner is missing");
-    for (auto* address : std::as_const(d.finalOrder)) result.push_back(std::move(*owners.at(address)));
+    for (auto& row : d.rows)
+        for (auto& root : row.second.roots)
+            owners.emplace(root.get(), &root);
+    std::vector<std::unique_ptr<RS_Entity>> result;
+    result.reserve(d.finalOrder.size());
+    for (auto* address : std::as_const(d.finalOrder))
+        if (!owners.count(address))
+            throw std::logic_error("Offset output owner is missing");
+    for (auto* address : std::as_const(d.finalOrder))
+        result.push_back(std::move(*owners.at(address)));
     d.released = true;
     return result;
 }
 
 void LC_OffsetBatchPreparation::release() noexcept {
     auto& d = *m_data;
-    if (!d.ready || d.released) return;
-    for (auto& row : d.rows) for (auto& root : row.second.roots)
-        if (std::binary_search(d.finalAdded.begin(), d.finalAdded.end(), root.get(), std::less<RS_Entity*>{})) root.release();
+    if (!d.ready || d.released)
+        return;
+    for (auto& row : d.rows)
+        for (auto& root : row.second.roots)
+            if (std::binary_search(d.finalAdded.begin(), d.finalAdded.end(), root.get(), std::less<RS_Entity*>{}))
+                root.release();
     d.released = true;
 }
 
 LC_OffsetBatchOutcome RS_Modification::offsetWithOutcome(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList,
                                                          const bool forPreviewOnly, const LC_OffsetBatchLimits& limits,
-                                                         LC_DocumentModificationBatch& ctx,
-                                                         LC_OffsetPreviewCache* const cache) {
+                                                         LC_DocumentModificationBatch& ctx, LC_OffsetPreviewCache* const cache) {
     return offsetWithOutcomeImpl(data, entitiesList, forPreviewOnly, limits, ctx, cache, nullptr);
 }
 
 LC_OffsetBatchOutcome RS_Modification::offsetWithOutcomeImpl(const RS_OffsetData& data, const QList<RS_Entity*>& entitiesList,
-    const bool forPreviewOnly, const LC_OffsetBatchLimits& limits, LC_DocumentModificationBatch& ctx,
-    LC_OffsetPreviewCache* const cache, LC_OffsetBatchPreparation* preparation) {
+                                                             const bool forPreviewOnly, const LC_OffsetBatchLimits& limits,
+                                                             LC_DocumentModificationBatch& ctx, LC_OffsetPreviewCache* const cache,
+                                                             LC_OffsetBatchPreparation* preparation) {
     LC_OffsetBatchOutcome outcome;
     ctx.setActiveLayer = data.useCurrentLayer;
     ctx.setActivePen = data.useCurrentAttributes;
@@ -2200,8 +2265,7 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcomeImpl(const RS_OffsetData
                 continue;
             }
         }
-        RS_Entity* const target =
-            (segmentRun != nullptr && segmentRun->chain != nullptr) ? segmentRun->chain.get() : e;
+        RS_Entity* const target = (segmentRun != nullptr && segmentRun->chain != nullptr) ? segmentRun->chain.get() : e;
         LC_OffsetSourceOutcome result;
         result.source = e;
         result.copiesRequested = numberOfCopies;
@@ -2231,11 +2295,26 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcomeImpl(const RS_OffsetData
             auto* staged = preparation ? preparation->m_data.get() : nullptr;
             const auto stored = staged ? staged->rows.find(e) : decltype(staged->rows)::iterator{};
             if (staged && stored != staged->rows.end()) {
-                if (stored->second.remaining != requestDeepLeft) throw std::logic_error("Offset source allowance changed");
-                result = stored->second.outcome; ownedRoots = &stored->second.roots;
-            } else if (staged && (dynamic_cast<const RS_Ellipse*>(target) || dynamic_cast<const LC_OffsetCurve*>(target))) {
-                staged->pending = e; staged->remaining = requestDeepLeft;
+                if (stored->second.remaining != requestDeepLeft)
+                    throw std::logic_error("Offset source allowance changed");
+                result = stored->second.outcome;
+                ownedRoots = &stored->second.roots;
+            } else if (staged && (dynamic_cast<const RS_Ellipse *>(target) ||
+                                   dynamic_cast<const LC_OffsetCurve *>(target))) {
+                staged->pending = e;
+                staged->remaining = requestDeepLeft;
                 return outcome; // Owned numeric prefixes remain staged, never published or recomputed.
+            } else if (staged) {
+                auto typedSource = LC_OffsetSourceGeometry::capture(*target);
+                const bool deferSimpleLine = dynamic_cast<const RS_Line *>(target) && entitiesList.size() > 1;
+                if (typedSource && !deferSimpleLine) {
+                    staged->pending = e;
+                    staged->pendingTypedSource = std::move(*typedSource);
+                    staged->remaining = requestDeepLeft;
+                    return outcome;
+                }
+                result.status = prepareOffsetSourceImpl(data, *target, forPreviewOnly, limits, requestDeepLeft,
+                    roots, result, cache, nullptr, numberOfCopies);
             } else result.status = prepareOffsetSourceImpl(data, *target, forPreviewOnly, limits, requestDeepLeft,
                 roots, result, cache, nullptr, numberOfCopies);
             if (!result.succeeded()) {
@@ -2252,19 +2331,22 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcomeImpl(const RS_OffsetData
             }
         }
         if (result.succeeded()) {
-            // only a source that succeeded is handed over, and only then debits the request
-            requestDeepLeft -= std::min(requestDeepLeft, result.usage.deepEntities);
-            for (std::unique_ptr<RS_Entity>& root : *ownedRoots) {
-                //highlight is used by trim actions. do not carry over flag
-                root->setHighlighted(false);
-                result.createdEntities.append(root.get());
-                ctx += preparation ? root.get() : root.release();
-            }
-            if (result.complete() && segmentRun == nullptr &&
-                (!e->getParent() || (e->getParent()->isDocument() && e->getParent()->findEntityIndex(e) >= 0))) {
-                offsetOriginals.append(e); // a source short of copies is kept
-                result.sourceRemoved = !data.keepOriginals && !forPreviewOnly;
-            }
+          // only a source that succeeded is handed over, and only then debits
+          // the request
+          requestDeepLeft -=
+              std::min(requestDeepLeft, result.usage.deepEntities);
+          for (std::unique_ptr<RS_Entity> &root : *ownedRoots) {
+            // highlight is used by trim actions. do not carry over flag
+            root->setHighlighted(false);
+            result.createdEntities.append(root.get());
+            ctx += preparation ? root.get() : root.release();
+          }
+          if (result.complete() && segmentRun == nullptr &&
+              (!e->getParent() || (e->getParent()->isDocument() &&
+                                   e->getParent()->findEntityIndex(e) >= 0))) {
+            offsetOriginals.append(e); // a source short of copies is kept
+            result.sourceRemoved = !data.keepOriginals && !forPreviewOnly;
+          }
         }
         if (segmentRun != nullptr) {
             runOutcome[segmentRun] = result;

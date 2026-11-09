@@ -63,7 +63,7 @@ struct CheckThrough {
  * policy without repairing raw input or constructing a synthetic document.
  */
 struct Produce {
-    std::variant<RS_EllipseData, RS_SplineData> source;
+    std::variant<RS_EllipseData, RS_SplineData, LC_OffsetSourceGeometry> source;
     LC_OffsetSourceContext context;
     std::optional<RS_Vector> minimum, maximum;
     RS_Vector coordinate;
