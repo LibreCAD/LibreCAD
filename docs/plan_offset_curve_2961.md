@@ -29930,12 +29930,13 @@ at the engine's ellipse-adapter parameter phase. The same native-circle source
 is carried through the real worker with operation-8 cache admission required,
 translated replacement, Produce, and all five file round-trip lanes.
 
-Validation: focused exact-normal oracle passes 3,946 assertions; all eight
-`[oracle]` cases pass 48,135 assertions; complete `[curve-offset][direct]`
-passes 113,878 assertions/41 cases. The focused worker family case passes
+Validation: focused exact-normal and collapse-boundary oracle passes 5,264
+assertions; all eight `[oracle]` cases pass 49,453 assertions; complete
+`[curve-offset][direct]` passes 115,196 assertions/41 cases. The focused worker family case passes
 67,751 assertions; the complete client suite passes 74,610 assertions/21
 cases. LibreDWG 0.14 reads R2000 and R2018 outputs with ARC=1, CIRCLE=2,
 LINE=1, LWPOLYLINE=4, SPLINE=19; all SPLINEs have non-empty controls and valid
-knot cardinality. This covers a nonzero near-collapse native-circle offset,
-not the exact zero-radius boundary, offsets beyond collapse, extreme scales,
-visible GUI, or ODA/AutoCAD acceptance.
+knot cardinality. Direct geometry vanishes at exactly the radius and produces
+the exact reversed small-circle locus just beyond it; only the nonzero
+near-collapse fixture is carried through the worker and persistence lanes.
+Extreme scales, visible GUI, and ODA/AutoCAD acceptance remain open.

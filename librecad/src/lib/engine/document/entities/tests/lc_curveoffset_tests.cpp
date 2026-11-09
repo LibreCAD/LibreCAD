@@ -849,6 +849,21 @@ TEST_CASE("Native circles preserve exact normals near inner collapse",
         REQUIRE(result.branches.size() == 1);
         CHECK(maxDeviation(result, exactCircle) <= options.tolerance.requestedGeometry);
     }
+
+    const auto collapseOptions = LC_CurveOffset::makeDirectOptions(source, 2.0);
+    const auto collapsed = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 2.0), collapseOptions,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(collapsed.branches.empty());
+
+    const double beyondCollapseDistance = 2.1;
+    const auto beyondOptions = LC_CurveOffset::makeDirectOptions(source, beyondCollapseDistance);
+    const auto beyondCollapse = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, beyondCollapseDistance), beyondOptions,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(beyondCollapse.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(beyondCollapse.branches.size() == 1);
+    CHECK(maxDeviation(beyondCollapse, exactCircle) <= beyondOptions.tolerance.requestedGeometry);
 }
 
 TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direct]") {
