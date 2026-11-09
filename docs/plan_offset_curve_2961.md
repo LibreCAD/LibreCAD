@@ -28702,3 +28702,25 @@ cases; the changed range passes repository clang-format and `git diff --check`.
 Test commit `fe704216f` (`test(offset): widen rational knot weights`). Native
 file persistence for the new high-contrast profile, arbitrary weights, external
 CAD, visible GUI and exact-head CI remain open.
+
+## 630. Persist the Higher-contrast Weight Profile (2026-11-09)
+
+Extended the native multi-knot writer/reopen matrix with W629's `.25`-to-`2.8`
+positive weight profile on the four-knot `.12`/`.31`/`.58`/`.82` source. The
+matrix now covers six bounded knot/weight profiles across degrees 3/4/5/6,
+both curvature orientations, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+(48 source fixtures and 240 fixture/lane combinations). Fixture and retained
+DWG names distinguish default, moderate alternate, and high-contrast weights.
+Each lane verifies staged import, typed-source equality, exact cache-fingerprint
+preservation, and writer export/reopen. DWG retention remains opt-in through
+`LIBRECAD_TYPED_SOURCE_DWG_DIR`.
+
+Validation: focused Release persistence test passes 93,294 assertions/1 test
+case; all 96 retained R2000/R2018 DWGs independently decode with LibreDWG 0.14
+minJSON and each contains exactly one nonempty degree-3 SPLINE with
+`LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release `librecad_tests`
+target builds, the changed test range passes repository clang-format, and
+`git diff --check` passes. Test commit `d90da6314` (`test(offset): persist
+high-contrast spline weights`). This qualifies the enumerated bounded profiles
+and file versions only; arbitrary weights, external-CAD acceptance, visible
+GUI, and exact-head CI remain open.
