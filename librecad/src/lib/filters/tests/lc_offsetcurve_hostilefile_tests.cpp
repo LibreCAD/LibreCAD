@@ -8225,6 +8225,7 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
     };
     const std::array<Fixture, 4> fixtures{{
         {0.25, 0.5}, {0.25, 2.0}, {0.5, 0.5}, {0.5, 2.0}}};
+    constexpr std::array<double, 3> scales{0.5, 1.0, 2.0};
     const std::array<std::pair<Lane, bool>, 5> lanes{{
         {Lane::Binary14, false}, {Lane::Binary2000, false}, {Lane::Eed2000, true},
         {Lane::Binary18, false}, {Lane::Eed18, true}}};
@@ -8252,23 +8253,25 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
 
     for (std::size_t fixtureIndex = 0; fixtureIndex < fixtures.size(); ++fixtureIndex) {
         const auto [insertion, middleWeight] = fixtures[fixtureIndex];
+        for (const double scale : scales) {
+        CAPTURE(fixtureIndex, insertion, middleWeight, scale);
         const double firstWeight = 1.0 - insertion + insertion * middleWeight;
         const double secondWeight = (1.0 - insertion) * middleWeight + insertion;
         RS_SplineData sourceData{2, false};
         sourceData.controlPoints = {
-            {-2, 0},
-            {-2 * (1.0 - insertion) / firstWeight,
-             2 * middleWeight * insertion / firstWeight},
-            {2 * insertion / secondWeight,
-             2 * middleWeight * (1.0 - insertion) / secondWeight},
-            {2, 0}};
+            {-2 * scale, 0},
+            {-2 * scale * (1.0 - insertion) / firstWeight,
+             2 * scale * middleWeight * insertion / firstWeight},
+            {2 * scale * insertion / secondWeight,
+             2 * scale * middleWeight * (1.0 - insertion) / secondWeight},
+            {2 * scale, 0}};
         sourceData.knotslist = {0, 0, 0, insertion, 1, 1, 1};
         sourceData.weights = {1, firstWeight, secondWeight, 1};
         RS_Spline insertedSource{nullptr, sourceData};
         REQUIRE(insertedSource.validate());
 
         RS_SplineData originalData{2, false};
-        originalData.controlPoints = {{-2, 0}, {0, 2}, {2, 0}};
+        originalData.controlPoints = {{-2 * scale, 0}, {0, 2 * scale}, {2 * scale, 0}};
         originalData.knotslist = {0, 0, 0, 1, 1, 1};
         originalData.weights = {1, middleWeight, 1};
         RS_Spline originalSource{nullptr, originalData};
@@ -8280,14 +8283,15 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
                 parameter, LC_CurveEvaluationSide::Interior, insertedJet));
             REQUIRE(originalSource.tryEvaluateJet(
                 parameter, LC_CurveEvaluationSide::Interior, originalJet));
-            CHECK(insertedJet.point.distanceTo(originalJet.point) < 1e-12);
+            CHECK(insertedJet.point.distanceTo(originalJet.point) < 1e-12 * scale);
         }
 
         for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
                                                 LC_CurveOffsetSide::Right}) {
-            const double signedDistance = side == LC_CurveOffsetSide::Left ? 0.05 : -0.05;
+            const double signedDistance =
+                (side == LC_CurveOffsetSide::Left ? 0.05 : -0.05) * scale;
             const LC_OffsetSourceDefinition definition{
-                LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
+                LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4 * scale, false};
             auto source = definition.source.makeEntity();
             REQUIRE(source);
             const auto options = LC_OffsetWorkerTolerance::directOptions(
@@ -8356,6 +8360,7 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
 
                 const auto input = directory.file(
                     std::to_string(fixtureIndex) + "-" +
+                    std::to_string(scale) + "-" +
                     (side == LC_CurveOffsetSide::Left ? "left-" : "right-") +
                     std::to_string(static_cast<int>(lane)) + (dwg ? ".dwg" : ".dxf"));
 #ifdef DWGSUPPORT
@@ -8370,7 +8375,7 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
                     ? DRW::AC1015 : DRW::AC1032);
 #endif
                 const auto outcome = stagedImport(input, lane);
-                CAPTURE(fixtureIndex, insertion, middleWeight,
+                CAPTURE(fixtureIndex, insertion, middleWeight, scale,
                         static_cast<int>(side), static_cast<int>(lane));
                 REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
                 REQUIRE(outcome.graphic);
@@ -8390,6 +8395,7 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
                 CHECK(RS_Spline::geometryFingerprint(imported->getData()) ==
                       RS_Spline::geometryFingerprint(expectedCache));
             }
+        }
         }
     }
 }
