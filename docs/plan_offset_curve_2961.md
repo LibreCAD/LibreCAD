@@ -63,7 +63,9 @@ asymmetric nonuniform-knot, multiplicity-two, and selected asymmetric
 control/weight fixtures recorded in W506-W511. This is not arbitrary NURBS
 support: untested knot multiplicities/layouts, periodic high-degree offsets,
 large source counts, independent offset-error oracles, and external CAD remain
-open. Properties picker/replacement now has focused degree-4/6 coverage for
+open; wrapped degree-4/6 sources now have worker generation/cache-validation
+coverage, but lack the broader format and GUI qualification needed to close
+periodic support. Properties picker/replacement now has focused degree-4/6 coverage for
 the tested clamped single-span, midpoint-knot, and asymmetric rational
 profiles; this does not qualify other knot layouts or all high-degree
 geometry. Generated editable offset caches are still constrained to the
@@ -27277,3 +27279,22 @@ This closes only Properties replacement for the recorded midpoint-knot and
 asymmetric fixtures. It does not qualify every nonuniform knot vector,
 repeated-knot multiplicity, periodic high-degree source, independent offset
 accuracy, saved/reopened promoted replacement, or external CAD behavior.
+
+## 514. Generate Periodic Degree-4 and Degree-6 Sources in the Worker (2026-11-09)
+
+Added validated wrapped-closed degree-4 and degree-6 spline fixtures with
+unit weights and bounded control/knot counts. Each source generates one
+editable spline cache through worker operation 7, and operation 8 validates
+the exact source/cache pair. The test exercises the existing bounded cache
+contract without broadening output representation.
+
+Validation: focused worker-kernel selector `[high-degree][periodic]` passes
+60 assertions/1 case; `librecad_offset_worker_kernel_tests` builds; `git diff
+--check` passes. Test commit `60bba6ad4` (`test(offset): generate periodic
+high-degree splines`).
+
+This establishes only direct periodic degree-4/6 worker generation and cache
+validation for the recorded unit-weight profiles. Periodic high-degree DXF/DWG
+carrier promotion, source metadata save/reopen, Properties replacement,
+nonuniform/repeated periodic knots, rational periodic variants, independent
+geometry accuracy, and external CAD remain open.
