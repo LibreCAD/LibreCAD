@@ -1577,38 +1577,46 @@ public:
             if (m_source.closed() && !breaks.empty()) {
                 const double start = breaks.front();
                 const double end = breaks.back();
-                const auto nearRoundoffZero = [&](const LC_CurveJet& jet) {
+                const auto factorAndRoundoff = [&](const LC_CurveJet& jet) {
                     const double speedSquared = dot(jet.first, jet.first);
                     const double speed = std::sqrt(speedSquared);
                     const double value = speedSquared * speed -
                                          m_d * cross(jet.first, jet.second);
                     const double roundoff = 64.0 * g_eps *
                         (speedSquared * speed + std::abs(m_d) * speed * jet.second.magnitude());
-                    return std::isfinite(value) && std::isfinite(roundoff) &&
-                           std::abs(value) <= roundoff;
+                    return std::pair{value, roundoff};
                 };
                 LC_CurveJet left;
                 LC_CurveJet right;
                 if (m_source.jet(end, LC_CurveEvaluationSide::Left, left) &&
-                    m_source.jet(start, LC_CurveEvaluationSide::Right, right) &&
-                    nearRoundoffZero(left) && nearRoundoffZero(right)) {
-                    const double boundaryParameterTolerance = 64.0 * g_eps *
-                        std::max({1.0, std::abs(start), std::abs(end)});
-                    const bool candidateOwnsBoundary = std::any_of(
-                        cuspDiagnostics->candidateBoxes.begin(),
-                        cuspDiagnostics->candidateBoxes.end(), [&](const auto& box) {
-                            return (box.t0 <= start && box.t1 >= start) ||
-                                   (box.t0 <= end && box.t1 >= end) ||
-                                   std::abs(box.parameter - start) <= boundaryParameterTolerance ||
-                                   std::abs(box.parameter - end) <= boundaryParameterTolerance;
-                        });
-                    const bool stallOwnsBoundary = std::any_of(
-                        stalls.begin(), stalls.end(), [&](const auto& interval) {
-                            return (interval.first <= start && interval.second >= start) ||
-                                   (interval.first <= end && interval.second >= end);
-                        });
-                    if (!candidateOwnsBoundary && !stallOwnsBoundary)
-                        cuspDiagnostics->unclassifiedBoundaryParameters.push_back(start);
+                    m_source.jet(start, LC_CurveEvaluationSide::Right, right)) {
+                    const auto [leftFactor, leftRoundoff] = factorAndRoundoff(left);
+                    const auto [rightFactor, rightRoundoff] = factorAndRoundoff(right);
+                    const auto withinRoundoff = [](const double value, const double bound) {
+                        return std::isfinite(value) && std::isfinite(bound) &&
+                               std::abs(value) <= bound;
+                    };
+                    if (withinRoundoff(leftFactor, leftRoundoff) &&
+                        withinRoundoff(rightFactor, rightRoundoff)) {
+                        const double boundaryParameterTolerance = 64.0 * g_eps *
+                            std::max({1.0, std::abs(start), std::abs(end)});
+                        const bool candidateOwnsBoundary = std::any_of(
+                            cuspDiagnostics->candidateBoxes.begin(),
+                            cuspDiagnostics->candidateBoxes.end(), [&](const auto& box) {
+                                return (box.t0 <= start && box.t1 >= start) ||
+                                       (box.t0 <= end && box.t1 >= end) ||
+                                       std::abs(box.parameter - start) <= boundaryParameterTolerance ||
+                                       std::abs(box.parameter - end) <= boundaryParameterTolerance;
+                            });
+                        const bool stallOwnsBoundary = std::any_of(
+                            stalls.begin(), stalls.end(), [&](const auto& interval) {
+                                return (interval.first <= start && interval.second >= start) ||
+                                       (interval.first <= end && interval.second >= end);
+                            });
+                        if (!candidateOwnsBoundary && !stallOwnsBoundary)
+                            cuspDiagnostics->unclassifiedBoundaries.push_back(
+                                {start, leftFactor, rightFactor, leftRoundoff, rightRoundoff});
+                    }
                 }
             }
             cuspDiagnostics->candidateParameters = cusps;

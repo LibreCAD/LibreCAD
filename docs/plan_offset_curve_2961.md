@@ -27754,20 +27754,22 @@ fail-closed behavior when the boundary cannot be classified.
 
 ## 587. Surface Unclassified Near-zero Closed Boundaries (2026-11-09)
 
-Added `unclassifiedBoundaryParameters` to test diagnostics. For a closed source,
-the builder records the domain seam only when both one-sided offset-factor
-numerators lie within a scale-aware floating-point roundoff bound and neither
-a candidate box nor stall interval owns the boundary. Candidate ownership
-allows a parameter within an ULP-scaled distance of the seam, covering the
-degree-6 case whose isolated root rounds just inside the domain. This is
-observability only: the field does not certify or create a root, change branch
-geometry, or change acceptance/refusal behavior.
+Added `unclassifiedBoundaries` to test diagnostics. Each record retains the
+domain seam, left/right offset-factor numerators, and each side's floating-point
+roundoff bound. For a closed source, the builder records the seam only when
+both one-sided values lie within their scale-aware bounds and neither a
+candidate box nor stall interval owns the boundary. Candidate ownership allows
+a parameter within an ULP-scaled distance of the seam, covering the degree-6
+case whose isolated root rounds just inside the domain. This is observability
+only: the record does not certify or create a root, change branch geometry, or
+change acceptance/refusal behavior.
 
 The degree-4/5/6 weighted seam fixtures now require every near-zero seam to be
-owned either by a candidate/stall or reported as unclassified, and require at
-least one unclassified case to prevent implicit output closure from hiding the
-diagnostic gap. Validation: focused `[degree-limit]` passes 160 assertions/1
-case; full Release worker-kernel suite passes 1,706,151 assertions/85 cases;
-the target builds and `git diff --check` passes. Certified boundary root
+owned either by a candidate/stall or reported as unclassified, checks both
+recorded factors against their respective bounds, and requires at least one
+unclassified case to prevent implicit output closure from hiding the diagnostic
+gap. Validation: focused `[degree-limit]` passes 162 assertions/1 case; full
+Release worker-kernel suite passes 1,706,153 assertions/85 cases; the target
+builds and `git diff --check` passes. Certified boundary root
 classification, exact event ownership, other profiles, and global
 candidate/stall-to-output bijection remain open.

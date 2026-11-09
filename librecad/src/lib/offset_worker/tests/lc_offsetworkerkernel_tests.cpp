@@ -3665,7 +3665,7 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
             *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
         CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
                 diagnostics.candidateParameters, diagnostics.candidateBoxes,
-                diagnostics.unclassifiedBoundaryParameters,
+                diagnostics.unclassifiedBoundaries,
                 diagnostics.failureStage, diagnostics.failureSpan,
                 diagnostics.failureT0, diagnostics.failureT1,
                 diagnostics.isolationBoxesVisited, diagnostics.failingRunBoxes,
@@ -3685,11 +3685,11 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
                 return (interval.first <= startValue && interval.second >= startValue) ||
                        (interval.first <= endValue && interval.second >= endValue);
             });
-        const bool unclassifiedSeam = std::any_of(
-            diagnostics.unclassifiedBoundaryParameters.begin(),
-            diagnostics.unclassifiedBoundaryParameters.end(), [&](double parameter) {
-                return std::abs(parameter - startValue) < 1e-7 ||
-                       std::abs(parameter - endValue) < 1e-7;
+        const auto unclassifiedSeam = std::find_if(
+            diagnostics.unclassifiedBoundaries.begin(),
+            diagnostics.unclassifiedBoundaries.end(), [&](const auto& boundary) {
+                return std::abs(boundary.parameter - startValue) < 1e-7 ||
+                       std::abs(boundary.parameter - endValue) < 1e-7;
             });
         if (weightProfile == 0) {
             CHECK((seamStall != diagnostics.stallIntervals.end()) !=
@@ -3697,12 +3697,19 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
         } else {
             const bool seamHasOwner = seamStall != diagnostics.stallIntervals.end() ||
                                       seamCandidate != diagnostics.candidateParameters.end();
-            const bool seamHasDiagnostic = seamHasOwner || unclassifiedSeam;
-            const bool conflictingSeamDiagnostics = unclassifiedSeam && seamHasOwner;
+            const bool hasUnclassifiedSeam =
+                unclassifiedSeam != diagnostics.unclassifiedBoundaries.end();
+            const bool seamHasDiagnostic = seamHasOwner || hasUnclassifiedSeam;
+            const bool conflictingSeamDiagnostics = hasUnclassifiedSeam && seamHasOwner;
             CHECK(seamHasDiagnostic);
             CHECK_FALSE(conflictingSeamDiagnostics);
-            if (unclassifiedSeam)
+            if (hasUnclassifiedSeam) {
+                CHECK(std::abs(unclassifiedSeam->leftFactor) <=
+                      unclassifiedSeam->leftRoundoffBound);
+                CHECK(std::abs(unclassifiedSeam->rightFactor) <=
+                      unclassifiedSeam->rightRoundoffBound);
                 ++unclassifiedWeightedSeams;
+            }
         }
         if (seamCandidate != diagnostics.candidateParameters.end()) {
             const auto seamBox = std::find_if(

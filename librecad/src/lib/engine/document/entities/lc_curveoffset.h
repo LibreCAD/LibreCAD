@@ -297,6 +297,15 @@ struct LC_CurveOffsetCuspCandidateBox {
     LC_CurveOffsetCuspCandidateKind kind{LC_CurveOffsetCuspCandidateKind::ExactSample};
 };
 
+/** One-sided floating-point evidence for a closed boundary not owned by a cusp/stall event. */
+struct LC_CurveOffsetUnclassifiedBoundary {
+    double parameter{std::numeric_limits<double>::quiet_NaN()};
+    double leftFactor{std::numeric_limits<double>::quiet_NaN()};
+    double rightFactor{std::numeric_limits<double>::quiet_NaN()};
+    double leftRoundoffBound{std::numeric_limits<double>::quiet_NaN()};
+    double rightRoundoffBound{std::numeric_limits<double>::quiet_NaN()};
+};
+
 /** Test-only snapshot of cusp-isolation progress; candidates may be partial on failure. */
 struct LC_CurveOffsetCuspIsolationDiagnostics {
     LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidSource};
@@ -304,7 +313,7 @@ struct LC_CurveOffsetCuspIsolationDiagnostics {
     std::vector<LC_CurveOffsetCuspCandidateBox> candidateBoxes;
     std::vector<std::pair<double, double>> stallIntervals;
     /** Closed-source boundaries numerically near zero but not owned by a candidate or stall. */
-    std::vector<double> unclassifiedBoundaryParameters;
+    std::vector<LC_CurveOffsetUnclassifiedBoundary> unclassifiedBoundaries;
     std::vector<LC_CurveOffsetTinyReversalCollapse> collapsedTinyReversals;
     std::size_t spansVisited{0};
     std::size_t isolationBoxesVisited{0};
