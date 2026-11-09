@@ -628,13 +628,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         *mixedBulgeSource};
     const std::size_t smallCircleFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{{0.0, 0.0}, 2e-4}});
+    const std::size_t largeCircleFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{{1e10, -1e10}, 2e4}});
     const LC_ParabolaData nearParallelParabola = LC_ParabolaData::FromEndPointsTangents(
         {{{0.0, 0.0}, {10.0, 0.0}}}, {{{1.0, 1e-8}, {1.0, -1e-8}}});
     REQUIRE(nearParallelParabola.isValid());
     const std::size_t nearParallelParabolaFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{nearParallelParabola});
     const std::size_t scaledLineFixtureStart = sources.size();
-    const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 3;
+    const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 4;
     std::vector<double> scaledLineScales;
     std::vector<double> scaledLineDistances;
     const std::array<std::pair<RS_Vector, RS_Vector>, 3> lineProfiles{{
@@ -661,7 +663,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const double sourceDistance = i >= scaledLineFixtureStart ?
             scaledLineDistances[i - scaledLineFixtureStart] :
             i == mixedBulgeFixture ? -.25 : i == smallCircleFixture ? 2e-5 :
-            i == nearParallelParabolaFixture ? .01 :
+            i == largeCircleFixture ? 2e3 : i == nearParallelParabolaFixture ? .01 :
             i == 21 ? .1 : i == 24 ? 1.9 : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
@@ -714,7 +716,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
-        if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture ||
+        if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture ||
             i == nearParallelParabolaFixture ||
             i + 3 >= sources.size() || i >= scaledLineFixtureStart)
             REQUIRE(cacheRepresentable);
