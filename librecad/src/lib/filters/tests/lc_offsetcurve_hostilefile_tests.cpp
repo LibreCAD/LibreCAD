@@ -7289,18 +7289,18 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
     const std::array<double, 11> wideRatioWeightPattern{.05, 20.0, .1, 10.0, .2, 15.0, .08, 18.0, 5.0, .12, 12.0};
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
-    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
     const std::array<std::vector<double>, 4> knotLayouts{{{.25, .5}, {.25, .65}, {.2, .45, .7}, {.12, .31, .58, .82}}};
     const bool fourKnotWeightProfile = layoutProfile >= 3;
     const auto& interiorKnots = knotLayouts[static_cast<std::size_t>(fourKnotWeightProfile ? 3 : layoutProfile)];
-    const std::size_t targetKnotIndex = layoutProfile == 8 || layoutProfile == 11 || layoutProfile == 12 ? 0
-        : layoutProfile == 6 || layoutProfile == 9 || layoutProfile == 13                                ? 1
-        : layoutProfile == 7 || layoutProfile == 10 || layoutProfile == 14                               ? 2
-                                                                                                         : interiorKnots.size() - 1;
+    const std::size_t targetKnotIndex = layoutProfile == 8 || layoutProfile == 11 || layoutProfile == 12 || layoutProfile == 16 ? 0
+        : layoutProfile == 6 || layoutProfile == 9 || layoutProfile == 13 || layoutProfile == 17                                ? 1
+        : layoutProfile == 7 || layoutProfile == 10 || layoutProfile == 14 || layoutProfile == 18                               ? 2
+                                                                                                  : interiorKnots.size() - 1;
     const double targetKnot = interiorKnots[targetKnotIndex];
     const bool alternateWeights = layoutProfile == 4 || layoutProfile == 6 || layoutProfile == 7 || layoutProfile == 11;
     const bool highContrastWeights = layoutProfile == 5 || (layoutProfile >= 12 && layoutProfile <= 14);
-    const bool wideRatioWeights = layoutProfile == 15;
+    const bool wideRatioWeights = layoutProfile >= 15;
     const auto& selectedWeightPattern = alternateWeights ? alternateWeightPattern
         : highContrastWeights                            ? highContrastWeightPattern
         : wideRatioWeights                               ? wideRatioWeightPattern
