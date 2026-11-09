@@ -1045,6 +1045,38 @@ TEST_CASE("Tangent-constrained spline-points follow their exact offset normals",
     }
 }
 
+TEST_CASE("Clamped rational degree-four through degree-six splines follow exact offset normals",
+          "[curve-offset][direct][spline][high-degree][rational][oracle]") {
+    for (const std::size_t degree : {4U, 5U, 6U}) {
+        std::vector<RS_Vector> controls;
+        std::vector<double> weights;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            controls.emplace_back(4.0 * t, 2.0 * t * (1.0 - t));
+            weights.push_back(0.75 + 0.5 * t);
+        }
+        std::vector<double> knots(degree + 1, 0.0);
+        knots.insert(knots.end(), degree + 1, 1.0);
+        const RS_Spline source = makeSpline(degree, controls, knots, weights);
+        CAPTURE(degree);
+        REQUIRE(source.validate());
+
+        for (const double distance : {0.05, 0.2}) {
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                                   LC_CurveOffsetSide::Right}) {
+                CAPTURE(distance, side);
+                const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(maxDeviation(result, evaluator(source)) <=
+                      options.tolerance.requestedGeometry);
+            }
+        }
+    }
+}
+
 TEST_CASE("An S-curve offsets on both sides through its inflection", "[curve-offset][direct]") {
     const RS_Spline s = sCurve();
     for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {

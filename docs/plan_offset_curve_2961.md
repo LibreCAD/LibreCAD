@@ -29803,3 +29803,18 @@ constructions, high-degree geometry accuracy, periodic/closed cases, visible
 GUI, or ODA/AutoCAD acceptance. Continue the capability matrix with the
 remaining spline/conic/polyline variants rather than generalizing from these
 fixtures.
+
+## 665. Qualify Rational High-degree Spline Geometry Directly (2026-11-09)
+
+Added exact-normal offset checks for clamped positive-rational Bezier/NURBS
+sources of degree 4, 5, and 6. Each source has degree+1 controls, endpoint
+clamping, and varying positive weights. Both sides at distances 0.05 and 0.2
+are compared against the exact source evaluator's `C + dN`; source validation,
+piece continuity, and corner joins are included in the shared checker.
+
+Validation: focused degree-4..6 oracle passes 5,627 assertions/1 case; all four
+`[oracle]` cases pass 33,691 assertions; complete `[curve-offset][direct]`
+passes 99,434 assertions/37 cases. This qualifies these simple clamped
+positive-rational profiles only. Interior/repeated knots, periodic layouts,
+high-degree fit-point/tangent combinations, broad weights/scales, worker cache
+promotion for every degree, visible GUI, and ODA/AutoCAD acceptance remain open.
