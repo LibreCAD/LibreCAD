@@ -8224,8 +8224,9 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         double middleWeight;
         std::size_t multiplicity;
         double secondInsertion{};
+        bool asymmetric{};
     };
-    const std::array<Fixture, 24> fixtures{{
+    const std::array<Fixture, 28> fixtures{{
         {0.25, 0.25, 1}, {0.25, 0.5, 1}, {0.25, 2.0, 1}, {0.25, 4.0, 1},
         {0.5, 0.25, 1}, {0.5, 0.5, 1}, {0.5, 2.0, 1}, {0.5, 4.0, 1},
         {0.25, 0.25, 2}, {0.25, 0.5, 2}, {0.25, 2.0, 2}, {0.25, 4.0, 2},
@@ -8233,7 +8234,9 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         {0.25, 0.5, 1, 0.75}, {0.25, 2.0, 1, 0.75},
         {0.75, 0.5, 1, 0.25}, {0.75, 2.0, 1, 0.25},
         {0.125, 0.25, 1, 0.625}, {0.125, 4.0, 1, 0.625},
-        {0.2, 0.25, 1, 0.8}, {0.2, 4.0, 1, 0.8}}};
+        {0.2, 0.25, 1, 0.8}, {0.2, 4.0, 1, 0.8},
+        {0.15, 0.5, 1, 0.7, true}, {0.15, 2.0, 1, 0.7, true},
+        {0.3, 0.5, 1, 0.85, true}, {0.3, 2.0, 1, 0.85, true}}};
     const auto insertKnot = [](RS_SplineData& data, double knot) {
         struct HomogeneousPoint {
             double x;
@@ -8329,16 +8332,22 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
     };
 
     for (std::size_t fixtureIndex = 0; fixtureIndex < fixtures.size(); ++fixtureIndex) {
-        const auto [insertion, middleWeight, multiplicity, secondInsertion] =
-            fixtures[fixtureIndex];
+        const auto [insertion, middleWeight, multiplicity, secondInsertion,
+                    asymmetric] = fixtures[fixtureIndex];
         for (const double scale : scales) {
         CAPTURE(fixtureIndex, insertion, middleWeight, multiplicity,
-                secondInsertion, scale);
+                secondInsertion, asymmetric, scale);
         RS_SplineData sourceData{2, false};
         RS_SplineData originalData{2, false};
-        originalData.controlPoints = {{-2 * scale, 0}, {0, 2 * scale}, {2 * scale, 0}};
+        originalData.controlPoints = asymmetric
+            ? std::vector<RS_Vector>{{-2 * scale, 0},
+                                    {-0.25 * scale, 2.25 * scale},
+                                    {2.5 * scale, 0.75 * scale}}
+            : std::vector<RS_Vector>{{-2 * scale, 0}, {0, 2 * scale}, {2 * scale, 0}};
         originalData.knotslist = {0, 0, 0, 1, 1, 1};
-        originalData.weights = {1, middleWeight, 1};
+        originalData.weights = asymmetric
+            ? std::vector<double>{0.75, middleWeight, 1.25}
+            : std::vector<double>{1, middleWeight, 1};
         RS_Spline originalSource{nullptr, originalData};
         REQUIRE(originalSource.validate());
         sourceData = originalData;
@@ -8347,7 +8356,8 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         if (secondInsertion > 0.0) REQUIRE(insertKnot(sourceData, secondInsertion));
         RS_Spline insertedSource{nullptr, sourceData};
         REQUIRE(insertedSource.validate());
-        for (const double parameter : {0.125, 0.375, 0.625, 0.875}) {
+        for (const double parameter : {0.125, 0.25, 0.375, 0.5,
+                                       0.625, 0.75, 0.875}) {
             LC_CurveJet insertedJet;
             LC_CurveJet originalJet;
             REQUIRE(insertedSource.tryEvaluateJet(
@@ -8449,7 +8459,7 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
 #endif
                 const auto outcome = stagedImport(input, lane);
                 CAPTURE(fixtureIndex, insertion, middleWeight, multiplicity,
-                        secondInsertion, scale, static_cast<int>(side),
+                        secondInsertion, asymmetric, scale, static_cast<int>(side),
                         static_cast<int>(lane));
                 REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
                 REQUIRE(outcome.graphic);
