@@ -29995,12 +29995,29 @@ extreme scales, visible GUI, or ODA/AutoCAD acceptance.
 
 ## 676. Revalidate the All-family Source Picker Contract (2026-11-09)
 
-Re-ran the current-build GUI test matrix for source-family switching. The
-focused replacement matrix verifies all nine supported kinds, candidate
+Re-ran the current-build GUI test matrix for source-family switching and
+refined the acceptance contract from the latest request. While replacement
+selection is active, the user must be able to change the requested source
+family before picking; changing the family immediately filters drawing
+candidates without changing the existing source, its generated cache, or its
+highlight. The picker must cover every kind in
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. In particular,
+parabola is a distinct selectable family, not an alias for spline-points.
+Picking a valid candidate atomically adopts its actual typed geometry and
+identity; cancellation, stale candidates, and unsupported variants preserve
+the original source/cache. The current source remains highlighted while the
+candidate filter changes, even when the requested family differs.
+
+The focused replacement matrix verifies all nine supported kinds, candidate
 filtering, successful typed replacement, selected-source highlighting, and
 widget reopen behavior. The full source-picker tag additionally covers
 duplicate identity, deleted candidates, unsupported variants, and atomic
-refusal without filter side effects.
+refusal without filter side effects. This closes the picker-level contract
+only; it does not imply all geometry variants are supported end to end. Keep
+the family-by-family direct oracle, worker/cache, source replacement, and
+applicable DXF/DWG persistence gates separate, and do not add another selector
+or a parabola-only UI path.
 
 Validation: focused all-family picker test passes 8,103 assertions; the full
 `[gui][dialog][offsetcurve][source]` lane passes 11,877 assertions/12 cases
