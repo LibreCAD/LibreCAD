@@ -26883,3 +26883,22 @@ symmetric rational-quadratic profile; it does not establish arbitrary control
 weights, knot vectors/multiplicities, offset magnitudes, periodic cases, or
 general candidate-to-output mapping. Those remain open, as do visible GUI,
 external CAD, and exact-head CI gates.
+
+## 500. Vary Rational Import Offset Magnitudes (2026-11-08)
+
+Expanded Section 497's knot-inserted rational-quadratic product matrix to test
+normalized offset magnitudes `0.025`, `0.05`, and `0.1`, on both left and right
+sides. Each magnitude is multiplied by the same geometry scales `0.5`, `1`,
+and `2`; the four middle weights, two insertion locations, and R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG lanes remain in the matrix. Each combination
+compares worker operation-7 output with direct materialization, then verifies
+staged operation-8 promotion and exact source/cache fingerprints.
+
+Release validation: focused knot-inserted import test, 85,828 assertions/1
+case; `[lc-offsetcurve][import-session][typed-source][spline-variant]` union,
+304,070 assertions/11 cases; target rebuild and `git diff --check` pass. Test
+commit `596d073bb` (`test(offset): vary rational import distances`). These
+three magnitudes qualify only the recorded symmetric rational-quadratic
+profiles; broader offsets, arbitrary rational data, periodic cases, and
+general candidate-to-output mapping remain open. Visible GUI, external CAD,
+and exact-head CI gates also remain open.
