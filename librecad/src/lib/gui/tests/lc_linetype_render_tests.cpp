@@ -823,6 +823,59 @@ TEST_CASE("Group 49 dash lists are canonicalised", "[gui][pen][linetype][dash]")
         CHECK(dash > 0.0);
 }
 
+TEST_CASE("A dash list longer than Qt honours keeps its period",
+          "[gui][pen][linetype][dash]") {
+    QVector<qreal> forty;
+    for (int i = 0; i < 40; ++i) {
+        forty.push_back(static_cast<qreal>((i % 4) + 1));
+    }
+    qreal inputSum = 0.;
+    for (const qreal value : forty) {
+        inputSum += value;
+    }
+    const QVector<qreal> folded = RS_Painter::dashPatternForQt(forty, 1.0);
+    CHECK(folded.size() <= 32);
+    CHECK(folded.size() % 2 == 0);
+    qreal foldedSum = 0.;
+    for (const qreal value : folded) {
+        CHECK(value >= 0.);
+        foldedSum += value;
+    }
+    CHECK(foldedSum == Catch::Approx(inputSum));
+
+    // A list Qt already honours is returned unchanged.
+    QVector<qreal> thirtyTwo;
+    for (int i = 0; i < 32; ++i) {
+        thirtyTwo.push_back(i % 2 == 0 ? 3. : 7.);
+    }
+    CHECK(RS_Painter::dashPatternForQt(thirtyTwo, 1.0) == thirtyTwo);
+
+    // One pair above the limit folds exactly once.
+    QVector<qreal> thirtyFour;
+    for (int i = 0; i < 34; ++i) {
+        thirtyFour.push_back(i % 2 == 0 ? 1.5 : 2.5);
+    }
+    qreal thirtyFourSum = 0.;
+    for (const qreal value : thirtyFour) {
+        thirtyFourSum += value;
+    }
+    const QVector<qreal> once = RS_Painter::dashPatternForQt(thirtyFour, 1.0);
+    CHECK(once.size() == 32);
+    qreal onceSum = 0.;
+    for (const qreal value : once) {
+        onceSum += value;
+    }
+    CHECK(onceSum == Catch::Approx(thirtyFourSum));
+}
+
+TEST_CASE("The period floor accepts and rejects at its boundary",
+          "[gui][pen][linetype][dash]") {
+    CHECK_FALSE(RS_Painter::periodFitsQt(2.9, 0.0));
+    CHECK(RS_Painter::periodFitsQt(3.0, 0.0));
+    CHECK_FALSE(RS_Painter::periodFitsQt(3.5, 40000.0));
+    CHECK(RS_Painter::periodFitsQt(4.0, 40000.0));
+}
+
 TEST_CASE("A named line draws its table dashes", "[gui][pen][linetype]") {
     (void)lc::test::application();
 
@@ -850,6 +903,121 @@ TEST_CASE("A table pattern starting with a gap keeps its phase", "[gui][pen][lin
     checkDashPattern(installed.dashPattern,
                      {20. * installed.scale, 10. * installed.scale});
     CHECK(installed.dashOffset == Catch::Approx(20. * installed.scale));
+}
+
+TEST_CASE("A tiny table pattern draws solid", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "TINY", {0.001, -0.001});
+
+    const InstalledPen installed = installInView(graphic, namedPen("TINY"));
+    CHECK(installed.style == Qt::SolidLine);
+    CHECK_FALSE(installed.hasDashes);
+    CHECK(installed.dashPattern.isEmpty());
+
+    // At factor 4000 the same entry has an 8 px period, above the 3 px floor.
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.setDocument(&graphic);
+    viewport.setOffsetAndFactor(0, 0, 4000.0);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    LineTypeViewRenderer renderer(&viewport, &image);
+    renderer.setupPainter(&painter);
+    painter.setPen(namedPen("TINY"));
+    CHECK(painter.pen().style() == Qt::CustomDashLine);
+    CHECK(painter.penHasDashPattern());
+    checkDashPattern(painter.pen().dashPattern(), {4., 4.});
+}
+
+TEST_CASE("A new view rectangle rebuilds a table pattern", "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "MIDDASH", {2., -2.});
+
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.setDocument(&graphic);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    LineTypeViewRenderer renderer(&viewport, &image);
+    renderer.setupPainter(&painter);
+
+    const RS_Pen pen = namedPen("MIDDASH");
+    painter.setPen(pen);
+    CHECK(painter.pen().style() == Qt::CustomDashLine);
+    CHECK(painter.penHasDashPattern());
+
+    // The 800000 px diagonal puts the floor at 80 px, far above the 4 px period.
+    painter.setWorldBoundingRect(
+        LC_Rect{RS_Vector{0., 0.}, RS_Vector{640000., 480000.}});
+    painter.setPen(pen);
+    CHECK(painter.pen().style() == Qt::SolidLine);
+    CHECK_FALSE(painter.penHasDashPattern());
+
+    // A zero-area rectangle means "no view rectangle" for the floor.
+    painter.setWorldBoundingRect(
+        LC_Rect{RS_Vector{0., 0.}, RS_Vector{0., 0.}});
+    painter.setPen(pen);
+    CHECK(painter.pen().style() == Qt::CustomDashLine);
+    CHECK(painter.penHasDashPattern());
+}
+
+TEST_CASE("A long table pattern draws the same with and without lineweight",
+          "[gui][pen][linetype]") {
+    (void)lc::test::application();
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    std::vector<double> raw;
+    for (int i = 0; i < 40; ++i) {
+        raw.push_back(i % 2 == 0 ? 2. : -2.);
+    }
+    addLineType(graphic, "LONGDASH", raw);
+
+    LC_GraphicViewport viewport;
+    viewport.setSize(640, 480);
+    viewport.setDocument(&graphic);
+    QImage image(640, 480, QImage::Format_RGB32);
+    RS_Painter painter(&image);
+    LineTypeViewRenderer renderer(&viewport, &image);
+    renderer.setupPainter(&painter);
+
+    RS_Pen cosmetic = namedPen("LONGDASH");
+    cosmetic.setScreenWidth(0.0);
+    painter.setPen(cosmetic);
+    REQUIRE(painter.pen().style() == Qt::CustomDashLine);
+    const QVector<qreal> cosmeticPattern = painter.pen().dashPattern();
+
+    RS_Pen weighted = namedPen("LONGDASH");
+    weighted.setScreenWidth(3.0);
+    painter.setPen(weighted);
+    REQUIRE(painter.pen().style() == Qt::CustomDashLine);
+    const QVector<qreal> strokerPattern = painter.pen().dashPattern();
+
+    CHECK(cosmeticPattern.size() == strokerPattern.size());
+    CHECK(cosmeticPattern.size() <= 32);
+    CHECK(cosmeticPattern.size() % 2 == 0);
+    qreal cosmeticPeriod = 0.;
+    qreal strokerPeriod = 0.;
+    for (const qreal value : cosmeticPattern) {
+        cosmeticPeriod += value;
+    }
+    for (const qreal value : strokerPattern) {
+        strokerPeriod += value;
+    }
+    REQUIRE(cosmeticPeriod > 0.);
+    REQUIRE(strokerPeriod > 0.);
+    // The pen width cancels out of the pattern, so each element is the same
+    // fraction of the period at any width.
+    for (qsizetype i = 0; i < cosmeticPattern.size(); ++i) {
+        CHECK(cosmeticPattern.at(i) / cosmeticPeriod
+              == Catch::Approx(strokerPattern.at(i) / strokerPeriod));
+    }
 }
 
 TEST_CASE("Two names with one enum keep separate dash lists", "[gui][pen][linetype]") {
