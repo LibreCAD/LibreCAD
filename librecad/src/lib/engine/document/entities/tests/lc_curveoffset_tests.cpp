@@ -1019,6 +1019,44 @@ TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direc
     CHECK(offsetToSide(parabola, LC_CurveOffsetSide::Left, 3.0).status == LC_CurveOffsetStatus::Ok);
 }
 
+TEST_CASE("Four-point parabola reconstructions retain typed offset support",
+          "[curve-offset][direct][parabola][reconstruction][oracle]") {
+    const std::array<RS_Vector, 3> controls{{{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}}};
+    const auto quadraticAt = [&controls](const double t) {
+        const double u = 1.0 - t;
+        return controls[0] * (u * u) + controls[1] * (2.0 * u * t) + controls[2] * (t * t);
+    };
+    const std::vector<RS_Vector> samples{
+        quadraticAt(0.0), quadraticAt(0.3), quadraticAt(0.7), quadraticAt(1.0)};
+    const std::vector<LC_ParabolaData> candidates = LC_ParabolaData::From4Points(samples);
+    REQUIRE_FALSE(candidates.empty());
+
+    std::size_t validCandidates = 0;
+    for (const LC_ParabolaData& candidate : candidates) {
+        CAPTURE(validCandidates);
+        if (!candidate.isValid()) continue;
+        ++validCandidates;
+
+        const LC_Parabola source{nullptr, candidate};
+        const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+        REQUIRE(snapshot);
+        CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+        CHECK(snapshot->isWellFormed());
+
+        const EvalFn exactCurve = evaluator(source);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            const double distance = 0.1;
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = offsetToSide(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
+        }
+    }
+    CHECK(validCandidates > 0);
+}
+
 TEST_CASE("Typed parabola offsets remain exact after an affine shape transform",
           "[curve-offset][direct][parabola][affine]") {
     const std::array<LC_ParabolaData, 4> transformedSources{{

@@ -30407,3 +30407,22 @@ passes 1,739 assertions/1 case, including both refusal sides, collapsed and
 non-finite inputs. `git diff --check` passes. This does not relax numerical
 guards or qualify one-ULP geometry for worker/cache or persistence. Visible
 GUI, external CAD, cross-platform/ASan, and exact-head CI remain open.
+
+## 689. Qualify Four-point Parabola Reconstruction for Direct Offsets (2026-11-09)
+
+Added a direct exact-normal offset oracle for the parabola candidates produced
+from four samples of a known quadratic Bezier parabola. Every valid candidate
+returned by `LC_ParabolaData::From4Points` for this fixture is captured as the
+distinct `Parabola` source kind, checked for a well-formed typed snapshot, and
+offset on both sides at distance `0.1`. The generated branch geometry is
+compared against the candidate's evaluated source normals. This closes the
+direct-geometry gap between the existing four-point reconstruction test and
+the offset engine for this sample set only; it does not qualify arbitrary
+four-point configurations, tangent degeneracies, worker/cache, or file
+persistence.
+
+Validation: the focused Release case
+`Four-point parabola reconstructions retain typed offset support` passes 1,163
+assertions/1 case after rebuilding `librecad_tests`. Broader parabola
+parameterizations and the visible GUI, external CAD, cross-platform/ASan, and
+exact-head CI gates remain open.
