@@ -8225,8 +8225,9 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         std::size_t multiplicity;
         double secondInsertion{};
         bool asymmetric{};
+        int degree{2};
     };
-    const std::array<Fixture, 28> fixtures{{
+    const std::array<Fixture, 30> fixtures{{
         {0.25, 0.25, 1}, {0.25, 0.5, 1}, {0.25, 2.0, 1}, {0.25, 4.0, 1},
         {0.5, 0.25, 1}, {0.5, 0.5, 1}, {0.5, 2.0, 1}, {0.5, 4.0, 1},
         {0.25, 0.25, 2}, {0.25, 0.5, 2}, {0.25, 2.0, 2}, {0.25, 4.0, 2},
@@ -8236,16 +8237,19 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         {0.125, 0.25, 1, 0.625}, {0.125, 4.0, 1, 0.625},
         {0.2, 0.25, 1, 0.8}, {0.2, 4.0, 1, 0.8},
         {0.15, 0.5, 1, 0.7, true}, {0.15, 2.0, 1, 0.7, true},
-        {0.3, 0.5, 1, 0.85, true}, {0.3, 2.0, 1, 0.85, true}}};
+        {0.3, 0.5, 1, 0.85, true}, {0.3, 2.0, 1, 0.85, true},
+        {0.2, 0.75, 1, 0.7, true, 3},
+        {0.2, 1.5, 1, 0.7, true, 3}}};
     const auto insertKnot = [](RS_SplineData& data, double knot) {
         struct HomogeneousPoint {
             double x;
             double y;
             double weight;
         };
-        constexpr int degree = 2;
+        const int degree = data.degree;
         const int n = static_cast<int>(data.controlPoints.size()) - 1;
-        if (n < degree || data.weights.size() != data.controlPoints.size() ||
+        if (degree < 1 || n < degree ||
+            data.weights.size() != data.controlPoints.size() ||
             data.knotslist.size() != data.controlPoints.size() + degree + 1 ||
             !std::isfinite(knot) || knot <= data.knotslist[degree] ||
             knot >= data.knotslist[n + 1]) {
@@ -8333,21 +8337,31 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
 
     for (std::size_t fixtureIndex = 0; fixtureIndex < fixtures.size(); ++fixtureIndex) {
         const auto [insertion, middleWeight, multiplicity, secondInsertion,
-                    asymmetric] = fixtures[fixtureIndex];
+                    asymmetric, degree] = fixtures[fixtureIndex];
         for (const double scale : scales) {
         CAPTURE(fixtureIndex, insertion, middleWeight, multiplicity,
-                secondInsertion, asymmetric, scale);
-        RS_SplineData sourceData{2, false};
-        RS_SplineData originalData{2, false};
-        originalData.controlPoints = asymmetric
-            ? std::vector<RS_Vector>{{-2 * scale, 0},
-                                    {-0.25 * scale, 2.25 * scale},
-                                    {2.5 * scale, 0.75 * scale}}
-            : std::vector<RS_Vector>{{-2 * scale, 0}, {0, 2 * scale}, {2 * scale, 0}};
-        originalData.knotslist = {0, 0, 0, 1, 1, 1};
-        originalData.weights = asymmetric
-            ? std::vector<double>{0.75, middleWeight, 1.25}
-            : std::vector<double>{1, middleWeight, 1};
+                secondInsertion, asymmetric, degree, scale);
+        RS_SplineData sourceData{degree, false};
+        RS_SplineData originalData{degree, false};
+        if (degree == 3) {
+            originalData.controlPoints = {{-2 * scale, 0},
+                                          {-1.5 * scale, 2.25 * scale},
+                                          {1.25 * scale, 2.5 * scale},
+                                          {2.5 * scale, 0.75 * scale}};
+            originalData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+            originalData.weights = {0.8, middleWeight, 1.35, 0.9};
+        } else {
+            originalData.controlPoints = asymmetric
+                ? std::vector<RS_Vector>{{-2 * scale, 0},
+                                        {-0.25 * scale, 2.25 * scale},
+                                        {2.5 * scale, 0.75 * scale}}
+                : std::vector<RS_Vector>{{-2 * scale, 0}, {0, 2 * scale},
+                                         {2 * scale, 0}};
+            originalData.knotslist = {0, 0, 0, 1, 1, 1};
+            originalData.weights = asymmetric
+                ? std::vector<double>{0.75, middleWeight, 1.25}
+                : std::vector<double>{1, middleWeight, 1};
+        }
         RS_Spline originalSource{nullptr, originalData};
         REQUIRE(originalSource.validate());
         sourceData = originalData;
@@ -8459,7 +8473,8 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
 #endif
                 const auto outcome = stagedImport(input, lane);
                 CAPTURE(fixtureIndex, insertion, middleWeight, multiplicity,
-                        secondInsertion, asymmetric, scale, static_cast<int>(side),
+                        secondInsertion, asymmetric, degree, scale,
+                        static_cast<int>(side),
                         static_cast<int>(lane));
                 REQUIRE(outcome.status == LC_OffsetImportSession::Status::Complete);
                 REQUIRE(outcome.graphic);
