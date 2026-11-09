@@ -42671,47 +42671,47 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1155"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] ગુજરાતી</translation>
+        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1160"/>
         <source>[0B00-0B7F] Oriya</source>
-        <translation>[0B00-0B7F] ଓଡ଼ିଆ</translation>
+        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1165"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] தமிழ்</translation>
+        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1170"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] தெலுங்கு</translation>
+        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1175"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] கன்னடம்</translation>
+        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1180"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] மலையாளம்</translation>
+        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1185"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] சிங்களம்</translation>
+        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1190"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] தை</translation>
+        <translation type="unfinished">[0E00-0E7F] Tailandia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1195"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] லாவோ</translation>
+        <translation type="unfinished">[0E80-0EFF] Lao</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1200"/>
@@ -42721,17 +42721,17 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1205"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] மியான்மர்</translation>
+        <translation type="unfinished">[1000-109F] Myanmar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1210"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] ஜார்ஜியன்</translation>
+        <translation type="unfinished">[10A0-10FF] Georgiano</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1215"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] ஹங்குல் ஜாமோ</translation>
+        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1220"/>
@@ -42741,7 +42741,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1225"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] ચેરોકી</translation>
+        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1230"/>
@@ -42751,37 +42751,37 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1235"/>
         <source>[1680-169F] Ogham</source>
-        <translation>[1680-169F] ઓગહામ</translation>
+        <translation type="unfinished">[1680-169F] Ogham</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1240"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] રુનિક</translation>
+        <translation type="unfinished">[16A0-16FF] Runico</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1245"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] તાગલોગ</translation>
+        <translation type="unfinished">[1700-171F]</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1250"/>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] હનુનો</translation>
+        <translation type="unfinished">[1720-173F] Hanunoo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1255"/>
         <source>[1740-175F] Buhid</source>
-        <translation>[1740-175F] બુહિદ</translation>
+        <translation type="unfinished">[1740-175F] Buhid</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1260"/>
         <source>[1760-177F] Tagbanwa</source>
-        <translation>[1760-177F] તાગબાનવા</translation>
+        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1265"/>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] ખ્મેર</translation>
+        <translation type="unfinished">[1780-17FF] Khmer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1270"/>

@@ -38024,12 +38024,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1363"/>
         <source>[30A0-30FF] Katakana</source>
-        <translation>[30A0-30FF] カタカナ</translation>
+        <translation type="unfinished">[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1368"/>
         <source>[3100-312F] Bopomofo</source>
-        <translation>[3100-312F] 注音文字</translation>
+        <translation type="unfinished">[3100-312F] Bopomofo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1373"/>
@@ -38039,7 +38039,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1378"/>
         <source>[3190-319F] Kanbun</source>
-        <translation>[3190-319F] 漢文</translation>
+        <translation type="unfinished">[3190-319F] Kanbun</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1383"/>
@@ -38059,27 +38059,27 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1398"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK統合漢字拡張A</translation>
+        <translation type="unfinished">[3400-4DBF] Extensión A de ideogramas unificados CJK</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1403"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK統合漢字</translation>
+        <translation type="unfinished">[4E00-9FAF] Ideogramas unificados CJK</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1408"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] イ文字</translation>
+        <translation type="unfinished">[A000-A48F] Sílabas Yi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1413"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] イ部首</translation>
+        <translation type="unfinished">[A490-A4CF] Radicales Yi</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1418"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] ハングル文字</translation>
+        <translation type="unfinished">[AC00-D7AF] Sílabas Hangul</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1423"/>
@@ -38159,7 +38159,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1498"/>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] デザレット</translation>
+        <translation type="unfinished">[10400-1044F] Deseret</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1503"/>
@@ -38179,7 +38179,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1518"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK統合漢字拡張B</translation>
+        <translation type="unfinished">[20000-2A6DF] CJK ideograma-multzo bateratua, luzapen B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1523"/>
@@ -42681,37 +42681,37 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1165"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] தமிழ்</translation>
+        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1170"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] தெலுங்கு</translation>
+        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1175"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] கன்னடம்</translation>
+        <translation type="unfinished">[0C80-0CFF] Kannada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1180"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] மலையாளம்</translation>
+        <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1185"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] சிங்களம்</translation>
+        <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1190"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] தை</translation>
+        <translation type="unfinished">[0E00-0E7F] Tailandia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1195"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] லாவோ</translation>
+        <translation type="unfinished">[0E80-0EFF] Lao</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1200"/>
@@ -42731,7 +42731,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1215"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] ஹங்குல் ஜாமோ</translation>
+        <translation type="unfinished">[1100-11FF] Hangul Jamo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1220"/>
@@ -42741,7 +42741,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1225"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] செரோக்கி</translation>
+        <translation type="unfinished">[13A0-13FF] ᎠᎾᎵᏍᏗ ᏗᎦᏘᏌᎾ ᎤᎾᏓᏅᏍᏗ ᎤᏪᏘᏍᏗ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1230"/>
@@ -42751,7 +42751,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1235"/>
         <source>[1680-169F] Ogham</source>
-        <translation>[1680-169F] ஓகாம்</translation>
+        <translation type="unfinished">[1680-169F] ᎤᎾᎵᏍᏗ ᏗᎦᏘᏌᎾ ᎤᎾᏓᏅᏍᏗ ᎤᏪᏘᏍᏗ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1240"/>
@@ -43016,52 +43016,52 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1500"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK兼容象形文字</translation>
+        <translation type="unfinished">[F900-FAFF] CJK Compatibilidad Ideografías</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1505"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] 字母表示形式</translation>
+        <translation type="unfinished">[FB00-FB4F]</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1510"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] 阿拉伯表示形式-A</translation>
+        <translation type="unfinished">[FB50-FDFF] A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1515"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] 变体选择器</translation>
+        <translation type="unfinished">[FE00-FE0F] Selectores de variación</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1520"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] 组合半音符</translation>
+        <translation type="unfinished">[FE20-FE2F] Combinando medias marcas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1525"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK兼容形式</translation>
+        <translation type="unfinished">[FE30-FE4F] CJK Compatibilidad Formas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1530"/>
         <source>[FE50-FE6F] Small Form Variants</source>
-        <translation>[FE50-FE6F] 小型形式变体</translation>
+        <translation type="unfinished">[FE50-FE6F]</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1535"/>
         <source>[FE70-FEFF] Arabic Presentation Forms-B</source>
-        <translation>[FE70-FEFF] 阿拉伯表示形式-B</translation>
+        <translation type="unfinished">[FE70-FEFF]</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1540"/>
         <source>[FF00-FFEF] Halfwidth and Fullwidth Forms</source>
-        <translation>[FF00-FFEF] 半宽和全宽形式</translation>
+        <translation type="unfinished">[FF00-FFEF] Formas de ancho medio y ancho completo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1545"/>
         <source>[FFF0-FFFF] Specials</source>
-        <translation>[FFF0-FFFF] 特殊字符</translation>
+        <translation type="unfinished">[FFF0-FFFF] Especiales</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1550"/>

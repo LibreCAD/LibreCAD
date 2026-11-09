@@ -37754,37 +37754,37 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1093"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] ગુજરાતી</translation>
+        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1098"/>
         <source>[0B00-0B7F] Oriya</source>
-        <translation>[0B00-0B7F] ଓଡ଼ିଆ</translation>
+        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1103"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] தமிழ்</translation>
+        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1108"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] తెలుగు</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1113"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] ಕನ್ನಡ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1118"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] മലയാളം</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1123"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] සිංහල</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1128"/>
@@ -37794,7 +37794,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1133"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] ລາວ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1138"/>
@@ -42686,32 +42686,32 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1170"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] తెలుగు</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1175"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] ಕನ್ನಡ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1180"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] മലയാളം</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1185"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] සිංහල</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1190"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] ไทย</translation>
+        <translation type="unfinished">[0E00-0E7F] Tailandia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1195"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] ລາວ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1200"/>
@@ -42726,7 +42726,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1210"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] ქართული</translation>
+        <translation type="unfinished">[10A0-10FF] Georgiano</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1215"/>
@@ -42741,52 +42741,52 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1225"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] चेरोकी</translation>
+        <translation type="unfinished">[13A0-13FF] 2. [CONTEXT: QG_DlgMText] [13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1230"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] एकीकृत कनाडाई आदिवासी सिलेबिक</translation>
+        <translation type="unfinished">[1400-167F] 3. [CONTEXT: QG_DlgMText] [1400-167F] Unified Canadian Aboriginal Syllabic</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1235"/>
         <source>[1680-169F] Ogham</source>
-        <translation>[1680-169F] ओघम</translation>
+        <translation type="unfinished">[1680-169F] 4. [CONTEXT: QG_DlgMText] [1680-169F] Ogham</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1240"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] रूणिक</translation>
+        <translation type="unfinished">[16A0-16FF] 5. [CONTEXT: QG_DlgMText] [16A0-16FF] Runic</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1245"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] टैगलोग</translation>
+        <translation type="unfinished">[1700-171F]</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1250"/>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] हनुनू</translation>
+        <translation type="unfinished">[1720-173F] 6. [CONTEXT: QG_DlgMText] [1720-173F] Hanunoo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1255"/>
         <source>[1740-175F] Buhid</source>
-        <translation>[1740-175F] बुहाइड</translation>
+        <translation type="unfinished">[1740-175F] 7. [CONTEXT: QG_DlgMText] [1740-175F] Buhid</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1260"/>
         <source>[1760-177F] Tagbanwa</source>
-        <translation>[1760-177F] टैगबनवा</translation>
+        <translation type="unfinished">[1760-177F] 8. [CONTEXT: QG_DlgMText] [1760-177F] Tagbanwa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1265"/>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] खमेर</translation>
+        <translation type="unfinished">[1780-17FF] 9. [CONTEXT: QG_DlgMText] [1780-17FF] Khmer</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1270"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] मंगोलियाई</translation>
+        <translation type="unfinished">[1800-18AF] Mongolia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1275"/>
@@ -43785,7 +43785,7 @@ Los contenidos de una capa de construcción no deberán aparecer en la impresió
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>ਖੱਬੇ/ਸੱਜੇ ਮਾਊਸ ਬਟਨ ਕਾਰਵਾਈਆਂ ਬਾਰੇ ਸੰਕੇਤ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/status_bar/qg_mousewidget.ui" line="304"/>

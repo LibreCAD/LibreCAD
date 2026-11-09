@@ -42671,47 +42671,47 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1155"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] ગુજરાતી</translation>
+        <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1160"/>
         <source>[0B00-0B7F] Oriya</source>
-        <translation>[0B00-0B7F] ઓડિયા</translation>
+        <translation type="unfinished">[0B00-0B7F] Oriya</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1165"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] તામિલ</translation>
+        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1170"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] તેલુગુ</translation>
+        <translation type="unfinished">[0C00-0C7F] Telugu</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1175"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] કન્નડ</translation>
+        <translation type="unfinished">[0C80-0CFF] 1. [CONTEXT: QG_DlgMText] [0C80-0CFF] Kannada</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1180"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] മലയാളം</translation>
+        <translation type="unfinished">[0D00-0D7F] 2. [CONTEXT: QG_DlgMText] [0D00-0D7F] Malayalam</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1185"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] සිංහල</translation>
+        <translation type="unfinished">[0D80-0DFF] 3. [CONTEXT: QG_DlgMText] [0D80-0DFF] Sinhala</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1190"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] ໄທ</translation>
+        <translation type="unfinished">[0E00-0E7F] Tailandia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1195"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] ລາວ</translation>
+        <translation type="unfinished">[0E80-0EFF] 4. [CONTEXT: QG_DlgMText] [0E80-0EFF] Lao</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1200"/>
@@ -42731,7 +42731,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1215"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] હંગુલ જામો</translation>
+        <translation type="unfinished">[1100-11FF] 5. [CONTEXT: QG_DlgMText] [1100-11FF] Hangul Jamo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1220"/>

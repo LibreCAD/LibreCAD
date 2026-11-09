@@ -37684,12 +37684,12 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1023"/>
         <source>[0250-02AF] IPA Extensions</source>
-        <translation>[0250-02AF] IPA 擴展</translation>
+        <translation type="unfinished">[0250-02AF] Extensões IPA</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1028"/>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation>[02B0-02FF] 間距修飾符號</translation>
+        <translation type="unfinished">[02B0-02FF] Letras Modificadoras de Espaçamento</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1033"/>
@@ -37704,42 +37704,42 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1043"/>
         <source>[0400-04FF] Cyrillic</source>
-        <translation>[0400-04FF] 西里爾字母</translation>
+        <translation type="unfinished">[0400-04FF] Cirílico</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1048"/>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation>[0500-052F] 西里爾字母補充</translation>
+        <translation type="unfinished">[0500-052F] Cirílico Suplementar</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1053"/>
         <source>[0530-058F] Armenian</source>
-        <translation>[0530-058F] 亞美尼亞語</translation>
+        <translation type="unfinished">[0530-058F] Armênio</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1058"/>
         <source>[0590-05FF] Hebrew</source>
-        <translation>[0590-05FF] 希伯來語</translation>
+        <translation type="unfinished">[0590-05FF] Hebraico</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1063"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] 阿拉伯語</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1068"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] సిరియాక్</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1073"/>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] థానా</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1078"/>
         <source>[0900-097F] Devanagari</source>
-        <translation>[0900-097F] దేవనాగరి</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1083"/>
@@ -37749,22 +37749,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1088"/>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation>[0A00-0A7F] గురుముక్కి</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1093"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] గుజరాతీ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1098"/>
         <source>[0B00-0B7F] Oriya</source>
-        <translation>[0B00-0B7F] ఒరియా</translation>
+        <translation type="unfinished">[0B00-0B7F] Odia</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1103"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] తమిళం</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1108"/>
@@ -37779,22 +37779,22 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1118"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] మలయాళం</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1123"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] సింహళం</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1128"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] థాయ్</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1133"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] ລາວ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1138"/>
@@ -37804,17 +37804,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1143"/>
         <source>[1000-109F] Myanmar</source>
-        <translation>[1000-109F] ໄມອານມາ</translation>
+        <translation type="unfinished">[1000-109F] မြန်မာ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1148"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] ຈໍເຈຍ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1153"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] ຮັງກຸນ ຈາໂມ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1158"/>
@@ -37824,7 +37824,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1163"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] ເຊໂຣກີ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1168"/>
@@ -37834,42 +37834,42 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1173"/>
         <source>[1680-169F] Ogham</source>
-        <translation>[1680-169F] ໂອກາ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1178"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] ຣູນິກ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1183"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] ທາກາໂລກ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1188"/>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] ຮານູນູ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1193"/>
         <source>[1740-175F] Buhid</source>
-        <translation>[1740-175F] ບູຮິດ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1198"/>
         <source>[1760-177F] Tagbanwa</source>
-        <translation>[1760-177F] 塔格巴納語</translation>
+        <translation type="unfinished">[1760-177F] Tagbanwa</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1203"/>
         <source>[1780-17FF] Khmer</source>
-        <translation>[1780-17FF] 高棉語</translation>
+        <translation type="unfinished">[1780-17FF] ខ្មែរ</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1208"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] 蒙古語</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1213"/>
@@ -37964,7 +37964,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1303"/>
         <source>[2700-27BF] Dingbats</source>
-        <translation>[2700-27BF] 裝飾符號</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1308"/>
@@ -37979,7 +37979,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1318"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] 布萊葉點字</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1323"/>
@@ -38004,7 +38004,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1343"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] 康熙部首</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1348"/>
@@ -38019,17 +38019,17 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1358"/>
         <source>[3040-309F] Hiragana</source>
-        <translation>[3040-309F] 平假名</translation>
+        <translation type="unfinished">[3040-309F] Χιραγκάνα</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1363"/>
         <source>[30A0-30FF] Katakana</source>
-        <translation>[30A0-30FF] 片假名</translation>
+        <translation type="unfinished">[30A0-30FF] Κατακάνα</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1368"/>
         <source>[3100-312F] Bopomofo</source>
-        <translation>[3100-312F] 注音符號</translation>
+        <translation type="unfinished">[3100-312F] Bopomofo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1373"/>
@@ -38039,7 +38039,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1378"/>
         <source>[3190-319F] Kanbun</source>
-        <translation>[3190-319F] 勘文</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1383"/>
@@ -38059,27 +38059,27 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1398"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK 統一表意文字擴展 A</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1403"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK 統一表意文字</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1408"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] 彝文字節</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1413"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] 彝文字部</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1418"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] 韓文音節</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1423"/>
@@ -38159,7 +38159,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1498"/>
         <source>[10400-1044F] Deseret</source>
-        <translation>[10400-1044F] 迪塞雷特文字</translation>
+        <translation type="unfinished">[10400-1044F] Deseret</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1503"/>
@@ -38179,7 +38179,7 @@ This recursively modifies all entities of the Block itself.</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1518"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK 統一表意文字擴展 B</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_mtext.ui" line="1523"/>
@@ -42456,7 +42456,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="991"/>
         <source>Copyright (©)</source>
-        <translation>版權所有 (©)</translation>
+        <translation type="unfinished">Copyright (©)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="996"/>
@@ -42471,7 +42471,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1006"/>
         <source>Pi (π)</source>
-        <translation>圓周率 (π)</translation>
+        <translation type="unfinished">Pi (π)</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1011"/>
@@ -42511,7 +42511,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1065"/>
         <source>[0000-007F] Basic Latin</source>
-        <translation>[0000-007F] 基本拉丁字母</translation>
+        <translation type="unfinished">[0000-007F] Basic Latin</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="145"/>
@@ -42586,7 +42586,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1070"/>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation>[0080-00FF] 拉丁字母 1 補充</translation>
+        <translation type="unfinished">[0080-00FF] Latin-1 Supplementary</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1075"/>
@@ -42641,37 +42641,37 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1125"/>
         <source>[0600-06FF] Arabic</source>
-        <translation>[0600-06FF] العربية</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1130"/>
         <source>[0700-074F] Syriac</source>
-        <translation>[0700-074F] السريانية</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1135"/>
         <source>[0780-07BF] Thaana</source>
-        <translation>[0780-07BF] ثانا</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1140"/>
         <source>[0900-097F] Devanagari</source>
-        <translation>[0900-097F] ديفاناغاري</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1145"/>
         <source>[0980-09FF] Bengali</source>
-        <translation>[0980-09FF] البنغالية</translation>
+        <translation type="unfinished">[0980-09FF] Bengalí</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1150"/>
         <source>[0A00-0A7F] Gurmukhi</source>
-        <translation>[0A00-0A7F] جورموخي</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1155"/>
         <source>[0A80-0AFF] Gujarati</source>
-        <translation>[0A80-0AFF] الغوجاراتية</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1160"/>
@@ -42681,37 +42681,37 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1165"/>
         <source>[0B80-0BFF] Tamil</source>
-        <translation>[0B80-0BFF] التاميلية</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1170"/>
         <source>[0C00-0C7F] Telugu</source>
-        <translation>[0C00-0C7F] التيلجو</translation>
+        <translation type="unfinished">[0C00-0C7F] Telugú</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1175"/>
         <source>[0C80-0CFF] Kannada</source>
-        <translation>[0C80-0CFF] الكانادا</translation>
+        <translation type="unfinished">[0C80-0CFF] Canarés</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1180"/>
         <source>[0D00-0D7F] Malayalam</source>
-        <translation>[0D00-0D7F] മലയാളം</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1185"/>
         <source>[0D80-0DFF] Sinhala</source>
-        <translation>[0D80-0DFF] සිංහල</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1190"/>
         <source>[0E00-0E7F] Thai</source>
-        <translation>[0E00-0E7F] ไทย</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1195"/>
         <source>[0E80-0EFF] Lao</source>
-        <translation>[0E80-0EFF] ລາວ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1200"/>
@@ -42726,52 +42726,52 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1210"/>
         <source>[10A0-10FF] Georgian</source>
-        <translation>[10A0-10FF] ქართული</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1215"/>
         <source>[1100-11FF] Hangul Jamo</source>
-        <translation>[1100-11FF] ჰანგული</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1220"/>
         <source>[1200-137F] Ethiopic</source>
-        <translation>[1200-137F] ეთიოპური</translation>
+        <translation type="unfinished">[1200-137F] Etíope</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1225"/>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] ჩეროკი</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1230"/>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] კანადური აბორიგენული დამწერლობა</translation>
+        <translation type="unfinished">[1400-167F] Sílabo aborigen canadiense unificado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1235"/>
         <source>[1680-169F] Ogham</source>
-        <translation>[1680-169F] ოღამური</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1240"/>
         <source>[16A0-16FF] Runic</source>
-        <translation>[16A0-16FF] რუნული</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1245"/>
         <source>[1700-171F] Tagalog</source>
-        <translation>[1700-171F] ტაგალოგი</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1250"/>
         <source>[1720-173F] Hanunoo</source>
-        <translation>[1720-173F] ჰანუნუ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1255"/>
         <source>[1740-175F] Buhid</source>
-        <translation>[1740-175F] ბუჰიდი</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1260"/>
@@ -42786,7 +42786,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1270"/>
         <source>[1800-18AF] Mongolian</source>
-        <translation>[1800-18AF] Монгол</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1275"/>
@@ -42826,102 +42826,102 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1310"/>
         <source>[2150-218F] Number Forms</source>
-        <translation>[2150-218F] எண் வடிவங்கள்</translation>
+        <translation type="unfinished">[2150-218F] Formas numerales</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1315"/>
         <source>[2190-21FF] Arrows</source>
-        <translation>[2190-21FF] அம்புகள்</translation>
+        <translation type="unfinished">[2190-21FF] Flechas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1320"/>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation>[2200-22FF] கணிதச் செயற்குறிகள்</translation>
+        <translation type="unfinished">[2200-22FF] Operadores Matemáticos</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1325"/>
         <source>[2300-23FF] Miscellaneous Technical</source>
-        <translation>[2300-23FF] பல்வேறு தொழில்நுட்பக் குறியீடுகள்</translation>
+        <translation type="unfinished">[2300-23FF] Varios variados</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1330"/>
         <source>[2400-243F] Control Pictures</source>
-        <translation>[2400-243F] கட்டுப்பாட்டுப் படங்கள்</translation>
+        <translation type="unfinished">[2400-243F] Imágenes de control</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1335"/>
         <source>[2440-245F] Optical Character Recognition</source>
-        <translation>[2440-245F] ஒளியியல் எழுத்துணரி</translation>
+        <translation type="unfinished">[2440-245F] Caracteres de reconocimiento óptico</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1340"/>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation>[2460-24FF] சுற்றப்பட்ட எழுத்து மற்றும் எண் குறியீடுகள்</translation>
+        <translation type="unfinished">[2460-24FF]</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1345"/>
         <source>[2500-257F] Box Drawing</source>
-        <translation>[2500-257F] பெட்டி வரைதல்</translation>
+        <translation type="unfinished">[2500-257F] Cajas de dibujo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1350"/>
         <source>[2580-259F] Block Elements</source>
-        <translation>[2580-259F] தொகுதி கூறுகள்</translation>
+        <translation type="unfinished">[2580-259F] Elementos de bloque</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1355"/>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation>[25A0-25FF] வடிவவியல் வடிவங்கள்</translation>
+        <translation type="unfinished">[25A0-25FF] Formas Geométricas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1360"/>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation>[2600-26FF] ವಿವಿಧ ಚಿಹ್ನೆಗಳು</translation>
+        <translation type="unfinished">[2600-26FF] Símbolos variados</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1365"/>
         <source>[2700-27BF] Dingbats</source>
-        <translation>[2700-27BF] ಡಿಂಗ್‌ಬ್ಯಾಟ್‌ಗಳು</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1370"/>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
-        <translation>[27C0-27EF] ವಿವಿಧ ಗಣಿತ ಚಿಹ್ನೆಗಳು-ಎ</translation>
+        <translation type="unfinished">[27C0-27EF] Símbolos Matemáticos Varios- A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1375"/>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation>[27F0-27FF] ಸಪ್ಲಿಮೆಂಟಲ್ ಅರೋಗಳು-ಎ</translation>
+        <translation type="unfinished">[27F0-27FF] Flechas suplementarias A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1380"/>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] ಬ್ರೈಲ್ ಮಾದರಿಗಳು</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1385"/>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation>[2900-297F] ಸಪ್ಲಿಮೆಂಟಲ್ ಅರೋಗಳು-ಬಿ</translation>
+        <translation type="unfinished">[2900-297F] Arrows suplementarios-B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1390"/>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] ವಿವಿಧ ಗಣಿತ ಚಿಹ್ನೆಗಳು-ಬಿ</translation>
+        <translation type="unfinished">[2980-29FF] Símbolos Matemáticos diversos-B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1395"/>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation>[2A00-2AFF] ಸಪ್ಲಿಮೆಂಟಲ್ ಗಣಿತ ಸಂಕೇತಗಳು</translation>
+        <translation type="unfinished">[2A00-2AFF] Operadores Matemáticos Suplementarios</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1400"/>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
-        <translation>[2E80-2EFF] ಸಿಜೆಕೆ ಮೂಲಗಳು</translation>
+        <translation type="unfinished">[2E80-2EFF]</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1405"/>
         <source>[2F00-2FDF] Kangxi Radicals</source>
-        <translation>[2F00-2FDF] ಕಾಂಗ್ಕ್ಸಿ ಮೂಲಗಳು</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1410"/>
@@ -42951,97 +42951,97 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1435"/>
         <source>[3130-318F] Hangul Compatibility Jamo</source>
-        <translation>[3130-318F] Hangul 兼容音素</translation>
+        <translation type="unfinished">[3130-318F] Hangul Compatibilidad Jamo</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1440"/>
         <source>[3190-319F] Kanbun</source>
-        <translation>[3190-319F] 勘文</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1445"/>
         <source>[31A0-31BF] Bopomofo Extended</source>
-        <translation>[31A0-31BF] Bopomofo 擴充</translation>
+        <translation type="unfinished">[31A0-31BF] Bopomofo Extendido</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1450"/>
         <source>[3200-32FF] Enclosed CJK Letters and Months</source>
-        <translation>[3200-32FF] 封閉式 CJK 字母和月份</translation>
+        <translation type="unfinished">[3200-32FF] Cartas y Meses CJK adjuntas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1455"/>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation>[3300-33FF] CJK 兼容</translation>
+        <translation type="unfinished">[3300-33FF] CJK Compatibilidad</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1460"/>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
-        <translation>[3400-4DBF] CJK 統一表意文字擴展 A</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1465"/>
         <source>[4E00-9FAF] CJK Unified Ideographs</source>
-        <translation>[4E00-9FAF] CJK 統一表意文字</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1470"/>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] 彝文字節</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1475"/>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] 彝文字根</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1480"/>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] 韓文音節</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1485"/>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] 高位代理區</translation>
+        <translation type="unfinished">[D800-DBFF] Altas Surrogaciones</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1490"/>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] 低位代理區</translation>
+        <translation type="unfinished">[DC00-DFFF] Zona de baja superficie</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1495"/>
         <source>[E000-F8FF] Private Use Area</source>
-        <translation>[E000-F8FF] 私有使用區</translation>
+        <translation type="unfinished">[E000-F8FF] Zona de uso privado</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1500"/>
         <source>[F900-FAFF] CJK Compatibility Ideographs</source>
-        <translation>[F900-FAFF] CJK 相容表意文字</translation>
+        <translation type="unfinished">[F900-FAFF] CJK Compatibilidad Ideografías</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1505"/>
         <source>[FB00-FB4F] Alphabetic Presentation Forms</source>
-        <translation>[FB00-FB4F] 字母呈現形式</translation>
+        <translation type="unfinished">[FB00-FB4F]</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1510"/>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] 阿拉伯語呈現形式-A</translation>
+        <translation type="unfinished">[FB50-FDFF] A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1515"/>
         <source>[FE00-FE0F] Variation Selectors</source>
-        <translation>[FE00-FE0F] 變異選擇器</translation>
+        <translation type="unfinished">[FE00-FE0F] Selectores de variación</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1520"/>
         <source>[FE20-FE2F] Combining Half Marks</source>
-        <translation>[FE20-FE2F] 組合半標記</translation>
+        <translation type="unfinished">[FE20-FE2F] Combinando medias marcas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1525"/>
         <source>[FE30-FE4F] CJK Compatibility Forms</source>
-        <translation>[FE30-FE4F] CJK 兼容形式</translation>
+        <translation type="unfinished">[FE30-FE4F] CJK Compatibilidad Formas</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1530"/>
@@ -43096,12 +43096,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1580"/>
         <source>[20000-2A6DF] CJK Unified Ideographs Extension B</source>
-        <translation>[20000-2A6DF] CJK 统一表意符号扩展 B</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1585"/>
         <source>[2F800-2FA1F] CJK Compatibility Ideographs Supplement</source>
-        <translation>[2F800-2FA1F] CJK 兼容表意符号补充</translation>
+        <translation type="unfinished">[2F800-2FA1F] CJK Compatibilidad Ideografías Suplemento</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1590"/>
@@ -43111,12 +43111,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1595"/>
         <source>[F0000-FFFFD] Supplementary Private Use Area-A</source>
-        <translation>[F0000-FFFFD] 补充专用使用区-A</translation>
+        <translation type="unfinished">[F0000-FFFFD] Zona de uso privado suplementario A</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1600"/>
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
-        <translation>[100000-10FFFD] QG_DlgText [100000-10FFFD] ڀريو ذاتي استعمال وارو علائقو-بي</translation>
+        <translation type="unfinished">[100000-10FFFD] Zona de uso privado suplementario-B</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="1668"/>
@@ -43240,7 +43240,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="162"/>
         <source>QCad Font %1</source>
-        <translation>QCad فانٽ %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="163"/>
@@ -43738,27 +43738,27 @@ Los contenidos de una capa de construcción no deberán aparecer en la impresió
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="91"/>
         <source>Dot (tiny)</source>
-        <translation>ڊاٽ (ڇوٽو)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="95"/>
         <source>Dash (tiny)</source>
-        <translation>ڊيش (ڇوٽو)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="103"/>
         <source>Dash Dot (tiny)</source>
-        <translation>ڊيش ڊاٽ (ڇوٽو)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="107"/>
         <source>Divide (tiny)</source>
-        <translation>ڊوائڊ (ڇوٽو)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="111"/>
         <source>Center (tiny)</source>
-        <translation>مرڪز (ڇوٽو)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="119"/>
@@ -44843,7 +44843,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="493"/>
         <source>LFF Font %1</source>
-        <translation>QObject: LFF ಫಾಂಟ್ %1</translation>
+        <translation type="unfinished">Font LFF %1</translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="495"/>
@@ -44853,12 +44853,12 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="782"/>
         <source>Scalable Vector Graphics</source>
-        <translation>QObject: ಸ್ಕೇಲಬಲ್ ವೆಕ್ಟರ್ ಗ್ರಾಫಿಕ್ಸ್</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="785"/>
         <source>SGI Black &amp; White</source>
-        <translation>QObject: SGI ಕಪ್ಪು ಮತ್ತು ಬಿಳಿ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="788"/>
@@ -44878,7 +44878,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="797"/>
         <source>Windows Icon</source>
-        <translation>QObject: ವಿಂಡೋಸ್ ಐಕಾನ್</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="800"/>
@@ -44888,7 +44888,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="803"/>
         <source>ZSoft Paintbrush</source>
-        <translation>QObject: ZSoft ಪೇಂಟ್ಬ್ರಷ್</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="806"/>
@@ -49835,7 +49835,7 @@ End: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/zoom/rs_actionzoompan.cpp" line="112"/>
         <source>Zoom panning</source>
-        <translation>ஜூம் பேனிங்</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
