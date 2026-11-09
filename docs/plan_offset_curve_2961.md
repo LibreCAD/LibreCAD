@@ -100,6 +100,8 @@ degree-6 open C2 crossing fixtures are qualified (degree 4-6 repeated knots;
 degree 3 simple knot), not general repeated-knot support. W598 mirrors the
 degree-3/4/5 fixtures and verifies their crossings on both signed offset
 sides; this remains evidence for those exact knot and weight profiles.
+W599 additionally runs worker operation 7 and round-trips its result through
+the result codec for every tested degree-3/4/5 mirrored fixture.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -28058,3 +28060,20 @@ five` passes 102 assertions/1 case; complete Release
 `git diff --check` passes. Other knot profiles and multiplicities, periodic
 profiles, full geometry-variant support, exact-head CI, visible GUI, and
 independent-CAD acceptance remain open.
+
+## 599. Exercise C2 Knot Fixtures Through the Worker Protocol (2026-11-09)
+
+For each degree-3/4/5 C2 knot fixture and its mirrored signed-side partner,
+ran worker operation 7 after direct-generation and oracle checks. The worker
+must complete with ordinary output; the result is encoded and decoded against
+the same request, and engine/refusal/status plus ordinary item count are
+compared. This proves request/result protocol passage for these exact
+fixtures, not operation-8 cache acceptance, file persistence, or general
+high-degree spline support.
+
+Validation: focused `C2 rational knot crossings map for degrees three through
+five` passes 240 assertions/1 case; complete Release
+`librecad_offset_worker_kernel_tests` passes 1,706,980 assertions/88 cases;
+`git diff --check` passes. Operation-8 validation, broader knot profiles,
+periodic profiles, full geometry-variant support, exact-head CI, visible GUI,
+and independent-CAD acceptance remain open.
