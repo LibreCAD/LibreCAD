@@ -28249,3 +28249,30 @@ locked, so visible GUI acceptance remains blocked pending an unlocked desktop.
 The exact PR #3193 head at this checkpoint is `024c59f98`; headless and
 cross-platform checks were still in progress when queried. No production code
 changed in this validation slice.
+
+## 608. Use Analytic One-sided Curvature at Rational Knots (2026-11-09)
+
+Resolved W606's `0.23` oracle mismatch without relaxing its strict continuity
+threshold. The prior finite-difference curvature stencil differed by about
+`9.55e-20` at that non-binary knot, so its result was not suitable for the
+`1e-30` one-sided equality assertion. Added a test-only high-precision
+homogeneous de Boor evaluator with derivative control nets through second
+order, then converted the homogeneous derivatives to rational first/second
+derivatives and curvature. It selects the requested left or right span
+directly, preserves the strict `1e-30` analytic curvature-continuity check,
+and cross-checks each analytic one-sided curvature against LibreCAD's
+production spline jet within `1e-12` relative/absolute scale.
+
+The degree-3/4/5 C2 crossing matrix now passes at `0.23`, `0.25`, `0.37`,
+`0.5`, and `0.75` for both curvature orientations, including direct cusp
+certification/mapping and worker operations 7/8 with result-wire round-trips.
+This validates the five recorded parameter locations and existing knot,
+weight, and source profiles; it does not establish arbitrary knot vectors,
+multiplicities, or rational spline geometry.
+
+Validation: focused five-location case passes 2,310 assertions/1 case; full
+Release `librecad_offset_worker_kernel_tests` passes 1,709,050 assertions/88
+cases; post-guard focused rerun passes and `git diff --check` passes. Code
+commit `eeb6369dc` (`test(offset): use analytic C2 knot curvature oracle`).
+Broader knot/profile coverage, full family-variant completion, exact-head CI,
+visible GUI, and external-CAD acceptance remain open.
