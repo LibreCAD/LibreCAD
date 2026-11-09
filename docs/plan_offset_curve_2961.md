@@ -29404,3 +29404,25 @@ eligibility/transport only: they do not close any family's direct geometric
 oracle, cache certification, DXF/DWG persistence, visible GUI, ODA/AutoCAD, or
 exact-head CI gates. Continue W654's per-family accepted/refused matrix and
 qualify concrete variants end-to-end before claiming all-types support.
+
+## 657. Qualify a Near-straight Valid Parabola (2026-11-09)
+
+Added the finite valid control net `(0,0), (5,1e-14), (10,0)` to the typed
+parabola tests. Direct offsets are checked against the exact-normal oracle on
+both sides at normalized distances `0.05` and `0.25`, and scales `1e-8`, `1`,
+and `1e8`. The staged-import matrix carries this profile through operation-7
+generation, operation-8 cache admission or explicit multi-branch refusal, and
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG reopen for representable translated
+cases. When translation erases the tiny sagitta at the coordinate ULP, the
+source definition is rejected before worker encoding; that is recorded as a
+precision refusal rather than repaired into a line or another entity type.
+
+Validation: focused direct affine test passes 23,646 assertions/1 case. The
+expanded staged parabola matrix passes 3,788,717 assertions/1 case, including
+all five internal file lanes for admitted caches; `git diff --check` passes.
+Product/test commit `fc44c184e` (`test(offset): qualify near-straight
+parabola`). LibreDWG's independent R2018 reader check remains conditional and
+still targets the canonical fixture, not this near-straight profile. This
+qualifies only the recorded shape, normalized distances, scales, translation
+grid, and fail-closed precision boundary; broad parabola domains, external-CAD
+acceptance, visible GUI, and other source families remain open.
