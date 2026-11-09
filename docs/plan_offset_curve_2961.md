@@ -30044,7 +30044,8 @@ every endpoint/tangent conditioning, parameter range, or signed distance.
 
 Validation: rebuilt `librecad_offset_worker_client_tests`; the focused
 "Worker client joins typed source generation for every modeled source family"
-case passes 78,186 assertions. The focused
+case passes 78,186 assertions; the complete worker-client executable passes
+82,841 assertions/21 cases. The focused
 "scaled translated parabola caches persist through staged DXF and DWG import"
 case passes 4,012,775 assertions; the test independently parses its selected
 first and final-profile R2018 DWG fixtures with LibreDWG 0.14.
