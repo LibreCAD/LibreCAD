@@ -29125,3 +29125,22 @@ build; `git diff --check` passes. Implementation/test commit `54f010cf2`
 (`test(offset): qualify million-ratio knot crossings`). External-CAD visual
 acceptance, visible GUI acceptance, exact-head CI, and other rational profiles
 remain open.
+
+## 647. Qualify an Affinely Transformed Parabola Through File Lanes (2026-11-09)
+
+Added a typed `LC_Parabola` fixture formed from the canonical quadratic bowl by
+the nonsingular affine map `x'=1.5x+0.35y+4`, `y'=-0.2x+0.7y-3`. Direct
+generation is checked against exact source-normal offsets on both sides at
+distances `0.05` and `0.25`. The fixture is also added to W524's centered and
+translated scale/distance grid, where worker operation 7, operation-8 cache
+admission or explicit multi-branch refusal, and staged R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG reopen are checked. The source remains tagged as
+`LC_Parabola` throughout.
+
+Validation: focused direct test passes 1,745 assertions/1 case. The expanded
+five-lane staged parabola matrix passes 1,378,068 assertions/1 case; Release
+`librecad_tests` builds and `git diff --check` passes. Product/test commit
+`bc5f081c3` (`test(offset): cover affine parabola sources`). This qualifies one
+affine profile, not every parabola transform, shape, distance, or precision
+boundary. External-CAD visual acceptance, visible GUI, exact-head CI, and the
+remaining end-to-end parabola variants stay open.
