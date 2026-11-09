@@ -29426,3 +29426,23 @@ still targets the canonical fixture, not this near-straight profile. This
 qualifies only the recorded shape, normalized distances, scales, translation
 grid, and fail-closed precision boundary; broad parabola domains, external-CAD
 acceptance, visible GUI, and other source families remain open.
+
+## 658. Independently Parse the Near-straight Parabola DWG (2026-11-09)
+
+The near-straight profile loses its sagitta for the prior large translation
+ratios, so the precision matrix now gives this profile a centered lane and
+retains one `1e6` translation lane as an explicit rejection case. The centered
+case is carried through all five internal DXF/DWG lanes. When `dwgread` is
+available, the generated native R2018 DWG is independently parsed and its
+SPLINE degree and control points are compared with the imported native cache.
+The external-reader gate now separately requires the canonical and
+near-straight fixtures.
+
+Validation: the focused staged parabola matrix passes 4,019,440 assertions/1
+case with LibreDWG 0.14 available, including both independent-reader checks;
+`git diff --check` passes. Product/test commit `9874034a8` (`test(offset):
+verify near-straight DWG independently`). This adds independent-reader
+evidence for this centered near-straight profile, not acceptance by
+ODA/AutoCAD, visible-GUI evidence, or support for arbitrary near-degenerate
+parabolas. Continue to retain the translation precision refusal and broaden
+the family matrix only with explicit per-variant evidence.
