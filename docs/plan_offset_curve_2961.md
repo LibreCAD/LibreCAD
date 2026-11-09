@@ -28504,3 +28504,24 @@ pass. Test commit `f6daa7f15` (`test(offset): cover two-knot rational layouts`).
 Persistence of this distinct layout through DXF/DWG writer/reopen and
 independent DWG parsing remains open, along with other knot layouts, weight
 profiles, visible GUI, external-CAD acceptance, and exact-head CI.
+
+## 620. Persist Two-knot Rational Caches Through Native File Lanes (2026-11-09)
+
+Added eight source fixtures (degrees 3/4/5/6, both curvature orientations) for
+the distinct `.25`/`.5` knot layout from W619. Each generated typed offset
+cache is staged-imported, exported and reopened through R14 DXF, R2000 DXF/DWG,
+and R2018 DXF/DWG. The regression requires the typed source definition and
+exact generated-cache geometry fingerprint to survive each lane without
+downgrade. DWG retention is opt-in through the existing
+`LIBRECAD_TYPED_SOURCE_DWG_DIR` test hook.
+
+Validation: focused Release persistence case passes 14,051 assertions/1 case
+across 40 source/lane combinations; all 16 retained R2000/R2018 DWGs decode
+with LibreDWG 0.14 minJSON and satisfy the structural checks for exactly one
+non-empty degree-3 SPLINE carrying `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED
+markers. `librecad_tests` Release target builds, the added range passes the
+repository clang-format check, and `git diff --check` passes. Test commit
+`e514e6ca4` (`test(offset): persist two-knot spline caches`). This proves the
+recorded fixture/layouts and file lanes only, not arbitrary knot vectors,
+rendering equivalence, or AutoCAD/ODA acceptance; visible GUI, external-CAD
+acceptance, and exact-head CI remain open.
