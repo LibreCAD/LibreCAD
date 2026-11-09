@@ -146,6 +146,10 @@ LC_LineType* LC_LineTypeList::add(LC_LineType* entry) {
     return existing;
 }
 
+bool LC_LineTypeList::redefinesBuiltIn([[maybe_unused]]const LC_LineType& entry) {
+    return false;
+}
+
 bool LC_LineTypeList::patternMatchesSeed(const LC_LineType& entry) {
     if (entry.pattern.empty()) {
         return false;

@@ -26,6 +26,14 @@
 
 #include "qg_linetypebox.h"
 
+#include <QSignalBlocker>
+
+#include <algorithm>
+#include <vector>
+
+#include "lc_linetype.h"
+#include "lc_linetypelist.h"
+#include "lc_linetypenames.h"
 #include "rs_debug.h"
 
 /**
@@ -68,22 +76,53 @@ QG_LineTypeBox::~QG_LineTypeBox() = default;
  * @param showUnchanged
  * @param showNoPen
  */
-void QG_LineTypeBox::init(const bool showByLayer, const bool showUnchanged, const bool showNoPen) {
+void QG_LineTypeBox::init(const LC_LineTypeList* list, const bool showByLayer, const bool showUnchanged, const bool showNoPen) {
     LC_LOG << __func__ << "(): QG_LineTypeBox, begin";
     this->m_showByLayer = showByLayer;
     this->m_showUnchanged = showUnchanged;
+    this->m_showNoPen = showNoPen;
+    this->m_hasList = list != nullptr;
+    fillRows(list);
+    // A combo carries no pen: a source from an earlier init() must not survive.
+    this->m_hasSource = false;
+    this->m_sourceRowIndex = -1;
 
-    if (showUnchanged) {
+    // init() runs once per combo; the flag keeps a second call from connecting
+    // activated twice.
+    if (!m_initialized) {
+        connect(this, &QG_LineTypeBox::activated, this, &QG_LineTypeBox::slotLineTypeChanged);
+    }
+
+    setCurrentIndex(0);
+    slotLineTypeChanged(currentIndex());
+    m_initialized = true;
+    LC_LOG << __func__ << "(): QG_LineTypeBox, done";
+}
+
+void QG_LineTypeBox::init(const bool showByLayer, const bool showUnchanged, const bool showNoPen) {
+    init(nullptr, showByLayer, showUnchanged, showNoPen);
+}
+
+/**
+ * Fills the rows: the special rows, the built-ins, then the table's own line
+ * types behind one separator.
+ */
+void QG_LineTypeBox::fillRows(const LC_LineTypeList* list) {
+    (void)list;
+    clear();
+    m_hasSeparator = false;
+
+    if (m_showUnchanged) {
         addItem(QIcon(":linetypes/linetype00.lci"), tr("- Unchanged -"), RS2::LineTypeUnchanged);
     }
 
-    if (showByLayer) {
+    if (m_showByLayer) {
         // addItem(QIcon(":linetypes/linetype00.lci"), tr("By Layer"), RS2::LineByLayer);
         // addItem(QIcon(":linetypes/linetype00.lci"), tr("By Block"), RS2::LineByBlock);
         addItem(QIcon(":/icons/item_by_layer.lci"), tr("By Layer"), RS2::LineByLayer);
         addItem(QIcon(":/icons/point_plus_square.lci"), tr("By Block"),RS2::LineByBlock);
     }
-    if (showNoPen) {
+    if (m_showNoPen) {
         addItem(QIcon(":linetypes/linetype00.lci"), tr("No Pen"), RS2::NoPen);
     }
     addItem(QIcon(":linetypes/linetype01.lci"), tr("Continuous"), RS2::SolidLine);
@@ -120,11 +159,124 @@ void QG_LineTypeBox::init(const bool showByLayer, const bool showUnchanged, cons
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (small)"), RS2::BorderLine2);
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (large)"), RS2::BorderLineX2);
 
-    connect(this, &QG_LineTypeBox::activated, this, &QG_LineTypeBox::slotLineTypeChanged);
+    // The special rows write no name and no built-in row does without a table.
+    const int specialRows = (m_showUnchanged ? 1 : 0) + (m_showByLayer ? 2 : 0) +
+                            (m_showNoPen ? 1 : 0);
+    for (int i = 0; i < count(); ++i) {
+        if (i < specialRows) {
+            setItemData(i, QString(), LineTypeNameRole);
+            setItemData(i, SpecialRow, LineTypeRowKindRole);
+            continue;
+        }
+        setItemData(i, QString(), LineTypeNameRole);
+        setItemData(i, BuiltInRow, LineTypeRowKindRole);
+    }
+}
 
-    setCurrentIndex(0);
-    slotLineTypeChanged(currentIndex());
-    LC_LOG << __func__ << "(): QG_LineTypeBox, done";
+/**
+ * Refills the rows for another drawing, keeps the selection and emits nothing.
+ */
+void QG_LineTypeBox::rebuild(const LC_LineTypeList* list) {
+    (void)list;
+}
+
+/**
+ * Selects the row of a pen's line type; a name without a row gets a temporary
+ * row, so the combo always shows what the pen says.
+ */
+void QG_LineTypeBox::setLineTypeOf(const RS_Pen& pen) {
+    setLineType(pen.getLineType());
+}
+
+/**
+ * Writes the selected row's line type into a pen. An untouched selection copies
+ * the pen it was set from, so the pen's own spelling survives.
+ */
+void QG_LineTypeBox::applyLineTypeTo(RS_Pen& pen) const {
+    pen.setLineType(getLineType());
+}
+
+int QG_LineTypeBox::indexForName(const QString& name) const {
+    const QString key = LC_LineTypeNames::foldName(name);
+    for (int i = 0; i < count(); ++i) {
+        const QString rowName = itemData(i, LineTypeNameRole).toString();
+        if (!rowName.isEmpty() && LC_LineTypeNames::foldName(rowName) == key) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int QG_LineTypeBox::indexForEnum(const RS2::LineType type) const {
+    switch (type) {
+        case RS2::LineByLayer:
+            return m_showByLayer ? (m_showUnchanged ? 1 : 0) : -1;
+        case RS2::LineByBlock:
+            return m_showByLayer ? (m_showUnchanged ? 2 : 1) : -1;
+        default:
+            return findData(type);
+    }
+}
+
+/**
+ * The row a name selects: its row by folded key, else, for the canonical
+ * spelling of an enum, the built-in row setLineType(enum) would select.
+ */
+int QG_LineTypeBox::indexForRowOfName(const QString& name, const RS2::LineType type) const {
+    const int byName = indexForName(name);
+    if (byName >= 0) {
+        return byName;
+    }
+    if (isCanonicalName(name, type)) {
+        return indexForEnum(type);
+    }
+    return -1;
+}
+
+bool QG_LineTypeBox::isCanonicalName(const QString& name, const RS2::LineType type) const {
+    return LC_LineTypeNames::foldName(name) ==
+           LC_LineTypeNames::foldName(LC_LineTypeNames::lineTypeToName(type));
+}
+
+void QG_LineTypeBox::removeTemporaryRow() {
+    // Found by kind: the text carries a translated sentence and the pen's name.
+    for (int i = count() - 1; i >= 0; --i) {
+        if (itemData(i, LineTypeRowKindRole).toInt() == TemporaryRow) {
+            removeItem(i);
+            break;
+        }
+    }
+    if (!m_hasSeparator) {
+        return;
+    }
+    // A separator that only introduced the temporary row has nothing left to
+    // separate.
+    for (int i = 0; i < count(); ++i) {
+        const int kind = itemData(i, LineTypeRowKindRole).toInt();
+        if (kind == TableRow || kind == TemporaryRow) {
+            return;
+        }
+    }
+    removeItem(count() - 1);
+    m_hasSeparator = false;
+}
+
+int QG_LineTypeBox::appendTemporaryRow(const QString& name, const RS2::LineType type) {
+    ensureSeparator();
+    const int index = count();
+    addItem(tr("%1 (not in this drawing)").arg(name));
+    setItemData(index, static_cast<int>(type), LineTypeRole);
+    setItemData(index, name, LineTypeNameRole);
+    setItemData(index, TemporaryRow, LineTypeRowKindRole);
+    setItemData(index, name, Qt::ToolTipRole);
+    return index;
+}
+
+void QG_LineTypeBox::ensureSeparator() {
+    if (!m_hasSeparator) {
+        insertSeparator(count());
+        m_hasSeparator = true;
+    }
 }
 
 /**
@@ -209,6 +361,17 @@ void QG_LineTypeBox::setLayerLineType(const RS2::LineType t) {
  */
 void QG_LineTypeBox::slotLineTypeChanged(const int index) {
     RS_DEBUG->print("QG_LineTypeBox::slotLineTypeChanged %d\n", index);
+    readRow(index);
+    RS_DEBUG->print("QG_LineTypeBox::slotLineTypeChanged %d: done\n", index);
+
+    emit lineTypeChanged(m_currentLineType);
+}
+
+/**
+ * Reads the given row into the value the combo reports, without emitting: a
+ * silent rebuild still has to describe the row it restored.
+ */
+void QG_LineTypeBox::readRow(const int index) {
     m_unchanged = false;
     if (m_showByLayer) {
         switch (index) {
@@ -237,8 +400,4 @@ void QG_LineTypeBox::slotLineTypeChanged(const int index) {
     else {
         m_currentLineType = static_cast<RS2::LineType>(itemData(index).toInt());
     }
-    //    RS_DEBUG->print(RS_Debug::D_ERROR, "Current linetype is (%d): %d\n", index, currentLineType);
-    RS_DEBUG->print("QG_LineTypeBox::slotLineTypeChanged %d: done\n", index);
-
-    emit lineTypeChanged(m_currentLineType);
 }

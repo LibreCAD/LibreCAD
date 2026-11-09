@@ -405,6 +405,40 @@ TEST_CASE("LC_LineTypeList::patternMatchesSeed compares the canonical dashes wit
     }
 }
 
+TEST_CASE("An entry redefines a built-in only with other dashes",
+          "[linetype][list][seed]") {
+    SECTION("an untouched seed does not") {
+        LC_LineTypeList list;
+        const LC_LineType* dashed = list.find(QStringLiteral("DASHED"));
+        REQUIRE(dashed != nullptr);
+        CHECK_FALSE(LC_LineTypeList::redefinesBuiltIn(*dashed));
+    }
+    SECTION("a vendor name does not") {
+        LC_LineType entry(QStringLiteral("VENDOR_TAB"));
+        entry.pattern = {10.0, -5.0};
+        CHECK_FALSE(LC_LineTypeList::redefinesBuiltIn(entry));
+    }
+    SECTION("a built-in record without dashes does not") {
+        LC_LineType entry(QStringLiteral("DASHED"));
+        CHECK_FALSE(LC_LineTypeList::redefinesBuiltIn(entry));
+    }
+    SECTION("dashes on CONTINUOUS do not") {
+        LC_LineType entry(QStringLiteral("CONTINUOUS"));
+        entry.pattern = {10.0, -5.0};
+        CHECK_FALSE(LC_LineTypeList::redefinesBuiltIn(entry));
+    }
+    SECTION("other dashes on DASHED do") {
+        LC_LineType entry(QStringLiteral("DASHED"));
+        entry.pattern = {64.0, -32.0};
+        CHECK(LC_LineTypeList::redefinesBuiltIn(entry));
+    }
+    SECTION("other dashes on HIDDEN do") {
+        LC_LineType entry(QStringLiteral("HIDDEN"));
+        entry.pattern = {64.0, -32.0};
+        CHECK(LC_LineTypeList::redefinesBuiltIn(entry));
+    }
+}
+
 TEST_CASE("LC_LineTypeList owns the entries it keeps and frees the ones it merges",
           "[linetype][list][ownership]") {
     int live = 0;
