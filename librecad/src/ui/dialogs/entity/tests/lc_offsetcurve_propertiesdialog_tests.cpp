@@ -1056,6 +1056,14 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     aboveSupportedDegree.knotslist.insert(aboveSupportedDegree.knotslist.end(),
         aboveSupportedDegree.degree + 1, 1.0);
     auto* unsupportedSpline = new RS_Spline(nullptr, aboveSupportedDegree);
+    RS_SplineData oversizedWorkerSpline;
+    oversizedWorkerSpline.degree = 1;
+    oversizedWorkerSpline.type = oversizedWorkerSpline.savedOpenType =
+        RS_SplineData::SplineType::ClampedOpen;
+    oversizedWorkerSpline.controlPoints.assign(16385, RS_Vector{0, 0});
+    oversizedWorkerSpline.knotslist.assign(
+        oversizedWorkerSpline.controlPoints.size() + oversizedWorkerSpline.degree + 1, 0.0);
+    auto* unsupportedWorkerSpline = new RS_Spline(nullptr, oversizedWorkerSpline);
     auto* unboundedHyperbola = new LC_Hyperbola(nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5});
     RS_SplineData constrainedFitSpline{1, false};
     constrainedFitSpline.controlPoints = {{0, 0}, {4, 0}};
@@ -1117,6 +1125,7 @@ TEST_CASE("Native source picker explains empty buckets for unsupported curve var
     auto* invalidParabola = new LC_Parabola(nullptr,
         LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{1, 0}, RS_Vector{2, 0}}});
     f.graphic.addEntity(unsupportedSpline);
+    f.graphic.addEntity(unsupportedWorkerSpline);
     f.graphic.addEntity(unboundedHyperbola);
     f.graphic.addEntity(constrainedFit);
     f.graphic.addEntity(constrainedPoints);

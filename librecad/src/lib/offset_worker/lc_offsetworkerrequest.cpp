@@ -198,11 +198,18 @@ bool valid(const LC_OffsetSourceGeometry& source) {
     if (!source.isWellFormed()) return false;
     return std::visit([](const auto& data) {
         using T = std::decay_t<decltype(data)>;
-        if constexpr (std::is_same_v<T, RS_SplineData>)
-            return std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0 &&
+        if constexpr (std::is_same_v<T, RS_SplineData>) {
+            return data.controlPoints.size() <= ControlCap &&
+                data.knotslist.size() <= KnotCap && data.weights.size() <= ControlCap &&
+                data.fitPoints.size() <= FitCap && data.savedOpenKnots.size() <= KnotCap &&
+                std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0 &&
                 valid(data.fitStartTangent) && valid(data.fitEndTangent);
-        if constexpr (std::is_same_v<T, LC_SplinePointsData>)
-            return valid(data.fitStartTangent) && valid(data.fitEndTangent);
+        }
+        if constexpr (std::is_same_v<T, LC_SplinePointsData>) {
+            return data.splinePoints.size() <= ControlCap &&
+                data.controlPoints.size() <= ControlCap &&
+                valid(data.fitStartTangent) && valid(data.fitEndTangent);
+        }
         return true;
     }, source.value);
 }
@@ -749,6 +756,9 @@ std::optional<LC_EllipseOffsetDefinition> decodeDefinition(const QCborArray& a) 
 std::optional<QCborArray> encodeSourceGeometry(const LC_OffsetSourceGeometry& source) {
     if (!valid(source)) return std::nullopt;
     return fields(source);
+}
+bool isSourceGeometryEncodable(const LC_OffsetSourceGeometry& source) {
+    return valid(source);
 }
 std::optional<LC_OffsetSourceGeometry> decodeSourceGeometry(const QCborArray& a) {
     LC_OffsetSourceGeometry source;

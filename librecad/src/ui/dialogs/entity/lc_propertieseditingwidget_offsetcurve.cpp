@@ -20,6 +20,7 @@
 #include "lc_offsetsource.h"
 #include "../../../lib/offset_worker/lc_offsetworkerclient.h"
 #include "../../../lib/offset_worker/lc_offsetworkeredit.h"
+#include "../../../lib/offset_worker/lc_offsetworkerrequest.h"
 #include "lc_graphicviewport.h"
 #include "lc_offsetcurveui.h"
 #include "lc_offsetcurvereadutils.h"
@@ -56,6 +57,9 @@ std::optional<LC_OffsetSourceGeometry::Kind> sourceKind(const RS_Entity& entity)
 }
 
 bool sourceVariantSelectable(const RS_Entity& entity) {
+    const auto geometry = LC_OffsetSourceGeometry::capture(entity);
+    if (!geometry || !LC_OffsetWorkerRequest::Values::isSourceGeometryEncodable(*geometry))
+        return false;
     if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&entity))
         return !points->getData().fitTangentsConstrained ||
                points->fitTangentsMatchCurve();

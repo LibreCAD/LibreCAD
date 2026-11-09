@@ -906,6 +906,64 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     CHECK_FALSE(values::decodeSourceDefinition(changed(invalidDistance, {1}, std::numeric_limits<double>::quiet_NaN())));
 }
 
+TEST_CASE("source geometry codec mirrors worker array admission caps",
+          "[lc-offsetcurve][worker-protocol][request][source-definition][limits]") {
+    namespace values = request::Values;
+    constexpr std::size_t controlCap = 16384;
+    constexpr std::size_t fitCap = 4096;
+    constexpr std::size_t savedKnotCap = 32768;
+    RS_SplineData data{1, false};
+    data.type = data.savedOpenType = RS_SplineData::SplineType::ClampedOpen;
+    data.controlPoints.assign(controlCap, point());
+    data.knotslist.assign(controlCap + data.degree + 1, 0.0);
+    data.weights.assign(controlCap, 1.0);
+    data.fitPoints.assign(fitCap, point());
+    data.savedOpenKnots.assign(savedKnotCap, 0.0);
+    LC_OffsetSourceGeometry exactCaps{data};
+    REQUIRE(exactCaps.isWellFormed());
+    CHECK(values::isSourceGeometryEncodable(exactCaps));
+    const auto encoded = values::encodeSourceGeometry(exactCaps);
+    REQUIRE(encoded);
+    const auto decoded = values::decodeSourceGeometry(*encoded);
+    REQUIRE(decoded);
+    const auto& roundTripped = std::get<RS_SplineData>(decoded->value);
+    CHECK(roundTripped.controlPoints.size() == controlCap);
+    CHECK(roundTripped.weights.size() == controlCap);
+    CHECK(roundTripped.fitPoints.size() == fitCap);
+    CHECK(roundTripped.savedOpenKnots.size() == savedKnotCap);
+
+    auto overControls = data;
+    overControls.controlPoints.push_back(point());
+    overControls.knotslist.push_back(0.0);
+    overControls.weights.push_back(1.0);
+    LC_OffsetSourceGeometry tooManyControls{std::move(overControls)};
+    REQUIRE(tooManyControls.isWellFormed());
+    CHECK_FALSE(values::isSourceGeometryEncodable(tooManyControls));
+    CHECK_FALSE(values::encodeSourceGeometry(tooManyControls));
+
+    auto overFit = data;
+    overFit.fitPoints.push_back(point());
+    LC_OffsetSourceGeometry tooManyFitPoints{std::move(overFit)};
+    REQUIRE(tooManyFitPoints.isWellFormed());
+    CHECK_FALSE(values::isSourceGeometryEncodable(tooManyFitPoints));
+    CHECK_FALSE(values::encodeSourceGeometry(tooManyFitPoints));
+
+    auto overSavedKnots = data;
+    overSavedKnots.savedOpenKnots.push_back(0.0);
+    LC_OffsetSourceGeometry tooManySavedKnots{std::move(overSavedKnots)};
+    REQUIRE(tooManySavedKnots.isWellFormed());
+    CHECK_FALSE(values::isSourceGeometryEncodable(tooManySavedKnots));
+    CHECK_FALSE(values::encodeSourceGeometry(tooManySavedKnots));
+
+    LC_SplinePointsData points{false, false};
+    points.useControlPoints = true;
+    points.controlPoints.assign(controlCap + 1, point());
+    LC_OffsetSourceGeometry tooManySplinePoints{std::move(points)};
+    REQUIRE(tooManySplinePoints.isWellFormed());
+    CHECK_FALSE(values::isSourceGeometryEncodable(tooManySplinePoints));
+    CHECK_FALSE(values::encodeSourceGeometry(tooManySplinePoints));
+}
+
 TEST_CASE("offset worker op7 transports generalized source generation requests",
           "[lc-offsetcurve][worker-protocol][request][source-generation]") {
     RS_SplineData splineData{2, false};
