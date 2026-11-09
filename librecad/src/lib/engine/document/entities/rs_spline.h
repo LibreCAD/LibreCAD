@@ -123,6 +123,8 @@ struct RS_SplineData {
  */
 class RS_Spline : public RS_EntityContainer {
 public:
+  static constexpr int MaxSupportedDegree = 6;
+
   /** Constructor with parent and data */
   RS_Spline(RS_EntityContainer *parent, const RS_SplineData &d);
 
@@ -174,7 +176,7 @@ public:
   /** Calculate bounding box from control points */
   void calculateBorders() override;
 
-  /** Set degree (1-3), throws if invalid */
+  /** Set degree (1-MaxSupportedDegree), throws if invalid */
   void setDegree(int degree);
 
   /** Get degree */

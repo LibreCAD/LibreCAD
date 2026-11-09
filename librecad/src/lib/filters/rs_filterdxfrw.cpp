@@ -9334,14 +9334,14 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline *data) {
     return;
   }
 
-  // General spline (degree 1-3)
+  // General spline (degree 1-MaxSupportedDegree)
   if (data->degree < 1) {
     RS_DEBUG->print(RS_Debug::D_WARNING,
                     "RS_FilterDXFRW::addSpline: unsupported spline degree %d",
                     data->degree);
     return;
   }
-  if (data->degree > 3) {
+  if (data->degree > RS_Spline::MaxSupportedDegree) {
     std::unique_ptr<LC_SplinePoints> sampled =
         approximateDrwSpline(m_currentContainer, data);
     if (sampled) {
@@ -32733,7 +32733,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
           });
   };
   constexpr auto maximum = static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max());
-  if (degree < 1 || degree > 3 ||
+  if (degree < 1 || degree > RS_Spline::MaxSupportedDegree ||
       sourceData.controlPoints.size() < static_cast<std::size_t>(degree) + 1 ||
       sourceData.controlPoints.size() > maximum - 6 ||
       sourceData.knotslist.size() > maximum - 6 || sourceData.weights.size() > maximum - 6 ||

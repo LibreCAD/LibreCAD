@@ -62,9 +62,12 @@ TEST_CASE("RS_Spline Basic Functionality", "[RS_Spline]")
     {
         spline.setDegree(2);
         REQUIRE(spline.getDegree() == 2);
+        spline.setDegree(4);
+        REQUIRE(spline.getDegree() == 4);
 
         REQUIRE_THROWS_AS(spline.setDegree(0), std::invalid_argument);
-        REQUIRE_THROWS_AS(spline.setDegree(4), std::invalid_argument);
+        REQUIRE_THROWS_AS(spline.setDegree(RS_Spline::MaxSupportedDegree + 1),
+                          std::invalid_argument);
     }
 }
 

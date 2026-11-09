@@ -659,6 +659,77 @@ TEST_CASE("Closed splines survive a DXF and DWG round trip",
   }
 }
 
+TEST_CASE("High-degree rational open splines survive DXF and DWG round trips",
+          "[dxf][dwg][filter][spline][high-degree][roundtrip]") {
+  ensureSettings();
+  struct Layout {
+    int degree;
+    std::vector<RS_Vector> controls;
+    std::vector<double> knots;
+  };
+  const std::vector<Layout> layouts{
+      {4,
+       {{0, 0}, {18, -12}, {42, 7}, {58, 39}, {21, 54}, {-9, 24}},
+       {0, 0, 0, 0, 0, 0.35, 1, 1, 1, 1, 1}},
+      {6,
+       {{0, 0}, {12, -8}, {26, 4}, {41, 23}, {57, 46}, {38, 61}, {9, 50},
+        {-7, 19}},
+       {0, 0, 0, 0, 0, 0, 0, 0.45, 1, 1, 1, 1, 1, 1, 1}},
+  };
+  const std::vector<std::pair<RS2::FormatType, std::string>> formats{
+      {RS2::FormatDXFRW, "dxf"},
+#ifdef DWGSUPPORT
+      {RS2::FormatDWG, "dwg-r2000"},
+      {RS2::FormatDWG2004, "dwg-r2004"},
+      {RS2::FormatDWG2007, "dwg-r2007"},
+      {RS2::FormatDWG2010, "dwg-r2010"},
+      {RS2::FormatDWG2013, "dwg-r2013"},
+      {RS2::FormatDWG2018, "dwg-r2018"},
+#endif
+  };
+  for (const Layout &layout : layouts) {
+    INFO("degree " << layout.degree);
+    RS_SplineData data{layout.degree, false};
+    data.controlPoints = layout.controls;
+    data.knotslist = layout.knots;
+    for (std::size_t i = 0; i < layout.controls.size(); ++i)
+      data.weights.push_back(0.65 + 0.17 * static_cast<double>(i));
+    RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+    const auto expected = splineCurve(source, 1000);
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    graphic.addEntity(new RS_Spline(&graphic, data));
+    for (const auto &[format, suffix] : formats) {
+      INFO(suffix);
+      const std::string path =
+          tempPath("high-degree-open-" + std::to_string(layout.degree) + "-" +
+                   suffix);
+      std::remove(path.c_str());
+      {
+        RS_FilterDXFRW writer;
+        REQUIRE(writer.fileExport(graphic, QString::fromStdString(path), format));
+      }
+      RS_Graphic reopened;
+      std::vector<SplineRecord> written;
+      importFile(reopened, path,
+                 format == RS2::FormatDXFRW ? RS2::FormatDXFRW
+                                             : RS2::FormatDWG,
+                 &written);
+      std::remove(path.c_str());
+      REQUIRE(written.size() == 1);
+      CHECK(written.front().m_degree == layout.degree);
+      checkSameVectors(written.front().m_controlPoints, layout.controls);
+      checkSameKnots(written.front().m_knots, layout.knots);
+      RS_Spline *received = onlySpline(reopened);
+      REQUIRE(received->validate());
+      CHECK(received->getDegree() == layout.degree);
+      CHECK(curveDistance(expected, splineCurve(*received, 1000)) < 1.0e-9);
+    }
+  }
+}
+
 TEST_CASE(
     "Nonuniform rational periodic RS_Spline survives DXF and DWG round trips",
     "[dxf][dwg][filter][spline][periodic][roundtrip]") {

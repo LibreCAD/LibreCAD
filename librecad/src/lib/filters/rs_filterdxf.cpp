@@ -360,7 +360,7 @@ void RS_FilterDXF::addSpline(const DL_SplineData& data) {
         return;
     }
 
-    if (data.degree >= 1 && data.degree <= 3) {
+    if (data.degree >= 1 && data.degree <= RS_Spline::MaxSupportedDegree) {
         RS_SplineData d(data.degree, ((data.flags & 0x1) == 0x1));
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, attributes);
@@ -369,7 +369,7 @@ void RS_FilterDXF::addSpline(const DL_SplineData& data) {
         splinePoints = NULL;
     }
     else {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addSpline: Invalid degree for spline: %d. " "Accepted values are 1..3.",
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_FilterDXF::addSpline: Invalid degree for spline: %d. " "Accepted values are 1..6.",
                         data.degree);
     }
 }

@@ -92,7 +92,7 @@ bool solveSystem(const std::vector<std::vector<double>> &coef,
   return RS_Math::linearSolver(aug, sol);
 }
 
-constexpr size_t g_maxDegree = 3;
+constexpr size_t g_maxDegree = RS_Spline::MaxSupportedDegree;
 constexpr size_t g_maxRationalCuspPolynomialDegree = 30;
 
 /**
@@ -594,8 +594,8 @@ void RS_Spline::calculateBorders() {
 
 /** Degree */
 void RS_Spline::setDegree(const int degree) {
-  if (degree < 1 || degree > 3) {
-      throw std::invalid_argument("Degree must be 1-3");
+  if (degree < 1 || degree > MaxSupportedDegree) {
+      throw std::invalid_argument("Degree must be 1-6");
   }
   if (m_data.degree == static_cast<size_t>(degree)) {
       return;
@@ -1881,7 +1881,7 @@ std::vector<double> RS_Spline::getBSplineBasis(const double t,
 
 bool RS_Spline::validate() const {
   const size_t degree = m_data.degree;
-  if (degree < 1 || degree > 3) return false;
+  if (degree < 1 || degree > MaxSupportedDegree) return false;
 
   // Basic checks
   const size_t numControlPoints = m_data.controlPoints.size(); // total (wrapped if closed)
