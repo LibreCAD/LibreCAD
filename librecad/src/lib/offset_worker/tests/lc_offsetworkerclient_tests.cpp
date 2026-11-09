@@ -23,6 +23,12 @@
 #include <QEvent>
 #include <QEventLoop>
 #include <QFileInfo>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QProcess>
+#include <QStandardPaths>
 #include <QThread>
 #include <algorithm>
 #include <array>
@@ -858,6 +864,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) result.splineData = spline->getData();
         return result;
     };
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
 
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i, sources[i].kind());
@@ -960,6 +970,75 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         CAPTURE(lane.extension);
         const auto path = persistenceDirectory.file(lane.extension);
         REQUIRE(lc::test::exportDrawing(persistenceGraphic, path, lane.format));
+#ifdef DWGSUPPORT
+        if (!libreDwgReader.isEmpty() &&
+            (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
+            QProcess reader;
+            reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
+            REQUIRE(reader.waitForStarted());
+            REQUIRE(reader.waitForFinished(30000));
+            INFO(reader.readAllStandardError().toStdString());
+            REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+            REQUIRE(reader.exitCode() == 0);
+            const QByteArray output = reader.readAllStandardOutput();
+            REQUIRE_FALSE(output.isEmpty());
+            QJsonParseError parseError;
+            const QJsonDocument document = QJsonDocument::fromJson(output, &parseError);
+            REQUIRE(parseError.error == QJsonParseError::NoError);
+            REQUIRE(document.isObject());
+            const QJsonArray objects = document.object().value("OBJECTS").toArray();
+            const auto ulp = [](const double value) {
+                return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) -
+                       std::abs(value);
+            };
+            for (std::size_t fixture = scaledLineFixtureStart; fixture < sources.size(); ++fixture) {
+                const PersistedGeometry* expected = nullptr;
+                for (const PersistedGeometry& candidate : persistedGeometry) {
+                    if (candidate.sourceFixture != fixture) continue;
+                    REQUIRE(candidate.type == RS2::EntityLine);
+                    REQUIRE(expected == nullptr);
+                    expected = &candidate;
+                }
+                REQUIRE(expected);
+                const double scale = scaledLineScales[fixture - scaledLineFixtureStart];
+                const auto matchesPoint = [&](const QJsonArray& actual, const RS_Vector& point) {
+                    if (actual.size() != 3) return false;
+                    const double tolerance = std::max({1e-12 * scale, 64.0 * ulp(point.x),
+                                                       64.0 * ulp(point.y), 64.0 * ulp(point.z)});
+                    return std::abs(actual[0].toDouble() - point.x) <= tolerance &&
+                           std::abs(actual[1].toDouble() - point.y) <= tolerance &&
+                           std::abs(actual[2].toDouble() - point.z) <= tolerance;
+                };
+                QJsonObject externalLine;
+                std::size_t matchingLines = 0;
+                for (const QJsonValue& value : objects) {
+                    const QJsonObject candidate = value.toObject();
+                    if (candidate.value("entity").toString() != "LINE") continue;
+                    if (!matchesPoint(candidate.value("start").toArray(), expected->start) ||
+                        !matchesPoint(candidate.value("end").toArray(), expected->end))
+                        continue;
+                    externalLine = candidate;
+                    ++matchingLines;
+                }
+                CAPTURE(fixture, lane.extension, scale);
+                REQUIRE(matchingLines == 1);
+                const QJsonArray start = externalLine.value("start").toArray();
+                const QJsonArray end = externalLine.value("end").toArray();
+                const std::array<QJsonArray, 2> actualPoints{start, end};
+                const std::array<RS_Vector, 2> expectedPoints{expected->start, expected->end};
+                for (std::size_t pointIndex = 0; pointIndex < actualPoints.size(); ++pointIndex) {
+                    const auto& expectedPoint = expectedPoints[pointIndex];
+                    const std::array<double, 3> coordinates{expectedPoint.x, expectedPoint.y, expectedPoint.z};
+                    const double tolerance = std::max({1e-12 * scale, 64.0 * ulp(expectedPoint.x),
+                        64.0 * ulp(expectedPoint.y), 64.0 * ulp(expectedPoint.z)});
+                    for (std::size_t coordinate = 0; coordinate < coordinates.size(); ++coordinate) {
+                        CHECK(std::abs(actualPoints[pointIndex][static_cast<qsizetype>(coordinate)].toDouble() -
+                                       coordinates[coordinate]) <= tolerance);
+                    }
+                }
+            }
+        }
+#endif
         RS_Graphic reopened;
         REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
         std::vector<PersistedGeometry> reopenedGeometry;
