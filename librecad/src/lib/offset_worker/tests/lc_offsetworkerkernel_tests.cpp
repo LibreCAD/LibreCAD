@@ -5142,8 +5142,6 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
     for (std::size_t profile = 0; profile < weightProfiles.size(); ++profile) {
         const auto& weightPattern = weightProfiles[profile];
         for (std::size_t targetKnotIndex = 0; targetKnotIndex < interiorKnots.size(); ++targetKnotIndex) {
-            if (profile == 3 && targetKnotIndex != interiorKnots.size() - 1)
-                continue;
             const double targetKnot = interiorKnots[targetKnotIndex];
             for (const int degree : {3, 4, 5, 6}) {
                 const int multiplicity = degree - 2;
@@ -5232,7 +5230,7 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
         }
     }
     CAPTURE(oracleCrossingCases);
-    CHECK(oracleCrossingCases == 90);
+    CHECK(oracleCrossingCases == 104);
 }
 
 TEST_CASE("rational spline knot sign jump is not certified as a cusp",
