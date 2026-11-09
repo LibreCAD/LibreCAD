@@ -695,6 +695,69 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse);
 }
 
+TEST_CASE("Native source picker preserves highlighted source across family filters",
+          "[gui][dialog][offsetcurve][source][highlight][filter]") {
+    Fixture f;
+    auto* line = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    auto* parabola = new LC_Parabola(
+        nullptr, LC_ParabolaData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}});
+    f.graphic.addEntity(line);
+    f.graphic.addEntity(parabola);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
+    CHECK(typeBox->isEnabled());
+
+    const int lineType = typeBox->findData(static_cast<int>(
+        LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(lineType >= 0);
+    typeBox->setCurrentIndex(lineType);
+    int lineIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == line->getId()) lineIndex = i;
+    REQUIRE(lineIndex >= 0);
+    sourceBox->setCurrentIndex(lineIndex);
+    awaitPreparation(widget);
+    REQUIRE(clone->sourceDefinition());
+    click(*selectSource);
+    CHECK(line->getFlag(RS2::FlagSelected));
+
+    const auto sourceBefore =
+        LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*clone->sourceDefinition());
+    REQUIRE(sourceBefore);
+    const auto cacheBefore = RS_Spline::geometryFingerprint(clone->getData());
+    const int parabolaType = typeBox->findData(static_cast<int>(
+        LC_OffsetSourceGeometry::Kind::Parabola));
+    REQUIRE(parabolaType >= 0);
+    typeBox->setCurrentIndex(parabolaType);
+
+    CHECK(typeBox->isEnabled());
+    CHECK_FALSE(widget.isPreparing());
+    CHECK(line->getFlag(RS2::FlagSelected));
+    std::vector<qulonglong> parabolaCandidates;
+    for (int i = 0; i < sourceBox->count(); ++i) {
+        bool hasEntityId = false;
+        const auto id = sourceBox->itemData(i).toULongLong(&hasEntityId);
+        if (hasEntityId) parabolaCandidates.push_back(id);
+    }
+    REQUIRE(parabolaCandidates.size() == 1);
+    CHECK(parabolaCandidates.front() == parabola->getId());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
+              *clone->sourceDefinition()) == sourceBefore);
+    CHECK(RS_Spline::geometryFingerprint(clone->getData()) == cacheBefore);
+
+    typeBox->setCurrentIndex(lineType);
+    CHECK(sourceBox->currentData().toULongLong() == line->getId());
+    CHECK(line->getFlag(RS2::FlagSelected));
+}
+
 TEST_CASE("Native source picker offers supported spline and polyline variants",
           "[gui][dialog][offsetcurve][source][eligibility][variants]") {
     Fixture f;
