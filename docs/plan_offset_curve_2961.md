@@ -28505,25 +28505,6 @@ Persistence of this distinct layout through DXF/DWG writer/reopen and
 independent DWG parsing remains open, along with other knot layouts, weight
 profiles, visible GUI, external-CAD acceptance, and exact-head CI.
 
-## 621. Qualify an Asymmetric Two-knot Layout in the Worker (2026-11-09)
-
-Added a second two-interior-knot fixture at `.25` and `.65`, keeping the target
-cusp at the second knot. Degrees 3/4/5/6, both curvature orientations, the
-positive nonuniform weight profile, and multiplicity `degree - 2` are checked.
-The 256-bit rational oracle independently proves one-sided curvature agreement
-below `1e-30`, derives the offset distance and confirms the factor sign change;
-direct isolation must certify and map the cusp, followed by operation-7 wire
-round-trip and operation-8 source-cache validation. This qualifies this one
-asymmetric layout, not arbitrary knot placement.
-
-Validation: focused Release case passes 304 assertions/1 case; complete
-Release `librecad_offset_worker_kernel_tests` passes 1,715,840 assertions/91
-cases; added-range clang-format and `git diff --check` pass. Test commit
-`9107bfbaf` (`test(offset): cover asymmetric two-knot layout`). Native-file
-persistence was separately exercised locally for this layout, but its test
-slice and receipt are still being committed; broader knot layouts and all
-other remaining acceptance gates remain open.
-
 ## 620. Persist Two-knot Rational Caches Through Native File Lanes (2026-11-09)
 
 Added eight source fixtures (degrees 3/4/5/6, both curvature orientations) for
@@ -28544,3 +28525,41 @@ repository clang-format check, and `git diff --check` passes. Test commit
 recorded fixture/layouts and file lanes only, not arbitrary knot vectors,
 rendering equivalence, or AutoCAD/ODA acceptance; visible GUI, external-CAD
 acceptance, and exact-head CI remain open.
+
+## 621. Qualify an Asymmetric Two-knot Layout in the Worker (2026-11-09)
+
+Added a second two-interior-knot fixture at `.25` and `.65`, keeping the target
+cusp at the second knot. Degrees 3/4/5/6, both curvature orientations, the
+positive nonuniform weight profile, and multiplicity `degree - 2` are checked.
+The 256-bit rational oracle independently proves one-sided curvature agreement
+below `1e-30`, derives the offset distance and confirms the factor sign change;
+direct isolation must certify and map the cusp, followed by operation-7 wire
+round-trip and operation-8 source-cache validation. This qualifies this one
+asymmetric layout, not arbitrary knot placement.
+
+Validation: focused Release case passes 304 assertions/1 case; complete
+Release `librecad_offset_worker_kernel_tests` passes 1,715,840 assertions/91
+cases; added-range clang-format and `git diff --check` pass. Test commit
+`9107bfbaf` (`test(offset): cover asymmetric two-knot layout`). W622 completes
+native-file persistence for this layout; broader knot layouts and all other
+remaining acceptance gates remain open.
+
+## 622. Persist the Asymmetric Two-knot Layout Through Native Files (2026-11-09)
+
+Extended W620's product-writer regression to both two-knot layouts: `.25`/`.5`
+and the asymmetric `.25`/`.65`. For each layout, degree 3/4/5/6 and both
+curvature orientations run through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+(80 fixture/lane combinations total). Every lane verifies staged import,
+writer export/reopen, typed source-definition equality, and exact generated
+cache fingerprint preservation. DWG outputs remain opt-in via
+`LIBRECAD_TYPED_SOURCE_DWG_DIR`.
+
+Validation: focused Release persistence run passes 28,003 assertions; all 32
+retained DWGs independently decode with LibreDWG 0.14 minJSON and each has
+exactly one nonempty degree-3 SPLINE plus `LC_OFFSET_CURVE` and `TYPED_SOURCE`
+EED markers. `librecad_tests` Release target builds, the changed range passes
+repository clang-format, and `git diff --check` passes. Test commit
+`953a956a8` (`test(offset): persist asymmetric knot caches`). This qualifies
+only these two-knot vectors, fixture profile, and listed file versions; other
+knot layouts/weights, external-CAD acceptance, visible GUI, and exact-head CI
+remain open.
