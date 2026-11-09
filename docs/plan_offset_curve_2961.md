@@ -29784,3 +29784,22 @@ arbitrary polyline domains, extreme scale/translation, visible GUI, or external
 CAD acceptance. Continue the family matrix with the least-qualified remaining
 geometry representation and keep direct-geometry, cache promotion, persistence,
 and trimmed-topology claims distinct.
+
+## 664. Verify Tangent-constrained Spline Families Against Exact Normals (2026-11-09)
+
+Added exact-normal direct geometry oracles for a polynomial cubic spline with
+endpoint constraints, a rational cubic spline with preserved fit points and
+constrained endpoint tangents, and a fit-point `LC_SplinePoints` source with
+matching tangent metadata. Every source is checked on both offset sides at
+distances 0.125 and 0.5. The oracle compares each emitted cubic against the
+source evaluator's exact `C + dN` at interior parameters and checks branch
+continuity/corner arcs through the shared direct-result validator.
+
+Validation: the three `[oracle]` cases pass 28,064 assertions; the complete
+`[curve-offset][direct]` suite passes 93,807 assertions/36 cases. This
+qualifies these tangent-constrained source layouts and these distances only;
+it does not close broader rational weights, knot multiplicities, fit-point
+constructions, high-degree geometry accuracy, periodic/closed cases, visible
+GUI, or ODA/AutoCAD acceptance. Continue the capability matrix with the
+remaining spline/conic/polyline variants rather than generalizing from these
+fixtures.

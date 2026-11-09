@@ -970,6 +970,81 @@ TEST_CASE("Mixed-bulge polyline offsets stay at exact distance from its line and
     }
 }
 
+TEST_CASE("Tangent-constrained rational and polynomial splines follow their exact offset normals",
+          "[curve-offset][direct][spline][tangents][oracle]") {
+    RS_Spline polynomial{nullptr, RS_SplineData{3, false}};
+    REQUIRE(polynomial.setFitPointsWithTangents(
+        {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {2, 1}, {1, -3}));
+    REQUIRE(polynomial.fitTangentsMatchCurve());
+
+    RS_SplineData rationalData{3, false};
+    rationalData.controlPoints = {{0, 0}, {2, 3}, {6, 4}, {9, 0}};
+    rationalData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    rationalData.weights = {1.0, 0.75, 0.8, 1.0};
+    RS_Spline rational{nullptr, rationalData};
+    rational.getData().fitTangentsConstrained = true;
+    rational.getData().fitTolerance = 1e-2;
+    rational.getData().fitStartTangent = {2, 3};
+    rational.getData().fitEndTangent = {3, -4};
+    for (const double parameter : {0.0, 0.2, 0.5, 0.8, 1.0}) {
+        LC_CurveJet jet;
+        REQUIRE(rational.tryEvaluateJet(parameter,
+            parameter == 1.0 ? LC_CurveEvaluationSide::Left
+                             : LC_CurveEvaluationSide::Right, jet));
+        rational.getData().fitPoints.push_back(jet.point);
+    }
+    REQUIRE(rational.fitTangentsMatchCurve());
+
+    const std::array<const RS_Spline*, 2> sources{&polynomial, &rational};
+    for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
+        const RS_Spline& source = *sources[sourceIndex];
+        for (const double distance : {0.125, 0.5}) {
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                                   LC_CurveOffsetSide::Right}) {
+                CAPTURE(sourceIndex, distance, side);
+                const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(maxDeviation(result, evaluator(source)) <=
+                      options.tolerance.requestedGeometry);
+            }
+        }
+    }
+}
+
+TEST_CASE("Tangent-constrained spline-points follow their exact offset normals",
+          "[curve-offset][direct][spline-points][tangents][oracle]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    data.fitTangentsConstrained = true;
+    data.fitTolerance = 1e-10;
+    LC_SplinePoints source{nullptr, data};
+    const double endParameter = static_cast<double>(source.getSegmentCount());
+    LC_CurveJet start;
+    LC_CurveJet end;
+    REQUIRE(source.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, start));
+    REQUIRE(source.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, end));
+    source.getData().fitStartTangent = start.first;
+    source.getData().fitEndTangent = end.first;
+    REQUIRE(source.fitTangentsMatchCurve());
+
+    for (const double distance : {0.125, 0.5}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(distance, side);
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, evaluator(source)) <=
+                  options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("An S-curve offsets on both sides through its inflection", "[curve-offset][direct]") {
     const RS_Spline s = sCurve();
     for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
