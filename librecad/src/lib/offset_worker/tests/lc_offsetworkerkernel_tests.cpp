@@ -4315,11 +4315,12 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][degree-limit]") {
     const std::array<double, 7> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99};
     for (const int degree : {3, 4, 5}) {
+      for (const double curvatureSign : {-1.0, 1.0}) {
         RS_SplineData data{degree, false};
         const int controlCount = 2 * degree - 1;
         for (int i = 0; i < controlCount; ++i) {
             const double x = static_cast<double>(i);
-            const double y = i == degree - 3 ? -5.0 : .001 * x * x * x;
+            const double y = curvatureSign * (i == degree - 3 ? -5.0 : .001 * x * x * x);
             data.controlPoints.emplace_back(x, y);
             data.weights.push_back(weightPattern[static_cast<std::size_t>(i) %
                                                  weightPattern.size()]);
@@ -4342,7 +4343,7 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
         };
         const double leftCurvature = curvature(leftJet);
         const double rightCurvature = curvature(rightJet);
-        CAPTURE(degree, leftCurvature, rightCurvature);
+        CAPTURE(degree, curvatureSign, leftCurvature, rightCurvature);
         REQUIRE(std::isfinite(leftCurvature));
         REQUIRE(std::isfinite(rightCurvature));
 
@@ -4362,7 +4363,7 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
         const SplineOracle after = oracleOffsetFactor(
             data, SplineOracle{"0.5"} + SplineOracle{"1e-7"}, step,
             start, end, SplineOracle{signedDistance});
-        CAPTURE(signedDistance, before, after);
+        CAPTURE(degree, curvatureSign, signedDistance, before, after);
         REQUIRE((before < 0) != (after < 0));
 
         LC_CurveJetBounds leftBounds;
@@ -4387,7 +4388,7 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
                                      : LC_CurveOffsetSide::Right,
                 std::abs(signedDistance)),
             *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
-        CAPTURE(degree, built.status, diagnostics.failureStage,
+        CAPTURE(degree, curvatureSign, built.status, diagnostics.failureStage,
                 diagnostics.candidateParameters, diagnostics.stallIntervals);
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
         const auto candidate = std::find_if(
@@ -4415,8 +4416,9 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
                     branch.cubicPieces.back().bezier.back().distanceTo(expected));
             }
         }
-        CAPTURE(degree, endpointError, options->tolerance.requestedGeometry);
+        CAPTURE(degree, curvatureSign, endpointError, options->tolerance.requestedGeometry);
         CHECK(endpointError <= options->tolerance.requestedGeometry);
+      }
     }
 }
 
