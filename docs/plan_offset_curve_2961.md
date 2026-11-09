@@ -28884,3 +28884,22 @@ target builds, the changed range passes clang-format using
 `e8600dbf8` (`test(offset): persist wider rational weights`). Other knot
 targets, arbitrary positive weights, external-CAD acceptance, visible GUI,
 and exact-head CI remain open.
+
+## 638. Map Ratio-400 Weight Crossings at Every Four-knot Position (2026-11-09)
+
+Extended the ratio-400 profile from W636's `.82` target to all four interior
+knots (`.12`, `.31`, `.58`, `.82`) for degrees 3/4/5/6 and both curvature
+orientations. Across the four positive weight profiles and four knot targets,
+the worker test now enumerates 128 combinations. The independent 256-bit
+oracle finds sign crossings in 104; only those cases require the production
+certified cusp, endpoint mapping, operation-7 result-wire round-trip, and
+operation-8 cache validation. The remaining 24 are not reported as cusps.
+This remains bounded evidence for these knot positions and weight patterns.
+
+Validation: focused Release worker case passes 3,968 assertions/1 case; the
+complete Release `librecad_offset_worker_kernel_tests` suite passes 1,720,417
+assertions/94 cases. The changed range passes clang-format using
+`code_style/.clang-format`, and `git diff --check` passes. Test commit
+`1ef2312a0` (`test(offset): map wide weights across knot positions`). Native
+file persistence for the other ratio-400 knot targets, external-CAD
+acceptance, visible GUI, and exact-head CI remain open.
