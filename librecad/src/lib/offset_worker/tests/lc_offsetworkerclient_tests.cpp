@@ -591,6 +591,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5, true}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{12, -7}, {3, 1}, 1.2, -2.0, 1.8, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {100, 0}, .03, 0, 0, false}},
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, .25, 1.5, true}},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource};
 

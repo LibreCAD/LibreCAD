@@ -29888,3 +29888,18 @@ both DWGs, finding 17 SPLINEs in each with non-empty controls and zero invalid
 knot cardinalities. This connects one eccentric outward-offset fixture to
 persistence; it does not imply near-cusp/inward cache support, arbitrary axis
 ratios, all sweep/reversal cases, visible GUI, or ODA/AutoCAD acceptance.
+
+## 670. Persist a Reversed Elliptic-arc Source (2026-11-09)
+
+Added a reversed bounded elliptic arc (ratio 0.5, parameter endpoints 0.25
+and 1.5) to the typed real-worker matrix. Its operation-8 cache is required,
+and the case runs through translated replacement, Produce, and all five
+R14/R2000/R2018 DXF/DWG round-trip lanes. This extends the previous thin
+whole-ellipse persistence case with reversed source traversal.
+
+Validation: the focused worker family case passes 61,855 assertions; the full
+worker-client suite passes 68,682 assertions/21 cases. LibreDWG 0.14 reads
+both DWGs with 18 SPLINE entities each; all have non-empty controls and valid
+knot cardinality. This is one reversed bounded arc, not full/reversed sweep
+boundaries, seam-adjacent endpoints, arbitrary ratios, GUI visibility, or
+ODA/AutoCAD acceptance.
