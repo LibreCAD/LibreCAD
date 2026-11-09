@@ -7081,6 +7081,28 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
 
         const LC_OffsetSourceDefinition definition{
             LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
+        const auto directOptions = LC_OffsetWorkerTolerance::directOptions(
+            definition, sourceCheck);
+        REQUIRE(directOptions);
+        LC_CurveOffsetCuspIsolationDiagnostics cuspDiagnostics;
+        const auto direct = LC_CurveOffset::buildDirectBranches(
+            sourceCheck,
+            LC_CurveOffset::makeSideRequest(
+                signedDistance > 0 ? LC_CurveOffsetSide::Left
+                                   : LC_CurveOffsetSide::Right,
+                std::abs(signedDistance)),
+            *directOptions, LC_CurveOffset::makeDirectSourceBudget(),
+            &cuspDiagnostics);
+        REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+        const auto knotCandidate = std::find_if(
+            cuspDiagnostics.candidateBoxes.begin(), cuspDiagnostics.candidateBoxes.end(),
+            [](const LC_CurveOffsetCuspCandidateBox& candidate) {
+                return std::abs(candidate.parameter - .5) < 1e-8;
+            });
+        REQUIRE(knotCandidate != cuspDiagnostics.candidateBoxes.end());
+        CHECK(knotCandidate->kind ==
+              LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket);
+
         LC_OffsetWorkerRequest::Request request;
         request.token = {nextRequestId++, 1, 1, 1};
         request.operation = LC_OffsetWorkerRequest::GenerateSource{definition, {}};
