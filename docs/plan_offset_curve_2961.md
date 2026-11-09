@@ -28861,8 +28861,9 @@ complete Release `librecad_offset_worker_kernel_tests` suite passes 1,719,849
 assertions/94 cases. The changed range passes clang-format using
 `code_style/.clang-format`, and `git diff --check` passes. Test commit
 `f2374450b` (`test(offset): qualify wider rational weights`). W637 below closes
-native-file persistence for this profile at `.82`; other knot targets,
-external-CAD acceptance, visible GUI, and exact-head CI remain open.
+native-file persistence for this profile at `.82`; W639 below closes the other
+knot targets. External-CAD acceptance, visible GUI, and exact-head CI remain
+open.
 
 ## 637. Persist the Wider Positive Weight Profile (2026-11-09)
 
@@ -28882,8 +28883,8 @@ minJSON and contain exactly one nonempty degree-3 SPLINE with both
 target builds, the changed range passes clang-format using
 `code_style/.clang-format`, and `git diff --check` passes. Test commit
 `e8600dbf8` (`test(offset): persist wider rational weights`). Other knot
-targets, arbitrary positive weights, external-CAD acceptance, visible GUI,
-and exact-head CI remain open.
+targets are addressed by W639 below; arbitrary positive weights,
+external-CAD acceptance, visible GUI, and exact-head CI remain open.
 
 ## 638. Map Ratio-400 Weight Crossings at Every Four-knot Position (2026-11-09)
 
@@ -28900,6 +28901,26 @@ Validation: focused Release worker case passes 3,968 assertions/1 case; the
 complete Release `librecad_offset_worker_kernel_tests` suite passes 1,720,417
 assertions/94 cases. The changed range passes clang-format using
 `code_style/.clang-format`, and `git diff --check` passes. Test commit
-`1ef2312a0` (`test(offset): map wide weights across knot positions`). Native
-file persistence for the other ratio-400 knot targets, external-CAD
+`1ef2312a0` (`test(offset): map wide weights across knot positions`). W639
+below closes persistence for the other ratio-400 knot targets; external-CAD
 acceptance, visible GUI, and exact-head CI remain open.
+
+## 639. Persist Ratio-400 Weights at All Four Knot Targets (2026-11-09)
+
+Extended W637's product writer/reopen matrix to include the ratio-400 positive
+weight pattern at the remaining `.12`, `.31`, and `.58` targets. The matrix
+now covers 19 bounded four-knot/profile/target combinations across degrees
+3/4/5/6 and both curvature orientations, for 152 source fixtures and 760
+fixture/lane combinations in R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Every
+lane requires staged promotion, typed-source equality, exact cache-fingerprint
+preservation, and native export/reopen.
+
+Validation: focused Release persistence case passes 377,211 assertions/1
+case. All 304 retained R2000/R2018 DWG outputs independently parse with
+LibreDWG 0.14 minJSON and each contains exactly one nonempty degree-3 SPLINE
+with `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release
+`librecad_tests` target builds, the changed range passes clang-format using
+`code_style/.clang-format`, and `git diff --check` passes. Test commit
+`097e66551` (`test(offset): persist wide weights at all knots`). This still
+qualifies only the recorded ratio-400 profile and knot positions; arbitrary
+weights, external-CAD acceptance, visible GUI, and exact-head CI remain open.
