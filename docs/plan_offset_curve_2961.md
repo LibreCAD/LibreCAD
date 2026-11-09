@@ -233,8 +233,9 @@ Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid, extended by W647-W648 with positive- and negative-determinant affine
 source profiles, W649 with a tighter-curvature source through direct
-geometry/worker/cache/five-lane file validation, and W650 with normalized
-primitive construction across extreme scales; W645 keeps broader parabola
+geometry/worker/cache/five-lane file validation, W650 with normalized
+primitive construction across extreme scales, and W652 with five-lane
+worker/cache persistence across source scales `1e-8` through `1e8`; W645 keeps broader parabola
 variants as an explicit end-to-end gate; W646 extends the ratio-1e6
 rational four-knot support to `.12`, `.31`, and `.58` under its recorded
 proof/persistence limits; W526 polyline worker
@@ -29244,3 +29245,22 @@ profiles and scales; it does not qualify worker/cache admission or file
 round-trip at the scaled coordinates, nor complete parabola or all-family
 support. The editable nine-family source picker remains covered by W641; visible
 desktop acceptance and the other family/variant gates remain open.
+
+## 652. Extend Parabola Persistence Through Extreme Source Scales (2026-11-09)
+
+Extended W524's staged worker/cache and DXF/DWG persistence matrix from scales
+`1e-3`, `1`, and `1e3` to also include `1e-8` and `1e8`. The existing six
+source profiles, two translation ratios, six signed normalized distances,
+centered/translated operation-7 comparisons, per-branch operation-8 validation,
+and five file lanes remain in force. Every generated, refused, cache-admitted,
+and imported case is still explicitly accounted for.
+
+Validation: focused staged-import test passes 3,751,898 assertions/1 case;
+worker cache validation across uniform scales passes 903 assertions/1 case;
+Release `librecad_tests` and `librecad_offset_worker_kernel_tests` build, and
+`git diff --check` passes. Test commit `f966c4735` (`test(offset): extend
+parabola persistence scales`). This qualifies the recorded profiles and
+translation/distance grid at the five listed scales; it does not imply
+arbitrary parabola support or persistence at every representable scale. Other
+family/variant gates, visible desktop acceptance, external-CAD acceptance, and
+exact-head CI remain open.
