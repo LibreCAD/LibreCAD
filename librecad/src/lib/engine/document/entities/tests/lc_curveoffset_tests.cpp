@@ -1019,6 +1019,32 @@ TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direc
     CHECK(offsetToSide(parabola, LC_CurveOffsetSide::Left, 3.0).status == LC_CurveOffsetStatus::Ok);
 }
 
+TEST_CASE("Nearly parallel endpoint tangents retain parabola offset support",
+          "[curve-offset][direct][parabola][tangent][oracle]") {
+    const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
+    for (const double slope : {1e-4, 1e-6, 1e-8}) {
+        CAPTURE(slope);
+        const LC_ParabolaData data = LC_ParabolaData::FromEndPointsTangents(
+            endpoints, {{{1.0, slope}, {1.0, -slope}}});
+        REQUIRE(data.isValid());
+        CHECK(data.m_controlPoints[1].distanceTo({5.0, 5.0 * slope}) < 1e-7);
+
+        const LC_Parabola source{nullptr, data};
+        const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+        REQUIRE(snapshot);
+        CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+        const EvalFn exactCurve = evaluator(source);
+        const double distance = 0.01;
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(side);
+            const auto result = offsetToSide(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("Four-point parabola reconstructions retain typed offset support",
           "[curve-offset][direct][parabola][reconstruction][oracle]") {
     const std::array<RS_Vector, 3> controls{{{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}}};
