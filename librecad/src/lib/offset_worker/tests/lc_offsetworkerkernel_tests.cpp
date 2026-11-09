@@ -4248,6 +4248,116 @@ TEST_CASE("rational quadratic tangent stalls map across weight profiles and bina
     }
 }
 
+TEST_CASE("knot-inserted rational quadratic tangent maps across the interior knot",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][knot]") {
+    const std::vector<std::pair<double, double>> profiles{
+        {0.5, 0.5}, {1.0, 0.5}, {2.0, 0.5},
+        {0.5, 2.0}, {1.0, 2.0}, {2.0, 2.0}};
+    const SplineOracle domainStart{0};
+    const SplineOracle domainEnd{1};
+    const SplineOracle root{"0.5"};
+    const SplineOracle step{"1e-24"};
+
+    for (const auto& [scale, middleWeight] : profiles) {
+        RS_SplineData original{2, false};
+        original.type = RS_SplineData::SplineType::ClampedOpen;
+        original.controlPoints = {{-2 * scale, 0}, {0, 2 * scale},
+                                  {2 * scale, 0}};
+        original.knotslist = {0, 0, 0, 1, 1, 1};
+        original.weights = {1, middleWeight, 1};
+
+        RS_SplineData inserted{2, false};
+        inserted.type = RS_SplineData::SplineType::ClampedOpen;
+        const double denominator = 1.0 + middleWeight;
+        inserted.controlPoints = {
+            {-2 * scale, 0},
+            {-2 * scale / denominator, 2 * scale * middleWeight / denominator},
+            {2 * scale / denominator, 2 * scale * middleWeight / denominator},
+            {2 * scale, 0}};
+        inserted.knotslist = {0, 0, 0, 0.5, 1, 1, 1};
+        const double insertedWeight = 0.5 * denominator;
+        inserted.weights = {1, insertedWeight, insertedWeight, 1};
+        const RS_Spline source{nullptr, inserted};
+        REQUIRE(source.validate());
+
+        for (const double parameter : {0.1, 0.25, 0.49, 0.5, 0.51, 0.75, 0.9}) {
+            const auto originalPoint = evaluateSplineOracle(
+                original, SplineOracle{parameter});
+            const auto insertedPoint = evaluateSplineOracle(
+                inserted, SplineOracle{parameter});
+            const SplineOracle dx = originalPoint.first - insertedPoint.first;
+            const SplineOracle dy = originalPoint.second - insertedPoint.second;
+            CHECK(sqrt(dx * dx + dy * dy) < SplineOracle{"1e-12"});
+        }
+
+        const double signedDistance = -2.0 * scale / middleWeight;
+        const SplineOracle distance{signedDistance};
+        const SplineOracle tangentLeft = oracleOffsetFactor(
+            inserted, root, step, domainStart, domainEnd, distance, true);
+        const SplineOracle tangentRight = oracleOffsetFactor(
+            inserted, root, step, domainStart, domainEnd, distance, false);
+        const SplineOracle before = oracleOffsetFactor(
+            inserted, root - SplineOracle{"1e-7"}, step, domainStart,
+            domainEnd, distance);
+        const SplineOracle after = oracleOffsetFactor(
+            inserted, root + SplineOracle{"1e-7"}, step, domainStart,
+            domainEnd, distance);
+        CAPTURE(scale, middleWeight, signedDistance, tangentLeft, tangentRight,
+                before, after);
+        CHECK(abs(tangentLeft) < SplineOracle{"1e-10"});
+        CHECK(abs(tangentRight) < SplineOracle{"1e-10"});
+        CHECK(before != 0);
+        CHECK(after != 0);
+        CHECK((before < 0) == (after < 0));
+
+        const double requestedGeometry = 1e-4 * scale;
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{inserted}, signedDistance,
+            requestedGeometry, false};
+        const auto options =
+            LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(options);
+        LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+        const auto built = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right,
+                                            std::abs(signedDistance)),
+            *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+        CAPTURE(scale, middleWeight, built.status, diagnostics.failureStage,
+                diagnostics.failureT0, diagnostics.failureT1,
+                diagnostics.stallIntervals);
+        REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(diagnostics.complete);
+        const auto knotStall = std::find_if(
+            diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+            [](const std::pair<double, double>& interval) {
+                return interval.first <= 0.5 && 0.5 <= interval.second;
+            });
+        REQUIRE(knotStall != diagnostics.stallIntervals.end());
+
+        std::vector<RS_Vector> endpoints;
+        for (const LC_OffsetBranch& branch : built.branches) {
+            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                endpoints.push_back(piece.bezier.front());
+                endpoints.push_back(piece.bezier.back());
+            }
+        }
+        for (const double parameter : {knotStall->first, 0.5,
+                                       knotStall->second}) {
+            const auto point = oracleOffsetPoint(
+                inserted, SplineOracle{parameter}, step, domainStart,
+                domainEnd, distance);
+            const RS_Vector expected{point.first.convert_to<double>(),
+                                     point.second.convert_to<double>()};
+            double nearest = std::numeric_limits<double>::infinity();
+            for (const RS_Vector& endpoint : endpoints)
+                nearest = std::min(nearest, endpoint.distanceTo(expected));
+            CAPTURE(scale, middleWeight, parameter, nearest);
+            CHECK(nearest <= requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("degree-elevated rational cubic tangent maps to retained output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][degree]") {
     RS_SplineData data{3, false};

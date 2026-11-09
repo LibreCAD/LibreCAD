@@ -26740,3 +26740,22 @@ offset results`). The `0.0625`/`8.0` profiles and their scaled variants pass
 the focused matrix with 368 assertions, `[rational][tangent-root]` with 887
 assertions/11 cases, and the full worker-kernel suite with 1,705,191
 assertions/77 cases.
+
+#### W563ep Follow-up. Qualify Knot-inserted Rational Quadratic Tangencies (2026-11-08)
+
+Added an exact single-knot insertion of the symmetric rational quadratic, then
+verified the inserted degree-2 spline against its original single-span curve
+with a 256-bit oracle. Two middle-weight profiles (`0.5` and `2.0`) are checked
+at scales `0.5`, `1`, and `2`. The oracle confirms both one-sided knot factors
+vanish at `t=0.5`, nearby factors have the same nonzero sign, and the offset
+build completes with a bounded stall containing the knot. The knot point and
+both stall endpoints map to retained output within requested geometry
+tolerance.
+
+This adds one explicit interior-knot layout across six weight/scale pairs; it
+does not qualify arbitrary knot vectors, knot multiplicities, unequal
+one-sided curvature, or general rational knot-adjacent root pairs. Release
+validation: focused case, 120 assertions/1 case; `[rational][tangent-root]`,
+1,007 assertions/12 cases; full `librecad_offset_worker_kernel_tests`,
+1,705,311 assertions/78 cases; `git diff --check` passes. Test/roadmap commit
+pending.
