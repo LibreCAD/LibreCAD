@@ -3639,13 +3639,10 @@ TEST_CASE("higher-degree periodic spline seam tangencies map to output",
         CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
                 diagnostics.candidateParameters, diagnostics.candidateBoxes,
                 diagnostics.failureStage, diagnostics.failureSpan,
-                diagnostics.failureT0, diagnostics.failureT1);
-        if (degree == 6) {
-            CHECK(built.status == LC_CurveOffsetStatus::AmbiguousRegularity);
-            CHECK_FALSE(diagnostics.complete);
-            CHECK(built.branches.empty());
-            continue;
-        }
+                diagnostics.failureT0, diagnostics.failureT1,
+                diagnostics.isolationBoxesVisited, diagnostics.failingRunBoxes,
+                diagnostics.failingRunSignChanges, diagnostics.failingRunExtent,
+                diagnostics.failingRunObserved, options->tolerance.nodeMerge);
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(diagnostics.complete);
         const auto seamCandidate = std::find_if(

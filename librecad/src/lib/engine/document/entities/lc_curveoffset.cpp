@@ -2416,7 +2416,11 @@ private:
         const std::vector<double>& breaks = m_source.breaks();
         const int count = static_cast<int>(std::min(256u, 4u * run.boxes + 4u));
         std::vector<double> found;
+        std::vector<double> exactRoots;
+        std::vector<std::pair<double, double>> signBrackets;
         std::size_t changes = 0;
+        int firstRunSign = 0;
+        int lastRunSign = 0;
         const auto recordFailure = [&](const LC_CurveOffsetStatus status) {
             if (cuspDiagnostics != nullptr) {
                 cuspDiagnostics->failingRunBoxes = run.boxes;
@@ -2446,20 +2450,24 @@ private:
                     }
                     continue;
                 }
+                const int sign = std::signbit(g) ? -1 : 1;
+                if (firstRunSign == 0) {
+                    firstRunSign = sign;
+                }
+                else if (lastG == 0.0 && sign != lastRunSign) {
+                    // A wrapped unresolved run is sampled as separate
+                    // last-span and first-span pieces; include the transition
+                    // across that seam in the same sign-change count.
+                    ++changes;
+                }
+                lastRunSign = sign;
                 if (lastG != 0.0 && std::signbit(g) != std::signbit(lastG)) {
                     ++changes;
                     if (!std::isnan(zeroT)) {
-                        found.push_back(zeroT); // an exact root among the samples
-                        recordCuspCandidateBox(
-                            zeroT, zeroT, zeroT,
-                            LC_CurveOffsetCuspCandidateKind::ExactSample, cuspDiagnostics);
+                        exactRoots.push_back(zeroT);
                     }
                     else {
-                        const LC_CurveOffsetStatus status =
-                            bisectCusp(lastT, t, run, found, cuspDiagnostics);
-                        if (status != LC_CurveOffsetStatus::Ok) {
-                            return recordFailure(status);
-                        }
+                        signBrackets.emplace_back(lastT, t);
                     }
                 }
                 lastT = t;
@@ -2471,14 +2479,34 @@ private:
         const bool rootCountCertified = !run.rationalRootVariationBounded ||
                                         changes == static_cast<std::size_t>(
                                                        run.rationalRootVariationUpperBound);
-        const bool boundedTouch = stalled && changes == 0;
-        // an odd count turns the offset back; an even one within the merge
-        // tolerance is a swallowtail too small to keep, and none a touch
+        const bool boundedEvenRun = stalled && changes % 2 == 0 &&
+                                    firstRunSign != 0 && firstRunSign == lastRunSign;
+        if (boundedEvenRun) {
+            stalls.insert(stalls.end(), parts.begin(), parts.end());
+            return LC_CurveOffsetStatus::Ok;
+        }
+        for (const double root : exactRoots) {
+            found.push_back(root);
+            recordCuspCandidateBox(root, root, root,
+                                   LC_CurveOffsetCuspCandidateKind::ExactSample,
+                                   cuspDiagnostics);
+        }
+        for (const auto& [lo, hi] : signBrackets) {
+            const LC_CurveOffsetStatus status =
+                bisectCusp(lo, hi, run, found, cuspDiagnostics);
+            if (status != LC_CurveOffsetStatus::Ok) {
+                return recordFailure(status);
+            }
+        }
+        // An odd count turns the offset back; an even run whose complete
+        // offset path is within the merge tolerance is a swallowtail too small
+        // to keep. Equal nonzero endpoint signs preserve the even-run parity
+        // even when a squared-polynomial variation bound is conservative.
         if (rootCountCertified && (changes % 2 == 1 || (changes > 0 && !stalled))) {
             cusps.insert(cusps.end(), found.begin(), found.end());
             return LC_CurveOffsetStatus::Ok;
         }
-        if (!stalled || (!rootCountCertified && !boundedTouch)) {
+        if (!stalled || (!rootCountCertified && !boundedEvenRun)) {
             if (cuspDiagnostics != nullptr) {
                 cuspDiagnostics->failingRunBoxes = run.boxes;
                 cuspDiagnostics->failingRunSignChanges = changes;

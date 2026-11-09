@@ -27371,8 +27371,8 @@ limit and verifies it on those fixtures. Because the cusp polynomial is
 squared, variation bounds may include extraneous roots; complete actual cusp
 root counts and broad candidate-to-output bijection remain open.
 Seam even-root acceptance is separately qualified for one symmetric periodic
-profile at degrees 4 and 5; the corresponding degree-6 profile still refuses
-atomically because another span is unresolved (W582).
+profile at degrees 4-6. W582 records the original degree-6 atomic refusal;
+W583 resolves that same profile with a bounded even-run collapse.
 
 ## 569. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
 
@@ -27653,10 +27653,34 @@ cubic output within the geometry tolerance.
 The degree-6 profile currently encounters an unresolved regularity interval
 elsewhere. It must return `AmbiguousRegularity`, mark diagnostics incomplete,
 and publish no branches. This records a support boundary, not accepted seam
-output. No production acceptance or budget was changed.
+output at this checkpoint. W583 later resolves the same fixture under the
+existing merge-tolerance bound; no production budget was changed.
 
 Validation: focused `[degree-limit]` seam test passes 53 assertions/1 case;
 the full worker-kernel suite passes 1,706,044 assertions/85 cases; the Release
 worker-kernel test target builds and `git diff --check` passes. Other seam
 profiles, degree-6 full-output resolution, general even-root completeness,
+visible GUI, external CAD, and exact-head CI remain open.
+
+## 583. Resolve Bounded Degree-6 Periodic Seam Even Runs (2026-11-09)
+
+The degree-6 seam fixture exposed a tiny unresolved even-root run elsewhere
+in the periodic domain. Its complete offset-motion bound was approximately
+`1e-17`, far below the existing `nodeMerge` tolerance, but the resolver tried
+to bisect every sampled crossing before applying the bounded-stall rule. The
+crossings were collected first instead. A run may now resolve as a stall
+without individual root bisection only when its complete motion is within
+`nodeMerge`, it has an even number of sampled sign changes, and its first and
+last nonzero endpoint signs agree. Other runs retain the previous root-count,
+bisection, and fail-closed paths; no merge tolerance or work budget increased.
+
+The degree-6 symmetric periodic seam fixture now completes and maps the oracle
+seam offset into retained output. The same regression continues to verify
+degree-4/5 seam event ownership and output mapping. `resolveRun` also counts
+sign changes across split pieces of a seam-wrapping unresolved run.
+
+Validation: focused `[degree-limit]` seam test passes 48 assertions/1 case;
+the full worker-kernel suite passes 1,706,039 assertions/85 cases; the Release
+worker-kernel test target builds and `git diff --check` passes. Other periodic
+profiles, complete actual-root counts, global candidate-to-output bijection,
 visible GUI, external CAD, and exact-head CI remain open.
