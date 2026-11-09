@@ -28441,3 +28441,25 @@ Validation: focused Release test passes 800 assertions/1 case; full
 knot multiplicities`). Product-writer persistence and independent DWG parsing
 for the newly added lower-multiplicity fixtures remain open; so do other knot
 layouts, weight/control profiles, external CAD, visible GUI, and exact-head CI.
+
+## 617. Persist the Continuous Multiplicity Sweep Through Native Files (2026-11-09)
+
+Extended the C2 knot product-writer matrix with every midpoint multiplicity
+qualified by W616, for degrees 3/4/5/6 and both curvature orientations. The
+existing seven-location matrix retains its `degree - 2` multiplicity at the
+six non-midpoint positions; the midpoint adds the lower C2-or-better
+multiplicities. Together the test covers 68 source fixtures through five
+native lanes (340 fixture/lane combinations), preserving typed source
+definition and exact cache fingerprint on carrier promotion and writer
+export/reopen. Filenames encode degree, multiplicity, knot position,
+orientation, and file version.
+
+Validation: focused Release persistence test passes 132,878 assertions/1
+case with DWG retention enabled; all 136 R2000/R2018 DWGs parse through
+LibreDWG 0.14 and each contains exactly one nonempty degree-3 cache SPLINE
+with `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release
+`librecad_tests` target rebuilds and `git diff --check` passes. Test commit
+`afd7b52f9` (`test(offset): persist C2 knot multiplicities`). This closes the
+recorded midpoint multiplicities only; it does not establish other knot
+locations/layouts, broader weight profiles, or rendered/AutoCAD equivalence.
+Visible GUI, external CAD, and exact-head CI remain separate open gates.
