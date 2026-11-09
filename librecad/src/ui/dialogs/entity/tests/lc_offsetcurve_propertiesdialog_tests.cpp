@@ -1511,8 +1511,8 @@ TEST_CASE("Native source picker admits only tangent splines matching their exact
           supportedTangentPoints->getId());
 }
 
-TEST_CASE("Tangent spline replacement refusal preserves the current offset atomically",
-          "[gui][dialog][offsetcurve][source][eligibility][tangents][atomicity]") {
+TEST_CASE("Tangent spline replacement preserves its typed definition",
+          "[gui][dialog][offsetcurve][source][eligibility][tangents]") {
     Fixture f;
     RS_Spline spline{nullptr, RS_SplineData{3, false}};
     REQUIRE(spline.setFitPointsWithTangents(
@@ -1525,7 +1525,7 @@ TEST_CASE("Tangent spline replacement refusal preserves the current offset atomi
     NativeWidget widget;
     widget.setGraphicViewport(f.view.getViewPort());
     widget.setEntity(clone.get());
-    const Snapshot before(*clone);
+    const auto beforeCache = RS_Spline::geometryFingerprint(clone->getData());
     auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     REQUIRE(typeBox); REQUIRE(sourceBox);
@@ -1540,10 +1540,25 @@ TEST_CASE("Tangent spline replacement refusal preserves the current offset atomi
     awaitPreparation(widget);
 
     REQUIRE(widget.lastEditResult());
-    CHECK(widget.lastEditResult()->refusal ==
-          LC_OffsetCurveRefusal::NotCacheRepresentable);
-    CHECK_FALSE(clone->sourceDefinition());
-    before.exact(*clone);
+    REQUIRE(*widget.lastEditResult());
+    CHECK(widget.lastEditResult()->changed);
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::Spline);
+    const auto* committed = std::get_if<RS_SplineData>(
+        &clone->sourceDefinition()->source.value);
+    REQUIRE(committed);
+    CHECK(committed->fitTangentsConstrained);
+    CHECK(committed->fitStartTangent == spline.getData().fitStartTangent);
+    CHECK(committed->fitEndTangent == spline.getData().fitEndTangent);
+    const auto expected = LC_OffsetSourceGeometry::capture(*candidate);
+    REQUIRE(expected);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+              clone->sourceDefinition()->source) ==
+          LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
+    CHECK(RS_Spline::geometryFingerprint(clone->getData()) != beforeCache);
+    CHECK(sourceBox->currentData().toULongLong() == candidate->getId());
+    CHECK_FALSE(candidate->getFlag(RS2::FlagSelected));
 }
 
 TEST_CASE("Native source picker refuses unrepresentable source variants atomically",
@@ -1554,7 +1569,8 @@ TEST_CASE("Native source picker refuses unrepresentable source variants atomical
          RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}};
     auto polyline = LC_OffsetSourceGeometry{closedSquare}.makeEntity();
     REQUIRE(polyline);
-    auto* source = polyline.get();
+    auto* source = dynamic_cast<RS_Polyline*>(polyline.get());
+    REQUIRE(source);
     f.graphic.addEntity(source);
     polyline.release();
     RS_Polyline mixedBulgePolyline;
@@ -1595,9 +1611,9 @@ TEST_CASE("Native source picker refuses unrepresentable source variants atomical
     auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
     auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
     REQUIRE(typeBox); REQUIRE(sourceBox);
-    const Snapshot before(*clone);
     const auto verifyRefusal = [&](LC_OffsetSourceGeometry::Kind kind, RS_Entity& candidate) {
         CAPTURE(kind, candidate.rtti());
+        const Snapshot before(*clone);
         const int typeIndex = typeBox->findData(static_cast<int>(kind));
         REQUIRE(typeIndex >= 0);
         typeBox->setCurrentIndex(typeIndex);
@@ -1617,8 +1633,36 @@ TEST_CASE("Native source picker refuses unrepresentable source variants atomical
         REQUIRE(refusal);
         CHECK_FALSE(refusal->text().isEmpty());
     };
-    verifyRefusal(LC_OffsetSourceGeometry::Kind::Polyline, *source);
-    verifyRefusal(LC_OffsetSourceGeometry::Kind::Polyline, *mixedPolyline);
+    const auto verifyPolylineReplacement = [&](RS_Polyline& candidate) {
+        const auto expected = LC_OffsetSourceGeometry::capture(candidate);
+        REQUIRE(expected);
+        REQUIRE(expected->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+        const auto beforeCache = RS_Spline::geometryFingerprint(clone->getData());
+        const int typeIndex = typeBox->findData(
+            static_cast<int>(LC_OffsetSourceGeometry::Kind::Polyline));
+        REQUIRE(typeIndex >= 0);
+        typeBox->setCurrentIndex(typeIndex);
+        int sourceIndex = -1;
+        for (int i = 0; i < sourceBox->count(); ++i)
+            if (sourceBox->itemData(i).toULongLong() == candidate.getId()) sourceIndex = i;
+        REQUIRE(sourceIndex >= 0);
+        sourceBox->setCurrentIndex(sourceIndex);
+        awaitPreparation(widget);
+        REQUIRE(widget.lastEditResult());
+        REQUIRE(*widget.lastEditResult());
+        CHECK(widget.lastEditResult()->changed);
+        REQUIRE(clone->sourceDefinition());
+        CHECK(clone->sourceDefinition()->source.kind() ==
+              LC_OffsetSourceGeometry::Kind::Polyline);
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(
+                  clone->sourceDefinition()->source) ==
+              LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
+        CHECK(RS_Spline::geometryFingerprint(clone->getData()) != beforeCache);
+        CHECK(sourceBox->currentData().toULongLong() == candidate.getId());
+        CHECK_FALSE(candidate.getFlag(RS2::FlagSelected));
+    };
+    verifyPolylineReplacement(*source);
+    verifyPolylineReplacement(*mixedPolyline);
 
     const int splinePointsType = typeBox->findData(
         static_cast<int>(LC_OffsetSourceGeometry::Kind::SplinePoints));

@@ -29615,3 +29615,146 @@ The 4-6 input degrees are exercised end-to-end through the worker, but their
 products are normalized degree-1/3 SPLINE outputs. Geometry oracles for wider
 high-degree knot/weight layouts, additional distances/sides, visible GUI, and
 ODA/AutoCAD acceptance remain open.
+
+## 661. Make Source-family Switching and All-family Support an Explicit Gate (2026-11-09)
+
+### User-visible contract
+
+The Offset Curve Properties source control must let the user change the
+requested source-curve family before making a replacement pick. The supported
+family inventory is exactly the nine modeled adapters: line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+`LC_Parabola` is a distinct source identity and must never be silently
+reinterpreted as generic spline-points. Do not add another selector or a
+parabola-only UI path.
+
+Changing the requested family changes the active pick filter immediately, but
+does not mutate the currently committed source, its typed definition, or its
+highlight. A successful pick atomically replaces the source with the concrete
+picked family and identity; cancel, wrong-family pick, unsupported definition,
+or failed preparation leaves the previous source and highlight intact. After
+success, the Properties control reports the actual new type and the drawing
+highlights that exact source. Undo/redo must restore both the prior typed
+source and its highlight. Family choice is a pick constraint, not a conversion
+command: selecting a different family must not coerce existing geometry.
+
+### Implementation sequence
+
+1. **Audit and lock the picker contract.** Trace the Properties widget, action,
+   entity filter, source replacement, selection/highlight, and undo/redo paths
+   in the current code. Add focused UI/action tests for each transition above,
+   including switching among all nine families while a source is already
+   committed. Fix only demonstrated gaps; do not duplicate existing coverage.
+2. **Build a family capability matrix.** For each of the nine adapters, record
+   supported source-definition forms, parameter/domain constraints, both
+   offset sides, distance limits, and explicit refusal conditions. Separate
+   eligibility/serialization from kernel support. Reject unsupported or
+   ambiguous definitions atomically, retaining the prior source and emitting
+   an actionable diagnostic; never silently substitute a different family.
+3. **Qualify direct geometry per family.** Add deterministic fixtures and
+   independent geometric oracles for every claimed representation. Cover both
+   sides, interior and boundary picks, positive/negative/zero distances where
+   meaningful, scale/translation stress, degeneracy, and expected refusal.
+   Include analytic conics, rational and non-rational spline forms, fit-point
+   `LC_SplinePoints`, typed parabola constructors, bounded hyperbola branches,
+   and line/arc polyline segments. Zero-distance and closed/periodic cases
+   must have explicit expected behavior. Do not use the implementation under
+   test as its own oracle.
+4. **Qualify the isolated execution path.** Send every admitted typed family
+   through the real helper process and join path. Verify source immutability,
+   cancellation/timeout behavior, bounded receipts, composite output
+   accounting, cache admission, and atomic replacement. Add rejection cases
+   for malformed and unsupported family payloads, and prove no partial cache
+   or source mutation occurs.
+5. **Qualify persistence by family and representation.** For every
+   oracle-qualified case, exercise Produce and the applicable R14 DXF, R2000
+   DXF/DWG, and R2018 DXF/DWG read/write lanes. Compare concrete entity type,
+   defining geometry, references, and toleranced coordinates after reopen;
+   independently parse generated DWGs when LibreDWG is available. Keep typed
+   parabola identity assertions separate from SPLINE output assertions, since
+   current offset results may be represented as SPLINEs.
+6. **Validate the visible workflow and external readers.** Run GUI-level
+   switching, candidate picking, successful replacement, cancellation,
+   highlight, and undo/redo checks on the exact tested build. Run ODA/AutoCAD
+   acceptance where available. Report unavailable external tools as open gates,
+   not as passes.
+7. **Promote support claims conservatively.** Maintain a table with one row per
+   family and representation, listing oracle, worker/cache, persistence, and
+   visible/external evidence. A family is complete only for the rows whose
+   required evidence passes. “All supported types” is complete only when every
+   advertised family has at least one fully qualified supported representation
+   and every known unsupported boundary fails explicitly without changing the
+   committed source. Broad arbitrary-domain coverage remains a separately
+   stated limitation.
+
+### Current evidence and remaining work
+
+W641/W643/W656 and the current Properties implementation already provide the
+nine-family selector, family-filter switching, existing-source identity and
+highlight retention, typed replacement, and a distinct parabola identity.
+W660 has real-helper, cache/replacement, Produce, and five internal
+DXF/DWG-lane evidence for 19 captured representations. W647-W659 provide
+direct and staged evidence for selected parabola constructions and profiles.
+These are captured-case results, not proof that all legal definitions or
+domains are supported.
+
+Continue at step 2 by reconciling existing fixtures and tests against the
+family capability matrix, then close missing direct-oracle rows before
+extending worker/persistence coverage. The immediate active family is
+parabola, but do not let it crowd out uncovered ellipse, spline,
+spline-points, hyperbola, or mixed-polyline cases. Existing worker-produced
+fixture counts and prior test totals are historical receipts; rerun the exact
+current targets when changing code. Visible GUI checks, ODA/AutoCAD acceptance,
+unqualified variants, and exact-head CI remain open until independently
+recorded.
+
+### 662. Promote Mixed-bulge and Tangent-spline Sources Through the Worker (2026-11-09)
+
+The source-family capability audit found that the picker and worker already
+accept more than the older GUI refusal tests represented. Replaced those stale
+refusal expectations with success assertions for (a) a closed linear
+polyline, (b) a closed polyline with positive and negative bulge arcs, and
+(c) a tangent-constrained cubic spline. Tests assert source-family identity,
+exact encoded source definition (including spline endpoint tangents), changed
+cache, selected candidate identity, and no implicit source selection. Existing
+malformed/self-intersecting variants still exercise explicit atomic refusal.
+
+Added the closed mixed-bulge polyline and tangent-constrained spline to the
+real worker-client fixture table. Both now pass operation-7 generation,
+operation-8 cache admission, translated source replacement, Produce, and all
+five R14/R2000/R2018 DXF/DWG read/write lanes. The aggregate matrix now covers
+21 source representations across the nine advertised families.
+
+Validation on the current Release tree: rebuilt `librecad_tests`; the complete
+source-picker suite passes 11,877 assertions/12 cases, and the focused parabola
+geometry suite passes 44,071 assertions/4 cases. The expanded worker family
+case passes 47,244 assertions; the complete worker-client suite passes 53,895
+assertions/21 cases. LibreDWG 0.14 independently parses both generated DWGs.
+Each reports ARC=1, CIRCLE=1, LINE=1, LWPOLYLINE=4, SPLINE=14. All 14 SPLINEs
+in each file have non-empty control points and knot cardinality
+`knot_count == control_count + degree + 1`; invalid count is zero. This is
+reader validation, not ODA/AutoCAD acceptance.
+
+Capability matrix as presently evidenced (the qualifier column is deliberate;
+these rows do not imply every parameter/domain is supported):
+
+| Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
+| --- | --- | --- | --- |
+| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; real worker, cache replacement, Produce, five file lanes | Direction/boundary and extreme scale/refusal matrix |
+| Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; typed worker output; five file lanes | Sweep seam, reversed/full-sweep limits and boundary matrix |
+| Circle | Finite nonzero-radius closed circle | Direct closed conic behavior; typed worker output; five file lanes | Inner collapse/zero-radius and large/small scale matrix |
+| Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
+| Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
+| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
+| Parabola | Three-control typed `LC_ParabolaData`, including endpoint/tangent construction | Distinct typed identity, direct normal-distance checks, selected affine/scale/near-straight fixtures, worker and five file lanes | General coefficient/endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
+| Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct branch/curvature tests; typed worker/cache/Produce and five file lanes | Branch orientation, vertex/seam boundaries, extreme interval/scale and persistence variants |
+| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct topology/offset tests; closed linear and closed mixed-bulge typed UI replacement; worker/cache/Produce and five file lanes | Segment-count/topology limits, arc sweep edge cases, boundary picks and wider self-intersection/collapse oracles |
+
+This closes the immediate worker/persistence gap for the two newly discovered
+accepted layouts; it does not complete step 3 or prove arbitrary legal source
+geometry. Continue by selecting the least-qualified family/row, adding an
+independent direct geometry oracle and explicit refusal boundaries, then carry
+only oracle-qualified variants through the worker and applicable file lanes.
+The picker contract has a green automated GUI test suite, but still needs an
+exact-build visible GUI check. ODA/AutoCAD acceptance and exact-head CI remain
+open gates.

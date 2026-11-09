@@ -550,6 +550,19 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
         return data;
     };
+    RS_Spline tangentConstrainedSpline{nullptr, RS_SplineData{3, false}};
+    REQUIRE(tangentConstrainedSpline.setFitPointsWithTangents(
+        {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {2, 1}, {1, -3}));
+    RS_Polyline mixedBulgePolyline;
+    mixedBulgePolyline.addVertex({0, 0}, .2);
+    mixedBulgePolyline.addVertex({8, 0}, -.2);
+    mixedBulgePolyline.addVertex({8, 6});
+    mixedBulgePolyline.addVertex({0, 6});
+    mixedBulgePolyline.setClosed(true);
+    mixedBulgePolyline.endPolyline();
+    const auto mixedBulgeSource = LC_OffsetSourceGeometry::capture(mixedBulgePolyline);
+    REQUIRE(mixedBulgeSource);
+    REQUIRE(mixedBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
     const std::vector<LC_OffsetSourceGeometry> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
@@ -574,7 +587,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{wrappedLinear},
         LC_OffsetSourceGeometry{clampedRationalSpline(4)},
         LC_OffsetSourceGeometry{clampedRationalSpline(5)},
-        LC_OffsetSourceGeometry{clampedRationalSpline(6)}};
+        LC_OffsetSourceGeometry{clampedRationalSpline(6)},
+        LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
+        *mixedBulgeSource};
 
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
