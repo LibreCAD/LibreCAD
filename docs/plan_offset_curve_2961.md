@@ -30024,3 +30024,22 @@ Validation: focused all-family picker test passes 8,103 assertions; the full
 with `QT_QPA_PLATFORM=offscreen`. This confirms automated widget behavior on
 the current tree only; exact-build visible GUI acceptance and ODA/AutoCAD
 acceptance remain open.
+
+## 677. Exercise Endpoint/tangent Parabola Through the Worker (2026-11-09)
+
+Extended the real-worker typed-source family matrix with a parabola constructed
+from explicit endpoint and tangent pairs, in addition to the existing
+control-point parabola profiles. The fixture must be valid, is serialized as
+the distinct typed `Parabola` source, and participates in the same worker
+generation, cache-admission, cache-validation, and translated source-replacement
+checks as the other matrix entries. This proves one endpoint/tangent
+representation through the native worker path; it does not qualify every
+endpoint/tangent conditioning, parameter range, signed distance, or DXF/DWG
+round-trip.
+
+Validation: rebuilt `librecad_offset_worker_client_tests`; the focused
+"Worker client joins typed source generation for every modeled source family"
+case passes 78,186 assertions. `git diff --check` passes. The family matrix
+still has separate open direct-oracle variants, applicable persistence lanes,
+visible GUI acceptance, and ODA/AutoCAD acceptance; the picker contract alone
+does not imply complete family support.
