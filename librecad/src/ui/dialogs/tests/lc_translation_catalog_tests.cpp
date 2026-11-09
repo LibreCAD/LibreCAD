@@ -6,12 +6,16 @@
 // Snap tooltip showed English text in every language, and a translator could not
 // find those strings in the catalogs, because the catalogs had not been refreshed
 // with `lupdate` since the strings were added. A string that is absent from a
-// catalog can neither be translated nor looked up, so the catalogs that lupdate
-// maintains (the TRANSLATIONS list of librecad/src/src.pro) must list them.
+// catalog can neither be translated nor looked up, so the catalogs of the TRANSLATIONS
+// list of librecad/src/src.pro must list them.
 //
 // The catalogs are read from the source tree, not from the compiled .qm files:
 // lrelease leaves out untranslated messages, which is exactly the state a new
 // string is in until a translator has worked on it.
+//
+// Every catalog the project file lists is checked, the regional Spanish ones included:
+// lupdate skips a catalog that is not in the current format (<TS version="2.1"> with
+// a language), so one left in the old format is never refreshed again.
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -102,9 +106,9 @@ QString entryKey(const QString& context, const QString& source) {
 }
 
 // True when the catalog is in the current format (<TS version="2.1">). lupdate leaves
-// the old-format catalogs alone ("won't be updated: it does not specify any target
-// languages"); the regional Spanish catalogs (librecad_es_bo.ts and the like) are
-// such version 2.0 files, so no refresh can reach them.
+// an old-format catalog alone ("won't be updated: it does not specify any target
+// languages"), as it did the regional Spanish ones (librecad_es_bo.ts and the like)
+// while they were version 2.0 files, so no refresh could reach them.
 bool isCurrentFormat(const QString& name) {
     QFile file(sourceTreePath(QStringLiteral("librecad/ts/") + name));
     if (!file.open(QIODevice::ReadOnly)) {
@@ -144,17 +148,6 @@ QStringList listedCatalogs() {
         names << match.captured(1);
         if (match.captured(2).isEmpty()) {
             break;
-        }
-    }
-    return names;
-}
-
-// The listed catalogs that `lupdate` keeps up to date: the ones in the current format.
-QStringList maintainedCatalogs() {
-    QStringList names;
-    for (const QString& name : listedCatalogs()) {
-        if (isCurrentFormat(name)) {
-            names << name;
         }
     }
     return names;
@@ -242,7 +235,7 @@ TEST_CASE("The strings of issue 3235 are in the program", "[translation][catalog
     }
 }
 
-TEST_CASE("The maintained catalogs are found", "[translation][catalog]") {
+TEST_CASE("The catalogs are found", "[translation][catalog]") {
     const QStringList listed = listedCatalogs();
 
     // 66 catalogs when this test was written; a drop means src.pro changed shape and
@@ -252,23 +245,19 @@ TEST_CASE("The maintained catalogs are found", "[translation][catalog]") {
         INFO(name.toStdString());
         CHECK(QFile::exists(sourceTreePath(QStringLiteral("librecad/ts/") + name)));
     }
-    CHECK(maintainedCatalogs().size() >= 40);
 }
 
-TEST_CASE("Only the old regional Spanish catalogs are in the old format", "[translation][catalog]") {
-    // lupdate skips an old-format catalog, and so do the tests here: a new catalog that
-    // was left in the old format would never be refreshed or checked, which is how
-    // strings go missing without anyone noticing.
+TEST_CASE("Every catalog is in the current format", "[translation][catalog]") {
+    // lupdate skips an old-format catalog: one left in the old format is never
+    // refreshed, which is how strings go missing without anyone noticing.
     for (const QString& name : listedCatalogs()) {
-        if (!isCurrentFormat(name)) {
-            INFO(name.toStdString() << " is not <TS version=\"2.1\">: open it in Qt Linguist and save it");
-            CHECK(name.startsWith(QStringLiteral("librecad_es_")));
-        }
+        INFO(name.toStdString() << " is not <TS version=\"2.1\">: give it a language and run lupdate");
+        CHECK(isCurrentFormat(name));
     }
 }
 
-TEST_CASE("Every maintained catalog lists the strings of issue 3235", "[translation][catalog]") {
-    const QStringList names = maintainedCatalogs();
+TEST_CASE("Every catalog lists the strings of issue 3235", "[translation][catalog]") {
+    const QStringList names = listedCatalogs();
     REQUIRE_FALSE(names.isEmpty());
 
     for (const QString& name : names) {
