@@ -3572,6 +3572,7 @@ TEST_CASE("periodic rational seam tangent root maps to a bounded stall",
 TEST_CASE("higher-degree periodic spline seam roots map to output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][seam-root][even-root][degree-limit]") {
+    std::size_t unclassifiedWeightedSeams = 0;
     for (const auto [degree, weightProfile] : {
              std::pair{4, 0}, std::pair{4, 1}, std::pair{5, 0},
              std::pair{5, 1}, std::pair{6, 0}, std::pair{6, 1}}) {
@@ -3664,6 +3665,7 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
             *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
         CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
                 diagnostics.candidateParameters, diagnostics.candidateBoxes,
+                diagnostics.unclassifiedBoundaryParameters,
                 diagnostics.failureStage, diagnostics.failureSpan,
                 diagnostics.failureT0, diagnostics.failureT1,
                 diagnostics.isolationBoxesVisited, diagnostics.failingRunBoxes,
@@ -3683,9 +3685,24 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
                 return (interval.first <= startValue && interval.second >= startValue) ||
                        (interval.first <= endValue && interval.second >= endValue);
             });
+        const bool unclassifiedSeam = std::any_of(
+            diagnostics.unclassifiedBoundaryParameters.begin(),
+            diagnostics.unclassifiedBoundaryParameters.end(), [&](double parameter) {
+                return std::abs(parameter - startValue) < 1e-7 ||
+                       std::abs(parameter - endValue) < 1e-7;
+            });
         if (weightProfile == 0) {
             CHECK((seamStall != diagnostics.stallIntervals.end()) !=
                   (seamCandidate != diagnostics.candidateParameters.end()));
+        } else {
+            const bool seamHasOwner = seamStall != diagnostics.stallIntervals.end() ||
+                                      seamCandidate != diagnostics.candidateParameters.end();
+            const bool seamHasDiagnostic = seamHasOwner || unclassifiedSeam;
+            const bool conflictingSeamDiagnostics = unclassifiedSeam && seamHasOwner;
+            CHECK(seamHasDiagnostic);
+            CHECK_FALSE(conflictingSeamDiagnostics);
+            if (unclassifiedSeam)
+                ++unclassifiedWeightedSeams;
         }
         if (seamCandidate != diagnostics.candidateParameters.end()) {
             const auto seamBox = std::find_if(
@@ -3757,6 +3774,7 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
             }
         }
     }
+    CHECK(unclassifiedWeightedSeams > 0);
 }
 
 TEST_CASE("periodic rational seam tangent and interior roots map to output",

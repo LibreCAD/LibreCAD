@@ -303,6 +303,8 @@ struct LC_CurveOffsetCuspIsolationDiagnostics {
     std::vector<double> candidateParameters;
     std::vector<LC_CurveOffsetCuspCandidateBox> candidateBoxes;
     std::vector<std::pair<double, double>> stallIntervals;
+    /** Closed-source boundaries numerically near zero but not owned by a candidate or stall. */
+    std::vector<double> unclassifiedBoundaryParameters;
     std::vector<LC_CurveOffsetTinyReversalCollapse> collapsedTinyReversals;
     std::size_t spansVisited{0};
     std::size_t isolationBoxesVisited{0};
