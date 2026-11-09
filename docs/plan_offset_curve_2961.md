@@ -36,14 +36,20 @@ and polyline. `LC_Parabola` remains distinct from its `LC_SplinePoints` base.
 
 This Properties-widget behavior is implemented and covered by regressions;
 do not create another selector or a parabola-only UI branch. Changing the
-filter alone must preserve the current source and highlight, and selecting a
-different family must expose only matching eligible candidates. A successful
-candidate pick atomically replaces it with the candidate's actual typed
-geometry; cancellation or an invalid candidate leaves source and cache
-unchanged. This closes only the picker-level requirement. The requested
-support expansion remains open until every production-supported family and
-eligible variant is qualified through geometry generation, worker/cache
-admission, replacement, and applicable DXF/DWG persistence.
+family control remains enabled while replacing an existing source. The user
+can choose the replacement family before selecting in the drawing; changing
+that filter refreshes the candidate set but does not mutate the current source,
+generated cache, or its drawing highlight. Keep the current source visibly
+selected/highlighted independently of the candidate filter, including when its
+family differs from the requested replacement family. The candidate set must
+contain only valid, eligible entities of the requested family. A successful
+candidate pick atomically replaces the source with that entity's actual typed
+geometry; cancellation or an invalid/stale candidate leaves source and cache
+unchanged. Parabola is one of the nine selectable families and remains distinct
+from its `LC_SplinePoints` base. This closes only the picker-level requirement.
+The requested support expansion remains open until every production-supported
+family and eligible variant is qualified through geometry generation,
+worker/cache admission, replacement, and applicable DXF/DWG persistence.
 
 “Support all source types” remains an end-to-end obligation. For each listed
 family, inventory concrete eligible variants and independently validate direct
@@ -105,9 +111,14 @@ Current implementation order for the remaining “all supported types” work:
    never flatten them lossily.
 4. **Properties interaction:** the existing family selector is complete.
    Verify family change refreshes candidates before picking, current-source
-   highlighting survives an unsuccessful or cancelled replacement, and a
+   highlighting survives a family-filter change even when the current source
+   is not a candidate in that family, and highlighting survives an
+   unsuccessful or cancelled replacement. Verify the control stays enabled
+   for an existing source; candidate lists contain only matching eligible
+   entities from all nine families, including distinct parabola; and a
    successful pick publishes the matching tagged source and cache together.
-   No new selector or duplicate parabola branch is in scope.
+   Keep visible-GUI acceptance separate from widget regressions. No new
+   selector or duplicate parabola branch is in scope.
 5. **Persistence:** for each admitted, serializable variant, round-trip the
    source and cache through the applicable DXF/DWG versions, then reopen and
    regenerate/validate the cache. Assert dynamic type, parameters, weights,
@@ -128,8 +139,8 @@ Current implementation order for the remaining “all supported types” work:
    only; an unweighted spline is checked across all five lanes on both
    signed sides; a rational tangent-constrained cubic offset is product-
    round-tripped through all five lanes. Wrapped periodic spline caches are
-   product-round-tripped through all five lanes across the complete 96-case
-   tested import grid: degree 2/3, five/six-base-control layouts,
+   product-round-tripped through all five lanes across the complete 192-case
+   tested import grid: degree 2/3/4/6, two bounded control-count layouts,
    unit/rational weights, three scales, two distances, and both sides.
    A regular open degree-2 rational spline with nine controls and seven
    nonuniform spans is also product-round-tripped for both `1e-6` to `1e6`
@@ -27410,3 +27421,23 @@ This closes codec/picker consistency for the enumerated arrays, not generation
 performance or geometry quality at maximum counts. High-count worker
 generation, oversized polyline behavior, and broader source-count stress
 remain open.
+
+## 572. Requalify High-degree Periodic Product-writer Round-trips (2026-11-09)
+
+Re-ran the wrapped-periodic staged import and native product-writer matrix on
+the current worktree. It covers degrees 2, 3, 4, and 6; two bounded base
+control-count layouts; unit and positive rational weights; scales `1e-3`, `1`,
+and `1e3`; distance factors `0.125` and `0.25`; and both signed sides. Every
+case is imported from a generated spline carrier and then exported/reopened
+through R14, R2000, and R2018 DXF plus R2000 and R2018 DWG. Reopen checks
+require native typed-source admission and exact source/cache fingerprints.
+This is a 192-case matrix, extending the former 96-case degree-2/3 scope with
+the recorded degree-4/6 profiles.
+
+Validation: focused `librecad_tests "wrapped periodic spline source promotes
+on both sides across file lanes"` passes 182,726 assertions in one case;
+`git diff --check` passes. This qualifies only the enumerated wrapped layouts,
+weight sets, scales, distances, sides, and five file lanes. Other periodic
+knot layouts and weight distributions, cusp/root completeness outside the
+tested profiles, independent-CAD equivalence, visible GUI acceptance, and
+exact-head CI remain open.
