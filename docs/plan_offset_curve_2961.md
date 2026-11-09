@@ -232,9 +232,10 @@ the recorded degree-4/5/6 weighted periodic profiles.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid, extended by W647-W648 with positive- and negative-determinant affine
-source profiles and by W649 with a tighter-curvature source through direct
-geometry, worker/cache validation, and five DXF/DWG lanes; W645 keeps broader
-parabola variants as an explicit end-to-end gate; W646 extends the ratio-1e6
+source profiles, W649 with a tighter-curvature source through direct
+geometry/worker/cache/five-lane file validation, and W650 with normalized
+primitive construction across extreme scales; W645 keeps broader parabola
+variants as an explicit end-to-end gate; W646 extends the ratio-1e6
 rational four-knot support to `.12`, `.31`, and `.58` under its recorded
 proof/persistence limits; W526 polyline worker
 scale/translation qualification complete for its
@@ -29169,6 +29170,24 @@ commit `89f2b2a40` (`test(offset): cover reflected parabola sources`). The two
 affine maps are bounded evidence, not exhaustive affine conditioning or
 arbitrary parabola support. Visible GUI, external-CAD acceptance, exact-head
 CI, and the remaining geometry variants remain open.
+
+## 650. Normalize Parabola Primitive Construction Across Extreme Scales (2026-11-09)
+
+`LC_ParabolaData::calculatePrimitives()` now computes its vertex parameter,
+axis direction, and focal distance in a unit-scale local frame, then restores
+the source scale and origin. This avoids overflow/underflow in squared control
+delta calculations for finite, nondegenerate shapes while preserving the
+relative degeneracy test and final finite-result checks. The regression uses
+directly scaled control nets from `1e-160` through `1e155`; direct controls
+avoid losing the tiny fixture to a separate `a*a` underflow in the test helper.
+
+Validation: focused `[parabola][primitives]` passes 66 assertions/2 cases;
+the full `[parabola]` Release suite passes 2,306,551 assertions/19 cases.
+Release `librecad_tests` builds and `git diff --check` passes. Implementation
+commit `39d62a6b3` (`fix(offset): normalize parabola primitive math`). This
+qualifies entity primitive construction at the recorded scales; it does not
+claim direct offset, worker, or file-lane support at `1e-160`/`1e155`. Broader
+parabola shapes and visible/external acceptance remain open.
 
 ## 649. Qualify a Tighter-curvature Parabola Through File Lanes (2026-11-09)
 
