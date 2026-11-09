@@ -27843,3 +27843,26 @@ recorded degree-4/5/6 weighted seam profiles only. Certified boundary root
 classification, other periodic weight/knot profiles, full root completeness,
 global candidate-to-output bijection, visible GUI, independent CAD, and
 exact-head CI remain open.
+
+## 590. Reaffirm Source-Family Switching Before Replacement (2026-11-09)
+
+The latest source-widget request is consistent with the completed picker
+contract: while replacing an existing source, the user can change the source
+family first, see candidates for that family, and then select the replacement.
+The control remains available during replacement, and changing its value must
+not change the current source, generated cache, or current-source highlight.
+Candidate selection covers all nine modeled families, including parabola as a
+distinct choice from generic spline-points. The current source remains
+highlighted even when its family differs from the candidate filter.
+
+No additional selector or parabola-specific UI implementation is planned.
+The family-change/candidate-refresh and cross-family replacement behavior is
+already represented by widget regressions; visible interaction remains a
+separate acceptance gate. The requested expansion to all supported source
+types continues in implementation order 1-6 above: each eligible concrete
+variant still requires its own geometry, worker/cache, replacement, and
+applicable DXF/DWG evidence. Do not interpret picker availability as proof of
+end-to-end support.
+
+Validation status is unchanged by this documentation update: no code changed
+and no tests were rerun. The most recent production validation remains W589.
