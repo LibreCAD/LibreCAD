@@ -1081,6 +1081,85 @@ TEST_CASE("Mixed-bulge polyline offsets stay at exact distance from its line and
     }
 }
 
+TEST_CASE("Major and minor bulge offsets follow exact segment normals",
+          "[curve-offset][direct][polyline][bulge][major][oracle]") {
+    RS_Polyline source;
+    source.addVertex({0, 0}, 2.0);
+    source.addVertex({10, 0}, -0.2);
+    source.addVertex({10, 10});
+    source.addVertex({0, 10});
+    source.setClosed(true);
+    source.endPolyline();
+    const auto sourceSegments = orientedSegments(source);
+    REQUIRE(sourceSegments.size() == 4);
+    REQUIRE(sourceSegments[0].arc);
+    REQUIRE(sourceSegments[1].arc);
+    CHECK(std::abs(sourceSegments[0].sweep) > M_PI);
+    CHECK(std::abs(sourceSegments[1].sweep) < M_PI);
+    CHECK(sourceSegments[0].sweep > 0.0);
+    CHECK(sourceSegments[1].sweep < 0.0);
+
+    std::vector<double> sourceBreaks{0.0};
+    for (const auto& segment : sourceSegments) {
+        sourceBreaks.push_back(sourceBreaks.back() +
+            (segment.arc ? std::abs(segment.sweep) : segment.length()));
+    }
+
+    for (const double distance : {0.25, 0.5}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(distance, side);
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+
+            for (const auto& branch : result.branches) {
+                REQUIRE_FALSE(branch.cubicPieces.empty());
+                for (const auto& piece : branch.cubicPieces) {
+                    if (piece.provenance.arcCentre.valid) {
+                        for (int sample = 0; sample <= 37; ++sample) {
+                            const RS_Vector point = bezierAt(piece.bezier, sample / 37.0);
+                            CHECK(std::abs(point.distanceTo(piece.provenance.arcCentre) - distance) <=
+                                  2.0 * options.tolerance.requestedGeometry);
+                        }
+                        continue;
+                    }
+                    for (int sample = 1; sample < 37; ++sample) {
+                        const double fraction = sample / 37.0;
+                        const double parameter = piece.provenance.sourceT0 + fraction *
+                            (piece.provenance.sourceT1 - piece.provenance.sourceT0);
+                        std::size_t segmentIndex = 0;
+                        while (segmentIndex + 1 < sourceSegments.size() &&
+                               parameter >= sourceBreaks[segmentIndex + 1]) {
+                            ++segmentIndex;
+                        }
+                        REQUIRE(parameter >= sourceBreaks[segmentIndex]);
+                        REQUIRE(parameter <= sourceBreaks[segmentIndex + 1]);
+                        const auto& segment = sourceSegments[segmentIndex];
+                        const double local = (parameter - sourceBreaks[segmentIndex]) /
+                            (sourceBreaks[segmentIndex + 1] - sourceBreaks[segmentIndex]);
+                        RS_Vector tangent;
+                        if (segment.arc) {
+                            const double angle = segment.startAngle + segment.sweep * local;
+                            const double direction = std::copysign(1.0, segment.sweep);
+                            tangent = {-std::sin(angle) * direction, std::cos(angle) * direction};
+                        } else {
+                            tangent = (segment.b - segment.a) / segment.length();
+                        }
+                        const RS_Vector exact = segment.pointAt(local) +
+                            RS_Vector{-tangent.y, tangent.x} * piece.provenance.signedDistance;
+                        CHECK(bezierAt(piece.bezier, fraction).distanceTo(exact) <=
+                              options.tolerance.requestedGeometry);
+                    }
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("Tangent-constrained rational and polynomial splines follow their exact offset normals",
           "[curve-offset][direct][spline][tangents][oracle]") {
     RS_Spline polynomial{nullptr, RS_SplineData{3, false}};
