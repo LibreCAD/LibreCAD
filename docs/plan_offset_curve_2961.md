@@ -29744,7 +29744,7 @@ these rows do not imply every parameter/domain is supported):
 
 | Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
 | --- | --- | --- | --- |
-| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed-line capture refusal; real worker/cache, Produce and strict five-format reopen checks for the added profiles | Independent DWG-reader checks for the added stress profiles; near-ULP and non-finite source boundaries |
+| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed-line capture refusal; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Near-ULP and non-finite source boundaries |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; typed worker output; five file lanes | Sweep seam, reversed/full-sweep limits and boundary matrix |
 | Circle | Finite nonzero-radius closed circle | Direct closed conic behavior; typed worker output; five file lanes | Inner collapse/zero-radius and large/small scale matrix |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
@@ -30334,9 +30334,24 @@ matrix.
 
 Validation: rebuilt `librecad_offset_worker_client_tests`; the focused
 `Worker client joins typed source generation for every modeled source family`
-case passes 92,508 assertions/1 case, including all five file lanes for the
+case passes 92,532 assertions/1 case, including all five file lanes for the
 18 added profiles. Section 684's direct oracle passes 1,729 assertions/1 case;
-`git diff --check` passes. These internal round-trips do not substitute for
-independent LibreDWG parsing of the new stress files. Near-ULP/non-finite source
-refusal, visible GUI, external CAD, cross-platform/ASan, and exact-head CI stay
-open.
+`git diff --check` passes. The independent reader check is recorded in section
+686. Near-ULP/non-finite source refusal, visible GUI, external CAD,
+cross-platform/ASan, and exact-head CI stay open.
+
+## 686. Independently Parse the Scaled Line DWG Fixtures (2026-11-09)
+
+Extended the worker-produced line persistence matrix with LibreDWG
+`dwgread -O minJSON` checks for all 18 scaled/oriented line profiles in both
+R2000 and R2018 DWG. Each decoded LINE must match exactly one expected output
+by start/end coordinates. Comparisons use the same local scale and binary64
+ULP-derived tolerance as the internal reopen checks, so large-origin
+world-relative tolerances cannot conceal a lost offset.
+
+Validation: with `DWGREAD=/opt/homebrew/bin/dwgread`, the focused Release
+worker-client case passes 92,532 assertions/1 case, including 36 independent
+DWG parses; all five internal DXF/DWG round-trip lanes and strict line endpoint
+checks pass. This is LibreDWG validation, not ODA/AutoCAD acceptance. The
+near-ULP/non-finite line refusal boundary, visible GUI, cross-platform/ASan,
+and exact-head CI remain open.
