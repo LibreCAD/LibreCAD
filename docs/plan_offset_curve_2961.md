@@ -28728,7 +28728,7 @@ GUI, and exact-head CI remain open.
 ## 631. Map Interior Crossings in a Four-knot Layout (2026-11-09)
 
 Extended the four-knot rational cusp worker case beyond its final `.82` knot.
-For the mild positive weight profile, the `.31`, `.58`, and `.82` interior
+For the moderate positive weight profile, the `.31`, `.58`, and `.82` interior
 knots are exercised for degrees 3/4/5/6 and both curvature orientations. The
 moderate and high-contrast positive profiles remain exercised at `.82` for the
 same degree/orientation matrix. Every included case requires independent
@@ -28738,7 +28738,7 @@ mapping within requested error, operation-7 wire round-trip, and operation-8
 cache validation.
 
 The fixture exploration did not prove a crossing for every knot/profile
-combination: the mild-profile degree-3 negative case at `.12`, and the
+combination: the moderate-profile degree-3 negative case at `.12`, and the
 moderate-profile degree-5 negative case at `.31`, do not show an oracle sign
 change. They are deliberately not counted as cusp coverage; neither is
 relabelled as a tangent cusp. Other profiles at `.12`, alternate-profile
