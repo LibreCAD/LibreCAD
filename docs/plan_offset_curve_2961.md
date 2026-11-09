@@ -29903,3 +29903,21 @@ both DWGs with 18 SPLINE entities each; all have non-empty controls and valid
 knot cardinality. This is one reversed bounded arc, not full/reversed sweep
 boundaries, seam-adjacent endpoints, arbitrary ratios, GUI visibility, or
 ODA/AutoCAD acceptance.
+
+## 671. Qualify Closed Fit-point Spline Offsets and Persistence (2026-11-09)
+
+Added an exact-normal oracle for a closed five-point fit-point
+`LC_SplinePoints` source on both sides at distance 0.25, including the periodic
+seam. The identical typed source is required to pass operation-8 cache
+admission in the real worker matrix and remains covered by translated source
+replacement, Produce, and the five R14/R2000/R2018 DXF/DWG round-trip lanes.
+
+Validation: focused seam-aware direct oracle passes 3,290 assertions; all
+seven `[oracle]` cases pass 44,189 assertions; the complete
+`[curve-offset][direct]` suite passes 109,932 assertions/40 cases. The focused
+worker family case passes 66,674 assertions; the complete worker-client suite
+passes 73,599 assertions/21 cases. LibreDWG 0.14 independently reads both
+DWGs with 19 SPLINEs each and zero invalid control/knot cardinalities. This
+qualifies one closed fit-point construction, not repeated/degenerate points,
+all interpolation policies, tangent-constrained closed fits, visible GUI, or
+ODA/AutoCAD acceptance.

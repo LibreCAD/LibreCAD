@@ -508,6 +508,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
     LC_SplinePointsData fitPoints{false, false};
     fitPoints.splinePoints = {{0, 0}, {1, 2}, {2, 0}};
+    LC_SplinePointsData closedFitPoints{true, false};
+    closedFitPoints.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
     RS_SplineData degreeOne{1, false};
     degreeOne.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
     degreeOne.knotslist = {0, 0, .5, 1, 1};
@@ -592,6 +594,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{LC_HyperbolaData{{12, -7}, {3, 1}, 1.2, -2.0, 1.8, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {100, 0}, .03, 0, 0, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, .25, 1.5, true}},
+        LC_OffsetSourceGeometry{closedFitPoints},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource};
 

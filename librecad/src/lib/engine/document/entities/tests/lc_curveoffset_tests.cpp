@@ -785,6 +785,26 @@ TEST_CASE("Consistent tangent-constrained spline-points can be offset",
         LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::InvalidSource);
 }
 
+TEST_CASE("Closed fit-point spline sources follow exact offset normals across the seam",
+          "[curve-offset][direct][spline-points][closed][oracle]") {
+    LC_SplinePointsData data{true, false};
+    data.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    LC_SplinePoints source{nullptr, data};
+    REQUIRE(source.isClosed());
+    REQUIRE(source.getSegmentCount() > 0);
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        const double distance = 0.25;
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(side, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(maxDeviation(result, evaluator(source)) <= options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("A straight source offsets exactly to either side", "[curve-offset][direct]") {
     const LC_SplinePoints line = fromControlPoints({{0.0, 0.0}, {10.0, 0.0}});
     const RS_Spline linear = makeSpline(1, {{0.0, 0.0}, {10.0, 0.0}}, {0, 0, 1, 1});
