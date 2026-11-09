@@ -626,8 +626,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{endpointTangentParabola},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource};
+    const LC_ParabolaData nearParallelParabola = LC_ParabolaData::FromEndPointsTangents(
+        {{{0.0, 0.0}, {10.0, 0.0}}}, {{{1.0, 1e-8}, {1.0, -1e-8}}});
+    REQUIRE(nearParallelParabola.isValid());
+    const std::size_t nearParallelParabolaFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{nearParallelParabola});
     const std::size_t scaledLineFixtureStart = sources.size();
-    const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 1;
+    const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 2;
     std::vector<double> scaledLineScales;
     std::vector<double> scaledLineDistances;
     const std::array<std::pair<RS_Vector, RS_Vector>, 3> lineProfiles{{
@@ -653,7 +658,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const qint64 requestId = static_cast<qint64>(i + 1);
         const double sourceDistance = i >= scaledLineFixtureStart ?
             scaledLineDistances[i - scaledLineFixtureStart] :
-            i == mixedBulgeFixture ? -.25 : i == 21 ? .1 : i == 24 ? 1.9 : .25;
+            i == mixedBulgeFixture ? -.25 : i == nearParallelParabolaFixture ? .01 :
+            i == 21 ? .1 : i == 24 ? 1.9 : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
         REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
@@ -705,7 +711,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
-        if (i == 13 || i == 15 || i == 20 || i + 3 >= sources.size() || i >= scaledLineFixtureStart)
+        if (i == 13 || i == 15 || i == 20 || i == nearParallelParabolaFixture ||
+            i + 3 >= sources.size() || i >= scaledLineFixtureStart)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {

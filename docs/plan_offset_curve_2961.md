@@ -30484,3 +30484,20 @@ Validation: the focused regression passes 3 assertions/1 case, and the complete
 passes. The focused near-parallel direct-oracle test passes 282 assertions/1
 case. More extreme near-parallel conditioning, broader constructor domains,
 visible GUI, external CAD, cross-platform/ASan, and exact-head CI remain open.
+
+## 693. Carry Near-parallel Parabola Through Worker and Persistence (2026-11-09)
+
+Added the endpoint/tangent parabola at slope magnitude `1e-8` from section 692
+to the real-worker fixture matrix. The test requires operation-7 generation,
+operation-8 cache admission, typed-source replacement, Produce, and all five
+R14/R2000/R2018 DXF/DWG product-writer reopen lanes. LibreDWG is available and
+independently parses the generated DWG files. This closes the complete chain
+for this one near-parallel profile only; the `1e-4` and `1e-6` direct fixtures
+and more extreme conditioning are not thereby qualified for persistence.
+
+Validation: the focused worker-family matrix passes 91,132 assertions/1 case;
+the complete `[lc-offsetcurve][worker-client]` suite passes 98,369
+assertions/21 cases under the 45-second suite watchdog. Section 692's direct
+oracle passes 282 assertions/1 case; `git diff --check` passes. Other tangent
+conditionings, visible GUI, ODA/AutoCAD, cross-platform/ASan, and exact-head CI
+remain open.
