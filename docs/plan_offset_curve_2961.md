@@ -26982,12 +26982,16 @@ distinct interior knots. The initial layouts use mirrored orders (`0.25,
 knot pairs `0.125/0.625` and `0.2/0.8` with weights `0.25` and `4.0`. The
 latest extension adds an asymmetric control polygon `(-2,0), (-0.25,2.25),
 (2.5,0.75)`, unequal endpoint weights `0.75` and `1.25`, middle weights
-`0.5` and `2.0`, and knot pairs `0.15/0.7` and `0.3/0.85`. Replaced the
-fixture's special-case control-point formulas with a test-local homogeneous
-Boehm knot insertion routine, which also constructs the existing single- and
+`0.5` and `2.0`, and knot pairs `0.15/0.7` and `0.3/0.85`. The newest
+extension uses the same homogeneous insertion routine for a clamped degree-3
+rational spline with controls `(-2,0), (-1.5,2.25), (1.25,2.5), (2.5,0.75)`,
+weights `(0.8, middle, 1.35, 0.9)`, middle weights `0.75` and `1.5`, and two
+distinct interior knots `0.2/0.7`. Replaced the fixture's special-case
+control-point formulas with a test-local degree-generic homogeneous Boehm
+knot insertion routine, which also constructs the existing single- and
 double-multiplicity variants. Each generated spline is checked against its
-original single-span rational quadratic at parameters `0.125` through `0.875`
-in `0.125` increments before offset generation.
+original single-span rational curve at parameters `0.125` through `0.875` in
+`0.125` increments before offset generation.
 
 For the new layouts, the existing matrix compares worker operation-7 output
 with direct materialization and stages operation-8 promotion through R14 DXF,
@@ -26999,10 +27003,13 @@ Release validation: initial focused case, 209,193 assertions/1 case and
 spline-variant selection, 430,899 assertions/11 cases; varied symmetric
 locations/weights, 272,485 assertions/1 case and 470,800 assertions/11 cases;
 asymmetric profiles, 304,668 assertions/1 case and 526,467 assertions/11
+cases; the cubic profiles, 315,312 assertions/1 case and 535,646 assertions/11
 cases. The `librecad_tests` target rebuild and `git diff --check` pass. Test
 commits `3a6728fbe` (`test(offset): import two-knot rational splines`),
-`d2e08850a` (`test(offset): vary distinct rational knot layouts`), and
-`c4a141580` (`test(offset): import asymmetric rational knot profiles`). These
-are finite quadratic profiles, not arbitrary rational NURBS support; arbitrary
-knot values/counts, higher degrees, other asymmetric source shapes, periodic
-sources, external CAD, visible GUI, and exact-head CI remain open.
+`d2e08850a` (`test(offset): vary distinct rational knot layouts`),
+`c4a141580` (`test(offset): import asymmetric rational knot profiles`), and
+`c40e14daa` (`test(offset): import rational cubic knot profiles`). These are
+finite quadratic/cubic profiles, not arbitrary rational NURBS support;
+arbitrary knot values/counts and higher degrees, other asymmetric source
+shapes, periodic sources, external CAD, visible GUI, and exact-head CI remain
+open.
