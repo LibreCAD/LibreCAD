@@ -64,13 +64,14 @@ control/weight fixtures recorded in W506-W511. This is not arbitrary NURBS
 support: untested knot multiplicities/layouts, periodic high-degree offsets,
 large source counts, independent offset-error oracles, and external CAD remain
 open; wrapped degree-4/6 sources now have worker generation/cache-validation
-coverage, but lack the broader format and GUI qualification needed to close
-periodic support. Properties picker/replacement now has focused degree-4/6 coverage for
-the tested clamped single-span, midpoint-knot, and asymmetric rational
-profiles; this does not qualify other knot layouts or all high-degree
-geometry. Generated editable offset caches are still constrained to the
-validated line/cubic-Bezier representation; do not widen cache validation
-merely because source spline degree increased.
+coverage and Properties replacement coverage for bounded periodic fixtures,
+but lack the broader format qualification needed to close periodic support.
+Properties picker/replacement now has focused degree-4/6 coverage for the
+tested clamped single-span, midpoint-knot, asymmetric rational, and wrapped
+periodic profiles; this does not qualify other knot layouts or all
+high-degree geometry. Generated editable offset caches are still constrained
+to the validated line/cubic-Bezier representation; do not widen cache
+validation merely because source spline degree increased.
 
 Current implementation order for the remaining “all supported types” work:
 
@@ -27295,6 +27296,26 @@ high-degree splines`).
 
 This establishes only direct periodic degree-4/6 worker generation and cache
 validation for the recorded unit-weight profiles. Periodic high-degree DXF/DWG
-carrier promotion, source metadata save/reopen, Properties replacement,
-nonuniform/repeated periodic knots, rational periodic variants, independent
-geometry accuracy, and external CAD remain open.
+carrier promotion, source metadata save/reopen, nonuniform/repeated periodic
+knots, rational periodic variants, independent geometry accuracy, and external
+CAD remain open. W515 adds Properties replacement for the same bounded
+periodic profiles.
+
+## 515. Replace Periodic Degree-4 and Degree-6 Sources in Properties (2026-11-09)
+
+Extended the Spline-family replacement matrix with wrapped-closed degree-4 and
+degree-6 sources generated from validated clamped profiles. Both types pass
+worker-backed replacement, source rediscovery when the widget is reopened,
+signed-side changes, and subsequent distance edits. This joins source picking
+and interactive editing to the worker generation/cache validation established
+by W514.
+
+Validation: focused source-family replacement regression passes 8,103
+assertions/1 case; the `librecad_tests` Release target builds; `git diff
+--check` passes. Test commit `afbf6dbee` (`test(offset): replace periodic
+high-degree sources`).
+
+This qualifies only the recorded degree-4/6 wrapped, unit-weight profiles in
+Properties replacement. Periodic high-degree DXF/DWG carrier promotion,
+source metadata save/reopen, rational periodic variants, nonuniform/repeated
+periodic knots, independent geometry accuracy, and external CAD remain open.
