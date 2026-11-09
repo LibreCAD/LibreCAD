@@ -97,7 +97,9 @@ for those exact profiles, the cross-knot candidates are certified and mapped
 to output endpoints. W597 adds an open degree-3 positive-rational fixture
 with one simple C2 knot. Across W595-W597, only the recorded degree-3 through
 degree-6 open C2 crossing fixtures are qualified (degree 4-6 repeated knots;
-degree 3 simple knot), not general repeated-knot support.
+degree 3 simple knot), not general repeated-knot support. W598 mirrors the
+degree-3/4/5 fixtures and verifies their crossings on both signed offset
+sides; this remains evidence for those exact knot and weight profiles.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -28036,6 +28038,23 @@ claim degree-2 interior C2 knot support or general repeated-knot coverage.
 Validation: focused `C2 rational knot crossings map for degrees three through
 five` passes 51 assertions/1 case; complete Release
 `librecad_offset_worker_kernel_tests` passes 1,706,791 assertions/88 cases;
+`git diff --check` passes. Other knot profiles and multiplicities, periodic
+profiles, full geometry-variant support, exact-head CI, visible GUI, and
+independent-CAD acceptance remain open.
+
+## 598. Verify Both Signed Sides at C2 Rational Knots (2026-11-09)
+
+Mirrored the degree-3, degree-4, and degree-5 positive-rational knot fixtures
+across the x-axis, reversing curvature and the signed distance that places an
+offset cusp at the C2 join. Both orientations pass the high-precision oracle,
+interval-variation bound, certified-unique candidate, and output-endpoint
+mapping checks. This covers both signed offset sides for these exact three
+fixtures; it does not broaden the tested knot layouts, weights, distances, or
+periodic behavior.
+
+Validation: focused `C2 rational knot crossings map for degrees three through
+five` passes 102 assertions/1 case; complete Release
+`librecad_offset_worker_kernel_tests` passes 1,706,842 assertions/88 cases;
 `git diff --check` passes. Other knot profiles and multiplicities, periodic
 profiles, full geometry-variant support, exact-head CI, visible GUI, and
 independent-CAD acceptance remain open.
