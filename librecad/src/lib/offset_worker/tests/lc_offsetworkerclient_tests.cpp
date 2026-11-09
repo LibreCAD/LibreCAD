@@ -569,7 +569,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     const auto mixedBulgeSource = LC_OffsetSourceGeometry::capture(mixedBulgePolyline);
     REQUIRE(mixedBulgeSource);
     REQUIRE(mixedBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
-    const std::vector<LC_OffsetSourceGeometry> sources{
+    std::vector<LC_OffsetSourceGeometry> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
@@ -606,13 +606,35 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{endpointTangentParabola},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource};
+    const std::size_t scaledLineFixtureStart = sources.size();
+    const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 1;
+    std::vector<double> scaledLineScales;
+    std::vector<double> scaledLineDistances;
+    const std::array<std::pair<RS_Vector, RS_Vector>, 3> lineProfiles{{
+        {{0.0, 0.0}, {10.0, 0.0}},
+        {{0.0, 0.0}, {6.0, 8.0}},
+        {{6.0, 8.0}, {0.0, 0.0}},
+    }};
+    for (const double scale : {1e-8, 1.0, 1e8}) {
+        for (const double translationRatio : {0.0, 1e6}) {
+            const RS_Vector translation{translationRatio * scale, -translationRatio * scale};
+            for (const auto& [start, end] : lineProfiles) {
+                sources.emplace_back(LC_OffsetSourceGeometry{
+                    RS_LineData{start * scale + translation, end * scale + translation}});
+                scaledLineScales.push_back(scale);
+                scaledLineDistances.push_back(.02 * scale);
+            }
+        }
+    }
 
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
-        const double sourceDistance = i + 1 == sources.size() ? -.25 : i == 21 ? .1 : i == 24 ? 1.9 : .25;
+        const double sourceDistance = i >= scaledLineFixtureStart ?
+            scaledLineDistances[i - scaledLineFixtureStart] :
+            i == mixedBulgeFixture ? -.25 : i == 21 ? .1 : i == 24 ? 1.9 : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
         REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
@@ -664,7 +686,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
-        if (i == 13 || i == 15 || i == 20 || i + 3 >= sources.size()) REQUIRE(cacheRepresentable);
+        if (i == 13 || i == 15 || i == 20 || i + 3 >= sources.size() || i >= scaledLineFixtureStart)
+            REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
             if (result.ordinary.size() > 1)
@@ -1003,6 +1026,23 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 for (std::size_t weight = 0; weight < expected.weights.size(); ++weight)
                     CHECK(std::abs(actual.weights[weight] - expected.weights[weight]) <=
                           1e-8 * std::max(1.0, std::abs(expected.weights[weight])));
+            }
+            if (persistedGeometry[i].sourceFixture >= scaledLineFixtureStart) {
+                REQUIRE(persistedGeometry[i].type == RS2::EntityLine);
+                const double scale = scaledLineScales[
+                    persistedGeometry[i].sourceFixture - scaledLineFixtureStart];
+                const auto ulp = [](const double value) {
+                    return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) -
+                           std::abs(value);
+                };
+                const auto checkScaledLineVector = [&](const RS_Vector& actual, const RS_Vector& expected) {
+                    const double tolerance = std::max({1e-12 * scale, 64.0 * ulp(expected.x),
+                                                       64.0 * ulp(expected.y)});
+                    CHECK(std::abs(actual.x - expected.x) <= tolerance);
+                    CHECK(std::abs(actual.y - expected.y) <= tolerance);
+                };
+                checkScaledLineVector(reopenedGeometry[i].start, persistedGeometry[i].start);
+                checkScaledLineVector(reopenedGeometry[i].end, persistedGeometry[i].end);
             }
         }
     }
