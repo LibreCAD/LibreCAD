@@ -810,7 +810,7 @@ This inventory compares the older attached tree with the later candidate.
 | Validation workers | `scripts/offset-curve-validation/`, X-H1 through X-H7 | Candidate has Node developer/test workers and recorded timeout fixes. These tools are not a shipped isolated geometry worker. Do not confuse their deadlines with GUI computation limits. |
 | Native geometry-worker path | Real seven-operation protocol4 helper/client, cached source-copy production, same-producer ordinary fallback, plus dialog, sheet, grip, Update, Modify Offset, native Trim and GUI drawing-open/template routing committed/qualified locally | W16-W19 qualify cache portability and creation/repeat; W24-W26 qualify local Trim routing and scoped action faults; W31/W32 cover GUI drawing open/templates. W72 adds staged DXF/DWG plugin block import; W91 routes the legacy synchronous entry through that staged session (it still waits for compatibility) and preserves the async callback entry. W93 classifies hatch-pattern input as display-cache-only. W142 inventories every current in-repo import entry point and records that the remaining synchronous `RS_FileIO`/`LC_DocumentsStorage` APIs are compatibility-level calls with no current recognized DXF/DWG product caller; W143 reruns GUI open/template staging and ownership tests in Release/ASan. External API callers, cross-platform and packaged/final acceptance remain mandatory W0-W2 work. |
 | Tests/build targets | Main Catch target, filter micro targets and two standalone offset allocation-failure targets | Candidate present; source registration is not discovery/execution. Use the actual targets in section5.3, not just the old grouped fast lanes. |
-| Surviving test defect | `spline_offset_representation_tests.cpp` lines205 and668 in candidate still use DWG enum ranges | `FormatDWG2007` is outside the range; those ordinary representation loops also omit it. Fix classification and add an executed R2007 regression in S0. The separate candidate matrix already lists all six DWG versions. |
+| Former test defect (closed in the selected tree) | `spline_offset_representation_tests.cpp` ordinary spline round-trip routing | The current tree uses explicit DWG format classification, includes `FormatDWG2007`, and has a physical AC1021/reader-routing regression with ASCII DXF negatives. Revalidated in W679; no further codec rewrite is indicated. |
 
 ### 2.1 Findings to Close, Not Repeat
 
@@ -818,7 +818,7 @@ This inventory compares the older attached tree with the later candidate.
 |---|---|---|
 | P1 | A plan based only on the older tree labels implemented candidate features missing | S0 audits ancestry, scope and source differences; select the candidate without wholesale changes to the main checkout. Preserve/review A-C, E/U/G/F/O/T code rather than rebuilding it. |
 | P1 | Test-runner success could be mistaken for product worker isolation/responsiveness | W0 pins which runtime is being qualified; W1/W2 implement the native path promised here. If only the validation runner was intended, record an explicit scope correction before removing the native requirement; do not silently count X-H7 as it. |
-| P2 | Ordinary representation tests misclassify DWG2007 and never execute that row | S0 adds explicit enum mapping, both affected round-trip paths and a physical `AC1021`/reader-routing assertion, plus non-DWG negatives. No unrelated codec rewrite. |
+| P2 (closed in current tree) | Ordinary representation tests misclassify DWG2007 and never execute that row | Explicit enum mapping, six-version routing checks, physical `AC1021`/reader routing, and non-DWG negatives are present and pass W679. Preserve the regression; no unrelated codec rewrite. |
 | P2 | Existing entity/filter/failure tests would be missed by a geometry-only or grouped-fast-lane run | S0 inventories actual declarations/targets; each slice runs its named cases, relevant filter micro targets and standalone fault processes. Zero matches or omitted targets cannot close a slice. |
 | P2 | Historical evidence and temporary artifacts could be promoted into current or durable acceptance | Earlier audit reported matching14 receipt/52 fixture hashes. The old14 receipt files are now absent; all52 committed fixtures still match. Use new scoped durable runtime receipts for current claims, never reconstruct old bytes or PASS results from hashes. |
 | P2 | Prior visible UI results explicitly omit physical variants | R carries the unobserved rows from the candidate interactive record: context menus, compact options, held-drag cancellation, locked/stale peers and preview/commit comparisons. Automated tests do not turn those rows into physical PASS. |
@@ -1059,13 +1059,13 @@ candidate except the explicitly proposed native-worker tags.
    micro targets and standalone fault modules. Pin Qt6/compiler/Catch2 provider;
    use the exact local Catch2 source when available, with no dependency upgrades.
    Build/run the candidate baseline in a fresh directory before assigning PASS.
-4. In its own test slice, replace both numeric DWG range tests with an explicit
-   format switch/table and add DWG2007 to both ordinary representation paths.
-   Add a regression that fails on the old classification: all six DWG targets,
-   especially `FormatDWG2007`, route to the DWG reader; ASCII DXF never does.
-   Verify the physical R2007 signature is `AC1021`, import succeeds, and controls,
-   knots, weights, direction, layer/pen and bounded geometry are retained.
-   Scope is this offset test TU unless a separate production defect is proved.
+4. **Completed in the selected tree; revalidated in W679.** The ordinary
+   representation paths use explicit format classification, and the executed
+   regression verifies all six DWG enum values, physical `AC1021` read/write
+   routing, and ASCII DXF negatives. Keep this regression in the exact-slice
+   test set; do not repeat the enum rewrite. W679 also rechecks physical
+   AC1021 import and retained spline data/metadata. Scope is this offset test
+   TU unless a separate production defect is proved.
 5. Discover then execute the new case plus ordinary representation/persistence,
    full native offset and entity-coverage selections. Run affected ASan and
    format lanes. Keep named baseline failures/skips; no count-based waiver.
@@ -30070,3 +30070,17 @@ This qualifies the recorded closed four-segment major/minor profile, not all
 bulge magnitudes, vertex counts, self-intersection/collapse topologies,
 extreme coordinates, or outgoing-file persistence for arbitrary polylines.
 Visible GUI and ODA/AutoCAD acceptance remain open.
+
+## 679. Revalidate Explicit DWG2007 Reader Routing (2026-11-09)
+
+Reconciled the old S0/P2 finding against the selected tree. The ordinary
+spline representation tests now classify DWG targets with an explicit format
+switch that includes all six DWG enum values, including `FormatDWG2007`, rather
+than relying on an enum range. The focused regression checks all six reader
+selections, ASCII DXF negatives, and writes/reopens a physical R2007 file whose
+header is `AC1021` through the DWG reader.
+
+Validation: "Ordinary spline round trips route DWG2007 explicitly and keep
+ASCII DXF distinct" passes 295 assertions/1 case in the current Release build.
+This closes only the recorded reader-routing defect; the broader spline
+representation/file matrix remains governed by its existing gates.
