@@ -5127,10 +5127,11 @@ TEST_CASE("rational C2 knot crossing maps in a four-knot layout",
 
 TEST_CASE("rational four-knot crossing maps across positive weight profiles",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][weights]") {
-    const std::array<std::array<double, 11>, 3> weightProfiles{{
+    const std::array<std::array<double, 11>, 4> weightProfiles{{
         {{1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98}},
         {{.72, 1.38, .81, 1.27, .93, 1.46, .76, 1.19, 1.08, .84, 1.31}},
         {{.25, 2.0, .4, 2.5, .35, 2.2, .3, 2.8, 1.7, .45, 2.4}},
+        {{.05, 20.0, .1, 10.0, .2, 15.0, .08, 18.0, 5.0, .12, 12.0}},
     }};
     const SplineOracle domainStart{0};
     const SplineOracle domainEnd{1};
@@ -5141,6 +5142,8 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
     for (std::size_t profile = 0; profile < weightProfiles.size(); ++profile) {
         const auto& weightPattern = weightProfiles[profile];
         for (std::size_t targetKnotIndex = 0; targetKnotIndex < interiorKnots.size(); ++targetKnotIndex) {
+            if (profile == 3 && targetKnotIndex != interiorKnots.size() - 1)
+                continue;
             const double targetKnot = interiorKnots[targetKnotIndex];
             for (const int degree : {3, 4, 5, 6}) {
                 const int multiplicity = degree - 2;
@@ -5229,7 +5232,7 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
         }
     }
     CAPTURE(oracleCrossingCases);
-    CHECK(oracleCrossingCases == 82);
+    CHECK(oracleCrossingCases == 90);
 }
 
 TEST_CASE("rational spline knot sign jump is not certified as a cusp",
