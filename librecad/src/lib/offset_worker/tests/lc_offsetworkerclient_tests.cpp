@@ -596,7 +596,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
-        const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], .25, 1e-4, false}, {}}};
+        const double sourceDistance = i + 1 == sources.size() ? -.25 : .25;
+        const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
         REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
         rt.until([&] { return receipts.calls[0] != 0; });
@@ -647,6 +648,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
+        if (i + 2 >= sources.size()) REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
             if (result.ordinary.size() > 1)
@@ -675,7 +677,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             CHECK(editable->setDistance(.5).refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
             editable->move({2, 3});
             REQUIRE(editable->hasGeneralizedSourceDefinition());
-            CHECK(editable->sourceDefinition()->signedDistance == .25);
+            CHECK(editable->sourceDefinition()->signedDistance == sourceDistance);
             const bool movedExactly = RS_Spline::geometryFingerprint(editable->getData()) != cacheStamp;
             auto movedSource = std::get<Req::GenerateSource>(input.operation).definition.source.makeEntity();
             REQUIRE(movedSource);

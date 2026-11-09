@@ -29728,8 +29728,12 @@ five R14/R2000/R2018 DXF/DWG read/write lanes. The aggregate matrix now covers
 Validation on the current Release tree: rebuilt `librecad_tests`; the complete
 source-picker suite passes 11,877 assertions/12 cases, and the focused parabola
 geometry suite passes 44,071 assertions/4 cases. The expanded worker family
-case passes 47,244 assertions; the complete worker-client suite passes 53,895
-assertions/21 cases. LibreDWG 0.14 independently parses both generated DWGs.
+case passes 47,537 assertions; the complete worker-client suite passes 58,402
+assertions/21 cases. The tangent-spline fixture and the negative signed-distance
+mixed-bulge fixture are explicitly required to admit operation-8 native caches.
+For the same mixed-bulge source, the opposite signed side remains an ordinary
+multi-branch result and must refuse native-cache promotion; it is not reported
+as an editable cache success. LibreDWG 0.14 independently parses both generated DWGs.
 Each reports ARC=1, CIRCLE=1, LINE=1, LWPOLYLINE=4, SPLINE=14. All 14 SPLINEs
 in each file have non-empty control points and knot cardinality
 `knot_count == control_count + degree + 1`; invalid count is zero. This is
