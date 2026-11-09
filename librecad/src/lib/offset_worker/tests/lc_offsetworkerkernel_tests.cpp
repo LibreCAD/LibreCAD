@@ -3712,6 +3712,29 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
                                }));
             CHECK(diagnostics.failureStage ==
                   LC_CurveOffsetCuspFailureStage::RunResolution);
+            const req::Request generationRequest{
+                token, req::GenerateSource{definition, {}}};
+            const auto generationReply =
+                LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            CHECK(generated.engineRuns == 1);
+            REQUIRE(generated.engineStatus);
+            CHECK(*generated.engineStatus == built.status);
+            CHECK(generated.refusal == LC_OffsetCurveRefusal::Engine);
+            CHECK_FALSE(generated.curve);
+            CHECK_FALSE(generated.changed);
+            CHECK(generated.ordinaryStatus == result::OrdinaryStatus::None);
+            CHECK(generated.ordinary.empty());
+            const auto wire = result::encode(generationReply, generationRequest);
+            REQUIRE(wire);
+            const auto decoded = result::decode(*wire, generationRequest);
+            REQUIRE(decoded);
+            const auto& decodedGenerated = native(*decoded, 7);
+            CHECK(decodedGenerated.engineStatus == generated.engineStatus);
+            CHECK(decodedGenerated.refusal == generated.refusal);
+            CHECK_FALSE(decodedGenerated.curve);
+            CHECK_FALSE(decodedGenerated.changed);
+            CHECK(decodedGenerated.ordinary.empty());
             continue;
         }
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
