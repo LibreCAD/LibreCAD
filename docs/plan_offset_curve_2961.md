@@ -27618,3 +27618,20 @@ worker-kernel test target builds and `git diff --check` passes. Remaining:
 performance and enclosure tests at the degree-6 bound, broader knot/weight
 profiles, exact actual-root completeness, candidate-to-output bijection,
 visible GUI, external CAD, and exact-head CI.
+
+## 581. Verify High-degree Rational Cusp No-root Certificates (2026-11-09)
+
+Extended the degree-4/5/6 periodic rational tangent fixtures to check a
+separate narrow interval beside each independently identified even root. For
+each higher-degree source, `tryBoundJetForCusp` must prove that the squared
+rational cusp polynomial has no root on that interval. This complements the
+root-containing-box variation assertion and exercises both sides of the
+degree-6 certificate path: multi-variation near a root and strict no-root
+signs away from it.
+
+Validation: focused `[tangent-root]` suite passes 1,288 assertions/14 cases;
+the full worker-kernel suite passes 1,705,991 assertions/84 cases; the Release
+worker-kernel test target builds and `git diff --check` passes. This verifies
+only the recorded profiles and intervals; it does not prove complete actual
+cusp-root counts or general certificate effectiveness for arbitrary degree-6
+knot/weight data.

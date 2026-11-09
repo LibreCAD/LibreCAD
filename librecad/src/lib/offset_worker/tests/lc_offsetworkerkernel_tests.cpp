@@ -4157,6 +4157,12 @@ TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
     CHECK(rootBounds.rationalCuspRootVariationUpperBound >= 2);
     CHECK(rootBounds.offsetFactorNumerator(signedDistance).lo() <= 0.0);
     CHECK(rootBounds.offsetFactorNumerator(signedDistance).hi() >= 0.0);
+    const double rootFreeA = rootValue + 0.001 * (spanEnd - rootValue);
+    const double rootFreeB = rootValue + 0.002 * (spanEnd - rootValue);
+    LC_CurveJetBounds rootFreeBounds;
+    REQUIRE(rationalSource.tryBoundJetForCusp(rootFreeA, rootFreeB,
+                                              rootFreeBounds, signedDistance));
+    CHECK(rootFreeBounds.rationalCuspNoRootCertified);
 
     const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data},
                                                signedDistance, 1e-4, false};
