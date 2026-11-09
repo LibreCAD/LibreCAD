@@ -28469,20 +28469,27 @@ Visible GUI, external CAD, and exact-head CI remain separate open gates.
 The Properties source-curve control must allow changing the requested source
 family before selecting a replacement. Its candidate list covers all nine
 currently modeled families: line, arc, circle, ellipse, spline, spline-points,
-parabola, bounded hyperbola, and polyline. Selecting a family filters drawing
-candidates without mutating or clearing the current source; choosing a valid
-candidate replaces the source with that entity's actual typed geometry and
-selects/highlights the resolved source in the drawing. `LC_Parabola` remains a
-distinct choice and must be classified before its `LC_SplinePoints` base type.
+parabola, bounded hyperbola, and polyline. Changing the family is a filter
+operation only: it must not mutate the offset definition, clear the current
+source, or remove that source's drawing selection/highlight. When the current
+source belongs to the filtered family and is still available/selectable, show
+it as the matching picker item; otherwise show an explicit placeholder rather
+than substituting another entity. Choosing a valid candidate replaces the
+source with that entity's actual typed geometry and selects/highlights the
+resolved source in the drawing. `LC_Parabola` remains a distinct choice and
+must be classified before its `LC_SplinePoints` base type.
 
 This request reconfirms the existing picker contract and does not call for a
 second control or a parabola-only branch. Existing type-switch, all-family
 replacement, current-source resolution/highlighting, and parabola-identity
-regressions remain the implementation gates (W359/W396/W397/W607). This is a
-picker-scope statement only: admission for offset generation, worker/cache
-coverage, and DXF/DWG round-trip remain independently qualified and are not
-implied by displaying a family in the picker. No code or test changed for this
-plan clarification; visible desktop acceptance remains an independent gate.
+regressions remain the implementation gates (W359/W396/W397/W607). The current
+implementation is in `LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices`
+and is exercised by the native source-picker tests, including the all-modeled-
+families matrix. Re-run those focused Release tests after any picker change.
+This is a picker-scope statement only: admission for offset generation,
+worker/cache coverage, and DXF/DWG round-trip remain independently qualified
+and are not implied by displaying a family in the picker. Visible desktop
+acceptance remains an independent gate.
 
 ## 619. Qualify a Distinct Two-knot Rational Layout in the Worker (2026-11-09)
 
