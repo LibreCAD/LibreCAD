@@ -265,7 +265,7 @@ LC_OffsetCurveEditResult LC_OffsetWorkerCompletion::apply(LC_OffsetCurve& clone)
     if (std::holds_alternative<LC_OffsetWorkerRequest::GenerateSource>(m_request.operation)) {
         if (result->engineStatus != LC_CurveOffsetStatus::Ok || result->engineRuns != 1 ||
             result->ordinaryStatus != LC_OffsetWorkerResult::OrdinaryStatus::Complete ||
-            result->refusal != LC_OffsetCurveRefusal::NotCacheRepresentable || result->ordinary.size() != 1) return outcome;
+            result->refusal != LC_OffsetCurveRefusal::NotCacheRepresentable) return outcome;
         if (!clone.isConsistent()) {
             outcome.refusal = LC_OffsetCurveRefusal::Inconsistent;
             outcome.changed = false;

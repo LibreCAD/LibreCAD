@@ -29512,26 +29512,33 @@ Implementation order:
 3. (Complete for the captured fixtures) Give each family fixture a valid,
    unambiguous side coordinate and require successful worker output and source
    immutability. Broader boundary/degeneracy refusal matrices remain separate.
-4. Continue qualifying every source family with family-specific direct
-   geometric/oracle checks and exercise operation-8 validation, cache
-   replacement atomicity, and undo/redo for each cache-admissible family.
-   Current generic source/cache paths do not by themselves prove this matrix.
+4. (Complete for the 16 captured fixtures) Exercise operation-8 cache
+   validation and translated source-definition replacement for every
+   cache-admitted fixture. The client test now transports all ordinary output
+   branches through `nativeSource()` and the exact composite-cache validator;
+   it no longer rejects a receipt merely because it has multiple ordinary
+   outputs. All 16 replacements commit with a changed cache and matching
+   typed definition, with no refusal and no partial state. The previously
+   rejected spline and polyline cases specifically cover the composite-output
+   path. UI undo/redo across the nine family switches remains evidenced by
+   W563b; broader per-variant geometry/oracle and file-persistence matrices
+   remain open.
 5. Extend only the variants that pass direct geometry/oracle checks into the
    applicable five DXF/DWG product-writer lanes and independent reader checks.
    Keep picker completion, helper execution, geometry support, cache
    admission, persistence, visible GUI, and external-CAD acceptance as
    separate claims.
 
-Validation for this implementation slice (all pass): Release build of the
-worker client/process/request/result and kernel targets; client tests 19,155
-assertions/21 cases; helper-process tests 2,625/5 (including rejection of the
-stale protocol-7 handshake); request protocol
+Validation for the worker protocol/output slice (all pass): Release build of
+the worker client/process/request/result and kernel targets; client tests
+21,786 assertions/21 cases; helper-process tests 2,625/5 (including rejection
+of the stale protocol-7 handshake); request protocol
 603,526/18; result protocol 467,591/27; worker kernel 1,721,306/94; source
 preparation 76,653/40; source-action 2,812/34; `git diff --check`. The
 all-family client run covers 16 captured representations across the nine
 modeled kinds, but only the captured profiles and configured side picks.
-These results do not prove arbitrary geometry-domain support, cache
-replacement/persistence for every family, the five DXF/DWG lanes, visible GUI
-behavior, or ODA/AutoCAD acceptance. Commit this implementation and roadmap
-update together, then continue with item 4 rather than treating this worker
-slice as completion of the all-types plan.
+These results do not prove arbitrary geometry-domain support, all source
+variants or distances, the five DXF/DWG lanes for every new variant, visible
+GUI behavior, or ODA/AutoCAD acceptance. Commit this composite replacement fix
+and roadmap update together, then continue with item 5 rather than treating
+this captured-fixture matrix as completion of the all-types plan.

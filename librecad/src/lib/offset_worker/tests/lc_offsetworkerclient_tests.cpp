@@ -693,6 +693,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     const LC_OffsetSourceDefinition linearDefinition{LC_OffsetSourceGeometry{linear}, .25, 0, false};
     REQUIRE_FALSE(cacheCandidates.empty());
     qint64 nextRequestId = static_cast<qint64>(sources.size() + 1);
+    std::size_t replacementsApplied = 0;
+    std::vector<LC_OffsetSourceGeometry::Kind> replacementRefusals;
     for (const auto& [sourceDefinition, cache] : cacheCandidates) {
         const Req::Request validationInput{token(nextRequestId), Req::ValidateSourceCache{cache, sourceDefinition, {}}};
         Receipts validationReceipts;
@@ -713,8 +715,44 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         CHECK(Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition()) ==
               Req::Values::encodeSourceDefinition(sourceDefinition));
         exactCache(validatedNative->getData(), cache);
-        ++nextRequestId;
+
+        auto replacementDefinition = *validatedNative->sourceDefinition();
+        auto replacementSource = replacementDefinition.source.makeEntity();
+        REQUIRE(replacementSource);
+        replacementSource->move({2, 3});
+        const auto replacementGeometry = LC_OffsetSourceGeometry::capture(*replacementSource);
+        REQUIRE(replacementGeometry);
+        replacementDefinition.source = *replacementGeometry;
+        const auto previousFingerprint = RS_Spline::geometryFingerprint(validatedNative->getData());
+        const auto previousDefinition = Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition());
+        auto edit = LC_OffsetWorkerEdit::prepareSourceDefinition(*validatedNative, replacementDefinition, {});
+        REQUIRE(edit.generateSource());
+        const qint64 replacementId = nextRequestId + 1;
+        Receipts editReceipts;
+        REQUIRE(owned.get().submit({token(replacementId), *edit.generateSource()}, Client::Mode::Commit,
+            editReceipts.into(0)));
+        rt.until([&] { return editReceipts.calls[0] != 0; });
+        const auto& editCompletion = completed(editReceipts.at(0), replacementId, 7);
+        const auto editOutcome = editCompletion.apply(*validatedNative);
+        if (editOutcome) {
+            ++replacementsApplied;
+            CHECK(editOutcome.changed);
+            REQUIRE(validatedNative->sourceDefinition());
+            CHECK(Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition()) ==
+                Req::Values::encodeSourceDefinition(replacementDefinition));
+            CHECK(RS_Spline::geometryFingerprint(validatedNative->getData()) != previousFingerprint);
+        } else {
+            CAPTURE(sourceDefinition.source.kind(), editOutcome.refusal);
+            CHECK(editOutcome.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+            replacementRefusals.push_back(sourceDefinition.source.kind());
+            CHECK(Req::Values::encodeSourceDefinition(*validatedNative->sourceDefinition()) == previousDefinition);
+            CHECK(RS_Spline::geometryFingerprint(validatedNative->getData()) == previousFingerprint);
+        }
+        nextRequestId += 2;
     }
+    CHECK(replacementsApplied + replacementRefusals.size() == cacheCandidates.size());
+    CHECK(replacementsApplied == cacheCandidates.size());
+    CHECK(replacementRefusals.empty());
 
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i, sources[i].kind());
