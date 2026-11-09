@@ -30101,3 +30101,147 @@ Validation: `[kink]` passes 5,707 assertions/16 cases. The full
 Release build. This closes a test-contract mismatch, not a new geometry
 acceptance case; physical GUI, cross-platform/ASan, exact-head CI, and external
 CAD gates remain separate.
+
+## 681. Separate Embedded-source Type Selection from Picked-source Replacement (2026-11-09)
+
+### Current-code correction
+
+The latest user requirement applies to changing the source family while
+replacing an offset curve's source, and to making that replacement picker cover
+all supported source kinds, including parabola. The current tree has two
+distinct workflows which must not be conflated:
+
+* The embedded-source controls tested by
+  `Native source picker replaces every modeled source family without filter
+  side effects` exercise the Properties dialog's type/source controls and typed
+  embedded definitions.
+* The Properties command link `Update from Source` launches
+  `LC_ActionOffsetCurveUpdateSource`, whose current `sourceRefusal()` accepts
+  only `RS_Ellipse`, whose `sourceAt()` returns `RS_Ellipse*`, and whose action
+  test explicitly requires the picked source to be an ellipse. The link's
+  description also still says "picked ellipse". Thus the interactive
+  replacement action remains ellipse-only despite the dialog-level
+  nine-family tests.
+
+This corrects the scope of section 676: its automated nine-kind picker result
+closes the embedded-source type/filter contract only. It is not evidence that
+the interactive Update from Source action lets the user change the requested
+family or replace a source with another supported kind. Do not count the
+existing dialog test as coverage for that action.
+
+### Implementation-ready sequence
+
+1. **Define the shared kind contract.** Use the existing
+   `LC_OffsetSourceGeometry::SupportedKinds` inventory as the authoritative
+   list: line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+   hyperbola, and polyline. Add a kind-selection state to the source-update
+   action, defaulting compatibly to ellipse if the command has no remembered
+   selection. Keep family choice a filter only; never convert the currently
+   committed source or target geometry when the filter changes.
+2. **Expose kind selection during the pick workflow.** Add the selector to the
+   active source-update command UI using existing command/options conventions.
+   Changing it while the command is active must immediately update candidate
+   eligibility and hover/pick behavior without clearing targets, changing
+   their generated cache, or removing their highlight. Update the Properties
+   action label/description so it no longer promises an ellipse-only source.
+3. **Generalize candidate inventory and validation.** Replace
+   `RS_Ellipse* sourceAt()` and ellipse-specific refusal checks with a typed
+   candidate path for all nine kinds. Candidate discovery must preserve current
+   document ownership, visibility, finite pick-distance, nearest-candidate,
+   tie-order, and read-only/locked-source behavior. Each candidate must map to
+   its actual `LC_OffsetSourceGeometry` variant; parabola must remain
+   `LC_ParabolaData`, not `LC_SplinePointsData`. Refuse unsupported/malformed
+   variants with an actionable diagnostic and no mutation.
+4. **Preserve atomic replacement semantics.** Reuse the existing bounded
+   snapshot/worker/cache/publication pipeline. Validate the selected family and
+   source snapshot before dispatch; cancellation, filter changes without a
+   successful pick, stale/deleted candidates, unsupported geometry, worker
+   failure, and timeout must leave the old source definition, cache, target
+   selection/highlight, and undo history unchanged. Successful replacement
+   must publish the actual picked typed source, regenerated cache, and undo
+   record atomically.
+5. **Add action-level regression coverage.** Extend action tests beyond the
+   current ellipse-only case. For every supported kind, test that the selector
+   admits only matching candidates, a valid candidate replaces the source
+   with the exact typed identity, and the worker/publication path behaves as
+   before. Test changing the family while the action is active; each family
+   transition; wrong-family, null, nested, foreign-document, hidden/deleted,
+   stale, malformed, and unsupported candidates; cancel/right-click; and
+   successful pick followed by undo/redo. Assert source/cache fingerprints,
+   selection/highlight, worker counts, diagnostics, and undo counts at each
+   failure boundary.
+6. **Test the UI-to-action integration.** Add a widget/action integration test
+   proving that the visible selector changes the active action's candidate
+   filter, not only a dialog-local combo box. Cover all nine kinds, including a
+   distinct parabola selection, retain-the-old-source behavior while changing
+   filters, source highlight, successful replacement, cancellation, and
+   re-opening Properties after replacement.
+7. **Qualify geometry and persistence without overclaiming.** Reuse the
+   family capability matrix and direct geometry oracles. For each admitted
+   representation, run the real worker/cache pipeline and applicable Produce,
+   DXF/DWG round-trip, and independent DWG-reader checks. Keep unsupported
+   variants explicit and fail-closed. Run the exact-build visible GUI check and
+   ODA/AutoCAD acceptance separately; unavailable external acceptance remains
+   an open gate.
+
+### Implementation status and remaining gates
+
+The implementation now distinguishes the embedded-source editor from the
+interactive **Update from Source** command and addresses the action-level gap:
+
+* The action options widget exposes all entries from
+  `LC_OffsetSourceGeometry::SupportedKinds`, defaults to ellipse, and applies
+  the selected kind as a candidate filter without mutating the selected offset
+  targets.
+* Candidate lookup and validation are typed across the nine modeled kinds.
+  The Properties command description no longer promises an ellipse-only pick.
+* The worker request carries the captured typed source geometry and source
+  encoding. Ellipse retains its established fast path; other kinds use the
+  isolated typed `GenerateSource` operation and preserve signed distance,
+  tolerance, and reverse settings. Publication remains through the existing
+  staged edit/undo path.
+* Action tests now exercise all nine kinds, wrong-family rejection/filtering,
+  typed replacement, undo, and live selector behavior. The focused matrix
+  currently passes 421 assertions in one Catch2 case; the focused picker test
+  also passes.
+
+### Completed implementation and validation
+
+The implementation and automated action/property integration are complete.
+The test contract was also corrected: malformed source geometry is refused
+during admission without an edit/worker receipt, while valid geometry that
+exceeds the configured native work limit still reports the native edit result.
+Existing pending-worker tests use the nonblocking submission path and continue
+to test cancellation, stale-input, and heartbeat behavior as intended.
+
+Current Release-build evidence:
+
+| Validation | Result |
+| --- | --- |
+| `librecad_offset_update_source_tests` | PASS, 36 cases / 3,191 assertions |
+| Properties source-picker workflow (`[gui][dialog][offsetcurve][source]`) | PASS, 12 cases / 11,877 assertions |
+| `librecad_offset_worker_edit_tests` | PASS, 15 cases / 101,553 assertions |
+| Main CMake `LibreCAD` target | PASS |
+| `git diff --check` | PASS |
+
+Two broader adjacent suites still report failures outside the focused source
+workflow: the full Properties dialog suite has 3 failures (editor focus and
+unfinished-field event behavior), and source preparation has 1 failure in
+`Ordered offset staging preserves polyline run aliases and whole-source
+coverage`. These remain visible suite-level follow-ups; the focused source
+picker and worker-edit cases above pass.
+
+### Remaining acceptance gates
+
+1. Run the exact-build visible GUI flow for type switching, candidate hover and
+   pick, replacement, cancellation, and undo/redo. Automated widget/action
+   coverage is not a substitute for this visible check.
+2. Exercise applicable geometry generation and DXF/DWG save/reopen/import
+   round-trips for every supported source kind, including distinct parabola
+   persistence; the action matrix proves typed worker replacement, not format
+   coverage.
+3. Run independent ODA/AutoCAD acceptance, cross-platform/ASan qualification,
+   and exact-head CI. These are not verified by the current local Release
+   build and remain open until results are available.
+
+Do not claim full external acceptance until all three gates have evidence.

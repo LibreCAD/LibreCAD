@@ -12,6 +12,7 @@
 #include "lc_offsetcurve.h"
 
 class RS_Ellipse;
+class LC_ActionOptionsWidget;
 class LC_OffsetWorkerClient;
 class QTimer;
 
@@ -28,6 +29,8 @@ public:
     void suspend() override;
     void keyPressEvent(QKeyEvent* event) override;
     bool isPreparing() const { return bool(m_work); }
+    LC_OffsetSourceGeometry::Kind sourceKind() const noexcept { return m_sourceKind; }
+    void setSourceKind(LC_OffsetSourceGeometry::Kind kind);
 
     struct Outcome {
         EntityId targetId = 0;
@@ -57,9 +60,11 @@ protected:
     void updateActionPromptForSelection() override;
     void updateActionPromptForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doTriggerModifications(LC_DocumentModificationBatch& batch) override;
     void doTriggerSelectionUpdate(bool keepSelected, const LC_DocumentModificationBatch& batch) override;
     void doTriggerCompletion(bool success) override;
+    RS_Entity* sourceAt(const LC_MouseEvent* event) const;
 
     void useSource(RS_Entity* source);
     LC_OffsetRunLimits m_limits{};
@@ -88,12 +93,12 @@ private:
     RS_Entity* liveMember(const RS_Entity* address) const;
     QString targetRefusal(RS_Entity* entity) const;
     QString sourceRefusal(RS_Entity* entity) const;
-    RS_Ellipse* sourceAt(const LC_MouseEvent* event) const;
     void publishReport();
 
     QList<Target> m_targets;
     RS_Entity* m_source = nullptr;
     EntityId m_sourceId = 0;
+    LC_OffsetSourceGeometry::Kind m_sourceKind = LC_OffsetSourceGeometry::Kind::Ellipse;
     Report m_report;
     std::unique_ptr<LC_OffsetWorkerClient> m_worker;
     std::unique_ptr<QTimer> m_deadline;

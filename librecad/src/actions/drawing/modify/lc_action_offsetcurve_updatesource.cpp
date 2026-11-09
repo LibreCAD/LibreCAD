@@ -16,8 +16,12 @@
 #include <QSet>
 #include <QStringList>
 #include <QElapsedTimer>
+#include <QComboBox>
+#include <QHBoxLayout>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QScopeGuard>
+#include <QSignalBlocker>
 #include <QTimer>
 
 #include "lc_actioncontext.h"
@@ -38,8 +42,35 @@
 #include "rs_layer.h"
 #include "rs_graphic.h"
 #include "lc_selectedset.h"
+#include "lc_action_options_widget.h"
+#include "../../../lib/offset_worker/lc_offsetworkerrequest.h"
+#include "lc_splinepoints.h"
+#include "lc_parabola.h"
+#include "lc_hyperbola.h"
+#include "rs_line.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_polyline.h"
 
 namespace {
+using SourceKind = LC_OffsetSourceGeometry::Kind;
+
+QString sourceKindName(const SourceKind kind) {
+    switch (kind) {
+    case SourceKind::Line: return QObject::tr("Line");
+    case SourceKind::Arc: return QObject::tr("Arc");
+    case SourceKind::Circle: return QObject::tr("Circle");
+    case SourceKind::Ellipse: return QObject::tr("Ellipse");
+    case SourceKind::Spline: return QObject::tr("Spline");
+    case SourceKind::SplinePoints: return QObject::tr("Spline points");
+    case SourceKind::Parabola: return QObject::tr("Parabola");
+    case SourceKind::BoundedHyperbola: return QObject::tr("Bounded hyperbola");
+    case SourceKind::Polyline: return QObject::tr("Polyline");
+    case SourceKind::Invalid: break;
+    }
+    return QObject::tr("Unsupported");
+}
+
 bool registeredUpdateLayer(const RS_Entity& entity) {
     const RS_Entity* ancestor = &entity;
     RS_Layer* layer = nullptr;
@@ -49,15 +80,6 @@ bool registeredUpdateLayer(const RS_Entity& entity) {
             return !layer || const_cast<RS_Graphic*>(graphic)->RS_Graphic::getLayerList()->contains(layer);
     }
     return !ancestor && !layer;
-}
-bool sameUpdateBasis(const RS_EllipseData& a, const RS_EllipseData& b) {
-    const auto values = [](const RS_EllipseData& d) {
-        return std::array<double, 13>{d.center.x, d.center.y, d.center.z, d.majorP.x, d.majorP.y, d.majorP.z,
-            d.ratio, d.angle1, d.angle2, d.angleDegrees, d.startAngleDegrees, d.otherAngleDegrees, d.angularLength};
-    };
-    const auto x = values(a), y = values(b);
-    return std::memcmp(x.data(), y.data(), x.size() * sizeof(double)) == 0 && a.center.valid == b.center.valid &&
-        a.majorP.valid == b.majorP.valid && a.isArc == b.isArc && a.reversed == b.reversed;
 }
 constexpr std::size_t UpdateCloneCharge = 4 * LC_OffsetCurveEditSnapshot::MaximumSnapshotBytes;
 std::optional<std::size_t> updateCloneCharge(const LC_OffsetCurve& curve) {
@@ -104,6 +126,37 @@ std::optional<std::size_t> updateCloneCharge(const LC_OffsetCurve& curve) {
     }
     return 3 * bytes;
 }
+
+class UpdateSourceOptions final : public LC_ActionOptionsWidget {
+public:
+    UpdateSourceOptions() {
+        auto* layout = new QHBoxLayout(this);
+        layout->setContentsMargins(4, 0, 4, 0);
+        layout->addWidget(new QLabel(tr("Source type:"), this));
+        m_kind = new QComboBox(this);
+        m_kind->setObjectName(QStringLiteral("cbUpdateSourceKind"));
+        for (const auto kind : LC_OffsetSourceGeometry::SupportedKinds)
+            m_kind->addItem(sourceKindName(kind), static_cast<int>(kind));
+        layout->addWidget(m_kind);
+        connect(m_kind, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [this](const int index) {
+            if (!m_action || index < 0) return;
+            m_action->setSourceKind(static_cast<SourceKind>(m_kind->itemData(index).toInt()));
+            m_action->updateOptions();
+        });
+    }
+
+protected:
+    void doUpdateByAction(RS_ActionInterface* action) override {
+        m_action = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(action);
+        if (!m_action) return;
+        const QSignalBlocker blocker(m_kind);
+        m_kind->setCurrentIndex(m_kind->findData(static_cast<int>(m_action->sourceKind())));
+    }
+
+private:
+    QComboBox* m_kind = nullptr;
+    LC_ActionOffsetCurveUpdateSource* m_action = nullptr;
+};
 }
 
 struct LC_ActionOffsetCurveUpdateSource::PreparedRow {
@@ -128,7 +181,9 @@ struct LC_ActionOffsetCurveUpdateSource::Work final : LC_SelectedSetListener {
     RS_Document* document = nullptr; // Independently tracked even if a publication notification deletes the action.
     std::uint64_t undoEpoch = 0;
     Target source;
-    RS_EllipseData basis;
+    SourceKind sourceKind = SourceKind::Ellipse;
+    LC_OffsetSourceGeometry sourceGeometry{RS_EllipseData{}};
+    std::optional<QCborArray> sourceEncoding;
     RS_Layer* sourceLayer = nullptr;
     LC_OffsetRunLimits limits;
     Report report, frozen;
@@ -235,6 +290,17 @@ void LC_ActionOffsetCurveUpdateSource::init(const int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
 
+void LC_ActionOffsetCurveUpdateSource::setSourceKind(const LC_OffsetSourceGeometry::Kind kind) {
+    if (std::find(LC_OffsetSourceGeometry::SupportedKinds.begin(),
+                  LC_OffsetSourceGeometry::SupportedKinds.end(), kind) ==
+        LC_OffsetSourceGeometry::SupportedKinds.end() || kind == m_sourceKind) return;
+    m_sourceKind = kind;
+    deletePreviewAndHighlights();
+    updateActionPrompt();
+    updateMouseCursor();
+    redrawDrawing();
+}
+
 bool LC_ActionOffsetCurveUpdateSource::isEntityAllowedToSelect(RS_Entity* entity) const {
     entity = liveMember(entity);
     // Existing selected native targets stay in the attempt inventory even if
@@ -285,31 +351,34 @@ QString LC_ActionOffsetCurveUpdateSource::targetRefusal(RS_Entity* entity) const
 }
 
 QString LC_ActionOffsetCurveUpdateSource::sourceRefusal(RS_Entity* entity) const {
-    if (!entity) return tr("Source must be a live top-level ellipse in the same editable document.");
+    if (!entity) return tr("Pick a live top-level %1 in this editable document.").arg(sourceKindName(m_sourceKind));
     if (!registeredUpdateLayer(*entity)) return tr("Source layer is no longer registered in this document.");
-    if (entity->rtti() != RS2::EntityEllipse || !dynamic_cast<RS_Ellipse*>(entity))
-        return tr("Source is not an ellipse.");
-    if (!entity->isVisible()) return tr("Source ellipse is hidden.");
+    if (entity->rtti() == RS2::EntityOffsetCurve)
+        return tr("Offset curves are not valid source entities.");
+    const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
+    if (!geometry || geometry->kind() != m_sourceKind || !geometry->isWellFormed() ||
+        !LC_OffsetWorkerRequest::Values::isSourceGeometryEncodable(*geometry))
+        return tr("Source is not a supported %1.").arg(sourceKindName(m_sourceKind));
+    if (!entity->isVisible()) return tr("Source is hidden.");
     // A locked source is read-only input, not a replacement target.
     return {};
 }
 
-RS_Ellipse* LC_ActionOffsetCurveUpdateSource::sourceAt(const LC_MouseEvent* event) const {
+RS_Entity* LC_ActionOffsetCurveUpdateSource::sourceAt(const LC_MouseEvent* event) const {
     if (!event || !currentContext()) return nullptr;
-    // The general editing picker excludes locked layers. This source is read-only;
-    // inspect only directly owned ellipses, retaining the normal range and tie order.
+    // The general editing picker excludes locked layers. Sources are read-only;
+    // inspect directly owned candidates, retaining normal range and tie order.
     double nearest = getCatchDistance(getSnapRange(), m_catchEntityGuiRange);
     RS_EntityContainer nearby(nullptr, false);
     m_document->appendNearby(event->graphPoint, nearest, nearby);
-    RS_Ellipse* result = nullptr;
+    RS_Entity* result = nullptr;
     for (auto* entity : nearby) {
         if (!entity || entity->getParent() != m_document || entity->isDeleted() ||
             !sourceRefusal(entity).isEmpty()) continue;
-        auto* ellipse = static_cast<RS_Ellipse*>(entity);
-        const double distance = ellipse->getDistanceToPoint(event->graphPoint);
+        const double distance = entity->getDistanceToPoint(event->graphPoint);
         if (std::isfinite(distance) && distance >= 0 && distance <= nearest) {
             nearest = distance;
-            result = ellipse;
+            result = entity;
         }
     }
     return result;
@@ -317,7 +386,7 @@ RS_Ellipse* LC_ActionOffsetCurveUpdateSource::sourceAt(const LC_MouseEvent* even
 
 void LC_ActionOffsetCurveUpdateSource::onMouseMoveEventSelected(int, const LC_MouseEvent* event) {
     if (isPreparing()) return;
-    if (auto* ellipse = sourceAt(event)) highlightHover(ellipse);
+    if (auto* source = sourceAt(event)) highlightHover(source);
 }
 
 void LC_ActionOffsetCurveUpdateSource::onMouseLeftButtonReleaseSelected(int, const LC_MouseEvent* event) {
@@ -326,12 +395,12 @@ void LC_ActionOffsetCurveUpdateSource::onMouseLeftButtonReleaseSelected(int, con
         trigger();
         return;
     }
-    auto* ellipse = sourceAt(event);
-    if (!ellipse) {
-        commandMessage(tr("Pick a visible top-level source ellipse in this editable document."));
+    auto* source = sourceAt(event);
+    if (!source) {
+        commandMessage(tr("Pick a visible top-level %1 in this editable document.").arg(sourceKindName(m_sourceKind)));
         return;
     }
-    useSource(ellipse);
+    useSource(source);
 }
 
 void LC_ActionOffsetCurveUpdateSource::useSource(RS_Entity* source) {
@@ -345,6 +414,7 @@ void LC_ActionOffsetCurveUpdateSource::useSource(RS_Entity* source) {
     m_sourceId = member ? member->getId() : 0;
     trigger();
 }
+
 
 void LC_ActionOffsetCurveUpdateSource::trigger() {
     if (isPreparing()) return;
@@ -417,13 +487,17 @@ bool LC_ActionOffsetCurveUpdateSource::currentWork(const std::shared_ptr<Work>& 
             world[i].z != work->world[i].z || world[i].valid != work->world[i].valid) return false;
     if (m_viewport->toWorldAngle(m_viewport->toAbsUCSAngle(0)) != work->angle ||
         m_viewport->areAnglesCounterClockwise() != work->counterClockwise) return false;
+    if (m_sourceKind != work->sourceKind) return false;
     if (!work->report.sourceRefusal.isEmpty()) return true; // Inventory the original source refusal without math.
     const int index = m_document->findEntityIndex(work->source.address);
     if (index < 0) return false;
-    const auto* source = dynamic_cast<const RS_Ellipse*>(m_document->entityAt(index));
-    return source && source->getId() == work->source.id && source->getParent() == m_document &&
-        registeredUpdateLayer(*source) && LC_OffsetCurveFinalInput::available(*source, false) &&
-        source->RS_Entity::getLayer(false) == work->sourceLayer && sameUpdateBasis(source->getData(), work->basis);
+    const auto* source = m_document->entityAt(index);
+    if (!source || source->getId() != work->source.id || source->getParent() != m_document ||
+        !registeredUpdateLayer(*source) || !LC_OffsetCurveFinalInput::available(*source, false) ||
+        source->RS_Entity::getLayer(false) != work->sourceLayer) return false;
+    const auto geometry = LC_OffsetSourceGeometry::capture(*source);
+    const auto encoding = geometry ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
+    return encoding && work->sourceEncoding && *encoding == *work->sourceEncoding;
 }
 
 bool LC_ActionOffsetCurveUpdateSource::currentRow(const std::shared_ptr<Work>& work, const std::size_t index) const {
@@ -473,10 +547,18 @@ void LC_ActionOffsetCurveUpdateSource::beginPreparation() {
         auto* source = liveMember(m_source);
         if (source && source->getId() != m_sourceId) source = nullptr;
         work->report.sourceRefusal = sourceRefusal(source);
+        work->sourceKind = m_sourceKind;
         if (!alive || work->serial != m_serial || !currentContext() || m_document != work->document) return;
         if (work->report.sourceRefusal.isEmpty()) {
             work->source = {source, source->getId()};
-            work->basis = static_cast<RS_Ellipse*>(source)->getData(); work->sourceLayer = source->getLayer(false);
+            const auto geometry = LC_OffsetSourceGeometry::capture(*source);
+            work->sourceEncoding = geometry ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
+            if (!geometry || !work->sourceEncoding) {
+                work->report.sourceRefusal = tr("The selected source geometry could not be safely captured.");
+            } else {
+                work->sourceGeometry = *geometry;
+                work->sourceLayer = source->getLayer(false);
+            }
         }
         work->rows.reserve(std::size_t(targets.size()));
         work->report.outcomes.reserve(targets.size());
@@ -541,11 +623,28 @@ void LC_ActionOffsetCurveUpdateSource::advance(const std::shared_ptr<Work>& work
             if (alive && m_work == work) refuse(tr("Target changed while its private replacement was prepared."));
             return;
         }
-        auto definition = row.clone->definition(); definition.basis = work->basis;
-        auto prepared = LC_OffsetWorkerEdit::prepare(*row.clone, definition, work->limits);
+        std::optional<LC_OffsetWorkerEdit::Preparation> prepared;
+        const bool legacyEllipse = work->sourceGeometry.kind() == SourceKind::Ellipse &&
+                                   !row.clone->sourceDefinition();
+        if (legacyEllipse) {
+            auto definition = row.clone->definition();
+            definition.basis = std::get<RS_EllipseData>(work->sourceGeometry.value);
+            prepared.emplace(LC_OffsetWorkerEdit::prepare(*row.clone, definition, work->limits));
+        } else {
+            LC_OffsetSourceDefinition definition;
+            if (row.clone->sourceDefinition()) definition = *row.clone->sourceDefinition();
+            else {
+                const auto& original = row.clone->definition();
+                definition.signedDistance = original.towardCentre ? -original.distance : original.distance;
+                definition.relativeTolerance = original.relTolerance;
+                definition.cacheReversed = original.cacheReversed;
+            }
+            definition.source = work->sourceGeometry;
+            prepared.emplace(LC_OffsetWorkerEdit::prepareSourceDefinition(*row.clone, definition, work->limits));
+        }
         if (!current()) { if (alive && m_work == work) completePreparation(work, tr("The Update from Source input changed.")); return; }
-        if (!prepared.generate()) {
-            outcome.edit = LC_OffsetWorkerEdit::applyLocal(*row.clone, std::move(prepared));
+        if (!prepared->generate() && !prepared->generateSource()) {
+            outcome.edit = LC_OffsetWorkerEdit::applyLocal(*row.clone, std::move(*prepared));
             if (!*outcome.edit) { refuse(LC_OffsetCurveUI::refusalText(*outcome.edit)); return; }
             if (!outcome.edit->changed) {
                 ++work->report.unchanged; row.clone.reset(); row.input.reset(); row.snapshot.reset(); next(); return;
@@ -556,10 +655,13 @@ void LC_ActionOffsetCurveUpdateSource::advance(const std::shared_ptr<Work>& work
         }
         if (m_requestId == std::numeric_limits<qint64>::max() || row.id > EntityId(std::numeric_limits<qint64>::max()) ||
             work->deepCharged == work->deepLimit) { refuse(tr("The Update from Source worker budget was exhausted.")); return; }
-        auto generated = *prepared.generate();
-        generated.limits.outputBudget.maxDeepEntities = std::min(generated.limits.outputBudget.maxDeepEntities,
+        auto operation = prepared->generate()
+            ? std::variant<LC_OffsetWorkerRequest::Generate, LC_OffsetWorkerRequest::GenerateSource>{*prepared->generate()}
+            : std::variant<LC_OffsetWorkerRequest::Generate, LC_OffsetWorkerRequest::GenerateSource>{*prepared->generateSource()};
+        auto& generatedLimits = std::visit([](auto& op) -> LC_OffsetRunLimits& { return op.limits; }, operation);
+        generatedLimits.outputBudget.maxDeepEntities = std::min(generatedLimits.outputBudget.maxDeepEntities,
             work->deepLimit - work->deepCharged);
-        auto& c = generated.limits.checkLimits;
+        auto& c = generatedLimits.checkLimits;
         const LC_OffsetCheckLimits hard;
         c.maxCacheSpans = std::min({c.maxCacheSpans, hard.maxCacheSpans, work->workLimit.cacheSpans - work->charged.cacheSpans});
         c.maxVertices = std::min({c.maxVertices, hard.maxVertices, work->workLimit.vertices - work->charged.vertices});
@@ -572,13 +674,16 @@ void LC_ActionOffsetCurveUpdateSource::advance(const std::shared_ptr<Work>& work
             (work->limits.checkLimits.maxDistancePairs && !c.maxDistancePairs)) {
             refuse(tr("The Update from Source shared checker budget was exhausted.")); return;
         }
-        outcome.workerReservation = generated.limits;
-        const auto reserved = generated.limits;
+        outcome.workerReservation = generatedLimits;
+        const auto reserved = generatedLimits;
         work->deepCharged += reserved.outputBudget.maxDeepEntities;
         work->charged.cacheSpans += c.maxCacheSpans; work->charged.vertices += c.maxVertices;
         work->charged.distancePairs += c.maxDistancePairs; work->charged.orderingComparisons += c.maxOrderingComparisons;
         const auto id = ++m_requestId;
-        LC_OffsetWorkerRequest::Request request{{id, work->serial, qint64(row.id), qint64(work->undoEpoch)}, std::move(generated)};
+        LC_OffsetWorkerRequest::Request request{{id, work->serial, qint64(row.id), qint64(work->undoEpoch)},
+            LC_OffsetWorkerRequest::Generate{}};
+        std::visit([&request](auto&& op) { request.operation = std::forward<decltype(op)>(op); },
+            std::move(operation));
         const std::weak_ptr<Work> weak = work;
         const bool accepted = m_worker->submit(request, LC_OffsetWorkerClient::Mode::Commit,
             [alive, weak, index, reserved](LC_OffsetWorkerClient::Outcome result) {
@@ -618,6 +723,7 @@ void LC_ActionOffsetCurveUpdateSource::advance(const std::shared_ptr<Work>& work
                             outcome.edit = result.completed->apply(*row.clone);
                             if (!*outcome.edit) outcome.refusal = LC_OffsetCurveUI::refusalText(*outcome.edit);
                             else if (outcome.edit->changed) {
+                                if (!counted) { ++work->report.updated; counted = true; }
                                 const auto cost = measureOffsetOutput({row.clone.get()}, reserved.outputBudget.maxDeepEntities);
                                 if (cost.status != LC_OffsetTreeStatus::Ok) {
                                     outcome.refusal = tr("The received output exceeds its original reservation."); knownDeep.reset();
@@ -715,7 +821,10 @@ bool LC_ActionOffsetCurveUpdateSource::doTriggerModifications(LC_DocumentModific
     if (source && source->getId() != m_sourceId) source = nullptr;
     m_report.sourceRefusal = sourceRefusal(source);
     std::optional<RS_EllipseData> basis;
-    if (m_report.sourceRefusal.isEmpty()) basis = static_cast<RS_Ellipse*>(source)->getData();
+    if (m_report.sourceRefusal.isEmpty() && m_sourceKind == SourceKind::Ellipse)
+        basis = static_cast<RS_Ellipse*>(source)->getData();
+    else if (m_report.sourceRefusal.isEmpty())
+        m_report.sourceRefusal = tr("Typed source replacement requires the isolated worker path.");
 
     std::vector<PreparedRow> staged;
     {
@@ -885,7 +994,12 @@ void LC_ActionOffsetCurveUpdateSource::updateActionPromptForSelection() {
 }
 
 void LC_ActionOffsetCurveUpdateSource::updateActionPromptForSelected(int) {
-    updatePromptTRCancel(isPreparing() ? tr("Updating offset curves...") : tr("Select source ellipse"));
+    updatePromptTRCancel(isPreparing() ? tr("Updating offset curves...") :
+        tr("Select source %1").arg(sourceKindName(m_sourceKind)));
+}
+
+LC_ActionOptionsWidget* LC_ActionOffsetCurveUpdateSource::createOptionsWidget() {
+    return new UpdateSourceOptions();
 }
 
 RS2::CursorType LC_ActionOffsetCurveUpdateSource::doGetMouseCursorSelected(int) {

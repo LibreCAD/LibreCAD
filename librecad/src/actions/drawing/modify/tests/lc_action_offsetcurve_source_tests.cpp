@@ -21,13 +21,16 @@
 #include <QEventLoop>
 #include <QTimer>
 #include <QKeyEvent>
+#include <QComboBox>
 
 #include "drw_base.h"
 #include "lc_action_offsetcurve_updatesource.h"
+#include "lc_action_options_widget.h"
 #include "lc_actiontestsupport.h"
 #include "lc_offsetcurveactiontestsupport.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "lc_offsetcurveui.h"
+#include "../../../../lib/offset_worker/lc_offsetworkerrequest.h"
 #include "rs_block.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
@@ -69,6 +72,7 @@ public:
     explicit Probe(LC_ActionContext* context) : LC_ActionOffsetCurveUpdateSource(context) {}
     using LC_ActionOffsetCurveUpdateSource::isEntityAllowedToSelect;
     using LC_ActionOffsetCurveUpdateSource::m_limits;
+    using LC_ActionOffsetCurveUpdateSource::createOptionsWidget;
     using LC_ActionPreSelectionAwareBase::m_selectionComplete;
     using RS_PreviewActionInterface::m_preview;
     // Call the real protected preparation callback while useSource supplies its private source identity.
@@ -94,6 +98,10 @@ public:
         const auto event = lc::test::eventAt(point.x, point.y);
         onMouseLeftButtonReleaseSelected(0, &event);
         awaitUpdate(*this);
+    }
+    RS_Entity* candidateAt(const RS_Vector& point) {
+        const auto event = lc::test::eventAt(point.x, point.y);
+        return sourceAt(&event);
     }
 };
 
@@ -194,6 +202,38 @@ void notRun(const LC_OffsetCurveEditResult& edit) {
     CHECK(edit.checkWork.distancePairs == 0);
     CHECK(edit.checkWork.orderingComparisons == 0);
     CHECK(edit.checkWork.deepest == 0);
+}
+
+LC_OffsetSourceGeometry sourceGeometry(const LC_OffsetSourceGeometry::Kind kind) {
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    switch (kind) {
+    case Kind::Line: return LC_OffsetSourceGeometry{RS_LineData{{-4, 0}, {4, 0}}};
+    case Kind::Arc: return LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 4, .2, 1.4, false}};
+    case Kind::Circle: return LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 4}};
+    case Kind::Ellipse: return LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .7, 0, 0, false}};
+    case Kind::Spline: {
+        RS_SplineData data{2, false};
+        data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+        data.knotslist = {0, 0, 0, 1, 1, 1};
+        data.weights = {1, .8, 1};
+        return LC_OffsetSourceGeometry{data};
+    }
+    case Kind::SplinePoints: {
+        LC_SplinePointsData data{false, false};
+        data.useControlPoints = true;
+        data.controlPoints = {{-4, 0}, {0, 3}, {4, 0}};
+        return LC_OffsetSourceGeometry{data};
+    }
+    case Kind::Parabola:
+        return LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}};
+    case Kind::BoundedHyperbola:
+        return LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .5, -.4, .4}};
+    case Kind::Polyline:
+        return LC_OffsetSourceGeometry{LC_OffsetPolylineData{{-4, 0}, {4, 0}, false,
+            {RS_LineData{{-4, 0}, {0, 2}}, RS_LineData{{0, 2}, {4, 0}}}}};
+    case Kind::Invalid: break;
+    }
+    return LC_OffsetSourceGeometry{RS_LineData{}};
 }
 
 void regenerated(const LC_OffsetCurveEditResult& edit) {
@@ -795,7 +835,7 @@ TEST_CASE("I update rechecks visibility lock definition deletion and owner at co
     noUndo(f.graphic);
 }
 
-TEST_CASE("I update source must be visible live directly owned and exactly an ellipse",
+TEST_CASE("I update source defaults to ellipse and rejects invalid ellipse candidates",
           "[lc-offsetcurve][i-update][action]") {
     Fixture f;
     auto* curve = f.arc();
@@ -830,6 +870,106 @@ TEST_CASE("I update source must be visible live directly owned and exactly an el
     CHECK(curve->isSelected());
     CHECK(RS_Spline::geometryFingerprint(curve->getData()) == fingerprint);
     noUndo(f.graphic);
+}
+
+TEST_CASE("I update source selector filters and replaces every supported source family",
+          "[lc-offsetcurve][i-update][action][typed][matrix]") {
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    const auto kind = GENERATE(Kind::Line, Kind::Arc, Kind::Circle, Kind::Ellipse,
+        Kind::Spline, Kind::SplinePoints, Kind::Parabola, Kind::BoundedHyperbola, Kind::Polyline);
+    CAPTURE(static_cast<int>(kind));
+    Fixture f;
+    auto* target = f.arc(.25);
+    const auto originalFingerprint = RS_Spline::geometryFingerprint(target->getData());
+    auto geometry = sourceGeometry(kind);
+    REQUIRE(geometry.isWellFormed());
+    auto sourceOwner = geometry.makeEntity();
+    REQUIRE(sourceOwner);
+    auto* source = sourceOwner.get();
+    f.add(source);
+    sourceOwner.release();
+    const auto expected = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(expected);
+    f.start({target});
+
+    std::unique_ptr<LC_ActionOptionsWidget> options(f.action->createOptionsWidget());
+    REQUIRE(options);
+    options->setAction(f.action.get());
+    auto* selector = options->findChild<QComboBox*>("cbUpdateSourceKind");
+    REQUIRE(selector);
+    REQUIRE(selector->count() == static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds.size()));
+    for (std::size_t i = 0; i < LC_OffsetSourceGeometry::SupportedKinds.size(); ++i)
+        CHECK(selector->itemData(static_cast<int>(i)).toInt() ==
+              static_cast<int>(LC_OffsetSourceGeometry::SupportedKinds[i]));
+
+    const Kind wrongKind = kind == Kind::Ellipse ? Kind::Line : Kind::Ellipse;
+    selector->setCurrentIndex(selector->findData(static_cast<int>(wrongKind)));
+    CHECK(f.action->sourceKind() == wrongKind);
+    f.action->useSource(source);
+    CHECK(f.action->lastReport().updated == 0);
+    CHECK(f.action->lastReport().refused == 1);
+    CHECK(RS_Spline::geometryFingerprint(target->getData()) == originalFingerprint);
+    CHECK_FALSE(target->sourceDefinition());
+    noUndo(f.graphic);
+
+    selector->setCurrentIndex(selector->findData(static_cast<int>(kind)));
+    CHECK(f.action->sourceKind() == kind);
+    f.action->useSource(source);
+    CHECK(f.action->lastReport().updated == 1);
+    CHECK(f.action->lastReport().refused == 0);
+    CHECK(f.action->lastReport().unchanged == 0);
+    REQUIRE(f.action->lastReport().outcomes.size() == 1);
+    REQUIRE(f.action->lastReport().outcomes.front().edit);
+    CHECK(f.action->lastReport().outcomes.front().edit->changed);
+    REQUIRE(f.live().size() == 1);
+    auto* updated = f.live().front();
+    if (kind == Kind::Ellipse) {
+        CHECK_FALSE(updated->sourceDefinition());
+        const auto actual = LC_OffsetSourceGeometry{updated->definition().basis};
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(actual) ==
+              LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
+    } else {
+        REQUIRE(updated->sourceDefinition());
+        CHECK(updated->sourceDefinition()->source.kind() == kind);
+        CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(updated->sourceDefinition()->source) ==
+              LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expected));
+        CHECK(std::abs(updated->sourceDefinition()->signedDistance) == updated->definition().distance);
+    }
+    CHECK(updated->isSelected());
+    CHECK(f.graphic.undo());
+    auto* restored = f.live().front();
+    CHECK(RS_Spline::geometryFingerprint(restored->getData()) == originalFingerprint);
+    CHECK_FALSE(restored->sourceDefinition());
+}
+
+TEST_CASE("I update source type changes the live candidate filter without changing the target",
+          "[lc-offsetcurve][i-update][action][typed][picker]") {
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    Fixture f;
+    auto* target = f.arc(.25);
+    const auto fingerprint = RS_Spline::geometryFingerprint(target->getData());
+    auto* line = f.add(new RS_Line(&f.document(), {-5, 0}, {5, 0}));
+    auto* ellipse = f.add(new RS_Ellipse(&f.document(), RS_EllipseData{{20, 0}, {5, 0}, .5, 0, 0, false}));
+    f.start({target});
+
+    std::unique_ptr<LC_ActionOptionsWidget> options(f.action->createOptionsWidget());
+    REQUIRE(options);
+    options->setAction(f.action.get());
+    auto* selector = options->findChild<QComboBox*>("cbUpdateSourceKind");
+    REQUIRE(selector);
+    selector->setCurrentIndex(selector->findData(static_cast<int>(Kind::Line)));
+    CHECK(f.action->candidateAt({0, 0}) == line);
+    CHECK(f.action->candidateAt({25, 0}) != ellipse);
+    CHECK(target->isSelected());
+    CHECK(RS_Spline::geometryFingerprint(target->getData()) == fingerprint);
+    CHECK_FALSE(target->sourceDefinition());
+
+    selector->setCurrentIndex(selector->findData(static_cast<int>(Kind::Ellipse)));
+    CHECK(f.action->candidateAt({25, 0}) == ellipse);
+    CHECK(f.action->candidateAt({0, 0}) != line);
+    CHECK(target->isSelected());
+    CHECK(RS_Spline::geometryFingerprint(target->getData()) == fingerprint);
+    CHECK_FALSE(target->sourceDefinition());
 }
 
 TEST_CASE("I update refuses a changed or missing document view context before overlay or batch work",
@@ -887,21 +1027,25 @@ TEST_CASE("I update reports actual native refusal with bounded work and retains 
     f.action->useSource(source);
     CHECK(f.action->lastReport().updated == 0);
     CHECK(f.action->lastReport().refused == 1);
-    const auto& edit = onlyEdit(*f.action);
-    CHECK_FALSE(edit);
-    CHECK_FALSE(edit.changed);
-    CHECK(edit.engineRuns <= 1);
+    REQUIRE(f.action->lastReport().outcomes.size() == 1);
+    const auto& outcome = f.action->lastReport().outcomes.front();
     if (invalidBasis) {
-        CHECK(edit.refusal == LC_OffsetCurveRefusal::InvalidInput);
-        notRun(edit);
+        CHECK_FALSE(outcome.edit);
+        CHECK_FALSE(outcome.workerReservation);
+        CHECK_FALSE(outcome.refusal.isEmpty());
+        CHECK_FALSE(f.action->lastReport().sourceRefusal.isEmpty());
     } else {
+        REQUIRE(outcome.edit);
+        const auto& edit = *outcome.edit;
+        CHECK_FALSE(edit);
+        CHECK_FALSE(edit.changed);
+        CHECK(edit.engineRuns <= 1);
         REQUIRE(edit.engineStatus);
         CHECK(*edit.engineStatus == LC_CurveOffsetStatus::LimitExceeded);
         CHECK(edit.engineRuns == 1);
+        CHECK(outcome.refusal == LC_OffsetCurveUI::refusalText(edit));
+        CHECK_FALSE(outcome.refusal.isEmpty());
     }
-    REQUIRE(f.action->lastReport().outcomes.size() == 1);
-    CHECK(f.action->lastReport().outcomes.front().refusal == LC_OffsetCurveUI::refusalText(edit));
-    CHECK_FALSE(f.action->lastReport().outcomes.front().refusal.isEmpty());
     REQUIRE(f.live().size() == 1);
     CHECK(f.live().front() == curve);
     CHECK(curve->getId() == id);

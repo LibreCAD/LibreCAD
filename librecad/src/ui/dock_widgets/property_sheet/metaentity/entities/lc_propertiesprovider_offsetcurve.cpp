@@ -541,7 +541,7 @@ void LC_PropertiesProviderOffsetCurve::createSourceActionLinks(
     // not a provider or an entity to dereference before checking current ownership.
     LC_PropertyProviderUtils::createSingleEntityCommand<RS_Entity>(
         container, single ? "offsetSourceSingle" : "offsetSourceSelection",
-        nativeTr("Update from Source"), nativeTr("Update selected offset curves from a picked ellipse"),
+        nativeTr("Update from Source"), nativeTr("Choose a source type, then pick geometry to update selected offset curves"),
         nativeTr("Restore Original"), nativeTr("Restore embedded source ellipses"),
         nullptr,
         [sheet, view, queue, context, document, epoch, targets, single](RS_Entity*, const int index) {
