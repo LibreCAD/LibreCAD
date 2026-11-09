@@ -3569,6 +3569,142 @@ TEST_CASE("periodic rational seam tangent root maps to a bounded stall",
     }
 }
 
+TEST_CASE("higher-degree periodic spline seam tangencies map to output",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
+          "rational][seam-root][even-root][degree-limit]") {
+    for (const int degree : {4, 5, 6}) {
+        RS_Spline base{nullptr, RS_SplineData{degree, false}};
+        const int controlCount = degree + 1;
+        for (int i = 0; i < controlCount; ++i) {
+            const double angle = 2.0 * M_PI * i / controlCount;
+            base.addControlPoint({10.0 * std::cos(angle), 10.0 * std::sin(angle)});
+        }
+        std::vector<double> knots(static_cast<std::size_t>(degree + 1), 0.0);
+        knots.insert(knots.end(), static_cast<std::size_t>(degree + 1), 1.0);
+        base.setKnotVector(knots);
+        REQUIRE(base.validate());
+        base.setClosed(true);
+        RS_SplineData data = base.getData();
+        data.weights.assign(data.controlPoints.size(), 1.0);
+        const RS_Spline source{nullptr, data};
+        REQUIRE(source.validate());
+        REQUIRE(source.isClosed());
+
+        double startValue = 0.0;
+        double endValue = 0.0;
+        REQUIRE(source.getParameterDomain(startValue, endValue));
+        const SplineOracle start{startValue};
+        const SplineOracle end{endValue};
+        const SplineOracle step{"1e-24"};
+        const SplineOracle unitLeft = oracleOffsetFactor(
+            data, end, step, start, end, SplineOracle{1}, true);
+        const SplineOracle unitRight = oracleOffsetFactor(
+            data, start, step, start, end, SplineOracle{1}, false);
+        const SplineOracle curvatureLeft = 1 - unitLeft;
+        const SplineOracle curvatureRight = 1 - unitRight;
+        CAPTURE(degree, curvatureLeft, curvatureRight);
+        REQUIRE(abs(curvatureLeft - curvatureRight) < SplineOracle{"1e-8"});
+        REQUIRE(abs(curvatureLeft) > SplineOracle{"1e-12"});
+        const double signedDistance =
+            (2 / (curvatureLeft + curvatureRight)).convert_to<double>();
+        const SplineOracle distance{signedDistance};
+        const SplineOracle seamLeft = oracleOffsetFactor(
+            data, end, step, start, end, distance, true);
+        const SplineOracle seamRight = oracleOffsetFactor(
+            data, start, step, start, end, distance, false);
+        const SplineOracle before = oracleOffsetFactor(
+            data, end - SplineOracle{"1e-7"}, step, start, end, distance);
+        const SplineOracle after = oracleOffsetFactor(
+            data, start + SplineOracle{"1e-7"}, step, start, end, distance);
+        CAPTURE(signedDistance, seamLeft, seamRight, before, after);
+        CHECK(abs(seamLeft) < SplineOracle{"1e-8"});
+        CHECK(abs(seamRight) < SplineOracle{"1e-8"});
+        REQUIRE(before != 0);
+        REQUIRE(after != 0);
+        CHECK((before < 0) == (after < 0));
+
+        const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data},
+                                                   signedDistance, 1e-4, false};
+        const auto options =
+            LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(options);
+        LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+        const auto built = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(signedDistance > 0
+                                                ? LC_CurveOffsetSide::Left
+                                                : LC_CurveOffsetSide::Right,
+                                            std::abs(signedDistance)),
+            *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+        CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
+                diagnostics.candidateParameters, diagnostics.candidateBoxes,
+                diagnostics.failureStage, diagnostics.failureSpan,
+                diagnostics.failureT0, diagnostics.failureT1);
+        if (degree == 6) {
+            CHECK(built.status == LC_CurveOffsetStatus::AmbiguousRegularity);
+            CHECK_FALSE(diagnostics.complete);
+            CHECK(built.branches.empty());
+            continue;
+        }
+        REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(diagnostics.complete);
+        const auto seamCandidate = std::find_if(
+            diagnostics.candidateParameters.begin(),
+            diagnostics.candidateParameters.end(), [&](double parameter) {
+                return std::abs(parameter - startValue) < 1e-7 ||
+                       std::abs(parameter - endValue) < 1e-7;
+            });
+        const auto seamStall = std::find_if(
+            diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+            [&](const std::pair<double, double>& interval) {
+                return (interval.first <= startValue && interval.second >= startValue) ||
+                       (interval.first <= endValue && interval.second >= endValue);
+            });
+        CHECK((seamStall != diagnostics.stallIntervals.end()) !=
+              (seamCandidate != diagnostics.candidateParameters.end()));
+        if (seamCandidate != diagnostics.candidateParameters.end()) {
+            const auto seamBox = std::find_if(
+                diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
+                [&](const LC_CurveOffsetCuspCandidateBox& box) {
+                    return std::abs(box.parameter - *seamCandidate) < 1e-12;
+                });
+            REQUIRE(seamBox != diagnostics.candidateBoxes.end());
+            REQUIRE(seamBox->span != std::numeric_limits<std::size_t>::max());
+            const std::vector<double> breaks = source.getBreakParameters();
+            REQUIRE(seamBox->span + 1 < breaks.size());
+            if (std::abs(*seamCandidate - startValue) < 1e-7) {
+                CHECK(seamBox->span == 0);
+                CHECK(seamBox->t0 <= startValue + 1e-7);
+                CHECK(seamBox->t1 >= startValue);
+            } else {
+                CHECK(seamBox->span + 2 == breaks.size());
+                CHECK(seamBox->t0 <= endValue);
+                CHECK(seamBox->t1 >= endValue - 1e-7);
+            }
+        }
+
+        const auto startPoint = oracleOffsetPoint(
+            data, start, step, start, end, distance);
+        const auto endPoint = oracleOffsetPoint(
+            data, end, step, start, end, distance, true);
+        const RS_Vector expected{
+            ((startPoint.first + endPoint.first) / 2).convert_to<double>(),
+            ((startPoint.second + endPoint.second) / 2).convert_to<double>()};
+        double nearest = std::numeric_limits<double>::infinity();
+        for (const LC_OffsetBranch& branch : built.branches) {
+            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                nearest = std::min(
+                    nearest,
+                    std::min(piece.bezier.front().distanceTo(expected),
+                             piece.bezier.back().distanceTo(expected)));
+            }
+        }
+        CAPTURE(degree, expected.x, expected.y, nearest,
+                options->tolerance.requestedGeometry);
+        CHECK(nearest <= options->tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("periodic rational seam tangent and interior roots map to output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][seam-root][even-root][candidate-mapping]") {

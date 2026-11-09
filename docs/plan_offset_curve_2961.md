@@ -27370,6 +27370,9 @@ Bernstein variation upper bound through the supported degree-6 polynomial
 limit and verifies it on those fixtures. Because the cusp polynomial is
 squared, variation bounds may include extraneous roots; complete actual cusp
 root counts and broad candidate-to-output bijection remain open.
+Seam even-root acceptance is separately qualified for one symmetric periodic
+profile at degrees 4 and 5; the corresponding degree-6 profile still refuses
+atomically because another span is unresolved (W582).
 
 ## 569. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
 
@@ -27635,3 +27638,25 @@ worker-kernel test target builds and `git diff --check` passes. This verifies
 only the recorded profiles and intervals; it does not prove complete actual
 cusp-root counts or general certificate effectiveness for arbitrary degree-6
 knot/weight data.
+
+## 582. Qualify Higher-degree Periodic Seam Tangencies (2026-11-09)
+
+Added a high-precision seam even-root regression for symmetric periodic
+splines of degrees 4, 5, and 6. Each fixture verifies seam curvature agreement,
+derives the tangent distance from the two one-sided curvatures, and confirms
+same-sign offset-factor values on both sides of the seam. For degrees 4 and 5,
+production completes and the seam event is represented by exactly one of a
+near-seam first-span candidate or a stall; candidate provenance must identify
+the owning first span and the oracle seam-offset point must map to retained
+cubic output within the geometry tolerance.
+
+The degree-6 profile currently encounters an unresolved regularity interval
+elsewhere. It must return `AmbiguousRegularity`, mark diagnostics incomplete,
+and publish no branches. This records a support boundary, not accepted seam
+output. No production acceptance or budget was changed.
+
+Validation: focused `[degree-limit]` seam test passes 53 assertions/1 case;
+the full worker-kernel suite passes 1,706,044 assertions/85 cases; the Release
+worker-kernel test target builds and `git diff --check` passes. Other seam
+profiles, degree-6 full-output resolution, general even-root completeness,
+visible GUI, external CAD, and exact-head CI remain open.
