@@ -30551,17 +30551,20 @@ Validation: documentation consistency and whitespace checked with
 Added an independent exact-normal oracle matrix for four circular-arc
 parameterizations: a short counterclockwise arc crossing 0/2π, a
 counterclockwise near-full arc, and the corresponding reversed near-full and
-seam-crossing forms. Each uses a 1e-4-radian seam gap and is offset on both
-signed sides. All preserve the expected exact circular offset within the
-requested geometry tolerance. This is direct-engine evidence only; it does not
+seam-crossing forms. Each is tested with seam gaps of 1e-4, 1e-6, 1e-7, and
+1e-8 radians on both signed sides, preserving the expected exact circular
+offset within the requested geometry tolerance. A short seam-crossing arc
+below the 1e-8-radian `RS_ArcData` validity floor is explicitly refused during
+typed source capture. This is direct-engine evidence only; it does not
 establish worker/cache admission, source replacement, or DXF/DWG persistence
-for these sweep boundaries.
+for the smaller sweep boundaries.
 
 Validation: rebuilt the Release `librecad_tests` target. The focused new case
-passes 10,696 assertions/1 case; the complete `[curve-offset][direct][arc]`
-selection passes 14,641 assertions/2 cases. `git diff --check` passes.
-Smaller seam gaps, sweep limits, and worker/cache/file-lane coverage remain
-open, as do visible GUI, external CAD, cross-platform/ASan, and exact-head CI.
+passes 42,786 assertions/1 case; the complete `[curve-offset][direct][arc]`
+selection passes 46,731 assertions/2 cases. `git diff --check` passes.
+Sweep-limit behavior and worker/cache/file-lane coverage for the smaller gaps
+remain open, as do visible GUI, external CAD, cross-platform/ASan, and
+exact-head CI.
 
 ## 697. Carry a Near-full Arc Through Worker and Persistence (2026-11-09)
 
