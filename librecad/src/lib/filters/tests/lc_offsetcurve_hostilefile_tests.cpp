@@ -7047,113 +7047,148 @@ TEST_CASE("C2 rational knot cusps through degree six round-trip through native f
 
     LC_OffsetWorkerClient generationWorker;
     qint64 nextRequestId = 1;
-    const std::array<double, 7> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99};
+    const std::array<double, 7> weightPattern{1.0, 1.02, .98, 1.03,
+                                              .97, 1.01, .99};
     const std::array<std::pair<double, double>, 14> knotAndCurvatureCases{
-        {{.125, -1.0}, {.23, -1.0},  {.25, -1.0},  {.37, -1.0},
-         {.5, -1.0},   {.625, -1.0}, {.75, -1.0},  {.125, 1.0},
-         {.23, 1.0},   {.25, 1.0},   {.37, 1.0},   {.5, 1.0},
-         {.625, 1.0},  {.75, 1.0}}};
+        {{.125, -1.0},
+         {.23, -1.0},
+         {.25, -1.0},
+         {.37, -1.0},
+         {.5, -1.0},
+         {.625, -1.0},
+         {.75, -1.0},
+         {.125, 1.0},
+         {.23, 1.0},
+         {.25, 1.0},
+         {.37, 1.0},
+         {.5, 1.0},
+         {.625, 1.0},
+         {.75, 1.0}}};
     for (const int degree : {3, 4, 5, 6}) {
-      for (const auto& [knot, curvatureSign] : knotAndCurvatureCases) {
-        CAPTURE(degree, knot, curvatureSign);
-        RS_SplineData sourceData{degree, false};
-        const int controlCount = 2 * degree - 1;
-        for (int i = 0; i < controlCount; ++i) {
+      for (const auto &[knot, curvatureSign] : knotAndCurvatureCases) {
+        const int firstMultiplicity = knot == .5 ? 1 : degree - 2;
+        for (int multiplicity = firstMultiplicity; multiplicity <= degree - 2;
+             ++multiplicity) {
+          CAPTURE(degree, knot, curvatureSign, multiplicity);
+          RS_SplineData sourceData{degree, false};
+          const int controlCount = degree + 1 + multiplicity;
+          for (int i = 0; i < controlCount; ++i) {
             const double x = static_cast<double>(i);
-            const double y = curvatureSign * (i == degree - 3 ? -5.0 : .001 * x * x * x);
+            const double y =
+                curvatureSign * (i == degree - 3 ? -5.0 : .001 * x * x * x);
             sourceData.controlPoints.emplace_back(x, y);
-            sourceData.weights.push_back(weightPattern[static_cast<std::size_t>(i) %
-                                                       weightPattern.size()]);
-        }
-        sourceData.knotslist.assign(static_cast<std::size_t>(degree + 1), 0.0);
-        sourceData.knotslist.insert(sourceData.knotslist.end(),
-                                    static_cast<std::size_t>(degree - 2), knot);
-        sourceData.knotslist.insert(sourceData.knotslist.end(),
-                                    static_cast<std::size_t>(degree + 1), 1.0);
-        RS_Spline sourceCheck{nullptr, sourceData};
-        REQUIRE(sourceCheck.validate());
-        LC_CurveJet leftJet;
-        LC_CurveJet rightJet;
-        REQUIRE(sourceCheck.tryEvaluateJet(knot, LC_CurveEvaluationSide::Left, leftJet));
-        REQUIRE(sourceCheck.tryEvaluateJet(knot, LC_CurveEvaluationSide::Right, rightJet));
-        const auto curvature = [](const LC_CurveJet& jet) {
-            const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+            sourceData.weights.push_back(
+                weightPattern[static_cast<std::size_t>(i) %
+                              weightPattern.size()]);
+          }
+          sourceData.knotslist.assign(static_cast<std::size_t>(degree + 1),
+                                      0.0);
+          sourceData.knotslist.insert(sourceData.knotslist.end(),
+                                      static_cast<std::size_t>(multiplicity),
+                                      knot);
+          sourceData.knotslist.insert(sourceData.knotslist.end(),
+                                      static_cast<std::size_t>(degree + 1),
+                                      1.0);
+          RS_Spline sourceCheck{nullptr, sourceData};
+          REQUIRE(sourceCheck.validate());
+          LC_CurveJet leftJet;
+          LC_CurveJet rightJet;
+          REQUIRE(sourceCheck.tryEvaluateJet(knot, LC_CurveEvaluationSide::Left,
+                                             leftJet));
+          REQUIRE(sourceCheck.tryEvaluateJet(
+              knot, LC_CurveEvaluationSide::Right, rightJet));
+          const auto curvature = [](const LC_CurveJet &jet) {
+            const double speedSquared =
+                jet.first.x * jet.first.x + jet.first.y * jet.first.y;
             return (jet.first.x * jet.second.y - jet.first.y * jet.second.x) /
                    (speedSquared * std::sqrt(speedSquared));
-        };
-        const double signedDistance = 2.0 / (curvature(leftJet) + curvature(rightJet));
-        REQUIRE(std::isfinite(signedDistance));
-        REQUIRE(std::abs(signedDistance) > 1e-8);
+          };
+          const double signedDistance =
+              2.0 / (curvature(leftJet) + curvature(rightJet));
+          REQUIRE(std::isfinite(signedDistance));
+          REQUIRE(std::abs(signedDistance) > 1e-8);
 
-        const LC_OffsetSourceDefinition definition{
-            LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
-        const auto directOptions = LC_OffsetWorkerTolerance::directOptions(
-            definition, sourceCheck);
-        REQUIRE(directOptions);
-        LC_CurveOffsetCuspIsolationDiagnostics cuspDiagnostics;
-        const auto direct = LC_CurveOffset::buildDirectBranches(
-            sourceCheck,
-            LC_CurveOffset::makeSideRequest(
-                signedDistance > 0 ? LC_CurveOffsetSide::Left
-                                   : LC_CurveOffsetSide::Right,
-                std::abs(signedDistance)),
-            *directOptions, LC_CurveOffset::makeDirectSourceBudget(),
-            &cuspDiagnostics);
-        REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
-        const double knotPosition = knot;
-        const auto knotCandidate = std::find_if(
-            cuspDiagnostics.candidateBoxes.begin(), cuspDiagnostics.candidateBoxes.end(),
-            [knotPosition](const LC_CurveOffsetCuspCandidateBox& candidate) {
+          const LC_OffsetSourceDefinition definition{
+              LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
+          const auto directOptions =
+              LC_OffsetWorkerTolerance::directOptions(definition, sourceCheck);
+          REQUIRE(directOptions);
+          LC_CurveOffsetCuspIsolationDiagnostics cuspDiagnostics;
+          const auto direct = LC_CurveOffset::buildDirectBranches(
+              sourceCheck,
+              LC_CurveOffset::makeSideRequest(signedDistance > 0
+                                                  ? LC_CurveOffsetSide::Left
+                                                  : LC_CurveOffsetSide::Right,
+                                              std::abs(signedDistance)),
+              *directOptions, LC_CurveOffset::makeDirectSourceBudget(),
+              &cuspDiagnostics);
+          REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+          const double knotPosition = knot;
+          const auto knotCandidate = std::find_if(
+              cuspDiagnostics.candidateBoxes.begin(),
+              cuspDiagnostics.candidateBoxes.end(),
+              [knotPosition](const LC_CurveOffsetCuspCandidateBox &candidate) {
                 return std::abs(candidate.parameter - knotPosition) < 1e-8;
-            });
-        REQUIRE(knotCandidate != cuspDiagnostics.candidateBoxes.end());
-        CHECK(knotCandidate->kind ==
-              LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket);
+              });
+          REQUIRE(knotCandidate != cuspDiagnostics.candidateBoxes.end());
+          CHECK(knotCandidate->kind ==
+                LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket);
 
-        LC_OffsetWorkerRequest::Request request;
-        request.token = {nextRequestId++, 1, 1, 1};
-        request.operation = LC_OffsetWorkerRequest::GenerateSource{definition, {}};
-        std::optional<LC_OffsetWorkerClient::Outcome> generatedOutcome;
-        REQUIRE(generationWorker.submit(request, LC_OffsetWorkerClient::Mode::Commit,
-            [&](LC_OffsetWorkerClient::Outcome outcome) {
+          LC_OffsetWorkerRequest::Request request;
+          request.token = {nextRequestId++, 1, 1, 1};
+          request.operation =
+              LC_OffsetWorkerRequest::GenerateSource{definition, {}};
+          std::optional<LC_OffsetWorkerClient::Outcome> generatedOutcome;
+          REQUIRE(generationWorker.submit(
+              request, LC_OffsetWorkerClient::Mode::Commit,
+              [&](LC_OffsetWorkerClient::Outcome outcome) {
                 generatedOutcome.emplace(std::move(outcome));
-            }));
-        QElapsedTimer elapsed;
-        elapsed.start();
-        while (!generatedOutcome) {
-            REQUIRE(elapsed.elapsed() < LC_OffsetWorkerClient::Deadlines::commit + 5000);
+              }));
+          QElapsedTimer elapsed;
+          elapsed.start();
+          while (!generatedOutcome) {
+            REQUIRE(elapsed.elapsed() <
+                    LC_OffsetWorkerClient::Deadlines::commit + 5000);
             QCoreApplication::processEvents(QEventLoop::AllEvents);
             QThread::msleep(1);
-        }
-        REQUIRE(generatedOutcome->status == LC_OffsetWorkerClient::Status::Completed);
-        REQUIRE(generatedOutcome->completed);
-        REQUIRE(generatedOutcome->completed->isJoined());
-        const auto& workerReply = generatedOutcome->completed->reply();
-        REQUIRE(workerReply.operation == 7);
-        REQUIRE(std::holds_alternative<LC_OffsetWorkerResult::Native>(workerReply.result));
-        const auto& generated = std::get<LC_OffsetWorkerResult::Native>(workerReply.result);
-        CAPTURE(degree, knot, curvatureSign, signedDistance, generated.engineStatus,
-                generated.ordinaryStatus, generated.refusal);
-        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
-        REQUIRE(generated.ordinaryStatus == LC_OffsetWorkerResult::OrdinaryStatus::Complete);
-        RS_SplineData cacheData;
-        REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cacheData));
-        RS_Spline cacheCheck{nullptr, cacheData};
-        REQUIRE(cacheCheck.validate());
+          }
+          REQUIRE(generatedOutcome->status ==
+                  LC_OffsetWorkerClient::Status::Completed);
+          REQUIRE(generatedOutcome->completed);
+          REQUIRE(generatedOutcome->completed->isJoined());
+          const auto &workerReply = generatedOutcome->completed->reply();
+          REQUIRE(workerReply.operation == 7);
+          REQUIRE(std::holds_alternative<LC_OffsetWorkerResult::Native>(
+              workerReply.result));
+          const auto &generated =
+              std::get<LC_OffsetWorkerResult::Native>(workerReply.result);
+          CAPTURE(degree, knot, curvatureSign, signedDistance,
+                  generated.engineStatus, generated.ordinaryStatus,
+                  generated.refusal);
+          REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+          REQUIRE(generated.ordinaryStatus ==
+                  LC_OffsetWorkerResult::OrdinaryStatus::Complete);
+          RS_SplineData cacheData;
+          REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary,
+                                                      cacheData));
+          RS_Spline cacheCheck{nullptr, cacheData};
+          REQUIRE(cacheCheck.validate());
 
-        for (const auto& fileFormat : formats) {
+          for (const auto &fileFormat : formats) {
 #ifndef DWGSUPPORT
-            if (fileFormat.dwg) continue;
+            if (fileFormat.dwg)
+              continue;
 #endif
-            CAPTURE(degree, knot, curvatureSign, signedDistance, fileFormat.suffix);
+            CAPTURE(degree, knot, curvatureSign, signedDistance,
+                    fileFormat.suffix);
             xd::Definition carrier;
             carrier.source = definition;
             xd::Options encoding;
             if (fileFormat.dwg) {
-                encoding.eed = true;
-                encoding.textEncoding = xd::TextEncoding::Utf16;
+              encoding.eed = true;
+              encoding.textEncoding = xd::TextEncoding::Utf16;
             } else {
-                encoding.asciiDxf = false;
+              encoding.asciiDxf = false;
             }
             const auto tags = xd::forExport(
                 {std::make_shared<DRW_Variant>(1001, std::string("LibreCad"))},
@@ -7161,8 +7196,9 @@ TEST_CASE("C2 rational knot cusps through degree six round-trip through native f
             REQUIRE(tags);
             DRW_Spline raw = f::raw(1, *tags);
             raw.controllist.clear();
-            for (const auto& point : cacheData.controlPoints)
-                raw.controllist.push_back(std::make_shared<DRW_Coord>(point.x, point.y, 0));
+            for (const auto &point : cacheData.controlPoints)
+              raw.controllist.push_back(
+                  std::make_shared<DRW_Coord>(point.x, point.y, 0));
             raw.knotslist = cacheData.knotslist;
             raw.weightlist = cacheData.weights;
             raw.degree = cacheData.degree;
@@ -7172,101 +7208,115 @@ TEST_CASE("C2 rational knot cusps through degree six round-trip through native f
             raw.nknots = static_cast<std::int32_t>(raw.knotslist.size());
             raw.nfit = 0;
 
-            const std::string side = std::to_string(degree) + "-knot-" +
-                std::to_string(knot) +
+            const std::string side =
+                std::to_string(degree) + "-mult-" +
+                std::to_string(multiplicity) + "-knot-" + std::to_string(knot) +
                 (curvatureSign < 0 ? "-negative-" : "-positive-");
             const auto input = directory.file(side + fileFormat.suffix);
             writeInput(input, fileFormat.lane, raw);
             const auto imported = stagedImport(input, fileFormat.lane);
-            REQUIRE(imported.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(imported.status ==
+                    LC_OffsetImportSession::Status::Complete);
             REQUIRE(imported.graphic);
             CHECK(imported.admitted == 1);
             CHECK(imported.downgraded == 0);
-            const auto* native = dynamic_cast<const LC_OffsetCurve*>(f::sole(*imported.graphic));
+            const auto *native = dynamic_cast<const LC_OffsetCurve *>(
+                f::sole(*imported.graphic));
             REQUIRE(native);
             REQUIRE(native->sourceDefinition());
-            const auto expectedSource = values::encodeSourceDefinition(definition);
-            const auto importedSource = values::encodeSourceDefinition(*native->sourceDefinition());
+            const auto expectedSource =
+                values::encodeSourceDefinition(definition);
+            const auto importedSource =
+                values::encodeSourceDefinition(*native->sourceDefinition());
             REQUIRE(expectedSource);
             REQUIRE(importedSource);
-            CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*importedSource).toCbor());
+            CHECK(QCborValue(*expectedSource).toCbor() ==
+                  QCborValue(*importedSource).toCbor());
             CHECK(RS_Spline::geometryFingerprint(native->getData()) ==
                   RS_Spline::geometryFingerprint(cacheData));
 
-            const auto output = directory.file("native-" + side + fileFormat.suffix);
+            const auto output =
+                directory.file("native-" + side + fileFormat.suffix);
             REQUIRE(lc::test::exportDrawing(*imported.graphic, output,
                                             ::format(fileFormat.lane)));
             if (fileFormat.dwg)
-                preserveTypedSourceDwg(output, "c2-native-" + side + fileFormat.suffix);
+              preserveTypedSourceDwg(output,
+                                     "c2-native-" + side + fileFormat.suffix);
             const auto roundTrip = stagedImport(output, fileFormat.lane);
-            REQUIRE(roundTrip.status == LC_OffsetImportSession::Status::Complete);
+            REQUIRE(roundTrip.status ==
+                    LC_OffsetImportSession::Status::Complete);
             REQUIRE(roundTrip.graphic);
             CHECK(roundTrip.admitted == 1);
             CHECK(roundTrip.downgraded == 0);
-            const auto* copy = dynamic_cast<const LC_OffsetCurve*>(f::sole(*roundTrip.graphic));
+            const auto *copy = dynamic_cast<const LC_OffsetCurve *>(
+                f::sole(*roundTrip.graphic));
             REQUIRE(copy);
             REQUIRE(copy->sourceDefinition());
-            const auto roundTrippedSource = values::encodeSourceDefinition(*copy->sourceDefinition());
+            const auto roundTrippedSource =
+                values::encodeSourceDefinition(*copy->sourceDefinition());
             REQUIRE(roundTrippedSource);
             CHECK(QCborValue(*expectedSource).toCbor() ==
                   QCborValue(*roundTrippedSource).toCbor());
             CHECK(RS_Spline::geometryFingerprint(copy->getData()) ==
                   RS_Spline::geometryFingerprint(cacheData));
+          }
         }
-    }
+      }
     }
 }
 
-TEST_CASE("hyperbola import follows output topology on both sides across file lanes",
-          "[lc-offsetcurve][import-session][typed-source][hyperbola][refusal]") {
-    Setup setup;
-    lc::test::OutputDirectory directory("offset-hyperbola-multibranch-import");
-    namespace xd = LC_OffsetCurveXData;
-    namespace values = LC_OffsetWorkerRequest::Values;
+TEST_CASE(
+    "hyperbola import follows output topology on both sides across file lanes",
+    "[lc-offsetcurve][import-session][typed-source][hyperbola][refusal]") {
+  Setup setup;
+  lc::test::OutputDirectory directory("offset-hyperbola-multibranch-import");
+  namespace xd = LC_OffsetCurveXData;
+  namespace values = LC_OffsetWorkerRequest::Values;
 
-    const LC_OffsetSourceGeometry sourceGeometry{
-        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}};
-    const auto side = GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
-    const double signedDistance = side == LC_CurveOffsetSide::Left ? 1.1 : -1.1;
-    CAPTURE(static_cast<int>(side), signedDistance);
-    const LC_OffsetSourceDefinition definition{
-        sourceGeometry, signedDistance, 1e-4, false};
-    auto source = definition.source.makeEntity();
-    REQUIRE(source);
-    const double magnitude = std::abs(definition.signedDistance);
-    const auto options = LC_OffsetWorkerTolerance::directOptions(
-        *source, magnitude, definition.relativeTolerance).value();
-    const auto generated = LC_CurveOffset::buildDirectBranches(
-        *source, LC_CurveOffset::makeSideRequest(side, magnitude),
-        options, LC_CurveOffset::makeDirectSourceBudget());
-    REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
-    const auto materialized = LC_CurveOffset::materializeBranches(
-        *source, generated, options, LC_CurveOffset::makeDirectSourceBudget());
-    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
-    REQUIRE_FALSE(materialized.entities.empty());
-    const bool singleCache = materialized.entities.size() == 1;
-    CHECK(materialized.entities.size() ==
-          (side == LC_CurveOffsetSide::Left ? std::size_t{1} : std::size_t{3}));
-    const auto* firstBranch =
-        dynamic_cast<const RS_Spline*>(materialized.entities.front().get());
-    REQUIRE(firstBranch);
-    const RS_SplineData firstBranchCache = firstBranch->getData();
-    REQUIRE(firstBranch->validate());
+  const LC_OffsetSourceGeometry sourceGeometry{
+      LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}};
+  const auto side =
+      GENERATE(LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right);
+  const double signedDistance = side == LC_CurveOffsetSide::Left ? 1.1 : -1.1;
+  CAPTURE(static_cast<int>(side), signedDistance);
+  const LC_OffsetSourceDefinition definition{sourceGeometry, signedDistance,
+                                             1e-4, false};
+  auto source = definition.source.makeEntity();
+  REQUIRE(source);
+  const double magnitude = std::abs(definition.signedDistance);
+  const auto options = LC_OffsetWorkerTolerance::directOptions(
+                           *source, magnitude, definition.relativeTolerance)
+                           .value();
+  const auto generated = LC_CurveOffset::buildDirectBranches(
+      *source, LC_CurveOffset::makeSideRequest(side, magnitude), options,
+      LC_CurveOffset::makeDirectSourceBudget());
+  REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+  const auto materialized = LC_CurveOffset::materializeBranches(
+      *source, generated, options, LC_CurveOffset::makeDirectSourceBudget());
+  REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+  REQUIRE_FALSE(materialized.entities.empty());
+  const bool singleCache = materialized.entities.size() == 1;
+  CHECK(materialized.entities.size() ==
+        (side == LC_CurveOffsetSide::Left ? std::size_t{1} : std::size_t{3}));
+  const auto *firstBranch =
+      dynamic_cast<const RS_Spline *>(materialized.entities.front().get());
+  REQUIRE(firstBranch);
+  const RS_SplineData firstBranchCache = firstBranch->getData();
+  REQUIRE(firstBranch->validate());
 
-    struct Format {
-        Lane lane;
-        bool dwg;
-        DRW::Version version;
-        const char* suffix;
-    };
-    const std::array<Format, 5> formats{{
-        {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
-        {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
-        {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
-        {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
-        {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}
-    }};
-    for (const auto& format : formats) {
+  struct Format {
+    Lane lane;
+    bool dwg;
+    DRW::Version version;
+    const char *suffix;
+  };
+  const std::array<Format, 5> formats{
+      {{Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
+       {Lane::Binary2000, false, DRW::AC1015, "r2000.dxf"},
+       {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
+       {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
+       {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
+  for (const auto &format : formats) {
 #ifndef DWGSUPPORT
         if (format.dwg) continue;
 #endif
