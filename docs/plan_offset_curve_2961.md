@@ -112,7 +112,10 @@ W602 adds product-writer export/reopen evidence for the C2 cusp fixtures at
 degrees 3-5, both signed sides and the same five lanes; each staged reopen
 retains the typed source and exact cache fingerprint. The persistence test
 also requires the direct engine to classify the knot as a
-`CertifiedUniqueBracket` before testing the worker/file path.
+`CertifiedUniqueBracket` before testing the worker/file path. W603 adds a
+separate LibreDWG 0.14 parse of all 12 preserved R2000/R2018 DWGs, confirming
+one canonical cubic cache SPLINE plus both typed-source EED markers; this is
+independent parsing, not external-CAD visual acceptance.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -28119,9 +28122,9 @@ it does not prove persistence for the C2 cusp-crossing fixtures in W595-W600.
 
 Validation: focused `repeated-knot rational spline imports preserve exact
 cache eligibility` passes 1,891 assertions/1 case; `git diff --check` passes.
-The matching C2 cusp fixtures still need DXF/DWG product-writer round-trips,
-along with broader knot profiles, full geometry-variant coverage, exact-head
-CI, visible GUI, and independent-CAD acceptance.
+The matching C2 cusp fixtures are covered in W602; broader knot profiles,
+full geometry-variant coverage, exact-head CI, visible GUI, and
+independent-CAD acceptance remain open.
 
 ## 602. Round-trip C2 Rational Knot Caches Across Five File Lanes (2026-11-09)
 
@@ -28132,9 +28135,9 @@ join curvature. For each case, the direct engine must report a
 `CertifiedUniqueBracket` at the knot; worker operation 7 then generates the
 cache, staged import admits the typed-source carrier, and LibreCAD's native
 writer exports it before a second staged import. DXF lanes are binary R14,
-R2000, and R2018;
-DWG lanes are R2000 and R2018. The source definition and cache geometry
-fingerprint must survive both imports and the application write/reopen cycle.
+R2000, and R2018; DWG lanes are R2000 and R2018. The source definition and
+cache geometry fingerprint must survive both imports and the application
+write/reopen cycle.
 This qualifies only these six degree/orientation fixtures and five lanes, not
 other knot layouts, multiplicities, distances, weight profiles, or DWG
 releases.
@@ -28143,3 +28146,19 @@ Validation: focused `C2 rational knot cusps round-trip through native file
 writers` passes 8,419 assertions/1 case; `git diff --check` passes. Other
 rational knot profiles, periodic profiles, full geometry-variant support,
 exact-head CI, visible GUI, and independent-CAD acceptance remain open.
+
+## 603. Independently Parse C2 Knot DWG Writer Outputs (2026-11-09)
+
+Preserved the native C2-knot writer outputs and parsed all 12 DWGs with
+LibreDWG `dwgread` 0.14: degree-3/4/5 source fixtures, both curvature
+orientations, and R2000/R2018 output. Each file parses successfully and has
+exactly one degree-3 cache `SPLINE` with control points and both
+`LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. Degree 3 is expected here
+because operation 7 canonicalizes the editable output cache to cubic form.
+This verifies an independent parser, not ODA/AutoCAD acceptance or visual
+equivalence in an independent CAD application.
+
+Validation: LibreDWG 0.14 JSON parse plus structural assertions pass for all
+12 preserved DWGs; the host persistence case passes 8,435 assertions/1 case
+with output preservation enabled. Exact-head CI, visible GUI, external-CAD
+rendering, other DWG releases, and broader spline profiles remain open.
