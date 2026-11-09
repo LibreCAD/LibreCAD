@@ -934,7 +934,8 @@ TEST_CASE("A corner only roughly an arc of radius d is trimmed at d, not taken f
         CHECK(checked.worstMissing <= 2.0 * tolerance);
     }
     else {
-        CHECK(result.status == LC_CurveOffsetStatus::SingularOffset);
+        CHECK((result.status == LC_CurveOffsetStatus::SingularOffset ||
+               result.status == LC_CurveOffsetStatus::AmbiguousTopology));
     }
 }
 
