@@ -3699,6 +3699,35 @@ TEST_CASE("higher-degree periodic spline seam tangencies map to output",
         CAPTURE(degree, expected.x, expected.y, nearest,
                 options->tolerance.requestedGeometry);
         CHECK(nearest <= options->tolerance.requestedGeometry);
+        for (const auto& interval : diagnostics.stallIntervals) {
+            const bool ownsStart = interval.first <= startValue &&
+                                   interval.second >= startValue;
+            const bool ownsEnd = interval.first <= endValue &&
+                                 interval.second >= endValue;
+            if (!ownsStart && !ownsEnd) {
+                continue;
+            }
+            for (const double parameter : {interval.first, interval.second}) {
+                const auto offsetPoint = oracleOffsetPoint(
+                    data, SplineOracle{parameter}, step, start, end, distance,
+                    parameter == endValue);
+                const RS_Vector expectedEndpoint{
+                    offsetPoint.first.convert_to<double>(),
+                    offsetPoint.second.convert_to<double>()};
+                double endpointError = std::numeric_limits<double>::infinity();
+                for (const LC_OffsetBranch& branch : built.branches) {
+                    for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+                        endpointError = std::min(
+                            endpointError,
+                            std::min(piece.bezier.front().distanceTo(expectedEndpoint),
+                                     piece.bezier.back().distanceTo(expectedEndpoint)));
+                    }
+                }
+                CAPTURE(degree, parameter, endpointError,
+                        options->tolerance.requestedGeometry);
+                CHECK(endpointError <= options->tolerance.requestedGeometry);
+            }
+        }
     }
 }
 

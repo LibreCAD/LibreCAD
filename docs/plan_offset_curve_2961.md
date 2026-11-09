@@ -27679,8 +27679,24 @@ seam offset into retained output. The same regression continues to verify
 degree-4/5 seam event ownership and output mapping. `resolveRun` also counts
 sign changes across split pieces of a seam-wrapping unresolved run.
 
-Validation: focused `[degree-limit]` seam test passes 48 assertions/1 case;
-the full worker-kernel suite passes 1,706,039 assertions/85 cases; the Release
+Validation: focused `[degree-limit]` seam test passes 60 assertions/1 case;
+the full worker-kernel suite passes 1,706,051 assertions/85 cases; the Release
 worker-kernel test target builds and `git diff --check` passes. Other periodic
 profiles, complete actual-root counts, global candidate-to-output bijection,
 visible GUI, external CAD, and exact-head CI remain open.
+
+## 584. Map Every Higher-degree Seam-stall Endpoint (2026-11-09)
+
+Strengthened the degree-4/5/6 symmetric periodic seam matrix so every reported
+stall interval that owns either domain endpoint is checked at both ends. The
+independent high-precision spline oracle evaluates each stall endpoint's
+offset point, and at least one retained cubic-piece endpoint must lie within
+the requested geometry tolerance. This complements the existing seam-point
+mapping and first-span candidate provenance checks.
+
+Validation: focused `[degree-limit]` seam test passes 60 assertions/1 case;
+the full worker-kernel suite passes 1,706,051 assertions/85 cases; the Release
+worker-kernel test target builds and `git diff --check` passes. This maps the
+reported seam-owning stall endpoints in the recorded symmetric profiles only;
+general candidate/stall-to-output bijection and other periodic profiles remain
+open.
