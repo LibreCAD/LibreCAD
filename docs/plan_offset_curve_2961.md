@@ -28944,3 +28944,18 @@ assertions/94 cases. The changed range passes clang-format using
 `0135fa536` (`test(offset): characterize extreme rational weights`). Native
 file persistence, external-CAD acceptance, visible GUI, and exact-head CI for
 this profile remain open.
+
+## 641. Revalidate the Editable Source Picker on the Current Product Head (2026-11-09)
+
+Re-ran the Properties source-picker regression set after the latest worker and
+file-persistence slices. The 12 `[gui][dialog][offsetcurve][source]` cases
+exercise family changes before selecting, refreshed candidate filtering,
+cross-family replacement, source-highlight retention, cancellation and
+invalid-candidate atomicity, and distinct parabola identity across the nine
+modeled source kinds. This confirms the picker request remains implemented;
+it does not expand per-family geometry eligibility or persistence coverage.
+
+Validation: Release `librecad_tests '[gui][dialog][offsetcurve][source]'`
+passes 12,155 assertions/12 cases. This is headless widget/model coverage only;
+visible desktop acceptance remains open. No new implementation commit was
+needed for this verification.
