@@ -555,6 +555,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     RS_Spline tangentConstrainedSpline{nullptr, RS_SplineData{3, false}};
     REQUIRE(tangentConstrainedSpline.setFitPointsWithTangents(
         {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {2, 1}, {1, -3}));
+    const LC_ParabolaData endpointTangentParabola = LC_ParabolaData::FromEndPointsTangents(
+        {RS_Vector{7, -2}, RS_Vector{-5, 0.5}},
+        {RS_Vector{-2, 9.25}, RS_Vector{-10, -6.75}});
+    REQUIRE(endpointTangentParabola.isValid());
     RS_Polyline mixedBulgePolyline;
     mixedBulgePolyline.addVertex({0, 0}, .2);
     mixedBulgePolyline.addVertex({8, 0}, -.2);
@@ -599,6 +603,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{RS_ArcData{{3, -4}, 4, .25, 1.5, true}},
         LC_OffsetSourceGeometry{RS_LineData{{1.0e9, -2.0e9}, {1.0e9 + 1000.0, -2.0e9 + 250.0}}},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{4.0, -3.0}, RS_Vector{15.0, 3.0}, RS_Vector{19.0, -5.0}}}},
+        LC_OffsetSourceGeometry{endpointTangentParabola},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource};
 
