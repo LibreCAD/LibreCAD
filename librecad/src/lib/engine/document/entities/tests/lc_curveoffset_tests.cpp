@@ -801,6 +801,28 @@ TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direc
     CHECK(offsetToSide(parabola, LC_CurveOffsetSide::Left, 3.0).status == LC_CurveOffsetStatus::Ok);
 }
 
+TEST_CASE("Typed parabola offsets remain exact after an affine shape transform",
+          "[curve-offset][direct][parabola][affine]") {
+    const LC_ParabolaData affineData{{RS_Vector{4.0, -3.0}, RS_Vector{15.0, 3.0}, RS_Vector{19.0, -5.0}}};
+    const LC_Parabola parabola{nullptr, affineData};
+    REQUIRE(affineData.isValid());
+    const auto source = LC_OffsetSourceGeometry::capture(parabola);
+    REQUIRE(source);
+    CHECK(source->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+
+    const EvalFn exactCurve = evaluator(parabola);
+    for (const double distance : {0.05, 0.25}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(distance, side);
+            const LC_CurveOffsetGeometryResult result = offsetToSide(parabola, side, distance);
+            const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK_FALSE(result.branches.empty());
+            CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("A circular arc offsets to a concentric arc", "[curve-offset][direct]") {
     const RS_Vector center{3.0, -2.0};
     const RS_Spline arc = quarterCircle(center, 10.0);

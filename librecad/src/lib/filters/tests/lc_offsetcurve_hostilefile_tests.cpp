@@ -10133,11 +10133,14 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
     namespace req = LC_OffsetWorkerRequest;
     namespace result = LC_OffsetWorkerResult;
 
-    const std::array<LC_ParabolaData, 3> variants{
+    // The last fixture is the canonical bowl transformed by the nonsingular
+    // affine map x'=1.5x+0.35y+4, y'=-0.2x+0.7y-3.
+    const std::array<LC_ParabolaData, 4> variants{
         LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}},
         LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}},
         LC_ParabolaData{{RS_Vector{3, -7}, RS_Vector{2.3301270189221936, 4.160254037844386},
-                         RS_Vector{11.660254037844386, -2}}}};
+                         RS_Vector{11.660254037844386, -2}}},
+        LC_ParabolaData{{RS_Vector{4, -3}, RS_Vector{15, 3}, RS_Vector{19, -5}}}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
