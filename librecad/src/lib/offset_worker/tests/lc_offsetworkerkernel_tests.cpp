@@ -5127,11 +5127,12 @@ TEST_CASE("rational C2 knot crossing maps in a four-knot layout",
 
 TEST_CASE("rational four-knot crossing maps across positive weight profiles",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][weights]") {
-    const std::array<std::array<double, 11>, 5> weightProfiles{{
+    const std::array<std::array<double, 11>, 6> weightProfiles{{
         {{1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98}},
         {{.72, 1.38, .81, 1.27, .93, 1.46, .76, 1.19, 1.08, .84, 1.31}},
         {{.25, 2.0, .4, 2.5, .35, 2.2, .3, 2.8, 1.7, .45, 2.4}},
         {{.05, 20.0, .1, 10.0, .2, 15.0, .08, 18.0, 5.0, .12, 12.0}},
+        {{1e-3, 1e3, 1e-2, 1e2, 1e-1, 10.0, 1.0, 500.0, 2e-3, 200.0, 2.0}},
         {{1e-6, 1e6, 1e-4, 1e4, 1e-2, 1e2, 1.0, 5e5, 2e-6, 2e5, 2.0}},
     }};
     const SplineOracle domainStart{0};
@@ -5146,7 +5147,7 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
     for (std::size_t profile = 0; profile < weightProfiles.size(); ++profile) {
         const auto& weightPattern = weightProfiles[profile];
         for (std::size_t targetKnotIndex = 0; targetKnotIndex < interiorKnots.size(); ++targetKnotIndex) {
-            if (profile == 4 && targetKnotIndex != interiorKnots.size() - 1)
+            if (profile >= 4 && targetKnotIndex != interiorKnots.size() - 1)
                 continue;
             const double targetKnot = interiorKnots[targetKnotIndex];
             for (const int degree : {3, 4, 5, 6}) {
@@ -5195,20 +5196,20 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
                                                         std::abs(signedDistance)),
                         *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
                     CAPTURE(built.status, diagnostics.failureStage, diagnostics.candidateParameters);
-                    if (profile == 4 && built.status != LC_CurveOffsetStatus::Ok) {
+                    if (profile == 5 && built.status != LC_CurveOffsetStatus::Ok) {
                         CHECK(built.status == LC_CurveOffsetStatus::ToleranceNotMet);
                         CHECK(built.branches.empty());
                         ++extremeWeightRefusals;
                         continue;
                     }
                     REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
-                    if (profile == 4)
+                    if (profile == 5)
                         ++extremeWeightDirectOutputs;
                     const auto candidate = std::find_if(
                         diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
                         [targetKnot](const LC_CurveOffsetCuspCandidateBox& box) { return std::abs(box.parameter - targetKnot) < 1e-8; });
                     REQUIRE(candidate != diagnostics.candidateBoxes.end());
-                    if (profile == 4) {
+                    if (profile == 5) {
                         CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::SampledSignChange);
                         ++extremeWeightSampledCandidates;
                     }
@@ -5228,7 +5229,7 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
                             endpointError = std::min(endpointError, branch.cubicPieces.back().bezier.back().distanceTo(expected));
                     }
                     CHECK(endpointError <= options->tolerance.requestedGeometry);
-                    if (profile == 4)
+                    if (profile == 5)
                         continue;
 
                     const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
@@ -5252,7 +5253,7 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
         }
     }
     CAPTURE(oracleCrossingCases);
-    CHECK(oracleCrossingCases == 110);
+    CHECK(oracleCrossingCases == 116);
     CAPTURE(extremeWeightDirectOutputs, extremeWeightRefusals, extremeWeightSampledCandidates);
     CHECK(extremeWeightDirectOutputs == 2);
     CHECK(extremeWeightRefusals == 4);

@@ -7287,9 +7287,10 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
     const std::array<double, 11> alternateWeightPattern{.72, 1.38, .81, 1.27, .93, 1.46, .76, 1.19, 1.08, .84, 1.31};
     const std::array<double, 11> highContrastWeightPattern{.25, 2.0, .4, 2.5, .35, 2.2, .3, 2.8, 1.7, .45, 2.4};
     const std::array<double, 11> wideRatioWeightPattern{.05, 20.0, .1, 10.0, .2, 15.0, .08, 18.0, 5.0, .12, 12.0};
+    const std::array<double, 11> ratioMillionWeightPattern{1e-3, 1e3, 1e-2, 1e2, 1e-1, 10.0, 1.0, 500.0, 2e-3, 200.0, 2.0};
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
-    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18);
+    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19);
     const std::array<std::vector<double>, 4> knotLayouts{{{.25, .5}, {.25, .65}, {.2, .45, .7}, {.12, .31, .58, .82}}};
     const bool fourKnotWeightProfile = layoutProfile >= 3;
     const auto& interiorKnots = knotLayouts[static_cast<std::size_t>(fourKnotWeightProfile ? 3 : layoutProfile)];
@@ -7300,13 +7301,16 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
     const double targetKnot = interiorKnots[targetKnotIndex];
     const bool alternateWeights = layoutProfile == 4 || layoutProfile == 6 || layoutProfile == 7 || layoutProfile == 11;
     const bool highContrastWeights = layoutProfile == 5 || (layoutProfile >= 12 && layoutProfile <= 14);
-    const bool wideRatioWeights = layoutProfile >= 15;
+    const bool ratioMillionWeights = layoutProfile == 19;
+    const bool wideRatioWeights = layoutProfile >= 15 && !ratioMillionWeights;
     const auto& selectedWeightPattern = alternateWeights ? alternateWeightPattern
         : highContrastWeights                            ? highContrastWeightPattern
+        : ratioMillionWeights                            ? ratioMillionWeightPattern
         : wideRatioWeights                               ? wideRatioWeightPattern
                                                          : weightPattern;
     const char* weightProfileName = alternateWeights ? "alternate-weights-"
         : highContrastWeights                        ? "high-contrast-weights-"
+        : ratioMillionWeights                        ? "ratio-million-weights-"
         : wideRatioWeights                           ? "wide-ratio-weights-"
                                                      : "default-weights-";
 
