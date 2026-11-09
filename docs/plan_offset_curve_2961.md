@@ -26999,6 +26999,9 @@ asymmetric rational cubics with three distinct interior knots each; insertion
 order is deliberately unsorted (`0.91`, `0.07`, `0.37` and `0.62`, `0.16`,
 `0.84`) to exercise insertion into an already multi-span knot vector. The
 original-curve comparison now also samples each inserted knot directly.
+The newest fixture adds four distinct interior knots inserted in order
+`0.93`, `0.08`, `0.72`, `0.31`, producing a cubic with five interior spans;
+all four knot parameters are included in the exact-curve comparison.
 
 For the new layouts, the existing matrix compares worker operation-7 output
 with direct materialization and stages operation-8 promotion through R14 DXF,
@@ -27015,8 +27018,9 @@ cases; the cubic two-distinct-knot profiles, 315,312 assertions/1 case and
 assertions/1 case; the full-multiplicity cubic fixtures, 381,239 assertions/1
 case and 612,461 assertions/11 cases for the spline-variant selection;
 three-distinct-knot cubic fixtures, 415,894 assertions/1 case and 613,908
-assertions/11 cases. The `librecad_tests` target rebuild and `git diff --check`
-pass. Test commits
+assertions/11 cases; four-distinct-knot cubic fixture, 387,334 assertions/1
+case and 655,253 assertions/11 cases. The `librecad_tests` target rebuild and
+`git diff --check` pass. Test commits
 `3a6728fbe` (`test(offset): import two-knot rational splines`),
 `d2e08850a` (`test(offset): vary distinct rational knot layouts`),
 `c4a141580` (`test(offset): import asymmetric rational knot profiles`), and
@@ -27024,6 +27028,7 @@ pass. Test commits
 `c640e5067` (`test(offset): import repeated-knot rational cubics`) and
 `f98b36b3d` (`test(offset): import cubic splines at full knot multiplicity`)
 and `3649eecdb` (`test(offset): import cubic splines with three distinct
+knots`) and `208e15097` (`test(offset): import cubic splines with four
 knots`).
 These are finite quadratic/cubic profiles, not arbitrary rational NURBS support;
 arbitrary knot values/counts and higher degrees, other asymmetric source
