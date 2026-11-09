@@ -27177,3 +27177,23 @@ This qualifies only the recorded positive-weight profiles and knot locations.
 Repeated interior-knot multiplicities, other nonuniform layouts, asymmetric
 control/weight profiles, arbitrary spans/control counts, independent numerical
 offset oracles, visible GUI replacement, and external CAD remain open.
+
+## 510. Qualify Multiplicity-two High-degree Knots (2026-11-08)
+
+Added clamped rational degree-4 and degree-6 source splines with one interior
+knot at `0.4` repeated twice. Both layouts pass source validation, worker
+operation-7 generation, and operation-8 cache validation. Their source metadata
+also survives R14/R2000/R2018 DXF/DWG save/reopen/second-save; signed offsets
+promote from carriers through the same five format lanes after worker
+validation.
+
+Validation: the focused high-degree knot worker selector passes 188 assertions
+across 3 cases; typed-source file round-trip passes 7,620 assertions; staged
+cache-promotion matrix passes 70,521 assertions; `librecad_tests` and worker
+kernel targets build; `git diff --check` passes. Test commit `aecf0313f`
+(`test(offset): qualify repeated high-degree knots`).
+
+This qualifies only multiplicity two at `0.4` for the recorded degree-4/6
+profiles. Other repeated-knot values and multiplicities (especially near the
+degree bound), asymmetric control/weight profiles, larger layouts, geometry
+oracle comparisons, GUI replacement, and external CAD remain open.
