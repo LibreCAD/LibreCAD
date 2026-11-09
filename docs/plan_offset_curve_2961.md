@@ -26699,13 +26699,13 @@ alternate rational double knot`).
 
 #### W563ep. Gate Open Rational Tangent Runs on Aggregate Motion (2026-11-08)
 
-Added symmetric rational-quadratic tangent profiles with middle weights `0.125`
-and `4.0` to the independent-oracle weight/scale matrix. The weight-4 case
-initially refused at `RunResolution`: individually delegated leaves passed the
-motion gate, but their combined certified motion exceeded `nodeMerge` by about
-1.7%. This exposed an inconsistency where open sources gated each leaf while
-closed sources gated the accumulated unresolved run, even though both resolve
-the combined run atomically.
+Added symmetric rational-quadratic tangent profiles with middle weights `0.125`,
+`4.0`, `0.0625`, and `8.0` to the independent-oracle weight/scale matrix. The
+weight-4 case initially refused at `RunResolution`: individually delegated
+leaves passed the motion gate, but their combined certified motion exceeded
+`nodeMerge` by about 1.7%. This exposed an inconsistency where open sources
+gated each leaf while closed sources gated the accumulated unresolved run,
+even though both resolve the combined run atomically.
 
 Changed the delegation predicate to require the accumulated certified motion
 of the unresolved run to be at most `nodeMerge` for open and closed sources.
@@ -26728,4 +26728,7 @@ Release validation: focused expanded profile, 78 assertions/1 case;
 `[curve-offset][direct]`, 42,096 assertions/32 cases; `git diff --check`
 passes. Aggregate-run implementation/test/roadmap commit `e08721c17`
 (`fix(offset): bound aggregate rational tangent runs`); collapsed-result
-classification follow-up commit pending.
+classification follow-up commit `714d0d1a5` (`fix(offset): classify collapsed
+offset results`). The added `0.0625`/`8.0` profiles pass the focused matrix
+with 104 assertions, `[rational][tangent-root]` with 623 assertions/11 cases,
+and the full worker-kernel suite with 1,704,927 assertions/77 cases.
