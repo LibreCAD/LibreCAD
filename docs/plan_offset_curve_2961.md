@@ -26826,11 +26826,14 @@ R2000 DXF/DWG, and R2018 DXF/DWG. Every lane must promote to `LC_OffsetCurve`
 without downgrade and preserve both the tagged spline source and exact cache
 fingerprint.
 
-Release validation: focused case, 4,632 assertions/1 case; full
+Release validation: focused case, 13,852 assertions/1 case; full
 `[lc-offsetcurve][import-session][typed-source][spline-variant]` union,
-225,047 assertions/11 cases; `librecad_tests` rebuild and `git diff --check`
-pass. Product commit `a60f0c848` (`test(offset): import knot-inserted
-rational sources`). This qualifies two insertion locations, two positive
-middle weights, one scale, one small offset magnitude, and the listed file
-lanes. Arbitrary knots/multiplicities, broader weight/scale/distance matrices,
-periodic tangencies, external CAD, visible GUI, and exact-head CI remain open.
+233,805 assertions/11 cases; `librecad_tests` rebuild and `git diff --check`
+pass. The focused assertion count includes scales `0.5`, `1`, and `2`, with
+offset magnitude and geometry tolerance scaled consistently. Product test
+commits `a60f0c848` (`test(offset): import knot-inserted rational sources`) and
+`7005fe96a` (`test(offset): scale knot-inserted rational imports`). This
+qualifies two insertion locations, two positive middle weights, three binary
+scales, one normalized offset magnitude, and the listed file lanes. Arbitrary
+knots/multiplicities, broader weight/distance matrices, periodic tangencies,
+external CAD, visible GUI, and exact-head CI remain open.
