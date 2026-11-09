@@ -30084,3 +30084,19 @@ Validation: "Ordinary spline round trips route DWG2007 explicitly and keep
 ASCII DXF distinct" passes 295 assertions/1 case in the current Release build.
 This closes only the recorded reader-routing defect; the broader spline
 representation/file matrix remains governed by its existing gates.
+
+## 680. Reconcile the Kinked-trim Fail-closed Status Assertion (2026-11-09)
+
+The broad current-tree `[curve-offset]` run exposed one stale test expectation
+for a spline offset around a deliberately imperfect quarter-circle corner.
+The production pipeline correctly refuses the fitted self-crossing as
+`AmbiguousTopology`; `SingularOffset` is also a valid refusal when no offset
+geometry survives. The test now accepts only those two fail-closed outcomes,
+while retaining its geometry-distance checks whenever trimmed geometry is
+returned. No production status behavior was changed.
+
+Validation: `[kink]` passes 5,707 assertions/16 cases. The full
+`[curve-offset]` selection passes 1,121,020 assertions/237 cases in the current
+Release build. This closes a test-contract mismatch, not a new geometry
+acceptance case; physical GUI, cross-platform/ASan, exact-head CI, and external
+CAD gates remain separate.
