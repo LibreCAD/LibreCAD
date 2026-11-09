@@ -7048,8 +7048,12 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
     LC_OffsetWorkerClient generationWorker;
     qint64 nextRequestId = 1;
     const std::array<double, 7> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99};
+    const std::array<std::pair<double, double>, 10> knotAndCurvatureCases{
+        {{.23, -1.0}, {.25, -1.0}, {.37, -1.0}, {.5, -1.0}, {.75, -1.0},
+         {.23, 1.0},  {.25, 1.0},  {.37, 1.0},  {.5, 1.0},  {.75, 1.0}}};
     for (const int degree : {3, 4, 5}) {
-      for (const double curvatureSign : {-1.0, 1.0}) {
+      for (const auto& [knot, curvatureSign] : knotAndCurvatureCases) {
+        CAPTURE(degree, knot, curvatureSign);
         RS_SplineData sourceData{degree, false};
         const int controlCount = 2 * degree - 1;
         for (int i = 0; i < controlCount; ++i) {
@@ -7061,15 +7065,15 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
         }
         sourceData.knotslist.assign(static_cast<std::size_t>(degree + 1), 0.0);
         sourceData.knotslist.insert(sourceData.knotslist.end(),
-                                    static_cast<std::size_t>(degree - 2), .5);
+                                    static_cast<std::size_t>(degree - 2), knot);
         sourceData.knotslist.insert(sourceData.knotslist.end(),
                                     static_cast<std::size_t>(degree + 1), 1.0);
         RS_Spline sourceCheck{nullptr, sourceData};
         REQUIRE(sourceCheck.validate());
         LC_CurveJet leftJet;
         LC_CurveJet rightJet;
-        REQUIRE(sourceCheck.tryEvaluateJet(.5, LC_CurveEvaluationSide::Left, leftJet));
-        REQUIRE(sourceCheck.tryEvaluateJet(.5, LC_CurveEvaluationSide::Right, rightJet));
+        REQUIRE(sourceCheck.tryEvaluateJet(knot, LC_CurveEvaluationSide::Left, leftJet));
+        REQUIRE(sourceCheck.tryEvaluateJet(knot, LC_CurveEvaluationSide::Right, rightJet));
         const auto curvature = [](const LC_CurveJet& jet) {
             const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
             return (jet.first.x * jet.second.y - jet.first.y * jet.second.x) /
@@ -7094,10 +7098,11 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
             *directOptions, LC_CurveOffset::makeDirectSourceBudget(),
             &cuspDiagnostics);
         REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+        const double knotPosition = knot;
         const auto knotCandidate = std::find_if(
             cuspDiagnostics.candidateBoxes.begin(), cuspDiagnostics.candidateBoxes.end(),
-            [](const LC_CurveOffsetCuspCandidateBox& candidate) {
-                return std::abs(candidate.parameter - .5) < 1e-8;
+            [knotPosition](const LC_CurveOffsetCuspCandidateBox& candidate) {
+                return std::abs(candidate.parameter - knotPosition) < 1e-8;
             });
         REQUIRE(knotCandidate != cuspDiagnostics.candidateBoxes.end());
         CHECK(knotCandidate->kind ==
@@ -7125,7 +7130,7 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
         REQUIRE(workerReply.operation == 7);
         REQUIRE(std::holds_alternative<LC_OffsetWorkerResult::Native>(workerReply.result));
         const auto& generated = std::get<LC_OffsetWorkerResult::Native>(workerReply.result);
-        CAPTURE(degree, curvatureSign, signedDistance, generated.engineStatus,
+        CAPTURE(degree, knot, curvatureSign, signedDistance, generated.engineStatus,
                 generated.ordinaryStatus, generated.refusal);
         REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(generated.ordinaryStatus == LC_OffsetWorkerResult::OrdinaryStatus::Complete);
@@ -7138,7 +7143,7 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
 #ifndef DWGSUPPORT
             if (fileFormat.dwg) continue;
 #endif
-            CAPTURE(degree, curvatureSign, signedDistance, fileFormat.suffix);
+            CAPTURE(degree, knot, curvatureSign, signedDistance, fileFormat.suffix);
             xd::Definition carrier;
             carrier.source = definition;
             xd::Options encoding;
@@ -7165,7 +7170,8 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
             raw.nknots = static_cast<std::int32_t>(raw.knotslist.size());
             raw.nfit = 0;
 
-            const std::string side = std::to_string(degree) +
+            const std::string side = std::to_string(degree) + "-knot-" +
+                std::to_string(knot) +
                 (curvatureSign < 0 ? "-negative-" : "-positive-");
             const auto input = directory.file(side + fileFormat.suffix);
             writeInput(input, fileFormat.lane, raw);
