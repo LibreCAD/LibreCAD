@@ -803,22 +803,28 @@ TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direc
 
 TEST_CASE("Typed parabola offsets remain exact after an affine shape transform",
           "[curve-offset][direct][parabola][affine]") {
-    const LC_ParabolaData affineData{{RS_Vector{4.0, -3.0}, RS_Vector{15.0, 3.0}, RS_Vector{19.0, -5.0}}};
-    const LC_Parabola parabola{nullptr, affineData};
-    REQUIRE(affineData.isValid());
-    const auto source = LC_OffsetSourceGeometry::capture(parabola);
-    REQUIRE(source);
-    CHECK(source->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+    const std::array<LC_ParabolaData, 2> transformedSources{{
+        LC_ParabolaData{{RS_Vector{4.0, -3.0}, RS_Vector{15.0, 3.0}, RS_Vector{19.0, -5.0}}},
+        LC_ParabolaData{{RS_Vector{7.0, -2.0}, RS_Vector{5.0, 7.25}, RS_Vector{-5.0, 0.5}}}}};
+    for (std::size_t sourceIndex = 0; sourceIndex < transformedSources.size(); ++sourceIndex) {
+        const LC_ParabolaData& data = transformedSources[sourceIndex];
+        CAPTURE(sourceIndex);
+        const LC_Parabola parabola{nullptr, data};
+        REQUIRE(data.isValid());
+        const auto source = LC_OffsetSourceGeometry::capture(parabola);
+        REQUIRE(source);
+        CHECK(source->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
 
-    const EvalFn exactCurve = evaluator(parabola);
-    for (const double distance : {0.05, 0.25}) {
-        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-            CAPTURE(distance, side);
-            const LC_CurveOffsetGeometryResult result = offsetToSide(parabola, side, distance);
-            const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, distance);
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            CHECK_FALSE(result.branches.empty());
-            CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
+        const EvalFn exactCurve = evaluator(parabola);
+        for (const double distance : {0.05, 0.25}) {
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                CAPTURE(distance, side);
+                const LC_CurveOffsetGeometryResult result = offsetToSide(parabola, side, distance);
+                const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK_FALSE(result.branches.empty());
+                CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
+            }
         }
     }
 }
