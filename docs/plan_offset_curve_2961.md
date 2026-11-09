@@ -28400,3 +28400,24 @@ location matrix`). These are seven locations for the existing per-degree
 fixture profiles, not arbitrary knot vectors or layout/multiplicity coverage;
 rendering equivalence, AutoCAD/ODA acceptance, visible GUI, and exact-head CI
 remain separate gates.
+
+## 615. Independently Check C2 Knot Offset Geometry (2026-11-09)
+
+Added a high-precision geometry check to the seven-location degree-3/4/5/6
+C2 crossing matrix. At three interior parameters of every generated cubic
+piece, the test maps the sample through the piece's source-parameter
+provenance, evaluates the source offset independently with the 256-bit
+rational spline oracle, and compares that point with the generated cubic.
+Every sampled error must be within the existing requested geometry tolerance;
+no engine or tolerance behavior was changed. This checks continuous geometry
+away from cusp endpoints in addition to the existing certified crossing and
+endpoint mapping assertions.
+
+Validation: focused seven-location case passes 7,692 assertions/1 case; the
+complete Release `librecad_offset_worker_kernel_tests` suite passes 1,714,432
+assertions/88 cases; `git diff --check` passes. Test commit `0aee830dc`
+(`test(offset): oracle-check C2 knot geometry`). This oracle receipt covers
+the recorded knots, degrees, weights, and offset distances only; it is not a
+general offset-error guarantee for arbitrary rational splines. Product-file
+serialization of the sampled-oracle checks, other layouts/multiplicities,
+external CAD, visible GUI, and exact-head CI remain open.
