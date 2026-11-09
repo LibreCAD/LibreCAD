@@ -826,6 +826,31 @@ TEST_CASE("A straight source offsets exactly to either side", "[curve-offset][di
     }
 }
 
+TEST_CASE("Native circles preserve exact normals near inner collapse",
+          "[curve-offset][direct][circle][oracle]") {
+    const RS_Circle source{nullptr, RS_CircleData{{5.0, -2.0}, 2.0}};
+    const EvalFn exactCircle = [data = source.getData()](const double parameter, LC_CurveEvaluationSide,
+                                                         LC_CurveJet& jet) {
+        const double angle = M_PI_4 + parameter;
+        jet.point = data.center + RS_Vector{std::cos(angle), std::sin(angle)} * data.radius;
+        jet.first = RS_Vector{-std::sin(angle), std::cos(angle)} * data.radius;
+        jet.second = RS_Vector{-std::cos(angle), -std::sin(angle)} * data.radius;
+        return true;
+    };
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        const double distance = 1.9;
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(side, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.branches.size() == 1);
+        CHECK(maxDeviation(result, exactCircle) <= options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direct]") {
     // B(u) = (10u, 20u(1-u)) turns clockwise, tightest at its apex: radius 2.5.
     const LC_SplinePoints parabola = fromControlPoints({{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}});

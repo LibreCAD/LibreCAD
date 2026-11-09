@@ -595,6 +595,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {100, 0}, .03, 0, 0, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, .25, 1.5, true}},
         LC_OffsetSourceGeometry{closedFitPoints},
+        LC_OffsetSourceGeometry{RS_CircleData{{5, -2}, 2}},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource};
 
@@ -603,7 +604,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
-        const double sourceDistance = i + 1 == sources.size() ? -.25 : i == 21 ? .1 : .25;
+        const double sourceDistance = i + 1 == sources.size() ? -.25 : i == 21 ? .1 : i == 24 ? 1.9 : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
         REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));

@@ -29921,3 +29921,21 @@ DWGs with 19 SPLINEs each and zero invalid control/knot cardinalities. This
 qualifies one closed fit-point construction, not repeated/degenerate points,
 all interpolation policies, tangent-constrained closed fits, visible GUI, or
 ODA/AutoCAD acceptance.
+
+## 672. Qualify Native-circle Offsets Near Inner Collapse (2026-11-09)
+
+Added a native `RS_Circle` direct oracle at radius 2 and offset distance 1.9
+on both sides, comparing emitted branches to the analytic circular `C + dN`
+at the engine's ellipse-adapter parameter phase. The same native-circle source
+is carried through the real worker with operation-8 cache admission required,
+translated replacement, Produce, and all five file round-trip lanes.
+
+Validation: focused exact-normal oracle passes 3,946 assertions; all eight
+`[oracle]` cases pass 48,135 assertions; complete `[curve-offset][direct]`
+passes 113,878 assertions/41 cases. The focused worker family case passes
+67,751 assertions; the complete client suite passes 74,610 assertions/21
+cases. LibreDWG 0.14 reads R2000 and R2018 outputs with ARC=1, CIRCLE=2,
+LINE=1, LWPOLYLINE=4, SPLINE=19; all SPLINEs have non-empty controls and valid
+knot cardinality. This covers a nonzero near-collapse native-circle offset,
+not the exact zero-radius boundary, offsets beyond collapse, extreme scales,
+visible GUI, or ODA/AutoCAD acceptance.
