@@ -29288,3 +29288,86 @@ midpoint overflow`). This qualifies derived-data stability, typed capture, and
 reconstruction only; it does not claim that offset detail remains representable
 at that world-coordinate ULP scale, or close general parabola/all-family
 support.
+
+## 654. Consolidate Source-family Replacement and All-family Support Contract (2026-11-09)
+
+The latest request confirms that source replacement must let the user change
+the requested curve family before choosing a replacement, and that the
+replacement choices must span all supported source families, including
+parabola. This is a single Properties workflow, not a request for another
+widget: retain the current source identity/highlight while the candidate filter
+changes; after a valid pick, replace atomically and preserve the picked
+entity's concrete family. Keep parabola distinct from generic spline-points.
+
+Current implementation status: the Properties selector already uses the nine
+families in `LC_OffsetSource::SupportedKinds` (line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline), allows
+changing the family before picking, and has regression coverage for family
+switching, current-source highlight retention, cross-family replacement,
+cancellation/invalid-candidate atomicity, and typed parabola identity (W641/W643).
+Do not add another selector or mark geometry support complete from these UI
+tests.
+
+Implementation plan for closing the actual all-family request:
+
+1. Keep the Properties picker as the shared entry point. For each family,
+   retain regression coverage for family filtering, highlight retention while
+   filtering, valid replacement, cancellation, and stale/invalid candidate
+   rollback. Add UI behavior only if a concrete regression exposes a gap.
+2. Audit the nine source adapters and record, per family, accepted domains,
+   transformations, orientations, degeneracies, and numeric refusal limits.
+   Preserve typed source data; do not silently coerce parabola to
+   spline-points or approximate unsupported curves.
+3. Implement and test direct offset generation for one family/variant slice at
+   a time, for both sides and representative distances, using an independent
+   geometric oracle. Require finite bounded geometry, expected topology, and
+   empty/no-partial output on refusal.
+4. Carry each admitted case through the isolated worker protocol, operation-7
+   generation, operation-8 cache validation, and canonical cache/fingerprint
+   checks. Treat timeout, malformed output, stale source, or unsupported
+   variants as explicit refusal; do not weaken process isolation.
+5. Carry each admitted and representable case through applicable R14/R2000/
+   R2018 DXF and DWG write/reopen lanes. Verify the typed source parameters,
+   regenerated geometry, and cache after reopen. Use independent readers and
+   external CAD checks where available; report unavailable lanes instead of
+   implying they passed.
+6. Close families individually only when their declared variant matrix passes
+   all applicable stages. Maintain an explicit accepted/refused matrix so
+   “all supported types” means all nine family adapters are selectable and
+   each claimed variant is evidenced end-to-end, not that every mathematical
+   parameterization is accepted.
+7. After each implementation/test commit, update this roadmap with exact
+   variants, commands, assertion/case counts, file lanes, independent-reader
+   results, and residual refusal boundaries. Keep visible GUI and external-CAD
+   acceptance as separate gates.
+
+Immediate continuation: parabola remains the active family workstream. W647-W653
+add evidence for specific affine/reflected profiles, curvature, scale grids,
+file lanes, and derived-data overflow, but general parabola support is still
+open. Continue with the next unqualified parabola variant through steps 2-5;
+then return to the next family with incomplete end-to-end coverage. Do not
+repeat the already-covered selector implementation.
+
+Validation: documentation-only reconciliation against the current source
+family inventory and picker implementation; no tests rerun. Current picker
+evidence remains W641/W643, while the family-specific geometry and
+worker/cache/file gates remain as recorded in prior sections.
+
+## 655. Independently Parse a Typed-parabola R2018 DWG (2026-11-09)
+
+Extended the scaled/translated parabola staged-import matrix with one bounded
+independent-reader check. On the first promoted typed-parabola fixture at scale
+1 and translation ratio `1e6`, the test exports the native editable offset as
+R2018 DWG, runs LibreDWG `dwgread -O minJSON`, and verifies the emitted SPLINE
+degree and control points against the imported cache. The check is conditional
+on `dwgread` being available (or supplied through `DWGREAD`); absent tools are
+not reported as independent-reader coverage.
+
+Validation: Release `librecad_tests` builds. The focused
+`[lc-offsetcurve][import-session][typed-source][parabola][precision][combined]`
+case passes 3,803,223 assertions/1 case, including the conditional R2018
+DWG writer/readback check with LibreDWG 0.14 on this host. Existing operation-7
+generation, operation-8 cache validation, scale/translation grid, and five
+DXF/DWG staged-import lanes also pass. `git diff --check` passes. This verifies
+one admitted parabola profile through LibreDWG parsing; it is not ODA/AutoCAD
+acceptance or general parabola/all-family completion.
