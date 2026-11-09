@@ -27744,3 +27744,9 @@ seam events. It does not prove complete event ownership/counting: some weighted
 seam roots are represented by materialized output endpoints without an
 explicit seam candidate/stall diagnostic. General candidate/stall-to-output
 bijection, other periodic profiles, and full root completeness remain open.
+Next seam-root slice: give exact domain-boundary events explicit ownership in
+the diagnostic model, distinct from span-interior candidate boxes and ordinary
+output closure; exercise simple and even seam roots against one-sided oracle
+signs and output mapping. Do not treat a near-zero floating factor as a
+certified root without a bounded/sign-based classification, and preserve
+fail-closed behavior when the boundary cannot be classified.
