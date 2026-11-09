@@ -28563,3 +28563,21 @@ repository clang-format, and `git diff --check` passes. Test commit
 only these two-knot vectors, fixture profile, and listed file versions; other
 knot layouts/weights, external-CAD acceptance, visible GUI, and exact-head CI
 remain open.
+
+## 623. Qualify a Three-knot Rational Layout in the Worker (2026-11-09)
+
+Added a three-interior-knot fixture at `.2`, `.45`, and `.7`, targeting the
+third knot, for degrees 3/4/5/6. Each interior knot has multiplicity
+`degree - 2`; positive nonuniform rational weights and both curvature
+orientations are covered. The 256-bit rational oracle proves C2 curvature
+continuity below `1e-30` and an offset-factor sign change at `.7`; direct cusp
+isolation must certify/map the oracle offset point, then worker operation 7
+and wire round-trip plus operation-8 source-cache validation must pass. This
+is one tested three-knot layout, not a general knot-vector guarantee.
+
+Validation: focused Release case passes 304 assertions/1 case; full Release
+`librecad_offset_worker_kernel_tests` passes 1,716,144 assertions/92 cases;
+added-range clang-format and `git diff --check` pass. Test commit `f5e4ca4ad`
+(`test(offset): cover three-knot rational layouts`). DXF/DWG persistence and
+independent DWG parsing for this layout remain open, as do other knot vectors,
+weight profiles, external-CAD acceptance, visible GUI, and exact-head CI.
