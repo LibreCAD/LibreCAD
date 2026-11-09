@@ -231,7 +231,12 @@ unclassified, not certified as a root; candidate-to-output proof is limited to
 the recorded degree-4/5/6 weighted periodic profiles.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
-grid; W526 polyline worker scale/translation qualification complete for its
+grid, extended by W647-W648 with positive- and negative-determinant affine
+source profiles through direct geometry, worker/cache validation, and five
+DXF/DWG lanes; W645 keeps broader parabola variants as an explicit end-to-end
+gate; W646 extends the ratio-1e6 rational four-knot support to `.12`, `.31`,
+and `.58` under its recorded proof/persistence limits; W526 polyline worker
+scale/translation qualification complete for its
 defined matrix; W527 polyline staged-file persistence complete for its defined
 matrix; W528 mixed-sign bulge polyline scale/translation qualification
 complete for its defined matrix;
