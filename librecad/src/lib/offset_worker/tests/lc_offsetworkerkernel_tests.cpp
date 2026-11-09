@@ -5127,7 +5127,8 @@ TEST_CASE("rational C2 knot crossing maps in a four-knot layout",
 
 TEST_CASE("rational four-knot crossing maps across positive weight profiles",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][weights]") {
-    const std::array<std::array<double, 11>, 2> weightProfiles{{
+    const std::array<std::array<double, 11>, 3> weightProfiles{{
+        {{1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98}},
         {{.72, 1.38, .81, 1.27, .93, 1.46, .76, 1.19, 1.08, .84, 1.31}},
         {{.25, 2.0, .4, 2.5, .35, 2.2, .3, 2.8, 1.7, .45, 2.4}},
     }};
@@ -5135,12 +5136,11 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
     const SplineOracle domainEnd{1};
     const SplineOracle derivativeStep{"1e-24"};
     const std::array<double, 4> interiorKnots{.12, .31, .58, .82};
+    std::size_t oracleCrossingCases = 0;
 
     for (std::size_t profile = 0; profile < weightProfiles.size(); ++profile) {
         const auto& weightPattern = weightProfiles[profile];
-        for (std::size_t targetKnotIndex = 1; targetKnotIndex < interiorKnots.size(); ++targetKnotIndex) {
-            if (profile != 0 && targetKnotIndex != interiorKnots.size() - 1)
-                continue;
+        for (std::size_t targetKnotIndex = 0; targetKnotIndex < interiorKnots.size(); ++targetKnotIndex) {
             const double targetKnot = interiorKnots[targetKnotIndex];
             for (const int degree : {3, 4, 5, 6}) {
                 const int multiplicity = degree - 2;
@@ -5174,7 +5174,9 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
                                                                    domainStart, domainEnd, SplineOracle{signedDistance});
                     const SplineOracle after = oracleOffsetFactor(data, SplineOracle{targetKnot} + SplineOracle{"1e-7"}, derivativeStep,
                                                                   domainStart, domainEnd, SplineOracle{signedDistance});
-                    REQUIRE((before < 0) != (after < 0));
+                    if ((before < 0) == (after < 0))
+                        continue;
+                    ++oracleCrossingCases;
 
                     const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
                     const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
@@ -5226,6 +5228,8 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
             }
         }
     }
+    CAPTURE(oracleCrossingCases);
+    CHECK(oracleCrossingCases == 82);
 }
 
 TEST_CASE("rational spline knot sign jump is not certified as a cusp",
