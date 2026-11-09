@@ -10150,7 +10150,7 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
         {Lane::Eed2000, true, DRW::AC1015, "r2000.dwg"},
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
-    constexpr std::array<double, 3> scales{1e-3, 1.0, 1e3};
+    constexpr std::array<double, 5> scales{1e-8, 1e-3, 1.0, 1e3, 1e8};
     constexpr std::array<double, 2> translationRatios{1e6, 1e9};
     constexpr std::array<double, 6> normalizedDistances{-3.0, -2.5, -2.0, 2.0, 2.5, 3.0};
 
