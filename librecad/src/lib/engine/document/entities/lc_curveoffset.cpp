@@ -2080,6 +2080,8 @@ private:
         Leaf last;
         int rationalRootVariationUpperBound{0};
         bool rationalRootVariationBounded{true};
+        int rationalRootIntervalVariationUpperBound{0};
+        bool rationalRootIntervalVariationBounded{true};
     };
 
     /**
@@ -2295,27 +2297,30 @@ private:
                     ++run.boxes;
                     run.span = span;
                     run.last = leaf;
-                    if (run.rationalRootVariationBounded &&
-                        bounds.rationalCuspRootVariationUpperBound >= 0) {
-                        run.rationalRootVariationUpperBound +=
-                            bounds.rationalCuspRootVariationUpperBound;
-                    } else {
+                    if (run.rationalRootVariationBounded && bounds.rationalCuspRootVariationUpperBound >= 0) {
+                        run.rationalRootVariationUpperBound += bounds.rationalCuspRootVariationUpperBound;
+                    }
+                    else {
                         run.rationalRootVariationBounded = false;
+                    }
+                    if (run.rationalRootIntervalVariationBounded && bounds.rationalCuspIntervalVariationUpperBound >= 0) {
+                        run.rationalRootIntervalVariationUpperBound += bounds.rationalCuspIntervalVariationUpperBound;
+                    }
+                    else {
+                        run.rationalRootIntervalVariationBounded = false;
                     }
                 }
                 else {
-                    const bool boundedVariation =
-                        bounds.rationalCuspRootVariationUpperBound >= 0;
+                    const bool boundedVariation = bounds.rationalCuspRootVariationUpperBound >= 0;
+                    const bool boundedIntervalVariation = bounds.rationalCuspIntervalVariationUpperBound >= 0;
                     runs.push_back(Run{leaf.t0, leaf.t1, extent, 1, span, leaf,
-                                       boundedVariation
-                                           ? bounds.rationalCuspRootVariationUpperBound
-                                           : -1,
-                                       boundedVariation});
+                                       boundedVariation ? bounds.rationalCuspRootVariationUpperBound : -1, boundedVariation,
+                                       boundedIntervalVariation ? bounds.rationalCuspIntervalVariationUpperBound : -1,
+                                       boundedIntervalVariation});
                 }
                 const Run& run = runs.back();
-                const bool extendsPrefixStall = run.boxes > maxRunBoxes && !stalls.empty() &&
-                                                stalls.back().second == run.t0 &&
-                                                stalls.back().first >= a && run.t1 > run.t0;
+                const bool extendsPrefixStall = run.boxes > maxRunBoxes && !stalls.empty() && stalls.back().second == run.t0 &&
+                    stalls.back().first >= a && run.t1 > run.t0;
                 if (run.boxes > maxRunBoxes && (run.t0 == a || extendsPrefixStall) && run.t1 > a) {
                     // A tangent/even root at the start of a knot span can
                     // leave many tiny unresolved boxes. Grow the prefix while
@@ -2623,21 +2628,18 @@ private:
             }
         }
         const bool stalled = extent <= m_options.tolerance.nodeMerge;
-        const bool uniqueRootCountProven = run.rationalRootVariationBounded &&
-                                           changes == static_cast<std::size_t>(
-                                                          run.rationalRootVariationUpperBound);
+        const bool uniqueRootCountProven =
+            (run.rationalRootVariationBounded && changes == static_cast<std::size_t>(run.rationalRootVariationUpperBound)) ||
+            (run.rationalRootIntervalVariationBounded && changes == static_cast<std::size_t>(run.rationalRootIntervalVariationUpperBound));
         const bool rootCountCertified = !run.rationalRootVariationBounded || uniqueRootCountProven;
-        const bool boundedEvenRun = stalled && changes % 2 == 0 &&
-                                    firstRunSign != 0 && firstRunSign == lastRunSign;
+        const bool boundedEvenRun = stalled && changes % 2 == 0 && firstRunSign != 0 && firstRunSign == lastRunSign;
         if (boundedEvenRun) {
             stalls.insert(stalls.end(), parts.begin(), parts.end());
             return LC_CurveOffsetStatus::Ok;
         }
         for (const double root : exactRoots) {
             found.push_back(root);
-            recordCuspCandidateBox(root, root, root,
-                                   LC_CurveOffsetCuspCandidateKind::ExactSample,
-                                   cuspDiagnostics);
+            recordCuspCandidateBox(root, root, root, LC_CurveOffsetCuspCandidateKind::ExactSample, cuspDiagnostics);
         }
         for (const auto& [lo, hi] : signBrackets) {
             const LC_CurveOffsetStatus status =

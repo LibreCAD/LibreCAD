@@ -7290,18 +7290,20 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
     const std::array<double, 11> ratioMillionWeightPattern{1e-3, 1e3, 1e-2, 1e2, 1e-1, 10.0, 1.0, 500.0, 2e-3, 200.0, 2.0};
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
-    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19);
+    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22);
     const std::array<std::vector<double>, 4> knotLayouts{{{.25, .5}, {.25, .65}, {.2, .45, .7}, {.12, .31, .58, .82}}};
     const bool fourKnotWeightProfile = layoutProfile >= 3;
     const auto& interiorKnots = knotLayouts[static_cast<std::size_t>(fourKnotWeightProfile ? 3 : layoutProfile)];
-    const std::size_t targetKnotIndex = layoutProfile == 8 || layoutProfile == 11 || layoutProfile == 12 || layoutProfile == 16 ? 0
-        : layoutProfile == 6 || layoutProfile == 9 || layoutProfile == 13 || layoutProfile == 17                                ? 1
-        : layoutProfile == 7 || layoutProfile == 10 || layoutProfile == 14 || layoutProfile == 18                               ? 2
-                                                                                                  : interiorKnots.size() - 1;
+    const std::size_t targetKnotIndex =
+        layoutProfile == 8 || layoutProfile == 11 || layoutProfile == 12 || layoutProfile == 16 || layoutProfile == 20  ? 0
+        : layoutProfile == 6 || layoutProfile == 9 || layoutProfile == 13 || layoutProfile == 17 || layoutProfile == 21 ? 1
+        : layoutProfile == 7 || layoutProfile == 10 || layoutProfile == 14 || layoutProfile == 18 || layoutProfile == 22
+        ? 2
+        : interiorKnots.size() - 1;
     const double targetKnot = interiorKnots[targetKnotIndex];
     const bool alternateWeights = layoutProfile == 4 || layoutProfile == 6 || layoutProfile == 7 || layoutProfile == 11;
     const bool highContrastWeights = layoutProfile == 5 || (layoutProfile >= 12 && layoutProfile <= 14);
-    const bool ratioMillionWeights = layoutProfile == 19;
+    const bool ratioMillionWeights = layoutProfile >= 19 && layoutProfile <= 22;
     const bool wideRatioWeights = layoutProfile >= 15 && !ratioMillionWeights;
     const auto& selectedWeightPattern = alternateWeights ? alternateWeightPattern
         : highContrastWeights                            ? highContrastWeightPattern
@@ -7346,6 +7348,34 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
             REQUIRE(std::abs(signedDistance) > 1e-8);
 
             const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
+            if (ratioMillionWeights && targetKnotIndex < 3) {
+                auto directSource = definition.source.makeEntity();
+                REQUIRE(directSource);
+                const auto directOptions = LC_OffsetWorkerTolerance::directOptions(definition, *directSource);
+                REQUIRE(directOptions);
+                LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+                const auto direct = LC_CurveOffset::buildDirectBranches(
+                    *directSource,
+                    LC_CurveOffset::makeSideRequest(signedDistance > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
+                                                    std::abs(signedDistance)),
+                    *directOptions, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+                if (direct.status != LC_CurveOffsetStatus::Ok) {
+                    CHECK(direct.status == LC_CurveOffsetStatus::ToleranceNotMet);
+                    CHECK(direct.branches.empty());
+                    return;
+                }
+                const auto candidate = std::find_if(
+                    diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
+                    [targetKnot](const LC_CurveOffsetCuspCandidateBox& box) { return std::abs(box.parameter - targetKnot) < 1e-8; });
+                if (candidate == diagnostics.candidateBoxes.end()) {
+                    SUCCEED("no cusp candidate at this target knot");
+                    return;
+                }
+                if (candidate->kind != LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket) {
+                    CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::SampledSignChange);
+                    return;
+                }
+            }
             LC_OffsetWorkerRequest::Request request;
             request.token = {requestId++, 1, 1, 1};
             request.operation = LC_OffsetWorkerRequest::GenerateSource{definition, {}};

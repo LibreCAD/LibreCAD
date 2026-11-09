@@ -5143,11 +5143,17 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
     std::size_t extremeWeightDirectOutputs = 0;
     std::size_t extremeWeightRefusals = 0;
     std::size_t extremeWeightSampledCandidates = 0;
+    std::size_t millionWeightCertifiedCandidates = 0;
+    std::size_t millionWeightSampledCandidates = 0;
+    std::size_t millionWeightRefusals = 0;
+    std::array<std::size_t, 3> millionWeightCertifiedByKnot{};
+    std::array<std::size_t, 3> millionWeightSampledByKnot{};
+    std::array<std::size_t, 3> millionWeightRefusalsByKnot{};
 
     for (std::size_t profile = 0; profile < weightProfiles.size(); ++profile) {
         const auto& weightPattern = weightProfiles[profile];
         for (std::size_t targetKnotIndex = 0; targetKnotIndex < interiorKnots.size(); ++targetKnotIndex) {
-            if (profile >= 4 && targetKnotIndex != interiorKnots.size() - 1)
+            if (profile == 5 && targetKnotIndex != interiorKnots.size() - 1)
                 continue;
             const double targetKnot = interiorKnots[targetKnotIndex];
             for (const int degree : {3, 4, 5, 6}) {
@@ -5202,6 +5208,13 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
                         ++extremeWeightRefusals;
                         continue;
                     }
+                    if (profile == 4 && targetKnotIndex != interiorKnots.size() - 1 && built.status != LC_CurveOffsetStatus::Ok) {
+                        CHECK(built.status == LC_CurveOffsetStatus::ToleranceNotMet);
+                        CHECK(built.branches.empty());
+                        ++millionWeightRefusals;
+                        ++millionWeightRefusalsByKnot[targetKnotIndex];
+                        continue;
+                    }
                     REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
                     if (profile == 5)
                         ++extremeWeightDirectOutputs;
@@ -5212,6 +5225,17 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
                     if (profile == 5) {
                         CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::SampledSignChange);
                         ++extremeWeightSampledCandidates;
+                    }
+                    else if (profile == 4 && targetKnotIndex != interiorKnots.size() - 1) {
+                        if (candidate->kind == LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket) {
+                            ++millionWeightCertifiedCandidates;
+                            ++millionWeightCertifiedByKnot[targetKnotIndex];
+                        }
+                        else {
+                            CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::SampledSignChange);
+                            ++millionWeightSampledCandidates;
+                            ++millionWeightSampledByKnot[targetKnotIndex];
+                        }
                     }
                     else {
                         CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket);
@@ -5229,7 +5253,9 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
                             endpointError = std::min(endpointError, branch.cubicPieces.back().bezier.back().distanceTo(expected));
                     }
                     CHECK(endpointError <= options->tolerance.requestedGeometry);
-                    if (profile == 5)
+                    if (profile == 5 ||
+                        (profile == 4 && targetKnotIndex != interiorKnots.size() - 1 &&
+                         candidate->kind != LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket))
                         continue;
 
                     const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
@@ -5253,22 +5279,33 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
         }
     }
     CAPTURE(oracleCrossingCases);
-    CHECK(oracleCrossingCases == 116);
-    CAPTURE(extremeWeightDirectOutputs, extremeWeightRefusals, extremeWeightSampledCandidates);
+    CHECK(oracleCrossingCases == 136);
+    CAPTURE(extremeWeightDirectOutputs, extremeWeightRefusals, extremeWeightSampledCandidates, millionWeightCertifiedCandidates,
+            millionWeightSampledCandidates, millionWeightRefusals);
     CHECK(extremeWeightDirectOutputs == 2);
     CHECK(extremeWeightRefusals == 4);
     CHECK(extremeWeightSampledCandidates == 2);
+    CAPTURE(millionWeightCertifiedByKnot, millionWeightSampledByKnot, millionWeightRefusalsByKnot);
+    CHECK(millionWeightCertifiedCandidates == 14);
+    CHECK(millionWeightSampledCandidates == 4);
+    CHECK(millionWeightRefusals == 2);
+    CHECK(millionWeightCertifiedByKnot[0] == 4);
+    CHECK(millionWeightCertifiedByKnot[1] == 4);
+    CHECK(millionWeightCertifiedByKnot[2] == 6);
+    CHECK(millionWeightSampledByKnot[0] == 2);
+    CHECK(millionWeightSampledByKnot[1] == 2);
+    CHECK(millionWeightSampledByKnot[2] == 0);
+    CHECK(millionWeightRefusalsByKnot[0] == 0);
+    CHECK(millionWeightRefusalsByKnot[1] == 0);
+    CHECK(millionWeightRefusalsByKnot[2] == 2);
 }
 
 TEST_CASE("rational spline knot sign jump is not certified as a cusp",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][refusal]") {
     RS_SplineData data{6, false};
-    data.controlPoints = {{0, 0},  {1, -1}, {2, 1},  {3, 2},  {4, 1},
-                          {5, 0},  {6, 0},  {7, -2}, {8, -1}, {9, 1},
-                          {10, 2}, {11, 0}};
+    data.controlPoints = {{0, 0}, {1, -1}, {2, 1}, {3, 2}, {4, 1}, {5, 0}, {6, 0}, {7, -2}, {8, -1}, {9, 1}, {10, 2}, {11, 0}};
     data.weights = {1.0, 1.2, .9, 1.1, .8, 1.3, 1.0, .7, 1.4, .9, 1.2, .8};
-    data.knotslist = {0, 0, 0, 0, 0, 0, 0, .5, .5, .5, .5, .5,
-                      1, 1, 1, 1, 1, 1, 1};
+    data.knotslist = {0, 0, 0, 0, 0, 0, 0, .5, .5, .5, .5, .5, 1, 1, 1, 1, 1, 1, 1};
     const RS_Spline source{nullptr, data};
     REQUIRE(source.validate());
     LC_CurveJet leftJet;
