@@ -26941,3 +26941,35 @@ range`). This cross-product covers only these symmetric positive-weight
 quadratics with interior multiplicity two. Other degrees/multiplicities,
 general knot layouts, periodic curves and complete candidate-to-output
 mapping remain open, alongside visible GUI, external CAD, and exact-head CI.
+
+## 503. Reaffirm Type-changing Source Widget and All-family Scope (2026-11-08)
+
+The latest source-widget request is captured as two separate acceptance
+criteria:
+
+1. **Choose the family while replacing the source.** The Properties control
+   must allow changing the requested source family before picking a live
+   candidate, refresh eligible candidates for that family, and preserve the
+   currently stored source/cache until a valid replacement is committed. The
+   existing-source action must resolve and highlight the actual source. This
+   picker behavior is already implemented; keep `SupportedKinds` as the sole
+   family list and do not add a duplicate selector.
+2. **Cover every currently supported source family end to end.** The current
+   inventory is line, arc, circle, ellipse, spline, spline-points, parabola,
+   bounded hyperbola, and polyline. `LC_Parabola` must remain a distinct kind
+   and be captured before its `LC_SplinePoints` base class. For every family,
+   implementation evidence must separately qualify eligible geometry
+   variants through direct generation, worker/cache validation, replacement
+   atomicity/refusal, and applicable DXF/DWG round-trips. Family presence in
+   the widget alone does not satisfy this criterion.
+
+Implementation sequence remains the family/variant workflow in the Current
+Contract: inventory concrete variants and eligibility first; add focused
+geometry/oracle and fail-closed cases; qualify worker/cache and atomic
+replacement; then add applicable persistence lanes. Preserve existing valid
+source/cache on cancellation, ineligible candidates, invalid geometry, or
+worker failure. Record the exact admitted matrix and test evidence per slice;
+do not advertise a variant as supported beyond that evidence. The picker
+requirement itself adds no code work. All-family geometry/persistence gaps,
+visible desktop acceptance, independent-CAD checks, and exact-head CI remain
+open.
