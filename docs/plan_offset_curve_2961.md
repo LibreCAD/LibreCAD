@@ -26700,7 +26700,8 @@ alternate rational double knot`).
 #### W563ep. Gate Open Rational Tangent Runs on Aggregate Motion (2026-11-08)
 
 Added symmetric rational-quadratic tangent profiles with middle weights `0.125`,
-`4.0`, `0.0625`, and `8.0` to the independent-oracle weight/scale matrix. The
+`4.0`, `0.0625`, and `8.0` to the independent-oracle weight/scale matrix.
+Each of those four profiles is now checked at scales `0.5`, `1`, and `2`. The
 weight-4 case initially refused at `RunResolution`: individually delegated
 leaves passed the motion gate, but their combined certified motion exceeded
 `nodeMerge` by about 1.7%. This exposed an inconsistency where open sources
@@ -26729,6 +26730,7 @@ Release validation: focused expanded profile, 78 assertions/1 case;
 passes. Aggregate-run implementation/test/roadmap commit `e08721c17`
 (`fix(offset): bound aggregate rational tangent runs`); collapsed-result
 classification follow-up commit `714d0d1a5` (`fix(offset): classify collapsed
-offset results`). The added `0.0625`/`8.0` profiles pass the focused matrix
-with 104 assertions, `[rational][tangent-root]` with 623 assertions/11 cases,
-and the full worker-kernel suite with 1,704,927 assertions/77 cases.
+offset results`). The `0.0625`/`8.0` profiles and their scaled variants pass
+the focused matrix with 208 assertions, `[rational][tangent-root]` with 727
+assertions/11 cases, and the full worker-kernel suite with 1,705,031
+assertions/77 cases.
