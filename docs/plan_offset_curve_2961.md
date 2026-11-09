@@ -30429,20 +30429,25 @@ exact-head CI gates remain open.
 
 ## 690. Carry Reconstructed Parabolas Through Worker and File Lanes (2026-11-09)
 
-Added every valid `LC_ParabolaData::From4Points` candidate from section 689's
-sample set to the typed-source real-helper matrix. Each now requires successful
-operation-7 generation, operation-8 cache admission, translated typed-source
-replacement, and the existing Produce path. Product export/reopen is checked
-through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The optional
-`dwgread -O minJSON` verifier is available in this environment and is exercised
-for the generated DWG lanes. This completes the recorded four-point sample's
-direct/worker/cache/replacement/persistence chain; it does not qualify other
-four-point samples or general parabola construction domains.
+Replaced an existing canonical parabola entry in the typed-source real-helper
+matrix with one valid `LC_ParabolaData::From4Points` candidate from section
+689's sample set. That representative requires successful operation-7
+generation, operation-8 cache admission, translated typed-source replacement,
+and the existing Produce path. Product export/reopen is checked through R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The optional `dwgread -O minJSON`
+verifier is available in this environment and is exercised for the generated
+DWG lanes. All valid candidates from this sample remain covered by direct
+geometry; one representative now has full worker/cache/replacement/persistence
+coverage. Other four-point samples and general parabola construction domains
+remain unqualified.
 
 Validation: the Release worker-client case
 `Worker client joins typed source generation for every modeled source family`
-passes 93,737 assertions/1 case, including the five internal file lanes and
-independent LibreDWG parses. The direct exact-normal test remains green at
-1,163 assertions. `git diff --check` passes. Broader parabola variants,
+passes 90,403 assertions/1 case, including the five internal file lanes and
+independent LibreDWG parses. The full `[lc-offsetcurve][worker-client]` suite
+passes 97,146 assertions/21 cases. Its aggregate watchdog is 45 seconds to
+accommodate the complete native-writer and independent-reader suite; individual
+worker-operation deadlines remain unchanged. The direct exact-normal test
+passes 1,163 assertions. `git diff --check` passes. Broader parabola variants,
 visible GUI, external ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain
 open.

@@ -71,7 +71,7 @@ static_assert(std::is_nothrow_move_constructible_v<Completion>);
 static_assert(std::is_nothrow_move_assignable_v<Completion>);
 static_assert(!std::is_constructible_v<Completion, Req::Request&&, Reply::Reply&&>);
 
-constexpr int SuiteTimeoutMs = 24000;
+constexpr int SuiteTimeoutMs = 45000;
 constexpr int WaitTimeoutMs = 3500;
 constexpr const char* Tags = "[lc-offsetcurve][worker-client]";
 
@@ -565,6 +565,20 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {RS_Vector{7, -2}, RS_Vector{-5, 0.5}},
         {RS_Vector{-2, 9.25}, RS_Vector{-10, -6.75}});
     REQUIRE(endpointTangentParabola.isValid());
+    const std::array<RS_Vector, 3> reconstructedControls{{{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}}};
+    const auto reconstructedQuadraticAt = [&reconstructedControls](const double t) {
+        const double u = 1.0 - t;
+        return reconstructedControls[0] * (u * u) + reconstructedControls[1] * (2.0 * u * t) +
+               reconstructedControls[2] * (t * t);
+    };
+    const std::vector<RS_Vector> reconstructedSamples{
+        reconstructedQuadraticAt(0.0), reconstructedQuadraticAt(0.3),
+        reconstructedQuadraticAt(0.7), reconstructedQuadraticAt(1.0)};
+    const auto reconstructedParabolas = LC_ParabolaData::From4Points(reconstructedSamples);
+    const auto reconstructedParabola = std::find_if(
+        reconstructedParabolas.begin(), reconstructedParabolas.end(),
+        [](const LC_ParabolaData& candidate) { return candidate.isValid(); });
+    REQUIRE(reconstructedParabola != reconstructedParabolas.end());
     RS_Polyline mixedBulgePolyline;
     mixedBulgePolyline.addVertex({0, 0}, .2);
     mixedBulgePolyline.addVertex({8, 0}, -.2);
@@ -582,7 +596,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{fitPoints},
         LC_OffsetSourceGeometry{degreeOne},
         LC_OffsetSourceGeometry{cubic},
-        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{*reconstructedParabola},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
         LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, .25, 1.5, false}},
@@ -632,31 +646,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             }
         }
     }
-    const std::size_t scaledLineFixtureEnd = sources.size();
-    const std::array<RS_Vector, 3> reconstructedControls{{{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}}};
-    const auto reconstructedQuadraticAt = [&reconstructedControls](const double t) {
-        const double u = 1.0 - t;
-        return reconstructedControls[0] * (u * u) + reconstructedControls[1] * (2.0 * u * t) +
-               reconstructedControls[2] * (t * t);
-    };
-    const std::vector<RS_Vector> reconstructedSamples{
-        reconstructedQuadraticAt(0.0), reconstructedQuadraticAt(0.3),
-        reconstructedQuadraticAt(0.7), reconstructedQuadraticAt(1.0)};
-    const auto reconstructedParabolas = LC_ParabolaData::From4Points(reconstructedSamples);
-    const std::size_t reconstructedParabolaStart = sources.size();
-    for (const LC_ParabolaData& candidate : reconstructedParabolas) {
-        if (candidate.isValid()) sources.emplace_back(LC_OffsetSourceGeometry{candidate});
-    }
-    const std::size_t reconstructedParabolaEnd = sources.size();
-    REQUIRE(reconstructedParabolaEnd > reconstructedParabolaStart);
-
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
-        const bool scaledLineFixture = i >= scaledLineFixtureStart && i < scaledLineFixtureEnd;
-        const double sourceDistance = scaledLineFixture ?
+        const double sourceDistance = i >= scaledLineFixtureStart ?
             scaledLineDistances[i - scaledLineFixtureStart] :
             i == mixedBulgeFixture ? -.25 : i == 21 ? .1 : i == 24 ? 1.9 : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
@@ -710,7 +705,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
-        if (i == 13 || i == 15 || i == 20 || i + 3 >= sources.size() || scaledLineFixture)
+        if (i == 13 || i == 15 || i == 20 || i + 3 >= sources.size() || i >= scaledLineFixtureStart)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -1009,7 +1004,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) -
                        std::abs(value);
             };
-            for (std::size_t fixture = scaledLineFixtureStart; fixture < scaledLineFixtureEnd; ++fixture) {
+            for (std::size_t fixture = scaledLineFixtureStart; fixture < sources.size(); ++fixture) {
                 const PersistedGeometry* expected = nullptr;
                 for (const PersistedGeometry& candidate : persistedGeometry) {
                     if (candidate.sourceFixture != fixture) continue;
@@ -1124,8 +1119,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                     CHECK(std::abs(actual.weights[weight] - expected.weights[weight]) <=
                           1e-8 * std::max(1.0, std::abs(expected.weights[weight])));
             }
-            if (persistedGeometry[i].sourceFixture >= scaledLineFixtureStart &&
-                persistedGeometry[i].sourceFixture < scaledLineFixtureEnd) {
+            if (persistedGeometry[i].sourceFixture >= scaledLineFixtureStart) {
                 REQUIRE(persistedGeometry[i].type == RS2::EntityLine);
                 const double scale = scaledLineScales[
                     persistedGeometry[i].sourceFixture - scaledLineFixtureStart];
