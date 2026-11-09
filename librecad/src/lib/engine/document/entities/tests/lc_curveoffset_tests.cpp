@@ -833,9 +833,12 @@ TEST_CASE("Typed parabola offsets remain exact after an affine shape transform",
           "[curve-offset][direct][parabola][affine]") {
     const std::array<LC_ParabolaData, 4> transformedSources{{
         LC_ParabolaData{{RS_Vector{4.0, -3.0}, RS_Vector{15.0, 3.0}, RS_Vector{19.0, -5.0}}},
-        LC_ParabolaData{{RS_Vector{7.0, -2.0}, RS_Vector{5.0, 7.25}, RS_Vector{-5.0, 0.5}}},
+        LC_ParabolaData::FromEndPointsTangents(
+            {RS_Vector{7.0, -2.0}, RS_Vector{-5.0, 0.5}},
+            {RS_Vector{-2.0, 9.25}, RS_Vector{-10.0, -6.75}}),
         LC_ParabolaData{{RS_Vector{0.0, 0.0}, RS_Vector{5.0, 50.0}, RS_Vector{10.0, 0.0}}},
         LC_ParabolaData{{RS_Vector{0.0, 0.0}, RS_Vector{5.0, 1e-14}, RS_Vector{10.0, 0.0}}}}};
+    CHECK(transformedSources[1].m_controlPoints[1].distanceTo({5.0, 7.25}) < 1e-12);
     for (std::size_t sourceIndex = 0; sourceIndex < transformedSources.size(); ++sourceIndex) {
         for (const double scale : {1e-8, 1.0, 1e8}) {
             CAPTURE(sourceIndex, scale);
