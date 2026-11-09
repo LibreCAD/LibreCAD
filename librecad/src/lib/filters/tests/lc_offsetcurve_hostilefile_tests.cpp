@@ -7188,6 +7188,8 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
             const auto output = directory.file("native-" + side + fileFormat.suffix);
             REQUIRE(lc::test::exportDrawing(*imported.graphic, output,
                                             ::format(fileFormat.lane)));
+            if (fileFormat.dwg)
+                preserveTypedSourceDwg(output, "c2-native-" + side + fileFormat.suffix);
             const auto roundTrip = stagedImport(output, fileFormat.lane);
             REQUIRE(roundTrip.status == LC_OffsetImportSession::Status::Complete);
             REQUIRE(roundTrip.graphic);
