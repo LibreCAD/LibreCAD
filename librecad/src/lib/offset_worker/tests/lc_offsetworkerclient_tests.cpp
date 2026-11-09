@@ -588,6 +588,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{clampedRationalSpline(4)},
         LC_OffsetSourceGeometry{clampedRationalSpline(5)},
         LC_OffsetSourceGeometry{clampedRationalSpline(6)},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5, true}},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource};
 
@@ -648,7 +649,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
-        if (i + 2 >= sources.size()) REQUIRE(cacheRepresentable);
+        if (i + 3 >= sources.size()) REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
             if (result.ordinary.size() > 1)

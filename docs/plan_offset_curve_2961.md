@@ -29818,3 +29818,20 @@ passes 99,434 assertions/37 cases. This qualifies these simple clamped
 positive-rational profiles only. Interior/repeated knots, periodic layouts,
 high-degree fit-point/tangent combinations, broad weights/scales, worker cache
 promotion for every degree, visible GUI, and ODA/AutoCAD acceptance remain open.
+
+## 666. Persist the Opposite Bounded Hyperbola Branch (2026-11-09)
+
+Added a bounded hyperbola fixture on the opposite branch to the real worker
+client matrix and require its canonical cache to be admitted. This fixture
+passes generation, cache admission, translated source replacement, Produce,
+and all five R14/R2000/R2018 DXF/DWG read/write lanes. Existing direct tests
+continue to cover both branch orientations and exact source normals; this
+checkpoint adds persistence evidence for the opposite branch specifically.
+
+Validation: focused all-family worker fixture passes 52,145 assertions; the
+complete worker-client suite passes 58,918 assertions/21 cases. LibreDWG 0.14
+independently parses both generated DWGs with ARC=1, CIRCLE=1, LINE=1,
+LWPOLYLINE=4, SPLINE=15. Every SPLINE has control points and valid knot
+cardinality `knot_count == control_count + degree + 1`; invalid count is zero.
+This does not qualify every hyperbola interval, branch transform, scale,
+curvature boundary, or external CAD reader; those gates remain open.
