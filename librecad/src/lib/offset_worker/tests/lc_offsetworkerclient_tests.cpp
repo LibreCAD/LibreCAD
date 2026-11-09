@@ -635,6 +635,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(nearParallelParabola.isValid());
     const std::size_t nearParallelParabolaFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{nearParallelParabola});
+    const double arcSeam = 1e-4;
+    const std::size_t nearFullArcFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{
+        RS_ArcData{{3.0, -4.0}, 4.0, arcSeam, 2.0 * M_PI - arcSeam, false}});
     const std::size_t scaledLineFixtureStart = sources.size();
     const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 4;
     std::vector<double> scaledLineScales;
@@ -717,7 +721,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
         if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture ||
-            i == nearParallelParabolaFixture ||
+            i == nearParallelParabolaFixture || i == nearFullArcFixture ||
             i + 3 >= sources.size() || i >= scaledLineFixtureStart)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
