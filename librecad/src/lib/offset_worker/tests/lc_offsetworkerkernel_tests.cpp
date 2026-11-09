@@ -16,6 +16,7 @@
 #include <cmath>
 #include <limits>
 #include <numeric>
+#include <optional>
 #include <tuple>
 #include <vector>
 #include <boost/multiprecision/cpp_bin_float.hpp>
@@ -235,6 +236,47 @@ double sampledSplineDistance(const RS_SplineData& data, const RS_Vector& point,
         nearest = std::min(nearest, point.distanceTo(jet.point));
     }
     return nearest;
+}
+
+std::optional<double> maximumOracleOffsetDistance(
+    const RS_SplineData& sourceData, const RS_SplineData& cacheData,
+    const double signedDistance) {
+    const RS_Spline source{nullptr, sourceData};
+    if (!source.validate()) return std::nullopt;
+    double domainStartValue = 0.0, domainEndValue = 0.0;
+    if (!source.getParameterDomain(domainStartValue, domainEndValue)) return std::nullopt;
+    const SplineOracle domainStart{domainStartValue};
+    const SplineOracle domainEnd{domainEndValue};
+
+    std::vector<double> breaks{domainStartValue};
+    for (double knot : sourceData.knotslist) {
+        if (knot > domainStartValue && knot < domainEndValue &&
+            (breaks.empty() || breaks.back() != knot))
+            breaks.push_back(knot);
+    }
+    breaks.push_back(domainEndValue);
+    std::sort(breaks.begin(), breaks.end());
+    breaks.erase(std::unique(breaks.begin(), breaks.end()), breaks.end());
+
+    double maximum = 0.0;
+    constexpr std::array<double, 5> fractions{.1, .3, .5, .7, .9};
+    for (std::size_t span = 1; span < breaks.size(); ++span) {
+        const double start = breaks[span - 1], end = breaks[span];
+        if (!(start < end)) continue;
+        const SplineOracle step{(end - start) * 1e-20};
+        for (double fraction : fractions) {
+            const double parameter = start + (end - start) * fraction;
+            const auto expected = oracleOffsetPoint(
+                sourceData, SplineOracle{parameter}, step, domainStart,
+                domainEnd, SplineOracle{signedDistance});
+            const RS_Vector oraclePoint{expected.first.convert_to<double>(),
+                                        expected.second.convert_to<double>()};
+            const double distance = sampledSplineDistance(cacheData, oraclePoint, 16384);
+            if (!std::isfinite(distance)) return std::nullopt;
+            maximum = std::max(maximum, distance);
+        }
+    }
+    return maximum;
 }
 
 struct OracleSplineCusp {
@@ -1582,6 +1624,14 @@ TEST_CASE("offset worker generates degree-four and degree-six splines with a dis
         const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
         CHECK((cache.degree == 1 || cache.degree == 3));
 
+        const auto oracleDistance = maximumOracleOffsetDistance(
+            data, cache, definition.signedDistance);
+        REQUIRE(oracleDistance);
+        const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(tolerance);
+        CAPTURE(degree, *oracleDistance, tolerance->tolerance.requestedGeometry);
+        CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
+
         const req::Request validation{token,
             req::ValidateSourceCache{cache, definition, {}}};
         const auto validationReply = LC_OffsetWorkerKernel::run(validation);
@@ -1633,6 +1683,14 @@ TEST_CASE("offset worker generates high-degree splines with asymmetric nonunifor
         const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
         CHECK((cache.degree == 1 || cache.degree == 3));
 
+        const auto oracleDistance = maximumOracleOffsetDistance(
+            data, cache, definition.signedDistance);
+        REQUIRE(oracleDistance);
+        const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(tolerance);
+        CAPTURE(degree, *oracleDistance, tolerance->tolerance.requestedGeometry);
+        CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
+
         const req::Request validation{token,
             req::ValidateSourceCache{cache, definition, {}}};
         const auto validationReply = LC_OffsetWorkerKernel::run(validation);
@@ -1683,6 +1741,14 @@ TEST_CASE("offset worker generates degree-four and degree-six splines with a rep
         const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
         CHECK((cache.degree == 1 || cache.degree == 3));
 
+        const auto oracleDistance = maximumOracleOffsetDistance(
+            data, cache, definition.signedDistance);
+        REQUIRE(oracleDistance);
+        const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(tolerance);
+        CAPTURE(degree, *oracleDistance, tolerance->tolerance.requestedGeometry);
+        CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
+
         const req::Request validation{token,
             req::ValidateSourceCache{cache, definition, {}}};
         const auto validationReply = LC_OffsetWorkerKernel::run(validation);
@@ -1730,6 +1796,14 @@ TEST_CASE("offset worker generates asymmetric rational degree-four and degree-si
         REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
         const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
         CHECK((cache.degree == 1 || cache.degree == 3));
+
+        const auto oracleDistance = maximumOracleOffsetDistance(
+            data, cache, definition.signedDistance);
+        REQUIRE(oracleDistance);
+        const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(tolerance);
+        CAPTURE(degree, *oracleDistance, tolerance->tolerance.requestedGeometry);
+        CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
 
         const req::Request validation{token,
             req::ValidateSourceCache{cache, definition, {}}};
@@ -1783,6 +1857,14 @@ TEST_CASE("offset worker generates periodic degree-four and degree-six spline so
         REQUIRE(generated.ordinary.size() == 1);
         REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
         const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+
+        const auto oracleDistance = maximumOracleOffsetDistance(
+            data, cache, definition.signedDistance);
+        REQUIRE(oracleDistance);
+        const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(tolerance);
+        CAPTURE(degree, *oracleDistance, tolerance->tolerance.requestedGeometry);
+        CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
 
         const req::Request validation{token,
             req::ValidateSourceCache{cache, definition, {}}};
