@@ -91,7 +91,12 @@ worker operation 7 plus result-wire round-trip for this exact profile. W595
 also qualifies one open degree-6 positive-rational spline with a repeated
 multiplicity-four C2 knot and an oracle-backed crossing at `t=0.5`. These do
 not qualify other degree-6 periodic weight/knot profiles or general
-high-rational/repeated-knot support.
+high-rational/repeated-knot support. W596 adds oracle-backed open degree-4 and
+degree-5 positive-rational fixtures with multiplicity `degree-2` C2 knots;
+for those exact profiles, the cross-knot candidates are certified and mapped
+to output endpoints. Across W595-W596, this means only the recorded degree-4,
+degree-5, and degree-6 open repeated-C2 fixtures are qualified, not general
+repeated-knot support.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -27999,3 +28004,20 @@ passes 24 assertions/1 case; complete Release
 weight profile, knot multiplicity, distance, and topology. Other repeated-knot
 layouts, periodic profiles, full geometry-variant support, exact-head CI,
 visible GUI, and independent-CAD acceptance remain open.
+
+## 596. Cover Lower-Degree Repeated C2 Rational Knot Crossings (2026-11-09)
+
+Extended the repeated-C2 crossing matrix with open degree-4 and degree-5
+positive-rational spline fixtures. Each has an interior knot with multiplicity
+`degree-2`, a high-precision oracle crossing, positive nonuniform weights, and
+an interval-variation upper bound of at most two over the adjacent spans.
+The tests require a `CertifiedUniqueBracket` candidate and verify that its
+parameter maps to an output cusp endpoint within the requested tolerance.
+Together with W595, these are three specific degree/multiplicity/profile
+fixtures; they do not establish arbitrary rational repeated-knot coverage.
+
+Validation: focused lower-degree repeated-C2 test passes 34 assertions/1 case;
+complete Release `librecad_offset_worker_kernel_tests` passes 1,706,774
+assertions/88 cases; `git diff --check` passes. Other repeated-knot layouts,
+periodic profiles, full geometry-variant support, exact-head CI, visible GUI,
+and independent-CAD acceptance remain open.
