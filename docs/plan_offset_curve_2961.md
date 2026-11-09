@@ -28637,3 +28637,20 @@ range passes repository clang-format, and `git diff --check` passes. Test
 commit `25da4e3ef` (`test(offset): persist four-knot spline caches`). This is
 not arbitrary vector/weight coverage or AutoCAD/ODA acceptance; visible GUI,
 external-CAD validation, and exact-head CI remain open.
+
+## 627. Qualify a Second Positive Rational Weight Profile (2026-11-09)
+
+Added an alternate positive, nonuniform weight pattern to the four-knot
+`.12`/`.31`/`.58`/`.82` worker fixture, for degrees 3/4/5/6 and both
+curvature orientations. The independent high-precision oracle still requires
+one-sided curvature agreement below `1e-30` and a sign crossing at the final
+knot; the direct engine must certify/map the cusp and worker generation,
+result-wire round-trip, and source-cache validation must pass. This adds one
+moderately varied positive weight pattern, not arbitrary rational weights.
+
+Validation: focused Release case passes 304 assertions/1 case; complete
+Release `librecad_offset_worker_kernel_tests` passes 1,716,752 assertions/94
+cases; added-range clang-format and `git diff --check` pass. Test commit
+`4c6cd2e9c` (`test(offset): cover alternate rational weights`). Native DXF/DWG
+persistence for the alternate profile, other weight distributions, external
+CAD, visible GUI, and exact-head CI remain open.
