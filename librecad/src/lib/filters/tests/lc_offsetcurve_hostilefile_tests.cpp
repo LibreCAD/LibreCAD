@@ -7286,8 +7286,8 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
     const std::array<double, 11> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98};
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
-    const std::vector<double> interiorKnots =
-        GENERATE(std::vector<double>{.25, .5}, std::vector<double>{.25, .65}, std::vector<double>{.2, .45, .7});
+    const std::vector<double> interiorKnots = GENERATE(std::vector<double>{.25, .5}, std::vector<double>{.25, .65},
+                                                       std::vector<double>{.2, .45, .7}, std::vector<double>{.12, .31, .58, .82});
     const double targetKnot = interiorKnots.back();
 
     for (const int degree : {3, 4, 5, 6}) {
