@@ -28314,3 +28314,44 @@ with DWG preservation enabled; LibreDWG JSON parsing and structure assertions
 pass for all 60 DWGs. No production code changed. C2 knot persistence for other
 DWG releases, other spline profiles, broader source-family variants,
 independent-CAD visual acceptance, visible GUI, and exact-head CI remain open.
+
+## 611. Reconfirm Type-changing Source Selection and Full Picker Inventory (2026-11-09)
+
+The latest request confirms that the source-curve Properties widget must let
+the user change the requested source family before selecting a replacement,
+and must offer every source kind currently supported by the picker. The
+existing contract and implementation satisfy this: line, arc, circle,
+ellipse, spline, spline-points, distinct parabola, bounded hyperbola, and
+polyline. `LC_Parabola` remains distinct from its `LC_SplinePoints` base.
+Changing the family refreshes candidate eligibility without changing or
+clearing the current source or its highlight; selecting a valid candidate
+replaces it with the candidate's actual typed geometry. Do not add a second
+widget, selector, or parabola-only path.
+
+This reconfirms picker scope only. It does not expand geometry-generation,
+worker/cache, replacement-variant, or DXF/DWG round-trip eligibility; those
+remain subject to their per-variant evidence gates in the current roadmap.
+Validation remains the existing Release source-picker regression receipt in
+W607 (9,771 assertions/9 cases). No code changed and no tests were rerun for
+this documentation-only update. Visible desktop interaction and the broader
+geometry/persistence matrix remain open.
+
+## 612. Extend the Analytic C2 Knot Matrix Through Degree Six (2026-11-09)
+
+Extended W608's exact rational C2 knot-crossing matrix from degrees 3/4/5 to
+degrees 3/4/5/6, retaining all five knot positions (`0.23`, `0.25`, `0.37`,
+`0.5`, `0.75`) and both curvature orientations. The same independent
+high-precision homogeneous de Boor/derivative-net oracle verifies one-sided
+curvature continuity and sign change; production-jet agreement, certified
+interval bounds, direct cusp mapping, worker operation 7, result-wire
+round-trip, operation-8 validation, and its result-wire round-trip remain
+required for each case. The strict analytic continuity threshold was not
+relaxed.
+
+Validation: focused Release case passes 3,080 assertions/1 case; the complete
+`librecad_offset_worker_kernel_tests` suite passes 1,709,820 assertions/88
+cases; `git diff --check` passes. Test commit `54ace8543` (`test(offset): extend
+C2 knot matrix to degree six`). This qualifies only the tested degree/knot/
+orientation and existing rational fixture profiles. Product-writer persistence
+for degree six, other knot layouts and multiplicities, broader spline variants,
+exact-head CI, visible GUI, and independent-CAD acceptance remain open.
