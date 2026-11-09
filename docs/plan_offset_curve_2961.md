@@ -28969,3 +28969,31 @@ Validation: Release `librecad_tests '[gui][dialog][offsetcurve][source]'`
 passes 12,155 assertions/12 cases. This is headless widget/model coverage only;
 visible desktop acceptance remains open. Documentation reconciliation only;
 no new implementation commit was needed for this verification.
+
+## 642. Qualify a Ratio-1e6 Rational Weight Profile at the `.82` Knot (2026-11-09)
+
+Added a positive rational weight pattern spanning `1e-3` to `1e3` (ratio
+`1e6`) to the four-knot degree-3/4/5/6 worker matrix at target knot `.82`, for
+both curvature orientations. The independent 256-bit oracle finds six
+sign-crossing cases; each must produce a certified unique cusp bracket, map
+the cusp endpoint within the requested geometric tolerance, round-trip worker
+operation 7, and pass operation-8 cache validation. The product writer/reopen
+matrix adds the same eight degree/orientation inputs across R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. It checks staged promotion, exact typed-source
+equality, exact cache fingerprints, and a second native save/reopen.
+
+The ratio-`1e6` sweep at `.12`, `.31`, and `.58` was not qualified: observed
+cases included sampling-only cusp candidates and a degree-6 refusal. Those
+positions are intentionally excluded rather than counted as supported. The
+ratio-`1e12` profile remains its own fail-closed characterization in W640.
+
+Validation: focused worker case passes 4,266 assertions; the complete Release
+worker-kernel suite passes 1,720,714 assertions/94 cases. The focused product
+writer/reopen case passes 342,900 assertions/1 case. All 16 retained
+ratio-`1e6` R2000/R2018 DWGs independently decode with LibreDWG 0.14 minJSON;
+each contains exactly one nonempty SPLINE and both `LC_OFFSET_CURVE` and
+`TYPED_SOURCE` EED markers. Changed ranges pass `code_style/.clang-format`
+and `git diff --check`. Implementation commit `edc1d3db6` (`test(offset):
+qualify million-ratio rational weights`). This is evidence for the recorded
+profile and knot only; other knot positions, broader rational layouts, visible
+GUI, external-CAD visual acceptance, and exact-head CI remain open.
