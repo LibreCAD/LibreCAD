@@ -4754,6 +4754,98 @@ TEST_CASE("C2 rational knot crossings map across continuous multiplicities",
     }
 }
 
+TEST_CASE("rational C2 knot crossing maps in a two-knot layout",
+          "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][layout]") {
+    const std::array<double, 11> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98};
+    const SplineOracle domainStart{0};
+    const SplineOracle domainEnd{1};
+    const SplineOracle derivativeStep{"1e-24"};
+    constexpr double targetKnot = .5;
+
+    for (const int degree : {3, 4, 5, 6}) {
+        const int multiplicity = degree - 2;
+        const int controlCount = degree + 1 + 2 * multiplicity;
+        for (const double curvatureSign : {-1.0, 1.0}) {
+            RS_SplineData data{degree, false};
+            const int curvatureControl = multiplicity + degree - 3;
+            for (int i = 0; i < controlCount; ++i) {
+                const double x = static_cast<double>(i);
+                const double y = curvatureSign * (i == curvatureControl ? -5.0 : .001 * x * x * x);
+                data.controlPoints.emplace_back(x, y);
+                data.weights.push_back(weightPattern[static_cast<std::size_t>(i) % weightPattern.size()]);
+            }
+            data.knotslist.assign(static_cast<std::size_t>(degree + 1), 0.0);
+            for (const double knot : {.25, .5})
+                data.knotslist.insert(data.knotslist.end(), static_cast<std::size_t>(multiplicity), knot);
+            data.knotslist.insert(data.knotslist.end(), static_cast<std::size_t>(degree + 1), 1.0);
+            const RS_Spline source{nullptr, data};
+            CAPTURE(degree, multiplicity, curvatureSign, curvatureControl);
+            REQUIRE(source.validate());
+
+            const auto leftCurvature = oracleSplineCurvatureLimit(data, SplineOracle{targetKnot}, true);
+            const auto rightCurvature = oracleSplineCurvatureLimit(data, SplineOracle{targetKnot}, false);
+            REQUIRE(leftCurvature);
+            REQUIRE(rightCurvature);
+            REQUIRE(abs(*leftCurvature - *rightCurvature) < SplineOracle{"1e-30"});
+            const double signedDistance = (2 / (*leftCurvature + *rightCurvature)).convert_to<double>();
+            REQUIRE(std::isfinite(signedDistance));
+
+            const SplineOracle before = oracleOffsetFactor(data, SplineOracle{targetKnot} - SplineOracle{"1e-7"}, derivativeStep,
+                                                           domainStart, domainEnd, SplineOracle{signedDistance});
+            const SplineOracle after = oracleOffsetFactor(data, SplineOracle{targetKnot} + SplineOracle{"1e-7"}, derivativeStep,
+                                                          domainStart, domainEnd, SplineOracle{signedDistance});
+            REQUIRE((before < 0) != (after < 0));
+
+            const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
+            const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+            REQUIRE(options);
+            LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+            const auto built = LC_CurveOffset::buildDirectBranches(
+                source,
+                LC_CurveOffset::makeSideRequest(signedDistance > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
+                                                std::abs(signedDistance)),
+                *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+            CAPTURE(built.status, diagnostics.failureStage, diagnostics.candidateParameters);
+            REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+            const auto candidate =
+                std::find_if(diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
+                             [](const LC_CurveOffsetCuspCandidateBox& box) { return std::abs(box.parameter - targetKnot) < 1e-8; });
+            REQUIRE(candidate != diagnostics.candidateBoxes.end());
+            CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket);
+            const auto expectedPoint =
+                oracleOffsetPoint(data, SplineOracle{targetKnot}, derivativeStep, domainStart, domainEnd, SplineOracle{signedDistance});
+            const RS_Vector expected{expectedPoint.first.convert_to<double>(), expectedPoint.second.convert_to<double>()};
+            double endpointError = std::numeric_limits<double>::infinity();
+            for (const auto& branch : built.branches) {
+                if (branch.cubicPieces.empty())
+                    continue;
+                if (branch.startEnd == LC_OffsetBranchEnd::Cusp)
+                    endpointError = std::min(endpointError, branch.cubicPieces.front().bezier.front().distanceTo(expected));
+                if (branch.endEnd == LC_OffsetBranchEnd::Cusp)
+                    endpointError = std::min(endpointError, branch.cubicPieces.back().bezier.back().distanceTo(expected));
+            }
+            CHECK(endpointError <= options->tolerance.requestedGeometry);
+
+            const req::Request generationRequest{token, req::GenerateSource{definition, {}}};
+            const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+            const auto& generated = native(generationReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            const auto generationWire = result::encode(generationReply, generationRequest);
+            REQUIRE(generationWire);
+            REQUIRE(result::decode(*generationWire, generationRequest));
+            RS_SplineData cache;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+            const req::Request validationRequest{token, req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validationRequest);
+            const auto& validated = native(validationReply, 8);
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validated.changed);
+            CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+        }
+    }
+}
+
 TEST_CASE("rational spline knot sign jump is not certified as a cusp",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][refusal]") {
     RS_SplineData data{6, false};
