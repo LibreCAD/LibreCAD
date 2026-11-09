@@ -965,6 +965,38 @@ TEST_CASE("offset worker op8 transports source cache validation requests",
     CHECK_FALSE(request::encode({token(), invalid}));
 }
 
+TEST_CASE("offset worker source codec preserves native spline degrees four through six",
+          "[lc-offsetcurve][worker-protocol][request][source-definition][spline]") {
+    for (std::size_t degree : {4u, 5u, 6u}) {
+        CAPTURE(degree);
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            data.controlPoints.emplace_back(4.0 * t, 2.0 * t * (1.0 - t));
+            data.weights.push_back(0.75 + 0.5 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+
+        LC_OffsetSourceGeometry source{data};
+        REQUIRE(source.isWellFormed());
+        const request::Request input{token(), request::GenerateSource{
+            LC_OffsetSourceDefinition{source, .05, .001, false}, runLimits()}};
+        const auto wire = encoded(input);
+        const auto decoded = request::decode(wire);
+        REQUIRE(decoded);
+        same(input, *decoded);
+        sameTree(wire, encoded(*decoded));
+
+        auto unsupported = data;
+        unsupported.degree = RS_Spline::MaxSupportedDegree + 1;
+        CHECK_FALSE(LC_OffsetSourceGeometry{unsupported}.isWellFormed());
+    }
+}
+
 TEST_CASE("offset worker CheckThrough owns raw values and bounds every membership allowance",
           "[lc-offsetcurve][worker-protocol][request][through]") {
     request::CheckThrough op{spline(), definition(), .125, point(), {}};

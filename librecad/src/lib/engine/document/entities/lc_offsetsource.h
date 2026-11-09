@@ -324,7 +324,8 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
                 return std::all_of(knots.begin(), knots.end(), [](double value) { return std::isfinite(value); }) &&
                        std::is_sorted(knots.begin(), knots.end());
             };
-            return degree >= 1 && degree <= 3 && data.controlPoints.size() >= degree + 1 &&
+            return degree >= 1 && degree <= RS_Spline::MaxSupportedDegree &&
+                   data.controlPoints.size() >= degree + 1 &&
                    data.controlPoints.size() <= MaximumSourceItems &&
                    data.knotslist.size() == data.controlPoints.size() + degree + 1 &&
                    data.knotslist.size() <= 2 * MaximumSourceItems &&
