@@ -28,7 +28,9 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <queue>
 #include <utility>
+#include <vector>
 
 #include "dxf_format.h"
 #include "lc_graphicviewport.h"
@@ -270,28 +272,84 @@ QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, con
     // The fold pairs dash with gap, so an odd list cannot draw.
     if (pattern.size() % 2 != 0)
         return {};
-    // Qt's stroker honours only the first 32 elements, so fold longer lists to
-    // that count without moving the period: the shortest dash+gap pair goes
-    // into the previous dash and the following gap. Deterministic, O(n^2) at
-    // worst, and reached only when the painter memo misses.
+    // Qt's stroker honours only the first 32 elements. Fold the shortest
+    // dash+gap pairs into their neighbours, keeping the first pair anchored so
+    // the DXF pattern phase does not rotate. A min-heap avoids quadratic scans.
     constexpr qsizetype qtDashElementLimit = 32;
-    while (pattern.size() > qtDashElementLimit) {
-        const qsizetype count = pattern.size();
-        qsizetype shortest = 0;
-        qreal shortestPair = pattern.at(0) + pattern.at(1);
-        for (qsizetype i = 2; i < count; i += 2) {
-            const qreal pair = pattern.at(i) + pattern.at(i + 1);
-            if (pair < shortestPair) {
-                shortestPair = pair;
-                shortest = i;
+    if (pattern.size() > qtDashElementLimit) {
+        struct DashPair {
+            qreal dash;
+            qreal gap;
+            std::size_t previous;
+            std::size_t following;
+            std::size_t revision;
+            bool alive;
+        };
+        struct Candidate {
+            qreal length;
+            std::size_t index;
+            std::size_t revision;
+        };
+        struct CandidateLater {
+            bool operator()(const Candidate& left, const Candidate& right) const {
+                if (left.length != right.length)
+                    return left.length > right.length;
+                return left.index > right.index;
             }
+        };
+
+        const std::size_t pairCount = static_cast<std::size_t>(pattern.size() / 2);
+        std::vector<DashPair> pairs;
+        pairs.reserve(pairCount);
+        for (std::size_t i = 0; i < pairCount; ++i) {
+            const qsizetype dashIndex = static_cast<qsizetype>(2 * i);
+            pairs.push_back({pattern.at(dashIndex), pattern.at(dashIndex + 1),
+                             (i + pairCount - 1) % pairCount, (i + 1) % pairCount, 0, true});
         }
-        const qsizetype gapIndex = shortest + 1;
-        const qsizetype previousDash = (shortest - 2 + count) % count;
-        const qsizetype followingGap = (gapIndex + 2) % count;
-        pattern[previousDash] += pattern.at(shortest);
-        pattern[followingGap] += pattern.at(gapIndex);
-        pattern.remove(shortest, 2);
+
+        std::priority_queue<Candidate, std::vector<Candidate>, CandidateLater> candidates;
+        auto queueCandidate = [&pairs, &candidates](const std::size_t index) {
+            if (index == 0 || !pairs[index].alive)
+                return;
+            const DashPair& pair = pairs[index];
+            candidates.push({pair.dash + pair.gap, index, pair.revision});
+        };
+        for (std::size_t i = 1; i < pairCount; ++i)
+            queueCandidate(i);
+
+        const std::size_t targetPairCount = static_cast<std::size_t>(qtDashElementLimit / 2);
+        std::size_t remaining = pairCount;
+        while (remaining > targetPairCount) {
+            const Candidate candidate = candidates.top();
+            candidates.pop();
+            DashPair& removed = pairs[candidate.index];
+            if (!removed.alive || removed.revision != candidate.revision)
+                continue;
+
+            const std::size_t previous = removed.previous;
+            const std::size_t following = removed.following;
+            pairs[previous].dash += removed.dash;
+            pairs[following].gap += removed.gap;
+            pairs[previous].following = following;
+            pairs[following].previous = previous;
+            removed.alive = false;
+            --remaining;
+
+            ++pairs[previous].revision;
+            ++pairs[following].revision;
+            queueCandidate(previous);
+            queueCandidate(following);
+        }
+
+        QVector<qreal> folded;
+        folded.reserve(static_cast<int>(qtDashElementLimit));
+        std::size_t index = 0;
+        do {
+            folded.push_back(pairs[index].dash);
+            folded.push_back(pairs[index].gap);
+            index = pairs[index].following;
+        } while (index != 0);
+        pattern.swap(folded);
     }
     // QPen requires strictly positive dash and gap lengths. A zero group 49
     // element is a dot; with the pen cap it becomes a point at this tiny length.
