@@ -62,8 +62,11 @@ metadata save/reopen/second-save coverage for the single-span, midpoint-knot,
 asymmetric nonuniform-knot, multiplicity-two, and selected asymmetric
 control/weight fixtures recorded in W506-W511. This is not arbitrary NURBS
 support: untested knot multiplicities/layouts, periodic high-degree offsets,
-large source counts, independent offset-error oracles, and external CAD remain
-open; wrapped degree-4/6 sources now have worker generation/cache-validation,
+large-source generation beyond protocol caps, independent offset-error
+oracles, and external CAD remain open. The source codec now enforces its
+decoder's array caps and the picker excludes unencodable spline candidates;
+this is a fail-closed bound, not proof of useful geometry at the maximum
+count. Wrapped degree-4/6 sources now have worker generation/cache-validation,
 Properties replacement, and staged five-lane DXF/DWG promotion coverage for
 the recorded periodic profiles. This does not qualify other periodic knot
 layouts or all high-degree geometry. An independent high-precision source
@@ -27238,12 +27241,12 @@ qualify asymmetric high-degree sources`).
 This is a pair of bounded profiles, not exhaustive asymmetric NURBS coverage.
 Further weight/control combinations, knot multiplicity sweeps, periodic
 high-degree sources, large span/count limits, independent offset-error oracles,
-and external CAD remain open. W542 first qualified the clamped single-span
-degree-4/6 fixtures in Properties replacement; W543 extends that UI coverage
+and external CAD remain open. W564 first qualified the clamped single-span
+degree-4/6 fixtures in Properties replacement; W565 extends that UI coverage
 to the midpoint-knot and asymmetric profile families represented in this
 receipt, without claiming every such spline is supported.
 
-## 542. Admit High-Degree Rational Sources in Properties Replacement (2026-11-09)
+## 564. Admit High-Degree Rational Sources in Properties Replacement (2026-11-09)
 
 Updated the Properties source-picker regression matrix to include clamped,
 single-span rational degree-4 and degree-6 source splines. Both appear in the
@@ -27258,12 +27261,12 @@ and source replacement without filter side effects; `librecad_tests` builds.
 Test commit `3118abf01` (`test(offset): admit high-degree picker sources`).
 
 This receipt originally qualified only clamped single-span rational degree-4
-and degree-6 fixtures in Properties replacement. W543 adds representative
+and degree-6 fixtures in Properties replacement. W565 adds representative
 midpoint-knot and asymmetric profiles; periodic high-degree splines, other knot
 layouts/multiplicities, broader geometry accuracy, persistence of the promoted
 replacement, and external CAD remain open.
 
-## 543. Replace Multi-span and Asymmetric High-degree Sources in Properties (2026-11-09)
+## 565. Replace Multi-span and Asymmetric High-degree Sources in Properties (2026-11-09)
 
 Extended the worker-backed Properties replacement matrix with degree-4 and
 degree-6 rational splines containing a midpoint interior knot and with
@@ -27284,7 +27287,7 @@ asymmetric fixtures. It does not qualify every nonuniform knot vector,
 repeated-knot multiplicity, periodic high-degree source, independent offset
 accuracy, saved/reopened promoted replacement, or external CAD behavior.
 
-## 544. Generate Periodic Degree-4 and Degree-6 Sources in the Worker (2026-11-09)
+## 566. Generate Periodic Degree-4 and Degree-6 Sources in the Worker (2026-11-09)
 
 Added validated wrapped-closed degree-4 and degree-6 spline fixtures with
 unit weights and bounded control/knot counts. Each source generates one
@@ -27300,18 +27303,18 @@ high-degree splines`).
 This establishes direct periodic degree-4/6 worker generation and cache
 validation for the recorded unit-weight profiles. Periodic high-degree
 DXF/DWG carrier promotion and source metadata save/reopen are separately
-qualified for the tested matrix by W546. Nonuniform/repeated periodic knots,
-independent geometry accuracy, and external CAD remain open. W545 adds
+qualified for the tested matrix by W568. Nonuniform/repeated periodic knots,
+independent geometry accuracy, and external CAD remain open. W567 adds
 Properties replacement for the same bounded periodic profiles.
 
-## 545. Replace Periodic Degree-4 and Degree-6 Sources in Properties (2026-11-09)
+## 567. Replace Periodic Degree-4 and Degree-6 Sources in Properties (2026-11-09)
 
 Extended the Spline-family replacement matrix with wrapped-closed degree-4 and
 degree-6 sources generated from validated clamped profiles. Both types pass
 worker-backed replacement, source rediscovery when the widget is reopened,
 signed-side changes, and subsequent distance edits. This joins source picking
 and interactive editing to the worker generation/cache validation established
-by W544.
+by W566.
 
 Validation: focused source-family replacement regression passes 8,103
 assertions/1 case; the `librecad_tests` Release target builds; `git diff
@@ -27319,11 +27322,11 @@ assertions/1 case; the `librecad_tests` Release target builds; `git diff
 high-degree sources`).
 
 This qualifies only the recorded degree-4/6 wrapped, unit-weight profiles in
-Properties replacement. W546 separately qualifies carrier promotion and
+Properties replacement. W568 separately qualifies carrier promotion and
 source metadata save/reopen for the periodic matrix. Nonuniform/repeated
 periodic knots, independent geometry accuracy, and external CAD remain open.
 
-## 546. Promote Periodic Degree-4 and Degree-6 Sources Across File Lanes (2026-11-09)
+## 568. Promote Periodic Degree-4 and Degree-6 Sources Across File Lanes (2026-11-09)
 
 Expanded the staged periodic source-import matrix from degrees 2/3 to 2/3/4/6.
 The high-degree cases use two bounded control-count layouts and test unit and
@@ -27343,11 +27346,11 @@ This qualifies only the tested generated wrapped periodic profiles, weight
 sets, conditions, scales, distances, and file lanes. It does not cover
 arbitrary periodic knot vectors, repeated/nonuniform periodic knots, every
 high-degree rational profile, periodic-specific independent offset-error
-oracles outside the recorded cases, or external CAD acceptance. W547 adds an
-independent oracle for bounded clamped single-span rational degrees 4-6; W549
+oracles outside the recorded cases, or external CAD acceptance. W569 adds an
+independent oracle for bounded clamped single-span rational degrees 4-6; W570
 extends it to the representative knot and periodic profiles.
 
-## 547. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
+## 569. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
 
 Extended the independent homogeneous de Boor test evaluator to the supported
 degree bound instead of its former cubic-only scratch capacity. For clamped
@@ -27364,11 +27367,11 @@ Test commit `c3989de05` (`test(offset): check high-degree cache against spline
 oracle`).
 
 This qualifies an independent offset-error check only for the recorded
-clamped single-span profiles. W549 records additional knot-inserted,
+clamped single-span profiles. W570 records additional knot-inserted,
 asymmetric, repeated-knot, and wrapped-periodic profiles; untested knot
 layouts, larger source-count limits, and external CAD remain open.
 
-## 549. Oracle-check High-degree Knot and Periodic Profiles (2026-11-09)
+## 570. Oracle-check High-degree Knot and Periodic Profiles (2026-11-09)
 
 Applied the 256-bit homogeneous de Boor source evaluator to the already
 admitted degree-4/6 midpoint-knot, asymmetric nonuniform-knot, repeated-knot,
@@ -27386,3 +27389,24 @@ This is a bounded sampled accuracy check, not a proof over every parameter or
 all rational knot vectors. Untested knot layouts and multiplicities, broader
 weight/control distributions, larger source counts, and external CAD remain
 open.
+
+## 571. Enforce Worker Source Caps in the Codec and Properties Picker (2026-11-09)
+
+Aligned source-geometry encoding with the worker decoder's bounded arrays:
+SPLINE controls/weights, fit points, saved knots, and `LC_SplinePoints` arrays
+are rejected above their respective protocol caps. Added a no-allocation
+`isSourceGeometryEncodable` predicate so the Properties source picker excludes
+captured but unencodable candidates before starting worker-backed replacement.
+The source model can still represent larger arrays for other use; they are not
+advertised as editable offset sources through this worker contract.
+
+Validation: exact-cap source encoding/decoding and over-cap refusal pass in
+the complete worker-request test binary (603,526 assertions/18 cases).
+Three focused Properties picker tests pass 9,208 assertions; `librecad_tests`
+and the request-test target build; `git diff --check` passes. Implementation
+commit `21423e562` (`fix(offset): align source eligibility with worker bounds`).
+
+This closes codec/picker consistency for the enumerated arrays, not generation
+performance or geometry quality at maximum counts. High-count worker
+generation, oversized polyline behavior, and broader source-count stress
+remain open.
