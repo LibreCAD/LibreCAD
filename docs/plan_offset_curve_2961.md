@@ -29744,13 +29744,13 @@ these rows do not imply every parameter/domain is supported):
 
 | Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
 | --- | --- | --- | --- |
-| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed-line capture refusal; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Near-ULP and non-finite source boundaries |
+| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Other sub-ULP/coordinate-conditioning boundaries and broad non-finite payload refusal |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; typed worker output; five file lanes | Sweep seam, reversed/full-sweep limits and boundary matrix |
-| Circle | Finite nonzero-radius closed circle | Direct closed conic behavior; typed worker output; five file lanes | Inner collapse/zero-radius and large/small scale matrix |
+| Circle | Finite nonzero-radius closed circle | Direct near-collapse and exact-collapse semantics; exact-normal scale/translation matrix at 1e-4/1/1e4; small and large-origin circle worker/cache, Produce, and five-format reopen fixtures | Zero-radius refusal, still-smaller/larger scales, broader origin/conditioning matrix, independent geometry comparison for scaled persisted caches |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
-| Parabola | Three-control typed `LC_ParabolaData`, including endpoint/tangent construction | Distinct typed identity, direct normal-distance checks, selected affine/scale/near-straight fixtures, worker and five file lanes | General coefficient/endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
+| Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks for all valid four-point candidates in one sample and endpoint tangent slopes +/-1e-4..1e-8; one four-point candidate and the 1e-8 near-parallel profile through worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct branch/curvature tests; typed worker/cache/Produce and five file lanes | Branch orientation, vertex/seam boundaries, extreme interval/scale and persistence variants |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct topology/offset tests; closed linear and closed mixed-bulge typed UI replacement; worker/cache/Produce and five file lanes | Segment-count/topology limits, arc sweep edge cases, boundary picks and wider self-intersection/collapse oracles |
 
@@ -30519,3 +30519,29 @@ focused worker-family matrix passes 93,845 assertions/1 case; the full
 `git diff --check` passes. These two scales do not close still-smaller/larger
 scales, arbitrary circle positions, ODA/AutoCAD, visible GUI, cross-platform/
 ASan, or exact-head CI.
+
+## 695. Reconcile Source-picker Scope and Capability Matrix (2026-11-09)
+
+Reconfirmed the Properties workflow contract for changing source type before
+the drawing pick: the existing family selector covers every modeled source
+kind, including the distinct parabola type, and filters eligible live drawing
+entities without changing the current source, generated cache, or source
+highlight. Picking a valid candidate atomically installs its actual typed
+geometry; invalid/stale candidates and cancellation leave the existing source
+unchanged. This behavior is already implemented and covered by the automated
+Properties regressions, so no duplicate picker, source-type control, or
+parabola-only UI branch is planned. The remaining “all supported types” work
+is family/variant geometry, worker/cache, and applicable DXF/DWG qualification,
+tracked separately in the capability matrix above.
+
+Reconciled the matrix against the latest validation receipts: line coverage now
+distinguishes the accepted one-ULP capture from direct-generation refusal at
+the world-coordinate precision floor; circle coverage records the tested
+near-collapse semantics and representative small/large translated profiles;
+parabola coverage records `From4Points`, endpoint-tangent conditioning and
+refusals, plus the specific worker/persistence profiles. These receipts close
+only the exact tested cases. Other parameterizations, visible GUI checks,
+external CAD acceptance, cross-platform/ASan, and exact-head CI remain open.
+
+Validation: documentation consistency and whitespace checked with
+`git diff --check`; no code changed in this checkpoint.
