@@ -28298,3 +28298,19 @@ lanes`). This qualifies the recorded knot positions and fixtures only, not
 arbitrary knot layouts or rational spline variants. Independent CAD visual
 acceptance, exact-head CI, other spline profiles, and remaining source-family
 variant coverage remain open.
+
+## 610. Independently Parse the Expanded C2 Knot DWGs (2026-11-09)
+
+Preserved the product-writer outputs from W609 and ran every one through
+LibreDWG `dwgread` 0.14 in JSON mode. The set comprises all 30 tested
+degree/knot/orientation fixtures in both R2000 and R2018 DWG. Structural
+assertions require exactly one `SPLINE` entity, canonical degree 3, non-empty
+control points, and EED markers `LC_OFFSET_CURVE` and `TYPED_SOURCE` in every
+decoded file. This is independent-reader parse/structure evidence only; it is
+not ODA/AutoCAD validation or rendered visual equivalence.
+
+Validation: host product-writer round-trip passes 42,265 assertions/1 case
+with DWG preservation enabled; LibreDWG JSON parsing and structure assertions
+pass for all 60 DWGs. No production code changed. C2 knot persistence for other
+DWG releases, other spline profiles, broader source-family variants,
+independent-CAD visual acceptance, visible GUI, and exact-head CI remain open.
