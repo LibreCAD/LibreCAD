@@ -1550,6 +1550,57 @@ TEST_CASE("offset worker generates degree-four and degree-six splines with a dis
     }
 }
 
+TEST_CASE("offset worker generates high-degree splines with asymmetric nonuniform knots",
+          "[lc-offsetcurve][worker-kernel][source-generation][spline][high-degree][knots]") {
+    for (std::size_t degree : {4u, 6u}) {
+        CAPTURE(degree);
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree + 2; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree + 2);
+            data.controlPoints.emplace_back(4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t);
+            data.weights.push_back(0.75 + 0.5 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), {.2, .7});
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{data}, .01, 2e-3, false};
+        REQUIRE(definition.isWellFormed());
+
+        RS_Spline source{nullptr, data};
+        REQUIRE(source.validate());
+        const auto breaks = source.getBreakParameters();
+        REQUIRE(breaks.size() == 4);
+        CHECK(breaks[1] == .2);
+        CHECK(breaks[2] == .7);
+
+        const req::Request generation{token, req::GenerateSource{definition, {}}};
+        const auto generatedReply = LC_OffsetWorkerKernel::run(generation);
+        const auto& generated = native(generatedReply, 7);
+        INFO("degree=" << degree << " engine="
+             << (generated.engineStatus ? int(*generated.engineStatus) : -1)
+             << " ordinary=" << int(generated.ordinaryStatus)
+             << " refusal=" << int(generated.refusal));
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(generated.ordinary.size() == 1);
+        REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+        const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+        CHECK((cache.degree == 1 || cache.degree == 3));
+
+        const req::Request validation{token,
+            req::ValidateSourceCache{cache, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validation);
+        const auto& validated = native(validationReply, 8);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+        CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+    }
+}
+
 TEST_CASE("offset worker op8 accepts only the exact canonical source cache",
           "[lc-offsetcurve][worker-kernel][source-cache]") {
     const LC_OffsetSourceDefinition definition{
