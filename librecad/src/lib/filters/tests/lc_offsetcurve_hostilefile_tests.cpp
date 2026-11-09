@@ -7048,9 +7048,11 @@ TEST_CASE("C2 rational knot cusps through degree six round-trip through native f
     LC_OffsetWorkerClient generationWorker;
     qint64 nextRequestId = 1;
     const std::array<double, 7> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99};
-    const std::array<std::pair<double, double>, 10> knotAndCurvatureCases{
-        {{.23, -1.0}, {.25, -1.0}, {.37, -1.0}, {.5, -1.0}, {.75, -1.0},
-         {.23, 1.0},  {.25, 1.0},  {.37, 1.0},  {.5, 1.0},  {.75, 1.0}}};
+    const std::array<std::pair<double, double>, 14> knotAndCurvatureCases{
+        {{.125, -1.0}, {.23, -1.0},  {.25, -1.0},  {.37, -1.0},
+         {.5, -1.0},   {.625, -1.0}, {.75, -1.0},  {.125, 1.0},
+         {.23, 1.0},   {.25, 1.0},   {.37, 1.0},   {.5, 1.0},
+         {.625, 1.0},  {.75, 1.0}}};
     for (const int degree : {3, 4, 5, 6}) {
       for (const auto& [knot, curvatureSign] : knotAndCurvatureCases) {
         CAPTURE(degree, knot, curvatureSign);
