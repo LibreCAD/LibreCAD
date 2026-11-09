@@ -30252,3 +30252,29 @@ picker and worker-edit cases above pass.
    build and remain open until results are available.
 
 Do not claim full external acceptance until both remaining gates have evidence.
+
+## 682. Reaffirm Source-widget Type Switching and Full-family Selection (2026-11-09)
+
+The latest request confirms the existing source-widget contract rather than
+introducing another picker or a new geometry family. When choosing/replacing a
+source curve, the widget must let the user change the requested curve type;
+that choice filters eligible drawing candidates and must not coerce the
+currently stored source. The supported choices are exactly
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola remains its
+own choice and typed identity even though its implementation derives from
+`LC_SplinePoints`.
+
+Current-code reconciliation: the Properties source widget is populated from
+`SupportedKinds`; its family-switch/replacement tests cover the nine choices,
+including source-highlight retention while changing filters and distinct
+parabola behavior (`Native source picker replaces every modeled source family
+without filter side effects`, plus the focused highlight and parabola cases).
+The interactive Update from Source command is separately implemented and
+covered in section 681. No additional widget, selector, parabola-only branch,
+or source-family implementation is required for this reaffirmation.
+
+Validation gate: retain the existing focused source-widget/action tests and the
+section 681 exact-build visible GUI gate. The automated tests establish the
+family/filter contract; they do not close the still-open visible interaction,
+external CAD, cross-platform/ASan, or exact-head CI gates listed above.
