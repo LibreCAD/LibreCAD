@@ -63,15 +63,15 @@ asymmetric nonuniform-knot, multiplicity-two, and selected asymmetric
 control/weight fixtures recorded in W506-W511. This is not arbitrary NURBS
 support: untested knot multiplicities/layouts, periodic high-degree offsets,
 large source counts, independent offset-error oracles, and external CAD remain
-open; wrapped degree-4/6 sources now have worker generation/cache-validation
-coverage and Properties replacement coverage for bounded periodic fixtures,
-but lack the broader format qualification needed to close periodic support.
-Properties picker/replacement now has focused degree-4/6 coverage for the
-tested clamped single-span, midpoint-knot, asymmetric rational, and wrapped
-periodic profiles; this does not qualify other knot layouts or all
-high-degree geometry. Generated editable offset caches are still constrained
-to the validated line/cubic-Bezier representation; do not widen cache
-validation merely because source spline degree increased.
+open; wrapped degree-4/6 sources now have worker generation/cache-validation,
+Properties replacement, and staged five-lane DXF/DWG promotion coverage for
+the recorded periodic profiles. This does not qualify other periodic knot
+layouts or all high-degree geometry. Properties picker/replacement now has
+focused degree-4/6 coverage for the tested clamped single-span, midpoint-knot,
+asymmetric rational, and wrapped periodic profiles. Generated editable offset
+caches are still constrained to the validated line/cubic-Bezier
+representation; do not widen cache validation merely because source spline
+degree increased.
 
 Current implementation order for the remaining “all supported types” work:
 
@@ -27294,12 +27294,12 @@ Validation: focused worker-kernel selector `[high-degree][periodic]` passes
 --check` passes. Test commit `60bba6ad4` (`test(offset): generate periodic
 high-degree splines`).
 
-This establishes only direct periodic degree-4/6 worker generation and cache
-validation for the recorded unit-weight profiles. Periodic high-degree DXF/DWG
-carrier promotion, source metadata save/reopen, nonuniform/repeated periodic
-knots, rational periodic variants, independent geometry accuracy, and external
-CAD remain open. W515 adds Properties replacement for the same bounded
-periodic profiles.
+This establishes direct periodic degree-4/6 worker generation and cache
+validation for the recorded unit-weight profiles. Periodic high-degree
+DXF/DWG carrier promotion and source metadata save/reopen are separately
+qualified for the tested matrix by W516. Nonuniform/repeated periodic knots,
+independent geometry accuracy, and external CAD remain open. W515 adds
+Properties replacement for the same bounded periodic profiles.
 
 ## 515. Replace Periodic Degree-4 and Degree-6 Sources in Properties (2026-11-09)
 
@@ -27316,6 +27316,28 @@ assertions/1 case; the `librecad_tests` Release target builds; `git diff
 high-degree sources`).
 
 This qualifies only the recorded degree-4/6 wrapped, unit-weight profiles in
-Properties replacement. Periodic high-degree DXF/DWG carrier promotion,
-source metadata save/reopen, rational periodic variants, nonuniform/repeated
+Properties replacement. W516 separately qualifies carrier promotion and
+source metadata save/reopen for the periodic matrix. Nonuniform/repeated
 periodic knots, independent geometry accuracy, and external CAD remain open.
+
+## 516. Promote Periodic Degree-4 and Degree-6 Sources Across File Lanes (2026-11-09)
+
+Expanded the staged periodic source-import matrix from degrees 2/3 to 2/3/4/6.
+The high-degree cases use two bounded control-count layouts and test unit and
+rational weights, three scale/translation conditions, two normalized offset
+magnitudes, and both signed sides. Each generated carrier is saved and
+reopened through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG; import promotes it
+only after worker validation. Assertions verify the typed source definition,
+cache geometry, and fallback behavior where a single-spline cache is not
+representable.
+
+Validation: focused staged-import matrix passes 184,805 assertions/1 case
+across the five format lanes; the `librecad_tests` Release target builds;
+`git diff --check` passes. Test commit `75f1eb209` (`test(offset): promote
+periodic high-degree splines`).
+
+This qualifies only the tested generated wrapped periodic profiles, weight
+sets, conditions, scales, distances, and file lanes. It does not cover
+arbitrary periodic knot vectors, repeated/nonuniform periodic knots, every
+high-degree rational profile, independent offset-error oracles, or external
+CAD acceptance.
