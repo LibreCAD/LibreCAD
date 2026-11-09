@@ -29575,8 +29575,13 @@ tangent metadata. Cached `getMin()/getMax()` is not treated as defining spline
 geometry: two fixtures produced different cached bounds after reopen despite
 matching defining spline data, endpoints, references, and length.
 
-Validation: focused all-family worker test passes 34,987 assertions; complete
-`librecad_offset_worker_client_tests` passes 42,246 assertions/21 cases.
+Before persistence, the test now asserts the worker-produced entity class for
+each source family: line, arc, circle, and polyline retain their concrete
+entity classes; ellipse, spline, spline-points, parabola, and bounded hyperbola
+produce SPLINE entities for these captured fixtures.
+
+Validation: focused all-family worker test passes 35,423 assertions; complete
+`librecad_offset_worker_client_tests` passes 42,176 assertions/21 cases.
 LibreDWG `dwgread -O JSON` independently parses both generated DWGs and reports
 the same model-space entity inventory for AC1015 and AC1032: one ARC, one
 CIRCLE, one LINE, three LWPOLYLINEs, and ten SPLINEs. Reproduce by running the

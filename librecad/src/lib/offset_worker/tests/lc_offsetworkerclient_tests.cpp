@@ -845,8 +845,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         CHECK(prepared.outcome().sources.front().complete());
         CHECK(Req::Values::encodeSourceGeometry(sources[i]) == sourceBefore);
         REQUIRE_FALSE(batch.entitiesToAdd.empty());
+        RS2::EntityType expectedOutputType = RS2::EntitySpline;
+        switch (sources[i].kind()) {
+        case LC_OffsetSourceGeometry::Kind::Line: expectedOutputType = RS2::EntityLine; break;
+        case LC_OffsetSourceGeometry::Kind::Arc: expectedOutputType = RS2::EntityArc; break;
+        case LC_OffsetSourceGeometry::Kind::Circle: expectedOutputType = RS2::EntityCircle; break;
+        case LC_OffsetSourceGeometry::Kind::Polyline: expectedOutputType = RS2::EntityPolyline; break;
+        default: break;
+        }
         for (const RS_Entity* generated : batch.entitiesToAdd) {
             REQUIRE(generated);
+            CAPTURE(i, sources[i].kind(), expectedOutputType, generated->rtti());
+            CHECK(generated->rtti() == expectedOutputType);
             const auto geometry = persistenceGeometry(*generated, i);
             std::unique_ptr<RS_Entity> copy{generated->clone()};
             REQUIRE(copy);
