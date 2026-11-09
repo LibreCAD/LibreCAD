@@ -30501,3 +30501,20 @@ assertions/21 cases under the 45-second suite watchdog. Section 692's direct
 oracle passes 282 assertions/1 case; `git diff --check` passes. Other tangent
 conditionings, visible GUI, ODA/AutoCAD, cross-platform/ASan, and exact-head CI
 remain open.
+
+## 694. Qualify Native-circle Scale Conditioning (2026-11-09)
+
+Added an analytic exact-normal oracle for native `RS_Circle` offsets at scales
+`1e-4`, `1`, and `1e4`, with zero and `1e6 * scale` center translations and
+both signed sides. A representative small circle (radius `2e-4`, offset
+`2e-5`) also passes the real-worker operation-7/operation-8 path, typed source
+replacement, Produce, and all five internal DXF/DWG reopen lanes. LibreDWG
+successfully parses the generated DWGs; this does not claim independent
+coordinate-by-coordinate validation of the small circle cache.
+
+Validation: direct exact-normal matrix passes 31,542 assertions/1 case; the
+focused worker-family matrix passes 92,693 assertions/1 case; the full
+`[lc-offsetcurve][worker-client]` suite passes 99,718 assertions/21 cases.
+`git diff --check` passes. Only the small-scale circle has worker/file evidence;
+large-scale worker persistence, smaller/larger scales, ODA/AutoCAD, visible GUI,
+cross-platform/ASan, and exact-head CI remain open.

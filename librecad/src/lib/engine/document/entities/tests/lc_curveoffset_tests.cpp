@@ -866,6 +866,37 @@ TEST_CASE("Native circles preserve exact normals near inner collapse",
     CHECK(maxDeviation(beyondCollapse, exactCircle) <= beyondOptions.tolerance.requestedGeometry);
 }
 
+TEST_CASE("Native circle offsets preserve exact normals across scale and translation",
+          "[curve-offset][direct][circle][oracle][scale]") {
+    for (const double scale : {1e-4, 1.0, 1e4}) {
+        for (const double translationRatio : {0.0, 1e6}) {
+            const RS_Vector center{translationRatio * scale, -translationRatio * scale};
+            const double radius = 2.0 * scale;
+            const double distance = 0.2 * scale;
+            const RS_Circle source{nullptr, RS_CircleData{center, radius}};
+            CAPTURE(scale, translationRatio);
+            const EvalFn exactCircle = [center, radius](const double parameter,
+                LC_CurveEvaluationSide, LC_CurveJet& jet) {
+                const double angle = M_PI_4 + parameter;
+                jet.point = center + RS_Vector{std::cos(angle), std::sin(angle)} * radius;
+                jet.first = RS_Vector{-std::sin(angle), std::cos(angle)} * radius;
+                jet.second = RS_Vector{-std::cos(angle), -std::sin(angle)} * radius;
+                return true;
+            };
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            REQUIRE(options.tolerance.requestedGeometry > 0.0);
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                CAPTURE(side);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(maxDeviation(result, exactCircle) <= options.tolerance.requestedGeometry);
+            }
+        }
+    }
+}
+
 TEST_CASE("Reversed circular arcs follow exact offset normals",
           "[curve-offset][direct][arc][oracle]") {
     const RS_ArcData data{{3.0, -4.0}, 4.0, 0.25, 1.5, true};
