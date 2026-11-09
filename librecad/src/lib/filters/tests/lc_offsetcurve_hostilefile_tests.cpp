@@ -7286,12 +7286,13 @@ TEST_CASE("Two-knot C2 rational splines preserve typed source through native fil
     const std::array<double, 11> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98};
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
+    const double targetKnot = GENERATE(.5, .65);
 
     for (const int degree : {3, 4, 5, 6}) {
         const int multiplicity = degree - 2;
         const int controlCount = degree + 1 + 2 * multiplicity;
         for (const double curvatureSign : {-1.0, 1.0}) {
-            CAPTURE(degree, multiplicity, curvatureSign);
+            CAPTURE(degree, multiplicity, curvatureSign, targetKnot);
             RS_SplineData sourceData{degree, false};
             const int curvatureControl = multiplicity + degree - 3;
             for (int i = 0; i < controlCount; ++i) {
@@ -7301,15 +7302,15 @@ TEST_CASE("Two-knot C2 rational splines preserve typed source through native fil
                 sourceData.weights.push_back(weightPattern[static_cast<std::size_t>(i) % weightPattern.size()]);
             }
             sourceData.knotslist.assign(static_cast<std::size_t>(degree + 1), 0.0);
-            for (const double knot : {.25, .5})
+            for (const double knot : {.25, targetKnot})
                 sourceData.knotslist.insert(sourceData.knotslist.end(), static_cast<std::size_t>(multiplicity), knot);
             sourceData.knotslist.insert(sourceData.knotslist.end(), static_cast<std::size_t>(degree + 1), 1.0);
             RS_Spline sourceCheck{nullptr, sourceData};
             REQUIRE(sourceCheck.validate());
             LC_CurveJet leftJet;
             LC_CurveJet rightJet;
-            REQUIRE(sourceCheck.tryEvaluateJet(.5, LC_CurveEvaluationSide::Left, leftJet));
-            REQUIRE(sourceCheck.tryEvaluateJet(.5, LC_CurveEvaluationSide::Right, rightJet));
+            REQUIRE(sourceCheck.tryEvaluateJet(targetKnot, LC_CurveEvaluationSide::Left, leftJet));
+            REQUIRE(sourceCheck.tryEvaluateJet(targetKnot, LC_CurveEvaluationSide::Right, rightJet));
             const auto curvature = [](const LC_CurveJet& jet) {
                 const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
                 return (jet.first.x * jet.second.y - jet.first.y * jet.second.x) / (speedSquared * std::sqrt(speedSquared));
@@ -7377,7 +7378,8 @@ TEST_CASE("Two-knot C2 rational splines preserve typed source through native fil
                 raw.nknots = static_cast<std::int32_t>(raw.knotslist.size());
                 raw.nfit = 0;
 
-                const std::string fixtureName = "degree-" + std::to_string(degree) + "-" + (curvatureSign < 0 ? "negative-" : "positive-");
+                const std::string fixtureName = "degree-" + std::to_string(degree) + "-knot-" + (targetKnot < .6 ? "50-" : "65-") +
+                    (curvatureSign < 0 ? "negative-" : "positive-");
                 const auto input = directory.file(fixtureName + fileFormat.suffix);
 #ifdef DWGSUPPORT
                 if (fileFormat.dwg)
