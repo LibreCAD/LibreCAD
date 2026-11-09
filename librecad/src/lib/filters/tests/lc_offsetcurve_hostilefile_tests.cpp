@@ -8225,13 +8225,15 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         std::size_t multiplicity;
         double secondInsertion{};
     };
-    const std::array<Fixture, 20> fixtures{{
+    const std::array<Fixture, 24> fixtures{{
         {0.25, 0.25, 1}, {0.25, 0.5, 1}, {0.25, 2.0, 1}, {0.25, 4.0, 1},
         {0.5, 0.25, 1}, {0.5, 0.5, 1}, {0.5, 2.0, 1}, {0.5, 4.0, 1},
         {0.25, 0.25, 2}, {0.25, 0.5, 2}, {0.25, 2.0, 2}, {0.25, 4.0, 2},
         {0.5, 0.25, 2}, {0.5, 0.5, 2}, {0.5, 2.0, 2}, {0.5, 4.0, 2},
         {0.25, 0.5, 1, 0.75}, {0.25, 2.0, 1, 0.75},
-        {0.75, 0.5, 1, 0.25}, {0.75, 2.0, 1, 0.25}}};
+        {0.75, 0.5, 1, 0.25}, {0.75, 2.0, 1, 0.25},
+        {0.125, 0.25, 1, 0.625}, {0.125, 4.0, 1, 0.625},
+        {0.2, 0.25, 1, 0.8}, {0.2, 4.0, 1, 0.8}}};
     const auto insertKnot = [](RS_SplineData& data, double knot) {
         struct HomogeneousPoint {
             double x;
