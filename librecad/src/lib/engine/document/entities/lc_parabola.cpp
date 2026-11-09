@@ -40,10 +40,11 @@ LC_SplinePointsData convert2SplineData(const LC_ParabolaData &parabolaData) {
   splineData.controlPoints = {parabolaData.m_controlPoints.cbegin(),
                               parabolaData.m_controlPoints.cend()};
   // spline points are probably not used
-  RS_Vector sp1 = (parabolaData.m_controlPoints.front() +
-                   parabolaData.m_controlPoints.back()) *
-                      0.25 +
-                  parabolaData.m_controlPoints.at(1) * 0.5;
+  const RS_Vector& first = parabolaData.m_controlPoints.front();
+  const RS_Vector& control = parabolaData.m_controlPoints.at(1);
+  const RS_Vector& last = parabolaData.m_controlPoints.back();
+  const RS_Vector chordMidpoint = first + (last - first) * 0.5;
+  const RS_Vector sp1 = chordMidpoint + (control - chordMidpoint) * 0.5;
   splineData.splinePoints = {parabolaData.m_controlPoints.front(), sp1,
                              parabolaData.m_controlPoints.back()};
   splineData.useControlPoints = true;

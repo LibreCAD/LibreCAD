@@ -226,6 +226,34 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     CHECK_FALSE(definition.isWellFormed());
 }
 
+TEST_CASE("Large translated parabola remains an eligible typed source",
+          "[lc-offsetcurve][source][parabola][precision]") {
+    const double base = 1e308;
+    const double step = std::nextafter(base, std::numeric_limits<double>::infinity()) - base;
+    const LC_Parabola parabola{nullptr, LC_ParabolaData{{
+        RS_Vector{base, base},
+        RS_Vector{base + 2.0 * step, base + step},
+        RS_Vector{base + 4.0 * step, base}}}};
+
+    REQUIRE(parabola.getData().isValid());
+    CHECK(std::isfinite(parabola.getData().m_vertex.x));
+    CHECK(std::isfinite(parabola.getData().m_focus.x));
+    const auto& splinePoints = static_cast<const LC_SplinePoints&>(parabola).getData().splinePoints;
+    REQUIRE(splinePoints.size() == 3);
+    CHECK(LC_OffsetSourceDetail::finite(splinePoints[1]));
+    const auto source = LC_OffsetSourceGeometry::capture(parabola);
+    REQUIRE(source);
+    CHECK(source->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+    auto restoredEntity = source->makeEntity();
+    REQUIRE(restoredEntity);
+    const auto* restored = dynamic_cast<const LC_Parabola*>(restoredEntity.get());
+    REQUIRE(restored);
+    const auto& restoredSplinePoints =
+        static_cast<const LC_SplinePoints&>(*restored).getData().splinePoints;
+    REQUIRE(restoredSplinePoints.size() == 3);
+    CHECK(LC_OffsetSourceDetail::finite(restoredSplinePoints[1]));
+}
+
 TEST_CASE("Offset source capture rejects lossy polyline preview projections",
           "[lc-offsetcurve][source][polyline][provenance]") {
     const auto makePolyline = [] {
