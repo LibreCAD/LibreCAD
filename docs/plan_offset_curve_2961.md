@@ -26809,3 +26809,28 @@ these contracts.
 No production edit is required by this reaffirmation. It closes no additional
 family/variant gate beyond the already recorded UI completion; remaining
 geometry and persistence gaps stay open under their owning roadmap sections.
+
+## 497. Import Knot-inserted Rational Quadratic Sources (2026-11-08)
+
+The worker-kernel oracle already qualifies single-knot insertions of a
+symmetric rational quadratic at `u=0.25` and `u=0.5`, with middle weights
+`0.5` and `2.0`. Before this slice those layouts were not represented in the
+real DXF/DWG staged-import promotion matrix.
+
+Added a product-level regression that reconstructs each exact insertion from
+the original single-span homogeneous control net, compares source positions
+at representative parameters, and checks worker operation-7 cache generation
+against direct materialization. It writes that cache with the tagged source
+metadata and stages operation-8 import for both offset signs in R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG. Every lane must promote to `LC_OffsetCurve`
+without downgrade and preserve both the tagged spline source and exact cache
+fingerprint.
+
+Release validation: focused case, 4,632 assertions/1 case; full
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` union,
+225,047 assertions/11 cases; `librecad_tests` rebuild and `git diff --check`
+pass. Product commit `a60f0c848` (`test(offset): import knot-inserted
+rational sources`). This qualifies two insertion locations, two positive
+middle weights, one scale, one small offset magnitude, and the listed file
+lanes. Arbitrary knots/multiplicities, broader weight/scale/distance matrices,
+periodic tangencies, external CAD, visible GUI, and exact-head CI remain open.
