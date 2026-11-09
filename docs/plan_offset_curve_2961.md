@@ -28355,3 +28355,26 @@ C2 knot matrix to degree six`). This qualifies only the tested degree/knot/
 orientation and existing rational fixture profiles. Product-writer persistence
 for degree six, other knot layouts and multiplicities, broader spline variants,
 exact-head CI, visible GUI, and independent-CAD acceptance remain open.
+
+## 613. Persist Degree-six C2 Knot Caches Across Native File Lanes (2026-11-09)
+
+Extended W609's product-writer matrix to include degree 6, preserving all five
+tested knot positions and both curvature orientations. The test now covers 40
+source fixtures (degrees 3/4/5/6) through five lanes: binary R14/R2000/R2018
+DXF and R2000/R2018 DWG, for 200 fixture/lane combinations. Every lane checks
+certified cusp ownership, operation-7 worker generation, staged promotion,
+writer output, second staged import, typed source-definition equality, and
+exact generated-cache fingerprint preservation. DWG output names remain
+unique by degree, knot position, and orientation.
+
+Validation: the focused Release product-writer test passes 65,146
+assertions/1 case; a second run with the DWG-preservation hook enabled passes
+64,787 assertions/1 case and retains all 80 DWG outputs. LibreDWG 0.14 parses
+and structurally validates all 80 files: each has exactly one nonempty
+degree-3 cache SPLINE and both `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED
+markers. `git diff --check` passes. Test commit `b5123d1b0` (`test(offset):
+persist degree-six C2 knot caches`). This proves native writer/reopen and
+independent parser structure only; it does not prove rendering equivalence or
+AutoCAD/ODA acceptance. Other spline profiles, knot layouts/multiplicities,
+DWG releases, exact-head CI, visible GUI, and independent-CAD acceptance
+remain open.
