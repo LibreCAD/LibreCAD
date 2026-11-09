@@ -29562,3 +29562,22 @@ checks. This closes persistence only for these six captured fixture paths.
 Continue item 5 with the remaining oracle-qualified variants and independent
 reader coverage; visible GUI and ODA/AutoCAD acceptance remain distinct open
 gates.
+
+### Item 5 Progress: All Captured Worker Fixtures (2026-11-09)
+
+The persistence matrix now retains actual output entities from all 16 captured
+Produce fixtures across the nine modeled source kinds, rather than only the
+line/arc/circle/polyline subset. The aggregate drawing is reopened in all five
+lanes above. Checks include output count/type, endpoints, reference points,
+length, and bounds for non-splines. For SPLINE, compare its defining degree,
+type, control/fit points, knot vector, weights, fit tolerance, and endpoint
+tangent metadata. Cached `getMin()/getMax()` is not treated as defining spline
+geometry: two fixtures produced different cached bounds after reopen despite
+matching defining spline data, endpoints, references, and length.
+
+Validation: focused all-family worker test passes 34,987 assertions; complete
+`librecad_offset_worker_client_tests` passes 42,246 assertions/21 cases.
+LibreDWG independently parses both generated DWGs successfully. This extends
+five-lane persistence evidence to the 16 captured fixture profiles only; it
+does not close untested knot/weight layouts, geometry boundaries/distances,
+other source variants, visible GUI, or ODA/AutoCAD acceptance.

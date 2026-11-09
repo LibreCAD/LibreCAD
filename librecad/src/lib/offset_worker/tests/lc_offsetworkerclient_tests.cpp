@@ -13,6 +13,7 @@
 #include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_line.h"
+#include "rs_spline.h"
 #include "lc_parabola.h"
 #include "rs_pen.h"
 
@@ -764,6 +765,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     auto* persistenceLayer = persistenceGraphic.findLayer("0");
     REQUIRE(persistenceLayer);
     struct PersistedGeometry {
+        std::size_t sourceFixture;
         RS2::EntityType type;
         RS_Vector start;
         RS_Vector end;
@@ -771,12 +773,14 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         RS_Vector maximum;
         RS_VectorSolutions references;
         double length = 0.0;
+        std::optional<RS_SplineData> splineData;
     };
     std::vector<PersistedGeometry> persistedGeometry;
-    const auto persistenceGeometry = [](const RS_Entity& entity) {
-        return PersistedGeometry{entity.rtti(), entity.getStartpoint(), entity.getEndpoint(),
-                                 entity.getMin(), entity.getMax(), entity.getRefPoints(),
-                                 entity.getLength()};
+    const auto persistenceGeometry = [](const RS_Entity& entity, const std::size_t sourceFixture) {
+        PersistedGeometry result{sourceFixture, entity.rtti(), entity.getStartpoint(), entity.getEndpoint(),
+                                 entity.getMin(), entity.getMax(), entity.getRefPoints(), entity.getLength(), std::nullopt};
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) result.splineData = spline->getData();
+        return result;
     };
 
     for (std::size_t i = 0; i < sources.size(); ++i) {
@@ -840,21 +844,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         CHECK(prepared.outcome().sources.front().source == entity.get());
         CHECK(prepared.outcome().sources.front().complete());
         CHECK(Req::Values::encodeSourceGeometry(sources[i]) == sourceBefore);
-        const auto sourceKind = sources[i].kind();
-        if (sourceKind == LC_OffsetSourceGeometry::Kind::Line ||
-            sourceKind == LC_OffsetSourceGeometry::Kind::Arc ||
-            sourceKind == LC_OffsetSourceGeometry::Kind::Circle ||
-            sourceKind == LC_OffsetSourceGeometry::Kind::Polyline) {
-            REQUIRE_FALSE(batch.entitiesToAdd.empty());
-            for (const RS_Entity* generated : batch.entitiesToAdd) {
-                REQUIRE(generated);
-                const auto geometry = persistenceGeometry(*generated);
-                std::unique_ptr<RS_Entity> copy{generated->clone()};
-                REQUIRE(copy);
-                copy->setLayer(persistenceLayer);
-                persistedGeometry.push_back(geometry);
-                persistenceGraphic.addEntity(copy.release());
-            }
+        REQUIRE_FALSE(batch.entitiesToAdd.empty());
+        for (const RS_Entity* generated : batch.entitiesToAdd) {
+            REQUIRE(generated);
+            const auto geometry = persistenceGeometry(*generated, i);
+            std::unique_ptr<RS_Entity> copy{generated->clone()};
+            REQUIRE(copy);
+            copy->setLayer(persistenceLayer);
+            persistedGeometry.push_back(geometry);
+            persistenceGraphic.addEntity(copy.release());
         }
         prepared.release();
         qDeleteAll(batch.entitiesToAdd);
@@ -882,26 +880,57 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         for (const RS_Entity* entity : reopened) {
             if (entity->isDeleted()) continue;
             CAPTURE(entity->rtti());
-            reopenedGeometry.push_back(persistenceGeometry(*entity));
+            reopenedGeometry.push_back(persistenceGeometry(*entity, 0));
         }
         REQUIRE(reopenedGeometry.size() == persistedGeometry.size());
         for (std::size_t i = 0; i < persistedGeometry.size(); ++i) {
-            CAPTURE(i, persistedGeometry[i].type, reopenedGeometry[i].type);
+            CAPTURE(i, persistedGeometry[i].sourceFixture, persistedGeometry[i].type, reopenedGeometry[i].type);
             CHECK(reopenedGeometry[i].type == persistedGeometry[i].type);
-            const auto checkVector = [](const RS_Vector& actual, const RS_Vector& expected) {
+            const auto checkVector = [](const RS_Vector& actual, const RS_Vector& expected, const char* field) {
+                INFO("geometry field=" << field);
                 const double scale = std::max({1.0, std::abs(expected.x), std::abs(expected.y)});
                 CHECK(std::abs(actual.x - expected.x) <= 1e-8 * scale);
                 CHECK(std::abs(actual.y - expected.y) <= 1e-8 * scale);
             };
-            checkVector(reopenedGeometry[i].start, persistedGeometry[i].start);
-            checkVector(reopenedGeometry[i].end, persistedGeometry[i].end);
-            checkVector(reopenedGeometry[i].minimum, persistedGeometry[i].minimum);
-            checkVector(reopenedGeometry[i].maximum, persistedGeometry[i].maximum);
+            checkVector(reopenedGeometry[i].start, persistedGeometry[i].start, "start");
+            checkVector(reopenedGeometry[i].end, persistedGeometry[i].end, "end");
+            if (persistedGeometry[i].type != RS2::EntitySpline) {
+                checkVector(reopenedGeometry[i].minimum, persistedGeometry[i].minimum, "minimum");
+                checkVector(reopenedGeometry[i].maximum, persistedGeometry[i].maximum, "maximum");
+            }
             REQUIRE(reopenedGeometry[i].references.size() == persistedGeometry[i].references.size());
             for (std::size_t point = 0; point < persistedGeometry[i].references.size(); ++point)
-                checkVector(reopenedGeometry[i].references[point], persistedGeometry[i].references[point]);
+                checkVector(reopenedGeometry[i].references[point], persistedGeometry[i].references[point], "reference");
             const double lengthScale = std::max(1.0, std::abs(persistedGeometry[i].length));
             CHECK(std::abs(reopenedGeometry[i].length - persistedGeometry[i].length) <= 1e-8 * lengthScale);
+            REQUIRE(reopenedGeometry[i].splineData.has_value() == persistedGeometry[i].splineData.has_value());
+            if (persistedGeometry[i].splineData) {
+                const auto& expected = *persistedGeometry[i].splineData;
+                const auto& actual = *reopenedGeometry[i].splineData;
+                CAPTURE(expected.degree, expected.type, expected.controlPoints.size(), expected.knotslist.size(),
+                        expected.weights.size(), actual.degree, actual.type, actual.controlPoints.size(),
+                        actual.knotslist.size(), actual.weights.size());
+                CHECK(actual.degree == expected.degree);
+                CHECK(actual.type == expected.type);
+                CHECK(actual.fitTolerance == expected.fitTolerance);
+                CHECK(actual.fitTangentsConstrained == expected.fitTangentsConstrained);
+                checkVector(actual.fitStartTangent, expected.fitStartTangent, "fit start tangent");
+                checkVector(actual.fitEndTangent, expected.fitEndTangent, "fit end tangent");
+                REQUIRE(actual.controlPoints.size() == expected.controlPoints.size());
+                REQUIRE(actual.knotslist.size() == expected.knotslist.size());
+                REQUIRE(actual.weights.size() == expected.weights.size());
+                REQUIRE(actual.fitPoints.size() == expected.fitPoints.size());
+                for (std::size_t point = 0; point < expected.controlPoints.size(); ++point)
+                    checkVector(actual.controlPoints[point], expected.controlPoints[point], "spline control");
+                for (std::size_t point = 0; point < expected.fitPoints.size(); ++point)
+                    checkVector(actual.fitPoints[point], expected.fitPoints[point], "spline fit point");
+                for (std::size_t knot = 0; knot < expected.knotslist.size(); ++knot)
+                    CHECK(std::abs(actual.knotslist[knot] - expected.knotslist[knot]) <=
+                          1e-8 * std::max(1.0, std::abs(expected.knotslist[knot])));
+                for (std::size_t weight = 0; weight < expected.weights.size(); ++weight)
+                    CHECK(std::abs(actual.weights[weight] - expected.weights[weight]) <=
+                          1e-8 * std::max(1.0, std::abs(expected.weights[weight])));
+            }
         }
     }
 
