@@ -29745,7 +29745,7 @@ these rows do not imply every parameter/domain is supported):
 | Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
 | --- | --- | --- | --- |
 | Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Other sub-ULP/coordinate-conditioning boundaries and broad non-finite payload refusal |
-| Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at gaps 1e-4..1e-8 radians, both orientations and both offset sides; counterclockwise near-full profiles at 1e-4 and 1e-8, reversed near-full at 1e-8, and short counterclockwise seam-crossing at 1e-4 pass required worker/cache admission, replacement, Produce, and five-file-lane reopen; below-validity arc refused at typed capture | Carry remaining sweep-boundary profiles through worker/cache, replacement and file lanes; broader sweep-limit and boundary matrix |
+| Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at gaps 1e-4..1e-8 radians, both orientations and both offset sides; counterclockwise near-full profiles at 1e-4 and 1e-8, reversed near-full at 1e-8, and short counterclockwise seam-crossing at 1e-4 pass required worker/cache admission, replacement, Produce, and five-file-lane reopen; short 1e-8 seam arc passes the same path at distance 1e-6, while distance .25 cleanly refuses with UndefinedTangent and no output; below-validity arc refused at typed capture | Carry remaining sweep-boundary profiles through worker/cache, replacement and file lanes; broader sweep-limit and boundary matrix |
 | Circle | Finite nonzero-radius closed circle | Direct near-collapse and exact-collapse semantics; exact-normal scale/translation matrix at 1e-4/1/1e4; small and large-origin circle worker/cache, Produce, and five-format reopen fixtures | Zero-radius refusal, still-smaller/larger scales, broader origin/conditioning matrix, independent geometry comparison for scaled persisted caches |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
@@ -30576,12 +30576,18 @@ operation-7 generation, operation-8 cache admission, typed source replacement,
 Produce, and all five R14/R2000/R2018 DXF/DWG product-writer reopen lanes. The
 existing reopen assertions compare entity type, endpoints/references, bounds,
 and length; the available LibreDWG reader also parses both generated DWG lanes.
-This closes the complete chain for these four profiles only, not for reversed
-short seam-crossing forms or arbitrary arc sweeps.
+Also exercised a short counterclockwise seam arc with a 1e-8-radian gap. It
+passes the same end-to-end path at a proportionate offset distance of 1e-6;
+at distance 0.25 with a 1e-4 relative tolerance, the worker reports
+`UndefinedTangent`, publishes no ordinary geometry or native cache, and is
+explicitly covered by a refusal regression. This is a tolerance-dependent
+eligibility boundary, not an unconditional positive profile. Other reversed
+short seam-crossing forms and arbitrary arc sweeps remain unqualified.
 
-Validation: the focused worker-family case passes 107,479 assertions/1 case;
-the complete `[lc-offsetcurve][worker-client]` suite passes 115,562
-assertions/21 cases. The direct sweep case passes 42,786 assertions and the
+Validation: the focused worker-family case passes 108,657 assertions/1 case;
+the explicit coarse-tolerance refusal passes 207 assertions/1 case; the
+complete `[lc-offsetcurve][worker-client]` suite passes 116,805 assertions/22
+cases. The direct sweep case passes 42,786 assertions and the
 full `[curve-offset][direct][arc]` selection passes 46,731 assertions/2 cases.
 `git diff --check` passes. Smaller-gap short arcs, reversed short seam-crossing
 profiles, sweep-limit refusal tests, visible GUI, external ODA/AutoCAD,
