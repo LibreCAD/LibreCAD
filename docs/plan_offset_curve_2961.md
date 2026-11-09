@@ -28860,6 +28860,27 @@ Validation: focused Release worker case passes 3,401 assertions/1 case; the
 complete Release `librecad_offset_worker_kernel_tests` suite passes 1,719,849
 assertions/94 cases. The changed range passes clang-format using
 `code_style/.clang-format`, and `git diff --check` passes. Test commit
-`f2374450b` (`test(offset): qualify wider rational weights`). Native-file
-persistence for this profile, other knot targets, external-CAD acceptance,
-visible GUI, and exact-head CI remain open.
+`f2374450b` (`test(offset): qualify wider rational weights`). W637 below closes
+native-file persistence for this profile at `.82`; other knot targets,
+external-CAD acceptance, visible GUI, and exact-head CI remain open.
+
+## 637. Persist the Wider Positive Weight Profile (2026-11-09)
+
+Added W636's positive weight pattern spanning `.05` to `20` at the four-knot
+`.82` target to the native product writer/reopen matrix. The matrix now covers
+16 bounded knot/profile/target combinations, degrees 3/4/5/6, both curvature
+orientations, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG: 128 source
+fixtures and 640 fixture/lane combinations. Each lane verifies staged
+promotion, typed-source equality, exact cache-fingerprint preservation, and
+writer export/reopen. This adds persistence for this one high-ratio profile at
+`.82`, not its other knot positions or arbitrary positive weights.
+
+Validation: focused Release persistence case passes 297,890 assertions/1
+case. All 256 retained R2000/R2018 DWGs independently parse with LibreDWG 0.14
+minJSON and contain exactly one nonempty degree-3 SPLINE with both
+`LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release `librecad_tests`
+target builds, the changed range passes clang-format using
+`code_style/.clang-format`, and `git diff --check` passes. Test commit
+`e8600dbf8` (`test(offset): persist wider rational weights`). Other knot
+targets, arbitrary positive weights, external-CAD acceptance, visible GUI,
+and exact-head CI remain open.
