@@ -27363,12 +27363,12 @@ oracles outside the recorded cases, or external CAD acceptance. W569 adds an
 independent oracle for bounded clamped single-span rational degrees 4-6; W570
 extends it to the representative knot and periodic profiles.
 
-Periodic rational tangent/even-root handling now also has one independently
-oracle-checked, nonuniform degree-4 periodic profile with bounded stall and
-retained-output endpoint mapping (W577). The current root-variation diagnostic
-does not certify this degree-4 root count; the fixture's high-precision oracle
-and production output mapping qualify only that concrete case, not general
-degree-4 root completeness.
+Periodic rational tangent/even-root handling now also has independently
+oracle-checked nonuniform degree-4 and degree-5 periodic profiles with bounded
+stall and retained-output endpoint mapping (W577-W578). The current
+root-variation diagnostic does not certify these higher-degree root counts;
+the fixtures' high-precision oracles and production output mapping qualify
+only those concrete cases, not general degree-4/5 root completeness.
 
 ## 569. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
 
@@ -27546,3 +27546,26 @@ worker-kernel test target builds and `git diff --check` passes. The fixture
 adds one geometry/knot/weight profile only. Other degree-4+ tangent layouts,
 root-count certification, broad candidate-to-output bijection, visible GUI,
 external CAD, and exact-head CI remain open.
+
+## 578. Qualify a Nonuniform Periodic Rational Degree-5 Tangent Root (2026-11-09)
+
+Extended the same independent-oracle periodic rational tangent/even-root
+matrix with a nonuniform degree-5 profile and positive rational weights. The
+fixture independently derives its maximum-curvature parameter and signed
+tangent distance, verifies the same-sign even-root neighborhood, and checks
+that production isolation completes with a bounded stall owning the oracle
+root inside its source span. The oracle offset point and endpoints of every
+reported stall must map to retained cubic-piece endpoints within requested
+geometry tolerance.
+
+As with W577, the Bernstein root-variation diagnostic is unavailable for this
+degree. The test keeps that limitation explicit and does not claim a general
+root-count certificate or alter production budgets/acceptance policy.
+
+Validation: focused `[tangent-root]` suite passes 1,236 assertions/14 cases;
+the full worker-kernel suite passes 1,705,939 assertions/84 cases; the Release
+worker-kernel test target builds and `git diff --check` passes.
+The combined degree-2-through-5 periodic tangent evidence is still limited to
+its concrete layouts and weights; other high-degree knot/weight profiles,
+general root-count certification, complete candidate-to-output bijection,
+visible GUI, external CAD, and exact-head CI remain open.
