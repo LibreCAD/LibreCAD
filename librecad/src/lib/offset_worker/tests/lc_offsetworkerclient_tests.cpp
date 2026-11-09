@@ -536,7 +536,21 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                                             {RS_ArcData{{0, 0}, 2, 0, pi / 2, false}, RS_ArcData{{0, 0}, 2, pi / 2, pi, false},
                                              RS_ArcData{{0, 0}, 2, pi, 3 * pi / 2, false},
                                              RS_ArcData{{0, 0}, 2, 3 * pi / 2, 2 * pi, false}}};
-    const std::array<LC_OffsetSourceGeometry, 16> sources{
+    const auto clampedRationalSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            data.controlPoints.emplace_back(4.0 * t, 2.0 * t * (1.0 - t));
+            data.weights.push_back(0.75 + 0.5 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
+    const std::vector<LC_OffsetSourceGeometry> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{points},
@@ -557,7 +571,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             {RS_LineData{{0, 0}, {2, 0}}, RS_LineData{{2, 0}, {2, 2}}, RS_LineData{{2, 2}, {0, 2}}, RS_LineData{{0, 2}, {0, 0}}}}},
         LC_OffsetSourceGeometry{wrapped},
         LC_OffsetSourceGeometry{closedArcPolyline},
-        LC_OffsetSourceGeometry{wrappedLinear}};
+        LC_OffsetSourceGeometry{wrappedLinear},
+        LC_OffsetSourceGeometry{clampedRationalSpline(4)},
+        LC_OffsetSourceGeometry{clampedRationalSpline(5)},
+        LC_OffsetSourceGeometry{clampedRationalSpline(6)}};
 
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;

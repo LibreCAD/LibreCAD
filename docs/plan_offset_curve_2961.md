@@ -29503,20 +29503,20 @@ Implementation order:
    polyline, rejects a mismatched reported depth, and rejects an over-cap
    segment payload. Completion independently remeasures the materialized
    entity tree.
-2. (Complete for the captured fixtures) Exercise line, arc, circle, and
-   polyline outputs through the real worker client; assert complete output and
-   concrete type preservation. Keep the focused typed-line helper-process
-   regression. The output schema uses protocol 8, so older helpers fail the
-   existing protocol handshake rather than misreading the new output tag.
+2. (Complete for the captured fixtures) Exercise all captured source fixtures
+   through the real worker client; assert complete output and source-family-
+   appropriate concrete entity types. Keep the focused typed-line helper-
+   process regression. The output schema uses protocol 8, so older helpers fail
+   the existing protocol handshake rather than misreading the new output tag.
 3. (Complete for the captured fixtures) Give each family fixture a valid,
    unambiguous side coordinate and require successful worker output and source
    immutability. Broader boundary/degeneracy refusal matrices remain separate.
-4. (Complete for the 16 captured fixtures) Exercise operation-8 cache
+4. (Complete for the 19 captured fixtures) Exercise operation-8 cache
    validation and translated source-definition replacement for every
    cache-admitted fixture. The client test now transports all ordinary output
    branches through `nativeSource()` and the exact composite-cache validator;
    it no longer rejects a receipt merely because it has multiple ordinary
-   outputs. All 16 replacements commit with a changed cache and matching
+   outputs. All 19 replacements commit with a changed cache and matching
    typed definition, with no refusal and no partial state. The previously
    rejected spline and polyline cases specifically cover the composite-output
    path. UI undo/redo across the nine family switches remains evidenced by
@@ -29534,7 +29534,7 @@ the worker client/process/request/result and kernel targets; client tests
 of the stale protocol-7 handshake); request protocol
 603,526/18; result protocol 467,591/27; worker kernel 1,721,306/94; source
 preparation 76,653/40; source-action 2,812/34; `git diff --check`. The
-all-family client run covers 16 captured representations across the nine
+all-family client run covers 19 captured representations across the nine
 modeled kinds, but only the captured profiles and configured side picks.
 These results do not prove arbitrary geometry-domain support, all source
 variants or distances, the five DXF/DWG lanes for every new variant, visible
@@ -29593,3 +29593,25 @@ each DWG have control points and the expected knot cardinality
 five-lane persistence evidence to the 16 captured fixture profiles only; it
 does not close untested knot/weight layouts, geometry boundaries/distances,
 other source variants, visible GUI, or ODA/AutoCAD acceptance.
+
+### Item 5 Progress: Clamped Rational Degree-4..6 Sources (2026-11-09)
+
+Extended the real-helper matrix with the existing bounded, clamped positive-
+rational degree-4, degree-5, and degree-6 source fixtures from the worker codec
+tests. All 19 captured representations across the nine modeled source kinds
+now pass operation-7 generation, operation-8 cache admission, translated
+source-definition replacement, and Produce execution; the generated outputs
+are retained and round-tripped through all five DXF/DWG lanes. High-degree
+inputs produce cache/output splines of supported degree 1 or 3; this does not
+expand generated-cache degree or establish arbitrary high-degree offset
+accuracy.
+
+Validation: focused all-family worker test passes 41,018 assertions; the full
+`librecad_offset_worker_client_tests` suite passes 47,365 assertions/21 cases.
+LibreDWG JSON independently reports, for both AC1015 and AC1032, one ARC, one
+CIRCLE, one LINE, three LWPOLYLINEs, and thirteen SPLINEs. All thirteen have
+control points and valid knot cardinality, with zero invalid spline layouts.
+The 4-6 input degrees are exercised end-to-end through the worker, but their
+products are normalized degree-1/3 SPLINE outputs. Geometry oracles for wider
+high-degree knot/weight layouts, additional distances/sides, visible GUI, and
+ODA/AutoCAD acceptance remain open.
