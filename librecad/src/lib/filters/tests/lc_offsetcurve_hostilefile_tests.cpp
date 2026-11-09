@@ -10209,6 +10209,10 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
     std::size_t importedFiles = 0;
     std::size_t promotedFiles = 0;
     std::size_t fallbackFiles = 0;
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+      libreDwgReader = QStandardPaths::findExecutable("dwgread");
+    bool independentlyReadR2018Parabola = false;
 
     for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
         for (const double scale : scales) {
@@ -10467,6 +10471,67 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
                               QCborValue(*actualSource).toCbor());
                         const auto* importedSpline = dynamic_cast<const RS_Spline*>(imported);
                         REQUIRE(importedSpline);
+#ifdef DWGSUPPORT
+                        if (native && !independentlyReadR2018Parabola &&
+                            !libreDwgReader.isEmpty() && format.dwg &&
+                            format.version == DRW::AC1032 && scale == 1.0 &&
+                            ratio == 1e6 && variantIndex == 0) {
+                          const auto nativeOutput =
+                              directory.file("parabola-native-r2018.dwg");
+                          REQUIRE(lc::test::exportDrawing(
+                              *outcome.graphic, nativeOutput,
+                              ::format(Lane::Eed18)));
+                          QProcess reader;
+                          reader.start(libreDwgReader,
+                                       {"-O", "minJSON",
+                                        lc::test::toQString(nativeOutput)});
+                          REQUIRE(reader.waitForStarted());
+                          REQUIRE(reader.waitForFinished(30000));
+                          INFO(reader.readAllStandardError().toStdString());
+                          REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                          REQUIRE(reader.exitCode() == 0);
+                          const QByteArray output =
+                              reader.readAllStandardOutput();
+                          REQUIRE_FALSE(output.isEmpty());
+                          QJsonParseError parseError;
+                          const QJsonDocument document =
+                              QJsonDocument::fromJson(output, &parseError);
+                          REQUIRE(parseError.error == QJsonParseError::NoError);
+                          REQUIRE(document.isObject());
+                          const QJsonArray objects =
+                              document.object().value("OBJECTS").toArray();
+                          QJsonObject externalSpline;
+                          for (const QJsonValue &object : objects) {
+                            const QJsonObject candidate = object.toObject();
+                            if (candidate.value("entity").toString() ==
+                                "SPLINE") {
+                              externalSpline = candidate;
+                              break;
+                            }
+                          }
+                          REQUIRE_FALSE(externalSpline.isEmpty());
+                          CHECK(externalSpline.value("degree").toInt() ==
+                                static_cast<int>(
+                                    importedSpline->getData().degree));
+                          const QJsonArray controls =
+                              externalSpline.value("ctrl_pts").toArray();
+                          REQUIRE(controls.size() ==
+                                  static_cast<qsizetype>(
+                                      importedSpline->getData()
+                                          .controlPoints.size()));
+                          for (qsizetype i = 0; i < controls.size(); ++i) {
+                            const RS_Vector &expected =
+                                importedSpline->getData()
+                                    .controlPoints[static_cast<std::size_t>(i)];
+                            const QJsonObject actual = controls[i].toObject();
+                            CHECK(actual.value("x").toDouble() ==
+                                  Catch::Approx(expected.x).margin(1e-10));
+                            CHECK(actual.value("y").toDouble() ==
+                                  Catch::Approx(expected.y).margin(1e-10));
+                          }
+                          independentlyReadR2018Parabola = true;
+                        }
+#endif
                         for (int sample = 0; sample <= 128; ++sample) {
                             const double parameter = static_cast<double>(sample) / 128.0;
                             const RS_Vector expected = expectedSpline.getPointAt(parameter);
@@ -10495,6 +10560,9 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
     CHECK(importedFiles == admittedTranslatedCaches * formats.size());
 #endif
     CHECK(promotedFiles + fallbackFiles == importedFiles);
+#ifdef DWGSUPPORT
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadR2018Parabola);
+#endif
 }
 
 TEST_CASE("scaled translated polyline caches persist through staged DXF and DWG import",
