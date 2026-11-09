@@ -281,18 +281,22 @@ void QG_LineTypeBox::setLineTypeOf(const RS_Pen& pen) {
             index = appendTemporaryRow(name, pen.getLineType());
         }
     }
+    // Record the pen before anything emits: a host reading the pen inside the
+    // signal must get this pen, not the spelling of the row it selected.
+    m_sourcePen = pen;
+    m_hasSource = true;
     if (index < 0) {
+        // The row setLineType(enum) is about to select; none when the combo has
+        // no row for the enum, so the recorded row stays none.
+        m_sourceRowIndex = indexForEnum(pen.getLineType());
         // A pen without a name, or a canonical spelling the combo does not show,
         // behaves as setLineType() does today.
         setLineType(pen.getLineType());
+        return;
     }
-    else {
-        setCurrentIndex(index);
-        slotLineTypeChanged(currentIndex());
-    }
-    m_sourcePen = pen;
-    m_hasSource = true;
-    m_sourceRowIndex = currentIndex();
+    m_sourceRowIndex = index;
+    setCurrentIndex(index);
+    slotLineTypeChanged(currentIndex());
 }
 
 /**

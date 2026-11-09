@@ -381,3 +381,44 @@ TEST_CASE("A canonical spelling without a row gets no temporary row", "[gui][lin
     CHECK(box.count() == base);
     CHECK(box.findText(QG_LineTypeBox::tr("%1 (not in this drawing)").arg(QStringLiteral("BYLAYER"))) < 0);
 }
+
+TEST_CASE("A host that reads the pen inside the signal gets the pen it set",
+          "[gui][linetype][combo]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    addLineType(graphic, "VENDOR_TAB", {10.0, -5.0});
+
+    SECTION("with a list") {
+        QG_LineTypeBox box;
+        box.init(&graphic.getLineTypeList(), true, false);
+        const RS_Pen source = namedPen(QStringLiteral("vendor_tab"));
+        RS_Pen seen;
+        bool read = false;
+        QObject::connect(&box, &QG_LineTypeBox::lineTypeChanged, [&](RS2::LineType) {
+            box.applyLineTypeTo(seen);
+            read = true;
+        });
+        box.setLineTypeOf(source);
+        REQUIRE(read);
+        CHECK(seen.getLineTypeId() == source.getLineTypeId());
+        CHECK(seen.getLineTypeName() == QStringLiteral("vendor_tab"));
+    }
+
+    SECTION("without a list") {
+        QG_LineTypeBox box;
+        box.init(true, false);
+        const RS_Pen source = namedPen(QStringLiteral("VENDOR_TAB"));
+        RS_Pen seen;
+        bool read = false;
+        QObject::connect(&box, &QG_LineTypeBox::lineTypeChanged, [&](RS2::LineType) {
+            box.applyLineTypeTo(seen);
+            read = true;
+        });
+        box.setLineTypeOf(source);
+        REQUIRE(read);
+        CHECK(seen.hasLineTypeName());
+        CHECK(seen.getLineTypeId() == source.getLineTypeId());
+        CHECK(seen.getLineTypeName() == QStringLiteral("VENDOR_TAB"));
+    }
+}
