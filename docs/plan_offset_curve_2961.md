@@ -141,8 +141,8 @@ Current implementation order for the remaining “all supported types” work:
    only; an unweighted spline is checked across all five lanes on both
    signed sides; a rational tangent-constrained cubic offset is product-
    round-tripped through all five lanes. Wrapped periodic spline caches are
-   product-round-tripped through all five lanes across the complete 192-case
-   tested import grid: degree 2/3/4/6, two bounded control-count layouts,
+   product-round-tripped through all five lanes across the complete 240-case
+   tested import grid: degree 2/3/4/5/6, two bounded control-count layouts,
    unit/rational weights, three scales, two distances, and both sides.
    A regular open degree-2 rational spline with nine controls and seven
    nonuniform spans is also product-round-tripped for both `1e-6` to `1e6`
@@ -27363,6 +27363,13 @@ oracles outside the recorded cases, or external CAD acceptance. W569 adds an
 independent oracle for bounded clamped single-span rational degrees 4-6; W570
 extends it to the representative knot and periodic profiles.
 
+Periodic rational tangent/even-root handling now also has one independently
+oracle-checked, nonuniform degree-4 periodic profile with bounded stall and
+retained-output endpoint mapping (W577). The current root-variation diagnostic
+does not certify this degree-4 root count; the fixture's high-precision oracle
+and production output mapping qualify only that concrete case, not general
+degree-4 root completeness.
+
 ## 569. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
 
 Extended the independent homogeneous de Boor test evaluator to the supported
@@ -27479,3 +27486,63 @@ regressions pass 44 assertions/2 cases; the complete source-picker suite passes
 12,155 assertions/12 cases; Release `librecad_tests` build and
 `git diff --check` pass. Implementation commit `87c0a6f20` (`fix(offset):
 retain picked source identity`).
+
+## 575. Add Degree-5 Periodic SPLINEs to the Five-lane Matrix (2026-11-09)
+
+Extended the wrapped-periodic import and native product-writer matrix to
+include degree 5 alongside degrees 2, 3, 4, and 6. The new degree-5 cases use
+the two bounded periodic control-count layouts, unit and positive rational
+weights, three scale/translation conditions, two normalized distances, and
+both signed sides. Each case runs generated-carrier import/promotion and
+native export/reopen in R14, R2000, and R2018 DXF plus R2000 and R2018 DWG.
+The current matrix is 240 combinations. Assertions require the typed source
+and exact generated cache fingerprint to survive each file lane.
+
+Validation: the focused wrapped-periodic matrix passes 254,534 assertions/1
+case; the Release `librecad_tests` target builds and `git diff --check` passes.
+Test commit `c28083f9e` (`test(offset): cover degree-five periodic sources`).
+This adds source/cache and five-lane round-trip evidence for the tested
+degree-5 periodic layouts, not an independent high-precision geometry oracle
+for that degree, other periodic knot layouts or weight profiles, or
+independent-CAD interoperability.
+
+## 576. Reconfirm Type-changing Source Selection and Parabola Identity (2026-11-09)
+
+The latest source-widget requests reiterate two requirements already in the
+current contract: while replacing an offset source, the user can switch the
+requested family before picking; and the family list covers all nine currently
+modeled source kinds, including a distinct parabola choice. The selected
+source highlight remains independent of the replacement-family filter. This
+behavior is implemented; retain the existing widget and family control rather
+than adding another selector or a parabola-only UI branch.
+
+Picker membership is not blanket geometric support. Continue the roadmap's
+family-by-family inventory and qualify concrete variants through direct
+generation, worker/cache admission, replacement, and applicable DXF/DWG
+round-trips. Keep unsupported or unproved variants excluded/fail-closed until
+their evidence is added. Existing selector, source-replacement, highlight,
+and parabola-identity regressions remain the UI gates; visible-GUI acceptance
+and end-to-end geometry/persistence qualification remain separate open items.
+
+## 577. Qualify a Nonuniform Periodic Rational Degree-4 Tangent Root (2026-11-09)
+
+Extended the oracle-driven periodic rational tangent/even-root matrix with a
+nonuniform degree-4 profile. The independent high-precision spline evaluator
+locates the maximum-curvature parameter, derives the signed tangent distance,
+checks the even-root same-sign neighborhood, and evaluates the offset point.
+Production isolation must complete, report a bounded stall owning the oracle
+root wholly inside its source knot span, and retain cubic-piece endpoints
+within requested geometry tolerance for the oracle root and every reported
+stall endpoint.
+
+The existing Bernstein root-variation diagnostic returns unavailable for this
+degree-4 fixture, so the test requires that limitation to remain explicit; it
+does not claim a certified general degree-4 root count. No production
+acceptance policy or work budget changed.
+
+Validation: focused `[tangent-root]` suite passes 1,204 assertions/14 cases;
+full worker-kernel suite passes 1,705,907 assertions/84 cases; the Release
+worker-kernel test target builds and `git diff --check` passes. The fixture
+adds one geometry/knot/weight profile only. Other degree-4+ tangent layouts,
+root-count certification, broad candidate-to-output bijection, visible GUI,
+external CAD, and exact-head CI remain open.
