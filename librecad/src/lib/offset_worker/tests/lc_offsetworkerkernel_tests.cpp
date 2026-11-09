@@ -47,7 +47,7 @@ std::pair<SplineOracle, SplineOracle> evaluateSplineOracle(
         else low = middle;
     }
     const std::size_t span = low;
-    std::array<HomogeneousPoint, 4> work{};
+    std::vector<HomogeneousPoint> work(degree + 1);
     for (std::size_t j = 0; j <= degree; ++j) {
         const std::size_t index = span - degree + j;
         const SplineOracle weight{data.weights[index]};
@@ -217,6 +217,24 @@ std::pair<SplineOracle, SplineOracle> oracleOffsetPoint(
     const SplineOracle speed = sqrt(first.first * first.first + first.second * first.second);
     return {point.first - signedDistance * first.second / speed,
             point.second + signedDistance * first.first / speed};
+}
+
+double sampledSplineDistance(const RS_SplineData& data, const RS_Vector& point,
+                             const std::size_t sampleCount) {
+    const RS_Spline spline{nullptr, data};
+    double start = 0.0, end = 0.0;
+    if (!spline.getParameterDomain(start, end) || sampleCount == 0)
+        return std::numeric_limits<double>::infinity();
+    double nearest = std::numeric_limits<double>::infinity();
+    for (std::size_t i = 0; i <= sampleCount; ++i) {
+        const double parameter = start + (end - start) *
+            static_cast<double>(i) / static_cast<double>(sampleCount);
+        LC_CurveJet jet;
+        if (!spline.tryEvaluateJet(parameter, LC_CurveEvaluationSide::Interior, jet))
+            return std::numeric_limits<double>::infinity();
+        nearest = std::min(nearest, point.distanceTo(jet.point));
+    }
+    return nearest;
 }
 
 struct OracleSplineCusp {
@@ -1468,6 +1486,8 @@ TEST_CASE("offset worker generates and validates caches for degree four through 
         const LC_OffsetSourceDefinition definition{
             LC_OffsetSourceGeometry{data}, .02, 1e-3, false};
         REQUIRE(definition.isWellFormed());
+        const RS_Spline source{nullptr, data};
+        REQUIRE(source.validate());
 
         const req::Request generation{token,
             req::GenerateSource{definition, {}}};
@@ -1483,6 +1503,28 @@ TEST_CASE("offset worker generates and validates caches for degree four through 
         REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
         const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
         CHECK((cache.degree == 1 || cache.degree == 3));
+
+        double domainStart = 0.0, domainEnd = 0.0;
+        REQUIRE(source.getParameterDomain(domainStart, domainEnd));
+        const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(options);
+        double maximumOracleDistance = 0.0;
+        for (int sample = 1; sample < 16; ++sample) {
+            const double parameter = domainStart + (domainEnd - domainStart) *
+                static_cast<double>(sample) / 16.0;
+            const auto expected = oracleOffsetPoint(
+                data, SplineOracle{parameter}, SplineOracle{"1e-20"},
+                SplineOracle{domainStart}, SplineOracle{domainEnd},
+                SplineOracle{definition.signedDistance});
+            const RS_Vector oraclePoint{expected.first.convert_to<double>(),
+                                        expected.second.convert_to<double>()};
+            maximumOracleDistance = std::max(maximumOracleDistance,
+                sampledSplineDistance(cache, oraclePoint, 8192));
+        }
+        CAPTURE(degree, maximumOracleDistance,
+                options->tolerance.requestedGeometry);
+        CHECK(maximumOracleDistance <=
+              2.0 * options->tolerance.requestedGeometry);
         const auto encoded = result::encode(generatedReply, generation);
         REQUIRE(encoded);
         CHECK(result::decode(*encoded, generation));
