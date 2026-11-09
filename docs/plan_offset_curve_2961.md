@@ -28233,3 +28233,19 @@ C2 knot position matrix`). This qualifies only the four stated knot locations
 for the existing degree/multiplicity/weight fixtures. Other knot layouts,
 profiles and multiplicities, geometry families/variants, exact-head CI,
 visible GUI, and external-CAD acceptance remain open.
+
+## 607. Re-run Source-picker Family Regressions (2026-11-09)
+
+Ran the existing native source-picker regression set after the latest request
+to confirm the picker-level contract remains green: changing the family before
+replacement, preserving the current source highlight while filtering,
+cross-family replacement for every modeled family, typed parabola identity,
+duplicate-geometry identity, and fail-closed candidate handling.
+
+Validation: Release `librecad_tests '*Native source picker*'` passes 9,771
+assertions/9 cases. This confirms automated widget behavior only; it does not
+replace a visible desktop interaction. A fresh CUA inventory reports the Mac
+locked, so visible GUI acceptance remains blocked pending an unlocked desktop.
+The exact PR #3193 head at this checkpoint is `024c59f98`; headless and
+cross-platform checks were still in progress when queried. No production code
+changed in this validation slice.
