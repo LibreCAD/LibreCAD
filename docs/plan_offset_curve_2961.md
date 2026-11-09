@@ -104,7 +104,10 @@ W599 additionally runs worker operation 7 and round-trips its result through
 the result codec for every tested degree-3/4/5 mirrored fixture. W600
 combines each worker output into the canonical source-cache spline and
 validates it through operation 8 plus the result codec; this still does not
-prove DXF/DWG persistence for these crossing fixtures.
+prove DXF/DWG persistence for these crossing fixtures. W601 adds native
+application-writer export/reopen checks for the existing degree-3 rational
+repeated-knot source on both signed sides across five file lanes; that fixture
+is a separate, older repeated-knot profile, not the C2 cusp-crossing matrix.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -28098,3 +28101,19 @@ five` passes 438 assertions/1 case; complete Release
 `git diff --check` passes. DXF/DWG round-trips for these exact fixtures,
 broader knot profiles, periodic profiles, full geometry-variant support,
 exact-head CI, visible GUI, and independent-CAD acceptance remain open.
+
+## 601. Round-trip a Repeated-knot Rational Source Offset (2026-11-09)
+
+Extended the existing degree-3 rational repeated-knot import fixture to export
+the admitted native offset through LibreCAD's product writer and stage-import
+the result again on both signed sides. The five lanes cover binary R14, R2000,
+and R2018 DXF plus R2000 and R2018 DWG. Each round-trip must retain one
+admitted native offset, the typed source definition, and the exact cache
+fingerprint. This fixture has a C1 repeated knot and signed distance `+/-0.05`;
+it does not prove persistence for the C2 cusp-crossing fixtures in W595-W600.
+
+Validation: focused `repeated-knot rational spline imports preserve exact
+cache eligibility` passes 1,891 assertions/1 case; `git diff --check` passes.
+The matching C2 cusp fixtures still need DXF/DWG product-writer round-trips,
+along with broader knot profiles, full geometry-variant coverage, exact-head
+CI, visible GUI, and independent-CAD acceptance.
