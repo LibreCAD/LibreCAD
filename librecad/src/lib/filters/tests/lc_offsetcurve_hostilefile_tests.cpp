@@ -8223,8 +8223,9 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         double insertion;
         double middleWeight;
     };
-    const std::array<Fixture, 4> fixtures{{
-        {0.25, 0.5}, {0.25, 2.0}, {0.5, 0.5}, {0.5, 2.0}}};
+    const std::array<Fixture, 8> fixtures{{
+        {0.25, 0.25}, {0.25, 0.5}, {0.25, 2.0}, {0.25, 4.0},
+        {0.5, 0.25}, {0.5, 0.5}, {0.5, 2.0}, {0.5, 4.0}}};
     constexpr std::array<double, 3> scales{0.5, 1.0, 2.0};
     const std::array<std::pair<Lane, bool>, 5> lanes{{
         {Lane::Binary14, false}, {Lane::Binary2000, false}, {Lane::Eed2000, true},
