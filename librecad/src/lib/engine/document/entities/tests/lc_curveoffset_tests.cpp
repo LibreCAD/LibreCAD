@@ -33,6 +33,7 @@
 
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
+#include "lc_offsetresultcheck.h"
 #include "lc_offsetsource.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
@@ -889,6 +890,83 @@ TEST_CASE("A circular arc offsets to a concentric arc", "[curve-offset][direct]"
             }
         }
         CHECK(maxDeviation(result, evaluator(arc)) <= options.tolerance.requestedGeometry);
+    }
+}
+
+TEST_CASE("Mixed-bulge polyline offsets stay at exact distance from its line and arc segments",
+          "[curve-offset][direct][polyline][bulge][oracle]") {
+    RS_Polyline source;
+    source.addVertex({0, 0}, 0.2);
+    source.addVertex({8, 0}, -0.2);
+    source.addVertex({8, 6});
+    source.addVertex({0, 6});
+    source.setClosed(true);
+    source.endPolyline();
+    const auto sourceSegments = orientedSegments(source);
+    REQUIRE(sourceSegments.size() == 4);
+    CHECK(sourceSegments[0].arc);
+    CHECK(sourceSegments[1].arc);
+    std::vector<double> sourceBreaks{0.0};
+    for (const auto& segment : sourceSegments) {
+        sourceBreaks.push_back(sourceBreaks.back() +
+            (segment.arc ? std::abs(segment.sweep) : segment.length()));
+    }
+
+    for (const double distance : {0.25, 0.5}) {
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            CAPTURE(distance, side);
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            CHECK(result.signedDistance ==
+                  (side == LC_CurveOffsetSide::Left ? distance : -distance));
+
+            for (const auto& branch : result.branches) {
+                REQUIRE_FALSE(branch.cubicPieces.empty());
+                for (const auto& piece : branch.cubicPieces) {
+                    if (piece.provenance.arcCentre.valid) {
+                        for (int sample = 0; sample <= 37; ++sample) {
+                            const RS_Vector point = bezierAt(piece.bezier, sample / 37.0);
+                            CHECK(std::abs(point.distanceTo(piece.provenance.arcCentre) - distance) <=
+                                  2.0 * options.tolerance.requestedGeometry);
+                        }
+                        continue;
+                    }
+                    for (int sample = 0; sample <= 37; ++sample) {
+                        if (sample == 0 || sample == 37) continue;
+                        const double fraction = sample / 37.0;
+                        const double parameter = piece.provenance.sourceT0 + fraction *
+                            (piece.provenance.sourceT1 - piece.provenance.sourceT0);
+                        std::size_t segmentIndex = 0;
+                        while (segmentIndex + 1 < sourceSegments.size() &&
+                               parameter >= sourceBreaks[segmentIndex + 1]) {
+                            ++segmentIndex;
+                        }
+                        REQUIRE(parameter >= sourceBreaks[segmentIndex]);
+                        REQUIRE(parameter <= sourceBreaks[segmentIndex + 1]);
+                        const auto& segment = sourceSegments[segmentIndex];
+                        const double local = (parameter - sourceBreaks[segmentIndex]) /
+                            (sourceBreaks[segmentIndex + 1] - sourceBreaks[segmentIndex]);
+                        RS_Vector tangent;
+                        if (segment.arc) {
+                            const double angle = segment.startAngle + segment.sweep * local;
+                            const double direction = std::copysign(1.0, segment.sweep);
+                            tangent = {-std::sin(angle) * direction, std::cos(angle) * direction};
+                        } else {
+                            tangent = (segment.b - segment.a) / segment.length();
+                        }
+                        const RS_Vector exact = segment.pointAt(local) +
+                            RS_Vector{-tangent.y, tangent.x} * piece.provenance.signedDistance;
+                        CHECK(bezierAt(piece.bezier, fraction).distanceTo(exact) <=
+                              options.tolerance.requestedGeometry);
+                    }
+                }
+            }
+        }
     }
 }
 

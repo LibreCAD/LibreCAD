@@ -29762,3 +29762,25 @@ only oracle-qualified variants through the worker and applicable file lanes.
 The picker contract has a green automated GUI test suite, but still needs an
 exact-build visible GUI check. ODA/AutoCAD acceptance and exact-head CI remain
 open gates.
+
+## 663. Verify Mixed-bulge Direct Geometry Against Exact Segment Normals (2026-11-09)
+
+Added a deterministic direct-geometry oracle for the accepted closed mixed-
+bulge polyline `(0,0) -> (8,0) -> (8,6) -> (0,6) -> close`, with positive
+and negative bulges on the first two segments. It checks both offset sides at
+distances 0.25 and 0.5. For each non-corner cubic piece, the piece's source
+parameter is mapped to the exact source line or circular arc, its analytic
+unit tangent supplies the left normal, and the emitted Bezier is compared with
+the exact `C + dN`. Rounded join pieces are independently checked against the
+exact radius about their recorded corner center. This avoids treating a raw
+Direct branch's legitimate overlap with a different source segment as an
+offset-distance failure before the separate trim/topology operation.
+
+Validation: focused direct mixed-bulge oracle passes 10,043 assertions/1 case;
+the current Release `librecad_tests` target builds and `git diff --check` passes.
+The evidence is for this mixed-bulge topology, these two signed distances, and
+this four-segment profile. It does not establish trimmed-region correctness,
+arbitrary polyline domains, extreme scale/translation, visible GUI, or external
+CAD acceptance. Continue the family matrix with the least-qualified remaining
+geometry representation and keep direct-geometry, cache promotion, persistence,
+and trimmed-topology claims distinct.
