@@ -596,6 +596,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, .25, 1.5, true}},
         LC_OffsetSourceGeometry{closedFitPoints},
         LC_OffsetSourceGeometry{RS_CircleData{{5, -2}, 2}},
+        LC_OffsetSourceGeometry{RS_ArcData{{3, -4}, 4, .25, 1.5, true}},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource};
 
@@ -815,12 +816,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         RS_Vector maximum;
         RS_VectorSolutions references;
         double length = 0.0;
+        bool reversedArc = false;
         std::optional<RS_SplineData> splineData;
     };
     std::vector<PersistedGeometry> persistedGeometry;
     const auto persistenceGeometry = [](const RS_Entity& entity, const std::size_t sourceFixture) {
         PersistedGeometry result{sourceFixture, entity.rtti(), entity.getStartpoint(), entity.getEndpoint(),
-                                 entity.getMin(), entity.getMax(), entity.getRefPoints(), entity.getLength(), std::nullopt};
+                                 entity.getMin(), entity.getMax(), entity.getRefPoints(), entity.getLength(), false,
+                                 std::nullopt};
+        if (const auto* arc = dynamic_cast<const RS_Arc*>(&entity)) result.reversedArc = arc->getData().reversed;
         if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) result.splineData = spline->getData();
         return result;
     };
@@ -938,21 +942,31 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         for (std::size_t i = 0; i < persistedGeometry.size(); ++i) {
             CAPTURE(i, persistedGeometry[i].sourceFixture, persistedGeometry[i].type, reopenedGeometry[i].type);
             CHECK(reopenedGeometry[i].type == persistedGeometry[i].type);
+            const bool canonicalArcOrder = persistedGeometry[i].reversedArc &&
+                persistedGeometry[i].type == RS2::EntityArc;
             const auto checkVector = [](const RS_Vector& actual, const RS_Vector& expected, const char* field) {
                 INFO("geometry field=" << field);
                 const double scale = std::max({1.0, std::abs(expected.x), std::abs(expected.y)});
                 CHECK(std::abs(actual.x - expected.x) <= 1e-8 * scale);
                 CHECK(std::abs(actual.y - expected.y) <= 1e-8 * scale);
             };
-            checkVector(reopenedGeometry[i].start, persistedGeometry[i].start, "start");
-            checkVector(reopenedGeometry[i].end, persistedGeometry[i].end, "end");
+            // DXF/DWG ARC has canonical CCW endpoint order; reversed LibreCAD arcs
+            // round-trip with the same locus but swapped start/end references.
+            checkVector(reopenedGeometry[i].start,
+                        canonicalArcOrder ? persistedGeometry[i].end : persistedGeometry[i].start, "start");
+            checkVector(reopenedGeometry[i].end,
+                        canonicalArcOrder ? persistedGeometry[i].start : persistedGeometry[i].end, "end");
             if (persistedGeometry[i].type != RS2::EntitySpline) {
                 checkVector(reopenedGeometry[i].minimum, persistedGeometry[i].minimum, "minimum");
                 checkVector(reopenedGeometry[i].maximum, persistedGeometry[i].maximum, "maximum");
             }
             REQUIRE(reopenedGeometry[i].references.size() == persistedGeometry[i].references.size());
-            for (std::size_t point = 0; point < persistedGeometry[i].references.size(); ++point)
-                checkVector(reopenedGeometry[i].references[point], persistedGeometry[i].references[point], "reference");
+            for (std::size_t point = 0; point < persistedGeometry[i].references.size(); ++point) {
+                std::size_t expectedPoint = point;
+                if (canonicalArcOrder && point == 0) expectedPoint = persistedGeometry[i].references.size() - 1;
+                else if (canonicalArcOrder && point + 1 == persistedGeometry[i].references.size()) expectedPoint = 0;
+                checkVector(reopenedGeometry[i].references[point], persistedGeometry[i].references[expectedPoint], "reference");
+            }
             const double lengthScale = std::max(1.0, std::abs(persistedGeometry[i].length));
             CHECK(std::abs(reopenedGeometry[i].length - persistedGeometry[i].length) <= 1e-8 * lengthScale);
             REQUIRE(reopenedGeometry[i].splineData.has_value() == persistedGeometry[i].splineData.has_value());

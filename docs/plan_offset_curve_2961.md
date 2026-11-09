@@ -29940,3 +29940,22 @@ knot cardinality. Direct geometry vanishes at exactly the radius and produces
 the exact reversed small-circle locus just beyond it; only the nonzero
 near-collapse fixture is carried through the worker and persistence lanes.
 Extreme scales, visible GUI, and ODA/AutoCAD acceptance remain open.
+
+## 673. Verify Reversed Circular-arc Geometry Across File Lanes (2026-11-09)
+
+Added an exact-normal oracle for a reversed `RS_Arc` on both offset sides and
+carried the same arc through worker cache admission, translated replacement,
+Produce, and the five DXF/DWG round-trip lanes. The file-format assertion now
+accounts for ARC's canonical CCW representation: a reversed LibreCAD arc
+round-trips with swapped start/end references while retaining its locus,
+midpoint, bounds, and length. The reversed flag and ordered endpoint identity
+are not claimed to survive in the plain ARC record.
+
+Validation: focused reversed-arc oracle passes 3,945 assertions; all nine
+`[oracle]` cases pass 53,398 assertions; complete `[curve-offset][direct]`
+passes 119,141 assertions/42 cases. Focused worker family case passes 68,745
+assertions; full client suite passes 76,015 assertions/21 cases. LibreDWG
+0.14 reads both DWGs with ARC=2, CIRCLE=2, LINE=1, LWPOLYLINE=4, SPLINE=19;
+all spline control/knot cardinalities are valid. Exact traversal-direction
+round-trip remains format-limited; GUI visibility and ODA/AutoCAD acceptance
+remain open.
