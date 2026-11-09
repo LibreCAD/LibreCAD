@@ -27,6 +27,7 @@
 
 #include <array>
 #include <cmath>
+#include <limits>
 
 #include <catch2/catch_approx.hpp>
 #include <catch2/catch_test_macros.hpp>
@@ -202,6 +203,22 @@ TEST_CASE("LC_Parabola: getNearestOrthTan onEntity check uses point coords",
   REQUIRE(tp.valid);
   REQUIRE(tp.x == Approx(0.0).margin(1e-12));
   REQUIRE(tp.y == Approx(0.0).margin(1e-12));
+}
+
+TEST_CASE("LC_Parabola: endpoint-tangent construction rejects degenerate inputs",
+          "[parabola][tangent][validation]") {
+  const std::array<RS_Vector, 2> endpoints{{{0.0, 0.0}, {10.0, 0.0}}};
+  const auto parallel = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{1.0, 0.0}, {2.0, 0.0}}});
+  CHECK_FALSE(parallel.isValid());
+
+  const auto zeroStartTangent = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{0.0, 0.0}, {1.0, -1.0}}});
+  CHECK_FALSE(zeroStartTangent.isValid());
+
+  const auto nonFiniteTangent = LC_ParabolaData::FromEndPointsTangents(
+      endpoints, {{{std::numeric_limits<double>::infinity(), 0.0}, {1.0, -1.0}}});
+  CHECK_FALSE(nonFiniteTangent.isValid());
 }
 
 TEST_CASE("LC_Parabola: From4Points reconstructs at realistic scale",

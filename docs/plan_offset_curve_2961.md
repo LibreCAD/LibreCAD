@@ -30467,3 +30467,18 @@ Validation: rebuilt the Release `librecad_tests` target. The focused Properties
 matrix passes 8,156 assertions/1 case; `git diff --check` passes. This is
 automated widget coverage, not the still-open visible desktop check. External
 ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain open.
+
+## 692. Pin Endpoint-tangent Parabola Refusals (2026-11-09)
+
+Added constructor regressions proving `LC_ParabolaData::FromEndPointsTangents`
+returns invalid data for parallel endpoint tangents, a zero start tangent, and
+a non-finite tangent. This records the current fail-closed eligibility
+boundary required by the parabola capability audit. It does not alter the
+constructor, admit ill-conditioned definitions, or qualify endpoint/tangent
+parabolas for offset generation; the valid endpoint/tangent fixture remains
+covered by the existing direct and worker matrices.
+
+Validation: the focused regression passes 3 assertions/1 case, and the complete
+`[parabola][tangent]` filter passes 6 assertions/2 cases. `git diff --check`
+passes. Near-parallel finite tangent conditioning, broader constructor domains,
+visible GUI, external CAD, cross-platform/ASan, and exact-head CI remain open.
