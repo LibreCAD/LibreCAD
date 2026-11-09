@@ -44,9 +44,11 @@ selected/highlighted independently of the candidate filter, including when its
 family differs from the requested replacement family. The candidate set must
 contain only valid, eligible entities of the requested family. A successful
 candidate pick atomically replaces the source with that entity's actual typed
-geometry; cancellation or an invalid/stale candidate leaves source and cache
-unchanged. Parabola is one of the nine selectable families and remains distinct
-from its `LC_SplinePoints` base. This closes only the picker-level requirement.
+geometry and retains that picked entity identity during the editor session,
+even when another entity has identical geometry. Cancellation or an
+invalid/stale candidate leaves source and cache unchanged. Parabola is one of
+the nine selectable families and remains distinct from its `LC_SplinePoints`
+base. This closes only the picker-level requirement.
 The requested support expansion remains open until every production-supported
 family and eligible variant is qualified through geometry generation,
 worker/cache admission, replacement, and applicable DXF/DWG persistence.
@@ -27460,3 +27462,20 @@ commit `dfb7ef0bc` (`test(offset): retain source highlight across filters`).
 Visible desktop acceptance and the roadmap's remaining per-variant geometry,
 worker/cache, persistence, independent-CAD, and exact-head CI gates remain
 open.
+
+## 574. Retain the Picked Entity Among Duplicate Curves (2026-11-09)
+
+The source widget now remembers the drawing entity ID selected for replacement
+and prefers that entity when refreshing candidates, but only while its live
+geometry still exactly matches the embedded typed source. This prevents two
+geometrically identical entities from causing the just-picked second entity
+to be replaced in the widget by the first match or highlighted incorrectly.
+The preference is transient to the editor session; persisted offset metadata
+still stores source geometry rather than a durable source-entity reference, so
+duplicate-source disambiguation after reopening remains unspecified.
+
+Validation: duplicate-line selection/highlight and cross-family highlight
+regressions pass 44 assertions/2 cases; the complete source-picker suite passes
+12,155 assertions/12 cases; Release `librecad_tests` build and
+`git diff --check` pass. Implementation commit `87c0a6f20` (`fix(offset):
+retain picked source identity`).
