@@ -87,9 +87,11 @@ An additional strong positive-rational weight profile maps the oracle's simple
 periodic seam roots for degrees 4 and 5. Its degree-6 counterpart has six
 oracle roots including interior knot `t=2`; W593 now certifies that C2-knot
 crossing, maps every reported candidate to output geometry, and completes
-worker operation 7 plus result-wire round-trip for this exact profile. This
-does not qualify other degree-6 periodic weight/knot profiles or general
-high-rational periodic support.
+worker operation 7 plus result-wire round-trip for this exact profile. W595
+also qualifies one open degree-6 positive-rational spline with a repeated
+multiplicity-four C2 knot and an oracle-backed crossing at `t=0.5`. These do
+not qualify other degree-6 periodic weight/knot profiles or general
+high-rational/repeated-knot support.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -27975,3 +27977,25 @@ result; complete Release `librecad_offset_worker_kernel_tests` passes
 1,706,716 assertions/86 cases; `git diff --check` passes. Broader repeated-knot
 layouts, exact-head CI, visible GUI, and independent-CAD acceptance remain
 open.
+
+## 595. Qualify a Repeated C2 Rational Knot Crossing (2026-11-09)
+
+Added an open degree-6 positive-rational spline with an interior knot of
+multiplicity four, so the representation guarantees C2 continuity. A
+high-precision one-sided oracle verifies matching curvature at the join and
+opposite offset-factor signs around the selected distance. On both adjacent
+intervals the prior strict Bernstein root-count field remains unavailable,
+while the conservative interval-variation bounds sum to at most two. The
+engine reports the knot as a certified-unique candidate and maps its offset
+point to an output cusp endpoint within the requested geometry tolerance.
+Together with W594's C1 sign-jump case, this exercises the continuity gate on
+both sides: a C2 repeated knot can be certified; a sign jump at a knot lacking
+a C2 guarantee is not promoted to a cusp.
+
+Validation: focused `repeated C2 rational spline knot cusp maps to output`
+passes 24 assertions/1 case; complete Release
+`librecad_offset_worker_kernel_tests` passes 1,706,740 assertions/87 cases;
+`git diff --check` passes. This qualifies only the recorded degree-6 data,
+weight profile, knot multiplicity, distance, and topology. Other repeated-knot
+layouts, periodic profiles, full geometry-variant support, exact-head CI,
+visible GUI, and independent-CAD acceptance remain open.
