@@ -28774,3 +28774,30 @@ clang-format, and `git diff --check` passes. Test commit `13acfcede` (`test(offs
 persist interior knot crossings`). This does not qualify arbitrary rational
 weights or knot positions, external-CAD acceptance, visible GUI, or exact-head
 CI.
+
+## 633. Confirm Editable Source-family Picker and Parabola Scope (2026-11-09)
+
+The latest Properties-widget requests confirm the intended replacement
+workflow: while editing an offset, the user can change the requested source
+curve family before selecting a drawing entity; the candidate list refreshes
+to that family, and the current source remains highlighted independently of
+the candidate filter. The picker covers every currently modeled source kind:
+line, arc, circle, ellipse, spline, spline-points, distinct parabola, bounded
+hyperbola, and polyline. Parabola is a first-class selectable identity even
+where its geometry uses the `LC_SplinePoints` representation.
+
+This picker behavior is implemented and covered by the existing family-change,
+cross-family replacement, highlight-retention, and parabola-identity tests.
+Do not add another selector or a parabola-only UI branch. Treat the repeated
+requests as confirmation, not new implementation slices. Remaining work is
+end-to-end geometry, eligibility/refusal, worker/cache, and persistence
+qualification for concrete variants within each family; presence in the picker
+does not imply those variants are supported. Keep visible-desktop acceptance
+as a separate gate.
+
+Validation evidence already recorded in the picker regressions includes the
+nine-family replacement matrix and typed parabola identity checks. The current
+workspace remains blocked from visible GUI validation while macOS reports the
+desktop locked; do not mark that gate complete based on automated tests. Latest
+multi-knot persistence evidence is W632 above, and its exact-head CI status must
+be refreshed after the next push.
