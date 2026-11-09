@@ -435,6 +435,31 @@ TEST_CASE("Worker client reports exact known work for a real geometric refusal",
     CHECK_FALSE(completion.native(attributes));
 }
 
+TEST_CASE("Worker rejects a sub-tolerance short arc without publishing partial geometry",
+          "[lc-offsetcurve][worker-client][arc][refusal]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    Receipts receipts;
+    constexpr double seam = 1e-8;
+    const LC_OffsetSourceGeometry source{
+        RS_ArcData{{3.0, -4.0}, 4.0, 2.0 * M_PI - seam, seam, false}};
+    const LC_OffsetSourceDefinition definition{source, .25, 1e-4, false};
+    const Req::Request request{token(71), Req::GenerateSource{definition, {}}};
+
+    REQUIRE(owned.get().submit(request, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 71, 7);
+    REQUIRE(std::holds_alternative<Reply::Native>(completion.reply().result));
+    const auto& result = std::get<Reply::Native>(completion.reply().result);
+    REQUIRE(result.engineStatus);
+    CHECK(*result.engineStatus == LC_CurveOffsetStatus::UndefinedTangent);
+    CHECK(result.ordinaryStatus == Reply::OrdinaryStatus::None);
+    CHECK(result.ordinary.empty());
+    CHECK_FALSE(result.curve);
+    const RS_Line attributes{nullptr, {0, 0}, {1, 0}};
+    CHECK_FALSE(completion.native(attributes));
+}
+
 TEST_CASE("Worker ordinary completions materialize exact plain output with fresh identities", Tags) {
     auto& rt = runtime(); OwnedClient owned{rt};
     RS_EntityContainer owner; RS_Layer layer{QStringLiteral("ordinary local")};
