@@ -27135,3 +27135,25 @@ not cover general nonuniform or repeated-knot degree-4..6 source splines,
 multi-span/high-control-count admission, independent numerical offset oracles
 for these degrees, or visible/independent-CAD acceptance. Those remain open;
 do not label high-degree SPLINE offsets universally supported yet.
+
+## 508. Qualify Two-span Degree-4 and Degree-6 Sources (2026-11-08)
+
+Extended the worker, file-metadata, and staged-promotion fixtures to include
+clamped degree-4 and degree-6 rational splines with one distinct interior knot
+at `0.5` (two spans). The worker generates and validates caches for both
+degrees. Both signed offsets also pass operation-7/operation-8 staged import
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The metadata matrix checks
+save/reopen/second-save preservation, including exact source knot vectors.
+
+Validation: high-degree interior-knot worker case, 62 assertions/1 case;
+typed-source file round-trip, 6,900 assertions/1 case; helper-backed staged
+cache-promotion matrix, 63,100 assertions/1 case; `librecad_tests` and worker
+kernel targets build; `git diff --check` passes. Test commit `a5a87deaa`
+(`test(offset): qualify multi-span high-degree sources`).
+
+This adds only a single simple interior knot at the midpoint for degrees four
+and six. Nonuniform interior knots, repeated knots, asymmetric multi-span
+profiles, higher control counts, independent offset-accuracy oracles, GUI
+source replacement, and independent CAD verification remain open. Continue
+the degree-4..6 knot-layout matrix; do not generalize this receipt to all
+multi-span NURBS.
