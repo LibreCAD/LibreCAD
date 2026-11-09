@@ -6041,7 +6041,7 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
 
-    const int degree = GENERATE(2, 3, 4, 6);
+    const int degree = GENERATE(2, 3, 4, 5, 6);
     const bool sixControlLayout = GENERATE(false, true);
     RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
     if (degree <= 3 && sixControlLayout) {
