@@ -3673,6 +3673,31 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
                 diagnostics.failingRunObserved, options->tolerance.nodeMerge);
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(diagnostics.complete);
+        const auto builtWithoutDiagnostics = LC_CurveOffset::buildDirectBranches(
+            source,
+            LC_CurveOffset::makeSideRequest(signedDistance > 0
+                                                ? LC_CurveOffsetSide::Left
+                                                : LC_CurveOffsetSide::Right,
+                                            std::abs(signedDistance)),
+            *options, LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(builtWithoutDiagnostics.status == built.status);
+        REQUIRE(builtWithoutDiagnostics.branches.size() == built.branches.size());
+        for (std::size_t i = 0; i < built.branches.size(); ++i) {
+            const LC_OffsetBranch& withDiagnostics = built.branches[i];
+            const LC_OffsetBranch& withoutDiagnostics = builtWithoutDiagnostics.branches[i];
+            CHECK(withoutDiagnostics.closed == withDiagnostics.closed);
+            CHECK(withoutDiagnostics.reversed == withDiagnostics.reversed);
+            CHECK(withoutDiagnostics.startEnd == withDiagnostics.startEnd);
+            CHECK(withoutDiagnostics.endEnd == withDiagnostics.endEnd);
+            REQUIRE(withoutDiagnostics.cubicPieces.size() ==
+                    withDiagnostics.cubicPieces.size());
+            if (!withDiagnostics.cubicPieces.empty()) {
+                CHECK(withoutDiagnostics.cubicPieces.front().bezier.front() ==
+                      withDiagnostics.cubicPieces.front().bezier.front());
+                CHECK(withoutDiagnostics.cubicPieces.back().bezier.back() ==
+                      withDiagnostics.cubicPieces.back().bezier.back());
+            }
+        }
         const auto seamCandidate = std::find_if(
             diagnostics.candidateParameters.begin(),
             diagnostics.candidateParameters.end(), [&](double parameter) {
@@ -3730,6 +3755,84 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
                 CHECK(seamBox->t0 <= endValue);
                 CHECK(seamBox->t1 >= endValue - 1e-7);
             }
+        }
+
+        for (const double candidate : diagnostics.candidateParameters) {
+            const SplineOracle candidateParameter{candidate};
+            const SplineOracle candidateNeighborhood{"1e-6"};
+            const auto oracleCandidateFactor = oracleOffsetFactor(
+                data, candidateParameter, step, start, end, distance);
+            const auto oracleCandidateBefore = oracleOffsetFactor(
+                data, candidateParameter - candidateNeighborhood, step,
+                start, end, distance);
+            const auto oracleCandidateAfter = oracleOffsetFactor(
+                data, candidateParameter + candidateNeighborhood, step,
+                start, end, distance);
+            const auto productionFactor = [&](const double parameter) {
+                double wrappedParameter = parameter;
+                const double domain = endValue - startValue;
+                if (wrappedParameter < startValue) wrappedParameter += domain;
+                if (wrappedParameter > endValue) wrappedParameter -= domain;
+                LC_CurveJet jet;
+                if (!source.tryEvaluateJet(wrappedParameter,
+                                           LC_CurveEvaluationSide::Interior, jet))
+                    return std::numeric_limits<double>::quiet_NaN();
+                const double speedSquared = jet.first.x * jet.first.x +
+                                            jet.first.y * jet.first.y;
+                return speedSquared * std::sqrt(speedSquared) - signedDistance *
+                    (jet.first.x * jet.second.y - jet.first.y * jet.second.x);
+            };
+            const double productionBefore = productionFactor(candidate - 1e-6);
+            const double productionAfter = productionFactor(candidate + 1e-6);
+            const auto candidatePoint = oracleOffsetPoint(
+                data, candidateParameter, step, start, end, distance,
+                candidate == endValue);
+            const RS_Vector expectedCandidate{
+                candidatePoint.first.convert_to<double>(),
+                candidatePoint.second.convert_to<double>()};
+            double nearestCuspEndpoint = std::numeric_limits<double>::infinity();
+            for (const LC_OffsetBranch& branch : built.branches) {
+                if (branch.cubicPieces.empty()) continue;
+                if (branch.startEnd == LC_OffsetBranchEnd::Cusp) {
+                    nearestCuspEndpoint = std::min(
+                        nearestCuspEndpoint,
+                        branch.cubicPieces.front().bezier.front().distanceTo(
+                            expectedCandidate));
+                }
+                if (branch.endEnd == LC_OffsetBranchEnd::Cusp) {
+                    nearestCuspEndpoint = std::min(
+                        nearestCuspEndpoint,
+                        branch.cubicPieces.back().bezier.back().distanceTo(
+                            expectedCandidate));
+                }
+            }
+            const auto candidateBox = std::find_if(
+                diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
+                [&](const LC_CurveOffsetCuspCandidateBox& box) {
+                    return box.parameter == candidate;
+                });
+            REQUIRE(candidateBox != diagnostics.candidateBoxes.end());
+            const bool mappedToTinyReversal = std::any_of(
+                diagnostics.collapsedTinyReversals.begin(),
+                diagnostics.collapsedTinyReversals.end(),
+                [&](const LC_CurveOffsetTinyReversalCollapse& collapse) {
+                    return collapse.boundedByCusps &&
+                           collapse.sourceT0 <= candidate &&
+                           candidate <= collapse.sourceT1 &&
+                           collapse.extent <= 2.0 * options->tolerance.nodeMerge &&
+                           collapse.replacementPoint.distanceTo(expectedCandidate) <=
+                               options->tolerance.requestedGeometry;
+                });
+            CAPTURE(degree, weightProfile, candidate, candidateBox->span,
+                    nearestCuspEndpoint, mappedToTinyReversal,
+                    options->tolerance.requestedGeometry, oracleCandidateFactor,
+                    oracleCandidateBefore, oracleCandidateAfter, productionBefore,
+                    productionAfter);
+            CHECK(abs(oracleCandidateFactor) < SplineOracle{"1e-8"});
+            CHECK((oracleCandidateBefore < 0) != (oracleCandidateAfter < 0));
+            CHECK((productionBefore < 0) != (productionAfter < 0));
+            CHECK((nearestCuspEndpoint <= options->tolerance.requestedGeometry ||
+                   mappedToTinyReversal));
         }
 
         const auto startPoint = oracleOffsetPoint(

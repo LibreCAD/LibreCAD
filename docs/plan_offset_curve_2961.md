@@ -180,6 +180,12 @@ W563cr adds validated multi-branch ordinary line/cubic cache canonicalization
 and generic cache-layout/grip support for full-multiplicity boundaries; this
 closes that narrow representation gap, not unresolved periodic positive-side
 cases or all-source-variant cache support.
+W589 now keeps a roundoff-near-zero closed seam as a provisional branch-join
+boundary when no isolated cusp/stall owns it. This prevents the wrapped first/
+last branch from receiving one mixed orientation classification that can
+erase a separately isolated cusp. The seam remains diagnostically
+unclassified, not certified as a root; candidate-to-output proof is limited to
+the recorded degree-4/5/6 weighted periodic profiles.
 Current status (W523 complete for its defined spline precision/persistence
 matrix; W524 parabola translation/persistence matrix complete for its defined
 grid; W526 polyline worker scale/translation qualification complete for its
@@ -27773,3 +27779,67 @@ Release worker-kernel suite passes 1,706,153 assertions/85 cases; the target
 builds and `git diff --check` passes. Certified boundary root
 classification, exact event ownership, other profiles, and global
 candidate/stall-to-output bijection remain open.
+
+## 588. Keep Unproved Seam Boundaries Unclassified (2026-11-09)
+
+Evaluated whether the existing cusp-isolation leaves could prove a weighted
+periodic seam root-free by recording strict no-root/sign-variation leaves on
+both sides of the domain seam. The degree-4/5/6 weighted fixtures produced no
+complete two-sided proof record, so that evidence cannot support a new
+root-free boundary classification. The instrumentation and its test were
+discarded; no production behavior or diagnostics contract changed. W587's
+roundoff-bounded `unclassifiedBoundaries` remains the honest result for these
+cases.
+
+Next boundary work must either establish a complete, explicit proof covering
+both one-sided seam neighborhoods and validate it on fixtures that exercise
+that proof, or retain the boundary as unclassified. Do not infer root absence
+from partial coverage, sampled signs alone, or a near-zero floating-point
+factor. The source-picker contract is unaffected: family switching before
+selection, all nine modeled families, and distinct parabola identity remain
+implemented; end-to-end per-variant geometry/cache/persistence qualification
+is still open.
+
+Validation: the exploratory proof assertion failed because none of the
+weighted fixtures yielded a complete two-sided proof; the experiment was
+removed. The last valid validation remains W587 (focused `[degree-limit]`,
+162 assertions/1 case; full worker-kernel suite, 1,706,153 assertions/85
+cases). Re-run those suites after the next production change.
+
+## 589. Preserve Cusp Ownership Beside an Unclassified Periodic Seam (2026-11-09)
+
+Strengthened the degree-4/5/6 weighted periodic seam regression so every
+isolated production candidate is checked against the independent 256-bit
+offset-factor oracle, the production spline jet on both sides, and final
+geometry. Each simple candidate must have a near-zero oracle factor and
+opposite one-sided signs; its offset point must be represented by a cusp
+endpoint or by a recorded cusp-bounded tiny-reversal collapse.
+
+The strengthened assertion exposed a degree-4 weighted case at
+`t=4.09620132833931372`: the candidate factor was about `-8.17e-16`, and both
+oracle and production signs changed across it, but no output cusp endpoint or
+collapse represented it. The closed seam itself had a roundoff-near-zero
+factor and no candidate/stall owner. Branch assembly wrapped the first and
+last source intervals before `joinCorners` classified their offset
+orientation. Because the wrapped branch crossed the unresolved seam, its
+widest piece supplied a mixed orientation; that made the later true cusp look
+like a through-join and erased it.
+
+When a closed seam's one-sided factors are both within their scale-aware
+roundoff bounds and the cusp/stall lists do not own the seam, branch assembly
+now keeps a provisional seam link instead of unconditionally wrapping the
+first and last intervals. `joinCorners` retains the split only when its
+one-sided orientation classification requires it; equal orientations still
+merge. The near-zero seam remains recorded as unclassified and is not promoted
+to a certified cusp/root. The decision uses the production cusp/stall lists,
+not the optional diagnostics pointer, so diagnostic and ordinary callers
+produce identical branch status, topology, and endpoints.
+
+Validation: focused `[degree-limit]` passes 387 assertions/1 case; complete
+Release worker-kernel suite passes 1,706,378 assertions/85 cases; the Release
+`librecad_tests` target builds; `[spline]` passes 29,438 assertions/78 cases;
+`git diff --check` passes. This closes candidate-to-output mapping for the
+recorded degree-4/5/6 weighted seam profiles only. Certified boundary root
+classification, other periodic weight/knot profiles, full root completeness,
+global candidate-to-output bijection, visible GUI, independent CAD, and
+exact-head CI remain open.

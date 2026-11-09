@@ -1573,52 +1573,54 @@ public:
         }
         LC_CurveOffsetStatus status =
             isolateCusps(barrier, arcStalls, cusps, stalls, cuspDiagnostics);
-        if (cuspDiagnostics != nullptr) {
-            if (m_source.closed() && !breaks.empty()) {
-                const double start = breaks.front();
-                const double end = breaks.back();
-                const auto factorAndRoundoff = [&](const LC_CurveJet& jet) {
-                    const double speedSquared = dot(jet.first, jet.first);
-                    const double speed = std::sqrt(speedSquared);
-                    const double value = speedSquared * speed -
-                                         m_d * cross(jet.first, jet.second);
-                    const double roundoff = 64.0 * g_eps *
-                        (speedSquared * speed + std::abs(m_d) * speed * jet.second.magnitude());
-                    return std::pair{value, roundoff};
+        bool unclassifiedNearZeroSeam = false;
+        if (m_source.closed() && breaks.size() >= 2) {
+            const double start = breaks.front();
+            const double end = breaks.back();
+            const auto factorAndRoundoff = [&](const LC_CurveJet& jet) {
+                const double speedSquared = dot(jet.first, jet.first);
+                const double speed = std::sqrt(speedSquared);
+                const double value = speedSquared * speed -
+                                     m_d * cross(jet.first, jet.second);
+                const double roundoff = 64.0 * g_eps *
+                    (speedSquared * speed +
+                     std::abs(m_d) * speed * jet.second.magnitude());
+                return std::pair{value, roundoff};
+            };
+            LC_CurveJet left;
+            LC_CurveJet right;
+            if (m_source.jet(end, LC_CurveEvaluationSide::Left, left) &&
+                m_source.jet(start, LC_CurveEvaluationSide::Right, right)) {
+                const auto [leftFactor, leftRoundoff] = factorAndRoundoff(left);
+                const auto [rightFactor, rightRoundoff] = factorAndRoundoff(right);
+                const auto withinRoundoff = [](const double value, const double bound) {
+                    return std::isfinite(value) && std::isfinite(bound) &&
+                           std::abs(value) <= bound;
                 };
-                LC_CurveJet left;
-                LC_CurveJet right;
-                if (m_source.jet(end, LC_CurveEvaluationSide::Left, left) &&
-                    m_source.jet(start, LC_CurveEvaluationSide::Right, right)) {
-                    const auto [leftFactor, leftRoundoff] = factorAndRoundoff(left);
-                    const auto [rightFactor, rightRoundoff] = factorAndRoundoff(right);
-                    const auto withinRoundoff = [](const double value, const double bound) {
-                        return std::isfinite(value) && std::isfinite(bound) &&
-                               std::abs(value) <= bound;
-                    };
-                    if (withinRoundoff(leftFactor, leftRoundoff) &&
-                        withinRoundoff(rightFactor, rightRoundoff)) {
-                        const double boundaryParameterTolerance = 64.0 * g_eps *
-                            std::max({1.0, std::abs(start), std::abs(end)});
-                        const bool candidateOwnsBoundary = std::any_of(
-                            cuspDiagnostics->candidateBoxes.begin(),
-                            cuspDiagnostics->candidateBoxes.end(), [&](const auto& box) {
-                                return (box.t0 <= start && box.t1 >= start) ||
-                                       (box.t0 <= end && box.t1 >= end) ||
-                                       std::abs(box.parameter - start) <= boundaryParameterTolerance ||
-                                       std::abs(box.parameter - end) <= boundaryParameterTolerance;
-                            });
-                        const bool stallOwnsBoundary = std::any_of(
-                            stalls.begin(), stalls.end(), [&](const auto& interval) {
-                                return (interval.first <= start && interval.second >= start) ||
-                                       (interval.first <= end && interval.second >= end);
-                            });
-                        if (!candidateOwnsBoundary && !stallOwnsBoundary)
-                            cuspDiagnostics->unclassifiedBoundaries.push_back(
-                                {start, leftFactor, rightFactor, leftRoundoff, rightRoundoff});
+                if (withinRoundoff(leftFactor, leftRoundoff) &&
+                    withinRoundoff(rightFactor, rightRoundoff)) {
+                    const double boundaryParameterTolerance = 64.0 * g_eps *
+                        std::max({1.0, std::abs(start), std::abs(end)});
+                    const bool candidateOwnsBoundary = std::any_of(
+                        cusps.begin(), cusps.end(), [&](const double cusp) {
+                            return std::abs(cusp - start) <= boundaryParameterTolerance ||
+                                   std::abs(cusp - end) <= boundaryParameterTolerance;
+                        });
+                    const bool stallOwnsBoundary = std::any_of(
+                        stalls.begin(), stalls.end(), [&](const auto& interval) {
+                            return (interval.first <= start && interval.second >= start) ||
+                                   (interval.first <= end && interval.second >= end);
+                        });
+                    unclassifiedNearZeroSeam =
+                        !candidateOwnsBoundary && !stallOwnsBoundary;
+                    if (cuspDiagnostics != nullptr && unclassifiedNearZeroSeam) {
+                        cuspDiagnostics->unclassifiedBoundaries.push_back(
+                            {start, leftFactor, rightFactor, leftRoundoff, rightRoundoff});
                     }
                 }
             }
+        }
+        if (cuspDiagnostics != nullptr) {
             cuspDiagnostics->candidateParameters = cusps;
             cuspDiagnostics->stallIntervals = stalls;
             cuspDiagnostics->status = status;
@@ -1633,6 +1635,13 @@ public:
             if (std::binary_search(cusps.begin(), cusps.end(), breaks[i])) {
                 breakCusps[(i + 1 == breaks.size()) ? 0 : i] = true;
             }
+        }
+        // Do not wrap the first and last branches into one orientation sample
+        // when the seam is numerically near a cusp but no isolated event owns
+        // it. joinCorners() merges the boundary only when the adjacent branch
+        // orientation classifications agree.
+        if (unclassifiedNearZeroSeam) {
+            breakCusps[0] = true;
         }
         branches.assign(1, LC_OffsetBranch{});
         // what lies between each branch and the next: a cusp, or the join at a break
