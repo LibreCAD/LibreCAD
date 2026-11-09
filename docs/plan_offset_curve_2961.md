@@ -28276,3 +28276,25 @@ cases; post-guard focused rerun passes and `git diff --check` passes. Code
 commit `eeb6369dc` (`test(offset): use analytic C2 knot curvature oracle`).
 Broader knot/profile coverage, full family-variant completion, exact-head CI,
 visible GUI, and external-CAD acceptance remain open.
+
+## 609. Persist C2 Knot Caches Across Five Native File Lanes (2026-11-09)
+
+Extended the product-writer C2 knot round-trip matrix from the midpoint to
+all five positions qualified in W608: `0.23`, `0.25`, `0.37`, `0.5`, and
+`0.75`. The test covers degrees 3/4/5, both curvature orientations, and each
+position through binary R14/R2000/R2018 DXF plus R2000/R2018 DWG. For every
+one of the 30 source fixtures and five lanes, it verifies direct
+`CertifiedUniqueBracket` cusp ownership, worker operation-7 generation,
+staged carrier promotion, native product export, second staged import, typed
+source-definition equality, and exact cache fingerprint preservation. Output
+paths include degree, knot position, side, and file version to prevent fixture
+collisions.
+
+Validation: focused `C2 rational knot cusps round-trip through native file
+writers` passes 42,233 assertions/1 case, including all 150 fixture/lane
+combinations; `librecad_tests` Release target builds and `git diff --check`
+passes. Test commit `09c3cb554` (`test(offset): persist C2 knots across file
+lanes`). This qualifies the recorded knot positions and fixtures only, not
+arbitrary knot layouts or rational spline variants. Independent CAD visual
+acceptance, exact-head CI, other spline profiles, and remaining source-family
+variant coverage remain open.
