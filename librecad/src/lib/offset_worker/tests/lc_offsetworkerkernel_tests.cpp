@@ -4201,6 +4201,116 @@ TEST_CASE("periodic rational seam tangent and interior roots map to output",
     }
 }
 
+TEST_CASE("repeated C2 rational spline knot cusp maps to output",
+          "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][oracle]") {
+    RS_SplineData data{6, false};
+    data.controlPoints = {{0, 0}, {1, .001}, {2, .008}, {3, -5.0}, {4, .064},
+                          {5, .125}, {6, .216}, {7, .343}, {8, .512},
+                          {9, .729}, {10, 1.0}};
+    data.weights = {1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98};
+    data.knotslist = {0, 0, 0, 0, 0, 0, 0, .5, .5, .5, .5,
+                      1, 1, 1, 1, 1, 1, 1};
+    const RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+    LC_CurveJet leftJet;
+    LC_CurveJet rightJet;
+    REQUIRE(source.tryEvaluateJet(.5, LC_CurveEvaluationSide::Left, leftJet));
+    REQUIRE(source.tryEvaluateJet(.5, LC_CurveEvaluationSide::Right, rightJet));
+    const auto curvature = [](const LC_CurveJet& jet) {
+        const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+        return (jet.first.x * jet.second.y - jet.first.y * jet.second.x) /
+               (speedSquared * std::sqrt(speedSquared));
+    };
+    const double leftCurvature = curvature(leftJet);
+    const double rightCurvature = curvature(rightJet);
+    CAPTURE(leftCurvature, rightCurvature);
+    REQUIRE(std::isfinite(leftCurvature));
+    REQUIRE(std::isfinite(rightCurvature));
+    REQUIRE(std::abs(leftCurvature) > 1e-9);
+    CHECK(std::abs(leftCurvature - rightCurvature) < 1e-8);
+    const SplineOracle start{0};
+    const SplineOracle end{1};
+    const SplineOracle step{"1e-24"};
+    const SplineOracle leftKnotCurvature = 1 - oracleOffsetFactor(
+        data, SplineOracle{"0.5"}, step, start, end, SplineOracle{1}, true);
+    const SplineOracle rightKnotCurvature = 1 - oracleOffsetFactor(
+        data, SplineOracle{"0.5"}, step, start, end, SplineOracle{1});
+    REQUIRE(abs(leftKnotCurvature - rightKnotCurvature) < SplineOracle{"1e-30"});
+    const double signedDistance =
+        (2 / (leftKnotCurvature + rightKnotCurvature)).convert_to<double>();
+    LC_CurveJetBounds leftBounds;
+    LC_CurveJetBounds rightBounds;
+    REQUIRE(source.tryBoundJetForCusp(.5 - 1e-6, .5, leftBounds, signedDistance));
+    REQUIRE(source.tryBoundJetForCusp(.5, .5 + 1e-6, rightBounds, signedDistance));
+    CAPTURE(leftBounds.rationalCuspRootVariationUpperBound,
+            rightBounds.rationalCuspRootVariationUpperBound,
+            leftBounds.rationalCuspIntervalVariationUpperBound,
+            rightBounds.rationalCuspIntervalVariationUpperBound);
+    CHECK(leftBounds.rationalCuspRootVariationUpperBound < 0);
+    CHECK(rightBounds.rationalCuspRootVariationUpperBound < 0);
+    REQUIRE(leftBounds.rationalCuspIntervalVariationUpperBound >= 0);
+    REQUIRE(rightBounds.rationalCuspIntervalVariationUpperBound >= 0);
+    CHECK(leftBounds.rationalCuspIntervalVariationUpperBound +
+              rightBounds.rationalCuspIntervalVariationUpperBound <=
+          2);
+    const SplineOracle before = oracleOffsetFactor(
+        data, SplineOracle{"0.5"} - SplineOracle{"1e-7"}, step,
+        start, end, SplineOracle{signedDistance});
+    const SplineOracle after = oracleOffsetFactor(
+        data, SplineOracle{"0.5"} + SplineOracle{"1e-7"}, step,
+        start, end, SplineOracle{signedDistance});
+    CAPTURE(signedDistance, before, after);
+    REQUIRE(abs(before) > SplineOracle{"1e-12"});
+    REQUIRE(abs(after) > SplineOracle{"1e-12"});
+    REQUIRE((before < 0) != (after < 0));
+
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, signedDistance, 1e-5, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(
+            signedDistance > 0.0 ? LC_CurveOffsetSide::Left
+                                 : LC_CurveOffsetSide::Right,
+            std::abs(signedDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.failureStage, diagnostics.candidateParameters,
+            diagnostics.stallIntervals);
+    REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+    CHECK(std::any_of(diagnostics.candidateParameters.begin(),
+                      diagnostics.candidateParameters.end(), [](const double parameter) {
+                          return std::abs(parameter - .5) < 1e-8;
+                      }));
+    const auto knotCandidate = std::find_if(
+        diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
+        [](const LC_CurveOffsetCuspCandidateBox& candidate) {
+            return std::abs(candidate.parameter - .5) < 1e-8;
+        });
+    REQUIRE(knotCandidate != diagnostics.candidateBoxes.end());
+    CHECK(knotCandidate->kind ==
+          LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket);
+    const auto expectedPoint = oracleOffsetPoint(
+        data, SplineOracle{"0.5"}, step, start, end, SplineOracle{signedDistance});
+    const RS_Vector expected{expectedPoint.first.convert_to<double>(),
+                             expectedPoint.second.convert_to<double>()};
+    double endpointError = std::numeric_limits<double>::infinity();
+    for (const auto& branch : built.branches) {
+        if (branch.cubicPieces.empty()) continue;
+        if (branch.startEnd == LC_OffsetBranchEnd::Cusp) {
+            endpointError = std::min(endpointError,
+                                     branch.cubicPieces.front().bezier.front().distanceTo(expected));
+        }
+        if (branch.endEnd == LC_OffsetBranchEnd::Cusp) {
+            endpointError = std::min(endpointError,
+                                     branch.cubicPieces.back().bezier.back().distanceTo(expected));
+        }
+    }
+    CAPTURE(endpointError, options->tolerance.requestedGeometry);
+    CHECK(endpointError <= options->tolerance.requestedGeometry);
+}
+
 TEST_CASE("rational spline knot sign jump is not certified as a cusp",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][refusal]") {
     RS_SplineData data{6, false};
