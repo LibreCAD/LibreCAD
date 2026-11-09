@@ -28162,3 +28162,52 @@ Validation: LibreDWG 0.14 JSON parse plus structural assertions pass for all
 12 preserved DWGs; the host persistence case passes 8,435 assertions/1 case
 with output preservation enabled. Exact-head CI, visible GUI, external-CAD
 rendering, other DWG releases, and broader spline profiles remain open.
+
+## 604. Reconfirm Editable Source-family Replacement Scope (2026-11-09)
+
+The latest request confirms the source replacement interaction and family
+coverage already specified in the current contract. While replacing an
+existing source, the user first changes the source-family control; the picker
+then refreshes to eligible entities of that family. The current source remains
+selected/highlighted independently of that filter until a valid replacement is
+chosen. The picker covers all nine kinds currently modeled by
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
+distinct kind from its `LC_SplinePoints` base.
+
+This is a scope confirmation, not a new UI implementation task: existing
+widget regressions cover family switching, cross-family replacement, source
+highlighting, and parabola identity. Do not add a second widget or selector.
+“All supported types” at the picker means all nine modeled kinds; it does not
+claim every concrete geometry variant is eligible through generation,
+worker/cache admission, replacement, or DXF/DWG persistence. Continue those
+gates family-by-family using the existing implementation order and require
+variant-specific regression evidence before expanding eligibility.
+
+Validation: documentation-only reconciliation; no code changed and no tests
+rerun. The latest picker regression receipt remains W590, and the latest
+production validation remains W603. Visible GUI interaction, exact-head CI,
+external-CAD acceptance, and the remaining per-variant geometry/persistence
+matrix remain open.
+
+## 605. Check a Non-midpoint C2 Rational Knot Crossing (2026-11-09)
+
+Extended the degree-3/4/5 open positive-rational C2 knot crossing matrix from
+the midpoint alone to two interior knot positions, `0.37` and `0.5`, for both
+curvature orientations. For each exact fixture, the high-precision oracle
+checks the one-sided curvature agreement and sign change; interval bounds
+remain limited to at most two roots; direct generation must report a
+`CertifiedUniqueBracket` mapped to the output cusp; and worker operation 7,
+result-wire round-trip, cache combination, operation-8 validation, and its
+result-wire round-trip must all succeed. This adds evidence for one
+non-midpoint knot location, not general knot-location or repeated-knot
+coverage.
+
+Validation: the complete Release `librecad_offset_worker_kernel_tests` suite
+passes 1,707,616 assertions/88 cases with the two-position matrix. After a
+behavior-preserving loop cleanup to keep captures compatible with the
+project's pre-C++20 language mode, the focused case passes 876 assertions/1
+case without compiler warnings; `git diff --check` passes. Test commit
+`d18fc2262` (`test(offset): cover non-midpoint C2 knot cusps`). Broader knot
+profiles, full geometry-family coverage, exact-head CI, visible GUI, and
+external-CAD acceptance remain open.
