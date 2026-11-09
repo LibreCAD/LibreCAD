@@ -28751,3 +28751,26 @@ assertions/94 cases; the changed range passes repository clang-format and
 `git diff --check`. Test commit `f79797120` (`test(offset): cover interior C2
 knot crossings`). This qualifies only the stated profile/knot matrix, not
 arbitrary multi-knot rational splines.
+
+## 632. Persist the Interior-knot Crossing Fixtures (2026-11-09)
+
+Extended the native writer/reopen matrix with the moderate positive weight
+profile at W631's interior target knots `.31` and `.58`. The matrix now has
+eight bounded knot/weight/target configurations, degrees 3/4/5/6, both
+curvature orientations, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG (64
+source fixtures and 320 fixture/lane combinations). Fixture names encode the
+target knot as well as the knot vector and weight profile. Each lane requires
+staged import, typed-source equality, exact cache-fingerprint preservation,
+and writer export/reopen. This adds persistence only for the oracle-qualified
+moderate-profile `.31`/`.58` crossings; unqualified target/profile combinations
+from W631 remain outside this matrix.
+
+Validation: focused Release persistence test passes 124,675 assertions/1 test
+case; all 128 newly retained R2000/R2018 DWGs parse with LibreDWG 0.14 minJSON,
+and the entire retained set of 224 DWGs contains exactly one nonempty degree-3
+SPLINE with `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers per file. The
+Release `librecad_tests` target builds, the changed range passes repository
+clang-format, and `git diff --check` passes. Test commit `13acfcede` (`test(offset):
+persist interior knot crossings`). This does not qualify arbitrary rational
+weights or knot positions, external-CAD acceptance, visible GUI, or exact-head
+CI.
