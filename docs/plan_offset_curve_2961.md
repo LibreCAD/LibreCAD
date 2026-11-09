@@ -29446,3 +29446,24 @@ evidence for this centered near-straight profile, not acceptance by
 ODA/AutoCAD, visible-GUI evidence, or support for arbitrary near-degenerate
 parabolas. Continue to retain the translation precision refusal and broaden
 the family matrix only with explicit per-variant evidence.
+
+## 659. Qualify Endpoint-and-tangent Parabola Construction (2026-11-09)
+
+The affine source profile `(7,-2), (5,7.25), (-5,0.5)` is now constructed
+through `LC_ParabolaData::FromEndPointsTangents`, using endpoint tangent
+vectors `(-2,9.25)` and `(-10,-6.75)`. The direct test verifies that the
+constructor recovers the expected middle control point before checking both
+offset sides against the exact-normal oracle. The same endpoint/tangent-built
+typed source enters the staged operation-7/operation-8 cache matrix and all
+five internal R14/R2000/R2018 DXF/DWG reopen lanes.
+
+Validation: direct affine-parabola test passes 23,647 assertions/1 case; the
+expanded staged parabola matrix passes 3,973,255 assertions/1 case. Both
+independent LibreDWG fixtures (canonical and near-straight) remain required
+and pass in the staged matrix; the endpoint/tangent profile itself has
+internal five-lane reader coverage, not a separate LibreDWG parse. Product/
+test commit `6e9b32061` (`test(offset): cover endpoint-tangent parabola
+source`). This qualifies the recorded endpoint/tangent construction and
+resulting profile only; parallel/ill-conditioned tangents, all endpoint
+domains, ODA/AutoCAD, visible GUI, and remaining source-family variants remain
+open.
