@@ -29835,3 +29835,22 @@ LWPOLYLINE=4, SPLINE=15. Every SPLINE has control points and valid knot
 cardinality `knot_count == control_count + degree + 1`; invalid count is zero.
 This does not qualify every hyperbola interval, branch transform, scale,
 curvature boundary, or external CAD reader; those gates remain open.
+
+## 667. Qualify Closed Periodic Spline Offsets Through the Worker (2026-11-09)
+
+Added a direct exact-normal oracle for a validated closed periodic cubic spline
+on both sides at distance 0.2, including seam continuity. The same periodic
+cubic and closed periodic linear layouts were already represented in the
+real-helper matrix; operation-8 native-cache admission is now explicitly
+required for both. Their generated products remain in the aggregate Produce
+and five-format DXF/DWG round-trip matrix.
+
+Validation: focused periodic direct oracle passes 2,143 assertions/1 case;
+all five `[oracle]` cases pass 35,834 assertions; complete
+`[curve-offset][direct]` passes 101,577 assertions/38 cases. The focused
+worker family case passes 51,879 assertions; the complete worker-client suite
+passes 59,098 assertions/21 cases. LibreDWG 0.14 independently parses both
+DWGs with ARC=1, CIRCLE=1, LINE=1, LWPOLYLINE=4, SPLINE=15, and zero invalid
+spline control/knot cardinalities. These are specific periodic layouts, not
+arbitrary knot vectors, periodic rational-weight variants, all seam/orientation
+cases, visible GUI, or ODA/AutoCAD acceptance.

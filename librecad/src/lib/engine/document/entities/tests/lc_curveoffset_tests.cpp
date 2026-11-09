@@ -1077,6 +1077,35 @@ TEST_CASE("Clamped rational degree-four through degree-six splines follow exact 
     }
 }
 
+TEST_CASE("Closed periodic cubic splines follow exact offset normals at their seam",
+          "[curve-offset][direct][spline][periodic][oracle]") {
+    RS_Spline source{nullptr, RS_SplineData{3, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10},
+                                   RS_Vector{60, 30}, RS_Vector{20, 50},
+                                   RS_Vector{-15, 25}}) {
+        source.addControlPoint(point);
+    }
+    source.setClosed(true);
+    REQUIRE(source.validate());
+    double first = 0.0;
+    double last = 0.0;
+    REQUIRE(source.getParameterDomain(first, last));
+    REQUIRE(last > first);
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                           LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        const double distance = 0.2;
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(side, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(maxDeviation(result, evaluator(source)) <=
+              options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("An S-curve offsets on both sides through its inflection", "[curve-offset][direct]") {
     const RS_Spline s = sCurve();
     for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {

@@ -649,7 +649,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
-        if (i + 3 >= sources.size()) REQUIRE(cacheRepresentable);
+        if (i == 13 || i == 15 || i + 3 >= sources.size()) REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
             if (result.ordinary.size() > 1)
