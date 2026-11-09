@@ -3569,15 +3569,20 @@ TEST_CASE("periodic rational seam tangent root maps to a bounded stall",
     }
 }
 
-TEST_CASE("higher-degree periodic spline seam tangencies map to output",
+TEST_CASE("higher-degree periodic spline seam roots map to output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][seam-root][even-root][degree-limit]") {
-    for (const int degree : {4, 5, 6}) {
+    for (const auto [degree, weightProfile] : {
+             std::pair{4, 0}, std::pair{4, 1}, std::pair{5, 0},
+             std::pair{5, 1}, std::pair{6, 0}, std::pair{6, 1}}) {
         RS_Spline base{nullptr, RS_SplineData{degree, false}};
         const int controlCount = degree + 1;
+        std::vector<RS_Vector> basePoints;
         for (int i = 0; i < controlCount; ++i) {
             const double angle = 2.0 * M_PI * i / controlCount;
-            base.addControlPoint({10.0 * std::cos(angle), 10.0 * std::sin(angle)});
+            const RS_Vector point{10.0 * std::cos(angle), 10.0 * std::sin(angle)};
+            basePoints.push_back(point);
+            base.addControlPoint(point);
         }
         std::vector<double> knots(static_cast<std::size_t>(degree + 1), 0.0);
         knots.insert(knots.end(), static_cast<std::size_t>(degree + 1), 1.0);
@@ -3586,6 +3591,23 @@ TEST_CASE("higher-degree periodic spline seam tangencies map to output",
         base.setClosed(true);
         RS_SplineData data = base.getData();
         data.weights.assign(data.controlPoints.size(), 1.0);
+        if (weightProfile == 1) {
+            const std::vector<double> weights = degree == 4
+                ? std::vector<double>{1.0, 1.3, .8, .8, 1.3}
+                : degree == 5
+                    ? std::vector<double>{1.0, 1.3, .8, 1.5, .8, 1.3}
+                    : std::vector<double>{1.0, 1.3, .8, 1.5, 1.5, .8, 1.3};
+            REQUIRE(weights.size() == basePoints.size());
+            for (std::size_t i = 0; i < data.controlPoints.size(); ++i) {
+                const auto original = std::find_if(
+                    basePoints.begin(), basePoints.end(), [&](const RS_Vector& point) {
+                        return point.distanceTo(data.controlPoints[i]) < 1e-12;
+                    });
+                REQUIRE(original != basePoints.end());
+                data.weights[i] = weights[static_cast<std::size_t>(
+                    std::distance(basePoints.begin(), original))];
+            }
+        }
         const RS_Spline source{nullptr, data};
         REQUIRE(source.validate());
         REQUIRE(source.isClosed());
@@ -3602,7 +3624,7 @@ TEST_CASE("higher-degree periodic spline seam tangencies map to output",
             data, start, step, start, end, SplineOracle{1}, false);
         const SplineOracle curvatureLeft = 1 - unitLeft;
         const SplineOracle curvatureRight = 1 - unitRight;
-        CAPTURE(degree, curvatureLeft, curvatureRight);
+        CAPTURE(degree, weightProfile, curvatureLeft, curvatureRight);
         REQUIRE(abs(curvatureLeft - curvatureRight) < SplineOracle{"1e-8"});
         REQUIRE(abs(curvatureLeft) > SplineOracle{"1e-12"});
         const double signedDistance =
@@ -3616,12 +3638,16 @@ TEST_CASE("higher-degree periodic spline seam tangencies map to output",
             data, end - SplineOracle{"1e-7"}, step, start, end, distance);
         const SplineOracle after = oracleOffsetFactor(
             data, start + SplineOracle{"1e-7"}, step, start, end, distance);
-        CAPTURE(signedDistance, seamLeft, seamRight, before, after);
+        CAPTURE(startValue, endValue, weightProfile, signedDistance, seamLeft,
+                seamRight, before, after);
         CHECK(abs(seamLeft) < SplineOracle{"1e-8"});
         CHECK(abs(seamRight) < SplineOracle{"1e-8"});
         REQUIRE(before != 0);
         REQUIRE(after != 0);
-        CHECK((before < 0) == (after < 0));
+        if (weightProfile == 0)
+            CHECK((before < 0) == (after < 0));
+        else
+            CHECK((before < 0) != (after < 0));
 
         const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data},
                                                    signedDistance, 1e-4, false};
@@ -3657,8 +3683,10 @@ TEST_CASE("higher-degree periodic spline seam tangencies map to output",
                 return (interval.first <= startValue && interval.second >= startValue) ||
                        (interval.first <= endValue && interval.second >= endValue);
             });
-        CHECK((seamStall != diagnostics.stallIntervals.end()) !=
-              (seamCandidate != diagnostics.candidateParameters.end()));
+        if (weightProfile == 0) {
+            CHECK((seamStall != diagnostics.stallIntervals.end()) !=
+                  (seamCandidate != diagnostics.candidateParameters.end()));
+        }
         if (seamCandidate != diagnostics.candidateParameters.end()) {
             const auto seamBox = std::find_if(
                 diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
@@ -3696,7 +3724,7 @@ TEST_CASE("higher-degree periodic spline seam tangencies map to output",
                              piece.bezier.back().distanceTo(expected)));
             }
         }
-        CAPTURE(degree, expected.x, expected.y, nearest,
+        CAPTURE(degree, weightProfile, expected.x, expected.y, nearest,
                 options->tolerance.requestedGeometry);
         CHECK(nearest <= options->tolerance.requestedGeometry);
         for (const auto& interval : diagnostics.stallIntervals) {
@@ -3723,7 +3751,7 @@ TEST_CASE("higher-degree periodic spline seam tangencies map to output",
                                      piece.bezier.back().distanceTo(expectedEndpoint)));
                     }
                 }
-                CAPTURE(degree, parameter, endpointError,
+                CAPTURE(degree, weightProfile, parameter, endpointError,
                         options->tolerance.requestedGeometry);
                 CHECK(endpointError <= options->tolerance.requestedGeometry);
             }

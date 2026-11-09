@@ -27724,3 +27724,23 @@ passes 8,103 assertions/1 case; full `[gui][dialog][offsetcurve][source]`
 suite passes 12,155 assertions/12 cases. This closes only the picker-level
 type-changing workflow. End-to-end geometry, worker/cache, persistence, visible
 GUI, independent-CAD, and exact-head CI requirements remain open.
+
+## 586. Map Weighted Higher-degree Periodic Seam Roots (2026-11-09)
+
+Extended the degree-4/5/6 periodic seam oracle matrix with positive,
+nonuniform rational control weights. The uniform profiles retain their
+same-sign even-root checks; the weighted profiles are independently measured
+as simple seam crossings and are checked separately for opposite one-sided
+signs. For both profile classes, production must complete cusp isolation and
+map the high-precision seam offset point to a retained cubic-piece endpoint
+within requested geometry tolerance. The weighted profiles also exercise
+wrapped-control weight propagation after closed-spline conversion.
+
+Validation: focused `[degree-limit]` seam matrix passes 153 assertions/1 case;
+full Release `librecad_offset_worker_kernel_tests` passes 1,706,144 assertions
+in 85 cases; the target rebuilds and `git diff --check` passes. This qualifies
+only these symmetric positive-weight profiles and the recorded simple/even
+seam events. It does not prove complete event ownership/counting: some weighted
+seam roots are represented by materialized output endpoints without an
+explicit seam candidate/stall diagnostic. General candidate/stall-to-output
+bijection, other periodic profiles, and full root completeness remain open.
