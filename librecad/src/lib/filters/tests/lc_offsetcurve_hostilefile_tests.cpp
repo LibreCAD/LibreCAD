@@ -1427,7 +1427,26 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     };
     const RS_SplineData quarticRepeatedKnotSpline = repeatedKnotRationalSpline(4);
     const RS_SplineData sexticRepeatedKnotSpline = repeatedKnotRationalSpline(6);
-    const std::array<LC_OffsetSourceGeometry, 42> sources{
+    const auto asymmetricRationalSpline = [](const std::size_t degree) {
+        constexpr std::array<double, 8> yValues{0.0, 1.5, -.4, 2.2, .3, 1.1, -1.0, .5};
+        constexpr std::array<double, 8> weights{.7, 1.5, .6, 1.8, .85, 1.3, 2.0, .9};
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree + 1; ++i) {
+            data.controlPoints.emplace_back(.8 * static_cast<double>(i) + .04 * (i % 2),
+                                            yValues[i]);
+            data.weights.push_back(weights[i]);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.push_back(degree == 4 ? .3 : .62);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
+    const RS_SplineData quarticAsymmetricSpline = asymmetricRationalSpline(4);
+    const RS_SplineData sexticAsymmetricSpline = asymmetricRationalSpline(6);
+    const std::array<LC_OffsetSourceGeometry, 44> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .2, 0, 2 * M_PI, false}},
@@ -1449,6 +1468,8 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{sexticNonuniformSpline},
         LC_OffsetSourceGeometry{quarticRepeatedKnotSpline},
         LC_OffsetSourceGeometry{sexticRepeatedKnotSpline},
+        LC_OffsetSourceGeometry{quarticAsymmetricSpline},
+        LC_OffsetSourceGeometry{sexticAsymmetricSpline},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{tangentSplinePointsData},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
@@ -1556,7 +1577,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             // Keep one second-saved carrier per source family for optional
             // independent CAD inspection; default tests remain hermetic.
             constexpr std::array<std::size_t, 9> representativeSources{
-                0, 5, 22, 24, 27, 36, 37, 38, 39};
+                0, 5, 24, 26, 29, 38, 39, 40, 41};
             if (fileFormat.dwg &&
                 std::find(representativeSources.begin(), representativeSources.end(), i) !=
                     representativeSources.end()) {
@@ -1890,7 +1911,24 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
         data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
         return data;
     };
-    const std::array<LC_OffsetSourceGeometry, 28> sources{
+    const auto asymmetricRationalSpline = [](const std::size_t degree) {
+        constexpr std::array<double, 8> yValues{0.0, 1.5, -.4, 2.2, .3, 1.1, -1.0, .5};
+        constexpr std::array<double, 8> weights{.7, 1.5, .6, 1.8, .85, 1.3, 2.0, .9};
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree + 1; ++i) {
+            data.controlPoints.emplace_back(.8 * static_cast<double>(i) + .04 * (i % 2),
+                                            yValues[i]);
+            data.weights.push_back(weights[i]);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.push_back(degree == 4 ? .3 : .62);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
+    const std::array<LC_OffsetSourceGeometry, 30> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {4, 0}, .6, 0, tau, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{3, -2}, {3, 0}, .7, .2, 2.1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{-3, 1}, {2, 1}, .8, 1.8, .1, true}},
@@ -1918,7 +1956,9 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
         LC_OffsetSourceGeometry{nonuniformRationalSpline(4)},
         LC_OffsetSourceGeometry{nonuniformRationalSpline(6)},
         LC_OffsetSourceGeometry{repeatedKnotRationalSpline(4)},
-        LC_OffsetSourceGeometry{repeatedKnotRationalSpline(6)}
+        LC_OffsetSourceGeometry{repeatedKnotRationalSpline(6)},
+        LC_OffsetSourceGeometry{asymmetricRationalSpline(4)},
+        LC_OffsetSourceGeometry{asymmetricRationalSpline(6)}
     };
     struct Format {
         Lane lane;
