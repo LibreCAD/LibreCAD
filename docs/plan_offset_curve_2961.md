@@ -26862,3 +26862,24 @@ observed on the desktop.
 No code change is requested by this reconciliation. It confirms the picker
 contract is complete while keeping end-to-end variant qualification, visible
 GUI acceptance, and exact-head CI explicitly open.
+
+## 499. Broaden Knot-inserted Rational Import Weights (2026-11-08)
+
+Extended the product-level staged-import matrix in Section 497 from middle
+weights `0.5` and `2.0` to `0.25`, `0.5`, `2.0`, and `4.0`, for both exact
+quadratic knot-insertion locations (`u=0.25` and `u=0.5`). The existing matrix
+still checks scales `0.5`, `1`, and `2`, both signed offset sides, and R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG. For every combination, worker operation-7
+generation must match direct materialization, and staged operation-8 import
+must promote the source/cache without downgrade and preserve their exact
+fingerprints.
+
+Release validation: focused knot-inserted import test, 27,776 assertions/1
+case; `[lc-offsetcurve][import-session][typed-source][spline-variant]` union,
+248,353 assertions/11 cases; test target rebuild and `git diff --check` pass.
+Test commit `19960c11d` (`test(offset): broaden rational import weights`).
+This adds end-to-end evidence for four middle weights on this specific
+symmetric rational-quadratic profile; it does not establish arbitrary control
+weights, knot vectors/multiplicities, offset magnitudes, periodic cases, or
+general candidate-to-output mapping. Those remain open, as do visible GUI,
+external CAD, and exact-head CI gates.
