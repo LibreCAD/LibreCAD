@@ -101,7 +101,10 @@ degree 3 simple knot), not general repeated-knot support. W598 mirrors the
 degree-3/4/5 fixtures and verifies their crossings on both signed offset
 sides; this remains evidence for those exact knot and weight profiles.
 W599 additionally runs worker operation 7 and round-trips its result through
-the result codec for every tested degree-3/4/5 mirrored fixture.
+the result codec for every tested degree-3/4/5 mirrored fixture. W600
+combines each worker output into the canonical source-cache spline and
+validates it through operation 8 plus the result codec; this still does not
+prove DXF/DWG persistence for these crossing fixtures.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -28077,3 +28080,21 @@ five` passes 240 assertions/1 case; complete Release
 `git diff --check` passes. Operation-8 validation, broader knot profiles,
 periodic profiles, full geometry-variant support, exact-head CI, visible GUI,
 and independent-CAD acceptance remain open.
+
+## 600. Validate C2 Knot Caches Through Operation 8 (2026-11-09)
+
+For each degree-3/4/5 positive-rational C2 knot fixture and mirrored signed
+side, combined operation-7 ordinary output into the canonical cache spline
+and ran worker operation 8 against the original source definition. Every
+cache is accepted (`refusal=None`, `changed=true`, engine status `Ok`), and
+the validation result preserves those fields through the result codec. This
+qualifies direct generation, operation-7 output, operation-8 cache admission,
+and protocol round-trips only for these six tested fixtures; it does not
+establish source/cache file persistence or broader knot support.
+
+Validation: focused `C2 rational knot crossings map for degrees three through
+five` passes 438 assertions/1 case; complete Release
+`librecad_offset_worker_kernel_tests` passes 1,707,178 assertions/88 cases;
+`git diff --check` passes. DXF/DWG round-trips for these exact fixtures,
+broader knot profiles, periodic profiles, full geometry-variant support,
+exact-head CI, visible GUI, and independent-CAD acceptance remain open.
