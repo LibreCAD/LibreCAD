@@ -108,6 +108,9 @@ prove DXF/DWG persistence for these crossing fixtures. W601 adds native
 application-writer export/reopen checks for the existing degree-3 rational
 repeated-knot source on both signed sides across five file lanes; that fixture
 is a separate, older repeated-knot profile, not the C2 cusp-crossing matrix.
+W602 adds product-writer export/reopen evidence for the C2 cusp fixtures at
+degrees 3-5, both signed sides and the same five lanes; each staged reopen
+retains the typed source and exact cache fingerprint.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -28117,3 +28120,22 @@ cache eligibility` passes 1,891 assertions/1 case; `git diff --check` passes.
 The matching C2 cusp fixtures still need DXF/DWG product-writer round-trips,
 along with broader knot profiles, full geometry-variant coverage, exact-head
 CI, visible GUI, and independent-CAD acceptance.
+
+## 602. Round-trip C2 Rational Knot Caches Across Five File Lanes (2026-11-09)
+
+Added the degree-3 simple-knot and degree-4/5 multiplicity-`degree-2` C2
+rational cusp fixtures to the product-writer persistence matrix. Both
+curvature orientations are tested, with the signed distance derived from the
+join curvature. For each case, worker operation 7 generates the cache, staged
+import admits the typed-source carrier, and LibreCAD's native writer exports
+it before a second staged import. DXF lanes are binary R14, R2000, and R2018;
+DWG lanes are R2000 and R2018. The source definition and cache geometry
+fingerprint must survive both imports and the application write/reopen cycle.
+This qualifies only these six degree/orientation fixtures and five lanes, not
+other knot layouts, multiplicities, distances, weight profiles, or DWG
+releases.
+
+Validation: focused `C2 rational knot cusps round-trip through native file
+writers` passes 8,468 assertions/1 case; `git diff --check` passes. Other
+rational knot profiles, periodic profiles, full geometry-variant support,
+exact-head CI, visible GUI, and independent-CAD acceptance remain open.
