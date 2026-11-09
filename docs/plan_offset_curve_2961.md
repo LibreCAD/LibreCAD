@@ -66,12 +66,14 @@ large source counts, independent offset-error oracles, and external CAD remain
 open; wrapped degree-4/6 sources now have worker generation/cache-validation,
 Properties replacement, and staged five-lane DXF/DWG promotion coverage for
 the recorded periodic profiles. This does not qualify other periodic knot
-layouts or all high-degree geometry. Properties picker/replacement now has
-focused degree-4/6 coverage for the tested clamped single-span, midpoint-knot,
-asymmetric rational, and wrapped periodic profiles. Generated editable offset
-caches are still constrained to the validated line/cubic-Bezier
-representation; do not widen cache validation merely because source spline
-degree increased.
+layouts or all high-degree geometry. An independent high-precision source
+offset oracle now checks representative clamped single-span rational degrees
+4-6; broader knot-profile accuracy oracles remain open. Properties
+picker/replacement now has focused degree-4/6 coverage for the tested clamped
+single-span, midpoint-knot, asymmetric rational, and wrapped periodic profiles.
+Generated editable offset caches are still constrained to the validated
+line/cubic-Bezier representation; do not widen cache validation merely
+because source spline degree increased.
 
 Current implementation order for the remaining “all supported types” work:
 
@@ -27339,5 +27341,27 @@ periodic high-degree splines`).
 This qualifies only the tested generated wrapped periodic profiles, weight
 sets, conditions, scales, distances, and file lanes. It does not cover
 arbitrary periodic knot vectors, repeated/nonuniform periodic knots, every
-high-degree rational profile, independent offset-error oracles, or external
-CAD acceptance.
+high-degree rational profile, periodic-specific independent offset-error
+oracles, or external CAD acceptance. W547 adds an independent oracle for
+bounded clamped single-span rational degrees 4-6.
+
+## 547. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
+
+Extended the independent homogeneous de Boor test evaluator to the supported
+degree bound instead of its former cubic-only scratch capacity. For clamped
+single-span rational degree-4, degree-5, and degree-6 sources, the worker
+generation test now compares 15 high-precision offset points per source
+against a densely sampled generated cache. The maximum nearest-cache distance
+must remain within twice the requested geometric tolerance. The oracle uses
+its own 256-bit source evaluation and finite-difference tangent estimate; the
+production worker still generates and validates the cache as before.
+
+Validation: `[high-degree]` worker-kernel selector passes 414 assertions/6
+cases; `librecad_offset_worker_kernel_tests` builds; `git diff --check` passes.
+Test commit `c3989de05` (`test(offset): check high-degree cache against spline
+oracle`).
+
+This qualifies an independent offset-error check only for the recorded
+clamped single-span profiles. Knot-inserted, asymmetric, repeated-knot, and
+periodic degree-4/6 accuracy grids, larger source-count limits, and external
+CAD remain open.
