@@ -28618,3 +28618,22 @@ cases; added-range clang-format and `git diff --check` pass. Test commit
 `053e03e71` (`test(offset): cover four-knot rational layouts`). Native-file
 persistence and independent DWG parsing for this vector remain open, along
 with other knot/weight profiles, external CAD, visible GUI, and exact-head CI.
+
+## 626. Persist the Four-knot Rational Layout Through Native Files (2026-11-09)
+
+Extended the multi-knot writer matrix with the `.12`/`.31`/`.58`/`.82` vector
+from W625. The combined regression now covers four bounded knot layouts across
+degrees 3/4/5/6 and both curvature orientations, through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG (32 source fixtures, 160 fixture/lane combinations).
+Each lane requires staged import, typed-source preservation, exact cache
+fingerprint retention, and successful writer export/reopen. DWG fixtures are
+preserved only when `LIBRECAD_TYPED_SOURCE_DWG_DIR` is set.
+
+Validation: focused Release persistence case passes 59,342 assertions/1 case;
+all 64 retained DWGs independently decode with LibreDWG 0.14 minJSON and each
+contains exactly one nonempty degree-3 SPLINE with `LC_OFFSET_CURVE` and
+`TYPED_SOURCE` EED markers. `librecad_tests` Release target builds, the changed
+range passes repository clang-format, and `git diff --check` passes. Test
+commit `25da4e3ef` (`test(offset): persist four-knot spline caches`). This is
+not arbitrary vector/weight coverage or AutoCAD/ODA acceptance; visible GUI,
+external-CAD validation, and exact-head CI remain open.
