@@ -29744,7 +29744,7 @@ these rows do not imply every parameter/domain is supported):
 
 | Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
 | --- | --- | --- | --- |
-| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed-line capture refusal; real worker/cache and five file lanes for existing fixtures | Carry the new scale/orientation profiles through worker/cache and persistence; near-ULP and non-finite source boundaries |
+| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed-line capture refusal; real worker/cache, Produce and strict five-format reopen checks for the added profiles | Independent DWG-reader checks for the added stress profiles; near-ULP and non-finite source boundaries |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; typed worker output; five file lanes | Sweep seam, reversed/full-sweep limits and boundary matrix |
 | Circle | Finite nonzero-radius closed circle | Direct closed conic behavior; typed worker output; five file lanes | Inner collapse/zero-radius and large/small scale matrix |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
@@ -30314,6 +30314,29 @@ Validation: the focused Release test
 `Line offsets retain exact normals across orientation and scale boundaries`
 passes 1,729 assertions/1 case; `librecad_tests` rebuilt successfully and
 `git diff --check` passes. This closes only these direct-geometry fixtures.
-The new profiles still need real-worker/cache admission and applicable
-five-format persistence; near-ULP/non-finite source refusal, visible GUI,
-external CAD, cross-platform/ASan, and exact-head CI remain open.
+At this checkpoint the profiles still needed worker/cache and file-lane
+qualification; section 685 records that follow-up. Near-ULP/non-finite source
+refusal, visible GUI, external CAD, cross-platform/ASan, and exact-head CI
+remain open.
+
+## 685. Carry Line Scale Profiles Through Worker and File Lanes (2026-11-09)
+
+Added the same 18 forward-horizontal, diagonal, and reversed-diagonal line
+profiles from section 684 to the typed-source real-helper matrix. They span
+scales `1e-8`, `1`, and `1e8`, both zero and `1e6 * scale` translations, and
+scale-relative signed distances. Every added source is required to produce a
+joined operation-7 result, admit the operation-8 cache, and apply the translated
+source-definition replacement. The existing Produce path retains each as a
+native LINE. R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG are reopened and checked;
+the added stress-line endpoints use a local-scale/ULP-derived tolerance rather
+than the broad world-coordinate tolerance used by the historical mixed-family
+matrix.
+
+Validation: rebuilt `librecad_offset_worker_client_tests`; the focused
+`Worker client joins typed source generation for every modeled source family`
+case passes 92,508 assertions/1 case, including all five file lanes for the
+18 added profiles. Section 684's direct oracle passes 1,729 assertions/1 case;
+`git diff --check` passes. These internal round-trips do not substitute for
+independent LibreDWG parsing of the new stress files. Near-ULP/non-finite source
+refusal, visible GUI, external CAD, cross-platform/ASan, and exact-head CI stay
+open.
