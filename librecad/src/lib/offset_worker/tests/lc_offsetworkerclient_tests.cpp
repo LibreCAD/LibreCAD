@@ -8,7 +8,9 @@
 #include "../lc_offsetworkertolerance.h"
 #include "../lc_offsetworkeredit.h"
 #include "lc_offsetcurvexdata.h"
+#include "lc_filtertestsupport.h"
 #include "rs_entitycontainer.h"
+#include "rs_graphic.h"
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "lc_parabola.h"
@@ -754,6 +756,29 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     CHECK(replacementsApplied == cacheCandidates.size());
     CHECK(replacementRefusals.empty());
 
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory persistenceDirectory("offset-worker-produced-legacy-roundtrip");
+    RS_Graphic persistenceGraphic;
+    persistenceGraphic.initForNewDocument();
+    auto* persistenceLayer = persistenceGraphic.findLayer("0");
+    REQUIRE(persistenceLayer);
+    struct PersistedGeometry {
+        RS2::EntityType type;
+        RS_Vector start;
+        RS_Vector end;
+        RS_Vector minimum;
+        RS_Vector maximum;
+        RS_VectorSolutions references;
+        double length = 0.0;
+    };
+    std::vector<PersistedGeometry> persistedGeometry;
+    const auto persistenceGeometry = [](const RS_Entity& entity) {
+        return PersistedGeometry{entity.rtti(), entity.getStartpoint(), entity.getEndpoint(),
+                                 entity.getMin(), entity.getMax(), entity.getRefPoints(),
+                                 entity.getLength()};
+    };
+
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i, sources[i].kind());
         auto entity = sources[i].makeEntity();
@@ -815,8 +840,69 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         CHECK(prepared.outcome().sources.front().source == entity.get());
         CHECK(prepared.outcome().sources.front().complete());
         CHECK(Req::Values::encodeSourceGeometry(sources[i]) == sourceBefore);
+        const auto sourceKind = sources[i].kind();
+        if (sourceKind == LC_OffsetSourceGeometry::Kind::Line ||
+            sourceKind == LC_OffsetSourceGeometry::Kind::Arc ||
+            sourceKind == LC_OffsetSourceGeometry::Kind::Circle ||
+            sourceKind == LC_OffsetSourceGeometry::Kind::Polyline) {
+            REQUIRE_FALSE(batch.entitiesToAdd.empty());
+            for (const RS_Entity* generated : batch.entitiesToAdd) {
+                REQUIRE(generated);
+                const auto geometry = persistenceGeometry(*generated);
+                std::unique_ptr<RS_Entity> copy{generated->clone()};
+                REQUIRE(copy);
+                copy->setLayer(persistenceLayer);
+                persistedGeometry.push_back(geometry);
+                persistenceGraphic.addEntity(copy.release());
+            }
+        }
         prepared.release();
         qDeleteAll(batch.entitiesToAdd);
+    }
+
+    REQUIRE_FALSE(persistedGeometry.empty());
+    struct PersistenceLane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<PersistenceLane, 5> persistenceLanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDXFRW2018, "r2018.dxf"},
+        {RS2::FormatDWG2018, "r2018.dwg"},
+    }};
+    for (const auto& lane : persistenceLanes) {
+        CAPTURE(lane.extension);
+        const auto path = persistenceDirectory.file(lane.extension);
+        REQUIRE(lc::test::exportDrawing(persistenceGraphic, path, lane.format));
+        RS_Graphic reopened;
+        REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+        std::vector<PersistedGeometry> reopenedGeometry;
+        for (const RS_Entity* entity : reopened) {
+            if (entity->isDeleted()) continue;
+            CAPTURE(entity->rtti());
+            reopenedGeometry.push_back(persistenceGeometry(*entity));
+        }
+        REQUIRE(reopenedGeometry.size() == persistedGeometry.size());
+        for (std::size_t i = 0; i < persistedGeometry.size(); ++i) {
+            CAPTURE(i, persistedGeometry[i].type, reopenedGeometry[i].type);
+            CHECK(reopenedGeometry[i].type == persistedGeometry[i].type);
+            const auto checkVector = [](const RS_Vector& actual, const RS_Vector& expected) {
+                const double scale = std::max({1.0, std::abs(expected.x), std::abs(expected.y)});
+                CHECK(std::abs(actual.x - expected.x) <= 1e-8 * scale);
+                CHECK(std::abs(actual.y - expected.y) <= 1e-8 * scale);
+            };
+            checkVector(reopenedGeometry[i].start, persistedGeometry[i].start);
+            checkVector(reopenedGeometry[i].end, persistedGeometry[i].end);
+            checkVector(reopenedGeometry[i].minimum, persistedGeometry[i].minimum);
+            checkVector(reopenedGeometry[i].maximum, persistedGeometry[i].maximum);
+            REQUIRE(reopenedGeometry[i].references.size() == persistedGeometry[i].references.size());
+            for (std::size_t point = 0; point < persistedGeometry[i].references.size(); ++point)
+                checkVector(reopenedGeometry[i].references[point], persistedGeometry[i].references[point]);
+            const double lengthScale = std::max(1.0, std::abs(persistedGeometry[i].length));
+            CHECK(std::abs(reopenedGeometry[i].length - persistedGeometry[i].length) <= 1e-8 * lengthScale);
+        }
     }
 
     const qint64 linearRequestId = nextRequestId;

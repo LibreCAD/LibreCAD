@@ -26,41 +26,40 @@ USA.
 Updated: 2026-11-09. Project: **LibreCAD**, not LibreCAD_3.
 ## Current Contract
 
-The latest follow-up, after the explicit parabola request, reconfirms the
-source replacement contract: while choosing a replacement, the user can
-change the source family before selecting an entity, and the candidate list
-refreshes to that family. The selector uses
-`LC_OffsetSourceGeometry::SupportedKinds` and includes every modeled kind:
-line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
-and polyline. `LC_Parabola` remains distinct from its `LC_SplinePoints` base.
+The latest source-widget request is captured as this testable contract: while
+replacing a source, the Properties family control remains enabled, and changing
+it before a drawing pick filters candidates to that requested family. The
+selector is populated from `LC_OffsetSourceGeometry::SupportedKinds` and
+includes every modeled kind: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. `LC_Parabola` remains
+distinct from its `LC_SplinePoints` base.
 
-This Properties-widget behavior is implemented and covered by regressions;
-do not create another selector or a parabola-only UI branch. Changing the
-family control remains enabled while replacing an existing source. The user
-can choose the replacement family before selecting in the drawing; changing
-that filter refreshes the candidate set but does not mutate the current source,
-generated cache, or its drawing highlight. Keep the current source visibly
-selected/highlighted independently of the candidate filter, including when its
-family differs from the requested replacement family. The candidate set must
-contain only valid, eligible entities of the requested family. A successful
-candidate pick atomically replaces the source with that entity's actual typed
-geometry and retains that picked entity identity during the editor session,
-even when another entity has identical geometry. Cancellation or an
-invalid/stale candidate leaves source and cache unchanged. Parabola is one of
-the nine selectable families and remains distinct from its `LC_SplinePoints`
-base. This closes only the picker-level requirement.
-The requested support expansion remains open until every production-supported
-family and eligible variant is qualified through geometry generation,
-worker/cache admission, replacement, and applicable DXF/DWG persistence.
+Changing the candidate filter must not mutate the current source or generated
+cache, and must not clear or move the current source's drawing highlight even
+when its family differs from the requested replacement family. Candidates
+must be valid and eligible for the requested family. Picking one atomically
+replaces the source with that entity's actual typed geometry and retains the
+picked entity identity during the editor session, including when another
+entity has identical geometry. Cancellation and invalid/stale picks leave the
+source and cache unchanged. Existing Properties-widget regressions cover this
+picker contract; do not add another selector or a parabola-only UI branch.
+This closes only the picker-level requirement.
 
-“Support all source types” remains an end-to-end obligation. For each listed
-family, inventory concrete eligible variants and independently validate direct
-generation, worker/cache admission, replacement, and applicable DXF/DWG
-read/write round-trips. Parabola picker support is not geometric support: the
-existing parabola receipts qualify only their recorded parameterizations,
-transforms, topologies, and distances. Unqualified variants must remain
-excluded or fail closed without mutating the current source/cache until their
-own geometry and persistence evidence is recorded.
+“Support all types” is a separate end-to-end requirement: qualify each
+production-supported family and eligible variant through direct geometry,
+real worker execution, cache admission, source replacement, and applicable
+DXF/DWG read/write persistence. A family appearing in the picker is not proof
+that its geometry is supported. Parabola is explicitly in scope as a
+first-class source type, but only its individually recorded parameterizations,
+transforms, topologies, and distances are qualified; unsupported cases must
+remain excluded or fail closed without changing the current source or cache.
+
+Track concrete eligible variants in a family-by-family matrix, with separate
+evidence for direct generation, worker/cache admission, replacement, and
+applicable DXF/DWG round-trips. Existing parabola receipts qualify only their
+recorded parameterizations, transforms, topologies, and distances. Unqualified
+variants must remain excluded or fail closed without mutating the current
+source/cache until their own geometry and persistence evidence is recorded.
 
 High-degree spline evidence has advanced beyond native SPLINE persistence.
 Degrees 4-6 now pass bounded source/protocol admission and worker operation-7
@@ -29542,3 +29541,24 @@ variants or distances, the five DXF/DWG lanes for every new variant, visible
 GUI behavior, or ODA/AutoCAD acceptance. Commit this composite replacement fix
 and roadmap update together, then continue with item 5 rather than treating
 this captured-fixture matrix as completion of the all-types plan.
+
+### Item 5 Progress: Worker-produced Legacy Geometry Persistence (2026-11-09)
+
+The real-helper client test now retains output entities from the Produce path
+for six captured line/arc/circle/polyline source fixtures, then writes and
+reopens the aggregate drawing through R14 DXF, R2000 DXF, R2000 DWG, R2018 DXF,
+and R2018 DWG. Each lane checks entity count and type, endpoints, bounds,
+reference points, and length with a scale-relative `1e-8` tolerance for
+format-level floating-point serialization. This tests actual generated
+entities, not source reconstructions or offset metadata alone.
+
+Validation: the focused family case passes 18,687 assertions, and the complete
+`librecad_offset_worker_client_tests` suite passes 26,632 assertions/21 cases.
+LibreDWG `dwgread -v0 -O JSON` independently parses both generated DWGs
+(AC1015 and AC1032). The first run exposed approximately
+`7e-9` drift in R2018 DWG polyline coordinates; the test now uses the documented
+relative tolerance and passes without weakening type/count/reference-point
+checks. This closes persistence only for these six captured fixture paths.
+Continue item 5 with the remaining oracle-qualified variants and independent
+reader coverage; visible GUI and ODA/AutoCAD acceptance remain distinct open
+gates.
