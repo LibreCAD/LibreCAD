@@ -30278,3 +30278,24 @@ Validation gate: retain the existing focused source-widget/action tests and the
 section 681 exact-build visible GUI gate. The automated tests establish the
 family/filter contract; they do not close the still-open visible interaction,
 external CAD, cross-platform/ASan, or exact-head CI gates listed above.
+
+## 683. Independently Read Update-from-source DWG Outputs (2026-11-09)
+
+Extended the action-level typed-source persistence matrix with a conditional
+LibreDWG `dwgread -O minJSON` check for every generated DWG. It covers all nine
+source families in both R2000 DWG and R2018 DWG (18 files across the existing
+45 family/format combinations). Because each drawing may contain unrelated
+SPLINE entities, the reader check identifies the offset cache by its complete
+degree/knot/control signature, then compares the decoded degree, knot values,
+control-point coordinates, and rational weights against the action-produced
+cache. LibreCAD's own reopen assertions continue to verify typed source
+metadata and cache promotion.
+
+Validation: the Release `librecad_tests` target rebuilt successfully. With
+`QT_QPA_PLATFORM=offscreen` and `DWGREAD=/opt/homebrew/bin/dwgread`, the
+`[i-ui][persistence][typed][matrix]` lane passes all 45 family/format
+combinations in 1 Catch2 case with 4,683 assertions, including the 18
+independent DWG parses; `git diff --check` passes. This is LibreDWG validation
+of the emitted DWG entity geometry, not ODA/AutoCAD acceptance, not independent
+DXF validation, and not proof of arbitrary source domains. Keep visible GUI,
+external CAD, cross-platform/ASan, and exact-head CI gates open.
