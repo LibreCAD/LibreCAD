@@ -28822,3 +28822,25 @@ assertions/94 cases. The changed range passes clang-format using
 `de91d3b14` (`test(offset): map additional rational knot crossings`). Native
 file persistence for newly qualified combinations, external-CAD acceptance,
 visible GUI, and exact-head CI remain open.
+
+## 635. Persist Expanded Four-knot Rational Profiles (2026-11-09)
+
+Extended the native product writer/reopen matrix from eight to 15 bounded
+four-knot/profile/target combinations. In addition to W632, it now includes
+the default profile at `.12`, `.31`, and `.58`; the moderate profile at `.12`;
+and the high-contrast profile at `.12`, `.31`, and `.58`. Across degrees
+3/4/5/6 and both curvature orientations, this produces 120 source fixtures
+and 600 fixture/lane combinations through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. Every lane checks staged import/promotion, typed-source equality,
+exact cache-fingerprint retention, and native writer export/reopen. The matrix
+is limited to these recorded profiles and target knots.
+
+Validation: focused Release persistence case passes 239,575 assertions/1
+case. All 240 retained R2000/R2018 DWG outputs independently parse with
+LibreDWG 0.14 minJSON; every file contains exactly one nonempty degree-3
+SPLINE and both `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release
+`librecad_tests` target builds, the changed range passes clang-format using
+`code_style/.clang-format`, and `git diff --check` passes. Test commit
+`872b5fc8a` (`test(offset): persist expanded knot weight profiles`). This is
+independent structural decoding, not AutoCAD/ODA visual acceptance; arbitrary
+rational weights, visible GUI, and exact-head CI remain open.
