@@ -234,8 +234,9 @@ matrix; W524 parabola translation/persistence matrix complete for its defined
 grid, extended by W647-W648 with positive- and negative-determinant affine
 source profiles, W649 with a tighter-curvature source through direct
 geometry/worker/cache/five-lane file validation, W650 with normalized
-primitive construction across extreme scales, and W652 with five-lane
-worker/cache persistence across source scales `1e-8` through `1e8`; W645 keeps broader parabola
+primitive construction across extreme scales, W652 with five-lane worker/cache
+persistence across source scales `1e-8` through `1e8`, and W653 with overflow-
+safe derived spline points at large translations; W645 keeps broader parabola
 variants as an explicit end-to-end gate; W646 extends the ratio-1e6
 rational four-knot support to `.12`, `.31`, and `.58` under its recorded
 proof/persistence limits; W526 polyline worker
@@ -29264,3 +29265,26 @@ translation/distance grid at the five listed scales; it does not imply
 arbitrary parabola support or persistence at every representable scale. Other
 family/variant gates, visible desktop acceptance, external-CAD acceptance, and
 exact-head CI remain open.
+
+## 653. Avoid Overflow in the Parabola's Derived Spline-point Midpoint (2026-11-09)
+
+`LC_Parabola::update()` derives redundant spline-point data from its three
+control points. The previous weighted sum added the two endpoint world
+coordinates before scaling, overflowing when valid controls were translated
+near `1e308`. It now computes the same quadratic midpoint as two
+difference-based midpoint steps. A regression uses finite, non-collinear
+controls separated by representable ULP-sized deltas and checks primitive
+validity, finite inherited spline-point data, typed source capture, and
+reconstruction.
+
+Validation: the new regression passes 11 assertions/1 case; the complete
+`[lc-offsetcurve][source]` selection passes 161 assertions/7 cases; the worker
+`[parabola]` selection passes 3,580 assertions/5 cases. The full `[parabola]`
+selection also completed successfully in the same validation run; the emitted
+summary was truncated, so no assertion count is claimed here. The new test
+failed before the fix specifically because the inherited midpoint was
+non-finite. Implementation commit `4a1712c11` (`fix(offset): avoid parabola
+midpoint overflow`). This qualifies derived-data stability, typed capture, and
+reconstruction only; it does not claim that offset detail remains representable
+at that world-coordinate ULP scale, or close general parabola/all-family
+support.
