@@ -705,8 +705,26 @@ TEST_CASE("Native source picker offers supported spline and polyline variants",
     cubic.controlPoints = {{0, 0}, {1, 2}, {3, 2}, {4, 0}};
     cubic.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
     cubic.weights = {1, .8, 1.2, 1};
+    const auto rationalSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            data.controlPoints.emplace_back(4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t);
+            data.weights.push_back(.75 + .5 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
+    const RS_SplineData quartic = rationalSpline(4);
+    const RS_SplineData sextic = rationalSpline(6);
     auto* degreeOne = new RS_Spline(nullptr, linear);
     auto* degreeThree = new RS_Spline(nullptr, cubic);
+    auto* degreeFour = new RS_Spline(nullptr, quartic);
+    auto* degreeSix = new RS_Spline(nullptr, sextic);
     auto* openBulgePolyline = new RS_Polyline;
     openBulgePolyline->addVertex({0, 0}, .2);
     openBulgePolyline->addVertex({8, 0});
@@ -714,6 +732,8 @@ TEST_CASE("Native source picker offers supported spline and polyline variants",
     openBulgePolyline->endPolyline();
     f.graphic.addEntity(degreeOne);
     f.graphic.addEntity(degreeThree);
+    f.graphic.addEntity(degreeFour);
+    f.graphic.addEntity(degreeSix);
     f.graphic.addEntity(openBulgePolyline);
 
     std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
@@ -747,7 +767,8 @@ TEST_CASE("Native source picker offers supported spline and polyline variants",
         CHECK_FALSE(clone->sourceDefinition());
     };
 
-    checkCandidates(LC_OffsetSourceGeometry::Kind::Spline, {degreeOne, degreeThree});
+    checkCandidates(LC_OffsetSourceGeometry::Kind::Spline,
+                    {degreeOne, degreeThree, degreeFour, degreeSix});
     checkCandidates(LC_OffsetSourceGeometry::Kind::Polyline, {openBulgePolyline});
 }
 
@@ -799,14 +820,30 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
     spline.knotslist = {0, 0, 0, 1, 1, 1};
     spline.weights = {1, .7, 1};
+    const auto highDegreeSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            data.controlPoints.emplace_back(4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t);
+            data.weights.push_back(.75 + .5 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
     LC_SplinePointsData points{false, false};
     points.useControlPoints = true;
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
     LC_SplinePointsData fitPoints{false, false};
     fitPoints.splinePoints = {{0, 0}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 10> sources{
+    const std::array<LC_OffsetSourceGeometry, 12> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{highDegreeSpline(4)},
+        LC_OffsetSourceGeometry{highDegreeSpline(6)},
         LC_OffsetSourceGeometry{points},
         LC_OffsetSourceGeometry{fitPoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
@@ -966,10 +1003,17 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
 TEST_CASE("Native source picker explains empty buckets for unsupported curve variants",
           "[gui][dialog][offsetcurve][source][eligibility]") {
     Fixture f;
-    RS_SplineData highDegree{4, false};
-    highDegree.controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {4, 0}};
-    highDegree.knotslist = {0, 0, 0, 0, 0, 1, 1, 1, 1, 1};
-    auto* unsupportedSpline = new RS_Spline(nullptr, highDegree);
+    RS_SplineData aboveSupportedDegree;
+    aboveSupportedDegree.degree = RS_Spline::MaxSupportedDegree + 1;
+    aboveSupportedDegree.type = RS_SplineData::SplineType::ClampedOpen;
+    aboveSupportedDegree.savedOpenType = aboveSupportedDegree.type;
+    for (std::size_t i = 0; i < aboveSupportedDegree.degree + 1; ++i)
+        aboveSupportedDegree.controlPoints.emplace_back(static_cast<double>(i), i % 2 ? 1.0 : 0.0);
+    aboveSupportedDegree.knotslist.insert(aboveSupportedDegree.knotslist.end(),
+        aboveSupportedDegree.degree + 1, 0.0);
+    aboveSupportedDegree.knotslist.insert(aboveSupportedDegree.knotslist.end(),
+        aboveSupportedDegree.degree + 1, 1.0);
+    auto* unsupportedSpline = new RS_Spline(nullptr, aboveSupportedDegree);
     auto* unboundedHyperbola = new LC_Hyperbola(nullptr, LC_HyperbolaData{{0, 0}, {2, 0}, .5});
     RS_SplineData constrainedFitSpline{1, false};
     constrainedFitSpline.controlPoints = {{0, 0}, {4, 0}};
