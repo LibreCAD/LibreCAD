@@ -10152,7 +10152,6 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
         {Lane::Binary18, false, DRW::AC1032, "r2018.dxf"},
         {Lane::Eed18, true, DRW::AC1032, "r2018.dwg"}}};
     constexpr std::array<double, 5> scales{1e-8, 1e-3, 1.0, 1e3, 1e8};
-    constexpr std::array<double, 2> translationRatios{1e6, 1e9};
     constexpr std::array<double, 6> normalizedDistances{-3.0, -2.5, -2.0, 2.0, 2.5, 3.0};
 
     LC_OffsetWorkerClient worker;
@@ -10214,9 +10213,12 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
     QString libreDwgReader = qEnvironmentVariable("DWGREAD");
     if (libreDwgReader.isEmpty())
       libreDwgReader = QStandardPaths::findExecutable("dwgread");
-    bool independentlyReadR2018Parabola = false;
+    std::array<bool, 2> independentlyReadR2018Parabola{};
 
     for (std::size_t variantIndex = 0; variantIndex < variants.size(); ++variantIndex) {
+        const std::array<double, 2> translationRatios = variantIndex == variants.size() - 1
+            ? std::array<double, 2>{0.0, 1e6}
+            : std::array<double, 2>{1e6, 1e9};
         for (const double scale : scales) {
             for (const double ratio : translationRatios) {
                 const RS_Vector translation{ratio * scale, -ratio * scale};
@@ -10482,12 +10484,17 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
                         const auto* importedSpline = dynamic_cast<const RS_Spline*>(imported);
                         REQUIRE(importedSpline);
 #ifdef DWGSUPPORT
-                        if (native && !independentlyReadR2018Parabola &&
+                        const std::size_t externalFixture = variantIndex == 0 ? 0 : 1;
+                        const double externalTranslation = externalFixture == 0 ? 1e6 : 0.0;
+                        if (native && externalFixture < independentlyReadR2018Parabola.size() &&
+                            !independentlyReadR2018Parabola[externalFixture] &&
                             !libreDwgReader.isEmpty() && format.dwg &&
                             format.version == DRW::AC1032 && scale == 1.0 &&
-                            ratio == 1e6 && variantIndex == 0) {
+                            ratio == externalTranslation &&
+                            (variantIndex == 0 || variantIndex == variants.size() - 1)) {
                           const auto nativeOutput =
-                              directory.file("parabola-native-r2018.dwg");
+                              directory.file("parabola-native-r2018-" +
+                                  std::to_string(externalFixture) + ".dwg");
                           REQUIRE(lc::test::exportDrawing(
                               *outcome.graphic, nativeOutput,
                               ::format(Lane::Eed18)));
@@ -10539,7 +10546,7 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
                             CHECK(actual.value("y").toDouble() ==
                                   Catch::Approx(expected.y).margin(1e-10));
                           }
-                          independentlyReadR2018Parabola = true;
+                          independentlyReadR2018Parabola[externalFixture] = true;
                         }
 #endif
                         for (int sample = 0; sample <= 128; ++sample) {
@@ -10559,7 +10566,7 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
     }
 
     const std::size_t representableSources =
-        variants.size() * scales.size() * translationRatios.size() -
+        variants.size() * scales.size() * 2 -
         unrepresentableTranslatedSources;
     CHECK(unrepresentableTranslatedSources > 0);
     CHECK(cells == representableSources * normalizedDistances.size());
@@ -10574,7 +10581,10 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
 #endif
     CHECK(promotedFiles + fallbackFiles == importedFiles);
 #ifdef DWGSUPPORT
-    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadR2018Parabola);
+    if (!libreDwgReader.isEmpty()) {
+        CHECK(independentlyReadR2018Parabola[0]);
+        CHECK(independentlyReadR2018Parabola[1]);
+    }
 #endif
 }
 
