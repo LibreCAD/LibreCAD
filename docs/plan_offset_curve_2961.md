@@ -27040,16 +27040,17 @@ across DXF and DWG R2000, R2004, R2007, R2010, R2013, and R2018. Degree-2
 conic classification and cubic fit-tangent semantics are unchanged.
 
 Validation: `[RS_Spline]`, 613 assertions/25 cases; high-degree open DXF/DWG
-round-trip, 436 assertions/1 case; existing degree-1..3 periodic round-trip,
-1,673 assertions/1 case; `librecad_tests` rebuild and `git diff --check` pass.
-Implementation/test commit `b5c13ca74` (`feat(spline): preserve degree four
-through six splines`). An attempted degree-4 periodic conversion failed
-validation, so degrees 4-6 are currently supported only for open splines.
+round-trip, 436 assertions/1 case; periodic DXF/DWG round-trip,
+2,285 assertions/1 case, now including degree-4 and degree-6 periodic layouts;
+`librecad_tests` rebuild and `git diff --check` pass. Implementation/test
+commit `b5c13ca74` (`feat(spline): preserve degree four through six splines`)
+was followed by `fb43840bb` (`fix(spline): wrap higher degree periodic
+splines`), which raises the shared `LC_SplineHelper` validation bound so
+degree-4..6 open-to-wrapped conversions are retained and round-trip.
 
 The knot-inserted offset-import fixtures still cover finite quadratic/cubic
 profiles only; degree-4..6 support here is native spline persistence, not
 offset-worker source/cache support (which remains line/cubic Bezier-chain
-based). Arbitrary rational knot layouts, degree >6, degree-4..6 periodic
-wrapping, high-degree offset-source representation and generation, other
-asymmetric source shapes, periodic offset sources, external CAD, visible GUI,
-and exact-head CI remain open.
+based). Arbitrary rational knot layouts, degree >6, high-degree offset-source
+representation and generation, other asymmetric source shapes, periodic
+offset sources, external CAD, visible GUI, and exact-head CI remain open.
