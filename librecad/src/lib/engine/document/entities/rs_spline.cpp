@@ -2299,6 +2299,10 @@ bool RS_Spline::tryBoundJetImpl(const double a, const double b, LC_CurveJetBound
           bool allStrict = true;
           int previousSign = 0;
           int signVariations = 0;
+          constexpr int impossibleVariation = -1000000;
+          int noNonzeroCoefficients = 0;
+          int negativeEnding = impossibleVariation;
+          int positiveEnding = impossibleVariation;
           LC_Interval polynomialRange;
           const size_t distanceTermDegree = weightFourthDegree + crossSquaredDegree;
           if (distanceTermDegree == polynomialDegree) {
@@ -2315,8 +2319,33 @@ bool RS_Spline::tryBoundJetImpl(const double a, const double b, LC_CurveJetBound
                 if (previousSign != 0 && sign != previousSign) ++signVariations;
                 previousSign = sign;
               }
+              const int oldEmpty = noNonzeroCoefficients;
+              const int oldNegative = negativeEnding;
+              const int oldPositive = positiveEnding;
+              const bool canBeZero = coefficient.lo() <= 0.0 && coefficient.hi() >= 0.0;
+              noNonzeroCoefficients = canBeZero ? oldEmpty : impossibleVariation;
+              negativeEnding = canBeZero ? oldNegative : impossibleVariation;
+              positiveEnding = canBeZero ? oldPositive : impossibleVariation;
+              if (coefficient.lo() < 0.0) {
+                negativeEnding = std::max(
+                    negativeEnding,
+                    std::max({oldEmpty, oldNegative,
+                              oldPositive == impossibleVariation
+                                  ? impossibleVariation
+                                  : oldPositive + 1}));
+              }
+              if (coefficient.hi() > 0.0) {
+                positiveEnding = std::max(
+                    positiveEnding,
+                    std::max({oldEmpty, oldPositive,
+                              oldNegative == impossibleVariation
+                                  ? impossibleVariation
+                                  : oldNegative + 1}));
+              }
             }
             if (allStrict) result.rationalCuspRootVariationUpperBound = signVariations;
+            result.rationalCuspIntervalVariationUpperBound =
+                std::max({noNonzeroCoefficients, negativeEnding, positiveEnding});
             result.rationalCuspNoRootCertified = allPositive || allNegative;
 
             // P = q^3 - d^2 W^4 r^2 factors as

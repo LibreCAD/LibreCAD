@@ -27895,3 +27895,65 @@ Validation: focused `higher-degree periodic spline seam roots map to output`
 passes 617 assertions/1 case; the complete Release worker-kernel executable
 passes 1,706,608 assertions/85 cases. No production geometry code changed in
 this slice. `git diff --check` is required before commit.
+
+## 592. Reconcile the Source Picker Scope (2026-11-09)
+
+The latest request reiterates that, while replacing an existing offset source,
+the Properties widget must let the user choose a different source family before
+selecting the replacement entity, and the replacement picker must include every
+currently modeled source family. This is already implemented and covered by
+W585/W590; the current-source entity remains selected/highlighted while the
+candidate-family filter changes, and parabola remains distinct from generic
+spline-points. Do not add another widget, selector, or parabola-only UI path.
+
+For this plan, “all supported types” means the nine modeled families exposed by
+`SupportedKinds` (line, arc, circle, ellipse, spline, spline-points, parabola,
+bounded hyperbola, and polyline). It does not mean every parameterization or
+variant in those families is already eligible for offset generation, worker
+execution, cache reuse, replacement, persistence, or DXF/DWG round-trip. Those
+remain separate geometry/worker/cache and format-acceptance gates in the
+existing implementation order. Keep each future addition tied to a concrete
+variant and exact regression evidence; picker membership alone is not support.
+
+Validation: documentation-only reconciliation; no tests rerun. The latest
+source-picker validation remains W590, and the latest production validation
+remains W591. The in-progress W591 follow-up on conservative rational cusp
+interval bounds is experimental and must not be treated as a certified knot
+root or as completed geometry support until its proof and regressions are
+reviewed. W593 implements this narrowly for a rational spline knot whose
+multiplicity guarantees C2 continuity, where one-sided Bernstein variation
+bounds total at most two roots and bounded offset-factor signs on opposite
+sides prove a unique crossing. Only unresolved runs fully contained by that
+certified bracket are skipped; other knot/run cases remain fail-closed.
+
+## 593. Certify the High-degree Rational Knot Cusp (2026-11-09)
+
+Added a conservative interval-Bernstein sign-variation upper bound for the
+squared rational cusp polynomial, independently of the existing strict-net
+bound so prior isolation behavior is unchanged. The cross-knot path is limited
+to rational splines with positive weights and an interior knot multiplicity no
+greater than `degree - 2`, which guarantees C2 continuity. It adaptively builds
+a bracket around such a knot; each one-sided piece must prove positive speed
+and a total Bernstein root-variation bound no greater than two, and the outer
+offset-factor signs must be interval-certified and opposite. The odd crossing
+plus the combined root bound proves one unique offset-factor root. It is
+bisected across the join, and only unresolved runs entirely contained in that
+certified bracket are removed from run resolution. Any failed condition leaves
+the original fail-closed behavior intact.
+
+The weighted degree-6 periodic regression now completes successfully, reports
+the previously missing cusp at `t=2`, verifies all oracle candidates against
+output cusp endpoints or bounded tiny-reversal collapses, and checks worker
+operation 7 plus result-wire round-trip. Existing degree-4/5 profiles and
+weighted seam ownership assertions remain in the same matrix.
+
+Validation: focused `higher-degree periodic spline seam roots map to output`
+passes 712 assertions/1 case; complete Release
+`librecad_offset_worker_kernel_tests` passes 1,706,703 assertions/85 cases;
+Release `[spline]` passes 29,438 assertions/78 cases; `librecad_tests` builds;
+and `git diff --check` passes. Release `[offsetcurve]` ran 190 cases and 148,975
+assertions, with 3 UI-dialog cases failing 4 focus/async-edit assertions in
+`lc_offsetcurve_propertiesdialog_tests.cpp` (lines 269, 1690-1691); these are
+outside the changed geometry path and remain an acceptance caveat. Other
+periodic knot/weight profiles, exhaustive cross-knot proof coverage, visible
+GUI, independent-CAD, and exact-head CI remain open.

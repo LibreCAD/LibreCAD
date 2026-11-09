@@ -3698,20 +3698,48 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
                 diagnostics.failingRunSignChanges, diagnostics.failingRunExtent,
                 diagnostics.failingRunObserved, options->tolerance.nodeMerge);
         if (degree == 6 && weightProfile == 2) {
-            CHECK(built.status == LC_CurveOffsetStatus::SingularOffset);
+            LC_CurveJetBounds leftKnotBounds;
+            LC_CurveJetBounds rightKnotBounds;
+            REQUIRE(source.tryBoundJetForCusp(2.0 - 1e-6, 2.0,
+                                               leftKnotBounds, signedDistance));
+            REQUIRE(source.tryBoundJetForCusp(2.0, 2.0 + 1e-6,
+                                               rightKnotBounds, signedDistance));
+            CAPTURE(leftKnotBounds.rationalCuspRootVariationUpperBound,
+                    rightKnotBounds.rationalCuspRootVariationUpperBound,
+                    leftKnotBounds.rationalCuspIntervalVariationUpperBound,
+                    rightKnotBounds.rationalCuspIntervalVariationUpperBound);
+            CHECK(leftKnotBounds.rationalCuspIntervalVariationUpperBound >= 0);
+            CHECK(rightKnotBounds.rationalCuspIntervalVariationUpperBound >= 0);
+            CHECK(leftKnotBounds.rationalCuspIntervalVariationUpperBound +
+                      rightKnotBounds.rationalCuspIntervalVariationUpperBound ==
+                  2);
+            LC_CurveJetBounds leftInteriorBounds;
+            LC_CurveJetBounds rightInteriorBounds;
+            REQUIRE(source.tryBoundJetForCusp(2.0 - 1e-6, 2.0 - 5e-7,
+                                               leftInteriorBounds, signedDistance));
+            REQUIRE(source.tryBoundJetForCusp(2.0 + 5e-7, 2.0 + 1e-6,
+                                               rightInteriorBounds, signedDistance));
+            const LC_Interval leftInteriorFactor =
+                leftInteriorBounds.offsetFactorNumerator(signedDistance);
+            const LC_Interval rightInteriorFactor =
+                rightInteriorBounds.offsetFactorNumerator(signedDistance);
+            CAPTURE(leftInteriorFactor, rightInteriorFactor);
+            REQUIRE(leftInteriorFactor.excludesZero());
+            REQUIRE(rightInteriorFactor.excludesZero());
+            CHECK((leftInteriorFactor.hi() < 0.0) !=
+                  (rightInteriorFactor.hi() < 0.0));
+            CHECK(built.status == LC_CurveOffsetStatus::Ok);
             CHECK(diagnostics.status == built.status);
-            CHECK_FALSE(diagnostics.complete);
-            CHECK(built.branches.empty());
+            CHECK(diagnostics.complete);
+            CHECK_FALSE(built.branches.empty());
             CHECK(std::any_of(oracleCandidateParameters.begin(),
                               oracleCandidateParameters.end(), [](double parameter) {
                                   return std::abs(parameter - 2.0) < 1e-12;
                               }));
-            CHECK(std::none_of(diagnostics.candidateParameters.begin(),
-                               diagnostics.candidateParameters.end(), [](double parameter) {
-                                   return std::abs(parameter - 2.0) < 1e-12;
-                               }));
-            CHECK(diagnostics.failureStage ==
-                  LC_CurveOffsetCuspFailureStage::RunResolution);
+            CHECK(std::any_of(diagnostics.candidateParameters.begin(),
+                              diagnostics.candidateParameters.end(), [](double parameter) {
+                                  return std::abs(parameter - 2.0) < 1e-12;
+                              }));
             const req::Request generationRequest{
                 token, req::GenerateSource{definition, {}}};
             const auto generationReply =
@@ -3720,11 +3748,11 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
             CHECK(generated.engineRuns == 1);
             REQUIRE(generated.engineStatus);
             CHECK(*generated.engineStatus == built.status);
-            CHECK(generated.refusal == LC_OffsetCurveRefusal::Engine);
+            CHECK(generated.refusal != LC_OffsetCurveRefusal::Engine);
             CHECK_FALSE(generated.curve);
             CHECK_FALSE(generated.changed);
-            CHECK(generated.ordinaryStatus == result::OrdinaryStatus::None);
-            CHECK(generated.ordinary.empty());
+            CHECK(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            CHECK_FALSE(generated.ordinary.empty());
             const auto wire = result::encode(generationReply, generationRequest);
             REQUIRE(wire);
             const auto decoded = result::decode(*wire, generationRequest);
@@ -3734,8 +3762,8 @@ TEST_CASE("higher-degree periodic spline seam roots map to output",
             CHECK(decodedGenerated.refusal == generated.refusal);
             CHECK_FALSE(decodedGenerated.curve);
             CHECK_FALSE(decodedGenerated.changed);
-            CHECK(decodedGenerated.ordinary.empty());
-            continue;
+            CHECK(decodedGenerated.ordinaryStatus == generated.ordinaryStatus);
+            CHECK(decodedGenerated.ordinary.size() == generated.ordinary.size());
         }
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
         REQUIRE(diagnostics.complete);

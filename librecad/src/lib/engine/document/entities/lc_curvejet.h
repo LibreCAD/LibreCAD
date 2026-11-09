@@ -90,6 +90,8 @@ struct LC_CurveJetBounds {
     bool rationalCuspNoRootCertified{false};
     /** Sign variations of the strict Bernstein net for the squared cusp polynomial, or -1 if unresolved. */
     int rationalCuspRootVariationUpperBound{-1};
+    /** Conservative variation bound allowing any signs admitted by interval Bernstein coefficients. */
+    int rationalCuspIntervalVariationUpperBound{-1};
 
     bool isValid() const {
         return x.isValid() && y.isValid() && dx.isValid() && dy.isValid() && ddx.isValid() &&

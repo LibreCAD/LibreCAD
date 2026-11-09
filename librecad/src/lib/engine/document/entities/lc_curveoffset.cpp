@@ -105,6 +105,10 @@ public:
     virtual bool rationalCuspRootBounds() const {
         return false;
     }
+    /** True when the spline has a C2-continuous join at this interior knot. */
+    virtual bool smoothCuspKnot([[maybe_unused]] const double knot) const {
+        return false;
+    }
     /**
      * True when nothing of the curve is left at @p signedDistance (positive to
      * its left), to within @p band: a closed curve shrunk by its inradius or
@@ -179,6 +183,19 @@ public:
         return !weights.empty() &&
                std::any_of(weights.begin() + 1, weights.end(),
                            [&](const double w) { return w != weights.front(); });
+    }
+
+    bool smoothCuspKnot(const double knot) const override {
+        const RS_SplineData& data = m_spline.getData();
+        const int degree = m_spline.getDegree();
+        if (degree < 2 || !std::isfinite(knot) || data.weights.empty() ||
+            !std::all_of(data.weights.begin(), data.weights.end(), [](const double weight) {
+                return std::isfinite(weight) && weight > 0.0;
+            })) {
+            return false;
+        }
+        const auto multiplicity = std::count(data.knotslist.begin(), data.knotslist.end(), knot);
+        return multiplicity <= degree - 2;
     }
 
 private:
@@ -2420,6 +2437,76 @@ private:
                 }
             }
         }
+        // A root can sit on a smooth rational knot while floating-point
+        // interval bounds leave a tiny run only on one side. Bernstein's
+        // variation bound limits roots of the squared cusp polynomial on
+        // each piece; opposite certified signs require an odd root count.
+        // A total bound of two therefore proves exactly one offset-factor
+        // root across this C2 join. No sampling-only knot promotion is used.
+        std::vector<std::pair<double, double>> certifiedKnotBrackets;
+        if (m_source.rationalCuspRootBounds()) {
+            for (size_t knotIndex = 1; knotIndex + 1 < breaks.size(); ++knotIndex) {
+                const double knot = breaks[knotIndex];
+                if (!m_source.smoothCuspKnot(knot)) continue;
+                const double radiusLimit =
+                    0.25 * std::min(knot - breaks[knotIndex - 1],
+                                    breaks[knotIndex + 1] - knot);
+                if (!(radiusLimit > 0.0) || !std::isfinite(radiusLimit)) continue;
+                double radius = radiusLimit * 1e-6;
+                for (unsigned attempt = 0; attempt < 24 && radius <= radiusLimit;
+                     ++attempt, radius *= 2.0) {
+                    const double lo = knot - radius;
+                    const double hi = knot + radius;
+                    LC_CurveJetBounds leftBounds;
+                    LC_CurveJetBounds rightBounds;
+                    if (!m_source.boundJetForCusp(lo, knot, m_d, leftBounds) ||
+                        !m_source.boundJetForCusp(knot, hi, m_d, rightBounds) ||
+                        !leftBounds.speedSquared().isPositive() ||
+                        !rightBounds.speedSquared().isPositive() ||
+                        leftBounds.rationalCuspIntervalVariationUpperBound < 0 ||
+                        rightBounds.rationalCuspIntervalVariationUpperBound < 0 ||
+                        leftBounds.rationalCuspIntervalVariationUpperBound +
+                                rightBounds.rationalCuspIntervalVariationUpperBound >
+                            2) {
+                        continue;
+                    }
+                    const double afterLo = std::nextafter(lo, knot);
+                    const double beforeHi = std::nextafter(hi, knot);
+                    int signLo = 0;
+                    int signHi = 0;
+                    if (!factorNumeratorSignBounded(lo, afterLo, signLo) ||
+                        !factorNumeratorSignBounded(beforeHi, hi, signHi) ||
+                        signLo == signHi) {
+                        continue;
+                    }
+                    const bool containsUnresolvedRun = std::any_of(
+                        runs.begin(), runs.end(), [&](const Run& run) {
+                            return lo <= run.t0 && run.t1 <= hi;
+                        });
+                    if (!containsUnresolvedRun) continue;
+                    const bool alreadyRepresented = std::any_of(
+                        cusps.begin(), cusps.end(), [&](const double cusp) {
+                            return lo <= cusp && cusp <= hi;
+                        });
+                    if (!alreadyRepresented) {
+                        if (cusps.size() >= maxRunBoxes) {
+                            return failAt(LC_CurveOffsetStatus::AmbiguousRegularity,
+                                          knotIndex - 1, lo, hi,
+                                          LC_CurveOffsetCuspFailureStage::CuspCandidateLimit);
+                        }
+                        const LC_CurveOffsetStatus status =
+                            bisectCertifiedCusp(lo, hi, signLo, signHi, cusps,
+                                                cuspDiagnostics);
+                        if (status != LC_CurveOffsetStatus::Ok) {
+                            return failAt(status, knotIndex - 1, lo, hi,
+                                          LC_CurveOffsetCuspFailureStage::CuspBisection);
+                        }
+                    }
+                    certifiedKnotBrackets.emplace_back(lo, hi);
+                    break;
+                }
+            }
+        }
         // a run across the seam: from the last one, at the end, into the first
         bool wraps = false;
         if (m_source.closed() && !joinCusps[0] && runs.size() > 1 && runs.front().t0 == breaks.front() &&
@@ -2436,6 +2523,12 @@ private:
         }
         for (size_t i = wraps ? 1 : 0; i < runs.size(); ++i) {
             const Run& run = runs[i];
+            if (std::any_of(certifiedKnotBrackets.begin(), certifiedKnotBrackets.end(),
+                            [&](const auto& bracket) {
+                                return bracket.first <= run.t0 && run.t1 <= bracket.second;
+                            })) {
+                continue;
+            }
             // a run across the seam: from the start of the last run to the end of the first
             const bool acrossSeam = wraps && i + 1 == runs.size();
             const std::vector<std::pair<double, double>> parts =
@@ -2668,7 +2761,7 @@ private:
                 break;
             }
         }
-        if (span == std::numeric_limits<std::size_t>::max() && t0 == t1 &&
+        if (span == std::numeric_limits<std::size_t>::max() &&
             parameter >= breaks.front() && parameter <= breaks.back()) {
             span = parameter == breaks.back()
                        ? breaks.size() - 2
