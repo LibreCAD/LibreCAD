@@ -146,8 +146,17 @@ LC_LineType* LC_LineTypeList::add(LC_LineType* entry) {
     return existing;
 }
 
-bool LC_LineTypeList::redefinesBuiltIn([[maybe_unused]]const LC_LineType& entry) {
-    return false;
+bool LC_LineTypeList::redefinesBuiltIn(const LC_LineType& entry) {
+    if (entry.pattern.empty() || !LC_LineTypeNames::isKnownName(entry.key())) {
+        return false;
+    }
+    const LC_LineTypeNames::BuiltinMetric* seed =
+        LC_LineTypeNames::builtinMetric(LC_LineTypeNames::nameToLineType(entry.key()));
+    // A line type without dashes has no pattern to redefine.
+    if (seed == nullptr || seed->pattern.empty()) {
+        return false;
+    }
+    return !patternMatchesSeed(entry);
 }
 
 bool LC_LineTypeList::patternMatchesSeed(const LC_LineType& entry) {

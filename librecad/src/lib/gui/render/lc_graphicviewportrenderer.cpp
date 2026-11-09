@@ -261,16 +261,9 @@ void LC_GraphicViewportRenderer::buildDashPatternCache() {
         if (entry == nullptr || entry->pattern.empty())
             continue;
         const bool known = LC_LineTypeNames::isKnownName(entry->key());
-        if (known) {
-            const LC_LineTypeNames::BuiltinMetric* seed =
-                LC_LineTypeNames::builtinMetric(LC_LineTypeNames::nameToLineType(entry->key()));
-            // A record with dashes for a line type that has none is nonsense; the enum stays solid.
-            if (seed == nullptr || seed->pattern.empty())
-                continue;
-            // A built-in the file agrees with keeps the shipped screen pattern.
-            if (LC_LineTypeList::patternMatchesSeed(*entry))
-                continue;
-        }
+        // A known name the entry does not redefine keeps the shipped screen pattern.
+        if (known && !LC_LineTypeList::redefinesBuiltIn(*entry))
+            continue;
         RS_Pen probe;
         probe.setLineTypeName(entry->name);
         const std::uint16_t foldId = probe.getLineTypeFoldId();

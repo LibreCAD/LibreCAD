@@ -108,7 +108,6 @@ void QG_LineTypeBox::init(const bool showByLayer, const bool showUnchanged, cons
  * types behind one separator.
  */
 void QG_LineTypeBox::fillRows(const LC_LineTypeList* list) {
-    (void)list;
     clear();
     m_hasSeparator = false;
 
@@ -159,7 +158,9 @@ void QG_LineTypeBox::fillRows(const LC_LineTypeList* list) {
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (small)"), RS2::BorderLine2);
     addItem(QIcon(":linetypes/linetype07.lci"), tr("Border (large)"), RS2::BorderLineX2);
 
-    // The special rows write no name and no built-in row does without a table.
+    // The special rows write no name; a built-in row writes its canonical name
+    // only when the drawing paints that built-in from its table, so the two
+    // cannot disagree.
     const int specialRows = (m_showUnchanged ? 1 : 0) + (m_showByLayer ? 2 : 0) +
                             (m_showNoPen ? 1 : 0);
     for (int i = 0; i < count(); ++i) {
@@ -168,8 +169,54 @@ void QG_LineTypeBox::fillRows(const LC_LineTypeList* list) {
             setItemData(i, SpecialRow, LineTypeRowKindRole);
             continue;
         }
-        setItemData(i, QString(), LineTypeNameRole);
+        const auto type = static_cast<RS2::LineType>(itemData(i).toInt());
+        QString name;
+        if (list != nullptr) {
+            const QString canonical = LC_LineTypeNames::lineTypeToName(type);
+            const LC_LineType* entry = list->find(canonical);
+            if (entry != nullptr && LC_LineTypeList::redefinesBuiltIn(*entry)) {
+                name = canonical;
+            }
+        }
+        setItemData(i, name, LineTypeNameRole);
         setItemData(i, BuiltInRow, LineTypeRowKindRole);
+    }
+
+    if (list == nullptr) {
+        return;
+    }
+    // The seeds are the rows above. A spelling that is not its enum's canonical
+    // name is a line type only this drawing holds.
+    std::vector<const LC_LineType*> rows;
+    for (unsigned i = 0; i < list->count(); ++i) {
+        const LC_LineType* entry = list->at(i);
+        if (entry == nullptr) {
+            continue;
+        }
+        const QString canonical = LC_LineTypeNames::lineTypeToName(
+            LC_LineTypeNames::nameToLineType(entry->name));
+        // key() is already the fold of the name.
+        if (entry->key() == LC_LineTypeNames::foldName(canonical)) {
+            continue;
+        }
+        rows.push_back(entry);
+    }
+    if (rows.empty()) {
+        return;
+    }
+    std::sort(rows.begin(), rows.end(),
+              [](const LC_LineType* a, const LC_LineType* b) { return a->key() < b->key(); });
+    insertSeparator(count());
+    m_hasSeparator = true;
+    for (const LC_LineType* entry : rows) {
+        const int index = count();
+        addItem(entry->name);
+        setItemData(index, static_cast<int>(LC_LineTypeNames::nameToLineType(entry->name)), LineTypeRole);
+        setItemData(index, entry->name, LineTypeNameRole);
+        setItemData(index, TableRow, LineTypeRowKindRole);
+        if (!entry->description.isEmpty()) {
+            setItemData(index, entry->description, Qt::ToolTipRole);
+        }
     }
 }
 
@@ -177,7 +224,45 @@ void QG_LineTypeBox::fillRows(const LC_LineTypeList* list) {
  * Refills the rows for another drawing, keeps the selection and emits nothing.
  */
 void QG_LineTypeBox::rebuild(const LC_LineTypeList* list) {
-    (void)list;
+    if (!m_initialized) {
+        return;
+    }
+    const QSignalBlocker blocker(this);
+    const int previous = currentIndex();
+    const QString selectedName =
+        previous >= 0 ? itemData(previous, LineTypeNameRole).toString() : QString();
+    const auto selectedType = previous >= 0
+        ? static_cast<RS2::LineType>(itemData(previous, LineTypeRole).toInt())
+        : m_currentLineType;
+    // Only a selection that still sits on the source row keeps that source; a
+    // pen the user replaced must not come back.
+    const bool wasSource = m_hasSource && previous >= 0 && previous == m_sourceRowIndex;
+    m_hasList = list != nullptr;
+    fillRows(list);
+    int index = -1;
+    if (!selectedName.isEmpty() && m_hasList) {
+        index = indexForRowOfName(selectedName, selectedType);
+        if (index < 0 && !isCanonicalName(selectedName, selectedType)) {
+            index = appendTemporaryRow(selectedName, selectedType);
+        }
+    }
+    if (index < 0) {
+        index = indexForEnum(selectedType);
+    }
+    if (index < 0) {
+        // Neither the name nor the enum finds a row: start at row 0, as init()
+        // does, and forget the pen behind the old selection.
+        index = 0;
+        m_hasSource = false;
+    }
+    setCurrentIndex(index);
+    readRow(index);
+    if (wasSource && m_hasSource) {
+        m_sourceRowIndex = currentIndex();
+    }
+    else {
+        m_hasSource = false;
+    }
 }
 
 /**
@@ -185,7 +270,29 @@ void QG_LineTypeBox::rebuild(const LC_LineTypeList* list) {
  * row, so the combo always shows what the pen says.
  */
 void QG_LineTypeBox::setLineTypeOf(const RS_Pen& pen) {
-    setLineType(pen.getLineType());
+    if (m_hasList) {
+        removeTemporaryRow();
+    }
+    int index = -1;
+    if (m_hasList && pen.hasLineTypeName()) {
+        const QString name = pen.getLineTypeName();
+        index = indexForRowOfName(name, pen.getLineType());
+        if (index < 0 && !isCanonicalName(name, pen.getLineType())) {
+            index = appendTemporaryRow(name, pen.getLineType());
+        }
+    }
+    if (index < 0) {
+        // A pen without a name, or a canonical spelling the combo does not show,
+        // behaves as setLineType() does today.
+        setLineType(pen.getLineType());
+    }
+    else {
+        setCurrentIndex(index);
+        slotLineTypeChanged(currentIndex());
+    }
+    m_sourcePen = pen;
+    m_hasSource = true;
+    m_sourceRowIndex = currentIndex();
 }
 
 /**
@@ -193,7 +300,23 @@ void QG_LineTypeBox::setLineTypeOf(const RS_Pen& pen) {
  * the pen it was set from, so the pen's own spelling survives.
  */
 void QG_LineTypeBox::applyLineTypeTo(RS_Pen& pen) const {
-    pen.setLineType(getLineType());
+    if (m_hasSource && currentIndex() >= 0 && currentIndex() == m_sourceRowIndex) {
+        pen.setLineTypeFromPen(m_sourcePen);
+        return;
+    }
+    const int index = currentIndex();
+    const QString name = index >= 0 ? itemData(index, LineTypeNameRole).toString() : QString();
+    if (!name.isEmpty()) {
+        pen.setLineTypeName(name);
+    }
+    else if (index < 0 || isUnchanged()) {
+        // No row or "- Unchanged -": keep the value the combo last reported.
+        pen.setLineType(getLineType());
+    }
+    else {
+        // The row shown decides, even when a host moved the index itself.
+        pen.setLineType(static_cast<RS2::LineType>(itemData(index, LineTypeRole).toInt()));
+    }
 }
 
 int QG_LineTypeBox::indexForName(const QString& name) const {
