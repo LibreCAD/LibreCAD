@@ -917,6 +917,62 @@ TEST_CASE("Translated long lines keep exact offset normals at small relative dis
     }
 }
 
+TEST_CASE("Line offsets retain exact normals across orientation and scale boundaries",
+          "[curve-offset][direct][line][oracle][precision]") {
+    struct Profile {
+        RS_Vector start;
+        RS_Vector end;
+    };
+    const std::array<Profile, 3> profiles{{
+        {{0.0, 0.0}, {10.0, 0.0}},
+        {{0.0, 0.0}, {6.0, 8.0}},
+        {{6.0, 8.0}, {0.0, 0.0}},
+    }};
+
+    for (const double scale : {1e-8, 1.0, 1e8}) {
+        for (const double translationRatio : {0.0, 1e6}) {
+            const RS_Vector translation{translationRatio * scale, -translationRatio * scale};
+            for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+                const RS_LineData data{
+                    profiles[profileIndex].start * scale + translation,
+                    profiles[profileIndex].end * scale + translation};
+                const RS_Line source{nullptr, data};
+                const RS_Vector delta = data.endpoint - data.startpoint;
+                const double length = std::hypot(delta.x, delta.y);
+                REQUIRE(std::isfinite(length));
+                REQUIRE(length > 0.0);
+                const RS_Vector direction = delta / length;
+                const EvalFn exactLine = [data, direction](const double parameter,
+                    LC_CurveEvaluationSide, LC_CurveJet& jet) {
+                    jet.point = data.startpoint + direction * parameter;
+                    jet.first = direction;
+                    jet.second = {0.0, 0.0};
+                    return true;
+                };
+
+                CAPTURE(scale, translationRatio, profileIndex);
+                const double distance = 0.02 * scale;
+                for (const LC_CurveOffsetSide side :
+                     {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                    CAPTURE(side);
+                    const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                    const auto result = LC_CurveOffset::buildDirectBranches(
+                        source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                        LC_CurveOffset::makeDirectSourceBudget());
+                    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                    REQUIRE(result.branches.size() == 1);
+                    CHECK(result.signedDistance == (side == LC_CurveOffsetSide::Left
+                        ? distance : -distance));
+                    CHECK(maxDeviation(result, exactLine) <= options.tolerance.requestedGeometry);
+                }
+            }
+        }
+    }
+
+    const RS_Line collapsed{nullptr, RS_LineData{{1e16, -1e16}, {1e16, -1e16}}};
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(collapsed));
+}
+
 TEST_CASE("A parabola's offset follows its exact normals", "[curve-offset][direct]") {
     // B(u) = (10u, 20u(1-u)) turns clockwise, tightest at its apex: radius 2.5.
     const LC_SplinePoints parabola = fromControlPoints({{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}});
