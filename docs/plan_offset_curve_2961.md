@@ -29992,3 +29992,18 @@ both DWGs with ARC=2, CIRCLE=2, LINE=2, LWPOLYLINE=4, SPLINE=20 and no invalid
 spline control/knot cardinalities. This qualifies one translated/rotated
 parabola fixture, not broad focus/vertex conditioning, near-straight limits,
 extreme scales, visible GUI, or ODA/AutoCAD acceptance.
+
+## 676. Revalidate the All-family Source Picker Contract (2026-11-09)
+
+Re-ran the current-build GUI test matrix for source-family switching. The
+focused replacement matrix verifies all nine supported kinds, candidate
+filtering, successful typed replacement, selected-source highlighting, and
+widget reopen behavior. The full source-picker tag additionally covers
+duplicate identity, deleted candidates, unsupported variants, and atomic
+refusal without filter side effects.
+
+Validation: focused all-family picker test passes 8,103 assertions; the full
+`[gui][dialog][offsetcurve][source]` lane passes 11,877 assertions/12 cases
+with `QT_QPA_PLATFORM=offscreen`. This confirms automated widget behavior on
+the current tree only; exact-build visible GUI acceptance and ODA/AutoCAD
+acceptance remain open.
