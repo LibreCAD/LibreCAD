@@ -26902,3 +26902,23 @@ three magnitudes qualify only the recorded symmetric rational-quadratic
 profiles; broader offsets, arbitrary rational data, periodic cases, and
 general candidate-to-output mapping remain open. Visible GUI, external CAD,
 and exact-head CI gates also remain open.
+
+## 501. Import Double-multiplicity Rational Quadratics (2026-11-08)
+
+Extended the staged-import matrix with knot multiplicity two at `u=0.25` and
+`u=0.5` for middle weights `0.5` and `2.0`. The added degree-2 fixtures use
+the homogeneous knot-insertion relation to create the fifth control point and
+its positive weight. They are checked against the original single-span
+rational quadratic before the same worker operation-7/direct-output equality
+and operation-8 DXF/DWG promotion checks run. The matrix retains all three
+geometry scales, three normalized offset magnitudes, both sides, and the five
+R14/R2000/R2018 serialization lanes.
+
+Release validation: focused knot-import test, 124,519 assertions/1 case;
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` union,
+347,480 assertions/11 cases; `librecad_tests` rebuild and `git diff --check`
+pass. Test commit `f49363612` (`test(offset): import double-knot rational
+splines`). This qualifies only these positive-weight quadratic profiles with
+interior multiplicity two; higher multiplicities, independent knot layouts,
+other degrees, periodic sources, broader candidate-to-output mapping, visible
+GUI, external CAD, and exact-head CI remain open.
