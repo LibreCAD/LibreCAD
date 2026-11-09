@@ -4418,6 +4418,26 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
         }
         CAPTURE(degree, curvatureSign, endpointError, options->tolerance.requestedGeometry);
         CHECK(endpointError <= options->tolerance.requestedGeometry);
+
+        const req::Request generationRequest{
+            token, req::GenerateSource{definition, {}}};
+        const auto generationReply = LC_OffsetWorkerKernel::run(generationRequest);
+        const auto& generated = native(generationReply, 7);
+        CAPTURE(degree, curvatureSign, generated.engineStatus,
+                generated.refusal, generated.ordinaryStatus,
+                generated.ordinary.size());
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE_FALSE(generated.ordinary.empty());
+        const auto wire = result::encode(generationReply, generationRequest);
+        REQUIRE(wire);
+        const auto decoded = result::decode(*wire, generationRequest);
+        REQUIRE(decoded);
+        const auto& decodedGenerated = native(*decoded, 7);
+        CHECK(decodedGenerated.engineStatus == generated.engineStatus);
+        CHECK(decodedGenerated.refusal == generated.refusal);
+        CHECK(decodedGenerated.ordinaryStatus == generated.ordinaryStatus);
+        CHECK(decodedGenerated.ordinary.size() == generated.ordinary.size());
       }
     }
 }
