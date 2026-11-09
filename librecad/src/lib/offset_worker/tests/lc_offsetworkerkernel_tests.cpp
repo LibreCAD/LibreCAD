@@ -4526,6 +4526,41 @@ TEST_CASE("C2 rational knot crossings map for degrees three through six and seve
         CAPTURE(degree, curvatureSign, built.status, diagnostics.failureStage,
                 diagnostics.candidateParameters, diagnostics.stallIntervals);
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+        const auto cubicPoint = [](const std::array<RS_Vector, 4>& bezier,
+                                   const double parameter) {
+            const double inverse = 1.0 - parameter;
+            return bezier[0] * (inverse * inverse * inverse) +
+                   bezier[1] * (3.0 * inverse * inverse * parameter) +
+                   bezier[2] * (3.0 * inverse * parameter * parameter) +
+                   bezier[3] * (parameter * parameter * parameter);
+        };
+        std::size_t checkedOffsetSamples = 0;
+        double maximumOffsetError = 0.0;
+        for (const auto& branch : built.branches) {
+            for (const auto& piece : branch.cubicPieces) {
+                const double localWidth = piece.localU1 - piece.localU0;
+                REQUIRE(localWidth > 0.0);
+                for (const double fraction : {.2, .5, .8}) {
+                    const double localParameter = piece.localU0 + localWidth * fraction;
+                    const double sourceParameter = piece.provenance.sourceT0 +
+                        (piece.provenance.sourceT1 - piece.provenance.sourceT0) * fraction;
+                    const auto expectedPoint = oracleOffsetPoint(
+                        data, SplineOracle{sourceParameter}, step, start, end,
+                        SplineOracle{signedDistance});
+                    const RS_Vector expected{
+                        expectedPoint.first.convert_to<double>(),
+                        expectedPoint.second.convert_to<double>()};
+                    const double error = cubicPoint(piece.bezier, localParameter)
+                                             .distanceTo(expected);
+                    maximumOffsetError = std::max(maximumOffsetError, error);
+                    ++checkedOffsetSamples;
+                }
+            }
+        }
+        CAPTURE(degree, curvatureSign, checkedOffsetSamples, maximumOffsetError,
+                options->tolerance.requestedGeometry);
+        REQUIRE(checkedOffsetSamples > 0);
+        CHECK(maximumOffsetError <= options->tolerance.requestedGeometry);
         const double knotPosition = knot;
         const auto candidate = std::find_if(
             diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
