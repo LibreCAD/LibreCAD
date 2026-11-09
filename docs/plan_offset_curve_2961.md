@@ -64,10 +64,11 @@ control/weight fixtures recorded in W506-W511. This is not arbitrary NURBS
 support: untested knot multiplicities/layouts, periodic high-degree offsets,
 large source counts, independent offset-error oracles, and external CAD remain
 open. Properties picker/replacement now has focused degree-4/6 coverage for
-tested clamped single-span rational profiles; this does not qualify the other
-knot layouts or all high-degree geometry. Generated editable offset caches
-are still constrained to the validated line/cubic-Bezier representation; do
-not widen cache validation merely because source spline degree increased.
+the tested clamped single-span, midpoint-knot, and asymmetric rational
+profiles; this does not qualify other knot layouts or all high-degree
+geometry. Generated editable offset caches are still constrained to the
+validated line/cubic-Bezier representation; do not widen cache validation
+merely because source spline degree increased.
 
 Current implementation order for the remaining “all supported types” work:
 
@@ -27231,9 +27232,10 @@ qualify asymmetric high-degree sources`).
 This is a pair of bounded profiles, not exhaustive asymmetric NURBS coverage.
 Further weight/control combinations, knot multiplicity sweeps, periodic
 high-degree sources, large span/count limits, independent offset-error oracles,
-and external CAD remain open. Properties replacement is separately qualified
-for clamped single-span degree-4/6 rational fixtures by W512; it does not cover
-the multi-span or asymmetric profiles in this receipt.
+and external CAD remain open. W512 first qualified the clamped single-span
+degree-4/6 fixtures in Properties replacement; W513 extends that UI coverage
+to the midpoint-knot and asymmetric profile families represented in this
+receipt, without claiming every such spline is supported.
 
 ## 512. Admit High-Degree Rational Sources in Properties Replacement (2026-11-09)
 
@@ -27249,7 +27251,29 @@ across 3 cases, covering supported candidates, unsupported-bucket handling,
 and source replacement without filter side effects; `librecad_tests` builds.
 Test commit `3118abf01` (`test(offset): admit high-degree picker sources`).
 
-This receipt qualifies only clamped single-span rational degree-4/6 fixtures
-in Properties replacement. Replacement of multi-span and asymmetric knot
-profiles, periodic high-degree splines, broader geometry accuracy, persistence
-of the promoted replacement, and external CAD remain open.
+This receipt originally qualified only clamped single-span rational degree-4
+and degree-6 fixtures in Properties replacement. W513 adds representative midpoint-
+knot and asymmetric profiles; periodic high-degree splines, other knot
+layouts/multiplicities, broader geometry accuracy, persistence of the promoted
+replacement, and external CAD remain open.
+
+## 513. Replace Multi-span and Asymmetric High-degree Sources in Properties (2026-11-09)
+
+Extended the worker-backed Properties replacement matrix with degree-4 and
+degree-6 rational splines containing a midpoint interior knot and with
+asymmetric control/weight profiles and degree-specific interior knots. Each
+fixture is selected through the Spline source family, replaces the current
+source, and remains addressable when the Properties widget is reopened. The
+test also exercises both offset sides and a subsequent distance edit for each
+fixture. These are representative variants already covered by worker
+generation/cache validation and staged file promotion, now also connected to
+the user-facing replacement flow.
+
+Validation: focused replacement regression, 6,546 assertions/1 case; the
+`librecad_tests` Release target builds; `git diff --check` passes. Test commit
+`0b259f69b` (`test(offset): replace multi-span high-degree sources`).
+
+This closes only Properties replacement for the recorded midpoint-knot and
+asymmetric fixtures. It does not qualify every nonuniform knot vector,
+repeated-knot multiplicity, periodic high-degree source, independent offset
+accuracy, saved/reopened promoted replacement, or external CAD behavior.
