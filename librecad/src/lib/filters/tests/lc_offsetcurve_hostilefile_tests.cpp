@@ -10135,14 +10135,15 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
 
     // The final two fixtures use nonsingular affine maps with positive then
     // negative determinant; the last also has a tighter vertex radius.
-    const std::array<LC_ParabolaData, 6> variants{
+    const std::array<LC_ParabolaData, 7> variants{
         LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}},
         LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}},
         LC_ParabolaData{{RS_Vector{3, -7}, RS_Vector{2.3301270189221936, 4.160254037844386},
                          RS_Vector{11.660254037844386, -2}}},
         LC_ParabolaData{{RS_Vector{4, -3}, RS_Vector{15, 3}, RS_Vector{19, -5}}},
         LC_ParabolaData{{RS_Vector{7, -2}, RS_Vector{5, 7.25}, RS_Vector{-5, 0.5}}},
-        LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 50}, RS_Vector{10, 0}}}};
+        LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 50}, RS_Vector{10, 0}}},
+        LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 1e-14}, RS_Vector{10, 0}}}};
     struct Format { Lane lane; bool dwg; DRW::Version version; const char* suffix; };
     const std::array<Format, 5> formats{{
         {Lane::Binary14, false, DRW::AC1014, "r14.dxf"},
@@ -10198,6 +10199,7 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
     };
 
     std::size_t cells = 0;
+    std::size_t unrepresentableTranslatedSources = 0;
     std::size_t generatedCells = 0;
     std::size_t generationRefusedCells = 0;
     std::size_t admittedTranslatedCaches = 0;
@@ -10220,8 +10222,16 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
                 const RS_Vector translation{ratio * scale, -ratio * scale};
                 const auto centeredSource = transform(variants[variantIndex], scale, {});
                 const auto translatedSource = transform(variants[variantIndex], scale, translation);
+                CAPTURE(variantIndex, scale, ratio);
                 REQUIRE(centeredSource.isWellFormed());
-                REQUIRE(translatedSource.isWellFormed());
+                if (!translatedSource.isWellFormed()) {
+                    CHECK(variantIndex == variants.size() - 1);
+                    const LC_OffsetSourceDefinition rejected{
+                        translatedSource, 0.05 * scale, 1e-4, false};
+                    CHECK_FALSE(values::encodeSourceDefinition(rejected));
+                    ++unrepresentableTranslatedSources;
+                    continue;
+                }
                 for (const double normalizedDistance : normalizedDistances) {
                     ++cells;
                     CAPTURE(variantIndex, scale, ratio, normalizedDistance);
@@ -10548,8 +10558,11 @@ TEST_CASE("scaled translated parabola caches persist through staged DXF and DWG 
         }
     }
 
-    CHECK(cells == variants.size() * scales.size() * translationRatios.size() *
-          normalizedDistances.size());
+    const std::size_t representableSources =
+        variants.size() * scales.size() * translationRatios.size() -
+        unrepresentableTranslatedSources;
+    CHECK(unrepresentableTranslatedSources > 0);
+    CHECK(cells == representableSources * normalizedDistances.size());
     CHECK(generatedCells + generationRefusedCells == cells);
     CHECK(admittedTranslatedCaches + refusedTranslatedCacheCells == generatedCells);
     CHECK(centeredCacheAdmittedCells + centeredCacheRefusedCells == generatedCells);
