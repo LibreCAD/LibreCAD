@@ -26837,3 +26837,28 @@ qualifies two insertion locations, two positive middle weights, three binary
 scales, one normalized offset magnitude, and the listed file lanes. Arbitrary
 knots/multiplicities, broader weight/distance matrices, periodic tangencies,
 external CAD, visible GUI, and exact-head CI remain open.
+
+## 498. Reconcile the Source-type Picker Requirement (2026-11-08)
+
+The source-curve widget must let the user choose a source type before choosing
+the replacement entity, and its choices must cover every source kind modeled
+by the offset workflow. This is already implemented: the editable selector is
+driven by `LC_OffsetSourceGeometry::SupportedKinds` and contains line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Changing the selector filters candidates without modifying the
+current source or cache; choosing a candidate performs the replacement.
+Existing-source resolution/highlighting and cancel behavior remain part of
+the contract. Keep `LC_Parabola` distinct from generic `LC_SplinePoints` by
+testing the derived type first.
+
+The all-family picker/replacement regression and source snapshot tests are the
+automated gate; rerun them when this UI is touched. Do not add a second
+selector or treat picker membership as proof that every geometry variant is
+eligible for worker generation, cache promotion, or DXF/DWG round-trip. Those
+remain separate family/variant gates and must fail closed without replacing
+the currently valid source/cache. Visible GUI acceptance remains open until
+observed on the desktop.
+
+No code change is requested by this reconciliation. It confirms the picker
+contract is complete while keeping end-to-end variant qualification, visible
+GUI acceptance, and exact-head CI explicitly open.
