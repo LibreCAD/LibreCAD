@@ -6041,27 +6041,44 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
 
-    const int degree = GENERATE(2, 3);
+    const int degree = GENERATE(2, 3, 4, 6);
     const bool sixControlLayout = GENERATE(false, true);
     RS_Spline periodic{nullptr, RS_SplineData{degree, false}};
-    if (sixControlLayout) {
+    if (degree <= 3 && sixControlLayout) {
         for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{30, -15},
                                        RS_Vector{60, 0}, RS_Vector{55, 35},
                                        RS_Vector{20, 50}, RS_Vector{-15, 25}})
             periodic.addControlPoint(point);
-    } else {
+    } else if (degree <= 3) {
         for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{40, -10},
                                        RS_Vector{60, 30}, RS_Vector{20, 50},
                                        RS_Vector{-15, 25}})
             periodic.addControlPoint(point);
+    } else {
+        const std::size_t count = static_cast<std::size_t>(degree) +
+                                  (sixControlLayout ? 3 : 2);
+        for (std::size_t i = 0; i < count; ++i) {
+            const double angle = 2.0 * M_PI * static_cast<double>(i) /
+                                 static_cast<double>(count);
+            periodic.addControlPoint({50.0 * std::cos(angle),
+                                      35.0 * std::sin(angle)});
+        }
     }
     periodic.setClosed(true);
     auto wrapped = periodic.getData();
     const bool rational = GENERATE(false, true);
     if (rational) {
-        const std::vector<double> baseWeights = sixControlLayout
-            ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85}
-            : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05};
+        std::vector<double> baseWeights;
+        if (degree <= 3) {
+            baseWeights = sixControlLayout
+                ? std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05, 0.85}
+                : std::vector<double>{1.0, 0.9, 1.1, 0.95, 1.05};
+        } else {
+            const std::size_t count = static_cast<std::size_t>(degree) +
+                                      (sixControlLayout ? 3 : 2);
+            for (std::size_t i = 0; i < count; ++i)
+                baseWeights.push_back(.85 + .05 * static_cast<double>(i));
+        }
         REQUIRE(wrapped.controlPoints.size() == baseWeights.size() + degree);
         wrapped.weights = baseWeights;
         wrapped.weights.insert(wrapped.weights.end(), baseWeights.begin(),
@@ -6152,7 +6169,8 @@ TEST_CASE("wrapped periodic spline source promotes on both sides across file lan
         const auto input = directory.file(std::string("scale-") +
             std::to_string(scale) + "-distance-" + std::to_string(distanceFactor) +
             "-degree-" + std::to_string(degree) +
-            (sixControlLayout ? "-six-control" : "-five-control") +
+            (degree <= 3 ? (sixControlLayout ? "-six-control" : "-five-control")
+                         : (sixControlLayout ? "-plus-three-control" : "-plus-two-control")) +
             (rational ? "-rational" : "-unit") +
             (side == LC_CurveOffsetSide::Left
                 ? "-wrapped-left-" : "-wrapped-right-") + suffix);
