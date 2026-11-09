@@ -28661,3 +28661,25 @@ cases; added-range clang-format and `git diff --check` pass. Test commit
 `4c6cd2e9c` (`test(offset): cover alternate rational weights`). Native DXF/DWG
 persistence for the alternate profile, other weight distributions, external
 CAD, visible GUI, and exact-head CI remain open.
+
+## 628. Persist the Alternate Rational Weight Profile (2026-11-09)
+
+Extended the multi-knot native writer/reopen matrix to include W627's alternate
+positive weight profile on the four-knot `.12`/`.31`/`.58`/`.82` vector. The
+matrix now covers five bounded knot/weight profiles, degrees 3/4/5/6, both
+curvature orientations, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG (40
+source fixtures and 200 fixture/lane combinations). Fixture names distinguish
+the default and alternate weights, and retained DWG names identify the broader
+multi-knot matrix. Each lane requires staged import, typed-source equality,
+cache-fingerprint preservation, and writer export/reopen. DWG retention remains
+opt-in through `LIBRECAD_TYPED_SOURCE_DWG_DIR`.
+
+Validation: focused Release persistence test passes 76,004 assertions/1 test
+case; all 80 retained R2000/R2018 DWGs independently decode with LibreDWG 0.14
+minJSON and each contains exactly one nonempty degree-3 SPLINE with
+`LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release `librecad_tests`
+target builds, the changed test range passes repository clang-format, and
+`git diff --check` passes. Test commit `4cbdb0bd3` (`test(offset): persist
+alternate spline weights`). This qualifies only the enumerated bounded
+knot/weight profiles and formats; arbitrary rational weights, external-CAD
+acceptance, visible GUI, and exact-head CI remain open.
