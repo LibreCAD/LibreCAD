@@ -27957,3 +27957,21 @@ assertions, with 3 UI-dialog cases failing 4 focus/async-edit assertions in
 outside the changed geometry path and remain an acceptance caveat. Other
 periodic knot/weight profiles, exhaustive cross-knot proof coverage, visible
 GUI, independent-CAD, and exact-head CI remain open.
+
+## 594. Guard Discontinuous Rational Knot Sign Jumps (2026-11-09)
+
+Added a public-data degree-6 rational spline fixture with an internal knot of
+multiplicity five (C1, not guaranteed C2). Its certified one-sided offset
+factor intervals have opposite signs, but the factor is discontinuous at the
+knot; the cross-knot certificate must not infer a root from that sign jump.
+The engine returns `Ok` for this fixture's independently resolved span roots
+and reports no candidate at the discontinuous knot `t=0.5`. This specifically
+checks the knot-multiplicity continuity gate, not arbitrary repeated-knot
+geometry support.
+
+Validation: focused `rational spline knot sign jump is not certified as a
+cusp` passes 13 assertions/1 case and confirms the successful no-false-cusp
+result; complete Release `librecad_offset_worker_kernel_tests` passes
+1,706,716 assertions/86 cases; `git diff --check` passes. Broader repeated-knot
+layouts, exact-head CI, visible GUI, and independent-CAD acceptance remain
+open.
