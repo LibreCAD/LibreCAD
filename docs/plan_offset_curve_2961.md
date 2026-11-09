@@ -28844,3 +28844,22 @@ SPLINE and both `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release
 `872b5fc8a` (`test(offset): persist expanded knot weight profiles`). This is
 independent structural decoding, not AutoCAD/ODA visual acceptance; arbitrary
 rational weights, visible GUI, and exact-head CI remain open.
+
+## 636. Qualify a Wider Positive Weight Ratio at a Four-knot Cusp (2026-11-09)
+
+Added a fourth positive rational weight pattern spanning `.05` to `20` (ratio
+`400`) to the four-knot worker sweep, targeting knot `.82` for degrees 3/4/5/6
+and both curvature orientations. All eight configurations show an independent
+256-bit offset-factor sign crossing, satisfy C2 one-sided curvature agreement,
+and pass production certified-bracket classification, oracle-point endpoint
+mapping, operation-7 result-wire round-trip, and operation-8 cache validation.
+This is one bounded high-ratio profile at one knot position, not arbitrary
+positive-weight support.
+
+Validation: focused Release worker case passes 3,401 assertions/1 case; the
+complete Release `librecad_offset_worker_kernel_tests` suite passes 1,719,849
+assertions/94 cases. The changed range passes clang-format using
+`code_style/.clang-format`, and `git diff --check` passes. Test commit
+`f2374450b` (`test(offset): qualify wider rational weights`). Native-file
+persistence for this profile, other knot targets, external-CAD acceptance,
+visible GUI, and exact-head CI remain open.
