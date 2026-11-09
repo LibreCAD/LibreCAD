@@ -650,6 +650,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(reversedNarrowSeamArc.isValid());
     const std::size_t reversedNarrowSeamArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedNarrowSeamArc});
+    const RS_ArcData shortSeamCrossingArc{{3.0, -4.0}, 4.0,
+        2.0 * M_PI - arcSeam, arcSeam, false};
+    REQUIRE(shortSeamCrossingArc.isValid());
+    const std::size_t shortSeamCrossingArcFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{shortSeamCrossingArc});
     const std::size_t scaledLineFixtureStart = sources.size();
     const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 4;
     std::vector<double> scaledLineScales;
@@ -733,7 +738,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
         if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture ||
             i == nearParallelParabolaFixture || i == nearFullArcFixture || i == narrowSeamArcFixture ||
-            i == reversedNarrowSeamArcFixture ||
+            i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
             i + 3 >= sources.size() || i >= scaledLineFixtureStart)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
