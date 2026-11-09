@@ -29745,7 +29745,7 @@ these rows do not imply every parameter/domain is supported):
 | Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
 | --- | --- | --- | --- |
 | Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Other sub-ULP/coordinate-conditioning boundaries and broad non-finite payload refusal |
-| Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; typed worker output; five file lanes | Sweep seam, reversed/full-sweep limits and boundary matrix |
+| Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at 1e-4 radians, both orientations and both offset sides; typed worker output and five file lanes for existing moderate-sweep fixtures | Carry sweep-boundary profiles through worker/cache, replacement and file lanes; smaller seam gaps, sweep limits and broader boundary matrix |
 | Circle | Finite nonzero-radius closed circle | Direct near-collapse and exact-collapse semantics; exact-normal scale/translation matrix at 1e-4/1/1e4; small and large-origin circle worker/cache, Produce, and five-format reopen fixtures | Zero-radius refusal, still-smaller/larger scales, broader origin/conditioning matrix, independent geometry comparison for scaled persisted caches |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
@@ -30545,3 +30545,20 @@ external CAD acceptance, cross-platform/ASan, and exact-head CI remain open.
 
 Validation: documentation consistency and whitespace checked with
 `git diff --check`; no code changed in this checkpoint.
+
+## 696. Qualify Circular-arc Sweep Seam Boundaries (2026-11-09)
+
+Added an independent exact-normal oracle matrix for four circular-arc
+parameterizations: a short counterclockwise arc crossing 0/2π, a
+counterclockwise near-full arc, and the corresponding reversed near-full and
+seam-crossing forms. Each uses a 1e-4-radian seam gap and is offset on both
+signed sides. All preserve the expected exact circular offset within the
+requested geometry tolerance. This is direct-engine evidence only; it does not
+establish worker/cache admission, source replacement, or DXF/DWG persistence
+for these sweep boundaries.
+
+Validation: rebuilt the Release `librecad_tests` target. The focused new case
+passes 10,696 assertions/1 case; the complete `[curve-offset][direct][arc]`
+selection passes 14,641 assertions/2 cases. `git diff --check` passes.
+Smaller seam gaps, sweep limits, and worker/cache/file-lane coverage remain
+open, as do visible GUI, external CAD, cross-platform/ASan, and exact-head CI.
