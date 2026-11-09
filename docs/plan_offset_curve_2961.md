@@ -28378,3 +28378,25 @@ independent parser structure only; it does not prove rendering equivalence or
 AutoCAD/ODA acceptance. Other spline profiles, knot layouts/multiplicities,
 DWG releases, exact-head CI, visible GUI, and independent-CAD acceptance
 remain open.
+
+## 614. Add Two Exact-binary C2 Knot Locations Through Degree Six (2026-11-09)
+
+Broadened the worker and product-writer C2 rational-knot matrices from five to
+seven interior knot locations by adding `0.125` and `0.625`. Degrees 3/4/5/6
+and both curvature orientations remain covered. The direct analytic
+one-sided-curvature oracle and its strict continuity threshold are unchanged;
+all cases still require certified candidate bounds/mapping, operation-7
+generation, operation-8 cache validation, and result-wire round-trips.
+
+The persistence matrix now covers 56 degree/location/orientation fixtures
+through five native lanes (280 fixture/lane combinations). With DWG retention
+enabled, the focused product-writer test passes 90,945 assertions/1 case and
+produces 112 DWGs. LibreDWG 0.14 parses all 112 and confirms exactly one
+nonempty degree-3 cache SPLINE with `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED
+markers in each. Validation also includes 4,312 focused worker assertions,
+1,711,052 assertions across the full 88-case worker suite, and
+`git diff --check`. Test commit `9eef4dd36` (`test(offset): broaden C2 knot
+location matrix`). These are seven locations for the existing per-degree
+fixture profiles, not arbitrary knot vectors or layout/multiplicity coverage;
+rendering equivalence, AutoCAD/ODA acceptance, visible GUI, and exact-head CI
+remain separate gates.
