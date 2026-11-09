@@ -28211,3 +28211,25 @@ case without compiler warnings; `git diff --check` passes. Test commit
 `d18fc2262` (`test(offset): cover non-midpoint C2 knot cusps`). Broader knot
 profiles, full geometry-family coverage, exact-head CI, visible GUI, and
 external-CAD acceptance remain open.
+
+## 606. Broaden C2 Knot-location Coverage (2026-11-09)
+
+Extended W605's degree-3/4/5 C2 crossing matrix to four interior knot
+locations: `0.25`, `0.37`, `0.5`, and `0.75`, each tested for both curvature
+orientations. The quarter and three-quarter locations add off-center fixtures
+while remaining exactly representable in binary; the oracle's existing strict
+one-sided curvature agreement tolerance remains unchanged. Every case still
+checks certified interval variation, direct cusp classification and mapping,
+worker operation 7/result-wire round-trip, operation-8 cache validation, and
+its result-wire round-trip. An exploratory `0.23` location did not satisfy the
+oracle's `1e-30` one-sided-curvature equality check, so it was not accepted by
+loosening that proof threshold; non-binary knot locations remain a distinct
+numerical-validation question.
+
+Validation: focused C2 crossing matrix passes 1,752 assertions/1 case; full
+Release `librecad_offset_worker_kernel_tests` passes 1,708,492 assertions/88
+cases; `git diff --check` passes. Commit `c54f50e98` (`test(offset): broaden
+C2 knot position matrix`). This qualifies only the four stated knot locations
+for the existing degree/multiplicity/weight fixtures. Other knot layouts,
+profiles and multiplicities, geometry families/variants, exact-head CI,
+visible GUI, and external-CAD acceptance remain open.
