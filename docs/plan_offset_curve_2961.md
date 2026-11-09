@@ -26994,7 +26994,11 @@ single- and repeated-multiplicity variants. The current extension adds cubic
 interior-knot multiplicity three at `0.4` for both middle weights. Each
 generated spline is checked against its original single-span rational curve
 at parameters `0.125` through `0.875` in `0.125` increments, including the
-repeated knot itself, before offset generation.
+repeated knot itself, before offset generation. The latest layouts add two
+asymmetric rational cubics with three distinct interior knots each; insertion
+order is deliberately unsorted (`0.91`, `0.07`, `0.37` and `0.62`, `0.16`,
+`0.84`) to exercise insertion into an already multi-span knot vector. The
+original-curve comparison now also samples each inserted knot directly.
 
 For the new layouts, the existing matrix compares worker operation-7 output
 with direct materialization and stages operation-8 promotion through R14 DXF,
@@ -27009,14 +27013,18 @@ asymmetric profiles, 304,668 assertions/1 case and 526,467 assertions/11
 cases; the cubic two-distinct-knot profiles, 315,312 assertions/1 case and
 535,646 assertions/11 cases; the repeated-knot cubic fixtures, 333,782
 assertions/1 case; the full-multiplicity cubic fixtures, 381,239 assertions/1
-case and 612,461 assertions/11 cases for the spline-variant selection. The
-`librecad_tests` target rebuild and `git diff --check` pass. Test commits
+case and 612,461 assertions/11 cases for the spline-variant selection;
+three-distinct-knot cubic fixtures, 415,894 assertions/1 case and 613,908
+assertions/11 cases. The `librecad_tests` target rebuild and `git diff --check`
+pass. Test commits
 `3a6728fbe` (`test(offset): import two-knot rational splines`),
 `d2e08850a` (`test(offset): vary distinct rational knot layouts`),
 `c4a141580` (`test(offset): import asymmetric rational knot profiles`), and
 `c40e14daa` (`test(offset): import rational cubic knot profiles`) and
 `c640e5067` (`test(offset): import repeated-knot rational cubics`) and
-`f98b36b3d` (`test(offset): import cubic splines at full knot multiplicity`).
+`f98b36b3d` (`test(offset): import cubic splines at full knot multiplicity`)
+and `3649eecdb` (`test(offset): import cubic splines with three distinct
+knots`).
 These are finite quadratic/cubic profiles, not arbitrary rational NURBS support;
 arbitrary knot values/counts and higher degrees, other asymmetric source
 shapes, periodic sources, external CAD, visible GUI, and exact-head CI remain
