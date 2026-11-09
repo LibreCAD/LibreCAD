@@ -1,5 +1,6 @@
 /* Copyright (C) 2026 LibreCAD.org. SPDX-License-Identifier: GPL-2.0-or-later */
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 #include <catch2/generators/catch_generators.hpp>
 
 #include <cmath>
@@ -10,6 +11,12 @@
 #include <QCursor>
 #include <QFile>
 #include <QMouseEvent>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QProcess>
+#include <QStandardPaths>
 #include <QStringList>
 #include <QTemporaryDir>
 
@@ -166,6 +173,78 @@ void reopened(RS_Graphic& graphic, const LC_EllipseOffsetDefinition& expected, i
     CHECK(ellipses == ellipseCount);
     CHECK(other == 0);
 }
+
+#ifdef DWGSUPPORT
+void checkLibreDwgSpline(const QString& readerPath, const std::filesystem::path& file,
+                         const RS_SplineData& expected) {
+    QProcess reader;
+    reader.start(readerPath, {"-O", "minJSON", lc::test::toQString(file)});
+    REQUIRE(reader.waitForStarted());
+    REQUIRE(reader.waitForFinished(30000));
+    INFO(reader.readAllStandardError().toStdString());
+    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+    REQUIRE(reader.exitCode() == 0);
+    const QByteArray output = reader.readAllStandardOutput();
+    REQUIRE_FALSE(output.isEmpty());
+    QJsonParseError parseError;
+    const QJsonDocument document = QJsonDocument::fromJson(output, &parseError);
+    REQUIRE(parseError.error == QJsonParseError::NoError);
+    REQUIRE(document.isObject());
+
+    QJsonObject externalSpline;
+    for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
+        const QJsonObject object = value.toObject();
+        if (object.value("entity").toString() != "SPLINE" ||
+            object.value("degree").toInt() != expected.degree)
+            continue;
+        const QJsonArray knots = object.value("knots").toArray();
+        const QJsonArray controls = object.value("ctrl_pts").toArray();
+        if (knots.size() != static_cast<qsizetype>(expected.knotslist.size()) ||
+            controls.size() != static_cast<qsizetype>(expected.controlPoints.size()))
+            continue;
+
+        bool sameGeometry = true;
+        for (qsizetype i = 0; i < knots.size() && sameGeometry; ++i) {
+            sameGeometry = std::abs(knots[i].toDouble() -
+                expected.knotslist[static_cast<std::size_t>(i)]) <= 1e-11;
+        }
+        for (qsizetype i = 0; i < controls.size() && sameGeometry; ++i) {
+            const auto index = static_cast<std::size_t>(i);
+            const auto& point = expected.controlPoints[index];
+            const double weight = expected.weights.empty() ? 1.0 : expected.weights[index];
+            const QJsonObject actual = controls[i].toObject();
+            sameGeometry = std::abs(actual.value("x").toDouble() - point.x) <= 1e-10 &&
+                           std::abs(actual.value("y").toDouble() - point.y) <= 1e-10 &&
+                           std::abs(actual.value("z").toDouble() - point.z) <= 1e-10 &&
+                           std::abs(actual.value("w").toDouble(1.0) - weight) <= 1e-10;
+        }
+        if (sameGeometry) {
+            externalSpline = object;
+            break;
+        }
+    }
+    REQUIRE_FALSE(externalSpline.isEmpty());
+    CHECK(externalSpline.value("degree").toInt() == expected.degree);
+    const QJsonArray knots = externalSpline.value("knots").toArray();
+    REQUIRE(knots.size() == static_cast<qsizetype>(expected.knotslist.size()));
+    for (qsizetype i = 0; i < knots.size(); ++i) {
+        CHECK(knots[i].toDouble() == Catch::Approx(
+            expected.knotslist[static_cast<std::size_t>(i)]).margin(1e-11));
+    }
+    const QJsonArray controls = externalSpline.value("ctrl_pts").toArray();
+    REQUIRE(controls.size() == static_cast<qsizetype>(expected.controlPoints.size()));
+    for (qsizetype i = 0; i < controls.size(); ++i) {
+        const auto index = static_cast<std::size_t>(i);
+        const auto& point = expected.controlPoints[index];
+        const double weight = expected.weights.empty() ? 1.0 : expected.weights[index];
+        const QJsonObject actual = controls[i].toObject();
+        CHECK(actual.value("x").toDouble() == Catch::Approx(point.x).margin(1e-10));
+        CHECK(actual.value("y").toDouble() == Catch::Approx(point.y).margin(1e-10));
+        CHECK(actual.value("z").toDouble() == Catch::Approx(point.z).margin(1e-10));
+        CHECK(actual.value("w").toDouble(1.0) == Catch::Approx(weight).margin(1e-10));
+    }
+}
+#endif
 }
 
 TEST_CASE("I UI registered source actions persist updated native and restored ellipse through R2018",
@@ -280,6 +359,10 @@ TEST_CASE("I Update from Source preserves every typed source through five DXF an
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
         RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
     const QByteArray expectedVersion = (format == RS2::FormatDXFRW14) ? "AC1014" :
         (format == RS2::FormatDXFRW2000 || format == RS2::FormatDWG) ? "AC1015" : "AC1032";
     CAPTURE(static_cast<int>(kind), static_cast<int>(format));
@@ -354,6 +437,10 @@ TEST_CASE("I Update from Source preserves every typed source through five DXF an
     const auto header = bytes.read(dwg ? 6 : bytes.size());
     if (dwg) CHECK(header == expectedVersion);
     else { CHECK(header.contains("$ACADVER")); CHECK(header.contains(expectedVersion)); }
+#ifdef DWGSUPPORT
+    if (dwg && !libreDwgReader.isEmpty())
+        checkLibreDwgSpline(libreDwgReader, file, updated->getData());
+#endif
     CHECK(RS_Spline::geometryFingerprint(updated->getData()) != fingerprint);
     RS_Graphic loaded;
     REQUIRE(lc::test::importDrawing(loaded, file, format));
