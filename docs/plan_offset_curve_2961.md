@@ -120,6 +120,16 @@ Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
 
+The 2026-11-09 follow-up restates the requirement that users can change the
+source-curve family while choosing a replacement and that source support
+expand across all supported types. The first part is already implemented by
+the editable nine-family picker and is covered by W641; do not add a parallel
+selector or duplicate family list. The second part remains the end-to-end
+eligibility obligation below: picker visibility alone does not make a source
+variant offsettable or round-trippable. Continue closing concrete variants
+through geometry, worker/cache admission, replacement, and applicable
+DXF/DWG validation, retaining fail-closed behavior for unqualified cases.
+
 Current implementation order for the remaining “all supported types” work:
 
 1. **Inventory and eligibility:** use `SupportedKinds` as the canonical set;
@@ -28997,3 +29007,28 @@ and `git diff --check`. Implementation commit `edc1d3db6` (`test(offset):
 qualify million-ratio rational weights`). This is evidence for the recorded
 profile and knot only; other knot positions, broader rational layouts, visible
 GUI, external-CAD visual acceptance, and exact-head CI remain open.
+
+## 643. Reconcile the Source-Family Picker and All-Types Support Request (2026-11-09)
+
+The latest request reiterates two related but separate requirements: the
+Properties widget must allow changing source family before selecting a
+replacement, and offset support must expand across every supported source
+type. The widget requirement is already implemented: its editable selector
+uses the canonical nine-kind inventory, refreshes candidates when the family
+changes, preserves the current source highlight until a valid pick, and keeps
+`LC_Parabola` distinct from generic `LC_SplinePoints`. W641 records the
+current-source regression run; no additional selector or parabola-only UI
+branch is needed.
+
+The all-types requirement is not complete. Treat the nine picker kinds as the
+family inventory, then qualify each concrete eligible geometry variant
+independently through direct generation, worker/cache admission, source
+replacement, and applicable DXF/DWG export/reopen. Preserve fail-closed
+behavior and do not claim support from picker visibility, serialization, or
+one representative fixture alone. Continue using the existing inventory and
+implementation order above; this is a planning reconciliation, not a code
+change.
+
+Validation: inspected `LC_OffsetSourceGeometry::SupportedKinds` and the W641
+source-picker coverage in the current plan. No tests were run because this
+entry changes documentation only.
