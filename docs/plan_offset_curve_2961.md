@@ -28683,3 +28683,22 @@ target builds, the changed test range passes repository clang-format, and
 alternate spline weights`). This qualifies only the enumerated bounded
 knot/weight profiles and formats; arbitrary rational weights, external-CAD
 acceptance, visible GUI, and exact-head CI remain open.
+
+## 629. Qualify a Higher-contrast Positive Weight Profile (2026-11-09)
+
+Extended the four-knot `.12`/`.31`/`.58`/`.82` worker cusp-oracle case with a
+third strictly positive weight pattern spanning `.25` to `2.8` (ratio `11.2`),
+alongside the prior mild and moderate profiles. Degrees 3/4/5/6 and both
+curvature orientations must retain the 256-bit left/right curvature agreement,
+oracle offset-factor sign crossing, certified unique cusp bracket, endpoint
+mapping and requested geometric-error bound. Each generated ordinary cache
+must also survive operation-7 wire round-trip and operation-8 source-cache
+validation. This is bounded evidence for these three profiles and one knot
+layout, not general positive-rational NURBS support.
+
+Validation: focused Release case passes 608 assertions/1 test case; complete
+Release `librecad_offset_worker_kernel_tests` passes 1,717,056 assertions/94
+cases; the changed range passes repository clang-format and `git diff --check`.
+Test commit `fe704216f` (`test(offset): widen rational knot weights`). Native
+file persistence for the new high-contrast profile, arbitrary weights, external
+CAD, visible GUI and exact-head CI remain open.
