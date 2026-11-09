@@ -4248,124 +4248,113 @@ TEST_CASE("rational quadratic tangent stalls map across weight profiles and bina
     }
 }
 
-TEST_CASE("knot-inserted rational quadratic tangent maps across the interior knot",
-          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][knot]") {
-    const std::vector<std::pair<double, double>> profiles{
-        {0.5, 0.5}, {1.0, 0.5}, {2.0, 0.5},
-        {0.5, 2.0}, {1.0, 2.0}, {2.0, 2.0}};
+TEST_CASE("knot-inserted rational quadratic tangent maps across nonuniform spans",
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-"
+          "root][knot]") {
+    const std::vector<std::pair<double, double>> profiles{{0.5, 0.5}, {1.0, 0.5}, {2.0, 0.5},
+                                                          {0.5, 2.0}, {1.0, 2.0}, {2.0, 2.0}};
     const SplineOracle domainStart{0};
     const SplineOracle domainEnd{1};
     const SplineOracle root{"0.5"};
     const SplineOracle step{"1e-24"};
 
-    for (const auto& [scale, middleWeight] : profiles) {
-        RS_SplineData original{2, false};
-        original.type = RS_SplineData::SplineType::ClampedOpen;
-        original.controlPoints = {{-2 * scale, 0}, {0, 2 * scale},
-                                  {2 * scale, 0}};
-        original.knotslist = {0, 0, 0, 1, 1, 1};
-        original.weights = {1, middleWeight, 1};
+    for (const double insertionParameter : {0.25, 0.5}) {
+        for (const auto &[scale, middleWeight] : profiles) {
+            RS_SplineData original{2, false};
+            original.type = RS_SplineData::SplineType::ClampedOpen;
+            original.controlPoints = {{-2 * scale, 0}, {0, 2 * scale}, {2 * scale, 0}};
+            original.knotslist = {0, 0, 0, 1, 1, 1};
+            original.weights = {1, middleWeight, 1};
 
-        RS_SplineData inserted{2, false};
-        inserted.type = RS_SplineData::SplineType::ClampedOpen;
-        const double denominator = 1.0 + middleWeight;
-        inserted.controlPoints = {
-            {-2 * scale, 0},
-            {-2 * scale / denominator, 2 * scale * middleWeight / denominator},
-            {2 * scale / denominator, 2 * scale * middleWeight / denominator},
-            {2 * scale, 0}};
-        inserted.knotslist = {0, 0, 0, 0.5, 1, 1, 1};
-        const double insertedWeight = 0.5 * denominator;
-        inserted.weights = {1, insertedWeight, insertedWeight, 1};
-        const RS_Spline source{nullptr, inserted};
-        REQUIRE(source.validate());
+            RS_SplineData inserted{2, false};
+            inserted.type = RS_SplineData::SplineType::ClampedOpen;
+            const double firstWeight = 1.0 - insertionParameter + insertionParameter * middleWeight;
+            const double secondWeight = (1.0 - insertionParameter) * middleWeight + insertionParameter;
+            inserted.controlPoints = {{-2 * scale, 0},
+                                      {-2 * scale * (1.0 - insertionParameter) / firstWeight,
+                                       2 * scale * middleWeight * insertionParameter / firstWeight},
+                                      {2 * scale * insertionParameter / secondWeight,
+                                       2 * scale * middleWeight * (1.0 - insertionParameter) / secondWeight},
+                                      {2 * scale, 0}};
+            inserted.knotslist = {0, 0, 0, insertionParameter, 1, 1, 1};
+            inserted.weights = {1, firstWeight, secondWeight, 1};
+            const RS_Spline source{nullptr, inserted};
+            REQUIRE(source.validate());
 
-        for (const double parameter : {0.1, 0.25, 0.49, 0.5, 0.51, 0.75, 0.9}) {
-            const auto originalPoint = evaluateSplineOracle(
-                original, SplineOracle{parameter});
-            const auto insertedPoint = evaluateSplineOracle(
-                inserted, SplineOracle{parameter});
-            const SplineOracle dx = originalPoint.first - insertedPoint.first;
-            const SplineOracle dy = originalPoint.second - insertedPoint.second;
-            CHECK(sqrt(dx * dx + dy * dy) < SplineOracle{"1e-12"});
-        }
-
-        const double signedDistance = -2.0 * scale / middleWeight;
-        const SplineOracle distance{signedDistance};
-        const SplineOracle tangentLeft = oracleOffsetFactor(
-            inserted, root, step, domainStart, domainEnd, distance, true);
-        const SplineOracle tangentRight = oracleOffsetFactor(
-            inserted, root, step, domainStart, domainEnd, distance, false);
-        const SplineOracle before = oracleOffsetFactor(
-            inserted, root - SplineOracle{"1e-7"}, step, domainStart,
-            domainEnd, distance);
-        const SplineOracle after = oracleOffsetFactor(
-            inserted, root + SplineOracle{"1e-7"}, step, domainStart,
-            domainEnd, distance);
-        CAPTURE(scale, middleWeight, signedDistance, tangentLeft, tangentRight,
-                before, after);
-        CHECK(abs(tangentLeft) < SplineOracle{"1e-10"});
-        CHECK(abs(tangentRight) < SplineOracle{"1e-10"});
-        CHECK(before != 0);
-        CHECK(after != 0);
-        CHECK((before < 0) == (after < 0));
-
-        const double requestedGeometry = 1e-4 * scale;
-        const LC_OffsetSourceDefinition definition{
-            LC_OffsetSourceGeometry{inserted}, signedDistance,
-            requestedGeometry, false};
-        const auto options =
-            LC_OffsetWorkerTolerance::directOptions(definition, source);
-        REQUIRE(options);
-        LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
-        const auto built = LC_CurveOffset::buildDirectBranches(
-            source,
-            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right,
-                                            std::abs(signedDistance)),
-            *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
-        CAPTURE(scale, middleWeight, built.status, diagnostics.failureStage,
-                diagnostics.failureT0, diagnostics.failureT1,
-                diagnostics.stallIntervals);
-        REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
-        REQUIRE(diagnostics.complete);
-        std::vector<std::pair<double, double>> knotStalls;
-        std::copy_if(diagnostics.stallIntervals.begin(),
-                     diagnostics.stallIntervals.end(),
-                     std::back_inserter(knotStalls),
-                     [](const std::pair<double, double>& interval) {
-                         return interval.first <= 0.5 && 0.5 <= interval.second;
-                     });
-        REQUIRE_FALSE(knotStalls.empty());
-
-        std::vector<RS_Vector> endpoints;
-        for (const LC_OffsetBranch& branch : built.branches) {
-            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                endpoints.push_back(piece.bezier.front());
-                endpoints.push_back(piece.bezier.back());
+            for (const double parameter : {0.1, insertionParameter, 0.49, 0.5, 0.51, 0.75, 0.9}) {
+                const auto originalPoint = evaluateSplineOracle(original, SplineOracle{parameter});
+                const auto insertedPoint = evaluateSplineOracle(inserted, SplineOracle{parameter});
+                const SplineOracle dx = originalPoint.first - insertedPoint.first;
+                const SplineOracle dy = originalPoint.second - insertedPoint.second;
+                CHECK(sqrt(dx * dx + dy * dy) < SplineOracle{"1e-12"});
             }
-        }
-        std::vector<double> mappedParameters{0.5};
-        for (const auto& stall : knotStalls) {
-            mappedParameters.push_back(stall.first);
-            mappedParameters.push_back(stall.second);
-        }
-        for (const double parameter : mappedParameters) {
-            const auto point = oracleOffsetPoint(
-                inserted, SplineOracle{parameter}, step, domainStart,
-                domainEnd, distance);
-            const RS_Vector expected{point.first.convert_to<double>(),
-                                     point.second.convert_to<double>()};
-            double nearest = std::numeric_limits<double>::infinity();
-            for (const RS_Vector& endpoint : endpoints)
-                nearest = std::min(nearest, endpoint.distanceTo(expected));
-            CAPTURE(scale, middleWeight, parameter, nearest);
-            CHECK(nearest <= requestedGeometry);
+
+            const double signedDistance = -2.0 * scale / middleWeight;
+            const SplineOracle distance{signedDistance};
+            const SplineOracle tangentLeft =
+                oracleOffsetFactor(inserted, root, step, domainStart, domainEnd, distance, true);
+            const SplineOracle tangentRight =
+                oracleOffsetFactor(inserted, root, step, domainStart, domainEnd, distance, false);
+            const SplineOracle before =
+                oracleOffsetFactor(inserted, root - SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
+            const SplineOracle after =
+                oracleOffsetFactor(inserted, root + SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
+            CAPTURE(insertionParameter, scale, middleWeight, signedDistance, tangentLeft, tangentRight, before, after);
+            CHECK(abs(tangentLeft) < SplineOracle{"1e-10"});
+            CHECK(abs(tangentRight) < SplineOracle{"1e-10"});
+            CHECK(before != 0);
+            CHECK(after != 0);
+            CHECK((before < 0) == (after < 0));
+
+            const double requestedGeometry = 1e-4 * scale;
+            const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{inserted}, signedDistance,
+                                                       requestedGeometry, false};
+            const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+            REQUIRE(options);
+            LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+            const auto built = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, std::abs(signedDistance)), *options,
+                LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+            CAPTURE(insertionParameter, scale, middleWeight, built.status, diagnostics.failureStage,
+                    diagnostics.failureT0, diagnostics.failureT1, diagnostics.stallIntervals);
+            REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(diagnostics.complete);
+            std::vector<std::pair<double, double>> rootStalls;
+            std::copy_if(diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
+                         std::back_inserter(rootStalls), [](const std::pair<double, double> &interval) {
+                             return interval.first <= 0.5 && 0.5 <= interval.second;
+                         });
+            REQUIRE_FALSE(rootStalls.empty());
+
+            std::vector<RS_Vector> endpoints;
+            for (const LC_OffsetBranch &branch : built.branches) {
+                for (const LC_OffsetCubicPiece &piece : branch.cubicPieces) {
+                    endpoints.push_back(piece.bezier.front());
+                    endpoints.push_back(piece.bezier.back());
+                }
+            }
+            std::vector<double> mappedParameters{0.5};
+            for (const auto &stall : rootStalls) {
+                mappedParameters.push_back(stall.first);
+                mappedParameters.push_back(stall.second);
+            }
+            for (const double parameter : mappedParameters) {
+                const auto point =
+                    oracleOffsetPoint(inserted, SplineOracle{parameter}, step, domainStart, domainEnd, distance);
+                const RS_Vector expected{point.first.convert_to<double>(), point.second.convert_to<double>()};
+                double nearest = std::numeric_limits<double>::infinity();
+                for (const RS_Vector &endpoint : endpoints)
+                    nearest = std::min(nearest, endpoint.distanceTo(expected));
+                CAPTURE(insertionParameter, scale, middleWeight, parameter, nearest);
+                CHECK(nearest <= requestedGeometry);
+            }
         }
     }
 }
 
 TEST_CASE("degree-elevated rational cubic tangent maps to retained output",
-          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational][tangent-root][degree]") {
+          "[lc-offsetcurve][worker-kernel][spline-variant][oracle][rational]["
+          "tangent-root][degree]") {
     RS_SplineData data{3, false};
     data.type = RS_SplineData::SplineType::ClampedOpen;
     data.controlPoints = {{-2, 0}, {-1, 1}, {1, 1}, {2, 0}};
@@ -4378,146 +4367,108 @@ TEST_CASE("degree-elevated rational cubic tangent maps to retained output",
     const SplineOracle domainEnd{1};
     const SplineOracle root{"0.5"};
     const SplineOracle step{"1e-24"};
-    const SplineOracle unitFactor = oracleOffsetFactor(
-        data, root, step, domainStart, domainEnd, SplineOracle{1});
+    const SplineOracle unitFactor = oracleOffsetFactor(data, root, step, domainStart, domainEnd, SplineOracle{1});
     const SplineOracle curvature = 1 - unitFactor;
     REQUIRE(abs(curvature) > SplineOracle{"1e-12"});
     const double signedDistance = (1 / curvature).convert_to<double>();
     const SplineOracle distance{signedDistance};
-    const SplineOracle tangent = oracleOffsetFactor(
-        data, root, step, domainStart, domainEnd, distance);
-    const SplineOracle leftNeighbor = oracleOffsetFactor(
-        data, root - SplineOracle{"1e-7"}, step, domainStart, domainEnd,
-        distance);
-    const SplineOracle rightNeighbor = oracleOffsetFactor(
-        data, root + SplineOracle{"1e-7"}, step, domainStart, domainEnd,
-        distance);
+    const SplineOracle tangent = oracleOffsetFactor(data, root, step, domainStart, domainEnd, distance);
+    const SplineOracle leftNeighbor =
+        oracleOffsetFactor(data, root - SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
+    const SplineOracle rightNeighbor =
+        oracleOffsetFactor(data, root + SplineOracle{"1e-7"}, step, domainStart, domainEnd, distance);
     CAPTURE(signedDistance, tangent, leftNeighbor, rightNeighbor);
     CHECK(abs(tangent) < SplineOracle{"1e-10"});
     CHECK(leftNeighbor != 0);
     CHECK(rightNeighbor != 0);
     CHECK((leftNeighbor < 0) == (rightNeighbor < 0));
 
-    const LC_OffsetSourceDefinition strictDefinition{
-        LC_OffsetSourceGeometry{data}, signedDistance, 1e-3, false};
-    const auto strictOptions =
-        LC_OffsetWorkerTolerance::directOptions(strictDefinition, source);
+    const LC_OffsetSourceDefinition strictDefinition{LC_OffsetSourceGeometry{data}, signedDistance, 1e-3, false};
+    const auto strictOptions = LC_OffsetWorkerTolerance::directOptions(strictDefinition, source);
     REQUIRE(strictOptions);
     LC_CurveOffsetCuspIsolationDiagnostics strictDiagnostics;
     const auto strict = LC_CurveOffset::buildDirectBranches(
         source,
-        LC_CurveOffset::makeSideRequest(signedDistance > 0
-                                            ? LC_CurveOffsetSide::Left
-                                            : LC_CurveOffsetSide::Right,
+        LC_CurveOffset::makeSideRequest(signedDistance > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
                                         std::abs(signedDistance)),
-        *strictOptions, LC_CurveOffset::makeDirectSourceBudget(),
-        &strictDiagnostics);
-    CAPTURE(strict.status, strictDiagnostics.failureStage,
-            strictDiagnostics.failingRunBoxes, strictDiagnostics.failingRunExtent,
-            strictOptions->tolerance.nodeMerge);
+        *strictOptions, LC_CurveOffset::makeDirectSourceBudget(), &strictDiagnostics);
+    CAPTURE(strict.status, strictDiagnostics.failureStage, strictDiagnostics.failingRunBoxes,
+            strictDiagnostics.failingRunExtent, strictOptions->tolerance.nodeMerge);
     REQUIRE(strict.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(strictDiagnostics.complete);
     const auto strictTangentStall = std::find_if(
-        strictDiagnostics.stallIntervals.begin(),
-        strictDiagnostics.stallIntervals.end(),
-        [](const std::pair<double, double>& interval) {
-            return interval.first <= .5 && .5 <= interval.second;
-        });
+        strictDiagnostics.stallIntervals.begin(), strictDiagnostics.stallIntervals.end(),
+        [](const std::pair<double, double> &interval) { return interval.first <= .5 && .5 <= interval.second; });
     REQUIRE(strictTangentStall != strictDiagnostics.stallIntervals.end());
     LC_CurveJetBounds strictTangentBounds;
-    REQUIRE(source.tryBoundJetForCusp(
-        strictTangentStall->first, strictTangentStall->second,
-        strictTangentBounds, signedDistance));
-    const LC_Interval strictTangentFactor =
-        strictTangentBounds.offsetFactorNumeratorForMotionBound(signedDistance);
+    REQUIRE(source.tryBoundJetForCusp(strictTangentStall->first, strictTangentStall->second, strictTangentBounds,
+                                      signedDistance));
+    const LC_Interval strictTangentFactor = strictTangentBounds.offsetFactorNumeratorForMotionBound(signedDistance);
     REQUIRE(strictTangentFactor.isValid());
     const double strictTangentMotion =
-        std::max(std::abs(strictTangentFactor.lo()),
-                 std::abs(strictTangentFactor.hi())) /
-        strictTangentBounds.speedSquared().lo() *
-        (strictTangentStall->second - strictTangentStall->first);
+        std::max(std::abs(strictTangentFactor.lo()), std::abs(strictTangentFactor.hi())) /
+        strictTangentBounds.speedSquared().lo() * (strictTangentStall->second - strictTangentStall->first);
     CAPTURE(strictTangentMotion, strictOptions->tolerance.nodeMerge);
     CHECK(strictTangentMotion <= strictOptions->tolerance.nodeMerge);
-    const auto nearestStrictEndpoint = [&](const RS_Vector& point) {
+    const auto nearestStrictEndpoint = [&](const RS_Vector &point) {
         double nearest = std::numeric_limits<double>::infinity();
-        for (const LC_OffsetBranch& branch : strict.branches) {
-            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                nearest = std::min(nearest,
-                    std::min(piece.bezier.front().distanceTo(point),
-                             piece.bezier.back().distanceTo(point)));
+        for (const LC_OffsetBranch &branch : strict.branches) {
+            for (const LC_OffsetCubicPiece &piece : branch.cubicPieces) {
+                nearest = std::min(
+                    nearest, std::min(piece.bezier.front().distanceTo(point), piece.bezier.back().distanceTo(point)));
             }
         }
         return nearest;
     };
-    for (const double parameter :
-         {strictTangentStall->first, strictTangentStall->second}) {
-        const auto point = oracleOffsetPoint(
-            data, SplineOracle{parameter}, step, domainStart, domainEnd,
-            distance, parameter == domainEnd);
-        const RS_Vector expected{point.first.convert_to<double>(),
-                                 point.second.convert_to<double>()};
-        CHECK(nearestStrictEndpoint(expected) <=
-              strictOptions->tolerance.requestedGeometry);
+    for (const double parameter : {strictTangentStall->first, strictTangentStall->second}) {
+        const auto point = oracleOffsetPoint(data, SplineOracle{parameter}, step, domainStart, domainEnd, distance,
+                                             parameter == domainEnd);
+        const RS_Vector expected{point.first.convert_to<double>(), point.second.convert_to<double>()};
+        CHECK(nearestStrictEndpoint(expected) <= strictOptions->tolerance.requestedGeometry);
     }
-    const auto strictTangentPoint = oracleOffsetPoint(
-        data, root, step, domainStart, domainEnd, distance);
-    const RS_Vector expectedStrictTangent{
-        strictTangentPoint.first.convert_to<double>(),
-        strictTangentPoint.second.convert_to<double>()};
-    CHECK(nearestStrictEndpoint(expectedStrictTangent) <=
-          strictOptions->tolerance.requestedGeometry);
+    const auto strictTangentPoint = oracleOffsetPoint(data, root, step, domainStart, domainEnd, distance);
+    const RS_Vector expectedStrictTangent{strictTangentPoint.first.convert_to<double>(),
+                                          strictTangentPoint.second.convert_to<double>()};
+    CHECK(nearestStrictEndpoint(expectedStrictTangent) <= strictOptions->tolerance.requestedGeometry);
 
-    const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{data}, signedDistance, 1e-2, false};
+    const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data}, signedDistance, 1e-2, false};
     const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
     REQUIRE(options);
     LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
     const auto built = LC_CurveOffset::buildDirectBranches(
         source,
-        LC_CurveOffset::makeSideRequest(signedDistance > 0
-                                            ? LC_CurveOffsetSide::Left
-                                            : LC_CurveOffsetSide::Right,
+        LC_CurveOffset::makeSideRequest(signedDistance > 0 ? LC_CurveOffsetSide::Left : LC_CurveOffsetSide::Right,
                                         std::abs(signedDistance)),
         *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
-    CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals,
-            diagnostics.candidateParameters, diagnostics.failureStage,
-            diagnostics.failingRunBoxes, diagnostics.failingRunExtent,
-            diagnostics.failingRunSignChanges, diagnostics.failingRunObserved,
-            diagnostics.isolationBoxesVisited);
+    CAPTURE(built.status, diagnostics.status, diagnostics.stallIntervals, diagnostics.candidateParameters,
+            diagnostics.failureStage, diagnostics.failingRunBoxes, diagnostics.failingRunExtent,
+            diagnostics.failingRunSignChanges, diagnostics.failingRunObserved, diagnostics.isolationBoxesVisited);
     REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(diagnostics.complete);
     const auto owningStall = std::find_if(
         diagnostics.stallIntervals.begin(), diagnostics.stallIntervals.end(),
-        [](const std::pair<double, double>& interval) {
-            return interval.first <= .5 && .5 <= interval.second;
-        });
+        [](const std::pair<double, double> &interval) { return interval.first <= .5 && .5 <= interval.second; });
     REQUIRE(owningStall != diagnostics.stallIntervals.end());
 
-    const auto nearestEndpoint = [&](const RS_Vector& point) {
+    const auto nearestEndpoint = [&](const RS_Vector &point) {
         double nearest = std::numeric_limits<double>::infinity();
-        for (const LC_OffsetBranch& branch : built.branches) {
-            for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
-                nearest = std::min(nearest,
-                    std::min(piece.bezier.front().distanceTo(point),
-                             piece.bezier.back().distanceTo(point)));
+        for (const LC_OffsetBranch &branch : built.branches) {
+            for (const LC_OffsetCubicPiece &piece : branch.cubicPieces) {
+                nearest = std::min(
+                    nearest, std::min(piece.bezier.front().distanceTo(point), piece.bezier.back().distanceTo(point)));
             }
         }
         return nearest;
     };
     for (const double parameter : {owningStall->first, owningStall->second}) {
-        const auto oraclePoint = oracleOffsetPoint(
-            data, SplineOracle{parameter}, step, domainStart, domainEnd,
-            distance, parameter == domainEnd);
-        const RS_Vector expected{oraclePoint.first.convert_to<double>(),
-                                 oraclePoint.second.convert_to<double>()};
+        const auto oraclePoint = oracleOffsetPoint(data, SplineOracle{parameter}, step, domainStart, domainEnd,
+                                                   distance, parameter == domainEnd);
+        const RS_Vector expected{oraclePoint.first.convert_to<double>(), oraclePoint.second.convert_to<double>()};
         CHECK(nearestEndpoint(expected) <= options->tolerance.requestedGeometry);
     }
-    const auto tangentPoint = oracleOffsetPoint(
-        data, root, step, domainStart, domainEnd, distance);
-    const RS_Vector expectedTangent{tangentPoint.first.convert_to<double>(),
-                                    tangentPoint.second.convert_to<double>()};
-    CHECK(nearestEndpoint(expectedTangent) <=
-          options->tolerance.requestedGeometry);
+    const auto tangentPoint = oracleOffsetPoint(data, root, step, domainStart, domainEnd, distance);
+    const RS_Vector expectedTangent{tangentPoint.first.convert_to<double>(), tangentPoint.second.convert_to<double>()};
+    CHECK(nearestEndpoint(expectedTangent) <= options->tolerance.requestedGeometry);
 }
 
 TEST_CASE("exact binary rational cubic tangent has bounded output mapping",

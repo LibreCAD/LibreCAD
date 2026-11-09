@@ -26743,23 +26743,23 @@ assertions/77 cases.
 
 #### W563ep Follow-up. Qualify Knot-inserted Rational Quadratic Tangencies (2026-11-08)
 
-Added an exact single-knot insertion of the symmetric rational quadratic, then
-verified the inserted degree-2 spline against its original single-span curve
-with a 256-bit oracle. Two middle-weight profiles (`0.5` and `2.0`) are checked
-at scales `0.5`, `1`, and `2`. The oracle confirms both one-sided knot factors
-vanish at `t=0.5`, nearby factors have the same nonzero sign, and the offset
-build completes with a bounded stall containing the knot. The knot point and
-both stall endpoints map to retained output within requested geometry
-tolerance.
+Added exact single-knot insertions of the symmetric rational quadratic at
+`t=0.25` and `t=0.5`, verifying each inserted degree-2 spline against its
+original single-span curve with a 256-bit oracle. Two middle-weight profiles
+(`0.5` and `2.0`) are checked at scales `0.5`, `1`, and `2`. The root remains
+at `t=0.5`: the `t=0.5` insertion tests a tangent at the knot, while the
+`t=0.25` insertion places the same tangent inside the following nonuniform
+span. The oracle verifies both one-sided factors vanish at the root, nearby
+factors have the same nonzero sign, and the offset completes with a bounded
+stall containing the root. Every root-containing stall endpoint and the root
+point map to retained output within requested geometry tolerance.
 
-This adds one explicit interior-knot layout across six weight/scale pairs; it
-does not qualify arbitrary knot vectors, knot multiplicities, unequal
-one-sided curvature, or general rational knot-adjacent root pairs. Release
-validation: focused case, 120 assertions/1 case; `[rational][tangent-root]`,
-1,007 assertions/12 cases; full `librecad_offset_worker_kernel_tests`,
-1,705,311 assertions/78 cases; `git diff --check` passes. Initial test/roadmap
-commit `68000d547` (`test(offset): cover rational quadratic knot tangency`).
-A follow-up now enumerates every stall interval containing the knot and maps
-all such interval endpoints, not only the first matching interval; its focused
-case and full worker-kernel rerun pass with the same assertion totals. Test
-follow-up commit pending.
+This qualifies two insertion locations for six weight/scale profiles; it does
+not qualify arbitrary knot vectors, knot multiplicities, unequal one-sided
+curvature, or general rational knot-adjacent root pairs. Release validation:
+focused case, 240 assertions/1 case; `[rational][tangent-root]`, 1,127
+assertions/12 cases; full `librecad_offset_worker_kernel_tests`, 1,705,431
+assertions/78 cases; `git diff --check` passes. Initial test/roadmap commit
+`68000d547` (`test(offset): cover rational quadratic knot tangency`). The
+endpoint-enumeration follow-up is `5dd7527a2` (`test(offset): map all knot
+stall endpoints`).
