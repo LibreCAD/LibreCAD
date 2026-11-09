@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-08. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-09. Project: **LibreCAD**, not LibreCAD_3.
 ## Current Contract
 
 The latest follow-up, after the explicit parabola request, reconfirms the
@@ -53,6 +53,21 @@ existing parabola receipts qualify only their recorded parameterizations,
 transforms, topologies, and distances. Unqualified variants must remain
 excluded or fail closed without mutating the current source/cache until their
 own geometry and persistence evidence is recorded.
+
+High-degree spline evidence has advanced beyond native SPLINE persistence.
+Degrees 4-6 now pass bounded source/protocol admission and worker operation-7
+generation plus operation-8 cache validation for tested clamped rational
+profiles. Degrees 4 and 6 additionally have staged carrier promotion and
+metadata save/reopen/second-save coverage for the single-span, midpoint-knot,
+asymmetric nonuniform-knot, multiplicity-two, and selected asymmetric
+control/weight fixtures recorded in W506-W511. This is not arbitrary NURBS
+support: untested knot multiplicities/layouts, periodic high-degree offsets,
+large source counts, independent offset-error oracles, and external CAD remain
+open. Properties picker/replacement now has focused degree-4/6 coverage for
+tested clamped single-span rational profiles; this does not qualify the other
+knot layouts or all high-degree geometry. Generated editable offset caches
+are still constrained to the validated line/cubic-Bezier representation; do
+not widen cache validation merely because source spline degree increased.
 
 Current implementation order for the remaining “all supported types” work:
 
@@ -27197,3 +27212,44 @@ This qualifies only multiplicity two at `0.4` for the recorded degree-4/6
 profiles. Other repeated-knot values and multiplicities (especially near the
 degree bound), asymmetric control/weight profiles, larger layouts, geometry
 oracle comparisons, GUI replacement, and external CAD remain open.
+
+## 511. Qualify Asymmetric Degree-4 and Degree-6 Rational Profiles (2026-11-09)
+
+Added clamped rational degree-4 and degree-6 source splines with asymmetric
+control points, nonuniform positive weights, and different single interior
+knots (`0.3` and `0.62`). Both profiles pass worker generation and exact
+operation-8 cache validation. Source metadata survives save/reopen/second-save
+through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG; both signed-distance carrier
+imports are promoted only after worker validation in those five formats.
+
+Validation: combined high-degree worker selector, 342 assertions/5 cases;
+typed-source file round-trip, 7,980 assertions/1 case; staged cache-promotion
+matrix, 69,985 assertions/1 case; `librecad_tests` and worker kernel targets
+build; `git diff --check` passes. Test commit `9f1c32ed9` (`test(offset):
+qualify asymmetric high-degree sources`).
+
+This is a pair of bounded profiles, not exhaustive asymmetric NURBS coverage.
+Further weight/control combinations, knot multiplicity sweeps, periodic
+high-degree sources, large span/count limits, independent offset-error oracles,
+and external CAD remain open. Properties replacement is separately qualified
+for clamped single-span degree-4/6 rational fixtures by W512; it does not cover
+the multi-span or asymmetric profiles in this receipt.
+
+## 512. Admit High-Degree Rational Sources in Properties Replacement (2026-11-09)
+
+Updated the Properties source-picker regression matrix to include clamped,
+single-span rational degree-4 and degree-6 source splines. Both appear in the
+Spline family and can replace the current modeled source through the worker-
+backed preparation route. A degree-7 spline remains excluded as unsupported,
+so the UI continues to match `RS_Spline::MaxSupportedDegree` rather than
+mistaking the new admission for unbounded NURBS support.
+
+Validation: the three focused picker/property tests pass 4,486 assertions
+across 3 cases, covering supported candidates, unsupported-bucket handling,
+and source replacement without filter side effects; `librecad_tests` builds.
+Test commit `3118abf01` (`test(offset): admit high-degree picker sources`).
+
+This receipt qualifies only clamped single-span rational degree-4/6 fixtures
+in Properties replacement. Replacement of multi-span and asymmetric knot
+profiles, periodic high-degree splines, broader geometry accuracy, persistence
+of the promoted replacement, and external CAD remain open.
