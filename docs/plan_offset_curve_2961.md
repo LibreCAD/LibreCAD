@@ -29032,3 +29032,23 @@ change.
 Validation: inspected `LC_OffsetSourceGeometry::SupportedKinds` and the W641
 source-picker coverage in the current plan. No tests were run because this
 entry changes documentation only.
+
+## 644. Keep Sampled Cusp Candidates Uncertified Without a Root Bound (2026-11-09)
+
+Separated the condition that permits existing unresolved-run handling from
+the stronger proof needed to label a sampled sign-change bracket as
+`CertifiedUniqueBracket`. A unique-root label now requires a bounded rational
+root-variation count equal to the observed sign-change count. When the bound
+is unavailable, the candidate remains `SampledSignChange`, even though the
+existing run acceptance policy is unchanged. This avoids turning missing
+proof into a positive uniqueness claim. The ratio-`1e12` `.82` cases therefore
+remain diagnostic-only and stop before worker operation 7/cache validation;
+the already-qualified ratio-`1e6` `.82` path retains its certified behavior.
+
+Validation: focused rational four-knot worker case passes 4,266 assertions;
+the complete Release worker-kernel suite passes 1,720,714 assertions/94 test
+cases. The native five-lane rational-spline persistence matrix passes 393,601
+assertions/1 test case. `git diff --check` passes. Implementation commit
+`57718e03a` (`fix(offset): require proof for unique cusp brackets`). The
+ratio-`1e12` output remains unqualified for worker/cache and file persistence;
+only the ratio-`1e6` `.82` profile is covered by W642.
