@@ -7024,7 +7024,7 @@ TEST_CASE("repeated-knot rational spline imports preserve exact cache eligibilit
     }
 }
 
-TEST_CASE("C2 rational knot cusps round-trip through native file writers",
+TEST_CASE("C2 rational knot cusps through degree six round-trip through native file writers",
           "[lc-offsetcurve][import-session][typed-source][spline-variant][c2-knot][persistence]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-c2-knot-native-roundtrip");
@@ -7051,7 +7051,7 @@ TEST_CASE("C2 rational knot cusps round-trip through native file writers",
     const std::array<std::pair<double, double>, 10> knotAndCurvatureCases{
         {{.23, -1.0}, {.25, -1.0}, {.37, -1.0}, {.5, -1.0}, {.75, -1.0},
          {.23, 1.0},  {.25, 1.0},  {.37, 1.0},  {.5, 1.0},  {.75, 1.0}}};
-    for (const int degree : {3, 4, 5}) {
+    for (const int degree : {3, 4, 5, 6}) {
       for (const auto& [knot, curvatureSign] : knotAndCurvatureCases) {
         CAPTURE(degree, knot, curvatureSign);
         RS_SplineData sourceData{degree, false};
