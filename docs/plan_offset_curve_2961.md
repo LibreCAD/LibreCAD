@@ -27441,3 +27441,22 @@ weight sets, scales, distances, sides, and five file lanes. Other periodic
 knot layouts and weight distributions, cusp/root completeness outside the
 tested profiles, independent-CAD equivalence, visible GUI acceptance, and
 exact-head CI remain open.
+
+## 573. Preserve Current-source Highlight Across Family Filters (2026-11-09)
+
+Added a Properties regression for the distinction between current source and
+replacement candidates. After replacing an offset's source with a line and
+highlighting it in the drawing, changing the requested family to parabola must
+leave the line selected while showing only parabola entity candidates; the
+embedded typed source and generated-cache fingerprint must remain unchanged.
+Switching the filter back to line must select the existing source candidate in
+the widget again. This confirms that family selection is non-mutating and that
+the drawing highlight is independent of the candidate-family filter.
+
+Validation: focused regression passes 28 assertions/1 case; the complete
+`[gui][dialog][offsetcurve][source]` suite passes 12,139 assertions/11 cases;
+the Release `librecad_tests` target builds and `git diff --check` passes. Test
+commit `dfb7ef0bc` (`test(offset): retain source highlight across filters`).
+Visible desktop acceptance and the roadmap's remaining per-variant geometry,
+worker/cache, persistence, independent-CAD, and exact-head CI gates remain
+open.
