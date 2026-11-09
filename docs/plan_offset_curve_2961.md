@@ -30051,3 +30051,22 @@ first and final-profile R2018 DWG fixtures with LibreDWG 0.14.
 `git diff --check` passes. Other parabola parameterizations and boundaries, visible GUI
 acceptance, and ODA/AutoCAD acceptance remain open; the picker contract alone
 does not imply complete family support.
+
+## 678. Verify Closed Major/minor Bulge Offsets Against Exact Normals (2026-11-09)
+
+Added a direct exact-normal oracle for the closed four-segment polyline used
+by the major/minor bulge import fixture: a positive bulge with a sweep greater
+than 180 degrees, a negative reversed minor arc, and two line segments. The
+oracle checks both offset sides at distances 0.25 and 0.5, samples non-join
+Bezier pieces against the analytic source-segment tangent normal, and verifies
+rounded join radii. Existing imported-source coverage for the same outline
+checks typed arc direction after R14/R2000/R2018 DXF/DWG import, worker
+operation-7 generation, and operation-8 cache validation for both signed sides.
+
+Validation: the new direct oracle passes 19,535 assertions/1 case. The focused
+"closed major-minor bulge imports generate and validate typed offset caches"
+case passes 3,161 assertions/1 case across the five enabled format lanes.
+This qualifies the recorded closed four-segment major/minor profile, not all
+bulge magnitudes, vertex counts, self-intersection/collapse topologies,
+extreme coordinates, or outgoing-file persistence for arbitrary polylines.
+Visible GUI and ODA/AutoCAD acceptance remain open.
