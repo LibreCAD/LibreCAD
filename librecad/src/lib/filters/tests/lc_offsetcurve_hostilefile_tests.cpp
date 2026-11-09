@@ -7265,8 +7265,8 @@ TEST_CASE("C2 rational knot cusps through degree six round-trip through native f
     }
 }
 
-TEST_CASE("Two-knot C2 rational splines preserve typed source through native file lanes",
-          "[lc-offsetcurve][import-session][typed-source][spline-variant][two-knot][persistence]") {
+TEST_CASE("Multi-knot C2 rational splines preserve typed source through native file lanes",
+          "[lc-offsetcurve][import-session][typed-source][spline-variant][multi-knot][persistence]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-two-knot-native-roundtrip");
     namespace xd = LC_OffsetCurveXData;
@@ -7286,15 +7286,17 @@ TEST_CASE("Two-knot C2 rational splines preserve typed source through native fil
     const std::array<double, 11> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98};
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
-    const double targetKnot = GENERATE(.5, .65);
+    const std::vector<double> interiorKnots =
+        GENERATE(std::vector<double>{.25, .5}, std::vector<double>{.25, .65}, std::vector<double>{.2, .45, .7});
+    const double targetKnot = interiorKnots.back();
 
     for (const int degree : {3, 4, 5, 6}) {
         const int multiplicity = degree - 2;
-        const int controlCount = degree + 1 + 2 * multiplicity;
+        const int controlCount = degree + 1 + static_cast<int>(interiorKnots.size()) * multiplicity;
         for (const double curvatureSign : {-1.0, 1.0}) {
-            CAPTURE(degree, multiplicity, curvatureSign, targetKnot);
+            CAPTURE(degree, multiplicity, curvatureSign, interiorKnots, targetKnot);
             RS_SplineData sourceData{degree, false};
-            const int curvatureControl = multiplicity + degree - 3;
+            const int curvatureControl = (static_cast<int>(interiorKnots.size()) - 1) * multiplicity + degree - 3;
             for (int i = 0; i < controlCount; ++i) {
                 const double x = static_cast<double>(i);
                 const double y = curvatureSign * (i == curvatureControl ? -5.0 : .001 * x * x * x);
@@ -7302,7 +7304,7 @@ TEST_CASE("Two-knot C2 rational splines preserve typed source through native fil
                 sourceData.weights.push_back(weightPattern[static_cast<std::size_t>(i) % weightPattern.size()]);
             }
             sourceData.knotslist.assign(static_cast<std::size_t>(degree + 1), 0.0);
-            for (const double knot : {.25, targetKnot})
+            for (const double knot : interiorKnots)
                 sourceData.knotslist.insert(sourceData.knotslist.end(), static_cast<std::size_t>(multiplicity), knot);
             sourceData.knotslist.insert(sourceData.knotslist.end(), static_cast<std::size_t>(degree + 1), 1.0);
             RS_Spline sourceCheck{nullptr, sourceData};
@@ -7378,8 +7380,11 @@ TEST_CASE("Two-knot C2 rational splines preserve typed source through native fil
                 raw.nknots = static_cast<std::int32_t>(raw.knotslist.size());
                 raw.nfit = 0;
 
-                const std::string fixtureName = "degree-" + std::to_string(degree) + "-knot-" + (targetKnot < .6 ? "50-" : "65-") +
-                    (curvatureSign < 0 ? "negative-" : "positive-");
+                std::string knotLabel;
+                for (const double knot : interiorKnots)
+                    knotLabel += std::to_string(static_cast<int>(std::lround(knot * 100.0))) + "-";
+                const std::string fixtureName =
+                    "degree-" + std::to_string(degree) + "-knots-" + knotLabel + (curvatureSign < 0 ? "negative-" : "positive-");
                 const auto input = directory.file(fixtureName + fileFormat.suffix);
 #ifdef DWGSUPPORT
                 if (fileFormat.dwg)
