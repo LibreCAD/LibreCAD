@@ -28463,3 +28463,44 @@ with `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED markers. The Release
 recorded midpoint multiplicities only; it does not establish other knot
 locations/layouts, broader weight profiles, or rendered/AutoCAD equivalence.
 Visible GUI, external CAD, and exact-head CI remain separate open gates.
+
+## 618. Reconfirm Type-changing Source Picker Scope (2026-11-09)
+
+The Properties source-curve control must allow changing the requested source
+family before selecting a replacement. Its candidate list covers all nine
+currently modeled families: line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. Selecting a family filters drawing
+candidates without mutating or clearing the current source; choosing a valid
+candidate replaces the source with that entity's actual typed geometry and
+selects/highlights the resolved source in the drawing. `LC_Parabola` remains a
+distinct choice and must be classified before its `LC_SplinePoints` base type.
+
+This request reconfirms the existing picker contract and does not call for a
+second control or a parabola-only branch. Existing type-switch, all-family
+replacement, current-source resolution/highlighting, and parabola-identity
+regressions remain the implementation gates (W359/W396/W397/W607). This is a
+picker-scope statement only: admission for offset generation, worker/cache
+coverage, and DXF/DWG round-trip remain independently qualified and are not
+implied by displaying a family in the picker. No code or test changed for this
+plan clarification; visible desktop acceptance remains an independent gate.
+
+## 619. Qualify a Distinct Two-knot Rational Layout in the Worker (2026-11-09)
+
+Added an independent two-interior-knot layout with knots at `0.25` and `0.5`,
+each at multiplicity `degree - 2`, for degrees 3/4/5/6. Each degree uses
+positive nonuniform rational weights and both curvature orientations. A
+high-precision oracle proves the one-sided knot curvature agrees below the
+existing strict `1e-30` threshold, derives the signed offset distance, and
+confirms an offset-factor sign change at the target knot. Direct generation
+must produce a certified unique cusp bracket mapped to the oracle offset
+point; worker operation 7 and its wire round-trip plus operation-8 cache
+validation are also checked. This is a bounded two-knot layout, not arbitrary
+knot-vector support.
+
+Validation: focused Release case passes 304 assertions/1 case; complete
+Release `librecad_offset_worker_kernel_tests` passes 1,715,536 assertions/90
+cases; repository clang-format check for the added range and `git diff --check`
+pass. Test commit `f6daa7f15` (`test(offset): cover two-knot rational layouts`).
+Persistence of this distinct layout through DXF/DWG writer/reopen and
+independent DWG parsing remains open, along with other knot layouts, weight
+profiles, visible GUI, external-CAD acceptance, and exact-head CI.
