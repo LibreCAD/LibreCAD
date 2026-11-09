@@ -820,17 +820,33 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
     spline.knotslist = {0, 0, 0, 1, 1, 1};
     spline.weights = {1, .7, 1};
-    const auto highDegreeSpline = [](const std::size_t degree) {
+    const auto highDegreeSpline = [](const std::size_t degree, const int profile = 0) {
         RS_SplineData data;
         data.degree = degree;
         data.type = RS_SplineData::SplineType::ClampedOpen;
         data.savedOpenType = data.type;
-        for (std::size_t i = 0; i <= degree; ++i) {
-            const double t = static_cast<double>(i) / static_cast<double>(degree);
-            data.controlPoints.emplace_back(4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t);
-            data.weights.push_back(.75 + .5 * t);
+        if (profile == 2) {
+            constexpr std::array<double, 8> yValues{0.0, 1.5, -.4, 2.2, .3, 1.1, -1.0, .5};
+            constexpr std::array<double, 8> weights{.7, 1.5, .6, 1.8, .85, 1.3, 2.0, .9};
+            for (std::size_t i = 0; i <= degree + 1; ++i) {
+                data.controlPoints.emplace_back(8.0 * static_cast<double>(i) + .4 * (i % 2),
+                                                10.0 * yValues[i]);
+                data.weights.push_back(weights[i]);
+            }
+        } else {
+            const std::size_t last = profile == 1 ? degree + 1 : degree;
+            for (std::size_t i = 0; i <= last; ++i) {
+                const double t = static_cast<double>(i) / static_cast<double>(last);
+                data.controlPoints.emplace_back(4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t);
+                data.weights.push_back(.75 + .5 * t);
+            }
         }
         data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        if (profile == 1) {
+            data.knotslist.push_back(.5);
+        } else if (profile == 2) {
+            data.knotslist.push_back(degree == 4 ? .3 : .62);
+        }
         data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
         return data;
     };
@@ -839,11 +855,15 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
     LC_SplinePointsData fitPoints{false, false};
     fitPoints.splinePoints = {{0, 0}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 12> sources{
+    const std::array<LC_OffsetSourceGeometry, 16> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{highDegreeSpline(4)},
         LC_OffsetSourceGeometry{highDegreeSpline(6)},
+        LC_OffsetSourceGeometry{highDegreeSpline(4, 1)},
+        LC_OffsetSourceGeometry{highDegreeSpline(6, 1)},
+        LC_OffsetSourceGeometry{highDegreeSpline(4, 2)},
+        LC_OffsetSourceGeometry{highDegreeSpline(6, 2)},
         LC_OffsetSourceGeometry{points},
         LC_OffsetSourceGeometry{fitPoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
