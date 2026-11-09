@@ -26922,3 +26922,22 @@ splines`). This qualifies only these positive-weight quadratic profiles with
 interior multiplicity two; higher multiplicities, independent knot layouts,
 other degrees, periodic sources, broader candidate-to-output mapping, visible
 GUI, external CAD, and exact-head CI remain open.
+
+## 502. Cross Double-knot Imports with the Full Weight Range (2026-11-08)
+
+Extended the multiplicity-two fixtures from weights `0.5` and `2.0` to all
+four already-qualified middle weights: `0.25`, `0.5`, `2.0`, and `4.0`, at
+both insertion locations (`u=0.25` and `u=0.5`). Each case preserves the
+scale `0.5/1/2`, normalized distance `0.025/0.05/0.1`, both signed sides, and
+the five R14/R2000/R2018 DXF/DWG lanes. The test checks the homogeneous
+insertion against the original single-span curve before worker/direct
+generation equality and staged-import promotion/fingerprint validation.
+
+Release validation: focused knot-import test, 167,076 assertions/1 case;
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` union,
+423,464 assertions/11 cases; `librecad_tests` rebuild and `git diff --check`
+pass. Test commit `2fba7e1f8` (`test(offset): qualify double-knot weight
+range`). This cross-product covers only these symmetric positive-weight
+quadratics with interior multiplicity two. Other degrees/multiplicities,
+general knot layouts, periodic curves and complete candidate-to-output
+mapping remain open, alongside visible GUI, external CAD, and exact-head CI.
