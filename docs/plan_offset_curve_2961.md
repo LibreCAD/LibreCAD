@@ -27157,3 +27157,23 @@ profiles, higher control counts, independent offset-accuracy oracles, GUI
 source replacement, and independent CAD verification remain open. Continue
 the degree-4..6 knot-layout matrix; do not generalize this receipt to all
 multi-span NURBS.
+
+## 509. Qualify Asymmetric Nonuniform High-degree Knots (2026-11-08)
+
+Added clamped rational degree-4 and degree-6 source splines with three spans
+and distinct, asymmetric interior knots `0.2` and `0.7`. The worker tests
+confirm the exact parameter breaks, operation-7 generation, and operation-8
+cache validation. The file matrix verifies exact typed-source metadata through
+save/reopen/second-save. Both signed offset distances also pass staged worker
+promotion from carrier files through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+
+Validation: high-degree knot worker cases, 126 assertions/2 cases; typed-source
+file round-trip, 7,260 assertions/1 case; helper-backed cache-promotion matrix,
+74,884 assertions/1 case; `librecad_tests` and worker kernel test targets build;
+`git diff --check` passes. Test commit `bf4981c85` (`test(offset): qualify
+nonuniform high-degree sources`).
+
+This qualifies only the recorded positive-weight profiles and knot locations.
+Repeated interior-knot multiplicities, other nonuniform layouts, asymmetric
+control/weight profiles, arbitrary spans/control counts, independent numerical
+offset oracles, visible GUI replacement, and external CAD remain open.
