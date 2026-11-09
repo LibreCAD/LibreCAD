@@ -7285,20 +7285,26 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
                                          {Lane::Eed18, DRW::AC1032, "r2018.dwg", true}}};
     const std::array<double, 11> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99, 1.04, .96, 1.02, .98};
     const std::array<double, 11> alternateWeightPattern{.72, 1.38, .81, 1.27, .93, 1.46, .76, 1.19, 1.08, .84, 1.31};
+    const std::array<double, 11> highContrastWeightPattern{.25, 2.0, .4, 2.5, .35, 2.2, .3, 2.8, 1.7, .45, 2.4};
     LC_OffsetWorkerClient worker;
     qint64 requestId = 1;
-    const int layoutProfile = GENERATE(0, 1, 2, 3, 4);
+    const int layoutProfile = GENERATE(0, 1, 2, 3, 4, 5);
     const std::array<std::vector<double>, 4> knotLayouts{{{.25, .5}, {.25, .65}, {.2, .45, .7}, {.12, .31, .58, .82}}};
-    const bool alternateWeights = layoutProfile == 4;
-    const auto& interiorKnots = knotLayouts[static_cast<std::size_t>(alternateWeights ? 3 : layoutProfile)];
-    const auto& selectedWeightPattern = alternateWeights ? alternateWeightPattern : weightPattern;
+    const bool fourKnotWeightProfile = layoutProfile >= 4;
+    const auto& interiorKnots = knotLayouts[static_cast<std::size_t>(fourKnotWeightProfile ? 3 : layoutProfile)];
+    const auto& selectedWeightPattern = layoutProfile == 4 ? alternateWeightPattern
+        : layoutProfile == 5                               ? highContrastWeightPattern
+                                                           : weightPattern;
+    const char* weightProfileName = layoutProfile == 4 ? "alternate-weights-"
+        : layoutProfile == 5                           ? "high-contrast-weights-"
+                                                       : "default-weights-";
     const double targetKnot = interiorKnots.back();
 
     for (const int degree : {3, 4, 5, 6}) {
         const int multiplicity = degree - 2;
         const int controlCount = degree + 1 + static_cast<int>(interiorKnots.size()) * multiplicity;
         for (const double curvatureSign : {-1.0, 1.0}) {
-            CAPTURE(degree, multiplicity, curvatureSign, interiorKnots, targetKnot, alternateWeights);
+            CAPTURE(degree, multiplicity, curvatureSign, interiorKnots, targetKnot, weightProfileName);
             RS_SplineData sourceData{degree, false};
             const int curvatureControl = (static_cast<int>(interiorKnots.size()) - 1) * multiplicity + degree - 3;
             for (int i = 0; i < controlCount; ++i) {
@@ -7387,8 +7393,8 @@ TEST_CASE("Multi-knot C2 rational splines preserve typed source through native f
                 std::string knotLabel;
                 for (const double knot : interiorKnots)
                     knotLabel += std::to_string(static_cast<int>(std::lround(knot * 100.0))) + "-";
-                const std::string fixtureName = "degree-" + std::to_string(degree) + "-knots-" + knotLabel +
-                    (alternateWeights ? "alternate-weights-" : "default-weights-") + (curvatureSign < 0 ? "negative-" : "positive-");
+                const std::string fixtureName = "degree-" + std::to_string(degree) + "-knots-" + knotLabel + weightProfileName +
+                    (curvatureSign < 0 ? "negative-" : "positive-");
                 const auto input = directory.file(fixtureName + fileFormat.suffix);
 #ifdef DWGSUPPORT
                 if (fileFormat.dwg)
