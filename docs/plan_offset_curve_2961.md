@@ -29872,3 +29872,19 @@ controls and valid knot cardinality `knot_count == control_count + degree + 1`.
 This qualifies one rotated interval and two subcritical distances, not the
 near-vertex/cusp boundary, arbitrary intervals, extreme scales, all branch
 orientations, visible GUI, or ODA/AutoCAD acceptance.
+
+## 669. Carry a Thin High-eccentricity Ellipse Through Persistence (2026-11-09)
+
+Extended the real worker matrix with the thin whole-ellipse fixture already
+covered by the ellipse exact-distance geometry suite: semi-major axis 100,
+axis ratio 0.03, outward signed offset 0.1. The case is required to retain a
+canonical operation-8 cache and runs through translated source replacement,
+Produce, and all five R14/R2000/R2018 DXF/DWG round-trip lanes.
+
+Validation: the ellipse geometry suite passes 722,735 assertions/22 cases; the
+focused worker family case passes 58,630 assertions; the full worker-client
+suite passes 65,301 assertions/21 cases. LibreDWG 0.14 independently reads
+both DWGs, finding 17 SPLINEs in each with non-empty controls and zero invalid
+knot cardinalities. This connects one eccentric outward-offset fixture to
+persistence; it does not imply near-cusp/inward cache support, arbitrary axis
+ratios, all sweep/reversal cases, visible GUI, or ODA/AutoCAD acceptance.
