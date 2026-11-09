@@ -655,6 +655,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(shortSeamCrossingArc.isValid());
     const std::size_t shortSeamCrossingArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{shortSeamCrossingArc});
+    const RS_ArcData narrowShortSeamArc{{3.0, -4.0}, 4.0,
+        2.0 * M_PI - narrowArcSeam, narrowArcSeam, false};
+    REQUIRE(narrowShortSeamArc.isValid());
+    const std::size_t narrowShortSeamArcFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{narrowShortSeamArc});
     const std::size_t scaledLineFixtureStart = sources.size();
     const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 4;
     std::vector<double> scaledLineScales;
@@ -682,6 +687,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const qint64 requestId = static_cast<qint64>(i + 1);
         const double sourceDistance = i >= scaledLineFixtureStart ?
             scaledLineDistances[i - scaledLineFixtureStart] :
+            i == narrowShortSeamArcFixture ? 1e-6 :
             i == mixedBulgeFixture ? -.25 : i == smallCircleFixture ? 2e-5 :
             i == largeCircleFixture ? 2e3 : i == nearParallelParabolaFixture ? .01 :
             i == 21 ? .1 : i == 24 ? 1.9 : .25;
@@ -739,6 +745,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture ||
             i == nearParallelParabolaFixture || i == nearFullArcFixture || i == narrowSeamArcFixture ||
             i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
+            i == narrowShortSeamArcFixture ||
             i + 3 >= sources.size() || i >= scaledLineFixtureStart)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
