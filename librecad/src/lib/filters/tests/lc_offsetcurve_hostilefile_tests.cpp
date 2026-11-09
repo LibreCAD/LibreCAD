@@ -8226,8 +8226,9 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         double secondInsertion{};
         bool asymmetric{};
         int degree{2};
+        double thirdInsertion{};
     };
-    const std::array<Fixture, 34> fixtures{{
+    const std::array<Fixture, 36> fixtures{{
         {0.25, 0.25, 1}, {0.25, 0.5, 1}, {0.25, 2.0, 1}, {0.25, 4.0, 1},
         {0.5, 0.25, 1}, {0.5, 0.5, 1}, {0.5, 2.0, 1}, {0.5, 4.0, 1},
         {0.25, 0.25, 2}, {0.25, 0.5, 2}, {0.25, 2.0, 2}, {0.25, 4.0, 2},
@@ -8243,7 +8244,9 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         {0.4, 0.75, 2, 0.0, true, 3},
         {0.4, 1.5, 2, 0.0, true, 3},
         {0.4, 0.75, 3, 0.0, true, 3},
-        {0.4, 1.5, 3, 0.0, true, 3}}};
+        {0.4, 1.5, 3, 0.0, true, 3},
+        {0.91, 0.4, 1, 0.07, true, 3, 0.37},
+        {0.62, 2.5, 1, 0.16, true, 3, 0.84}}};
     const auto insertKnot = [](RS_SplineData& data, double knot) {
         struct HomogeneousPoint {
             double x;
@@ -8341,10 +8344,10 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
 
     for (std::size_t fixtureIndex = 0; fixtureIndex < fixtures.size(); ++fixtureIndex) {
         const auto [insertion, middleWeight, multiplicity, secondInsertion,
-                    asymmetric, degree] = fixtures[fixtureIndex];
+                    asymmetric, degree, thirdInsertion] = fixtures[fixtureIndex];
         for (const double scale : scales) {
         CAPTURE(fixtureIndex, insertion, middleWeight, multiplicity,
-                secondInsertion, asymmetric, degree, scale);
+                secondInsertion, asymmetric, degree, thirdInsertion, scale);
         RS_SplineData sourceData{degree, false};
         RS_SplineData originalData{degree, false};
         if (degree == 3) {
@@ -8373,10 +8376,12 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         for (std::size_t i = 1; i < multiplicity; ++i)
             REQUIRE(insertKnot(sourceData, insertion));
         if (secondInsertion > 0.0) REQUIRE(insertKnot(sourceData, secondInsertion));
+        if (thirdInsertion > 0.0) REQUIRE(insertKnot(sourceData, thirdInsertion));
         RS_Spline insertedSource{nullptr, sourceData};
         REQUIRE(insertedSource.validate());
         for (const double parameter : {0.125, 0.25, 0.375, 0.4, 0.5,
-                                       0.625, 0.75, 0.875}) {
+                                       0.625, 0.75, 0.875, insertion,
+                                       secondInsertion, thirdInsertion}) {
             LC_CurveJet insertedJet;
             LC_CurveJet originalJet;
             REQUIRE(insertedSource.tryEvaluateJet(
