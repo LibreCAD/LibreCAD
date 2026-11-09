@@ -110,7 +110,9 @@ repeated-knot source on both signed sides across five file lanes; that fixture
 is a separate, older repeated-knot profile, not the C2 cusp-crossing matrix.
 W602 adds product-writer export/reopen evidence for the C2 cusp fixtures at
 degrees 3-5, both signed sides and the same five lanes; each staged reopen
-retains the typed source and exact cache fingerprint.
+retains the typed source and exact cache fingerprint. The persistence test
+also requires the direct engine to classify the knot as a
+`CertifiedUniqueBracket` before testing the worker/file path.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
@@ -28126,9 +28128,11 @@ CI, visible GUI, and independent-CAD acceptance.
 Added the degree-3 simple-knot and degree-4/5 multiplicity-`degree-2` C2
 rational cusp fixtures to the product-writer persistence matrix. Both
 curvature orientations are tested, with the signed distance derived from the
-join curvature. For each case, worker operation 7 generates the cache, staged
-import admits the typed-source carrier, and LibreCAD's native writer exports
-it before a second staged import. DXF lanes are binary R14, R2000, and R2018;
+join curvature. For each case, the direct engine must report a
+`CertifiedUniqueBracket` at the knot; worker operation 7 then generates the
+cache, staged import admits the typed-source carrier, and LibreCAD's native
+writer exports it before a second staged import. DXF lanes are binary R14,
+R2000, and R2018;
 DWG lanes are R2000 and R2018. The source definition and cache geometry
 fingerprint must survive both imports and the application write/reopen cycle.
 This qualifies only these six degree/orientation fixtures and five lanes, not
@@ -28136,6 +28140,6 @@ other knot layouts, multiplicities, distances, weight profiles, or DWG
 releases.
 
 Validation: focused `C2 rational knot cusps round-trip through native file
-writers` passes 8,468 assertions/1 case; `git diff --check` passes. Other
+writers` passes 8,419 assertions/1 case; `git diff --check` passes. Other
 rational knot profiles, periodic profiles, full geometry-variant support,
 exact-head CI, visible GUI, and independent-CAD acceptance remain open.
