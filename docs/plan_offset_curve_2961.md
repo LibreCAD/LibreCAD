@@ -29371,3 +29371,36 @@ generation, operation-8 cache validation, scale/translation grid, and five
 DXF/DWG staged-import lanes also pass. `git diff --check` passes. This verifies
 one admitted parabola profile through LibreDWG parsing; it is not ODA/AutoCAD
 acceptance or general parabola/all-family completion.
+
+## 656. Reconcile Type-changing Source Picker With Typed Worker Routing (2026-11-09)
+
+The Properties source widget requirement is a type-changing replacement flow,
+not merely a source selector: the user can change the requested source family
+before picking, the current source remains identifiable/highlighted while the
+filter changes, and successful replacement retains the picked entity's
+concrete type. The canonical family inventory remains line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+Parabola remains a first-class distinct type. Existing W641/W643 picker tests
+cover these UI behaviors; no duplicate widget or parabola-only branch is
+needed.
+
+Implementation slice: `Produce` now carries bounded
+`LC_OffsetSourceGeometry` values in addition to ellipse and raw spline data.
+The isolated worker reconstructs that typed source and uses the normal bounded
+offset preparation path; simple lines in mixed batches retain their
+synchronous prefix behavior. The wire change is protocol 7, so a stale
+protocol-6 worker fails the version handshake instead of misreading a typed
+source tag. Capturable family values are exercised through batch request
+construction, and a real helper-process parabola batch confirms joined output
+remains ordinary geometry without mutating the source.
+
+Validation: Release build targets `librecad_tests`, worker client/request/
+result/kernel/process tests build. Worker-client tests pass 17,521 assertions
+in 21 cases, request protocol tests pass 603,526 assertions in 18 cases,
+result protocol selection passes 18 assertions, Produce-kernel tests pass
+1,015 assertions in 4 cases, and worker-process tests pass 2,598 assertions in
+4 cases. `git diff --check` passes. The picker and typed worker route establish
+eligibility/transport only: they do not close any family's direct geometric
+oracle, cache certification, DXF/DWG persistence, visible GUI, ODA/AutoCAD, or
+exact-head CI gates. Continue W654's per-family accepted/refused matrix and
+qualify concrete variants end-to-end before claiming all-types support.
