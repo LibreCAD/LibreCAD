@@ -28581,3 +28581,22 @@ added-range clang-format and `git diff --check` pass. Test commit `f5e4ca4ad`
 (`test(offset): cover three-knot rational layouts`). DXF/DWG persistence and
 independent DWG parsing for this layout remain open, as do other knot vectors,
 weight profiles, external-CAD acceptance, visible GUI, and exact-head CI.
+
+## 624. Persist the Three-knot Rational Layout Through Native Files (2026-11-09)
+
+Generalized the multi-knot product-writer test to the two previously qualified
+layouts plus the three-knot `.2`/`.45`/`.7` profile from W623. Degrees 3/4/5/6
+and both curvature orientations run through R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG, for 24 source fixtures and 120 fixture/lane combinations. The test
+checks staged admission, typed source equality, exact cache fingerprint
+preservation, and writer export/reopen. DWG retention remains opt-in through
+`LIBRECAD_TYPED_SOURCE_DWG_DIR`.
+
+Validation: focused Release persistence case passes 43,242 assertions/1 case;
+all 48 retained DWGs parse with LibreDWG 0.14 minJSON and each contains exactly
+one nonempty degree-3 SPLINE with `LC_OFFSET_CURVE` and `TYPED_SOURCE` EED
+markers. `librecad_tests` Release target builds, the changed range passes
+repository clang-format, and `git diff --check` passes. Test commit
+`8846dce90` (`test(offset): persist three-knot spline caches`). These are
+three bounded knot vectors only; other layouts/weights, external CAD, visible
+GUI, and exact-head CI remain open.
