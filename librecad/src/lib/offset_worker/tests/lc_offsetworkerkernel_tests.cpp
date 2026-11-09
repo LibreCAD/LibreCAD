@@ -4201,6 +4201,72 @@ TEST_CASE("periodic rational seam tangent and interior roots map to output",
     }
 }
 
+TEST_CASE("rational spline knot sign jump is not certified as a cusp",
+          "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][refusal]") {
+    RS_SplineData data{6, false};
+    data.controlPoints = {{0, 0},  {1, -1}, {2, 1},  {3, 2},  {4, 1},
+                          {5, 0},  {6, 0},  {7, -2}, {8, -1}, {9, 1},
+                          {10, 2}, {11, 0}};
+    data.weights = {1.0, 1.2, .9, 1.1, .8, 1.3, 1.0, .7, 1.4, .9, 1.2, .8};
+    data.knotslist = {0, 0, 0, 0, 0, 0, 0, .5, .5, .5, .5, .5,
+                      1, 1, 1, 1, 1, 1, 1};
+    const RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+    LC_CurveJet leftJet;
+    LC_CurveJet rightJet;
+    REQUIRE(source.tryEvaluateJet(.5, LC_CurveEvaluationSide::Left, leftJet));
+    REQUIRE(source.tryEvaluateJet(.5, LC_CurveEvaluationSide::Right, rightJet));
+    const auto curvature = [](const LC_CurveJet& jet) {
+        const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
+        const double cross = jet.first.x * jet.second.y - jet.first.y * jet.second.x;
+        return cross / (speedSquared * std::sqrt(speedSquared));
+    };
+    const double leftCurvature = curvature(leftJet);
+    const double rightCurvature = curvature(rightJet);
+    CAPTURE(leftCurvature, rightCurvature, leftJet, rightJet);
+    REQUIRE(std::isfinite(leftCurvature));
+    REQUIRE(std::isfinite(rightCurvature));
+    REQUIRE(leftCurvature * rightCurvature < 0.0);
+    const double signedDistance = leftCurvature > 0.0
+                                      ? 2.0 / leftCurvature
+                                      : 2.0 / rightCurvature;
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
+    const auto options = LC_OffsetWorkerTolerance::directOptions(definition, source);
+    REQUIRE(options);
+
+    LC_CurveJetBounds leftBounds;
+    LC_CurveJetBounds rightBounds;
+    REQUIRE(source.tryBoundJetForCusp(.5 - 1e-6, .5, leftBounds, signedDistance));
+    REQUIRE(source.tryBoundJetForCusp(.5, .5 + 1e-6, rightBounds, signedDistance));
+    const LC_Interval leftFactor = leftBounds.offsetFactorNumerator(signedDistance);
+    const LC_Interval rightFactor = rightBounds.offsetFactorNumerator(signedDistance);
+    CAPTURE(leftFactor, rightFactor,
+            leftBounds.rationalCuspIntervalVariationUpperBound,
+            rightBounds.rationalCuspIntervalVariationUpperBound);
+    REQUIRE(leftFactor.excludesZero());
+    REQUIRE(rightFactor.excludesZero());
+    CHECK((leftFactor.hi() < 0.0) != (rightFactor.hi() < 0.0));
+
+    LC_CurveOffsetCuspIsolationDiagnostics diagnostics;
+    const auto built = LC_CurveOffset::buildDirectBranches(
+        source,
+        LC_CurveOffset::makeSideRequest(
+            signedDistance > 0.0 ? LC_CurveOffsetSide::Left
+                                 : LC_CurveOffsetSide::Right,
+            std::abs(signedDistance)),
+        *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
+    CAPTURE(built.status, diagnostics.failureStage, diagnostics.candidateParameters,
+            diagnostics.failureT0, diagnostics.failureT1);
+    CHECK(std::none_of(diagnostics.candidateParameters.begin(),
+                       diagnostics.candidateParameters.end(), [](const double parameter) {
+                           return std::abs(parameter - .5) < 1e-8;
+                       }));
+    if (built.status != LC_CurveOffsetStatus::Ok) {
+        CHECK(built.branches.empty());
+    }
+}
+
 TEST_CASE("nonuniform periodic rational seam tangent maps to retained output",
           "[lc-offsetcurve][worker-kernel][spline-variant][oracle][periodic]["
           "rational][seam-root][nonuniform][even-root]") {
