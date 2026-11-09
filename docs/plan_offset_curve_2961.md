@@ -27235,12 +27235,12 @@ qualify asymmetric high-degree sources`).
 This is a pair of bounded profiles, not exhaustive asymmetric NURBS coverage.
 Further weight/control combinations, knot multiplicity sweeps, periodic
 high-degree sources, large span/count limits, independent offset-error oracles,
-and external CAD remain open. W512 first qualified the clamped single-span
-degree-4/6 fixtures in Properties replacement; W513 extends that UI coverage
+and external CAD remain open. W542 first qualified the clamped single-span
+degree-4/6 fixtures in Properties replacement; W543 extends that UI coverage
 to the midpoint-knot and asymmetric profile families represented in this
 receipt, without claiming every such spline is supported.
 
-## 512. Admit High-Degree Rational Sources in Properties Replacement (2026-11-09)
+## 542. Admit High-Degree Rational Sources in Properties Replacement (2026-11-09)
 
 Updated the Properties source-picker regression matrix to include clamped,
 single-span rational degree-4 and degree-6 source splines. Both appear in the
@@ -27255,12 +27255,12 @@ and source replacement without filter side effects; `librecad_tests` builds.
 Test commit `3118abf01` (`test(offset): admit high-degree picker sources`).
 
 This receipt originally qualified only clamped single-span rational degree-4
-and degree-6 fixtures in Properties replacement. W513 adds representative midpoint-
-knot and asymmetric profiles; periodic high-degree splines, other knot
+and degree-6 fixtures in Properties replacement. W543 adds representative
+midpoint-knot and asymmetric profiles; periodic high-degree splines, other knot
 layouts/multiplicities, broader geometry accuracy, persistence of the promoted
 replacement, and external CAD remain open.
 
-## 513. Replace Multi-span and Asymmetric High-degree Sources in Properties (2026-11-09)
+## 543. Replace Multi-span and Asymmetric High-degree Sources in Properties (2026-11-09)
 
 Extended the worker-backed Properties replacement matrix with degree-4 and
 degree-6 rational splines containing a midpoint interior knot and with
@@ -27281,7 +27281,7 @@ asymmetric fixtures. It does not qualify every nonuniform knot vector,
 repeated-knot multiplicity, periodic high-degree source, independent offset
 accuracy, saved/reopened promoted replacement, or external CAD behavior.
 
-## 514. Generate Periodic Degree-4 and Degree-6 Sources in the Worker (2026-11-09)
+## 544. Generate Periodic Degree-4 and Degree-6 Sources in the Worker (2026-11-09)
 
 Added validated wrapped-closed degree-4 and degree-6 spline fixtures with
 unit weights and bounded control/knot counts. Each source generates one
@@ -27297,18 +27297,18 @@ high-degree splines`).
 This establishes direct periodic degree-4/6 worker generation and cache
 validation for the recorded unit-weight profiles. Periodic high-degree
 DXF/DWG carrier promotion and source metadata save/reopen are separately
-qualified for the tested matrix by W516. Nonuniform/repeated periodic knots,
-independent geometry accuracy, and external CAD remain open. W515 adds
+qualified for the tested matrix by W546. Nonuniform/repeated periodic knots,
+independent geometry accuracy, and external CAD remain open. W545 adds
 Properties replacement for the same bounded periodic profiles.
 
-## 515. Replace Periodic Degree-4 and Degree-6 Sources in Properties (2026-11-09)
+## 545. Replace Periodic Degree-4 and Degree-6 Sources in Properties (2026-11-09)
 
 Extended the Spline-family replacement matrix with wrapped-closed degree-4 and
 degree-6 sources generated from validated clamped profiles. Both types pass
 worker-backed replacement, source rediscovery when the widget is reopened,
 signed-side changes, and subsequent distance edits. This joins source picking
 and interactive editing to the worker generation/cache validation established
-by W514.
+by W544.
 
 Validation: focused source-family replacement regression passes 8,103
 assertions/1 case; the `librecad_tests` Release target builds; `git diff
@@ -27316,11 +27316,11 @@ assertions/1 case; the `librecad_tests` Release target builds; `git diff
 high-degree sources`).
 
 This qualifies only the recorded degree-4/6 wrapped, unit-weight profiles in
-Properties replacement. W516 separately qualifies carrier promotion and
+Properties replacement. W546 separately qualifies carrier promotion and
 source metadata save/reopen for the periodic matrix. Nonuniform/repeated
 periodic knots, independent geometry accuracy, and external CAD remain open.
 
-## 516. Promote Periodic Degree-4 and Degree-6 Sources Across File Lanes (2026-11-09)
+## 546. Promote Periodic Degree-4 and Degree-6 Sources Across File Lanes (2026-11-09)
 
 Expanded the staged periodic source-import matrix from degrees 2/3 to 2/3/4/6.
 The high-degree cases use two bounded control-count layouts and test unit and
