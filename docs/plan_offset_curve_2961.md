@@ -26973,3 +26973,29 @@ do not advertise a variant as supported beyond that evidence. The picker
 requirement itself adds no code work. All-family geometry/persistence gaps,
 visible desktop acceptance, independent-CAD checks, and exact-head CI remain
 open.
+
+## 504. Import Rational Quadratics with Two Distinct Interior Knots (2026-11-08)
+
+Extended the knot-inserted rational-quadratic staged-import fixture with two
+distinct interior knots, in both mirrored orders (`0.25, 0.75` and
+`0.75, 0.25`) and middle weights `0.5` and `2.0`. Replaced the fixture's
+special-case control-point formulas with a test-local homogeneous Boehm knot
+insertion routine, which also constructs the existing single- and
+double-multiplicity variants. Each generated spline is checked against its
+original single-span rational quadratic at representative parameters before
+offset generation.
+
+For the new layouts, the existing matrix compares worker operation-7 output
+with direct materialization and stages operation-8 promotion through R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG, with three scales, three normalized
+distances, and both offset sides. The import must preserve the typed source
+and exact cache fingerprint.
+
+Release validation: focused knot-import case, 209,193 assertions/1 case;
+`[lc-offsetcurve][import-session][typed-source][spline-variant]` selection,
+430,899 assertions/11 cases; `librecad_tests` rebuild and `git diff --check`
+pass. Test commit `3a6728fbe` (`test(offset): import two-knot rational
+splines`). This covers only the recorded symmetric quadratic profiles and
+mirrored knot pairs; arbitrary distinct knot values/counts, higher-degree or
+non-symmetric rational profiles, periodic sources, external CAD, visible GUI,
+and exact-head CI remain open.
