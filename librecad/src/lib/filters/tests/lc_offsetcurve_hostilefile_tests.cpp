@@ -8227,6 +8227,13 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
         {0.25, 0.25}, {0.25, 0.5}, {0.25, 2.0}, {0.25, 4.0},
         {0.5, 0.25}, {0.5, 0.5}, {0.5, 2.0}, {0.5, 4.0}}};
     constexpr std::array<double, 3> scales{0.5, 1.0, 2.0};
+    constexpr std::array<std::pair<LC_CurveOffsetSide, double>, 6> offsets{{
+        {LC_CurveOffsetSide::Left, 0.5},
+        {LC_CurveOffsetSide::Left, 1.0},
+        {LC_CurveOffsetSide::Left, 2.0},
+        {LC_CurveOffsetSide::Right, 0.5},
+        {LC_CurveOffsetSide::Right, 1.0},
+        {LC_CurveOffsetSide::Right, 2.0}}};
     const std::array<std::pair<Lane, bool>, 5> lanes{{
         {Lane::Binary14, false}, {Lane::Binary2000, false}, {Lane::Eed2000, true},
         {Lane::Binary18, false}, {Lane::Eed18, true}}};
@@ -8287,10 +8294,11 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
             CHECK(insertedJet.point.distanceTo(originalJet.point) < 1e-12 * scale);
         }
 
-        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
-                                                LC_CurveOffsetSide::Right}) {
+        for (const auto& [side, distanceScale] : offsets) {
+            CAPTURE(distanceScale);
             const double signedDistance =
-                (side == LC_CurveOffsetSide::Left ? 0.05 : -0.05) * scale;
+                (side == LC_CurveOffsetSide::Left ? 0.05 : -0.05) *
+                scale * distanceScale;
             const LC_OffsetSourceDefinition definition{
                 LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4 * scale, false};
             auto source = definition.source.makeEntity();
@@ -8362,6 +8370,7 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
                 const auto input = directory.file(
                     std::to_string(fixtureIndex) + "-" +
                     std::to_string(scale) + "-" +
+                    std::to_string(distanceScale) + "-" +
                     (side == LC_CurveOffsetSide::Left ? "left-" : "right-") +
                     std::to_string(static_cast<int>(lane)) + (dwg ? ".dwg" : ".dxf"));
 #ifdef DWGSUPPORT
@@ -8397,8 +8406,8 @@ TEST_CASE("knot-inserted rational tangent splines promote from DXF and DWG",
                       RS_Spline::geometryFingerprint(expectedCache));
             }
         }
-        }
     }
+}
 }
 
 TEST_CASE("fit-point spline-points source imports through operation-8 validation",
