@@ -13,6 +13,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
+#include <new>
+#include <utility>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -111,15 +113,39 @@ bool dwgReader18::parseSysPage(duint8 *decompSec, duint32 decompSize){
  //called ???: Section map: 0x4163003b
 bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/){
     DRW_DBG("\nparseDataPage\n ");
-    objData.reset( new duint8 [si.pageCount * si.maxSize] );
+    constexpr duint64 maxBufferSize = 0x2f000000;
+    const duint64 pageCap = si.maxSize != 0 ? si.maxSize : si.size;
+    if (si.size == 0 || (si.compressed != 1 && si.compressed != 2)
+        || pageCap == 0)
+        return false;
+
+    duint64 bufferPageCount =
+        si.size / pageCap + (si.size % pageCap != 0);
+    if (bufferPageCount < si.pageCount)
+        bufferPageCount = si.pageCount;
+    if (bufferPageCount > maxBufferSize / pageCap)
+        return false;
+
+    const duint64 bufferSize = bufferPageCount * pageCap;
+    std::unique_ptr<duint8[]> decodedData(new (std::nothrow)
+        duint8[static_cast<std::size_t>(bufferSize)]());
+    if (!decodedData)
+        return false;
 
     for (auto it=si.pages.begin(); it!=si.pages.end(); ++it){
         dwgPageInfo pi = it->second;
+        const duint64 fileSize = fileBuf->size();
+        if (pi.size < 32 || pi.address > fileSize
+            || pi.size > fileSize - pi.address
+            || pi.startOffset > bufferSize
+            || pageCap > bufferSize - pi.startOffset)
+            return false;
         if (!fileBuf->setPosition(pi.address))
             return false;
         //decript section header
         duint8 hdrData[32];
-        fileBuf->getBytes(hdrData, 32);
+        if (!fileBuf->getBytes(hdrData, 32))
+            return false;
         dwgCompressor::decrypt18Hdr(hdrData, 32, pi.address);
         DRW_DBG("Section  "); DRW_DBG(si.name); DRW_DBG(" page header=\n");
         for (unsigned int i=0, j=0; i< 32;i++) {
@@ -150,29 +176,36 @@ bool dwgReader18::parseDataPage(const dwgSectionInfo &si/*, duint8 *dData*/){
         DRW_DBG("\n      header checksum= "); DRW_DBGH(bufHdr.getRawLong32());
         DRW_DBG("\n      data checksum= "); DRW_DBGH(bufHdr.getRawLong32()); DRW_DBG("\n");
 
-        //get compressed data
-        std::vector<duint8> cData(pi.cSize);
-        if (!fileBuf->setPosition(pi.address + 32)) {
+        if (!bufHdr.isGood() || pi.cSize == 0
+            || pi.cSize > pi.size - 32 || pi.cSize > maxBufferSize
+            || pi.uSize > pageCap)
             return false;
-        }
-        fileBuf->getBytes(cData.data(), pi.cSize);
+
+        //get compressed data
+        std::unique_ptr<duint8[]> cData(new (std::nothrow)
+            duint8[static_cast<std::size_t>(pi.cSize)]);
+        if (!cData || !fileBuf->setPosition(pi.address + 32)
+            || !fileBuf->getBytes(cData.get(), pi.cSize))
+            return false;
 
         //calculate checksum
-        duint32 calcsD = checksum(0, cData.data(), pi.cSize);
+        duint32 calcsD = checksum(0, cData.get(), pi.cSize);
         for (duint8 i= 24; i<28; ++i)
             hdrData[i]=0;
         duint32 calcsH = checksum(calcsD, hdrData, 32);
         DRW_DBG("Calc header checksum= "); DRW_DBGH(calcsH);
         DRW_DBG("\nCalc data checksum= "); DRW_DBGH(calcsD); DRW_DBG("\n");
 
-        duint8* oData = objData.get() + pi.startOffset;
-        pi.uSize = si.maxSize;
-        DRW_DBG("decompressing "); DRW_DBG(pi.cSize); DRW_DBG(" bytes in "); DRW_DBG(pi.uSize); DRW_DBG(" bytes\n");
+        duint8* oData = decodedData.get()
+            + static_cast<std::size_t>(pi.startOffset);
+        DRW_DBG("decompressing "); DRW_DBG(pi.cSize);
+        DRW_DBG(" bytes in "); DRW_DBG(pageCap); DRW_DBG(" bytes\n");
         dwgCompressor comp;
-        if (!comp.decompress18(cData.data(), oData, pi.cSize, pi.uSize)) {
+        if (!comp.decompress18(cData.get(), oData, pi.cSize, pageCap)) {
             return false;
         }
     }
+    objData = std::move(decodedData);
     return true;
 }
 
