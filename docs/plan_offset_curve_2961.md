@@ -30208,8 +30208,8 @@ interactive **Update from Source** command and addresses the action-level gap:
 ### Completed implementation and validation
 
 The implementation and automated action/property integration are complete.
-Implementation is committed as `154ee33c5` and pushed to the open PR #3193
-head `154ee33c592ccfdf0ed45e33871863497bedac71`.
+The action implementation is committed as `154ee33c5`; the five-format
+action-persistence follow-up is committed as `7322606a7` for PR #3193.
 The test contract was also corrected: malformed source geometry is refused
 during admission without an edit/worker receipt, while valid geometry that
 exceeds the configured native work limit still reports the native edit result.
