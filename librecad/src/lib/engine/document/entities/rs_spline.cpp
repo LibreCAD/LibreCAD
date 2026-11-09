@@ -93,7 +93,9 @@ bool solveSystem(const std::vector<std::vector<double>> &coef,
 }
 
 constexpr size_t g_maxDegree = RS_Spline::MaxSupportedDegree;
-constexpr size_t g_maxRationalCuspPolynomialDegree = 30;
+// For a degree-p rational spline, the squared cusp polynomial has degree
+// 12p-6. Keep the certificate available through the supported degree bound.
+constexpr size_t g_maxRationalCuspPolynomialDegree = 12 * g_maxDegree - 6;
 
 /**
  * Whether the degree, control points, weights and knot vector have the sizes a

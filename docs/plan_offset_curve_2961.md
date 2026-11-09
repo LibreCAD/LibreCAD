@@ -27363,12 +27363,13 @@ oracles outside the recorded cases, or external CAD acceptance. W569 adds an
 independent oracle for bounded clamped single-span rational degrees 4-6; W570
 extends it to the representative knot and periodic profiles.
 
-Periodic rational tangent/even-root handling now also has independently
-oracle-checked nonuniform degree-4, degree-5, and degree-6 periodic profiles
-with bounded stall and retained-output endpoint mapping (W577-W579). The
-current root-variation diagnostic does not certify these higher-degree root
-counts; the fixtures' high-precision oracles and production output mapping
-qualify only those concrete cases, not general degree-4/5/6 root completeness.
+Periodic rational tangent/even-root handling has independently oracle-checked
+nonuniform degree-4, degree-5, and degree-6 periodic profiles with bounded
+stall and retained-output endpoint mapping (W577-W579). W580 extends the
+Bernstein variation upper bound through the supported degree-6 polynomial
+limit and verifies it on those fixtures. Because the cusp polynomial is
+squared, variation bounds may include extraneous roots; complete actual cusp
+root counts and broad candidate-to-output bijection remain open.
 
 ## 569. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
 
@@ -27580,13 +27581,40 @@ production isolation with a bounded stall owning that root inside its source
 span. The oracle offset point and every reported stall endpoint must map to
 retained cubic-piece endpoints within requested geometry tolerance.
 
-The root-variation diagnostic remains unavailable for this higher degree, so
-the test preserves that explicit limitation and makes no general root-count
-claim or production budget change.
+At this test-only checkpoint, the root-variation diagnostic was unavailable
+for this higher degree, so the regression preserved that limitation and made
+no general root-count claim or production budget change. W580 subsequently
+extends the certificate polynomial cap through degree 6 and verifies the
+higher-degree variation bound.
 
 Validation: focused `[tangent-root]` suite passes 1,268 assertions/14 cases;
 the full worker-kernel suite passes 1,705,971 assertions/84 cases; the Release
 worker-kernel test target builds and `git diff --check` passes. This qualifies
 one additional profile only; other high-degree knot/weight variants,
-certified general root counts, broad candidate-to-output mapping, visible GUI,
+complete actual-root counts, broad candidate-to-output mapping, visible GUI,
 external CAD, and exact-head CI stay open.
+
+## 580. Extend Rational Cusp Bernstein Certificates Through Degree 6 (2026-11-09)
+
+Raised the rational cusp-polynomial certificate limit from degree 30 to the
+full supported-spline bound, `12 * MaxSupportedDegree - 6` (66 for the
+current degree-6 maximum). This polynomial arises from the squared rational
+cusp equation. The existing fixed coefficient arrays already cover the
+supported spline maximum; the bound now allows their Bernstein coefficient
+sign-variation upper bound and no-root certificate to be computed for higher
+source degrees as well.
+
+Strengthened the independently oracle-derived periodic rational tangent-root
+fixture so degrees 4, 5, and 6 must now produce a variation upper bound of at
+least two in the root-containing box, while preserving complete bounded-stall
+isolation, source-span ownership, and output-endpoint mapping. The variation
+is only an upper bound for roots of the squared polynomial; it may count
+extraneous roots and does not by itself classify every cusp of the unsquared
+offset factor.
+
+Validation: focused `[tangent-root]` suite passes 1,268 assertions/14 cases;
+the full worker-kernel suite passes 1,705,971 assertions/84 cases; the Release
+worker-kernel test target builds and `git diff --check` passes. Remaining:
+performance and enclosure tests at the degree-6 bound, broader knot/weight
+profiles, exact actual-root completeness, candidate-to-output bijection,
+visible GUI, external CAD, and exact-head CI.

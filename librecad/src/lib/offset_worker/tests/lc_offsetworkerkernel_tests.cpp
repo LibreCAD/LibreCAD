@@ -4154,13 +4154,7 @@ TEST_CASE("periodic rational tangent root is isolated as a bounded stall",
     CAPTURE(rootBounds.rationalCuspRootVariationUpperBound,
             rootBounds.offsetFactorNumerator(signedDistance).lo(),
             rootBounds.offsetFactorNumerator(signedDistance).hi());
-    if (fixture.degree <= 3) {
-      CHECK(rootBounds.rationalCuspRootVariationUpperBound >= 2);
-    } else {
-      // The independent oracle proves the degree-4 even root; the current
-      // Bernstein variation diagnostic does not certify its root count.
-      CHECK(rootBounds.rationalCuspRootVariationUpperBound < 0);
-    }
+    CHECK(rootBounds.rationalCuspRootVariationUpperBound >= 2);
     CHECK(rootBounds.offsetFactorNumerator(signedDistance).lo() <= 0.0);
     CHECK(rootBounds.offsetFactorNumerator(signedDistance).hi() >= 0.0);
 
