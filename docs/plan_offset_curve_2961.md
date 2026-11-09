@@ -29052,3 +29052,76 @@ assertions/1 test case. `git diff --check` passes. Implementation commit
 `57718e03a` (`fix(offset): require proof for unique cusp brackets`). The
 ratio-`1e12` output remains unqualified for worker/cache and file persistence;
 only the ratio-`1e6` `.82` profile is covered by W642.
+
+## 645. Make Parabola Support an End-to-end Family Gate (2026-11-09)
+
+The repeated source-widget request does not require more UI: the editable
+Properties selector already allows changing the requested family before
+selecting a replacement and lists line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Keep `LC_Parabola` a
+distinct family and preserve the current source highlight independently of the
+candidate filter. Do not add a second selector or treat selector visibility as
+support.
+
+The explicit request to add parabola support is an end-to-end geometry request.
+W524 qualifies only its recorded parabola parameterizations, transforms,
+topologies, distances, and single-cache persistence cases; it does not establish
+complete parabola support. Close the remaining work in this order:
+
+1. Inventory concrete `LC_Parabola` representations and valid parameter
+   ranges, including partial/full domains, orientations, degeneracies, and
+   transformed/reversed cases. Record which cases the direct engine currently
+   accepts and which fail closed.
+2. For each newly admitted case, compare both offset signs and representative
+   distances against an independent parabola/offset oracle. Require bounded
+   finite output, correct topology, and no partial branches on refusal.
+3. Prove worker request/reply bounds, operation-7 output, operation-8 cache
+   validation, and canonical cache representation. Confirm Properties
+   replacement preserves the picked entity's `LC_Parabola` identity and is
+   atomic on invalid or stale candidates.
+4. Round-trip each admitted, representable case through applicable DXF and DWG
+   lanes, checking the typed source parameters and regenerated cache after
+   reopen. Keep unsupported lanes explicit; do not silently flatten or promote
+   an unvalidated result.
+5. Update this roadmap after each implementation/test commit with exact fixture
+   scope, test commands and counts, and any remaining refusal boundary. Only
+   claim parabola support for the variants that pass the full chain; retain
+   fail-closed behavior for all other variants.
+
+Validation status: the nine-family picker regressions in W641 cover selectable
+parabola identity and family replacement, while W524 provides bounded direct,
+worker, and persistence evidence for its listed cases. This entry adds no UI
+work and makes no new geometry-support claim. Broader parabola variants remain
+open; visible desktop interaction and external-CAD acceptance remain separate
+gates.
+
+## 646. Extend Ratio-1e6 Rational Support to Three More Knot Positions (2026-11-09)
+
+Extended W642's ratio-`1e6` positive-weight profile from knot `.82` to `.12`,
+`.31`, and `.58` for degrees 3/4/5/6 and both curvature orientations. The
+direct engine now also accumulates the conservative interval-Bernstein root
+variation bound across a candidate run. It labels a sign-change bracket
+`CertifiedUniqueBracket` only when either the strict or interval bound proves
+that the number of roots equals the number of observed sign changes; it does
+not relax the existing run-acceptance rule. Across the three new knot
+positions, 14 oracle-confirmed crossings are certified and continue through
+worker operation 7, result-wire round-trip, and operation-8 cache validation.
+Four crossings remain `SampledSignChange`, and two fail with
+`ToleranceNotMet` and no partial branches. These cases intentionally stop
+before worker/cache admission.
+
+The native product writer/reopen matrix adds persistence only for those 14
+certified crossings, across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. Sampled
+and refused cases are kept outside file writes. This supersedes W642's earlier
+statement that `.12`, `.31`, and `.58` were excluded, but qualifies only this
+weight profile, degree/orientation matrix, and these knots; it does not imply
+arbitrary high-ratio rational spline support.
+
+Validation: focused Release worker test passes 4,858 assertions; the complete
+Release `librecad_offset_worker_kernel_tests` suite passes 1,721,306
+assertions/94 cases. The focused native product persistence test passes
+356,646 assertions/1 case. The Release `librecad_tests` and worker test targets
+build; `git diff --check` passes. Implementation/test commit `54f010cf2`
+(`test(offset): qualify million-ratio knot crossings`). External-CAD visual
+acceptance, visible GUI acceptance, exact-head CI, and other rational profiles
+remain open.
