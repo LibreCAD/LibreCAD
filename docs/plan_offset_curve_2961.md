@@ -26763,3 +26763,49 @@ assertions/78 cases; `git diff --check` passes. Initial test/roadmap commit
 `68000d547` (`test(offset): cover rational quadratic knot tangency`). The
 endpoint-enumeration follow-up is `5dd7527a2` (`test(offset): map all knot
 stall endpoints`).
+
+## 496. Reaffirm Editable Source Type and Full Modeled-family Coverage (2026-11-08)
+
+The latest request repeats two requirements: choose/change the source-curve
+type as part of selecting a replacement entity, and expand source support to
+all types already supported by the offset workflow. Reconcile it with Section
+494 and the current implementation rather than adding another widget task.
+
+**UI contract: satisfied.** The source Properties widget exposes an editable
+family selector independently of the embedded source type, then filters live
+entities by that choice. Selecting an existing source resolves it in its
+family and supports highlighting/selection. The nine current choices are line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. `LC_Parabola` remains a distinct choice and must be detected before
+its `LC_SplinePoints` base class. Existing implementation and regression
+receipts are recorded in W359, W396, W397, and Section 494; do not duplicate
+this UI work.
+
+**Remaining implementation scope: end-to-end family support.** A family being
+selectable is not proof that every variant is safely supported. For every
+advertised family, keep the matrix current for typed capture/reconstruction,
+worker generation, cache validation, atomic source/cache replacement, refusal
+behavior, and applicable DXF/DWG persistence. Unsupported or invalid
+family/setting combinations must produce an explicit refusal without changing
+the existing source/cache or selecting an ineligible entity. Add a family to
+the selector only after its production path and focused regressions satisfy
+these contracts.
+
+**Step order for future family work:**
+
+1. Inventory the family's concrete variants and existing tests; identify gaps
+   without widening the selector merely to expose an unimplemented path.
+2. Add value-owned typed snapshot and round-trip tests, including subtype
+   identity (especially parabola versus generic spline-points).
+3. Qualify worker generation and cache validation for representative valid
+   variants; add explicit fail-closed cases for unsupported or degenerate
+   variants.
+4. Exercise cross-family replacement, source highlighting, atomic failure,
+   and the relevant DXF/DWG lanes.
+5. Record commands, assertion counts, limitations, and commit receipts here;
+   distinguish local automated results from GUI, exact-head CI, and external
+   CAD validation.
+
+No production edit is required by this reaffirmation. It closes no additional
+family/variant gate beyond the already recorded UI completion; remaining
+geometry and persistence gaps stay open under their owning roadmap sections.
