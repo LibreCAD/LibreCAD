@@ -29029,16 +29029,37 @@ branch is needed.
 
 The all-types requirement is not complete. Treat the nine picker kinds as the
 family inventory, then qualify each concrete eligible geometry variant
-independently through direct generation, worker/cache admission, source
-replacement, and applicable DXF/DWG export/reopen. Preserve fail-closed
-behavior and do not claim support from picker visibility, serialization, or
-one representative fixture alone. Continue using the existing inventory and
-implementation order above; this is a planning reconciliation, not a code
-change.
+independently. For each family, implementation proceeds in this order:
 
-Validation: inspected `LC_OffsetSourceGeometry::SupportedKinds` and the W641
-source-picker coverage in the current plan. No tests were run because this
-entry changes documentation only.
+1. Inventory the native representations and eligibility boundaries, including
+   bounded versus unbounded domains, closed/reversed forms, degeneracies, and
+   numeric limits. Record unsupported cases as explicit fail-closed outcomes.
+2. Add direct-generation fixtures for both offset sides and representative
+   distances; compare against an independent geometric oracle and assert finite
+   bounded output, expected topology, and no partial result on refusal.
+3. Exercise the same accepted/refused cases through the native worker request,
+   operation-7 result, operation-8 cache admission, and canonical cache
+   fingerprint. Do not broaden admission based only on successful generation.
+4. Verify Properties source replacement for the family: candidate filtering,
+   typed source identity, current-source highlight, cancellation, and atomic
+   rejection of stale or invalid candidates.
+5. Round-trip every admitted, representable fixture through the applicable
+   DXF/DWG versions. Check source parameters, regenerated geometry, and cache
+   equality after reopen; retain unsupported format lanes as explicit gaps.
+6. Record exact fixtures, commands/counts, accepted variants, and refusal
+   boundaries after each implementation slice. Only mark a family complete
+   when its applicable stages pass; picker visibility or a single fixture is
+   not evidence of family-wide support.
+
+Use the nine `SupportedKinds` entries as separate workstreams: line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. Keep parabola distinct from spline-points. Continue in the existing
+plan order and update each family’s gate as evidence lands; this reconciliation
+adds no new selector or UI code.
+
+Validation: inspected `LC_OffsetSourceGeometry::SupportedKinds`, the W641
+source-picker coverage, and the current per-family gates. No tests were run
+because this entry changes documentation only.
 
 ## 644. Keep Sampled Cusp Candidates Uncertified Without a Root Bound (2026-11-09)
 
@@ -29208,3 +29229,18 @@ parabola curvature`). This adds evidence for this exact curvature and recorded
 distance/scale grid; it does not certify arbitrary curvature or numeric
 conditioning. Visible GUI, external-CAD acceptance, and exact-head CI remain
 open.
+
+## 651. Qualify Scale-normalized Affine Parabola Offsets (2026-11-09)
+
+Extended the direct affine-parabola test to uniformly scale both recorded
+transformed source profiles by `1e-8`, `1`, and `1e8`. At each scale, both
+offset sides and normalized distances `0.05` and `0.25` are compared with the
+exact source-normal offset oracle. The typed source remains `LC_Parabola`.
+
+Validation: the focused Release test passes 23,085 assertions/1 case, and
+`git diff --check` passes. Test commit `51134df19` (`test(offset): scale affine
+parabola fixtures`). This adds direct-generation evidence only for these two
+profiles and scales; it does not qualify worker/cache admission or file
+round-trip at the scaled coordinates, nor complete parabola or all-family
+support. The editable nine-family source picker remains covered by W641; visible
+desktop acceptance and the other family/variant gates remain open.
