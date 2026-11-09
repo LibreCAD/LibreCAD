@@ -28801,3 +28801,24 @@ workspace remains blocked from visible GUI validation while macOS reports the
 desktop locked; do not mark that gate complete based on automated tests. Latest
 multi-knot persistence evidence is W632 above, and its exact-head CI status must
 be refreshed after the next push.
+
+## 634. Expand Four-knot Oracle Coverage Across Weights and Knots (2026-11-09)
+
+Expanded W631's four-knot worker matrix to enumerate all four interior target
+knots (`.12`, `.31`, `.58`, `.82`) for default, moderate, and high-contrast
+positive weight profiles, degrees 3/4/5/6, and both curvature orientations:
+96 combinations. The independent 256-bit oracle confirms a signed offset-factor
+crossing in 82; only those cases proceed to require production cusp
+certification, endpoint mapping within the requested error, operation-7 result
+wire round-trip, and operation-8 cache validation. The other 14 combinations
+have no oracle sign change and are deliberately not called cusp cases. This
+qualifies the enumerated combinations only, not arbitrary rational weights or
+knot layouts, and it adds worker evidence rather than native-file persistence.
+
+Validation: focused Release worker case passes 3,105 assertions/1 case; the
+complete Release `librecad_offset_worker_kernel_tests` suite passes 1,719,553
+assertions/94 cases. The changed range passes clang-format using
+`code_style/.clang-format`, and `git diff --check` passes. Test commit
+`de91d3b14` (`test(offset): map additional rational knot crossings`). Native
+file persistence for newly qualified combinations, external-CAD acceptance,
+visible GUI, and exact-head CI remain open.
