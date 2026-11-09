@@ -4311,11 +4311,13 @@ TEST_CASE("repeated C2 rational spline knot cusp maps to output",
     CHECK(endpointError <= options->tolerance.requestedGeometry);
 }
 
-TEST_CASE("C2 rational knot crossings map for degrees three through five",
+TEST_CASE("C2 rational knot crossings map for degrees three through five and two knot positions",
           "[lc-offsetcurve][worker-kernel][spline-variant][rational][knot][degree-limit]") {
     const std::array<double, 7> weightPattern{1.0, 1.02, .98, 1.03, .97, 1.01, .99};
+    const std::array<std::pair<double, double>, 4> orientationAndKnotCases{
+        {{-1.0, .37}, {-1.0, .5}, {1.0, .37}, {1.0, .5}}};
     for (const int degree : {3, 4, 5}) {
-      for (const double curvatureSign : {-1.0, 1.0}) {
+      for (const auto& [curvatureSign, knot] : orientationAndKnotCases) {
         RS_SplineData data{degree, false};
         const int controlCount = 2 * degree - 1;
         for (int i = 0; i < controlCount; ++i) {
@@ -4327,15 +4329,15 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
         }
         data.knotslist.assign(static_cast<std::size_t>(degree + 1), 0.0);
         data.knotslist.insert(data.knotslist.end(),
-                              static_cast<std::size_t>(degree - 2), .5);
+                              static_cast<std::size_t>(degree - 2), knot);
         data.knotslist.insert(data.knotslist.end(),
                               static_cast<std::size_t>(degree + 1), 1.0);
         const RS_Spline source{nullptr, data};
         REQUIRE(source.validate());
         LC_CurveJet leftJet;
         LC_CurveJet rightJet;
-        REQUIRE(source.tryEvaluateJet(.5, LC_CurveEvaluationSide::Left, leftJet));
-        REQUIRE(source.tryEvaluateJet(.5, LC_CurveEvaluationSide::Right, rightJet));
+        REQUIRE(source.tryEvaluateJet(knot, LC_CurveEvaluationSide::Left, leftJet));
+        REQUIRE(source.tryEvaluateJet(knot, LC_CurveEvaluationSide::Right, rightJet));
         const auto curvature = [](const LC_CurveJet& jet) {
             const double speedSquared = jet.first.x * jet.first.x + jet.first.y * jet.first.y;
             return (jet.first.x * jet.second.y - jet.first.y * jet.second.x) /
@@ -4350,26 +4352,27 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
         const SplineOracle start{0};
         const SplineOracle end{1};
         const SplineOracle step{"1e-24"};
+        const SplineOracle knotParameter{knot};
         const SplineOracle leftKnotCurvature = 1 - oracleOffsetFactor(
-            data, SplineOracle{"0.5"}, step, start, end, SplineOracle{1}, true);
+            data, knotParameter, step, start, end, SplineOracle{1}, true);
         const SplineOracle rightKnotCurvature = 1 - oracleOffsetFactor(
-            data, SplineOracle{"0.5"}, step, start, end, SplineOracle{1});
+            data, knotParameter, step, start, end, SplineOracle{1});
         REQUIRE(abs(leftKnotCurvature - rightKnotCurvature) < SplineOracle{"1e-30"});
         const double signedDistance =
             (2 / (leftKnotCurvature + rightKnotCurvature)).convert_to<double>();
         const SplineOracle before = oracleOffsetFactor(
-            data, SplineOracle{"0.5"} - SplineOracle{"1e-7"}, step,
+            data, knotParameter - SplineOracle{"1e-7"}, step,
             start, end, SplineOracle{signedDistance});
         const SplineOracle after = oracleOffsetFactor(
-            data, SplineOracle{"0.5"} + SplineOracle{"1e-7"}, step,
+            data, knotParameter + SplineOracle{"1e-7"}, step,
             start, end, SplineOracle{signedDistance});
         CAPTURE(degree, curvatureSign, signedDistance, before, after);
         REQUIRE((before < 0) != (after < 0));
 
         LC_CurveJetBounds leftBounds;
         LC_CurveJetBounds rightBounds;
-        REQUIRE(source.tryBoundJetForCusp(.5 - 1e-6, .5, leftBounds, signedDistance));
-        REQUIRE(source.tryBoundJetForCusp(.5, .5 + 1e-6, rightBounds, signedDistance));
+        REQUIRE(source.tryBoundJetForCusp(knot - 1e-6, knot, leftBounds, signedDistance));
+        REQUIRE(source.tryBoundJetForCusp(knot, knot + 1e-6, rightBounds, signedDistance));
         CHECK(leftBounds.rationalCuspIntervalVariationUpperBound >= 0);
         CHECK(rightBounds.rationalCuspIntervalVariationUpperBound >= 0);
         CHECK(leftBounds.rationalCuspIntervalVariationUpperBound +
@@ -4391,15 +4394,16 @@ TEST_CASE("C2 rational knot crossings map for degrees three through five",
         CAPTURE(degree, curvatureSign, built.status, diagnostics.failureStage,
                 diagnostics.candidateParameters, diagnostics.stallIntervals);
         REQUIRE(built.status == LC_CurveOffsetStatus::Ok);
+        const double knotPosition = knot;
         const auto candidate = std::find_if(
             diagnostics.candidateBoxes.begin(), diagnostics.candidateBoxes.end(),
-            [](const LC_CurveOffsetCuspCandidateBox& box) {
-                return std::abs(box.parameter - .5) < 1e-8;
+            [knotPosition](const LC_CurveOffsetCuspCandidateBox& box) {
+                return std::abs(box.parameter - knotPosition) < 1e-8;
             });
         REQUIRE(candidate != diagnostics.candidateBoxes.end());
         CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket);
         const auto oraclePoint = oracleOffsetPoint(
-            data, SplineOracle{"0.5"}, step, start, end, SplineOracle{signedDistance});
+            data, knotParameter, step, start, end, SplineOracle{signedDistance});
         const RS_Vector expected{oraclePoint.first.convert_to<double>(),
                                  oraclePoint.second.convert_to<double>()};
         double endpointError = std::numeric_limits<double>::infinity();
