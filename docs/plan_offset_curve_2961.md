@@ -67,8 +67,9 @@ open; wrapped degree-4/6 sources now have worker generation/cache-validation,
 Properties replacement, and staged five-lane DXF/DWG promotion coverage for
 the recorded periodic profiles. This does not qualify other periodic knot
 layouts or all high-degree geometry. An independent high-precision source
-offset oracle now checks representative clamped single-span rational degrees
-4-6; broader knot-profile accuracy oracles remain open. Properties
+offset oracle now checks representative clamped single-span and knot-profile
+rational degrees 4-6, including tested periodic profiles; other knot layouts
+and parameter ranges remain open. Properties
 picker/replacement now has focused degree-4/6 coverage for the tested clamped
 single-span, midpoint-knot, asymmetric rational, and wrapped periodic profiles.
 Generated editable offset caches are still constrained to the validated
@@ -27342,8 +27343,9 @@ This qualifies only the tested generated wrapped periodic profiles, weight
 sets, conditions, scales, distances, and file lanes. It does not cover
 arbitrary periodic knot vectors, repeated/nonuniform periodic knots, every
 high-degree rational profile, periodic-specific independent offset-error
-oracles, or external CAD acceptance. W547 adds an independent oracle for
-bounded clamped single-span rational degrees 4-6.
+oracles outside the recorded cases, or external CAD acceptance. W547 adds an
+independent oracle for bounded clamped single-span rational degrees 4-6; W549
+extends it to the representative knot and periodic profiles.
 
 ## 547. Check High-degree Worker Caches Against an Independent Oracle (2026-11-09)
 
@@ -27362,6 +27364,25 @@ Test commit `c3989de05` (`test(offset): check high-degree cache against spline
 oracle`).
 
 This qualifies an independent offset-error check only for the recorded
-clamped single-span profiles. Knot-inserted, asymmetric, repeated-knot, and
-periodic degree-4/6 accuracy grids, larger source-count limits, and external
-CAD remain open.
+clamped single-span profiles. W549 records additional knot-inserted,
+asymmetric, repeated-knot, and wrapped-periodic profiles; untested knot
+layouts, larger source-count limits, and external CAD remain open.
+
+## 549. Oracle-check High-degree Knot and Periodic Profiles (2026-11-09)
+
+Applied the 256-bit homogeneous de Boor source evaluator to the already
+admitted degree-4/6 midpoint-knot, asymmetric nonuniform-knot, repeated-knot,
+asymmetric control/weight, and wrapped-periodic worker fixtures. For each
+nonzero source knot span, five interior parameters are evaluated independently
+with high-precision finite-difference tangents. Each true offset point is
+compared to a 16,384-sample traversal of the generated cache, and the maximum
+measured distance must stay within twice the requested geometry tolerance.
+
+Validation: `[high-degree]` worker-kernel selector passes 444 assertions/6
+cases; `librecad_offset_worker_kernel_tests` builds; `git diff --check` passes.
+Test commit `5d95f3f12` (`test(offset): oracle-check high-degree knot profiles`).
+
+This is a bounded sampled accuracy check, not a proof over every parameter or
+all rational knot vectors. Untested knot layouts and multiplicities, broader
+weight/control distributions, larger source counts, and external CAD remain
+open.
