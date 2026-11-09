@@ -84,12 +84,12 @@ and parameter ranges remain open. Properties
 picker/replacement now has focused degree-4/6 coverage for the tested clamped
 single-span, midpoint-knot, asymmetric rational, and wrapped periodic profiles.
 An additional strong positive-rational weight profile maps the oracle's simple
-periodic seam roots for degrees 4 and 5. Its degree-6 counterpart has an
-oracle root at interior knot `t=2` that current isolation does not own and
-refuses with empty output both directly and through worker operation 7; its
-result wire round-trip preserves that refusal and carries no cache candidate.
-This remains an explicit high-rational degree-6 knot-event gap, not qualified
-support.
+periodic seam roots for degrees 4 and 5. Its degree-6 counterpart has six
+oracle roots including interior knot `t=2`; W593 now certifies that C2-knot
+crossing, maps every reported candidate to output geometry, and completes
+worker operation 7 plus result-wire round-trip for this exact profile. This
+does not qualify other degree-6 periodic weight/knot profiles or general
+high-rational periodic support.
 Generated editable offset caches are still constrained to the validated
 line/cubic-Bezier representation; do not widen cache validation merely
 because source spline degree increased.
