@@ -140,6 +140,7 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
         const auto geometry = LC_OffsetSourceGeometry::capture(*source);
         if (!geometry || !sourceVariantSelectable(*source) ||
             static_cast<int>(geometry->kind()) != ui->cbSourceType->currentData().toInt()) return;
+        m_preferredSourceId = source->getId();
         if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(source);
             ellipse && m_entity->hasEditableDefinition()) {
             auto next = proposedDefinition();
@@ -252,6 +253,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::setEntity(RS_Entity* entity) {
     if (!alive || !m_worker || revision != m_sourceRevision || cancelledGeneration != m_generation) return;
     m_entity = entity != nullptr && entity->rtti() == RS2::EntityOffsetCurve
         ? static_cast<LC_OffsetCurve*>(entity) : nullptr;
+    m_preferredSourceId = 0;
     {
         const QSignalBlocker blocked(ui->cbSourceType);
         ui->cbSourceType->clear();
@@ -384,7 +386,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
         const auto id = static_cast<qulonglong>(entity->getId());
         const auto label = tr("%1 %2").arg(sourceKindName(geometry->kind())).arg(id);
         ui->cbSource->addItem(label, QVariant::fromValue<qulonglong>(id));
-        if (!hasMatchingSource && matchesEmbedded) {
+        if (matchesEmbedded &&
+            (id == m_preferredSourceId || !hasMatchingSource)) {
             matchedIndex = ui->cbSource->count() - 1;
             hasMatchingSource = true;
         }

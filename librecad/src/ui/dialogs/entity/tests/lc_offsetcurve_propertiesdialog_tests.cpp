@@ -758,6 +758,40 @@ TEST_CASE("Native source picker preserves highlighted source across family filte
     CHECK(line->getFlag(RS2::FlagSelected));
 }
 
+TEST_CASE("Native source picker retains the picked identity for duplicate geometry",
+          "[gui][dialog][offsetcurve][source][identity]") {
+    Fixture f;
+    auto* first = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    auto* second = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    f.graphic.addEntity(first);
+    f.graphic.addEntity(second);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox); REQUIRE(selectSource);
+    const int lineType = typeBox->findData(static_cast<int>(
+        LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(lineType >= 0);
+    typeBox->setCurrentIndex(lineType);
+
+    int secondIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == second->getId()) secondIndex = i;
+    REQUIRE(secondIndex >= 0);
+    sourceBox->setCurrentIndex(secondIndex);
+    awaitPreparation(widget);
+
+    CHECK(sourceBox->currentData().toULongLong() == second->getId());
+    click(*selectSource);
+    CHECK_FALSE(first->getFlag(RS2::FlagSelected));
+    CHECK(second->getFlag(RS2::FlagSelected));
+}
+
 TEST_CASE("Native source picker offers supported spline and polyline variants",
           "[gui][dialog][offsetcurve][source][eligibility][variants]") {
     Fixture f;
