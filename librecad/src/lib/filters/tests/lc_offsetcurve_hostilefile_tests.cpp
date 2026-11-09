@@ -1360,7 +1360,23 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
     REQUIRE(std::holds_alternative<RS_ArcData>(mixedPolylineData.segments[1]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[2]));
     REQUIRE(std::holds_alternative<RS_LineData>(mixedPolylineData.segments[3]));
-    const std::array<LC_OffsetSourceGeometry, 34> sources{
+    const auto singleSpanRationalSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            data.controlPoints.emplace_back(4.0 * t, 1.5 * t * (1.0 - t));
+            data.weights.push_back(0.75 + 0.5 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
+    const RS_SplineData quarticSpline = singleSpanRationalSpline(4);
+    const RS_SplineData sexticSpline = singleSpanRationalSpline(6);
+    const std::array<LC_OffsetSourceGeometry, 36> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{1, -2}, {2, 0}, 1.4, .3, 2.3, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {2, 0}, .2, 0, 2 * M_PI, false}},
@@ -1374,6 +1390,8 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
         LC_OffsetSourceGeometry{rationalTangentQuadratic},
         LC_OffsetSourceGeometry{linearTangentSpline},
         LC_OffsetSourceGeometry{oneEndedLinearTangentSpline},
+        LC_OffsetSourceGeometry{quarticSpline},
+        LC_OffsetSourceGeometry{sexticSpline},
         LC_OffsetSourceGeometry{wrappedSpline}, LC_OffsetSourceGeometry{splinePoints},
         LC_OffsetSourceGeometry{tangentSplinePointsData},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
@@ -1481,7 +1499,7 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
             // Keep one second-saved carrier per source family for optional
             // independent CAD inspection; default tests remain hermetic.
             constexpr std::array<std::size_t, 9> representativeSources{
-                0, 5, 14, 16, 19, 28, 29, 30, 31};
+                0, 5, 16, 18, 21, 30, 31, 32, 33};
             if (fileFormat.dwg &&
                 std::find(representativeSources.begin(), representativeSources.end(), i) !=
                     representativeSources.end()) {
@@ -1756,7 +1774,21 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
         CHECK(worker.healthyAndIdle());
         return std::move(outcome->completed);
     };
-    const std::array<LC_OffsetSourceGeometry, 20> sources{
+    const auto singleSpanRationalSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            data.controlPoints.emplace_back(4.0 * t, 1.2 * t * (1.0 - t) + 0.1 * t);
+            data.weights.push_back(0.75 + 0.5 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
+    const std::array<LC_OffsetSourceGeometry, 22> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {4, 0}, .6, 0, tau, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{3, -2}, {3, 0}, .7, .2, 2.1, false}},
         LC_OffsetSourceGeometry{RS_EllipseData{{-3, 1}, {2, 1}, .8, 1.8, .1, true}},
@@ -1776,7 +1808,9 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, -.2, false}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false}},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true}},
-        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}}
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{singleSpanRationalSpline(4)},
+        LC_OffsetSourceGeometry{singleSpanRationalSpline(6)}
     };
     struct Format {
         Lane lane;
@@ -1794,7 +1828,11 @@ TEST_CASE("typed source families promote from real DXF and DWG cache carriers",
     std::size_t representativeNativeWriterCases = 0;
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
         CAPTURE(sourceIndex, static_cast<int>(sources[sourceIndex].kind()));
-        const std::vector<double> signedDistances =
+        const auto* splineSource =
+            std::get_if<RS_SplineData>(&sources[sourceIndex].value);
+        const std::vector<double> signedDistances = splineSource && splineSource->degree > 3
+                ? std::vector<double>{-.02, .02}
+            :
             sources[sourceIndex].kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola
                 ? std::vector<double>{-.5, -.3, -.1, .1, .3, .5}
                 : (std::get_if<RS_EllipseData>(&sources[sourceIndex].value) &&
