@@ -28600,3 +28600,21 @@ repository clang-format, and `git diff --check` passes. Test commit
 `8846dce90` (`test(offset): persist three-knot spline caches`). These are
 three bounded knot vectors only; other layouts/weights, external CAD, visible
 GUI, and exact-head CI remain open.
+
+## 625. Qualify a Four-knot Rational Layout in the Worker (2026-11-09)
+
+Added a four-interior-knot vector at `.12`, `.31`, `.58`, and `.82`, targeting
+the final knot, for degrees 3/4/5/6. Each interior multiplicity is
+`degree - 2`, with positive nonuniform rational weights and both curvature
+orientations. The independent 256-bit oracle verifies C2 curvature continuity
+below `1e-30` and the signed offset-factor crossing; production isolation must
+certify and map the cusp, followed by worker operation-7 wire round-trip and
+operation-8 source-cache validation. The fixture is one bounded four-knot
+profile, not arbitrary knot-vector coverage.
+
+Validation: focused Release case passes 304 assertions/1 case; complete
+Release `librecad_offset_worker_kernel_tests` passes 1,716,448 assertions/93
+cases; added-range clang-format and `git diff --check` pass. Test commit
+`053e03e71` (`test(offset): cover four-knot rational layouts`). Native-file
+persistence and independent DWG parsing for this vector remain open, along
+with other knot/weight profiles, external CAD, visible GUI, and exact-head CI.
