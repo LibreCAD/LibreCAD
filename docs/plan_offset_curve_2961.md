@@ -29854,3 +29854,21 @@ DWGs with ARC=1, CIRCLE=1, LINE=1, LWPOLYLINE=4, SPLINE=15, and zero invalid
 spline control/knot cardinalities. These are specific periodic layouts, not
 arbitrary knot vectors, periodic rational-weight variants, all seam/orientation
 cases, visible GUI, or ODA/AutoCAD acceptance.
+
+## 668. Qualify a Wide Rotated Bounded Hyperbola Interval (2026-11-09)
+
+Added an exact-normal direct oracle for a translated, rotated bounded
+hyperbola with parameter interval `[-2.0, 1.8]`, on both sides and at offsets
+0.25 and 1.0. The same typed source is now required to admit its canonical
+operation-8 cache in the real worker matrix and remains covered by Produce and
+the five R14/R2000/R2018 DXF/DWG round-trip lanes.
+
+Validation: all six `[oracle]` cases pass 40,899 assertions; the complete
+`[curve-offset][direct]` suite passes 106,642 assertions/39 cases. The focused
+worker family case passes 54,752 assertions; the full worker-client suite
+passes 61,491 assertions/21 cases. LibreDWG 0.14 independently reads the
+R2000 and R2018 DWGs; each contains 16 SPLINE records, all with non-empty
+controls and valid knot cardinality `knot_count == control_count + degree + 1`.
+This qualifies one rotated interval and two subcritical distances, not the
+near-vertex/cusp boundary, arbitrary intervals, extreme scales, all branch
+orientations, visible GUI, or ODA/AutoCAD acceptance.

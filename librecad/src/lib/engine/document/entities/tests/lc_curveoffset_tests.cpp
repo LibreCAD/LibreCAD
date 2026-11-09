@@ -2025,6 +2025,28 @@ TEST_CASE("A hyperbola is offset along its exact curve on either branch and eith
     }
 }
 
+TEST_CASE("A rotated hyperbola with a wide bounded interval follows exact offset normals",
+          "[curve-offset][direct][hyperbola][oracle]") {
+    const LC_HyperbolaData data{RS_Vector{12.0, -7.0}, RS_Vector{3.0, 1.0}, 1.2, -2.0, 1.8, false};
+    const LC_Hyperbola hyperbola{nullptr, data};
+    REQUIRE(hyperbola.isValid());
+    REQUIRE(LC_CurveOffset::isSupportedSource(hyperbola));
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        for (const double distance : {0.25, 1.0}) {
+            CAPTURE(distance);
+            const auto options = LC_CurveOffset::makeDirectOptions(hyperbola, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                hyperbola, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.branches.size() == 1);
+            CHECK(maxDeviation(result, hyperbolaEvaluator(data)) <= options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("A hyperbola whose ends run backwards is offset all the same", "[curve-offset][hyperbola]") {
     // grip edits, DXF imports and reversing a hyperbola all leave angle1 > angle2
     const LC_HyperbolaData forwards{RS_Vector{5.0, -3.0}, RS_Vector{4.0, 2.0}, 0.6, -1.2, 1.5, false};
