@@ -972,6 +972,18 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
     LC_SplinePointsData fitPoints{false, false};
     fitPoints.splinePoints = {{0, 0}, {2, 0}};
+    const std::array<RS_Vector, 3> parabolaControls{{{0.0, 0.0}, {5.0, 10.0}, {10.0, 0.0}}};
+    const auto parabolaAt = [&parabolaControls](const double t) {
+        const double u = 1.0 - t;
+        return parabolaControls[0] * (u * u) + parabolaControls[1] * (2.0 * u * t) +
+               parabolaControls[2] * (t * t);
+    };
+    const auto parabolaCandidates = LC_ParabolaData::From4Points(
+        {parabolaAt(0.0), parabolaAt(0.3), parabolaAt(0.7), parabolaAt(1.0)});
+    const auto reconstructedParabola = std::find_if(
+        parabolaCandidates.begin(), parabolaCandidates.end(),
+        [](const LC_ParabolaData& candidate) { return candidate.isValid(); });
+    REQUIRE(reconstructedParabola != parabolaCandidates.end());
     const std::array<LC_OffsetSourceGeometry, 18> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
@@ -985,7 +997,7 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
         LC_OffsetSourceGeometry{periodicHighDegreeSpline(6)},
         LC_OffsetSourceGeometry{points},
         LC_OffsetSourceGeometry{fitPoints},
-        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{*reconstructedParabola},
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
         LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
         LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, .25, 1.5, false}},

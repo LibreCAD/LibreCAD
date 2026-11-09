@@ -30451,3 +30451,19 @@ worker-operation deadlines remain unchanged. The direct exact-normal test
 passes 1,163 assertions. `git diff --check` passes. Broader parabola variants,
 visible GUI, external ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain
 open.
+
+## 691. Replace the Properties Parabola Fixture With a Reconstructed Source (2026-11-09)
+
+Updated the all-family Properties source-picker matrix to use one valid
+`LC_ParabolaData::From4Points` candidate instead of a manually specified
+three-control-point parabola. The existing test switches the family filter,
+picks that live entity, and verifies the typed source definition and geometry
+are replaced correctly without filter-only side effects. Together with the
+direct candidates in section 689 and the worker/file path in section 690, this
+connects the recorded reconstructed fixture through the Properties workflow.
+Other parabola constructions remain unqualified.
+
+Validation: rebuilt the Release `librecad_tests` target. The focused Properties
+matrix passes 8,156 assertions/1 case; `git diff --check` passes. This is
+automated widget coverage, not the still-open visible desktop check. External
+ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain open.
