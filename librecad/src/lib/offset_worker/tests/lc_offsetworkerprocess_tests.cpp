@@ -89,7 +89,7 @@ public:
     }
 
     Completion exchange(const QByteArray& input,
-                        const QStringList& arguments = {QStringLiteral("--protocol=7")},
+                        const QStringList& arguments = {QStringLiteral("--protocol=8")},
                         bool partial = false) {
         REQUIRE(input.size() <= InputCap);
         ScopedProcess child;
@@ -148,7 +148,7 @@ public:
         REQUIRE(fields);
         const auto input = Wire::encode(*fields);
         REQUIRE_FALSE(input.isEmpty());
-        const auto completed = exchange(input, {QStringLiteral("--protocol=7")}, partial);
+        const auto completed = exchange(input, {QStringLiteral("--protocol=8")}, partial);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
         REQUIRE(completed.status == QProcess::NormalExit);
         REQUIRE(completed.code == 0);
@@ -171,7 +171,7 @@ public:
     }
 
     void reject(const QByteArray& input,
-                const QStringList& arguments = {QStringLiteral("--protocol=7")}) {
+                const QStringList& arguments = {QStringLiteral("--protocol=8")}) {
         INFO("rejected bytes=" << input.size() << " arguments=" << arguments.join(' ').toStdString());
         const auto completed = exchange(input, arguments);
         INFO("helper stderr: " << completed.diagnostic.toStdString());
@@ -535,7 +535,8 @@ TEST_CASE("Built native offset helper qualifies computations and one-request pro
         helper.reject(frame, {QStringLiteral("--protocol=3")});
         helper.reject(frame, {QStringLiteral("--protocol=4")});
         helper.reject(frame, {QStringLiteral("--protocol=5")});
-        helper.reject({}, {QStringLiteral("--protocol=7"), QStringLiteral("extra")});
+        helper.reject(frame, {QStringLiteral("--protocol=7")});
+        helper.reject({}, {QStringLiteral("--protocol=8"), QStringLiteral("extra")});
     }
 }
 
@@ -654,6 +655,27 @@ TEST_CASE("Built helper transports Produce series grouping native admission work
     CHECK(refusal.copyOutputCounts.empty()); CHECK(refusal.outputs.empty());
     CHECK(refusal.outputStatus == Reply::OrdinaryStatus::None);
     CHECK(refusal.source.sampleUnits > 1); CHECK(refusal.source.rebaseEngineRuns == 1);
+}
+
+TEST_CASE("Built helper produces a typed line source", "[lc-offsetcurve][worker-process][produce][typed-source]") {
+    int argc = 1; char name[] = "offset-worker-typed-line-tests"; char* argv[] = {name, nullptr};
+    std::unique_ptr<QCoreApplication> application;
+    if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
+    Helper helper;
+    Req::Produce op;
+    op.source = LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}};
+    op.context.topLevel = true;
+    op.coordinate = {3, 2};
+    op.distance = .25;
+    op.copies = 1;
+    op.asOffsetCurve = true;
+    const auto reply = helper.run({Token, op});
+    REQUIRE(std::holds_alternative<Reply::Produced>(reply.result));
+    const auto& produced = std::get<Reply::Produced>(reply.result);
+    CHECK(produced.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(produced.outputStatus == Reply::OrdinaryStatus::Complete);
+    REQUIRE(produced.outputs.size() == 1);
+    CHECK(std::holds_alternative<Req::Segment>(produced.outputs.front()));
 }
 
 TEST_CASE("Fresh helper processes preserve cached preview hits while native adoption remains checked",

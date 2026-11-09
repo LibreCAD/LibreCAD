@@ -245,7 +245,7 @@ bool read(const QCborValue& value, LC_HyperbolaData& data) {
         number(a.at(2), data.ratio) && number(a.at(3), data.angle1) && number(a.at(4), data.angle2) &&
         boolean(a.at(5), data.reversed);
 }
-bool read(const QCborValue& value, LC_OffsetSourceGeometry& source) {
+bool readGeometry(const QCborValue& value, LC_OffsetSourceGeometry& source, const bool produced) {
     QCborArray a;
     qint64 tag;
     if (!array(value, 2, a) || !integer(a.at(0), tag)) return false;
@@ -261,7 +261,13 @@ bool read(const QCborValue& value, LC_OffsetSourceGeometry& source) {
     case 8: { LC_OffsetPolylineData data; if (!read(a.at(1), data)) return false; source.value = std::move(data); break; }
     default: return false;
     }
-    return valid(source);
+    return produced ? source.isWellFormedOutput() : valid(source);
+}
+bool read(const QCborValue& value, LC_OffsetSourceGeometry& source) {
+    return readGeometry(value, source, false);
+}
+bool readProducedGeometry(const QCborValue& value, LC_OffsetSourceGeometry& source) {
+    return readGeometry(value, source, true);
 }
 bool read(const QCborValue& value, LC_OffsetSourceDefinition& definition) {
     QCborArray a;
@@ -876,6 +882,15 @@ std::optional<LC_OffsetSourceGeometry> decodeSourceGeometry(const QCborArray& a)
     if (!read(a, source)) return std::nullopt;
     return source;
 }
+std::optional<QCborArray> encodeProducedGeometry(const LC_OffsetSourceGeometry& geometry) {
+    if (!geometry.isWellFormedOutput()) return std::nullopt;
+    return fields(geometry);
+}
+std::optional<LC_OffsetSourceGeometry> decodeProducedGeometry(const QCborArray& a) {
+    LC_OffsetSourceGeometry geometry;
+    if (!readProducedGeometry(a, geometry)) return std::nullopt;
+    return geometry;
+}
 std::optional<QCborArray> encodeSourceDefinition(const LC_OffsetSourceDefinition& definition) {
     if (!valid(definition)) return std::nullopt;
     return fields(definition);
@@ -914,14 +929,14 @@ std::optional<QCborArray> encode(const Request& request) {
     // No CBOR arrays are populated until the entire caller-owned value is admitted.
     if (!admitted(request)) return std::nullopt;
     const auto& t = request.token;
-    return QCborArray{7, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{8, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(request.operation.index()), std::visit([](const auto& op) { return fields(op); }, request.operation)};
 }
 
 std::optional<Request> decode(const QCborArray& a) {
     qint64 version, tag;
     Token token;
-    if (a.size() != 4 || !integer(a.at(0), version) || version != 7 ||
+    if (a.size() != 4 || !integer(a.at(0), version) || version != 8 ||
         !read(a.at(1), token) || !integer(a.at(2), tag) || !a.at(3).isArray()) return std::nullopt;
     const auto body = a.at(3).toArray();
     switch (tag) {

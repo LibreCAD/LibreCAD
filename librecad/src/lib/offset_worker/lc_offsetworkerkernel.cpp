@@ -472,6 +472,7 @@ result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace
         const auto* native = dynamic_cast<const LC_OffsetCurve*>(entity.get());
         const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
         const auto* line = dynamic_cast<const RS_Line*>(entity.get());
+        std::optional<LC_OffsetSourceGeometry> typed;
         bool supported = false;
         if (spline && ordinarySpline(spline->getData())) {
             const auto& raw = spline->getData();
@@ -481,13 +482,53 @@ result::Produced LC_OffsetWorkerKernel::produce(const req::Produce& input, Trace
         } else if (line) {
             n = 1; c = 2;
             supported = geo::isFinite2D(line->getStartpoint()) && geo::isFinite2D(line->getEndpoint());
+        } else {
+            std::optional<LC_OffsetSourceGeometry> value;
+            if (const auto* arc = dynamic_cast<const RS_Arc*>(entity.get())) {
+                value.emplace(LC_OffsetSourceGeometry{arc->getData()});
+            } else if (const auto* circle = dynamic_cast<const RS_Circle*>(entity.get())) {
+                value.emplace(LC_OffsetSourceGeometry{circle->getData()});
+            } else if (const auto* polyline = dynamic_cast<const RS_Polyline*>(entity.get())) {
+                LC_OffsetPolylineData data;
+                data.startpoint = polyline->getStartpoint();
+                data.endpoint = polyline->getEndpoint();
+                data.closed = polyline->isClosed();
+                data.segments.reserve(polyline->size());
+                bool valid = true;
+                for (const RS_Entity* child : *polyline) {
+                    if (const auto* segmentLine = dynamic_cast<const RS_Line*>(child))
+                        data.segments.emplace_back(segmentLine->getData());
+                    else if (const auto* segmentArc = dynamic_cast<const RS_Arc*>(child))
+                        data.segments.emplace_back(segmentArc->getData());
+                    else {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) value.emplace(LC_OffsetSourceGeometry{std::move(data)});
+            }
+            if (value && value->isWellFormedOutput()) {
+                using Kind = LC_OffsetSourceGeometry::Kind;
+                const auto kind = value->kind();
+                if (kind == Kind::Arc || kind == Kind::Circle || kind == Kind::Polyline) {
+                    if (kind == Kind::Polyline) {
+                        const auto& polyline = std::get<LC_OffsetPolylineData>(value->value);
+                        n = polyline.segments.size();
+                        for (const auto& segment : polyline.segments)
+                            if (std::holds_alternative<RS_LineData>(segment)) c += 2;
+                    } else n = 1;
+                    typed = std::move(value);
+                    supported = true;
+                }
+            }
         }
         if (!supported || !take(spans, n, spanCap) || !take(controls, c, 16384) || !take(knots, k, 32768)) {
             output.outputs.clear(); return output;
         }
         if (native) output.outputs.emplace_back(value(*native));
         else if (spline) output.outputs.emplace_back(spline->getData());
-        else output.outputs.emplace_back(req::Segment{line->getStartpoint(), line->getEndpoint()});
+        else if (line) output.outputs.emplace_back(req::Segment{line->getStartpoint(), line->getEndpoint()});
+        else output.outputs.emplace_back(std::move(*typed));
     }
     output.outputStatus = result::OrdinaryStatus::Complete;
     if (!admitted()) {

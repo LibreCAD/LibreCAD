@@ -722,6 +722,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         REQUIRE(entity);
         RS_OffsetData offset;
         offset.coord = {3, 2};
+        offset.sideFallback = {10, 10};
         offset.distance = .25;
         offset.number = 1;
         offset.multipleCopies = true;
@@ -729,22 +730,55 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetBatchPreparation prepared{offset, {entity.get()}, false, {}};
         LC_DocumentModificationBatch batch;
         REQUIRE_FALSE(prepared.advance(batch));
-        const auto workerRequest = prepared.request(token(nextRequestId++));
+        const qint64 requestId = nextRequestId++;
+        const auto workerRequest = prepared.request(token(requestId));
         REQUIRE(workerRequest);
         REQUIRE(std::holds_alternative<Req::Produce>(workerRequest->operation));
         const auto& produce = std::get<Req::Produce>(workerRequest->operation);
         if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
             CHECK(produce.source.index() == 0);
         } else if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Spline) {
-        CHECK(produce.source.index() == 1);
-      } else {
-        REQUIRE(produce.source.index() == 2);
-        const auto *typed =
-            std::get_if<LC_OffsetSourceGeometry>(&produce.source);
-        REQUIRE(typed);
-        CHECK(typed->kind() == sources[i].kind());
-      }
-      CHECK(Req::admitted(*workerRequest));
+            CHECK(produce.source.index() == 1);
+        } else {
+            REQUIRE(produce.source.index() == 2);
+            const auto* typed = std::get_if<LC_OffsetSourceGeometry>(&produce.source);
+            REQUIRE(typed);
+            CHECK(typed->kind() == sources[i].kind());
+        }
+        CHECK(Req::admitted(*workerRequest));
+        const auto sourceBefore = Req::Values::encodeSourceGeometry(sources[i]);
+        REQUIRE(sourceBefore);
+        Receipts producedReceipts;
+        REQUIRE(owned.get().submit(*workerRequest, Client::Mode::Commit,
+            producedReceipts.into(0)));
+        rt.until([&] { return producedReceipts.calls[0] != 0; });
+        const auto& produced = completed(producedReceipts.at(0), requestId, 5);
+        const auto& producedReply = produced.reply();
+        const auto* producedValue = std::get_if<Reply::Produced>(&producedReply.result);
+        REQUIRE(producedValue);
+        CAPTURE(i, producedValue->outputStatus, producedValue->source.status,
+            producedValue->source.copiesMade, producedValue->source.engineStatus,
+            producedValue->source.detail, producedValue->outputs.size());
+        INFO("worker diagnostics: " << producedReceipts.at(0).diagnostics.toStdString());
+        if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Line) {
+            REQUIRE(producedValue->outputs.size() == 1);
+            CHECK(std::holds_alternative<Req::Segment>(producedValue->outputs.front()));
+        } else if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Arc ||
+                   sources[i].kind() == LC_OffsetSourceGeometry::Kind::Circle ||
+                   sources[i].kind() == LC_OffsetSourceGeometry::Kind::Polyline) {
+            REQUIRE(producedValue->outputs.size() == 1);
+            const auto* output = std::get_if<LC_OffsetSourceGeometry>(&producedValue->outputs.front());
+            REQUIRE(output);
+            CHECK(output->kind() == sources[i].kind());
+        }
+        REQUIRE(prepared.accept(produced));
+        REQUIRE(prepared.advance(batch));
+        REQUIRE(prepared.outcome().sources.size() == 1);
+        CHECK(prepared.outcome().sources.front().source == entity.get());
+        CHECK(prepared.outcome().sources.front().complete());
+        CHECK(Req::Values::encodeSourceGeometry(sources[i]) == sourceBefore);
+        prepared.release();
+        qDeleteAll(batch.entitiesToAdd);
     }
 
     const qint64 linearRequestId = nextRequestId;

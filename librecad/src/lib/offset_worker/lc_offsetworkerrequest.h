@@ -105,6 +105,8 @@ std::optional<QCborArray> encodeDefinition(const LC_EllipseOffsetDefinition&);
 std::optional<LC_EllipseOffsetDefinition> decodeDefinition(const QCborArray&);
 std::optional<QCborArray> encodeSourceGeometry(const LC_OffsetSourceGeometry&);
 std::optional<LC_OffsetSourceGeometry> decodeSourceGeometry(const QCborArray&);
+std::optional<QCborArray> encodeProducedGeometry(const LC_OffsetSourceGeometry&);
+std::optional<LC_OffsetSourceGeometry> decodeProducedGeometry(const QCborArray&);
 bool isSourceGeometryEncodable(const LC_OffsetSourceGeometry&);
 std::optional<QCborArray> encodeSourceDefinition(const LC_OffsetSourceDefinition&);
 std::optional<LC_OffsetSourceDefinition> decodeSourceDefinition(const QCborArray&);

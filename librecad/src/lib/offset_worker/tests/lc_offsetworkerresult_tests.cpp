@@ -318,7 +318,7 @@ TEST_CASE("Worker ordinary fallback retains exact raw values outside lowered C a
         }
         const auto decoded = roundtrip(r, reply(r, n));
         const auto wire = Reply::encode(decoded, r); REQUIRE(wire);
-        CHECK(wire->at(0).toInteger() == 7);
+        CHECK(wire->at(0).toInteger() == 8);
         const auto body = wire->at(4).toArray(); REQUIRE(body.size() == 15);
         CHECK(body.at(12).toInteger() == qint64(Reply::OrdinaryStatus::Complete));
         REQUIRE(body.at(13).toArray().size() == 3);
@@ -574,7 +574,7 @@ TEST_CASE("Worker CheckThrough receipts contain only bounded membership work and
     roundtrip(r, reply(r, n));
     n.refusal = Refusal::ThroughNotOnCache; roundtrip(r, reply(r, n));
     const auto encoded = Reply::encode(reply(r, n), r); REQUIRE(encoded);
-    CHECK(encoded->at(0).toInteger() == 7); CHECK(encoded->at(2).toInteger() == 4);
+    CHECK(encoded->at(0).toInteger() == 8); CHECK(encoded->at(2).toInteger() == 4);
     REQUIRE(encoded->at(4).toArray().size() == 15);
     CHECK_FALSE(Reply::decode(patched(*encoded, {0}, 1), r));
     CHECK_FALSE(Reply::decode(patched(*encoded, {2}, 5), r));
@@ -1042,6 +1042,48 @@ QCborArray producedRoundtrip(const Req::Request& r, const Reply::Produced& d) {
 }
 }
 
+TEST_CASE("Produced typed polylines account bounded leaf entities", tags) {
+    auto r = producedRequest(false);
+    auto& op = std::get<Req::Produce>(r.operation);
+    op.source = LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}};
+
+    LC_OffsetPolylineData polyline;
+    polyline.startpoint = {0, 0};
+    polyline.endpoint = {1, 1};
+    polyline.segments.emplace_back(RS_LineData{{0, 0}, {1, 0}});
+    polyline.segments.emplace_back(RS_ArcData{{1, 1}, 1, -pi / 2, 0, false});
+
+    auto d = producedValue(r);
+    d.source.usage = {0, 1, 2};
+    d.source.attemptedOutputUsage = {};
+    d.source.cacheEngineRuns = 0;
+    d.source.sampleUnits = 0;
+    d.source.intersectionPairAllowance = 0;
+    d.source.resolvedSide.reset();
+    d.outputs = {LC_OffsetSourceGeometry{polyline}};
+    const auto encoded = producedRoundtrip(r, d);
+    const auto& decoded = encoded.at(4).toArray().at(5).toArray();
+    REQUIRE(decoded.size() == 1);
+    const auto geometry = Req::Values::decodeProducedGeometry(decoded.at(0).toArray().at(1).toArray());
+    REQUIRE(geometry);
+    REQUIRE(geometry->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    CHECK(std::get<LC_OffsetPolylineData>(geometry->value).segments.size() == 2);
+
+    auto wrongDepth = d;
+    wrongDepth.source.usage.deepEntities = 1;
+    wrongDepth.source.attemptedOutputUsage.deepEntities = 1;
+    CHECK_FALSE(Reply::encode(producedReply(r, wrongDepth), r));
+
+    auto overCap = d;
+    auto& segments = std::get<LC_OffsetPolylineData>(
+        std::get<LC_OffsetSourceGeometry>(overCap.outputs.front()).value).segments;
+    segments.assign(makeDefaultOffsetSourceBudget().maxCubicPieces + 1,
+        RS_LineData{{0, 0}, {1, 0}});
+    overCap.source.usage = {0, 1, segments.size()};
+    overCap.source.attemptedOutputUsage = {};
+    CHECK_FALSE(Reply::encode(producedReply(r, overCap), r));
+}
+
 TEST_CASE("Produced receipts retain pointer-free diagnostics grouping and successful stopped prefixes", tags) {
     auto r = producedRequest(false, 2); auto d = producedValue(r);
     producedRoundtrip(r, d);
@@ -1051,7 +1093,7 @@ TEST_CASE("Produced receipts retain pointer-free diagnostics grouping and succes
     d.source.stoppedBy = LC_OffsetSourceStatus::Vanished; d.source.engineStatus = Status::Ok;
     producedRoundtrip(r, d);
     const auto wire = producedRoundtrip(r, d);
-    CHECK(wire.at(0).toInteger() == 7); CHECK(wire.at(2).toInteger() == 5);
+    CHECK(wire.at(0).toInteger() == 8); CHECK(wire.at(2).toInteger() == 5);
     REQUIRE(wire.at(4).toArray().size() == 6);
     REQUIRE(wire.at(4).toArray().at(0).toArray().size() == 19);
     for (const auto& bad : {

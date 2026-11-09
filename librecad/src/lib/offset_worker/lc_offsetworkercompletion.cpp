@@ -212,6 +212,9 @@ LC_OffsetWorkerCompletion::produced(const RS_Entity& attributes) const {
         if (const auto* line = std::get_if<LC_OffsetWorkerRequest::Segment>(&value)) {
             if (deep == deepCap) return std::nullopt;
             entity = std::make_unique<RS_Line>(nullptr, RS_LineData{line->start, line->end});
+        } else if (const auto* geometry = std::get_if<LC_OffsetSourceGeometry>(&value)) {
+            entity = geometry->makeOutputEntity();
+            if (!entity) return std::nullopt;
         } else {
             const auto* native = std::get_if<LC_OffsetWorkerResult::Curve>(&value);
             const auto& cache = native ? native->cache : std::get<RS_SplineData>(value);

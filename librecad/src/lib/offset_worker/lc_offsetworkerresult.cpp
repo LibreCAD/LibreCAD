@@ -478,10 +478,12 @@ bool admitReuse(ReuseAdmission& out, const SourceDiagnostics& source, const Req:
     out.count = count;
     return true;
 }
+bool legacySource(const Req::Produce& op);
 bool productionHeader(const Produced& d, const Req::Produce& op, std::size_t groups,
     std::size_t plain, std::size_t rebases, std::size_t outputs, const ReuseAdmission* reused = nullptr) {
     const auto& s = d.source;
     const auto cap = produceBudget(op);
+    const bool legacy = legacySource(op);
     const std::size_t copies = std::size_t(op.copies);
     if (!admitted(s) || !admitted(d.outputStatus) || s.copiesRequested != op.copies ||
         s.copiesMade > op.copies || s.sourceRemoved || groups != std::size_t(s.copiesMade) ||
@@ -507,14 +509,18 @@ bool productionHeader(const Produced& d, const Req::Produce& op, std::size_t gro
     const bool success = s.status == LC_OffsetSourceStatus::Succeeded;
     if (success) {
         const auto completedOrStopped = std::size_t(s.copiesMade) + (s.copiesMade < op.copies ? 1 : 0);
-        if (wrap && op.source.index() == 1 && op.context.nativeSource) {
+        if (legacy) {
+            if (s.cacheEngineRuns || s.reusedCacheCopies || s.rebaseEngineRuns || rebases) return false;
+        } else if (wrap && op.source.index() == 1 && op.context.nativeSource) {
             if (rebases != completedOrStopped) return false;
         } else if (s.cacheEngineRuns + s.reusedCacheCopies != completedOrStopped) return false;
-        if (!s.copiesMade || !s.resolvedSide || !s.usage.outputEntities ||
-            s.usage.outputEntities < std::size_t(s.copiesMade) || s.usage.cubicPieces < s.usage.outputEntities ||
+        if (!s.copiesMade || (!legacy && !s.resolvedSide) || !s.usage.outputEntities ||
+            s.usage.outputEntities < std::size_t(s.copiesMade) ||
+            (!legacy && s.usage.cubicPieces < s.usage.outputEntities) ||
             s.usage.deepEntities < s.usage.outputEntities ||
             s.usage.cubicPieces > s.attemptedOutputUsage.cubicPieces + (reused ? reused->usage.cubicPieces : 0) ||
-            s.usage.outputEntities > s.attemptedOutputUsage.outputEntities + (reused ? reused->usage.outputEntities : 0)) return false;
+            (!legacy && s.usage.outputEntities > s.attemptedOutputUsage.outputEntities +
+                (reused ? reused->usage.outputEntities : 0))) return false;
         if (s.copiesMade == op.copies) {
             if (s.stoppedBy != LC_OffsetSourceStatus::Succeeded || s.engineStatus != Status::Ok) return false;
         } else if (s.stoppedBy == LC_OffsetSourceStatus::Vanished) {
@@ -529,12 +535,13 @@ bool productionHeader(const Produced& d, const Req::Produce& op, std::size_t gro
         if (s.copiesMade || groups || plain || !zero(s.usage) ||
             d.outputStatus != OrdinaryStatus::None || outputs) return false;
         if (s.status == LC_OffsetSourceStatus::Vanished &&
-            (s.stoppedBy != LC_OffsetSourceStatus::Vanished || s.engineStatus != Status::Ok || !s.resolvedSide)) return false;
+            (s.stoppedBy != LC_OffsetSourceStatus::Vanished || s.engineStatus != Status::Ok ||
+                (!legacy && !s.resolvedSide))) return false;
         if (s.status == LC_OffsetSourceStatus::LimitExceeded &&
             s.engineStatus != Status::Ok && s.engineStatus != Status::LimitExceeded) return false;
         if (s.status == LC_OffsetSourceStatus::OffsetFailed && s.engineStatus == Status::LimitExceeded) return false;
     }
-    return (!runs && !rebases && !s.adoptionAttempts) || s.resolvedSide.has_value();
+    return legacy || (!runs && !rebases && !s.adoptionAttempts) || s.resolvedSide.has_value();
 }
 bool productionCopy(std::size_t n, std::size_t index, ProductionScan& scan, const Req::Produce& op) {
     if (!n || index >= scan.copies.size() || !add(scan.roots, n, produceBudget(op).maxOutputEntities)) return false;
@@ -557,6 +564,44 @@ bool productionPlain(const LC_OffsetPlainOutcome& p, ProductionScan& scan, const
     scan.plainOutcomes[ordinal] = p;
     scan.previousPlain = std::size_t(p.copy); scan.plain[ordinal] = true;
     return true;
+}
+bool legacySource(const Req::Produce& op) {
+    const auto* source = std::get_if<LC_OffsetSourceGeometry>(&op.source);
+    if (!source) return false;
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    const auto kind = source->kind();
+    return kind == Kind::Line || kind == Kind::Arc || kind == Kind::Circle || kind == Kind::Polyline;
+}
+bool producedGeometryCounts(const LC_OffsetSourceGeometry& geometry, Counts& counts, std::size_t cap) {
+    if (!geometry.isWellFormedOutput()) return false;
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    switch (geometry.kind()) {
+    case Kind::Line:
+        counts = {1, 2, 0};
+        break;
+    case Kind::Arc:
+    case Kind::Circle:
+        counts = {1, 0, 0};
+        break;
+    case Kind::Polyline: {
+        const auto& polyline = std::get<LC_OffsetPolylineData>(geometry.value);
+        if (polyline.segments.size() > cap) return false;
+        std::size_t controls = 0;
+        for (const auto& segment : polyline.segments)
+            if (std::holds_alternative<RS_LineData>(segment) && !add(controls, 2, 32768)) return false;
+        counts = {polyline.segments.size(), controls, 0};
+        break;
+    }
+    default:
+        return false;
+    }
+    return counts.spans <= cap;
+}
+std::size_t producedGeometryDepth(const LC_OffsetSourceGeometry& geometry) {
+    if (geometry.kind() != LC_OffsetSourceGeometry::Kind::Polyline) return 1;
+    // measureOffsetOutput() counts leaves, not container nodes. A polyline's
+    // emitted line/arc children are therefore its complete deep-entity cost.
+    return std::get<LC_OffsetPolylineData>(geometry.value).segments.size();
 }
 bool productionRebase(const LC_OffsetRebaseOutcome& a, ProductionScan& scan,
     const Produced& d, const Req::Produce& op, const ReuseAdmission* reused = nullptr) {
@@ -686,9 +731,13 @@ bool produced(const Produced& d, const Req::Produce& op, const ReuseAdmission* r
         } else if (const auto* value = std::get_if<Curve>(&item)) {
             if (!nativeExpected || scan.copies[ordinal] != 1 ||
                 !curve(*value, c, cap.maxCubicPieces) || !productionDefinition(*value, ordinal, d, op)) return false;
+        } else if (const auto* geometry = std::get_if<LC_OffsetSourceGeometry>(&item)) {
+            if (!legacySource(op) || nativeExpected || !producedGeometryCounts(*geometry, c, cap.maxCubicPieces)) return false;
         } else return false;
-        if (!ordinaryCount(scan.geometry, c, cap.maxCubicPieces) ||
-            !add(scan.minimumDeep, item.index() == 0 ? 1 : kOffsetDeepEntitiesPerOutputSpline - 1,
+        if (!ordinaryCount(scan.geometry, c, cap.maxCubicPieces)) return false;
+        if (!add(scan.minimumDeep, item.index() == 0 ? 1 : item.index() == 3 ?
+                producedGeometryDepth(std::get<LC_OffsetSourceGeometry>(item)) :
+                kOffsetDeepEntitiesPerOutputSpline - 1,
                 d.source.usage.deepEntities)) return false;
     }
     return productionTail(scan, d, op);
@@ -730,6 +779,7 @@ bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool
         QCborArray output, segment;
         std::size_t type;
         Counts c;
+        std::size_t minimumDeep = kOffsetDeepEntitiesPerOutputSpline - 1;
         const bool nativeExpected = nativeForCopy(scan, d, op, ordinal);
         if (!array(item, 2, output) || !read(output.at(0), type)) return false;
         if (type == 0) {
@@ -737,6 +787,7 @@ bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool
             if (nativeExpected || !array(output.at(1), 2, segment) ||
                 !read(segment.at(0), line.start) || !read(segment.at(1), line.end)) return false;
             c = {1, 2, 0};
+            minimumDeep = 1;
             if (materialize) d.outputs.emplace_back(line);
         } else if (type == 1) {
             if (nativeExpected || !scanCache(output.at(1), c, cap.maxCubicPieces)) return false;
@@ -751,10 +802,16 @@ bool readProduced(const QCborValue& v, Produced& d, const Req::Produce& op, bool
                 !readCurve(output.at(1), value, c, cap.maxCubicPieces, materialize) ||
                 !productionDefinition(value, ordinal, d, op)) return false;
             if (materialize) d.outputs.emplace_back(std::move(value));
+        } else if (type == 3) {
+            if (!output.at(1).isArray() || nativeExpected) return false;
+            auto geometry = Req::Values::decodeProducedGeometry(output.at(1).toArray());
+            if (!geometry || !legacySource(op) ||
+                !producedGeometryCounts(*geometry, c, cap.maxCubicPieces)) return false;
+            minimumDeep = producedGeometryDepth(*geometry);
+            if (materialize) d.outputs.emplace_back(std::move(*geometry));
         } else return false;
         if (!ordinaryCount(scan.geometry, c, cap.maxCubicPieces) ||
-            !add(scan.minimumDeep, type == 0 ? 1 : kOffsetDeepEntitiesPerOutputSpline - 1,
-                d.source.usage.deepEntities)) return false;
+            !add(scan.minimumDeep, minimumDeep, d.source.usage.deepEntities)) return false;
         ++index;
     }
     return productionTail(scan, d, op);
@@ -1064,7 +1121,8 @@ QCborArray fields(const Produced& d) {
         if (const auto* line = std::get_if<Req::Segment>(&item))
             value = QCborArray{fields(line->start), fields(line->end)};
         else if (const auto* data = std::get_if<RS_SplineData>(&item)) value = *Req::Values::encodeCache(*data);
-        else value = fields(std::get<Curve>(item));
+        else if (const auto* curve = std::get_if<Curve>(&item)) value = fields(*curve);
+        else value = *Req::Values::encodeProducedGeometry(std::get<LC_OffsetSourceGeometry>(item));
         outputs.append(QCborArray{qint64(item.index()), value});
     }
     return {fields(d.source), copies, plain, rebases, fields(d.outputStatus), outputs};
@@ -1108,6 +1166,30 @@ template<class T> std::size_t itemCount(const T& d) {
     else if constexpr (std::is_same_v<T, LC_Interval>) return 3;
     else if constexpr (std::is_same_v<T, RS_SplineData>)
         return 11 + 5 * d.controlPoints.size() + d.knotslist.size() + d.weights.size();
+    else if constexpr (std::is_same_v<T, LC_OffsetSourceGeometry>) {
+        return std::visit([](const auto& value) -> std::size_t {
+            using V = std::decay_t<decltype(value)>;
+            if constexpr (std::is_same_v<V, RS_EllipseData>) return 12;
+            else if constexpr (std::is_same_v<V, RS_SplineData>) return itemCount(value) + 5;
+            else if constexpr (std::is_same_v<V, LC_SplinePointsData>)
+                return 11 + 4 * (value.splinePoints.size() + value.controlPoints.size());
+            else if constexpr (std::is_same_v<V, LC_ParabolaData>) return 14;
+            else if constexpr (std::is_same_v<V, LC_HyperbolaData>) return 13;
+            else if constexpr (std::is_same_v<V, RS_LineData>) return 9;
+            else if constexpr (std::is_same_v<V, RS_ArcData>) return 12;
+            else if constexpr (std::is_same_v<V, RS_CircleData>) return 6;
+            else {
+                std::size_t n = 11;
+                for (const auto& segment : value.segments)
+                    n += 2 + std::visit([](const auto& part) -> std::size_t {
+                        using S = std::decay_t<decltype(part)>;
+                        if constexpr (std::is_same_v<S, RS_LineData>) return 8;
+                        else return 11;
+                    }, segment);
+                return n;
+            }
+        }, d.value);
+    }
     else if constexpr (std::is_same_v<T, Curve>)
         return 1 + itemCount(d.cache) + itemCount(d.definition) + 2 + 1 + 5 * d.grips.size() + itemCount(d.midpoint);
     else if constexpr (std::is_same_v<T, LC_OffsetPreviewSnapshot>) {
@@ -1226,7 +1308,7 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
             fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
     }
     const auto& t = d.token;
-    return QCborArray{7, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{8, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(d.operation), fields(d.failure), payload};
 }
 
@@ -1235,7 +1317,7 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
     QCborArray t;
     std::size_t version;
     std::size_t items = 0;
-    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 7 || !array(a.at(1), 4, t) ||
+    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 8 || !array(a.at(1), 4, t) ||
         !read(t.at(0), d.token.requestId) || !read(t.at(1), d.token.generation) ||
         !read(t.at(2), d.token.sourceRevision) || !read(t.at(3), d.token.undoEpoch) ||
         !read(a.at(2), d.operation) || !read(a.at(3), d.failure) || !envelope(d, r)) return std::nullopt;

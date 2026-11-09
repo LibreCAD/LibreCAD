@@ -29467,3 +29467,71 @@ source`). This qualifies the recorded endpoint/tangent construction and
 resulting profile only; parallel/ill-conditioned tangents, all endpoint
 domains, ODA/AutoCAD, visible GUI, and remaining source-family variants remain
 open.
+
+## 660. Run Every Typed Source Through the Real Worker (2026-11-09, active)
+
+The source-family picker contract remains complete and unchanged: the existing
+Properties control lets users change the requested family before picking and
+covers all nine modeled kinds, including the distinct parabola type. Do not
+add another widget or a second family inventory. The remaining “all supported
+types” requirement is end-to-end: successful candidates need real helper
+execution, joined output, cache admission, replacement/persistence evidence,
+and family-appropriate geometry checks.
+
+The request is now explicit that changing the source family in the widget must
+lead to actual support for every modeled source type, not just a wider picker
+filter. The existing widget work satisfies the interaction requirement; this
+slice exercises the typed values through the isolated worker, joined output,
+and cache-admission boundary. The worker protocol is now version 8: typed
+legacy output geometry is transported as bounded source-geometry values, and
+line/arc/circle/polyline results can retain their concrete output type instead
+of being forced into a spline or segment representation. A real helper-process
+typed-line reproducer now succeeds.
+
+The first all-family run exposed a receipt-accounting defect for mixed-curve
+polylines. The result validator counted the polyline container as an extra deep
+entity, while `measureOffsetOutput()` defines deep cost as leaf entities only.
+The validator now charges each emitted line/arc child exactly once, preserving
+the segment/output caps and the independent completion-time tree measurement.
+Temporary stderr probes have been removed. The family table now verifies
+complete client execution, retained source identity, unchanged source
+encoding, and concrete output kind for line, arc, circle, and polyline.
+
+Implementation order:
+
+1. (Complete) Fix mixed-curve polyline receipt depth accounting against the
+   leaf-count contract. A result-wire regression round-trips a mixed line/arc
+   polyline, rejects a mismatched reported depth, and rejects an over-cap
+   segment payload. Completion independently remeasures the materialized
+   entity tree.
+2. (Complete for the captured fixtures) Exercise line, arc, circle, and
+   polyline outputs through the real worker client; assert complete output and
+   concrete type preservation. Keep the focused typed-line helper-process
+   regression. The output schema uses protocol 8, so older helpers fail the
+   existing protocol handshake rather than misreading the new output tag.
+3. (Complete for the captured fixtures) Give each family fixture a valid,
+   unambiguous side coordinate and require successful worker output and source
+   immutability. Broader boundary/degeneracy refusal matrices remain separate.
+4. Continue qualifying every source family with family-specific direct
+   geometric/oracle checks and exercise operation-8 validation, cache
+   replacement atomicity, and undo/redo for each cache-admissible family.
+   Current generic source/cache paths do not by themselves prove this matrix.
+5. Extend only the variants that pass direct geometry/oracle checks into the
+   applicable five DXF/DWG product-writer lanes and independent reader checks.
+   Keep picker completion, helper execution, geometry support, cache
+   admission, persistence, visible GUI, and external-CAD acceptance as
+   separate claims.
+
+Validation for this implementation slice (all pass): Release build of the
+worker client/process/request/result and kernel targets; client tests 19,155
+assertions/21 cases; helper-process tests 2,625/5 (including rejection of the
+stale protocol-7 handshake); request protocol
+603,526/18; result protocol 467,591/27; worker kernel 1,721,306/94; source
+preparation 76,653/40; source-action 2,812/34; `git diff --check`. The
+all-family client run covers 16 captured representations across the nine
+modeled kinds, but only the captured profiles and configured side picks.
+These results do not prove arbitrary geometry-domain support, cache
+replacement/persistence for every family, the five DXF/DWG lanes, visible GUI
+behavior, or ODA/AutoCAD acceptance. Commit this implementation and roadmap
+update together, then continue with item 4 rather than treating this worker
+slice as completion of the all-types plan.

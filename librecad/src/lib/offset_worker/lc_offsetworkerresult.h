@@ -53,7 +53,8 @@ struct SourceDiagnostics {
     LC_EllipseOffsetGeometry::CheckWork adoptionCheckWork{};
     std::optional<LC_CurveOffsetSide> resolvedSide;
 };
-using ProducedEntity = std::variant<LC_OffsetWorkerRequest::Segment, RS_SplineData, Curve>;
+using ProducedEntity = std::variant<LC_OffsetWorkerRequest::Segment, RS_SplineData, Curve,
+                                    LC_OffsetSourceGeometry>;
 struct Produced {
     SourceDiagnostics source;
     std::vector<std::size_t> copyOutputCounts;
@@ -96,7 +97,8 @@ struct Reply {
  * Produce payload [diagnostics,copyOutputCounts,keptPlain,rebases,outputStatus,outputs].
  * Diagnostics retain SourceDiagnostics member order (19 fields); plain records
  * [copy,reason,checkReason]; rebase records retain LC_OffsetRebaseOutcome order.
- * Each output is [0 Segment / 1 raw Spline / 2 native Curve,record]. Copy counts
+ * Each output is [0 Segment / 1 raw Spline / 2 native Curve / 3 typed ordinary
+ * legacy geometry,record]. Copy counts
  * partition outputs exactly; native records bind to that ordinal and actual side.
  * CachedProduce (op 6) payload [Produce-payload,preview-snapshot,reusedCopies],
  * reuse [copy,remainingOutputBudget]. Native creation still performs its normal

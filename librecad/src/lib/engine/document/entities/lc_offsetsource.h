@@ -74,6 +74,8 @@ struct LC_OffsetSourceGeometry {
     static std::optional<LC_OffsetSourceGeometry> capture(const RS_Entity& entity);
     std::unique_ptr<RS_Entity> makeEntity(RS_EntityContainer* parent = nullptr) const;
     bool isWellFormed() const noexcept;
+    bool isWellFormedOutput() const noexcept;
+    std::unique_ptr<RS_Entity> makeOutputEntity(RS_EntityContainer* parent = nullptr) const;
 };
 
 /** Source plus the common signed left-normal distance and native cache options. */
@@ -419,6 +421,62 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             }
             return hasNoNonAdjacentSegmentIntersections(data);
         }
+    }, value);
+}
+
+inline bool LC_OffsetSourceGeometry::isWellFormedOutput() const noexcept {
+    using namespace LC_OffsetSourceDetail;
+    if (value.valueless_by_exception()) return false;
+    return std::visit([](const auto& data) noexcept {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_ArcData>) {
+            return data.isValid() && finite(data.center) && std::isfinite(data.radius) && data.radius > 0.0 &&
+                   std::isfinite(data.angle1) && std::isfinite(data.angle2);
+        } else if constexpr (std::is_same_v<T, RS_CircleData>) {
+            return data.isValid() && finite(data.center) && std::isfinite(data.radius) && data.radius > 0.0;
+        } else if constexpr (std::is_same_v<T, LC_OffsetPolylineData>) {
+            if (!finite(data.startpoint) || !finite(data.endpoint) || data.segments.empty() ||
+                data.segments.size() > MaximumSourceItems) return false;
+            return std::all_of(data.segments.begin(), data.segments.end(), [](const auto& segment) {
+                if (segment.valueless_by_exception()) return false;
+                return std::visit([](const auto& value) noexcept {
+                    using S = std::decay_t<decltype(value)>;
+                    if constexpr (std::is_same_v<S, RS_LineData>)
+                        return finite(value.startpoint) && finite(value.endpoint) &&
+                               (value.startpoint.x != value.endpoint.x || value.startpoint.y != value.endpoint.y);
+                    else
+                        return value.isValid() && finite(value.center) && std::isfinite(value.radius) &&
+                               value.radius > 0.0 && std::isfinite(value.angle1) && std::isfinite(value.angle2);
+                }, segment);
+            });
+        } else {
+            return false;
+        }
+    }, value);
+}
+
+inline std::unique_ptr<RS_Entity> LC_OffsetSourceGeometry::makeOutputEntity(RS_EntityContainer* parent) const {
+    if (!isWellFormedOutput()) return nullptr;
+    return std::visit([parent](const auto& data) -> std::unique_ptr<RS_Entity> {
+        using T = std::decay_t<decltype(data)>;
+        if constexpr (std::is_same_v<T, RS_ArcData>) return std::make_unique<RS_Arc>(parent, data);
+        else if constexpr (std::is_same_v<T, RS_CircleData>) return std::make_unique<RS_Circle>(parent, data);
+        else if constexpr (std::is_same_v<T, LC_OffsetPolylineData>) {
+            auto result = std::make_unique<RS_Polyline>(parent,
+                RS_PolylineData{data.startpoint, data.endpoint, data.closed});
+            result->setClosed(data.closed);
+            for (const auto& segment : data.segments) {
+                std::unique_ptr<RS_Entity> child = std::visit([&](const auto& value) -> std::unique_ptr<RS_Entity> {
+                    using S = std::decay_t<decltype(value)>;
+                    if constexpr (std::is_same_v<S, RS_LineData>) return std::make_unique<RS_Line>(result.get(), value);
+                    else return std::make_unique<RS_Arc>(result.get(), value);
+                }, segment);
+                result->RS_EntityContainer::addEntity(child.get());
+                child.release();
+            }
+            result->calculateBorders();
+            return result;
+        } else return nullptr;
     }, value);
 }
 
