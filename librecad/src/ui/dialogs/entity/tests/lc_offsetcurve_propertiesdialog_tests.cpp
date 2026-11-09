@@ -850,12 +850,32 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
         data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
         return data;
     };
+    const auto periodicHighDegreeSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = data.savedOpenType = RS_SplineData::SplineType::ClampedOpen;
+        const std::size_t controls = degree + 3;
+        for (std::size_t i = 0; i < controls; ++i) {
+            const double angle = 2.0 * M_PI * static_cast<double>(i) / static_cast<double>(controls);
+            data.controlPoints.emplace_back(10.0 * std::cos(angle), 7.0 * std::sin(angle));
+        }
+        data.weights.assign(controls, 1.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        for (std::size_t i = 1; i <= controls - degree - 1; ++i)
+            data.knotslist.push_back(static_cast<double>(i) /
+                                     static_cast<double>(controls - degree));
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        RS_Spline spline{nullptr, data};
+        spline.setClosed(true);
+        REQUIRE(spline.validate());
+        return spline.getData();
+    };
     LC_SplinePointsData points{false, false};
     points.useControlPoints = true;
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
     LC_SplinePointsData fitPoints{false, false};
     fitPoints.splinePoints = {{0, 0}, {2, 0}};
-    const std::array<LC_OffsetSourceGeometry, 16> sources{
+    const std::array<LC_OffsetSourceGeometry, 18> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
         LC_OffsetSourceGeometry{highDegreeSpline(4)},
@@ -864,6 +884,8 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
         LC_OffsetSourceGeometry{highDegreeSpline(6, 1)},
         LC_OffsetSourceGeometry{highDegreeSpline(4, 2)},
         LC_OffsetSourceGeometry{highDegreeSpline(6, 2)},
+        LC_OffsetSourceGeometry{periodicHighDegreeSpline(4)},
+        LC_OffsetSourceGeometry{periodicHighDegreeSpline(6)},
         LC_OffsetSourceGeometry{points},
         LC_OffsetSourceGeometry{fitPoints},
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
