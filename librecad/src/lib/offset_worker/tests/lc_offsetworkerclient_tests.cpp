@@ -1113,6 +1113,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         REQUIRE(openArcLineSource);
         sources.emplace_back(*openArcLineSource);
     }
+    RS_Polyline scaledMajorSweep;
+    scaledMajorSweep.addVertex({1e6, -2e6}, 2.0);
+    scaledMajorSweep.addVertex({1e6 + 2e4, -2e6});
+    scaledMajorSweep.addVertex({1e6 + 2e4, -2e6 + 2e4});
+    scaledMajorSweep.endPolyline();
+    const auto scaledMajorSweepSource = LC_OffsetSourceGeometry::capture(scaledMajorSweep);
+    REQUIRE(scaledMajorSweepSource);
+    const std::size_t scaledMajorSweepFixture = sources.size();
+    sources.emplace_back(*scaledMajorSweepSource);
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
@@ -1140,6 +1149,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == nearParallelParabolaFixture                                           ? .01
             : i == 21                                                                    ? .1
             : i == 24                                                                    ? 1.9
+            : i == scaledMajorSweepFixture                                               ? 2500.0
                                                                                          : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
