@@ -1421,6 +1421,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     CHECK(replacementsApplied == cacheCandidates.size());
     CHECK(replacementRefusals.empty());
 
+    const std::size_t scaledCornerOppositeFixture = sources.size();
+    sources.emplace_back(*scaledCornerSource);
+
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
     lc::test::OutputDirectory persistenceDirectory("offset-worker-produced-legacy-roundtrip");
@@ -1512,7 +1515,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
         if (i == scaledCornerFixture || i == scaledCornerAtLargerScaleFixture) {
             const double scale = i == scaledCornerFixture ? 1e-3 : 1e-2;
+            offset.distance = 0.25 * scale;
             offset.coord = {10.0 + 3.0 * scale, -20.0 + 2.0 * scale};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == scaledCornerOppositeFixture) {
+            offset.distance = 0.00025;
+            offset.coord = {10.001, -19.997};
             offset.sideFallback = offset.coord;
         }
         offset.number = 1;
