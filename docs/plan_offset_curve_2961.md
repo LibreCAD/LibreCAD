@@ -38,13 +38,15 @@ first-class, distinct picker entry, not a generic spline-points alias.
 
 The acceptance gates are
 `Native source picker changes family and replaces the source with a typed
-curve` and the `SupportedKinds` selector-inventory assertion in
+curve`, `Native source picker replaces every modeled source family without
+filter side effects`, and the `SupportedKinds` selector-inventory assertion in
 `lc_offsetcurve_propertiesdialog_tests.cpp`. Together they verify that the
-parabola is a distinct selectable and replaceable source, that changing the
-family filters live candidates, and that the current source highlight remains
-until replacement. Re-run these when changing the picker or adding a modeled
-family; do not treat their pass as evidence that every geometry variant can be
-offset or round-tripped.
+type selector remains available during source replacement, each modeled kind
+can be selected as the requested family and installed as its actual typed
+source, parabola is distinct from spline-points, and filtering leaves the
+current source and highlight intact until acceptance. Re-run these when
+changing the picker or adding a modeled family; do not treat their pass as
+evidence that every geometry variant can be offset or round-tripped.
 
 The 2026-11-10 clarification reconfirms the requirement to change source type
 while replacement picking is active and to include parabola as a distinct
@@ -56,10 +58,11 @@ unqualified variants filtered or fail-closed without changing source/cache.
 
 ## Current Contract
 
-The latest source-widget request is captured as this testable contract: while
-replacing a source, the Properties family control remains enabled, and changing
-it before a drawing pick filters candidates to that requested family. The
-selector is populated from `LC_OffsetSourceGeometry::SupportedKinds`, not a
+The latest source-widget request is captured as this testable contract: during
+the replacement flow, the Properties family control remains enabled, and
+changing it before accepting a drawing pick filters candidates to that
+requested family. The selector is populated from
+`LC_OffsetSourceGeometry::SupportedKinds`, not a
 second hard-coded UI list, so every modeled kind is available for replacement:
 line, arc, circle, ellipse, spline, spline-points, parabola, bounded
 hyperbola, and polyline. Newly modeled source kinds must therefore appear in
@@ -82,9 +85,10 @@ This closes only the picker-level requirement.
 The latest clarification explicitly includes changing the source type during
 the replacement flow and first-class parabola support. The existing
 `cbSourceType`/`cbSource` implementation and Properties regressions already
-cover that UI contract, including parabola identity; do not add another widget
-or duplicate parabola-specific control. Remaining parabola work is only the
-unclosed end-to-end geometry/worker/cache/persistence matrix described below.
+cover that UI contract, including all nine modeled kinds and parabola identity;
+do not add another widget or duplicate parabola-specific control. The picker
+slice is closed. Remaining parabola work is only the unclosed end-to-end
+geometry/worker/cache/persistence matrix described below.
 
 “Support all types” is a separate end-to-end requirement: qualify each
 production-supported family and eligible variant through direct geometry,
