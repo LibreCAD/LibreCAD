@@ -1054,7 +1054,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 cuspDistances = {110.0};
                 break;
             case 70:
-                cuspDistances = {0.9, 1.0, 1.1};
+                cuspDistances = {0.9e-2, 1.0e-2, 1.1e-2};
                 break;
             default:
                 cuspDistances = {0.5e-6};
