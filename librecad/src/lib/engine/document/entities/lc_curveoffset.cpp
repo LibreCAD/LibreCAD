@@ -4214,6 +4214,18 @@ public:
         return -1;
     }
 
+    const Arc& arc(const std::size_t index) const {
+        return m_arcs[index];
+    }
+
+    std::size_t arcCount() const {
+        return m_arcs.size();
+    }
+
+    double radius() const {
+        return m_radius;
+    }
+
     bool evaluate(const std::size_t segment, const double t, RS_Vector& point, RS_Vector& derivative) const override {
         const Arc& arc = m_arcs[segment];
         const double angle = arc.reversed ? arc.a0 + arc.a1 - t : t;
@@ -4247,6 +4259,219 @@ private:
     double m_radius;
     std::vector<LC_ParametricSegment> m_segments;
 };
+
+/** Isolate intersections between an offset branch and the endpoint circles. */
+LC_IntersectionStatus findCapIntersections(const OffsetCurves& offsets, const ArcCurves& caps,
+                                          const std::vector<LC_OffsetBranch>& branches,
+                                          const std::size_t branchOffset, const std::size_t segmentOffset,
+                                          const double tolerance,
+                                          std::size_t& remainingPairs,
+                                          std::vector<LC_ParametricIntersection>& intersections,
+                                          LC_IntersectionWorkStats& work,
+                                          LC_IntersectionDomain& failureDomain, bool& hasFailureDomain,
+                                          unsigned& failureDepth) {
+    const auto parameterOnArc = [](const ArcCurves::Arc& arc, const RS_Vector& point, const double angularTolerance,
+                                   double& parameter) {
+        double angle = std::atan2(point.y - arc.centre.y, point.x - arc.centre.x);
+        for (int turn = -2; turn <= 2; ++turn) {
+            const double candidateAngle = angle + turn * 2.0 * M_PI;
+            if (candidateAngle < arc.a0 - angularTolerance || candidateAngle > arc.a1 + angularTolerance) {
+                continue;
+            }
+            parameter = arc.reversed ? arc.a0 + arc.a1 - candidateAngle : candidateAngle;
+            return true;
+        }
+        return false;
+    };
+
+    const auto appendRoot = [&](const std::size_t segment, const std::size_t cap,
+                                double lo, double hi, double fLo, double fHi,
+                                LC_ParametricIntersection& root, bool& onArc) {
+        const LC_ParametricSegment& sourceSegment = offsets.segments()[segment];
+        const ArcCurves::Arc& arc = caps.arc(cap);
+        RS_Vector point;
+        RS_Vector derivative;
+        double t = lo;
+        if (fLo == 0.0) {
+            t = lo;
+        }
+        else if (fHi == 0.0) {
+            t = hi;
+        }
+        else {
+            for (int iteration = 0; iteration < 80; ++iteration) {
+                const double mid = lo + 0.5 * (hi - lo);
+                if (!(mid > lo && mid < hi)) {
+                    break;
+                }
+                if (!offsets.evaluate(segment, mid, point, derivative)) {
+                    return false;
+                }
+                const double x = point.x - arc.centre.x;
+                const double y = point.y - arc.centre.y;
+                const double fMid = x * x + y * y - caps.radius() * caps.radius();
+                if (fMid == 0.0) {
+                    lo = hi = mid;
+                    break;
+                }
+                if (std::signbit(fMid) == std::signbit(fLo)) {
+                    lo = mid;
+                    fLo = fMid;
+                }
+                else {
+                    hi = mid;
+                    fHi = fMid;
+                }
+                LC_Interval xBound, yBound, dxBound, dyBound;
+                if (!offsets.bound(segment, lo, hi, xBound, yBound, dxBound, dyBound)) {
+                    return false;
+                }
+                const double speed = std::hypot(std::max(std::abs(dxBound.lo()), std::abs(dxBound.hi())),
+                                                std::max(std::abs(dyBound.lo()), std::abs(dyBound.hi())));
+                if (speed * (hi - lo) <= 0.125 * tolerance) {
+                    break;
+                }
+            }
+            t = lo + 0.5 * (hi - lo);
+        }
+        if (!offsets.evaluate(segment, t, point, derivative) || !isFinite(point)) {
+            return false;
+        }
+        double capParameter = 0.0;
+        const double angularTolerance = tolerance / caps.radius();
+        if (!parameterOnArc(arc, point, angularTolerance, capParameter)) {
+            onArc = false;
+            return true; // the circle root is outside this half-circle
+        }
+        onArc = true;
+        capParameter = std::clamp(capParameter, arc.a0, arc.a1);
+        root = {sourceSegment.branch, t, branchOffset + cap, capParameter, point,
+                LC_ParametricIntersection::Kind::Transverse};
+        root.point.z = 0.0;
+        return true;
+    };
+
+    const std::vector<LC_ParametricSegment>& segments = offsets.segments();
+    for (std::size_t cap = 0; cap < caps.arcCount(); ++cap) {
+        const ArcCurves::Arc& arc = caps.arc(cap);
+        for (std::size_t segment = 0; segment < segments.size(); ++segment) {
+            struct IntervalWork {
+                double lo;
+                double hi;
+                unsigned depth;
+            };
+            const auto recordFailure = [&](const IntervalWork& failed) {
+                failureDomain = {segment, segmentOffset + cap, LC_Interval::hull(failed.lo, failed.hi),
+                                 LC_Interval::hull(arc.a0, arc.a1)};
+                hasFailureDomain = true;
+                failureDepth = failed.depth;
+            };
+            std::vector<IntervalWork> pending{{segments[segment].t0, segments[segment].t1, 0}};
+            while (!pending.empty()) {
+                const IntervalWork interval = pending.back();
+                pending.pop_back();
+                if (remainingPairs == 0) {
+                    recordFailure(interval);
+                    return LC_IntersectionStatus::LimitExceeded;
+                }
+                --remainingPairs;
+                ++work.refinementBoxPairs;
+                ++work.totalBoxPairs;
+
+                LC_Interval x, y, dx, dy;
+                if (!offsets.bound(segment, interval.lo, interval.hi, x, y, dx, dy)) {
+                    recordFailure(interval);
+                    return LC_IntersectionStatus::AmbiguousTopology;
+                }
+                const std::size_t branch = segments[segment].branch;
+                const bool linkedStart = cap == 0 && branch == 0 &&
+                                         branches.front().startEnd == LC_OffsetBranchEnd::Free &&
+                                         interval.lo == segments[segment].t0;
+                const bool linkedEnd = cap == 1 && branch + 1 == branches.size() &&
+                                       branches.back().endEnd == LC_OffsetBranchEnd::Free &&
+                                       interval.hi == segments[segment].t1;
+                if (linkedStart || linkedEnd) {
+                    RS_Vector join;
+                    RS_Vector derivative;
+                    const double t = linkedStart ? segments[segment].t0 : segments[segment].t1;
+                    if (!offsets.evaluate(segment, t, join, derivative)) {
+                        recordFailure(interval);
+                        return LC_IntersectionStatus::AmbiguousTopology;
+                    }
+                    const double farX = std::max(std::abs(x.lo() - join.x), std::abs(x.hi() - join.x));
+                    const double farY = std::max(std::abs(y.lo() - join.y), std::abs(y.hi() - join.y));
+                    if (std::hypot(farX, farY) <= 2.0 * tolerance) {
+                        continue;
+                    }
+                }
+                const LC_Interval rx = x - LC_Interval::point(arc.centre.x);
+                const LC_Interval ry = y - LC_Interval::point(arc.centre.y);
+                const double middleAngle = arc.a0 + 0.5 * (arc.a1 - arc.a0);
+                const LC_Interval inHalfCircle = LC_Interval::point(std::cos(middleAngle)) * rx +
+                                                 LC_Interval::point(std::sin(middleAngle)) * ry;
+                if (inHalfCircle.hi() < 0.0) {
+                    continue;
+                }
+                const LC_Interval radiusSquared = LC_Interval::point(caps.radius() * caps.radius());
+                if (!radiusSquared.isValid()) {
+                    return LC_IntersectionStatus::InvalidInput;
+                }
+                const LC_Interval value = sqr(rx) + sqr(ry) - radiusSquared;
+                if (!value.containsZero()) {
+                    continue;
+                }
+                const LC_Interval derivative = LC_Interval::point(2.0) * (rx * dx + ry * dy);
+                if (derivative.isPositive() || derivative.isNegative()) {
+                    RS_Vector first, firstDerivative, last, lastDerivative;
+                    if (!offsets.evaluate(segment, interval.lo, first, firstDerivative) ||
+                        !offsets.evaluate(segment, interval.hi, last, lastDerivative)) {
+                        recordFailure(interval);
+                        return LC_IntersectionStatus::AmbiguousTopology;
+                    }
+                    const auto squaredDistance = [&arc, &caps](const RS_Vector& point) {
+                        const double x = point.x - arc.centre.x;
+                        const double y = point.y - arc.centre.y;
+                        return x * x + y * y - caps.radius() * caps.radius();
+                    };
+                    const double fLo = squaredDistance(first);
+                    const double fHi = squaredDistance(last);
+                    if (!std::isfinite(fLo) || !std::isfinite(fHi)) {
+                        recordFailure(interval);
+                        return LC_IntersectionStatus::AmbiguousTopology;
+                    }
+                    if (fLo == 0.0 || fHi == 0.0 || std::signbit(fLo) != std::signbit(fHi)) {
+                        LC_ParametricIntersection root;
+                        bool onArc = false;
+                        if (!appendRoot(segment, cap, interval.lo, interval.hi, fLo, fHi, root, onArc)) {
+                            recordFailure(interval);
+                            return LC_IntersectionStatus::AmbiguousTopology;
+                        }
+                        if (onArc) {
+                            const bool duplicate = std::any_of(intersections.begin(), intersections.end(),
+                                                               [&root](const LC_ParametricIntersection& other) {
+                                return other.branchA == root.branchA && other.branchB == root.branchB &&
+                                       std::abs(other.parameterA - root.parameterA) <=
+                                           32.0 * g_eps * std::max(1.0, std::abs(root.parameterA));
+                            });
+                            if (!duplicate) {
+                                intersections.push_back(root);
+                            }
+                        }
+                    }
+                    continue;
+                }
+                const double mid = interval.lo + 0.5 * (interval.hi - interval.lo);
+                if (interval.depth >= 48 || !(mid > interval.lo && mid < interval.hi)) {
+                    recordFailure(interval);
+                    return LC_IntersectionStatus::AmbiguousTopology;
+                }
+                pending.push_back({mid, interval.hi, interval.depth + 1});
+                pending.push_back({interval.lo, mid, interval.depth + 1});
+            }
+        }
+    }
+    return LC_IntersectionStatus::Ok;
+}
 
 /**
  * Several curve sets as one, their branches numbered in the given order, with
@@ -5054,17 +5279,7 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
     const OffsetCurves self{source, d, speedFloor, branches};
     const OffsetCurves across{source, -d, speedFloor, opposite};
     const ArcCurves capArcs{caps, std::abs(d)};
-    std::vector<std::pair<std::size_t, std::size_t>> links;
-    if (!caps.empty()) {
-        const size_t firstCap = branches.size() + opposite.size();
-        if (branches.front().startEnd == LC_OffsetBranchEnd::Free) {
-            links.emplace_back(firstCap, 0);
-        }
-        if (branches.back().endEnd == LC_OffsetBranchEnd::Free) {
-            links.emplace_back(branches.size() - 1, firstCap + 1);
-        }
-    }
-    const CompositeCurves all{{&self, &across, &capArcs}, links};
+    const CompositeCurves all{{&self, &across}};
     const size_t own = branches.size();
     LC_IntersectionOptions query;
     query.tolerance = options.tolerance.nodeMerge;
@@ -5073,7 +5288,73 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
     // two arms' offsets on one line, or an open source whose ends coincide,
     // would make that ambiguous without bearing on this offset
     query.anchoredBranches = own;
-    const LC_IntersectionResult found = findIntersections(all, query);
+    LC_IntersectionResult found = findIntersections(all, query);
+    LC_IntersectionWorkStats capWork;
+    LC_IntersectionDomain capFailure;
+    bool capHasFailureDomain = false;
+    unsigned capFailureDepth = 0;
+    std::size_t remainingPairs = found.work.totalBoxPairs < query.maxBoxPairs
+                                     ? query.maxBoxPairs - found.work.totalBoxPairs
+                                     : 0;
+    if (found.status == LC_IntersectionStatus::Ok) {
+        const LC_IntersectionWorkStats offsetWork = found.work;
+        const LC_IntersectionStatus capStatus =
+            findCapIntersections(self, capArcs, branches, own + opposite.size(),
+                                 self.segments().size() + across.segments().size(), query.tolerance, remainingPairs,
+                                 found.intersections, capWork, capFailure, capHasFailureDomain, capFailureDepth);
+        found.work.refinementBoxPairs += capWork.refinementBoxPairs;
+        found.work.totalBoxPairs += capWork.totalBoxPairs;
+        found.status = capStatus;
+        if (capStatus == LC_IntersectionStatus::InvalidInput) {
+            found.status = capStatus;
+        }
+        else if (capStatus != LC_IntersectionStatus::Ok) {
+            std::vector<std::pair<std::size_t, std::size_t>> links;
+            if (!caps.empty()) {
+                const size_t firstCap = branches.size() + opposite.size();
+                if (branches.front().startEnd == LC_OffsetBranchEnd::Free) {
+                    links.emplace_back(firstCap, 0);
+                }
+                if (branches.back().endEnd == LC_OffsetBranchEnd::Free) {
+                    links.emplace_back(branches.size() - 1, firstCap + 1);
+                }
+            }
+            const CompositeCurves full{{&self, &across, &capArcs}, links};
+            LC_IntersectionOptions fallbackQuery = query;
+            fallbackQuery.maxBoxPairs = remainingPairs;
+            LC_IntersectionResult fallback = findIntersections(full, fallbackQuery);
+            const auto addWork = [](LC_IntersectionWorkStats& into, const LC_IntersectionWorkStats& from) {
+                into.candidateBoxPairs += from.candidateBoxPairs;
+                into.refinementBoxPairs += from.refinementBoxPairs;
+                into.certificateBoxPairs += from.certificateBoxPairs;
+                into.totalBoxPairs += from.totalBoxPairs;
+                into.generatedLeaves += from.generatedLeaves;
+                into.generatedItems += from.generatedItems;
+                into.deepestPreparation = std::max(into.deepestPreparation, from.deepestPreparation);
+                into.deepestPairRefinement = std::max(into.deepestPairRefinement, from.deepestPairRefinement);
+                into.deepestOrderingRefinement = std::max(into.deepestOrderingRefinement, from.deepestOrderingRefinement);
+                into.deepestRootRefinement = std::max(into.deepestRootRefinement, from.deepestRootRefinement);
+                into.orderingComparisons += from.orderingComparisons;
+                into.validationSegmentVisits += from.validationSegmentVisits;
+                into.validationNextCalls += from.validationNextCalls;
+                into.orientedProjectionExclusions += from.orientedProjectionExclusions;
+                into.bvhUnanchoredPairs += from.bvhUnanchoredPairs;
+                into.bvhDisjointPairs += from.bvhDisjointPairs;
+                into.bvhMonotonePathPrunes += from.bvhMonotonePathPrunes;
+                into.bvhLeafCandidates += from.bvhLeafCandidates;
+                into.bvhExpandedPairs += from.bvhExpandedPairs;
+                into.bvhInterruptedPairs += from.bvhInterruptedPairs;
+            };
+            addWork(fallback.work, offsetWork);
+            addWork(fallback.work, capWork);
+            if (!fallback.hasFailureDomain && capHasFailureDomain) {
+                fallback.hasFailureDomain = true;
+                fallback.failureDomain = capFailure;
+                fallback.failureDepth = capFailureDepth;
+            }
+            found = std::move(fallback);
+        }
+    }
     recordIntersectionDiagnostics(result.intersectionDiagnostics, found,
                                   LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::TrimBoundary);
     if (found.status != LC_IntersectionStatus::Ok) {

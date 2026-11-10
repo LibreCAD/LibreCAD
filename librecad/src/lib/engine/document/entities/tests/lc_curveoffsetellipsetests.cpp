@@ -1096,16 +1096,6 @@ TEST_CASE("Large-origin reversed 1000-to-1 elliptic arc endpoint retains cusp-th
         CAPTURE(distance, cuspRadius);
         for (const auto side : {kLeft, kRight}) {
             const Offset result = offsetOf(source, side, distance, 0.1 * distance);
-            if (distance > cuspRadius && side == kRight) {
-                CHECK(result.status == LC_CurveOffsetStatus::LimitExceeded);
-                CHECK(result.entities.empty());
-                CHECK(result.chains.empty());
-                CHECK(result.intersectionDiagnostics.stage ==
-                      LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::TrimBoundary);
-                CHECK(result.intersectionDiagnostics.hasFailureDomain);
-                CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
-                continue;
-            }
             CHECK(result.status == LC_CurveOffsetStatus::Ok);
             const std::vector<RS_Vector> criticalPoint =
                 side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
@@ -1169,33 +1159,6 @@ TEST_CASE("Very-large-origin reversed 1000-to-1 elliptic arc endpoint retains cu
         CAPTURE(distance, cuspRadius);
         for (const auto side : {kLeft, kRight}) {
             const Offset result = offsetOf(source, side, distance, 0.1 * distance);
-            if (distance > cuspRadius && side == kRight) {
-                CAPTURE(result.intersectionDiagnostics.stage, result.intersectionDiagnostics.work.totalBoxPairs,
-                        result.intersectionDiagnostics.work.candidateBoxPairs,
-                        result.intersectionDiagnostics.work.refinementBoxPairs,
-                        result.intersectionDiagnostics.work.bvhDisjointPairs,
-                        result.intersectionDiagnostics.work.bvhMonotonePathPrunes,
-                        result.intersectionDiagnostics.work.bvhLeafCandidates,
-                        result.intersectionDiagnostics.work.bvhExpandedPairs,
-                        result.intersectionDiagnostics.hasFailureDomain,
-                        result.intersectionDiagnostics.failureDepth,
-                        result.intersectionDiagnostics.failureDomain.segmentA,
-                        result.intersectionDiagnostics.failureDomain.segmentB,
-                        result.intersectionDiagnostics.failureDomain.parameterA.lo(),
-                        result.intersectionDiagnostics.failureDomain.parameterA.hi(),
-                        result.intersectionDiagnostics.failureDomain.parameterB.lo(),
-                        result.intersectionDiagnostics.failureDomain.parameterB.hi());
-                CHECK(result.intersectionDiagnostics.stage ==
-                      LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::TrimBoundary);
-                CHECK(result.intersectionDiagnostics.hasFailureDomain);
-                const auto options = LC_CurveOffset::makeOffsetOptions(source, distance, 0.1 * distance);
-                CHECK(result.intersectionDiagnostics.work.totalBoxPairs == options.maxIntersectionPairs);
-                CHECK(result.status == LC_CurveOffsetStatus::LimitExceeded);
-                CHECK(result.entities.empty());
-                CHECK(result.chains.empty());
-                CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
-                continue;
-            }
             CHECK(result.status == LC_CurveOffsetStatus::Ok);
             const std::vector<RS_Vector> criticalPoint =
                 side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};

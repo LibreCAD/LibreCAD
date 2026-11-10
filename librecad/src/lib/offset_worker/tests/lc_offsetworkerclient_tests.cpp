@@ -1313,8 +1313,6 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[73]});
         thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
         reversed1000To1InteriorPickFixtures.push_back(fixture);
-        if (cuspDistance > 1.0e-4)
-            expectedLimitExceededProduceFixtures.push_back(fixture);
     }
     for (const double cuspDistance : {0.9e-2, 1.0e-2, 1.1e-2}) {
         const std::size_t fixture = sources.size();
@@ -1364,8 +1362,6 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[77]});
         thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
         reversed1000To1InteriorPickFixtures.push_back(fixture);
-        if (cuspDistance > 1.0e-4)
-            expectedLimitExceededProduceFixtures.push_back(fixture);
     }
     const std::size_t translatedThinEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});

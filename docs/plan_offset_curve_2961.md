@@ -33674,3 +33674,44 @@ Trimmed mode; this does not qualify the separate Direct mode. Test commit
 `e128be842` (`test(offset):
 qualify large-origin thin ellipse cusp`) records the original fixture; the
 corrected worker triplet and resolved-side evidence are in `576a9bb22`.
+
+## 825. Bound the Very-large-origin 1000-to-1 Ellipse Cap Intersections (2026-11-10)
+
+The current implementation replaces generic offset-versus-end-cap refinement
+with a bounded scalar root isolator for the squared-distance equation
+`|Q(t)-E|^2-r^2=0`. It interval-bounds the function and derivative, rejects
+root-free parameter intervals, bisects monotone brackets, restricts roots to
+the cap semicircle, and suppresses only the shared free-endpoint join. Work
+consumes the existing global intersection-pair budget; ambiguous isolation
+falls back to the generic composite solver with only the remaining budget.
+The global pair cap is unchanged.
+
+The section-824 profile's formerly over-budget inward `1.1e-4` trimmed offset
+now resolves with 14 pair checks at `MaterializedOutput`. Its focused geometric
+oracle passes 27,740 assertions, and the full `[curve-offset][ellipse]` suite
+passes 1,306,413 assertions across 54 cases. The combined `[intersection]` and
+`[curve-offset][trim]` selection passes 55,442 assertions across 46 cases;
+`[offset][check]` passes 223 assertions across 8 cases.
+
+The complete typed-source worker matrix passes 1,541,807 assertions. It
+exercises worker generation, cache admission, replacement, Produce, and all
+five R14/R2000/R2018 DXF/DWG lanes; `dwgread` parses the generated DWGs. The
+matrix initially caught a stale `LimitExceeded` expectation for the matching
+large-origin 1000-to-1 inward case at `(1e6, -1e6)`. The direct geometric oracle
+and worker both now require and produce the successful result; the distinct
+very-large-origin profile at `(1e7, -1e7)` also succeeds. No budget was raised.
+Both `librecad_tests` and `librecad_offset_worker_client_tests` build with the
+final implementation.
+
+The generic fallback remains necessary for cap tangencies and cases the
+specialized interval proof cannot resolve. Its work accounting combines the
+initial offset query, specialized cap isolation, and any bounded generic
+fallback without exceeding the original pair cap. On fallback refusal, the
+specialized cap interval/depth is retained when the generic pass has no more
+precise failure domain; invalid input is not retried as ambiguity. This
+qualifies only the recorded ratios, origins, orientation, reversed partial
+sweeps, and distance triplets. It does not establish support for other ellipse
+profiles or Direct mode. The source-picker requirement remains separate and
+closed by section 819 and the Current Contract: all nine modeled source types,
+including distinct parabola, are selectable during replacement, but that does
+not imply end-to-end geometry support.
