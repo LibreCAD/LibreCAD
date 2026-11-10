@@ -31262,3 +31262,33 @@ This qualifies only the listed interval, eccentricity, centers, and distances.
 Other partial sweeps, cusp positions near but not exactly at endpoints,
 translated/rotated arc cusps, and other cusp multiplicities still require
 their own geometry and end-to-end worker/persistence evidence.
+
+## 721. Qualify Transformed Partial-arc Cusps and Numeric-floor Refusal (2026-11-09)
+
+Added three transformed partial-arc direct cases around the ratio-`1e-4`
+major-vertex cusp: forward 30-degree arcs centered at `(100, -100)`, a forward
+45-degree arc centered at `(1e4, -1e4)`, and a reversed 30-degree arc at
+`(100, -100)`. At inward distance `0.5e-6`, all materialize as one open chain
+and pass the independent distance/tangent and sampled topology checks under
+the default pair budget. The two translated/rotated forms and reversed form
+are also in the real-worker matrix with signed distance chosen to keep the
+offset inward; they survive replacement/Produce and all five DXF/DWG lanes,
+with independent LibreDWG parsing for the DWG outputs.
+
+Added a fail-closed boundary at center `(1e8, -1e8)` for the same sub-micron
+request. Its implicit geometry tolerance cannot remain below 10% of the
+requested distance once the coordinate ULP floor is accounted for, so
+`toleranceFor()` returns NaN and direct generation returns `InvalidRequest`
+with no branches. Do not loosen the tolerance policy to make such a case appear
+supported.
+
+Validation: the focused transformed-arc/numeric-floor test passes 10,860
+assertions/1 case; `[curve-offset][ellipse][cusp]` passes 104,756 assertions/5
+cases. The full worker-client suite passes 759,543 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Edited C++ ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `01eb81411`
+(`test(offset): qualify transformed arc cusps`).
+
+This records only the tested translations, rotations, arc spans, and distance.
+Larger representable origins, intermediate arc endpoints, other cusp distances,
+and other ellipse ratios still need qualification.
