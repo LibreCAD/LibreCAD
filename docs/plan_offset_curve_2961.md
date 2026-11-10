@@ -29802,7 +29802,7 @@ these rows do not imply every parameter/domain is supported):
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
-| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span and preserves exact-normal tolerance on both moving spans; real worker/cache/Produce and five file lanes | Other repeated-point/stationary-span patterns, joins around removed spans, fit construction variants, closed/periodic domains, and broader refusal matrix |
+| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span, preserves exact-normal tolerance on both moving spans, and passes real worker/cache/Produce, five file lanes, and LibreDWG parsing | Other repeated-point/stationary-span patterns, joins around removed spans, fit construction variants, closed/periodic domains, and broader refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples and endpoint tangent slopes +/-1e-4..1e-8; two four-point candidates and the 1e-8 near-parallel profile pass worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; closed mixed-bulge and major/minor bulge oracles remain covered; matching tangent-connected typed source passes worker/cache/Produce and five file lanes | Other open sweep/scale boundaries, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles; worker/file persistence for open corner and major-sweep profiles |
@@ -32110,3 +32110,19 @@ assertions/4 cases. `librecad_tests` is built in
 pass. Worker/cache and persistence coverage for this degenerate refusal is
 not claimed. Test commit:
 `a682b8412` (`test(offset): cover degenerate spline-points refusal`).
+
+## 754. Carry the Stationary Spline-points Profile Through Worker Persistence (2026-11-10)
+
+Added the same stationary-middle-span source used in section 753 to the real
+worker-client typed-source matrix. It must generate a completed ordinary
+result, admit its editable source cache, pass Produce/replacement validation,
+and survive the matrix's five DXF/DWG save/reopen lanes. LibreDWG is found via
+`PATH` and independently parses both DWG lanes. This is evidence for that one
+control-point profile only; no general repeated-span guarantee is implied.
+
+Validation: `Worker client joins typed source generation for every modeled
+source family` passes 1,104,346 assertions/1 case. The focused direct oracle
+and full direct spline-points suite remain green at 70 assertions/2 cases and
+8,388 assertions/5 cases respectively. Scoped clang-format and
+`git diff --check` pass. Worker test commit: `d0c333eb2` (`test(offset): persist
+stationary spline-points offsets`).
