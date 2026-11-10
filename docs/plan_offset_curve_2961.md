@@ -30643,3 +30643,23 @@ the complete `[lc-offsetcurve][worker-client]` suite passes 109,531
 assertions/22 cases with LibreDWG available. `git diff --check` passes. Other
 scaled source profiles through worker/persistence and visible GUI, external
 ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain open.
+
+## 701. Carry Extreme Native-circle Scales Through Worker and Persistence (2026-11-09)
+
+Extended the native-circle family matrix with four profiles from the direct
+scale oracle: radii `2e-6` and `2e8`, each at the origin and translated by
+`1e6 * scale`. Each uses a scale-relative signed offset (`0.2 * scale`) and
+passes real-worker generation, operation-8 cache admission, typed source
+replacement, Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG round trips.
+The independent LibreDWG checks now compare center and radius for all four
+profiles in both DWG versions, using radius-relative and coordinate-ULP
+tolerances. The line stress-fixture interval is explicitly bounded so later
+circle additions cannot accidentally inherit line assertions.
+
+Validation: the focused Release worker-family test passes 107,130 assertions
+in 1 case; the complete Release worker-client suite passes 112,443 assertions
+in 22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`. Both DWG outputs for
+each added profile match the LibreCAD-produced circle center and radius.
+`git diff --check` passes. This extends only the tested scales and translations;
+arbitrary-origin ratios, more extreme scales, visible GUI, external
+ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain open.
