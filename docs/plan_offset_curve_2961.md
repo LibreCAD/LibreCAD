@@ -31399,3 +31399,30 @@ This closes only the recorded transformed threshold profiles. Other partial
 sweeps, translations, rotations, eccentricity ratios, and distances remain
 open matrix rows; results must continue to be qualified through direct
 geometry, worker/cache/replacement/Produce, and persistence lanes.
+
+## 726. Close the Translated 45-degree Arc Threshold Triplet (2026-11-09)
+
+Extended the translated, 45-degree ratio-`1e-4` forward-arc case from the
+exact-stall distance to the full `0.9e-6`/`1.0e-6`/`1.1e-6` threshold triplet.
+The direct oracle anchors the sampled-contact exception at the exact normal
+offset of the major-axis curvature feature. A sampled crossing is tolerated
+only when all four chord endpoints are within the existing requested-geometry
+slack of that point; the feature must also lie on the materialized chain within
+the same slack. Distance, tangent (outside the narrow feature neighborhood),
+and materialized-output intersection checks remain active.
+
+The worker matrix now carries all three distances through generation, cache
+admission, replacement/Produce, and the five DXF/DWG lanes, preserving the
+other cusp profile indexes and signed-distance conventions. LibreDWG parses
+the DWG outputs.
+
+Validation: the focused transformed partial-arc test passes 40,726 assertions;
+the full direct `[curve-offset][ellipse][cusp]` selection passes 188,898
+assertions/7 cases. The full worker-client suite passes 984,503 assertions/22
+cases with `DWGREAD=/opt/homebrew/bin/dwgread`. Touched ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `77cd63694`
+(`test(offset): qualify translated arc cusp neighborhood`).
+
+This closes only the translated 45-degree forward-arc threshold triplet.
+Other transformed partial arcs and ellipse ratios still require independent
+direct and end-to-end persistence qualification.
