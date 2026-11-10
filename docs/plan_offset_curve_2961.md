@@ -31106,23 +31106,25 @@ profile supported.
 
 ## 716. Reconfirm Editable Source-family Selection (2026-11-09)
 
-The latest source-widget request reiterates two requirements: the user must be
-able to change the requested curve type while selecting a replacement, and the
-choices must cover every source family supported by the offset model. This is
-already implemented and tested in the Properties workflow; no new widget or
-parallel type selector is needed. The selector remains active during the pick
-flow and filters eligible drawing entities from the canonical
+The source-curve widget contract is that the user can change the requested
+source family while a replacement pick is active, then select a replacement
+from any family supported by the offset-source model. This is already
+implemented and tested in the Properties workflow; no new widget or parallel
+type selector is needed. The selector remains enabled during the pick flow and
+filters eligible drawing entities from the canonical
 `LC_OffsetSourceGeometry::SupportedKinds` inventory:
 line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
 and polyline. Parabola is a distinct selectable type, not an alias for
 spline-points.
 
-Changing the filter must not replace or clear the current source/cache before a
-valid candidate is accepted. Cancellation and an ineligible candidate leave
-the existing source intact. The existing source-picker suite covers type
-changes during the pick flow, each listed family, typed parabola identity,
-highlight retention, and cancellation/invalid-candidate behavior; its latest
-recorded result is 11,930 assertions/12 cases (section 711).
+Changing the filter during the pick must immediately change candidate
+eligibility without replacing or clearing the current source/cache. Accepting
+a valid candidate updates the source to that candidate's actual family;
+cancellation or an ineligible candidate leaves the existing source intact.
+The existing source-picker suite covers type changes during the pick flow,
+each listed family, typed parabola identity, highlight retention, and
+cancellation/invalid-candidate behavior; its latest recorded result is 11,930
+assertions/12 cases (section 711).
 
 This request closes no additional implementation item beyond reaffirming that
 picker contract. Continue treating all-family geometry generation, worker/cache
