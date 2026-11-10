@@ -323,6 +323,14 @@ void QG_LineTypeBox::applyLineTypeTo(RS_Pen& pen) const {
     }
 }
 
+std::optional<LC_LineType> QG_LineTypeBox::definitionOf(const RS_Pen&) const {
+    return std::nullopt;
+}
+
+void QG_LineTypeBox::setLayerLineTypeOf(const RS_Pen& layerPen) {
+    setLayerLineType(layerPen.getLineType());
+}
+
 int QG_LineTypeBox::indexForName(const QString& name) const {
     // By LC_LineType::key(): a record keeps the blanks around its name, a pen
     // trims them, and both are one name.

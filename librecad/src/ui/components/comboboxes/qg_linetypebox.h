@@ -29,6 +29,9 @@
 
 #include <QComboBox>
 
+#include <optional>
+
+#include "lc_linetype.h"
 #include "rs.h"
 #include "rs_pen.h"
 
@@ -63,6 +66,12 @@ public:
     void setLineTypeOf(const RS_Pen& pen);
     /// Writes the selected row's line type into a pen.
     void applyLineTypeTo(RS_Pen& pen) const;
+    /// How the drawing defines the line type a pen names: the name as the
+    /// drawing spells it, its description and its dashes. Empty for a pen
+    /// without a name, a plain built-in and a name the drawing does not define.
+    std::optional<LC_LineType> definitionOf(const RS_Pen& pen) const;
+    /// Paints the By Layer row with the picture of the row this layer pen selects.
+    void setLayerLineTypeOf(const RS_Pen& layerPen);
 
     bool isUnchanged() const {
         return m_unchanged;
