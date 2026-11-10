@@ -31369,3 +31369,33 @@ clang-format checks and `git diff --check`. Test commit: `5baaacf43`
 
 Other reversed arc sweeps, transformed threshold profiles, and other
 eccentricity ratios remain open.
+
+## 725. Qualify Transformed Partial-arc Cusp Thresholds (2026-11-09)
+
+Added direct materialization and topology checks for ratio-`1e-4` elliptic
+arcs near the major-vertex cusp threshold. The matrix covers a translated,
+30-degree forward arc at `0.9e-6`, `1.0e-6`, and `1.1e-6`, a translated
+45-degree forward arc at `1.0e-6`, and a translated, 30-degree reversed arc
+at `1.0e-6`. Each result passes the independent bidirectional distance and
+tangent checks and reaches the materialized-output intersection diagnostic
+with `LC_IntersectionStatus::Ok`. At the exact cusp, the sampled-polyline
+oracle exempts only non-neighboring chord contacts whose four endpoints all
+lie within the known cusp's requested-geometry slack; other crossings still
+fail.
+
+Added the translated 45-degree forward and translated 30-degree reversed
+threshold profiles to the real-worker cusp matrix. They retain the original
+fixture indexes and distance semantics, and run through generation, cache
+admission, replacement/Produce, and all five DXF/DWG round-trip lanes. Both
+DWG outputs are independently parsed by LibreDWG.
+
+Validation: the full direct `[curve-offset][ellipse][cusp]` selection passes
+172,866 assertions/7 cases. The full worker-client suite passes 970,107
+assertions/22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`. Touched C++ ranges
+pass repository clang-format checks and `git diff --check`. Test commit:
+`2db7f0c4a` (`test(offset): qualify transformed arc cusp thresholds`).
+
+This closes only the recorded transformed threshold profiles. Other partial
+sweeps, translations, rotations, eccentricity ratios, and distances remain
+open matrix rows; results must continue to be qualified through direct
+geometry, worker/cache/replacement/Produce, and persistence lanes.
