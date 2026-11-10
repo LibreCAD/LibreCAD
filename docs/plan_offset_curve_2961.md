@@ -32662,23 +32662,25 @@ other endpoint intervals, ratios, and transforms remain open.
 
 ## 783. Reconcile the Repeated Source-family Picker Request (2026-11-10)
 
-The repeated request confirms two separate contracts: while replacing an
-offset source, the Properties widget must let the user change the requested
-source family; and the picker must enumerate every source kind currently
-modeled by the offset feature, including parabola. The current implementation
-and regressions already meet the picker contract. `cbSourceType` remains
-editable during selection, filters candidates by the chosen kind, and does
-not mutate or unhighlight the existing source when the filter changes. A
-successful pick replaces it with the candidate's actual typed geometry.
+The latest repeated request makes the interaction timing explicit: while
+replacing an offset source, the Properties widget must let the user change the
+requested source family both before and after drawing-pick mode has started.
+The picker must enumerate every source kind currently modeled by the offset
+feature, including parabola. The current implementation and regressions
+already meet this picker contract. `cbSourceType` remains editable throughout
+selection, filters candidates by the chosen kind, and does not mutate or
+unhighlight the existing source when the filter changes. A successful pick
+replaces it with the candidate's actual typed geometry.
 
 The source inventory remains the single contract:
 line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
-and polyline (`LC_OffsetSourceGeometry::SupportedKinds`). `LC_Parabola` must
-remain distinguishable from its `LC_SplinePoints` base and selectable as
-parabola. The existing all-family Properties regressions cover family changes,
-filter/highlight retention, typed replacement, and parabola identity; retain
-and extend them if the inventory changes. No extra selector or parabola-only
-UI branch is required.
+and polyline (`LC_OffsetSourceGeometry::SupportedKinds`). This means all
+currently modeled offset source kinds, not every CAD entity class. `LC_Parabola`
+must remain distinguishable from its `LC_SplinePoints` base and selectable as
+parabola. The existing all-family Properties regressions cover family changes
+after pick mode starts, filter/highlight retention, typed replacement, and
+parabola identity; retain and extend them if the inventory changes. No extra
+selector or parabola-only UI branch is required.
 
 This is UI inventory coverage, not a blanket geometry-support claim. For each
 family, continue to qualify concrete variants independently through direct
@@ -32715,3 +32717,40 @@ claim. Implementation/test commit `d5397f579` (`fix(offset): refine highly
 rational spline cusps`). `git diff --check` passes. The installed
 clang-format reports baseline-wide differences in these legacy translation
 units, so no full-file formatting claim is made.
+
+## 785. Characterize Highly Rational Periodic Spline Trim Refusal (2026-11-10)
+
+The newly admitted reversed-gradual quadratic periodic spline profile has
+weights `{1e6, 1e4, 1e2, 1, 1e-2, 1e-4, 1e-6}` plus the periodic wrap. Direct
+offset generation at distance `0.005` succeeds with 10 branches, 406 cubic
+pieces, and 10,063 exact samples. The interactive Trimmed path removes 15 local
+loop intervals, then reaches the existing `1,048,576` offset-self-noding
+candidate-pair ceiling before entering refinement. This is an explicit
+bounded `LimitExceeded`, not a tolerance failure; do not raise the shared
+intersection ceiling or relax geometric tolerances to make this profile pass.
+
+A focused geometry regression records the noding stage and exact budget
+exhaustion. A real worker-client regression confirms Produce returns no output
+prefix, keeps the source unchanged, and publishes no additions or deletions.
+The expensive profile was removed from the broad five-format persistence
+matrix, which remains within its 105-second test watchdog and passes for the
+other qualified variants. The profile is not thereby DXF/DWG persistence
+qualified, and the family is not globally unsupported: keep the source kind
+selectable and retain atomic refusal for this concrete high-complexity case.
+
+Next implementation opportunity: reduce conservative self-noding candidate
+work for highly rational periodic offsets while preserving the current hard
+pair ceiling, exact topology decisions, and error budget. Until that lands,
+report this exact profile as bounded-but-unqualified and keep other rational
+profiles independently assessed. This follows the source-picker contract in
+section 783: picker inventory is separate from per-variant geometry and file
+support.
+
+Validation: focused kernel regression passes 8 assertions/1 case; isolated
+worker-client refusal/atomicity regression passes 2,857 assertions/1 case;
+the existing complete worker family and persistence matrix passes 1,246,182
+assertions/1 case, including R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes;
+both DWG exports are parsed by `dwgread`. Both worker test targets build,
+scoped `clang-format --style=file:code_style/.clang-format` and `git diff
+--check` pass. Test commit `6f23b0335` (`test(offset): verify bounded
+rational spline refusal`).
