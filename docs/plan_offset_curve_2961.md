@@ -30663,3 +30663,23 @@ each added profile match the LibreCAD-produced circle center and radius.
 `git diff --check` passes. This extends only the tested scales and translations;
 arbitrary-origin ratios, more extreme scales, visible GUI, external
 ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain open.
+
+## 702. Complete the Native-circle Worker Scale Matrix (2026-11-09)
+
+Completed the same five-scale/two-translation matrix as section 699 through the
+real worker and persistence path: radii `2e-6`, `2e-4`, `2`, `2e4`, and `2e8`,
+each at the origin and at a center translated by `1e6 * scale`. The added
+fixtures use scale-relative signed distances and require operation-7
+generation, operation-8 cache admission, typed source replacement, Produce,
+and all five internal DXF/DWG lanes. LibreDWG independently compares each
+persisted CIRCLE's center and radius in R2000 and R2018 DWG output with
+radius-relative and coordinate-ULP tolerances. Existing representative circle
+fixtures remain in the matrix as separate profiles.
+
+Validation: the focused Release worker-family test passes 113,593 assertions
+in 1 case; the complete Release worker-client suite passes 121,131 assertions
+in 22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`. All ten matrix profiles
+match the generated geometry in both independent DWG reads. `git diff --check`
+passes. This closes the specified scale/translation matrix only; broader
+arbitrary origins, external ODA/AutoCAD, visible GUI, cross-platform/ASan, and
+exact-head CI remain open.
