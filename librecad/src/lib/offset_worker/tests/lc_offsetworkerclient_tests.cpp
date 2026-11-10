@@ -746,7 +746,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
     std::vector<std::pair<std::size_t, std::size_t>> expectedVanishingThinCuspFixtures;
-    const std::array<RS_EllipseData, 43> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 45> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -790,6 +790,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.8, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.8, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.8, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 10.0 / 11.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 10.0 / 11.0, -0.2, 0.2, false},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
@@ -902,6 +904,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             case 42:
                 cuspDistances = {70.4};
                 break;
+            case 43:
+                cuspDistances = {9000.0 / 121.0};
+                break;
+            case 44:
+                cuspDistances = {11000.0 / 121.0};
+                break;
             default:
                 cuspDistances = {0.5e-6};
                 break;
@@ -917,6 +925,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 expectedVanishingThinCuspFixtures.emplace_back(fixture, 1);
             }
             else if (profile == 42) {
+                expectedVanishingThinCuspFixtures.emplace_back(fixture, 1);
+            }
+            else if (profile == 44) {
                 expectedVanishingThinCuspFixtures.emplace_back(fixture, 1);
             }
         }
