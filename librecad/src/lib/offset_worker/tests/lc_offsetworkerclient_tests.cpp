@@ -727,18 +727,24 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
-    const std::array<RS_EllipseData, 6> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 10> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {0.0, 100.0}, 1e-4, 0.0, 0.0, false},
         {{1e4, -1e4}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, -0.2, 0.2, false},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, -0.2, 0.2, false},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.2, false},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.2, -0.2, true},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
         const std::vector<double> cuspDistances = profile == 0 ? std::vector<double>{0.9e-6, 1.0e-6, 1.1e-6}
             : profile == 1                                     ? std::vector<double>{1.0e-6}
+            : profile == 9                                     ? std::vector<double>{-1.1e-6}
+            : profile >= 7                                     ? std::vector<double>{1.1e-6}
                                                                : std::vector<double>{0.5e-6};
         for (const double cuspDistance : cuspDistances) {
             const std::size_t fixture = sources.size();
@@ -1395,7 +1401,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                         REQUIRE(thinEllipseArc != thinEllipseArcFixtures.end());
                         distance = thinEllipseArc->second;
                     }
-                    const double major = 1000.0 * distance;
+                    const double major = 1000.0 * std::abs(distance);
                     const auto ulp = [](const double value) {
                         return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) - std::abs(value);
                     };

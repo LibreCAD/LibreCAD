@@ -834,6 +834,30 @@ TEST_CASE("Translated rotated thin ellipse cusps preserve accurate trimming", "[
     }
 }
 
+TEST_CASE("Extreme thin elliptic arcs retain cusp-local topology", "[curve-offset][ellipse][cusp]") {
+    struct Profile {
+        double from;
+        double to;
+        bool reversed;
+        double distance;
+    };
+    const std::array<Profile, 5> profiles{{
+        {-0.2, 0.2, false, 0.5e-6},
+        {-0.2, 0.2, false, 1.1e-6},
+        {0.0, 0.2, false, 1.1e-6},
+        {-0.2, 0.0, false, 1.1e-6},
+        {0.2, -0.2, true, 1.1e-6},
+    }};
+    for (const Profile& profile : profiles) {
+        const RS_Ellipse source = ellipse(100.0, 1e-4, profile.from, profile.to, profile.reversed);
+        CAPTURE(profile.from, profile.to, profile.reversed, profile.distance);
+        const Offset inward = offsetOf(source, profile.reversed ? kRight : kLeft, profile.distance, 0.1 * profile.distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        INFO("chains=" << inward.chains.size());
+        checkOffset(inward, curveOf(source), profile.distance, {false});
+    }
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[curve-offset][ellipse]") {
     // Where an eccentric ellipse's inward offset needs both major-axis
