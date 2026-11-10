@@ -1423,6 +1423,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
 
     const std::size_t scaledCornerOppositeFixture = sources.size();
     sources.emplace_back(*scaledCornerSource);
+    const std::size_t scaledCornerOppositeAtLargerScaleFixture = sources.size();
+    sources.emplace_back(*scaledCornerAtLargerScaleSource);
 
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
@@ -1519,9 +1521,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             offset.coord = {10.0 + 3.0 * scale, -20.0 + 2.0 * scale};
             offset.sideFallback = offset.coord;
         }
-        if (i == scaledCornerOppositeFixture) {
-            offset.distance = 0.00025;
-            offset.coord = {10.001, -19.997};
+        if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
+            const double scale = i == scaledCornerOppositeFixture ? 1e-3 : 1e-2;
+            offset.distance = 0.25 * scale;
+            offset.coord = {10.0 + scale, -20.0 + 3.0 * scale};
             offset.sideFallback = offset.coord;
         }
         offset.number = 1;
