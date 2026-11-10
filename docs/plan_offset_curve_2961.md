@@ -32659,3 +32659,59 @@ clang-format and `git diff --check` pass. Direct-test commit `a7e93da12`
 commit `df06b3e34` (`test(offset): persist ellipse endpoint cusp both sides`).
 This qualifies the exact translated/reversed interval and three distances;
 other endpoint intervals, ratios, and transforms remain open.
+
+## 783. Reconcile the Repeated Source-family Picker Request (2026-11-10)
+
+The repeated request confirms two separate contracts: while replacing an
+offset source, the Properties widget must let the user change the requested
+source family; and the picker must enumerate every source kind currently
+modeled by the offset feature, including parabola. The current implementation
+and regressions already meet the picker contract. `cbSourceType` remains
+editable during selection, filters candidates by the chosen kind, and does
+not mutate or unhighlight the existing source when the filter changes. A
+successful pick replaces it with the candidate's actual typed geometry.
+
+The source inventory remains the single contract:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline (`LC_OffsetSourceGeometry::SupportedKinds`). `LC_Parabola` must
+remain distinguishable from its `LC_SplinePoints` base and selectable as
+parabola. The existing all-family Properties regressions cover family changes,
+filter/highlight retention, typed replacement, and parabola identity; retain
+and extend them if the inventory changes. No extra selector or parabola-only
+UI branch is required.
+
+This is UI inventory coverage, not a blanket geometry-support claim. For each
+family, continue to qualify concrete variants independently through direct
+geometry, worker generation/cache admission, replacement/Produce, and
+applicable DXF/DWG persistence. A family may be selectable while an unproven
+variant remains filtered or fails closed without changing the source or
+cache. Do not mark the broader all-types request complete from picker tests
+alone.
+
+## 784. Refine Highly Rational Spline Offsets Under the Existing Error Budget (2026-11-10)
+
+The current nonuniform periodic-spline worker matrix exposed stale expected
+refusals: several positive rational profiles with weights spanning `1e12`
+reached the adaptive cubic fitter's depth-20 limit even though the unchanged
+geometric error checks converged with more subdivision. `makeDirectOptions`
+now adds 20 levels only for `RS_Spline` inputs whose positive weight dynamic
+range is at least `1e8`. Requested, evaluation, and fit tolerances are
+unchanged, as are sample, output-branch, and entity budgets; exceeding those
+limits still refuses. The independent oracle/cusp/endpoint/cache assertions
+remain required, and the periodic matrix now expects the alternating,
+shifted-alternating, gradual, and reversed-gradual cases to succeed where the
+full matrix validates them.
+
+Validation: the Release CMake target
+`librecad_offset_worker_kernel_tests` builds in
+`/private/tmp/offset2961-build`; focused test
+`worker validates nonuniform periodic spline caches on both offset sides`
+passes 141,175 assertions/1 case. This qualifies only that test's
+nonuniform-periodic source, weight-profile, offset-distance, cusp-oracle, and
+worker/cache matrix. The newly admitted profiles have not thereby passed
+DXF/DWG persistence, independent CAD parsing/visual comparison, or visible GUI
+acceptance; continue those gates before making a broader rational-spline
+claim. Implementation/test commit `d5397f579` (`fix(offset): refine highly
+rational spline cusps`). `git diff --check` passes. The installed
+clang-format reports baseline-wide differences in these legacy translation
+units, so no full-file formatting claim is made.
