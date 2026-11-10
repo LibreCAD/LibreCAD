@@ -735,7 +735,7 @@ TEST_CASE("An elliptic arc breaks at each y-extremum once, and not at a join on 
 
     std::mt19937_64 rng(20261103);
     std::uniform_real_distribution<double> position(-1000.0, 1000.0);
-    std::uniform_real_distribution<double> majorLength(1.0, 50.0);
+    std::uniform_real_distribution<double> majorRadius(1.0, 50.0);
     std::uniform_real_distribution<double> direction(0.0, 2.0 * M_PI);
     std::uniform_real_distribution<double> ratio(0.3, 0.95);
     std::uniform_int_distribution<int> mode(0, 2);
@@ -743,7 +743,7 @@ TEST_CASE("An elliptic arc breaks at each y-extremum once, and not at a join on 
     for (int run = 0; run < 6000; ++run) {
         const double cx = position(rng);
         const double cy = position(rng);
-        const double a = majorLength(rng);
+        const double a = majorRadius(rng);
         const double phi = direction(rng);
         const double q = ratio(rng);
         const bool reversed = flip(rng) != 0;
