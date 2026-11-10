@@ -3891,9 +3891,14 @@ to `codex/offset-2961-native-worker`.
   plugin caller, and local relocated-helper checks. W266 records cross-platform
   DWG/DXF, worker, fault-recovery, and installed-helper passes on its exact head;
   W275 qualifies the local universal FreeType/package target. On exact PR head
-  `985328c12c17b951394908e8daed8c13edf4b3fe`, all 19 required checks pass and
-  7 configured lanes are skipped. This includes Headless ON/OFF, DWG/DXF fast
-  and Windows x64/ARM64, Windows ARM64 packaging, CodeQL, and the Pixi matrix.
+  `985328c12c17b951394908e8daed8c13edf4b3fe`, 19 required checks passed and
+  7 configured lanes were skipped; this is historical evidence, not the current
+  PR head. At the pre-update PR snapshot, head
+  `fe3f83caf795f5abe6c7aaa13bf8971062725239` had Headless ON/OFF in progress
+  and BuildMacOS queued. Do not report the earlier green checks as current-head
+  CI. The historical matrix includes
+  Headless ON/OFF, DWG/DXF fast and Windows x64/ARM64, Windows ARM64 packaging,
+  CodeQL, and the Pixi matrix.
   W341's bounded mounted-DMG app-startup smoke is exercised by the `macos-14`
   BuildMacOS workflow; the exact-head Build and packaging step and artifact
   upload passed in run `41598670715`. Do not carry results forward from older
@@ -3905,9 +3910,13 @@ to `codex/offset-2961-native-worker`.
   implementation audit found no remaining declared product-code slice. The
   outstanding integrated acceptance is visible CAD interaction and any concrete
   defect found there, not a presumed missing implementation phase.
-- [ ] R: PR head `985328c12c17b951394908e8daed8c13edf4b3fe` contains W341 and
-  W344-W346 workflow/roadmap updates over product head
-  `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`. W302 records visible
+- [ ] R: Historical PR head `985328c12c17b951394908e8daed8c13edf4b3fe`
+  contained W341 and W344-W346 workflow/roadmap updates over product head
+  `823d4f06b500db0a91a950e4ef13eda3e0fb3e7e`; it is not the current head.
+  At the pre-update snapshot, PR #3193 was open as a draft at
+  `fe3f83caf795f5abe6c7aaa13bf8971062725239`; its exact-head Headless ON/OFF
+  checks were running and BuildMacOS was queued. Recheck the pushed head before
+  closeout. W302 records visible
   preview/commit and pointer-drag cancellation; W330 adds the automated
   stale-peer event-pipeline pass (39 assertions), not physical stale-peer
   acceptance. W332-W334 record Windows ARM64 packaging, Windows x64/ARM64
