@@ -32809,3 +32809,23 @@ equivalent enclosure to the same broad phase.
 The source picker is independent of this geometry limit: all nine modeled
 kinds, including distinct parabola identity, remain selectable as recorded in
 sections 783 and 786.
+
+## 788. Revalidate the Picker and Record Current-head CI (2026-11-10)
+
+Rebuilt the current CMake Release target
+`librecad_offset_properties_dialog_tests`, then ran
+`QT_QPA_PLATFORM=offscreen ... '[gui][offsetcurve][source]'`. All 12 cases and
+11,930 assertions passed, including in-progress type changes, all nine modeled
+source kinds, typed replacement, highlight retention, and parabola identity.
+An initial run used a stale test executable and reported two failures; those
+results are superseded by the fresh target rebuild and successful rerun.
+
+At the PR snapshot `321f2091c2e2cb0973f644fc2c4a8cc859b60529`, GitHub showed
+Headless OFF passing, Headless ON and cross-platform/Pixi jobs in progress, and
+Security scan skipped. `BuildMacOS` was cancelled with the runner annotation
+`The configuration 'macos-14-arm64-us-default' is not supported`. The checked-in
+workflow still requests `runs-on: macos-14`; do not change the workflow based
+only on this runner-service annotation. The connected GitHub integration
+refused a rerun request with HTTP 403, so this is not a rerun or a code-failure
+result. Recheck exact-head CI and seek a runner-side rerun before closing the
+macOS workflow gate.
