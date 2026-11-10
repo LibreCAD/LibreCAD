@@ -720,6 +720,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             scaledCircleFixtures.emplace_back(fixture, scale);
         }
     }
+    std::vector<std::pair<std::size_t, double>> thinEllipseFixtures;
+    for (const double major : {10.0, 100.0}) {
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{0.0, 0.0}, {major, 0.0}, 1e-4, 0.0, 0.0, false}});
+        thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
+    }
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
@@ -728,13 +734,20 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const qint64 requestId = static_cast<qint64>(i + 1);
         const auto scaledCircle = std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(),
             [i](const auto& fixture) { return fixture.first == i; });
-        const double sourceDistance = i >= scaledLineFixtureStart && i < scaledLineFixtureEnd ?
-            scaledLineDistances[i - scaledLineFixtureStart] :
-            scaledCircle != scaledCircleFixtures.end() ? 0.2 * scaledCircle->second :
-            (i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture) ? 1e-6 :
-            i == mixedBulgeFixture ? -.25 : i == smallCircleFixture ? 2e-5 :
-            i == largeCircleFixture ? 2e3 : i == nearParallelParabolaFixture ? .01 :
-            i == 21 ? .1 : i == 24 ? 1.9 : .25;
+        const auto thinEllipse =
+            std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
+        const double sourceDistance = i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
+            ? scaledLineDistances[i - scaledLineFixtureStart]
+            : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->second
+            : thinEllipse != thinEllipseFixtures.end()                                   ? thinEllipse->second
+            : (i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture) ? 1e-6
+            : i == mixedBulgeFixture                                                     ? -.25
+            : i == smallCircleFixture                                                    ? 2e-5
+            : i == largeCircleFixture                                                    ? 2e3
+            : i == nearParallelParabolaFixture                                           ? .01
+            : i == 21                                                                    ? .1
+            : i == 24                                                                    ? 1.9
+                                                                                         : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
         REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
@@ -786,12 +799,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         auto editable = completion.nativeSource(attributes);
         RS_SplineData canonicalCache;
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
-        if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture ||
-            i == nearParallelParabolaFixture || i == nearFullArcFixture || i == narrowSeamArcFixture ||
-            i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
-            i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture ||
-            i + 3 >= sources.size() || (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) ||
-            scaledCircle != scaledCircleFixtures.end())
+        if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture || i == nearParallelParabolaFixture ||
+            i == nearFullArcFixture || i == narrowSeamArcFixture || i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
+            i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture || i + 3 >= sources.size() ||
+            (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) || scaledCircle != scaledCircleFixtures.end() ||
+            thinEllipse != thinEllipseFixtures.end())
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -974,6 +986,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         REQUIRE(entity);
         const auto scaledCircle = std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(),
             [i](const auto& fixture) { return fixture.first == i; });
+        const auto thinEllipse =
+            std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
         RS_OffsetData offset;
         offset.coord = {3, 2};
         offset.sideFallback = {10, 10};
@@ -982,6 +996,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const auto& circle = std::get<RS_CircleData>(sources[i].value);
             offset.distance = 0.2 * scaledCircle->second;
             offset.coord = circle.center + RS_Vector{2.5 * scaledCircle->second, 0.0};
+            offset.sideFallback = offset.coord;
+        }
+        if (thinEllipse != thinEllipseFixtures.end()) {
+            const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
+            const double major = ellipse.majorP.magnitude();
+            offset.distance = thinEllipse->second;
+            offset.coord = ellipse.center + ellipse.majorP * ((major + offset.distance) / major);
             offset.sideFallback = offset.coord;
         }
         offset.number = 1;

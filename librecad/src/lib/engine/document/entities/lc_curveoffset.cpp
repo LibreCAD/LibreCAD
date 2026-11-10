@@ -6028,6 +6028,11 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
     }
     options.angleTolerance = kDefaultOffsetAngleTolerance;
     options.maxSubdivisionDepth = kDefaultMaxSubdivisionDepth;
+    if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(&source); ellipse != nullptr && std::abs(ellipse->getData().ratio) < 0.01) {
+        // High eccentricity can need extra fit subdivision near the major-axis
+        // vertices; the shared sample and output budgets still bound the work.
+        options.maxSubdivisionDepth += 12;
+    }
     options.maxSamples = kDefaultMaxSamples;
     options.maxOutputBranches = kDefaultMaxOutputBranches;
     // not used by Direct, but part of a complete options object

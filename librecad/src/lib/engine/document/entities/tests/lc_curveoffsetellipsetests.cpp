@@ -193,6 +193,7 @@ Offset offsetOf(const RS_Ellipse& e, const LC_CurveOffsetSide side, const double
 /** P1, P2, P5 and P6 of every chain, and P9: how many, and which close. */
 void checkOffset(const Offset& offset, const Curve& source, const double d, const std::vector<bool>& closed,
                  const std::vector<RS_Vector>& corners = {}) {
+    INFO("offset status=" << static_cast<int>(offset.status));
     REQUIRE(offset.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(offset.chains.size() == closed.size());
     for (std::size_t c = 0; c < offset.chains.size(); ++c) {
@@ -660,6 +661,41 @@ TEST_CASE("Thin and far ellipse offsets stay at the distance everywhere", "[curv
     checkOffset(offsetOf(needle, kRight, 10.0), curveOf(needle), 10.0, {true});
     const RS_Ellipse thin = ellipse(100.0, 0.03);
     checkOffset(offsetOf(thin, kRight, 0.1), curveOf(thin), 0.1, {true});
+    const RS_Ellipse narrow = ellipse(10.0, 1e-4);
+    checkOffset(offsetOf(narrow, kRight, 0.01), curveOf(narrow), 0.01, {true});
+    const Offset erasedNarrow = offsetOf(narrow, kLeft, 0.01);
+    CHECK(erasedNarrow.status == LC_CurveOffsetStatus::Ok);
+    CHECK(erasedNarrow.entities.empty());
+    const RS_Ellipse farNarrow = ellipse(100.0, 1e-4);
+    checkOffset(offsetOf(farNarrow, kRight, 0.1), curveOf(farNarrow), 0.1, {true});
+    const Offset erasedFarNarrow = offsetOf(farNarrow, kLeft, 0.1);
+    CHECK(erasedFarNarrow.status == LC_CurveOffsetStatus::Ok);
+    CHECK(erasedFarNarrow.entities.empty());
+}
+
+TEST_CASE("Extreme thin ellipse receives bounded refinement headroom", "[curve-offset][ellipse][boundary]") {
+    const RS_Ellipse source = ellipse(10.0, 1e-4);
+    const auto refinedOptions = LC_CurveOffset::makeDirectOptions(source, 0.01);
+    CHECK(refinedOptions.maxSubdivisionDepth == LC_CurveOffset::kDefaultMaxSubdivisionDepth + 12);
+    auto baseOptions = refinedOptions;
+    baseOptions.maxSubdivisionDepth = LC_CurveOffset::kDefaultMaxSubdivisionDepth;
+    const auto baseline = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kRight, 0.01), baseOptions,
+                                                              LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(baseline.status == LC_CurveOffsetStatus::ToleranceNotMet);
+    CHECK(baseline.branches.empty());
+
+    const auto geometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kRight, 0.01), refinedOptions,
+                                                              LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(geometry.branches.size() == 1);
+    CHECK(geometry.exactSamples > baseline.exactSamples);
+    CHECK(geometry.exactSamples < refinedOptions.maxSamples);
+    const auto materialized =
+        LC_CurveOffset::materializeBranches(source, geometry, refinedOptions, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    CHECK(materialized.validationLevel == LC_OffsetValidationLevel::SampledBidirectional);
+    CHECK(materialized.maxObservedError <= refinedOptions.tolerance.requestedGeometry);
+    REQUIRE(materialized.entities.size() == 1);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
