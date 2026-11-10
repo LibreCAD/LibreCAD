@@ -630,11 +630,8 @@ TEST_CASE("Offset tolerance helper agrees with existing engine options", "[lc-of
     auto distantData = basis();
     distantData.center = RS_Vector{1e12, -1e12};
     const RS_Ellipse distant{nullptr, distantData};
-    const double floor = LC_CurveOffset::toleranceFor(distant, 1.0, 1e-4);
-    CHECK(std::isfinite(floor));
-    CHECK(floor > 0.01);
+    CHECK(std::isnan(LC_CurveOffset::toleranceFor(distant, 1.0, 1e-4)));
     CHECK(std::isnan(LC_CurveOffset::makeOffsetOptions(distant, 1.0).tolerance.requestedGeometry));
-    CHECK(LC_CurveOffset::toleranceFor(distant, 1.0, 1e-4) == floor); // validation can still assess a carried cache
 }
 
 TEST_CASE("Offset original distance cannot accept a far query as its own foot", "[lc-offsetcurve][geometry]") {

@@ -147,6 +147,30 @@ struct Bounds {
     LC_Interval dy;
 };
 
+/** Prove separation by enclosing the curve difference along a midpoint normal. */
+bool separatedByTangentNormal(const Bounds& a, const Bounds& b, const RS_Vector& pa, const RS_Vector& pb, const RS_Vector& da,
+                              const RS_Vector& db, const LC_Interval& ta, const LC_Interval& tb) {
+    const double lengthA = std::hypot(da.x, da.y);
+    const double lengthB = std::hypot(db.x, db.y);
+    const RS_Vector& tangent = (lengthA >= lengthB) ? da : db;
+    const double length = std::max(lengthA, lengthB);
+    if (!(length > 0.0) || !std::isfinite(length)) {
+        return false;
+    }
+    const double nx = -tangent.y / length;
+    const double ny = tangent.x / length;
+    const double centreA = mid(ta);
+    const double centreB = mid(tb);
+    const double value = nx * (pa.x - pb.x) + ny * (pa.y - pb.y);
+    const double margin = 64.0 * g_eps * (std::abs(pa.x) + std::abs(pa.y) + std::abs(pb.x) + std::abs(pb.y));
+    const LC_Interval midpoint = LC_Interval::hull(value - margin, value + margin);
+    const LC_Interval derivativeA = LC_Interval::point(nx) * a.dx + LC_Interval::point(ny) * a.dy;
+    const LC_Interval derivativeB = LC_Interval::point(nx) * b.dx + LC_Interval::point(ny) * b.dy;
+    const LC_Interval difference =
+        midpoint + derivativeA * (ta - LC_Interval::point(centreA)) - derivativeB * (tb - LC_Interval::point(centreB));
+    return difference.excludesZero();
+}
+
 class Solver {
 public:
     Solver(const LC_ParametricCurves& curves, const LC_IntersectionOptions& options)
@@ -554,6 +578,19 @@ private:
                 return LC_IntersectionStatus::AmbiguousTopology;
             }
             if (gap(bp.x, bp.y, bq.x, bq.y) > 0.0 || insideJoin(p, bp, q, bq) || bridged(p, q, box)) {
+                continue;
+            }
+            RS_Vector pointP;
+            RS_Vector derivativeP;
+            RS_Vector pointQ;
+            RS_Vector derivativeQ;
+            const LC_Interval parameterA = LC_Interval::hull(box.a0, box.a1);
+            const LC_Interval parameterB = LC_Interval::hull(box.b0, box.b1);
+            if (m_curves.evaluate(p.segment, mid(parameterA), pointP, derivativeP) &&
+                m_curves.evaluate(q.segment, mid(parameterB), pointQ, derivativeQ) && isFinite(pointP) && isFinite(pointQ) &&
+                isFinite(derivativeP) && isFinite(derivativeQ) &&
+                separatedByTangentNormal(bp, bq, pointP, pointQ, derivativeP, derivativeQ, parameterA, parameterB)) {
+                ++m_work.orientedProjectionExclusions;
                 continue;
             }
             // Pair indices follow branch order. Locally monotone sides can only share their endpoint.

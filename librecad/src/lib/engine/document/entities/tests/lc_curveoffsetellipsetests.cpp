@@ -209,6 +209,7 @@ struct Offset {
     LC_CurveOffsetStatus status{LC_CurveOffsetStatus::InvalidRequest};
     std::vector<std::unique_ptr<RS_Entity>> entities;
     std::vector<Chain> chains;
+    LC_CurveOffsetGeometryResult::IntersectionDiagnostics intersectionDiagnostics;
     /** Twice the geometric tolerance the offset was made to: what every check allows. */
     double slack{0.0};
 };
@@ -220,6 +221,7 @@ Offset offsetOf(const RS_Ellipse& e, const LC_CurveOffsetSide side, const double
     LC_CurveOffsetMaterializationResult made =
         LC_CurveOffset::createEntities(e, LC_CurveOffset::makeSideRequest(side, d), options, LC_CurveOffset::makeDirectSourceBudget());
     result.status = made.status;
+    result.intersectionDiagnostics = made.intersectionDiagnostics;
     result.entities = std::move(made.entities);
     for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
         const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
@@ -788,37 +790,22 @@ TEST_CASE("Extreme thin ellipse inward offsets bracket the major-vertex cusp", "
     }
 }
 
-TEST_CASE("Rotated extreme thin ellipse cusp fails closed when its accurate fit exceeds budget", "[curve-offset][ellipse][cusp]") {
+TEST_CASE("Rotated extreme thin ellipse cusp trims accurately within the bounded intersection budget", "[curve-offset][ellipse][cusp]") {
     const RS_Vector majorP{100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)};
     const RS_Ellipse source{nullptr, RS_EllipseData{RS_Vector{0, 0}, majorP, 1e-4, 0.0, 0.0, false}};
     constexpr double distance = 0.5e-6;
     CHECK(LC_CurveOffset::toleranceFor(source, distance, LC_CurveOffset::relativeOffsetTolerance(source)) == 0.1 * distance);
     const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
-    const auto inward = LC_CurveOffset::createEntities(source, LC_CurveOffset::makeSideRequest(kLeft, distance), options,
-                                                       LC_CurveOffset::makeDirectSourceBudget());
-    INFO("intersection stage=" << static_cast<int>(inward.intersectionDiagnostics.stage)
-                               << ", status=" << static_cast<int>(inward.intersectionDiagnostics.status)
-                               << ", pairs=" << inward.intersectionDiagnostics.work.totalBoxPairs);
-    CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
-    CHECK(inward.entities.empty());
-    CHECK(inward.intersectionDiagnostics.stage != LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::None);
-    CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::TrimBoundary);
-    CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
-    CHECK(inward.intersectionDiagnostics.work.totalBoxPairs == options.maxIntersectionPairs);
-    CHECK(inward.intersectionDiagnostics.work.candidateBoxPairs < options.maxIntersectionPairs / 100);
-    CHECK(inward.intersectionDiagnostics.work.refinementBoxPairs > options.maxIntersectionPairs * 99 / 100);
+    const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+    CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+    checkOffset(inward, curveOf(source), distance, {true});
+    CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+    CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    CHECK(inward.intersectionDiagnostics.work.totalBoxPairs < options.maxIntersectionPairs);
+    CHECK(inward.intersectionDiagnostics.work.orientedProjectionExclusions > 0);
     CHECK(inward.intersectionDiagnostics.work.totalBoxPairs ==
           inward.intersectionDiagnostics.work.candidateBoxPairs + inward.intersectionDiagnostics.work.refinementBoxPairs +
               inward.intersectionDiagnostics.work.certificateBoxPairs);
-    REQUIRE(inward.intersectionDiagnostics.hasFailureDomain);
-    CHECK(inward.intersectionDiagnostics.failureDepth > 0);
-    CHECK(inward.intersectionDiagnostics.failureDomain.parameterA.isValid());
-    CHECK(inward.intersectionDiagnostics.failureDomain.parameterB.isValid());
-    const LC_IntersectionDomain& failure = inward.intersectionDiagnostics.failureDomain;
-    CHECK(failure.segmentA != failure.segmentB);
-    CHECK(failure.parameterA.width() < 0.01);
-    CHECK(failure.parameterB.width() < 0.01);
-    CHECK(std::max(failure.parameterA.lo(), failure.parameterB.lo()) <= std::min(failure.parameterA.hi(), failure.parameterB.hi()));
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

@@ -71,7 +71,7 @@ static_assert(std::is_nothrow_move_constructible_v<Completion>);
 static_assert(std::is_nothrow_move_assignable_v<Completion>);
 static_assert(!std::is_constructible_v<Completion, Req::Request&&, Reply::Reply&&>);
 
-constexpr int SuiteTimeoutMs = 45000;
+constexpr int SuiteTimeoutMs = 60000;
 constexpr int WaitTimeoutMs = 3500;
 constexpr const char* Tags = "[lc-offsetcurve][worker-client]";
 
@@ -727,13 +727,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
-    const std::array<RS_EllipseData, 2> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 3> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
+        {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
-        const std::vector<double> cuspDistances = profile == 0 ? std::vector<double>{0.9e-6, 1.0e-6, 1.1e-6} : std::vector<double>{1.0e-6};
+        const std::vector<double> cuspDistances = profile == 0 ? std::vector<double>{0.9e-6, 1.0e-6, 1.1e-6}
+            : profile == 1                                     ? std::vector<double>{1.0e-6}
+                                                               : std::vector<double>{0.5e-6};
         for (const double cuspDistance : cuspDistances) {
             const std::size_t fixture = sources.size();
             sources.emplace_back(LC_OffsetSourceGeometry{ellipse});
@@ -1378,12 +1381,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                                  [&](const auto& fixture) { return fixture.first == persistedGeometry[i].sourceFixture; });
                 if (thinEllipse != thinEllipseFixtures.end() || thinEllipseCusp != thinEllipseCuspFixtures.end() ||
                     thinEllipseArc != thinEllipseArcFixtures.end()) {
-                    double distance = thinEllipseArc->second;
+                    double distance = 0.0;
                     if (thinEllipseCusp != thinEllipseCuspFixtures.end()) {
                         distance = thinEllipseCusp->second;
                     }
-                    if (thinEllipse != thinEllipseFixtures.end()) {
+                    else if (thinEllipse != thinEllipseFixtures.end()) {
                         distance = thinEllipse->second;
+                    }
+                    else {
+                        REQUIRE(thinEllipseArc != thinEllipseArcFixtures.end());
+                        distance = thinEllipseArc->second;
                     }
                     const double major = 1000.0 * distance;
                     const auto ulp = [](const double value) {

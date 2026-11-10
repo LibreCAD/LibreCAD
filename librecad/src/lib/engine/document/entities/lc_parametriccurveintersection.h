@@ -228,6 +228,8 @@ struct LC_IntersectionWorkStats {
     std::size_t orderingComparisons{0};
     std::size_t validationSegmentVisits{0};
     std::size_t validationNextCalls{0};
+    /** Refinement boxes excluded by a conservative derivative-normal projection. */
+    std::size_t orientedProjectionExclusions{0};
 
     unsigned deepest() const {
         return std::max({deepestPreparation, deepestPairRefinement, deepestOrderingRefinement, deepestRootRefinement});
