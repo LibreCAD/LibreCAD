@@ -33054,3 +33054,16 @@ the need for a materially effective self-noding broad-phase improvement
 therefore remain open; this proof change is not a claim that the case is now
 supported. Implementation/test commit `4570b107e` (`perf(offset): prove wider
 monotone curve spans`). `git diff --check` passes.
+
+## 799. Check Monotone Projection Across Scale (2026-11-10)
+
+Extended the wide-tangent monotonicity regression to uniform scales `1e-100`,
+`1`, and `1e100`, scaling the geometric tolerance by the same factor. All
+three validated quadratic sources remain one injective leaf with no
+intersection refinement, including the tiny- and large-magnitude arithmetic
+paths. The focused aggregate-bridge test passes 116 assertions; the broader
+`[curve-offset][geometry]` selection passes 27 cases / 2,476 assertions. This
+hardens scale behavior of the projection certificate but does not reduce the
+section-785 high-ratio pair count or close any additional source-family
+persistence gate. Test commit `c3abe3478` (`test(offset): scale monotone
+projection proof`).
