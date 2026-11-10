@@ -36,6 +36,7 @@
 #include "lc_graphicviewport.h"
 #include "lc_graphicviewportrenderer.h"
 #include "lc_linemath.h"
+#include "lc_linetypenames.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -214,55 +215,12 @@ RS_Painter::RS_Painter(QPaintDevice* pd)
 }
 
 QVector<qreal> RS_Painter::canonicalDashPattern(const std::vector<double>& raw, qreal* phaseOffset) {
+    // The engine helper is the one rule; the painter only ports its result.
+    double phase = 0.0;
+    const std::vector<double> dashes = LC_LineTypeNames::canonicalDashes(raw, &phase);
     if (phaseOffset != nullptr)
-        *phaseOffset = 0.0;
-    if (raw.empty())
-        return {};
-    // Runs of one state, in drawing units. A zero element takes the state the
-    // previous one left open, so the alternation survives DOT-like records.
-    std::vector<std::pair<bool, double>> runs; // dash, length
-    bool nextIsDash = true;
-    for (const double value : raw) {
-        if (!std::isfinite(value))
-            return {};
-        const bool isDash = value > 0.0 || (value == 0.0 && nextIsDash);
-        nextIsDash = !isDash;
-        const double length = std::abs(value);
-        if (!runs.empty() && runs.back().first == isDash)
-            runs.back().second += length;
-        else
-            runs.push_back({isDash, length});
-    }
-    // The list is cyclic: a run shared by both ends is one run. Retain the
-    // origin's position in that run before merging it for Qt.
-    const bool wraps = runs.size() > 1 && runs.front().first == runs.back().first;
-    const bool startsWithDash = runs.front().first;
-    const double leadingRun = runs.front().second;
-    const double trailingRun = runs.back().second;
-    if (wraps) {
-        runs.front().second += runs.back().second;
-        runs.pop_back();
-    }
-    // No dash or no gap means nothing Qt can draw.
-    if (runs.size() < 2)
-        return {};
-    // Rotate to start with a dash; the states alternate, so one step suffices.
-    const std::size_t first = runs.front().first ? 0 : 1;
-    double period = 0.0;
-    QVector<qreal> result;
-    result.reserve(static_cast<int>(runs.size()));
-    for (std::size_t i = 0; i < runs.size(); ++i) {
-        const auto& run = runs[(first + i) % runs.size()];
-        result.push_back(run.second);
-        period += run.second;
-    }
-    if (!std::isfinite(period) || period <= 0.0)
-        return {};
-    // Keep the DXF pattern's origin when rotation or a repeated end run moved
-    // it inside the Qt pattern's first dash/gap.
-    if (phaseOffset != nullptr)
-        *phaseOffset = startsWithDash ? (wraps ? trailingRun : 0.0) : period - leadingRun;
-    return result;
+        *phaseOffset = phase;
+    return QVector<qreal>(dashes.begin(), dashes.end());
 }
 
 QVector<qreal> RS_Painter::dashPatternForQt(const QVector<qreal>& canonical, const double k) {

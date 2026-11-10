@@ -24,6 +24,9 @@
 
 #include <QtAlgorithms>
 
+#include <algorithm>
+#include <cmath>
+
 #include "lc_linetypenames.h"
 
 namespace {
@@ -32,13 +35,7 @@ const LC_LineTypeNames::BuiltinMetric* seedOf(const LC_LineType& entry) {
     if (entry.origin != LC_LineType::Origin::BuiltIn) {
         return nullptr;
     }
-    const RS2::LineType type = LC_LineTypeNames::nameToLineType(entry.key());
-    for (const auto& row : LC_LineTypeNames::builtinMetrics()) {
-        if (row.type == type) {
-            return &row;
-        }
-    }
-    return nullptr;
+    return LC_LineTypeNames::builtinMetric(LC_LineTypeNames::nameToLineType(entry.key()));
 }
 
 bool padded(const QString& name) {
@@ -147,6 +144,38 @@ LC_LineType* LC_LineTypeList::add(LC_LineType* entry) {
     }
     delete entry;
     return existing;
+}
+
+bool LC_LineTypeList::patternMatchesSeed(const LC_LineType& entry) {
+    if (entry.pattern.empty()) {
+        return false;
+    }
+    // The name decides the seed, so an alias compares with its enum's row.
+    const LC_LineTypeNames::BuiltinMetric* seed =
+        LC_LineTypeNames::builtinMetric(LC_LineTypeNames::nameToLineType(entry.key()));
+    // SolidLine and every vendor name that folds to it have no dashes to match.
+    if (seed == nullptr || seed->pattern.empty()) {
+        return false;
+    }
+    // An untouched seed holds the row's own list.
+    if (entry.pattern == seed->pattern) {
+        return true;
+    }
+    const std::vector<double> actual = LC_LineTypeNames::canonicalDashes(entry.pattern);
+    const std::vector<double> expected = LC_LineTypeNames::canonicalDashes(seed->pattern);
+    if (actual.empty() || actual.size() != expected.size()) {
+        return false;
+    }
+    // RS_TOLERANCE relative to the longer element: it holds for a 0.15 tiny
+    // dash and a 63.5 long one alike, and is the engine's established length
+    // tolerance. A pair of exact zeros also matches.
+    for (std::size_t i = 0; i < actual.size(); ++i) {
+        const double scale = std::max(std::abs(actual[i]), std::abs(expected[i]));
+        if (std::abs(actual[i] - expected[i]) > RS_TOLERANCE * scale) {
+            return false;
+        }
+    }
+    return true;
 }
 
 void LC_LineTypeList::take(const LC_LineType* incoming) {

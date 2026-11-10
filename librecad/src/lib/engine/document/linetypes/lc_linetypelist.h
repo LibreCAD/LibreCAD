@@ -58,6 +58,10 @@ public:
     void merge(const LC_LineTypeList& source);
     /// merge(), of the entries these names find there that have dashes
     void merge(const LC_LineTypeList& source, const std::vector<QString>& names);
+    /// Whether an entry's dashes are the seed's, within a tolerance: the name
+    /// decides the seed, so an alias compares with its enum's row; reads the
+    /// built-in table only.
+    static bool patternMatchesSeed(const LC_LineType& entry);
 
     bool isModified() const {
         return m_modified;

@@ -365,6 +365,46 @@ TEST_CASE("LC_LineTypeList::add on a built-in: dashes replace the seed, a name-o
     }
 }
 
+TEST_CASE("LC_LineTypeList::patternMatchesSeed compares the canonical dashes with the seed",
+          "[linetype][list][seed]") {
+    SECTION("a built-in's own values match") {
+        LC_LineType entry(QStringLiteral("HIDDEN"));
+        entry.pattern = {6.35, -3.175};
+        CHECK(LC_LineTypeList::patternMatchesSeed(entry));
+    }
+    SECTION("a redefinition does not") {
+        LC_LineType entry(QStringLiteral("HIDDEN"));
+        entry.pattern = {64.0, -32.0};
+        CHECK_FALSE(LC_LineTypeList::patternMatchesSeed(entry));
+    }
+    SECTION("values that differ in the twelfth decimal still match") {
+        LC_LineType entry(QStringLiteral("DASHED"));
+        entry.pattern = {12.7 + 1e-12, -6.35 - 1e-12};
+        CHECK(LC_LineTypeList::patternMatchesSeed(entry));
+    }
+    SECTION("a vendor name has no seed") {
+        LC_LineType entry(QStringLiteral("DASHEDM"));
+        entry.pattern = {10.0, -5.0};
+        CHECK_FALSE(LC_LineTypeList::patternMatchesSeed(entry));
+    }
+    SECTION("a name-only record has no dashes") {
+        LC_LineType entry(QStringLiteral("HIDDEN"));
+        CHECK_FALSE(LC_LineTypeList::patternMatchesSeed(entry));
+    }
+    SECTION("a line type without dashes has no seed to match") {
+        LC_LineType entry(QStringLiteral("BYLAYER"));
+        entry.pattern = {5.0, -5.0};
+        CHECK_FALSE(LC_LineTypeList::patternMatchesSeed(entry));
+    }
+    SECTION("an alias compares with the seed of the enum it names") {
+        LC_LineType entry(QStringLiteral("ACAD_ISO02W100"));
+        entry.pattern = {12.7, -6.35};
+        CHECK(LC_LineTypeList::patternMatchesSeed(entry));
+        entry.pattern = {5.0, -5.0};
+        CHECK_FALSE(LC_LineTypeList::patternMatchesSeed(entry));
+    }
+}
+
 TEST_CASE("LC_LineTypeList owns the entries it keeps and frees the ones it merges",
           "[linetype][list][ownership]") {
     int live = 0;

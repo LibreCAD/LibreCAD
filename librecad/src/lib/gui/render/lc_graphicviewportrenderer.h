@@ -157,8 +157,10 @@ private:
 
     void buildDashPatternCache();
 
-    // Named line type dashes of the drawing, by fold id, built once per pass.
+    // Named line type dashes of the drawing by fold id (alias and vendor spellings), built once per pass.
     QHash<std::uint16_t, DashPattern> m_dashByFold;
+    // The same for a redefined built-in spelt canonically, by its enum; read for a named pen only.
+    QHash<int, DashPattern> m_dashByEnum;
     bool m_dashCacheBuilt = false;
 };
 
