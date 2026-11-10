@@ -33819,4 +33819,6 @@ topology of the over-cusp loop. Keep the conservative refusal; do not classify
 near-floor near-contacts as a shared root without a proof that distinguishes
 true intersections from distinct points inside the numeric floor. The focused
 ellipse regression passes with the additional exact-locus checks; no production
-algorithm or budget changed.
+algorithm or budget changed. Broader revalidation on this tree passes the
+combined `[curve-offset][ellipse],[intersection],[curve-offset][trim]`
+selection: 1,361,864 assertions across 100 cases.
