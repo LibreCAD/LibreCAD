@@ -3,21 +3,6 @@
  * Copyright (C) 2026 LibreCAD.org
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
-#include "../lc_offsetworkerclient.h"
-#include "../lc_offsetworkersourcecache.h"
-#include "../lc_offsetworkertolerance.h"
-#include "../lc_offsetworkeredit.h"
-#include "lc_offsetcurvexdata.h"
-#include "lc_filtertestsupport.h"
-#include "rs_entitycontainer.h"
-#include "rs_graphic.h"
-#include "rs_layer.h"
-#include "rs_line.h"
-#include "rs_spline.h"
-#include "lc_parabola.h"
-#include "rs_pen.h"
-
-#include <catch2/catch_test_macros.hpp>
 #include <QCoreApplication>
 #include <QDir>
 #include <QEvent>
@@ -32,6 +17,7 @@
 #include <QThread>
 #include <algorithm>
 #include <array>
+#include <catch2/catch_test_macros.hpp>
 #include <cmath>
 #include <cstring>
 #include <limits>
@@ -40,7 +26,22 @@
 #include <type_traits>
 #include <utility>
 #include <vector>
+
+#include "../lc_offsetworkerclient.h"
+#include "../lc_offsetworkeredit.h"
+#include "../lc_offsetworkersourcecache.h"
+#include "../lc_offsetworkertolerance.h"
+#include "lc_filtertestsupport.h"
+#include "lc_hyperbola.h"
 #include "lc_offsetbatchpreparation.h"
+#include "lc_offsetcurvexdata.h"
+#include "lc_parabola.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphic.h"
+#include "rs_layer.h"
+#include "rs_line.h"
+#include "rs_pen.h"
+#include "rs_spline.h"
 
 // The declared friend changes deadlines only, never process paths or completion values.
 class LC_OffsetWorkerClientTestAccess {
@@ -643,6 +644,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     const auto mixedBulgeSource = LC_OffsetSourceGeometry::capture(mixedBulgePolyline);
     REQUIRE(mixedBulgeSource);
     REQUIRE(mixedBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+    const LC_HyperbolaData reversedBoundsHyperbolaData{{-5.0, 9.0}, {6.128355544951824, -5.142300877492315}, 1.5, 1.7, -1.9, false};
     std::vector<LC_OffsetSourceGeometry> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
@@ -682,6 +684,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         *mixedBulgeSource,
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0.0, 0.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true}},
         LC_OffsetSourceGeometry{*secondParabola}};
+    const std::size_t reversedBoundsHyperbolaNearFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
+    const std::size_t reversedBoundsHyperbolaFarFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t smallCircleFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{{0.0, 0.0}, 2e-4}});
     const std::size_t largeCircleFixture = sources.size();
@@ -1193,6 +1199,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == nearParallelParabolaFixture                                           ? .01
             : i == largeOriginParabolaFixture                                            ? 2500.0
             : i == translatedSmallParabolaFixture                                        ? 0.00025
+            : i == reversedBoundsHyperbolaNearFixture                                    ? .9
+            : i == reversedBoundsHyperbolaFarFixture                                     ? 3.6
             : i == 21                                                                    ? .1
             : i == 24                                                                    ? 1.9
             : i == scaledMajorSweepFixture                                               ? 2500.0
@@ -1282,7 +1290,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const bool cacheRepresentable = LC_OffsetWorkerSourceCache::combine(result.ordinary, canonicalCache);
         if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture || i == nearParallelParabolaFixture ||
             i == nearFullArcFixture || i == narrowSeamArcFixture || i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
-            i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture || i + 3 >= sources.size() ||
+            i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture || i == reversedBoundsHyperbolaNearFixture ||
+            i == reversedBoundsHyperbolaFarFixture || i + 3 >= sources.size() ||
             (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) || scaledCircle != scaledCircleFixtures.end() ||
             thinEllipse != thinEllipseFixtures.end() || thinEllipseCusp != thinEllipseCuspFixtures.end() ||
             thinEllipseArc != thinEllipseArcFixtures.end())
@@ -1469,6 +1478,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{translatedSmallParabola});
     const std::size_t translatedSmallParabolaNearOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{translatedSmallParabola});
+    const std::size_t reversedBoundsHyperbolaNearOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
+    const std::size_t reversedBoundsHyperbolaFarOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
 
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
@@ -1490,17 +1503,21 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         std::optional<RS_SplineData> splineData;
     };
     std::vector<PersistedGeometry> persistedGeometry;
+    std::array<std::optional<LC_CurveOffsetSide>, 2> reversedBoundsHyperbolaResolvedSides{};
     const auto persistenceGeometry = [](const RS_Entity& entity, const std::size_t sourceFixture) {
         PersistedGeometry result{sourceFixture, entity.rtti(), entity.getStartpoint(), entity.getEndpoint(),
                                  entity.getMin(), entity.getMax(), entity.getRefPoints(), entity.getLength(), false,
                                  std::nullopt};
-        if (const auto* arc = dynamic_cast<const RS_Arc*>(&entity)) result.reversedArc = arc->getData().reversed;
-        if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) result.splineData = spline->getData();
+        if (const auto* arc = dynamic_cast<const RS_Arc*>(&entity))
+            result.reversedArc = arc->getData().reversed;
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity))
+            result.splineData = spline->getData();
         return result;
     };
 #ifdef DWGSUPPORT
     QString libreDwgReader = qEnvironmentVariable("DWGREAD");
-    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+    if (libreDwgReader.isEmpty())
+        libreDwgReader = QStandardPaths::findExecutable("dwgread");
 #endif
 
     for (std::size_t i = 0; i < sources.size(); ++i) {
@@ -1509,8 +1526,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                                                    [i](const auto& fixture) { return fixture.first == i; });
         auto entity = sources[i].makeEntity();
         REQUIRE(entity);
-        const auto scaledCircle = std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(),
-            [i](const auto& fixture) { return fixture.first == i; });
+        const bool reversedBoundsHyperbolaFixture = i == reversedBoundsHyperbolaNearFixture || i == reversedBoundsHyperbolaFarFixture ||
+            i == reversedBoundsHyperbolaNearOppositeFixture || i == reversedBoundsHyperbolaFarOppositeFixture;
+        const bool reversedBoundsHyperbolaOpposite =
+            i == reversedBoundsHyperbolaNearOppositeFixture || i == reversedBoundsHyperbolaFarOppositeFixture;
+        const auto scaledCircle =
+            std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipse =
             std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipseCusp = std::find_if(thinEllipseCuspFixtures.begin(), thinEllipseCuspFixtures.end(),
@@ -1615,6 +1636,19 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             offset.coord = {10.005, -19.99506};
             offset.sideFallback = offset.coord;
         }
+        if (reversedBoundsHyperbolaFixture) {
+            const auto& data = std::get<LC_HyperbolaData>(sources[i].value);
+            const double a = data.majorP.magnitude();
+            const double b = a * data.ratio;
+            const double branchSign = data.reversed ? -1.0 : 1.0;
+            const RS_Vector vertex = data.center + RS_Vector{branchSign * a, 0.0}.rotated(data.majorP.angle());
+            const double traversalSign = data.angle2 >= data.angle1 ? 1.0 : -1.0;
+            const RS_Vector tangent = (RS_Vector{0.0, b}.rotated(data.majorP.angle()) * traversalSign).normalized();
+            const RS_Vector leftNormal{-tangent.y, tangent.x};
+            offset.distance = (i == reversedBoundsHyperbolaNearFixture || i == reversedBoundsHyperbolaNearOppositeFixture) ? .9 : 3.6;
+            offset.coord = vertex + leftNormal * (offset.distance * (reversedBoundsHyperbolaOpposite ? -2.0 : 2.0));
+            offset.sideFallback = offset.coord;
+        }
         if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
             const double scale = i == scaledCornerOppositeFixture ? 1e-3 : 1e-2;
             offset.distance = 0.25 * scale;
@@ -1698,15 +1732,36 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
         CHECK(prepared.outcome().sources.front().source == entity.get());
         CHECK(prepared.outcome().sources.front().complete());
+        if (reversedBoundsHyperbolaFixture) {
+            REQUIRE(prepared.outcome().sources.front().resolvedSide);
+            const std::size_t sideSlot = i == reversedBoundsHyperbolaNearFixture || i == reversedBoundsHyperbolaNearOppositeFixture ? 0 : 1;
+            auto& firstSide = reversedBoundsHyperbolaResolvedSides[sideSlot];
+            if (reversedBoundsHyperbolaOpposite) {
+                REQUIRE(firstSide);
+                CHECK(*prepared.outcome().sources.front().resolvedSide != *firstSide);
+            }
+            else {
+                firstSide = prepared.outcome().sources.front().resolvedSide;
+            }
+        }
         CHECK(Req::Values::encodeSourceGeometry(sources[i]) == sourceBefore);
         REQUIRE_FALSE(batch.entitiesToAdd.empty());
         RS2::EntityType expectedOutputType = RS2::EntitySpline;
         switch (sources[i].kind()) {
-        case LC_OffsetSourceGeometry::Kind::Line: expectedOutputType = RS2::EntityLine; break;
-        case LC_OffsetSourceGeometry::Kind::Arc: expectedOutputType = RS2::EntityArc; break;
-        case LC_OffsetSourceGeometry::Kind::Circle: expectedOutputType = RS2::EntityCircle; break;
-        case LC_OffsetSourceGeometry::Kind::Polyline: expectedOutputType = RS2::EntityPolyline; break;
-        default: break;
+            case LC_OffsetSourceGeometry::Kind::Line:
+                expectedOutputType = RS2::EntityLine;
+                break;
+            case LC_OffsetSourceGeometry::Kind::Arc:
+                expectedOutputType = RS2::EntityArc;
+                break;
+            case LC_OffsetSourceGeometry::Kind::Circle:
+                expectedOutputType = RS2::EntityCircle;
+                break;
+            case LC_OffsetSourceGeometry::Kind::Polyline:
+                expectedOutputType = RS2::EntityPolyline;
+                break;
+            default:
+                break;
         }
         for (const RS_Entity* generated : batch.entitiesToAdd) {
             REQUIRE(generated);
@@ -1724,6 +1779,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     }
 
     REQUIRE_FALSE(persistedGeometry.empty());
+    CHECK(reversedBoundsHyperbolaResolvedSides[0]);
+    CHECK(reversedBoundsHyperbolaResolvedSides[1]);
     struct PersistenceLane {
         RS2::FormatType format;
         const char* extension;
@@ -1771,18 +1828,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 REQUIRE(expected);
                 const double scale = scaledLineScales[fixture - scaledLineFixtureStart];
                 const auto matchesPoint = [&](const QJsonArray& actual, const RS_Vector& point) {
-                    if (actual.size() != 3) return false;
-                    const double tolerance = std::max({1e-12 * scale, 64.0 * ulp(point.x),
-                                                       64.0 * ulp(point.y), 64.0 * ulp(point.z)});
-                    return std::abs(actual[0].toDouble() - point.x) <= tolerance &&
-                           std::abs(actual[1].toDouble() - point.y) <= tolerance &&
-                           std::abs(actual[2].toDouble() - point.z) <= tolerance;
+                    if (actual.size() != 3)
+                        return false;
+                    const double tolerance = std::max({1e-12 * scale, 64.0 * ulp(point.x), 64.0 * ulp(point.y), 64.0 * ulp(point.z)});
+                    return std::abs(actual[0].toDouble() - point.x) <= tolerance && std::abs(actual[1].toDouble() - point.y) <= tolerance &&
+                        std::abs(actual[2].toDouble() - point.z) <= tolerance;
                 };
                 QJsonObject externalLine;
                 std::size_t matchingLines = 0;
                 for (const QJsonValue& value : objects) {
                     const QJsonObject candidate = value.toObject();
-                    if (candidate.value("entity").toString() != "LINE") continue;
+                    if (candidate.value("entity").toString() != "LINE")
+                        continue;
                     if (!matchesPoint(candidate.value("start").toArray(), expected->start) ||
                         !matchesPoint(candidate.value("end").toArray(), expected->end))
                         continue;
