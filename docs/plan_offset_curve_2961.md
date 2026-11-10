@@ -33799,3 +33799,24 @@ change still needs a bounded intersection/topology proof and the independent
 materialized-output crossing check from section 827. The focused regression
 passes after adding the analytic checks; no production algorithm or work
 budget changed.
+
+## 830. Identify the Exact-cusp Unresolved Pair (2026-11-10)
+
+The exact-cusp diagnostic pair is two nonadjacent parameter intervals on the
+same inward-offset parametric segment, near the reversed arc's endpoint at
+source parameter `0.2`; it is not an offset-versus-cap pair. Evaluating the
+exact inward ellipse offset at the recorded interval midpoints places the two
+points about `6.97e-10` apart, below the same `1.42109e-8` world-coordinate
+numeric floor. The regression now requires the intervals to represent distinct
+parameters on one segment and independently checks their exact-locus distance
+against that floor, in addition to requiring `AmbiguousTopology` and empty
+output.
+
+This supports interpreting the exact-threshold failure as a resolution-limited
+near-contact at the cusp, rather than unexplained pair-budget exhaustion. It
+does not certify that the intervals contain a true intersection or prove the
+topology of the over-cusp loop. Keep the conservative refusal; do not classify
+near-floor near-contacts as a shared root without a proof that distinguishes
+true intersections from distinct points inside the numeric floor. The focused
+ellipse regression passes with the additional exact-locus checks; no production
+algorithm or budget changed.

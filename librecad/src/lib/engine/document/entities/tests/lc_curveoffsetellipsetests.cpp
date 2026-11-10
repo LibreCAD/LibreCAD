@@ -1229,6 +1229,26 @@ TEST_CASE("Large-origin reversed 10000-to-1 elliptic arc endpoint retains cusp-t
                 CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
                 CHECK(result.entities.empty());
                 CHECK(result.chains.empty());
+                if (distance == cuspRadius) {
+                    const auto& failure = result.intersectionDiagnostics.failureDomain;
+                    REQUIRE(result.intersectionDiagnostics.hasFailureDomain);
+                    CHECK(failure.segmentA == failure.segmentB);
+                    const auto exactInwardPoint = [&](const double sourceParameter) {
+                        const double eta = 0.2 - sourceParameter;
+                        const double cosine = std::cos(eta);
+                        const double sine = std::sin(eta);
+                        const double speed = std::hypot(majorRadius * sine, majorRadius * ratio * cosine);
+                        return RS_Vector{majorRadius * cosine - distance * majorRadius * ratio * cosine / speed,
+                                         majorRadius * ratio * sine - distance * majorRadius * sine / speed};
+                    };
+                    const double parameterA = 0.5 * failure.parameterA.lo() + 0.5 * failure.parameterA.hi();
+                    const double parameterB = 0.5 * failure.parameterB.lo() + 0.5 * failure.parameterB.hi();
+                    const double exactPairGap = (exactInwardPoint(parameterA) - exactInwardPoint(parameterB)).magnitude();
+                    const double numericFloor = 64.0 * std::numeric_limits<double>::epsilon() * 1e6;
+                    CAPTURE(parameterA, parameterB, exactPairGap, numericFloor);
+                    CHECK(parameterA != parameterB);
+                    CHECK(exactPairGap < numericFloor);
+                }
                 continue;
             }
             CHECK(result.status == LC_CurveOffsetStatus::Ok);
