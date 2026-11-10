@@ -1166,33 +1166,44 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{arc});
         thinEllipseArcFixtures.emplace_back(fixture, 0.1);
     }
+    std::vector<std::size_t> negativeStationarySplinePointsFixtures;
+    auto appendNegativeStationaryFixture = [&](const LC_SplinePointsData& source) {
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{source});
+        negativeStationarySplinePointsFixtures.push_back(fixture);
+    };
     LC_SplinePointsData stationarySplinePoints{false, false};
     stationarySplinePoints.useControlPoints = true;
     stationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
     const std::size_t stationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{stationarySplinePoints});
+    appendNegativeStationaryFixture(stationarySplinePoints);
     LC_SplinePointsData multipleStationarySplinePoints{false, false};
     multipleStationarySplinePoints.useControlPoints = true;
     multipleStationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0},
                                                     {3, 1}, {3, 1}, {3, 1}, {4, 0}};
     const std::size_t multipleStationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{multipleStationarySplinePoints});
+    appendNegativeStationaryFixture(multipleStationarySplinePoints);
     LC_SplinePointsData stationaryPlateauSplinePoints{false, false};
     stationaryPlateauSplinePoints.useControlPoints = true;
     stationaryPlateauSplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
                                                     {2, 0}, {3, 1}, {3, 1}, {3, 1}, {4, 0}};
     const std::size_t stationaryPlateauSplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{stationaryPlateauSplinePoints});
+    appendNegativeStationaryFixture(stationaryPlateauSplinePoints);
     LC_SplinePointsData leadingStationarySplinePoints{false, false};
     leadingStationarySplinePoints.useControlPoints = true;
     leadingStationarySplinePoints.controlPoints = {{0, 0}, {0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
     const std::size_t leadingStationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{leadingStationarySplinePoints});
+    appendNegativeStationaryFixture(leadingStationarySplinePoints);
     LC_SplinePointsData trailingStationarySplinePoints{false, false};
     trailingStationarySplinePoints.useControlPoints = true;
     trailingStationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {3, 1}};
     const std::size_t trailingStationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{trailingStationarySplinePoints});
+    appendNegativeStationaryFixture(trailingStationarySplinePoints);
     LC_SplinePointsData closedControlPoints{true, false};
     closedControlPoints.useControlPoints = true;
     closedControlPoints.controlPoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
@@ -1258,7 +1269,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                                                   [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipseArc = std::find_if(thinEllipseArcFixtures.begin(), thinEllipseArcFixtures.end(),
                                                  [i](const auto& fixture) { return fixture.first == i; });
-        const double sourceDistance = i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
+        const bool negativeStationary = std::find(negativeStationarySplinePointsFixtures.begin(),
+                                                  negativeStationarySplinePointsFixtures.end(), i) !=
+            negativeStationarySplinePointsFixtures.end();
+        const double sourceDistance = negativeStationary                                                      ? -.25
+            : i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
             ? scaledLineDistances[i - scaledLineFixtureStart]
             : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->second
             : thinEllipseCusp != thinEllipseCuspFixtures.end()                           ? thinEllipseCusp->second
@@ -1304,10 +1319,21 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
         if (i == stationarySplinePointsFixture || i == multipleStationarySplinePointsFixture ||
             i == stationaryPlateauSplinePointsFixture || i == leadingStationarySplinePointsFixture ||
-            i == trailingStationarySplinePointsFixture) {
-            CHECK(result.ordinary.size() == 1);
-            REQUIRE(result.ordinary.size() == 1);
-            CHECK(std::holds_alternative<RS_SplineData>(result.ordinary.front()));
+            i == trailingStationarySplinePointsFixture ||
+            std::find(negativeStationarySplinePointsFixtures.begin(), negativeStationarySplinePointsFixtures.end(), i) !=
+                negativeStationarySplinePointsFixtures.end()) {
+            if (std::find(negativeStationarySplinePointsFixtures.begin(), negativeStationarySplinePointsFixtures.end(), i) !=
+                negativeStationarySplinePointsFixtures.end()) {
+                REQUIRE_FALSE(result.ordinary.empty());
+                for (const auto& branch : result.ordinary)
+                    CHECK(((std::holds_alternative<RS_SplineData>(branch)) ||
+                           (std::holds_alternative<Req::Segment>(branch))));
+            }
+            else {
+                CHECK(result.ordinary.size() == 1);
+                REQUIRE(result.ordinary.size() == 1);
+                CHECK(std::holds_alternative<RS_SplineData>(result.ordinary.front()));
+            }
         }
         if (i == closedControlPointsFixture) {
             REQUIRE(result.ordinary.size() == 1);
@@ -1755,6 +1781,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 offset.coord = {10.0 + scale, -20.0 + 3.0 * scale};
                 offset.sideFallback = offset.coord;
             }
+        if (std::find(negativeStationarySplinePointsFixtures.begin(), negativeStationarySplinePointsFixtures.end(), i) !=
+            negativeStationarySplinePointsFixtures.end())
+            offset.distance = -0.25;
             offset.number = 1;
             offset.multipleCopies = true;
             offset.keepOriginals = true;
