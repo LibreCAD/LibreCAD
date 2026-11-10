@@ -32917,5 +32917,7 @@ matrix's operation-7 generation, operation-8 cache admission, replacement,
 Produce, and five DXF/DWG lanes, including the distinct parabola fixtures.
 LibreDWG's DWG reads are part of this test case. CMake reconfiguration emits
 existing unresolved translation locale-code warnings; they do not prevent
-the build. The increased timeout remains a bounded test accommodation, not
-evidence of faster geometry or completion of untested source variants.
+the build. The registered full CTest selection `offset_worker_client` also
+passes in 110.61 seconds with zero failures under the 140-second CTest cap.
+The increased timeout remains a bounded test accommodation, not evidence of
+faster geometry or completion of untested source variants.
