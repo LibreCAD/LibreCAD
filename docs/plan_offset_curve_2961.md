@@ -13756,6 +13756,26 @@ validation conversation, but were not saved as durable screenshot files; the
 Qt app-window DPR was not measured. The independent W171 viewport remains
 unqualified.
 
+## 817. Qualify Seven-fit-point Tangent Spline-points (2026-11-10)
+
+Added a seven-fit-point open profile with consistent start/end tangent
+constraints between the existing six- and eight-point cases. Its direct
+exact-normal checks pass for both signed sides within the requested geometry
+tolerance; the expanded focused direct test passes 13,254 assertions.
+
+The positive- and negative-distance seven-point sources pass worker generation,
+cache admission, source replacement, Produce, R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG. Available `dwgread` independently parses both generated DWGs.
+The complete worker-client family test passes 1,431,751 assertions.
+
+This additional matrix work took the previous 125-second internal watchdog
+past its limit by 68 ms. Raised the bounded worker-client suite watchdog to 150
+seconds and the CTest timeout to 165 seconds; the test remains serial and both
+limits remain bounded. The exact rerun passes, both targets build, and `git
+diff --check` passes. The explicitly qualified two-ended fit counts are now
+3, 4, 5, 6, 7, and 8; other counts, fit distributions, tangents, and topologies
+remain open.
+
 At 13:10 UTC, exact PR head `503cdab89d56f7fa08f8ac60b11463b9fb4cdf1e` had 19
 passing checks, 7 configured skips, and zero failures. BuildMacOS run
 `41618321172` passed, including the mounted-DMG runtime smoke in Build and

@@ -1181,6 +1181,8 @@ TEST_CASE("Consistent tangent-constrained spline-points can be offset",
              std::vector<RS_Vector>{{0, 0}, {2, 3}, {4, 0}},
              std::vector<RS_Vector>{{0, 0}, {1, 2}, {3, 1.5}, {4, 0}, {6, -2}},
              std::vector<RS_Vector>{{0, 0}, {1, 1}, {2, 2}, {3, 1}, {4, -1}, {5, 0}},
+             std::vector<RS_Vector>{{0, 0}, {1, 2}, {2, 2.5}, {3, 1.5}, {4, 0},
+                                    {5, -1}, {6, 0}},
              std::vector<RS_Vector>{{0, 0}, {1, 1.5}, {2, 2}, {3, 1}, {4, -1},
                                     {5, -2}, {6, -1}, {7, 0}}}) {
         LC_SplinePointsData profileData{false, false};
