@@ -29802,7 +29802,7 @@ these rows do not imply every parameter/domain is supported):
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
-| Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks for all valid four-point candidates in one sample and endpoint tangent slopes +/-1e-4..1e-8; one four-point candidate and the 1e-8 near-parallel profile through worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
+| Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples and endpoint tangent slopes +/-1e-4..1e-8; two four-point candidates and the 1e-8 near-parallel profile pass worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct topology/offset tests; closed linear and closed mixed-bulge typed UI replacement; worker/cache/Produce and five file lanes | Segment-count/topology limits, arc sweep edge cases, boundary picks and wider self-intersection/collapse oracles |
 
@@ -31883,6 +31883,24 @@ test targets build; scoped clang-format checks and `git diff --check` pass.
 Implementation/test commit `d2e16a583` (`test(offset): broaden hyperbola
 oracle matrix`). This is one bounded variant receipt, not completion of the
 hyperbola family or the all-family roadmap.
+
+## 748. Add a Second Four-point Parabola Through Worker Persistence (2026-11-10)
+
+Added a second quadratic profile with asymmetric endpoint/control geometry to
+the `From4Points` direct-normal tests. The test captures the reconstructed
+entity as the distinct `Parabola` source kind and checks both signed sides
+against the independent analytic source evaluator. The same reconstructed
+candidate is added to the real worker-family matrix and is carried through
+generation, cache validation/replacement, Produce, and the five internal
+R14/R2000/R2018 DXF/DWG lanes. LibreDWG independently parses both DWGs.
+
+Validation: both four-point reconstruction oracle cases pass 2,240 assertions;
+the expanded real-worker family matrix passes 1,103,219 assertions/1 case
+with LibreDWG enabled. Both test targets build; scoped clang-format checks and
+`git diff --check` pass. This qualifies a second concrete four-point profile,
+not arbitrary four-point samples, near-degenerate reconstructions, or external
+ODA/AutoCAD acceptance. Test commit `f1a2cbfea` (`test(offset): qualify
+another parabola reconstruction`).
 
 ## 733. Initial Source-picker Request (2026-11-10)
 
