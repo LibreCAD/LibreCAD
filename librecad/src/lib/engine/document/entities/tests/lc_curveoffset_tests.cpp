@@ -1424,6 +1424,7 @@ TEST_CASE("Open arc-line polylines follow exact normals across tangent and corne
     };
     verifyProfile(1.0);
     verifyProfile(0.2);
+    verifyProfile(2.0);
 }
 
 TEST_CASE("Major and minor bulge offsets follow exact segment normals",
