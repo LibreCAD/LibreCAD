@@ -31592,3 +31592,70 @@ Test commit: `f5ef89f4a` (`test(offset): qualify 3-to-1 ellipse cusp arcs`).
 
 This closes only the recorded translated, rotated forward-arc 3:1 triplet.
 Other transforms, reversed arcs, sweeps, and distances remain open.
+
+## 733. Reconcile Source-picker Type Changes and Parabola (2026-11-10)
+
+The latest request is explicitly a Properties source-picker requirement: while
+the user is choosing a replacement curve, they must still be able to change
+the requested source family; the candidate list must then reflect that family.
+Parabola must be offered as its own family, and the picker must cover every
+kind currently modeled by `LC_OffsetSourceGeometry::SupportedKinds`:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline.
+
+This is a re-confirmation of the implemented picker contract, not a request for
+a second selector. Keep implementation and verification stepwise:
+
+1. Populate the family selector from `SupportedKinds`; recognize
+   `LC_Parabola` before its `LC_SplinePoints` base so filtering, capture, and
+   replacement preserve the distinct parabola tag.
+2. Keep the selector enabled throughout replacement picking. Changing it
+   refreshes eligible candidates only; it must not change the current source,
+   generated cache, highlight, or document selection.
+3. On a valid pick, atomically capture the candidate's actual typed geometry
+   and replace the source through the existing guarded worker-edit path.
+   Cancellation, stale picks, and ineligible candidates leave the source and
+   cache unchanged.
+4. Test type changes during an active pick, every modeled family, transitions
+   into and out of parabola, source highlighting, and cancellation/refusal.
+   When a new source kind is added to `SupportedKinds`, extend these cases from
+   that canonical inventory rather than adding a UI-only kind list.
+5. Track geometry generation, worker/cache admission, editable replacement,
+   and applicable DXF/DWG round-trips separately for each eligible variant.
+   Selector availability is UI coverage only; it does not certify those
+   independent end-to-end support obligations.
+
+The source-picker integration regression already covers the current nine
+families, active type filtering, parabola identity, highlighting, and
+non-mutating cancellation/refusal (section 716 records the latest reported
+result). No duplicate widget or parabola-only UI slice is open. The remaining
+work is the per-variant end-to-end support matrix and any newly modeled family
+that is not yet included in `SupportedKinds`.
+
+## 734. Qualify a Rotated 2:1 Elliptic-arc Cusp Triplet (2026-11-10)
+
+Added a translated, 30-degree forward arc with major radius `100`, ratio `0.5`
+(2:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature radius is
+`a * ratio^2 = 25`; distances `22.5`, `25`, and `27.5` cover below, at, and
+above the threshold. The below/at cases materialize and pass the independent
+distance/tangent and materialized-intersection checks. Above the threshold,
+direct branch construction still reports three candidates, while trimmed
+materialization is valid but empty at the trim-boundary stage.
+
+The real-worker fixture follows both phases explicitly: generation returns the
+three candidate branches, then Produce reports `Vanished` with zero copies and
+empty add/delete batches. It does not claim a persisted offset for the vanished
+case. The two non-vanished profiles continue through the existing real-worker
+matrix, including cache admission, replacement/Produce, DXF/DWG lanes, and
+independent DWG parsing.
+
+Validation: focused direct case passes 7,247 assertions; the full direct
+`[curve-offset][ellipse][cusp]` selection passes 281,608 assertions/12 cases.
+The focused source-family worker test passes 1,057,261 assertions/1 case; the
+full worker-client suite passes 1,063,722 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Both test targets build, scoped
+clang-format checks pass, and `git diff --check` passes. Test commit:
+`c626f9de4` (`test(offset): qualify 2-to-1 ellipse cusp arcs`).
+
+This closes only the recorded translated, rotated forward-arc 2:1 triplet.
+Other transforms, reversed arcs, sweeps, and distances remain open.
