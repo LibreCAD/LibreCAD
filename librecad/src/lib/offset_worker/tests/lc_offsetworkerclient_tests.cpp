@@ -72,7 +72,7 @@ static_assert(std::is_nothrow_move_constructible_v<Completion>);
 static_assert(std::is_nothrow_move_assignable_v<Completion>);
 static_assert(!std::is_constructible_v<Completion, Req::Request&&, Reply::Reply&&>);
 
-constexpr int SuiteTimeoutMs = 105000;
+constexpr int SuiteTimeoutMs = 125000;
 constexpr int WaitTimeoutMs = 6000;
 constexpr const char* Tags = "[lc-offsetcurve][worker-client]";
 

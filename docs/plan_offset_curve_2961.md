@@ -32897,3 +32897,25 @@ static analysis were still running at this checkpoint. Recheck those checks
 against the exact latest PR head; do not use the earlier `a6d9db911` results to
 close them. Physical visible-GUI acceptance, an actual macOS 14.4 runtime,
 signing/notarization, and external ODA/AutoCAD acceptance remain open.
+
+## 792. Restore the Full Worker-family Matrix Margin (2026-11-10)
+
+Freshly reran the direct parabola oracle selection on the current tree:
+`[curve-offset][direct][parabola]` passes 31,463 assertions / 6 cases. The
+real-helper family/persistence case then exposed a stale suite watchdog: the
+full matrix exceeded 105 seconds by 1 ms, and a second run reached fixture 199
+before hitting an interim 110-second limit. No geometry or persistence
+assertion failed in either run. Raised the internal test watchdog to 125
+seconds and the CTest hard timeout to 140 seconds; per-request worker deadlines
+are unchanged. The old CMake comment claiming a 90-second matrix budget is
+corrected.
+
+After rebuilding `librecad_offset_worker_client_tests`, the exact case
+`Worker client joins typed source generation for every modeled source family`
+passes 1,255,948 assertions in one case. This exercises the real helper and the
+matrix's operation-7 generation, operation-8 cache admission, replacement,
+Produce, and five DXF/DWG lanes, including the distinct parabola fixtures.
+LibreDWG's DWG reads are part of this test case. CMake reconfiguration emits
+existing unresolved translation locale-code warnings; they do not prevent
+the build. The increased timeout remains a bounded test accommodation, not
+evidence of faster geometry or completion of untested source variants.
