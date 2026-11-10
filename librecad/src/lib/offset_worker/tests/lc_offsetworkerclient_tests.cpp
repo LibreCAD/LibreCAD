@@ -726,6 +726,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{0.0, 0.0}, {major, 0.0}, 1e-4, 0.0, 0.0, false}});
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
+    const std::size_t translatedThinEllipseFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
+    thinEllipseFixtures.emplace_back(translatedThinEllipseFixture, 0.1);
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
@@ -1275,19 +1278,33 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 for (std::size_t weight = 0; weight < expected.weights.size(); ++weight)
                     CHECK(std::abs(actual.weights[weight] - expected.weights[weight]) <=
                           1e-8 * std::max(1.0, std::abs(expected.weights[weight])));
+                const auto thinEllipse = std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [&](const auto& fixture) {
+                    return fixture.first == persistedGeometry[i].sourceFixture;
+                });
+                if (thinEllipse != thinEllipseFixtures.end()) {
+                    const double major = 1000.0 * thinEllipse->second;
+                    const auto ulp = [](const double value) {
+                        return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) - std::abs(value);
+                    };
+                    const auto checkLocalPoint = [&](const RS_Vector& actualPoint, const RS_Vector& expectedPoint) {
+                        const double tolerance = std::max({1e-9 * major, 64.0 * ulp(expectedPoint.x), 64.0 * ulp(expectedPoint.y)});
+                        CHECK(std::abs(actualPoint.x - expectedPoint.x) <= tolerance);
+                        CHECK(std::abs(actualPoint.y - expectedPoint.y) <= tolerance);
+                    };
+                    for (std::size_t point = 0; point < expected.controlPoints.size(); ++point)
+                        checkLocalPoint(actual.controlPoints[point], expected.controlPoints[point]);
+                    for (std::size_t point = 0; point < expected.fitPoints.size(); ++point)
+                        checkLocalPoint(actual.fitPoints[point], expected.fitPoints[point]);
+                }
             }
-            if (persistedGeometry[i].sourceFixture >= scaledLineFixtureStart &&
-                persistedGeometry[i].sourceFixture < scaledLineFixtureEnd) {
+            if (persistedGeometry[i].sourceFixture >= scaledLineFixtureStart && persistedGeometry[i].sourceFixture < scaledLineFixtureEnd) {
                 REQUIRE(persistedGeometry[i].type == RS2::EntityLine);
-                const double scale = scaledLineScales[
-                    persistedGeometry[i].sourceFixture - scaledLineFixtureStart];
+                const double scale = scaledLineScales[persistedGeometry[i].sourceFixture - scaledLineFixtureStart];
                 const auto ulp = [](const double value) {
-                    return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) -
-                           std::abs(value);
+                    return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) - std::abs(value);
                 };
                 const auto checkScaledLineVector = [&](const RS_Vector& actual, const RS_Vector& expected) {
-                    const double tolerance = std::max({1e-12 * scale, 64.0 * ulp(expected.x),
-                                                       64.0 * ulp(expected.y)});
+                    const double tolerance = std::max({1e-12 * scale, 64.0 * ulp(expected.x), 64.0 * ulp(expected.y)});
                     CHECK(std::abs(actual.x - expected.x) <= tolerance);
                     CHECK(std::abs(actual.y - expected.y) <= tolerance);
                 };
@@ -1299,8 +1316,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
 
     const qint64 linearRequestId = nextRequestId;
     Receipts linearReceipts;
-    REQUIRE(owned.get().submit({token(linearRequestId), Req::GenerateSource{linearDefinition, {}}},
-        Client::Mode::Commit, linearReceipts.into(0)));
+    REQUIRE(owned.get().submit({token(linearRequestId), Req::GenerateSource{linearDefinition, {}}}, Client::Mode::Commit,
+                               linearReceipts.into(0)));
     rt.until([&] { return linearReceipts.calls[0] != 0; });
     auto& linearCompletion = completed(linearReceipts.at(0), linearRequestId, 7);
     auto linearEditable = linearCompletion.nativeSource(attributes);
