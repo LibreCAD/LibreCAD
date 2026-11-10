@@ -31039,3 +31039,25 @@ the 1,048,576 hard cap, then test this rotated cusp at the default cap through
 accurate direct geometry, worker/cache admission, replacement, Produce, and
 all five DXF/DWG lanes. Do not infer trim-overlay performance from the separate
 source/offset noding query.
+
+## 714. Split Trim Overlay Pair Work (2026-11-09)
+
+Extended the rotated-cusp regression to classify the exhausted `TrimBoundary`
+query by its intersection-engine counters. At the production cap of 1,048,576
+box pairs, candidate hierarchy traversal examines only 967 pairs; refinement
+examines the rest, exceeding 99% of the cap. Candidate, refinement, and
+certificate counters reconcile to the reported total. The test asserts these
+bounded relationships rather than baking in the exact candidate count, which
+may vary slightly with floating-point/compiler behavior.
+
+Validation: the focused rotated-cusp case passes 10 assertions/1 case, and
+`git diff --check` passes. Test commit: `7ece3fbce` (`test(offset): classify
+trim pair-budget exhaustion`).
+
+Implementation target refined: investigate the trim-overlay refinement boxes
+that remain unresolved at the cusp-scale near-contact. Preserve the exact
+interval/root guarantees and default hard cap; do not spend effort on BVH
+candidate generation as the current data shows it consumes less than 0.1% of
+the budget. Record the repeatedly refined segment/parameter domains next so
+the numerical fix has a concrete failing shape and remains bounded for hostile
+inputs.
