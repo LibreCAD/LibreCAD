@@ -31470,3 +31470,27 @@ pass repository clang-format checks and `git diff --check`. Test commit:
 
 This closes only the translated 30-degree reversed-arc threshold triplet.
 Other transformed partial arcs and eccentricity ratios remain open.
+
+## 729. Qualify a Rotated 100:1 Elliptic-arc Cusp Triplet (2026-11-09)
+
+Added the first adjacent eccentricity ratio beyond `1e-4`: a translated,
+30-degree forward arc with major radius `100`, ratio `1e-3` (100:1), and
+parameters `[-0.2, 0.2]`. Its major-vertex curvature radius is
+`a * ratio^2 = 1e-4`; offsets at `0.9e-4`, `1.0e-4`, and `1.1e-4` all
+materialize as one open chain. The independent distance/tangent and
+feature-local topology checks pass, as does materialized-output intersection
+validation.
+
+The same three scaled distances run through the worker, cache, replacement,
+Produce, five DXF/DWG persistence lanes, and independent LibreDWG parsing for
+both DWG outputs.
+
+Validation: the focused 100:1 arc test passes 17,398 assertions; the full
+direct `[curve-offset][ellipse][cusp]` selection passes 235,386 assertions/8
+cases. The full worker-client suite passes 1,214,747 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Touched ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `ccba87199`
+(`test(offset): qualify 100-to-1 ellipse cusp arcs`).
+
+This closes only the recorded rotated 100:1 arc triplet. Other ratios,
+translations, orientations, and sweep directions remain open.
