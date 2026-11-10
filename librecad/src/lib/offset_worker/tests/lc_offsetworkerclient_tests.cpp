@@ -1098,6 +1098,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     stationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
     const std::size_t stationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{stationarySplinePoints});
+    LC_SplinePointsData closedControlPoints{true, false};
+    closedControlPoints.useControlPoints = true;
+    closedControlPoints.controlPoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    const std::size_t closedControlPointsFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{closedControlPoints});
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
@@ -1147,6 +1152,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
         if (i == stationarySplinePointsFixture) {
             CHECK(result.ordinary.size() == 1);
+            REQUIRE(result.ordinary.size() == 1);
+            CHECK(std::holds_alternative<RS_SplineData>(result.ordinary.front()));
+        }
+        if (i == closedControlPointsFixture) {
             REQUIRE(result.ordinary.size() == 1);
             CHECK(std::holds_alternative<RS_SplineData>(result.ordinary.front()));
         }
