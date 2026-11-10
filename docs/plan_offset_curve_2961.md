@@ -33347,11 +33347,10 @@ independently parses both generated DWGs. Both targets build and `git diff
 --check` passes.
 
 This receipt is limited to the recorded profile and rigid/uniform transform.
-Nonuniform scaling can change the fit-control reconstruction and invalidate
-the stored endpoint tangent directions, so it is not included in this
-qualification. Other fit counts, tangent directions, topologies, scales,
-translations, nonuniform transforms, and stationary/tangent combinations
-remain open and must be qualified or fail-closed independently.
+The nonuniform-scale/shear metadata inconsistency observed during this work is
+implemented and qualified in section 814. Other fit counts, tangent
+directions, topologies, scales, translations, and stationary/tangent
+combinations remain open and must be qualified or fail-closed independently.
 
 ## 813. Qualify One-ended Tangent-fit Spline-points (2026-11-10)
 
@@ -33367,6 +33366,33 @@ worker family matrix. Generation, cache admission, replacement, Produce, and
 R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes pass; `dwgread` independently
 parses both generated DWGs. The full family test passes 1,340,346 assertions.
 Both test targets build and `git diff --check` passes. This qualifies only the
-recorded four-point geometry and the two zero-tangent endpoint variants;
-other fit counts, tangent magnitudes/directions, source shapes, transforms,
-and stationary/tangent combinations remain open.
+recorded four-point geometry and the two zero-tangent endpoint variants; other
+fit counts, tangent magnitudes/directions, source shapes, transforms, and
+stationary/tangent combinations remain open.
+
+## 814. Preserve Tangent Consistency After Nonuniform Fit-point Transforms (2026-11-10)
+
+Fixed `LC_SplinePoints::scale()` and `shear()` so a previously consistent
+tangent-constrained fit-point source remains self-consistent after its fit
+control net is rebuilt. When the incoming tangent metadata was valid, each
+nonzero endpoint constraint is refreshed from the transformed curve's actual
+endpoint jet; an endpoint intentionally left unconstrained remains zero. If
+the transformed curve cannot provide the endpoint jets, stale tangent
+constraint metadata is cleared rather than retained in a contradictory state.
+Pre-existing inconsistent tangent metadata keeps the established vector
+transform behavior.
+
+Added direct regressions for nonuniform scale `(1.5, 0.75)` and shear `0.4`,
+including two-ended, start-only, and end-only constraints. They assert the
+post-transform tangent contract, preservation of unconstrained zero endpoints,
+and exact-normal offsets on both signed sides. The fit-tangent entity tests
+pass 30 assertions; the direct curve-offset test passes 5,824 assertions.
+
+Added nonuniformly scaled and sheared profiles, each with positive and
+negative signed distances, to the real worker-client matrix. Generation,
+cache admission, replacement, Produce, and R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG all pass. `dwgread` independently parses both generated DWGs. The
+complete family matrix passes 1,383,166 assertions. Both test targets build
+and `git diff --check` passes. This qualifies the recorded profile and
+transform values; other fit counts, tangent combinations, transform factors,
+and stationary/source-topology interactions remain open.

@@ -304,6 +304,43 @@ TEST_CASE("LC_SplinePoints admits only tangent metadata matching its represented
     CHECK_FALSE(spline.fitTangentsMatchCurve());
 }
 
+TEST_CASE("LC_SplinePoints transforms keep constrained fit tangents consistent",
+          "[spline][LC_SplinePoints][fit-tangents][transform]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0.0, 0.0}, {1.0, 2.0}, {3.0, 1.5}, {4.0, 0.0}};
+    LC_SplinePoints source{nullptr, data};
+    LC_CurveJet startJet;
+    LC_CurveJet endJet;
+    REQUIRE(source.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet));
+    REQUIRE(source.tryEvaluateJet(static_cast<double>(source.getSegmentCount()),
+                                  LC_CurveEvaluationSide::Left, endJet));
+    source.getData().fitTangentsConstrained = true;
+    source.getData().fitTolerance = 1e-10;
+    source.getData().fitStartTangent = startJet.first;
+    source.getData().fitEndTangent = endJet.first;
+    REQUIRE(source.fitTangentsMatchCurve());
+
+    LC_SplinePoints scaled{nullptr, source.getData()};
+    scaled.scale({0.0, 0.0}, {1.5, 0.75});
+    CHECK(scaled.fitTangentsMatchCurve());
+
+    LC_SplinePoints sheared{nullptr, source.getData()};
+    sheared.shear(0.4);
+    CHECK(sheared.fitTangentsMatchCurve());
+
+    LC_SplinePoints startOnly{nullptr, source.getData()};
+    startOnly.getData().fitEndTangent = {0.0, 0.0};
+    startOnly.scale({0.0, 0.0}, {1.5, 0.75});
+    CHECK(startOnly.fitTangentsMatchCurve());
+    CHECK(startOnly.getData().fitEndTangent.magnitude() == 0.0);
+
+    LC_SplinePoints endOnly{nullptr, source.getData()};
+    endOnly.getData().fitStartTangent = {0.0, 0.0};
+    endOnly.shear(0.4);
+    CHECK(endOnly.fitTangentsMatchCurve());
+    CHECK(endOnly.getData().fitStartTangent.magnitude() == 0.0);
+}
+
 TEST_CASE("LC_SplinePoints: open control-net spline ends at its first and last control points",
           "[lc-hatchfix][moments]") {
     // #2559 regression precursor: before update() has run on an open

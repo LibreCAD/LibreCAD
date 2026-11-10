@@ -1196,6 +1196,16 @@ TEST_CASE("Consistent tangent-constrained spline-points can be offset",
     REQUIRE(transformed.fitTangentsMatchCurve());
     checkBothSides(transformed);
 
+    LC_SplinePoints nonuniformlyScaled{nullptr, source.getData()};
+    nonuniformlyScaled.scale({0, 0}, {1.5, 0.75});
+    REQUIRE(nonuniformlyScaled.fitTangentsMatchCurve());
+    checkBothSides(nonuniformlyScaled);
+
+    LC_SplinePoints sheared{nullptr, source.getData()};
+    sheared.shear(0.4);
+    REQUIRE(sheared.fitTangentsMatchCurve());
+    checkBothSides(sheared);
+
     const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
     const auto left = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
     source.getData().fitEndTangent *= -1.0;

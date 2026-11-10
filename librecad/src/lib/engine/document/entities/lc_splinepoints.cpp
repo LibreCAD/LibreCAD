@@ -54,6 +54,30 @@ namespace {
         tangent.z *= factor.z;
     }
 
+    void refreshFitTangentDirections(LC_SplinePoints& spline) {
+        auto& data = spline.getData();
+        if (!data.fitTangentsConstrained) return;
+        const bool hasStartTangent = data.fitStartTangent.magnitude() > 0.0;
+        const bool hasEndTangent = data.fitEndTangent.magnitude() > 0.0;
+        if (!hasStartTangent && !hasEndTangent) return;
+
+        LC_CurveJet startJet;
+        LC_CurveJet endJet;
+        const double endParameter = static_cast<double>(spline.getSegmentCount());
+        if (!(endParameter > 0.0) ||
+            !spline.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, startJet) ||
+            !spline.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, endJet)) {
+            data.fitTangentsConstrained = false;
+            data.fitStartTangent = {0.0, 0.0};
+            data.fitEndTangent = {0.0, 0.0};
+            return;
+        }
+
+        // Refitting after a non-similarity transform can change endpoint directions.
+        if (hasStartTangent) data.fitStartTangent = startJet.first;
+        if (hasEndTangent) data.fitEndTangent = endJet.first;
+    }
+
     RS_Vector getQuadPoint(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2, const double dt) {
         return x1 * (1.0 - dt) * (1.0 - dt) + c1 * 2.0 * dt * (1.0 - dt) + x2 * dt * dt;
     }
@@ -1357,6 +1381,7 @@ void LC_SplinePoints::rotate(const RS_Vector& center, const RS_Vector& angleVect
 }
 
 void LC_SplinePoints::scale(const RS_Vector& center, const RS_Vector& factor) {
+    const bool hadConsistentFitTangents = fitTangentsMatchCurve();
     for (auto& v : m_data.splinePoints) {
         v.scale(center, factor);
     }
@@ -1366,6 +1391,7 @@ void LC_SplinePoints::scale(const RS_Vector& center, const RS_Vector& factor) {
     transformTangentByScale(m_data.fitStartTangent, factor);
     transformTangentByScale(m_data.fitEndTangent, factor);
     update();
+    if (hadConsistentFitTangents) refreshFitTangentDirections(*this);
 }
 
 void LC_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
@@ -1381,6 +1407,7 @@ void LC_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisP
 }
 
 RS_Entity& LC_SplinePoints::shear(const double k) {
+    const bool hadConsistentFitTangents = fitTangentsMatchCurve();
     for (auto& v : m_data.splinePoints) {
         v.shear(k);
     }
@@ -1390,6 +1417,7 @@ RS_Entity& LC_SplinePoints::shear(const double k) {
     m_data.fitStartTangent.shear(k);
     m_data.fitEndTangent.shear(k);
     update();
+    if (hadConsistentFitTangents) refreshFitTangentDirections(*this);
     return *this;
 }
 

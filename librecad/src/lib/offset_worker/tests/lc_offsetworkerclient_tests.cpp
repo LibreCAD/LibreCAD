@@ -582,6 +582,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(transformedTangentFitPointEntity.fitTangentsMatchCurve());
     const LC_SplinePointsData transformedTangentFitPoints =
         transformedTangentFitPointEntity.getData();
+    LC_SplinePoints nonuniformTangentFitPointEntity{nullptr, tangentFitPoints};
+    nonuniformTangentFitPointEntity.scale({0, 0}, {1.5, 0.75});
+    REQUIRE(nonuniformTangentFitPointEntity.fitTangentsMatchCurve());
+    const LC_SplinePointsData nonuniformTangentFitPoints =
+        nonuniformTangentFitPointEntity.getData();
+    LC_SplinePoints shearedTangentFitPointEntity{nullptr, tangentFitPoints};
+    shearedTangentFitPointEntity.shear(0.4);
+    REQUIRE(shearedTangentFitPointEntity.fitTangentsMatchCurve());
+    const LC_SplinePointsData shearedTangentFitPoints =
+        shearedTangentFitPointEntity.getData();
     LC_SplinePointsData startOnlyTangentFitPoints = tangentFitPoints;
     startOnlyTangentFitPoints.fitEndTangent = {0, 0};
     LC_SplinePoints startOnlyTangentFitEntity{nullptr, startOnlyTangentFitPoints};
@@ -723,6 +733,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{tangentFitPoints});
     const std::size_t transformedTangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{transformedTangentFitPoints});
+    const std::size_t nonuniformTangentFitPointFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{nonuniformTangentFitPoints});
+    const std::size_t shearedTangentFitPointFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{shearedTangentFitPoints});
     const std::size_t startOnlyTangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{startOnlyTangentFitPoints});
     const std::size_t endOnlyTangentFitPointFixture = sources.size();
@@ -1250,6 +1264,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     appendNegativeSplinePointsFixture(tangentFitPoints);
     const std::size_t negativeTransformedTangentFitPointFixture = sources.size();
     appendNegativeSplinePointsFixture(transformedTangentFitPoints);
+    const std::size_t negativeNonuniformTangentFitPointFixture = sources.size();
+    appendNegativeSplinePointsFixture(nonuniformTangentFitPoints);
+    const std::size_t negativeShearedTangentFitPointFixture = sources.size();
+    appendNegativeSplinePointsFixture(shearedTangentFitPoints);
     const std::size_t negativeStartOnlyTangentFitPointFixture = sources.size();
     appendNegativeSplinePointsFixture(startOnlyTangentFitPoints);
     const std::size_t negativeEndOnlyTangentFitPointFixture = sources.size();
@@ -1528,7 +1546,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                     CHECK(actual->reversed == expected->reversed);
                 }
                 else if (i == transformedTangentFitPointFixture ||
-                         i == negativeTransformedTangentFitPointFixture) {
+                         i == negativeTransformedTangentFitPointFixture ||
+                         i == nonuniformTangentFitPointFixture ||
+                         i == negativeNonuniformTangentFitPointFixture ||
+                         i == shearedTangentFitPointFixture ||
+                         i == negativeShearedTangentFitPointFixture) {
                     const auto* actual = std::get_if<LC_SplinePointsData>(
                         &editable->sourceDefinition()->source.value);
                     const auto* expected = std::get_if<LC_SplinePointsData>(
@@ -1889,6 +1911,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == tangentFitPointFixture || i == negativeTangentFitPointFixture ||
             i == transformedTangentFitPointFixture ||
             i == negativeTransformedTangentFitPointFixture ||
+            i == nonuniformTangentFitPointFixture ||
+            i == negativeNonuniformTangentFitPointFixture ||
+            i == shearedTangentFitPointFixture ||
+            i == negativeShearedTangentFitPointFixture ||
             i == startOnlyTangentFitPointFixture ||
             i == negativeStartOnlyTangentFitPointFixture ||
             i == endOnlyTangentFitPointFixture ||
@@ -1902,6 +1928,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const RS_Vector normal{-jet.first.y / speed, jet.first.x / speed};
             const double pickSide =
                 i == tangentFitPointFixture || i == transformedTangentFitPointFixture ||
+                i == nonuniformTangentFitPointFixture || i == shearedTangentFitPointFixture ||
                 i == startOnlyTangentFitPointFixture || i == endOnlyTangentFitPointFixture
                     ? 1.0 : -1.0;
             offset.coord = jet.point + normal * (pickSide * 0.5);
