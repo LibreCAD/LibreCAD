@@ -61,28 +61,23 @@ double gap(const LC_Interval& ax, const LC_Interval& ay, const LC_Interval& bx, 
     return std::hypot(gx, gy);
 }
 
-/**
- * The derivative box excludes zero and its directions span less than a right
- * angle: a curve piece with such tangents is monotone along their mean
- * direction, so it cannot cross itself, nor a neighbour whose tangents it shares
- * at their common end.
- */
-bool isMonotone(const LC_Interval& dx, const LC_Interval& dy) {
+/** Prove that one linear projection is strictly monotone over the derivative box. */
+bool hasStrictProjection(const LC_Interval& dx, const LC_Interval& dy) {
     if (!dx.isValid() || !dy.isValid() || !std::isfinite(dx.width()) || !std::isfinite(dy.width()) ||
         (dx.containsZero() && dy.containsZero())) {
         return false;
     }
-    const double centre = std::atan2(mid(dy), mid(dx));
-    double lo = 0.0;
-    double hi = 0.0;
-    for (const double x : {dx.lo(), dx.hi()}) {
-        for (const double y : {dy.lo(), dy.hi()}) {
-            const double delta = std::remainder(std::atan2(y, x) - centre, 2.0 * M_PI);
-            lo = std::min(lo, delta);
-            hi = std::max(hi, delta);
-        }
+    const double x = dx.lo() > 0.0 ? dx.lo() : dx.hi() < 0.0 ? dx.hi() : 0.0;
+    const double y = dy.lo() > 0.0 ? dy.lo() : dy.hi() < 0.0 ? dy.hi() : 0.0;
+    const double scale = std::max(std::abs(x), std::abs(y));
+    if (!(scale > 0.0) || !std::isfinite(scale)) {
+        return false;
     }
-    return hi - lo < 0.5 * M_PI;
+    return (LC_Interval::point(x / scale) * dx + LC_Interval::point(y / scale) * dy).isPositive();
+}
+
+bool isMonotone(const LC_Interval& dx, const LC_Interval& dy) {
+    return hasStrictProjection(dx, dy);
 }
 
 /**
@@ -1478,16 +1473,7 @@ private:
         return true;
     }
     static bool projection(const Bounds& bounds) {
-        const double x = centre(bounds.dx);
-        const double y = centre(bounds.dy);
-        const double scale = std::max(std::abs(x), std::abs(y));
-        if (!(scale > 0.0) || !std::isfinite(scale)) {
-            return false;
-        }
-        // The direction is an arbitrary exact floating vector; positivity is proved outward.
-        const LC_Interval derivative = LC_Interval::point(x / scale) * bounds.dx +
-                                       LC_Interval::point(y / scale) * bounds.dy;
-        return derivative.isPositive();
+        return hasStrictProjection(bounds.dx, bounds.dy);
     }
     static bool disjoint(const Bounds& a, const Bounds& b) {
         return a.x.hi() < b.x.lo() || b.x.hi() < a.x.lo() || a.y.hi() < b.y.lo() || b.y.hi() < a.y.lo();
