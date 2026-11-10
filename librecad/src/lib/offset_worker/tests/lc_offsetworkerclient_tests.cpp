@@ -765,7 +765,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : profile == 17                                    ? std::vector<double>{-0.9e-6}
             : profile == 18                                    ? std::vector<double>{-1.0e-6}
             : profile == 19                                    ? std::vector<double>{0.9e-6, 1.0e-6, 1.1e-6}
-            : profile == 20                                    ? std::vector<double>{-1.0e-6}
+            : profile == 20                                    ? std::vector<double>{-0.9e-6, -1.0e-6, -1.1e-6}
             : profile == 21                                    ? std::vector<double>{-0.9e-6, -1.0e-6, -1.1e-6}
             : profile == 7 || profile == 8                     ? std::vector<double>{1.1e-6}
                                                                : std::vector<double>{0.5e-6};
