@@ -29803,7 +29803,7 @@ these rows do not imply every parameter/domain is supported):
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks for all valid four-point candidates in one sample and endpoint tangent slopes +/-1e-4..1e-8; one four-point candidate and the 1e-8 near-parallel profile through worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
-| Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct branch/curvature tests; typed worker/cache/Produce and five file lanes | Branch orientation, vertex/seam boundaries, extreme interval/scale and persistence variants |
+| Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct topology/offset tests; closed linear and closed mixed-bulge typed UI replacement; worker/cache/Produce and five file lanes | Segment-count/topology limits, arc sweep edge cases, boundary picks and wider self-intersection/collapse oracles |
 
 This closes the immediate worker/persistence gap for the two newly discovered
@@ -31859,44 +31859,38 @@ and `git diff --check` pass. Test commit: `98b9daaa6`
 This closes only the tested partial-arc circular limit profile. Other sweeps,
 translations, orientations, and circular-entity mappings remain open.
 
-## 733. Reconcile Source-picker Type Changes and Parabola (2026-11-10)
+## 747. Extend Bounded-hyperbola Exact-normal and Persistence Coverage (2026-11-10)
 
-The latest request is explicitly a Properties source-picker requirement: while
-the user is choosing a replacement curve, they must still be able to change
-the requested source family; the candidate list must then reflect that family.
-Parabola must be offered as its own family, and the picker must cover every
-kind currently modeled by `LC_OffsetSourceGeometry::SupportedKinds`:
-line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
-and polyline.
+Added two direct hyperbola profiles to the independent analytic-normal oracle:
+a translated, rotated thin left branch over an asymmetric interval and a
+higher-ratio branch with reversed parameter bounds. Both are checked on both
+offset sides at 5% and 20% of the vertex curvature radius; each result must
+remain one branch and meet the requested geometry tolerance. The oracle uses
+the hyperbola's closed-form point/first/second derivative, independent of the
+offset adapter.
 
-This is a re-confirmation of the implemented picker contract, not a request for
-a second selector. Keep implementation and verification stepwise:
+Added the thin rotated left-branch profile to the real worker-family fixture
+matrix. It passes operation-7 generation, operation-8 cache validation and
+replacement, Produce, and R14 DXF/R2000 DXF+DWG/R2018 DXF+DWG round trips.
+LibreDWG independently parses both DWGs. This remains one worker/persistence
+profile and does not establish arbitrary hyperbola bounds, eccentricities,
+curvature limits, or ODA/AutoCAD acceptance.
 
-1. Populate the family selector from `SupportedKinds`; recognize
-   `LC_Parabola` before its `LC_SplinePoints` base so filtering, capture, and
-   replacement preserve the distinct parabola tag.
-2. Keep the selector enabled throughout replacement picking. Changing it
-   refreshes eligible candidates only; it must not change the current source,
-   generated cache, highlight, or document selection.
-3. On a valid pick, atomically capture the candidate's actual typed geometry
-   and replace the source through the existing guarded worker-edit path.
-   Cancellation, stale picks, and ineligible candidates leave the source and
-   cache unchanged.
-4. Test type changes during an active pick, every modeled family, transitions
-   into and out of parabola, source highlighting, and cancellation/refusal.
-   When a new source kind is added to `SupportedKinds`, extend these cases from
-   that canonical inventory rather than adding a UI-only kind list.
-5. Track geometry generation, worker/cache admission, editable replacement,
-   and applicable DXF/DWG round-trips separately for each eligible variant.
-   Selector availability is UI coverage only; it does not certify those
-   independent end-to-end support obligations.
+Validation: focused new direct case passes 10,499 assertions; the full direct
+hyperbola selection passes 48,588 assertions/7 cases. The focused real-worker
+family matrix passes 1,102,173 assertions/1 case with LibreDWG enabled. Both
+test targets build; scoped clang-format checks and `git diff --check` pass.
+Implementation/test commit `d2e16a583` (`test(offset): broaden hyperbola
+oracle matrix`). This is one bounded variant receipt, not completion of the
+hyperbola family or the all-family roadmap.
 
-The source-picker integration regression already covers the current nine
-families, active type filtering, parabola identity, highlighting, and
-non-mutating cancellation/refusal (section 716 records the latest reported
-result). No duplicate widget or parabola-only UI slice is open. The remaining
-work is the per-variant end-to-end support matrix and any newly modeled family
-that is not yet included in `SupportedKinds`.
+## 733. Initial Source-picker Request (2026-11-10)
+
+This initial checkpoint duplicated the type-changing picker and distinct
+parabola contract. It is consolidated into section 739, which records the
+current implementation audit, test expectations, and remaining end-to-end
+support boundary. Keep this historical entry to preserve the work-log
+sequence; section 739 is canonical for any future implementation or review.
 
 ## 734. Qualify a Rotated 2:1 Elliptic-arc Cusp Triplet (2026-11-10)
 
