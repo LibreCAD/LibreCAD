@@ -33864,3 +33864,18 @@ The focused Produce, periodic-spline, and rational-weight cases pass. The full
 99 cases. No production geometry code or work budget changed. Client-level
 generation, cache admission, GUI, and five-format persistence for the exact
 large-origin cusp profile remain separate qualification gates.
+
+## 833. Carry the 10000-to-1 Cusp Through Worker and File Lanes (2026-11-10)
+
+Added the reversed, rotated 10000-to-1 ellipse at `(1e6, -1e6)` to the shared
+typed-source worker-client matrix at `0.9e-6`, `1.0e-6`, and `1.1e-6` inward
+distances. Generation, exact op8 cache validation, source replacement, and
+Produce are exercised; the below-cusp Produce case succeeds, while exact and
+over-cusp Produce return `AmbiguousTopology` with no output or drawing changes.
+Generated results also traverse R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+round-trips. LibreDWG parses both generated DWGs.
+
+The full typed-source worker-client matrix passes 1,564,347 assertions. This
+qualifies these three distances and this recorded source profile only; the
+trimmed-mode cusp and over-cusp refusal remains intentional and bounded by the
+diagnostics/oracles in sections 826-830.

@@ -924,7 +924,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     std::vector<std::size_t> reversed100To1ExteriorPickFixtures;
     std::vector<std::size_t> reversed1000To1ExteriorPickFixtures;
     std::vector<std::size_t> reversed1000To1InteriorPickFixtures;
-    const std::array<RS_EllipseData, 78> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 79> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -1003,6 +1003,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{1e6, -1e6}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.2, 0.0, true},
         {{1e7, -1e7}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-2, 0.2, 0.0, true},
         {{1e7, -1e7}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, 0.2, 0.0, true},
+        {{1e6, -1e6}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.2, 0.0, true},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
@@ -1220,6 +1221,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             case 77:
                 cuspDistances = {0.9e-4, 1.0e-4, 1.1e-4};
                 break;
+            case 78:
+                cuspDistances = {0.9e-6, 1.0e-6, 1.1e-6};
+                break;
             default:
                 cuspDistances = {0.5e-6};
                 break;
@@ -1268,6 +1272,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 expectedSingularThinCuspFixtures.push_back(fixture);
             }
             else if (profile == 75 && cuspDistance >= 1.0e-6) {
+                expectedAmbiguousTopologyProduceFixtures.push_back(fixture);
+            }
+            else if (profile == 78 && cuspDistance >= 1.0e-6) {
                 expectedAmbiguousTopologyProduceFixtures.push_back(fixture);
             }
         }
