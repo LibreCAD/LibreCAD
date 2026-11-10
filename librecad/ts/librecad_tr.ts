@@ -55,6 +55,11 @@
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
+        <source> is not divided as it is part of another entity.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of polyline. Expand polyline first.</source>
         <translation>poliline parçası olduğu gibi bölünmüş değildir. İlk önce poliline genişletin.</translation>
     </message>
@@ -1159,6 +1164,78 @@ noktalar arasındaki mesafe=%2 çap=%3 den daha büyük</translation>
     </message>
 </context>
 <context>
+    <name>LC_ActionDrawLineDirect</name>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="350"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="510"/>
+        <source>Cannot open: draw at least one wall segment first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="371"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="551"/>
+        <source>Cannot place window: draw at least one wall segment first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="390"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="716"/>
+        <source>Cannot place door: draw at least one wall segment first.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="412"/>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="422"/>
+        <source>Cannot undo: Begin of history reached</source>
+        <translation type="unfinished">Cannot undo: Tarihin başlangıcı ulaştı</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="782"/>
+        <source>Specify first point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="789"/>
+        <source>Specify next point or type distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="797"/>
+        <source>Type opening width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="800"/>
+        <source>Click to choose marker side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="803"/>
+        <source>Type window width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="806"/>
+        <source>Click to choose window direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="809"/>
+        <source>Type door width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="812"/>
+        <source>Move to the swing side and desired hinge, then click</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="815"/>
+        <source>Click near hinge end</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawLineFreehand</name>
     <message>
         <location filename="../src/actions/drawing/draw/curve/lc_action_draw_line_freehand.cpp" line="121"/>
@@ -1637,6 +1714,12 @@ Ya da [x|y|p|sayı|sayı)</translation>
 [none|start|end|hem| mesafe]</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
+        <source>Specify fixed distance between points
+or [x|y|p|number|edges]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
@@ -1660,6 +1743,12 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Y</source>
         <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
+        <source>Specify distance (angle %1 deg)
+or [%2]</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -1818,6 +1907,11 @@ or [%2]</source>
         <translation>Tesisin genişliği</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
+        <source>Specify size (width, height)</source>
+        <translation type="unfinished">Boyut ( genişlik, yükseklik)</translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
         <source>Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]</source>
         <translation>Referans noktası [topl|top|topr|left| orta / sağ / aşağı / alt)</translation>
@@ -1883,6 +1977,11 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="619"/>
         <source>Specify height</source>
         <translation>€ yükseklik</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
+        <source>Specify start point</source>
+        <translation type="unfinished">Başlangıç noktanızı girin</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -2018,6 +2117,11 @@ or [%2]</source>
 <context>
     <name>LC_ActionDrawSpline</name>
     <message>
+        <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="150"/>
+        <source>Cannot finalize spline: at least %1 control points required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="240"/>
         <source>Specify first control point</source>
         <translation type="unfinished"></translation>
@@ -2031,6 +2135,11 @@ or [%2]</source>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="255"/>
         <source>Specify next control point</source>
         <translation type="unfinished">Sonraki kontrol noktasını belirt</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="273"/>
+        <source>Cannot close spline: at least %1 control points required.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="309"/>
@@ -3217,6 +3326,11 @@ or [%2]</source>
         <translation>Varlığın Katmanını Yazdır/Yazdırma</translation>
     </message>
     <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
+        <source>Draw Fast</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="225"/>
         <source>Centerline</source>
         <translation>Merkez</translation>
@@ -3460,6 +3574,11 @@ or [%2]</source>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="566"/>
         <source>Free Snap</source>
         <translation>Ücretsiz Snap</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
+        <source>Polar Snap</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="584"/>
@@ -3872,6 +3991,11 @@ or [%2]</source>
         <translation>Top To Top</translation>
     </message>
     <message>
+        <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
+        <source>Open Legacy LibreCAD DXF (UTF-8)...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693"/>
         <source>Left Dock Area</source>
         <translation>Sol Panel Alanı</translation>
@@ -4098,6 +4222,13 @@ or [%2]</source>
         <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="97"/>
         <source>Export as</source>
         <translation>Şu olarak dışa aktar</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/file/lc_actionfileexportmakercam.cpp" line="112"/>
+        <source>Cannot write the file
+%1
+Please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4960,6 +5091,11 @@ Puan: (%8, %9)</translation>
 <context>
     <name>LC_ActionModifyBreakDivide</name>
     <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="181"/>
+        <source>The selected segment is the whole entity - with &quot;Remove selected&quot; off there is nothing to remove.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="151"/>
         <source>Invalid entity selected - no segments between intersections to break/divide.</source>
         <translation>Invalid varlık seçildi - kesişimler arasında segment yok /.</translation>
@@ -5346,6 +5482,11 @@ Puan: (%8, %9)</translation>
         <translation type="unfinished">Bir Kopya Oluştur</translation>
     </message>
     <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="218"/>
+        <source>Finish</source>
+        <translation type="unfinished">Bitiş</translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="216"/>
         <source>Select to move</source>
         <translation type="unfinished"></translation>
@@ -5431,6 +5572,135 @@ Puan: (%8, %9)</translation>
 <context>
     <name>LC_ActionModifyOffset</name>
     <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="109"/>
+        <source>hidden or locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="111"/>
+        <source>the current layer is missing, frozen or locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="113"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="128"/>
+        <source>nothing is left at this distance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="115"/>
+        <source>too complex to preview; a click offsets it in full</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="115"/>
+        <source>the offset is too complex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="117"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="152"/>
+        <source>it cannot be offset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="136"/>
+        <source>it has no length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="138"/>
+        <source>it is unbounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="140"/>
+        <source>it has elliptic segments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="142"/>
+        <source>its offset would cross itself, which polylines do not support yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
+        <source>it runs over itself</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="146"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="171"/>
+        <source>the distance is not valid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="148"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="157"/>
+        <source>the point does not show which side to offset to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="154"/>
+        <source>it does not lie in the drawing plane</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="159"/>
+        <source>the curve does not move, or has a point where its direction cannot be found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="161"/>
+        <source>the curve has a gap or a corner the offset cannot join</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="164"/>
+        <source>the distance meets the curve&apos;s radius of curvature where that cannot be resolved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="166"/>
+        <source>the offset touches itself where it cannot be trimmed reliably</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="169"/>
+        <source>the offset cannot be fitted within the tolerance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="174"/>
+        <source>the offset could not be made</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="258"/>
+        <source>%1 of %2 selected entities could not be offset: %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="264"/>
+        <source>Only %1 of %2 copies fit, since nothing is left at a larger distance; the original was kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="269"/>
+        <source>%1 selected entities got fewer than %2 copies, since nothing is left at a larger distance; their originals were kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="275"/>
+        <source>Only %1 of %2 copies were made: %3; the original was kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="281"/>
+        <source>%1 selected entities got fewer than %2 copies: %3; their originals were kept</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
         <source>Offset</source>
         <translation type="unfinished">Offset</translation>
@@ -5439,6 +5709,27 @@ Puan: (%8, %9)</translation>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="145"/>
         <source>Distance:</source>
         <translation type="unfinished">Mesafe:</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="436"/>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Geçerli bir ifade değil</translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="523"/>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="531"/>
+        <source>Specify direction of offset, or enter distance &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="527"/>
+        <source>Specify reference point for direction of offset, or enter distance &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="540"/>
+        <source>Select entities to offset</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
@@ -10085,6 +10376,21 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
         <translation>Boyut</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="175"/>
+        <source>Measured value:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="182"/>
+        <source>Unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="183"/>
+        <source>Geometric measurement in drawing units, or decimal degrees for angles; excludes dimension scale factor.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/entity/lc_dlg_dimension.ui" line="209"/>
         <source>Layer</source>
         <translation>Katman</translation>
@@ -10931,9 +11237,19 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
         <translation>NOT: Menü ataması göz ardı edilecektir. &apos;Pan&apos; için ayrılmıştır.</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="242"/>
+        <source>NOTE: Menu assignment will be ignored. It is reserved for &apos;Select Contour&apos;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="243"/>
         <source>NOTE: This combination is reserved for default context menu and may prevent invocation of it!</source>
         <translation>NOT: Bu kombinasyon varsayılan bağlam menüsü için ayrılmıştır ve bunun iptalini engelleyebilir!</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="248"/>
+        <source>NOTE: This combination is reserved for Pan! Menu assignment will be ignored.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/creators/lc_dlg_menu_assigner.cpp" line="251"/>
@@ -12451,9 +12767,30 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
 <context>
     <name>LC_DocumentsStorage</name>
     <message>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="113"/>
+        <source>The original legacy DXF is protected. Choose a different name for the recovered drawing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="121"/>
+        <source>LibreCAD cannot save &quot;%1&quot; in its own format. Choose a name to save the drawing as.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="148"/>
         <source>Unnamed</source>
         <translation>Unnamed</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="281"/>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="380"/>
+        <source>The original legacy DXF is protected. Save the recovered drawing to a different file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/persistence/lc_documentsstorage.cpp" line="446"/>
+        <source>Skipped a backup that would replace the protected original legacy DXF.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13289,8 +13626,8 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="100"/>
-        <source>Strech selection</source>
-        <translation>Seçimi esnet</translation>
+        <source>Stretch selection</source>
+        <translation type="unfinished">Seçimi esnet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.cpp" line="103"/>
@@ -13413,6 +13750,11 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
         <source>Width of entity pen line</source>
         <translation>Varlık kaleminin çizgi kalınlığı</translation>
     </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/lc_entity_type_propertiesprovider.h" line="330"/>
+        <source>Unavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ExportLayersService</name>
@@ -13439,6 +13781,23 @@ Kartpostalarını kıracağınızdan emin misiniz?</translation>
         <location filename="../src/ui/dialogs/file/export/image/lc_exporttoimageservice.cpp" line="62"/>
         <source>Export failed!</source>
         <translation>İhracat başarısız oldu!</translation>
+    </message>
+</context>
+<context>
+    <name>LC_HatchDensity</name>
+    <message numerus="yes">
+        <location filename="../src/lib/gui/lc_hatchdensitytext.cpp" line="87"/>
+        <source>%n hatch(es) exceed the hatch pattern limit and are shown as fills.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/lib/gui/lc_hatchdensitytext.cpp" line="95"/>
+        <source>R12 export: %n hatch(es) are too dense; their pattern is not written and they will look empty in the file.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -14857,6 +15216,11 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation>Katmanın &amp;Varlıklarını Seç</translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="774"/>
+        <source>Restore Model/Paper Space Entity Visibility...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="726"/>
         <source>&amp;Create Layer Copy</source>
         <translation>Katman Ko&amp;pyası Oluştur</translation>
@@ -14935,6 +15299,18 @@ Lütfen farklı bir değer belirtin.</translation>
         <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="760"/>
         <source>&amp;Find And Remove Empty Layers</source>
         <translation>B&amp;oş Katmanları Bul ve Sil</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1802"/>
+        <source>Make %1 individually invisible model/paper-space entities on layer &quot;%2&quot; visible?
+
+This can recover drawings saved by LibreCAD 2.2.1, but it will also reveal entities that were intentionally hidden.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/layers_tree/lc_layertreewidget.cpp" line="1807"/>
+        <source>Restore Entity Visibility</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -17490,11 +17866,6 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="210"/>
-        <source>Specified type of center mark on dimension (DIMCEN variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="211"/>
         <source>Mark</source>
         <translation type="unfinished">Mark</translation>
@@ -17725,11 +18096,6 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="332"/>
-        <source>Specifies the color of the dimension of the text (DIMCLRT variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="336"/>
         <source>Text height</source>
         <translation type="unfinished"></translation>
@@ -17765,11 +18131,6 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="353"/>
-        <source>Specified horizontal dimension text position (DIMJUST variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="354"/>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="365"/>
         <source>Centered</source>
@@ -17798,11 +18159,6 @@ Lütfen farklı bir değer belirtin.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="364"/>
         <source>Text pos vert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="364"/>
-        <source>Specified vertical dimension text position (DIMTAD variable)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -17871,16 +18227,6 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation type="unfinished">Arc uzunluğu sembolü</translation>
     </message>
     <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
-        <source>Specifies placement of the arch length dimension symbol (DIMARCSYM variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
-        <source>Preceeding dimension text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="399"/>
         <source>Above dimension text</source>
         <translation type="unfinished">Yukarıdaki boyut metin</translation>
@@ -17924,11 +18270,6 @@ Lütfen farklı bir değer belirtin.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
         <source>Text override</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
-        <source>Specified the text string of dimension (overrides Measurement string)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18007,8 +18348,43 @@ Lütfen farklı bir değer belirtin.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="210"/>
+        <source>Specifies type of center mark on dimension (DIMCEN variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="332"/>
+        <source>Specifies the color of the dimension text (DIMCLRT variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="353"/>
+        <source>Specifies horizontal dimension text position (DIMJUST variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="364"/>
+        <source>Specifies vertical dimension text position (DIMTAD variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="397"/>
+        <source>Specifies placement of the arc length dimension symbol (DIMARCSYM variable)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="398"/>
+        <source>Preceding dimension text</source>
+        <translation type="unfinished">Preceding Dimension text</translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="433"/>
+        <source>Specifies the text string of dimension (overrides Measurement string)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="507"/>
-        <source>Place bettween if has room</source>
+        <source>Place between if has room</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -18650,7 +19026,7 @@ Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimbase.h" line="966"/>
-        <source>Sets suppression of zero inches for alterate units tolerance values in dimension (DIMALTTZ variable)</source>
+        <source>Sets suppression of zero inches for alternate units tolerance values in dimension (DIMALTTZ variable)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -18781,12 +19157,12 @@ Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
-        <source>Obligue</source>
-        <translation type="unfinished"></translation>
+        <source>Oblique</source>
+        <translation type="unfinished">Oblique</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimlinear.cpp" line="72"/>
-        <source>Dimension obligue angle</source>
+        <source>Dimension oblique angle</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -18904,7 +19280,7 @@ Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_dimordinate.cpp" line="71"/>
-        <source>Andle of horizontal direction for this dimension</source>
+        <source>Angle of horizontal direction for this dimension</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -19200,6 +19576,11 @@ Lütfen farklı bir değer belirtin.</translation>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="47"/>
         <source>Focus 2 X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_hyperbola.cpp" line="43"/>
+        <source>Y coordinate for first focus point</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -19747,7 +20128,7 @@ Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_mtext.cpp" line="47"/>
-        <source>Name of the text style)</source>
+        <source>Name of the text style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -20343,7 +20724,7 @@ Lütfen farklı bir değer belirtin.</translation>
     </message>
     <message>
         <location filename="../src/lib/selection/metaentity/entities/lc_matchdescriptor_text.cpp" line="62"/>
-        <source>Name of the text style)</source>
+        <source>Name of the text style</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -20608,6 +20989,16 @@ Lütfen farklı bir değer belirtin.</translation>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="543"/>
         <source>Modify Generic</source>
         <translation>Genel Değiştirme Araçları</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="573"/>
+        <source>Copy value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="578"/>
+        <source>Copy formatted</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_menufactory_graphicview.cpp" line="583"/>
@@ -22463,6 +22854,26 @@ Uyarı: Bu eylem geri alınamaz!</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="311"/>
+        <source>Hidden (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="312"/>
+        <source>Hidden (small)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="313"/>
+        <source>Hidden (large)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="310"/>
         <source>Dash Dot</source>
         <translation>Çizgi Nokta</translation>
     </message>
@@ -22520,6 +22931,26 @@ Uyarı: Bu eylem geri alınamaz!</translation>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="321"/>
         <source>Center (large)</source>
         <translation>Merkez (large)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="326"/>
+        <source>Phantom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="327"/>
+        <source>Phantom (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="328"/>
+        <source>Phantom (small)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="329"/>
+        <source>Phantom (large)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/pen_palette/lc_peninforegistry.cpp" line="322"/>
@@ -23031,6 +23462,14 @@ Please note that if you&apos;ll save pen via editor without restart, current pen
         <translation>Kalem dosyasının konumu değişti. Yeni dosyanın kullanılması için uygulamayı yeniden başlatın.
 
 Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, paletteki mevcut kalemler yeni dosyaya kaydedilir ve mevcut içerik üzerine yazılır.</translation>
+    </message>
+</context>
+<context>
+    <name>LC_PluginInvoker</name>
+    <message>
+        <location filename="../src/plugins/lc_plugininvoker.cpp" line="113"/>
+        <source>Could not load plugin %1: %2</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24016,92 +24455,92 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
         <source>Active Pen</source>
-        <translation type="unfinished">Aktif Pen Aktif Kalem</translation>
+        <translation>Etkin Kalem</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="44"/>
         <source>Pen that will be assigned to newly created entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni oluşturulan varlıklara atanacak kalemi belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="60"/>
         <source>Color</source>
-        <translation type="unfinished">Renkli Renk</translation>
+        <translation>Renk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="60"/>
         <source>Color of active pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin kalemin rengini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line Width</source>
-        <translation type="unfinished">Line Genişlik</translation>
+        <translation>Çizgi Kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="80"/>
         <source>Line width for active pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin kalemin çizgi kalınlığını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="101"/>
         <source>Line Type</source>
-        <translation type="unfinished">Çizgi Tipi</translation>
+        <translation>Çizgi Türü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="101"/>
         <source>Type of line for active pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin kalemin çizgi tipini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="133"/>
         <source>Pick</source>
-        <translation type="unfinished"></translation>
+        <translation>Seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="133"/>
         <source>Pick pen from entity and make it active one</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlığın kalemini seçip etkin kalem yapar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="134"/>
         <source>Pick resolved</source>
-        <translation type="unfinished"></translation>
+        <translation>Çözümlenmiş kalemi seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="134"/>
         <source>Pick resolved pen from entity and make it active</source>
-        <translation type="unfinished"></translation>
+        <translation>Varlığın çözümlenmiş kalemini seçip etkin kalem yapar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="135"/>
         <source>Pen pick commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem seçme komutları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="151"/>
         <source>Apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="151"/>
         <source>Applies active pen to selected entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin kalemi seçili varlıklara uygular</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="152"/>
         <source>From layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Katmandan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="152"/>
         <source>Pen of active layer becomes active pen</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin katmanın kalemini etkin kalem yapar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_active_pen.cpp" line="153"/>
         <source>Pen applying commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Kalem uygulama komutları</translation>
     </message>
 </context>
 <context>
@@ -24187,6 +24626,11 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>Yayın bitiş noktası</translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="85"/>
+        <source>Angle Length</source>
+        <translation type="unfinished">Uzunluk uzunluğu</translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Arc Length</source>
         <translation>Yay Uzunluğu</translation>
@@ -24195,12 +24639,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="81"/>
         <source>Total angle of arc</source>
         <translation>Yayın toplam açısı</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
-        <source>Circumference</source>
-        <comment>arc</comment>
-        <translation>Çevre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="87"/>
@@ -24333,9 +24771,49 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>Teğet Çember (2 V, 1 N)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="149"/>
-        <source>Create tangental circle by 2 entitites and 1 point</source>
-        <translation>2 varlık ve 1 noktadan teğet çember oluştur</translation>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="153"/>
+        <source>Create tangental circle by 2 entities and 1 point</source>
+        <translation type="unfinished">2 varlık ve 1 noktadan teğet çember oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="158"/>
+        <source>Create tangental circle by 2 entities and radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
+        <source>Break or divide the arc by intersection points</source>
+        <translation type="unfinished">Yayı kesişim noktalarından kes veya böl</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="182"/>
+        <source>Create ellipse inscribed</source>
+        <translation type="unfinished">İç teğet elips oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="187"/>
+        <source>Create diametric dimension for arc</source>
+        <translation type="unfinished">Yay için çap ölçüsü oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
+        <source>Create radial dimension for arc</source>
+        <translation type="unfinished">Yay için yarıçap ölçüsü oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="191"/>
+        <source>Creation of dimension, ordinate or arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="192"/>
+        <source>Create ordinate dimension for arc</source>
+        <translation type="unfinished">Yay için koordinat ölçüsü oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="193"/>
+        <source>Create arc dimension</source>
+        <translation type="unfinished">Yay ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="152"/>
@@ -24356,11 +24834,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
         <source>Tangent Circle (2 E, R)</source>
         <translation>Teğet Çember (2 V, Y)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="154"/>
-        <source>Create tangental circle by 2 points and radius</source>
-        <translation>2 nokta ve yarıçapla teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="157"/>
@@ -24390,6 +24863,11 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>İki çembere/yaya teğet çizgi oluştur</translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="166"/>
+        <source>Creation of orthogonal lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="163"/>
         <source>Orthogonal</source>
         <translation>Dik</translation>
@@ -24408,6 +24886,11 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="164"/>
         <source>Create arc tangental line orthogonal to line</source>
         <translation>Çizgiye dik, yaya teğet çizgi oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="171"/>
+        <source>Creation of line with relative angle or fillet</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="168"/>
@@ -24450,11 +24933,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>Kes/Böl</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="174"/>
-        <source>Break or divide the arc by intesection points</source>
-        <translation>Yayı kesişim noktalarından kes veya böl</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="177"/>
         <source>Creation of ellipse or bounding box</source>
         <translation>Elips veya sınır kutusu oluşturma</translation>
@@ -24463,11 +24941,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
         <source>Ellipse inscribed</source>
         <translation>İç teğet elips</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="178"/>
-        <source>Create elipse inscribed</source>
-        <translation>İç teğet elips oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="179"/>
@@ -24490,24 +24963,9 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>Çap Ölçüsü</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="183"/>
-        <source>Create of diametric dimension for arc</source>
-        <translation>Yay için çap ölçüsü oluştur</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
         <source>Dim Radial</source>
         <translation>Yarıçap Ölçüsü</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="184"/>
-        <source>Create of radial dimension for arc</source>
-        <translation>Yay için yarıçap ölçüsü oluştur</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="187"/>
-        <source>Creation of dimension, angular or ordinate</source>
-        <translation>Açı veya koordinat ölçüsü oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
@@ -24515,19 +24973,9 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>Koordinat Ölçüsü</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="188"/>
-        <source>Create of ordinate dimension for arc</source>
-        <translation>Yay için koordinat ölçüsü oluştur</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
         <source>Dim Arc</source>
         <translation>Yay Ölçüsü</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="189"/>
-        <source>Create of arc dimension</source>
-        <translation>Yay ölçüsü oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_arc.cpp" line="199"/>
@@ -24575,32 +25023,32 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="34"/>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="34"/>
         <source>Block settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="44"/>
         <source>Name</source>
-        <translation type="unfinished">Name</translation>
+        <translation>Ad</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="44"/>
         <source>Name of the block</source>
-        <translation type="unfinished">Blokun adı</translation>
+        <translation>Bloğun adıdır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="54"/>
         <source>Base point</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel nokta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_block.cpp" line="54"/>
         <source>Base point for the block (0,0). This point will be in block insertion point.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloğun temel noktasıdır (0,0). Bu nokta, blok ekleme noktasına yerleştirilir.</translation>
     </message>
 </context>
 <context>
@@ -24718,18 +25166,43 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="83"/>
-        <source>Create tangental circle 2 points</source>
-        <translation>2 noktadan teğet çember oluştur</translation>
+        <source>Create tangental circle by 2 points</source>
+        <translation type="unfinished">2 noktadan teğet çember oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
+        <source>Create tangental circle by 2 entities and 1 point</source>
+        <translation type="unfinished">2 varlık ve 1 noktadan teğet çember oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
+        <source>Create tangental circle by 2 entities and radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
+        <source>Break or divide the circle by intersection points</source>
+        <translation type="unfinished">Çemberi kesişim noktalarından kes veya böl</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="107"/>
+        <source>Creation of line with relative angle or fillet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
+        <source>Create ellipse inscribed</source>
+        <translation type="unfinished">İç teğet elips oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="122"/>
+        <source>Creation of ordinate dimension or leader</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
         <source>Tangent Circle (2 E, 1 P)</source>
         <translation>Teğet Çember (2 V, 1 N)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="84"/>
-        <source>Create tangental circle by 2 entitites and 1 point</source>
-        <translation>2 varlık ve 1 noktadan teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="87"/>
@@ -24750,11 +25223,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
         <source>Tangent Circle (2 E, R)</source>
         <translation>Teğet Çember (2 V, Y)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="89"/>
-        <source>Create tangental circle by 2 points and radius</source>
-        <translation>2 nokta ve yarıçapla teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="92"/>
@@ -24782,6 +25250,11 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="94"/>
         <source>Create line tangental to two circles</source>
         <translation>İki çembere teğet çizgi oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="97"/>
+        <source>Creation of orthogonal lines</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="98"/>
@@ -24824,11 +25297,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>Kes/Böl</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="104"/>
-        <source>Break or divide the circle by intesection points</source>
-        <translation>Çemberi kesişim noktalarından kes veya böl</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="108"/>
         <source>Relative</source>
         <translation>Göreceli</translation>
@@ -24857,11 +25325,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
         <source>Ellipse inscribed</source>
         <translation>İç teğet elips</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="113"/>
-        <source>Create elipse inscribed</source>
-        <translation>İç teğet elips oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="114"/>
@@ -24897,11 +25360,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="119"/>
         <source>Create radial dimension for circle</source>
         <translation>Çember için yarıçap ölçüsü oluştur</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="122"/>
-        <source>Creation of dimension, angular or ordinate</source>
-        <translation>Açı veya koordinat ölçüsü oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_circle.cpp" line="123"/>
@@ -24944,72 +25402,72 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="29"/>
         <source>Ext point 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma noktası 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="29"/>
         <source>Position of first extension point</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci uzatma noktasının konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="36"/>
         <source>Ext point 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma noktası 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="36"/>
         <source>Position of second extension point</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci uzatma noktasının konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="43"/>
         <source>Definition point </source>
-        <translation type="unfinished"></translation>
+        <translation>Tanım noktası </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="43"/>
         <source>Position of definition point</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanım noktasının konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="54"/>
         <source>Continue and baseline</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürekli ve taban çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="55"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürekli</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="55"/>
         <source>Continues aligned dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Hizalı ölçülendirmeyi sürdürür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Baseline</source>
-        <translation type="unfinished">Basel</translation>
+        <translation>Taban çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="56"/>
         <source>Uses aligned dimension as base line and creates other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Hizalı ölçülendirmeyi taban çizgisi olarak kullanıp başka ölçülendirmeler oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="64"/>
         <source>Apply dimension style to other dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini başka bir ölçülendirmeye uygular</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="65"/>
         <source>Apply style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_aligned.cpp" line="65"/>
         <source>Applies dimension style to other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini diğer ölçülendirmelere uygular</translation>
     </message>
 </context>
 <context>
@@ -25017,67 +25475,67 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="29"/>
         <source>Line 1 start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi 1 başlangıç noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="29"/>
         <source>Start point of first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci çizginin başlangıç noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="36"/>
         <source>Line 1 end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi 1 bitiş noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="36"/>
         <source>End point of first line</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci çizginin bitiş noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="43"/>
         <source>Line 2 start point</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi 2 başlangıç noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="43"/>
         <source>Start point of second line</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci çizginin başlangıç noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="50"/>
         <source>Line 2 end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi 2 bitiş noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="50"/>
         <source>End point of second line</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci çizginin bitiş noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="57"/>
         <source>Dim arc radius point</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü yayı yarıçap noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="57"/>
         <source>Point that defines dimension arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme yayını tanımlayan noktayı belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="69"/>
         <source>Apply dimension style to other dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini başka bir ölçülendirmeye uygular</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="70"/>
         <source>Apply style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_angular.cpp" line="70"/>
         <source>Applies dimension style to other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini diğer ölçülendirmelere uygular</translation>
     </message>
 </context>
 <context>
@@ -25085,27 +25543,27 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_arc.cpp" line="29"/>
         <source>Center point</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_arc.cpp" line="29"/>
         <source>Center point of arc dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay ölçülendirmesinin merkez noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_arc.cpp" line="42"/>
         <source>Apply dimension style to other dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini başka bir ölçülendirmeye uygular</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_arc.cpp" line="43"/>
         <source>Apply style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_arc.cpp" line="43"/>
         <source>Applies dimension style to other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini diğer ölçülendirmelere uygular</translation>
     </message>
 </context>
 <context>
@@ -25113,1250 +25571,1250 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="62"/>
         <source>Misc</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="62"/>
         <source>Misc dimension data</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer ölçülendirme verileri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="63"/>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="63"/>
         <source>Specifies current dimension style by name</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli ölçülendirme stilini adıyla belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="99"/>
         <source>Clear dim style override</source>
-        <translation type="unfinished"></translation>
+        <translation>Stil değişikliğini temizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="100"/>
         <source>Clears dimension style override, if one is present for dimension</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="127"/>
-        <source>Manage styles..</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmeye özel bir stil değişikliği varsa temizler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="128"/>
         <source>Invokes dimension styles management UI</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stillerini yönetme arayüzünü açar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="130"/>
         <source>Dimension styles management</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stili yönetimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="139"/>
         <source>Flip Arrow 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok 1'i Ters Çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="139"/>
         <source>Flips direction of arrows 1, if any</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsa birinci okun yönünü ters çevirir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="162"/>
         <source>Flip Arrow 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok 2'yi Ters Çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="162"/>
         <source>Flips direction of arrows 2, if any</source>
-        <translation type="unfinished"></translation>
+        <translation>Varsa ikinci okun yönünü ters çevirir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="221"/>
         <source>User Block...</source>
-        <translation type="unfinished">Kullanıcı Bloğu...</translation>
+        <translation>Kullanıcı bloğu...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="235"/>
         <source>Lines and Arrows</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="236"/>
-        <source>Dimensions lines and arrows setup</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgiler ve oklar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="265"/>
         <source>Arrow 1</source>
-        <translation type="unfinished">1</translation>
+        <translation>Ok 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="265"/>
         <source>Specifies type of the first dimension arrowhead (DIMBLK1 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci ölçülendirme okunun uç tipini belirtir (DIMBLK1 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="287"/>
         <source>Arrow 2</source>
-        <translation type="unfinished">2</translation>
+        <translation>Ok 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="287"/>
         <source>Specifies type of the second dimension arrowhead (DIMBLK2 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci ölçülendirme okunun uç tipini belirtir (DIMBLK2 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="317"/>
         <source>Arrow size</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="317"/>
         <source>Specifies size of the dimension arrowhead (DIMASZ variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme okunun uç boyutunu belirtir (DIMASZ değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="329"/>
         <source>Mark</source>
-        <translation type="unfinished">Mark</translation>
+        <translation>İşaret</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="330"/>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizgi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="331"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="701"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation>Yok</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
         <source>Center mark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
-        <source>Specified type of center mark on dimension (DIMCEN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez işareti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="360"/>
         <source>Center mark size</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez işareti boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="361"/>
         <source>Specifies size of the center mark on the dimension (DIMCEN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmedeki merkez işaretinin boyutunu belirtir (DIMCEN değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="387"/>
         <source>Dim line lineweight</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisi kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="387"/>
         <source>Specifies lineweight for dimension lines (DIMLWD variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgilerinin kalınlığını belirtir (DIMLWD değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="396"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="457"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="514"/>
         <source>Ext line lineweight</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi kalınlığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="396"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="457"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="514"/>
         <source>Specifies lineweight for extension line (DIMLWE variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisinin kalınlığını belirtir (DIMLWE değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="404"/>
         <source>Dim line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisi 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="404"/>
         <source>Sets suppression of first dimension line (DIMSD1 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci ölçü çizgisinin gizlenmesini ayarlar (DIMSD1 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="411"/>
         <source>Dim line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisi 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="411"/>
         <source>Sets suppression of second dimension line (DIMSD2 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci ölçü çizgisinin gizlenmesini ayarlar (DIMSD2 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="418"/>
         <source>Dim line color</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisi rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="418"/>
         <source>Specifies color of the dimension line (DIMCLRD variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisinin rengini belirtir (DIMCLRD değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="427"/>
         <source>Dim line linetype</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisi tipi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="427"/>
         <source>Specifies the linetype of the dimension line (DIMLTYPE variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisinin tipini belirtir (DIMLTYPE değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="439"/>
         <source>Dim line ext</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisi uzantısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="440"/>
         <source>Specifies amount to extend dimension lines beyond the extension lines (DIMDLE variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgilerinin uzatma çizgilerini ne kadar aşacağını belirtir (DIMDLE değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="449"/>
         <source>Ext line</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="449"/>
         <source>Sets suppression of extension line (DIMSE1 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisinin gizlenmesini ayarlar (DIMSE1 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="466"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="520"/>
         <source>Ext line linetype</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi tipi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="467"/>
         <source>Specifies the linetype of the extension line (DIMLTEX1 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisinin tipini belirtir (DIMLTEX1 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="478"/>
         <source>Ext line 1 linetype</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi 1 tipi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="479"/>
         <source>Specifies the linetype of the first extension line (DIMLTEX1 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci uzatma çizgisinin tipini belirtir (DIMLTEX1 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="489"/>
         <source>Ext line 2 linetype</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi 2 tipi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="490"/>
         <source>Specifies the linetype of the second extension line (DIMLTEX2 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci uzatma çizgisinin tipini belirtir (DIMLTEX2 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="498"/>
         <source>Ext line 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="498"/>
         <source>Sets suppression of first extension line (DIMSE1 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci uzatma çizgisinin gizlenmesini ayarlar (DIMSE1 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="505"/>
         <source>Ext line 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="505"/>
         <source>Sets suppression of second extension line (DIMSE2 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci uzatma çizgisinin gizlenmesini ayarlar (DIMSE2 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="520"/>
         <source>Specifies the linetype for the extension line (DIMLTEX1 variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisinin tipini belirtir (DIMLTEX1 değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="529"/>
         <source>Ext line fixed</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit uzatma çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="529"/>
         <source>Sets suppression of extension line fixed length (DIMFXLON variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisinin sabit uzunluğunun gizlenmesini ayarlar (DIMFXLON değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="536"/>
         <source>Ext line fixed length</source>
-        <translation type="unfinished"></translation>
+        <translation>Sabit uzatma çizgisi boyu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="536"/>
         <source>Sets extension line fixed length (DIMFXL variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisinin sabit uzunluğunu ayarlar (DIMFXL değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="544"/>
         <source>Ext line color</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="544"/>
         <source>Specifies color of the extension line (DIMCLRE variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisinin rengini belirtir (DIMCLRE değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="556"/>
         <source>Ext line ext</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi uzantısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="557"/>
         <source>Specifies amount to extend extension line beyond the dimension line  (DIMEXE variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisinin ölçü çizgisini ne kadar aşacağını belirtir (DIMEXE değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="566"/>
         <source>Ext line offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgisi ötelemesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="566"/>
         <source>Specifies offset of extension lines from the origin points (DIMEXO variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgilerinin orijin noktalarından ötelemesini belirtir (DIMEXO değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="575"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="811"/>
         <source>Text</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="575"/>
         <source>Text settings for dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmelerin metin ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="577"/>
         <source>Fill color</source>
-        <translation type="unfinished"></translation>
+        <translation>Dolgu rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="577"/>
         <source>Specifies the background color of the dimension (DIMTFILL variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmenin arka plan rengini belirtir (DIMTFILL değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="586"/>
         <source>Text color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="586"/>
-        <source>Specifies the color of the dimension of the text (DIMCLRT variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin rengi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="601"/>
         <source>Text height</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin yüksekliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="601"/>
         <source>Specifies text height of dimension (DIMTXT variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme metninin yüksekliğini belirtir (DIMTXT değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="610"/>
         <source>Text offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin ötelemesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="611"/>
         <source>Specifies the distance around dimension text when dimension line breaks for dimension text (DIMGAP variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisi metin için kesildiğinde metnin çevresinde bırakılacak mesafeyi belirtir (DIMGAP değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="621"/>
         <source>Text outside align</source>
-        <translation type="unfinished"></translation>
+        <translation>Dış metin hizalaması</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="622"/>
         <source>Sets positioning of dimension text outside of extension lines (DIMTOH variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme metninin uzatma çizgileri dışındaki konumunu ayarlar (DIMTOH değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="634"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="651"/>
         <source>Centered</source>
-        <translation type="unfinished">Merkezed</translation>
+        <translation>Ortalanmış</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="635"/>
         <source>First ext line</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci uzatma çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="636"/>
         <source>Second ext line</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci uzatma çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="637"/>
         <source>Over first ext line</source>
-        <translation type="unfinished"></translation>
+        <translation>1. uzatma çizgisi üstünde</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="638"/>
         <source>Over second ext line</source>
-        <translation type="unfinished"></translation>
+        <translation>2. uzatma çizgisi üstünde</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="641"/>
         <source>Text pos hor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="641"/>
-        <source>Specified horizontal dimension text position (DIMJUST variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay metin konumu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="652"/>
         <source>Above</source>
-        <translation type="unfinished">Above</translation>
+        <translation>Üstte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="653"/>
         <source>Outside</source>
-        <translation type="unfinished">Dışarıdan dış dışında</translation>
+        <translation>Dışarıda</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="654"/>
         <source>JIS</source>
-        <translation type="unfinished">ULTRASONIK</translation>
+        <translation>JIS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="655"/>
         <source>Below</source>
-        <translation type="unfinished">Aşağıda</translation>
+        <translation>Altta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="659"/>
         <source>Text pos vert</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="659"/>
-        <source>Specified vertical dimension text position (DIMTAD variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey metin konumu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="667"/>
         <source>Text style</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin stili</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="667"/>
         <source>Specifies style of text for dimension (DIMTXSTY variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme metninin stilini belirtir (DIMTXSTY değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="679"/>
         <source>Text inside align</source>
-        <translation type="unfinished"></translation>
+        <translation>İç metin hizalaması</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="680"/>
         <source>Sets positioning of dimension text inside of extension lines (DIMTIH variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma çizgileri arasındaki ölçülendirme metninin yerleşimini ayarlar (DIMTIH değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="688"/>
         <source>Text position</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin konumu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="688"/>
         <source>Specifies dimension text position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
-        <source>Preceeding dimension text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme metninin konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="700"/>
         <source>Above dimension text</source>
-        <translation type="unfinished">Yukarıdaki boyut metin</translation>
+        <translation>Ölçülendirme metni üstte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="707"/>
         <source>Arc length symbol</source>
-        <translation type="unfinished">Arc uzunluğu sembolü</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
-        <source>Specifies placement of the arch length dimension symbol (DIMARCSYM variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Yay uzunluğu simgesi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="719"/>
         <source>Text rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin döndürme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="719"/>
         <source>Specifies the rotation angle for dimension text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme metninin döndürme açısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="729"/>
         <source>Left-to-right</source>
-        <translation type="unfinished"></translation>
+        <translation>Soldan sağa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="729"/>
         <source>Right-to-left</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağdan sola</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="732"/>
         <source>Text view direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin okuma yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="732"/>
         <source>Specifies the text direction (DIMTXTDIRECTION variable)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="739"/>
-        <source>Text measurement</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="739"/>
-        <source>Specified dimension measurement value</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin yönünü belirtir (DIMTXTDIRECTION değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="754"/>
         <source>Text override</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="755"/>
-        <source>Specified the text string of dimension (overrides Measurement string)</source>
-        <translation type="unfinished"></translation>
+        <translation>Özel metin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="764"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="816"/>
         <source>Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sığdır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="764"/>
         <source>Fit settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Sığdırma ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="769"/>
         <source>Dim line forced</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisini zorla</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="770"/>
         <source>Force drawing dimension line between extension lines, even if text placed outside of extension lines (DIMTOFL variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin uzatma çizgilerinin dışında olsa bile aralarına ölçü çizgisi çizilmesini zorlar (DIMTOFL değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="781"/>
         <source>Dim line inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisi içeride</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="782"/>
         <source>Force displaying dimension line outside extension lines (DIMSOXD variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisinin uzatma çizgileri dışında gösterilmesini zorlar (DIMSOXD değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="799"/>
         <source>Dim scale overall</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel ölçülendirme ölçeği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="800"/>
         <source>Specifies the overall scale factor applied to properties, that specify sizes, distances or offsets (DIMSCALE variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut, mesafe veya öteleme belirten özelliklere uygulanan genel ölçek katsayısını belirtir (DIMSCALE değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="811"/>
         <source>Best Fit</source>
-        <translation type="unfinished"></translation>
+        <translation>En Uygun Sığdırma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="811"/>
         <source>Arrows</source>
-        <translation type="unfinished">Oklar</translation>
+        <translation>Oklar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="811"/>
         <source>Both</source>
-        <translation type="unfinished">Her ikisi de her ikisi de</translation>
+        <translation>Her ikisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="811"/>
         <source>Always fit</source>
-        <translation type="unfinished"></translation>
+        <translation>Her zaman sığdır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="817"/>
         <source>Determines what elements are moved to fit text and arrowheads in space between extension lines (DIMATFIT variable)</source>
+        <translation>Metin ve ok uçlarını uzatma çizgileri arasındaki alana sığdırmak için hangi öğelerin taşınacağını belirler (DIMATFIT değişkeni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="127"/>
+        <source>Manage styles...</source>
+        <translation type="unfinished">Stilleri yönet..</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="236"/>
+        <source>Dimension lines and arrows setup</source>
+        <translation type="unfinished">Ölçülendirme çizgilerini ve oklarını ayarlar</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="334"/>
+        <source>Specifies type of center mark on dimension (DIMCEN variable)</source>
+        <translation type="unfinished">Ölçülendirmedeki merkez işaretinin tipini belirtir (DIMCEN değişkeni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="586"/>
+        <source>Specifies the color of the dimension text (DIMCLRT variable)</source>
+        <translation type="unfinished">Ölçülendirme metninin rengini belirtir (DIMCLRT değişkeni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="641"/>
+        <source>Specifies horizontal dimension text position (DIMJUST variable)</source>
+        <translation type="unfinished">Ölçülendirme metninin yatay konumunu belirtir (DIMJUST değişkeni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="659"/>
+        <source>Specifies vertical dimension text position (DIMTAD variable)</source>
+        <translation type="unfinished">Ölçülendirme metninin dikey konumunu belirtir (DIMTAD değişkeni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="699"/>
+        <source>Preceding dimension text</source>
+        <translation type="unfinished">Preceding Dimension text</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="708"/>
+        <source>Specifies placement of the arc length dimension symbol (DIMARCSYM variable)</source>
+        <translation type="unfinished">Yay uzunluğu ölçülendirme simgesinin yerleşimini belirtir (DIMARCSYM değişkeni)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="739"/>
+        <source>Measured value</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="881"/>
-        <source>Place bettween if has room</source>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="740"/>
+        <source>Geometric measurement in drawing units, or decimal degrees for angles; excludes dimension scale factor.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="746"/>
+        <source>Specifies the text string of dimension (overrides Measurement string)</source>
+        <translation type="unfinished">Ölçülendirme metnini belirtir (ölçüm metninin yerine geçer)</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="872"/>
+        <source>Place between if has room</source>
+        <translation type="unfinished">Yer varsa araya yerleştir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="882"/>
         <source>Always inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Her zaman içeride</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="886"/>
         <source>Text inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin içeride</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="886"/>
         <source>Sets position of dimension text inside extension lines (DIMTIX variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme metninin uzatma çizgileri arasındaki konumunu ayarlar (DIMTIX değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="897"/>
         <source>Keep dim line with text</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçü çizgisini metinle tut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="898"/>
         <source>Move text, add leader</source>
-        <translation type="unfinished"></translation>
+        <translation>Metni taşı, açıklama çizgisi ekle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="899"/>
         <source>Move text, no leader</source>
-        <translation type="unfinished"></translation>
+        <translation>Metni taşı, açıklama çizgisi ekleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="905"/>
         <source>Text movement</source>
-        <translation type="unfinished"></translation>
+        <translation>Metin hareketi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="906"/>
         <source>Specifies position of the text when it is moved, either manually or automatically (DIMTMOVE variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Elle veya otomatik taşındığında metnin konumunu belirtir (DIMTMOVE değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="968"/>
         <source>Primary Units</source>
-        <translation type="unfinished">İlk Birimler</translation>
+        <translation>Birincil Birimler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="968"/>
         <source>Primary units for dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme ana birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="971"/>
         <source>.</source>
-        <translation type="unfinished"></translation>
+        <translation>.</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="971"/>
         <source>,</source>
-        <translation type="unfinished"></translation>
+        <translation>,</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="973"/>
         <source>Decimal separator</source>
-        <translation type="unfinished"></translation>
+        <translation>Ondalık ayırıcı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="973"/>
         <source>Specifies the decimal separator for metric dimensions (DIMDSEP variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Metrik ölçülendirmeler için ondalık ayırıcıyı belirtir (DIMDSEP değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="988"/>
         <source>Dim prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme öneki</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="988"/>
         <source>Specifies the text prefix for the dimensions (DIMPOST variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmelerin metin önekini belirtir (DIMPOST değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="999"/>
         <source>Dim suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme soneki</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="999"/>
         <source>Specifies the text suffix for the dimensions (DIMPOST variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmelerin metin sonekini belirtir (DIMPOST değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1034"/>
         <source>Dim roundoff</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme yuvarlaması</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1034"/>
         <source>Specifies the distance rounding value (DIMRND variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesafe yuvarlama değerini belirtir (DIMRND değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1045"/>
         <source>Dim scale linear</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrusal ölçülendirme ölçeği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1046"/>
         <source>Specifies global scale factor for linear dimensions (DIMLFAC variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrusal ölçülendirmeler için genel ölçek katsayısını belirtir (DIMLFAC değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1057"/>
         <source>Dim sub-units scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt birim ölçeği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1058"/>
         <source>Specifies sub-units scale factor for all applicable linear dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli tüm doğrusal ölçülendirmeler için alt birim ölçek katsayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1070"/>
         <source>Dim units</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1070"/>
         <source>Specifies units format for linear dimensions (DIMLUNIT variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrusal ölçülendirmeler için birim biçimini belirtir (DIMLUNIT değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1096"/>
         <source>Suppress leading zeros</source>
-        <translation type="unfinished"></translation>
+        <translation>Baştaki sıfırları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1097"/>
         <source>Sets suppression of leading zeros for dimensions (DIMZIN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmelerde baştaki sıfırların gizlenmesini ayarlar (DIMZIN değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1106"/>
         <source>Suppress trailing zeros</source>
-        <translation type="unfinished"></translation>
+        <translation>Sondaki sıfırları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1107"/>
         <source>Sets suppression of trailing zeros for dimensions (DIMZIN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmelerde sondaki sıfırların gizlenmesini ayarlar (DIMZIN değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1117"/>
         <source>Suppress zero feet</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır fit değerini gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1118"/>
         <source>Sets suppression of zero feet in dimension (DIMZIN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede sıfır fit değerinin gizlenmesini ayarlar (DIMZIN değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1129"/>
         <source>Suppress zero inches</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır inç değerini gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1130"/>
         <source>Sets suppression of zero inches for dimension (DIMZIN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede sıfır inç değerinin gizlenmesini ayarlar (DIMZIN değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1140"/>
         <source>Precision</source>
-        <translation type="unfinished"></translation>
+        <translation>Hassasiyet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1140"/>
         <source>Specifies precision for primary units dimensions (DIMDEC variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana birimlerle gösterilen ölçülendirmelerin hassasiyetini belirtir (DIMDEC değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1153"/>
         <source>Angle precision</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı hassasiyeti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1154"/>
         <source>Specifies number of precision decimal places displayed for angular dimension text (DIMADEC variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal ölçülendirme metninde gösterilen ondalık basamak sayısını belirtir (DIMADEC değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1165"/>
         <source>Angle format</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı biçimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1165"/>
         <source>Specifies the angle format (DIMAUNIT variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı biçimini belirtir (DIMAUNIT değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1179"/>
         <source>Alternate Units</source>
-        <translation type="unfinished">Alternatif Birimler</translation>
+        <translation>Alternatif Birimler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1179"/>
         <source>Alternate units for dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme alternatif birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1183"/>
         <source>Alt enabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birimler etkin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1184"/>
         <source>Sets units format for alternate units dimensions On or Off except angular (DIMALT variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal ölçülendirmeler dışındaki ölçülendirmelerde alternatif birim gösterimini açar veya kapatır (DIMALT değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1199"/>
         <source>Alt format</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birim biçimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1200"/>
         <source>Specifies units format for alternate units dimensions except angular (DIMALTU variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal ölçülendirmeler dışındaki ölçülendirmeler için alternatif birim biçimini belirtir (DIMALTU değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1213"/>
         <source>Alt precision</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birim hassasiyeti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1214"/>
         <source>Specifies precision for alternate units dimensions (DIMALTD variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birimlerle gösterilen ölçülendirmelerin hassasiyetini belirtir (DIMALTD değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1224"/>
         <source>Alt round</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birim yuvarlaması</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1224"/>
         <source>Specifies distances rounding value for alternate units (DIMALTRND variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birimler için mesafe yuvarlama değerini belirtir (DIMALTRND değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1240"/>
         <source>Alt scale factor</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birim ölçek katsayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1240"/>
         <source>Specifies scale factor for alternative units (DIMALTF variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birimler için ölçek katsayısını belirtir (DIMALTF değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1267"/>
         <source>Alt suppress leading zeros</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif baştaki sıfırları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1268"/>
         <source>Sets suppression of leading zeros for alternate units in dimension (DIMALTZ variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede alternatif birimlerin baştaki sıfırlarının gizlenmesini ayarlar (DIMALTZ değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1277"/>
         <source>Alt suppress trailing zeros</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif sondaki sıfırları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1278"/>
         <source>Sets suppression of trailing zeros for alternate units in dimension (DIMALTZ variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede alternatif birimlerin sondaki sıfırlarının gizlenmesini ayarlar (DIMALTZ değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1287"/>
         <source>Alt suppress zero feet</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif sıfır fiti gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1288"/>
         <source>Sets suppression of zero feet for alternate units in dimension (DIMALTZ variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede alternatif birimlerin sıfır fit değerinin gizlenmesini ayarlar (DIMALTZ değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1298"/>
         <source>Alt suppress zero inches</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif sıfır inçi gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1299"/>
         <source>Sets suppression of zero inches for alternate units in dimension (DIMALTZ variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede alternatif birimlerin sıfır inç değerinin gizlenmesini ayarlar (DIMALTZ değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1307"/>
         <source>Alt prefix</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birim öneki</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1307"/>
         <source>Specifies text prefix to alternate dimensions except angular (DIMAPOST variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal ölçülendirmeler dışındaki alternatif birimli ölçülendirmeler için metin önekini belirtir (DIMAPOST değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1318"/>
         <source>Alt suffix</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birim soneki</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1318"/>
         <source>Specifies text suffix to alternate dimensions except angular (DIMAPOST variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Açısal ölçülendirmeler dışındaki alternatif birimli ölçülendirmeler için metin sonekini belirtir (DIMAPOST değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
         <source>Tolerances</source>
-        <translation type="unfinished">Hoşgörüleri</translation>
+        <translation>Toleranslar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1350"/>
         <source>Tolerance settings for dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme tolerans ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1355"/>
         <source>Operational symbols</source>
-        <translation type="unfinished"></translation>
+        <translation>İşlem simgeleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1356"/>
         <source>Decimal separators</source>
-        <translation type="unfinished"></translation>
+        <translation>Ondalık ayırıcılar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1360"/>
         <source>Tolerance alignment</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans hizalaması</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1360"/>
         <source>Specifies alignment for stacked numbers (DIMTALN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst üste yazılan sayıların hizalamasını belirtir (DIMTALN değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Symmetrical</source>
-        <translation type="unfinished">Symmetrical</translation>
+        <translation>Simetrik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Deviation</source>
-        <translation type="unfinished">Deviasyon</translation>
+        <translation>Sapma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Limits</source>
-        <translation type="unfinished">Sınırlar</translation>
+        <translation>Sınırlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1369"/>
         <source>Basic</source>
-        <translation type="unfinished">Temel</translation>
+        <translation>Temel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1374"/>
         <source>Tolerance display</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans gösterimi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1375"/>
         <source>Specifies display mode of dimension tolerances to dimension text (DIMTOL variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme toleranslarının ölçülendirme metninde nasıl gösterileceğini belirtir (DIMTOL değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1396"/>
         <source>Tolerance limit lower</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans alt sınırı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1397"/>
         <source>Specifies the minimal (or lower) tolerance limit for dimension text when DIMTOL or DIMLIM is on (DIMTM variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMTOL veya DIMLIM etkinken ölçülendirme metni için en düşük tolerans sınırını belirtir (DIMTM değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1415"/>
         <source>Tolerance limit upper</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans üst sınırı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1416"/>
         <source>Specifies the maximum (or upper) tolerance limit for dimension text when DIMTOL or DIMLIM is on (DIMTP variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>DIMTOL veya DIMLIM etkinken ölçülendirme metni için en yüksek tolerans sınırını belirtir (DIMTP değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1435"/>
         <source>Bottom</source>
-        <translation type="unfinished">Alt</translation>
+        <translation>Alt</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1436"/>
         <source>Middle</source>
-        <translation type="unfinished">Orta</translation>
+        <translation>Orta</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1437"/>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Üstte</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1443"/>
         <source>Tolerance pos vert</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans dikey konumu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1444"/>
         <source>Specifies vertical justification for tolerance values relative to nominal dimension text (DIMTOLJ variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans değerlerinin nominal ölçülendirme metnine göre dikey hizalamasını belirtir (DIMTOLJ değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1457"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1472"/>
         <source>Tolerance precision</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans hassasiyeti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1458"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1473"/>
         <source>Specifies number of decimal places for tolerance values of a dimension (DIMTDEC variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmenin tolerans değerleri için ondalık basamak sayısını belirtir (DIMTDEC değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1498"/>
         <source>Tolerance suppress leading zeros</source>
-        <translation type="unfinished"></translation>
+        <translation>Tol. baştaki sıfırları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1499"/>
         <source>Sets suppression of leading zeros for tolerance values in dimension (DIMTZIN value)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmedeki tolerans değerlerinin baştaki sıfırlarının gizlenmesini ayarlar (DIMTZIN değeri)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1508"/>
         <source>Tolerance suppress trailing zeros</source>
-        <translation type="unfinished"></translation>
+        <translation>Tol. sondaki sıfırları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1509"/>
         <source>Sets suppression of trailing zeros for tolerance values in dimension (DIMTZIN value)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmedeki tolerans değerlerinin sondaki sıfırlarının gizlenmesini ayarlar (DIMTZIN değeri)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1519"/>
         <source>Tolerance suppress zero feet</source>
-        <translation type="unfinished"></translation>
+        <translation>Tol. sıfır fiti gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1520"/>
         <source>Sets suppression of zero feet for tolerance values in dimension (DIMTZIN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmedeki tolerans değerlerinde sıfır fit değerinin gizlenmesini ayarlar (DIMTZIN değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1530"/>
         <source>Tolerance suppress zero inches</source>
-        <translation type="unfinished"></translation>
+        <translation>Tol. sıfır inçi gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1531"/>
         <source>Sets suppression of zero inches for tolerance values in dimension (DIMTZIN variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmedeki tolerans değerlerinde sıfır inç değerinin gizlenmesini ayarlar (DIMTZIN değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1542"/>
         <source>Tolerance text height</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans metin yüksekliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1543"/>
         <source>Specifies scale factor for text height of tolerance values relative to dimension text height as set by DIMTXT (DIMTFAC variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tolerans değerlerinin metin yüksekliği için DIMTXT ile ayarlanan ölçülendirme metin yüksekliğine göre ölçek katsayısını belirtir (DIMTFAC değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1570"/>
         <source>Alt tolerance precision</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif tolerans hassasiyeti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1571"/>
         <source>Specifies number of decimal places for tolerance values of an alternate units dimension (DIMALTTD variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif birimli ölçülendirmenin tolerans değerleri için ondalık basamak sayısını belirtir (DIMALTTD değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1588"/>
         <source>Alt tolerance suppress leading zeros</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif tol. baştaki sıfırları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1589"/>
         <source>Sets suppression of leading zeros for alternate units tolerance values in dimension (DIMALTTZ value)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede alternatif birimlerin tolerans değerlerinin baştaki sıfırlarının gizlenmesini ayarlar (DIMALTTZ değeri)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1598"/>
         <source>Alt tolerance suppress trailing zeros</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif tol. sondaki sıfırları gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1599"/>
         <source>Sets suppression of trailing zeros for alternate units tolerance values in dimension (DIMALTTZ value)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede alternatif birimlerdeki tolerans değerlerinin sondaki sıfırlarının gizlenmesini ayarlar (DIMALTTZ değeri)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1608"/>
         <source>Alt tolerance suppress zero feet</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif tol. sıfır fit gizle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1609"/>
         <source>Sets suppression of zero feet for alternate units tolerance values in dimension (DIMALTTZ variable)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmede alternatif birimlerdeki tolerans değerlerinin sıfır fit bileşenlerinin gizlenmesini ayarlar (DIMALTTZ değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1619"/>
         <source>Alt tolerance suppress zero inches</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternatif tol. sıfır inç gizle</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1620"/>
-        <source>Sets suppression of zero inches for alterate units tolerance values in dimension (DIMALTTZ variable)</source>
-        <translation type="unfinished"></translation>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1593"/>
+        <source>Sets suppression of zero inches for alternate units tolerance values in dimension (DIMALTTZ variable)</source>
+        <translation type="unfinished">Ölçülendirmede alternatif birimlerdeki tolerans değerlerinin sıfır inç bileşenlerinin gizlenmesini ayarlar (DIMALTTZ değişkeni)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1781"/>
         <source>Dim geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme geometrisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1781"/>
         <source>Dimension&apos;s geometry properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmenin geometrik özelliklerini gösterir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1789"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1790"/>
         <source>Regenerate dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmeleri yenile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_base.cpp" line="1790"/>
         <source>Dim Regenerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmeyi Yenile</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="219"/>
         <source>Decimal Degrees</source>
-        <translation type="unfinished">Ondalık derece</translation>
+        <translation>Ondalık Derece</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="220"/>
         <source>Deg/min/sec</source>
-        <translation type="unfinished">Der/Dak/San</translation>
+        <translation>Derece/dakika/saniye</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="221"/>
         <source>Gradians</source>
-        <translation type="unfinished">Eğim</translation>
+        <translation>Grad</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="222"/>
         <source>Radians</source>
-        <translation type="unfinished">Radyan</translation>
+        <translation>Radyan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="223"/>
         <source>Surveyor&apos;s units</source>
-        <translation type="unfinished">Haritacı birimleri</translation>
+        <translation>Haritacı birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="233"/>
         <source>Scientific</source>
-        <translation type="unfinished">Bilimsel</translation>
+        <translation>Bilimsel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="234"/>
         <source>Decimal</source>
-        <translation type="unfinished">Ondalık</translation>
+        <translation>Ondalık</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="235"/>
         <source>Engineering</source>
-        <translation type="unfinished">Mühendislik</translation>
+        <translation>Mühendislik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="236"/>
         <source>Architectural</source>
-        <translation type="unfinished">Mimari</translation>
+        <translation>Mimari</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="237"/>
         <source>Fractional</source>
-        <translation type="unfinished">Oransal</translation>
+        <translation>Kesirli</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertyprovider_utils.cpp" line="238"/>
         <source>Architectural (metric)</source>
-        <translation type="unfinished">Mimari (metrik)</translation>
+        <translation>Mimari (metrik)</translation>
     </message>
 </context>
 <context>
@@ -26364,47 +26822,47 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="29"/>
         <source>Center Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="29"/>
         <source>Center point of dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmenin merkez noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">Açıklama noktası</translation>
+        <translation>Tanım Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="36"/>
         <source>Definition point of dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmenin tanım noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="43"/>
         <source>Leader Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama Çizgisi Boyu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="43"/>
         <source>Length of leader</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama çizgisinin uzunluğunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="54"/>
         <source>Apply dimension style to other dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini başka bir ölçülendirmeye uygular</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="55"/>
         <source>Apply style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_diametric.cpp" line="55"/>
         <source>Applies dimension style to other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini diğer ölçülendirmelere uygular</translation>
     </message>
 </context>
 <context>
@@ -26412,88 +26870,88 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="30"/>
         <source>Ext point 1</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma noktası 1</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="30"/>
         <source>Position of first extension point</source>
-        <translation type="unfinished"></translation>
+        <translation>Birinci uzatma noktasının konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="37"/>
         <source>Ext point 2</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzatma noktası 2</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="37"/>
         <source>Position of second extension point</source>
-        <translation type="unfinished"></translation>
+        <translation>İkinci uzatma noktasının konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="44"/>
         <source>Definition point </source>
-        <translation type="unfinished"></translation>
+        <translation>Tanım noktası </translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="44"/>
         <source>Position of definition point</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanım noktasının konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="51"/>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="51"/>
         <source>Rotation angle</source>
-        <translation type="unfinished">Rotasyon açısı</translation>
+        <translation>Döndürme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="57"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="57"/>
         <source>Oblique angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Eğiklik açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="67"/>
         <source>Continue and baseline</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürekli ve taban çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="68"/>
         <source>Continue</source>
-        <translation type="unfinished"></translation>
+        <translation>Sürekli</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="68"/>
         <source>Continues linear dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrusal ölçülendirmeyi sürdürür</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
         <source>Baseline</source>
-        <translation type="unfinished">Basel</translation>
+        <translation>Taban çizgisi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="69"/>
         <source>Uses linear dimension as base line and creates other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrusal ölçülendirmeyi taban çizgisi olarak kullanarak diğer ölçülendirmeleri oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="79"/>
         <source>Apply dimension style to other dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini başka bir ölçülendirmeye uygular</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="80"/>
         <source>Apply style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_linear.cpp" line="80"/>
         <source>Applies dimension style to other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini diğer ölçülendirmelere uygular</translation>
     </message>
 </context>
 <context>
@@ -26501,72 +26959,72 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="35"/>
         <source>Feature point</source>
-        <translation type="unfinished"></translation>
+        <translation>Özellik noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="35"/>
         <source>Position of feature point</source>
-        <translation type="unfinished"></translation>
+        <translation>Özellik noktasının konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="42"/>
         <source>Leader end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama çizgisi ucu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="42"/>
         <source>Position of leader end point</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama çizgisinin uç noktasının konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="49"/>
         <source>Is for X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>X ekseni için</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="49"/>
         <source>Defines whether ordinate dimension is for X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat ölçülendirmesinin X ekseni için olup olmadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="99"/>
         <source>Apply style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="100"/>
         <source>Applies dimension style to other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini diğer ölçülendirmelere uygular</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="101"/>
         <source>Select by base</source>
-        <translation type="unfinished"></translation>
+        <translation>Temele göre seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="102"/>
         <source>Selects all ordinate dimensions with the same base</source>
-        <translation type="unfinished"></translation>
+        <translation>Aynı temeli kullanan tüm koordinat ölçülendirmelerini seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="103"/>
         <source>Ordinate dimension operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat ölçülendirme işlemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="122"/>
         <source>&lt;No name&gt;</source>
-        <translation type="unfinished">&lt;İsim Yok&gt;</translation>
+        <translation>&lt;Adsız&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="128"/>
         <source>Re-Base to current UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli UCS'yi temel al</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_ordinate.cpp" line="129"/>
         <source>Rebase selected ordinate dimensions to current UCS - </source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili koordinat ölçülendirmelerinin temelini geçerli UCS'ye taşı - </translation>
     </message>
 </context>
 <context>
@@ -26574,47 +27032,47 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="29"/>
         <source>Center Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Merkez Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="29"/>
         <source>Center point of dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmenin merkez noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
         <source>Definition Point</source>
-        <translation type="unfinished">Açıklama noktası</translation>
+        <translation>Tanım Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="36"/>
         <source>Definition point of dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirmenin tanım noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="43"/>
         <source>Leader Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama Çizgisi Boyu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="43"/>
         <source>Length of leader</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama çizgisinin uzunluğunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="54"/>
         <source>Apply dimension style to other dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini başka bir ölçülendirmeye uygular</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="55"/>
         <source>Apply style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stili uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_dim_radial.cpp" line="55"/>
         <source>Applies dimension style to other dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Ölçülendirme stilini diğer ölçülendirmelere uygular</translation>
     </message>
 </context>
 <context>
@@ -26622,22 +27080,22 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_document.cpp" line="81"/>
         <source>Snap Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakalama Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_document.cpp" line="81"/>
         <source>Options for snap settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakalama ayarlarına ilişkin seçenekleri gösterir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_document.cpp" line="86"/>
         <source>Action Options</source>
-        <translation type="unfinished"></translation>
+        <translation>İşlem Seçenekleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_document.cpp" line="86"/>
         <source>Options for currently active tool action</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin araç işleminin seçeneklerini gösterir</translation>
     </message>
 </context>
 <context>
@@ -26755,9 +27213,24 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="120"/>
+        <source>Creation of orthogonal lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="120"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="125"/>
         <source>Creation of line tangental to ellipse</source>
         <translation>Elipse teğet çizgi oluşturma</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
+        <source>Create line tangental for two entities</source>
+        <translation type="unfinished">İki varlığa teğet çizgi oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="130"/>
+        <source>Creation of line with relative angle or fillet</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="121"/>
@@ -26793,16 +27266,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
         <source>Tangent (C,C)</source>
         <translation>Teğet (Ç,Ç)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="127"/>
-        <source>Create line tangental for two entitiers</source>
-        <translation>İki varlığa teğet çizgi oluştur</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="130"/>
-        <source>Creation of line with relative angle</source>
-        <translation>Göreceli açılı çizgi oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_ellipse.cpp" line="131"/>
@@ -26870,98 +27333,98 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
         <source>Grid</source>
-        <translation type="unfinished">Grid</translation>
+        <translation>Izgara</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="39"/>
         <source>Grid settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="60"/>
         <source>Show grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgarayı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="60"/>
         <source>Defines whether grid is shown or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgaranın gösterilip gösterilmeyeceğini belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="69"/>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="70"/>
         <source>Isometric Left</source>
-        <translation type="unfinished">Isometri Left Left</translation>
+        <translation>İzometrik Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="71"/>
         <source>Isometric Right</source>
-        <translation type="unfinished">Isometri Doğru</translation>
+        <translation>İzometrik Sağ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="72"/>
         <source>Isometric Top</source>
-        <translation type="unfinished">Isometri Top</translation>
+        <translation>İzometrik Üst</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="112"/>
         <source>Grid Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara Tipi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="112"/>
-        <source>Defines which time of grid should be drawn</source>
-        <translation type="unfinished"></translation>
+        <source>Defines which type of grid should be drawn</source>
+        <translation type="unfinished">Çizilecek ızgara tipini belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="122"/>
         <source>Spacing X</source>
-        <translation type="unfinished">X Aralığı</translation>
+        <translation>X Aralığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="122"/>
         <source>Spacing of grid by X axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgaranın X eksenindeki aralığını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="140"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="168"/>
         <source>auto</source>
-        <translation type="unfinished">özdevinimli</translation>
+        <translation>otomatik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="151"/>
         <source>Spacing Y</source>
-        <translation type="unfinished">Y Aralığı</translation>
+        <translation>Y Aralığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="151"/>
         <source>Spacing of grid by Y axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgaranın Y eksenindeki aralığını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="188"/>
         <source>Show meta-grid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana ızgarayı göster</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="188"/>
         <source>Defines whether meta-grid is shown or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana ızgaranın gösterilip gösterilmeyeceğini belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="220"/>
         <source>Meta grid every</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana ızgara aralığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_grid.cpp" line="221"/>
         <source>Frequency of major grid lines compared to minor grid lines (amount of minor cells in major one).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana ızgara çizgilerinin ara ızgara çizgilerine göre sıklığını (bir ana hücredeki ara hücre sayısını) belirtir.</translation>
     </message>
 </context>
 <context>
@@ -27168,112 +27631,112 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="50"/>
         <source>Print Paper</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma Kağıdı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="50"/>
         <source>Print paper format and margins settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırma kağıdının biçimini ve kenar boşluklarını ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="68"/>
         <source>Horizontal pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay sayfa sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="68"/>
         <source>Number of pages to print by horizontal</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay yönde yazdırılacak sayfa sayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="85"/>
         <source>Vertical pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey sayfa sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="85"/>
         <source>Number of pages to print by vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey yönde yazdırılacak sayfa sayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="102"/>
         <source>Margins</source>
-        <translation type="unfinished">Kenar boşlukları</translation>
+        <translation>Kenar boşlukları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="102"/>
         <source>Margins for print page</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırılacak sayfanın kenar boşluklarını ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="104"/>
         <source>Left page margin</source>
-        <translation type="unfinished"></translation>
+        <translation>Sol kenar boşluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="105"/>
         <source>Right page margin</source>
-        <translation type="unfinished"></translation>
+        <translation>Sağ kenar boşluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="106"/>
         <source>Top page margin</source>
-        <translation type="unfinished"></translation>
+        <translation>Üst kenar boşluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="107"/>
         <source>Bottom page margin</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt kenar boşluğu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="126"/>
         <source>Landscape</source>
-        <translation type="unfinished"></translation>
+        <translation>Yatay</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="127"/>
         <source>Portrait</source>
-        <translation type="unfinished"></translation>
+        <translation>Dikey</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="147"/>
         <source>Orientation</source>
-        <translation type="unfinished">Yönelim</translation>
+        <translation>Yön</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="147"/>
         <source>Orientation of page for printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırılacak sayfanın yönünü belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="158"/>
         <source>Page size</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa boyutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="158"/>
         <source>Size of page used for printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırmada kullanılan sayfanın boyutunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="162"/>
         <source>Width</source>
-        <translation type="unfinished">Genişlik genişliği Genişlik genişliği</translation>
+        <translation>Genişlik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="163"/>
         <source>Height</source>
-        <translation type="unfinished">Yükseklik</translation>
+        <translation>Yükseklik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="200"/>
         <source>Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Sayfa</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_paper.cpp" line="200"/>
         <source>Page format used for printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Yazdırmada kullanılan sayfa biçimini belirtir</translation>
     </message>
 </context>
 <context>
@@ -27281,78 +27744,78 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="37"/>
         <source>User Coordinate System (UCS)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanıcı Koordinat Sistemi (UCS)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="37"/>
         <source>Active user coordinate system properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin kullanıcı koordinat sisteminin özelliklerini gösterir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="71"/>
         <source>&lt;No name&gt;</source>
-        <translation type="unfinished">&lt;İsim Yok&gt;</translation>
+        <translation>&lt;Adsız&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="94"/>
         <source>Active UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>Etkin UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="94"/>
         <source>UCS switch to</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçilecek UCS</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="104"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="120"/>
         <source>Ortho</source>
-        <translation type="unfinished">Ortho</translation>
+        <translation>Ortogonal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="108"/>
         <source>Isometric Left</source>
-        <translation type="unfinished">Isometri Left Left</translation>
+        <translation>İzometrik Sol</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="112"/>
         <source>Isometric Right</source>
-        <translation type="unfinished">Isometri Doğru</translation>
+        <translation>İzometrik Sağ</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="116"/>
         <source>Isometric Top</source>
-        <translation type="unfinished">Isometri Top</translation>
+        <translation>İzometrik Üst</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="125"/>
         <source>Grid type</source>
-        <translation type="unfinished"></translation>
+        <translation>Izgara tipi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="125"/>
         <source>Type of grid used by coordinate system</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sisteminin kullandığı ızgara tipini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="150"/>
         <source>Add UCS...</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS ekle...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="150"/>
         <source>New UCS creation</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni bir UCS oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="151"/>
         <source>Remove UCS...</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS'yi kaldır...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="151"/>
         <source>Invokes removal of current UCS</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli UCS'yi kaldırma işlemini başlatır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="152"/>
@@ -27362,47 +27825,47 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="175"/>
         <source>By ordinate dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat ölçülendirmesine göre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="176"/>
-        <source>Set ucs that corresponds to selected ordinate dimension</source>
-        <translation type="unfinished"></translation>
+        <source>Set UCS that corresponds to selected ordinate dimension</source>
+        <translation type="unfinished">Seçili koordinat ölçülendirmesine karşılık gelen UCS'yi ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="177"/>
         <source>Rename UCS...</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS'yi yeniden adlandır...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="178"/>
         <source>Renames UCS (ones with empty names are temporary and are not saved)</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS'yi yeniden adlandırır (adı boş olanlar geçicidir ve kaydedilmez)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="179"/>
         <source>UCS-related commands</source>
-        <translation type="unfinished"></translation>
+        <translation>UCS ile ilgili komutlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="190"/>
         <source>Origin</source>
-        <translation type="unfinished"></translation>
+        <translation>Orijin</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="190"/>
         <source>Point of coordinates system origin (0,0) in world coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sistemi orijininin (0,0) dünya koordinatlarındaki konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="198"/>
         <source>X Axis direction</source>
-        <translation type="unfinished"></translation>
+        <translation>X ekseni yönü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_ucs.cpp" line="199"/>
         <source>Direction of X axis of coordinate system in world coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinat sisteminin X ekseninin dünya koordinatlarındaki yönünü belirtir</translation>
     </message>
 </context>
 <context>
@@ -27410,82 +27873,82 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="48"/>
         <source>Drawing Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim Birimleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="48"/>
         <source>Units and precisions for current drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli çizimin birimlerini ve hassasiyetlerini ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="70"/>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="70"/>
         <source>Format of angle units used in drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde kullanılan açı birimlerinin biçimini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="84"/>
         <source>Angle precision</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı hassasiyeti</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="84"/>
         <source>Precision of angular units used in drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde kullanılan açısal birimlerin hassasiyetini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="98"/>
         <source>Linear</source>
-        <translation type="unfinished">Linear</translation>
+        <translation>Doğrusal</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="98"/>
         <source>Format of linear units used in drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde kullanılan doğrusal birimlerin biçimini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="114"/>
         <source>Linear precision</source>
-        <translation type="unfinished"></translation>
+        <translation>Doğrusal hassasiyet</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="115"/>
-        <source>Precision of linear units units used in drawing</source>
-        <translation type="unfinished"></translation>
+        <source>Precision of linear units used in drawing</source>
+        <translation type="unfinished">Çizimde kullanılan doğrusal birimlerin hassasiyetini belirtir</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="137"/>
+        <source>Angles clockwise</source>
+        <translation type="unfinished">Açılar saat yönünde</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="138"/>
+        <source>Direction of angles. If counterclockwise, 90 degrees is north, for clockwise - 90 degrees is south</source>
+        <translation type="unfinished">Açıların yönünü belirler. Saat yönünün tersinde 90 derece kuzeyi, saat yönünde ise 90 derece güneyi gösterir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="130"/>
         <source>Primary Units</source>
-        <translation type="unfinished">İlk Birimler</translation>
+        <translation>Birincil Birimler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="130"/>
         <source>Primary linear units used by drawing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="137"/>
-        <source>Angles clockwize</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="138"/>
-        <source>Direction of angles. If counterclockwize, 90 degrees is north, for clockwise - 90 degrees is south</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde kullanılan birincil doğrusal birimleri belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="155"/>
         <source>Base angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_units.cpp" line="156"/>
         <source>Direction of zero angle (in degrees). 0 degrees there is 3 pm.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sıfır açısının yönünü derece cinsinden belirtir. 0 derece, saat 3 yönüdür.</translation>
     </message>
 </context>
 <context>
@@ -27493,68 +27956,68 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="41"/>
         <source>Named View</source>
-        <translation type="unfinished"></translation>
+        <translation>Adlandırılmış Görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="41"/>
         <source>Saved named views</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilmiş adlandırılmış görünümleri gösterir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="56"/>
         <source>&lt;Select View&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Görünüm seç&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="63"/>
         <source>&lt;No name&gt;</source>
-        <translation type="unfinished">&lt;İsim Yok&gt;</translation>
+        <translation>&lt;Adsız&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="85"/>
         <source>View to restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Geri yüklenecek görünüm</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="85"/>
         <source>Restoring one of previously saved named views</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceden kaydedilmiş adlandırılmış görünümlerden birini geri yükler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="95"/>
         <source>Save current view...</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli görünümü kaydet...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="96"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="98"/>
         <source>Create view for current zoom and offset of drawing</source>
-        <translation type="unfinished">Mevcut zoom için görünüm oluşturun ve çizim dengelemek</translation>
+        <translation>Çizimin geçerli yakınlaştırma ve öteleme değerleriyle bir görünüm oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="115"/>
         <source>Auto zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>Otomatik yakınlaştır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="116"/>
         <source>Adjusts drawing zoom and view to ensure that all content of drawing is visible</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimin tüm içeriğinin görünmesi için yakınlaştırmayı ve görünümü ayarlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="117"/>
         <source>Previous View...</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceki görünüm...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="117"/>
         <source>Positions drawing to previous view</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimi önceki görünüme getirir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_views.cpp" line="118"/>
         <source>Zoom related commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakınlaştırma komutları</translation>
     </message>
 </context>
 <context>
@@ -27562,68 +28025,73 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="36"/>
         <source>Workspace</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışma alanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="36"/>
         <source>Generic UI settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel arayüz ayarları</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="56"/>
         <source>&lt;Select Workspace&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;Çalışma alanı seç&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="77"/>
         <source>Workspace to use</source>
-        <translation type="unfinished"></translation>
+        <translation>Kullanılacak çalışma alanı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="77"/>
         <source>Restores one of previously saved workspaces</source>
-        <translation type="unfinished"></translation>
+        <translation>Önceden kaydedilmiş çalışma alanlarından birini geri yükler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="98"/>
         <source>Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Tam ekran</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="98"/>
         <source>Defines whether main window is shown in fullscreen window or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana pencerenin tam ekran gösterilip gösterilmeyeceğini belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="103"/>
         <source>Main menu</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana menü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="103"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
         <source>Defines whether main menu is shown or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana menünün gösterilip gösterilmeyeceğini belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
         <source>Statusbar</source>
-        <translation type="unfinished">Durum Çubuğu</translation>
+        <translation>Durum çubuğu</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="108"/>
+        <source>Defines whether status bar is shown or not</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="118"/>
         <source>Save workspace...</source>
-        <translation type="unfinished"></translation>
+        <translation>Çalışma alanını kaydet...</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="119"/>
         <source>Save current workspace for later use</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli çalışma alanını daha sonra kullanmak üzere kaydeder</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_graphic_workspace.cpp" line="120"/>
         <source>Saving current workspace for later use</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçerli çalışma alanını daha sonra kullanmak üzere kaydeder</translation>
     </message>
 </context>
 <context>
@@ -27631,51 +28099,61 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="33"/>
         <source>Is Solid</source>
-        <translation type="unfinished"></translation>
+        <translation>Düz Dolgu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="33"/>
         <source>Determines whether hatch is solid or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Taramanın düz dolgu olup olmadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="39"/>
         <source>Pattern</source>
-        <translation type="unfinished"></translation>
+        <translation>Desen</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="39"/>
         <source>Hatch pattern name</source>
-        <translation type="unfinished">Tarama deseni adı</translation>
+        <translation>Tarama deseni adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="53"/>
         <source>Scale</source>
-        <translation type="unfinished">Scale</translation>
+        <translation>Ölçek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="53"/>
         <source>Hatch scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarama ölçeği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="59"/>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="59"/>
         <source>Hatch rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Tarama döndürme açısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="67"/>
         <source>Area</source>
-        <translation type="unfinished">Alan Alanı</translation>
+        <translation>Alan</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="67"/>
         <source>Area of hatch</source>
+        <translation>Taramanın alanını belirtir</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="78"/>
+        <source>Pattern lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hatch.cpp" line="79"/>
+        <source>Whether the pattern lines were generated</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27788,8 +28266,8 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="104"/>
-        <source>Ecentricity of hyperbola</source>
-        <translation>Hiperbolün dış merkezliği</translation>
+        <source>Eccentricity of hyperbola</source>
+        <translation type="unfinished">Hiperbolün dış merkezliği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_hyperbola.cpp" line="110"/>
@@ -27863,124 +28341,124 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="37"/>
         <source>File</source>
-        <translation type="unfinished">Dosya</translation>
+        <translation>Dosya</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="37"/>
         <source>Name of image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Resim dosyasının adını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Kesion Point</translation>
+        <translation>Ekleme Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="65"/>
         <source>Point of image insertion</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin ekleme noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="71"/>
         <source>Scale</source>
-        <translation type="unfinished">Scale</translation>
+        <translation>Ölçek</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="71"/>
         <source>Scale factor for image</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin ölçek katsayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="105"/>
         <source>Size, pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut, piksel</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="105"/>
         <source>Size of the image in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin piksel cinsinden boyutunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="112"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="147"/>
         <source>Width</source>
-        <translation type="unfinished">Genişlik genişliği Genişlik genişliği</translation>
+        <translation>Genişlik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="113"/>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="148"/>
         <source>Height</source>
-        <translation type="unfinished">Yükseklik</translation>
+        <translation>Yükseklik</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="114"/>
         <source>Width of the image in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin piksel cinsinden genişliğini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="115"/>
         <source>Height of the image in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin piksel cinsinden yüksekliğini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="141"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Boyut</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="141"/>
         <source>Size in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim birimleri cinsinden boyutu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="149"/>
         <source>Width of the image in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin çizim birimleri cinsinden genişliğini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="150"/>
         <source>Height of the image in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin çizim birimleri cinsinden yüksekliğini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="167"/>
         <source>DPI</source>
-        <translation type="unfinished">DPI</translation>
+        <translation>DPI</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="167"/>
         <source>Dots per inch for the image</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin inç başına nokta sayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="173"/>
         <source>By width</source>
-        <translation type="unfinished"></translation>
+        <translation>Genişliğe göre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="174"/>
         <source>By height</source>
-        <translation type="unfinished"></translation>
+        <translation>Yüksekliğe göre</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="175"/>
         <source>DPI by width direction of image</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin genişlik yönündeki DPI değerini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="176"/>
         <source>DPI by height direction of image</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin yükseklik yönündeki DPI değerini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="188"/>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_image.cpp" line="188"/>
         <source>Image rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Resmin döndürme açısını belirtir</translation>
     </message>
 </context>
 <context>
@@ -27988,117 +28466,117 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="35"/>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="35"/>
         <source>Block name</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok adı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
         <source>Insertion Point</source>
-        <translation type="unfinished">Kesion Point</translation>
+        <translation>Ekleme Noktası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="54"/>
         <source>Point of block insertion</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloğun ekleme noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="60"/>
         <source>Scale X</source>
-        <translation type="unfinished">X Ölçeği</translation>
+        <translation>X Ölçeği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="60"/>
         <source>Scale factor of block by X</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloğun X yönündeki ölçek katsayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="71"/>
         <source>Scale Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y Ölçeği</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="71"/>
         <source>Scale factor of block by Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloğun Y yönündeki ölçek katsayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="82"/>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="82"/>
         <source>Block rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloğun döndürme açısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="88"/>
         <source>Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Sütunlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="88"/>
         <source>Amount of array columns</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizinin sütun sayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="95"/>
         <source>Rows</source>
-        <translation type="unfinished">Rows</translation>
+        <translation>Satırlar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="95"/>
         <source>Amount of array rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizinin satır sayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="102"/>
         <source>Spacing X</source>
-        <translation type="unfinished">X Aralığı</translation>
+        <translation>X Aralığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="102"/>
         <source>Spacing between columns of array (by X)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizinin sütunları arasındaki aralığı X yönünde belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="111"/>
         <source>Spacing Y</source>
-        <translation type="unfinished">Y Aralığı</translation>
+        <translation>Y Aralığı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="111"/>
         <source>Spacing between rows of array (by Y)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dizinin satırları arasındaki aralığı Y yönünde belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="127"/>
         <source>Block exploding and editing</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok parçalama ve düzenleme</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="128"/>
         <source>Explode</source>
-        <translation type="unfinished"></translation>
+        <translation>Parçala</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="128"/>
         <source>Explodes insert to individual entities of the block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok eklemeyi bloğun ayrı varlıklarına parçalar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="129"/>
         <source>Edit block</source>
-        <translation type="unfinished"></translation>
+        <translation>Bloğu düzenle</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_insert.cpp" line="129"/>
         <source>Performs editing of insert&apos;s block</source>
-        <translation type="unfinished"></translation>
+        <translation>Blok eklemenin bloğunu düzenler</translation>
     </message>
 </context>
 <context>
@@ -28106,42 +28584,42 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="31"/>
         <source>Has arrowhead</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok ucu var</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="31"/>
         <source>Determines whether leader has arrowhead or not</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama çizgisinin ok ucu olup olmadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="38"/>
         <source>Vertexes count</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşe sayısı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="38"/>
         <source>Amount of vertexes</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşe sayısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="62"/>
         <source>Vertex index</source>
-        <translation type="unfinished"></translation>
+        <translation>Köşe indeksi</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="63"/>
         <source>Index of current vertex of leader</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıklama çizgisinin geçerli köşesinin indeksini belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation>Köşe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_leader.cpp" line="64"/>
-        <source>Vertext of leader with given index</source>
-        <translation type="unfinished"></translation>
+        <source>Vertex of leader with given index</source>
+        <translation type="unfinished">Açıklama çizgisinin belirtilen indeksteki köşesini belirtir</translation>
     </message>
 </context>
 <context>
@@ -28199,7 +28677,7 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="77"/>
         <source>Delta</source>
-        <translation>Delta</translation>
+        <translation>Fark</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="77"/>
@@ -28236,6 +28714,11 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
         <source>Line Join</source>
         <translation>Çizgi Birleştir</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="99"/>
+        <source>Lengthen or shorten the line by a given distance</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="100"/>
@@ -28349,23 +28832,48 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="145"/>
-        <source>Create line orhtogonal to this line</source>
-        <translation>Bu çizgiye dik çizgi oluştur</translation>
+        <source>Create line orthogonal to this line</source>
+        <translation type="unfinished">Bu çizgiye dik çizgi oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
+        <source>Create line with relative angle to this line</source>
+        <translation type="unfinished">Bu çizgiye göreceli açıyla çizgi oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
+        <source>Creation of line from point or tangental orthogonal</source>
+        <translation type="unfinished">Noktadan çizgi veya teğet dik çizgi oluşturma</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
+        <source>Create circle tangental by 2 points</source>
+        <translation type="unfinished">2 noktadan teğet çember oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
+        <source>Create circle tangental by 2 entities and 1 point</source>
+        <translation type="unfinished">2 varlık ve 1 noktadan teğet çember oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
+        <source>Create ellipse inscribed</source>
+        <translation type="unfinished">İç teğet elips oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
+        <source>Create bounding box for line</source>
+        <translation type="unfinished">Çizgi için sınır kutusu oluştur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
+        <source>Break or divide the line by intersection points</source>
+        <translation type="unfinished">Çizgiyi kesişim noktalarından kes veya böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
         <source>Relative Angle</source>
         <translation>Göreceli Açı</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="146"/>
-        <source>Create line with related angle to this line</source>
-        <translation>Bu çizgiye göreceli açıyla çizgi oluştur</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="149"/>
-        <source>Creation line from point or tangental orthogonal</source>
-        <translation>Noktadan çizgi veya teğet dik çizgi oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="150"/>
@@ -28399,19 +28907,9 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>Teğet Çember (2 N)</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="155"/>
-        <source>Create circle tangental 2 points</source>
-        <translation>2 noktadan teğet çember oluştur</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
         <source>Tangential Circle (2 E, 1 P)</source>
         <translation>Teğet Çember (2 V, 1 N)</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="156"/>
-        <source>Create circle tangental by 2 entitites and 1 point</source>
-        <translation>2 varlık ve 1 noktadan teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="160"/>
@@ -28425,13 +28923,13 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
-        <source>Tangential Cicle (2 E, R)</source>
-        <translation>Teğet Çember (2 V, Y)</translation>
+        <source>Create circle tangental by 2 entities and radius</source>
+        <translation>2 varlık ve yarıçapla teğet çember oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="161"/>
-        <source>Create circle tangental by 2 entities and radius</source>
-        <translation>2 varlık ve yarıçapla teğet çember oluştur</translation>
+        <source>Tangential Circle (2 E, R)</source>
+        <translation type="unfinished">Teğet Çember (2 V, Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="164"/>
@@ -28444,19 +28942,9 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <translation>İç teğet elips</translation>
     </message>
     <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="165"/>
-        <source>Create elipse inscribed</source>
-        <translation>İç teğet elips oluştur</translation>
-    </message>
-    <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
         <source>Bounding box</source>
         <translation>Sınır kutusu</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="166"/>
-        <source>Create of bounding box for line</source>
-        <translation>Çizgi için sınır kutusu oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="169"/>
@@ -28502,11 +28990,6 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
         <source>Break/Divide</source>
         <translation>Kes/Böl</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="176"/>
-        <source>Break or divide the line by intesection points</source>
-        <translation>Çizgiyi kesişim noktalarından kes veya böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_line.cpp" line="178"/>
@@ -28817,67 +29300,67 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="33"/>
         <source>Focus</source>
-        <translation type="unfinished">Focus</translation>
+        <translation>Odak</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="33"/>
         <source>Focus of parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabolün odağını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex</source>
-        <translation type="unfinished">Vertex</translation>
+        <translation>Köşe</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="39"/>
         <source>Vertex of parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabolün tepe noktasını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="45"/>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="45"/>
         <source>Angle of parabola axis</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabol ekseninin açısını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="51"/>
         <source>Length</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzunluk</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="51"/>
         <source>Length of parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabolün uzunluğunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="65"/>
         <source>Dividing parabola or creation of bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabolü böler veya sınırlayıcı kutu oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="66"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Böl</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="66"/>
         <source>Divide parabola in given point</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabolü belirtilen noktada böler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="67"/>
         <source>Bounding box</source>
-        <translation type="unfinished"></translation>
+        <translation>Sınırlayıcı kutu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_parabola.cpp" line="67"/>
         <source>Creation of bounding box for parabola</source>
-        <translation type="unfinished"></translation>
+        <translation>Parabol için sınırlayıcı kutu oluşturur</translation>
     </message>
 </context>
 <context>
@@ -28885,77 +29368,77 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="31"/>
         <source>Position</source>
-        <translation type="unfinished">Pozisyon pozisyonu</translation>
+        <translation>Konum</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="31"/>
         <source>Position of point</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktanın konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="47"/>
         <source>Selection operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçim işlemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="48"/>
         <source>Select points</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktaları seç</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="48"/>
         <source>Selecting points within selected area</source>
-        <translation type="unfinished"></translation>
+        <translation>Seçili alan içindeki noktaları seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="49"/>
         <source>Middle points</source>
-        <translation type="unfinished"></translation>
+        <translation>Orta noktalar</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="49"/>
         <source>Draw points in the middle of line between two points</source>
-        <translation type="unfinished"></translation>
+        <translation>İki nokta arasındaki çizginin ortasına noktalar çizer</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="52"/>
         <source>Other point operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Diğer nokta işlemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="53"/>
         <source>Line of points</source>
-        <translation type="unfinished"></translation>
+        <translation>Nokta sırası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="53"/>
         <source>Creation of several points along specified direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Belirtilen yönde birden fazla nokta oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="54"/>
         <source>Lattice of points</source>
-        <translation type="unfinished"></translation>
+        <translation>Nokta ızgarası</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="54"/>
         <source>Creation of lattice of points</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktalardan oluşan bir ızgara oluşturur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="66"/>
         <source>Point operations</source>
-        <translation type="unfinished"></translation>
+        <translation>Nokta işlemleri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="69"/>
         <source>Paste to points</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktalara yapıştır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_point.cpp" line="70"/>
         <source>Perform paste from clipboard, inserting copied content into positions of selected points</source>
-        <translation type="unfinished"></translation>
+        <translation>Panodaki kopyalanmış içeriği seçili noktaların konumlarına yapıştırır</translation>
     </message>
 </context>
 <context>
@@ -28995,6 +29478,11 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
         <source>Vertex</source>
         <translation>Köşe</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="60"/>
+        <source>Vertex of polyline with given index</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="71"/>
@@ -29154,18 +29642,18 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="120"/>
-        <source>Creates equidistnat polyline</source>
-        <translation>Eş mesafeli çoklu çizgi oluşturur</translation>
+        <source>Creates equidistant polyline</source>
+        <translation type="unfinished">Eş mesafeli çoklu çizgi oluşturur</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="121"/>
+        <source>Revert direction of polyline, swapping start and end points</source>
+        <translation type="unfinished">Başlangıç ve bitiş noktalarının yerini değiştirerek çoklu çizginin yönünü ters çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="121"/>
         <source>Revert direction</source>
         <translation>Yönü ters çevir</translation>
-    </message>
-    <message>
-        <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="121"/>
-        <source>Reverst direction of polyline, swapping start and end points</source>
-        <translation>Başlangıç ve bitiş noktalarının yerini değiştirerek çoklu çizginin yönünü ters çevir</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_polyline.cpp" line="123"/>
@@ -29198,42 +29686,42 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_render_options.cpp" line="36"/>
         <source>Graphic View</source>
-        <translation type="unfinished"></translation>
+        <translation>Grafik Görünümü</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_render_options.cpp" line="36"/>
         <source>Setting that affects drawing appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimin görünümünü etkileyen ayardır</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_render_options.cpp" line="58"/>
         <source>Draft mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Taslak modu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_render_options.cpp" line="58"/>
         <source>Defines whether draft mode is enabled for drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde taslak modunun etkin olup olmadığını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_render_options.cpp" line="75"/>
         <source>Draft lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Taslak çizgileri</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_render_options.cpp" line="76"/>
         <source>Defines whether draft or actual line width is rendered in drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde taslak veya gerçek çizgi kalınlığının kullanılacağını belirler</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_render_options.cpp" line="106"/>
         <source>Antialiasing</source>
-        <translation type="unfinished"></translation>
+        <translation>Kenar yumuşatma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/document/lc_propertiesprovider_render_options.cpp" line="107"/>
         <source>Defines whether antialiased rendering is used in drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde kenar yumuşatmanın kullanılıp kullanılmayacağını belirler</translation>
     </message>
 </context>
 <context>
@@ -29380,8 +29868,8 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="145"/>
-        <source>Exploding spline and creating rounding box</source>
-        <translation>Spline parçalama ve sınır kutusu oluşturma</translation>
+        <source>Exploding spline and creating bounding box</source>
+        <translation type="unfinished">Spline parçalama ve sınır kutusu oluşturma</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="146"/>
@@ -29395,13 +29883,13 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="147"/>
-        <source>Rounding box</source>
-        <translation>Sınır kutusu</translation>
+        <source>Create bounding box around spline</source>
+        <translation>Spline çevresinde sınır kutusu oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="147"/>
-        <source>Create bounding box around spline</source>
-        <translation>Spline çevresinde sınır kutusu oluştur</translation>
+        <source>Bounding box</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_spline.cpp" line="158"/>
@@ -29573,8 +30061,8 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="114"/>
-        <source>Tangent and rounding box</source>
-        <translation>Teğet ve sınır kutusu</translation>
+        <source>Tangent and bounding box</source>
+        <translation type="unfinished">Teğet ve sınır kutusu</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="115"/>
@@ -29588,13 +30076,13 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="116"/>
-        <source>Rounding box</source>
-        <translation>Sınır kutusu</translation>
+        <source>Create bounding box around spline</source>
+        <translation>Spline çevresinde sınır kutusu oluştur</translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="116"/>
-        <source>Create bounding box around spline</source>
-        <translation>Spline çevresinde sınır kutusu oluştur</translation>
+        <source>Bounding box</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_splinepoints.cpp" line="127"/>
@@ -29712,8 +30200,8 @@ Yeniden başlatmadan düzenleyici aracılığıyla kalem kaydederseniz, palettek
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="83"/>
-        <source>Content text of MText</source>
-        <translation>MText&apos;in içerik metni</translation>
+        <source>Content of the text</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/property_sheet/metaentity/entities/lc_propertiesprovider_text.cpp" line="89"/>
@@ -30872,6 +31360,11 @@ Katman: </translation>
         <translation>Kontrol Noktaları</translation>
     </message>
     <message>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1396"/>
+        <source>Pattern lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfoentitydata.cpp" line="1505"/>
         <source>[Override]</source>
         <translation>[Override]</translation>
@@ -31286,6 +31779,11 @@ p, li { beyaz uzay: pre-wrap; }
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="399"/>
         <source>&amp;Collect Coordinates</source>
         <translation>&amp;Collect koordinates</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="701"/>
+        <source>Layer &quot;%1&quot; is locked: unlock it to edit its entities.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dock_widgets/entity_info/lc_quickinfowidget.cpp" line="786"/>
@@ -32369,56 +32867,56 @@ p, li { beyaz uzay: pre-wrap; }
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Form</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="38"/>
         <source>Projected position of the point</source>
-        <translation type="unfinished"></translation>
+        <translation>Noktanın izdüşüm konumunu belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="41"/>
         <source>Projected:</source>
-        <translation type="unfinished"></translation>
+        <translation>İzdüşüm:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="48"/>
         <source>&lt;p&gt;Base point coordinates. &lt;/p&gt;&lt;p&gt;Relative coordinates will be calculated based on this point&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Temel noktanın koordinatları. &lt;/p&gt;&lt;p&gt;Göreli koordinatlar bu noktaya göre hesaplanır.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="51"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Base point:</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel nokta:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="71"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="78"/>
         <source>-99.9999, -9999.99999</source>
-        <translation type="unfinished"></translation>
+        <translation>-99.9999, -9999.99999</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="109"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="966"/>
         <source>Offset by X from base to new point</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel noktadan yeni noktaya X yönündeki ötelemeyi belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="112"/>
         <source>Offset X:</source>
-        <translation type="unfinished">X Ekseni Kaydırması:</translation>
+        <translation>X Ötelemesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="119"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="278"/>
         <source>Absolute Y for new point</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni noktanın mutlak Y koordinatını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="154"/>
         <source>Pick Y from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Y koordinatını çizimden seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="177"/>
@@ -32428,7 +32926,7 @@ p, li { beyaz uzay: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="836"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1005"/>
         <source>Apply data</source>
-        <translation type="unfinished"></translation>
+        <translation>Verileri uygula</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="180"/>
@@ -32438,7 +32936,7 @@ p, li { beyaz uzay: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="839"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1008"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="200"/>
@@ -32448,12 +32946,12 @@ p, li { beyaz uzay: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="859"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1028"/>
         <source>Manually specify point on drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizim üzerinde elle bir nokta belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="239"/>
         <source>Click to edit absolute Y coordinate for new point</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni noktanın mutlak Y koordinatını düzenlemek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="242"/>
@@ -32463,111 +32961,111 @@ p, li { beyaz uzay: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="901"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1070"/>
         <source>12234345.23123235</source>
-        <translation type="unfinished"></translation>
+        <translation>12234345.23123235</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="281"/>
         <source>Y:</source>
-        <translation type="unfinished">Y:</translation>
+        <translation>Y:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="294"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="797"/>
         <source>Absolute X for new point</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni noktanın mutlak X koordinatını belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="297"/>
         <source>X:</source>
-        <translation type="unfinished">X:</translation>
+        <translation>X:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="342"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="937"/>
         <source>Distance between base and new points</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel nokta ile yeni nokta arasındaki mesafeyi belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="361"/>
         <source>Pick length from drawing</source>
-        <translation type="unfinished">Çizimten uzun süre alın</translation>
+        <translation>Uzunluğu çizimden seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="446"/>
         <source>Click to edit distance</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesafeyi düzenlemek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="460"/>
         <source>Specify position on drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Çizimde konum belirt</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="485"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1128"/>
         <source>Angle from base to new point</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel noktadan yeni noktaya olan açıyı belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="501"/>
         <source>Pick angle from drawing</source>
-        <translation type="unfinished">Çizim açısını çizimden alın</translation>
+        <translation>Açıyı çizimden seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="586"/>
         <source>Click to edit angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açıyı düzenlemek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="606"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="638"/>
         <source>Offset by Y from base to new point</source>
-        <translation type="unfinished"></translation>
+        <translation>Temel noktadan yeni noktaya Y yönündeki ötelemeyi belirtir</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="609"/>
         <source>Offset Y:</source>
-        <translation type="unfinished">Y Ekseni Kaydırması:</translation>
+        <translation>Y Ötelemesi:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="654"/>
         <source>Pick offset Y from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Y ötelemesini çizimden seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="742"/>
         <source>Click to edit offset by Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y yönündeki ötelemeyi düzenlemek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="813"/>
         <source>Pick X from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>X koordinatını çizimden seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="898"/>
         <source>Click to edit absolute X coordinate for new point</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni noktanın mutlak X koordinatını düzenlemek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="940"/>
         <source>Distance:</source>
-        <translation type="unfinished">Mesafe:</translation>
+        <translation>Mesafe:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="982"/>
         <source>Pick offset X from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>X ötelemesini çizimden seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1067"/>
         <source>Click to edit offset by X</source>
-        <translation type="unfinished"></translation>
+        <translation>X yönündeki ötelemeyi düzenlemek için tıklayın</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1131"/>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1143"/>
@@ -32577,7 +33075,7 @@ p, li { beyaz uzay: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1203"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1218"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Modification status. Exclamation mark (&lt;span style=&quot; font-weight:700;&quot;&gt;!&lt;/span&gt;) means that parameter is entered explicitly and so it&apos;s value has higher priority during calculation of relative point coordinates.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Değişiklik durumu. Ünlem işareti (&lt;span style=&quot; font-weight:700;&quot;&gt;!&lt;/span&gt;), parametrenin doğrudan girildiğini ve değerinin göreli nokta koordinatları hesaplanırken daha yüksek önceliğe sahip olduğunu gösterir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1146"/>
@@ -32587,72 +33085,72 @@ p, li { beyaz uzay: pre-wrap; }
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1206"/>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1221"/>
         <source>!</source>
-        <translation type="unfinished"></translation>
+        <translation>!</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1231"/>
         <source>&lt;p&gt;If checked, activates relative coordinates mode that calculates point position using offset from the base point. &lt;/p&gt;&lt;p&gt;Otherwise - absolute coordinates mode.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;İşaretlendiğinde, noktanın konumunu temel noktadan ötelemeye göre hesaplayan göreli koordinat modunu etkinleştirir. &lt;/p&gt;&lt;p&gt;Aksi halde mutlak koordinat modu kullanılır.&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.ui" line="1234"/>
         <source>By Offset</source>
-        <translation type="unfinished"></translation>
+        <translation>Ötelemeye Göre</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="91"/>
         <source>Relative point assistant. Use keys to activate:</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreli nokta yardımcısı. Etkinleştirmek için tuşları kullanın:</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="92"/>
         <source>Distance</source>
-        <translation type="unfinished">Mesafe</translation>
+        <translation>Mesafe</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="93"/>
         <source>Angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Açı</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="93"/>
         <source>Offset/Abs X</source>
-        <translation type="unfinished"></translation>
+        <translation>Öteleme/Mutlak X</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="94"/>
         <source>Offset/Abs Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Öteleme/Mutlak Y</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="95"/>
         <source>Toggle delta/absolute mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Öteleme ve mutlak koordinat modları arasında geçiş yapar</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="95"/>
         <source>Pick input value from drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Giriş değerini çizimden seçer</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="96"/>
         <source>Select manually with entered parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Girilen parametrelerle elle seçim yapar</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="97"/>
         <source>Confirm edit and try to apply values</source>
-        <translation type="unfinished"></translation>
+        <translation>Düzenlemeyi onaylar ve değerleri uygulamayı dener</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="98"/>
         <source>Cancel assistant</source>
-        <translation type="unfinished"></translation>
+        <translation>Yardımcıyı iptal et</translation>
     </message>
     <message>
         <location filename="../src/ui/components/relative_position_assistant/lc_relative_position_editing_widget.cpp" line="328"/>
         <source>Relative zero:</source>
-        <translation type="unfinished"></translation>
+        <translation>Göreli sıfır:</translation>
     </message>
 </context>
 <context>
@@ -36243,6 +36741,11 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <translation>Kaydet iptal edildi</translation>
     </message>
     <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="952"/>
+        <source>Saved drawing: %1. Left out: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="406"/>
         <source>&amp;Save</source>
         <translation>&amp;Kaydet</translation>
@@ -36261,6 +36764,46 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="412"/>
         <source>Save %1 &amp;as...</source>
         <translation>%1 &amp;Farklı kaydet...</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1633"/>
+        <source>Use this only for known old LibreCAD R12–R2004 DXF files that contain UTF-8 text but declare the ANSI_1252 code page. This is not automatic encoding detection.
+
+The original opens in a separate document. Mixed encodings and raw metadata are not guaranteed to recover correctly. Review the result, then use Save As to save a corrected copy instead of replacing the original.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1640"/>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1777"/>
+        <source>Legacy LibreCAD DXF recovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1648"/>
+        <source>Open Legacy LibreCAD DXF (UTF-8)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1649"/>
+        <source>DXF drawings (*.dxf *.DXF)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1774"/>
+        <source>Legacy LibreCAD UTF-8 recovery opens DXF files only. Use ordinary Open for DWG and other formats.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1847"/>
+        <source>Loaded with legacy LibreCAD UTF-8 recovery: %1. Use Save As to save a corrected copy. Mixed encodings and raw metadata are not guaranteed to recover correctly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1851"/>
+        <source> Modelspace is empty; %n block(s) in the Blocks dock contain geometry.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/main/qc_applicationwindow.cpp" line="1134"/>
@@ -36320,6 +36863,16 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <source>Current Layer</source>
         <translation>Geçerli Katman</translation>
     </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/qg_activelayername.cpp" line="90"/>
+        <source>The current layer is hidden: what is drawn on it is not shown until the layer is shown.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/status_bar/qg_activelayername.cpp" line="93"/>
+        <source>The current layer is locked, as no other layer is unlocked: it cannot be selected or modified.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_BlockDialog</name>
@@ -36342,6 +36895,16 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <location filename="../src/ui/dialogs/entity/qg_blockdialog.cpp" line="78"/>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
         <translation>Blok isimlendirilemedi. &quot;%1&quot; isminde bir blok zaten var.</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="354"/>
+        <source>Add Block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/qg_dialogfactory.cpp" line="390"/>
+        <source>Rename Block</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -36404,6 +36967,11 @@ Lütfen varlığını ve izinlerini kontrol edin.</translation>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="123"/>
         <source>Magenta</source>
         <translation>Mor</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="316"/>
+        <source>Select Color</source>
+        <translation type="unfinished">Renk seçin</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_colorbox.cpp" line="112"/>
@@ -36821,6 +37389,11 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
         <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.ui" line="124"/>
         <source>Hatched area</source>
         <translation>Hatched alan</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_hatch.cpp" line="213"/>
+        <source>Preview: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -40859,6 +41432,16 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
         <translation>Varlık başına ayrı menü</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="102"/>
+        <source>Marks the drawing&apos;s range along each scrollbar where it lies outside the view, and gives the ranges and the drawing&apos;s distance in the scrollbar&apos;s tooltip, so the drawing can be found again when panned far away</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="105"/>
+        <source>Show drawing extents on scrollbars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="376"/>
         <source>Overlay selection box boundary line type (normal mode)</source>
         <translation>Seçim kutusu kenar çizgisinin türü (normal kip)</translation>
@@ -40892,6 +41475,26 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2034"/>
         <source> Snap to grid lines if &quot;Snap to Grid&quot; is active</source>
         <translation> &quot;Izgaraya Yakala&quot; etkinse ızgara çizgilerine yakala</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2057"/>
+        <source>If selected, toolbar angle snap only snaps when the cursor is near the configured angle step.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2060"/>
+        <source>Soft Angle Snap</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2067"/>
+        <source>Soft Snap sensitivity:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2074"/>
+        <source>Maximum angular distance from the angle step before toolbar angle snap is applied.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="2044"/>
@@ -41216,6 +41819,11 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
         <translation>Yedek dosya adı soneki:</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5114"/>
+        <source>Hide backup and autosave files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5111"/>
         <source>If selected, mouse up will finish ad-hock moving operations (so just one click is need). Otherwise, first click initiates move, and second one completes it.</source>
         <translation>Seçiliyse anlık taşıma işlemleri fare düğmesi bırakılınca biter (tek tıklama yeterli olur). Aksi halde ilk tıklama taşımayı başlatır, ikincisi bitirir.</translation>
@@ -41259,6 +41867,71 @@ Bu, Bloğun kendisinin tüm varlıklarını yinelemeli olarak değiştirir.</tra
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5556"/>
         <source>Promote command in Cmd widget</source>
         <translation>Komutu Komut panelinde göster</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5635"/>
+        <source>Draw Fast Defaults</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5641"/>
+        <source>Opening marker depth:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5648"/>
+        <source>Length of the perpendicular tick marks drawn on each side of a wall opening (Draw Fast &apos;o&apos; / &apos;opening&apos; command).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5670"/>
+        <source>Window offset width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5677"/>
+        <source>Distance between the wall line and the inner window line in Draw Fast window mode (&apos;w&apos; / &apos;window&apos; command).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5699"/>
+        <source>Door thickness:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5706"/>
+        <source>Thickness of the door slab in Draw Fast door mode. Set to 0 for a single-line door leaf.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5728"/>
+        <source>Door swing angle:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5735"/>
+        <source>Arc sweep angle for the door swing in Draw Fast door mode. 90 degrees draws a quarter-circle; 45 degrees draws a shallower arc.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5752"/>
+        <source>Door design:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5759"/>
+        <source>Door symbol style. &apos;Swing only&apos; draws the leaf and arc. &apos;Swing with opening line&apos; also draws a straight line across the full door opening.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5763"/>
+        <source>Swing only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5768"/>
+        <source>Swing with opening line</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/settings/options_general/qg_dlgoptionsgeneral.ui" line="5573"/>
@@ -41901,6 +42574,26 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="145"/>
         <source>Text to insert</source>
         <translation>Eklenecek metin</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="151"/>
+        <source>Text Direction</source>
+        <translation type="unfinished">Metin Yönü</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="155"/>
+        <source>Auto</source>
+        <translation type="unfinished">Otomatik</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="161"/>
+        <source>Left to Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="166"/>
+        <source>Right to Left</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/entity/qg_dlg_text.ui" line="197"/>
@@ -42622,6 +43315,21 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <translation>Çizim Değişim DXF 2007 %1</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="148"/>
+        <source>Drawing Exchange DXF 2018 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="149"/>
+        <source>Drawing Exchange DXF 2013 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="150"/>
+        <source>Drawing Exchange DXF 2010 %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="134"/>
         <source>Drawing Exchange DXF 2004 %1</source>
         <translation>Çizim Değişim DXF 2004 %1</translation>
@@ -42630,6 +43338,11 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="136"/>
         <source>Drawing Exchange DXF R14 %1</source>
         <translation>Çizim Değişim DXF R14 %1</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="164"/>
+        <source>ESRI Shapefile %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="149"/>
@@ -42662,6 +43375,101 @@ yani pişirme için gereken varsayılan adım değeri</translation>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="248"/>
         <source>Untitled</source>
         <translation>İsimsiz</translation>
+    </message>
+</context>
+<context>
+    <name>QG_GraphicView</name>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1352"/>
+        <source>View X %1..%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1353"/>
+        <source>View Y %1..%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1358"/>
+        <source>The drawing is empty · %1</source>
+        <comment>scrollbar tooltip: %1 is the view&apos;s range</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1365"/>
+        <source>Drawing X %1..%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1366"/>
+        <source>Drawing Y %1..%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1372"/>
+        <source>less than 0.1 view widths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1372"/>
+        <source>less than 0.1 view heights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1376"/>
+        <source>≈%1 view widths</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1376"/>
+        <source>≈%1 view heights</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1381"/>
+        <source>view spans the drawing&apos;s X range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1381"/>
+        <source>view spans the drawing&apos;s Y range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1384"/>
+        <source>drawing&apos;s X range is in view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1384"/>
+        <source>drawing&apos;s Y range is in view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1388"/>
+        <source>drawing&apos;s X range is %1 to the left (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1389"/>
+        <source>drawing&apos;s Y range is %1 down (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1394"/>
+        <source>drawing&apos;s X range is %1 to the right (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1395"/>
+        <source>drawing&apos;s Y range is %1 up (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/view/qg_graphicview.cpp" line="1399"/>
+        <source>%1 · %2 · %3</source>
+        <comment>scrollbar tooltip: the drawing&apos;s range, the view&apos;s range, where the drawing is</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -42881,6 +43689,26 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
+        <source>Hidden</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="99"/>
+        <source>Hidden (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="100"/>
+        <source>Hidden (small)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="101"/>
+        <source>Hidden (large)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="98"/>
         <source>Dash Dot</source>
         <translation>Noktalı kesikli çizgi</translation>
     </message>
@@ -42923,6 +43751,26 @@ Yapı Katmanının içeriği çıktıda görünmemelidir.</translation>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="109"/>
         <source>Center (large)</source>
         <translation>Geniş kesikli eksen çizgisi</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="114"/>
+        <source>Phantom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="115"/>
+        <source>Phantom (tiny)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="116"/>
+        <source>Phantom (small)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="117"/>
+        <source>Phantom (large)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/comboboxes/qg_linetypebox.cpp" line="110"/>
@@ -43554,6 +44402,11 @@ Do you want to replace it?</source>
         <translation>Yazı tipi %1</translation>
     </message>
     <message>
+        <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="496"/>
+        <source>ESRI Shapefile %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/ui/dialogs/file/qg_filedialog.cpp" line="500"/>
         <source>Open Drawing</source>
         <translation>Çizim Aç</translation>
@@ -43828,6 +44681,20 @@ Do you want to replace it?</source>
         <translation>nesne</translation>
     </message>
     <message numerus="yes">
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4365"/>
+        <source>DWG load: the block table lists %n block record(s) that the file does not contain (erased). They were skipped.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4373"/>
+        <source>DWG load: %n entity(ies) belonged to block records that no longer exist (erased) and were skipped.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1151"/>
         <source>, and %n more class(es)</source>
         <translation>
@@ -43865,6 +44732,24 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1654"/>
         <source>XREF load failed for block &quot;%1&quot;: %2</source>
         <translation>&quot;%1&quot; bloğu için XREF yüklenemedi: %2</translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17114"/>
+        <source>%1 object(s) read from another DXF version, which this version cannot hold</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17123"/>
+        <source>annotation scale or column data of %1 multi-line attribute(s)</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="17130"/>
+        <source>%1 object(s) DWG cannot hold</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="12410"/>
@@ -45538,6 +46423,18 @@ Do you want to replace it?</source>
         <translation>paralel</translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="145"/>
+        <source>dfast</source>
+        <comment>draw fast</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="146"/>
+        <source>df</source>
+        <comment>draw fast</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="266"/>
         <source>lineoff</source>
         <comment>create parallel</comment>
@@ -46252,16 +47149,34 @@ Do you want to replace it?</source>
         <translation>taşı</translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="751"/>
+        <source>rotate</source>
+        <comment>modify - rotate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="724"/>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
         <translation>döndür</translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="758"/>
+        <source>scale</source>
+        <comment>modify - scale</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="730"/>
         <source>modscale</source>
         <comment>modify - scale</comment>
         <translation>ölçekle</translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="765"/>
+        <source>mirror</source>
+        <comment>modify -  mirror</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="736"/>
@@ -46304,6 +47219,12 @@ Do you want to replace it?</source>
         <source>md</source>
         <comment>modify -  revert direction</comment>
         <translation>yd</translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="791"/>
+        <source>trim</source>
+        <comment>modify - trim (extend)</comment>
+        <translation type="unfinished">kırp</translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="761"/>
@@ -46366,6 +47287,24 @@ Do you want to replace it?</source>
         <translation>mixet</translation>
     </message>
     <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="813"/>
+        <source>o</source>
+        <comment>modify - offset</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="820"/>
+        <source>bevel</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="821"/>
+        <source>chamfer</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/cmd/lc_commandItems.h" line="804"/>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
@@ -46400,6 +47339,12 @@ Do you want to replace it?</source>
         <source>xt</source>
         <comment>explode text strings</comment>
         <translation>mp</translation>
+    </message>
+    <message>
+        <location filename="../src/cmd/lc_commandItems.h" line="870"/>
+        <source>explode</source>
+        <comment>explode block/polyline into entities</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/cmd/lc_commandItems.h" line="838"/>
@@ -47176,6 +48121,12 @@ Do you want to replace it?</source>
         <translation>Hatayı göz ardı edip dosya açılsın mı?</translation>
     </message>
     <message>
+        <location filename="../src/lib/fileio/rs_fileio.cpp" line="218"/>
+        <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="11655"/>
+        <source>The original legacy DXF is protected. Save the recovered drawing to a different file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="1003"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
@@ -47376,6 +48327,16 @@ Do you want to replace it?</source>
         <location filename="../src/main/console_dxf2pdf/console_dxf2pdf.cpp" line="145"/>
         <source>Target output directory.</source>
         <translation>Hedef çıktı dizini.</translation>
+    </message>
+    <message>
+        <location filename="../src/main/console_dxf2dwg.cpp" line="230"/>
+        <source>DXF output version: r12, r14, r2000, r2004, r2007 (default), r2010, r2013, r2018.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/main/console_dxf2dwg.cpp" line="236"/>
+        <source>DWG output version: r2000 (default), r2004, r2007, r2010, r2013, r2018.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/main/console_dxf2dwg.cpp" line="189"/>
@@ -47618,6 +48579,36 @@ Do you want to replace it?</source>
         <translation>WCS</translation>
     </message>
     <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="130"/>
+        <source>There is no layer &quot;%1&quot;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="146"/>
+        <source>Layer &quot;%1&quot; is locked: unlock it to make it the current layer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="163"/>
+        <source>Layer &quot;%1&quot; is locked, so it cannot stay the current layer: &quot;%2&quot; is the current layer now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="168"/>
+        <source>Layer &quot;%1&quot; was not locked: it is the current layer, and no other layer is unlocked to take its place.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="357"/>
+        <source>Layer &quot;%1&quot; is being removed, so &quot;%2&quot; is the current layer now.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/rs_graphic.cpp" line="418"/>
+        <source>Layer &quot;0&quot; can never be removed.</source>
+        <translation type="unfinished">&quot;0&quot; katmanı hiçbir zaman silinemez.</translation>
+    </message>
+    <message>
         <location filename="../src/lib/engine/document/rs_graphic.cpp" line="668"/>
         <source>Invalid printing scale %1. Cannot fit print preview to page</source>
         <translation>Invalid baskı ölçeği %1. Sayfaya uygun baskı önizlemesi yapamaz</translation>
@@ -47631,6 +48622,23 @@ Do you want to replace it?</source>
         <location filename="../src/lib/printing/lc_printing.cpp" line="165"/>
         <source>PDF files (*.pdf);;All files (*.*)</source>
         <translation>PDF dosyaları (*.pdf);; Tüm dosyalar (*.*)</translation>
+    </message>
+    <message>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="375"/>
+        <source>Cannot start printing on %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="376"/>
+        <source>Cannot write the file
+%1
+Please check the filename and permissions.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/printing/lc_printing.cpp" line="379"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/ui/components/creators/lc_menuactivator.cpp" line="432"/>
@@ -47793,9 +48801,44 @@ Do you want to replace it?</source>
         <source>%2 - command for &quot;%1&quot;</source>
         <translation>%2 - &quot;%1&quot; için komut</translation>
     </message>
+    <message>
+        <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="346"/>
+        <source>Layer &quot;%1&quot; was not removed: it is the current layer. Make another layer current to remove it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="354"/>
+        <source>Layer &quot;%1&quot; was not removed: it is the current layer, and no other layer is unlocked to take its place.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/document/layers/rs_layerlist.cpp" line="517"/>
+        <source>The current layer cannot be locked: no other layer is unlocked to take its place.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/engine/undo/lc_undosection.cpp" line="130"/>
+        <source>Layer &quot;%1&quot; is the current layer and it is locked: unlock it, or add a layer that is not locked, to draw.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filtershp.cpp" line="493"/>
+        <source>Cannot open shapefile %1 (missing or corrupt .shx?)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/lib/filters/rs_filtershp.cpp" line="623"/>
+        <source>Shapefile %1 contained %2 records but none were readable</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
+    <message>
+        <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="61"/>
+        <source>Create Block</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/rs_actionblockscreate.cpp" line="105"/>
         <source>Select contour</source>
@@ -48223,6 +49266,13 @@ Do you want to replace it?</source>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
         <source>Hatch Error: Invalid contour found!</source>
         <translation>Tarama Hatası: Geçersiz kontur bulundu!</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="134"/>
+        <source>Hatch has %n duplicate boundary loop(s); duplicates cancel each other and leave that area empty.</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/hatch/rs_actiondrawhatch.cpp" line="138"/>
