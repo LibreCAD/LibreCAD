@@ -31231,3 +31231,34 @@ clang-format checks and `git diff --check`. Test commit: `637eb0c6d`
 This qualifies the two recorded translated centers and angles only. Offsets at
 larger translations and partial-arc cusp topology still need direct oracle,
 worker/cache, replacement, and persistence evidence.
+
+## 720. Qualify Extreme Thin Elliptic-arc Cusp Topology (2026-11-09)
+
+Added direct profiles for the `a=100`, ratio-`1e-4` elliptic arc around the
+major-vertex curvature minimum. The five cases cover a forward span crossing
+the vertex at `d=0.5e-6` and `1.1e-6`, arcs ending at the vertex from either
+side at `1.1e-6`, and the reversed crossing span at `1.1e-6`. Inward side is
+selected with traversal accounted for. Each result is one open chain (not the
+whole ellipse's closed topology) and passes the independent bidirectional
+source-distance and tangent-direction checks, including the sampled no-self-
+crossing assertion.
+
+The real-worker matrix now carries forward crossing spans below and above the
+curvature radius, an endpoint-cusp span, and a reversed crossing span with a
+negative signed distance to preserve the inward side. They pass worker
+generation, cache admission, replacement/Produce, all five DXF/DWG round-trip
+lanes, and the existing LibreDWG parsing of R2000/R2018 outputs. This confirms
+the partial source intervals remain open and does not reuse the closed whole-
+ellipse expectation.
+
+Validation: the focused partial-arc topology case passes 17,862 assertions/1
+case; `[curve-offset][ellipse][cusp]` passes 93,896 assertions/4 cases. The
+full worker-client selection passes 743,985 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Edited ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `9824114ee`
+(`test(offset): qualify thin ellipse arc cusps`).
+
+This qualifies only the listed interval, eccentricity, centers, and distances.
+Other partial sweeps, cusp positions near but not exactly at endpoints,
+translated/rotated arc cusps, and other cusp multiplicities still require
+their own geometry and end-to-end worker/persistence evidence.
