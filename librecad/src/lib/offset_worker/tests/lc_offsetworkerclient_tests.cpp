@@ -582,6 +582,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(transformedTangentFitPointEntity.fitTangentsMatchCurve());
     const LC_SplinePointsData transformedTangentFitPoints =
         transformedTangentFitPointEntity.getData();
+    LC_SplinePointsData startOnlyTangentFitPoints = tangentFitPoints;
+    startOnlyTangentFitPoints.fitEndTangent = {0, 0};
+    LC_SplinePoints startOnlyTangentFitEntity{nullptr, startOnlyTangentFitPoints};
+    REQUIRE(startOnlyTangentFitEntity.fitTangentsMatchCurve());
+    startOnlyTangentFitPoints = startOnlyTangentFitEntity.getData();
+    LC_SplinePointsData endOnlyTangentFitPoints = tangentFitPoints;
+    endOnlyTangentFitPoints.fitStartTangent = {0, 0};
+    LC_SplinePoints endOnlyTangentFitEntity{nullptr, endOnlyTangentFitPoints};
+    REQUIRE(endOnlyTangentFitEntity.fitTangentsMatchCurve());
+    endOnlyTangentFitPoints = endOnlyTangentFitEntity.getData();
     LC_SplinePointsData closedFitPoints{true, false};
     closedFitPoints.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
     RS_SplineData degreeOne{1, false};
@@ -713,6 +723,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{tangentFitPoints});
     const std::size_t transformedTangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{transformedTangentFitPoints});
+    const std::size_t startOnlyTangentFitPointFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{startOnlyTangentFitPoints});
+    const std::size_t endOnlyTangentFitPointFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{endOnlyTangentFitPoints});
     const std::size_t reversedBoundsHyperbolaNearFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarFixture = sources.size();
@@ -1236,6 +1250,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     appendNegativeSplinePointsFixture(tangentFitPoints);
     const std::size_t negativeTransformedTangentFitPointFixture = sources.size();
     appendNegativeSplinePointsFixture(transformedTangentFitPoints);
+    const std::size_t negativeStartOnlyTangentFitPointFixture = sources.size();
+    appendNegativeSplinePointsFixture(startOnlyTangentFitPoints);
+    const std::size_t negativeEndOnlyTangentFitPointFixture = sources.size();
+    appendNegativeSplinePointsFixture(endOnlyTangentFitPoints);
     struct ClosedStationaryFixture {
         std::size_t positive;
         std::size_t negative;
@@ -1870,7 +1888,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
         if (i == tangentFitPointFixture || i == negativeTangentFitPointFixture ||
             i == transformedTangentFitPointFixture ||
-            i == negativeTransformedTangentFitPointFixture) {
+            i == negativeTransformedTangentFitPointFixture ||
+            i == startOnlyTangentFitPointFixture ||
+            i == negativeStartOnlyTangentFitPointFixture ||
+            i == endOnlyTangentFitPointFixture ||
+            i == negativeEndOnlyTangentFitPointFixture) {
             const auto* spline = dynamic_cast<const LC_SplinePoints*>(entity.get());
             REQUIRE(spline);
             LC_CurveJet jet;
@@ -1879,7 +1901,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             REQUIRE(speed > 0.0);
             const RS_Vector normal{-jet.first.y / speed, jet.first.x / speed};
             const double pickSide =
-                i == tangentFitPointFixture || i == transformedTangentFitPointFixture
+                i == tangentFitPointFixture || i == transformedTangentFitPointFixture ||
+                i == startOnlyTangentFitPointFixture || i == endOnlyTangentFitPointFixture
                     ? 1.0 : -1.0;
             offset.coord = jet.point + normal * (pickSide * 0.5);
             offset.sideFallback = offset.coord;

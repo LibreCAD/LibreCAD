@@ -1177,6 +1177,18 @@ TEST_CASE("Consistent tangent-constrained spline-points can be offset",
     };
     checkBothSides(source);
 
+    LC_SplinePointsData startOnlyData = source.getData();
+    startOnlyData.fitEndTangent = {0, 0};
+    LC_SplinePoints startOnly{nullptr, startOnlyData};
+    REQUIRE(startOnly.fitTangentsMatchCurve());
+    checkBothSides(startOnly);
+
+    LC_SplinePointsData endOnlyData = source.getData();
+    endOnlyData.fitStartTangent = {0, 0};
+    LC_SplinePoints endOnly{nullptr, endOnlyData};
+    REQUIRE(endOnly.fitTangentsMatchCurve());
+    checkBothSides(endOnly);
+
     LC_SplinePoints transformed{nullptr, source.getData()};
     transformed.rotate({0, 0}, M_PI / 4.0);
     transformed.scale({0, 0}, {1.5, 1.5});

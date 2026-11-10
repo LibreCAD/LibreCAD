@@ -33352,3 +33352,21 @@ the stored endpoint tangent directions, so it is not included in this
 qualification. Other fit counts, tangent directions, topologies, scales,
 translations, nonuniform transforms, and stationary/tangent combinations
 remain open and must be qualified or fail-closed independently.
+
+## 813. Qualify One-ended Tangent-fit Spline-points (2026-11-10)
+
+Extended the same four-fit-point source with start-only and end-only tangent
+constraints, leaving the unconstrained endpoint tangent as the zero vector.
+Both variants pass `fitTangentsMatchCurve()` and direct exact-normal offset
+checks on both signed sides; each generated cubic remains within the requested
+geometry tolerance. The focused direct test, including the original two-ended
+and rigidly transformed cases, passes 4,164 assertions.
+
+Added each one-ended profile and its negative-distance counterpart to the real
+worker family matrix. Generation, cache admission, replacement, Produce, and
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes pass; `dwgread` independently
+parses both generated DWGs. The full family test passes 1,340,346 assertions.
+Both test targets build and `git diff --check` passes. This qualifies only the
+recorded four-point geometry and the two zero-tangent endpoint variants;
+other fit counts, tangent magnitudes/directions, source shapes, transforms,
+and stationary/tangent combinations remain open.
