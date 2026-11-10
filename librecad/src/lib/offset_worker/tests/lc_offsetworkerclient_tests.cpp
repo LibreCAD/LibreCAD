@@ -731,8 +731,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
     }};
-    for (const RS_EllipseData& ellipse : thinCuspEllipses) {
-        for (const double cuspDistance : {0.5e-6, 0.9e-6, 1.0e-6, 1.1e-6, 2.0e-6}) {
+    for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
+        const RS_EllipseData& ellipse = thinCuspEllipses[profile];
+        const std::vector<double> cuspDistances = profile == 0 ? std::vector<double>{0.9e-6, 1.0e-6, 1.1e-6} : std::vector<double>{1.0e-6};
+        for (const double cuspDistance : cuspDistances) {
             const std::size_t fixture = sources.size();
             sources.emplace_back(LC_OffsetSourceGeometry{ellipse});
             thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);

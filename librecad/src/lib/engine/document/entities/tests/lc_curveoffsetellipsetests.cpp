@@ -231,6 +231,8 @@ Offset offsetOf(const RS_Ellipse& e, const LC_CurveOffsetSide side, const double
     return result;
 }
 
+RS_Vector inwardOffset(const RS_Ellipse& e, double eta, double d);
+
 /** P1, P2, P5 and P6 of every chain, and P9: how many, and which close. */
 void checkOffset(const Offset& offset, const Curve& source, const double d, const std::vector<bool>& closed,
                  const std::vector<RS_Vector>& corners = {}) {
@@ -300,10 +302,11 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
 
 /** The exact offset of the ellipse's point at @p eta, @p d towards its inside. */
 RS_Vector inwardOffset(const RS_Ellipse& e, const double eta, const double d) {
-    const double a = e.getMajorRadius();
-    const double b = e.getMinorRadius();
-    const RS_Vector normal = RS_Vector{b * std::cos(eta), a * std::sin(eta)}.normalized(); // axis-aligned only
-    return e.getEllipsePoint(eta) - normal * d;
+    const RS_Vector major = e.getMajorP();
+    const RS_Vector minor{-major.y * e.getRatio(), major.x * e.getRatio()};
+    const RS_Vector tangent = (minor * std::cos(eta) - major * std::sin(eta)).normalized();
+    const RS_Vector inward{-tangent.y, tangent.x};
+    return e.getEllipsePoint(eta) + inward * d;
 }
 
 const LC_CurveOffsetSide kLeft = LC_CurveOffsetSide::Left;   // inside an ellipse that runs anticlockwise
@@ -783,6 +786,16 @@ TEST_CASE("Extreme thin ellipse inward offsets bracket the major-vertex cusp", "
             checkOffset(inward, curveOf(source), distance, {true});
         }
     }
+}
+
+TEST_CASE("Rotated extreme thin ellipse cusp fails closed when its accurate fit exceeds budget", "[curve-offset][ellipse][cusp]") {
+    const RS_Vector majorP{100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{RS_Vector{0, 0}, majorP, 1e-4, 0.0, 0.0, false}};
+    constexpr double distance = 0.5e-6;
+    CHECK(LC_CurveOffset::toleranceFor(source, distance, LC_CurveOffset::relativeOffsetTolerance(source)) == 0.1 * distance);
+    const Offset inward = offsetOf(source, kLeft, distance);
+    CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(inward.entities.empty());
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

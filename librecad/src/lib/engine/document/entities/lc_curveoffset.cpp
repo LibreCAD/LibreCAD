@@ -42,6 +42,7 @@
 namespace {
 
 constexpr double g_eps = std::numeric_limits<double>::epsilon();
+constexpr double kMaxToleranceToOffsetRatio = 0.1;
 
 bool isFinite(const RS_Vector& v) {
     return v.valid && std::isfinite(v.x) && std::isfinite(v.y) && std::isfinite(v.z);
@@ -855,6 +856,12 @@ bool computeScale(const OffsetSource& source, const double distanceMagnitude, So
     scale.numericFloor = 64.0 * g_eps * std::max(scale.coordinate, std::numeric_limits<double>::min());
     scale.tangentFloor = 64.0 * g_eps * std::max(scale.feature, std::numeric_limits<double>::min());
     return std::isfinite(scale.feature) && std::isfinite(scale.coordinate) && scale.feature > 0.0;
+}
+
+double defaultGeometryTolerance(const SourceScale& scale, const double distanceMagnitude, const double relativeFactor) {
+    // Do not let a scale-relative tolerance swallow the requested offset itself.
+    const double requested = std::min(relativeFactor * scale.feature, kMaxToleranceToOffsetRatio * std::abs(distanceMagnitude));
+    return std::isfinite(requested) && requested > scale.numericFloor ? requested : std::numeric_limits<double>::quiet_NaN();
 }
 
 bool isPlanar(const OffsetSource& source, const double numericFloor) {
@@ -5991,7 +5998,7 @@ double toleranceFor(const RS_Entity& source, const double distanceMagnitude, con
         !computeScale(*adapter, distanceMagnitude, scale) || adapter->breaks().size() < 2) {
         return std::numeric_limits<double>::quiet_NaN();
     }
-    const double requested = std::max(relativeFactor * scale.feature, scale.numericFloor);
+    const double requested = defaultGeometryTolerance(scale, distanceMagnitude, relativeFactor);
     return std::isfinite(requested) && requested > 0.0
                ? requested : std::numeric_limits<double>::quiet_NaN();
 }
@@ -6006,8 +6013,9 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
     }
     const double relative = dynamic_cast<const RS_Ellipse*>(&source) != nullptr ? kEllipseRelativeOffsetTolerance
                                                                                  : kDefaultRelativeOffsetTolerance;
-    const double requested = (requestedTolerance > 0.0) ? requestedTolerance
-                                                        : std::max(relative * scale.feature, scale.numericFloor);
+    const double requested = (requestedTolerance > 0.0)
+                                 ? requestedTolerance
+                                 : defaultGeometryTolerance(scale, distanceMagnitude, relative);
     if (!std::isfinite(requested) || !(requested > scale.numericFloor)) {
         return {}; // no tolerance the arithmetic can honour at this scale
     }
