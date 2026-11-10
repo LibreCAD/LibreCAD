@@ -668,7 +668,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{4.0, -3.0}, RS_Vector{15.0, 3.0}, RS_Vector{19.0, -5.0}}}},
         LC_OffsetSourceGeometry{endpointTangentParabola},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
-        *mixedBulgeSource};
+        *mixedBulgeSource,
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0.0, 0.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true}}};
     const std::size_t smallCircleFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{{0.0, 0.0}, 2e-4}});
     const std::size_t largeCircleFixture = sources.size();

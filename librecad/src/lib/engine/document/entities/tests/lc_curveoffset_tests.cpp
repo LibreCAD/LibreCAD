@@ -2468,6 +2468,35 @@ TEST_CASE("A rotated hyperbola with a wide bounded interval follows exact offset
     }
 }
 
+TEST_CASE("Hyperbola offset normals hold across eccentricity, branch, and reversed bounds",
+          "[curve-offset][direct][hyperbola][oracle][variants]") {
+    const std::array<LC_HyperbolaData, 2> profiles{{
+        LC_HyperbolaData{{350.0, -275.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true},
+        LC_HyperbolaData{{-5.0, 9.0}, {6.128355544951824, -5.142300877492315}, 1.5, 1.7, -1.9, false},
+    }};
+
+    for (const LC_HyperbolaData& data : profiles) {
+        const LC_Hyperbola hyperbola{nullptr, data};
+        REQUIRE(hyperbola.isValid());
+        REQUIRE(LC_CurveOffset::isSupportedSource(hyperbola));
+        const double vertexRadius = data.majorP.magnitude() * data.ratio * data.ratio;
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(data.ratio, data.reversed, data.angle1, data.angle2, side);
+            for (const double fraction : {0.05, 0.2}) {
+                const double distance = fraction * vertexRadius;
+                CAPTURE(distance);
+                const auto options = LC_CurveOffset::makeDirectOptions(hyperbola, distance);
+                const auto result = LC_CurveOffset::buildDirectBranches(hyperbola, LC_CurveOffset::makeSideRequest(side, distance), options,
+                                                                        LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE(result.branches.size() == 1);
+                CHECK(maxDeviation(result, hyperbolaEvaluator(data)) <= options.tolerance.requestedGeometry);
+            }
+        }
+    }
+}
+
 TEST_CASE("A hyperbola whose ends run backwards is offset all the same", "[curve-offset][hyperbola]") {
     // grip edits, DXF imports and reversing a hyperbola all leave angle1 > angle2
     const LC_HyperbolaData forwards{RS_Vector{5.0, -3.0}, RS_Vector{4.0, 2.0}, 0.6, -1.2, 1.5, false};
