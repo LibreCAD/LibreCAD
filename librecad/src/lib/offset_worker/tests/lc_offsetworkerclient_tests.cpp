@@ -1140,6 +1140,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(scaledCornerAtLargerScaleSource);
     const std::size_t scaledCornerAtLargerScaleFixture = sources.size();
     sources.emplace_back(*scaledCornerAtLargerScaleSource);
+    RS_Polyline scaledCornerLarge;
+    scaledCornerLarge.addVertex({1e6, -2e6}, 0.2);
+    scaledCornerLarge.addVertex({1e6 + 2e4, -2e6});
+    scaledCornerLarge.addVertex({1e6 + 2e4, -2e6 + 2e4});
+    scaledCornerLarge.endPolyline();
+    const auto scaledCornerLargeSource = LC_OffsetSourceGeometry::capture(scaledCornerLarge);
+    REQUIRE(scaledCornerLargeSource);
+    const std::size_t scaledCornerLargeFixture = sources.size();
+    sources.emplace_back(*scaledCornerLargeSource);
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
@@ -1168,10 +1177,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == 21                                                                    ? .1
             : i == 24                                                                    ? 1.9
             : i == scaledMajorSweepFixture                                               ? 2500.0
+            : i == scaledCornerLargeFixture                                              ? 2500.0
             : i == scaledCornerAtLargerScaleFixture                                      ? 0.0025
             : i == scaledCornerFixture                                                   ? 0.00025
                                                                                          : .25;
-        const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
+        const Req::Request input{token(requestId),
+                                 Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
         REQUIRE(owned.get().submit(input, Client::Mode::Commit, receipts.into(0)));
         rt.until([&] { return receipts.calls[0] != 0; });
@@ -1519,6 +1530,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const double scale = i == scaledCornerFixture ? 1e-3 : 1e-2;
             offset.distance = 0.25 * scale;
             offset.coord = {10.0 + 3.0 * scale, -20.0 + 2.0 * scale};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == scaledCornerLargeFixture) {
+            offset.distance = 2500.0;
+            offset.coord = {1e6 + 3e4, -2e6 + 2e4};
             offset.sideFallback = offset.coord;
         }
         if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
