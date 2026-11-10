@@ -29803,7 +29803,7 @@ these rows do not imply every parameter/domain is supported):
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span, preserves exact-normal tolerance on both moving spans, and passes real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing | Other repeated-point/stationary-span patterns and joins, fit/tangent combinations, and broader seam/refusal matrix |
-| Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples, endpoint tangent slopes +/-1e-4..1e-8, a scale-`1e4` source translated to `(1e6,-2e6)` at both signs and normalized distances `.05/.25`, and a scale-`1e-3` source translated to `(10,-20)` at both signs and normalized distances `.05/.25`; the large-origin profile at both signs and both distances, plus the small translated profile at both signs for distance `.25`, pass worker/cache, replacement, and five file lanes; two four-point candidates and the 1e-8 near-parallel profile also pass those lanes; parallel/zero/non-finite tangent refusals | Other source scales/translations, small translated `.05` persistence, other four-point samples, more extreme endpoint conditioning, broader transforms, distance/domain boundaries and visible GUI |
+| Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples, endpoint tangent slopes +/-1e-4..1e-8, a scale-`1e4` source translated to `(1e6,-2e6)` at both signs and normalized distances `.05/.25`, and a scale-`1e-3` source translated to `(10,-20)` at both signs and normalized distances `.05/.25`; both translated profiles at both signs and both distances pass worker/cache, replacement, and five file lanes; two four-point candidates and the 1e-8 near-parallel profile also pass those lanes; parallel/zero/non-finite tangent refusals | Other source scales/translations, other four-point samples, more extreme endpoint conditioning, broader transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; both worker sides of all three recorded corner scales and the translated major sweep pass generation/cache/Produce, five file lanes, and LibreDWG; closed mixed-bulge and major/minor bulge oracles remain covered; tangent-connected, cornering (`bulge 0.2`), and major-sweep (`bulge 2.0`) nominal sources pass the same worker/persistence path | Other open sweep/scale boundaries, additional transformed corner scales/origins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles |
 
@@ -32456,4 +32456,19 @@ Validation: `Worker client joins typed source generation for every modeled
 source family` passes 1,129,678 assertions/1 case with
 `DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs are independently
 parsed. Scoped clang-format and `git diff --check` pass. Test commit:
-`edf3663df` (`test(offset): persist translated small parabola`).
+`edf3663df` (`test(offset): persist translated small parabola`). Section 775
+below extends this to both normalized distances.
+
+## 775. Persist the Small Parabola at the Second Distance (2026-11-10)
+
+Extended section 774's scale-`1e-3`, origin-`(10,-20)` parabola through the
+real Produce and five-lane persistence path at normalized distance `0.05`
+(world distance `0.00005`) on both signed sides. Together, sections 774 and
+775 cover both signs at normalized distances `.05` and `.25` for this source;
+other scales/translations and additional distance values remain open.
+
+Validation: `Worker client joins typed source generation for every modeled
+source family` passes 1,131,930 assertions/1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs are independently
+parsed. Scoped clang-format and `git diff --check` pass. Test commit:
+`1cece5cc1` (`test(offset): persist small parabola at second distance`).
