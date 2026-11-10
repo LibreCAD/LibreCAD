@@ -29746,7 +29746,7 @@ these rows do not imply every parameter/domain is supported):
 | --- | --- | --- | --- |
 | Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Other sub-ULP/coordinate-conditioning boundaries and broad non-finite payload refusal |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at gaps 1e-4..1e-8 radians, both orientations and both offset sides; counterclockwise near-full profiles at 1e-4 and 1e-8, reversed near-full at 1e-8, and short counterclockwise seam-crossing at 1e-4 pass required worker/cache admission, replacement, Produce, and five-file-lane reopen; short arcs in both orientations at 1e-8 pass the same path at distance 1e-6; the counterclockwise profile at distance .25 cleanly refuses with UndefinedTangent and no output; below-validity arc refused at typed capture | Additional source radius/offset/tolerance combinations, sweep-limit behavior, and broader boundary matrix |
-| Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; small and large-origin circle worker/cache, Produce, and five-format reopen fixtures | Further scale/origin conditioning and independent geometry comparison for scaled persisted caches |
+| Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
@@ -30626,3 +30626,20 @@ case passes 52,570 assertions/1 case; the complete
 `git diff --check` passes. More extreme scales, arbitrary origin ratios, and
 independent coordinate comparisons of persisted scaled caches remain open,
 along with visible GUI, external CAD, cross-platform/ASan, and exact-head CI.
+
+## 700. Compare Persisted Circle Geometry With LibreDWG (2026-11-09)
+
+Extended the existing worker-produced small-circle and large-origin-circle
+fixtures with independent `dwgread -O minJSON` geometry checks. In both the
+R2000 and R2018 DWG lanes, the parsed CIRCLE center and radius must uniquely
+match the corresponding generated LibreCAD entity. Center and radius
+tolerances are derived from the expected radius and binary64 ULPs, rather than
+using a broad unit-scale epsilon. The check covers the existing radius-2e-4
+and radius-2e4-at-(1e10,-1e10) fixtures; it does not extend independent DWG
+verification to the full direct scale matrix from section 699.
+
+Validation: the focused worker-family case passes 103,327 assertions/1 case;
+the complete `[lc-offsetcurve][worker-client]` suite passes 109,531
+assertions/22 cases with LibreDWG available. `git diff --check` passes. Other
+scaled source profiles through worker/persistence and visible GUI, external
+ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain open.
