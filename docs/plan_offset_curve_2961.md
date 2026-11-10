@@ -29802,7 +29802,7 @@ these rows do not imply every parameter/domain is supported):
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
-| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; real worker/cache/Produce and five file lanes | Fit construction variants, repeated interior stationary spans (currently accepted but not independently qualified), closed/periodic domains, and broader refusal matrix |
+| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span and preserves exact-normal tolerance on both moving spans; real worker/cache/Produce and five file lanes | Other repeated-point/stationary-span patterns, joins around removed spans, fit construction variants, closed/periodic domains, and broader refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples and endpoint tangent slopes +/-1e-4..1e-8; two four-point candidates and the 1e-8 near-parallel profile pass worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; closed mixed-bulge and major/minor bulge oracles remain covered; matching tangent-connected typed source passes worker/cache/Produce and five file lanes | Other open sweep/scale boundaries, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles; worker/file persistence for open corner and major-sweep profiles |
@@ -32072,6 +32072,26 @@ worker result`).
 This closes only the recorded translated, rotated forward-arc cusp triplet.
 Other transforms, reversed arcs, sweeps, and distances remain open.
 
+## 753. Qualify Removal of a Repeated-control Stationary Spline-points Span (2026-11-10)
+
+Added an open five-control `LC_SplinePoints` profile whose middle quadratic
+span is stationary throughout because three consecutive controls coincide.
+The source evaluator confirms an exactly zero tangent inside the span. The
+offset engine's established contract removes stationary stretches before
+generation rather than assigning them an arbitrary normal. The direct result
+must remain `Ok`, retain nonempty output, omit the stationary source-parameter
+interval from every generated curve piece, and match exact left-offset normals
+on samples from both moving spans within the requested geometry tolerance.
+The source control points and captured typed snapshot remain unchanged.
+
+Validation: the degenerate/stationary selection passes 70 assertions/2 cases;
+the complete direct `[curve-offset][direct][spline-points]` selection passes
+8,388 assertions/5 cases. The test target builds; scoped clang-format and
+`git diff --check` pass. This qualifies only this exact repeated-control
+profile and the existing whole-zero-length refusal. Other stationary-span
+shapes, join behavior, worker/cache, and persistence remain open. Test commit:
+`4d264c275` (`test(offset): qualify stationary spline-points spans`).
+
 ## 752. Refuse a Zero-length Spline-points Source Without Mutation (2026-11-10)
 
 Added direct coverage for a control-point `LC_SplinePoints` whose two
@@ -32079,9 +32099,9 @@ controls coincide. Typed capture currently accepts the finite two-point
 source, but direct offset generation must refuse it with
 `UndefinedTangent`, return no branches, and leave the input control points and
 recaptured source snapshot unchanged. This qualifies only the zero-length
-two-control refusal; a five-control profile with repeated interior controls
-currently produces geometry and remains unqualified until an independent
-geometric oracle establishes whether that stationary span is valid.
+two-control refusal. Repeated-interior stationary-span behavior is separately
+qualified for one exact five-control profile in section 753; other
+repeated-control patterns remain open.
 
 Validation: the focused degenerate case passes 9 assertions/1 case, and the
 complete direct `[curve-offset][direct][spline-points]` selection passes 8,327
