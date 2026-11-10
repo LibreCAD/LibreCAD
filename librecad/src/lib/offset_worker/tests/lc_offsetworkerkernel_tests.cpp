@@ -361,7 +361,7 @@ double sampledSplineDistance(const RS_SplineData& data, const RS_Vector& point,
 
 std::optional<double> maximumOracleOffsetDistance(
     const RS_SplineData& sourceData, const RS_SplineData& cacheData,
-    const double signedDistance) {
+    const double signedDistance, const std::size_t cacheSampleCount = 16384) {
     const RS_Spline source{nullptr, sourceData};
     if (!source.validate()) return std::nullopt;
     double domainStartValue = 0.0, domainEndValue = 0.0;
@@ -392,7 +392,7 @@ std::optional<double> maximumOracleOffsetDistance(
                 domainEnd, SplineOracle{signedDistance});
             const RS_Vector oraclePoint{expected.first.convert_to<double>(),
                                         expected.second.convert_to<double>()};
-            const double distance = sampledSplineDistance(cacheData, oraclePoint, 16384);
+            const double distance = sampledSplineDistance(cacheData, oraclePoint, cacheSampleCount);
             if (!std::isfinite(distance)) return std::nullopt;
             maximum = std::max(maximum, distance);
         }
@@ -2064,7 +2064,7 @@ TEST_CASE("offset worker generates periodic degree-four and degree-six spline so
         const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
 
         const auto oracleDistance = maximumOracleOffsetDistance(
-            data, cache, definition.signedDistance);
+            data, cache, definition.signedDistance, 262144);
         REQUIRE(oracleDistance);
         const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
         REQUIRE(tolerance);
@@ -5273,6 +5273,7 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
     std::size_t oracleCrossingCases = 0;
     std::size_t extremeWeightDirectOutputs = 0;
     std::size_t extremeWeightRefusals = 0;
+    std::size_t extremeWeightCertifiedCandidates = 0;
     std::size_t extremeWeightSampledCandidates = 0;
     std::size_t millionWeightCertifiedCandidates = 0;
     std::size_t millionWeightSampledCandidates = 0;
@@ -5334,7 +5335,8 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
                         *options, LC_CurveOffset::makeDirectSourceBudget(), &diagnostics);
                     CAPTURE(built.status, diagnostics.failureStage, diagnostics.candidateParameters);
                     if (profile == 5 && built.status != LC_CurveOffsetStatus::Ok) {
-                        CHECK(built.status == LC_CurveOffsetStatus::ToleranceNotMet);
+                        CHECK(built.status == LC_CurveOffsetStatus::SingularOffset);
+                        CHECK(diagnostics.failureStage == LC_CurveOffsetCuspFailureStage::UnresolvedRunBudget);
                         CHECK(built.branches.empty());
                         ++extremeWeightRefusals;
                         continue;
@@ -5354,8 +5356,13 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
                         [targetKnot](const LC_CurveOffsetCuspCandidateBox& box) { return std::abs(box.parameter - targetKnot) < 1e-8; });
                     REQUIRE(candidate != diagnostics.candidateBoxes.end());
                     if (profile == 5) {
-                        CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::SampledSignChange);
-                        ++extremeWeightSampledCandidates;
+                        if (candidate->kind == LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket) {
+                            ++extremeWeightCertifiedCandidates;
+                        }
+                        else {
+                            CHECK(candidate->kind == LC_CurveOffsetCuspCandidateKind::SampledSignChange);
+                            ++extremeWeightSampledCandidates;
+                        }
                     }
                     else if (profile == 4 && targetKnotIndex != interiorKnots.size() - 1) {
                         if (candidate->kind == LC_CurveOffsetCuspCandidateKind::CertifiedUniqueBracket) {
@@ -5411,10 +5418,12 @@ TEST_CASE("rational four-knot crossing maps across positive weight profiles",
     }
     CAPTURE(oracleCrossingCases);
     CHECK(oracleCrossingCases == 136);
-    CAPTURE(extremeWeightDirectOutputs, extremeWeightRefusals, extremeWeightSampledCandidates, millionWeightCertifiedCandidates,
-            millionWeightSampledCandidates, millionWeightRefusals);
-    CHECK(extremeWeightDirectOutputs == 2);
-    CHECK(extremeWeightRefusals == 4);
+    CAPTURE(extremeWeightDirectOutputs, extremeWeightRefusals, extremeWeightCertifiedCandidates,
+            extremeWeightSampledCandidates, millionWeightCertifiedCandidates, millionWeightSampledCandidates,
+            millionWeightRefusals);
+    CHECK(extremeWeightDirectOutputs == 4);
+    CHECK(extremeWeightRefusals == 2);
+    CHECK(extremeWeightCertifiedCandidates == 2);
     CHECK(extremeWeightSampledCandidates == 2);
     CAPTURE(millionWeightCertifiedByKnot, millionWeightSampledByKnot, millionWeightRefusalsByKnot);
     CHECK(millionWeightCertifiedCandidates == 14);
@@ -9422,21 +9431,25 @@ TEST_CASE("Produce resolves the inward pick for a very-large-origin thin ellipse
     const auto defaultTolerance = LC_CurveOffset::createEntities(
         source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, op.distance),
         LC_CurveOffset::makeOffsetOptions(source, op.distance), LC_CurveOffset::makeDirectSourceBudget());
-    CHECK(defaultTolerance.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(defaultTolerance.status == LC_CurveOffsetStatus::Ok);
+    CHECK(defaultTolerance.intersectionDiagnostics.stage ==
+          LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
     const auto explicitTolerance = LC_CurveOffset::createEntities(
         source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, op.distance),
         LC_CurveOffset::makeOffsetOptions(source, op.distance, 0.1 * op.distance),
         LC_CurveOffset::makeDirectSourceBudget());
-    CHECK(explicitTolerance.status == LC_CurveOffsetStatus::LimitExceeded);
-    CHECK(explicitTolerance.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(explicitTolerance.status == LC_CurveOffsetStatus::Ok);
+    CHECK(explicitTolerance.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
 
     const auto value = seriesParity(source, op);
     REQUIRE(value.source.resolvedSide);
     CHECK(*value.source.resolvedSide == LC_CurveOffsetSide::Right);
-    CHECK(value.source.status == LC_OffsetSourceStatus::LimitExceeded);
-    CHECK(value.source.engineStatus == LC_CurveOffsetStatus::LimitExceeded);
-    CHECK(value.outputStatus == result::OrdinaryStatus::None);
-    CHECK(value.outputs.empty());
+    CHECK(value.source.status == LC_OffsetSourceStatus::Succeeded);
+    CHECK(value.source.engineStatus == LC_CurveOffsetStatus::Ok);
+    CHECK(value.outputStatus == result::OrdinaryStatus::Complete);
+    CHECK(value.copyOutputCounts == std::vector<std::size_t>{1});
+    REQUIRE(value.outputs.size() == 1);
+    CHECK(std::holds_alternative<RS_SplineData>(value.outputs.front()));
 }
 
 TEST_CASE("Produce kernel repeats actual stored caches using raw definition context without native input shells",

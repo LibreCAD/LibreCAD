@@ -33838,3 +33838,29 @@ The focused Direct case passes 21 assertions. The combined
 `[curve-offset][ellipse],[intersection],[curve-offset][trim]` selection passes
 1,361,885 assertions across 101 cases. No production code or work budget
 changed.
+
+## 832. Reconcile Current Worker-kernel Cusp and Spline Expectations (2026-11-10)
+
+Revalidated the worker-kernel tree and corrected stale expectations uncovered by
+the full suite. The existing reversed 1000-to-1 ellipse at `(1e7, -1e7)` and
+inward distance `1.1e-4` now succeeds with both default and explicit
+10%-of-distance tolerance; worker `Produce` resolves the `Right` pick and
+returns one ordinary spline output. The former refusal-only assertions are
+replaced by checks for successful geometry stage, status, copy accounting, and
+output type.
+
+Two adjacent spline checks also had stale/weak oracles. The periodic degree-4
+case's nearest-cache sampling is now dense enough to resolve the prior
+`0.0022494` sampling artifact against the `0.002` bound; the independent check
+passes with 262,144 samples. In the extreme positive-weight cusp matrix, two
+degree-4 cases remain empty and fail closed as `SingularOffset` at
+`UnresolvedRunBudget`; two degree-6 cases now have certified unique cusp
+brackets. The updated counts require four Direct outputs, two refusals, two
+certified brackets, and two sampled-sign-change candidates, preserving explicit
+coverage of both classification paths and refusal behavior.
+
+The focused Produce, periodic-spline, and rational-weight cases pass. The full
+`librecad_offset_worker_kernel_tests` suite passes 1,838,496 assertions across
+99 cases. No production geometry code or work budget changed. Client-level
+generation, cache admission, GUI, and five-format persistence for the exact
+large-origin cusp profile remain separate qualification gates.
