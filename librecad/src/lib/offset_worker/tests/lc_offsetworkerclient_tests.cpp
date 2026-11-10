@@ -788,7 +788,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
     std::vector<std::pair<std::size_t, std::size_t>> expectedVanishingThinCuspFixtures;
     std::vector<std::size_t> expectedSingularThinCuspFixtures;
-    const std::array<RS_EllipseData, 70> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 71> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -844,6 +844,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 80.0 / 81.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 80.0 / 81.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 80.0 / 81.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-2, 0.2, -0.2, true},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 160.0 / 161.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 160.0 / 161.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 160.0 / 161.0, -0.2, 0.2, false},
@@ -1051,6 +1052,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 break;
             case 69:
                 cuspDistances = {110.0};
+                break;
+            case 70:
+                cuspDistances = {0.9, 1.0, 1.1};
                 break;
             default:
                 cuspDistances = {0.5e-6};
@@ -1575,6 +1579,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
             offset.distance = thinEllipseCusp->second;
             offset.coord = ellipse.center;
+            if (ellipse.reversed && ellipse.ratio == 1e-2)
+                offset.coord += ellipse.majorP * 2.0;
             offset.sideFallback = offset.coord;
         }
         if (thinEllipseArc != thinEllipseArcFixtures.end()) {
