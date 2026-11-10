@@ -136,11 +136,22 @@ double pointArcDistance(const RS_Vector& p, const LC_OffsetSegment& s) {
 
 std::vector<RS_Vector> lineLine(const LC_OffsetSegment& s, const LC_OffsetSegment& t, const double tolerance) {
     std::vector<RS_Vector> out;
-    const RS_Vector r = s.b - s.a;
-    const RS_Vector q = t.b - t.a;
-    const double lr = norm(r);
-    const double lq = norm(q);
-    const double slack = slackFor(tolerance, lr + lq + norm(s.a) + norm(t.a));
+    using Wide = long double;
+    const Wide rx = static_cast<Wide>(s.b.x) - s.a.x;
+    const Wide ry = static_cast<Wide>(s.b.y) - s.a.y;
+    const Wide qx = static_cast<Wide>(t.b.x) - t.a.x;
+    const Wide qy = static_cast<Wide>(t.b.y) - t.a.y;
+    const Wide lr = std::hypot(rx, ry);
+    const Wide lq = std::hypot(qx, qy);
+    const double coordinateScale = static_cast<double>(lr + lq) + norm(s.a) + norm(t.a);
+    const double slack = std::max(tolerance, 16.0 * std::numeric_limits<double>::epsilon() * coordinateScale);
+    const Wide wideSlack = slack;
+    if (std::max(std::min(s.a.x, s.b.x), std::min(t.a.x, t.b.x)) - wideSlack >
+            std::min(std::max(s.a.x, s.b.x), std::max(t.a.x, t.b.x)) ||
+        std::max(std::min(s.a.y, s.b.y), std::min(t.a.y, t.b.y)) - wideSlack >
+            std::min(std::max(s.a.y, s.b.y), std::max(t.a.y, t.b.y))) {
+        return out;
+    }
     if (!(lr > 0.0) || !(lq > 0.0)) {
         // a segment of no length meets the other where it lies on it
         if (!(lr > 0.0)) {
@@ -153,33 +164,38 @@ std::vector<RS_Vector> lineLine(const LC_OffsetSegment& s, const LC_OffsetSegmen
         }
         return out;
     }
-    const RS_Vector w = t.a - s.a;
-    const double denominator = cross(r, q);
-    if (std::abs(denominator) <= 1e-12 * lr * lq) {
+    const Wide wx = static_cast<Wide>(t.a.x) - s.a.x;
+    const Wide wy = static_cast<Wide>(t.a.y) - s.a.y;
+    const Wide tx = static_cast<Wide>(t.b.x) - s.a.x;
+    const Wide ty = static_cast<Wide>(t.b.y) - s.a.y;
+    const auto crossWide = [](const Wide ax, const Wide ay, const Wide bx, const Wide by) { return ax * by - ay * bx; };
+    const Wide denominator = crossWide(rx, ry, qx, qy);
+    if (std::abs(denominator) <= 1e-12L * lr * lq) {
         // parallel: they meet only if collinear, over the stretch they share
-        if (std::abs(cross(r, w)) / lr > slack) {
+        if (std::abs(crossWide(rx, ry, wx, wy)) / lr > wideSlack) {
             return out;
         }
-        const double ta = dot(w, r) / (lr * lr);
-        const double tb = dot(t.b - s.a, r) / (lr * lr);
-        const double ext = slack / lr;
-        const double from = std::max(0.0, std::min(ta, tb));
-        const double to = std::min(1.0, std::max(ta, tb));
+        const Wide ta = (wx * rx + wy * ry) / (lr * lr);
+        const Wide tb = (tx * rx + ty * ry) / (lr * lr);
+        const Wide ext = wideSlack / lr;
+        const Wide from = std::max(0.0L, std::min(ta, tb));
+        const Wide to = std::min(1.0L, std::max(ta, tb));
         if (std::min(ta, tb) > 1.0 + ext || std::max(ta, tb) < -ext) {
             return out;
         }
-        const double a = std::min(from, to);
-        const double b = std::max(from, to);
-        out.push_back(s.a + r * a);
-        if ((b - a) * lr > slack) {
-            out.push_back(s.a + r * b);
+        const Wide a = std::min(from, to);
+        const Wide b = std::max(from, to);
+        out.push_back(s.a + RS_Vector{static_cast<double>(rx * a), static_cast<double>(ry * a)});
+        if ((b - a) * lr > wideSlack) {
+            out.push_back(s.a + RS_Vector{static_cast<double>(rx * b), static_cast<double>(ry * b)});
         }
         return out;
     }
-    const double u = cross(w, q) / denominator;
-    const double v = cross(w, r) / denominator;
-    if (u >= -slack / lr && u <= 1.0 + slack / lr && v >= -slack / lq && v <= 1.0 + slack / lq) {
-        out.push_back(s.a + r * std::clamp(u, 0.0, 1.0));
+    const Wide u = crossWide(wx, wy, qx, qy) / denominator;
+    const Wide v = crossWide(wx, wy, rx, ry) / denominator;
+    if (u >= -wideSlack / lr && u <= 1.0L + wideSlack / lr && v >= -wideSlack / lq && v <= 1.0L + wideSlack / lq) {
+        const Wide parameter = std::clamp(u, 0.0L, 1.0L);
+        out.push_back(s.a + RS_Vector{static_cast<double>(rx * parameter), static_cast<double>(ry * parameter)});
     }
     return out;
 }
