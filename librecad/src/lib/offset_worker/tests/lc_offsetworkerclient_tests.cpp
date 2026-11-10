@@ -1447,6 +1447,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(*scaledCornerAtLargerScaleSource);
     const std::size_t scaledCornerLargeOppositeFixture = sources.size();
     sources.emplace_back(*scaledCornerLargeSource);
+    const std::size_t largeOriginParabolaOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{largeOriginParabola});
 
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
@@ -1556,6 +1558,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == largeOriginParabolaFixture) {
             offset.distance = 2500.0;
             offset.coord = {1e6 + 5e4, -2e6 + 5.3e4};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == largeOriginParabolaOppositeFixture) {
+            offset.distance = 2500.0;
+            offset.coord = {1e6 + 5e4, -2e6 + 4.7e4};
             offset.sideFallback = offset.coord;
         }
         if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
