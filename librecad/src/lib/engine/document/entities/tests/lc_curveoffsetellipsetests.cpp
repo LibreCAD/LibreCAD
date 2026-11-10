@@ -282,13 +282,31 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
         // P6: no two sample segments but neighbours meet
         const std::size_t n = polygon.size();
         bool crossing = false;
+        std::size_t crossingI = 0;
+        std::size_t crossingJ = 0;
         for (std::size_t i = 0; i < n && !crossing; ++i) {
             for (std::size_t j = i + 2; j < n && !crossing; ++j) {
                 if (closed[c] && i == 0 && j == n - 1) {
                     continue; // neighbours across the seam
                 }
-                crossing = segmentsIntersect(polygon[i], polygon[j], 0.0);
+                if (segmentsIntersect(polygon[i], polygon[j], 0.0)) {
+                    const auto confinedToKnownCorner = [&](const RS_Vector& corner) {
+                        return polygon[i].a.distanceTo(corner) <= offset.slack && polygon[i].b.distanceTo(corner) <= offset.slack &&
+                            polygon[j].a.distanceTo(corner) <= offset.slack && polygon[j].b.distanceTo(corner) <= offset.slack;
+                    };
+                    if (!std::any_of(corners.begin(), corners.end(), confinedToKnownCorner)) {
+                        crossing = true;
+                        crossingI = i;
+                        crossingJ = j;
+                    }
+                }
             }
+        }
+        INFO("sampled crossing segments " << crossingI << " and " << crossingJ);
+        if (crossing) {
+            const auto& first = polygon[crossingI];
+            const auto& second = polygon[crossingJ];
+            CAPTURE(first.a.x, first.a.y, first.b.x, first.b.y, second.a.x, second.a.y, second.b.x, second.b.y);
         }
         CHECK_FALSE(crossing);
     }
@@ -908,6 +926,37 @@ TEST_CASE("Translated and rotated thin elliptic-arc cusps remain bounded", "[cur
                                                              LC_CurveOffset::makeDirectSourceBudget());
     CHECK(refused.status == LC_CurveOffsetStatus::InvalidRequest);
     CHECK(refused.branches.empty());
+}
+
+TEST_CASE("Transformed thin elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    struct Profile {
+        RS_Vector center;
+        double degrees;
+        double from;
+        double to;
+        bool reversed;
+        double distance;
+    };
+    const std::array<Profile, 5> profiles{{
+        {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 0.9e-6},
+        {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 1.0e-6},
+        {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 1.1e-6},
+        {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 1.0e-6},
+        {{100.0, -100.0}, 30.0, 0.2, -0.2, true, 1.0e-6},
+    }};
+    for (const Profile& profile : profiles) {
+        const double angle = profile.degrees * M_PI / 180.0;
+        const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+        const RS_Ellipse source{nullptr, RS_EllipseData{profile.center, majorP, 1e-4, profile.from, profile.to, profile.reversed}};
+        CAPTURE(profile.center.x, profile.center.y, profile.degrees, profile.from, profile.to, profile.reversed, profile.distance);
+        const Offset inward = offsetOf(source, profile.reversed ? kRight : kLeft, profile.distance, 0.1 * profile.distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        const std::vector<RS_Vector> cusp =
+            profile.distance == 1e-6 ? std::vector<RS_Vector>{inwardOffset(source, 0.0, profile.distance)} : std::vector<RS_Vector>{};
+        checkOffset(inward, curveOf(source), profile.distance, {false}, cusp);
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
