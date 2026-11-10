@@ -1040,6 +1040,23 @@ TEST_CASE("Rotated 10-to-1 elliptic arcs retain cusp-threshold geometry", "[curv
     }
 }
 
+TEST_CASE("Rotated 3-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1.0 / 3.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[curve-offset][ellipse]") {
     // Where an eccentric ellipse's inward offset needs both major-axis
