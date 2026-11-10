@@ -33737,3 +33737,23 @@ exhaustion. The next slice must identify whether the blocker is the opposing
 offset branches, a cusp/cap interaction, or numerical ambiguity, then add an
 independent geometric oracle before attempting a bounded classifier. Keep the
 current empty-output fail-closed behavior until that proof exists.
+
+## 827. Reject Product-bound Pruning at the Exact 10000-to-1 Cusp (2026-11-10)
+
+Tested intersecting the ordinary component interval bounds with the ellipse's
+independent speed-squared/cross-product bounds only where the offset-factor
+interval contains zero. This changed the exact `1e-6` threshold from
+`AmbiguousTopology` to a materialized trimmed result, but the independent
+`checkOffset` oracle found a self-crossing in the output near the cusp (sampled
+segments 404 and 406, with coordinates separated on the order of `1e-9`). The
+apparent status improvement therefore did not establish valid trimmed
+topology. The shortcut was reverted; the original bounded refusal and
+empty-output invariant are restored, and the focused case passes 16,527
+assertions.
+
+Do not use a narrower offset-derivative enclosure by itself to suppress these
+near-cusp pairs. The next successful classifier must also prove the
+materialized topology at the requested tolerance, or identify and bound an
+acceptable singular-cusp representation before publication. Keep the
+diagnostic captures in the regression so future attempts report stage, work,
+depth, and the unresolved parameter boxes.
