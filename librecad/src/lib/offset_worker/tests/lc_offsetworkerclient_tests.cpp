@@ -842,6 +842,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(rotatedSmallLargeOriginParabola.isValid());
     const std::size_t rotatedSmallLargeOriginParabolaFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{rotatedSmallLargeOriginParabola});
+    const RS_Vector reversedTraversalParabolaOrigin{2.0, -3.0};
+    const LC_ParabolaData reversedTraversalParabola{
+        {reversedTraversalParabolaOrigin + RS_Vector{10.0, 0.0},
+         reversedTraversalParabolaOrigin + RS_Vector{5.0, 10.0}, reversedTraversalParabolaOrigin}};
+    REQUIRE(reversedTraversalParabola.isValid());
+    const std::size_t reversedTraversalParabolaFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{reversedTraversalParabola});
     const double arcSeam = 1e-4;
     const std::size_t nearFullArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{
@@ -1456,6 +1463,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == translatedSmallParabolaFixture                                        ? 0.00025
             : i == smallLargeOriginParabolaFixture                                       ? 0.0005
             : i == rotatedSmallLargeOriginParabolaFixture                               ? 0.0005
+            : i == reversedTraversalParabolaFixture                                     ? 0.25
             : i == reversedBoundsHyperbolaNearFixture                                    ? .9
             : i == reversedBoundsHyperbolaFarFixture                                     ? 3.6
             : i == translatedThinHyperbolaNearFixture                                    ? .04
@@ -1567,6 +1575,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture || i == reversedBoundsHyperbolaNearFixture ||
             i == reversedBoundsHyperbolaFarFixture || i == translatedThinHyperbolaNearFixture || i == translatedThinHyperbolaFarFixture ||
             i == smallLargeOriginParabolaFixture || i == rotatedSmallLargeOriginParabolaFixture ||
+            i == reversedTraversalParabolaFixture ||
             i + 3 >= sources.size() || (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) ||
             scaledCircle != scaledCircleFixtures.end() || thinEllipse != thinEllipseFixtures.end() ||
             thinEllipseCusp != thinEllipseCuspFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end())
@@ -1801,6 +1810,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{smallLargeOriginParabola});
     const std::size_t rotatedSmallLargeOriginParabolaOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{rotatedSmallLargeOriginParabola});
+    const std::size_t reversedTraversalParabolaOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{reversedTraversalParabola});
     const std::size_t reversedBoundsHyperbolaNearOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarOppositeFixture = sources.size();
@@ -1991,6 +2002,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const RS_Vector normal{-tangent.y, tangent.x};
             const double side = i == rotatedSmallLargeOriginParabolaFixture ? 1.0 : -1.0;
             offset.coord = midpoint + normal * (side * 0.003);
+            offset.sideFallback = offset.coord;
+        }
+        if (i == reversedTraversalParabolaFixture || i == reversedTraversalParabolaOppositeFixture) {
+            offset.distance = 0.25;
+            const auto& data = std::get<LC_ParabolaData>(sources[i].value);
+            const RS_Vector midpoint = (data.m_controlPoints[0] + data.m_controlPoints[1] * 2.0 + data.m_controlPoints[2]) * 0.25;
+            const RS_Vector tangent = (data.m_controlPoints[2] - data.m_controlPoints[0]).normalized();
+            const RS_Vector normal{-tangent.y, tangent.x};
+            const double side = i == reversedTraversalParabolaFixture ? 1.0 : -1.0;
+            offset.coord = midpoint + normal * (side * 1.5);
             offset.sideFallback = offset.coord;
         }
         if (reversedBoundsHyperbolaFixture || translatedThinHyperbolaFixture) {

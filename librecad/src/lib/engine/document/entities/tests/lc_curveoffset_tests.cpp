@@ -1820,6 +1820,29 @@ TEST_CASE("Rotated small parabola at a large origin retains exact offset normals
     }
 }
 
+TEST_CASE("Reversed parabola traversal retains exact offset normals",
+          "[curve-offset][direct][parabola][oracle][reversed]") {
+    const RS_Vector origin{2.0, -3.0};
+    const LC_ParabolaData data{{origin + RS_Vector{10.0, 0.0}, origin + RS_Vector{5.0, 10.0}, origin}};
+    REQUIRE(data.isValid());
+    const LC_Parabola source{nullptr, data};
+    const auto typedSource = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(typedSource);
+    CHECK(typedSource->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+
+    const EvalFn exactCurve = evaluator(source);
+    for (const double distance : {0.05, 0.25}) {
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(distance, side);
+            const auto result = offsetToSide(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("A circular arc offsets to a concentric arc", "[curve-offset][direct]") {
     const RS_Vector center{3.0, -2.0};
     const RS_Spline arc = quarterCircle(center, 10.0);
