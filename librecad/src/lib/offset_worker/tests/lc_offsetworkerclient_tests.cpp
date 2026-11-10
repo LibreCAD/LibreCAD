@@ -559,6 +559,22 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     points.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
     LC_SplinePointsData fitPoints{false, false};
     fitPoints.splinePoints = {{0, 0}, {1, 2}, {2, 0}};
+    LC_SplinePointsData tangentFitPoints{false, false};
+    tangentFitPoints.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    tangentFitPoints.fitTangentsConstrained = true;
+    tangentFitPoints.fitTolerance = 1e-10;
+    LC_SplinePoints tangentFitPointEntity{nullptr, tangentFitPoints};
+    LC_CurveJet tangentFitStart;
+    LC_CurveJet tangentFitEnd;
+    REQUIRE(tangentFitPointEntity.tryEvaluateJet(
+        0.0, LC_CurveEvaluationSide::Right, tangentFitStart));
+    REQUIRE(tangentFitPointEntity.tryEvaluateJet(
+        static_cast<double>(tangentFitPointEntity.getSegmentCount()),
+        LC_CurveEvaluationSide::Left, tangentFitEnd));
+    tangentFitPointEntity.getData().fitStartTangent = tangentFitStart.first;
+    tangentFitPointEntity.getData().fitEndTangent = tangentFitEnd.first;
+    REQUIRE(tangentFitPointEntity.fitTangentsMatchCurve());
+    tangentFitPoints = tangentFitPointEntity.getData();
     LC_SplinePointsData closedFitPoints{true, false};
     closedFitPoints.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
     RS_SplineData degreeOne{1, false};
@@ -686,6 +702,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         *mixedBulgeSource,
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0.0, 0.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true}},
         LC_OffsetSourceGeometry{*secondParabola}};
+    const std::size_t tangentFitPointFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{tangentFitPoints});
     const std::size_t reversedBoundsHyperbolaNearFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarFixture = sources.size();
@@ -1167,44 +1185,46 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{arc});
         thinEllipseArcFixtures.emplace_back(fixture, 0.1);
     }
-    std::vector<std::size_t> negativeStationarySplinePointsFixtures;
-    auto appendNegativeStationaryFixture = [&](const LC_SplinePointsData& source) {
+    std::vector<std::size_t> negativeSplinePointsFixtures;
+    auto appendNegativeSplinePointsFixture = [&](const LC_SplinePointsData& source) {
         const std::size_t fixture = sources.size();
         sources.emplace_back(LC_OffsetSourceGeometry{source});
-        negativeStationarySplinePointsFixtures.push_back(fixture);
+        negativeSplinePointsFixtures.push_back(fixture);
     };
     LC_SplinePointsData stationarySplinePoints{false, false};
     stationarySplinePoints.useControlPoints = true;
     stationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
     const std::size_t stationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{stationarySplinePoints});
-    appendNegativeStationaryFixture(stationarySplinePoints);
+    appendNegativeSplinePointsFixture(stationarySplinePoints);
     LC_SplinePointsData multipleStationarySplinePoints{false, false};
     multipleStationarySplinePoints.useControlPoints = true;
     multipleStationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0},
                                                     {3, 1}, {3, 1}, {3, 1}, {4, 0}};
     const std::size_t multipleStationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{multipleStationarySplinePoints});
-    appendNegativeStationaryFixture(multipleStationarySplinePoints);
+    appendNegativeSplinePointsFixture(multipleStationarySplinePoints);
     LC_SplinePointsData stationaryPlateauSplinePoints{false, false};
     stationaryPlateauSplinePoints.useControlPoints = true;
     stationaryPlateauSplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
                                                     {2, 0}, {3, 1}, {3, 1}, {3, 1}, {4, 0}};
     const std::size_t stationaryPlateauSplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{stationaryPlateauSplinePoints});
-    appendNegativeStationaryFixture(stationaryPlateauSplinePoints);
+    appendNegativeSplinePointsFixture(stationaryPlateauSplinePoints);
     LC_SplinePointsData leadingStationarySplinePoints{false, false};
     leadingStationarySplinePoints.useControlPoints = true;
     leadingStationarySplinePoints.controlPoints = {{0, 0}, {0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
     const std::size_t leadingStationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{leadingStationarySplinePoints});
-    appendNegativeStationaryFixture(leadingStationarySplinePoints);
+    appendNegativeSplinePointsFixture(leadingStationarySplinePoints);
     LC_SplinePointsData trailingStationarySplinePoints{false, false};
     trailingStationarySplinePoints.useControlPoints = true;
     trailingStationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {3, 1}};
     const std::size_t trailingStationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{trailingStationarySplinePoints});
-    appendNegativeStationaryFixture(trailingStationarySplinePoints);
+    appendNegativeSplinePointsFixture(trailingStationarySplinePoints);
+    const std::size_t negativeTangentFitPointFixture = sources.size();
+    appendNegativeSplinePointsFixture(tangentFitPoints);
     struct ClosedStationaryFixture {
         std::size_t positive;
         std::size_t negative;
@@ -1222,7 +1242,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const std::size_t fixture = sources.size();
         sources.emplace_back(LC_OffsetSourceGeometry{closedStationary});
         const std::size_t negativeFixture = sources.size();
-        appendNegativeStationaryFixture(closedStationary);
+        appendNegativeSplinePointsFixture(closedStationary);
         closedStationarySplinePointsFixtures.push_back(
             {fixture, negativeFixture, profile == 0 ? 0.5 : 2.5});
     }
@@ -1291,10 +1311,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                                                   [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipseArc = std::find_if(thinEllipseArcFixtures.begin(), thinEllipseArcFixtures.end(),
                                                  [i](const auto& fixture) { return fixture.first == i; });
-        const bool negativeStationary = std::find(negativeStationarySplinePointsFixtures.begin(),
-                                                  negativeStationarySplinePointsFixtures.end(), i) !=
-            negativeStationarySplinePointsFixtures.end();
-        const double sourceDistance = negativeStationary                                                      ? -.25
+        const bool negativeSplinePoints = std::find(negativeSplinePointsFixtures.begin(),
+                                                    negativeSplinePointsFixtures.end(), i) !=
+            negativeSplinePointsFixtures.end();
+        const double sourceDistance = negativeSplinePoints                                                      ? -.25
             : i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
             ? scaledLineDistances[i - scaledLineFixtureStart]
             : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->second
@@ -1344,10 +1364,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == trailingStationarySplinePointsFixture ||
             std::any_of(closedStationarySplinePointsFixtures.begin(), closedStationarySplinePointsFixtures.end(),
                         [i](const ClosedStationaryFixture& fixture) { return fixture.positive == i; }) ||
-            std::find(negativeStationarySplinePointsFixtures.begin(), negativeStationarySplinePointsFixtures.end(), i) !=
-                negativeStationarySplinePointsFixtures.end()) {
-            if (std::find(negativeStationarySplinePointsFixtures.begin(), negativeStationarySplinePointsFixtures.end(), i) !=
-                negativeStationarySplinePointsFixtures.end()) {
+            std::find(negativeSplinePointsFixtures.begin(), negativeSplinePointsFixtures.end(), i) !=
+                negativeSplinePointsFixtures.end()) {
+            if (std::find(negativeSplinePointsFixtures.begin(), negativeSplinePointsFixtures.end(), i) !=
+                negativeSplinePointsFixtures.end()) {
                 REQUIRE_FALSE(result.ordinary.empty());
                 for (const auto& branch : result.ordinary)
                     CHECK(((std::holds_alternative<RS_SplineData>(branch)) ||
@@ -1799,6 +1819,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 leftNormal * (offset.distance * ((reversedBoundsHyperbolaOpposite || translatedThinHyperbolaOpposite) ? -2.0 : 2.0));
             offset.sideFallback = offset.coord;
         }
+        if (i == tangentFitPointFixture || i == negativeTangentFitPointFixture) {
+            const auto* spline = dynamic_cast<const LC_SplinePoints*>(entity.get());
+            REQUIRE(spline);
+            LC_CurveJet jet;
+            REQUIRE(spline->tryEvaluateJet(1.5, LC_CurveEvaluationSide::Interior, jet));
+            const double speed = jet.first.magnitude();
+            REQUIRE(speed > 0.0);
+            const RS_Vector normal{-jet.first.y / speed, jet.first.x / speed};
+            const double pickSide = i == tangentFitPointFixture ? 1.0 : -1.0;
+            offset.coord = jet.point + normal * (pickSide * 0.5);
+            offset.sideFallback = offset.coord;
+        }
         const auto closedStationaryFixture = std::find_if(
             closedStationarySplinePointsFixtures.begin(), closedStationarySplinePointsFixtures.end(),
             [i](const ClosedStationaryFixture& fixture) {
@@ -1823,8 +1855,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 offset.coord = {10.0 + scale, -20.0 + 3.0 * scale};
                 offset.sideFallback = offset.coord;
             }
-        if (std::find(negativeStationarySplinePointsFixtures.begin(), negativeStationarySplinePointsFixtures.end(), i) !=
-            negativeStationarySplinePointsFixtures.end())
+        if (std::find(negativeSplinePointsFixtures.begin(), negativeSplinePointsFixtures.end(), i) !=
+            negativeSplinePointsFixtures.end())
             offset.distance = -0.25;
             offset.number = 1;
             offset.multipleCopies = true;

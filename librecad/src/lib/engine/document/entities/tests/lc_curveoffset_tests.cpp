@@ -1138,11 +1138,43 @@ TEST_CASE("Consistent tangent-constrained spline-points can be offset",
     const auto options = LC_CurveOffset::makeDirectOptions(source, 0.5);
     const auto left = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.5);
     const auto right = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 0.5);
+    const auto evaluateCubic = [](const std::array<RS_Vector, 4>& points,
+                                  const double parameter) {
+        const double inverse = 1.0 - parameter;
+        return points[0] * (inverse * inverse * inverse) +
+            points[1] * (3.0 * inverse * inverse * parameter) +
+            points[2] * (3.0 * inverse * parameter * parameter) +
+            points[3] * (parameter * parameter * parameter);
+    };
 
-    CHECK(LC_CurveOffset::buildDirectBranches(source, left, options,
-        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
-    CHECK(LC_CurveOffset::buildDirectBranches(source, right, options,
-        LC_CurveOffset::makeDirectSourceBudget()).status == LC_CurveOffsetStatus::Ok);
+    for (const auto& [side, signedDistance] :
+         {std::pair{left, 0.5}, std::pair{right, -0.5}}) {
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, side, options, LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        std::size_t checkedSamples = 0;
+        for (const auto& branch : result.branches) {
+            for (const auto& piece : branch.cubicPieces) {
+                for (const int sample : {5, 13, 21, 29, 37}) {
+                    const double fraction = sample / 43.0;
+                    const double parameter = piece.provenance.sourceT0 +
+                        fraction * (piece.provenance.sourceT1 - piece.provenance.sourceT0);
+                    LC_CurveJet jet;
+                    REQUIRE(source.tryEvaluateJet(parameter,
+                        LC_CurveEvaluationSide::Interior, jet));
+                    const double speed = jet.first.magnitude();
+                    REQUIRE(speed > 0.0);
+                    const RS_Vector exact = jet.point +
+                        RS_Vector{-jet.first.y, jet.first.x} *
+                            (signedDistance / speed);
+                    CHECK(evaluateCubic(piece.bezier, fraction).distanceTo(exact) <=
+                          options.tolerance.requestedGeometry);
+                    ++checkedSamples;
+                }
+            }
+        }
+        CHECK(checkedSamples > 0);
+    }
 
     source.getData().fitEndTangent *= -1.0;
     CHECK_FALSE(source.fitTangentsMatchCurve());
