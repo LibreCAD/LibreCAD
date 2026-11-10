@@ -919,11 +919,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     std::vector<std::pair<std::size_t, std::size_t>> expectedVanishingThinCuspFixtures;
     std::vector<std::size_t> expectedSingularThinCuspFixtures;
     std::vector<std::size_t> expectedLimitExceededProduceFixtures;
+    std::vector<std::size_t> expectedAmbiguousTopologyProduceFixtures;
     std::vector<std::size_t> reversed100To1InteriorPickFixtures;
     std::vector<std::size_t> reversed100To1ExteriorPickFixtures;
     std::vector<std::size_t> reversed1000To1ExteriorPickFixtures;
     std::vector<std::size_t> reversed1000To1InteriorPickFixtures;
-    const std::array<RS_EllipseData, 75> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 76> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -999,6 +1000,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{1e4, -1e4}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-3, 0.2, 0.0, true},
         {{1e6, -1e6}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, 0.2, 0.0, true},
         {{1e6, -1e6}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-2, 0.2, 0.0, true},
+        {{1e6, -1e6}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.2, 0.0, true},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
@@ -1207,6 +1209,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             case 74:
                 cuspDistances = {0.9e-2, 1.0e-2, 1.1e-2};
                 break;
+            case 75:
+                cuspDistances = {0.9e-6, 1.0e-6, 1.1e-6};
+                break;
             default:
                 cuspDistances = {0.5e-6};
                 break;
@@ -1253,6 +1258,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             }
             else if (profile == 68) {
                 expectedSingularThinCuspFixtures.push_back(fixture);
+            }
+            else if (profile == 75 && cuspDistance >= 1.0e-6) {
+                expectedAmbiguousTopologyProduceFixtures.push_back(fixture);
             }
         }
     }
@@ -1311,6 +1319,19 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[74]});
         thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
         reversed100To1InteriorPickFixtures.push_back(fixture);
+    }
+    for (const double cuspDistance : {0.9e-6, 1.0e-6, 1.1e-6}) {
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[75]});
+        thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
+        reversed1000To1ExteriorPickFixtures.push_back(fixture);
+    }
+    for (const double cuspDistance : {0.9e-6, 1.0e-6, 1.1e-6}) {
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[75]});
+        thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
+        if (cuspDistance >= 1.0e-6)
+            expectedAmbiguousTopologyProduceFixtures.push_back(fixture);
     }
     const std::size_t translatedThinEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
@@ -2233,6 +2254,22 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 REQUIRE(prepared.advance(batch));
                 REQUIRE(prepared.outcome().sources.size() == 1);
                 CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::LimitExceeded);
+                CHECK_FALSE(prepared.outcome().sources.front().complete());
+                CHECK(batch.entitiesToAdd.empty());
+                CHECK(batch.entitiesToDelete.empty());
+                continue;
+            }
+            if (std::find(expectedAmbiguousTopologyProduceFixtures.begin(), expectedAmbiguousTopologyProduceFixtures.end(), i) !=
+                expectedAmbiguousTopologyProduceFixtures.end()) {
+                CHECK(producedValue->outputStatus == Reply::OrdinaryStatus::None);
+                CHECK(producedValue->source.status == LC_OffsetSourceStatus::OffsetFailed);
+                CHECK(producedValue->source.copiesMade == 0);
+                CHECK(producedValue->source.engineStatus == LC_CurveOffsetStatus::AmbiguousTopology);
+                CHECK(producedValue->outputs.empty());
+                REQUIRE(prepared.accept(produced));
+                REQUIRE(prepared.advance(batch));
+                REQUIRE(prepared.outcome().sources.size() == 1);
+                CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
                 CHECK_FALSE(prepared.outcome().sources.front().complete());
                 CHECK(batch.entitiesToAdd.empty());
                 CHECK(batch.entitiesToDelete.empty());

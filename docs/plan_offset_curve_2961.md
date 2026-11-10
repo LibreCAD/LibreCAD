@@ -33602,3 +33602,26 @@ pass, and `dwgread` parses both generated DWGs. The full matrix passes
 1,462,305 assertions. This does not generalize the result to other ratios,
 origins, orientations, or intervals; continue those independently, including
 the 1000-to-1 inward over-budget case in section 820.
+
+## 822. Qualify the Large-origin 10000-to-1 Ellipse Cusp Limit (2026-11-10)
+
+Added the same reversed, rotated, cusp-ending partial-arc profile at ratio
+`1e-4` and center `(1e6, -1e6)`. Both signed sides pass the direct geometric
+oracle at `0.9e-6`, below the major-vertex curvature radius. The inward result
+at and above `1e-6` returns `AmbiguousTopology` with no entities or chains;
+those are explicit bounded refusals, not supported outputs. The focused test
+passes 16,527 assertions.
+
+The worker matrix covers the profile's generation/cache and persistence, and
+verifies the ambiguous inward Produce cases return no outputs/copies and leave
+the drawing batch unchanged. The complete worker family matrix passes
+1,490,371 assertions with independent DWG parsing. The full ellipse suite
+passes 1,245,345 assertions in 52 cases; `[offset][check]` passes 223
+assertions in 8 cases.
+
+This probe also refined the large-origin segment predicate's roundoff slack
+from 16 to 2 machine-epsilon units of coordinate scale. That prevents
+representable near-cusp segment gaps from being mislabeled as collinear while
+retaining the `1e-7` disjoint-segment regression and positive crossing
+control. Continue qualifying smaller ratios and larger origins; preserve
+fail-closed behavior wherever the numeric or topology proof is unresolved.

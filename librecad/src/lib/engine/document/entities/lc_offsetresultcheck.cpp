@@ -144,7 +144,7 @@ std::vector<RS_Vector> lineLine(const LC_OffsetSegment& s, const LC_OffsetSegmen
     const Wide lr = std::hypot(rx, ry);
     const Wide lq = std::hypot(qx, qy);
     const double coordinateScale = static_cast<double>(lr + lq) + norm(s.a) + norm(t.a);
-    const double slack = std::max(tolerance, 16.0 * std::numeric_limits<double>::epsilon() * coordinateScale);
+    const double slack = std::max(tolerance, 2.0 * std::numeric_limits<double>::epsilon() * coordinateScale);
     const Wide wideSlack = slack;
     if (std::max(std::min(s.a.x, s.b.x), std::min(t.a.x, t.b.x)) - wideSlack >
             std::min(std::max(s.a.x, s.b.x), std::max(t.a.x, t.b.x)) ||
