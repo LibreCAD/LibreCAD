@@ -27,18 +27,16 @@ Updated: 2026-11-10. Project: **LibreCAD**, not LibreCAD_3.
 
 ### Source-picker status
 
-The requested type-changing picker is implemented and verified for every
-currently modeled source family: line, arc, circle, ellipse, spline,
-spline-points, distinct parabola, bounded hyperbola, and polyline. Keep the
-type selector available during source replacement and derive its options from
-`LC_OffsetSourceGeometry::SupportedKinds`; adding a modeled family must make it
-selectable and add filtering/replacement coverage. Do not add another picker
-or treat this UI inventory as proof of complete offset support. Remaining
-source-family work is the per-variant geometry, worker/cache, edit, and
-applicable DXF/DWG qualification tracked below; ineligible variants must fail
-closed without changing the existing source or cache.
+The editable type-changing picker is implemented for the canonical
+`LC_OffsetSourceGeometry::SupportedKinds` inventory: line, arc, circle, ellipse,
+spline, spline-points, distinct parabola, bounded hyperbola, and polyline. The
+selector stays enabled during the replacement-pick flow, including after it
+starts; changing type filters candidates without converting the current
+source or changing its generated cache or highlight. A successful pick
+atomically installs the candidate's actual typed source. Parabola is a
+first-class, distinct picker entry, not a generic spline-points alias.
 
-Concrete UI regression gates are
+The acceptance gates are
 `Native source picker changes family and replaces the source with a typed
 curve` and the `SupportedKinds` selector-inventory assertion in
 `lc_offsetcurve_propertiesdialog_tests.cpp`. Together they verify that the
@@ -48,27 +46,13 @@ until replacement. Re-run these when changing the picker or adding a modeled
 family; do not treat their pass as evidence that every geometry variant can be
 offset or round-tripped.
 
-The 2026-11-10 clarification reconfirms that the user must be able to change
-the requested source family during the replacement-pick flow, including after
-the flow has started, and that parabola must be available as its own source
-type. The active family is a candidate filter, not a conversion of the current
-source. These behaviors are already satisfied by the existing picker contract
-and do not require another UI implementation slice. Continue the open “all
-supported types” work by qualifying each eligible variant through its
-applicable geometry, worker/cache, replacement, and persistence paths; retain
-atomic refusal for variants that are not yet supported end to end.
-
-The repeated source-widget request on 2026-11-10 does not change this scope or
-the implementation sequence. Keep the source-family selector editable while a
-replacement pick is active; it must cover all nine current modeled kinds,
-including a distinct parabola entry, and changing the selector filters the
-candidate list without changing the current source, cache, or highlight. The
-existing Properties regressions are the acceptance gate for this UI behavior.
-No additional widget or parabola-only picker control is required. Continue
-“all supported types” work in the family-by-variant capability matrix: each
-eligible parameterization still needs direct geometry, worker/cache,
-replacement, and applicable DXF/DWG evidence, with unsupported variants
-excluded or rejected atomically.
+The 2026-11-10 clarification reconfirms the requirement to change source type
+while replacement picking is active and to include parabola as a distinct
+type. The contract and acceptance gates above already satisfy this; no
+additional widget or type-specific control is needed. “All supported types”
+remains open beyond the picker: qualify eligible variants through direct
+geometry, worker/cache, replacement, and applicable DXF/DWG paths. Keep
+unqualified variants filtered or fail-closed without changing source/cache.
 
 ## Current Contract
 
@@ -33625,3 +33609,21 @@ representable near-cusp segment gaps from being mislabeled as collinear while
 retaining the `1e-7` disjoint-segment regression and positive crossing
 control. Continue qualifying smaller ratios and larger origins; preserve
 fail-closed behavior wherever the numeric or topology proof is unresolved.
+
+## 823. Qualify the Very-large-origin 100-to-1 Ellipse Cusp (2026-11-10)
+
+Added a reversed, 30-degree rotated partial ellipse with major radius `100`,
+ratio `1e-2`, cusp endpoint, and center `(1e7, -1e7)`. The direct geometric
+oracle passes both signed sides at `0.9`, `1.0`, and `1.1` times the major-axis
+vertex curvature radius (`1e-2`); the focused test passes 27,809 assertions.
+The worker-family matrix includes both pick sides at the same three distances
+through generation, cache/replacement, Produce, and all five DXF/DWG lanes. The
+full matrix passes 1,517,159 assertions, with `dwgread` parsing the generated
+DWGs.
+
+This qualifies only this ratio, origin, orientation, reversed partial sweep,
+and distance triplet. It does not close the broader large-origin or ellipse
+parameterization matrix; continue recording direct, worker, and persistence
+evidence per variant, and retain bounded refusal where topology/numeric
+certification is unresolved. Test commit: `819a38d47` (`test(offset): qualify
+very-large-origin ellipse cusp`).
