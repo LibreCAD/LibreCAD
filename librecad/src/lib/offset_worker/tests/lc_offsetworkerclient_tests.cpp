@@ -829,6 +829,19 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(smallLargeOriginParabola.isValid());
     const std::size_t smallLargeOriginParabolaFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{smallLargeOriginParabola});
+    constexpr double rotatedSmallLargeOriginParabolaScale = 1e-2;
+    constexpr double rotatedSmallLargeOriginParabolaAngle = 0.6435011087932844;
+    const RS_Vector rotatedSmallLargeOriginParabolaOrigin{1e6, -2e6};
+    const auto rotateScaleTranslateParabolaPoint = [&](const RS_Vector& point) {
+        return rotatedSmallLargeOriginParabolaOrigin +
+               (point * rotatedSmallLargeOriginParabolaScale).rotated(rotatedSmallLargeOriginParabolaAngle);
+    };
+    const LC_ParabolaData rotatedSmallLargeOriginParabola{{rotateScaleTranslateParabolaPoint({0.0, 0.0}),
+                                                           rotateScaleTranslateParabolaPoint({5.0, 10.0}),
+                                                           rotateScaleTranslateParabolaPoint({10.0, 0.0})}};
+    REQUIRE(rotatedSmallLargeOriginParabola.isValid());
+    const std::size_t rotatedSmallLargeOriginParabolaFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{rotatedSmallLargeOriginParabola});
     const double arcSeam = 1e-4;
     const std::size_t nearFullArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{
@@ -1442,6 +1455,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == largeOriginParabolaFixture                                            ? 2500.0
             : i == translatedSmallParabolaFixture                                        ? 0.00025
             : i == smallLargeOriginParabolaFixture                                       ? 0.0005
+            : i == rotatedSmallLargeOriginParabolaFixture                               ? 0.0005
             : i == reversedBoundsHyperbolaNearFixture                                    ? .9
             : i == reversedBoundsHyperbolaFarFixture                                     ? 3.6
             : i == translatedThinHyperbolaNearFixture                                    ? .04
@@ -1552,7 +1566,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == nearFullArcFixture || i == narrowSeamArcFixture || i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
             i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture || i == reversedBoundsHyperbolaNearFixture ||
             i == reversedBoundsHyperbolaFarFixture || i == translatedThinHyperbolaNearFixture || i == translatedThinHyperbolaFarFixture ||
-            i == smallLargeOriginParabolaFixture ||
+            i == smallLargeOriginParabolaFixture || i == rotatedSmallLargeOriginParabolaFixture ||
             i + 3 >= sources.size() || (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) ||
             scaledCircle != scaledCircleFixtures.end() || thinEllipse != thinEllipseFixtures.end() ||
             thinEllipseCusp != thinEllipseCuspFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end())
@@ -1785,6 +1799,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{translatedSmallParabola});
     const std::size_t smallLargeOriginParabolaOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{smallLargeOriginParabola});
+    const std::size_t rotatedSmallLargeOriginParabolaOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{rotatedSmallLargeOriginParabola});
     const std::size_t reversedBoundsHyperbolaNearOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarOppositeFixture = sources.size();
@@ -1965,6 +1981,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == smallLargeOriginParabolaFixture || i == smallLargeOriginParabolaOppositeFixture) {
             offset.distance = 0.0005;
             offset.coord = {1e6 + 0.05, -2e6 + (i == smallLargeOriginParabolaFixture ? 0.053 : 0.047)};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == rotatedSmallLargeOriginParabolaFixture || i == rotatedSmallLargeOriginParabolaOppositeFixture) {
+            offset.distance = 0.0005;
+            const auto& data = std::get<LC_ParabolaData>(sources[i].value);
+            const RS_Vector midpoint = (data.m_controlPoints[0] + data.m_controlPoints[1] * 2.0 + data.m_controlPoints[2]) * 0.25;
+            const RS_Vector tangent = (data.m_controlPoints[2] - data.m_controlPoints[0]).normalized();
+            const RS_Vector normal{-tangent.y, tangent.x};
+            const double side = i == rotatedSmallLargeOriginParabolaFixture ? 1.0 : -1.0;
+            offset.coord = midpoint + normal * (side * 0.003);
             offset.sideFallback = offset.coord;
         }
         if (reversedBoundsHyperbolaFixture || translatedThinHyperbolaFixture) {

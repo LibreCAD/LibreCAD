@@ -33503,3 +33503,22 @@ the worker/persistence path, and the two recorded distances for direct
 geometry. Other parabola scales, translations, conditioning, topologies, and
 distances remain open and must be independently qualified or rejected
 atomically.
+
+## 817. Qualify Rotated Small Parabola at a Large Origin (2026-11-10)
+
+Added a rigidly rotated quadratic parabola at scale `1e-2` and origin
+`(1e6, -2e6)`, combining orientation with the scale/translation precision
+profile from section 816. The direct exact-normal oracle checks both signed
+sides at normalized distances `0.05` and `0.25` and passes 2,647 assertions.
+
+The real worker matrix now exercises this typed source at distance `0.0005`
+on both signed sides, deriving the pick points from the rotated midpoint
+tangent. Both cases pass cache admission, replacement, Produce, and all five
+R14/R2000/R2018 DXF/DWG lanes. `dwgread` independently parses both generated
+DWGs. The full family matrix passes 1,450,512 assertions; both targets build
+and `git diff --check` passes.
+
+This qualifies only the recorded rotation, scale, translation, and worker
+distance. Other orientations, affine transforms, parabola conditioning,
+topologies, and distances remain open and must be qualified independently or
+rejected atomically.
