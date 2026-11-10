@@ -699,6 +699,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(largeOriginParabola.isValid());
     const std::size_t largeOriginParabolaFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{largeOriginParabola});
+    constexpr double translatedSmallParabolaScale = 1e-3;
+    const RS_Vector translatedSmallParabolaOrigin{10.0, -20.0};
+    const LC_ParabolaData translatedSmallParabola{
+        {translatedSmallParabolaOrigin,
+         translatedSmallParabolaOrigin + RS_Vector{5.0 * translatedSmallParabolaScale, 10.0 * translatedSmallParabolaScale},
+         translatedSmallParabolaOrigin + RS_Vector{10.0 * translatedSmallParabolaScale, 0.0}}};
+    REQUIRE(translatedSmallParabola.isValid());
+    const std::size_t translatedSmallParabolaFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{translatedSmallParabola});
     const double arcSeam = 1e-4;
     const std::size_t nearFullArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{
@@ -1183,6 +1192,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == largeCircleFixture                                                    ? 2e3
             : i == nearParallelParabolaFixture                                           ? .01
             : i == largeOriginParabolaFixture                                            ? 2500.0
+            : i == translatedSmallParabolaFixture                                        ? 0.00025
             : i == 21                                                                    ? .1
             : i == 24                                                                    ? 1.9
             : i == scaledMajorSweepFixture                                               ? 2500.0
@@ -1453,6 +1463,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{largeOriginParabola});
     const std::size_t largeOriginParabolaNearOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{largeOriginParabola});
+    const std::size_t translatedSmallParabolaOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{translatedSmallParabola});
 
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
@@ -1577,6 +1589,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == largeOriginParabolaNearOppositeFixture) {
             offset.distance = 500.0;
             offset.coord = {1e6 + 5e4, -2e6 + 4.93e4};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == translatedSmallParabolaFixture) {
+            offset.distance = 0.00025;
+            offset.coord = {10.005, -19.9947};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == translatedSmallParabolaOppositeFixture) {
+            offset.distance = 0.00025;
+            offset.coord = {10.005, -19.9953};
             offset.sideFallback = offset.coord;
         }
         if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
