@@ -712,7 +712,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     }
     const std::size_t scaledLineFixtureEnd = sources.size();
     std::vector<std::pair<std::size_t, double>> scaledCircleFixtures;
-    for (const double scale : {1e-6, 1e8}) {
+    for (const double scale : {1e-6, 1e-4, 1.0, 1e4, 1e8}) {
         for (const double translationRatio : {0.0, 1e6}) {
             const RS_Vector center{translationRatio * scale, -translationRatio * scale};
             const std::size_t fixture = sources.size();
