@@ -31166,3 +31166,31 @@ Implementation commit: `a1f94e185` (`fix(offset): certify rotated trim
 separation`). Continue the remaining ellipse/spline/hyperbola/polyline variant
 qualification and external acceptance matrix; this result supports only the
 recorded rotated thin-ellipse cusp profile, not every member of those families.
+
+## 718. Qualify Additional Rotated Thin-ellipse Cusps (2026-11-09)
+
+Extended the inward cusp regression from the single 30-degree profile to
+whole-ellipse major-axis orientations 0, 15, 30, 45, 60, 75, and 90 degrees,
+keeping `a=100`, ratio `1e-4`, origin center, inward distance `0.5e-6`, and
+requested tolerance `0.1*d`. Every direct profile materializes successfully
+under the unchanged pair cap and passes the independent bidirectional distance
+and tangent-orientation oracle. Axis-aligned 0/90-degree cases are not required
+to increment the oriented-projection counter; genuinely rotated cases are.
+
+The real-worker fixture matrix now persists representative 30, 45, and 90
+degree whole-ellipse cusp profiles, in addition to the origin-aligned and
+translated cases. These run operation 7 generation, operation 8 cache
+validation, replacement/Produce, all five DXF/DWG lanes, and independent
+LibreDWG parsing for both DWG versions.
+
+Validation: the focused rotated-orientation test passes 25,366 assertions/1
+case; `[curve-offset][ellipse][cusp]` passes 61,546 assertions/2 cases; the
+full `[lc-offsetcurve][worker-client]` suite passes 648,204 assertions/22
+cases with `DWGREAD=/opt/homebrew/bin/dwgread`. Edited ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `c7ec05283`
+(`test(offset): qualify rotated thin ellipse cusps`).
+
+This qualifies only the listed centered whole-ellipse orientations and one
+inward distance. Larger translations and partial-arc cusp topology remain
+unqualified; continue those as separate variant rows before drawing a general
+rotation/translation-invariance conclusion.
