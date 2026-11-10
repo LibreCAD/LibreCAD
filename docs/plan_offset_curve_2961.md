@@ -33549,7 +33549,7 @@ changing source/cache state.
 ## 820. Qualify a Large-origin Reversed Ellipse Cusp Boundary (2026-11-10)
 
 Added a reversed, 1000-to-1 partial elliptic arc ending at its major-axis cusp,
-rotated 30 degrees and translated to `(1e6, -1e6)`. The direct oracle passes
+rotated 30 degrees and translated to `(1e6, -1e6)`. The trimmed-mode oracle passes
 both sides at `0.9e-4` and `1.0e-4`, and the non-inward side at `1.1e-4`. The
 inward `1.1e-4` result exhausts the existing materialized-output intersection
 pair budget (`1,048,576`) and returns `LimitExceeded` with no entities or
@@ -33575,10 +33575,10 @@ detectable. The focused intersection test passes 15 assertions; the broader
 ## 821. Qualify a Large-origin Reversed 100-to-1 Ellipse Cusp (2026-11-10)
 
 Added a 30-degree rotated, reversed partial ellipse with major radius `100`,
-ratio `1e-2`, cusp endpoint, and center `(1e6, -1e6)`. The direct geometric
+ratio `1e-2`, cusp endpoint, and center `(1e6, -1e6)`. The trimmed-mode geometric
 oracle passes both sides at `0.9`, `1.0`, and `1.1` times the major-vertex
 curvature radius (`1e-2`), including the post-cusp inward result. The focused
-direct test passes 27,809 assertions.
+test passes 27,809 assertions.
 
 Added both pick sides at the same cusp triplet to the worker-family matrix.
 Generation, cache/replacement, Produce, and all five DXF/DWG persistence lanes
@@ -33590,7 +33590,7 @@ the 1000-to-1 inward over-budget case in section 820.
 ## 822. Qualify the Large-origin 10000-to-1 Ellipse Cusp Limit (2026-11-10)
 
 Added the same reversed, rotated, cusp-ending partial-arc profile at ratio
-`1e-4` and center `(1e6, -1e6)`. Both signed sides pass the direct geometric
+`1e-4` and center `(1e6, -1e6)`. Both signed sides pass the trimmed-mode geometric
 oracle at `0.9e-6`, below the major-vertex curvature radius. The inward result
 at and above `1e-6` returns `AmbiguousTopology` with no entities or chains;
 those are explicit bounded refusals, not supported outputs. The focused test
@@ -33613,7 +33613,7 @@ fail-closed behavior wherever the numeric or topology proof is unresolved.
 ## 823. Qualify the Very-large-origin 100-to-1 Ellipse Cusp (2026-11-10)
 
 Added a reversed, 30-degree rotated partial ellipse with major radius `100`,
-ratio `1e-2`, cusp endpoint, and center `(1e7, -1e7)`. The direct geometric
+ratio `1e-2`, cusp endpoint, and center `(1e7, -1e7)`. The trimmed-mode geometric
 oracle passes both signed sides at `0.9`, `1.0`, and `1.1` times the major-axis
 vertex curvature radius (`1e-2`); the focused test passes 27,809 assertions.
 The worker-family matrix includes both pick sides at the same three distances
@@ -33631,22 +33631,24 @@ very-large-origin ellipse cusp`).
 ## 824. Characterize a Very-large-origin 1000-to-1 Ellipse Cusp (2026-11-10)
 
 Added the matching reversed, rotated partial-ellipse profile at ratio `1e-3`
-and center `(1e7, -1e7)`, with cusp radius `1e-4`. The direct geometric
+and center `(1e7, -1e7)`, with cusp radius `1e-4`. The trimmed-mode geometric
 oracle passes both sides at `0.9e-4` and `1e-4`. The inward `1.1e-4` result
 returns `LimitExceeded` with no entities or chains and reports intersection
 work exhaustion; this is an explicit bounded refusal, not a supported
-post-cusp direct result. The focused case passes 22,146 assertions.
+post-cusp trimmed-mode result. The focused case passes 22,146 assertions.
 
 Added both worker pick lanes at all three distances. The worker family matrix
 passes 1,545,497 assertions through generation, cache/replacement, Produce,
 and all five DXF/DWG lanes, with `dwgread` parsing the generated DWGs. The
-worker lane completes its picks. The worker's ordinary offset operation uses
-the trimmed mode, whereas the geometric cusp oracle above uses direct mode;
-their branch topology is not expected to be identical. Treat each result as
-mode-specific evidence, not as a cross-mode equivalence claim.
+worker lane completes its picks. The worker's ordinary offset and the
+geometric cusp oracle both use trimmed mode, but the oracle requests an explicit
+Left/Right side while the worker resolves a side from a drawing pick. The
+current worker matrix does not prove those paths selected the same signed
+branch; add side-resolution comparison before claiming this particular
+over-cusp boundary is worker-qualified.
 
 This qualifies only the recorded profile, parameter interval, and distances.
-Continue broader ellipse origin/eccentricity coverage, and preserve the direct
-work-budget refusal until a bounded algorithm proves the inward over-cusp
-geometry. Test commit: `e128be842` (`test(offset): qualify large-origin thin
-ellipse cusp`).
+Continue broader ellipse origin/eccentricity coverage, and preserve the
+trimmed-mode work-budget refusal until a bounded algorithm proves the inward
+over-cusp geometry. Test commit: `e128be842` (`test(offset): qualify
+large-origin thin ellipse cusp`).
