@@ -820,6 +820,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(translatedSmallParabola.isValid());
     const std::size_t translatedSmallParabolaFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{translatedSmallParabola});
+    constexpr double smallLargeOriginParabolaScale = 1e-2;
+    const RS_Vector smallLargeOriginParabolaOrigin{1e6, -2e6};
+    const LC_ParabolaData smallLargeOriginParabola{
+        {smallLargeOriginParabolaOrigin,
+         smallLargeOriginParabolaOrigin + RS_Vector{5.0 * smallLargeOriginParabolaScale, 10.0 * smallLargeOriginParabolaScale},
+         smallLargeOriginParabolaOrigin + RS_Vector{10.0 * smallLargeOriginParabolaScale, 0.0}}};
+    REQUIRE(smallLargeOriginParabola.isValid());
+    const std::size_t smallLargeOriginParabolaFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{smallLargeOriginParabola});
     const double arcSeam = 1e-4;
     const std::size_t nearFullArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{
@@ -1432,6 +1441,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == nearParallelParabolaFixture                                           ? .01
             : i == largeOriginParabolaFixture                                            ? 2500.0
             : i == translatedSmallParabolaFixture                                        ? 0.00025
+            : i == smallLargeOriginParabolaFixture                                       ? 0.0005
             : i == reversedBoundsHyperbolaNearFixture                                    ? .9
             : i == reversedBoundsHyperbolaFarFixture                                     ? 3.6
             : i == translatedThinHyperbolaNearFixture                                    ? .04
@@ -1542,6 +1552,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == nearFullArcFixture || i == narrowSeamArcFixture || i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
             i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture || i == reversedBoundsHyperbolaNearFixture ||
             i == reversedBoundsHyperbolaFarFixture || i == translatedThinHyperbolaNearFixture || i == translatedThinHyperbolaFarFixture ||
+            i == smallLargeOriginParabolaFixture ||
             i + 3 >= sources.size() || (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) ||
             scaledCircle != scaledCircleFixtures.end() || thinEllipse != thinEllipseFixtures.end() ||
             thinEllipseCusp != thinEllipseCuspFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end())
@@ -1772,6 +1783,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{translatedSmallParabola});
     const std::size_t translatedSmallParabolaNearOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{translatedSmallParabola});
+    const std::size_t smallLargeOriginParabolaOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{smallLargeOriginParabola});
     const std::size_t reversedBoundsHyperbolaNearOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarOppositeFixture = sources.size();
@@ -1947,6 +1960,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == translatedSmallParabolaNearOppositeFixture) {
             offset.distance = 0.00005;
             offset.coord = {10.005, -19.99506};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == smallLargeOriginParabolaFixture || i == smallLargeOriginParabolaOppositeFixture) {
+            offset.distance = 0.0005;
+            offset.coord = {1e6 + 0.05, -2e6 + (i == smallLargeOriginParabolaFixture ? 0.053 : 0.047)};
             offset.sideFallback = offset.coord;
         }
         if (reversedBoundsHyperbolaFixture || translatedThinHyperbolaFixture) {

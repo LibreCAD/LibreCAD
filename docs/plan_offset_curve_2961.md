@@ -58,6 +58,18 @@ supported types” work by qualifying each eligible variant through its
 applicable geometry, worker/cache, replacement, and persistence paths; retain
 atomic refusal for variants that are not yet supported end to end.
 
+The repeated source-widget request on 2026-11-10 does not change this scope or
+the implementation sequence. Keep the source-family selector editable while a
+replacement pick is active; it must cover all nine current modeled kinds,
+including a distinct parabola entry, and changing the selector filters the
+candidate list without changing the current source, cache, or highlight. The
+existing Properties regressions are the acceptance gate for this UI behavior.
+No additional widget or parabola-only picker control is required. Continue
+“all supported types” work in the family-by-variant capability matrix: each
+eligible parameterization still needs direct geometry, worker/cache,
+replacement, and applicable DXF/DWG evidence, with unsupported variants
+excluded or rejected atomically.
+
 ## Current Contract
 
 The latest source-widget request is captured as this testable contract: while
@@ -33470,3 +33482,24 @@ family matrix passes 1,399,424 assertions; both targets build and `git diff
 point shapes with two endpoint constraints. Other point counts, curve shapes,
 tangent configurations, transforms, and stationary/topology combinations
 remain open.
+
+## 816. Qualify Small Parabola at a Large Origin (2026-11-10)
+
+Added the quadratic parabola profile with scale `1e-2` and origin
+`(1e6, -2e6)`, complementing the existing large-scale/large-origin and
+small-scale/near-origin cases. The direct exact-normal oracle checks both
+signed sides at normalized distances `0.05` and `0.25`; it passes 2,647
+assertions.
+
+Added this typed profile to the real worker-client family matrix at distance
+`0.0005` (5% of scale), with positive and negative side picks. Both fixtures
+pass generation, explicit native-cache admission, replacement, Produce, and
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. `dwgread` independently parses both
+DWGs. The complete family matrix passes 1,442,628 assertions, both test targets
+build, and `git diff --check` passes.
+
+This qualifies only the recorded scale, translation, and offset distance for
+the worker/persistence path, and the two recorded distances for direct
+geometry. Other parabola scales, translations, conditioning, topologies, and
+distances remain open and must be independently qualified or rejected
+atomically.
