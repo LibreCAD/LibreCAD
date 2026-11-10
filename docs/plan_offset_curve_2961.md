@@ -32646,10 +32646,16 @@ below, at, and above its `1e-4` curvature radius, including exact-normal
 geometry, nonempty valid topology where the contract retains output, and
 successful intersection diagnostics. This closes only direct generation for
 this endpoint-owned cusp interval; the crossing interval in section 781 does
-not substitute for endpoint ownership.
+not substitute for endpoint ownership. The real worker matrix now also covers
+both inward and exterior picks through generation, cache admission,
+replacement/Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen;
+both DWG outputs are parsed independently by LibreDWG when available.
 
 Validation: focused test passes 27,778 assertions/1 case; `librecad_tests`
-builds, scoped clang-format and `git diff --check` pass. Test commit:
-`a7e93da12` (`test(offset): cover ellipse cusp at reversed arc endpoint`).
-Real-worker generation, cache admission, replacement/Produce, persistence on
-both picked sides, and independent DWG parsing remain open for this interval.
+builds; the complete worker source-family case passes 1,245,202 assertions/1
+case with `DWGREAD=/opt/homebrew/bin/dwgread`; both test targets build, scoped
+clang-format and `git diff --check` pass. Direct-test commit `a7e93da12`
+(`test(offset): cover ellipse cusp at reversed arc endpoint`) and worker test
+commit `df06b3e34` (`test(offset): persist ellipse endpoint cusp both sides`).
+This qualifies the exact translated/reversed interval and three distances;
+other endpoint intervals, ratios, and transforms remain open.
