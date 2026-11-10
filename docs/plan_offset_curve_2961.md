@@ -33637,18 +33637,23 @@ returns `LimitExceeded` with no entities or chains and reports intersection
 work exhaustion; this is an explicit bounded refusal, not a supported
 post-cusp trimmed-mode result. The focused case passes 22,146 assertions.
 
-Added both worker pick lanes at all three distances. The worker family matrix
-passes 1,545,497 assertions through generation, cache/replacement, Produce,
-and all five DXF/DWG lanes, with `dwgread` parsing the generated DWGs. The
-worker lane completes its picks. The worker's ordinary offset and the
-geometric cusp oracle both use trimmed mode, but the oracle requests an explicit
-Left/Right side while the worker resolves a side from a drawing pick. The
-current worker matrix does not prove those paths selected the same signed
-branch; add side-resolution comparison before claiming this particular
-over-cusp boundary is worker-qualified.
+Added both worker pick lanes at the correct cusp triplet, `0.9e-4`, `1.0e-4`,
+and `1.1e-4`. The worker-family matrix passes 1,547,869 assertions through
+generation, cache/replacement, Produce, and all five DXF/DWG lanes; `dwgread`
+parses the generated DWGs. A focused worker-kernel regression confirms that
+the center pick resolves to `Right` and that Produce returns `LimitExceeded`
+with no copies or outputs at the inward `1.1e-4` case. The same explicit-side
+trimmed-mode request also returns `LimitExceeded` at both default and recorded
+looser tolerance, so the refusal and pick-side semantics agree. The worker
+client matrix also verifies no drawing additions or deletions for the refused
+case. Test commit: `576a9bb22` (`test(offset): verify thin ellipse cusp
+refusal in worker`).
 
 This qualifies only the recorded profile, parameter interval, and distances.
 Continue broader ellipse origin/eccentricity coverage, and preserve the
 trimmed-mode work-budget refusal until a bounded algorithm proves the inward
-over-cusp geometry. Test commit: `e128be842` (`test(offset): qualify
-large-origin thin ellipse cusp`).
+over-cusp geometry. Both the focused geometric oracle and worker exercise
+Trimmed mode; this does not qualify the separate Direct mode. Test commit
+`e128be842` (`test(offset):
+qualify large-origin thin ellipse cusp`) records the original fixture; the
+corrected worker triplet and resolved-side evidence are in `576a9bb22`.
