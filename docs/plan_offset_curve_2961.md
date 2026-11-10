@@ -31568,3 +31568,27 @@ clang-format checks and `git diff --check`. Test commit: `edb85d313`
 This closes only the recorded translated, rotated forward-arc 10:1 triplet.
 Other translations, rotations, reversals, sweeps, and threshold distances
 remain open.
+
+## 732. Qualify a Rotated 3:1 Elliptic-arc Cusp Triplet (2026-11-10)
+
+Added a translated, 30-degree forward arc with major radius `100`, ratio
+`1/3` (3:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature radius
+is `a * ratio^2 = 100/9`; offsets at `0.9`, `1.0`, and `1.1` times that radius
+cover below, at, and above the threshold. Direct geometry checks the
+independent sampled distance/tangent oracle, one-open-chain topology, and
+materialized-output intersection validation.
+
+The three profiles are appended to the real-worker cusp inventory, preserving
+the established profile mapping. They pass generation, cache admission, typed
+replacement/Produce, all five DXF/DWG round-trip lanes, and independent
+LibreDWG parsing of both DWG outputs.
+
+Validation: focused direct case passes 10,860 assertions; full direct
+`[curve-offset][ellipse][cusp]` passes 274,361 assertions/11 cases; full
+worker-client suite passes 1,057,976 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. The test targets build successfully;
+touched ranges pass repository clang-format checks and `git diff --check`.
+Test commit: `f5ef89f4a` (`test(offset): qualify 3-to-1 ellipse cusp arcs`).
+
+This closes only the recorded translated, rotated forward-arc 3:1 triplet.
+Other transforms, reversed arcs, sweeps, and distances remain open.
