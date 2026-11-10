@@ -39,13 +39,14 @@ applicable DXF/DWG qualification tracked below; ineligible variants must fail
 closed without changing the existing source or cache.
 
 The 2026-11-10 clarification reconfirms that the user must be able to change
-the requested source family before picking a replacement, and that parabola
-must be available as its own source type. These are already satisfied by the
-existing picker contract and do not require another UI implementation slice.
-Continue the open “all supported types” work by qualifying each eligible
-variant through its applicable geometry, worker/cache, replacement, and
-persistence paths; retain atomic refusal for variants that are not yet
-supported end to end.
+the requested source family during the replacement-pick flow, including after
+the flow has started, and that parabola must be available as its own source
+type. The active family is a candidate filter, not a conversion of the current
+source. These behaviors are already satisfied by the existing picker contract
+and do not require another UI implementation slice. Continue the open “all
+supported types” work by qualifying each eligible variant through its
+applicable geometry, worker/cache, replacement, and persistence paths; retain
+atomic refusal for variants that are not yet supported end to end.
 
 ## Current Contract
 
@@ -29801,7 +29802,7 @@ these rows do not imply every parameter/domain is supported):
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
-| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
+| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; real worker/cache/Produce and five file lanes | Fit construction variants, repeated interior stationary spans (currently accepted but not independently qualified), closed/periodic domains, and broader refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples and endpoint tangent slopes +/-1e-4..1e-8; two four-point candidates and the 1e-8 near-parallel profile pass worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; closed mixed-bulge and major/minor bulge oracles remain covered; matching tangent-connected typed source passes worker/cache/Produce and five file lanes | Other open sweep/scale boundaries, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles; worker/file persistence for open corner and major-sweep profiles |
@@ -32070,3 +32071,22 @@ worker result`).
 
 This closes only the recorded translated, rotated forward-arc cusp triplet.
 Other transforms, reversed arcs, sweeps, and distances remain open.
+
+## 752. Refuse a Zero-length Spline-points Source Without Mutation (2026-11-10)
+
+Added direct coverage for a control-point `LC_SplinePoints` whose two
+controls coincide. Typed capture currently accepts the finite two-point
+source, but direct offset generation must refuse it with
+`UndefinedTangent`, return no branches, and leave the input control points and
+recaptured source snapshot unchanged. This qualifies only the zero-length
+two-control refusal; a five-control profile with repeated interior controls
+currently produces geometry and remains unqualified until an independent
+geometric oracle establishes whether that stationary span is valid.
+
+Validation: the focused degenerate case passes 9 assertions/1 case, and the
+complete direct `[curve-offset][direct][spline-points]` selection passes 8,327
+assertions/4 cases. `librecad_tests` is built in
+`/private/tmp/offset2961-build`; scoped clang-format and `git diff --check`
+pass. Worker/cache and persistence coverage for this degenerate refusal is
+not claimed. Test commit:
+`a682b8412` (`test(offset): cover degenerate spline-points refusal`).
