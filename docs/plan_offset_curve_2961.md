@@ -32992,3 +32992,20 @@ selection with output equivalence and one-pass completion. The broader
 This closes the specific adjacent-suite failure recorded in section 681, not
 all polyline-source parameterizations or the remaining external/GUI acceptance
 gates.
+
+## 796. Reject Two More BVH Split Heuristics (2026-11-10)
+
+On the section-785 high-ratio periodic spline, tested choosing each BVH split
+axis from the full node-box width rather than centroid spread. It changed the
+dispositions to 43,877 disjoint, 57,822 monotone-path prunes, 434,051 leaf
+candidates, and 512,826 expansions, but still reached the same 1,048,576 work
+cap before refinement. The 393 fewer leaf candidates are not a meaningful
+reduction in total pair work, so the production centroid-spread split remains.
+
+Also tested median partitioning by interval lower bounds with the full-width
+axis choice. This was worse: 40,239 disjoint, 58,256 monotone-path prunes,
+437,380 leaf candidates, and 512,701 expansions, again reaching the cap.
+Both variants were discarded and the production tree was restored unchanged.
+Do not retain an axis/key tweak on the strength of a small disposition shift;
+the next attempt must reduce total charged pairs materially or change the
+candidate topology with a proof that it cannot omit intersections.
