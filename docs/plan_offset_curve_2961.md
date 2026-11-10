@@ -32856,3 +32856,24 @@ This is local integration evidence, not current-head GitHub CI, physical GUI,
 minimum-macOS, signing/notarization, or ODA/AutoCAD acceptance. Push this merge
 and checkpoint to PR #3193, then recheck checks against the resulting exact
 head; do not carry the W788 CI snapshot forward as if it covered the merge.
+
+## 790. Reconcile the Source Widget and Parabola Requests (2026-11-10)
+
+The latest request again requires changing the requested source-curve type
+while choosing a replacement and exposing every offset source type, explicitly
+including parabola. Current-code review finds this UI contract already
+implemented: the type selector remains editable during replacement, candidate
+filtering uses the shared `LC_OffsetSourceGeometry::SupportedKinds` inventory,
+and the inventory includes line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. Parabola retains a distinct typed
+identity. The existing picker regression checks family switching, typed
+replacement, current-source highlight retention, and all-family inventory;
+the rebuilt current-head run passed 12 cases / 11,930 assertions as recorded in
+W788/W789.
+
+Do not add another widget or a parabola-only picker path. If the modeled source
+inventory or replacement behavior changes, extend the `SupportedKinds` and
+all-family filtering/replacement tests. Keep broader support claims separate:
+each eligible variant still needs its own direct geometry, worker/cache,
+editing, and applicable DXF/DWG read/write evidence, with unsupported cases
+failing atomically and without mutating the current source or cache.
