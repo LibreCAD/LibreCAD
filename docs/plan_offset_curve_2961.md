@@ -33067,3 +33067,18 @@ hardens scale behavior of the projection certificate but does not reduce the
 section-785 high-ratio pair count or close any additional source-family
 persistence gate. Test commit `c3abe3478` (`test(offset): scale monotone
 projection proof`).
+
+## 800. Reject a Binned Surface-area BVH Split (2026-11-10)
+
+Prototyped a 12-bin surface-area split with a 25%-75% balance guard and
+median fallback for the high-ratio periodic spline from section 785. It
+reached the unchanged 1,048,576 pair cap. Compared with the retained
+centroid-median tree, it reduced disjoint-node dispositions from 44,019 to
+32,713 but increased leaf candidates from 434,263 to 446,575; monotone-path
+prunes were 56,861 and expansions 512,427. The extra construction complexity
+therefore produced a worse candidate topology and no reduction in total
+charged work. The experiment was removed; centroid-median production code is
+unchanged. The fixture remains bounded-but-unqualified, and the next broadphase
+change must materially lower total work rather than improve one disposition in
+isolation. The 10-assertion refusal test and 53-case / 6,476-assertion topology
+suite pass on the restored implementation; `git diff --check` passes.
