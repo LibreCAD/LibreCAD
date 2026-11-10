@@ -29804,7 +29804,7 @@ these rows do not imply every parameter/domain is supported):
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples and endpoint tangent slopes +/-1e-4..1e-8; two four-point candidates and the 1e-8 near-parallel profile pass worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
-| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle now covers a tangent-connected open semicircular-arc/line chain, both sides and endpoint offsets; closed mixed-bulge and major/minor bulge oracles remain covered; matching typed open arc-line source passes worker/cache/Produce and five file lanes | Other open join/sweep cases, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles |
+| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected and cornering open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; closed mixed-bulge and major/minor bulge oracles remain covered; matching tangent-connected typed source passes worker/cache/Produce and five file lanes | Open major-sweep joins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles; worker/file persistence for the open corner profile |
 
 This closes the immediate worker/persistence gap for the two newly discovered
 accepted layouts; it does not complete step 3 or prove arbitrary legal source
@@ -31918,6 +31918,21 @@ direct polyline selection passes 33,774 assertions/3 cases. The real-worker
 family matrix most recently passed 1,103,219 assertions/1 case with
 LibreDWG enabled, including the identical typed arc-line source. Test commit
 `797094d9a` (`test(offset): verify open polyline endpoint normals`).
+
+## 750. Qualify the Open Arc-line Corner Split (2026-11-10)
+
+Extended the open arc-line oracle with a smaller-sweep arc whose tangent does
+not align with the following line. The direct result is allowed to split into
+multiple branches: for the left offset at distance 0.1 it must return exactly
+two. Every source-following piece is checked against the analytic line/arc
+normal, each join arc against its exact radius, and the original open endpoint
+offsets must occur among the returned branch endpoints. Both sides at 0.1 and
+0.25 are exercised. The profile is direct-geometry evidence only; worker/cache,
+Produce, and DXF/DWG persistence for this cornering source remain open.
+
+Validation: full direct polyline selection passes 35,595 assertions/3 cases;
+the target builds and scoped clang-format plus `git diff --check` pass. Test
+commit `2e77862cd` (`test(offset): cover open polyline corner joins`).
 
 ## 733. Initial Source-picker Request (2026-11-10)
 
