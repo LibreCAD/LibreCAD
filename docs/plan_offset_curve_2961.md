@@ -31797,6 +31797,34 @@ This closes only the recorded translated, rotated forward-arc 1.0015625:1
 triplet. Other transforms, reversed arcs, sweeps, ratios, and distances remain
 open.
 
+## 745. Qualify the 1.00078125:1 Elliptic-arc Cusp Neighborhood (2026-11-10)
+
+Added a translated, 30-degree forward arc with major radius `100`, ratio
+`1280/1281` (1.00078125:1), and parameters `[-0.2, 0.2]`. Its major-vertex
+curvature radius is `a * ratio^2 = 163840000/1640961`; the test covers `0.9`,
+`1.0`, and `1.1` times that radius. The below-threshold direct result
+materializes and passes the independent offset oracle. Exact-threshold trimmed
+direct materialization fails closed with `LimitExceeded` and empty output.
+Above threshold, direct construction returns one candidate branch; trim
+validly materializes no entity.
+
+The real-worker matrix covers all three distances. Below and exact thresholds
+pass cache admission, replacement/Produce, and the five DXF/DWG round-trip
+lanes. Above threshold produces one candidate then reports `Vanished` without
+publishing a document batch. Independent LibreDWG parsing remains enabled.
+
+Validation: focused direct case passes 3,629 assertions; the complete direct
+`[curve-offset][ellipse][cusp]` selection passes 325,133 assertions/22 cases.
+The focused source-family worker test passes 1,094,901 assertions/1 case; the
+full worker-client suite passes 1,101,523 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Both targets build; scoped clang-format
+and `git diff --check` pass. Test commit: `36a35715f`
+(`test(offset): qualify 1.00078125-to-1 cusp arcs`).
+
+This closes only the recorded translated, rotated forward-arc 1.00078125:1
+triplet. Other transforms, reversed arcs, sweeps, ratios, and distances remain
+open.
+
 ## 733. Reconcile Source-picker Type Changes and Parabola (2026-11-10)
 
 The latest request is explicitly a Properties source-picker requirement: while
