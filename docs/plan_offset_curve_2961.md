@@ -33640,9 +33640,10 @@ post-cusp direct result. The focused case passes 22,146 assertions.
 Added both worker pick lanes at all three distances. The worker family matrix
 passes 1,545,497 assertions through generation, cache/replacement, Produce,
 and all five DXF/DWG lanes, with `dwgread` parsing the generated DWGs. The
-worker lane completes its picks, but this is not evidence that its selected
-branch is identical to the direct engine's inward over-cusp case; keep
-side-specific worker/direct equivalence as a separate acceptance question.
+worker lane completes its picks. The worker's ordinary offset operation uses
+the trimmed mode, whereas the geometric cusp oracle above uses direct mode;
+their branch topology is not expected to be identical. Treat each result as
+mode-specific evidence, not as a cross-mode equivalence claim.
 
 This qualifies only the recorded profile, parameter interval, and distances.
 Continue broader ellipse origin/eccentricity coverage, and preserve the direct
