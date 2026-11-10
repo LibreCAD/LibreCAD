@@ -32319,3 +32319,19 @@ source family` passes 1,115,526 assertions/1 case with
 `DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs are independently
 parsed. Scoped clang-format and `git diff --check` pass. Test commit:
 `56402e59f` (`test(offset): persist larger corner opposite side`).
+
+## 766. Verify a Large-origin, Large-scale Cornering Polyline (2026-11-10)
+
+Extended the open arc-line exact-normal oracle with the cornering `bulge 0.2`
+profile at scale `1e4`, translated by `(1e6,-2e6)`. Both signed sides at
+scale-relative distances `0.1` and `0.25` are compared against exact source
+segment normals and must meet the requested geometry tolerance. This is a
+different topology from the major-sweep `bulge 2.0` profile at the same scale;
+it qualifies direct geometry only. Worker/cache and file persistence remain
+open for this cornering fixture.
+
+Validation: focused open arc-line oracle passes 20,977 assertions/1 case; the
+complete `[curve-offset][direct][polyline]` selection passes 50,555
+assertions/3 cases. Both targets build, scoped clang-format and
+`git diff --check` pass. Test commit: `72936836f` (`test(offset): verify
+translated corner at large scale`).
