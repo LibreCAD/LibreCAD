@@ -33540,3 +33540,50 @@ and `git diff --check` passes.
 This qualifies only the recorded reversed control ordering, translation, and
 distance. Other reversed parabola shapes, transforms, parameter domains,
 conditioning, and distance boundaries remain open.
+
+## 819. Reconcile the Source-type Replacement Request (2026-11-10)
+
+The latest request again asks that the source-curve widget allow changing the
+requested type during replacement and support every modeled source type,
+including parabola. This is already the implemented picker contract recorded
+in the Current Contract and sections 811/818: the selector remains editable
+while a pick is active, uses `LC_OffsetSourceGeometry::SupportedKinds`, and
+filters candidates without mutating the current source, generated cache, or
+highlight. Successful replacement retains the candidate's actual typed source
+identity. The current inventory is line, arc, circle, ellipse, spline,
+spline-points, distinct parabola, bounded hyperbola, and polyline.
+
+No additional widget or type-specific UI branch is needed. Keep the existing
+source-picker regressions as the UI acceptance gate and extend them only when
+the canonical modeled-kind inventory changes. The request to support all
+types remains open beyond the picker: continue the family-by-variant matrix
+through direct geometry, worker/cache, replacement, and applicable DXF/DWG
+read/write evidence. Do not infer end-to-end support from a type being
+selectable; unqualified variants must remain filtered or fail closed without
+changing source/cache state.
+
+## 820. Qualify a Large-origin Reversed Ellipse Cusp Boundary (2026-11-10)
+
+Added a reversed, 1000-to-1 partial elliptic arc ending at its major-axis cusp,
+rotated 30 degrees and translated to `(1e6, -1e6)`. The direct oracle passes
+both sides at `0.9e-4` and `1.0e-4`, and the non-inward side at `1.1e-4`. The
+inward `1.1e-4` result exhausts the existing materialized-output intersection
+pair budget (`1,048,576`) and returns `LimitExceeded` with no entities or
+chains. This is a bounded refusal, not completed support for that profile.
+
+Added the profile to the real worker family matrix. Generation/cache and the
+DXF/DWG persistence checks complete; Produce at the over-budget inward pick
+returns `LimitExceeded`, zero copies, and no drawing additions or deletions.
+The complete worker matrix passes 1,446,351 assertions, including independent
+DWG parsing with `dwgread`. Continue investigating how to prove or construct
+this over-cusp inward result within bounded work; do not raise the pair budget
+or claim the variant supported without a separately bounded algorithm and
+geometric oracle.
+
+The same slice hardens exact line-segment checks at large drawing origins.
+Long-double predicates and a machine-precision-aware slack prevent the old
+coordinate-scaled tolerance from merging short, separated parallel segments.
+A regression verifies a `1e-7` gap stays disjoint and a true crossing remains
+detectable. The focused intersection test passes 15 assertions; the broader
+`[offset][check]` selection passes 220 assertions. Commit:
+`93476ddb8` (`fix(offset): avoid false large-origin segment crossings`).
