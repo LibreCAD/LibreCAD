@@ -253,6 +253,13 @@ struct LC_CurveOffsetGeometryResult {
     std::size_t sourceIntersections{0};
     std::size_t offsetIntersections{0};
     std::size_t removedIntervals{0};
+    /** Last intersection query, including its bounded work, for failure triage. */
+    struct IntersectionDiagnostics {
+        enum class Stage { None, OffsetSelfNoding, SourceSelfNoding, TrimBoundary, RegionBoundary, MaterializedOutput };
+        Stage stage{Stage::None};
+        LC_IntersectionStatus status{LC_IntersectionStatus::Ok};
+        LC_IntersectionWorkStats work{};
+    } intersectionDiagnostics;
     /**
      * With nodeIntersections: where the exact offset meets itself, by branch and
      * source parameter; each is a shared end of the pieces incident to it.
@@ -341,6 +348,7 @@ struct LC_CurveOffsetMaterializationResult {
     /** Completed fitted pieces, constructed roots, and bounded observed leaves, even on failure. */
     LC_OffsetOutputUsage attemptedOutputUsage{};
     bool attemptedDeepCountComplete = true;
+    LC_CurveOffsetGeometryResult::IntersectionDiagnostics intersectionDiagnostics;
 };
 
 /**

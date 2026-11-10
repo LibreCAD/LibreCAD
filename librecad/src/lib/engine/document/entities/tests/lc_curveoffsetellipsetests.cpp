@@ -793,9 +793,18 @@ TEST_CASE("Rotated extreme thin ellipse cusp fails closed when its accurate fit 
     const RS_Ellipse source{nullptr, RS_EllipseData{RS_Vector{0, 0}, majorP, 1e-4, 0.0, 0.0, false}};
     constexpr double distance = 0.5e-6;
     CHECK(LC_CurveOffset::toleranceFor(source, distance, LC_CurveOffset::relativeOffsetTolerance(source)) == 0.1 * distance);
-    const Offset inward = offsetOf(source, kLeft, distance);
+    const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
+    const auto inward = LC_CurveOffset::createEntities(source, LC_CurveOffset::makeSideRequest(kLeft, distance), options,
+                                                       LC_CurveOffset::makeDirectSourceBudget());
+    INFO("intersection stage=" << static_cast<int>(inward.intersectionDiagnostics.stage)
+                               << ", status=" << static_cast<int>(inward.intersectionDiagnostics.status)
+                               << ", pairs=" << inward.intersectionDiagnostics.work.totalBoxPairs);
     CHECK(inward.status == LC_CurveOffsetStatus::LimitExceeded);
     CHECK(inward.entities.empty());
+    CHECK(inward.intersectionDiagnostics.stage != LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::None);
+    CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::TrimBoundary);
+    CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(inward.intersectionDiagnostics.work.totalBoxPairs == options.maxIntersectionPairs);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

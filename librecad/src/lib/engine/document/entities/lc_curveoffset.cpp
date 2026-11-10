@@ -4062,6 +4062,13 @@ LC_CurveOffsetStatus directBranches(const OffsetSource& source, const SourceScal
     return status;
 }
 
+void recordIntersectionDiagnostics(LC_CurveOffsetGeometryResult::IntersectionDiagnostics& diagnostics, const LC_IntersectionResult& result,
+                                   const LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage stage) {
+    diagnostics.stage = stage;
+    diagnostics.status = result.status;
+    diagnostics.work = result.work;
+}
+
 /**
  * Nodes the branches where the offset meets itself, and counts the source's
  * own crossings with the same engine at distance zero.
@@ -4074,6 +4081,8 @@ LC_CurveOffsetStatus nodeBranches(const OffsetSource& source, const double d, co
     query.maxBoxPairs = options.maxIntersectionPairs;
     const OffsetCurves curves{source, d, speedFloor, branches};
     const LC_IntersectionResult found = findIntersections(curves, query);
+    recordIntersectionDiagnostics(result.intersectionDiagnostics, found,
+                                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::OffsetSelfNoding);
     LC_CurveOffsetStatus status = fromIntersectionStatus(found.status);
     std::vector<Occurrence> occurrences;
     for (const LC_ParametricIntersection& x : found.intersections) {
@@ -4111,6 +4120,8 @@ LC_CurveOffsetStatus nodeBranches(const OffsetSource& source, const double d, co
     }
     // a count only: a source that retraces itself leaves it at zero
     const LC_IntersectionResult crossings = findIntersections(OffsetCurves{source, 0.0, speedFloor, {whole}}, query);
+    recordIntersectionDiagnostics(result.intersectionDiagnostics, crossings,
+                                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::SourceSelfNoding);
     if (crossings.status == LC_IntersectionStatus::Ok) {
         result.sourceIntersections = crossings.intersections.size();
     }
@@ -5060,6 +5071,8 @@ LC_CurveOffsetStatus trimBranches(const OffsetSource& source, const SourceScale&
     // would make that ambiguous without bearing on this offset
     query.anchoredBranches = own;
     const LC_IntersectionResult found = findIntersections(all, query);
+    recordIntersectionDiagnostics(result.intersectionDiagnostics, found,
+                                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::TrimBoundary);
     if (found.status != LC_IntersectionStatus::Ok) {
         return fromIntersectionStatus(found.status);
     }
@@ -5568,6 +5581,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
         whole.cubicPieces.push_back(piece);
     }
     const LC_IntersectionResult crossings = findIntersections(OffsetCurves{source, 0.0, speedFloor, {whole}}, query);
+    recordIntersectionDiagnostics(result.intersectionDiagnostics, crossings,
+                                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
     if (crossings.status != LC_IntersectionStatus::Ok) {
         return fromIntersectionStatus(crossings.status);
     }
@@ -5725,6 +5740,8 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
 
     // 5. node all candidates together, and split them there
     const LC_IntersectionResult found = findIntersections(CompositeCurves{parts}, query);
+    recordIntersectionDiagnostics(result.intersectionDiagnostics, found,
+                                  LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::RegionBoundary);
     if (found.status != LC_IntersectionStatus::Ok) {
         return fromIntersectionStatus(found.status);
     }
@@ -6275,14 +6292,13 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     result.status = LC_CurveOffsetStatus::Ok;
     return result;
 }
-
-
 LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                                                         const LC_CurveOffsetGeometryResult& geometry,
                                                         const LC_CurveOffsetOptions& options,
                                                         const LC_OffsetSourceBudget& budget) {
     LC_CurveOffsetMaterializationResult result;
     result.sampleUnits = geometry.exactSamples;
+    result.intersectionDiagnostics = geometry.intersectionDiagnostics;
     if (!validDirectOptions(options) || !isValidOffsetBudget(budget)) {
         result.status = LC_CurveOffsetStatus::InvalidRequest;
         return result;
@@ -6351,6 +6367,9 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         query.tolerance = options.tolerance.nodeMerge;
         query.maxBoxPairs = options.maxIntersectionPairs;
         const LC_IntersectionResult found = findIntersections(curves, query);
+        result.intersectionDiagnostics.stage = LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput;
+        result.intersectionDiagnostics.status = found.status;
+        result.intersectionDiagnostics.work = found.work;
         if (found.status != LC_IntersectionStatus::Ok) {
             result.status = fromIntersectionStatus(found.status);
             return result;
@@ -6420,9 +6439,14 @@ LC_CurveOffsetMaterializationResult createEntities(const RS_Entity& source, cons
         LC_CurveOffsetMaterializationResult result;
         result.status = geometry.status;
         result.sampleUnits = geometry.exactSamples;
+        result.intersectionDiagnostics = geometry.intersectionDiagnostics;
         return result;
     }
-    return materializeBranches(source, geometry, options, budget);
+    LC_CurveOffsetMaterializationResult result = materializeBranches(source, geometry, options, budget);
+    if (result.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::None) {
+        result.intersectionDiagnostics = geometry.intersectionDiagnostics;
+    }
+    return result;
 }
 
 /**
