@@ -30947,9 +30947,67 @@ The worker persistence matrix was narrowed to the origin-centered
 0.9/1.0/1.1 boundary triplet and one translated exact-cusp profile to preserve
 its 45-second guard with the tighter tolerance. Direct tests still cover all
 five distances for both origin and translated profiles. Validation: focused
-cusp tests pass 36,183 assertions/3 cases; the complete direct ellipse suite
+cusp tests pass 36,183 assertions/2 cases; the complete direct ellipse suite
 passes 802,338 assertions/25 cases; focused worker-family test passes 437,661
 assertions/1 case; the full worker-client suite passes 443,373 assertions/22
 cases with LibreDWG parsing both DWG lanes. `git diff --check` and repository
-clang-format checks pass. Implementation and test changes are pending their
-slice commit; exact-head CI must be checked after push.
+clang-format checks pass. Implementation commit `8cd5d74aa` (`fix(offset):
+bound implicit offset tolerance by distance`) and roadmap receipt commit
+`ad7271201` (`docs(offset): record bounded offset tolerance`) are pushed to
+PR #3193. Exact-head CI must be checked for the current PR head; earlier-head
+results do not transfer.
+
+## 711. Reconfirm Type-changing Source Picker Contract (2026-11-09)
+
+The latest source-widget clarification asks that the user be able to change
+the requested source-curve type while choosing a replacement and that the
+picker cover all supported source types, including parabola. The current code
+already satisfies the UI contract: `cbSourceType` remains enabled during
+replacement, changing it updates the candidate filter, and the choices are
+generated from `LC_OffsetSourceGeometry::SupportedKinds`. That inventory has
+nine distinct choices: line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. `LC_Parabola` remains distinguishable
+from its `LC_SplinePoints` base. Switching the filter preserves the current
+source/cache and its highlight until a valid replacement is picked.
+
+No duplicate selector or parabola-specific picker branch is needed. The
+Properties source-picker suite was rerun on the current tree and passes
+11,930 assertions/12 cases. The existing tests check inventory equality,
+type changes during the pick flow, per-family replacement, parabola identity,
+highlight retention, and cancellation/invalid-candidate behavior.
+
+Scope boundary: this closes the requested picker behavior only. It does not
+claim that every geometric variant of all nine families is fully qualified
+through generation, worker/cache admission, and DXF/DWG persistence. Those
+remaining family-by-family gaps stay tracked in the implementation matrix;
+unsupported variants must continue to fail closed without mutating the current
+source or cache.
+
+## 712. Isolate the Rotated Thin-ellipse Cusp Budget (2026-11-09)
+
+Follow-up experiments on W710's 30-degree rotated whole ellipse (`a=100`,
+ratio `1e-4`, inward distance `0.5e-6`) isolate the remaining refusal to
+topology intersection work, not accurate offset fitting. With the production
+sample limit, direct generation succeeds in 11,572 exact evaluations and
+produces one branch with 464 cubic pieces. Trimmed creation still returns
+`LimitExceeded` before materialization. Raising the sample limit eightfold
+does not change that status or the 11,572 sample demand. In a test-only probe,
+raising `maxIntersectionPairs` eightfold allowed the complete trimmed result
+to pass the independent bidirectional distance and tangent-orientation checks
+with one closed branch (39,801 assertions across the focused cusp selection).
+
+This is diagnostic evidence, not a production budget increase: the existing
+global intersection cap protects interactive and worker execution, and the
+larger-cap run was too costly to justify an unconditional multiplier. A
+twofold-cap probe did not complete within 150 seconds and was interrupted;
+that observation is not evidence that it would ultimately fail or succeed.
+The experiment changes were removed, leaving the safe default refusal intact.
+
+Next implementation slice: reduce conservative pair enumeration for rotated,
+high-curvature ellipse branches (prefer tighter/oriented bounds or a
+rotation-conditioned broad phase) while preserving the existing hard pair
+budget. Add diagnostics that distinguish pair-budget exhaustion from other
+trim/topology failures, then require the rotated cusp to pass with the default
+budget, direct geometric oracles, worker/cache validation, source replacement,
+Produce, and the five DXF/DWG lanes before claiming it supported. Do not raise
+the global cap or accept a coarse tolerance to make this case appear to pass.
