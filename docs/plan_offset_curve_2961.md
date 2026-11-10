@@ -31448,3 +31448,25 @@ pass repository clang-format checks and `git diff --check`. Test commit:
 
 This closes only the translated 45-degree reversed-arc threshold triplet.
 Other transformed partial arcs and eccentricity ratios remain open.
+
+## 728. Close the Translated 30-degree Reversed-arc Threshold Triplet (2026-11-09)
+
+Extended the translated, 30-degree reversed ratio-`1e-4` arc from the
+exact-stall point to inward distances `0.9e-6`, `1.0e-6`, and `1.1e-6`. Direct
+materialization verifies the reversed-side choice, accurate distance and
+tangent orientation, one open chain, the major-axis feature within the
+requested-geometry slack, and successful materialized-output intersection
+validation.
+
+All three cases are included in the worker matrix with negative signed
+distances. They pass generation, cache admission, replacement/Produce, the five
+DXF/DWG round-trip lanes, and independent LibreDWG parsing of both DWG outputs.
+
+Validation: the full direct `[curve-offset][ellipse][cusp]` selection passes
+217,988 assertions/7 cases. The full worker-client suite passes 1,036,240
+assertions/22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`. Touched ranges
+pass repository clang-format checks and `git diff --check`. Test commit:
+`3a0ebd398` (`test(offset): qualify translated reversed arc cusps`).
+
+This closes only the translated 30-degree reversed-arc threshold triplet.
+Other transformed partial arcs and eccentricity ratios remain open.
