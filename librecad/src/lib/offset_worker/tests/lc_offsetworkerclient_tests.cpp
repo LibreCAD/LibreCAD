@@ -1103,6 +1103,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     closedControlPoints.controlPoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
     const std::size_t closedControlPointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{closedControlPoints});
+    for (const double bulge : {0.2, 2.0}) {
+        RS_Polyline openArcLine;
+        openArcLine.addVertex({0.0, 0.0}, bulge);
+        openArcLine.addVertex({2.0, 0.0});
+        openArcLine.addVertex({2.0, 2.0});
+        openArcLine.endPolyline();
+        const auto openArcLineSource = LC_OffsetSourceGeometry::capture(openArcLine);
+        REQUIRE(openArcLineSource);
+        sources.emplace_back(*openArcLineSource);
+    }
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
