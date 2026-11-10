@@ -1086,6 +1086,35 @@ TEST_CASE("Rotated 2-to-1 elliptic arcs retain cusp-threshold geometry", "[curve
     }
 }
 
+TEST_CASE("Rotated 1.5-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 2.0 / 3.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto directOptions = LC_CurveOffset::makeDirectOptions(source, distance, 1e-4);
+        const auto directGeometry = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                                        directOptions, LC_CurveOffset::makeDirectSourceBudget());
+        const Offset inward = offsetOf(source, kLeft, distance, 1e-4);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE(directGeometry.status == LC_CurveOffsetStatus::Ok);
+            CHECK(directGeometry.branches.size() == 1);
+            CHECK(inward.entities.empty());
+            CHECK(inward.chains.empty());
+            CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::None);
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            continue;
+        }
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[curve-offset][ellipse]") {
     // Where an eccentric ellipse's inward offset needs both major-axis
