@@ -31,6 +31,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iomanip>
+#include <limits>
 #include <memory>
 #include <tuple>
 #include <vector>
@@ -1176,6 +1177,36 @@ TEST_CASE("Large-origin reversed 10000-to-1 elliptic arc endpoint retains cusp-t
     const double angle = M_PI / 6.0;
     const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
     const RS_Ellipse source{nullptr, RS_EllipseData{{1e6, -1e6}, majorP, ratio, 0.2, 0.0, true}};
+    {
+        const double distance = 1.1 * cuspRadius;
+        const double minorRadius = majorRadius * ratio;
+        const double sinSquared = (distance * distance * majorRadius * majorRadius /
+                                   (minorRadius * minorRadius) - minorRadius * minorRadius) /
+                                  (majorRadius * majorRadius - minorRadius * minorRadius);
+        REQUIRE(sinSquared > 0.0);
+        REQUIRE(sinSquared < 1.0);
+        const double returnAngle = std::asin(std::sqrt(sinSquared));
+        const auto inwardPoint = [&](const double parameter) {
+            const double cosine = std::cos(parameter);
+            const double sine = std::sin(parameter);
+            const double speed = std::hypot(majorRadius * sine, minorRadius * cosine);
+            return RS_Vector{majorRadius * cosine - distance * minorRadius * cosine / speed,
+                             minorRadius * sine - distance * majorRadius * sine / speed};
+        };
+        const RS_Vector cuspPoint = inwardPoint(0.0);
+        const RS_Vector returnedPoint = inwardPoint(returnAngle);
+        const double numericFloor = 64.0 * std::numeric_limits<double>::epsilon() * 1e6;
+        double maximumExcursion = 0.0;
+        constexpr int sampleCount = 256;
+        for (int i = 0; i <= sampleCount; ++i) {
+            const RS_Vector point = inwardPoint(returnAngle * i / sampleCount);
+            maximumExcursion = std::max(maximumExcursion, (point - cuspPoint).magnitude());
+        }
+        CAPTURE(returnAngle, numericFloor, maximumExcursion, (returnedPoint - cuspPoint).magnitude());
+        CHECK((returnedPoint - cuspPoint).magnitude() <= 2.0 * numericFloor);
+        CHECK(maximumExcursion <= 2.0 * numericFloor);
+        CHECK(maximumExcursion < 0.1 * distance);
+    }
     for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
         CAPTURE(distance, cuspRadius);
         for (const auto side : {kLeft, kRight}) {

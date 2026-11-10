@@ -33777,3 +33777,25 @@ generation, cache admission, replacement, Produce, and five DXF/DWG lanes;
 `dwgread` parses both generated DWG versions. `git diff --check` passes. The
 high-eccentricity 10000-to-1 cusp remains fail-closed as recorded in sections
 826-827.
+
+## 829. Bound the Near-floor Post-cusp Excursion (2026-11-10)
+
+Added an independent local-coordinate oracle to the 10000-to-1 large-origin
+ellipse regression for the inward `1.1e-6` case. It derives the first return
+parameter from the exact ellipse offset equation, then samples the local offset
+branch from the cusp endpoint to that return. For the recorded profile, the
+return angle is approximately `4.5826e-5` radians, the return gap is
+`5.0e-9`, and the maximum sampled excursion is `1.68784e-8`. The drawing-scale
+numeric floor is `1.42109e-8`; requested geometry tolerance is `1.1e-7`.
+Regression bounds require the return gap and excursion to remain within twice
+the numeric floor and the excursion below the requested tolerance.
+
+This is evidence that the post-cusp loop is at drawing-coordinate numeric
+resolution for this profile, not a proof that the unresolved TrimBoundary pair
+has been topologically classified. The test continues to require
+`AmbiguousTopology` and empty output at and above the cusp threshold. Do not
+relax that refusal based only on this sampled local oracle; a future solver
+change still needs a bounded intersection/topology proof and the independent
+materialized-output crossing check from section 827. The focused regression
+passes after adding the analytic checks; no production algorithm or work
+budget changed.
