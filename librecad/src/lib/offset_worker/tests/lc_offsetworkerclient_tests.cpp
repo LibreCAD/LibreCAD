@@ -920,9 +920,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     std::vector<std::size_t> expectedSingularThinCuspFixtures;
     std::vector<std::size_t> expectedLimitExceededProduceFixtures;
     std::vector<std::size_t> reversed100To1InteriorPickFixtures;
+    std::vector<std::size_t> reversed100To1ExteriorPickFixtures;
     std::vector<std::size_t> reversed1000To1ExteriorPickFixtures;
     std::vector<std::size_t> reversed1000To1InteriorPickFixtures;
-    const std::array<RS_EllipseData, 74> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 75> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -997,6 +998,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{1e4, -1e4}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-3, 0.2, -0.2, true},
         {{1e4, -1e4}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-3, 0.2, 0.0, true},
         {{1e6, -1e6}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, 0.2, 0.0, true},
+        {{1e6, -1e6}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-2, 0.2, 0.0, true},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
@@ -1202,6 +1204,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             case 73:
                 cuspDistances = {0.9e-4, 1.0e-4, 1.1e-4};
                 break;
+            case 74:
+                cuspDistances = {0.9e-2, 1.0e-2, 1.1e-2};
+                break;
             default:
                 cuspDistances = {0.5e-6};
                 break;
@@ -1294,6 +1299,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         reversed1000To1InteriorPickFixtures.push_back(fixture);
         if (cuspDistance > 1.0e-4)
             expectedLimitExceededProduceFixtures.push_back(fixture);
+    }
+    for (const double cuspDistance : {0.9e-2, 1.0e-2, 1.1e-2}) {
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[74]});
+        thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
+        reversed100To1ExteriorPickFixtures.push_back(fixture);
+    }
+    for (const double cuspDistance : {0.9e-2, 1.0e-2, 1.1e-2}) {
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[74]});
+        thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
+        reversed100To1InteriorPickFixtures.push_back(fixture);
     }
     const std::size_t translatedThinEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
@@ -1902,6 +1919,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                                                  [i](const auto& fixture) { return fixture.first == i; });
         const bool interiorPick = std::find(reversed100To1InteriorPickFixtures.begin(), reversed100To1InteriorPickFixtures.end(), i) !=
             reversed100To1InteriorPickFixtures.end();
+        const bool exterior100To1Pick =
+            std::find(reversed100To1ExteriorPickFixtures.begin(), reversed100To1ExteriorPickFixtures.end(), i) !=
+            reversed100To1ExteriorPickFixtures.end();
         const bool exteriorPick = std::find(reversed1000To1ExteriorPickFixtures.begin(), reversed1000To1ExteriorPickFixtures.end(), i) !=
             reversed1000To1ExteriorPickFixtures.end();
         const bool interior1000To1Pick =
@@ -1928,7 +1948,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
             offset.distance = thinEllipseCusp->second;
             offset.coord = ellipse.center;
-            if ((ellipse.reversed && ellipse.ratio == 1e-2 && !interiorPick) ||
+            if ((ellipse.reversed && ellipse.ratio == 1e-2 && !interiorPick) || exterior100To1Pick ||
                 (ellipse.reversed && ellipse.ratio == 1e-3 && !interior1000To1Pick) || exteriorPick)
                 offset.coord += ellipse.majorP * 2.0;
             offset.sideFallback = offset.coord;

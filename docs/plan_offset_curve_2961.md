@@ -33587,3 +33587,18 @@ A regression verifies a `1e-7` gap stays disjoint and a true crossing remains
 detectable. The focused intersection test passes 15 assertions; the broader
 `[offset][check]` selection passes 220 assertions. Commit:
 `93476ddb8` (`fix(offset): avoid false large-origin segment crossings`).
+
+## 821. Qualify a Large-origin Reversed 100-to-1 Ellipse Cusp (2026-11-10)
+
+Added a 30-degree rotated, reversed partial ellipse with major radius `100`,
+ratio `1e-2`, cusp endpoint, and center `(1e6, -1e6)`. The direct geometric
+oracle passes both sides at `0.9`, `1.0`, and `1.1` times the major-vertex
+curvature radius (`1e-2`), including the post-cusp inward result. The focused
+direct test passes 27,809 assertions.
+
+Added both pick sides at the same cusp triplet to the worker-family matrix.
+Generation, cache/replacement, Produce, and all five DXF/DWG persistence lanes
+pass, and `dwgread` parses both generated DWGs. The full matrix passes
+1,462,305 assertions. This does not generalize the result to other ratios,
+origins, orientations, or intervals; continue those independently, including
+the 1000-to-1 inward over-budget case in section 820.
