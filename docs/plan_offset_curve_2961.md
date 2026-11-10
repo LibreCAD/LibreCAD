@@ -32549,3 +32549,24 @@ admission, replacement/Produce, and applicable DXF/DWG round-trips. The
 family capability matrix remains authoritative: parabola is selectable, but
 only the explicitly recorded parabola profiles are geometry/worker/file
 qualified; other variants and visible GUI/external-CAD gates remain open.
+
+## 779. Qualify a Reversed 100-to-1 Ellipse Cusp Profile (2026-11-10)
+
+Added a translated, rotated, reversed elliptic arc with major radius 100,
+minor-to-major ratio `1e-2`, and parameter bounds `0.2` to `-0.2`. Its direct
+exact-normal checks cover both offset sides at distances `0.9`, `1.0`, and
+`1.1` times the curvature radius at the major-axis vertex. The three same
+source/distance profiles are now in the real worker family matrix; generation
+and cache admission pass, and Produce selects the exterior side for the
+five-lane R14/R2000/R2018 DXF/DWG save/reopen path. The generated DWGs are
+independently parsed when `DWGREAD` is available.
+
+Validation: focused direct test passes 28,103 assertions/1 case. The worker
+family test passes 1,172,830 assertions/1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; both DWG lanes are independently parsed.
+Both targets build, scoped clang-format and `git diff --check` pass. Test
+commit: `361bff65f` (`test(offset): qualify reversed ellipse cusp profile`).
+This qualifies only this reversed interval, transform, ratio, distance
+triplet, and the selected Produce side; broader ellipse scales, sweeps,
+curvature neighborhoods, and worker persistence on the opposite picked side
+remain open.
