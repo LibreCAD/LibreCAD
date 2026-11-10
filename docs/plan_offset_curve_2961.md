@@ -33082,3 +33082,19 @@ unchanged. The fixture remains bounded-but-unqualified, and the next broadphase
 change must materially lower total work rather than improve one disposition in
 isolation. The 10-assertion refusal test and 53-case / 6,476-assertion topology
 suite pass on the restored implementation; `git diff --check` passes.
+
+## 801. Rebuild the Current PR Head with qmake6 (2026-11-10)
+
+Rebuilt the complete qmake6 Release application tree from PR source head
+`49724f90be1e4984e41927eb8c89ef716f14d4fa` in
+`/private/tmp/offset-plan-current-qmake6`. `make -C
+/private/tmp/offset-plan-current-qmake6 -j8` completed successfully, linking
+LibreCAD and rebuilding the offset worker helper, bundled plugins, and
+`ttf2lff`. The application, helper, and plugin directory are present in the
+build output. The build emitted existing missing-field-initializer warnings
+from `lc_dwgadvancedmetadata.h`; no new compile or link errors occurred.
+
+This validates qmake6 build integration for the current PR tree, not execution
+on macOS 14.4: the local build uses the macOS 27 SDK with a 14.4 deployment
+target. Runtime, signing/notarization, visible desktop acceptance, and external
+CAD checks remain separate open gates. `git diff --check` passes.
