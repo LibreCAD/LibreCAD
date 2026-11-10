@@ -805,6 +805,11 @@ TEST_CASE("Rotated extreme thin ellipse cusp fails closed when its accurate fit 
     CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::TrimBoundary);
     CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
     CHECK(inward.intersectionDiagnostics.work.totalBoxPairs == options.maxIntersectionPairs);
+    CHECK(inward.intersectionDiagnostics.work.candidateBoxPairs < options.maxIntersectionPairs / 100);
+    CHECK(inward.intersectionDiagnostics.work.refinementBoxPairs > options.maxIntersectionPairs * 99 / 100);
+    CHECK(inward.intersectionDiagnostics.work.totalBoxPairs ==
+          inward.intersectionDiagnostics.work.candidateBoxPairs + inward.intersectionDiagnostics.work.refinementBoxPairs +
+              inward.intersectionDiagnostics.work.certificateBoxPairs);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
