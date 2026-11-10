@@ -31726,20 +31726,22 @@ this as an explicit fail-closed boundary, not as a successful geometric
 offset. At `1.1` times the radius, direct construction returns one candidate
 branch while trim validly produces an empty result.
 
-The real-worker matrix carries the two neighboring distances, excluding the
-exact-threshold refusal, through generation, cache admission where possible,
-replacement/Produce, and all five DXF/DWG lanes. The above-threshold worker
-case verifies one candidate followed by `Vanished` with no document batch.
-Worker behavior for the exact `LimitExceeded` threshold remains unqualified.
+The real-worker matrix carries all three distances through generation,
+cache-admission checks, replacement/Produce, and the five DXF/DWG lanes where
+the result is representable. This is a distinct operation contract from
+trimmed geometry: at the exact cusp, worker generation and Produce succeed
+with one untrimmed candidate, which passes persistence and independent DWG
+parsing. Above the threshold, generation returns one candidate but Produce
+reports `Vanished` with no document batch.
 
 Validation: focused direct case passes 3,629 assertions; the full direct
 `[curve-offset][ellipse][cusp]` selection passes 299,730 assertions/15 cases.
-The focused source-family worker test passes 1,069,121 assertions/1 case; the
-full worker-client suite passes 1,077,394 assertions/23 cases with
+The focused source-family worker test passes 1,072,341 assertions/1 case; the
+full worker-client suite passes 1,079,496 assertions/23 cases with
 `DWGREAD=/opt/homebrew/bin/dwgread`. Both targets build; scoped clang-format
-and `git diff --check` pass. Test commit: `ffaa846bc` (`test(offset): qualify
-1.1-to-1 cusp boundary`).
+and `git diff --check` pass. Test commits: `ffaa846bc` (`test(offset): qualify
+1.1-to-1 cusp boundary`) and `aa901b7b1` (`test(offset): persist exact cusp
+worker result`).
 
-This closes only the recorded translated, rotated forward-arc neighbor
-profiles. Exact-threshold worker refusal, other transforms, reversed arcs,
-sweeps, and distances remain open.
+This closes only the recorded translated, rotated forward-arc cusp triplet.
+Other transforms, reversed arcs, sweeps, and distances remain open.
