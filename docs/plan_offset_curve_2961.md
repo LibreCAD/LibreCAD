@@ -31713,3 +31713,33 @@ and `git diff --check` pass. Test commit: `0c965aba5` (`test(offset): qualify
 
 This closes only the recorded translated, rotated forward-arc 1.25:1 triplet.
 Other transforms, reversed arcs, sweeps, and distances remain open.
+
+## 737. Qualify the 1.1:1 Elliptic-arc Cusp Boundary (2026-11-10)
+
+Added a translated, 30-degree forward arc with major radius `100`, ratio
+`10/11` (1.1:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature
+radius is `a * ratio^2 = 10000/121`. At `0.9` times that radius, direct
+materialization passes the independent distance/tangent and
+materialized-intersection checks. At the exact radius, the bounded trimmed
+solver returns `LimitExceeded` with no entities or chains; the test records
+this as an explicit fail-closed boundary, not as a successful geometric
+offset. At `1.1` times the radius, direct construction returns one candidate
+branch while trim validly produces an empty result.
+
+The real-worker matrix carries the two neighboring distances, excluding the
+exact-threshold refusal, through generation, cache admission where possible,
+replacement/Produce, and all five DXF/DWG lanes. The above-threshold worker
+case verifies one candidate followed by `Vanished` with no document batch.
+Worker behavior for the exact `LimitExceeded` threshold remains unqualified.
+
+Validation: focused direct case passes 3,629 assertions; the full direct
+`[curve-offset][ellipse][cusp]` selection passes 299,730 assertions/15 cases.
+The focused source-family worker test passes 1,069,121 assertions/1 case; the
+full worker-client suite passes 1,077,394 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Both targets build; scoped clang-format
+and `git diff --check` pass. Test commit: `ffaa846bc` (`test(offset): qualify
+1.1-to-1 cusp boundary`).
+
+This closes only the recorded translated, rotated forward-arc neighbor
+profiles. Exact-threshold worker refusal, other transforms, reversed arcs,
+sweeps, and distances remain open.
