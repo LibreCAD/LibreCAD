@@ -771,13 +771,17 @@ TEST_CASE("Extreme thin ellipse receives bounded refinement headroom", "[curve-o
 }
 
 TEST_CASE("Extreme thin ellipse inward offsets bracket the major-vertex cusp", "[curve-offset][ellipse][cusp]") {
-    const RS_Ellipse source = ellipse(100.0, 1e-4);
+    const RS_Vector majorP{100.0, 0.0};
+    const RS_Ellipse sources[]{ellipse(100.0, 1e-4),
+                               RS_Ellipse{nullptr, RS_EllipseData{RS_Vector{100.0, -100.0}, majorP, 1e-4, 0.0, 0.0, false}}};
     constexpr double cuspRadius = 1e-6;
-    for (const double distance : {0.5 * cuspRadius, 0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius, 2.0 * cuspRadius}) {
-        CAPTURE(distance);
-        const Offset inward = offsetOf(source, kLeft, distance, 0.01 * distance);
-        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
-        checkOffset(inward, curveOf(source), distance, {true});
+    for (const RS_Ellipse& source : sources) {
+        for (const double distance : {0.5 * cuspRadius, 0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius, 2.0 * cuspRadius}) {
+            CAPTURE(source.getCenter().x, source.getCenter().y, source.getAngle(), distance);
+            const Offset inward = offsetOf(source, kLeft, distance, 0.01 * distance);
+            CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+            checkOffset(inward, curveOf(source), distance, {true});
+        }
     }
 }
 
