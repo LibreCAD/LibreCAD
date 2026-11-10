@@ -1122,6 +1122,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(scaledMajorSweepSource);
     const std::size_t scaledMajorSweepFixture = sources.size();
     sources.emplace_back(*scaledMajorSweepSource);
+    RS_Polyline scaledCorner;
+    scaledCorner.addVertex({10.0, -20.0}, 0.2);
+    scaledCorner.addVertex({10.002, -20.0});
+    scaledCorner.addVertex({10.002, -19.998});
+    scaledCorner.endPolyline();
+    const auto scaledCornerSource = LC_OffsetSourceGeometry::capture(scaledCorner);
+    REQUIRE(scaledCornerSource);
+    const std::size_t scaledCornerFixture = sources.size();
+    sources.emplace_back(*scaledCornerSource);
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
@@ -1150,6 +1159,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == 21                                                                    ? .1
             : i == 24                                                                    ? 1.9
             : i == scaledMajorSweepFixture                                               ? 2500.0
+            : i == scaledCornerFixture                                                   ? 0.00025
                                                                                          : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
         Receipts receipts;
@@ -1489,6 +1499,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             offset.distance = thinEllipseArc->second;
             offset.coord = point;
             offset.sideFallback = point + outward * offset.distance;
+        }
+        if (i == scaledCornerFixture) {
+            offset.coord = {10.003, -19.998};
+            offset.sideFallback = offset.coord;
         }
         offset.number = 1;
         offset.multipleCopies = true;
