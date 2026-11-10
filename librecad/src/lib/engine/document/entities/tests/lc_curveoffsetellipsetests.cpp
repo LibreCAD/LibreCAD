@@ -935,7 +935,7 @@ TEST_CASE("Transformed thin elliptic arcs retain cusp-threshold geometry", "[cur
         bool reversed;
         double distance;
     };
-    const std::array<Profile, 7> profiles{{
+    const std::array<Profile, 10> profiles{{
         {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 0.9e-6},
         {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 1.0e-6},
         {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 1.1e-6},
@@ -943,6 +943,9 @@ TEST_CASE("Transformed thin elliptic arcs retain cusp-threshold geometry", "[cur
         {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 1.0e-6},
         {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 1.1e-6},
         {{100.0, -100.0}, 30.0, 0.2, -0.2, true, 1.0e-6},
+        {{1e4, -1e4}, 45.0, 0.2, -0.2, true, 0.9e-6},
+        {{1e4, -1e4}, 45.0, 0.2, -0.2, true, 1.0e-6},
+        {{1e4, -1e4}, 45.0, 0.2, -0.2, true, 1.1e-6},
     }};
     for (const Profile& profile : profiles) {
         const double angle = profile.degrees * M_PI / 180.0;
