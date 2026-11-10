@@ -31318,3 +31318,28 @@ clang-format checks and `git diff --check`. Test commit: `116118d3c`
 
 Other rotated angles/distances, translated threshold profiles, partial-arc
 threshold distances, and other ellipse ratios remain open variant rows.
+
+## 723. Qualify Partial-arc Cusp-threshold Distances (2026-11-09)
+
+Extended the forward ratio-`1e-4` arc crossing the major vertex to inward
+distances `0.9e-6` and `1.0e-6`, complementing the existing `0.5e-6` and
+`1.1e-6` direct profiles. All are one open chain and pass the independent
+bidirectional distance/tangent oracle and sampled self-crossing check. This
+keeps partial-arc topology distinct from the closed whole-ellipse cusp
+threshold results.
+
+Added the `0.9e-6` and `1.0e-6` crossing-arc sources to the real-worker matrix;
+the preexisting `1.1e-6` arc supplies the above-threshold point. The three
+distances run generation, cache admission, replacement/Produce, five DXF/DWG
+round-trip lanes, and independent LibreDWG parsing for both DWG versions.
+
+Validation: the focused partial-arc test passes 25,098 assertions/1 case;
+`[curve-offset][ellipse][cusp]` passes 140,936 assertions/6 cases. The full
+worker-client selection passes 940,164 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Edited ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `8a2ad43a3`
+(`test(offset): qualify partial-arc cusp thresholds`).
+
+This closes only the tested forward interval and threshold neighborhood.
+Other partial sweeps, translated/rotated partial-arc thresholds, and reversed
+partial-arc thresholds still require direct and end-to-end persistence rows.
