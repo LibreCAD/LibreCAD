@@ -29804,7 +29804,7 @@ these rows do not imply every parameter/domain is supported):
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples and endpoint tangent slopes +/-1e-4..1e-8; two four-point candidates and the 1e-8 near-parallel profile pass worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
-| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected and cornering open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; closed mixed-bulge and major/minor bulge oracles remain covered; matching tangent-connected typed source passes worker/cache/Produce and five file lanes | Open major-sweep joins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles; worker/file persistence for the open corner profile |
+| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; closed mixed-bulge and major/minor bulge oracles remain covered; matching tangent-connected typed source passes worker/cache/Produce and five file lanes | Other open sweep/scale boundaries, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles; worker/file persistence for open corner and major-sweep profiles |
 
 This closes the immediate worker/persistence gap for the two newly discovered
 accepted layouts; it does not complete step 3 or prove arbitrary legal source
@@ -31933,6 +31933,21 @@ Produce, and DXF/DWG persistence for this cornering source remain open.
 Validation: full direct polyline selection passes 35,595 assertions/3 cases;
 the target builds and scoped clang-format plus `git diff --check` pass. Test
 commit `2e77862cd` (`test(offset): cover open polyline corner joins`).
+
+## 751. Qualify an Open Major-sweep Arc-line Join (2026-11-10)
+
+Added bulge `2.0` (a sweep greater than 180 degrees) to the open arc-line
+normal-oracle matrix, followed by the same straight segment. Both offset sides
+at 0.1 and 0.25 check exact segment normals, join-arc radius, and preservation
+of both open endpoint offsets over the actual returned branch set. This
+complements the tangent-connected semicircle and smaller-sweep corner profiles.
+The major-sweep profile is direct-only; worker/cache and file-lane persistence
+remain open.
+
+Validation: focused open-polyline oracle passes 10,773 assertions; the full
+direct polyline selection passes 40,351 assertions/3 cases. The target builds;
+scoped clang-format and `git diff --check` pass. Test commit `7a7d5c80f`
+(`test(offset): qualify open major-sweep joins`).
 
 ## 733. Initial Source-picker Request (2026-11-10)
 
