@@ -1131,6 +1131,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(scaledCornerSource);
     const std::size_t scaledCornerFixture = sources.size();
     sources.emplace_back(*scaledCornerSource);
+    RS_Polyline scaledCornerAtLargerScale;
+    scaledCornerAtLargerScale.addVertex({10.0, -20.0}, 0.2);
+    scaledCornerAtLargerScale.addVertex({10.02, -20.0});
+    scaledCornerAtLargerScale.addVertex({10.02, -19.98});
+    scaledCornerAtLargerScale.endPolyline();
+    const auto scaledCornerAtLargerScaleSource = LC_OffsetSourceGeometry::capture(scaledCornerAtLargerScale);
+    REQUIRE(scaledCornerAtLargerScaleSource);
+    const std::size_t scaledCornerAtLargerScaleFixture = sources.size();
+    sources.emplace_back(*scaledCornerAtLargerScaleSource);
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
@@ -1159,6 +1168,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == 21                                                                    ? .1
             : i == 24                                                                    ? 1.9
             : i == scaledMajorSweepFixture                                               ? 2500.0
+            : i == scaledCornerAtLargerScaleFixture                                      ? 0.0025
             : i == scaledCornerFixture                                                   ? 0.00025
                                                                                          : .25;
         const Req::Request input{token(requestId), Req::GenerateSource{LC_OffsetSourceDefinition{sources[i], sourceDistance, 1e-4, false}, {}}};
@@ -1500,8 +1510,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             offset.coord = point;
             offset.sideFallback = point + outward * offset.distance;
         }
-        if (i == scaledCornerFixture) {
-            offset.coord = {10.003, -19.998};
+        if (i == scaledCornerFixture || i == scaledCornerAtLargerScaleFixture) {
+            const double scale = i == scaledCornerFixture ? 1e-3 : 1e-2;
+            offset.coord = {10.0 + 3.0 * scale, -20.0 + 2.0 * scale};
             offset.sideFallback = offset.coord;
         }
         offset.number = 1;

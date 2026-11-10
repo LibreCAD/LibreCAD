@@ -1519,6 +1519,7 @@ TEST_CASE("Open arc-line polylines follow exact normals across tangent and corne
     verifyProfile(0.2);
     verifyProfile(2.0);
     verifyProfile(0.2, 1e-3, {10.0, -20.0});
+    verifyProfile(0.2, 1e-2, {10.0, -20.0});
     verifyProfile(2.0, 1e4, {1e6, -2e6});
 }
 
