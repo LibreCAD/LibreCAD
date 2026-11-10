@@ -30709,3 +30709,23 @@ complete worker-client suite passes 148,639 assertions/22 cases with
 `DWGREAD=/opt/homebrew/bin/dwgread`. The changed C++ ranges pass repository
 clang-format and `git diff --check`. Visible GUI, external ODA/AutoCAD,
 cross-platform/ASan, and exact-head CI remain open.
+
+## 704. Qualify a Translated Extreme Thin Ellipse (2026-11-09)
+
+Extended section 703's ratio-`1e-4` whole-ellipse coverage with a major-radius
+100 source centered at `(1e8, -1e8)`, offset outward by `0.1`. The direct
+independent normal-distance oracle passes. The same translated source passes
+real-worker generation, cache validation, typed replacement, Produce, and all
+five DXF/DWG lanes. Reopened spline control and fit points are additionally
+compared with a local-scale/ULP tolerance, rather than relying only on the
+existing world-coordinate-scaled comparison. This adds one translated profile;
+it does not establish arbitrary translations, rotated axes, partial arcs, or
+inward cusp behavior.
+
+Validation: focused direct ellipse test passes 18,089 assertions/1 case;
+focused worker-family test passes 166,837 assertions/1 case. The complete
+`[curve-offset][ellipse]` selection passes 733,601 assertions/23 cases, and
+the full worker-client suite passes 173,331 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. The changed ranges pass repository
+clang-format and `git diff --check`. Visible GUI, external ODA/AutoCAD,
+cross-platform/ASan, and exact-head CI remain open.
