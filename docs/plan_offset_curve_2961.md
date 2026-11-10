@@ -32757,3 +32757,46 @@ scoped `clang-format --style=file:code_style/.clang-format` and `git diff
 rational spline refusal`); follow-up diagnostic commit `c60169638` (`test(offset):
 record rational spline noding work`) adds the leaf-cap assertion and measured
 candidate/refinement diagnostics.
+
+## 786. Reconcile the Source-type Picker Scope (2026-11-10)
+
+The repeated request to change the source-curve type while selecting a new
+source, and to include parabola plus every supported source kind, is covered
+by the existing picker contract in sections 778 and 783. The implementation
+uses `LC_OffsetSourceGeometry::SupportedKinds` as the shared inventory, keeps
+the Properties type selector editable during replacement selection, preserves
+the current source/highlight while filtering candidates, and stores the
+selected candidate's typed geometry. The inventory currently contains line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline; parabola remains distinct from spline-points.
+
+No additional UI implementation slice is needed unless behavior or inventory
+changes. Preserve the existing all-family picker regressions and extend them
+whenever a kind is added. This closes only picker discoverability and typed
+source replacement; it does not assert that every parameterization of every
+kind passes direct geometry, worker execution, trimming, GUI, or DXF/DWG
+round-trip validation. Keep those claims tied to the per-variant capability
+matrix and its evidence.
+
+## 787. Reject Ineffective Rational-spline Broad-phase Projections (2026-11-10)
+
+Tested a conservative candidate-pair filter for the section-785 high-ratio
+periodic spline: accumulate oblique projections of leaf coordinate bounds and
+intersect them with outward mean-value bounds from the midpoint point/derivative
+intervals. The focused geometry case still reaches exactly 1,048,576
+candidate-box pairs, enters zero refinement pairs, and returns the same bounded
+`LimitExceeded`. The proposed projection checks therefore do not reduce the
+measured work for this profile and would add per-leaf bounds and node storage;
+they are not retained.
+
+Keep the section-785 hard ceiling and atomic refusal. Do not treat rotated
+projection filtering as the next implementation slice without a different
+profile demonstrating a measurable reduction and the full no-missed-pair
+regression set. The high-ratio spline remains a concrete bounded refusal, not
+a family-wide unsupported classification. The next useful change must target
+the actual candidate-pair topology/work source rather than add another
+equivalent enclosure to the same broad phase.
+
+The source picker is independent of this geometry limit: all nine modeled
+kinds, including distinct parabola identity, remain selectable as recorded in
+sections 783 and 786.
