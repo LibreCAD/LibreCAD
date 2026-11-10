@@ -727,10 +727,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
-    const std::array<RS_EllipseData, 3> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 5> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
+        {{0.0, 0.0}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-4, 0.0, 0.0, false},
+        {{0.0, 0.0}, {0.0, 100.0}, 1e-4, 0.0, 0.0, false},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];

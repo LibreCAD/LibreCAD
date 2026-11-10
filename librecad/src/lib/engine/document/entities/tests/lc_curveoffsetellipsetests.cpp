@@ -790,22 +790,28 @@ TEST_CASE("Extreme thin ellipse inward offsets bracket the major-vertex cusp", "
     }
 }
 
-TEST_CASE("Rotated extreme thin ellipse cusp trims accurately within the bounded intersection budget", "[curve-offset][ellipse][cusp]") {
-    const RS_Vector majorP{100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)};
-    const RS_Ellipse source{nullptr, RS_EllipseData{RS_Vector{0, 0}, majorP, 1e-4, 0.0, 0.0, false}};
+TEST_CASE("Rotated extreme thin ellipse cusps trim within the bounded intersection budget", "[curve-offset][ellipse][cusp]") {
     constexpr double distance = 0.5e-6;
-    CHECK(LC_CurveOffset::toleranceFor(source, distance, LC_CurveOffset::relativeOffsetTolerance(source)) == 0.1 * distance);
-    const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
-    const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
-    CHECK(inward.status == LC_CurveOffsetStatus::Ok);
-    checkOffset(inward, curveOf(source), distance, {true});
-    CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
-    CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
-    CHECK(inward.intersectionDiagnostics.work.totalBoxPairs < options.maxIntersectionPairs);
-    CHECK(inward.intersectionDiagnostics.work.orientedProjectionExclusions > 0);
-    CHECK(inward.intersectionDiagnostics.work.totalBoxPairs ==
-          inward.intersectionDiagnostics.work.candidateBoxPairs + inward.intersectionDiagnostics.work.refinementBoxPairs +
-              inward.intersectionDiagnostics.work.certificateBoxPairs);
+    for (const double degrees : {0.0, 15.0, 30.0, 45.0, 60.0, 75.0, 90.0}) {
+        const double angle = degrees * M_PI / 180.0;
+        const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+        const RS_Ellipse source{nullptr, RS_EllipseData{RS_Vector{0, 0}, majorP, 1e-4, 0.0, 0.0, false}};
+        CAPTURE(degrees);
+        CHECK(LC_CurveOffset::toleranceFor(source, distance, LC_CurveOffset::relativeOffsetTolerance(source)) == 0.1 * distance);
+        const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
+        const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        checkOffset(inward, curveOf(source), distance, {true});
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        CHECK(inward.intersectionDiagnostics.work.totalBoxPairs < options.maxIntersectionPairs);
+        if (degrees > 0.0 && degrees < 90.0) {
+            CHECK(inward.intersectionDiagnostics.work.orientedProjectionExclusions > 0);
+        }
+        CHECK(inward.intersectionDiagnostics.work.totalBoxPairs ==
+              inward.intersectionDiagnostics.work.candidateBoxPairs + inward.intersectionDiagnostics.work.refinementBoxPairs +
+                  inward.intersectionDiagnostics.work.certificateBoxPairs);
+    }
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
