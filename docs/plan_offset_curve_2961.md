@@ -30754,3 +30754,30 @@ ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain open.
 Implementation/test slice committed as `248078497` (`test(offset): cover
 extreme thin ellipse arcs`). The next slice remains broader thin-ellipse
 domains; this commit only qualifies the two arc profiles listed above.
+
+## 706. Qualify Translated and Rotated Extreme Thin Elliptic Arcs (2026-11-09)
+
+Extended the ratio-`1e-4`, major-radius-100 arc matrix to six profiles: the
+origin-centered axis-aligned forward/reversed pair, the same pair translated
+to `(1e8, -1e8)`, a 30-degree rotated forward arc, and a translated 60-degree
+rotated reversed arc. All use the bounded parameter interval between 0.25 and
+1.5 and outward offset distance 0.1. The direct suite checks each offset
+against the source-distance oracle and separately verifies that a translated
+direction point resolves to a definite side. The worker matrix requires
+operation-7 generation, operation-8 cache admission, typed source replacement,
+Produce, and all five DXF/DWG lanes. Reopened spline points are checked with a
+local-scale/ULP tolerance; after translating a typed source at a large origin,
+center and major-axis coordinates use an 8-ULP bound while ratio, parameter
+interval, and reversal remain exact.
+
+Validation: focused direct case passes 39,792 assertions/1 case; the complete
+`[curve-offset][ellipse]` suite passes 755,304 assertions/23 cases. The
+focused worker-family test passes 174,767 assertions/1 case; the complete
+`[lc-offsetcurve][worker-client]` suite passes 182,137 assertions/22 cases
+with `DWGREAD=/opt/homebrew/bin/dwgread`. Edited ranges pass repository
+clang-format and `git diff --check`. These six profiles do not establish other
+ratios, sweeps, rotations, translation magnitudes, inward cusp boundaries,
+visible GUI, external ODA/AutoCAD, cross-platform/ASan, or exact-head CI.
+
+Implementation/test slice committed as `21b3cec7b` (`test(offset): qualify
+translated thin ellipse arcs`).
