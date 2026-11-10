@@ -2355,6 +2355,67 @@ TEST_CASE("Worker Produce typed refusals materialize no prefix and cannot create
     CHECK_FALSE(completion.native(source)); CHECK_FALSE(completion.ordinary(source));
 }
 
+TEST_CASE("Worker Produce refuses highly rational periodic spline atomically at the self-noding cap", Tags) {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    Receipts receipts;
+    RS_Spline periodic{nullptr, RS_SplineData{2, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{25, -15}, RS_Vector{55, -5}, RS_Vector{70, 20}, RS_Vector{50, 45},
+                                   RS_Vector{15, 50}, RS_Vector{-15, 25}})
+        periodic.addControlPoint(point);
+    periodic.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+    periodic.setClosed(true);
+    auto sourceData = periodic.getData();
+    const std::vector<double> independentWeights{1e6, 1e4, 1e2, 1.0, 1e-2, 1e-4, 1e-6};
+    sourceData.weights = independentWeights;
+    sourceData.weights.insert(sourceData.weights.end(), independentWeights.begin(), independentWeights.begin() + sourceData.degree);
+    RS_Spline source{nullptr, sourceData};
+    const auto original = Req::Values::encodeSourceGeometry(LC_OffsetSourceGeometry{source.getData()});
+    REQUIRE(original);
+
+    LC_CurveJet jet;
+    REQUIRE(source.tryEvaluateJet(2.25, LC_CurveEvaluationSide::Interior, jet));
+    const RS_Vector tangent = jet.first / jet.first.magnitude();
+    RS_OffsetData offset;
+    offset.coord = jet.point + RS_Vector{-tangent.y, tangent.x} * .01;
+    offset.distance = .005;
+    offset.number = 1;
+    offset.multipleCopies = true;
+    offset.keepOriginals = true;
+    LC_OffsetBatchPreparation prepared{offset, {&source}, false, {}};
+    LC_DocumentModificationBatch batch;
+    REQUIRE_FALSE(prepared.advance(batch));
+    const auto request = prepared.request(token(1));
+    REQUIRE(request);
+    REQUIRE(Req::admitted(*request));
+    Receipts producedReceipts;
+    REQUIRE(owned.get().submit(*request, Client::Mode::Commit, producedReceipts.into(0)));
+    rt.until([&] { return producedReceipts.calls[0] != 0; });
+
+    const auto& completion = completed(producedReceipts.at(0), 1, 5);
+    const auto& reply = std::get<Reply::Produced>(completion.reply().result);
+    CHECK(reply.source.status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(reply.source.engineStatus == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(reply.source.intersectionPairAllowance == LC_CurveOffset::kDefaultMaxIntersectionPairs);
+    CHECK(reply.source.sampleUnits > 0);
+    CHECK(reply.outputs.empty());
+    auto materialized = completion.produced(source);
+    REQUIRE(materialized);
+    CHECK_FALSE(materialized->outcome.succeeded());
+    CHECK(materialized->entities.empty());
+    CHECK(materialized->outcome.copyOutputCounts.empty());
+
+    REQUIRE(prepared.accept(completion));
+    REQUIRE(prepared.advance(batch));
+    REQUIRE(prepared.outcome().sources.size() == 1);
+    CHECK(prepared.outcome().sources.front().source == &source);
+    CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK_FALSE(prepared.outcome().sources.front().complete());
+    CHECK(Req::Values::encodeSourceGeometry(LC_OffsetSourceGeometry{source.getData()}) == original);
+    CHECK(batch.entitiesToAdd.empty());
+    CHECK(batch.entitiesToDelete.empty());
+}
+
 TEST_CASE("Moved worker completions cannot materialize vacated successful receipts", Tags) {
     auto& rt = runtime(); OwnedClient owned{rt}; Receipts receipts;
     RS_Ellipse attributes{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};

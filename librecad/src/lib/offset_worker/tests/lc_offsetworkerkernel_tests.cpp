@@ -2148,6 +2148,44 @@ TEST_CASE("offset worker op8 promotes a wrapped periodic spline source when its 
     CHECK_FALSE(refused.changed);
 }
 
+TEST_CASE("Trimmed high-ratio periodic spline reports bounded self-noding refusal",
+          "[lc-offsetcurve][worker-kernel][produce][spline-variant][periodic][rational]") {
+    RS_Spline spline{nullptr, RS_SplineData{2, false}};
+    for (const RS_Vector& point : {RS_Vector{0, 0}, RS_Vector{25, -15}, RS_Vector{55, -5}, RS_Vector{70, 20}, RS_Vector{50, 45},
+                                   RS_Vector{15, 50}, RS_Vector{-15, 25}})
+        spline.addControlPoint(point);
+    spline.setKnotVector({0, 0, 0, .5, 1.5, 3, 4.5, 5, 5, 5});
+    spline.setClosed(true);
+    auto data = spline.getData();
+    const std::vector<double> independentWeights{1e6, 1e4, 1e2, 1.0, 1e-2, 1e-4, 1e-6};
+    data.weights = independentWeights;
+    data.weights.insert(data.weights.end(), independentWeights.begin(), independentWeights.begin() + data.degree);
+    RS_Spline source{nullptr, data};
+    REQUIRE(source.validate());
+
+    auto directOptions = LC_CurveOffset::makeDirectOptions(source, .005);
+    auto direct = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .005),
+                                                      directOptions, LC_CurveOffset::makeDirectSourceBudget());
+    std::size_t directPieces = 0;
+    for (const auto& branch : direct.branches)
+        directPieces += branch.cubicPieces.size();
+    auto options = LC_CurveOffset::makeOffsetOptions(source, .005);
+    LC_CurveOffsetGeometryResult geometry = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, .005), options, LC_CurveOffset::makeDirectSourceBudget());
+    CAPTURE(direct.status, direct.exactSamples, direct.branches.size(), directPieces, geometry.status, geometry.exactSamples,
+            geometry.intersectionDiagnostics.stage, geometry.intersectionDiagnostics.status,
+            geometry.intersectionDiagnostics.work.candidateBoxPairs, geometry.intersectionDiagnostics.work.refinementBoxPairs,
+            geometry.intersectionDiagnostics.work.totalBoxPairs, geometry.intersectionDiagnostics.failureDepth, geometry.removedIntervals,
+            geometry.branches.size());
+    CHECK(direct.status == LC_CurveOffsetStatus::Ok);
+    CHECK_FALSE(direct.branches.empty());
+    CHECK(geometry.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(geometry.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::OffsetSelfNoding);
+    CHECK(geometry.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(geometry.intersectionDiagnostics.work.totalBoxPairs == options.maxIntersectionPairs);
+    CHECK(geometry.branches.empty());
+}
+
 TEST_CASE("worker validates nonuniform periodic spline caches on both offset sides",
           "[lc-offsetcurve][worker-kernel][source-cache][spline-variant][periodic][nonuniform]") {
     enum class WeightProfile {
