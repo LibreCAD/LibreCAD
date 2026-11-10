@@ -30683,3 +30683,29 @@ match the generated geometry in both independent DWG reads. `git diff --check`
 passes. This closes the specified scale/translation matrix only; broader
 arbitrary origins, external ODA/AutoCAD, visible GUI, cross-platform/ASan, and
 exact-head CI remain open.
+
+## 703. Admit Tested Extreme Thin Ellipse Offsets (2026-11-09)
+
+The direct builder previously returned `ToleranceNotMet` for outward offsets
+of whole ellipses with axis ratio `1e-4` at major radii 10 and 100. Cusp
+isolation completed; the failure was the cubic-fit subdivision-depth limit.
+`makeDirectOptions()` now grants ellipses with ratio below `0.01` twelve more
+subdivision levels (32 total). The existing sample and output-piece budgets
+remain unchanged and bound the extra work. The regression proves that the
+default-depth baseline refuses without branches, the refined path builds and
+materializes one branch, and independent bidirectional validation remains
+within the requested geometry tolerance. Direct checks cover outward offsets
+0.01 and 0.1 at the two scales. Inward offsets greater than the semi-minor
+axis are separately required to return a successful empty trimmed region.
+
+Added both ratio-`1e-4` profiles to the real-worker family matrix. Each passes
+operation-7 generation, operation-8 cache validation, typed replacement,
+Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG read/write checks. These
+are bounded whole-ellipse profiles; arbitrary eccentricities, elliptic arcs,
+inward cusp boundaries, and translated variants are not claimed by this slice.
+
+Validation: `[curve-offset][ellipse]` passes 729,984 assertions/23 cases; the
+complete worker-client suite passes 148,639 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. The changed C++ ranges pass repository
+clang-format and `git diff --check`. Visible GUI, external ODA/AutoCAD,
+cross-platform/ASan, and exact-head CI remain open.
