@@ -33879,3 +33879,37 @@ The full typed-source worker-client matrix passes 1,564,347 assertions. This
 qualifies these three distances and this recorded source profile only; the
 trimmed-mode cusp and over-cusp refusal remains intentional and bounded by the
 diagnostics/oracles in sections 826-830.
+
+## 834. Reconcile the Source-family Picker Request (2026-11-10)
+
+The latest request reiterates two requirements: source replacement must allow
+changing the requested curve family while the drawing pick is active, and the
+picker must include every supported source kind, including parabola. Current
+code inspection confirms both picker requirements are already implemented:
+`cbSourceType` stays enabled during source selection, its entries come from
+`LC_OffsetSourceGeometry::SupportedKinds`, and that canonical inventory
+contains line, arc, circle, ellipse, spline, spline-points, distinct parabola,
+bounded hyperbola, and polyline. The Properties regressions
+`Native source picker changes family and replaces the source with a typed
+curve` and `Native source picker replaces every modeled source family without
+filter side effects` cover type changes during selection, replacement with the
+picked entity's actual typed geometry, highlight/filter behavior, and
+parabola identity. No additional widget, parabola-only branch, or picker code
+slice is required.
+
+Keep the picker slice closed. Interpret “expand source support to all
+supported types” as the separate end-to-end obligation in Current Contract:
+each eligible family/variant needs its own direct-geometry, worker/cache,
+replacement, and applicable DXF/DWG evidence. Picker visibility alone does not
+qualify geometry or persistence. When `SupportedKinds` or source eligibility
+changes, extend the selector inventory and all-family replacement regressions
+first, then add the corresponding end-to-end matrix rows; unsupported or
+unqualified variants continue to fail closed without mutating source/cache.
+
+Current-checkout validation: `librecad_tests '[curve-offset][parabola]'`
+passes 59,828 assertions across 12 cases. The Properties source-picker suite
+passes 11,930 assertions across 12 cases with `QT_QPA_PLATFORM=offscreen`;
+without the offscreen platform this headless host has no display and Qt aborts
+before the affected UI case. These runs revalidate the picker and recorded
+parabola geometry coverage, but do not close the remaining variant-by-variant
+worker/persistence or visible-GUI gates.
