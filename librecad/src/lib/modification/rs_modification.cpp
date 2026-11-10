@@ -2307,7 +2307,8 @@ LC_OffsetBatchOutcome RS_Modification::offsetWithOutcomeImpl(const RS_OffsetData
             } else if (staged) {
                 auto typedSource = LC_OffsetSourceGeometry::capture(*target);
                 const bool deferSimpleLine = dynamic_cast<const RS_Line *>(target) && entitiesList.size() > 1;
-                if (typedSource && !deferSimpleLine) {
+                const bool deferPolyline = dynamic_cast<const RS_Polyline *>(target) != nullptr;
+                if (typedSource && !deferSimpleLine && !deferPolyline) {
                     staged->pending = e;
                     staged->pendingTypedSource = std::move(*typedSource);
                     staged->remaining = requestDeepLeft;

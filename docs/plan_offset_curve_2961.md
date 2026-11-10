@@ -32971,3 +32971,24 @@ assertions, and `[curve-offset]` plus `[lc-offsetcurve][geometry]` passes 27
 cases / 2,467 assertions. The high-ratio test asserts that disposition totals
 equal charged BVH candidate pairs. These results validate bounded behavior and
 accounting, not a reduction in runtime or work.
+
+## 795. Keep Polyline Alias Preparation Synchronous (2026-11-10)
+
+Reproduced the outstanding source-preparation failure from section 681 on the
+current tree: `LC_OffsetBatchPreparation::advance()` returned pending for a
+selected polyline segment run because generic `LC_OffsetSourceGeometry`
+capture deferred its synthetic `RS_Polyline` chain to the worker. That
+prevented one-pass staging from preserving the established run-alias and
+whole-source coverage contract. Changed the generic typed-source dispatch so
+polylines, including these synthetic run chains, use the existing synchronous
+`prepareOffsetSourceImpl()` path; the eligible ellipse/native worker path and
+other typed worker submissions remain unchanged.
+
+Validation after a fresh Release rebuild: `[ordered-preparation]` passes all
+3 cases / 75 assertions, including alias-only and alias-plus-whole-polyline
+selection with output equivalence and one-pass completion. The broader
+`[modification][offset]` selection passes 44 cases / 7,157 assertions, and
+`librecad_offset_worker_edit_tests` passes 15 cases / 101,553 assertions.
+This closes the specific adjacent-suite failure recorded in section 681, not
+all polyline-source parameterizations or the remaining external/GUI acceptance
+gates.
