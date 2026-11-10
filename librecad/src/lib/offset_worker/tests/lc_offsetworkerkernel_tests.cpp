@@ -1418,6 +1418,27 @@ TEST_CASE("offset worker admits cubic tangent sources only when metadata matches
     CHECK_FALSE(refused.changed);
 }
 
+TEST_CASE("offset worker handles a rotated 10-to-1 elliptic arc past its cusp radius",
+          "[lc-offsetcurve][worker-kernel][source-generation][ellipse][cusp]") {
+    const double angle = M_PI / 6.0;
+    const RS_EllipseData ellipse{{100.0, -100.0}, {100.0 * std::cos(angle), 100.0 * std::sin(angle)}, 1e-2, -0.2, 0.2, false};
+    const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{ellipse}, 1.1e-2, 1e-4, false};
+    const req::Request request{token, req::GenerateSource{definition, {}}};
+    const auto encodedRequest = req::encode(request);
+    REQUIRE(encodedRequest);
+    const auto decodedRequest = req::decode(*encodedRequest);
+    REQUIRE(decodedRequest);
+    LC_OffsetWorkerKernel::Trace trace;
+    const auto reply = LC_OffsetWorkerKernel::run(*decodedRequest, &trace);
+    const auto& generated = native(reply, 7);
+    CAPTURE(generated.engineStatus, generated.sampleUnits, generated.attemptedOutputUsage.cubicPieces,
+            generated.attemptedOutputUsage.outputEntities, generated.attemptedOutputUsage.deepEntities,
+            static_cast<int>(trace.nativePrepareEntered), static_cast<int>(trace.computationCompleted));
+    REQUIRE(generated.engineStatus);
+    CHECK(*generated.engineStatus == LC_CurveOffsetStatus::Ok);
+    CHECK(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+}
+
 TEST_CASE("offset worker admits consistent rational tangent cubic sources and validates their cache",
           "[lc-offsetcurve][worker-kernel][source-generation][fit-points][tangents][rational]") {
     RS_SplineData data{3, false};

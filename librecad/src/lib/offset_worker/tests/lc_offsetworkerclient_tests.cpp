@@ -460,6 +460,24 @@ TEST_CASE("Worker rejects a sub-tolerance short arc without publishing partial g
     CHECK_FALSE(completion.native(attributes));
 }
 
+TEST_CASE("Worker client generates the 10-to-1 elliptic arc above its cusp radius", "[lc-offsetcurve][worker-client][ellipse][cusp]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    Receipts receipts;
+    const double angle = M_PI / 6.0;
+    const LC_OffsetSourceGeometry source{
+        RS_EllipseData{{100.0, -100.0}, {100.0 * std::cos(angle), 100.0 * std::sin(angle)}, 1e-2, -0.2, 0.2, false}};
+    const LC_OffsetSourceDefinition definition{source, 1.1e-2, 1e-4, false};
+    REQUIRE(owned.get().submit({token(106), Req::GenerateSource{definition, {}}}, Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& completion = completed(receipts.at(0), 106, 7);
+    const auto& result = std::get<Reply::Native>(completion.reply().result);
+    CAPTURE(result.engineStatus, result.sampleUnits, result.attemptedOutputUsage.cubicPieces, result.attemptedOutputUsage.deepEntities);
+    REQUIRE(result.engineStatus);
+    CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+    CHECK(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+}
+
 TEST_CASE("Worker ordinary completions materialize exact plain output with fresh identities", Tags) {
     auto& rt = runtime(); OwnedClient owned{rt};
     RS_EntityContainer owner; RS_Layer layer{QStringLiteral("ordinary local")};
@@ -727,7 +745,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
-    const std::array<RS_EllipseData, 25> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 28> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -746,6 +764,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-2, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-2, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-2, -0.2, 0.2, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -756,25 +777,74 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
-        const std::vector<double> cuspDistances = profile == 0 ? std::vector<double>{0.9e-6, 1.0e-6, 1.1e-6}
-            : profile == 1                                     ? std::vector<double>{1.0e-6}
-            : profile == 9                                     ? std::vector<double>{-1.1e-6}
-            : profile == 11                                    ? std::vector<double>{-0.5e-6}
-            : profile == 12                                    ? std::vector<double>{0.9e-6}
-            : profile == 13                                    ? std::vector<double>{1.0e-6}
-            : profile == 14                                    ? std::vector<double>{1.1e-6}
-            : profile == 15                                    ? std::vector<double>{0.9e-6}
-            : profile == 16                                    ? std::vector<double>{1.0e-6}
-            : profile == 17                                    ? std::vector<double>{-0.9e-6}
-            : profile == 18                                    ? std::vector<double>{-1.0e-6}
-            : profile == 19                                    ? std::vector<double>{0.9e-6, 1.0e-6, 1.1e-6}
-            : profile == 20                                    ? std::vector<double>{-0.9e-6, -1.0e-6, -1.1e-6}
-            : profile == 21                                    ? std::vector<double>{-0.9e-6, -1.0e-6, -1.1e-6}
-            : profile == 22                                    ? std::vector<double>{0.9e-4}
-            : profile == 23                                    ? std::vector<double>{1.0e-4}
-            : profile == 24                                    ? std::vector<double>{1.1e-4}
-            : profile == 7 || profile == 8                     ? std::vector<double>{1.1e-6}
-                                                               : std::vector<double>{0.5e-6};
+        std::vector<double> cuspDistances;
+        switch (profile) {
+            case 0:
+                cuspDistances = {0.9e-6, 1.0e-6, 1.1e-6};
+                break;
+            case 1:
+                cuspDistances = {1.0e-6};
+                break;
+            case 7:
+            case 8:
+                cuspDistances = {1.1e-6};
+                break;
+            case 9:
+                cuspDistances = {-1.1e-6};
+                break;
+            case 11:
+                cuspDistances = {-0.5e-6};
+                break;
+            case 12:
+                cuspDistances = {1.0e-6};
+                break;
+            case 13:
+            case 14:
+                cuspDistances = {-1.0e-6};
+                break;
+            case 15:
+                cuspDistances = {0.9e-4};
+                break;
+            case 16:
+                cuspDistances = {1.0e-4};
+                break;
+            case 17:
+                cuspDistances = {1.1e-4};
+                break;
+            case 18:
+                cuspDistances = {0.9e-2};
+                break;
+            case 19:
+                cuspDistances = {1.0e-2};
+                break;
+            case 20:
+                cuspDistances = {1.1e-2};
+                break;
+            case 21:
+                cuspDistances = {0.9e-6};
+                break;
+            case 22:
+                cuspDistances = {1.0e-6};
+                break;
+            case 23:
+                cuspDistances = {1.1e-6};
+                break;
+            case 24:
+                cuspDistances = {0.9e-6};
+                break;
+            case 25:
+                cuspDistances = {1.0e-6};
+                break;
+            case 26:
+                cuspDistances = {0.9e-6, 1.0e-6, 1.1e-6};
+                break;
+            case 27:
+                cuspDistances = {-0.9e-6, -1.0e-6, -1.1e-6};
+                break;
+            default:
+                cuspDistances = {0.5e-6};
+                break;
+        }
         for (const double cuspDistance : cuspDistances) {
             const std::size_t fixture = sources.size();
             sources.emplace_back(LC_OffsetSourceGeometry{ellipse});
