@@ -32616,14 +32616,16 @@ Added a reversed elliptic arc with major radius `100`, ratio `1e-3`, rotation
 `45` degrees, center `(1e4,-1e4)`, and reversed parameter bounds `0.2` to
 `-0.2`. Its direct exact-normal checks cover both offset sides at `0.9`, `1.0`,
 and `1.1` times the major-vertex curvature radius (`1e-4`). The real worker
-matrix covers generation/cache admission and the exterior picked side through
-Produce plus R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen; both DWG
-outputs are independently parsed by LibreDWG when available. This is evidence
-only for this exact transformed/reversed profile, distance triplet, and worker
-pick side, not a general thin-ellipse guarantee.
+matrix covers generation/cache admission and both inward and exterior picked
+sides through Produce plus R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+save/reopen; both DWG outputs are independently parsed by LibreDWG when
+available. This is evidence only for this exact transformed/reversed profile
+and distance triplet, not a general thin-ellipse guarantee.
 
 Validation: the focused direct test passes 28,258 assertions/1 case. The
-worker source-family case passes 1,204,062 assertions/1 case with
+worker source-family case passes 1,218,704 assertions/1 case with
 `DWGREAD=/opt/homebrew/bin/dwgread`; both test targets build, scoped
 clang-format and `git diff --check` pass. Test commit:
 `868864cea` (`test(offset): persist reversed 1000-to-1 cusp profiles`).
+Both picked sides are covered by worker commit `9c31c3b43` (`test(offset):
+persist inward thin ellipse cusp profiles`).
