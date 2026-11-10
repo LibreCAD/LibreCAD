@@ -855,8 +855,10 @@ TEST_CASE("Extreme thin elliptic arcs retain cusp-local topology", "[curve-offse
         bool reversed;
         double distance;
     };
-    const std::array<Profile, 5> profiles{{
+    const std::array<Profile, 7> profiles{{
         {-0.2, 0.2, false, 0.5e-6},
+        {-0.2, 0.2, false, 0.9e-6},
+        {-0.2, 0.2, false, 1.0e-6},
         {-0.2, 0.2, false, 1.1e-6},
         {0.0, 0.2, false, 1.1e-6},
         {-0.2, 0.0, false, 1.1e-6},
