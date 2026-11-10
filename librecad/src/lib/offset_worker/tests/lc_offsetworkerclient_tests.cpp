@@ -710,13 +710,27 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             }
         }
     }
+    const std::size_t scaledLineFixtureEnd = sources.size();
+    std::vector<std::pair<std::size_t, double>> scaledCircleFixtures;
+    for (const double scale : {1e-6, 1e8}) {
+        for (const double translationRatio : {0.0, 1e6}) {
+            const RS_Vector center{translationRatio * scale, -translationRatio * scale};
+            const std::size_t fixture = sources.size();
+            sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{center, 2.0 * scale}});
+            scaledCircleFixtures.emplace_back(fixture, scale);
+        }
+    }
+    const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
     for (std::size_t i = 0; i < sources.size(); ++i) {
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
-        const double sourceDistance = i >= scaledLineFixtureStart ?
+        const auto scaledCircle = std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(),
+            [i](const auto& fixture) { return fixture.first == i; });
+        const double sourceDistance = i >= scaledLineFixtureStart && i < scaledLineFixtureEnd ?
             scaledLineDistances[i - scaledLineFixtureStart] :
+            scaledCircle != scaledCircleFixtures.end() ? 0.2 * scaledCircle->second :
             (i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture) ? 1e-6 :
             i == mixedBulgeFixture ? -.25 : i == smallCircleFixture ? 2e-5 :
             i == largeCircleFixture ? 2e3 : i == nearParallelParabolaFixture ? .01 :
@@ -776,7 +790,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == nearParallelParabolaFixture || i == nearFullArcFixture || i == narrowSeamArcFixture ||
             i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
             i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture ||
-            i + 3 >= sources.size() || i >= scaledLineFixtureStart)
+            i + 3 >= sources.size() || (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) ||
+            scaledCircle != scaledCircleFixtures.end())
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -957,10 +972,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         CAPTURE(i, sources[i].kind());
         auto entity = sources[i].makeEntity();
         REQUIRE(entity);
+        const auto scaledCircle = std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(),
+            [i](const auto& fixture) { return fixture.first == i; });
         RS_OffsetData offset;
         offset.coord = {3, 2};
         offset.sideFallback = {10, 10};
         offset.distance = .25;
+        if (scaledCircle != scaledCircleFixtures.end()) {
+            const auto& circle = std::get<RS_CircleData>(sources[i].value);
+            offset.distance = 0.2 * scaledCircle->second;
+            offset.coord = circle.center + RS_Vector{2.5 * scaledCircle->second, 0.0};
+            offset.sideFallback = offset.coord;
+        }
         offset.number = 1;
         offset.multipleCopies = true;
         offset.keepOriginals = true;
@@ -1075,7 +1098,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) -
                        std::abs(value);
             };
-            for (std::size_t fixture = scaledLineFixtureStart; fixture < sources.size(); ++fixture) {
+            for (std::size_t fixture = scaledLineFixtureStart; fixture < scaledLineFixtureEnd; ++fixture) {
                 const PersistedGeometry* expected = nullptr;
                 for (const PersistedGeometry& candidate : persistedGeometry) {
                     if (candidate.sourceFixture != fixture) continue;
@@ -1121,7 +1144,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                     }
                 }
             }
-            for (const std::size_t fixture : {smallCircleFixture, largeCircleFixture}) {
+            std::vector<std::size_t> circleFixtures(initialCircleFixtures.begin(), initialCircleFixtures.end());
+            for (const auto& [fixture, scale] : scaledCircleFixtures) {
+                static_cast<void>(scale);
+                circleFixtures.push_back(fixture);
+            }
+            for (const std::size_t fixture : circleFixtures) {
                 const PersistedGeometry* expected = nullptr;
                 for (const PersistedGeometry& candidate : persistedGeometry) {
                     if (candidate.sourceFixture != fixture) continue;
@@ -1227,7 +1255,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                     CHECK(std::abs(actual.weights[weight] - expected.weights[weight]) <=
                           1e-8 * std::max(1.0, std::abs(expected.weights[weight])));
             }
-            if (persistedGeometry[i].sourceFixture >= scaledLineFixtureStart) {
+            if (persistedGeometry[i].sourceFixture >= scaledLineFixtureStart &&
+                persistedGeometry[i].sourceFixture < scaledLineFixtureEnd) {
                 REQUIRE(persistedGeometry[i].type == RS2::EntityLine);
                 const double scale = scaledLineScales[
                     persistedGeometry[i].sourceFixture - scaledLineFixtureStart];
