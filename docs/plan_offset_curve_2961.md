@@ -32285,8 +32285,8 @@ assertions/3 cases. The worker family/persistence case passes 1,115,140
 assertions/1 case with `DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs
 are independently parsed. Both targets build, scoped clang-format passes on
 the changed lines, and `git diff --check` passes. This qualifies the recorded
-scale and side only; other corner scales, the opposite worker side, and other
-translated/topological profiles remain open. Test commit: `477c86cdc`
+scale and side only; other corner scales and translated/topological profiles
+remain open. Test commit: `477c86cdc`
 (`test(offset): persist second scaled corner profile`).
 
 ## 764. Qualify the Opposite Side of the Translated Corner Polyline (2026-11-10)
@@ -32304,3 +32304,18 @@ source family` passes 1,115,141 assertions/1 case with
 `DWGREAD=/opt/homebrew/bin/dwgread`. Scoped clang-format and `git diff --check`
 pass. Test commit: `93f96a67c` (`test(offset): persist opposite scaled corner
 side`).
+
+## 765. Qualify the Opposite Side at the Larger Corner Scale (2026-11-10)
+
+Added the opposite-side pick for the scale-`1e-2`, translation-`(10,-20)`,
+open `bulge 0.2` corner fixture to the real worker-client persistence matrix.
+Together with section 763, both sides of this direct-oracle-qualified fixture
+now pass worker generation, cache admission, replacement/Produce, all five
+DXF/DWG round-trip lanes, and independent LibreDWG parsing. Other corner
+scales, offsets, topologies, and parameterizations remain open.
+
+Validation: `Worker client joins typed source generation for every modeled
+source family` passes 1,115,526 assertions/1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs are independently
+parsed. Scoped clang-format and `git diff --check` pass. Test commit:
+`56402e59f` (`test(offset): persist larger corner opposite side`).
