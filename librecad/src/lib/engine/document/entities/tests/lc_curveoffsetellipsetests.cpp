@@ -68,34 +68,75 @@ struct Curve {
         return (minor * std::cos(eta) - major * std::sin(eta)) * (sweep >= 0.0 ? 1.0 : -1.0);
     }
 
-    /** The exact least distance from @p p, and the eta it is at: dense samples, then a ternary search. */
+    /** The least distance from @p p, refining narrow basins near
+     * eccentric-ellipse vertices. */
     double distance(const RS_Vector& p, double* foot = nullptr) const {
         constexpr int samples = 4000;
-        int best = 0;
+        const double end = from + sweep;
+        const double low = std::min(from, end);
+        const double high = std::max(from, end);
+        double bestAngle = from;
         double least = RS_MAXDOUBLE;
+        const auto include = [&](const double angle) {
+            if (angle < low || angle > high) {
+                return;
+            }
+            const double candidate = p.distanceTo(at(angle));
+            if (candidate < least) {
+                least = candidate;
+                bestAngle = angle;
+            }
+        };
         for (int i = 0; i <= samples; ++i) {
-            const double d = p.distanceTo(at(from + sweep * i / samples));
-            if (d < least) {
-                least = d;
-                best = i;
-            }
+            include(from + sweep * static_cast<double>(i) / samples);
         }
-        double lo = from + sweep * std::max(best - 1, 0) / samples;
-        double hi = from + sweep * std::min(best + 1, samples) / samples;
-        for (int k = 0; k < 200; ++k) {
-            const double u = lo + (hi - lo) / 3.0;
-            const double v = hi - (hi - lo) / 3.0;
-            if (p.distanceTo(at(u)) < p.distanceTo(at(v))) {
-                hi = v;
+        const auto refine = [&](const double center, const double radius) {
+            double lo = std::max(low, center - radius);
+            double hi = std::min(high, center + radius);
+            for (int i = 0; i < 80 && hi - lo > 1e-13; ++i) {
+                const double u = lo + (hi - lo) / 3.0;
+                const double v = hi - (hi - lo) / 3.0;
+                if (p.distanceTo(at(u)) < p.distanceTo(at(v))) {
+                    hi = v;
+                }
+                else {
+                    lo = u;
+                }
             }
-            else {
-                lo = u;
+            include(0.5 * (lo + hi));
+        };
+        refine(bestAngle, std::abs(sweep) / samples);
+
+        RS_Vector local = p - ellipse.getCenter();
+        local.rotate(-ellipse.getAngle());
+        const double a = ellipse.getMajorRadius();
+        const double b = a * ellipse.getRatio();
+        const double projectedAngle = std::atan2(local.y / b, local.x / a);
+        for (int axisIndex = -8; axisIndex <= 8; ++axisIndex) {
+            const double axis = axisIndex * M_PI_2;
+            if (std::abs(std::remainder(projectedAngle - axis, 2.0 * M_PI)) > 0.02) {
+                continue;
+            }
+            const double step = std::max(ellipse.getRatio() / 32.0, 1e-10);
+            const double first = std::max(low, axis - 0.01);
+            const double last = std::min(high, axis + 0.01);
+            if (!(first < last)) {
+                continue;
+            }
+            const int localSamples = std::max(1, static_cast<int>(std::ceil((last - first) / step)));
+            const double previousLeast = least;
+            for (int i = 0; i <= localSamples; ++i) {
+                include(first + (last - first) * static_cast<double>(i) / localSamples);
+            }
+            if (least < previousLeast || (bestAngle >= first && bestAngle <= last)) {
+                const double bracket = (last - first) / localSamples;
+                refine(bestAngle, bracket);
             }
         }
         if (foot != nullptr) {
-            *foot = 0.5 * (lo + hi);
+            *foot = bestAngle;
         }
-        return p.distanceTo(at(0.5 * (lo + hi)));
+        return least;
     }
 };
 
@@ -172,12 +213,12 @@ struct Offset {
     double slack{0.0};
 };
 
-Offset offsetOf(const RS_Ellipse& e, const LC_CurveOffsetSide side, const double d) {
+Offset offsetOf(const RS_Ellipse& e, const LC_CurveOffsetSide side, const double d, const double requestedTolerance = 0.0) {
     Offset result;
-    const LC_CurveOffsetOptions options = LC_CurveOffset::makeOffsetOptions(e, d);
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeOffsetOptions(e, d, requestedTolerance);
     result.slack = 2.0 * options.tolerance.requestedGeometry;
-    LC_CurveOffsetMaterializationResult made = LC_CurveOffset::createEntities(
-        e, LC_CurveOffset::makeSideRequest(side, d), options, LC_CurveOffset::makeDirectSourceBudget());
+    LC_CurveOffsetMaterializationResult made =
+        LC_CurveOffset::createEntities(e, LC_CurveOffset::makeSideRequest(side, d), options, LC_CurveOffset::makeDirectSourceBudget());
     result.status = made.status;
     result.entities = std::move(made.entities);
     for (const std::unique_ptr<RS_Entity>& entity : result.entities) {
@@ -727,6 +768,17 @@ TEST_CASE("Extreme thin ellipse receives bounded refinement headroom", "[curve-o
     CHECK(materialized.validationLevel == LC_OffsetValidationLevel::SampledBidirectional);
     CHECK(materialized.maxObservedError <= refinedOptions.tolerance.requestedGeometry);
     REQUIRE(materialized.entities.size() == 1);
+}
+
+TEST_CASE("Extreme thin ellipse inward offsets bracket the major-vertex cusp", "[curve-offset][ellipse][cusp]") {
+    const RS_Ellipse source = ellipse(100.0, 1e-4);
+    constexpr double cuspRadius = 1e-6;
+    for (const double distance : {0.5 * cuspRadius, 0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius, 2.0 * cuspRadius}) {
+        CAPTURE(distance);
+        const Offset inward = offsetOf(source, kLeft, distance, 0.01 * distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        checkOffset(inward, curveOf(source), distance, {true});
+    }
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

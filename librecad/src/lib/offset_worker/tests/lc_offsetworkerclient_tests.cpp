@@ -726,6 +726,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{0.0, 0.0}, {major, 0.0}, 1e-4, 0.0, 0.0, false}});
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
+    std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
+    for (const double cuspDistance : {0.5e-6, 0.9e-6, 1.0e-6, 1.1e-6, 2.0e-6}) {
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
+        thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
+    }
     const std::size_t translatedThinEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
     thinEllipseFixtures.emplace_back(translatedThinEllipseFixture, 0.1);
@@ -756,11 +762,14 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipse =
             std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
+        const auto thinEllipseCusp = std::find_if(thinEllipseCuspFixtures.begin(), thinEllipseCuspFixtures.end(),
+                                                  [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipseArc = std::find_if(thinEllipseArcFixtures.begin(), thinEllipseArcFixtures.end(),
                                                  [i](const auto& fixture) { return fixture.first == i; });
         const double sourceDistance = i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
             ? scaledLineDistances[i - scaledLineFixtureStart]
             : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->second
+            : thinEllipseCusp != thinEllipseCuspFixtures.end()                           ? thinEllipseCusp->second
             : thinEllipse != thinEllipseFixtures.end()                                   ? thinEllipse->second
             : thinEllipseArc != thinEllipseArcFixtures.end()                             ? thinEllipseArc->second
             : (i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture) ? 1e-6
@@ -826,7 +835,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == nearFullArcFixture || i == narrowSeamArcFixture || i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
             i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture || i + 3 >= sources.size() ||
             (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) || scaledCircle != scaledCircleFixtures.end() ||
-            thinEllipse != thinEllipseFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end())
+            thinEllipse != thinEllipseFixtures.end() || thinEllipseCusp != thinEllipseCuspFixtures.end() ||
+            thinEllipseArc != thinEllipseArcFixtures.end())
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -1033,6 +1043,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipse =
             std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
+        const auto thinEllipseCusp = std::find_if(thinEllipseCuspFixtures.begin(), thinEllipseCuspFixtures.end(),
+                                                  [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipseArc = std::find_if(thinEllipseArcFixtures.begin(), thinEllipseArcFixtures.end(),
                                                  [i](const auto& fixture) { return fixture.first == i; });
         RS_OffsetData offset;
@@ -1050,6 +1062,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const double major = ellipse.majorP.magnitude();
             offset.distance = thinEllipse->second;
             offset.coord = ellipse.center + ellipse.majorP * ((major + offset.distance) / major);
+            offset.sideFallback = offset.coord;
+        }
+        if (thinEllipseCusp != thinEllipseCuspFixtures.end()) {
+            const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
+            offset.distance = thinEllipseCusp->second;
+            offset.coord = ellipse.center;
             offset.sideFallback = offset.coord;
         }
         if (thinEllipseArc != thinEllipseArcFixtures.end()) {
@@ -1344,11 +1362,21 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 const auto thinEllipse = std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [&](const auto& fixture) {
                     return fixture.first == persistedGeometry[i].sourceFixture;
                 });
+                const auto thinEllipseCusp =
+                    std::find_if(thinEllipseCuspFixtures.begin(), thinEllipseCuspFixtures.end(),
+                                 [&](const auto& fixture) { return fixture.first == persistedGeometry[i].sourceFixture; });
                 const auto thinEllipseArc =
                     std::find_if(thinEllipseArcFixtures.begin(), thinEllipseArcFixtures.end(),
                                  [&](const auto& fixture) { return fixture.first == persistedGeometry[i].sourceFixture; });
-                if (thinEllipse != thinEllipseFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end()) {
-                    const double distance = thinEllipse != thinEllipseFixtures.end() ? thinEllipse->second : thinEllipseArc->second;
+                if (thinEllipse != thinEllipseFixtures.end() || thinEllipseCusp != thinEllipseCuspFixtures.end() ||
+                    thinEllipseArc != thinEllipseArcFixtures.end()) {
+                    double distance = thinEllipseArc->second;
+                    if (thinEllipseCusp != thinEllipseCuspFixtures.end()) {
+                        distance = thinEllipseCusp->second;
+                    }
+                    if (thinEllipse != thinEllipseFixtures.end()) {
+                        distance = thinEllipse->second;
+                    }
                     const double major = 1000.0 * distance;
                     const auto ulp = [](const double value) {
                         return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) - std::abs(value);
