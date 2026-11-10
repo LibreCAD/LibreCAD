@@ -866,6 +866,20 @@ TEST_CASE("Native circles preserve exact normals near inner collapse",
     CHECK(maxDeviation(beyondCollapse, exactCircle) <= beyondOptions.tolerance.requestedGeometry);
 }
 
+TEST_CASE("Zero-radius circles are refused without offset geometry",
+          "[curve-offset][direct][circle][refusal]") {
+    const RS_Circle source{nullptr, RS_CircleData{{2.0, -3.0}, 0.0}};
+    CHECK_FALSE(source.getData().isValid());
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(source));
+
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+    const auto result = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status != LC_CurveOffsetStatus::Ok);
+    CHECK(result.branches.empty());
+}
+
 TEST_CASE("Native circle offsets preserve exact normals across scale and translation",
           "[curve-offset][direct][circle][oracle][scale]") {
     for (const double scale : {1e-4, 1.0, 1e4}) {
