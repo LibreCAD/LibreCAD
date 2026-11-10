@@ -33551,9 +33551,10 @@ changing source/cache state.
 Added a reversed, 1000-to-1 partial elliptic arc ending at its major-axis cusp,
 rotated 30 degrees and translated to `(1e6, -1e6)`. The trimmed-mode oracle passes
 both sides at `0.9e-4` and `1.0e-4`, and the non-inward side at `1.1e-4`. The
-inward `1.1e-4` result exhausts the existing materialized-output intersection
-pair budget (`1,048,576`) and returns `LimitExceeded` with no entities or
-chains. This is a bounded refusal, not completed support for that profile.
+inward `1.1e-4` result exhausts the intersection-pair budget (`1,048,576`)
+inside the `TrimBoundary` query and returns `LimitExceeded` with no entities or
+chains. Its diagnostics include the failure stage/domain. This is a bounded
+refusal, not completed support for that profile.
 
 Added the profile to the real worker family matrix. Generation/cache and the
 DXF/DWG persistence checks complete; Produce at the over-budget inward pick
@@ -33633,9 +33634,20 @@ very-large-origin ellipse cusp`).
 Added the matching reversed, rotated partial-ellipse profile at ratio `1e-3`
 and center `(1e7, -1e7)`, with cusp radius `1e-4`. The trimmed-mode geometric
 oracle passes both sides at `0.9e-4` and `1e-4`. The inward `1.1e-4` result
-returns `LimitExceeded` with no entities or chains and reports intersection
-work exhaustion; this is an explicit bounded refusal, not a supported
-post-cusp trimmed-mode result. The focused case passes 22,146 assertions.
+returns `LimitExceeded` with no entities or chains and reports `TrimBoundary`
+intersection-work exhaustion; this is an explicit bounded refusal, not a
+supported post-cusp trimmed-mode result. The focused case passes 22,149
+assertions and verifies the stage, exhausted pair cap, and failure-domain
+presence.
+
+The failure is refinement-bound rather than a broad-phase flood: the query
+examines 227 BVH node pairs (43 leaf candidates) and spends 1,048,349 of its
+1,048,576 pair allowance in refinement. It stops at depth 48 on segment pair
+`(0, 3)`, with parameter boxes `[0.19963831375454749,
+0.19963831375455315]` and `[-2.60668076968083806, -2.60663283278121671]`.
+The next algorithm slice should determine the geometric roles of these two
+TrimBoundary curves and strengthen their local intersection/exclusion proof;
+do not increase the global pair cap.
 
 Added both worker pick lanes at the correct cusp triplet, `0.9e-4`, `1.0e-4`,
 and `1.1e-4`. The worker-family matrix passes 1,547,869 assertions through
@@ -33647,7 +33659,8 @@ trimmed-mode request also returns `LimitExceeded` at both default and recorded
 looser tolerance, so the refusal and pick-side semantics agree. The worker
 client matrix also verifies no drawing additions or deletions for the refused
 case. Test commit: `576a9bb22` (`test(offset): verify thin ellipse cusp
-refusal in worker`).
+refusal in worker`). The TrimBoundary diagnosis is pinned by test commit
+`bc6bda9e3` (`test(offset): locate thin cusp trim boundary limit`).
 
 This qualifies only the recorded profile, parameter interval, and distances.
 Continue broader ellipse origin/eccentricity coverage, and preserve the
