@@ -32829,3 +32829,30 @@ only on this runner-service annotation. The connected GitHub integration
 refused a rerun request with HTTP 403, so this is not a rerun or a code-failure
 result. Recheck exact-head CI and seek a runner-side rerun before closing the
 macOS workflow gate.
+
+## 789. Merge Current origin/master and Revalidate Offset UI (2026-11-10)
+
+Updated the PR branch from its previous upstream point to current local
+`origin/master` `9889c13cd` with merge commit `dd0862582` (first parent
+`45e600fe1`). The merge tree was computed before mutation and had no conflicts.
+It imports seven upstream commits, including the polyline property-sheet
+closure behavior and its tests, drawing/action fixes, CMake registrations, and
+catalog updates. No offset implementation file conflicted or required manual
+resolution. This supersedes W15 as the latest upstream-integration checkpoint;
+W15 remains historical evidence for its earlier merge.
+
+Reconfigured and rebuilt CMake Release targets `librecad_tests` and
+`librecad_offset_properties_dialog_tests` on the merged tree. The merged full
+test executable passes the 12-case offset source-picker selection with 11,930
+assertions. The four imported upstream test groups (polyline property-sheet
+close/open, translation catalogs, Info Cursor colour buttons, and Snake
+commands) pass 7 cases / 261 assertions. An incremental rebuild of both test
+targets succeeds; `git diff --check` passes. CMake reported unresolved
+translation locale-code warnings for existing catalogs and compilation
+reported existing `nodiscard`/Qt deprecation warnings; neither prevented the
+build or selected tests.
+
+This is local integration evidence, not current-head GitHub CI, physical GUI,
+minimum-macOS, signing/notarization, or ODA/AutoCAD acceptance. Push this merge
+and checkpoint to PR #3193, then recheck checks against the resulting exact
+head; do not carry the W788 CI snapshot forward as if it covered the merge.
