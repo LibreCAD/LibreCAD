@@ -1172,6 +1172,33 @@ TEST_CASE("Four-point parabola reconstructions retain typed offset support",
     CHECK(validCandidates > 0);
 }
 
+TEST_CASE("A second four-point parabola reconstruction follows exact offset normals",
+          "[curve-offset][direct][parabola][reconstruction][oracle]") {
+    const std::array<RS_Vector, 3> controls{{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}};
+    const auto quadraticAt = [&controls](const double t) {
+        const double u = 1.0 - t;
+        return controls[0] * (u * u) + controls[1] * (2.0 * u * t) + controls[2] * (t * t);
+    };
+    const std::vector<RS_Vector> samples{quadraticAt(0.0), quadraticAt(0.3), quadraticAt(0.7), quadraticAt(1.0)};
+    const auto candidates = LC_ParabolaData::From4Points(samples);
+    const auto candidate = std::find_if(candidates.begin(), candidates.end(), [](const LC_ParabolaData& data) { return data.isValid(); });
+    REQUIRE(candidate != candidates.end());
+
+    const LC_Parabola source{nullptr, *candidate};
+    const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(snapshot);
+    CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+    const EvalFn exactCurve = evaluator(source);
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        const double distance = 0.1;
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        const auto result = offsetToSide(source, side, distance);
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("Typed parabola offsets remain exact after an affine shape transform",
           "[curve-offset][direct][parabola][affine]") {
     const std::array<LC_ParabolaData, 4> transformedSources{{

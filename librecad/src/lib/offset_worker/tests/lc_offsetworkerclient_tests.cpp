@@ -622,6 +622,17 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         reconstructedParabolas.begin(), reconstructedParabolas.end(),
         [](const LC_ParabolaData& candidate) { return candidate.isValid(); });
     REQUIRE(reconstructedParabola != reconstructedParabolas.end());
+    const std::array<RS_Vector, 3> secondParabolaControls{{{0.0, 0.0}, {5.0, 10.0}, {11.0, 2.0}}};
+    const auto secondParabolaAt = [&secondParabolaControls](const double t) {
+        const double u = 1.0 - t;
+        return secondParabolaControls[0] * (u * u) + secondParabolaControls[1] * (2.0 * u * t) + secondParabolaControls[2] * (t * t);
+    };
+    const std::vector<RS_Vector> secondParabolaSamples{secondParabolaAt(0.0), secondParabolaAt(0.3), secondParabolaAt(0.7),
+                                                       secondParabolaAt(1.0)};
+    const auto secondParabolas = LC_ParabolaData::From4Points(secondParabolaSamples);
+    const auto secondParabola =
+        std::find_if(secondParabolas.begin(), secondParabolas.end(), [](const LC_ParabolaData& candidate) { return candidate.isValid(); });
+    REQUIRE(secondParabola != secondParabolas.end());
     RS_Polyline mixedBulgePolyline;
     mixedBulgePolyline.addVertex({0, 0}, .2);
     mixedBulgePolyline.addVertex({8, 0}, -.2);
@@ -669,7 +680,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{endpointTangentParabola},
         LC_OffsetSourceGeometry{tangentConstrainedSpline.getData()},
         *mixedBulgeSource,
-        LC_OffsetSourceGeometry{LC_HyperbolaData{{0.0, 0.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true}}};
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0.0, 0.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true}},
+        LC_OffsetSourceGeometry{*secondParabola}};
     const std::size_t smallCircleFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{{0.0, 0.0}, 2e-4}});
     const std::size_t largeCircleFixture = sources.size();
