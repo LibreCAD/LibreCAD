@@ -32267,3 +32267,23 @@ source family` passes 1,114,565 assertions/1 case with
 `DWGREAD=/opt/homebrew/bin/dwgread`. Test target builds and `git diff --check`
 passes. Worker test commit: `e093c3b4f` (`test(offset): persist scaled
 corner polyline`).
+
+## 763. Qualify a Second Translated Corner Scale (2026-11-10)
+
+Extended the independent open arc-line exact-normal oracle with the cornering
+`bulge 0.2` profile at scale `1e-2`, translated by `(10,-20)`. Both sides at
+scale-relative distances `0.1` and `0.25` must meet the requested geometry
+tolerance. Added the same source at offset distance `0.0025` to the real worker
+matrix; the pick/fallback point is transformed with the source to exercise the
+oracle's right-side case through generation, cache admission, replacement and
+Produce, all five DXF/DWG lanes, and independent LibreDWG parsing.
+
+Validation: focused exact-normal oracle passes 19,161 assertions/1 case; the
+complete direct `[curve-offset][direct][polyline]` selection passes 48,739
+assertions/3 cases. The worker family/persistence case passes 1,115,140
+assertions/1 case with `DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs
+are independently parsed. Both targets build, scoped clang-format passes on
+the changed lines, and `git diff --check` passes. This qualifies the recorded
+scale and side only; other corner scales, the opposite worker side, and other
+translated/topological profiles remain open. Test commit: `477c86cdc`
+(`test(offset): persist second scaled corner profile`).
