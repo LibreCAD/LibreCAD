@@ -33627,3 +33627,25 @@ parameterization matrix; continue recording direct, worker, and persistence
 evidence per variant, and retain bounded refusal where topology/numeric
 certification is unresolved. Test commit: `819a38d47` (`test(offset): qualify
 very-large-origin ellipse cusp`).
+
+## 824. Characterize a Very-large-origin 1000-to-1 Ellipse Cusp (2026-11-10)
+
+Added the matching reversed, rotated partial-ellipse profile at ratio `1e-3`
+and center `(1e7, -1e7)`, with cusp radius `1e-4`. The direct geometric
+oracle passes both sides at `0.9e-4` and `1e-4`. The inward `1.1e-4` result
+returns `LimitExceeded` with no entities or chains and reports intersection
+work exhaustion; this is an explicit bounded refusal, not a supported
+post-cusp direct result. The focused case passes 22,146 assertions.
+
+Added both worker pick lanes at all three distances. The worker family matrix
+passes 1,545,497 assertions through generation, cache/replacement, Produce,
+and all five DXF/DWG lanes, with `dwgread` parsing the generated DWGs. The
+worker lane completes its picks, but this is not evidence that its selected
+branch is identical to the direct engine's inward over-cusp case; keep
+side-specific worker/direct equivalence as a separate acceptance question.
+
+This qualifies only the recorded profile, parameter interval, and distances.
+Continue broader ellipse origin/eccentricity coverage, and preserve the direct
+work-budget refusal until a bounded algorithm proves the inward over-cusp
+geometry. Test commit: `e128be842` (`test(offset): qualify large-origin thin
+ellipse cusp`).
