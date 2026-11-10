@@ -695,6 +695,13 @@ TEST_CASE("Thin and far ellipse offsets stay at the distance everywhere", "[curv
     const RS_Ellipse translatedRotatedReversedNarrowArc{
         nullptr, RS_EllipseData{{1e8, -1e8}, {50.0, 100.0 * std::sin(rotation)}, 1e-4, 1.5, 0.25, true}};
     checkOffset(offsetOf(translatedRotatedReversedNarrowArc, kLeft, 0.1), curveOf(translatedRotatedReversedNarrowArc), 0.1, {false});
+    const double seamGap = 0.1;
+    const RS_Ellipse shortSeamNarrowArc = ellipse(100.0, 1e-4, 2.0 * M_PI - seamGap, seamGap);
+    checkOffset(offsetOf(shortSeamNarrowArc, kRight, 0.1), curveOf(shortSeamNarrowArc), 0.1, {false});
+    const RS_Ellipse nearFullNarrowArc = ellipse(100.0, 1e-4, seamGap, 2.0 * M_PI - seamGap);
+    checkOffset(offsetOf(nearFullNarrowArc, kRight, 0.1), curveOf(nearFullNarrowArc), 0.1, {false});
+    const RS_Ellipse reversedNearFullNarrowArc = ellipse(100.0, 1e-4, 2.0 * M_PI - seamGap, seamGap, true);
+    checkOffset(offsetOf(reversedNearFullNarrowArc, kLeft, 0.1), curveOf(reversedNearFullNarrowArc), 0.1, {false});
 }
 
 TEST_CASE("Extreme thin ellipse receives bounded refinement headroom", "[curve-offset][ellipse][boundary]") {

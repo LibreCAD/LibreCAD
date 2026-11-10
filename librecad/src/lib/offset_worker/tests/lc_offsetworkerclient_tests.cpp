@@ -730,13 +730,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
     thinEllipseFixtures.emplace_back(translatedThinEllipseFixture, 0.1);
     std::vector<std::pair<std::size_t, double>> thinEllipseArcFixtures;
-    const std::array<RS_EllipseData, 6> thinEllipseArcs{{
+    const std::array<RS_EllipseData, 9> thinEllipseArcs{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.25, 1.5, false},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 1.5, 0.25, true},
         {{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.25, 1.5, false},
         {{1e8, -1e8}, {100.0, 0.0}, 1e-4, 1.5, 0.25, true},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.25, 1.5, false},
         {{1e8, -1e8}, {50.0, 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 1.5, 0.25, true},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 2.0 * M_PI - 0.1, 0.1, false},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.1, 2.0 * M_PI - 0.1, false},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 2.0 * M_PI - 0.1, 0.1, true},
     }};
     for (const RS_EllipseData& arc : thinEllipseArcs) {
         const std::size_t fixture = sources.size();
@@ -1052,7 +1055,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (thinEllipseArc != thinEllipseArcFixtures.end()) {
             const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
             const double major = ellipse.majorP.magnitude();
-            const double parameter = (ellipse.angle1 + ellipse.angle2) / 2.0;
+            double end = ellipse.angle2;
+            if (!ellipse.reversed && end < ellipse.angle1)
+                end += 2.0 * M_PI;
+            else if (ellipse.reversed && end > ellipse.angle1)
+                end -= 2.0 * M_PI;
+            const double parameter = (ellipse.angle1 + end) / 2.0;
             const RS_Vector majorUnit = ellipse.majorP / major;
             const RS_Vector minorUnit{-majorUnit.y, majorUnit.x};
             const RS_Vector minorP = minorUnit * (major * ellipse.ratio);
