@@ -882,7 +882,7 @@ TEST_CASE("Zero-radius circles are refused without offset geometry",
 
 TEST_CASE("Native circle offsets preserve exact normals across scale and translation",
           "[curve-offset][direct][circle][oracle][scale]") {
-    for (const double scale : {1e-4, 1.0, 1e4}) {
+    for (const double scale : {1e-6, 1e-4, 1.0, 1e4, 1e8}) {
         for (const double translationRatio : {0.0, 1e6}) {
             const RS_Vector center{translationRatio * scale, -translationRatio * scale};
             const double radius = 2.0 * scale;
