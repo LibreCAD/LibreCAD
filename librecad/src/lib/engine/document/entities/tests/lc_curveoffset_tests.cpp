@@ -1433,11 +1433,11 @@ TEST_CASE("Mixed-bulge polyline offsets stay at exact distance from its line and
 
 TEST_CASE("Open arc-line polylines follow exact normals across tangent and corner joins",
           "[curve-offset][direct][polyline][open][oracle]") {
-    const auto verifyProfile = [](const double bulge) {
+    const auto verifyProfile = [](const double bulge, const double scale = 1.0, const RS_Vector& translation = RS_Vector{0.0, 0.0}) {
         RS_Polyline source;
-        source.addVertex({0.0, 0.0}, bulge);
-        source.addVertex({2.0, 0.0});
-        source.addVertex({2.0, 2.0});
+        source.addVertex(translation, bulge);
+        source.addVertex(translation + RS_Vector{2.0 * scale, 0.0});
+        source.addVertex(translation + RS_Vector{2.0 * scale, 2.0 * scale});
         source.endPolyline();
         const auto sourceSegments = orientedSegments(source);
         REQUIRE(sourceSegments.size() == 2);
@@ -1450,9 +1450,10 @@ TEST_CASE("Open arc-line polylines follow exact normals across tangent and corne
             sourceBreaks.push_back(sourceBreaks.back() + (segment.arc ? std::abs(segment.sweep) : segment.length()));
         }
 
-        for (const double distance : {0.1, 0.25}) {
+        for (const double unitDistance : {0.1, 0.25}) {
+            const double distance = unitDistance * scale;
             for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-                CAPTURE(bulge, distance, side);
+                CAPTURE(bulge, scale, translation, distance, side);
                 const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
                 const auto result = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(side, distance), options,
                                                                         LC_CurveOffset::makeDirectSourceBudget());
@@ -1517,10 +1518,11 @@ TEST_CASE("Open arc-line polylines follow exact normals across tangent and corne
     verifyProfile(1.0);
     verifyProfile(0.2);
     verifyProfile(2.0);
+    verifyProfile(0.2, 1e-3, {10.0, -20.0});
+    verifyProfile(2.0, 1e4, {1e6, -2e6});
 }
 
-TEST_CASE("Major and minor bulge offsets follow exact segment normals",
-          "[curve-offset][direct][polyline][bulge][major][oracle]") {
+TEST_CASE("Major and minor bulge offsets follow exact segment normals", "[curve-offset][direct][polyline][bulge][major][oracle]") {
     RS_Polyline source;
     source.addVertex({0, 0}, 2.0);
     source.addVertex({10, 0}, -0.2);
