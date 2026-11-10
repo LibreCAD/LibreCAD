@@ -30,6 +30,7 @@
 #include <QComboBox>
 
 #include <optional>
+#include <vector>
 
 #include "lc_linetype.h"
 #include "rs.h"
@@ -77,6 +78,9 @@ public:
         return m_unchanged;
     }
 
+protected:
+    void changeEvent(QEvent* event) override;
+
 private
     slots :
     void slotLineTypeChanged(int index);
@@ -89,6 +93,8 @@ private:
         LineTypeRole = Qt::UserRole,
         LineTypeNameRole = Qt::UserRole + 1,
         LineTypeRowKindRole = Qt::UserRole + 2,
+        LineTypeDescriptionRole = Qt::UserRole + 3,
+        LineTypePatternRole = Qt::UserRole + 4,
     };
     /// The kinds start at 1: a row without one (the separator) reads as 0.
     enum RowKind {
@@ -99,6 +105,14 @@ private:
     };
 
     void fillRows(const LC_LineTypeList* list);
+    void addBuiltInRows(const LC_LineTypeList* list);
+    void setRowEntry(int index, const LC_LineType& entry);
+    std::vector<double> rowPattern(int index) const;
+    void applyRowIcons();
+    QIcon modeIcon(const std::vector<double>* pattern) const;
+    QIcon previewIcon(const std::vector<double>& pattern) const;
+    QIcon missingIcon() const;
+    void paintLayerRow(const RS_Pen& layerPen);
     void readRow(int index);
     int indexForName(const QString& name) const;
     int indexForEnum(RS2::LineType type) const;
@@ -106,7 +120,6 @@ private:
     bool isCanonicalName(const QString& name, RS2::LineType type) const;
     void removeTemporaryRow();
     int appendTemporaryRow(const QString& name, RS2::LineType type);
-    void ensureSeparator();
 
     RS2::LineType m_currentLineType = RS2::SolidLine;
     bool m_showByLayer = false;
@@ -119,6 +132,13 @@ private:
     RS_Pen m_sourcePen;
     bool m_hasSource = false;
     int m_sourceRowIndex = -1;
+    int m_builtInStart = 0;
+    /// Whether the 40x14 size belongs to list mode; leaving it hands the icon
+    /// size back to the style.
+    bool m_listIconSize = false;
+    /// The layer pen whose picture the By Layer row copies; a rebuild forgets
+    /// it, because the host paints the row again.
+    std::optional<RS_Pen> m_layerPen;
 };
 
 #endif
