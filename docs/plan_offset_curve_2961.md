@@ -31426,3 +31426,25 @@ clang-format checks and `git diff --check`. Test commit: `77cd63694`
 This closes only the translated 45-degree forward-arc threshold triplet.
 Other transformed partial arcs and ellipse ratios still require independent
 direct and end-to-end persistence qualification.
+
+## 727. Qualify the Translated 45-degree Reversed-arc Threshold Triplet (2026-11-09)
+
+Added the reversed counterpart to the translated 45-degree forward-arc
+threshold matrix: ratio-`1e-4` arc parameters `0.2` to `-0.2`, at inward
+distances `0.9e-6`, `1.0e-6`, and `1.1e-6`. Direct geometry selects the right
+side for the reversed entity and passes the same exact major-axis feature,
+distance, tangent, topology, and materialized-output intersection checks.
+
+Added all three cases to the real-worker matrix with negative signed distances
+to preserve inward orientation. They pass generation, cache admission,
+replacement/Produce, all five DXF/DWG round-trip lanes, and independent
+LibreDWG parsing of both DWG outputs.
+
+Validation: the full direct `[curve-offset][ellipse][cusp]` selection passes
+206,352 assertions/7 cases. The full worker-client suite passes 1,020,308
+assertions/22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`. Touched ranges
+pass repository clang-format checks and `git diff --check`. Test commit:
+`b01832444` (`test(offset): qualify reversed arc cusp thresholds`).
+
+This closes only the translated 45-degree reversed-arc threshold triplet.
+Other transformed partial arcs and eccentricity ratios remain open.
