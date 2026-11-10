@@ -32228,14 +32228,15 @@ clang-format and `git diff --check` pass. Worker test commit: `0b9b58722`
 
 ## 761. Reconcile the Source-family Picker and Parabola Request (2026-11-10)
 
-The requested Properties source widget must let the user change the desired
-source family while replacement selection is active, filter drawing candidates
-by that family, and keep the existing source visibly highlighted until a valid
-replacement is committed. The selector must include every kind currently
-modeled by `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle,
-ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
-`LC_Parabola` remains a distinct option and replacement type, not an alias for
-spline-points.
+The Properties source widget must let the user change the desired source family
+before and during replacement selection. Changing the family updates which
+drawing candidates are eligible but does not replace the current source; the
+current source remains visibly highlighted until a valid candidate is accepted.
+On acceptance, the source becomes that candidate's actual typed geometry. The
+selector must include every kind currently modeled by
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. `LC_Parabola` remains
+a distinct option and replacement type, not an alias for spline-points.
 
 Current-code reconciliation: this picker contract is already implemented and
 covered by the existing all-family Properties regressions recorded in sections
@@ -32287,3 +32288,19 @@ the changed lines, and `git diff --check` passes. This qualifies the recorded
 scale and side only; other corner scales, the opposite worker side, and other
 translated/topological profiles remain open. Test commit: `477c86cdc`
 (`test(offset): persist second scaled corner profile`).
+
+## 764. Qualify the Opposite Side of the Translated Corner Polyline (2026-11-10)
+
+Added the opposite-side pick for the scale-`1e-3`, translation-`(10,-20)`,
+open `bulge 0.2` corner fixture to the real worker-client persistence matrix.
+This complements section 762's other side at the same scale. The case exercises
+worker generation, cache admission, replacement/Produce, all five DXF/DWG
+round-trip lanes, and independent LibreDWG parsing. It qualifies only this
+fixture, distance, and side; further scales, offsets, topologies, and
+parameterizations remain open.
+
+Validation: `Worker client joins typed source generation for every modeled
+source family` passes 1,115,141 assertions/1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Scoped clang-format and `git diff --check`
+pass. Test commit: `93f96a67c` (`test(offset): persist opposite scaled corner
+side`).
