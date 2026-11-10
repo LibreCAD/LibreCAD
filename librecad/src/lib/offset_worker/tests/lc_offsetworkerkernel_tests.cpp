@@ -2421,16 +2421,14 @@ TEST_CASE("worker validates nonuniform periodic spline caches on both offset sid
                       (profileDiagnostics.status == LC_CurveOffsetStatus::Ok));
                 LC_CurveOffsetStatus expectedStatus = LC_CurveOffsetStatus::ToleranceNotMet;
                 switch (weightProfile) {
+                case WeightProfile::Alternating:
                 case WeightProfile::ShiftedAlternating:
-                    if (signedDistance == .0625) expectedStatus = LC_CurveOffsetStatus::Ok;
-                    break;
                 case WeightProfile::Gradual:
                 case WeightProfile::ReversedGradual:
                     expectedStatus = LC_CurveOffsetStatus::Ok;
                     break;
                 case WeightProfile::Mild:
                 case WeightProfile::Wide:
-                case WeightProfile::Alternating:
                     break;
                 }
                 CHECK(diagnostic.status == expectedStatus);

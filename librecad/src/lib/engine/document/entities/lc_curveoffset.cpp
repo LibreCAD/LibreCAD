@@ -6061,6 +6061,18 @@ LC_CurveOffsetOptions makeDirectOptions(const RS_Entity& source, const double di
         // vertices; the shared sample and output budgets still bound the work.
         options.maxSubdivisionDepth += 12;
     }
+    if (const auto* spline = dynamic_cast<const RS_Spline*>(&source); spline != nullptr) {
+        const std::vector<double>& weights = spline->getData().weights;
+        if (!weights.empty()) {
+            const auto [minimum, maximum] = std::minmax_element(weights.begin(), weights.end());
+            if (*minimum > 0.0 && *maximum / *minimum >= 1e8) {
+                // Strong rational conditioning can concentrate offset curvature
+                // next to a cusp. Extra depth is bounded by the unchanged sample
+                // and output budgets; positional tolerances are not relaxed.
+                options.maxSubdivisionDepth += 20;
+            }
+        }
+    }
     options.maxSamples = kDefaultMaxSamples;
     options.maxOutputBranches = kDefaultMaxOutputBranches;
     // not used by Direct, but part of a complete options object
