@@ -645,6 +645,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(mixedBulgeSource);
     REQUIRE(mixedBulgeSource->kind() == LC_OffsetSourceGeometry::Kind::Polyline);
     const LC_HyperbolaData reversedBoundsHyperbolaData{{-5.0, 9.0}, {6.128355544951824, -5.142300877492315}, 1.5, 1.7, -1.9, false};
+    const LC_HyperbolaData translatedThinLeftHyperbolaData{{350.0, -275.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true};
     std::vector<LC_OffsetSourceGeometry> sources{
         LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
         LC_OffsetSourceGeometry{spline},
@@ -688,6 +689,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
+    const std::size_t translatedThinHyperbolaNearFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{translatedThinLeftHyperbolaData});
+    const std::size_t translatedThinHyperbolaFarFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{translatedThinLeftHyperbolaData});
     const std::size_t smallCircleFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{{0.0, 0.0}, 2e-4}});
     const std::size_t largeCircleFixture = sources.size();
@@ -1201,6 +1206,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == translatedSmallParabolaFixture                                        ? 0.00025
             : i == reversedBoundsHyperbolaNearFixture                                    ? .9
             : i == reversedBoundsHyperbolaFarFixture                                     ? 3.6
+            : i == translatedThinHyperbolaNearFixture                                    ? .04
+            : i == translatedThinHyperbolaFarFixture                                     ? .16
             : i == 21                                                                    ? .1
             : i == 24                                                                    ? 1.9
             : i == scaledMajorSweepFixture                                               ? 2500.0
@@ -1291,10 +1298,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture || i == nearParallelParabolaFixture ||
             i == nearFullArcFixture || i == narrowSeamArcFixture || i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
             i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture || i == reversedBoundsHyperbolaNearFixture ||
-            i == reversedBoundsHyperbolaFarFixture || i + 3 >= sources.size() ||
-            (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) || scaledCircle != scaledCircleFixtures.end() ||
-            thinEllipse != thinEllipseFixtures.end() || thinEllipseCusp != thinEllipseCuspFixtures.end() ||
-            thinEllipseArc != thinEllipseArcFixtures.end())
+            i == reversedBoundsHyperbolaFarFixture || i == translatedThinHyperbolaNearFixture || i == translatedThinHyperbolaFarFixture ||
+            i + 3 >= sources.size() || (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) ||
+            scaledCircle != scaledCircleFixtures.end() || thinEllipse != thinEllipseFixtures.end() ||
+            thinEllipseCusp != thinEllipseCuspFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end())
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -1482,6 +1489,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarOppositeFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
+    const std::size_t translatedThinHyperbolaNearOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{translatedThinLeftHyperbolaData});
+    const std::size_t translatedThinHyperbolaFarOppositeFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{translatedThinLeftHyperbolaData});
 
     REQUIRE(lc::test::ensureSettings());
     lc::test::QuietLog quiet;
@@ -1504,6 +1515,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     };
     std::vector<PersistedGeometry> persistedGeometry;
     std::array<std::optional<LC_CurveOffsetSide>, 2> reversedBoundsHyperbolaResolvedSides{};
+    std::array<std::optional<LC_CurveOffsetSide>, 2> translatedThinHyperbolaResolvedSides{};
     const auto persistenceGeometry = [](const RS_Entity& entity, const std::size_t sourceFixture) {
         PersistedGeometry result{sourceFixture, entity.rtti(), entity.getStartpoint(), entity.getEndpoint(),
                                  entity.getMin(), entity.getMax(), entity.getRefPoints(), entity.getLength(), false,
@@ -1530,6 +1542,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == reversedBoundsHyperbolaNearOppositeFixture || i == reversedBoundsHyperbolaFarOppositeFixture;
         const bool reversedBoundsHyperbolaOpposite =
             i == reversedBoundsHyperbolaNearOppositeFixture || i == reversedBoundsHyperbolaFarOppositeFixture;
+        const bool translatedThinHyperbolaFixture = i == translatedThinHyperbolaNearFixture || i == translatedThinHyperbolaFarFixture ||
+            i == translatedThinHyperbolaNearOppositeFixture || i == translatedThinHyperbolaFarOppositeFixture;
+        const bool translatedThinHyperbolaOpposite =
+            i == translatedThinHyperbolaNearOppositeFixture || i == translatedThinHyperbolaFarOppositeFixture;
         const auto scaledCircle =
             std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipse =
@@ -1636,7 +1652,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             offset.coord = {10.005, -19.99506};
             offset.sideFallback = offset.coord;
         }
-        if (reversedBoundsHyperbolaFixture) {
+        if (reversedBoundsHyperbolaFixture || translatedThinHyperbolaFixture) {
             const auto& data = std::get<LC_HyperbolaData>(sources[i].value);
             const double a = data.majorP.magnitude();
             const double b = a * data.ratio;
@@ -1645,142 +1661,155 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const double traversalSign = data.angle2 >= data.angle1 ? 1.0 : -1.0;
             const RS_Vector tangent = (RS_Vector{0.0, b}.rotated(data.majorP.angle()) * traversalSign).normalized();
             const RS_Vector leftNormal{-tangent.y, tangent.x};
+            const bool near = i == reversedBoundsHyperbolaNearFixture || i == reversedBoundsHyperbolaNearOppositeFixture ||
+                i == translatedThinHyperbolaNearFixture || i == translatedThinHyperbolaNearOppositeFixture;
             offset.distance = (i == reversedBoundsHyperbolaNearFixture || i == reversedBoundsHyperbolaNearOppositeFixture) ? .9 : 3.6;
-            offset.coord = vertex + leftNormal * (offset.distance * (reversedBoundsHyperbolaOpposite ? -2.0 : 2.0));
+            if (translatedThinHyperbolaFixture)
+                offset.distance = near ? .04 : .16;
+            offset.coord = vertex +
+                leftNormal * (offset.distance * ((reversedBoundsHyperbolaOpposite || translatedThinHyperbolaOpposite) ? -2.0 : 2.0));
             offset.sideFallback = offset.coord;
         }
-        if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
-            const double scale = i == scaledCornerOppositeFixture ? 1e-3 : 1e-2;
-            offset.distance = 0.25 * scale;
-            offset.coord = {10.0 + scale, -20.0 + 3.0 * scale};
-            offset.sideFallback = offset.coord;
-        }
-        offset.number = 1;
-        offset.multipleCopies = true;
-        offset.keepOriginals = true;
-        LC_OffsetBatchPreparation prepared{offset, {entity.get()}, false, {}};
-        LC_DocumentModificationBatch batch;
-        REQUIRE_FALSE(prepared.advance(batch));
-        const qint64 requestId = nextRequestId++;
-        const auto workerRequest = prepared.request(token(requestId));
-        REQUIRE(workerRequest);
-        REQUIRE(std::holds_alternative<Req::Produce>(workerRequest->operation));
-        const auto& produce = std::get<Req::Produce>(workerRequest->operation);
-        if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
-            CHECK(produce.source.index() == 0);
-        } else if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Spline) {
-            CHECK(produce.source.index() == 1);
-        } else {
-            REQUIRE(produce.source.index() == 2);
-            const auto* typed = std::get_if<LC_OffsetSourceGeometry>(&produce.source);
-            REQUIRE(typed);
-            CHECK(typed->kind() == sources[i].kind());
-        }
-        CHECK(Req::admitted(*workerRequest));
-        const auto sourceBefore = Req::Values::encodeSourceGeometry(sources[i]);
-        REQUIRE(sourceBefore);
-        Receipts producedReceipts;
-        REQUIRE(owned.get().submit(*workerRequest, Client::Mode::Commit,
-            producedReceipts.into(0)));
-        rt.until([&] { return producedReceipts.calls[0] != 0; });
-        const auto& produced = completed(producedReceipts.at(0), requestId, 5);
-        const auto& producedReply = produced.reply();
-        const auto* producedValue = std::get_if<Reply::Produced>(&producedReply.result);
-        REQUIRE(producedValue);
-        CAPTURE(i, producedValue->outputStatus, producedValue->source.status,
-            producedValue->source.copiesMade, producedValue->source.engineStatus,
-            producedValue->source.detail, producedValue->outputs.size());
-        INFO("worker diagnostics: " << producedReceipts.at(0).diagnostics.toStdString());
-        const auto expectedSingular = std::find(expectedSingularThinCuspFixtures.begin(), expectedSingularThinCuspFixtures.end(), i);
-        if (expectedSingular != expectedSingularThinCuspFixtures.end()) {
-            CHECK(producedValue->outputStatus == Reply::OrdinaryStatus::None);
-            CHECK(producedValue->source.status == LC_OffsetSourceStatus::OffsetFailed);
-            CHECK(producedValue->source.copiesMade == 0);
-            CHECK(producedValue->source.engineStatus == LC_CurveOffsetStatus::SingularOffset);
-            CHECK(producedValue->outputs.empty());
+            if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
+                const double scale = i == scaledCornerOppositeFixture ? 1e-3 : 1e-2;
+                offset.distance = 0.25 * scale;
+                offset.coord = {10.0 + scale, -20.0 + 3.0 * scale};
+                offset.sideFallback = offset.coord;
+            }
+            offset.number = 1;
+            offset.multipleCopies = true;
+            offset.keepOriginals = true;
+            LC_OffsetBatchPreparation prepared{offset, {entity.get()}, false, {}};
+            LC_DocumentModificationBatch batch;
+            REQUIRE_FALSE(prepared.advance(batch));
+            const qint64 requestId = nextRequestId++;
+            const auto workerRequest = prepared.request(token(requestId));
+            REQUIRE(workerRequest);
+            REQUIRE(std::holds_alternative<Req::Produce>(workerRequest->operation));
+            const auto& produce = std::get<Req::Produce>(workerRequest->operation);
+            if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Ellipse) {
+                CHECK(produce.source.index() == 0);
+            }
+            else if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Spline) {
+                CHECK(produce.source.index() == 1);
+            }
+            else {
+                REQUIRE(produce.source.index() == 2);
+                const auto* typed = std::get_if<LC_OffsetSourceGeometry>(&produce.source);
+                REQUIRE(typed);
+                CHECK(typed->kind() == sources[i].kind());
+            }
+            CHECK(Req::admitted(*workerRequest));
+            const auto sourceBefore = Req::Values::encodeSourceGeometry(sources[i]);
+            REQUIRE(sourceBefore);
+            Receipts producedReceipts;
+            REQUIRE(owned.get().submit(*workerRequest, Client::Mode::Commit, producedReceipts.into(0)));
+            rt.until([&] { return producedReceipts.calls[0] != 0; });
+            const auto& produced = completed(producedReceipts.at(0), requestId, 5);
+            const auto& producedReply = produced.reply();
+            const auto* producedValue = std::get_if<Reply::Produced>(&producedReply.result);
+            REQUIRE(producedValue);
+            CAPTURE(i, producedValue->outputStatus, producedValue->source.status, producedValue->source.copiesMade,
+                    producedValue->source.engineStatus, producedValue->source.detail, producedValue->outputs.size());
+            INFO("worker diagnostics: " << producedReceipts.at(0).diagnostics.toStdString());
+            const auto expectedSingular = std::find(expectedSingularThinCuspFixtures.begin(), expectedSingularThinCuspFixtures.end(), i);
+            if (expectedSingular != expectedSingularThinCuspFixtures.end()) {
+                CHECK(producedValue->outputStatus == Reply::OrdinaryStatus::None);
+                CHECK(producedValue->source.status == LC_OffsetSourceStatus::OffsetFailed);
+                CHECK(producedValue->source.copiesMade == 0);
+                CHECK(producedValue->source.engineStatus == LC_CurveOffsetStatus::SingularOffset);
+                CHECK(producedValue->outputs.empty());
+                REQUIRE(prepared.accept(produced));
+                REQUIRE(prepared.advance(batch));
+                REQUIRE(prepared.outcome().sources.size() == 1);
+                CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+                CHECK_FALSE(prepared.outcome().sources.front().complete());
+                CHECK(batch.entitiesToAdd.empty());
+                CHECK(batch.entitiesToDelete.empty());
+                continue;
+            }
+            if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Line) {
+                REQUIRE(producedValue->outputs.size() == 1);
+                CHECK(std::holds_alternative<Req::Segment>(producedValue->outputs.front()));
+            }
+            else if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Arc ||
+                     sources[i].kind() == LC_OffsetSourceGeometry::Kind::Circle ||
+                     sources[i].kind() == LC_OffsetSourceGeometry::Kind::Polyline) {
+                REQUIRE(producedValue->outputs.size() == 1);
+                const auto* output = std::get_if<LC_OffsetSourceGeometry>(&producedValue->outputs.front());
+                REQUIRE(output);
+                CHECK(output->kind() == sources[i].kind());
+            }
             REQUIRE(prepared.accept(produced));
             REQUIRE(prepared.advance(batch));
             REQUIRE(prepared.outcome().sources.size() == 1);
-            CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
-            CHECK_FALSE(prepared.outcome().sources.front().complete());
-            CHECK(batch.entitiesToAdd.empty());
-            CHECK(batch.entitiesToDelete.empty());
-            continue;
-        }
-        if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Line) {
-            REQUIRE(producedValue->outputs.size() == 1);
-            CHECK(std::holds_alternative<Req::Segment>(producedValue->outputs.front()));
-        } else if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Arc ||
-                   sources[i].kind() == LC_OffsetSourceGeometry::Kind::Circle ||
-                   sources[i].kind() == LC_OffsetSourceGeometry::Kind::Polyline) {
-            REQUIRE(producedValue->outputs.size() == 1);
-            const auto* output = std::get_if<LC_OffsetSourceGeometry>(&producedValue->outputs.front());
-            REQUIRE(output);
-            CHECK(output->kind() == sources[i].kind());
-        }
-        REQUIRE(prepared.accept(produced));
-        REQUIRE(prepared.advance(batch));
-        REQUIRE(prepared.outcome().sources.size() == 1);
-        if (expectedVanished != expectedVanishingThinCuspFixtures.end()) {
-            CHECK(producedValue->source.status == LC_OffsetSourceStatus::Vanished);
-            CHECK(producedValue->source.copiesMade == 0);
-            CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::Vanished);
-            CHECK_FALSE(prepared.outcome().sources.front().complete());
-            CHECK(batch.entitiesToAdd.empty());
-            CHECK(batch.entitiesToDelete.empty());
-            continue;
-        }
-        CHECK(prepared.outcome().sources.front().source == entity.get());
-        CHECK(prepared.outcome().sources.front().complete());
-        if (reversedBoundsHyperbolaFixture) {
-            REQUIRE(prepared.outcome().sources.front().resolvedSide);
-            const std::size_t sideSlot = i == reversedBoundsHyperbolaNearFixture || i == reversedBoundsHyperbolaNearOppositeFixture ? 0 : 1;
-            auto& firstSide = reversedBoundsHyperbolaResolvedSides[sideSlot];
-            if (reversedBoundsHyperbolaOpposite) {
-                REQUIRE(firstSide);
-                CHECK(*prepared.outcome().sources.front().resolvedSide != *firstSide);
+            if (expectedVanished != expectedVanishingThinCuspFixtures.end()) {
+                CHECK(producedValue->source.status == LC_OffsetSourceStatus::Vanished);
+                CHECK(producedValue->source.copiesMade == 0);
+                CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::Vanished);
+                CHECK_FALSE(prepared.outcome().sources.front().complete());
+                CHECK(batch.entitiesToAdd.empty());
+                CHECK(batch.entitiesToDelete.empty());
+                continue;
             }
-            else {
-                firstSide = prepared.outcome().sources.front().resolvedSide;
+            CHECK(prepared.outcome().sources.front().source == entity.get());
+            CHECK(prepared.outcome().sources.front().complete());
+            if (reversedBoundsHyperbolaFixture || translatedThinHyperbolaFixture) {
+                REQUIRE(prepared.outcome().sources.front().resolvedSide);
+                const std::size_t sideSlot = i == reversedBoundsHyperbolaNearFixture || i == reversedBoundsHyperbolaNearOppositeFixture ||
+                        i == translatedThinHyperbolaNearFixture || i == translatedThinHyperbolaNearOppositeFixture
+                    ? 0
+                    : 1;
+                auto& resolvedSides =
+                    translatedThinHyperbolaFixture ? translatedThinHyperbolaResolvedSides : reversedBoundsHyperbolaResolvedSides;
+                auto& firstSide = resolvedSides[sideSlot];
+                if (reversedBoundsHyperbolaOpposite || translatedThinHyperbolaOpposite) {
+                    REQUIRE(firstSide);
+                    CHECK(*prepared.outcome().sources.front().resolvedSide != *firstSide);
+                }
+                else {
+                    firstSide = prepared.outcome().sources.front().resolvedSide;
+                }
             }
+            CHECK(Req::Values::encodeSourceGeometry(sources[i]) == sourceBefore);
+            REQUIRE_FALSE(batch.entitiesToAdd.empty());
+            RS2::EntityType expectedOutputType = RS2::EntitySpline;
+            switch (sources[i].kind()) {
+                case LC_OffsetSourceGeometry::Kind::Line:
+                    expectedOutputType = RS2::EntityLine;
+                    break;
+                case LC_OffsetSourceGeometry::Kind::Arc:
+                    expectedOutputType = RS2::EntityArc;
+                    break;
+                case LC_OffsetSourceGeometry::Kind::Circle:
+                    expectedOutputType = RS2::EntityCircle;
+                    break;
+                case LC_OffsetSourceGeometry::Kind::Polyline:
+                    expectedOutputType = RS2::EntityPolyline;
+                    break;
+                default:
+                    break;
+            }
+            for (const RS_Entity* generated : batch.entitiesToAdd) {
+                REQUIRE(generated);
+                CAPTURE(i, sources[i].kind(), expectedOutputType, generated->rtti());
+                CHECK(generated->rtti() == expectedOutputType);
+                const auto geometry = persistenceGeometry(*generated, i);
+                std::unique_ptr<RS_Entity> copy{generated->clone()};
+                REQUIRE(copy);
+                copy->setLayer(persistenceLayer);
+                persistedGeometry.push_back(geometry);
+                persistenceGraphic.addEntity(copy.release());
+            }
+            prepared.release();
+            qDeleteAll(batch.entitiesToAdd);
         }
-        CHECK(Req::Values::encodeSourceGeometry(sources[i]) == sourceBefore);
-        REQUIRE_FALSE(batch.entitiesToAdd.empty());
-        RS2::EntityType expectedOutputType = RS2::EntitySpline;
-        switch (sources[i].kind()) {
-            case LC_OffsetSourceGeometry::Kind::Line:
-                expectedOutputType = RS2::EntityLine;
-                break;
-            case LC_OffsetSourceGeometry::Kind::Arc:
-                expectedOutputType = RS2::EntityArc;
-                break;
-            case LC_OffsetSourceGeometry::Kind::Circle:
-                expectedOutputType = RS2::EntityCircle;
-                break;
-            case LC_OffsetSourceGeometry::Kind::Polyline:
-                expectedOutputType = RS2::EntityPolyline;
-                break;
-            default:
-                break;
-        }
-        for (const RS_Entity* generated : batch.entitiesToAdd) {
-            REQUIRE(generated);
-            CAPTURE(i, sources[i].kind(), expectedOutputType, generated->rtti());
-            CHECK(generated->rtti() == expectedOutputType);
-            const auto geometry = persistenceGeometry(*generated, i);
-            std::unique_ptr<RS_Entity> copy{generated->clone()};
-            REQUIRE(copy);
-            copy->setLayer(persistenceLayer);
-            persistedGeometry.push_back(geometry);
-            persistenceGraphic.addEntity(copy.release());
-        }
-        prepared.release();
-        qDeleteAll(batch.entitiesToAdd);
-    }
 
     REQUIRE_FALSE(persistedGeometry.empty());
     CHECK(reversedBoundsHyperbolaResolvedSides[0]);
     CHECK(reversedBoundsHyperbolaResolvedSides[1]);
+    CHECK(translatedThinHyperbolaResolvedSides[0]);
+    CHECK(translatedThinHyperbolaResolvedSides[1]);
     struct PersistenceLane {
         RS2::FormatType format;
         const char* extension;
@@ -1814,13 +1843,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             REQUIRE(document.isObject());
             const QJsonArray objects = document.object().value("OBJECTS").toArray();
             const auto ulp = [](const double value) {
-                return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) -
-                       std::abs(value);
+                return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) - std::abs(value);
             };
             for (std::size_t fixture = scaledLineFixtureStart; fixture < scaledLineFixtureEnd; ++fixture) {
                 const PersistedGeometry* expected = nullptr;
                 for (const PersistedGeometry& candidate : persistedGeometry) {
-                    if (candidate.sourceFixture != fixture) continue;
+                    if (candidate.sourceFixture != fixture)
+                        continue;
                     REQUIRE(candidate.type == RS2::EntityLine);
                     REQUIRE(expected == nullptr);
                     expected = &candidate;
@@ -2055,7 +2084,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     CHECK(Req::Values::encodeSourceGeometry(linearEditable->sourceDefinition()->source) ==
         Req::Values::encodeSourceGeometry(*expectedLinearSource));
     CHECK(owned.get().healthyAndIdle());
-}
+    }
 
 TEST_CASE("Worker joined op8 validates a typed native source cache before materialization", Tags) {
     auto& rt = runtime();
