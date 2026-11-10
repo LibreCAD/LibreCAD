@@ -1218,7 +1218,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 cuspDistances = {0.9e-2, 1.0e-2, 1.1e-2};
                 break;
             case 77:
-                cuspDistances = {0.9e-3, 1.0e-3, 1.1e-3};
+                cuspDistances = {0.9e-4, 1.0e-4, 1.1e-4};
                 break;
             default:
                 cuspDistances = {0.5e-6};
@@ -1353,17 +1353,19 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
         reversed100To1InteriorPickFixtures.push_back(fixture);
     }
-    for (const double cuspDistance : {0.9e-3, 1.0e-3, 1.1e-3}) {
+    for (const double cuspDistance : {0.9e-4, 1.0e-4, 1.1e-4}) {
         const std::size_t fixture = sources.size();
         sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[77]});
         thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
         reversed1000To1ExteriorPickFixtures.push_back(fixture);
     }
-    for (const double cuspDistance : {0.9e-3, 1.0e-3, 1.1e-3}) {
+    for (const double cuspDistance : {0.9e-4, 1.0e-4, 1.1e-4}) {
         const std::size_t fixture = sources.size();
         sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[77]});
         thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
         reversed1000To1InteriorPickFixtures.push_back(fixture);
+        if (cuspDistance > 1.0e-4)
+            expectedLimitExceededProduceFixtures.push_back(fixture);
     }
     const std::size_t translatedThinEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});

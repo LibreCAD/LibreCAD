@@ -9408,6 +9408,37 @@ TEST_CASE("Produce kernel matches shared ellipse source series and records actua
     CHECK(plain.source.adoptionAttempts == 0); CHECK(plain.source.copiesKeptPlain == plain.source.copiesMade);
 }
 
+TEST_CASE("Produce resolves the inward pick for a very-large-origin thin ellipse cusp",
+          "[lc-offsetcurve][worker-kernel][produce][ellipse][cusp]") {
+    const double angle = 3.14159265358979323846 / 6.0;
+    RS_Ellipse source{nullptr, RS_EllipseData{{1e7, -1e7}, {100.0 * std::cos(angle), 100.0 * std::sin(angle)},
+                                               1e-3, 0.2, 0.0, true}};
+    auto op = seriesInput(source);
+    op.coordinate = source.getCenter();
+    op.fallback = source.getCenter();
+    op.distance = 1.1e-4;
+    op.copies = 1;
+
+    const auto defaultTolerance = LC_CurveOffset::createEntities(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, op.distance),
+        LC_CurveOffset::makeOffsetOptions(source, op.distance), LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(defaultTolerance.status == LC_CurveOffsetStatus::LimitExceeded);
+    const auto explicitTolerance = LC_CurveOffset::createEntities(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, op.distance),
+        LC_CurveOffset::makeOffsetOptions(source, op.distance, 0.1 * op.distance),
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(explicitTolerance.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(explicitTolerance.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
+
+    const auto value = seriesParity(source, op);
+    REQUIRE(value.source.resolvedSide);
+    CHECK(*value.source.resolvedSide == LC_CurveOffsetSide::Right);
+    CHECK(value.source.status == LC_OffsetSourceStatus::LimitExceeded);
+    CHECK(value.source.engineStatus == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(value.outputStatus == result::OrdinaryStatus::None);
+    CHECK(value.outputs.empty());
+}
+
 TEST_CASE("Produce kernel repeats actual stored caches using raw definition context without native input shells",
           "[lc-offsetcurve][worker-kernel][produce]") {
     RS_Ellipse original{nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false}};
