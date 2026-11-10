@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-09. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-10. Project: **LibreCAD**, not LibreCAD_3.
 
 ### Source-picker status
 
@@ -37,6 +37,15 @@ or treat this UI inventory as proof of complete offset support. Remaining
 source-family work is the per-variant geometry, worker/cache, edit, and
 applicable DXF/DWG qualification tracked below; ineligible variants must fail
 closed without changing the existing source or cache.
+
+The 2026-11-10 clarification reconfirms that the user must be able to change
+the requested source family before picking a replacement, and that parabola
+must be available as its own source type. These are already satisfied by the
+existing picker contract and do not require another UI implementation slice.
+Continue the open “all supported types” work by qualifying each eligible
+variant through its applicable geometry, worker/cache, replacement, and
+persistence paths; retain atomic refusal for variants that are not yet
+supported end to end.
 
 ## Current Contract
 
@@ -31494,3 +31503,33 @@ clang-format checks and `git diff --check`. Test commit: `ccba87199`
 
 This closes only the recorded rotated 100:1 arc triplet. Other ratios,
 translations, orientations, and sweep directions remain open.
+
+## 730. Qualify a Rotated 10:1 Elliptic-arc Cusp Triplet (2026-11-10)
+
+Added a translated, 30-degree forward arc with major radius `100`, ratio
+`1e-2` (10:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature
+radius is `a * ratio^2 = 1e-2`; distances `0.9e-2`, `1.0e-2`, and `1.1e-2`
+cover below, at, and above that cusp threshold. Direct materialization checks
+the independent distance/tangent oracle, the critical feature, one-open-chain
+topology, and materialized-output intersection validation. A normalized
+source also exercises the direct-branch/materialization path with the worker's
+implicit tolerance policy.
+
+The real-worker matrix runs the triplet through generation, cache admission,
+typed replacement/Produce, all five DXF/DWG round-trip lanes, and independent
+LibreDWG parsing of both DWG outputs. The profile-to-distance mapping is now
+explicit, so adding threshold ratios cannot silently shift the signed-distance
+assignments of existing cusp fixtures. Separate kernel and worker-client tests
+also exercise a translated rotated arc above the threshold.
+
+Validation: focused kernel test passes 12 assertions/1 case; the full direct
+`[curve-offset][ellipse][cusp]` selection passes 252,635 assertions/9 cases;
+the full worker-client suite passes 1,037,950 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. The three focused C++ ranges pass
+repository clang-format checks, `git diff --check` passes, and the test targets
+build successfully. Test commit: `9070da311` (`test(offset): qualify 10-to-1
+ellipse cusp arcs`).
+
+This closes only the recorded translated, rotated forward-arc 10:1 triplet.
+Other partial sweeps, reversed arcs, transforms, distances, and eccentricity
+ratios remain open matrix rows.
