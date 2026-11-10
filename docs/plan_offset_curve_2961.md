@@ -29814,7 +29814,7 @@ these rows do not imply every parameter/domain is supported):
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span, preserves exact-normal tolerance on both moving spans, and passes real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing | Other repeated-point/stationary-span patterns and joins, fit/tangent combinations, and broader seam/refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples, endpoint tangent slopes +/-1e-4..1e-8, a scale-`1e4` source translated to `(1e6,-2e6)` at both signs and normalized distances `.05/.25`, and a scale-`1e-3` source translated to `(10,-20)` at both signs and normalized distances `.05/.25`; both translated profiles at both signs and both distances pass worker/cache, replacement, and five file lanes; two four-point candidates and the 1e-8 near-parallel profile also pass those lanes; parallel/zero/non-finite tangent refusals | Other source scales/translations, other four-point samples, more extreme endpoint conditioning, broader transforms, distance/domain boundaries and visible GUI |
-| Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks include rotated wide intervals, a translated thin left branch, and a high-ratio branch with reversed bounds; the high-ratio reversed-bounds branch at 5% and 20% of vertex curvature radius passes typed worker/cache admission, Produce on both resolved sides, five DXF/DWG lanes, and independent LibreDWG parsing; the broad worker matrix has only an origin-centered thin-left counterpart without required cache admission | Translated thin-left worker/cache and persistence, other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
+| Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks include rotated wide intervals, a translated thin left branch, and a high-ratio branch with reversed bounds; both exact profiles at 5% and 20% of vertex curvature radius pass typed worker/cache admission, Produce on both resolved sides, five DXF/DWG lanes, and independent LibreDWG parsing | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; both worker sides of all three recorded corner scales and the translated major sweep pass generation/cache/Produce, five file lanes, and LibreDWG; closed mixed-bulge and major/minor bulge oracles remain covered; tangent-connected, cornering (`bulge 0.2`), and major-sweep (`bulge 2.0`) nominal sources pass the same worker/persistence path | Other open sweep/scale boundaries, additional transformed corner scales/origins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles |
 
 This closes the immediate worker/persistence gap for the two newly discovered
@@ -31880,13 +31880,12 @@ remain one branch and meet the requested geometry tolerance. The oracle uses
 the hyperbola's closed-form point/first/second derivative, independent of the
 offset adapter.
 
-The broad worker matrix contains an origin-centered thin-left branch with the
-same axis shape, but it is not the translated direct-oracle fixture above and
-its generic path did not require operation-8 cache admission. Do not count that
-as worker/persistence qualification for the translated profile. Its translated
-worker/cache, Produce, and file-lane coverage remains open. This does not
-establish arbitrary hyperbola bounds, eccentricities, curvature limits, or
-ODA/AutoCAD acceptance.
+The worker matrix's origin-centered thin-left branch is a separate, generic
+fixture and is not used as evidence for the translated direct-oracle profile.
+Section 777 carries that exact translated profile through required cache
+admission, both-side Produce, and all file lanes. These are bounded receipts;
+they do not establish arbitrary hyperbola bounds, eccentricities, curvature
+limits, or ODA/AutoCAD acceptance.
 
 Validation: focused new direct case passes 10,499 assertions; the full direct
 hyperbola selection passes 48,588 assertions/7 cases. The focused real-worker
@@ -32502,3 +32501,20 @@ source family` passes 1,145,846 assertions/1 case with
 The test target builds, scoped clang-format and `git diff --check` pass. Test
 commit: `46a3caee6` (`test(offset): persist reversed-bounds hyperbola
 profiles`).
+
+## 777. Carry the Translated Thin-left Hyperbola Through Worker Persistence (2026-11-10)
+
+Added section 747's exact translated, rotated left-branch hyperbola to the
+required operation-7/operation-8 worker matrix at distances `0.04` and `0.16`
+(5% and 20% of the vertex curvature radius). The real Produce path is checked
+on both sides at both distances; the opposite picks must resolve to distinct
+sides. All four outputs pass R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+save/reopen, with independent LibreDWG parsing of both DWGs. This closes the
+translated thin-left profile only for the recorded geometry, interval,
+distances, and picks; the wider hyperbola matrix remains open.
+
+Validation: `Worker client joins typed source generation for every modeled
+source family` passes 1,161,682 assertions/1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs parse independently.
+The test target builds, scoped clang-format and `git diff --check` pass. Test
+commit: `c5e7dc4af` (`test(offset): persist translated thin hyperbola`).
