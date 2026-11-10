@@ -31825,6 +31825,40 @@ This closes only the recorded translated, rotated forward-arc 1.00078125:1
 triplet. Other transforms, reversed arcs, sweeps, ratios, and distances remain
 open.
 
+## 746. Qualify the Ellipse-to-circle Cusp Limit (2026-11-10)
+
+Added a translated, 30-degree partial ellipse arc with ratio `1.0` (the circle
+limit), major radius `100`, and parameters `[-0.2, 0.2]`. At `0.9` times the
+radius, the direct trimmed result materializes and passes the independent
+distance oracle. At the exact radius, trimmed direct materialization returns
+`SingularOffset` with empty output. At `1.1` times the radius, direct branch
+construction returns one candidate but trimmed materialization is valid and
+empty. This exact-limit status differs from the near-circular ratios above,
+which report `LimitExceeded` in trimmed direct mode.
+
+The real-worker matrix covers all three distances. Below threshold completes
+generation, cache admission, replacement/Produce, and the five DXF/DWG lanes.
+At the exact threshold, generation and Produce both retain an explicit
+`SingularOffset`/`OffsetFailed` result with zero outputs and unchanged add/delete
+batches. Above threshold generates one candidate and then reports `Vanished`
+with no document publication. Independent LibreDWG parsing is enabled.
+
+The added fixture makes the full worker-client suite exceed its old 90-second
+test-only watchdog by about 26 ms. Raise that internal watchdog to 105 seconds;
+the CTest outer timeout remains 120 seconds, and production deadlines and
+geometry budgets are unchanged.
+
+Validation: focused direct case passes 3,628 assertions; the full direct
+`[curve-offset][ellipse][cusp]` selection passes 328,761 assertions/23 cases.
+The focused source-family worker test passes 1,097,931 assertions/1 case; the
+full worker-client suite passes 1,103,748 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Both targets build; scoped clang-format
+and `git diff --check` pass. Test commit: `98b9daaa6`
+(`test(offset): qualify ellipse circular limit`).
+
+This closes only the tested partial-arc circular limit profile. Other sweeps,
+translations, orientations, and circular-entity mappings remain open.
+
 ## 733. Reconcile Source-picker Type Changes and Parabola (2026-11-10)
 
 The latest request is explicitly a Properties source-picker requirement: while
