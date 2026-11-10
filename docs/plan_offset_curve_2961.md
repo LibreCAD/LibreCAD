@@ -3763,6 +3763,23 @@ deployed-helper proof. Keep W16-W19 implemented; do not restart them as missing.
 Windows runtime validation and the separate W0-W2/import/final acceptance gates
 remain open.
 
+## 816. Qualify Six- and Eight-fit-point Tangent Spline-points (2026-11-10)
+
+Added six- and eight-fit-point open profiles with consistent start/end tangent
+constraints to the direct normal-oracle test. Together with sections 810, 815,
+and 813, the specifically qualified two-ended fit counts are now 3, 4, 5, 6,
+and 8. Each new profile passes `fitTangentsMatchCurve()` and exact-normal
+offset checks on both signed sides within the requested geometry tolerance.
+The focused direct test passes 11,507 assertions.
+
+Both profiles and their negative-distance counterparts pass the real worker
+generation/cache, source replacement, Produce, and five file lanes: R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG. Available `dwgread` independently parses
+both generated DWGs. The complete worker-client family test passes 1,401,444
+assertions; both targets build and `git diff --check` passes. These receipts
+qualify only the recorded profiles/counts; count 7 and all other fit counts,
+fit-point distributions, tangents, and topology variants remain unqualified.
+
 W46 staged nested-XREF snapshots `759bf4b7f` use the captured host's logical path
 to resolve each referenced drawing, then read each distinct dependency into an
 owned seekable byte buffer. DXF and DWG children parse from those captured bytes,

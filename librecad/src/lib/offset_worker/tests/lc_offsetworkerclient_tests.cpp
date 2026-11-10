@@ -595,6 +595,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         makeTangentFitPoints({{0, 0}, {2, 3}, {4, 0}});
     const LC_SplinePointsData fivePointTangentFitPoints =
         makeTangentFitPoints({{0, 0}, {1, 2}, {3, 1.5}, {4, 0}, {6, -2}});
+    const LC_SplinePointsData sixPointTangentFitPoints =
+        makeTangentFitPoints({{0, 0}, {1, 1}, {2, 2}, {3, 1}, {4, -1}, {5, 0}});
+    const LC_SplinePointsData eightPointTangentFitPoints =
+        makeTangentFitPoints({{0, 0}, {1, 1.5}, {2, 2}, {3, 1}, {4, -1},
+                              {5, -2}, {6, -1}, {7, 0}});
     LC_SplinePoints transformedTangentFitPointEntity{nullptr, tangentFitPoints};
     transformedTangentFitPointEntity.rotate({0, 0}, M_PI / 4.0);
     transformedTangentFitPointEntity.scale({0, 0}, {1.5, 1.5});
@@ -765,6 +770,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{threePointTangentFitPoints});
     const std::size_t fivePointTangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{fivePointTangentFitPoints});
+    const std::size_t sixPointTangentFitPointFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{sixPointTangentFitPoints});
+    const std::size_t eightPointTangentFitPointFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{eightPointTangentFitPoints});
     const std::size_t reversedBoundsHyperbolaNearFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarFixture = sources.size();
@@ -1300,6 +1309,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     appendNegativeSplinePointsFixture(threePointTangentFitPoints);
     const std::size_t negativeFivePointTangentFitPointFixture = sources.size();
     appendNegativeSplinePointsFixture(fivePointTangentFitPoints);
+    const std::size_t negativeSixPointTangentFitPointFixture = sources.size();
+    appendNegativeSplinePointsFixture(sixPointTangentFitPoints);
+    const std::size_t negativeEightPointTangentFitPointFixture = sources.size();
+    appendNegativeSplinePointsFixture(eightPointTangentFitPoints);
     struct ClosedStationaryFixture {
         std::size_t positive;
         std::size_t negative;
@@ -1950,13 +1963,21 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == threePointTangentFitPointFixture ||
             i == negativeThreePointTangentFitPointFixture ||
             i == fivePointTangentFitPointFixture ||
-            i == negativeFivePointTangentFitPointFixture) {
+            i == negativeFivePointTangentFitPointFixture ||
+            i == sixPointTangentFitPointFixture ||
+            i == negativeSixPointTangentFitPointFixture ||
+            i == eightPointTangentFitPointFixture ||
+            i == negativeEightPointTangentFitPointFixture) {
             const auto* spline = dynamic_cast<const LC_SplinePoints*>(entity.get());
             REQUIRE(spline);
             LC_CurveJet jet;
             const double pickParameter =
                 i == threePointTangentFitPointFixture ||
-                i == negativeThreePointTangentFitPointFixture ? 0.5 : 1.5;
+                i == negativeThreePointTangentFitPointFixture ? 0.5 :
+                i == sixPointTangentFitPointFixture ||
+                i == negativeSixPointTangentFitPointFixture ||
+                i == eightPointTangentFitPointFixture ||
+                i == negativeEightPointTangentFitPointFixture ? 2.5 : 1.5;
             REQUIRE(spline->tryEvaluateJet(pickParameter,
                                            LC_CurveEvaluationSide::Interior, jet));
             const double speed = jet.first.magnitude();
@@ -1966,7 +1987,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 i == tangentFitPointFixture || i == transformedTangentFitPointFixture ||
                 i == nonuniformTangentFitPointFixture || i == shearedTangentFitPointFixture ||
                 i == startOnlyTangentFitPointFixture || i == endOnlyTangentFitPointFixture ||
-                i == threePointTangentFitPointFixture || i == fivePointTangentFitPointFixture
+                i == threePointTangentFitPointFixture || i == fivePointTangentFitPointFixture ||
+                i == sixPointTangentFitPointFixture || i == eightPointTangentFitPointFixture
                     ? 1.0 : -1.0;
             offset.coord = jet.point + normal * (pickSide * 0.5);
             offset.sideFallback = offset.coord;
