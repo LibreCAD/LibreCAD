@@ -31593,6 +31593,64 @@ Test commit: `f5ef89f4a` (`test(offset): qualify 3-to-1 ellipse cusp arcs`).
 This closes only the recorded translated, rotated forward-arc 3:1 triplet.
 Other transforms, reversed arcs, sweeps, and distances remain open.
 
+## 738. Qualify the Near-circular 1.05:1 Cusp Neighborhood (2026-11-10)
+
+Added a translated, 30-degree forward arc with major radius `100`, ratio
+`20/21` (1.05:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature
+radius is `a * ratio^2 = 40000/441`; distances at `0.9`, `1.0`, and `1.1`
+times that radius all materialize and pass the independent distance/tangent
+and materialized-intersection checks. Unlike the tested 1.1:1 exact cusp, the
+1.05:1 exact threshold remains materializable. Above threshold, direct
+construction returns one branch while trimmed geometry is valid and empty.
+
+The real-worker matrix covers the same three distances: below and exact
+thresholds complete generation, cache admission, replacement/Produce, and the
+five DXF/DWG lanes; the above-threshold case produces no document batch after
+the worker reports `Vanished`. Independent LibreDWG parsing remains enabled.
+The repeated callback timeout on existing fixture 74 also required increasing
+the worker-client test-only per-callback watchdog from 3.5 to 6 seconds. The
+90-second suite watchdog, production deadlines, and geometry budgets are
+unchanged.
+
+Validation: focused direct case passes 3,629 assertions; the full direct
+`[curve-offset][ellipse][cusp]` selection passes 303,359 assertions/16 cases.
+The focused source-family worker test passes 1,085,113 assertions/1 case; the
+full worker-client suite passes 1,088,864 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Both targets build; scoped clang-format
+and `git diff --check` pass. Test commit: `c48052b9b` (`test(offset): qualify
+near-circular cusp arcs`).
+
+This closes only the recorded translated, rotated forward-arc 1.05:1 triplet.
+Other transforms, reversed arcs, sweeps, and distances remain open.
+
+## 739. Reconcile the Source Widget Type-selector Request (2026-11-10)
+
+The requested source-widget behavior is distinct from geometric eligibility:
+the user must be able to choose a source family in the Properties widget, see
+only matching drawing entities, select a replacement of that family, and then
+identify the selected source by the existing highlight/select action. The
+family choice must remain user-changeable while selecting a replacement; it
+is a candidate filter, not a conversion of the current source. A successful
+candidate selection replaces the typed source through the guarded worker edit
+path. Cancellation or a stale/ineligible candidate must leave the current
+source and generated cache unchanged.
+
+Current-code audit: this widget contract is already implemented. Its family
+combo is populated from `LC_OffsetSourceGeometry::SupportedKinds`, including
+the distinct `Parabola` kind, and candidate filtering uses the selected kind.
+The Properties regression covers changing families, typed source replacement,
+parabola identity, source highlighting, filter changes without losing the
+current source, and non-mutating cancellation/refusal. Do not add a duplicate
+selector or a parabola-only UI path. If these tests regress, fix this narrow
+widget contract first and validate it with the focused Properties suite.
+
+Parabola's presence in the selector is not a claim of complete parabola offset
+support. Track its geometry construction domains, direct and worker generation,
+cache admission, editable replacement/Produce, and applicable DXF/DWG
+round-trips in the existing parabola and per-variant work items. Any uncovered
+parabola variant belongs there; only add a new picker option and corresponding
+family-switch test when `SupportedKinds` gains a genuinely new modeled kind.
+
 ## 733. Reconcile Source-picker Type Changes and Parabola (2026-11-10)
 
 The latest request is explicitly a Properties source-picker requirement: while
