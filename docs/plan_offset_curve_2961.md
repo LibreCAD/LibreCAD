@@ -31194,3 +31194,40 @@ This qualifies only the listed centered whole-ellipse orientations and one
 inward distance. Larger translations and partial-arc cusp topology remain
 unqualified; continue those as separate variant rows before drawing a general
 rotation/translation-invariance conclusion.
+
+## 719. Qualify Translated Rotated Thin-ellipse Cusps (2026-11-09)
+
+Extended the direct cusp oracle to rotated whole ellipses at 30 and 45 degrees
+centered at `(100, -100)` and `(1e4, -1e4)`. All four profiles retain
+`a=100`, ratio `1e-4`, inward distance `0.5e-6`, and tolerance `0.1*d`; each
+passes trimmed materialization, bidirectional distance/tangent validation,
+and the existing intersection-pair cap. The `1e4` translation remains above
+the numerical floor for this requested tolerance. More extreme origins where
+the floor exceeds the allowed error must continue to refuse closed rather than
+inflating tolerance.
+
+Added the `1e4`-translated 30-degree profile to the real-worker matrix. Its
+typed source/cache survives replacement, Produce, and each of R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG round trips. Source basis comparison uses the same
+bounded ULP allowance already applied to translated/rotated ellipse arc
+metadata; a file round-trip is not required to reproduce trigonometric basis
+coordinates bit-for-bit. LibreDWG independently parses the generated R2000 and
+R2018 DWGs.
+
+The expanded full worker suite now takes about 55 seconds on this build. Its
+internal watchdog is 90 seconds and registered CTest timeout is 120 seconds;
+the per-operation worker wait remains 3.5 seconds. This prevents CTest's former
+30-second outer timeout from killing the complete format matrix while keeping
+the run bounded.
+
+Validation: the focused translated-rotated direct case passes 14,488
+assertions/1 case; `[curve-offset][ellipse][cusp]` passes 76,034 assertions/3
+cases. The full worker selection passes 717,874 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; registered `ctest -R '^offset_worker_client$'`
+passes in 55.70 seconds with the new timeout. Edited C++ ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `637eb0c6d`
+(`test(offset): cover translated rotated cusps`).
+
+This qualifies the two recorded translated centers and angles only. Offsets at
+larger translations and partial-arc cusp topology still need direct oracle,
+worker/cache, replacement, and persistence evidence.
