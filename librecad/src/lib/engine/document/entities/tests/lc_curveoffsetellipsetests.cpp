@@ -1035,6 +1035,27 @@ TEST_CASE("Reversed rotated 100-to-1 elliptic arcs retain cusp-threshold geometr
     }
 }
 
+TEST_CASE("Translated reversed 1000-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-3;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 4.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e4, -1e4}, majorP, ratio, 0.2, -0.2, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        for (const auto side : {kLeft, kRight}) {
+            const Offset result = offsetOf(source, side, distance, 0.1 * distance);
+            CHECK(result.status == LC_CurveOffsetStatus::Ok);
+            const std::vector<RS_Vector> criticalPoint =
+                side == kRight ? std::vector<RS_Vector>{inwardOffset(source, 0.0, distance)} : std::vector<RS_Vector>{};
+            checkOffset(result, curveOf(source), distance, {false}, criticalPoint);
+            CHECK(result.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+            CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        }
+    }
+}
+
 TEST_CASE("Rotated 10-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
     constexpr double majorRadius = 100.0;
     constexpr double ratio = 1e-1;
