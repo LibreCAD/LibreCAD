@@ -31539,3 +31539,32 @@ client and kernel regressions pass 163 and 12 assertions, respectively.
 This closes only the recorded translated, rotated forward-arc 100:1 triplet.
 Other partial sweeps, reversed arcs, transforms, distances, and eccentricity
 ratios remain open matrix rows.
+
+## 731. Qualify a Rotated 10:1 Elliptic-arc Cusp Triplet (2026-11-10)
+
+Added the next adjacent ratio: a translated, 30-degree forward arc with major
+radius `100`, ratio `1e-1` (10:1), and parameters `[-0.2, 0.2]`. Its
+major-vertex curvature radius is `a * ratio^2 = 1`; offsets `0.9`, `1.0`, and
+`1.1` cover below, at, and above the threshold. Direct geometry checks the
+independent sampled distance/tangent oracle, one-open-chain topology, and
+materialized-output intersection validation. The beyond-threshold cusp
+neighborhood is trimmed by the engine, so the oracle does not incorrectly
+require the analytic cusp points to remain vertices on the returned chain.
+
+The real-worker matrix carries all three distances through generation, cache
+admission, typed replacement/Produce, and all five DXF/DWG round-trip lanes;
+LibreDWG independently parses both DWG outputs. The fixtures are appended to
+the existing profile inventory so established profile indexes and their
+signed distances remain unchanged.
+
+Validation: focused direct case passes 10,866 assertions; full direct
+`[curve-offset][ellipse][cusp]` passes 263,501 assertions/10 cases; focused
+worker-kernel case passes 12 assertions/1 case; full worker-client suite
+passes 1,050,856 assertions/23 cases with `DWGREAD=/opt/homebrew/bin/dwgread`.
+The test targets build successfully; touched ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `edb85d313`
+(`test(offset): qualify 10-to-1 ellipse cusp arcs`).
+
+This closes only the recorded translated, rotated forward-arc 10:1 triplet.
+Other translations, rotations, reversals, sweeps, and threshold distances
+remain open.
