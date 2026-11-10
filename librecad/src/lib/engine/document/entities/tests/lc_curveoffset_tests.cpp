@@ -1177,6 +1177,11 @@ TEST_CASE("Consistent tangent-constrained spline-points can be offset",
     };
     checkBothSides(source);
 
+    LC_SplinePoints reversed{nullptr, source.getData()};
+    reversed.revertDirection();
+    REQUIRE(reversed.fitTangentsMatchCurve());
+    checkBothSides(reversed);
+
     for (const auto& fitPoints : {
              std::vector<RS_Vector>{{0, 0}, {2, 3}, {4, 0}},
              std::vector<RS_Vector>{{0, 0}, {1, 2}, {3, 1.5}, {4, 0}, {6, -2}},

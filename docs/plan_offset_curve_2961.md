@@ -3763,6 +3763,24 @@ deployed-helper proof. Keep W16-W19 implemented; do not restart them as missing.
 Windows runtime validation and the separate W0-W2/import/final acceptance gates
 remain open.
 
+## 818. Qualify Reversed Tangent-fit Spline-points (2026-11-10)
+
+Added a reversed-parameter version of the four-fit-point, two-ended
+tangent-constrained profile. `LC_SplinePoints::revertDirection()` swaps and
+negates its endpoint tangent metadata; the reversed entity continues to pass
+`fitTangentsMatchCurve()` and exact-normal offset checks for both signed sides.
+The focused direct test passes 14,399 assertions.
+
+Added the reversed source and its negative-distance counterpart to the real
+worker matrix. Both pass generation, cache admission, source replacement,
+Produce, R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. `dwgread` independently
+parses both generated DWGs. The full matrix passes 1,418,586 assertions; the
+worker/client and direct targets build, the bounded 150-second suite watchdog
+passes, and `git diff --check` is clean. This qualifies only direction reversal
+for the recorded four-point/two-ended profile; reversed one-ended variants,
+other fit counts/shapes, and combinations with nonuniform transforms or
+stationary topology remain open.
+
 ## 816. Qualify Six- and Eight-fit-point Tangent Spline-points (2026-11-10)
 
 Added six- and eight-fit-point open profiles with consistent start/end tangent
