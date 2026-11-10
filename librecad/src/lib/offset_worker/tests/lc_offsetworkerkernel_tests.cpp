@@ -1418,7 +1418,7 @@ TEST_CASE("offset worker admits cubic tangent sources only when metadata matches
     CHECK_FALSE(refused.changed);
 }
 
-TEST_CASE("offset worker handles a rotated 10-to-1 elliptic arc past its cusp radius",
+TEST_CASE("offset worker handles a rotated 100-to-1 elliptic arc past its cusp radius",
           "[lc-offsetcurve][worker-kernel][source-generation][ellipse][cusp]") {
     const double angle = M_PI / 6.0;
     const RS_EllipseData ellipse{{100.0, -100.0}, {100.0 * std::cos(angle), 100.0 * std::sin(angle)}, 1e-2, -0.2, 0.2, false};

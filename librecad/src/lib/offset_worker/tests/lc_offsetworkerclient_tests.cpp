@@ -460,7 +460,7 @@ TEST_CASE("Worker rejects a sub-tolerance short arc without publishing partial g
     CHECK_FALSE(completion.native(attributes));
 }
 
-TEST_CASE("Worker client generates the 10-to-1 elliptic arc above its cusp radius", "[lc-offsetcurve][worker-client][ellipse][cusp]") {
+TEST_CASE("Worker client generates the 100-to-1 elliptic arc above its cusp radius", "[lc-offsetcurve][worker-client][ellipse][cusp]") {
     auto& rt = runtime();
     OwnedClient owned{rt};
     Receipts receipts;

@@ -963,7 +963,7 @@ TEST_CASE("Transformed thin elliptic arcs retain cusp-threshold geometry", "[cur
     }
 }
 
-TEST_CASE("Rotated 100-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+TEST_CASE("Rotated 1000-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
     constexpr double majorRadius = 100.0;
     constexpr double ratio = 1e-3;
     constexpr double cuspRadius = majorRadius * ratio * ratio;
@@ -981,7 +981,7 @@ TEST_CASE("Rotated 100-to-1 elliptic arcs retain cusp-threshold geometry", "[cur
     }
 }
 
-TEST_CASE("Rotated 10-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+TEST_CASE("Rotated 100-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
     constexpr double majorRadius = 100.0;
     constexpr double ratio = 1e-2;
     constexpr double cuspRadius = majorRadius * ratio * ratio;
