@@ -2318,13 +2318,18 @@ TEST_CASE("Aggregate bridge pruning requires a complete single-branch proof",
     }
 
     SECTION("A wide tangent range is monotone when one projected derivative stays positive") {
-        const RS_Spline curve = makeSpline(2, {{0, 0}, {1, 10}, {2, 0}}, {0, 0, 0, 1, 1, 1});
-        const LC_IntersectionResult result = findIntersections(SplineCurves{{&curve}}, options);
-        REQUIRE(result.status == LC_IntersectionStatus::Ok);
-        checkWork(result, options);
-        CHECK(result.intersections.empty());
-        CHECK(result.work.generatedLeaves == 1);
-        CHECK(result.work.refinementBoxPairs == 0);
+        for (const double scale : {1e-100, 1.0, 1e100}) {
+            CAPTURE(scale);
+            const RS_Spline curve = makeSpline(2, {{0, 0}, {scale, 10 * scale}, {2 * scale, 0}}, {0, 0, 0, 1, 1, 1});
+            LC_IntersectionOptions scaledOptions = options;
+            scaledOptions.tolerance = 1e-8 * scale;
+            const LC_IntersectionResult result = findIntersections(SplineCurves{{&curve}}, scaledOptions);
+            REQUIRE(result.status == LC_IntersectionStatus::Ok);
+            checkWork(result, scaledOptions);
+            CHECK(result.intersections.empty());
+            CHECK(result.work.generatedLeaves == 1);
+            CHECK(result.work.refinementBoxPairs == 0);
+        }
     }
 
     SECTION("A nonmonotone intervening span prevents pruning a self-crossing") {
