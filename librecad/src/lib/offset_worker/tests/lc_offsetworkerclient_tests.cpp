@@ -745,7 +745,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
-    const std::array<RS_EllipseData, 34> thinCuspEllipses{{
+    std::vector<std::size_t> expectedVanishingThinCuspFixtures;
+    const std::array<RS_EllipseData, 37> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -780,6 +781,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1.0 / 3.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1.0 / 3.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1.0 / 3.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.5, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.5, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.5, -0.2, 0.2, false},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
@@ -865,6 +869,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             case 33:
                 cuspDistances = {1.1 * 100.0 / 9.0};
                 break;
+            case 34:
+                cuspDistances = {22.5};
+                break;
+            case 35:
+                cuspDistances = {25.0};
+                break;
+            case 36:
+                cuspDistances = {27.5};
+                break;
             default:
                 cuspDistances = {0.5e-6};
                 break;
@@ -873,6 +886,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const std::size_t fixture = sources.size();
             sources.emplace_back(LC_OffsetSourceGeometry{ellipse});
             thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
+            if (profile == 36) {
+                expectedVanishingThinCuspFixtures.push_back(fixture);
+            }
         }
     }
     const std::size_t translatedThinEllipseFixture = sources.size();
@@ -933,6 +949,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         REQUIRE(result.engineStatus);
         CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        if (std::find(expectedVanishingThinCuspFixtures.begin(), expectedVanishingThinCuspFixtures.end(), i) !=
+            expectedVanishingThinCuspFixtures.end()) {
+            REQUIRE(result.ordinary.size() == 3);
+            CHECK_FALSE(completion.native(attributes));
+            auto branches = completion.ordinary(attributes);
+            REQUIRE(branches);
+            CHECK(branches->size() == 3);
+            continue;
+        }
         if (i == 13) {
             REQUIRE(result.ordinary.size() == 1);
             const auto* cache = std::get_if<RS_SplineData>(&result.ordinary.front());
@@ -1282,6 +1307,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         REQUIRE(prepared.accept(produced));
         REQUIRE(prepared.advance(batch));
         REQUIRE(prepared.outcome().sources.size() == 1);
+        if (std::find(expectedVanishingThinCuspFixtures.begin(), expectedVanishingThinCuspFixtures.end(), i) !=
+            expectedVanishingThinCuspFixtures.end()) {
+            CHECK(producedValue->source.status == LC_OffsetSourceStatus::Vanished);
+            CHECK(producedValue->source.copiesMade == 0);
+            CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::Vanished);
+            CHECK_FALSE(prepared.outcome().sources.front().complete());
+            CHECK(batch.entitiesToAdd.empty());
+            CHECK(batch.entitiesToDelete.empty());
+            continue;
+        }
         CHECK(prepared.outcome().sources.front().source == entity.get());
         CHECK(prepared.outcome().sources.front().complete());
         CHECK(Req::Values::encodeSourceGeometry(sources[i]) == sourceBefore);
