@@ -834,6 +834,20 @@ TEST_CASE("Translated rotated thin ellipse cusps preserve accurate trimming", "[
     }
 }
 
+TEST_CASE("Rotated thin ellipse cusp threshold retains topology", "[curve-offset][ellipse][cusp]") {
+    for (const double degrees : {30.0, 45.0}) {
+        const double angle = degrees * M_PI / 180.0;
+        const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+        const RS_Ellipse source{nullptr, RS_EllipseData{RS_Vector{0, 0}, majorP, 1e-4, 0.0, 0.0, false}};
+        for (const double distance : {0.9e-6, 1.0e-6, 1.1e-6, 2.0e-6}) {
+            CAPTURE(degrees, distance);
+            const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+            CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+            checkOffset(inward, curveOf(source), distance, {true});
+        }
+    }
+}
+
 TEST_CASE("Extreme thin elliptic arcs retain cusp-local topology", "[curve-offset][ellipse][cusp]") {
     struct Profile {
         double from;
