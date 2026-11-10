@@ -71,7 +71,7 @@ static_assert(std::is_nothrow_move_constructible_v<Completion>);
 static_assert(std::is_nothrow_move_assignable_v<Completion>);
 static_assert(!std::is_constructible_v<Completion, Req::Request&&, Reply::Reply&&>);
 
-constexpr int SuiteTimeoutMs = 90000;
+constexpr int SuiteTimeoutMs = 105000;
 constexpr int WaitTimeoutMs = 6000;
 constexpr const char* Tags = "[lc-offsetcurve][worker-client]";
 
@@ -746,7 +746,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
     std::vector<std::pair<std::size_t, std::size_t>> expectedVanishingThinCuspFixtures;
-    const std::array<RS_EllipseData, 67> thinCuspEllipses{{
+    std::vector<std::size_t> expectedSingularThinCuspFixtures;
+    const std::array<RS_EllipseData, 70> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -814,6 +815,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1280.0 / 1281.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1280.0 / 1281.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1280.0 / 1281.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1.0, -0.2, 0.2, false},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
@@ -998,6 +1002,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             case 66:
                 cuspDistances = {180224000.0 / 1640961.0};
                 break;
+            case 67:
+                cuspDistances = {90.0};
+                break;
+            case 68:
+                cuspDistances = {100.0};
+                break;
+            case 69:
+                cuspDistances = {110.0};
+                break;
             default:
                 cuspDistances = {0.5e-6};
                 break;
@@ -1038,6 +1051,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             }
             else if (profile == 66) {
                 expectedVanishingThinCuspFixtures.emplace_back(fixture, 1);
+            }
+            else if (profile == 69) {
+                expectedVanishingThinCuspFixtures.emplace_back(fixture, 1);
+            }
+            else if (profile == 68) {
+                expectedSingularThinCuspFixtures.push_back(fixture);
             }
         }
     }
@@ -1097,6 +1116,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const auto& result = std::get<Reply::Native>(completion.reply().result);
         CAPTURE(i, result.ordinary.size());
         REQUIRE(result.engineStatus);
+        const auto expectedSingular = std::find(expectedSingularThinCuspFixtures.begin(), expectedSingularThinCuspFixtures.end(), i);
+        if (expectedSingular != expectedSingularThinCuspFixtures.end()) {
+            CHECK(*result.engineStatus == LC_CurveOffsetStatus::SingularOffset);
+            CHECK(result.ordinaryStatus == Reply::OrdinaryStatus::None);
+            CHECK(result.ordinary.empty());
+            CHECK_FALSE(completion.native(attributes));
+            CHECK_FALSE(completion.ordinary(attributes));
+            continue;
+        }
         CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
         const auto expectedVanished = std::find_if(expectedVanishingThinCuspFixtures.begin(), expectedVanishingThinCuspFixtures.end(),
@@ -1446,6 +1474,22 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             producedValue->source.copiesMade, producedValue->source.engineStatus,
             producedValue->source.detail, producedValue->outputs.size());
         INFO("worker diagnostics: " << producedReceipts.at(0).diagnostics.toStdString());
+        const auto expectedSingular = std::find(expectedSingularThinCuspFixtures.begin(), expectedSingularThinCuspFixtures.end(), i);
+        if (expectedSingular != expectedSingularThinCuspFixtures.end()) {
+            CHECK(producedValue->outputStatus == Reply::OrdinaryStatus::None);
+            CHECK(producedValue->source.status == LC_OffsetSourceStatus::OffsetFailed);
+            CHECK(producedValue->source.copiesMade == 0);
+            CHECK(producedValue->source.engineStatus == LC_CurveOffsetStatus::SingularOffset);
+            CHECK(producedValue->outputs.empty());
+            REQUIRE(prepared.accept(produced));
+            REQUIRE(prepared.advance(batch));
+            REQUIRE(prepared.outcome().sources.size() == 1);
+            CHECK(prepared.outcome().sources.front().status == LC_OffsetSourceStatus::OffsetFailed);
+            CHECK_FALSE(prepared.outcome().sources.front().complete());
+            CHECK(batch.entitiesToAdd.empty());
+            CHECK(batch.entitiesToDelete.empty());
+            continue;
+        }
         if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Line) {
             REQUIRE(producedValue->outputs.size() == 1);
             CHECK(std::holds_alternative<Req::Segment>(producedValue->outputs.front()));
