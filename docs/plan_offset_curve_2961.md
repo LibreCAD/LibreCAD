@@ -31343,3 +31343,27 @@ clang-format checks and `git diff --check`. Test commit: `8a2ad43a3`
 This closes only the tested forward interval and threshold neighborhood.
 Other partial sweeps, translated/rotated partial-arc thresholds, and reversed
 partial-arc thresholds still require direct and end-to-end persistence rows.
+
+## 724. Qualify Reversed Partial-arc Cusp Thresholds (2026-11-09)
+
+Extended the reversed ratio-`1e-4` arc crossing the major vertex to inward
+distances `0.9e-6` and `1.0e-6`, complementing the existing reversed
+`1.1e-6` case. Direct evaluation selects the right side for the reversed
+parameter direction; each remains one open chain and passes the independent
+distance/tangent oracle and sampled self-crossing check.
+
+The two added reversed sources use negative signed worker distances so the
+persisted offset remains inward. They pass operation 7/8, replacement/Produce,
+all five DXF/DWG round-trip lanes, and independent LibreDWG parsing. Together
+with the prior above-threshold reversed case, this closes the tested reversed
+partial-arc threshold triplet without assuming whole-ellipse closed topology.
+
+Validation: the focused partial-arc test passes 32,334 assertions/1 case;
+`[curve-offset][ellipse][cusp]` passes 148,172 assertions/6 cases. The full
+worker-client suite passes 953,955 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Edited ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `5baaacf43`
+(`test(offset): qualify reversed arc cusp thresholds`).
+
+Other reversed arc sweeps, transformed threshold profiles, and other
+eccentricity ratios remain open.
