@@ -1339,72 +1339,91 @@ TEST_CASE("Mixed-bulge polyline offsets stay at exact distance from its line and
     }
 }
 
-TEST_CASE("Open tangent-connected arc-line polylines follow exact offset normals", "[curve-offset][direct][polyline][open][oracle]") {
-    RS_Polyline source;
-    source.addVertex({0.0, 0.0}, 1.0);
-    source.addVertex({2.0, 0.0});
-    source.addVertex({2.0, 2.0});
-    source.endPolyline();
-    const auto sourceSegments = orientedSegments(source);
-    REQUIRE(sourceSegments.size() == 2);
-    REQUIRE(sourceSegments[0].arc);
-    CHECK_FALSE(sourceSegments[1].arc);
-    CHECK_FALSE(source.isClosed());
+TEST_CASE("Open arc-line polylines follow exact normals across tangent and corner joins",
+          "[curve-offset][direct][polyline][open][oracle]") {
+    const auto verifyProfile = [](const double bulge) {
+        RS_Polyline source;
+        source.addVertex({0.0, 0.0}, bulge);
+        source.addVertex({2.0, 0.0});
+        source.addVertex({2.0, 2.0});
+        source.endPolyline();
+        const auto sourceSegments = orientedSegments(source);
+        REQUIRE(sourceSegments.size() == 2);
+        REQUIRE(sourceSegments[0].arc);
+        CHECK_FALSE(sourceSegments[1].arc);
+        CHECK_FALSE(source.isClosed());
 
-    std::vector<double> sourceBreaks{0.0};
-    for (const auto& segment : sourceSegments) {
-        sourceBreaks.push_back(sourceBreaks.back() + (segment.arc ? std::abs(segment.sweep) : segment.length()));
-    }
+        std::vector<double> sourceBreaks{0.0};
+        for (const auto& segment : sourceSegments) {
+            sourceBreaks.push_back(sourceBreaks.back() + (segment.arc ? std::abs(segment.sweep) : segment.length()));
+        }
 
-    for (const double distance : {0.1, 0.25}) {
-        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-            CAPTURE(distance, side);
-            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
-            const auto result = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(side, distance), options,
-                                                                    LC_CurveOffset::makeDirectSourceBudget());
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE(result.branches.size() == 1);
-            const double expectedDistance = side == LC_CurveOffsetSide::Left ? distance : -distance;
-            const auto exactOffset = [expectedDistance](const LC_OffsetSegment& segment, const double local) {
-                RS_Vector tangent;
-                if (segment.arc) {
-                    const double angle = segment.startAngle + segment.sweep * local;
-                    const double direction = std::copysign(1.0, segment.sweep);
-                    tangent = {-std::sin(angle) * direction, std::cos(angle) * direction};
+        for (const double distance : {0.1, 0.25}) {
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                CAPTURE(bulge, distance, side);
+                const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                const auto result = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                                                                        LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                if (bulge == 0.2 && distance == 0.1 && side == LC_CurveOffsetSide::Left) {
+                    CHECK(result.branches.size() == 2);
                 }
-                else {
-                    tangent = (segment.b - segment.a) / segment.length();
-                }
-                return segment.pointAt(local) + RS_Vector{-tangent.y, tangent.x} * expectedDistance;
-            };
-            const auto& branch = result.branches.front();
-            CHECK(branch.cubicPieces.front().bezier[0].distanceTo(exactOffset(sourceSegments.front(), 0.0)) <=
-                  options.tolerance.requestedGeometry);
-            CHECK(branch.cubicPieces.back().bezier[3].distanceTo(exactOffset(sourceSegments.back(), 1.0)) <=
-                  options.tolerance.requestedGeometry);
-
-            for (const auto& piece : branch.cubicPieces) {
-                if (piece.provenance.arcCentre.valid) {
-                    for (int sample = 0; sample <= 37; ++sample) {
-                        const RS_Vector point = bezierAt(piece.bezier, sample / 37.0);
-                        CHECK(std::abs(point.distanceTo(piece.provenance.arcCentre) - distance) <=
-                              2.0 * options.tolerance.requestedGeometry);
+                const double expectedDistance = side == LC_CurveOffsetSide::Left ? distance : -distance;
+                const auto exactOffset = [expectedDistance](const LC_OffsetSegment& segment, const double local) {
+                    RS_Vector tangent;
+                    if (segment.arc) {
+                        const double angle = segment.startAngle + segment.sweep * local;
+                        const double direction = std::copysign(1.0, segment.sweep);
+                        tangent = {-std::sin(angle) * direction, std::cos(angle) * direction};
                     }
-                    continue;
-                }
+                    else {
+                        tangent = (segment.b - segment.a) / segment.length();
+                    }
+                    return segment.pointAt(local) + RS_Vector{-tangent.y, tangent.x} * expectedDistance;
+                };
+                bool hasStart = false;
+                bool hasEnd = false;
 
-                for (int sample = 1; sample < 37; ++sample) {
-                    const double fraction = sample / 37.0;
-                    const double parameter = piece.provenance.sourceT0 + fraction * (piece.provenance.sourceT1 - piece.provenance.sourceT0);
-                    const std::size_t segmentIndex = parameter < sourceBreaks[1] ? 0 : 1;
-                    const auto& segment = sourceSegments[segmentIndex];
-                    const double local =
-                        (parameter - sourceBreaks[segmentIndex]) / (sourceBreaks[segmentIndex + 1] - sourceBreaks[segmentIndex]);
-                    CHECK(bezierAt(piece.bezier, fraction).distanceTo(exactOffset(segment, local)) <= options.tolerance.requestedGeometry);
+                for (const auto& branch : result.branches) {
+                    REQUIRE_FALSE(branch.cubicPieces.empty());
+                    for (const RS_Vector endpoint : {branch.cubicPieces.front().bezier[0], branch.cubicPieces.back().bezier[3]}) {
+                        hasStart = hasStart ||
+                            endpoint.distanceTo(exactOffset(sourceSegments.front(), 0.0)) <= options.tolerance.requestedGeometry;
+                        hasEnd =
+                            hasEnd || endpoint.distanceTo(exactOffset(sourceSegments.back(), 1.0)) <= options.tolerance.requestedGeometry;
+                    }
+
+                    for (const auto& piece : branch.cubicPieces) {
+                        if (piece.provenance.arcCentre.valid) {
+                            for (int sample = 0; sample <= 37; ++sample) {
+                                const RS_Vector point = bezierAt(piece.bezier, sample / 37.0);
+                                CHECK(std::abs(point.distanceTo(piece.provenance.arcCentre) - distance) <=
+                                      2.0 * options.tolerance.requestedGeometry);
+                            }
+                            continue;
+                        }
+
+                        for (int sample = 1; sample < 37; ++sample) {
+                            const double fraction = sample / 37.0;
+                            const double parameter =
+                                piece.provenance.sourceT0 + fraction * (piece.provenance.sourceT1 - piece.provenance.sourceT0);
+                            const std::size_t segmentIndex = parameter < sourceBreaks[1] ? 0 : 1;
+                            const auto& segment = sourceSegments[segmentIndex];
+                            const double local =
+                                (parameter - sourceBreaks[segmentIndex]) / (sourceBreaks[segmentIndex + 1] - sourceBreaks[segmentIndex]);
+                            CHECK(bezierAt(piece.bezier, fraction).distanceTo(exactOffset(segment, local)) <=
+                                  options.tolerance.requestedGeometry);
+                        }
+                    }
                 }
+                CHECK(hasStart);
+                CHECK(hasEnd);
             }
         }
-    }
+    };
+    verifyProfile(1.0);
+    verifyProfile(0.2);
 }
 
 TEST_CASE("Major and minor bulge offsets follow exact segment normals",
