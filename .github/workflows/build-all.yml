@@ -180,7 +180,9 @@ jobs:
           retention-days: 2
 
   BuildMacOS:
-    runs-on: macos-14
+    # Use the explicit runner label already used by the Pixi matrix. The
+    # macos-14 alias currently resolves to an unsupported arm64 pool here.
+    runs-on: macos-15-intel
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
