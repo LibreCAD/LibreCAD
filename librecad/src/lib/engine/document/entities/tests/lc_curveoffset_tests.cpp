@@ -227,6 +227,29 @@ TEST_CASE("Offset source snapshots own every supported source type") {
     CHECK_FALSE(definition.isWellFormed());
 }
 
+TEST_CASE("A zero-length spline-points source refuses offsets without mutation", "[curve-offset][direct][spline-points][degenerate]") {
+    const std::vector<RS_Vector> controls{{0.0, 0.0}, {0.0, 0.0}};
+    LC_SplinePointsData data{false, false};
+    data.useControlPoints = true;
+    data.controlPoints = controls;
+    LC_SplinePoints source{nullptr, data};
+    const auto snapshot = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(snapshot);
+    CHECK(snapshot->kind() == LC_OffsetSourceGeometry::Kind::SplinePoints);
+    CHECK(snapshot->isWellFormed());
+
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+    const auto result = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25),
+                                                            options, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status == LC_CurveOffsetStatus::UndefinedTangent);
+    CHECK(result.branches.empty());
+    CHECK(source.getData().controlPoints == controls);
+    const auto after = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(after);
+    CHECK(after->kind() == snapshot->kind());
+    CHECK(std::get<LC_SplinePointsData>(after->value).controlPoints == controls);
+}
+
 TEST_CASE("Large translated parabola remains an eligible typed source",
           "[lc-offsetcurve][source][parabola][precision]") {
     const double base = 1e308;
