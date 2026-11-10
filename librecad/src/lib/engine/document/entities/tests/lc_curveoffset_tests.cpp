@@ -879,6 +879,24 @@ TEST_CASE("Closed fit-point spline sources follow exact offset normals across th
     }
 }
 
+TEST_CASE("Closed control-point spline-points follow exact offset normals across the seam",
+          "[curve-offset][direct][spline-points][closed][control-points][oracle]") {
+    const LC_SplinePoints source = fromControlPoints({{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}}, true);
+    REQUIRE(source.isClosed());
+    REQUIRE(source.getData().useControlPoints);
+    REQUIRE(source.getSegmentCount() == source.getControlPoints().size());
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        constexpr double distance = 0.25;
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        const auto result = LC_CurveOffset::buildDirectBranches(source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                                                                LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(maxDeviation(result, evaluator(source)) <= options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("A straight source offsets exactly to either side", "[curve-offset][direct]") {
     const LC_SplinePoints line = fromControlPoints({{0.0, 0.0}, {10.0, 0.0}});
     const RS_Spline linear = makeSpline(1, {{0.0, 0.0}, {10.0, 0.0}}, {0, 0, 1, 1});
