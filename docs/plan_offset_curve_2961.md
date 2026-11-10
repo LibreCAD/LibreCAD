@@ -29802,7 +29802,7 @@ these rows do not imply every parameter/domain is supported):
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
-| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span, preserves exact-normal tolerance on both moving spans, and passes real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed fit-point source passes seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed control-point source passes direct exact-normal checks across the seam on both sides | Other repeated-point/stationary-span patterns and joins, fit/tangent combinations, worker/persistence for closed control-point variants, and broader seam/refusal matrix |
+| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span, preserves exact-normal tolerance on both moving spans, and passes real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing | Other repeated-point/stationary-span patterns and joins, fit/tangent combinations, and broader seam/refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples and endpoint tangent slopes +/-1e-4..1e-8; two four-point candidates and the 1e-8 near-parallel profile pass worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; closed mixed-bulge and major/minor bulge oracles remain covered; matching tangent-connected typed source passes worker/cache/Produce and five file lanes | Other open sweep/scale boundaries, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles; worker/file persistence for open corner and major-sweep profiles |
@@ -32149,12 +32149,28 @@ stationary spline-points offsets`).
 Added a closed five-control `LC_SplinePoints` direct geometry case alongside
 the existing closed fit-point case. Both left and right offsets are compared
 against the independent source evaluator through the seam and must meet the
-requested geometry tolerance. This establishes direct geometry for this
-control-point fixture only; worker/cache, replacement/Produce, and file
-round-trips for closed control-point sources remain open.
+requested geometry tolerance. The same closed control-point fixture now
+passes the existing real worker/cache, replacement/Produce, five-format
+save/reopen, and LibreDWG parsing matrix.
 
 Validation: the focused closed-control-point oracle passes 3,291
 assertions/1 case; the full direct spline-points selector passes 11,679
 assertions/6 cases. The test target builds, scoped clang-format passes, and
-`git diff --check` passes. Test commit: `511979c80` (`test(offset): qualify
-closed spline-points controls`).
+`git diff --check` passes. Direct test commit: `511979c80` (`test(offset):
+qualify closed spline-points controls`).
+
+## 757. Carry Closed Control-point Spline-points Through Worker Persistence (2026-11-10)
+
+Added the closed control-point profile from section 756 to the real
+worker-client all-family source matrix. The result is required to be a spline
+and passes worker generation, editable-cache admission, replacement/Produce,
+five DXF/DWG save/reopen lanes, and independent LibreDWG parsing. This closes
+the end-to-end gap for that exact closed control-point fixture; other closed
+control-net geometries and combinations remain unqualified.
+
+Validation: `Worker client joins typed source generation for every modeled
+source family` passes 1,109,356 assertions/1 case with `dwgread` on `PATH`.
+The direct closed-control-point oracle passes 3,291 assertions/1 case and the
+full direct spline-points selector passes 11,679 assertions/6 cases. Scoped
+clang-format and `git diff --check` pass. Worker test commit: `7f9f07670`
+(`test(offset): persist closed spline-points controls`).
