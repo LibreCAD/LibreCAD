@@ -746,7 +746,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
     std::vector<std::pair<std::size_t, std::size_t>> expectedVanishingThinCuspFixtures;
-    const std::array<RS_EllipseData, 40> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 43> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -787,6 +787,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 2.0 / 3.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 2.0 / 3.0, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 2.0 / 3.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.8, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.8, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 0.8, -0.2, 0.2, false},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
@@ -890,6 +893,15 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             case 39:
                 cuspDistances = {440.0 / 9.0};
                 break;
+            case 40:
+                cuspDistances = {57.6};
+                break;
+            case 41:
+                cuspDistances = {64.0};
+                break;
+            case 42:
+                cuspDistances = {70.4};
+                break;
             default:
                 cuspDistances = {0.5e-6};
                 break;
@@ -902,6 +914,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 expectedVanishingThinCuspFixtures.emplace_back(fixture, 3);
             }
             else if (profile == 39) {
+                expectedVanishingThinCuspFixtures.emplace_back(fixture, 1);
+            }
+            else if (profile == 42) {
                 expectedVanishingThinCuspFixtures.emplace_back(fixture, 1);
             }
         }
