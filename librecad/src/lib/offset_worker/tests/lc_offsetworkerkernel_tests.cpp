@@ -2176,6 +2176,9 @@ TEST_CASE("Trimmed high-ratio periodic spline reports bounded self-noding refusa
             geometry.intersectionDiagnostics.stage, geometry.intersectionDiagnostics.status,
             geometry.intersectionDiagnostics.work.candidateBoxPairs, geometry.intersectionDiagnostics.work.refinementBoxPairs,
             geometry.intersectionDiagnostics.work.totalBoxPairs, geometry.intersectionDiagnostics.work.generatedLeaves,
+            geometry.intersectionDiagnostics.work.bvhUnanchoredPairs, geometry.intersectionDiagnostics.work.bvhDisjointPairs,
+            geometry.intersectionDiagnostics.work.bvhMonotonePathPrunes, geometry.intersectionDiagnostics.work.bvhLeafCandidates,
+            geometry.intersectionDiagnostics.work.bvhExpandedPairs, geometry.intersectionDiagnostics.work.bvhInterruptedPairs,
             geometry.intersectionDiagnostics.work.generatedItems, geometry.intersectionDiagnostics.failureDepth, geometry.removedIntervals,
             geometry.branches.size());
     CHECK(direct.status == LC_CurveOffsetStatus::Ok);
@@ -2184,6 +2187,12 @@ TEST_CASE("Trimmed high-ratio periodic spline reports bounded self-noding refusa
     CHECK(geometry.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::OffsetSelfNoding);
     CHECK(geometry.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
     CHECK(geometry.intersectionDiagnostics.work.totalBoxPairs == options.maxIntersectionPairs);
+    CHECK(geometry.intersectionDiagnostics.work.bvhUnanchoredPairs + geometry.intersectionDiagnostics.work.bvhDisjointPairs +
+              geometry.intersectionDiagnostics.work.bvhMonotonePathPrunes +
+              geometry.intersectionDiagnostics.work.bvhLeafCandidates +
+              geometry.intersectionDiagnostics.work.bvhExpandedPairs +
+              geometry.intersectionDiagnostics.work.bvhInterruptedPairs ==
+          geometry.intersectionDiagnostics.work.candidateBoxPairs);
     CHECK(geometry.intersectionDiagnostics.work.generatedLeaves <= LC_IntersectionOptions{}.maxLeaves);
     CHECK(geometry.branches.empty());
 }

@@ -500,16 +500,23 @@ private:
             if (!consumePair(m_work.candidateBoxPairs)) {
                 return LC_IntersectionStatus::LimitExceeded;
             }
-            if ((!p.anchored && !q.anchored) || gap(p.x, p.y, q.x, q.y) > m_options.tolerance) {
+            if (!p.anchored && !q.anchored) {
+                ++m_work.bvhUnanchoredPairs;
+                continue;
+            }
+            if (gap(p.x, p.y, q.x, q.y) > m_options.tolerance) {
+                ++m_work.bvhDisjointPairs;
                 continue;
             }
             // Prove the whole intervening branch range, not just these spatial subsets.
             if (p.singleBranch && q.singleBranch && p.branch == q.branch &&
                 (cachedBridge(std::min(p.firstLeaf, q.firstLeaf), std::max(p.lastLeaf, q.lastLeaf)) ||
                  bridgedRange(p.branch, std::min(p.a, q.a), std::max(p.b, q.b)))) {
+                ++m_work.bvhMonotonePathPrunes;
                 continue;
             }
             if (p.count == 1 && q.count == 1) {
+                ++m_work.bvhLeafCandidates;
                 const std::size_t first = std::min(p.leaf, q.leaf);
                 const std::size_t second = std::max(p.leaf, q.leaf);
                 if (!adjacent(m_leaves[first], m_leaves[second])) {
@@ -517,12 +524,15 @@ private:
                 }
             }
             else if (q.count == 1 || (p.count > 1 && p.count >= q.count)) {
+                ++m_work.bvhExpandedPairs;
                 if (!push(p.right, b) || !push(p.left, b)) {
                     return LC_IntersectionStatus::LimitExceeded;
                 }
-            }
-            else if (!push(a, q.right) || !push(a, q.left)) {
-                return LC_IntersectionStatus::LimitExceeded;
+            } else {
+                ++m_work.bvhExpandedPairs;
+                if (!push(a, q.right) || !push(a, q.left)) {
+                    return LC_IntersectionStatus::LimitExceeded;
+                }
             }
         }
         std::sort(pairs.begin(), pairs.end());
@@ -1684,27 +1694,46 @@ private:
             if (!consume(m_work.candidateBoxPairs)) {
                 return false;
             }
-            if ((!p.anchored && !q.anchored) || disjoint(p.bounds, q.bounds)) {
+            if (!p.anchored && !q.anchored) {
+                ++m_work.bvhUnanchoredPairs;
+                continue;
+            }
+            if (disjoint(p.bounds, q.bounds)) {
+                ++m_work.bvhDisjointPairs;
                 continue;
             }
             if (p.single && q.single && p.branch == q.branch) {
-                if (!compare()) { return false; }
+                if (!compare()) {
+                    ++m_work.bvhInterruptedPairs;
+                    return false;
+                }
                 const auto first = std::min(p.first, q.first);
-                if (!compare()) { return false; }
+                if (!compare()) {
+                    ++m_work.bvhInterruptedPairs;
+                    return false;
+                }
                 const auto last = std::max(p.last, q.last);
-                if (projection(range(first, last + 1))) { continue; }
+                if (projection(range(first, last + 1))) {
+                    ++m_work.bvhMonotonePathPrunes;
+                    continue;
+                }
             }
             if (p.count == 1 && q.count == 1) {
+                ++m_work.bvhLeafCandidates;
                 if (!canGenerate(1) || !reserveAdditional(pairs, 1) || !generate(1)) { return false; }
                 if (!compare()) { return false; }
                 const bool precedes = p.leaf < q.leaf;
                 pairs.emplace_back(precedes ? p.leaf : q.leaf, precedes ? q.leaf : p.leaf);
             } else if (q.count == 1 || (p.count > 1 && p.count >= q.count)) {
+                ++m_work.bvhExpandedPairs;
                 if (!push(p.right, b) || !push(p.left, b)) {
                     return false;
                 }
             } else if (!push(a, q.right) || !push(a, q.left)) {
+                ++m_work.bvhExpandedPairs;
                 return false;
+            } else {
+                ++m_work.bvhExpandedPairs;
             }
         }
         return heapSort(pairs, 0, pairs.size(), [](const auto& a, const auto& b) { return a < b; });

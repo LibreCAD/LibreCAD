@@ -32921,3 +32921,53 @@ the build. The registered full CTest selection `offset_worker_client` also
 passes in 110.61 seconds with zero failures under the 140-second CTest cap.
 The increased timeout remains a bounded test accommodation, not evidence of
 faster geometry or completion of untested source variants.
+
+## 793. Make the Source-picker Contract Explicit (2026-11-10)
+
+Rechecked the latest source-widget requirement against the current Properties
+dialog and source model. The existing selector stays enabled while a
+replacement pick is active, and changing its value updates the accepted source
+family without clearing the current source or its highlight. Accepting a
+candidate constructs the corresponding typed `LC_OffsetSourceGeometry`; the
+selector inventory is sourced from `LC_OffsetSourceGeometry::SupportedKinds`
+and currently covers line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. The parabola is a distinct type,
+not an alias for spline-points.
+
+No additional widget or picker implementation is required for this request.
+Keep the all-family replacement, family-change-during-pick, selected-source
+highlight, and parabola-identity tests as the UI acceptance contract, and extend
+them whenever `SupportedKinds` changes. A type being selectable is not evidence
+that every geometric parameterization is supported by offset generation,
+trimming, worker/cache persistence, or DXF/DWG round-trips; those remain governed
+by their own capability matrix and per-variant validation. Do not broaden those
+claims from the picker tests alone.
+
+## 794. Measure the High-ratio Self-noding Work Dispositions (2026-11-10)
+
+Instrumented the ordinary and certified BVH traversals so every charged
+`candidateBoxPairs` unit is classified as unanchored, disjoint, monotone-path
+pruned, a leaf candidate, expanded, or interrupted by a work-limit failure.
+The high-ratio periodic spline refusal from section 785 partitions exactly:
+0 unanchored, 43,800 disjoint, 57,504 monotone-path prunes, 434,444 leaf
+candidates, and 512,828 expansions (1,048,576 total). It still builds 63,819
+leaves, reaches the configured hard pair-work cap, performs zero refinement
+pairs, and returns atomic `LimitExceeded` with no published branches.
+
+Tested branch-first BVH partition ordering and a branch-local cached bridge
+range. Neither changed this profile's work dispositions; the branch-local cache
+was also redundant with the existing branch-specific `bridgedRange()` proof,
+so neither experiment is retained. Rotated projection filtering is likewise
+already rejected in section 787. Do not raise the pair cap or relax geometry
+tolerances to convert this bounded refusal into apparent support. The remaining
+optimization task is open: reduce dense candidate-leaf generation and/or tree
+expansion with a conservative algorithm, and require exact topology equivalence
+on the existing crossing/tangency/seam suite plus the high-ratio fixture before
+claiming progress.
+
+Validation for the retained counters: the focused high-ratio refusal passes
+10 assertions; the fresh `[topology]` selection passes 53 cases / 6,449
+assertions, and `[curve-offset]` plus `[lc-offsetcurve][geometry]` passes 27
+cases / 2,467 assertions. The high-ratio test asserts that disposition totals
+equal charged BVH candidate pairs. These results validate bounded behavior and
+accounting, not a reduction in runtime or work.
