@@ -4067,6 +4067,9 @@ void recordIntersectionDiagnostics(LC_CurveOffsetGeometryResult::IntersectionDia
     diagnostics.stage = stage;
     diagnostics.status = result.status;
     diagnostics.work = result.work;
+    diagnostics.hasFailureDomain = result.hasFailureDomain;
+    diagnostics.failureDomain = result.failureDomain;
+    diagnostics.failureDepth = result.failureDepth;
 }
 
 /**
@@ -6370,6 +6373,9 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         result.intersectionDiagnostics.stage = LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput;
         result.intersectionDiagnostics.status = found.status;
         result.intersectionDiagnostics.work = found.work;
+        result.intersectionDiagnostics.hasFailureDomain = found.hasFailureDomain;
+        result.intersectionDiagnostics.failureDomain = found.failureDomain;
+        result.intersectionDiagnostics.failureDepth = found.failureDepth;
         if (found.status != LC_IntersectionStatus::Ok) {
             result.status = fromIntersectionStatus(found.status);
             return result;

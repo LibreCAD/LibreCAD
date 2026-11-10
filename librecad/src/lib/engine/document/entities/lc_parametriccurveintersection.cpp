@@ -184,6 +184,9 @@ public:
         }
         result.work = m_work;
         result.work.generatedLeaves = m_leaves.size();
+        result.hasFailureDomain = m_hasFailureDomain;
+        result.failureDomain = m_failureDomain;
+        result.failureDepth = m_failureDepth;
         return result;
     }
 
@@ -532,8 +535,14 @@ private:
     LC_IntersectionStatus solvePair(const Leaf& p, const Leaf& q) {
         const bool corner = atCorner(p, q);
         std::vector<Pair> stack{{p.a, p.b, q.a, q.b, 0}};
+        const auto recordFailure = [&](const Pair& box) {
+            m_hasFailureDomain = true;
+            m_failureDomain = {p.segment, q.segment, LC_Interval::hull(box.a0, box.a1), LC_Interval::hull(box.b0, box.b1)};
+            m_failureDepth = box.depth;
+        };
         while (!stack.empty()) {
             if (!consumePair(m_work.refinementBoxPairs)) {
+                recordFailure(stack.back());
                 return LC_IntersectionStatus::LimitExceeded;
             }
             const Pair box = stack.back();
@@ -577,6 +586,7 @@ private:
                 }
             }
             if (box.depth >= m_options.maxDepth) {
+                recordFailure(box);
                 if (corner) {
                     return LC_IntersectionStatus::LimitExceeded;
                 }
@@ -1105,6 +1115,9 @@ private:
     };
     std::vector<Found> m_found;
     LC_IntersectionWorkStats m_work;
+    bool m_hasFailureDomain{false};
+    LC_IntersectionDomain m_failureDomain{};
+    unsigned m_failureDepth{0};
 };
 
 /** Proof-only policy is separate so ordinary tolerance-based behavior is unchanged. */

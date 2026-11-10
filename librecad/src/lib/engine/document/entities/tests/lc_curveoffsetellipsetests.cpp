@@ -810,6 +810,15 @@ TEST_CASE("Rotated extreme thin ellipse cusp fails closed when its accurate fit 
     CHECK(inward.intersectionDiagnostics.work.totalBoxPairs ==
           inward.intersectionDiagnostics.work.candidateBoxPairs + inward.intersectionDiagnostics.work.refinementBoxPairs +
               inward.intersectionDiagnostics.work.certificateBoxPairs);
+    REQUIRE(inward.intersectionDiagnostics.hasFailureDomain);
+    CHECK(inward.intersectionDiagnostics.failureDepth > 0);
+    CHECK(inward.intersectionDiagnostics.failureDomain.parameterA.isValid());
+    CHECK(inward.intersectionDiagnostics.failureDomain.parameterB.isValid());
+    const LC_IntersectionDomain& failure = inward.intersectionDiagnostics.failureDomain;
+    CHECK(failure.segmentA != failure.segmentB);
+    CHECK(failure.parameterA.width() < 0.01);
+    CHECK(failure.parameterB.width() < 0.01);
+    CHECK(std::max(failure.parameterA.lo(), failure.parameterB.lo()) <= std::min(failure.parameterA.hi(), failure.parameterB.hi()));
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)

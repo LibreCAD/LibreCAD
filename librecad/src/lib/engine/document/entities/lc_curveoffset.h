@@ -259,6 +259,9 @@ struct LC_CurveOffsetGeometryResult {
         Stage stage{Stage::None};
         LC_IntersectionStatus status{LC_IntersectionStatus::Ok};
         LC_IntersectionWorkStats work{};
+        bool hasFailureDomain{false};
+        LC_IntersectionDomain failureDomain{};
+        unsigned failureDepth{0};
     } intersectionDiagnostics;
     /**
      * With nodeIntersections: where the exact offset meets itself, by branch and

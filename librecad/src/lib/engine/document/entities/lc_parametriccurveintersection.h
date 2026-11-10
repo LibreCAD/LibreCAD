@@ -240,6 +240,10 @@ struct LC_IntersectionResult {
     std::vector<LC_ParametricIntersection> intersections;
     /** Consumed work on every status, bounded by maxBoxPairs and maxLeaves. */
     LC_IntersectionWorkStats work;
+    /** Pair box at refinement exhaustion or max-depth refusal, when one exists. */
+    bool hasFailureDomain{false};
+    LC_IntersectionDomain failureDomain{};
+    unsigned failureDepth{0};
 };
 
 /**
