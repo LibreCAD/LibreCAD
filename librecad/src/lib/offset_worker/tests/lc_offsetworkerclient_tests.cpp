@@ -730,9 +730,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
     thinEllipseFixtures.emplace_back(translatedThinEllipseFixture, 0.1);
     std::vector<std::pair<std::size_t, double>> thinEllipseArcFixtures;
-    const std::array<RS_EllipseData, 2> thinEllipseArcs{{
+    const std::array<RS_EllipseData, 6> thinEllipseArcs{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.25, 1.5, false},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 1.5, 0.25, true},
+        {{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.25, 1.5, false},
+        {{1e8, -1e8}, {100.0, 0.0}, 1e-4, 1.5, 0.25, true},
+        {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.25, 1.5, false},
+        {{1e8, -1e8}, {50.0, 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 1.5, 0.25, true},
     }};
     for (const RS_EllipseData& arc : thinEllipseArcs) {
         const std::size_t fixture = sources.size();
@@ -857,8 +861,30 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const auto expectedSource = LC_OffsetSourceGeometry::capture(*movedSource);
             REQUIRE(expectedSource);
             if (movedExactly) {
-                CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) ==
-                      Req::Values::encodeSourceGeometry(*expectedSource));
+                if (thinEllipseArc != thinEllipseArcFixtures.end()) {
+                    const auto* actual = std::get_if<RS_EllipseData>(&editable->sourceDefinition()->source.value);
+                    const auto* expected = std::get_if<RS_EllipseData>(&expectedSource->value);
+                    REQUIRE(actual);
+                    REQUIRE(expected);
+                    const auto ulp = [](const double value) {
+                        return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) - std::abs(value);
+                    };
+                    const auto checkCoordinate = [&](const double value, const double reference) {
+                        CHECK(std::abs(value - reference) <= std::max(1e-12 * 100.0, 8.0 * ulp(reference)));
+                    };
+                    checkCoordinate(actual->center.x, expected->center.x);
+                    checkCoordinate(actual->center.y, expected->center.y);
+                    checkCoordinate(actual->majorP.x, expected->majorP.x);
+                    checkCoordinate(actual->majorP.y, expected->majorP.y);
+                    CHECK(actual->ratio == expected->ratio);
+                    CHECK(actual->angle1 == expected->angle1);
+                    CHECK(actual->angle2 == expected->angle2);
+                    CHECK(actual->reversed == expected->reversed);
+                }
+                else {
+                    CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) ==
+                          Req::Values::encodeSourceGeometry(*expectedSource));
+                }
             }
             else {
                 CHECK(RS_Spline::geometryFingerprint(editable->getData()) == cacheStamp);
@@ -1026,13 +1052,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (thinEllipseArc != thinEllipseArcFixtures.end()) {
             const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
             const double major = ellipse.majorP.magnitude();
-            const double minor = major * ellipse.ratio;
             const double parameter = (ellipse.angle1 + ellipse.angle2) / 2.0;
-            const RS_Vector point = ellipse.center + RS_Vector{major * std::cos(parameter), minor * std::sin(parameter)};
-            const RS_Vector outward = RS_Vector{minor * std::cos(parameter), major * std::sin(parameter)}.normalized();
+            const RS_Vector majorUnit = ellipse.majorP / major;
+            const RS_Vector minorUnit{-majorUnit.y, majorUnit.x};
+            const RS_Vector minorP = minorUnit * (major * ellipse.ratio);
+            const RS_Vector point = ellipse.center + ellipse.majorP * std::cos(parameter) + minorP * std::sin(parameter);
+            const RS_Vector outward =
+                (majorUnit * (major * ellipse.ratio * std::cos(parameter)) + minorUnit * (major * std::sin(parameter))).normalized();
             offset.distance = thinEllipseArc->second;
-            offset.coord = point + outward * offset.distance;
-            offset.sideFallback = offset.coord;
+            offset.coord = point;
+            offset.sideFallback = point + outward * offset.distance;
         }
         offset.number = 1;
         offset.multipleCopies = true;

@@ -677,6 +677,24 @@ TEST_CASE("Thin and far ellipse offsets stay at the distance everywhere", "[curv
     checkOffset(offsetOf(narrowArc, kRight, 0.1), curveOf(narrowArc), 0.1, {false});
     const RS_Ellipse reversedNarrowArc = ellipse(100.0, 1e-4, 1.5, 0.25, true);
     checkOffset(offsetOf(reversedNarrowArc, kLeft, 0.1), curveOf(reversedNarrowArc), 0.1, {false});
+    const RS_Ellipse translatedNarrowArc{
+        nullptr, RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.25, 1.5, false}};
+    checkOffset(offsetOf(translatedNarrowArc, kRight, 0.1), curveOf(translatedNarrowArc), 0.1, {false});
+    const RS_Vector translatedArcProbe =
+        translatedNarrowArc.getEllipsePoint(0.875) + RS_Vector{1e-4 * std::cos(0.875), std::sin(0.875)}.normalized() * 0.1;
+    const auto translatedArcSide =
+        LC_CurveOffset::resolveSide(translatedNarrowArc, translatedArcProbe, LC_CurveOffset::makeOffsetOptions(translatedNarrowArc, 0.1));
+    INFO("translated arc side status=" << static_cast<int>(translatedArcSide.status));
+    CHECK(translatedArcSide.status == LC_CurveOffsetStatus::Ok);
+    const RS_Ellipse translatedReversedNarrowArc{nullptr, RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 1.5, 0.25, true}};
+    checkOffset(offsetOf(translatedReversedNarrowArc, kLeft, 0.1), curveOf(translatedReversedNarrowArc), 0.1, {false});
+    const double rotation = M_PI / 6.0;
+    const RS_Vector rotatedMajor{100.0 * std::cos(rotation), 100.0 * std::sin(rotation)};
+    const RS_Ellipse rotatedNarrowArc{nullptr, RS_EllipseData{{0.0, 0.0}, rotatedMajor, 1e-4, 0.25, 1.5, false}};
+    checkOffset(offsetOf(rotatedNarrowArc, kRight, 0.1), curveOf(rotatedNarrowArc), 0.1, {false});
+    const RS_Ellipse translatedRotatedReversedNarrowArc{
+        nullptr, RS_EllipseData{{1e8, -1e8}, {50.0, 100.0 * std::sin(rotation)}, 1e-4, 1.5, 0.25, true}};
+    checkOffset(offsetOf(translatedRotatedReversedNarrowArc, kLeft, 0.1), curveOf(translatedRotatedReversedNarrowArc), 0.1, {false});
 }
 
 TEST_CASE("Extreme thin ellipse receives bounded refinement headroom", "[curve-offset][ellipse][boundary]") {
