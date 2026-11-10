@@ -1332,6 +1332,30 @@ TEST_CASE("Typed parabola offsets remain exact after an affine shape transform",
     }
 }
 
+TEST_CASE("Large-origin scaled parabola offsets retain exact normals", "[curve-offset][direct][parabola][oracle][precision]") {
+    constexpr double scale = 1e4;
+    const RS_Vector origin{1e6, -2e6};
+    const LC_ParabolaData data{{origin, origin + RS_Vector{5.0 * scale, 10.0 * scale}, origin + RS_Vector{10.0 * scale, 0.0}}};
+    REQUIRE(data.isValid());
+    const LC_Parabola source{nullptr, data};
+    const auto typedSource = LC_OffsetSourceGeometry::capture(source);
+    REQUIRE(typedSource);
+    CHECK(typedSource->kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+
+    const EvalFn exactCurve = evaluator(source);
+    for (const double normalizedDistance : {0.05, 0.25}) {
+        const double distance = normalizedDistance * scale;
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(normalizedDistance, distance, side);
+            const auto result = offsetToSide(source, side, distance);
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            CHECK(maxDeviation(result, exactCurve) <= options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("A circular arc offsets to a concentric arc", "[curve-offset][direct]") {
     const RS_Vector center{3.0, -2.0};
     const RS_Spline arc = quarterCircle(center, 10.0);
