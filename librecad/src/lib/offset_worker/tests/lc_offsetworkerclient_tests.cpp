@@ -691,6 +691,14 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(nearParallelParabola.isValid());
     const std::size_t nearParallelParabolaFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{nearParallelParabola});
+    constexpr double largeOriginParabolaScale = 1e4;
+    const RS_Vector largeOriginParabolaOrigin{1e6, -2e6};
+    const LC_ParabolaData largeOriginParabola{
+        {largeOriginParabolaOrigin, largeOriginParabolaOrigin + RS_Vector{5.0 * largeOriginParabolaScale, 10.0 * largeOriginParabolaScale},
+         largeOriginParabolaOrigin + RS_Vector{10.0 * largeOriginParabolaScale, 0.0}}};
+    REQUIRE(largeOriginParabola.isValid());
+    const std::size_t largeOriginParabolaFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{largeOriginParabola});
     const double arcSeam = 1e-4;
     const std::size_t nearFullArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{
@@ -1174,6 +1182,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == smallCircleFixture                                                    ? 2e-5
             : i == largeCircleFixture                                                    ? 2e3
             : i == nearParallelParabolaFixture                                           ? .01
+            : i == largeOriginParabolaFixture                                            ? 2500.0
             : i == 21                                                                    ? .1
             : i == 24                                                                    ? 1.9
             : i == scaledMajorSweepFixture                                               ? 2500.0
@@ -1542,6 +1551,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == scaledCornerLargeOppositeFixture) {
             offset.distance = 2500.0;
             offset.coord = {1e6 + 1e4, -2e6 + 3e4};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == largeOriginParabolaFixture) {
+            offset.distance = 2500.0;
+            offset.coord = {1e6 + 5e4, -2e6 + 5.3e4};
             offset.sideFallback = offset.coord;
         }
         if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
