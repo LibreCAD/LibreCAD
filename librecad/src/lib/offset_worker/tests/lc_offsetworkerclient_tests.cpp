@@ -727,7 +727,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
-    const std::array<RS_EllipseData, 22> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 25> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -743,6 +743,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{1e4, -1e4}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-4, -0.2, 0.2, false},
         {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.2, -0.2, true},
         {{1e4, -1e4}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-4, 0.2, -0.2, true},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, -0.2, 0.2, false},
+        {{100.0, -100.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-3, -0.2, 0.2, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -767,6 +770,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : profile == 19                                    ? std::vector<double>{0.9e-6, 1.0e-6, 1.1e-6}
             : profile == 20                                    ? std::vector<double>{-0.9e-6, -1.0e-6, -1.1e-6}
             : profile == 21                                    ? std::vector<double>{-0.9e-6, -1.0e-6, -1.1e-6}
+            : profile == 22                                    ? std::vector<double>{0.9e-4}
+            : profile == 23                                    ? std::vector<double>{1.0e-4}
+            : profile == 24                                    ? std::vector<double>{1.1e-4}
             : profile == 7 || profile == 8                     ? std::vector<double>{1.1e-6}
                                                                : std::vector<double>{0.5e-6};
         for (const double cuspDistance : cuspDistances) {

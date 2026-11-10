@@ -963,6 +963,24 @@ TEST_CASE("Transformed thin elliptic arcs retain cusp-threshold geometry", "[cur
     }
 }
 
+TEST_CASE("Rotated 100-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-3;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{100.0, -100.0}, majorP, ratio, -0.2, 0.2, false}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        const std::vector<RS_Vector> criticalPoint{inwardOffset(source, 0.0, distance)};
+        checkOffset(inward, curveOf(source), distance, {false}, criticalPoint);
+        CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    }
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[curve-offset][ellipse]") {
     // Where an eccentric ellipse's inward offset needs both major-axis
@@ -972,12 +990,8 @@ TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[c
     // the first resolution's own splice and wrongly reported AmbiguousTopology.
     // Each corner sits at the closed form sqrt(a^2-b^2)*sqrt(1-(d/b)^2).
     const std::vector<std::tuple<double, double, double>> cases{
-        {20.0, 2.0, 1.8}, {20.0, 2.0, 1.9}, {20.0, 2.0, 1.99},
-        {100.0, 1.0, 0.98},
-        {10.0, 3.0, 2.95}, {10.0, 3.0, 2.998},
-        {10.0, 2.5, 2.49}, {10.0, 2.5, 2.498},
-        {10.0, 4.0, 3.99}, {10.0, 4.0, 3.998},
-        {10.0, 2.0, 1.95},
+        {20.0, 2.0, 1.8},  {20.0, 2.0, 1.9},   {20.0, 2.0, 1.99}, {100.0, 1.0, 0.98}, {10.0, 3.0, 2.95}, {10.0, 3.0, 2.998},
+        {10.0, 2.5, 2.49}, {10.0, 2.5, 2.498}, {10.0, 4.0, 3.99}, {10.0, 4.0, 3.998}, {10.0, 2.0, 1.95},
     };
     for (const auto& [a, b, d] : cases) {
         INFO("a = " << a << ", b = " << b << ", d = " << d);
