@@ -33715,3 +33715,25 @@ profiles or Direct mode. The source-picker requirement remains separate and
 closed by section 819 and the Current Contract: all nine modeled source types,
 including distinct parabola, are selectable during replacement, but that does
 not imply end-to-end geometry support.
+
+## 826. Localize the Large-origin 10000-to-1 Cusp Refusal (2026-11-10)
+
+Added failure-only context to the existing `(1e6, -1e6)`, 10000-to-1 reversed
+ellipse test. At the exact inward cusp distance `1e-6`, TrimBoundary returns
+`AmbiguousTopology` after 173,141 pair checks (1,424 candidates and 171,717
+refinements), reaching depth 48 on segment pair `(0, 0)`. The unresolved
+parameter boxes are `[0.19998855567537516, 0.19998855586163966]` and
+`[0.19999541595437659, 0.19999541595437662]`. At inward distance `1.1e-6`, it
+returns the same bounded refusal after 7,066 pairs (134 candidates and 6,932
+refinements), depth 42, without an isolated failure domain. The inward
+`0.9e-6` case and the opposite side continue to pass the direct geometry
+oracle. The focused case passes 16,527 assertions.
+
+These observations do not prove the exact geometric role of the unresolved
+pair or justify changing the expected refusal. Unlike section 825's
+offset-versus-cap bottleneck, the recorded boxes are on the trim-boundary
+query's segment pair `(0, 0)` and the over-cusp refusal is not a global-budget
+exhaustion. The next slice must identify whether the blocker is the opposing
+offset branches, a cusp/cap interaction, or numerical ambiguity, then add an
+independent geometric oracle before attempting a bounded classifier. Keep the
+current empty-output fail-closed behavior until that proof exists.

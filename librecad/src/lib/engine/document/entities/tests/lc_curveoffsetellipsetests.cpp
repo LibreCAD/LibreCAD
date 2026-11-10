@@ -1181,6 +1181,20 @@ TEST_CASE("Large-origin reversed 10000-to-1 elliptic arc endpoint retains cusp-t
         for (const auto side : {kLeft, kRight}) {
             const Offset result = offsetOf(source, side, distance, 0.1 * distance);
             if (distance >= cuspRadius && side == kRight) {
+                CAPTURE(result.intersectionDiagnostics.stage, result.intersectionDiagnostics.status,
+                        result.intersectionDiagnostics.work.totalBoxPairs,
+                        result.intersectionDiagnostics.work.candidateBoxPairs,
+                        result.intersectionDiagnostics.work.refinementBoxPairs,
+                        result.intersectionDiagnostics.work.bvhLeafCandidates,
+                        result.intersectionDiagnostics.work.deepestPairRefinement,
+                        result.intersectionDiagnostics.hasFailureDomain,
+                        result.intersectionDiagnostics.failureDepth,
+                        result.intersectionDiagnostics.failureDomain.segmentA,
+                        result.intersectionDiagnostics.failureDomain.segmentB,
+                        result.intersectionDiagnostics.failureDomain.parameterA.lo(),
+                        result.intersectionDiagnostics.failureDomain.parameterA.hi(),
+                        result.intersectionDiagnostics.failureDomain.parameterB.lo(),
+                        result.intersectionDiagnostics.failureDomain.parameterB.hi());
                 CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
                 CHECK(result.entities.empty());
                 CHECK(result.chains.empty());
