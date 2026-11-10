@@ -31598,15 +31598,19 @@ Other transforms, reversed arcs, sweeps, and distances remain open.
 Added a translated, 30-degree forward arc with major radius `100`, ratio
 `20/21` (1.05:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature
 radius is `a * ratio^2 = 40000/441`; distances at `0.9`, `1.0`, and `1.1`
-times that radius all materialize and pass the independent distance/tangent
-and materialized-intersection checks. Unlike the tested 1.1:1 exact cusp, the
-1.05:1 exact threshold remains materializable. Above threshold, direct
+times that radius cover below, exact, and above-threshold behavior. The below
+case materializes and passes the independent distance/tangent and
+materialized-intersection checks. At the exact threshold, trimmed direct
+materialization returns `LimitExceeded` with no output; the earlier claim that
+this direct case materialized was incorrect. Above threshold, direct
 construction returns one branch while trimmed geometry is valid and empty.
 
-The real-worker matrix covers the same three distances: below and exact
-thresholds complete generation, cache admission, replacement/Produce, and the
-five DXF/DWG lanes; the above-threshold case produces no document batch after
-the worker reports `Vanished`. Independent LibreDWG parsing remains enabled.
+The real-worker matrix covers the same three distances. Below and exact
+thresholds complete untrimmed generation, cache admission, replacement/Produce,
+and the five DXF/DWG lanes; this worker result does not contradict the direct
+trimmed solver's exact-cusp refusal. The above-threshold case produces no
+document batch after the worker reports `Vanished`. Independent LibreDWG
+parsing remains enabled.
 The repeated callback timeout on existing fixture 74 also required increasing
 the worker-client test-only per-callback watchdog from 3.5 to 6 seconds. The
 90-second suite watchdog, production deadlines, and geometry budgets are
@@ -31650,6 +31654,34 @@ cache admission, editable replacement/Produce, and applicable DXF/DWG
 round-trips in the existing parabola and per-variant work items. Any uncovered
 parabola variant belongs there; only add a new picker option and corresponding
 family-switch test when `SupportedKinds` gains a genuinely new modeled kind.
+
+## 740. Qualify the 1.025:1 Elliptic-arc Cusp Neighborhood (2026-11-10)
+
+Added a translated, 30-degree forward arc with major radius `100`, ratio
+`40/41` (1.025:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature
+radius is `a * ratio^2 = 160000/1681`; distances at `0.9`, `1.0`, and `1.1`
+times that radius cover the threshold. The below-threshold direct result
+materializes and passes the independent offset oracle. Exact-threshold trimmed
+direct materialization fails closed with `LimitExceeded` and empty output. The
+above-threshold direct builder returns one candidate branch, while trimmed
+materialization validly returns no entity.
+
+The real-worker matrix exercises all three distances. Below and exact cases
+complete the worker source-generation, cache-admission, replacement/Produce,
+and five DXF/DWG round-trip lanes; above threshold reports one candidate then
+`Vanished` without publishing a document batch. LibreDWG parsing is enabled for
+both DWG versions.
+
+Validation: focused direct case passes 3,629 assertions; the complete direct
+`[curve-offset][ellipse][cusp]` selection passes 306,988 assertions/17 cases.
+The focused source-family worker case passes 1,079,901 assertions/1 case; the
+full worker-client suite passes 1,087,714 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Both test targets build; scoped
+clang-format and `git diff --check` pass. Test commit: `b538bbf57`
+(`test(offset): qualify 1.025-to-1 cusp arcs`).
+
+This closes only the recorded translated, rotated forward-arc 1.025:1 triplet.
+Other transforms, reversed arcs, sweeps, ratios, and distances remain open.
 
 ## 733. Reconcile Source-picker Type Changes and Parabola (2026-11-10)
 
