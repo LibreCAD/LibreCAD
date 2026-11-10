@@ -30729,3 +30729,28 @@ the full worker-client suite passes 173,331 assertions/22 cases with
 `DWGREAD=/opt/homebrew/bin/dwgread`. The changed ranges pass repository
 clang-format and `git diff --check`. Visible GUI, external ODA/AutoCAD,
 cross-platform/ASan, and exact-head CI remain open.
+
+## 705. Carry Extreme Thin Elliptic Arcs Through Worker and Persistence (2026-11-09)
+
+Extended the ratio-`1e-4` ellipse boundary to a bounded arc with parameters
+0.25 to 1.5 and its reversed traversal. Both use major radius 100 and outward
+offset distance 0.1. The direct independent distance oracle now verifies both
+orientations. Added the same profiles to the real-worker matrix, requiring
+operation-7 generation, operation-8 cache validation, typed source replacement,
+Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG round trips. The Produce
+side point is derived from the ellipse gradient at the arc midpoint so the
+reversed case tests traversal-aware side resolution. Reopened spline control
+and fit points use the same local-scale/ULP check as the whole-ellipse fixtures.
+
+Validation: focused worker-family test passes 169,097 assertions/1 case; the
+complete `[lc-offsetcurve][worker-client]` suite passes 177,089 assertions/22
+cases with `DWGREAD=/opt/homebrew/bin/dwgread`. The complete
+`[curve-offset][ellipse]` direct suite passes 740,835 assertions/23 cases.
+Edited ranges pass repository clang-format and `git diff --check`. Only these
+arc parameterizations and offset scale are qualified; other eccentricities,
+rotated axes, translations, inward cusp boundaries, visible GUI, external
+ODA/AutoCAD, cross-platform/ASan, and exact-head CI remain open.
+
+Implementation/test slice committed as `248078497` (`test(offset): cover
+extreme thin ellipse arcs`). The next slice remains broader thin-ellipse
+domains; this commit only qualifies the two arc profiles listed above.
