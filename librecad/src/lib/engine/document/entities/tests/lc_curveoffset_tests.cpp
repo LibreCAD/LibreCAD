@@ -534,7 +534,7 @@ TEST_CASE("Closed spline-points stationary spans preserve seam-aware offset norm
     };
     const std::array<Profile, 2> profiles{{
         {{{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {-1, -1}}, 2.0, 3.0},
-        {{{1, 1}, {1, 1}, {2, 0}, {0, 2}, {-1, 0}, {1, 1}}, 0.0, 1.0},
+        {{{0, 0}, {0, 0}, {10, 0}, {13, 8}, {4, 13}, {0, 0}}, 0.0, 1.0},
     }};
     const auto cubicAt = [](const std::array<RS_Vector, 4>& bezier, const double t) {
         const double u = 1.0 - t;

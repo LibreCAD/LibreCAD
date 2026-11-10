@@ -1418,6 +1418,52 @@ TEST_CASE("offset worker admits cubic tangent sources only when metadata matches
     CHECK_FALSE(refused.changed);
 }
 
+TEST_CASE("offset worker produces closed stationary spline-point profiles",
+          "[lc-offsetcurve][worker-kernel][source-generation][spline-points][closed][stationary]") {
+    const std::array<std::vector<RS_Vector>, 2> profiles{{
+        {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {-1, -1}},
+        {{0, 0}, {0, 0}, {10, 0}, {13, 8}, {4, 13}, {0, 0}},
+    }};
+    for (std::size_t profile = 0; profile < profiles.size(); ++profile) {
+        LC_SplinePointsData data{true, false};
+        data.useControlPoints = true;
+        data.controlPoints = profiles[profile];
+        LC_SplinePoints source{nullptr, data};
+        REQUIRE(source.isClosed());
+
+        LC_CurveJet jet;
+        const double pickParameter = profile == 0 ? 0.5 : 2.5;
+        REQUIRE(source.tryEvaluateJet(pickParameter, LC_CurveEvaluationSide::Interior, jet));
+        REQUIRE(jet.first.magnitude() > 0.0);
+        const RS_Vector leftNormal{-jet.first.y / jet.first.magnitude(),
+                                   jet.first.x / jet.first.magnitude()};
+
+        for (const double sign : {1.0, -1.0}) {
+            CAPTURE(profile, sign);
+            const auto trimmed = LC_CurveOffset::createEntities(
+                source,
+                LC_CurveOffset::makeSideRequest(sign > 0.0 ? LC_CurveOffsetSide::Left
+                                                             : LC_CurveOffsetSide::Right,
+                                                0.25),
+                LC_CurveOffset::makeOffsetOptions(source, 0.25),
+                LC_CurveOffset::makeDirectSourceBudget());
+            CAPTURE(trimmed.status, trimmed.entities.size());
+            req::Produce operation;
+            operation.source = LC_OffsetSourceGeometry{data};
+            operation.coordinate = jet.point + leftNormal * (sign * 0.5);
+            operation.distance = 0.25;
+            operation.context.topLevel = true;
+            const auto reply = LC_OffsetWorkerKernel::run({token, operation});
+            const auto& produced = std::get<result::Produced>(reply.result);
+            CAPTURE(produced.source.status, produced.source.engineStatus,
+                    produced.source.detail, produced.copyOutputCounts.size());
+            CHECK(produced.source.status == LC_OffsetSourceStatus::Succeeded);
+            CHECK(produced.source.engineStatus == LC_CurveOffsetStatus::Ok);
+            CHECK(produced.outputs.size() == 1);
+        }
+    }
+}
+
 TEST_CASE("offset worker handles a rotated 100-to-1 elliptic arc past its cusp radius",
           "[lc-offsetcurve][worker-kernel][source-generation][ellipse][cusp]") {
     const double angle = M_PI / 6.0;

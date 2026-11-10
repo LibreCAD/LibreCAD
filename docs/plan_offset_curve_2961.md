@@ -29828,7 +29828,7 @@ these rows do not imply every parameter/domain is supported):
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
-| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; isolated, separated, plateau-plus-separated, leading-endpoint, and trailing-endpoint stationary profiles omit stationary source intervals, preserve exact-normal tolerance on moving spans, and pass both signed worker/cache/Produce paths, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed interior- and seam-stationary profiles pass direct exact-normal checks on both signed sides but not worker Produce | Other repeated-point/stationary-span patterns and joins, worker/persistence for closed stationary profiles, fit/tangent combinations, and broader seam/refusal matrix |
+| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; isolated, separated, plateau-plus-separated, leading-endpoint, and trailing-endpoint stationary profiles omit stationary source intervals, preserve exact-normal tolerance on moving spans, and pass both signed worker/cache/Produce paths, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing; a closed interior-stationary profile and a simple convex periodic-seam-stationary profile pass exact-normal checks on both sides plus worker/cache/replacement/Produce, five DXF/DWG lanes, and LibreDWG parsing | Other repeated-point/stationary-span patterns and joins, self-intersecting or ambiguous closed stationary profiles, fit/tangent combinations, and broader seam/refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples, endpoint tangent slopes +/-1e-4..1e-8, a scale-`1e4` source translated to `(1e6,-2e6)` at both signs and normalized distances `.05/.25`, and a scale-`1e-3` source translated to `(10,-20)` at both signs and normalized distances `.05/.25`; both translated profiles at both signs and both distances pass worker/cache, replacement, and five file lanes; two four-point candidates and the 1e-8 near-parallel profile also pass those lanes; parallel/zero/non-finite tangent refusals | Other source scales/translations, other four-point samples, more extreme endpoint conditioning, broader transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks include rotated wide intervals, a translated thin left branch, and a high-ratio branch with reversed bounds; both exact profiles at 5% and 20% of vertex curvature radius pass typed worker/cache admission, Produce on both resolved sides, five DXF/DWG lanes, and independent LibreDWG parsing | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; both worker sides of all three recorded corner scales and the translated major sweep pass generation/cache/Produce, five file lanes, and LibreDWG; closed mixed-bulge and major/minor bulge oracles remain covered; tangent-connected, cornering (`bulge 0.2`), and major-sweep (`bulge 2.0`) nominal sources pass the same worker/persistence path | Other open sweep/scale boundaries, additional transformed corner scales/origins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles |
@@ -33223,7 +33223,10 @@ removed from the accepted worker matrix; the maintained matrix passes
 1,278,028 assertions. Keep these closed stationary profiles direct-only and
 explicitly unqualified for cache, Produce, and file persistence until the
 topology discrepancy is resolved. This is a known open implementation item,
-not an accepted refusal guarantee. `git diff --check` passes.
+not an accepted refusal guarantee. Section 809 supersedes this provisional
+boundary for a corrected simple convex seam profile and the interior fixture;
+the original ambiguous seam shape remains outside the worker acceptance set.
+`git diff --check` passes.
 
 ## 808. Reconcile the Source-picker Type Request (2026-11-10)
 
@@ -33251,3 +33254,26 @@ other source variant, record direct generation/refusal, worker and cache,
 replacement/edit behavior, and applicable DXF/DWG persistence independently.
 Until a variant has evidence in its applicable lanes, preserve fail-closed
 behavior and do not infer geometric support from its presence in the picker.
+
+## 809. Qualify Closed Stationary Spline-points Through Produce and Persistence (2026-11-10)
+
+Replaced the earlier seam-stationary direct-only fixture with a simple convex
+closed profile whose repeated endpoint controls create a verified stationary
+span across the periodic seam. The former seam fixture also produced ambiguous
+side/topology results unrelated to the isolated seam-stationary behavior, so it
+is not used to claim a general seam limitation or success. Retained the closed
+interior stationary profile and added an explicit kernel regression that drives
+both profiles through trimmed worker Produce from both side picks. All four
+kernel cases succeed; the direct exact-normal test also passes on both signed
+sides, excludes stationary spans from provenance, and confirms the input
+controls remain unchanged (5,710 assertions).
+
+Added both closed profiles to the full typed-source worker matrix, with positive
+and negative generation requests and opposite side picks during Produce. The
+real helper run passes 1,302,930 assertions across source generation, cache
+admission, source replacement, Produce, R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. The available `dwgread` independently reads both generated DWG lanes.
+This closes the worker/persistence gap for these two exact closed stationary
+profiles only. Other repeated-point patterns, ambiguous/self-intersecting
+closed curves, fit-point stationary curves, and broader topology/refusal
+boundaries remain open. `git diff --check` passes.

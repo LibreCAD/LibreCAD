@@ -36,6 +36,7 @@
 #include "lc_offsetbatchpreparation.h"
 #include "lc_offsetcurvexdata.h"
 #include "lc_parabola.h"
+#include "lc_splinepoints.h"
 #include "rs_entitycontainer.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
@@ -1204,6 +1205,27 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     const std::size_t trailingStationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{trailingStationarySplinePoints});
     appendNegativeStationaryFixture(trailingStationarySplinePoints);
+    struct ClosedStationaryFixture {
+        std::size_t positive;
+        std::size_t negative;
+        double pickParameter;
+    };
+    std::vector<ClosedStationaryFixture> closedStationarySplinePointsFixtures;
+    const std::array<std::vector<RS_Vector>, 2> closedStationaryProfiles{{
+        {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {-1, -1}},
+        {{0, 0}, {0, 0}, {10, 0}, {13, 8}, {4, 13}, {0, 0}},
+    }};
+    for (std::size_t profile = 0; profile < closedStationaryProfiles.size(); ++profile) {
+        LC_SplinePointsData closedStationary{true, false};
+        closedStationary.useControlPoints = true;
+        closedStationary.controlPoints = closedStationaryProfiles[profile];
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{closedStationary});
+        const std::size_t negativeFixture = sources.size();
+        appendNegativeStationaryFixture(closedStationary);
+        closedStationarySplinePointsFixtures.push_back(
+            {fixture, negativeFixture, profile == 0 ? 0.5 : 2.5});
+    }
     LC_SplinePointsData closedControlPoints{true, false};
     closedControlPoints.useControlPoints = true;
     closedControlPoints.controlPoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
@@ -1320,6 +1342,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == stationarySplinePointsFixture || i == multipleStationarySplinePointsFixture ||
             i == stationaryPlateauSplinePointsFixture || i == leadingStationarySplinePointsFixture ||
             i == trailingStationarySplinePointsFixture ||
+            std::any_of(closedStationarySplinePointsFixtures.begin(), closedStationarySplinePointsFixtures.end(),
+                        [i](const ClosedStationaryFixture& fixture) { return fixture.positive == i; }) ||
             std::find(negativeStationarySplinePointsFixtures.begin(), negativeStationarySplinePointsFixtures.end(), i) !=
                 negativeStationarySplinePointsFixtures.end()) {
             if (std::find(negativeStationarySplinePointsFixtures.begin(), negativeStationarySplinePointsFixtures.end(), i) !=
@@ -1773,6 +1797,24 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 offset.distance = near ? .04 : .16;
             offset.coord = vertex +
                 leftNormal * (offset.distance * ((reversedBoundsHyperbolaOpposite || translatedThinHyperbolaOpposite) ? -2.0 : 2.0));
+            offset.sideFallback = offset.coord;
+        }
+        const auto closedStationaryFixture = std::find_if(
+            closedStationarySplinePointsFixtures.begin(), closedStationarySplinePointsFixtures.end(),
+            [i](const ClosedStationaryFixture& fixture) {
+                return fixture.positive == i || fixture.negative == i;
+            });
+        if (closedStationaryFixture != closedStationarySplinePointsFixtures.end()) {
+            const auto* spline = dynamic_cast<const LC_SplinePoints*>(entity.get());
+            REQUIRE(spline);
+            LC_CurveJet jet;
+            REQUIRE(spline->tryEvaluateJet(closedStationaryFixture->pickParameter,
+                                           LC_CurveEvaluationSide::Interior, jet));
+            const double speed = jet.first.magnitude();
+            REQUIRE(speed > 0.0);
+            const RS_Vector normal{-jet.first.y / speed, jet.first.x / speed};
+            const double pickSide = closedStationaryFixture->positive == i ? 1.0 : -1.0;
+            offset.coord = jet.point + normal * (pickSide * 0.5);
             offset.sideFallback = offset.coord;
         }
             if (i == scaledCornerOppositeFixture || i == scaledCornerOppositeAtLargerScaleFixture) {
