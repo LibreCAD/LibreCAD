@@ -72,6 +72,14 @@ recorded parameterizations, transforms, topologies, and distances. Unqualified
 variants must remain excluded or fail closed without mutating the current
 source/cache until their own geometry and persistence evidence is recorded.
 
+Implicit geometry tolerance is additionally bounded by 10% of the requested
+offset distance. A source-relative tolerance larger than that can accept a
+curve whose error exceeds the offset itself, effectively publishing the source
+instead of its requested offset. If the bound falls at or below the numeric
+floor, or the geometry cannot meet it within the existing work budgets, the
+operation must fail closed. Explicit geometric tolerances remain caller-owned.
+The full worker matrix must be rerun after changing this shared tolerance rule.
+
 High-degree spline evidence has advanced beyond native SPLINE persistence.
 Degrees 4-6 now pass bounded source/protocol admission and worker operation-7
 generation plus operation-8 cache validation for tested clamped rational
@@ -30850,17 +30858,19 @@ and the trimmed closed-branch topology is confirmed.
 
 Completed implementation and validation:
 
-1. Added all five cusp-bracket distances to the real-worker matrix, with
-   operation-7 generation, operation-8 cache admission, typed source
-   replacement, Produce, and independent checks of the generated geometry.
-   Keep the exact single-closed-branch expectation for these tested symmetric
-   whole-ellipse profiles; do not generalize it to partial arcs or other
-   eccentricities. Produce's direction point is placed at the ellipse center
-   so side classification is not confounded by the sub-micron offset distance.
-2. Carried those same five signed-distance profiles through R14 DXF, R2000
-   DXF/DWG, and R2018 DXF/DWG. Reopen each file and verify typed ellipse
-   source, cache spline geometry, branch topology, and source-distance oracle;
-   independently parse the generated DWGs with LibreDWG.
+1. Added the five origin-centered cusp-bracket distances to the real-worker
+   matrix, with operation-7 generation, operation-8 cache admission, typed
+   source replacement, Produce, and independent checks of the generated
+   geometry. Keep the exact single-closed-branch expectation for these tested
+   symmetric whole-ellipse profiles; do not generalize it to partial arcs or
+   other eccentricities. Produce's direction point is placed at the ellipse
+   center so side classification is not confounded by the sub-micron offset.
+2. Carried the cusp-boundary triplet (0.9, 1.0, and 1.1 times the cusp radius)
+   through the five DXF/DWG lanes for the origin-centered profile, plus the
+   exact cusp-radius profile for the translated ellipse. Reopen each file and
+   verify typed ellipse source, cache spline geometry, branch topology, and
+   source-distance oracle; independently parse the generated DWGs with
+   LibreDWG. The direct suite retains all five distances for both profiles.
 
 Validation on the current source: the focused direct cusp-bracket test passes
 18,090 assertions/1 case; the full `[curve-offset][ellipse]` suite passes
@@ -30891,16 +30901,17 @@ Extended W708's five inward distances (0.5, 0.9, 1.0, 1.1, and 2.0 times the
 the independent nearest-source-distance and tangent-orientation oracles and
 require one closed trimmed branch. The worker matrix additionally runs
 operation 7 generation, operation 8 cache admission, typed source replacement,
-Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG reopen checks for each
-distance. The existing LibreDWG pass independently reads both generated DWG
-lanes.
+Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG reopen checks for the
+0.9/1.0/1.1 cusp-boundary triplet on the origin-centered source and the exact
+cusp distance on the translated source. The existing LibreDWG pass
+independently reads both generated DWG lanes.
 
-Validation: the focused `[curve-offset][ellipse][cusp]` case passes 36,180
-assertions; the complete `[curve-offset][ellipse]` suite passes 802,335
-assertions/24 cases. The full worker-client selection passes 250,670
-assertions/22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`; both DWG lanes
-are parsed. `git diff --check` and repository clang-format checks pass. Test
-commit: `2d97a5e02` (`test(offset): cover translated inward ellipse cusps`).
+Validation at the translation-only code commit: the focused
+`[curve-offset][ellipse][cusp]` case passes 36,180 assertions; the complete
+`[curve-offset][ellipse]` suite passes 802,335 assertions/24 cases. The full
+worker-client selection passes 250,670 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; both DWG lanes are parsed. Test commit:
+`2d97a5e02` (`test(offset): cover translated inward ellipse cusps`).
 
 A separate exploratory 30-degree rotated cusp profile returned
 `LC_CurveOffsetStatus::LimitExceeded` at the default bounded geometry budget;
@@ -30910,3 +30921,35 @@ receipt qualifies only the one translated, axis-aligned whole-ellipse profile;
 rotated and larger-translation inward profiles, partial arcs, and other cusp
 topologies remain open. Push this receipt and check CI against the exact new
 PR head; no earlier-head result transfers.
+
+## 710. Bound Default Tolerance for Sub-scale Offsets (2026-11-09)
+
+A 30-degree rotated thin-ellipse cusp exposed a tolerance-policy defect. The
+previous implicit ellipse tolerance was source-relative (`1e-4` of the major
+scale), many orders larger than a `1e-6` requested offset; generation returned
+`Ok` while the independent analytic offset oracle measured `1e-5` to `1e-4`
+point errors and reversed tangent orientation near the major vertices. The
+strict 1%-of-distance probe instead exceeded the bounded output budget. The
+source-relative tolerance therefore concealed a non-offset result.
+
+Implicit tolerance now uses the smaller of the source-relative target and
+10% of the requested distance. A numeric floor that prevents this tolerance
+is honored as a refusal rather than inflating the tolerance. Caller-supplied
+geometric tolerances remain explicit overrides. The ellipse oracle's analytic
+inward-normal helper now uses the rotated major/minor basis, so transformed
+profiles are checked against their actual ellipse rather than an axis-aligned
+formula. The rotated cusp regression verifies the bound and requires
+`LimitExceeded` with no output under current work caps; it no longer accepts
+the previous inaccurate `Ok` result. Expanding the bounded work cap or
+improving rotation-conditioned fitting is separate follow-up work.
+
+The worker persistence matrix was narrowed to the origin-centered
+0.9/1.0/1.1 boundary triplet and one translated exact-cusp profile to preserve
+its 45-second guard with the tighter tolerance. Direct tests still cover all
+five distances for both origin and translated profiles. Validation: focused
+cusp tests pass 36,183 assertions/3 cases; the complete direct ellipse suite
+passes 802,338 assertions/25 cases; focused worker-family test passes 437,661
+assertions/1 case; the full worker-client suite passes 443,373 assertions/22
+cases with LibreDWG parsing both DWG lanes. `git diff --check` and repository
+clang-format checks pass. Implementation and test changes are pending their
+slice commit; exact-head CI must be checked after push.
