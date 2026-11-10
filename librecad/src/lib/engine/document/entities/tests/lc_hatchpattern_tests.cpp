@@ -1246,10 +1246,10 @@ TEST_CASE("Hatch pattern fast path: interior tiles draw exactly what clipping dr
     }
     SECTION("Full ellipse rotated 20 deg, ANSI31") {
         auto contour = std::make_unique<RS_EntityContainer>(nullptr, true);
-        RS_Vector major(240.0, 0.0);
-        major.rotate(20.0 * M_PI / 180.0);
+        RS_Vector majorAxis(240.0, 0.0);
+        majorAxis.rotate(20.0 * M_PI / 180.0);
         contour->addEntity(new RS_Ellipse(contour.get(),
-            RS_EllipseData{RS_Vector(250.0, 150.0), major, 140.0 / 240.0,
+            RS_EllipseData{RS_Vector(250.0, 150.0), majorAxis, 140.0 / 240.0,
                            0.0, 0.0, false}));
         contour->calculateBorders();
         LC_LoopUtils::LoopOptimizer opt(*contour);
