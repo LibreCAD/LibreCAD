@@ -858,6 +858,40 @@ TEST_CASE("Extreme thin elliptic arcs retain cusp-local topology", "[curve-offse
     }
 }
 
+TEST_CASE("Translated and rotated thin elliptic-arc cusps remain bounded", "[curve-offset][ellipse][cusp]") {
+    struct Profile {
+        RS_Vector center;
+        double degrees;
+        double from;
+        double to;
+        bool reversed;
+    };
+    const std::array<Profile, 3> profiles{{
+        {{100.0, -100.0}, 30.0, -0.2, 0.2, false},
+        {{1e4, -1e4}, 45.0, -0.2, 0.2, false},
+        {{100.0, -100.0}, 30.0, 0.2, -0.2, true},
+    }};
+    constexpr double distance = 0.5e-6;
+    for (const Profile& profile : profiles) {
+        const double angle = profile.degrees * M_PI / 180.0;
+        const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+        const RS_Ellipse source{nullptr, RS_EllipseData{profile.center, majorP, 1e-4, profile.from, profile.to, profile.reversed}};
+        CAPTURE(profile.center.x, profile.center.y, profile.degrees, profile.from, profile.to, profile.reversed);
+        const Offset inward = offsetOf(source, profile.reversed ? kRight : kLeft, distance, 0.1 * distance);
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        checkOffset(inward, curveOf(source), distance, {false});
+        CHECK(inward.intersectionDiagnostics.work.totalBoxPairs < LC_CurveOffset::makeOffsetOptions(source, distance).maxIntersectionPairs);
+    }
+
+    const RS_Ellipse unrepresentable{nullptr, RS_EllipseData{RS_Vector{1e8, -1e8}, RS_Vector{100.0, 0.0}, 1e-4, -0.2, 0.2, false}};
+    CHECK(std::isnan(LC_CurveOffset::toleranceFor(unrepresentable, distance, LC_CurveOffset::relativeOffsetTolerance(unrepresentable))));
+    const auto refused = LC_CurveOffset::buildDirectBranches(unrepresentable, LC_CurveOffset::makeSideRequest(kLeft, distance),
+                                                             LC_CurveOffset::makeOffsetOptions(unrepresentable, distance),
+                                                             LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(refused.status == LC_CurveOffsetStatus::InvalidRequest);
+    CHECK(refused.branches.empty());
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[curve-offset][ellipse]") {
     // Where an eccentric ellipse's inward offset needs both major-axis
