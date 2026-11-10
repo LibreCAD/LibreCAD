@@ -237,7 +237,7 @@ RS_Vector inwardOffset(const RS_Ellipse& e, double eta, double d);
 
 /** P1, P2, P5 and P6 of every chain, and P9: how many, and which close. */
 void checkOffset(const Offset& offset, const Curve& source, const double d, const std::vector<bool>& closed,
-                 const std::vector<RS_Vector>& corners = {}) {
+                 const std::vector<RS_Vector>& knownFeatures = {}) {
     INFO("offset status=" << static_cast<int>(offset.status));
     REQUIRE(offset.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(offset.chains.size() == closed.size());
@@ -259,14 +259,12 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
             INFO("at (" << jet.point.x << ", " << jet.point.y << ")");
             CHECK(distance >= d - offset.slack); // P1
             CHECK(distance <= d + offset.slack); // P2
-            const bool nearCorner = std::any_of(corners.begin(), corners.end(), [&](const RS_Vector& corner) {
-                return corner.distanceTo(jet.point) < 1e-2 * d;
-            });
+            const bool nearFeature = std::any_of(knownFeatures.begin(), knownFeatures.end(),
+                                                 [&](const RS_Vector& feature) { return feature.distanceTo(jet.point) < 1e-2 * d; });
             // a stretch within the tolerance of an end has no direction to
             // check: a tail past a cusp there is absorbed when it is that short
-            const bool atEnd = jet.point.distanceTo(chain.start()) <= offset.slack ||
-                               jet.point.distanceTo(chain.end()) <= offset.slack;
-            if (!nearCorner && !atEnd) {
+            const bool atEnd = jet.point.distanceTo(chain.start()) <= offset.slack || jet.point.distanceTo(chain.end()) <= offset.slack;
+            if (!nearFeature && !atEnd) {
                 CHECK(RS_Vector::dotP(jet.first, source.tangent(foot)) > 0.0); // P5
             }
             LC_OffsetSegment segment;
@@ -290,11 +288,11 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
                     continue; // neighbours across the seam
                 }
                 if (segmentsIntersect(polygon[i], polygon[j], 0.0)) {
-                    const auto confinedToKnownCorner = [&](const RS_Vector& corner) {
-                        return polygon[i].a.distanceTo(corner) <= offset.slack && polygon[i].b.distanceTo(corner) <= offset.slack &&
-                            polygon[j].a.distanceTo(corner) <= offset.slack && polygon[j].b.distanceTo(corner) <= offset.slack;
+                    const auto confinedToKnownFeature = [&](const RS_Vector& feature) {
+                        return polygon[i].a.distanceTo(feature) <= offset.slack && polygon[i].b.distanceTo(feature) <= offset.slack &&
+                            polygon[j].a.distanceTo(feature) <= offset.slack && polygon[j].b.distanceTo(feature) <= offset.slack;
                     };
-                    if (!std::any_of(corners.begin(), corners.end(), confinedToKnownCorner)) {
+                    if (!std::any_of(knownFeatures.begin(), knownFeatures.end(), confinedToKnownFeature)) {
                         crossing = true;
                         crossingI = i;
                         crossingJ = j;
@@ -310,11 +308,11 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
         }
         CHECK_FALSE(crossing);
     }
-    for (const RS_Vector& corner : corners) {
-        INFO("corner (" << corner.x << ", " << corner.y << ")");
+    for (const RS_Vector& feature : knownFeatures) {
+        INFO("known offset feature (" << feature.x << ", " << feature.y << ")");
         double nearest = RS_MAXDOUBLE;
         for (const Chain& chain : offset.chains) {
-            nearest = std::min(nearest, chain.distanceFrom(corner));
+            nearest = std::min(nearest, chain.distanceFrom(feature));
         }
         CHECK(nearest <= offset.slack);
     }
@@ -937,11 +935,13 @@ TEST_CASE("Transformed thin elliptic arcs retain cusp-threshold geometry", "[cur
         bool reversed;
         double distance;
     };
-    const std::array<Profile, 5> profiles{{
+    const std::array<Profile, 7> profiles{{
         {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 0.9e-6},
         {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 1.0e-6},
         {{100.0, -100.0}, 30.0, -0.2, 0.2, false, 1.1e-6},
+        {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 0.9e-6},
         {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 1.0e-6},
+        {{1e4, -1e4}, 45.0, -0.2, 0.2, false, 1.1e-6},
         {{100.0, -100.0}, 30.0, 0.2, -0.2, true, 1.0e-6},
     }};
     for (const Profile& profile : profiles) {
@@ -951,9 +951,8 @@ TEST_CASE("Transformed thin elliptic arcs retain cusp-threshold geometry", "[cur
         CAPTURE(profile.center.x, profile.center.y, profile.degrees, profile.from, profile.to, profile.reversed, profile.distance);
         const Offset inward = offsetOf(source, profile.reversed ? kRight : kLeft, profile.distance, 0.1 * profile.distance);
         CHECK(inward.status == LC_CurveOffsetStatus::Ok);
-        const std::vector<RS_Vector> cusp =
-            profile.distance == 1e-6 ? std::vector<RS_Vector>{inwardOffset(source, 0.0, profile.distance)} : std::vector<RS_Vector>{};
-        checkOffset(inward, curveOf(source), profile.distance, {false}, cusp);
+        const std::vector<RS_Vector> criticalPoint{inwardOffset(source, 0.0, profile.distance)};
+        checkOffset(inward, curveOf(source), profile.distance, {false}, criticalPoint);
         CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
         CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
     }
