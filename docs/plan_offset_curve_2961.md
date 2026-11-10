@@ -32542,13 +32542,29 @@ the other modeled families. Retain these tests when changing the widget and
 extend them whenever `SupportedKinds` gains a kind. No duplicate selector or
 parabola-only picker path is needed.
 
+Implementation acceptance for this UI slice is therefore closed when all of
+the following remain true: the family control is usable during an active
+replacement pick; changing it filters live candidates without changing the
+current source/cache or removing its highlight; a valid pick replaces the
+source with the selected entity's actual typed geometry and identity; cancel,
+stale, and ineligible picks are non-mutating; and every
+`LC_OffsetSourceGeometry::SupportedKinds` entry, including the distinct
+`LC_Parabola`, is selectable and covered. The 2026-11-10 repeat request adds
+no separate implementation phase because these behaviors are already present
+and tested.
+
 This closes only the source-picker UI contract, not the broader request for
 all source types to work end to end. Continue qualifying concrete variants
 through independent direct-geometry oracles, real worker generation/cache
 admission, replacement/Produce, and applicable DXF/DWG round-trips. The
 family capability matrix remains authoritative: parabola is selectable, but
 only the explicitly recorded parabola profiles are geometry/worker/file
-qualified; other variants and visible GUI/external-CAD gates remain open.
+qualified; other variants and visible GUI/external-CAD gates remain open. For
+each advertised family, implement and validate its remaining geometry and
+serialization variants in the existing per-variant matrix; unsupported or
+unproven variants must stay filtered or fail closed without modifying the
+current source/cache. A passing picker test must not be reported as complete
+offset support.
 
 ## 779. Qualify a Reversed 100-to-1 Ellipse Cusp Profile (2026-11-10)
 
@@ -32593,3 +32609,21 @@ target builds; scoped clang-format and `git diff --check` pass. Test commit:
 qualifies both picked sides for the exact section-779 profile and distance
 triplet only; broader ellipse sweep, eccentricity, scale/translation, and
 curvature-boundary matrices remain open.
+
+## 781. Qualify a Reversed Translated 1000-to-1 Ellipse Cusp Profile (2026-11-10)
+
+Added a reversed elliptic arc with major radius `100`, ratio `1e-3`, rotation
+`45` degrees, center `(1e4,-1e4)`, and reversed parameter bounds `0.2` to
+`-0.2`. Its direct exact-normal checks cover both offset sides at `0.9`, `1.0`,
+and `1.1` times the major-vertex curvature radius (`1e-4`). The real worker
+matrix covers generation/cache admission and the exterior picked side through
+Produce plus R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen; both DWG
+outputs are independently parsed by LibreDWG when available. This is evidence
+only for this exact transformed/reversed profile, distance triplet, and worker
+pick side, not a general thin-ellipse guarantee.
+
+Validation: the focused direct test passes 28,258 assertions/1 case. The
+worker source-family case passes 1,204,062 assertions/1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; both test targets build, scoped
+clang-format and `git diff --check` pass. Test commit:
+`868864cea` (`test(offset): persist reversed 1000-to-1 cusp profiles`).
