@@ -1121,6 +1121,43 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                     }
                 }
             }
+            for (const std::size_t fixture : {smallCircleFixture, largeCircleFixture}) {
+                const PersistedGeometry* expected = nullptr;
+                for (const PersistedGeometry& candidate : persistedGeometry) {
+                    if (candidate.sourceFixture != fixture) continue;
+                    REQUIRE(candidate.type == RS2::EntityCircle);
+                    REQUIRE(expected == nullptr);
+                    expected = &candidate;
+                }
+                REQUIRE(expected);
+                const RS_Vector center{0.5 * (expected->minimum.x + expected->maximum.x),
+                                       0.5 * (expected->minimum.y + expected->maximum.y)};
+                const double radius = expected->length / (2.0 * M_PI);
+                const double centerTolerance = std::max({1e-12 * radius, 64.0 * ulp(center.x),
+                                                         64.0 * ulp(center.y)});
+                const double radiusTolerance = std::max(1e-12 * radius, 64.0 * ulp(radius));
+                QJsonObject externalCircle;
+                std::size_t matchingCircles = 0;
+                for (const QJsonValue& value : objects) {
+                    const QJsonObject candidate = value.toObject();
+                    if (candidate.value("entity").toString() != "CIRCLE") continue;
+                    const QJsonArray actualCenter = candidate.value("center").toArray();
+                    if (actualCenter.size() != 3 ||
+                        std::abs(actualCenter[0].toDouble() - center.x) > centerTolerance ||
+                        std::abs(actualCenter[1].toDouble() - center.y) > centerTolerance ||
+                        std::abs(candidate.value("radius").toDouble() - radius) > radiusTolerance)
+                        continue;
+                    externalCircle = candidate;
+                    ++matchingCircles;
+                }
+                CAPTURE(fixture, lane.extension, center.x, center.y, radius,
+                        centerTolerance, radiusTolerance);
+                REQUIRE(matchingCircles == 1);
+                const QJsonArray actualCenter = externalCircle.value("center").toArray();
+                CHECK(std::abs(actualCenter[0].toDouble() - center.x) <= centerTolerance);
+                CHECK(std::abs(actualCenter[1].toDouble() - center.y) <= centerTolerance);
+                CHECK(std::abs(externalCircle.value("radius").toDouble() - radius) <= radiusTolerance);
+            }
         }
 #endif
         RS_Graphic reopened;
