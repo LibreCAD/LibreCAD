@@ -324,10 +324,12 @@ void QG_LineTypeBox::applyLineTypeTo(RS_Pen& pen) const {
 }
 
 int QG_LineTypeBox::indexForName(const QString& name) const {
-    const QString key = LC_LineTypeNames::foldName(name);
+    // By LC_LineType::key(): a record keeps the blanks around its name, a pen
+    // trims them, and both are one name.
+    const QString key = LC_LineTypeNames::foldName(name.trimmed());
     for (int i = 0; i < count(); ++i) {
         const QString rowName = itemData(i, LineTypeNameRole).toString();
-        if (!rowName.isEmpty() && LC_LineTypeNames::foldName(rowName) == key) {
+        if (!rowName.isEmpty() && LC_LineTypeNames::foldName(rowName.trimmed()) == key) {
             return i;
         }
     }
@@ -361,7 +363,7 @@ int QG_LineTypeBox::indexForRowOfName(const QString& name, const RS2::LineType t
 }
 
 bool QG_LineTypeBox::isCanonicalName(const QString& name, const RS2::LineType type) const {
-    return LC_LineTypeNames::foldName(name) ==
+    return LC_LineTypeNames::foldName(name.trimmed()) ==
            LC_LineTypeNames::foldName(LC_LineTypeNames::lineTypeToName(type));
 }
 

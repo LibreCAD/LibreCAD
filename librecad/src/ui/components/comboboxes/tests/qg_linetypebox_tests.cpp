@@ -382,6 +382,38 @@ TEST_CASE("A canonical spelling without a row gets no temporary row", "[gui][lin
     CHECK(box.findText(QG_LineTypeBox::tr("%1 (not in this drawing)").arg(QStringLiteral("BYLAYER"))) < 0);
 }
 
+TEST_CASE("Blanks around a table spelling do not make another name", "[gui][linetype][combo]") {
+    (void)lc::test::application();
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    // A record keeps the blanks of its name; a pen trims them.
+    addLineType(graphic, "VENDOR_PAD ", {10.0, -5.0});
+
+    QG_LineTypeBox box;
+    box.init(&graphic.getLineTypeList(), true, false);
+    const int base = box.count();
+    const int padRow = box.findText(QStringLiteral("VENDOR_PAD "));
+    REQUIRE(padRow >= 0);
+
+    // The table's row, not a temporary one.
+    box.setLineTypeOf(namedPen(QStringLiteral("VENDOR_PAD")));
+    CHECK(box.count() == base);
+    CHECK(box.currentIndex() == padRow);
+
+    // A rebuild finds the row again.
+    box.rebuild(&graphic.getLineTypeList());
+    CHECK(box.count() == base);
+    CHECK(box.currentIndex() == padRow);
+
+    // The row a user picks writes the name a pen holds.
+    QG_LineTypeBox other;
+    other.init(&graphic.getLineTypeList(), true, false);
+    other.setCurrentIndex(padRow);
+    RS_Pen pen;
+    other.applyLineTypeTo(pen);
+    CHECK(pen.getLineTypeName() == QStringLiteral("VENDOR_PAD"));
+}
+
 TEST_CASE("A host that reads the pen inside the signal gets the pen it set",
           "[gui][linetype][combo]") {
     (void)lc::test::application();
