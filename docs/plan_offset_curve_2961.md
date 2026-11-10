@@ -32225,3 +32225,45 @@ Section 759's direct open arc-line oracle passes 17,345 assertions/1 case and
 the full direct polyline selector passes 46,923 assertions/3 cases. Scoped
 clang-format and `git diff --check` pass. Worker test commit: `0b9b58722`
 (`test(offset): persist scaled major-sweep polyline`).
+
+## 761. Reconcile the Source-family Picker and Parabola Request (2026-11-10)
+
+The requested Properties source widget must let the user change the desired
+source family while replacement selection is active, filter drawing candidates
+by that family, and keep the existing source visibly highlighted until a valid
+replacement is committed. The selector must include every kind currently
+modeled by `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+`LC_Parabola` remains a distinct option and replacement type, not an alias for
+spline-points.
+
+Current-code reconciliation: this picker contract is already implemented and
+covered by the existing all-family Properties regressions recorded in sections
+676, 711, and 739. Do not add another selector or a parabola-only picker path.
+When a genuinely new source kind is added to `SupportedKinds`, it must appear
+automatically and receive the same filter, highlight-retention, typed
+replacement, cancellation, and refusal coverage.
+
+This UI status does not close the broader request to support all source types
+as offset geometry. Continue tracking each family's eligible parameterizations
+separately through direct geometric oracles, real worker execution, cache
+admission, replacement/Produce, and applicable DXF/DWG round-trips. The
+sections below and the family capability matrix remain authoritative for those
+gaps; unsupported cases must fail closed without changing the source or cache.
+
+## 762. Carry the Translated Corner Polyline Through Worker Persistence (2026-11-10)
+
+Added the scale-`1e-3`, translation-`(10,-20)`, open `bulge 0.2` corner
+fixture from section 759 to the real worker-client matrix. Its offset distance
+is `0.00025`; the pick and fallback points are transformed with the source so
+the worker exercises the same side as the direct oracle. It must pass worker
+generation, cache admission, replacement/Produce, all five DXF/DWG round-trip
+lanes, and independent LibreDWG parsing. This qualifies that exact transformed
+corner fixture only; other transformed corner sides, scales, sweeps, and
+topologies remain open.
+
+Validation: `Worker client joins typed source generation for every modeled
+source family` passes 1,114,565 assertions/1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Test target builds and `git diff --check`
+passes. Worker test commit: `e093c3b4f` (`test(offset): persist scaled
+corner polyline`).
