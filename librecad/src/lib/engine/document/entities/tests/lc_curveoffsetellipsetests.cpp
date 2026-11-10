@@ -1260,6 +1260,36 @@ TEST_CASE("Large-origin reversed 10000-to-1 elliptic arc endpoint retains cusp-t
     }
 }
 
+TEST_CASE("Large-origin reversed 10000-to-1 ellipse direct branches materialize across the cusp threshold",
+          "[curve-offset][ellipse][direct][cusp][precision]") {
+    constexpr double majorRadius = 100.0;
+    constexpr double ratio = 1e-4;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 6.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e6, -1e6}, majorP, ratio, 0.2, 0.0, true}};
+    for (const double distance : {0.9 * cuspRadius, cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const double tolerance = LC_CurveOffset::toleranceFor(
+            source, distance, LC_CurveOffset::relativeOffsetTolerance(source));
+        REQUIRE(std::isfinite(tolerance));
+        CHECK(tolerance == 0.1 * distance);
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance, tolerance);
+        const auto geometry = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(kRight, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        INFO("direct geometry status=" << static_cast<int>(geometry.status));
+        REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE_FALSE(geometry.branches.empty());
+        const auto materialized = LC_CurveOffset::materializeBranches(
+            source, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
+        INFO("materialized status=" << static_cast<int>(materialized.status));
+        REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+        CHECK(materialized.maxObservedError <= tolerance);
+        CHECK(materialized.validationLevel == LC_OffsetValidationLevel::SampledBidirectional);
+    }
+}
+
 TEST_CASE("Rotated 10-to-1 elliptic arcs retain cusp-threshold geometry", "[curve-offset][ellipse][cusp]") {
     constexpr double majorRadius = 100.0;
     constexpr double ratio = 1e-1;

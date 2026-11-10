@@ -33822,3 +33822,19 @@ ellipse regression passes with the additional exact-locus checks; no production
 algorithm or budget changed. Broader revalidation on this tree passes the
 combined `[curve-offset][ellipse],[intersection],[curve-offset][trim]`
 selection: 1,361,864 assertions across 100 cases.
+
+## 831. Qualify Direct Branch Materialization at the Large-origin Cusp (2026-11-10)
+
+Added Direct-mode generation and materialization for the same reversed,
+rotated 10000-to-1 ellipse at `(1e6, -1e6)`, for inward distances `0.9`, `1.0`,
+and `1.1` times its `1e-6` cusp radius. All three produce nonempty Direct
+branches and materialize successfully with the required 10%-of-offset
+geometric tolerance; each reports sampled-bidirectional validation within
+that tolerance. This is Direct geometry evidence only and does not accept the
+separate trimmed-mode post-cusp topology that remains fail-closed in sections
+826-830.
+
+The focused Direct case passes 21 assertions. The combined
+`[curve-offset][ellipse],[intersection],[curve-offset][trim]` selection passes
+1,361,885 assertions across 101 cases. No production code or work budget
+changed.
