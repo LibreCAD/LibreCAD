@@ -355,6 +355,57 @@ TEST_CASE("Multiple stationary spline-points spans are omitted from offset prove
     CHECK(source.getData().controlPoints == controls);
 }
 
+TEST_CASE("Stationary spline-points plateaus and separated spans are omitted",
+          "[curve-offset][direct][spline-points][degenerate]") {
+    const std::vector<RS_Vector> controls{{0.0, 0.0}, {1.0, 1.0}, {1.0, 1.0}, {1.0, 1.0}, {1.0, 1.0},
+                                         {1.0, 1.0}, {2.0, 0.0}, {3.0, 1.0}, {3.0, 1.0}, {3.0, 1.0},
+                                         {4.0, 0.0}};
+    LC_SplinePointsData data{false, false};
+    data.useControlPoints = true;
+    data.controlPoints = controls;
+    LC_SplinePoints source{nullptr, data};
+    REQUIRE(source.getSegmentCount() == 9);
+    for (const double parameter : {1.5, 2.5, 3.5, 7.5}) {
+        LC_CurveJet stationaryJet;
+        REQUIRE(source.tryEvaluateJet(parameter, LC_CurveEvaluationSide::Interior, stationaryJet));
+        CHECK(stationaryJet.first == RS_Vector(0.0, 0.0, 0.0));
+    }
+
+    const auto options = LC_CurveOffset::makeDirectOptions(source, 0.25);
+    const auto result = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.25), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(result.branches.empty());
+    const auto cubicAt = [](const std::array<RS_Vector, 4>& bezier, const double t) {
+        const double u = 1.0 - t;
+        return bezier[0] * (u * u * u) + bezier[1] * (3.0 * u * u * t) + bezier[2] * (3.0 * u * t * t) +
+               bezier[3] * (t * t * t);
+    };
+    size_t checkedSamples = 0;
+    for (const LC_OffsetBranch& branch : result.branches) {
+        for (const LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            if (piece.provenance.arcCentre.valid) {
+                continue;
+            }
+            for (const int sample : {3, 9, 15, 21, 27, 33}) {
+                const double fraction = sample / 37.0;
+                const double parameter = piece.provenance.sourceT0 + fraction * (piece.provenance.sourceT1 - piece.provenance.sourceT0);
+                CHECK(((parameter < 1.0) || (parameter > 4.0 && parameter < 7.0) || (parameter > 8.0)));
+                LC_CurveJet jet;
+                REQUIRE(source.tryEvaluateJet(parameter, LC_CurveEvaluationSide::Interior, jet));
+                const double speed = jet.first.magnitude();
+                REQUIRE(speed > 0.0);
+                const RS_Vector exact = jet.point + RS_Vector{-jet.first.y, jet.first.x} * (0.25 / speed);
+                CHECK(cubicAt(piece.bezier, fraction).distanceTo(exact) <= options.tolerance.requestedGeometry);
+                ++checkedSamples;
+            }
+        }
+    }
+    CHECK(checkedSamples > 0);
+    CHECK(source.getData().controlPoints == controls);
+}
+
 TEST_CASE("Large translated parabola remains an eligible typed source", "[lc-offsetcurve][source][parabola][precision]") {
     const double base = 1e308;
     const double step = std::nextafter(base, std::numeric_limits<double>::infinity()) - base;

@@ -1177,6 +1177,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                                                     {3, 1}, {3, 1}, {3, 1}, {4, 0}};
     const std::size_t multipleStationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{multipleStationarySplinePoints});
+    LC_SplinePointsData stationaryPlateauSplinePoints{false, false};
+    stationaryPlateauSplinePoints.useControlPoints = true;
+    stationaryPlateauSplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                                                    {2, 0}, {3, 1}, {3, 1}, {3, 1}, {4, 0}};
+    const std::size_t stationaryPlateauSplinePointsFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{stationaryPlateauSplinePoints});
     LC_SplinePointsData closedControlPoints{true, false};
     closedControlPoints.useControlPoints = true;
     closedControlPoints.controlPoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
@@ -1286,7 +1292,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
         CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-        if (i == stationarySplinePointsFixture || i == multipleStationarySplinePointsFixture) {
+        if (i == stationarySplinePointsFixture || i == multipleStationarySplinePointsFixture ||
+            i == stationaryPlateauSplinePointsFixture) {
             CHECK(result.ordinary.size() == 1);
             REQUIRE(result.ordinary.size() == 1);
             CHECK(std::holds_alternative<RS_SplineData>(result.ordinary.front()));
