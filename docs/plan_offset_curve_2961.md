@@ -29,10 +29,14 @@ Updated: 2026-11-09. Project: **LibreCAD**, not LibreCAD_3.
 The latest source-widget request is captured as this testable contract: while
 replacing a source, the Properties family control remains enabled, and changing
 it before a drawing pick filters candidates to that requested family. The
-selector is populated from `LC_OffsetSourceGeometry::SupportedKinds` and
-includes every modeled kind: line, arc, circle, ellipse, spline,
-spline-points, parabola, bounded hyperbola, and polyline. `LC_Parabola` remains
-distinct from its `LC_SplinePoints` base.
+selector is populated from `LC_OffsetSourceGeometry::SupportedKinds`, not a
+second hard-coded UI list, so every modeled kind is available for replacement:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded
+hyperbola, and polyline. Newly modeled source kinds must therefore appear in
+the picker automatically and receive the same filtering/replacement contract
+tests. `LC_Parabola` remains distinct from its `LC_SplinePoints` base and must
+be selectable and reconstructible as a parabola, not merely accepted as a
+generic spline-points entity.
 
 Changing the candidate filter must not mutate the current source or generated
 cache, and must not clear or move the current source's drawing highlight even
@@ -44,6 +48,13 @@ entity has identical geometry. Cancellation and invalid/stale picks leave the
 source and cache unchanged. Existing Properties-widget regressions cover this
 picker contract; do not add another selector or a parabola-only UI branch.
 This closes only the picker-level requirement.
+
+The latest clarification explicitly includes changing the source type during
+the replacement flow and first-class parabola support. The existing
+`cbSourceType`/`cbSource` implementation and Properties regressions already
+cover that UI contract, including parabola identity; do not add another widget
+or duplicate parabola-specific control. Remaining parabola work is only the
+unclosed end-to-end geometry/worker/cache/persistence matrix described below.
 
 “Support all types” is a separate end-to-end requirement: qualify each
 production-supported family and eligible variant through direct geometry,
@@ -216,7 +227,10 @@ before expanding the outward sweep matrix: a passing status alone is not
 evidence of a valid offset. Keep the independent source-distance and tangent-
 orientation oracles enabled, and establish the expected trimmed topology from
 the engine's offset contract rather than assuming a single closed branch when
-the untrimmed parallel curve develops cusps or loops.
+the untrimmed parallel curve develops cusps or loops. W708 qualifies the
+origin-centered symmetric whole ellipse; W709 adds one moderately translated,
+axis-aligned whole ellipse at the same five distances. Rotated inward cusps,
+larger translations, and partial-arc cusp topology remain open.
 
 The picker requirement itself is **complete**. Remaining implementation is
 steps 1-6 above, driven by the variant gaps recorded in the chronological
@@ -30860,10 +30874,39 @@ Implementation/test commit: `4e98e6c5e` (`test(offset): qualify thin ellipse
 inward cusps`). This commit includes the corrected scale-aware test oracle,
 direct bracket, and worker/cache/Produce/five-format persistence matrix.
 
-Remaining closeout: commit this roadmap receipt, push both commits to PR #3193,
-and verify the exact PR head and its CI checks.
+Remaining closeout for this slice: push its test and roadmap commits with the
+following roadmap update to PR #3193, then verify checks on the resulting exact
+head. The earlier exact-head checks are not inherited by later commits.
 
 This slice qualifies only the recorded symmetric whole-ellipse profiles and
 distances. The outward thin-ellipse receipts in sections 703-707 remain
 unchanged; arbitrary ratios, partial arcs, translated/rotated inward cases,
 and other cusp topologies remain open.
+
+## 709. Qualify a Translated Extreme Thin Ellipse Inward Cusp (2026-11-09)
+
+Extended W708's five inward distances (0.5, 0.9, 1.0, 1.1, and 2.0 times the
+`1e-6` major-vertex curvature radius) to one whole ellipse centered at
+`(100, -100)`, with the same `a=100` and axis ratio `1e-4`. Direct checks retain
+the independent nearest-source-distance and tangent-orientation oracles and
+require one closed trimmed branch. The worker matrix additionally runs
+operation 7 generation, operation 8 cache admission, typed source replacement,
+Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG reopen checks for each
+distance. The existing LibreDWG pass independently reads both generated DWG
+lanes.
+
+Validation: the focused `[curve-offset][ellipse][cusp]` case passes 36,180
+assertions; the complete `[curve-offset][ellipse]` suite passes 802,335
+assertions/24 cases. The full worker-client selection passes 250,670
+assertions/22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`; both DWG lanes
+are parsed. `git diff --check` and repository clang-format checks pass. Test
+commit: `2d97a5e02` (`test(offset): cover translated inward ellipse cusps`).
+
+A separate exploratory 30-degree rotated cusp profile returned
+`LC_CurveOffsetStatus::LimitExceeded` at the default bounded geometry budget;
+it is deliberately not counted as supported or persisted. Investigate the
+rotation-dependent work increase before claiming rotational invariance. This
+receipt qualifies only the one translated, axis-aligned whole-ellipse profile;
+rotated and larger-translation inward profiles, partial arcs, and other cusp
+topologies remain open. Push this receipt and check CI against the exact new
+PR head; no earlier-head result transfers.
