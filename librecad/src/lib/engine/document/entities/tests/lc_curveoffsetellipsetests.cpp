@@ -814,6 +814,26 @@ TEST_CASE("Rotated extreme thin ellipse cusps trim within the bounded intersecti
     }
 }
 
+TEST_CASE("Translated rotated thin ellipse cusps preserve accurate trimming", "[curve-offset][ellipse][cusp]") {
+    constexpr double distance = 0.5e-6;
+    for (const RS_Vector center : {RS_Vector{100.0, -100.0}, RS_Vector{1e4, -1e4}}) {
+        for (const double degrees : {30.0, 45.0}) {
+            const double angle = degrees * M_PI / 180.0;
+            const RS_Vector majorP{100.0 * std::cos(angle), 100.0 * std::sin(angle)};
+            const RS_Ellipse source{nullptr, RS_EllipseData{center, majorP, 1e-4, 0.0, 0.0, false}};
+            CAPTURE(center.x, center.y, degrees);
+            CHECK(LC_CurveOffset::toleranceFor(source, distance, LC_CurveOffset::relativeOffsetTolerance(source)) == 0.1 * distance);
+            const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
+            const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+            CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+            checkOffset(inward, curveOf(source), distance, {true});
+            CHECK(inward.intersectionDiagnostics.stage == LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput);
+            CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+            CHECK(inward.intersectionDiagnostics.work.totalBoxPairs < options.maxIntersectionPairs);
+        }
+    }
+}
+
 // NOLINTNEXTLINE(readability-identifier-naming)
 TEST_CASE("Both vertices trimmed past the cusp distance in the same offset", "[curve-offset][ellipse]") {
     // Where an eccentric ellipse's inward offset needs both major-axis

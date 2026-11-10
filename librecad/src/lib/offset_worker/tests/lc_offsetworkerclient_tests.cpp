@@ -71,7 +71,7 @@ static_assert(std::is_nothrow_move_constructible_v<Completion>);
 static_assert(std::is_nothrow_move_assignable_v<Completion>);
 static_assert(!std::is_constructible_v<Completion, Req::Request&&, Reply::Reply&&>);
 
-constexpr int SuiteTimeoutMs = 60000;
+constexpr int SuiteTimeoutMs = 90000;
 constexpr int WaitTimeoutMs = 3500;
 constexpr const char* Tags = "[lc-offsetcurve][worker-client]";
 
@@ -727,12 +727,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
-    const std::array<RS_EllipseData, 5> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 6> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {0.0, 100.0}, 1e-4, 0.0, 0.0, false},
+        {{1e4, -1e4}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
     }};
     for (std::size_t profile = 0; profile < thinCuspEllipses.size(); ++profile) {
         const RS_EllipseData& ellipse = thinCuspEllipses[profile];
@@ -887,7 +888,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const auto expectedSource = LC_OffsetSourceGeometry::capture(*movedSource);
             REQUIRE(expectedSource);
             if (movedExactly) {
-                if (thinEllipseArc != thinEllipseArcFixtures.end()) {
+                if (thinEllipseArc != thinEllipseArcFixtures.end() || thinEllipseCusp != thinEllipseCuspFixtures.end()) {
                     const auto* actual = std::get_if<RS_EllipseData>(&editable->sourceDefinition()->source.value);
                     const auto* expected = std::get_if<RS_EllipseData>(&expectedSource->value);
                     REQUIRE(actual);
