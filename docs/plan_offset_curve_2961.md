@@ -32572,5 +32572,24 @@ distance correction: `8bc8536fc` (`test(offset): scale ellipse cusp distances
 correctly`).
 This qualifies only this reversed interval, transform, ratio, distance
 triplet, and the selected Produce side; broader ellipse scales, sweeps,
-curvature neighborhoods, and worker persistence on the opposite picked side
-remain open.
+curvature neighborhoods, and other parameter intervals remain open. Section
+780 below adds worker/file coverage for the opposite picked side on this same
+profile.
+
+## 780. Persist the Inward Reversed Ellipse Cusp Side (2026-11-10)
+
+Extended the section-779 reversed 100-to-1 ellipse cusp triplet through the
+worker Produce path on the inward picked side, in addition to the exterior
+side. The duplicate source fixtures use the same reversed interval and the
+correct `0.009`, `0.010`, and `0.011` distances; each passes worker generation,
+cache admission, Produce, and R14 DXF/R2000 DXF+DWG/R2018 DXF+DWG save/reopen.
+Both generated DWG versions pass independent LibreDWG parsing. Existing
+reversed thin-ellipse fixtures retain their established exterior pick probe.
+
+Validation: the complete worker source-family case passes 1,176,148
+assertions/1 case with `DWGREAD=/opt/homebrew/bin/dwgread`. The worker test
+target builds; scoped clang-format and `git diff --check` pass. Test commit:
+`7f6a6b7b4` (`test(offset): persist inward ellipse cusp profiles`). This
+qualifies both picked sides for the exact section-779 profile and distance
+triplet only; broader ellipse sweep, eccentricity, scale/translation, and
+curvature-boundary matrices remain open.
