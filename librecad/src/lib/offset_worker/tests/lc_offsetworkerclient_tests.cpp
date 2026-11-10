@@ -1093,6 +1093,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{arc});
         thinEllipseArcFixtures.emplace_back(fixture, 0.1);
     }
+    LC_SplinePointsData stationarySplinePoints{false, false};
+    stationarySplinePoints.useControlPoints = true;
+    stationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
+    const std::size_t stationarySplinePointsFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{stationarySplinePoints});
     const std::array<std::size_t, 2> initialCircleFixtures{{smallCircleFixture, largeCircleFixture}};
     std::vector<std::pair<LC_OffsetSourceDefinition, RS_SplineData>> cacheCandidates;
     std::size_t multiBranchCacheCount = 0;
@@ -1140,6 +1145,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
         CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        if (i == stationarySplinePointsFixture) {
+            CHECK(result.ordinary.size() == 1);
+            REQUIRE(result.ordinary.size() == 1);
+            CHECK(std::holds_alternative<RS_SplineData>(result.ordinary.front()));
+        }
         const auto expectedVanished = std::find_if(expectedVanishingThinCuspFixtures.begin(), expectedVanishingThinCuspFixtures.end(),
                                                    [i](const auto& fixture) { return fixture.first == i; });
         if (expectedVanished != expectedVanishingThinCuspFixtures.end()) {
