@@ -24,6 +24,20 @@ USA.
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
 Updated: 2026-11-09. Project: **LibreCAD**, not LibreCAD_3.
+
+### Source-picker status
+
+The requested type-changing picker is implemented and verified for every
+currently modeled source family: line, arc, circle, ellipse, spline,
+spline-points, distinct parabola, bounded hyperbola, and polyline. Keep the
+type selector available during source replacement and derive its options from
+`LC_OffsetSourceGeometry::SupportedKinds`; adding a modeled family must make it
+selectable and add filtering/replacement coverage. Do not add another picker
+or treat this UI inventory as proof of complete offset support. Remaining
+source-family work is the per-variant geometry, worker/cache, edit, and
+applicable DXF/DWG qualification tracked below; ineligible variants must fail
+closed without changing the existing source or cache.
+
 ## Current Contract
 
 The latest source-widget request is captured as this testable contract: while
@@ -31061,3 +31075,31 @@ candidate generation as the current data shows it consumes less than 0.1% of
 the budget. Record the repeatedly refined segment/parameter domains next so
 the numerical fix has a concrete failing shape and remains bounded for hostile
 inputs.
+
+## 715. Capture the Unresolved Trim-Overlay Domain (2026-11-09)
+
+The intersection solver now carries the last unresolved segment pair,
+parameter intervals, and refinement depth through `LC_IntersectionResult` and
+the curve-offset diagnostics. It records the pending pair at pair-budget
+exhaustion and the current pair at maximum-depth refusal. The rotated thin-
+ellipse cusp regression verifies that the failure is a distinct-segment pair
+whose two valid parameter intervals overlap and are each narrower than 0.01;
+this captures the local shape without depending on exact segment numbering or
+floating-point endpoints. Exploratory diagnostics identify the pair near
+parameter 5.6139 on both sides at depth 19.
+
+Validation: the focused rotated-cusp case passes 18 assertions/1 case, and
+the full `[curve-offset][ellipse][cusp]` selection passes 36,198 assertions/2
+cases. Edited C++ ranges pass repository clang-format checks and `git diff
+--check`. Implementation commit: `c65b8ccfa` (`feat(offset): expose
+intersection failure domains`).
+
+This is diagnostic instrumentation only; it does not reduce work or alter
+intersection decisions. Next, use this captured near-contact domain to
+investigate why interval rejection/uniqueness certification cannot decide the
+trim boundary pair within the existing depth and pair budgets. Keep exact
+root guarantees and fail-closed behavior; do not raise the global cap or
+weaken geometric tolerance. After a bounded refinement change, require the
+rotated cusp to pass direct distance/tangent oracles, worker/cache admission,
+source replacement, Produce, and all five DXF/DWG lanes before claiming that
+profile supported.
