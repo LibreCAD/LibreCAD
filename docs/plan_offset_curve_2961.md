@@ -31480,10 +31480,10 @@ pass repository clang-format checks and `git diff --check`. Test commit:
 This closes only the translated 30-degree reversed-arc threshold triplet.
 Other transformed partial arcs and eccentricity ratios remain open.
 
-## 729. Qualify a Rotated 100:1 Elliptic-arc Cusp Triplet (2026-11-09)
+## 729. Qualify a Rotated 1000:1 Elliptic-arc Cusp Triplet (2026-11-09)
 
 Added the first adjacent eccentricity ratio beyond `1e-4`: a translated,
-30-degree forward arc with major radius `100`, ratio `1e-3` (100:1), and
+30-degree forward arc with major radius `100`, ratio `1e-3` (1000:1), and
 parameters `[-0.2, 0.2]`. Its major-vertex curvature radius is
 `a * ratio^2 = 1e-4`; offsets at `0.9e-4`, `1.0e-4`, and `1.1e-4` all
 materialize as one open chain. The independent distance/tangent and
@@ -31494,20 +31494,23 @@ The same three scaled distances run through the worker, cache, replacement,
 Produce, five DXF/DWG persistence lanes, and independent LibreDWG parsing for
 both DWG outputs.
 
-Validation: the focused 100:1 arc test passes 17,398 assertions; the full
+Validation: the focused 1000:1 arc test passes 17,398 assertions; the full
 direct `[curve-offset][ellipse][cusp]` selection passes 235,386 assertions/8
 cases. The full worker-client suite passes 1,214,747 assertions/22 cases with
 `DWGREAD=/opt/homebrew/bin/dwgread`. Touched ranges pass repository
 clang-format checks and `git diff --check`. Test commit: `ccba87199`
-(`test(offset): qualify 100-to-1 ellipse cusp arcs`).
+(`test(offset): qualify 100-to-1 ellipse cusp arcs`). The ratio `1e-3` is
+1000:1; the historical test/commit label said 100:1 and is corrected by the
+2026-11-10 follow-up `c8762f3f9` (`test(offset): correct ellipse ratio
+labels`). The renamed cusp selection passes 252,635 assertions/9 cases.
 
-This closes only the recorded rotated 100:1 arc triplet. Other ratios,
+This closes only the recorded rotated 1000:1 arc triplet. Other ratios,
 translations, orientations, and sweep directions remain open.
 
-## 730. Qualify a Rotated 10:1 Elliptic-arc Cusp Triplet (2026-11-10)
+## 730. Qualify a Rotated 100:1 Elliptic-arc Cusp Triplet (2026-11-10)
 
 Added a translated, 30-degree forward arc with major radius `100`, ratio
-`1e-2` (10:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature
+`1e-2` (100:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature
 radius is `a * ratio^2 = 1e-2`; distances `0.9e-2`, `1.0e-2`, and `1.1e-2`
 cover below, at, and above that cusp threshold. Direct materialization checks
 the independent distance/tangent oracle, the critical feature, one-open-chain
@@ -31528,8 +31531,11 @@ the full worker-client suite passes 1,037,950 assertions/23 cases with
 `DWGREAD=/opt/homebrew/bin/dwgread`. The three focused C++ ranges pass
 repository clang-format checks, `git diff --check` passes, and the test targets
 build successfully. Test commit: `9070da311` (`test(offset): qualify 10-to-1
-ellipse cusp arcs`).
+ellipse cusp arcs`); its message used an incorrect ratio label. Follow-up
+`c8762f3f9` (`test(offset): correct ellipse ratio labels`) corrects the test
+names and this receipt to match the actual 100:1 geometry. The focused worker
+client and kernel regressions pass 163 and 12 assertions, respectively.
 
-This closes only the recorded translated, rotated forward-arc 10:1 triplet.
+This closes only the recorded translated, rotated forward-arc 100:1 triplet.
 Other partial sweeps, reversed arcs, transforms, distances, and eccentricity
 ratios remain open matrix rows.
