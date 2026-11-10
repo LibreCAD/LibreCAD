@@ -29805,7 +29805,7 @@ these rows do not imply every parameter/domain is supported):
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span, preserves exact-normal tolerance on both moving spans, and passes real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing | Other repeated-point/stationary-span patterns and joins, fit/tangent combinations, and broader seam/refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples and endpoint tangent slopes +/-1e-4..1e-8; two four-point candidates and the 1e-8 near-parallel profile pass worker/cache, replacement, and five file lanes; parallel/zero/non-finite tangent refusals | Other four-point samples, more extreme endpoint conditioning, broad transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks now include rotated wide intervals, a translated thin left branch, a high-ratio branch with reversed bounds, and both offset sides; typed worker/cache/Produce and five file lanes include the translated/rotated thin left-branch fixture | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
-| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; both worker sides of the first two corner scales and one side at `1e4` pass generation/cache/Produce, five file lanes, and LibreDWG; the translated scale-`1e4` major-sweep profile also passes the same path; closed mixed-bulge and major/minor bulge oracles remain covered; tangent-connected, cornering (`bulge 0.2`), and major-sweep (`bulge 2.0`) nominal sources pass the same worker/persistence path | Other open sweep/scale boundaries, opposite worker side at scale `1e4`, additional transformed corner scales/origins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles |
+| Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; both worker sides of all three recorded corner scales and the translated major sweep pass generation/cache/Produce, five file lanes, and LibreDWG; closed mixed-bulge and major/minor bulge oracles remain covered; tangent-connected, cornering (`bulge 0.2`), and major-sweep (`bulge 2.0`) nominal sources pass the same worker/persistence path | Other open sweep/scale boundaries, additional transformed corner scales/origins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles |
 
 This closes the immediate worker/persistence gap for the two newly discovered
 accepted layouts; it does not complete step 3 or prove arbitrary legal source
@@ -32343,11 +32343,26 @@ Added the section-766 cornering `bulge 0.2` polyline at scale `1e4` and
 translation `(1e6,-2e6)` to the real typed-source worker matrix. At distance
 `2500`, it passes generation, cache admission, source replacement, Produce,
 all five R14/R2000/R2018 DXF/DWG lanes, and independent LibreDWG parsing. This
-qualifies the recorded side and profile only; the opposite worker side, other
-scales/origins, and other polyline topologies remain open.
+qualifies the recorded side and profile only; section 768 below qualifies the
+opposite worker side. Other scales/origins and polyline topologies remain open.
 
 Validation: `Worker client joins typed source generation for every modeled
 source family` passes 1,116,307 assertions/1 case with
 `DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs are independently
 parsed. Scoped clang-format and `git diff --check` pass. Test commit:
 `aa4213b89` (`test(offset): persist large-scale corner polyline`).
+
+## 768. Qualify the Opposite Large-origin Corner Offset (2026-11-10)
+
+Added the opposite-side pick for section 766's scale-`1e4`, translation
+`(1e6,-2e6)`, cornering `bulge 0.2` polyline to the worker-output persistence
+matrix. Both sides now pass worker generation, cache admission, replacement/
+Produce, all five R14/R2000/R2018 DXF/DWG lanes, and independent LibreDWG
+parsing for this exact source and distance. Other scales, origins, and
+polyline topologies remain open.
+
+Validation: `Worker client joins typed source generation for every modeled
+source family` passes 1,116,192 assertions/1 case with
+`DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs are independently
+parsed. Scoped clang-format and `git diff --check` pass. Test commit:
+`aa5faf96e` (`test(offset): persist opposite large-scale corner side`).
