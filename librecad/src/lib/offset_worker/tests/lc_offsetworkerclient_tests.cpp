@@ -727,7 +727,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         thinEllipseFixtures.emplace_back(fixture, 0.001 * major);
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseCuspFixtures;
-    const std::array<RS_EllipseData, 17> thinCuspEllipses{{
+    const std::array<RS_EllipseData, 19> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
@@ -736,6 +736,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{1e4, -1e4}, {100.0 * std::cos(M_PI / 6.0), 100.0 * std::sin(M_PI / 6.0)}, 1e-4, 0.0, 0.0, false},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, -0.2, 0.2, false},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, -0.2, 0.2, false},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.2, -0.2, true},
+        {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.2, -0.2, true},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.2, false},
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.2, -0.2, true},
         {{1e4, -1e4}, {100.0 * std::cos(M_PI / 4.0), 100.0 * std::sin(M_PI / 4.0)}, 1e-4, -0.2, 0.2, false},
@@ -757,6 +759,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : profile == 14                                    ? std::vector<double>{1.1e-6}
             : profile == 15                                    ? std::vector<double>{0.9e-6}
             : profile == 16                                    ? std::vector<double>{1.0e-6}
+            : profile == 17                                    ? std::vector<double>{-0.9e-6}
+            : profile == 18                                    ? std::vector<double>{-1.0e-6}
             : profile == 7 || profile == 8                     ? std::vector<double>{1.1e-6}
                                                                : std::vector<double>{0.5e-6};
         for (const double cuspDistance : cuspDistances) {
