@@ -33009,3 +33009,48 @@ Both variants were discarded and the production tree was restored unchanged.
 Do not retain an axis/key tweak on the strength of a small disposition shift;
 the next attempt must reduce total charged pairs materially or change the
 candidate topology with a proof that it cannot omit intersections.
+
+## 797. Reconfirm Source-type Replacement and Parabola Scope (2026-11-10)
+
+The latest request reiterates that the Properties source control must allow
+changing the requested source type while a replacement pick is active, and
+that replacement must cover all supported source kinds, including parabola.
+This is already implemented at the picker layer: its type options derive from
+`LC_OffsetSourceGeometry::SupportedKinds`, the current family remains editable
+during the pick, filtering does not replace or de-highlight the existing
+source, and acceptance stores the candidate's actual typed geometry. The
+distinct `LC_Parabola` identity is covered by the all-family replacement test.
+
+No new picker widget, type-specific branch, or parabola-only UI slice is
+required. Keep the existing family-change-during-pick, all-modeled-families,
+source-highlight, cancellation/invalid-pick, and parabola-identity regressions
+as the UI gate. When `SupportedKinds` changes, extend that gate for the new
+kind. This UI contract does not imply end-to-end geometric support: continue
+the family/variant capability matrix independently through direct generation,
+worker/cache admission, editing, and applicable DXF/DWG round-trips. Only
+record a variant as supported when each applicable lane has passing evidence;
+otherwise preserve fail-closed behavior without mutating the source or cache.
+
+## 798. Certify Wider Monotone Derivative Boxes (2026-11-10)
+
+Implemented a conservative derivative-box projection proof for both leaf
+monotonicity and aggregate path pruning. The candidate direction is the
+closest point of the axis-aligned derivative interval box to the origin,
+normalized before use; outward interval arithmetic must prove its derivative
+strictly positive. This certifies injectivity whenever one linear projection
+is strictly increasing, including tangent ranges wider than 90 degrees, while
+boxes containing the zero vector or failing the positivity proof remain
+unclassified. No tolerance or work cap changed.
+
+Added a quadratic spline regression whose tangent directions span more than
+90 degrees but whose x derivative is strictly positive; it is certified as a
+single injective leaf with no self-intersection refinement. The full
+`[topology]` selection passes 53 cases / 6,458 assertions, including the new
+case, and the focused high-ratio periodic-spline regression passes 10
+assertions. On that high-ratio fixture, prepared leaves fall from 63,819 to
+63,630, but candidate work still reaches the unchanged 1,048,576-pair ceiling
+with zero refinement pairs. The concrete bounded refusal in section 785 and
+the need for a materially effective self-noding broad-phase improvement
+therefore remain open; this proof change is not a claim that the case is now
+supported. Implementation/test commit `4570b107e` (`perf(offset): prove wider
+monotone curve spans`). `git diff --check` passes.
