@@ -31011,3 +31011,31 @@ trim/topology failures, then require the rotated cusp to pass with the default
 budget, direct geometric oracles, worker/cache validation, source replacement,
 Produce, and the five DXF/DWG lanes before claiming it supported. Do not raise
 the global cap or accept a coarse tolerance to make this case appear to pass.
+
+## 713. Report the Exact Intersection Failure Stage (2026-11-09)
+
+Added bounded intersection diagnostics to geometry and materialization
+results: the most recent query's stage, `LC_IntersectionStatus`, and complete
+`LC_IntersectionWorkStats`. Offset self-noding, source self-noding, trim
+boundary, region boundary, and materialized-output validation are labeled;
+`createEntities()` preserves the geometry-stage diagnostic when materializing
+does not run a later intersection query. These are local API diagnostics and
+do not change worker wire formats.
+
+The rotated thin-ellipse cusp regression now asserts its precise failure:
+`LimitExceeded` at `TrimBoundary`, with exactly 1,048,576 box-pair examinations
+and no published entities. This proves that the outstanding cost is the trim
+overlay query, rather than offset self-noding or sample generation.
+
+Validation: the focused cusp suite passes 36,187 assertions/2 cases; the
+specific rotated-cusp test passes 7 assertions/1 case; the complete worker
+client suite passes 444,299 assertions/22 cases, including DWG parsing by
+LibreDWG. Edited ranges pass repository clang-format and `git diff --check`.
+Implementation commit: `6461ea277` (`feat(offset): report intersection
+budget failures`).
+
+Next slice: reduce candidate/refinement work in the trim overlay while keeping
+the 1,048,576 hard cap, then test this rotated cusp at the default cap through
+accurate direct geometry, worker/cache admission, replacement, Produce, and
+all five DXF/DWG lanes. Do not infer trim-overlay performance from the separate
+source/offset noding query.
