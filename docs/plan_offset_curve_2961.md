@@ -30781,3 +30781,28 @@ visible GUI, external ODA/AutoCAD, cross-platform/ASan, or exact-head CI.
 
 Implementation/test slice committed as `21b3cec7b` (`test(offset): qualify
 translated thin ellipse arcs`).
+
+## 707. Qualify Extreme Thin Ellipse Seam and Near-full Sweeps (2026-11-09)
+
+Added three ratio-`1e-4`, major-radius-100 arc profiles at outward distance
+0.1: a short forward arc crossing the `0/2pi` seam, a forward near-full arc
+with a 0.1-radian gap, and its reversed counterpart. Each passes the direct
+source-distance oracle and the real worker path through operation-7
+generation, operation-8 cache validation, typed replacement, Produce, and
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The Produce point uses the directed
+interval midpoint, including seam unwrapping for forward traversal and the
+reversed near-full interval. Reopened spline controls and fit points retain
+the local-scale/ULP checks; the source interval and reversal remain exact.
+
+Validation: focused direct case passes 50,643 assertions/1 case; the complete
+`[curve-offset][ellipse]` suite passes 766,155 assertions/23 cases. The
+focused worker-family test passes 208,029 assertions/1 case; the complete
+`[lc-offsetcurve][worker-client]` suite passes 215,217 assertions/22 cases
+with `DWGREAD=/opt/homebrew/bin/dwgread`. Edited ranges pass repository
+clang-format and `git diff --check`. These three intervals do not establish
+arbitrary sweeps, narrower seam gaps, translated/rotated seam profiles,
+different ratios, inward cusp boundaries, visible GUI, external ODA/AutoCAD,
+cross-platform/ASan, or exact-head CI.
+
+Implementation/test slice committed as `b65da1165` (`test(offset): cover thin
+ellipse seam sweeps`).
