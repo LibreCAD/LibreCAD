@@ -31686,3 +31686,30 @@ and `git diff --check` pass. Test commit: `82e18f55e` (`test(offset): qualify
 
 This closes only the recorded translated, rotated forward-arc 1.5:1 triplet.
 Other transforms, reversed arcs, sweeps, and distances remain open.
+
+## 736. Qualify a Rotated 1.25:1 Elliptic-arc Cusp Triplet (2026-11-10)
+
+Added a translated, 30-degree forward arc with major radius `100`, ratio
+`0.8` (1.25:1), and parameters `[-0.2, 0.2]`. Its major-vertex curvature
+radius is `a * ratio^2 = 64`; offsets `57.6`, `64`, and `70.4` cover below,
+at, and above the threshold. The below/at cases pass the independent
+distance/tangent and materialized-intersection checks. Above the threshold,
+direct construction returns one candidate branch and trim validly produces no
+entity.
+
+The real-worker matrix carries these profiles through generation, cache
+admission where representable, replacement/Produce, and the five DXF/DWG
+lanes for non-vanished output. The above-threshold profile explicitly checks
+one generated candidate followed by `Vanished` with zero copies and no
+add/delete publication.
+
+Validation: focused direct case passes 7,246 assertions; the full direct
+`[curve-offset][ellipse][cusp]` selection passes 296,101 assertions/14 cases.
+The focused source-family worker test passes 1,069,549 assertions/1 case; the
+full worker-client suite passes 1,074,302 assertions/23 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Both targets build; scoped clang-format
+and `git diff --check` pass. Test commit: `0c965aba5` (`test(offset): qualify
+1.25-to-1 ellipse cusp arcs`).
+
+This closes only the recorded translated, rotated forward-arc 1.25:1 triplet.
+Other transforms, reversed arcs, sweeps, and distances remain open.
