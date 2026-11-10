@@ -4352,6 +4352,8 @@ LC_IntersectionStatus findCapIntersections(const OffsetCurves& offsets, const Ar
     };
 
     const std::vector<LC_ParametricSegment>& segments = offsets.segments();
+    LC_ParametricIntersection lastCapRoot;
+    bool hasLastCapRoot = false;
     for (std::size_t cap = 0; cap < caps.arcCount(); ++cap) {
         const ArcCurves::Arc& arc = caps.arc(cap);
         for (std::size_t segment = 0; segment < segments.size(); ++segment) {
@@ -4447,14 +4449,14 @@ LC_IntersectionStatus findCapIntersections(const OffsetCurves& offsets, const Ar
                             return LC_IntersectionStatus::AmbiguousTopology;
                         }
                         if (onArc) {
-                            const bool duplicate = std::any_of(intersections.begin(), intersections.end(),
-                                                               [&root](const LC_ParametricIntersection& other) {
-                                return other.branchA == root.branchA && other.branchB == root.branchB &&
-                                       std::abs(other.parameterA - root.parameterA) <=
-                                           32.0 * g_eps * std::max(1.0, std::abs(root.parameterA));
-                            });
+                            const bool duplicate = hasLastCapRoot && lastCapRoot.branchA == root.branchA &&
+                                                   lastCapRoot.branchB == root.branchB &&
+                                                   std::abs(lastCapRoot.parameterA - root.parameterA) <=
+                                                       32.0 * g_eps * std::max(1.0, std::abs(root.parameterA));
                             if (!duplicate) {
                                 intersections.push_back(root);
+                                lastCapRoot = root;
+                                hasLastCapRoot = true;
                             }
                         }
                     }

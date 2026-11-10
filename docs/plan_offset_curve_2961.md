@@ -33757,3 +33757,23 @@ materialized topology at the requested tolerance, or identify and bound an
 acceptable singular-cusp representation before publication. Keep the
 diagnostic captures in the regression so future attempts report stage, work,
 depth, and the unresolved parameter boxes.
+
+## 828. Bound Cap-root Deduplication Work (2026-11-10)
+
+Replaced the cap isolator's per-root scan of every prior intersection with a
+comparison against the last emitted cap root. The cap/segment loops and
+left-before-right interval traversal emit roots in parameter order, so
+duplicates at subdivision or segment boundaries remain adjacent. The
+comparison still keys both branch identities and uses the existing
+parameter-scale epsilon threshold. This removes quadratic, unaccounted
+deduplication work while retaining the intersection-pair budget and existing
+offset intersections.
+
+The CMake targets `librecad_tests` and
+`librecad_offset_worker_client_tests` build. The combined ellipse,
+intersection, and trim selection passes 1,361,855 assertions across 100 test
+cases. The full typed-source worker matrix passes 1,540,701 assertions through
+generation, cache admission, replacement, Produce, and five DXF/DWG lanes;
+`dwgread` parses both generated DWG versions. `git diff --check` passes. The
+high-eccentricity 10000-to-1 cusp remains fail-closed as recorded in sections
+826-827.
