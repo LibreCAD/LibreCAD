@@ -33224,3 +33224,30 @@ removed from the accepted worker matrix; the maintained matrix passes
 explicitly unqualified for cache, Produce, and file persistence until the
 topology discrepancy is resolved. This is a known open implementation item,
 not an accepted refusal guarantee. `git diff --check` passes.
+
+## 808. Reconcile the Source-picker Type Request (2026-11-10)
+
+The latest request again requires the replacement picker to let the user change
+the requested source type while selecting a replacement, and to include
+parabola among all supported types. Current implementation inspection confirms
+that `cbSourceType` remains enabled during the pick flow, its entries come from
+`LC_OffsetSourceGeometry::SupportedKinds`, and the inventory includes all nine
+modeled kinds: line, arc, circle, ellipse, spline, spline-points, distinct
+parabola, bounded hyperbola, and polyline. Candidate filtering follows the
+selected family without converting or replacing the existing source; the
+parabola is captured and restored as its own type.
+
+The existing UI contract is therefore complete; do not add another widget or a
+parabola-only selector path. Its acceptance tests are `Native source picker
+changes family and replaces the source with a typed curve`, `Native source
+picker preserves highlighted source across family filters`, and `Native source
+picker replaces every modeled source family without filter side effects`, plus
+the `SupportedKinds` inventory assertion in the source-action tests. Re-run
+these when changing picker behavior or adding a modeled source kind.
+
+This request does not close the distinct end-to-end support requirement. Keep
+the family-by-variant matrix authoritative: for each eligible parabola and
+other source variant, record direct generation/refusal, worker and cache,
+replacement/edit behavior, and applicable DXF/DWG persistence independently.
+Until a variant has evidence in its applicable lanes, preserve fail-closed
+behavior and do not infer geometric support from its presence in the picker.
