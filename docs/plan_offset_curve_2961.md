@@ -271,8 +271,15 @@ orientation oracles enabled, and establish the expected trimmed topology from
 the engine's offset contract rather than assuming a single closed branch when
 the untrimmed parallel curve develops cusps or loops. W708 qualifies the
 origin-centered symmetric whole ellipse; W709 adds one moderately translated,
-axis-aligned whole ellipse at the same five distances. Rotated inward cusps,
-larger translations, and partial-arc cusp topology remain open.
+axis-aligned whole ellipse at the same five distances. Later receipts
+W718-W728 qualify specific rotated/translated whole-ellipse and partial-arc
+inward cusp thresholds, including reversed arcs; W729-W781 add selected
+1000:1-through-near-circular ratios, transformed/reversed intervals, and both
+worker pick sides for the recorded reversed translated 1000:1 profile. These
+do not establish general scale, rotation, translation, sweep, or ratio
+invariance. Continue with distinct partial intervals, orientations, origins,
+and eccentricity neighborhoods; preserve the numeric-floor refusal boundary
+and keep direct, worker/cache, and five-lane persistence evidence separate.
 
 The picker requirement itself is **complete**. Remaining implementation is
 steps 1-6 above, driven by the variant gaps recorded in the chronological
