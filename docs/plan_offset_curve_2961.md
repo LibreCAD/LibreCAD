@@ -32724,10 +32724,11 @@ The newly admitted reversed-gradual quadratic periodic spline profile has
 weights `{1e6, 1e4, 1e2, 1, 1e-2, 1e-4, 1e-6}` plus the periodic wrap. Direct
 offset generation at distance `0.005` succeeds with 10 branches, 406 cubic
 pieces, and 10,063 exact samples. The interactive Trimmed path removes 15 local
-loop intervals, then reaches the existing `1,048,576` offset-self-noding
-candidate-pair ceiling before entering refinement. This is an explicit
-bounded `LimitExceeded`, not a tolerance failure; do not raise the shared
-intersection ceiling or relax geometric tolerances to make this profile pass.
+loop intervals, prepares 63,819 intersection leaves against the existing
+65,536 leaf cap, then reaches the `1,048,576` offset-self-noding candidate-pair
+ceiling with zero refinement pairs entered. This is an explicit bounded
+`LimitExceeded`, not a tolerance failure; do not raise the shared intersection
+ceiling or relax geometric tolerances to make this profile pass.
 
 A focused geometry regression records the noding stage and exact budget
 exhaustion. A real worker-client regression confirms Produce returns no output
@@ -32746,11 +32747,13 @@ profiles independently assessed. This follows the source-picker contract in
 section 783: picker inventory is separate from per-variant geometry and file
 support.
 
-Validation: focused kernel regression passes 8 assertions/1 case; isolated
+Validation: focused kernel regression passes 9 assertions/1 case; isolated
 worker-client refusal/atomicity regression passes 2,857 assertions/1 case;
 the existing complete worker family and persistence matrix passes 1,246,182
 assertions/1 case, including R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes;
 both DWG exports are parsed by `dwgread`. Both worker test targets build,
 scoped `clang-format --style=file:code_style/.clang-format` and `git diff
 --check` pass. Test commit `6f23b0335` (`test(offset): verify bounded
-rational spline refusal`).
+rational spline refusal`); follow-up diagnostic commit `c60169638` (`test(offset):
+record rational spline noding work`) adds the leaf-cap assertion and measured
+candidate/refinement diagnostics.
