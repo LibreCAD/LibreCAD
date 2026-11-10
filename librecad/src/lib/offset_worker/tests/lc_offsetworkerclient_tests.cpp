@@ -1171,6 +1171,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     stationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
     const std::size_t stationarySplinePointsFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{stationarySplinePoints});
+    LC_SplinePointsData multipleStationarySplinePoints{false, false};
+    multipleStationarySplinePoints.useControlPoints = true;
+    multipleStationarySplinePoints.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0},
+                                                    {3, 1}, {3, 1}, {3, 1}, {4, 0}};
+    const std::size_t multipleStationarySplinePointsFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{multipleStationarySplinePoints});
     LC_SplinePointsData closedControlPoints{true, false};
     closedControlPoints.useControlPoints = true;
     closedControlPoints.controlPoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
@@ -1280,7 +1286,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
         CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
         REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-        if (i == stationarySplinePointsFixture) {
+        if (i == stationarySplinePointsFixture || i == multipleStationarySplinePointsFixture) {
             CHECK(result.ordinary.size() == 1);
             REQUIRE(result.ordinary.size() == 1);
             CHECK(std::holds_alternative<RS_SplineData>(result.ordinary.front()));
@@ -1736,6 +1742,25 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             offset.keepOriginals = true;
             LC_OffsetBatchPreparation prepared{offset, {entity.get()}, false, {}};
             LC_DocumentModificationBatch batch;
+            if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Polyline) {
+                REQUIRE(prepared.advance(batch));
+                REQUIRE(prepared.outcome().sources.size() == 1);
+                CHECK(prepared.outcome().sources.front().complete());
+                REQUIRE_FALSE(batch.entitiesToAdd.empty());
+                for (const RS_Entity* generated : batch.entitiesToAdd) {
+                    REQUIRE(generated);
+                    CHECK(generated->rtti() == RS2::EntityPolyline);
+                    const auto geometry = persistenceGeometry(*generated, i);
+                    std::unique_ptr<RS_Entity> copy{generated->clone()};
+                    REQUIRE(copy);
+                    copy->setLayer(persistenceLayer);
+                    persistedGeometry.push_back(geometry);
+                    persistenceGraphic.addEntity(copy.release());
+                }
+                prepared.release();
+                qDeleteAll(batch.entitiesToAdd);
+                continue;
+            }
             REQUIRE_FALSE(prepared.advance(batch));
             const qint64 requestId = nextRequestId++;
             const auto workerRequest = prepared.request(token(requestId));

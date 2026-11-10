@@ -29828,7 +29828,7 @@ these rows do not imply every parameter/domain is supported):
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
-| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile removes its exact stationary span, preserves exact-normal tolerance on both moving spans, and passes real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing | Other repeated-point/stationary-span patterns and joins, fit/tangent combinations, and broader seam/refusal matrix |
+| Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; one repeated-interior-control profile and one profile with two separated stationary spans omit stationary source intervals, preserve exact-normal tolerance on moving spans, and pass real worker/cache/Produce, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing | Other repeated-point/stationary-span patterns and joins, fit/tangent combinations, and broader seam/refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples, endpoint tangent slopes +/-1e-4..1e-8, a scale-`1e4` source translated to `(1e6,-2e6)` at both signs and normalized distances `.05/.25`, and a scale-`1e-3` source translated to `(10,-20)` at both signs and normalized distances `.05/.25`; both translated profiles at both signs and both distances pass worker/cache, replacement, and five file lanes; two four-point candidates and the 1e-8 near-parallel profile also pass those lanes; parallel/zero/non-finite tangent refusals | Other source scales/translations, other four-point samples, more extreme endpoint conditioning, broader transforms, distance/domain boundaries and visible GUI |
 | Bounded hyperbola | Finite parameter interval on a single branch; unbounded source refused | Direct exact-normal checks include rotated wide intervals, a translated thin left branch, and a high-ratio branch with reversed bounds; both exact profiles at 5% and 20% of vertex curvature radius pass typed worker/cache admission, Produce on both resolved sides, five DXF/DWG lanes, and independent LibreDWG parsing | Other eccentricities/intervals and curvature neighborhoods, extreme interval/scale combinations, additional persistence variants, visible GUI and ODA/AutoCAD |
 | Polyline | Bounded connected line/arc segment chain; open/closed linear and mixed-bulge accepted; invalid self-intersecting topology refused | Direct exact-normal oracle covers tangent-connected, cornering, and major-sweep open arc/line chains, both sides and endpoint offsets; corner case asserts the two-branch left offset at distance 0.1; translated corners at scales `1e-3`, `1e-2`, and `1e4`, plus translated major sweep at `1e4`, pass direct exact-normal checks; both worker sides of all three recorded corner scales and the translated major sweep pass generation/cache/Produce, five file lanes, and LibreDWG; closed mixed-bulge and major/minor bulge oracles remain covered; tangent-connected, cornering (`bulge 0.2`), and major-sweep (`bulge 2.0`) nominal sources pass the same worker/persistence path | Other open sweep/scale boundaries, additional transformed corner scales/origins, segment-count/topology limits, boundary picks and wider self-intersection/collapse oracles |
@@ -33098,3 +33098,57 @@ This validates qmake6 build integration for the current PR tree, not execution
 on macOS 14.4: the local build uses the macOS 27 SDK with a 14.4 deployment
 target. Runtime, signing/notarization, visible desktop acceptance, and external
 CAD checks remain separate open gates. `git diff --check` passes.
+
+## 802. Reconcile Repeated Source-picker Requests (2026-11-10)
+
+The repeated requests to change source type during replacement, expose every
+supported source kind, and add parabola do not introduce a new implementation
+slice. Current code builds the replacement selector from
+`LC_OffsetSourceGeometry::SupportedKinds` in
+`lc_propertieseditingwidget_offsetcurve.cpp`; the nine entries are line, arc,
+circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. `LC_Parabola` remains a distinct typed source. The replacement action
+keeps the selector active while picking and filters candidates by the selected
+kind.
+
+Keep the picker contract closed and use these existing regressions as its
+acceptance gate: `Native source picker changes family and replaces the source
+with a typed curve` and `Native source picker replaces every modeled source
+family without filter side effects` in
+`lc_offsetcurve_propertiesdialog_tests.cpp`, plus the matching replacement
+inventory test in `lc_action_offsetcurve_source_tests.cpp`. Extend these tests
+only when `SupportedKinds` changes. Do not add another picker, a parabola-only
+control, or claim that picker visibility proves all parameterizations work.
+
+Remaining work is the per-variant capability matrix: independently qualify
+direct geometry/refusal, worker and cache, editing/preview, and applicable
+DXF/DWG read-write round-trips. Keep unqualified variants excluded or failing
+closed without replacing the active source/cache. This reconciliation is based
+on current source and test structure; the picker suite was not rerun for this
+documentation update.
+
+## 803. Qualify Multiple Stationary Spline-points Spans (2026-11-10)
+
+Added a nine-control `LC_SplinePoints` profile with two separated stationary
+quadratic spans at source parameters `[1, 2]` and `[5, 6]`. The direct test
+proves zero first derivatives inside both intervals, requires successful
+offset generation, verifies every sampled output piece maps only to moving
+source intervals, and compares each sample with the exact left normal within
+the requested geometry tolerance. It also confirms the source control points
+remain unchanged.
+
+Added the same typed profile to the real worker-client source matrix. It passes
+generation, cache materialization, Produce, and persistence through R14 DXF,
+R2000 DXF/DWG, and R2018 DXF/DWG. `dwgread` is available in this environment,
+so the matrix also independently parses both generated DWGs. The focused direct
+case passes 489 assertions; `Worker client joins typed source generation for
+every modeled source family` passes 1,244,217 assertions.
+
+The full matrix also exposed an obsolete expectation that every modeled source
+must use worker Produce: polylines intentionally prepare synchronously to
+preserve alias/run behavior. Updated that test path to validate completed
+synchronous output and still include it in all five file lanes. This does not
+expand worker eligibility for polylines. The spline-points row now qualifies
+this two-span repeated-control profile only; other stationary patterns, joins,
+fit/tangent combinations, and broader refusal cases remain open. `git diff
+--check` passes.
