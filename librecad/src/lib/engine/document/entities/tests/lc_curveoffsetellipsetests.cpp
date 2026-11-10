@@ -673,6 +673,10 @@ TEST_CASE("Thin and far ellipse offsets stay at the distance everywhere", "[curv
     CHECK(erasedFarNarrow.entities.empty());
     const RS_Ellipse translatedNarrow{nullptr, RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}};
     checkOffset(offsetOf(translatedNarrow, kRight, 0.1), curveOf(translatedNarrow), 0.1, {true});
+    const RS_Ellipse narrowArc = ellipse(100.0, 1e-4, 0.25, 1.5);
+    checkOffset(offsetOf(narrowArc, kRight, 0.1), curveOf(narrowArc), 0.1, {false});
+    const RS_Ellipse reversedNarrowArc = ellipse(100.0, 1e-4, 1.5, 0.25, true);
+    checkOffset(offsetOf(reversedNarrowArc, kLeft, 0.1), curveOf(reversedNarrowArc), 0.1, {false});
 }
 
 TEST_CASE("Extreme thin ellipse receives bounded refinement headroom", "[curve-offset][ellipse][boundary]") {
