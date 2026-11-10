@@ -29746,7 +29746,7 @@ these rows do not imply every parameter/domain is supported):
 | --- | --- | --- | --- |
 | Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Other sub-ULP/coordinate-conditioning boundaries and broad non-finite payload refusal |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at gaps 1e-4..1e-8 radians, both orientations and both offset sides; counterclockwise near-full profiles at 1e-4 and 1e-8, reversed near-full at 1e-8, and short counterclockwise seam-crossing at 1e-4 pass required worker/cache admission, replacement, Produce, and five-file-lane reopen; short arcs in both orientations at 1e-8 pass the same path at distance 1e-6; the counterclockwise profile at distance .25 cleanly refuses with UndefinedTangent and no output; below-validity arc refused at typed capture | Additional source radius/offset/tolerance combinations, sweep-limit behavior, and broader boundary matrix |
-| Circle | Finite nonzero-radius closed circle | Direct near-collapse and exact-collapse semantics; exact-normal scale/translation matrix at 1e-4/1/1e4; small and large-origin circle worker/cache, Produce, and five-format reopen fixtures | Zero-radius refusal, still-smaller/larger scales, broader origin/conditioning matrix, independent geometry comparison for scaled persisted caches |
+| Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale/translation matrix at 1e-4/1/1e4; small and large-origin circle worker/cache, Produce, and five-format reopen fixtures | Still-smaller/larger scales, broader origin/conditioning matrix, independent geometry comparison for scaled persisted caches |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; typed worker/cache and five file lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; real worker/cache/Produce and five file lanes | Fit construction variants, repeated/degenerate points, closed/periodic domains and refusal matrix |
@@ -30593,3 +30593,19 @@ full `[curve-offset][direct][arc]` selection passes 46,731 assertions/2 cases.
 `git diff --check` passes. Other source scales and tolerance ratios,
 sweep-limit refusal tests, visible GUI, external ODA/AutoCAD, cross-platform/
 ASan, and exact-head CI remain open.
+
+## 698. Pin Zero-radius Circle Refusal (2026-11-09)
+
+Added a regression for an `RS_Circle` with radius zero. The native
+`RS_CircleData::isValid` contract rejects it, typed offset-source capture
+returns no source, and direct offset generation returns a non-success result
+with no branches. This records the lower-radius refusal boundary without
+changing the native entity or offset implementation. It complements the
+separate exact-normal and collapse/beyond-collapse behavior for valid circles.
+
+Validation: rebuilt the Release `librecad_tests` target. The focused refusal
+passes 4 assertions/1 case; the full `[curve-offset][direct][circle]`
+selection passes 36,810 assertions/3 cases. `git diff --check` passes. Other
+radius scales, arbitrary origins, independent comparison of persisted scaled
+caches, visible GUI, external CAD, cross-platform/ASan, and exact-head CI remain
+open.
