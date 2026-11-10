@@ -32518,3 +32518,34 @@ source family` passes 1,161,682 assertions/1 case with
 `DWGREAD=/opt/homebrew/bin/dwgread`; both generated DWGs parse independently.
 The test target builds, scoped clang-format and `git diff --check` pass. Test
 commit: `c5e7dc4af` (`test(offset): persist translated thin hyperbola`).
+
+## 778. Reconfirm Type-changing Source Picker and Parabola Coverage (2026-11-10)
+
+The latest request reconfirms that users must be able to change the requested
+source family while choosing a replacement, and that source support should
+cover every currently modeled type, including parabola. Current-code review
+finds this picker requirement already implemented: `cbSourceType` remains
+enabled when selecting a replacement, changing it filters `cbSource`
+candidates without mutating the existing source/cache or clearing its
+highlight, and accepting a candidate stores that candidate's actual typed
+geometry. The selector is checked against
+`LC_OffsetSourceGeometry::SupportedKinds`, so the inventory remains the single
+source of truth.
+
+The focused Properties regressions are
+`Native source picker changes family and replaces the source with a typed
+curve`, `Native source picker preserves highlighted source across family
+filters`, and `Native source picker replaces every modeled source family
+without filter side effects`. The last test uses a reconstructed
+`LC_ParabolaData` and verifies its distinct parabola identity; it also checks
+the other modeled families. Retain these tests when changing the widget and
+extend them whenever `SupportedKinds` gains a kind. No duplicate selector or
+parabola-only picker path is needed.
+
+This closes only the source-picker UI contract, not the broader request for
+all source types to work end to end. Continue qualifying concrete variants
+through independent direct-geometry oracles, real worker generation/cache
+admission, replacement/Produce, and applicable DXF/DWG round-trips. The
+family capability matrix remains authoritative: parabola is selectable, but
+only the explicitly recorded parabola profiles are geometry/worker/file
+qualified; other variants and visible GUI/external-CAD gates remain open.
