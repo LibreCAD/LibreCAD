@@ -32636,3 +32636,20 @@ clang-format and `git diff --check` pass. Test commit:
 `868864cea` (`test(offset): persist reversed 1000-to-1 cusp profiles`).
 Both picked sides are covered by worker commit `9c31c3b43` (`test(offset):
 persist inward thin ellipse cusp profiles`).
+
+## 782. Verify a Reversed 1000:1 Arc Ending at the Cusp (2026-11-10)
+
+Added direct exact-normal coverage for a distinct partial interval: the
+translated, 45-degree, reversed 1000:1 elliptic arc runs from parameter `0.2`
+to the major-axis curvature extremum at `0`. Both offset sides are checked
+below, at, and above its `1e-4` curvature radius, including exact-normal
+geometry, nonempty valid topology where the contract retains output, and
+successful intersection diagnostics. This closes only direct generation for
+this endpoint-owned cusp interval; the crossing interval in section 781 does
+not substitute for endpoint ownership.
+
+Validation: focused test passes 27,778 assertions/1 case; `librecad_tests`
+builds, scoped clang-format and `git diff --check` pass. Test commit:
+`a7e93da12` (`test(offset): cover ellipse cusp at reversed arc endpoint`).
+Real-worker generation, cache admission, replacement/Produce, persistence on
+both picked sides, and independent DWG parsing remain open for this interval.
