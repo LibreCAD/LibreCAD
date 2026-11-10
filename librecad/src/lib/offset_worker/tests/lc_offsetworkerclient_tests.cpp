@@ -685,6 +685,11 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     REQUIRE(narrowShortSeamArc.isValid());
     const std::size_t narrowShortSeamArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{narrowShortSeamArc});
+    const RS_ArcData reversedNarrowShortSeamArc{{3.0, -4.0}, 4.0,
+        narrowArcSeam, 2.0 * M_PI - narrowArcSeam, true};
+    REQUIRE(reversedNarrowShortSeamArc.isValid());
+    const std::size_t reversedNarrowShortSeamArcFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{reversedNarrowShortSeamArc});
     const std::size_t scaledLineFixtureStart = sources.size();
     const std::size_t mixedBulgeFixture = scaledLineFixtureStart - 4;
     std::vector<double> scaledLineScales;
@@ -712,7 +717,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const qint64 requestId = static_cast<qint64>(i + 1);
         const double sourceDistance = i >= scaledLineFixtureStart ?
             scaledLineDistances[i - scaledLineFixtureStart] :
-            i == narrowShortSeamArcFixture ? 1e-6 :
+            (i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture) ? 1e-6 :
             i == mixedBulgeFixture ? -.25 : i == smallCircleFixture ? 2e-5 :
             i == largeCircleFixture ? 2e3 : i == nearParallelParabolaFixture ? .01 :
             i == 21 ? .1 : i == 24 ? 1.9 : .25;
@@ -770,7 +775,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         if (i == 13 || i == 15 || i == 20 || i == smallCircleFixture || i == largeCircleFixture ||
             i == nearParallelParabolaFixture || i == nearFullArcFixture || i == narrowSeamArcFixture ||
             i == reversedNarrowSeamArcFixture || i == shortSeamCrossingArcFixture ||
-            i == narrowShortSeamArcFixture ||
+            i == narrowShortSeamArcFixture || i == reversedNarrowShortSeamArcFixture ||
             i + 3 >= sources.size() || i >= scaledLineFixtureStart)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
