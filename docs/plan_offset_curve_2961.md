@@ -31103,3 +31103,66 @@ weaken geometric tolerance. After a bounded refinement change, require the
 rotated cusp to pass direct distance/tangent oracles, worker/cache admission,
 source replacement, Produce, and all five DXF/DWG lanes before claiming that
 profile supported.
+
+## 716. Reconfirm Editable Source-family Selection (2026-11-09)
+
+The latest source-widget request reiterates two requirements: the user must be
+able to change the requested curve type while selecting a replacement, and the
+choices must cover every source family supported by the offset model. This is
+already implemented and tested in the Properties workflow; no new widget or
+parallel type selector is needed. The selector remains active during the pick
+flow and filters eligible drawing entities from the canonical
+`LC_OffsetSourceGeometry::SupportedKinds` inventory:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline. Parabola is a distinct selectable type, not an alias for
+spline-points.
+
+Changing the filter must not replace or clear the current source/cache before a
+valid candidate is accepted. Cancellation and an ineligible candidate leave
+the existing source intact. The existing source-picker suite covers type
+changes during the pick flow, each listed family, typed parabola identity,
+highlight retention, and cancellation/invalid-candidate behavior; its latest
+recorded result is 11,930 assertions/12 cases (section 711).
+
+This request closes no additional implementation item beyond reaffirming that
+picker contract. Continue treating all-family geometry generation, worker/cache
+admission, and DXF/DWG read/write qualification as separate matrix obligations;
+selector presence alone is not support evidence.
+
+## 717. Certify Rotated Cusp Separation Within the Existing Budget (2026-11-09)
+
+Resolved the trim-overlay refinement exhaustion from sections 712-715 without
+raising the hard intersection-pair cap. Before refining a candidate pair, the
+solver now evaluates both curves at the parameter-box midpoints and chooses a
+normal to the larger midpoint tangent. It encloses the signed projected curve
+difference over both full parameter intervals using the existing outward-
+rounded derivative bounds. A pair is discarded only when this interval excludes
+zero; invalid evaluations or inconclusive intervals keep the prior refinement
+path. The projection-exclusion counter is appended to
+`LC_IntersectionWorkStats` to preserve the positions of existing aggregate
+initializers.
+
+The 30-degree rotated thin-ellipse cusp (`a=100`, ratio `1e-4`, inward distance
+`0.5e-6`) now completes trimmed materialization under the existing bounded
+options. The regression checks the independent bidirectional distance and
+tangent-orientation oracle, successful `MaterializedOutput` intersection
+diagnostics, work below the existing pair cap, and at least one certified
+projection exclusion. It replaces the previous expected `LimitExceeded` result.
+The real-worker typed-source matrix includes this profile through generation,
+cache validation/replacement, Produce, and the existing R14/R2000/R2018 DXF/DWG
+round-trip lanes; LibreDWG parses the generated DWG files.
+
+Validation on the committed source: `[lc-offsetcurve][geometry]` passes
+1,576,308 assertions/374 cases; `[curve-offset][ellipse][cusp]` passes 39,804
+assertions/2 cases; `[lc-offsetcurve][worker-client]` passes 513,568
+assertions/22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`. Edited C++ ranges
+pass repository clang-format checks, and `git diff --check` passes. The worker
+matrix's aggregate watchdog is now 60 seconds because adding this full persisted
+fixture made the prior 45-second guard expire; its individual wait timeout is
+unchanged at 3.5 seconds. No global geometry or intersection budget was
+increased.
+
+Implementation commit: `a1f94e185` (`fix(offset): certify rotated trim
+separation`). Continue the remaining ellipse/spline/hyperbola/polyline variant
+qualification and external acceptance matrix; this result supports only the
+recorded rotated thin-ellipse cusp profile, not every member of those families.
