@@ -575,6 +575,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     tangentFitPointEntity.getData().fitEndTangent = tangentFitEnd.first;
     REQUIRE(tangentFitPointEntity.fitTangentsMatchCurve());
     tangentFitPoints = tangentFitPointEntity.getData();
+    LC_SplinePoints transformedTangentFitPointEntity{nullptr, tangentFitPoints};
+    transformedTangentFitPointEntity.rotate({0, 0}, M_PI / 4.0);
+    transformedTangentFitPointEntity.scale({0, 0}, {1.5, 1.5});
+    transformedTangentFitPointEntity.move({1e4, -1e4});
+    REQUIRE(transformedTangentFitPointEntity.fitTangentsMatchCurve());
+    const LC_SplinePointsData transformedTangentFitPoints =
+        transformedTangentFitPointEntity.getData();
     LC_SplinePointsData closedFitPoints{true, false};
     closedFitPoints.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
     RS_SplineData degreeOne{1, false};
@@ -704,6 +711,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         LC_OffsetSourceGeometry{*secondParabola}};
     const std::size_t tangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{tangentFitPoints});
+    const std::size_t transformedTangentFitPointFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{transformedTangentFitPoints});
     const std::size_t reversedBoundsHyperbolaNearFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{reversedBoundsHyperbolaData});
     const std::size_t reversedBoundsHyperbolaFarFixture = sources.size();
@@ -1225,6 +1234,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     appendNegativeSplinePointsFixture(trailingStationarySplinePoints);
     const std::size_t negativeTangentFitPointFixture = sources.size();
     appendNegativeSplinePointsFixture(tangentFitPoints);
+    const std::size_t negativeTransformedTangentFitPointFixture = sources.size();
+    appendNegativeSplinePointsFixture(transformedTangentFitPoints);
     struct ClosedStationaryFixture {
         std::size_t positive;
         std::size_t negative;
@@ -1497,6 +1508,44 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                     CHECK(actual->angle1 == expected->angle1);
                     CHECK(actual->angle2 == expected->angle2);
                     CHECK(actual->reversed == expected->reversed);
+                }
+                else if (i == transformedTangentFitPointFixture ||
+                         i == negativeTransformedTangentFitPointFixture) {
+                    const auto* actual = std::get_if<LC_SplinePointsData>(
+                        &editable->sourceDefinition()->source.value);
+                    const auto* expected = std::get_if<LC_SplinePointsData>(
+                        &expectedSource->value);
+                    REQUIRE(actual);
+                    REQUIRE(expected);
+                    CHECK(actual->closed == expected->closed);
+                    CHECK(actual->cut == expected->cut);
+                    CHECK(actual->useControlPoints == expected->useControlPoints);
+                    CHECK(actual->fitTangentsConstrained == expected->fitTangentsConstrained);
+                    CHECK(actual->fitTolerance == expected->fitTolerance);
+                    const auto checkPoints = [](const std::vector<RS_Vector>& lhs,
+                                                const std::vector<RS_Vector>& rhs) {
+                        REQUIRE(lhs.size() == rhs.size());
+                        for (std::size_t point = 0; point < lhs.size(); ++point) {
+                            const double scale = std::max({1.0, std::abs(lhs[point].x),
+                                std::abs(lhs[point].y), std::abs(rhs[point].x),
+                                std::abs(rhs[point].y)});
+                            CHECK(lhs[point].distanceTo(rhs[point]) <=
+                                  256.0 * std::numeric_limits<double>::epsilon() * scale);
+                        }
+                    };
+                    checkPoints(actual->splinePoints, expected->splinePoints);
+                    checkPoints(actual->controlPoints, expected->controlPoints);
+                    const double tangentScale = std::max({1.0,
+                        actual->fitStartTangent.magnitude(),
+                        actual->fitEndTangent.magnitude(),
+                        expected->fitStartTangent.magnitude(),
+                        expected->fitEndTangent.magnitude()});
+                    const double tangentTolerance = 256.0 *
+                        std::numeric_limits<double>::epsilon() * tangentScale;
+                    CHECK(actual->fitStartTangent.distanceTo(expected->fitStartTangent) <=
+                          tangentTolerance);
+                    CHECK(actual->fitEndTangent.distanceTo(expected->fitEndTangent) <=
+                          tangentTolerance);
                 }
                 else {
                     CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) ==
@@ -1819,7 +1868,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 leftNormal * (offset.distance * ((reversedBoundsHyperbolaOpposite || translatedThinHyperbolaOpposite) ? -2.0 : 2.0));
             offset.sideFallback = offset.coord;
         }
-        if (i == tangentFitPointFixture || i == negativeTangentFitPointFixture) {
+        if (i == tangentFitPointFixture || i == negativeTangentFitPointFixture ||
+            i == transformedTangentFitPointFixture ||
+            i == negativeTransformedTangentFitPointFixture) {
             const auto* spline = dynamic_cast<const LC_SplinePoints*>(entity.get());
             REQUIRE(spline);
             LC_CurveJet jet;
@@ -1827,7 +1878,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const double speed = jet.first.magnitude();
             REQUIRE(speed > 0.0);
             const RS_Vector normal{-jet.first.y / speed, jet.first.x / speed};
-            const double pickSide = i == tangentFitPointFixture ? 1.0 : -1.0;
+            const double pickSide =
+                i == tangentFitPointFixture || i == transformedTangentFitPointFixture
+                    ? 1.0 : -1.0;
             offset.coord = jet.point + normal * (pickSide * 0.5);
             offset.sideFallback = offset.coord;
         }

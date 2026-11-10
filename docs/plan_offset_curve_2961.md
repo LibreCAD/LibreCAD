@@ -33295,3 +33295,60 @@ This closes the worker/persistence gap for these two exact closed stationary
 profiles only. Other repeated-point patterns, ambiguous/self-intersecting
 closed curves, fit-point stationary curves, and broader topology/refusal
 boundaries remain open. `git diff --check` passes.
+
+## 811. Reconcile Source-type Picker and All-modeled-family Support (2026-11-10)
+
+The latest request asks that a user changing the source during replacement can
+also change the source-curve type, and that the replacement flow cover every
+supported type, including parabola. This is the existing type-changing picker
+contract, not a request for another widget: keep the type selector enabled
+throughout replacement, populate it from
+`LC_OffsetSourceGeometry::SupportedKinds`, and use the selected family only to
+filter replacement candidates. A successful pick must preserve the picked
+entity's actual typed geometry and identity. Filtering, cancellation, and
+invalid or stale picks must not mutate the active source/cache or remove its
+highlight.
+
+Current-code reconciliation: the selector and cross-family replacement flow
+already meet this UI contract for line, arc, circle, ellipse, spline,
+spline-points, distinct parabola, bounded hyperbola, and polyline. The existing
+Properties tests cover family changes during the pick flow, retained source
+highlight, and replacement across the modeled inventory, including typed
+parabola identity. Do not add a second selector or a parabola-only branch.
+
+Implementation sequence for any future modeled family is: (1) add its kind to
+the canonical `SupportedKinds` inventory only when typed capture/reconstruction
+is defined; (2) extend candidate filtering and atomic replacement tests for
+that family; (3) qualify each eligible geometry variant through the direct
+oracle and explicit refusal boundaries; (4) qualify real worker/cache,
+replacement/Produce, and applicable DXF/DWG round-trips; (5) update the family
+capability matrix with exact variant and validation receipts. Keep unqualified
+variants filtered or fail-closed without changing the active source/cache.
+Picker visibility alone does not close any geometry or persistence row. The
+existing source-picker regressions remain the acceptance gate for steps 1-2;
+the family-by-variant matrix remains authoritative for steps 3-5.
+
+## 812. Qualify Rigidly Transformed Tangent-fit Spline-points (2026-11-10)
+
+Extended the consistent four-fit-point tangent-constrained profile through a
+rotation by 45 degrees, uniform scale 1.5, and translation `(10000, -10000)`.
+For both signed offset sides, the direct regression samples each generated
+cubic against the exact transformed source normal and remains within the
+requested geometry tolerance. The focused direct case passes 1,874
+assertions.
+
+Added the transformed profile and its negative-distance counterpart to the
+real worker-client family matrix. Both traverse generation, cache admission,
+source replacement, Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+lanes. The source-after-edit comparison checks all fit/control points and
+tangents with a scale-aware floating-point bound while retaining exact checks
+for typed metadata. The matrix passes 1,354,996 assertions; `dwgread`
+independently parses both generated DWGs. Both targets build and `git diff
+--check` passes.
+
+This receipt is limited to the recorded profile and rigid/uniform transform.
+Nonuniform scaling can change the fit-control reconstruction and invalidate
+the stored endpoint tangent directions, so it is not included in this
+qualification. Other fit counts, tangent directions, topologies, scales,
+translations, nonuniform transforms, and stationary/tangent combinations
+remain open and must be qualified or fail-closed independently.
