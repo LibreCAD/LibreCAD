@@ -32558,14 +32558,18 @@ exact-normal checks cover both offset sides at distances `0.9`, `1.0`, and
 `1.1` times the curvature radius at the major-axis vertex. The three same
 source/distance profiles are now in the real worker family matrix; generation
 and cache admission pass, and Produce selects the exterior side for the
-five-lane R14/R2000/R2018 DXF/DWG save/reopen path. The generated DWGs are
-independently parsed when `DWGREAD` is available.
+five-lane R14/R2000/R2018 DXF/DWG save/reopen path. Worker distances are
+`0.009`, `0.010`, and `0.011` (not `0.9`, `1.0`, and `1.1`); the former are
+the required 0.9x/1.0x/1.1x cusp-radius values for this source. The generated
+DWGs are independently parsed when `DWGREAD` is available.
 
 Validation: focused direct test passes 28,103 assertions/1 case. The worker
-family test passes 1,172,830 assertions/1 case with
+family test passes 1,171,160 assertions/1 case with
 `DWGREAD=/opt/homebrew/bin/dwgread`; both DWG lanes are independently parsed.
 Both targets build, scoped clang-format and `git diff --check` pass. Test
-commit: `361bff65f` (`test(offset): qualify reversed ellipse cusp profile`).
+commit: `361bff65f` (`test(offset): qualify reversed ellipse cusp profile`);
+distance correction: `8bc8536fc` (`test(offset): scale ellipse cusp distances
+correctly`).
 This qualifies only this reversed interval, transform, ratio, distance
 triplet, and the selected Produce side; broader ellipse scales, sweeps,
 curvature neighborhoods, and worker persistence on the opposite picked side
