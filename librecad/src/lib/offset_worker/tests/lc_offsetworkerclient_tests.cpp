@@ -790,6 +790,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     std::vector<std::size_t> expectedSingularThinCuspFixtures;
     std::vector<std::size_t> reversed100To1InteriorPickFixtures;
     std::vector<std::size_t> reversed1000To1ExteriorPickFixtures;
+    std::vector<std::size_t> reversed1000To1InteriorPickFixtures;
     const std::array<RS_EllipseData, 72> thinCuspEllipses{{
         {{0.0, 0.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
         {{100.0, -100.0}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false},
@@ -1122,6 +1123,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[71]});
         thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
         reversed1000To1ExteriorPickFixtures.push_back(fixture);
+    }
+    for (const double cuspDistance : {0.9e-4, 1.0e-4, 1.1e-4}) {
+        const std::size_t fixture = sources.size();
+        sources.emplace_back(LC_OffsetSourceGeometry{thinCuspEllipses[71]});
+        thinEllipseCuspFixtures.emplace_back(fixture, cuspDistance);
+        reversed1000To1InteriorPickFixtures.push_back(fixture);
     }
     const std::size_t translatedThinEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{{1e8, -1e8}, {100.0, 0.0}, 1e-4, 0.0, 0.0, false}});
@@ -1580,6 +1587,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             reversed100To1InteriorPickFixtures.end();
         const bool exteriorPick = std::find(reversed1000To1ExteriorPickFixtures.begin(), reversed1000To1ExteriorPickFixtures.end(), i) !=
             reversed1000To1ExteriorPickFixtures.end();
+        const bool interior1000To1Pick =
+            std::find(reversed1000To1InteriorPickFixtures.begin(), reversed1000To1InteriorPickFixtures.end(), i) !=
+            reversed1000To1InteriorPickFixtures.end();
         RS_OffsetData offset;
         offset.coord = {3, 2};
         offset.sideFallback = {10, 10};
@@ -1601,7 +1611,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
             offset.distance = thinEllipseCusp->second;
             offset.coord = ellipse.center;
-            if ((ellipse.reversed && ellipse.ratio == 1e-2 && !interiorPick) || exteriorPick)
+            if ((ellipse.reversed && ellipse.ratio == 1e-2 && !interiorPick) ||
+                (ellipse.reversed && ellipse.ratio == 1e-3 && !interior1000To1Pick) || exteriorPick)
                 offset.coord += ellipse.majorP * 2.0;
             offset.sideFallback = offset.coord;
         }
