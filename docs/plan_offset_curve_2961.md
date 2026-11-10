@@ -211,6 +211,13 @@ Current implementation order for the remaining “all supported types” work:
    Mark a family/variant complete only for the exact matrix exercised; keep
    GUI and independent-CAD acceptance separate from headless unit coverage.
 
+For the current extreme-thin-ellipse work, prioritize the inward cusp boundary
+before expanding the outward sweep matrix: a passing status alone is not
+evidence of a valid offset. Keep the independent source-distance and tangent-
+orientation oracles enabled, and establish the expected trimmed topology from
+the engine's offset contract rather than assuming a single closed branch when
+the untrimmed parallel curve develops cusps or loops.
+
 The picker requirement itself is **complete**. Remaining implementation is
 steps 1-6 above, driven by the variant gaps recorded in the chronological
 entries; in particular, recent periodic high-weight tests preserve a
@@ -30806,3 +30813,57 @@ cross-platform/ASan, or exact-head CI.
 
 Implementation/test slice committed as `b65da1165` (`test(offset): cover thin
 ellipse seam sweeps`).
+
+## 708. In Progress: Extreme Thin Ellipse Inward Cusp Boundary (2026-11-09)
+
+The current slice brackets the minimum radius of curvature at the major
+vertices for the existing `a=100`, axis-ratio-`1e-4` fixture. Its nominal cusp
+radius is `b*b/a = 1e-6`; the direct regression probes inward distances `0.5`,
+`0.9`, `1.0`, `1.1`, and `2.0` times that value, requests one-percent
+geometry tolerance, checks bidirectional source distance and tangent
+orientation, and requires the trimmed output topology to be one closed
+branch.
+
+The initial apparent defect at `d=2e-6` was in the test oracle. Its uniform
+4,000-angle sample followed by ternary search could choose the wrong minimum
+inside the narrow, non-unimodal distance basin near an eccentric ellipse's
+major vertex. LibreCAD's general ellipse-nearest-point routine also proved too
+inaccurate for this ratio, so the ellipse test oracle now keeps the global
+coarse search, adds a scale-relative fine search around nearby ellipse axes,
+and refines each local candidate. No offset-kernel change was justified by
+that false failure. With the corrected oracle, all five direct profiles pass
+and the trimmed closed-branch topology is confirmed.
+
+Completed implementation and validation:
+
+1. Added all five cusp-bracket distances to the real-worker matrix, with
+   operation-7 generation, operation-8 cache admission, typed source
+   replacement, Produce, and independent checks of the generated geometry.
+   Keep the exact single-closed-branch expectation for these tested symmetric
+   whole-ellipse profiles; do not generalize it to partial arcs or other
+   eccentricities. Produce's direction point is placed at the ellipse center
+   so side classification is not confounded by the sub-micron offset distance.
+2. Carried those same five signed-distance profiles through R14 DXF, R2000
+   DXF/DWG, and R2018 DXF/DWG. Reopen each file and verify typed ellipse
+   source, cache spline geometry, branch topology, and source-distance oracle;
+   independently parse the generated DWGs with LibreDWG.
+
+Validation on the current source: the focused direct cusp-bracket test passes
+18,090 assertions/1 case; the full `[curve-offset][ellipse]` suite passes
+784,245 assertions/24 cases; the focused worker-family test passes 226,343
+assertions/1 case; and the complete worker-client suite passes 232,871
+assertions/22 cases with `DWGREAD=/opt/homebrew/bin/dwgread`. Both DWG lanes
+are parsed by LibreDWG. `git diff --check` passes. Formatting was checked with
+the repository's `code_style/.clang-format` on edited ranges.
+
+Implementation/test commit: `4e98e6c5e` (`test(offset): qualify thin ellipse
+inward cusps`). This commit includes the corrected scale-aware test oracle,
+direct bracket, and worker/cache/Produce/five-format persistence matrix.
+
+Remaining closeout: commit this roadmap receipt, push both commits to PR #3193,
+and verify the exact PR head and its CI checks.
+
+This slice qualifies only the recorded symmetric whole-ellipse profiles and
+distances. The outward thin-ellipse receipts in sections 703-707 remain
+unchanged; arbitrary ratios, partial arcs, translated/rotated inward cases,
+and other cusp topologies remain open.
