@@ -33396,3 +33396,22 @@ complete family matrix passes 1,383,166 assertions. Both test targets build
 and `git diff --check` passes. This qualifies the recorded profile and
 transform values; other fit counts, tangent combinations, transform factors,
 and stationary/source-topology interactions remain open.
+
+## 815. Qualify Three- and Five-fit-point Tangent Spline-points (2026-11-10)
+
+Added two additional open `LC_SplinePoints` profiles with consistent start and
+end tangent constraints: a three-fit-point quadratic and a five-fit-point
+profile, alongside the existing four-fit-point profile. Each profile passes
+`fitTangentsMatchCurve()` and direct exact-normal checks for both signed offset
+sides; generated cubics remain within the requested geometry tolerance. The
+focused direct case passes 7,818 assertions.
+
+Added the three- and five-point profiles and their negative-distance variants
+to the real worker-client family matrix. Generation, cache admission, source
+replacement, Produce, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG lanes pass.
+The available `dwgread` independently parses both generated DWGs. The full
+family matrix passes 1,399,424 assertions; both targets build and `git diff
+--check` passes. This qualifies only these exact three-, four-, and five-fit-
+point shapes with two endpoint constraints. Other point counts, curve shapes,
+tangent configurations, transforms, and stationary/topology combinations
+remain open.

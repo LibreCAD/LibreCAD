@@ -1177,6 +1177,25 @@ TEST_CASE("Consistent tangent-constrained spline-points can be offset",
     };
     checkBothSides(source);
 
+    for (const auto& fitPoints : {
+             std::vector<RS_Vector>{{0, 0}, {2, 3}, {4, 0}},
+             std::vector<RS_Vector>{{0, 0}, {1, 2}, {3, 1.5}, {4, 0}, {6, -2}}}) {
+        LC_SplinePointsData profileData{false, false};
+        profileData.splinePoints = fitPoints;
+        profileData.fitTangentsConstrained = true;
+        profileData.fitTolerance = 1e-10;
+        LC_SplinePoints profile{nullptr, profileData};
+        LC_CurveJet profileStart;
+        LC_CurveJet profileEnd;
+        REQUIRE(profile.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, profileStart));
+        REQUIRE(profile.tryEvaluateJet(static_cast<double>(profile.getSegmentCount()),
+                                      LC_CurveEvaluationSide::Left, profileEnd));
+        profile.getData().fitStartTangent = profileStart.first;
+        profile.getData().fitEndTangent = profileEnd.first;
+        REQUIRE(profile.fitTangentsMatchCurve());
+        checkBothSides(profile);
+    }
+
     LC_SplinePointsData startOnlyData = source.getData();
     startOnlyData.fitEndTangent = {0, 0};
     LC_SplinePoints startOnly{nullptr, startOnlyData};
