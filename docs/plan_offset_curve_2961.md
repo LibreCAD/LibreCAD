@@ -31292,3 +31292,29 @@ clang-format checks and `git diff --check`. Test commit: `01eb81411`
 This records only the tested translations, rotations, arc spans, and distance.
 Larger representable origins, intermediate arc endpoints, other cusp distances,
 and other ellipse ratios still need qualification.
+
+## 722. Qualify Rotated Whole-ellipse Cusp-threshold Distances (2026-11-09)
+
+Extended the centered whole-ellipse rotation matrix at 30 and 45 degrees from
+the `0.5e-6` sub-threshold profile to inward distances `0.9e-6`, `1.0e-6`,
+`1.1e-6`, and `2.0e-6`, around the `1e-6` minimum-curvature radius. Each
+profile completes trimmed materialization as one closed branch and passes the
+independent bidirectional distance/tangent oracle. This directly exercises
+near-stall, exact-stall, and beyond-stall topology for rotated whole ellipses;
+it does not generalize to every angle or translation.
+
+The real-worker matrix carries the 30-degree threshold triplet
+`0.9e-6`/`1.0e-6`/`1.1e-6` through operation 7, operation 8, typed replacement,
+Produce, and R14/R2000/R2018 DXF/DWG round trips. LibreDWG parses both DWG
+outputs. Existing worker watchdogs remain bounded at 90 seconds internally and
+120 seconds in CTest; the per-operation timeout remains 3.5 seconds.
+
+Validation: the focused 30/45-degree threshold test passes 28,944
+assertions/1 case; `[curve-offset][ellipse][cusp]` passes 133,700 assertions/6
+cases. The full worker-client suite passes 923,270 assertions/22 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`. Edited ranges pass repository
+clang-format checks and `git diff --check`. Test commit: `116118d3c`
+(`test(offset): qualify rotated cusp thresholds`).
+
+Other rotated angles/distances, translated threshold profiles, partial-arc
+threshold distances, and other ellipse ratios remain open variant rows.
