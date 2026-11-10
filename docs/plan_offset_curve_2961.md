@@ -32877,3 +32877,23 @@ all-family filtering/replacement tests. Keep broader support claims separate:
 each eligible variant still needs its own direct geometry, worker/cache,
 editing, and applicable DXF/DWG read/write evidence, with unsupported cases
 failing atomically and without mutating the current source or cache.
+
+## 791. Revalidate qmake6 and Exact-head CI After Roadmap Push (2026-11-10)
+
+The pushed roadmap checkpoint is head
+`3b5980e1731a5a9c3e4deb60d8d10f449b60975e`. A fresh out-of-tree qmake6
+Release configuration and complete application build pass in
+`/private/tmp/offset-plan-current-qmake6`, including `LibreCAD.app`, the
+`LibreCADOffsetWorker` helper, bundled plugins, and `ttf2lff`. The generated
+application and helper are present. The build uses
+`-mmacosx-version-min=14.4`, but it ran on the newer local macOS SDK and links
+Homebrew QtSvg/Freetype binaries built for macOS 27; it does not prove runtime
+compatibility on macOS 14.4.
+
+The exact-head CI snapshot has Headless ON, Headless OFF, and
+`build_with_pixi (ubuntu-24.04-arm)` passing. The other Pixi platforms,
+`BuildMacOS`, Windows DWG/DXF verification, fast DWG/DXF verification, and
+static analysis were still running at this checkpoint. Recheck those checks
+against the exact latest PR head; do not use the earlier `a6d9db911` results to
+close them. Physical visible-GUI acceptance, an actual macOS 14.4 runtime,
+signing/notarization, and external ODA/AutoCAD acceptance remain open.
