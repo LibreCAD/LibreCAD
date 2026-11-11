@@ -34430,3 +34430,26 @@ tracked-listener, and viewport-range selectors passed 12,878 assertions in 68
 cases. The checkout remained clean. These macOS headless results do not close
 the uncommitted strict experiment, full qmake build, visible GUI, independent
 CAD visual, or other-platform gates.
+
+## 846. Bound Relative Join Displacement (2026-11-11)
+
+Commit `940dcd970` extends the restricted cubic-join certificate by bounding
+the two endpoint-relative displacements directly. If either coordinate of their
+interval difference excludes zero, the requested box contains no reportable
+contact. This avoids subtracting large absolute coordinates, while retaining
+outward rounding and fail-closed behavior when the interval includes zero.
+
+The materialized-proof selector passed 691 assertions in 6 cases with the
+uncommitted strict experiment present, including a captured rotated 3-to-1
+ellipse box, reversal, reflections, scaling, and the existing constructed
+second-crossing controls. The precision/strict-proof-domain selector passed
+291 assertions in 6 cases. CMake rebuilt the test target and qmake6 compiled
+the changed application object, not the full application.
+
+In the local uncommitted strict experiment, the rotated 3-to-1 fixture now
+passes 10,857 assertions. The broader ellipse/intersection/trim run reports 16
+failed assertions, down from the earlier 22, but still fails on extreme
+ellipses and trimming. Its fair-split and refined-box proof changes, strict
+trigger, and diagnostic prints remain uncommitted. A clean default-path matrix,
+worker/file matrix, visible checks, and cross-platform validation for this
+new certificate remain open.
