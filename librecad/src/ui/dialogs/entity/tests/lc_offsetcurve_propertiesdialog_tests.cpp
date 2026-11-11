@@ -1265,6 +1265,38 @@ TEST_CASE("Incremental source scan restarts after a layer lock change",
     CHECK(select->isEnabled());
 }
 
+TEST_CASE("Incremental source scan restarts after layer visibility changes",
+          "[gui][dialog][offsetcurve][source][highlight][incremental][visibility]") {
+    Fixture f;
+    auto* layer = f.graphic.getActiveLayer();
+    auto* source = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    source->setLayer(layer);
+    f.graphic.addEntity(source);
+    for (int i = 0; i < 100; ++i) {
+        f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 45}, {double(i + 1), 45}}));
+    }
+    layer->freeze(true);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    auto* viewport = f.view.getViewPort();
+    auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport);
+    widget.setEntity(clone.get());
+    widget.show();
+    auto* select = widget.findChild<QToolButton*>("tbSelectSource");
+    auto* sliceTimer = widget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+    REQUIRE(select);
+    REQUIRE(sliceTimer);
+    REQUIRE(sliceTimer->isActive());
+    CHECK_FALSE(select->isEnabled());
+
+    layer->freeze(false);
+    REQUIRE(pollEventsUntil([&] {
+        return overlay->getEntityList().size() == 1 && select->isEnabled();
+    }));
+    CHECK(overlay->getEntityList().front()->isHighlighted());
+}
+
 TEST_CASE("Incremental source scan does not publish across document lifetime changes",
           "[gui][dialog][offsetcurve][source][highlight][incremental][lifetime]") {
     Fixture f;
