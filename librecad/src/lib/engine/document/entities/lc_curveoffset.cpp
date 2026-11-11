@@ -3683,9 +3683,9 @@ public:
             }
             return q[0];
         };
-        const auto quadratic = [&](const LC_Interval& u1, const LC_Interval& u2, const double c0, const double c1,
-                                   const double c2) {
-            LC_Interval q[3] = {pt(c0), pt(c1), pt(c2)};
+        const auto quadratic = [&](const LC_Interval& u1, const LC_Interval& u2, const LC_Interval& c0,
+                                   const LC_Interval& c1, const LC_Interval& c2) {
+            LC_Interval q[3] = {c0, c1, c2};
             const LC_Interval* u[2] = {&u1, &u2};
             for (int r = 0; r < 2; ++r) {
                 for (int j = 0; j < 2 - r; ++j) {
@@ -3707,8 +3707,10 @@ public:
         dx = LC_Interval{};
         dy = LC_Interval{};
         for (const auto& u : args2) {
-            const LC_Interval vx = pt(3.0) * quadratic(*u[0], *u[1], p[1].x - p[0].x, p[2].x - p[1].x, p[3].x - p[2].x);
-            const LC_Interval vy = pt(3.0) * quadratic(*u[0], *u[1], p[1].y - p[0].y, p[2].y - p[1].y, p[3].y - p[2].y);
+            const LC_Interval vx = pt(3.0) * quadratic(*u[0], *u[1], pt(p[1].x) - pt(p[0].x),
+                                                       pt(p[2].x) - pt(p[1].x), pt(p[3].x) - pt(p[2].x));
+            const LC_Interval vy = pt(3.0) * quadratic(*u[0], *u[1], pt(p[1].y) - pt(p[0].y),
+                                                       pt(p[2].y) - pt(p[1].y), pt(p[3].y) - pt(p[2].y));
             dx = dx.isValid() ? LC_Interval::hull(dx, vx) : vx;
             dy = dy.isValid() ? LC_Interval::hull(dy, vy) : vy;
         }

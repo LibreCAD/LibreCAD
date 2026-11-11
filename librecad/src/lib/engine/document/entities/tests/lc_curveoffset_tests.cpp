@@ -30,6 +30,7 @@
 #include <iomanip>
 #include <limits>
 #include <vector>
+#include <boost/multiprecision/cpp_bin_float.hpp>
 
 #include "lc_curveoffset.h"
 #include "lc_curveoffsetinternal.h"
@@ -314,6 +315,52 @@ TEST_CASE("Materialized join proof separates tiny relative displacement", "[curv
         }
         const auto mapped = LC_CurveOffsetInternal::makePieceCurves(transformed, {1, -1});
         CHECK(mapped->certifyIntersection(box).outcome == Outcome::Excluded);
+    }
+}
+
+TEST_CASE("Materialized Bezier derivative bounds enclose high-precision values",
+          "[curve-offset][topology][materialized][bounds]") {
+    using High = boost::multiprecision::number<boost::multiprecision::cpp_bin_float<256>>;
+    const std::array<std::array<double, 4>, 5> controls{{
+        {{0x1p54, 1.0, 0x1p54 + 4.0, -3.0}},
+        {{1.0, 0x1p-54, -1.0, 0x1p-100}},
+        {{0x1p-400, -0x1p-450, 0x1p-399, -0x1p-410}},
+        {{1e150, -1e-150, -1e150, 1.0}},
+        {{1e-150, 1e-145, -1e-145, 1e-149}}
+    }};
+    const std::array<std::pair<double, double>, 5> ranges{{
+        {0.0, 0.0}, {.5, .5}, {.125, .125 + 0x1p-40}, {.001, .999}, {1.0, 1.0}
+    }};
+    REQUIRE(High(controls[0][1]) - High(controls[0][0]) != High(controls[0][1] - controls[0][0]));
+    for (const auto& xs : controls) {
+        for (const auto& ys : controls) {
+            LC_CurveOffsetInternal::BezierBranches branches(1);
+            std::array<RS_Vector, 4> piece;
+            for (std::size_t i = 0; i < piece.size(); ++i) piece[i] = {xs[i], ys[i]};
+            branches[0].push_back(piece);
+            const auto curves = LC_CurveOffsetInternal::makePieceCurves(branches, {-1});
+            for (const auto& range : ranges) {
+                CAPTURE(xs, ys, range);
+                LC_Interval x, y, dx, dy;
+                REQUIRE(curves->bound(0, range.first, range.second, x, y, dx, dy));
+                const High first(range.first), last(range.second);
+                const std::array<High, 3> samples{{first, (first + last) / 2, last}};
+                const auto derivative = [](const std::array<double, 4>& c, const High& t) -> High {
+                    const High u = 1 - t;
+                    return 3 * ((High(c[1]) - High(c[0])) * u * u +
+                                2 * (High(c[2]) - High(c[1])) * t * u +
+                                (High(c[3]) - High(c[2])) * t * t);
+                };
+                for (const High& t : samples) {
+                    const High expectedX = derivative(xs, t);
+                    const High expectedY = derivative(ys, t);
+                    CHECK(High(dx.lo()) <= expectedX);
+                    CHECK(High(dx.hi()) >= expectedX);
+                    CHECK(High(dy.lo()) <= expectedY);
+                    CHECK(High(dy.hi()) >= expectedY);
+                }
+            }
+        }
     }
 }
 
