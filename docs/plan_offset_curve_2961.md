@@ -35386,3 +35386,26 @@ the current CMake Release build. This closes the scanner's family-specific
 uniqueness/ambiguity gate for the tested duplicates. Still open: measure and
 bound worst-case single-entity capture/encoding latency, plus visible macOS GUI
 acceptance and the broader offset-plan requirements outside this scanner work.
+
+## 873. Bound and Measure Maximum Encodable Match Payload (2026-11-11)
+
+Commit `bdc5fe4c7` exposes the worker request admission limits as shared
+`LC_OffsetWorkerRequest::Values` constants and uses them in the codec and
+benchmark: 16,384 source control points, 32,768 knots, and 4,096 fit points.
+The source geometry model permits larger raw arrays, but those values are not
+worker-encodable; scanner identity comparison therefore has a finite admitted
+payload boundary instead of an unbounded source-array size.
+
+A hidden benchmark exercises capture plus CBOR encoding at the maximum
+encodable spline-points size (16,384 controls and 4,096 fit points). It passes
+6 assertions / 1 case and measured 2.91 ms on the current CMake Release/macOS
+build. The incremental family matrix passes 198 assertions / 1 case; the full
+source-picker suite passes 12,840 assertions / 37 cases. The dedicated
+worker-request microtest target passes 603,526 assertions / 18 cases. These
+establish a finite input/work cap and an observed run under the approximate 4
+ms target, not a hardware-independent wall-clock guarantee.
+
+The scanner's required invalidation, cancellation, family-ambiguity, and
+bounded-input gates are now covered. Remaining acceptance is visible GUI
+validation and continued monitoring of event-loop behavior on target hardware;
+the broader offset roadmap remains active beyond source-highlight scanning.
