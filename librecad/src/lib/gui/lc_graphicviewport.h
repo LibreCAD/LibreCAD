@@ -51,7 +51,7 @@ public:
     virtual ~LC_GraphicViewport();
 
     void setDocument(RS_Document *c);
-    RS_Document *getDocument() const {return m_document;}
+    RS_Document *getDocument() const {return m_documentLifetime.expired() ? nullptr : m_document;}
     int getWidth() const {return m_width;}
     int getHeight() const {return m_height;}
 
@@ -224,6 +224,7 @@ protected:
     int m_ucsApplyingPolicy = UCSApplyingPolicy::ZoomAuto;
 
     RS_Document *m_document = nullptr; // Holds a pointer to all the entities
+    std::weak_ptr<void> m_documentLifetime;
     RS_Graphic* m_graphic = nullptr; // may be extracted from document, yet have separate reference for performance reasons
 
     bool m_printPreview = false;

@@ -295,7 +295,9 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
 /**
  * Destructor.
  */
-RS_Graphic::~RS_Graphic() = default;
+RS_Graphic::~RS_Graphic() {
+    invalidateLifetime();
+}
 
 void RS_Graphic::onLoadingCompleted() {
     m_layerList.settleActiveLayer();

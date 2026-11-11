@@ -28,6 +28,7 @@
 #include "lc_actiontestsupport.h"
 #include "lc_dlg_entityproperties.h"
 #include "lc_graphicviewport.h"
+#include "lc_graphicviewportlistener.h"
 #include "lc_entitypropertieseditor.h"
 #include "lc_selectedset.h"
 #include "lc_offsetcurve.h"
@@ -47,9 +48,11 @@
 #include "qg_layerbox.h"
 #include "qg_widgetpen.h"
 #include "rs_coordinateevent.h"
+#include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_ellipse.h"
 #include "rs_layer.h"
+#include "rs_layerlistlistener.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_spline.h"
@@ -921,6 +924,80 @@ TEST_CASE("Source highlight monitoring stops after viewport invalidation",
         CHECK_FALSE(timer->isActive());
         viewport.reset();
     }
+}
+
+TEST_CASE("Source highlight monitoring stops after document destruction",
+          "[gui][dialog][offsetcurve][source][highlight][overlay][lifetime]") {
+    Fixture f;
+    auto document = std::make_unique<Graphic>();
+    document->initForNewDocument(); document->onLoadingCompleted();
+    auto* source = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    document->addEntity(source);
+    auto viewport = std::make_unique<LC_GraphicViewport>();
+    viewport->setDocument(document.get());
+    struct RedrawObserver final : LC_GraphicViewPortListener {
+        int count = 0;
+        void onViewportRedrawNeeded(RS2::RedrawMethod, bool) override { ++count; }
+    } observer;
+    viewport->addViewportListener(&observer);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport.get());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+    auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    REQUIRE(timer); REQUIRE(timer->isActive());
+    REQUIRE(overlay->getEntityList().size() == 1);
+    struct TeardownObserver final : RS_LayerListListener {
+        LC_GraphicViewport* viewport = nullptr;
+        QTimer* timer = nullptr;
+        bool called = false, documentExpired = false, timerInvoked = false;
+        void layerListDestroyed() override {
+            called = true;
+            documentExpired = viewport->getDocument() == nullptr;
+            timerInvoked = QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection);
+        }
+    } teardown;
+    teardown.viewport = viewport.get();
+    teardown.timer = timer;
+    document->addLayerListListener(&teardown);
+    observer.count = 0;
+    document.reset();
+    CHECK(teardown.called);
+    CHECK(teardown.documentExpired);
+    CHECK(teardown.timerInvoked);
+    CHECK(viewport->getDocument() == nullptr);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK_FALSE(timer->isActive());
+    CHECK(overlay->getEntityList().isEmpty());
+    QApplication::processEvents();
+    CHECK(observer.count == 0);
+    viewport.reset();
+}
+
+TEST_CASE("Viewport forgets a destroyed block document",
+          "[gui][dialog][offsetcurve][source][highlight][overlay][lifetime]") {
+    REQUIRE(lc::test::application());
+    std::optional<RS_Block> document;
+    document.emplace(nullptr, RS_BlockData{"test", {0, 0}, false});
+    LC_GraphicViewport viewport;
+    auto* const address = &*document;
+    viewport.setDocument(address);
+    REQUIRE(viewport.getDocument() == address);
+    RS_Line source(nullptr, RS_LineData{{0, 0}, {1, 0}});
+    auto lease = viewport.highlightOffsetSource(source);
+    REQUIRE(lease);
+    auto* overlay = viewport.getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    REQUIRE(overlay->getEntityList().size() == 1);
+    document.reset();
+    CHECK(viewport.getDocument() == nullptr);
+    document.emplace(nullptr, RS_BlockData{"replacement", {0, 0}, false});
+    REQUIRE(&*document == address);
+    viewport.setDocument(&*document);
+    CHECK(viewport.getDocument() == &*document);
+    CHECK(overlay->getEntityList().isEmpty());
 }
 
 TEST_CASE("Offset source highlight leases survive viewport document changes and destruction",

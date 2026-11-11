@@ -103,7 +103,7 @@ public:
     void requestRedraw() {
         std::weak_ptr<LC_OffsetSourceHighlightState> weak = shared_from_this();
         QTimer::singleShot(0, [weak] {
-            if (const auto state = weak.lock(); state && state->m_viewport)
+            if (const auto state = weak.lock(); state && state->m_viewport && state->m_viewport->getDocument())
                 state->m_viewport->notifyChanged(RS2::RedrawOverlay);
         });
     }
@@ -155,11 +155,12 @@ std::shared_ptr<void> LC_GraphicViewport::highlightOffsetSource(const RS_Entity&
 }
 
 void LC_GraphicViewport::setDocument(RS_Document *c) {
-    if (m_document != c && m_offsetSourceHighlights) {
+    if ((m_document != c || m_documentLifetime.expired()) && m_offsetSourceHighlights) {
         m_offsetSourceHighlights->shutdown();
         m_offsetSourceHighlights.reset();
     }
     m_document = c;
+    m_documentLifetime = c ? c->lifetimeToken() : std::weak_ptr<void>{};
     RS_Graphic* g = nullptr;
     if (m_document->rtti() == RS2::EntityGraphic){
         g = static_cast<RS_Graphic*>(c);

@@ -46,6 +46,7 @@ RS_Document::RS_Document(RS_EntityContainer* parent)
 }
 
 RS_Document::~RS_Document() {
+    invalidateLifetime();
 }
 
 void RS_Document::addEntity(const RS_Entity* entity) {

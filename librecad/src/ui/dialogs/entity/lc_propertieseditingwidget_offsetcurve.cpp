@@ -492,13 +492,15 @@ void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
     }
     try {
         const auto* document = m_highlightViewport->getDocument();
+        if (!document) {
+            clearSourceWatch();
+            return;
+        }
         const RS_Entity* source = nullptr;
-        if (document) {
-            for (auto* entity : document->getEntityList()) {
-                if (entity && entity->getId() == m_highlightSourceId) {
-                    source = entity;
-                    break;
-                }
+        for (auto* entity : document->getEntityList()) {
+            if (entity && entity->getId() == m_highlightSourceId) {
+                source = entity;
+                break;
             }
         }
         bool current = false;
