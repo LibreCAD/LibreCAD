@@ -36871,3 +36871,20 @@ in 273.16 seconds. `git diff --check` passes.
 This verifies worker preparation for this repeated-neighbor profile only.
 Five-lane persistence for it and other coincident fit-point patterns remains
 open, along with visible and external-CAD acceptance.
+
+## 950. Persist Repeated-neighbor Fit-point Trim Output (2026-11-11)
+
+Test commit `3b808fbea` adds the repeated-neighbor fit-point profile from
+sections 948-949 to the five-lane trimmed-output persistence matrix. Both
+sides at distances `0.2`/`0.5` pass through R2004 DXF/DWG, R2013 DXF, and
+R2018 DXF/DWG; reopened SPLINE geometry is compared at 33 normalized
+parameters. The focused test passes 25,946 assertions across 180
+profile/side/distance/version combinations. LibreDWG 0.14 independently reads
+all 36 R2018 DWGs and matches SPLINE degree/control points. The combined
+`[lc-offsetcurve][persistence][trim]` selection passes 39,393 assertions
+across three cases. `git diff --check` passes.
+
+This completes file-lane evidence for this repeated-neighbor profile only;
+it preserves materialized SPLINE geometry, not editable typed-source
+metadata. Other coincident fit-point patterns, ODA/AutoCAD acceptance, and
+visible-GUI behavior remain open.
