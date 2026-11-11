@@ -134,7 +134,7 @@ Execute and record these slices in order:
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
-   The source-picker suite currently passes 13,941 assertions / 38 cases and
+   The latest source-picker suite passes 13,958 assertions / 38 cases and
    worker-request microtests pass 603,526 assertions / 18 cases; exact results
    and revisions are in sections 867–873. Validate CMake and qmake6 on clean
    committed sources; record platform and deployment-target warnings. Run a
@@ -189,7 +189,7 @@ following slices in order, preserving the detailed safety requirements below:
 
 | Slice | Remaining work | Acceptance evidence |
 | --- | --- | --- |
-| 1. Inventory and selector | The UI contract and representative directed family transitions are implemented: the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Keep the controls editable while idle and disabled during worker preparation. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; focused source-picker suite passes 13,941 assertions / 38 cases. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
+| 1. Inventory and selector | The UI contract and representative directed family transitions are implemented: the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Keep the controls editable while idle and disabled during worker preparation. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; latest focused source-picker suite passes 13,958 assertions / 38 cases. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection; the hidden/locked guard is committed in `92f3c2097`, with remaining lifecycle and scale coverage still open. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Revalidate initially missing or ambiguous matches and record large-drawing limits until addressed. |
 | 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests, plus move/delete/document-change and late-reply tests; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
 | 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
@@ -35444,3 +35444,21 @@ CMake Release/macOS build. This closes the cross-family replacement matrix for
 these representative valid geometries; the separate family/variant geometry,
 parabola-conditioning, trimming, DXF/DWG persistence, synchronous large-source
 list performance, and visible-GUI gates remain open.
+
+## 875. Verify Source-selector State During Replacement (2026-11-11)
+
+Commit `a4af13e83` adds explicit interaction-state assertions to the typed
+replacement flow. Before choosing a candidate, both the family selector and
+candidate chooser are enabled. Selecting a line, parabola, or ellipse candidate
+starts worker preparation and disables both controls until completion; both
+are enabled again after a successful publication. This verifies that changing
+the requested type remains possible during the idle replacement workflow while
+preventing a second selection from racing an in-flight worker result.
+
+On the current CMake Release/macOS build, the focused typed source-picker
+selection passes 9,683 assertions / 4 cases and the complete
+`[gui][dialog][offsetcurve][source]` selector passes 13,958 assertions / 38
+cases. This is headless widget coverage, not visible-GUI acceptance or proof
+that every family variant can generate and persist an offset. The synchronous
+large-source chooser refresh, geometry/file qualification, and visible-GUI
+workflow remain open.
