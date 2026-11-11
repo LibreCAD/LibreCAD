@@ -49,6 +49,60 @@
 
 using Catch::Approx;
 
+TEST_CASE("Materialized asymmetric cusp retains the actual endpoint direction",
+          "[curve-offset][topology][materialized]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const RS_Vector join{186.60245377590351, -50.000050000000009};
+    const LC_CurveOffsetInternal::BezierBranches pieces{{
+        {{{186.60245391119801, -50.00005034011896},
+          {186.60245379357156, -50.000049997507531}, join, join}},
+        {{join, {186.60245377590348, -50.000050000000009},
+          {186.60245378689606, -50.000049985945267},
+          {186.60245354899911, -50.000049712772039}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(pieces, {-1});
+    REQUIRE(curves);
+    const LC_IntersectionDomain local{0, 1, LC_Interval::hull(.99999999953433871, 1),
+                                      LC_Interval::hull(1, 1.00000762939453125)};
+    const LC_IntersectionDomain reverse{1, 0, local.parameterB, local.parameterA};
+    CHECK(curves->certifyIntersection(local).outcome == Outcome::Excluded);
+    CHECK(curves->certifyIntersection(reverse).outcome == Outcome::Excluded);
+    const LC_IntersectionDomain whole{0, 1, LC_Interval::hull(0, 1), LC_Interval::hull(1, 2)};
+    CHECK(curves->certifyIntersection(whole).outcome == Outcome::Unavailable);
+
+    const LC_CurveOffsetInternal::BezierBranches crossingPieces{{
+        {{{0, -3}, {1, 1}, {0, 0}, {0, 0}}},
+        {{{0, 0}, {0, .25}, {1, -1.25}, {0, 3}}}}};
+    const auto crossing = LC_CurveOffsetInternal::makePieceCurves(crossingPieces, {-1});
+    REQUIRE(crossing);
+    RS_Vector a, b, derivative;
+    REQUIRE(crossing->evaluate(0, .5, a, derivative));
+    REQUIRE(crossing->evaluate(1, 1.5, b, derivative));
+    CHECK(a.x == b.x);
+    CHECK(a.y == b.y);
+    const LC_IntersectionDomain box{0, 1, LC_Interval::hull(.49, .51),
+                                    LC_Interval::hull(1.49, 1.51)};
+    CHECK(crossing->certifyIntersection(box).outcome == Outcome::Unavailable);
+    for (double scale : {.25, 1., 8.}) {
+        for (double sign : {-1., 1.}) {
+            for (bool swap : {false, true}) {
+                auto transformed = crossingPieces;
+                for (auto& branch : transformed) for (auto& piece : branch) for (auto& point : piece) {
+                    const double x = point.x, y = point.y;
+                    point.x = 16. + sign * scale * (swap ? y : x);
+                    point.y = -8. + scale * (swap ? x : y);
+                }
+                const auto mapped = LC_CurveOffsetInternal::makePieceCurves(transformed, {-1});
+                REQUIRE(mapped);
+                REQUIRE(mapped->evaluate(0, .5, a, derivative));
+                REQUIRE(mapped->evaluate(1, 1.5, b, derivative));
+                CHECK(a.x == b.x);
+                CHECK(a.y == b.y);
+                CHECK(mapped->certifyIntersection(box).outcome == Outcome::Unavailable);
+            }
+        }
+    }
+}
+
 TEST_CASE("Materialized cusp exclusion narrows directions to the requested box",
           "[curve-offset][topology][materialized]") {
     using Outcome = LC_AnalyticIntersectionCertificate::Outcome;

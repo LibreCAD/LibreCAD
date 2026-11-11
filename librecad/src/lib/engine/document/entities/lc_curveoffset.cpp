@@ -3649,7 +3649,6 @@ public:
                 differenceX.excludesZero() || differenceY.excludesZero()) {
                 return true;
             }
-            if (!same(p[2], p[3]) || !same(q[0], q[1])) return false;
             struct IntervalVector { LC_Interval x, y; };
             const auto difference = [](const RS_Vector& a, const RS_Vector& b) {
                 return IntervalVector{LC_Interval::point(a.x) - LC_Interval::point(b.x),
@@ -3658,9 +3657,50 @@ public:
             const auto triple = [](const IntervalVector& v) {
                 return IntervalVector{LC_Interval::point(3.0) * v.x, LC_Interval::point(3.0) * v.y};
             };
+            const auto threeHalves = [](const IntervalVector& v) {
+                return IntervalVector{LC_Interval::point(1.5) * v.x, LC_Interval::point(1.5) * v.y};
+            };
             const auto crossProduct = [](const IntervalVector& a, const IntervalVector& b) {
                 return a.x * b.y - a.y * b.x;
             };
+            const bool beforeCusp = same(p[2], p[3]);
+            const bool afterCusp = same(q[0], q[1]);
+            if ((beforeCusp || afterCusp) && h.isValid() && s.isValid()) {
+                // Factor each endpoint distance once, or twice at an exact cusp.
+                // Bound the cross product in Bernstein form to retain correlation.
+                std::array<IntervalVector, 3> beforeVectors{{triple(difference(p[2], p[3])),
+                    threeHalves(difference(p[1], p[3])), difference(p[0], p[3])}};
+                std::array<IntervalVector, 3> afterVectors{{triple(difference(q[1], q[0])),
+                    threeHalves(difference(q[2], q[0])), difference(q[3], q[0])}};
+                if (beforeCusp) {
+                    beforeVectors[0] = triple(difference(p[1], p[3]));
+                    beforeVectors[1] = beforeVectors[2];
+                }
+                if (afterCusp) {
+                    afterVectors[0] = triple(difference(q[2], q[0]));
+                    afterVectors[1] = afterVectors[2];
+                }
+                const std::size_t beforeCount = beforeCusp ? 2 : 3;
+                const std::size_t afterCount = afterCusp ? 2 : 3;
+                const auto interpolate = [](const LC_Interval& a, const LC_Interval& b, const LC_Interval& t) {
+                    return (LC_Interval::point(1.0) - t) * a + t * b;
+                };
+                const auto evaluate = [&](const std::array<LC_Interval, 3>& values,
+                                          std::size_t count, const LC_Interval& t) {
+                    const LC_Interval first = interpolate(values[0], values[1], t);
+                    return count == 2 ? first : interpolate(first, interpolate(values[1], values[2], t), t);
+                };
+                std::array<LC_Interval, 3> rows;
+                for (std::size_t i = 0; i < beforeCount; ++i) {
+                    std::array<LC_Interval, 3> values;
+                    for (std::size_t j = 0; j < afterCount; ++j) {
+                        values[j] = crossProduct(beforeVectors[i], afterVectors[j]);
+                    }
+                    rows[i] = evaluate(values, afterCount, s);
+                }
+                if (evaluate(rows, beforeCount, h).excludesZero()) return true;
+            }
+            if (!beforeCusp || !afterCusp) return false;
             // After factoring the squared distance from the join, each cubic is a
             // linear blend of these two endpoint-relative vectors.
             const std::array<IntervalVector, 2> a{{triple(difference(p[1], p[3])), difference(p[0], p[3])}};
