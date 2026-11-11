@@ -35058,3 +35058,26 @@ Properties editor, and timed one direct watch-timer invocation at 6 ms. The
 temporary measurement test was removed. This single observation excludes
 large spline/polyline payloads, mutation during scanning, slower machines and
 visible event-loop latency; it is not a performance bound or acceptance gate.
+
+## 859. Validate Materialized Nodes Against Branch Provenance (2026-11-11)
+
+Commit `4cf964566` adds branch ownership validation for noded, non-trimmed
+materialized output. A matched source intersection is accepted only when each
+finite source parameter belongs to the provenance interval of its recorded
+offset branch; corner arcs retain their angle-parameter handling, and trimmed
+mode continues to use its existing geometric source-occurrence validation.
+This closes the recorded adversarial case where one occurrence was replaced
+with `nextafter(parameterB, +infinity)`: both source samples remained one
+offset-distance from the node, but the corrupted parameter was outside its
+branch's provenance. The materializer now returns `AmbiguousTopology` and
+publishes no entities. No parameter-distance cutoff is used.
+
+Validation on the current CMake Release working build: the focused corrupted
+occurrence, valid noded-parabola, crossing-source and duplicate-accounting
+cases pass 103 assertions / 8 cases. The trimmed-ellipse selector passes
+1,306,451 assertions / 56 cases. The full `[curve-offset]` selector passes
+1,884,531 assertions / 312 cases. `git diff --check` passed before commit.
+The current-source clean CMake/qmake rebuilds, worker/file persistence lanes
+for this exact geometry change, and PR CI remain to be run. The distinct
+nearby-occurrence probe is now a permanent regression; broader corner-arc
+identity proofs and visible/cross-platform acceptance remain open.
