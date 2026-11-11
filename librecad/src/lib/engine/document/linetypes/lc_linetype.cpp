@@ -43,10 +43,26 @@ QString LC_LineType::key() const {
     return LC_LineTypeNames::foldName(name.trimmed());
 }
 
-LC_LineType::NameCheck LC_LineType::checkName(const QString&) {
+LC_LineType::NameCheck LC_LineType::checkName(const QString& name) {
+    const QString trimmed = name.trimmed();
+    if (trimmed.isEmpty()) {
+        return NameCheck::Empty;
+    }
+    if (trimmed.size() > 255) {
+        return NameCheck::TooLong;
+    }
+    for (const QChar c : trimmed) {
+        const char16_t value = c.unicode();
+        if (value <= 0x1Fu || value == 0x7Fu) {
+            return NameCheck::ControlCharacter;
+        }
+        if (reservedCharacters().contains(c)) {
+            return NameCheck::ReservedCharacter;
+        }
+    }
     return NameCheck::Ok;
 }
 
-bool LC_LineType::isValidName(const QString&) {
-    return true;
+bool LC_LineType::isValidName(const QString& name) {
+    return checkName(name) == NameCheck::Ok;
 }
