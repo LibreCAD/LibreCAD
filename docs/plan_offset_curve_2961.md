@@ -35634,3 +35634,19 @@ recorded as a bounded worker limitation, not generalized to other ellipse
 profiles. This closes these two distances for this exact source profile only;
 other ratios, origins, orientations, signed sides, trimming states and visible
 GUI/external-reader acceptance remain open.
+
+## 884. Qualify the Opposite Signed Side Near the Wide-axis Cusp (2026-11-11)
+
+Commit `034f6edf4` adds the outward side of the translated, rotated ratio-1.5
+whole ellipse at distance 2.4, with the pick placed beyond its major vertex to
+make side resolution unambiguous. The direct offset forms a closed chain and
+passes the independent distance-to-source, direction and non-self-intersection
+oracle. The focused direct cusp case passes 10,748 assertions / 1 case.
+
+The worker/client matrix passes 1,568,661 assertions / 1 case for the outward
+fixture, including typed source/cache validation, Produce and the five internal
+R14/R2000/R2018 DXF/DWG round-trip lanes. Along with sections 881 and 883, this
+qualifies below-cusp inward, exact/over-cusp inward, and near-cusp outward
+behavior for this one ellipse profile. Other signed distances, ratios,
+origins, orientations, ellipse-arc traversal and external/visible acceptance
+remain open; do not infer universal ellipse signed-side support from this row.
