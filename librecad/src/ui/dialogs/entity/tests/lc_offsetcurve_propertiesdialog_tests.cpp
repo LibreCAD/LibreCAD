@@ -827,6 +827,47 @@ TEST_CASE("Native source picker does not guess between identical embedded source
     CHECK(second->getFlag(RS2::FlagSelected));
 }
 
+TEST_CASE("Cancelling a duplicate source replacement retains the committed identity",
+          "[gui][dialog][offsetcurve][source][identity][async]") {
+    Fixture f;
+    auto* first = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    auto* second = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    f.graphic.addEntity(first);
+    f.graphic.addEntity(second);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(lineType >= 0);
+    typeBox->setCurrentIndex(lineType);
+    const int firstIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(first->getId()));
+    REQUIRE(firstIndex >= 0);
+    sourceBox->setCurrentIndex(firstIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    const auto sourceBefore = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*clone->sourceDefinition());
+    const auto cacheBefore = RS_Spline::geometryFingerprint(clone->getData());
+    REQUIRE(sourceBefore);
+
+    const int secondIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(second->getId()));
+    REQUIRE(secondIndex >= 0);
+    sourceBox->setCurrentIndex(secondIndex);
+    REQUIRE(widget.isPreparing());
+    widget.cancelPreparation();
+    CHECK_FALSE(widget.isPreparing());
+    CHECK(sourceBox->currentData().toULongLong() == first->getId());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*clone->sourceDefinition()) == sourceBefore);
+    CHECK(RS_Spline::geometryFingerprint(clone->getData()) == cacheBefore);
+    observeCancelledReplies();
+    CHECK(sourceBox->currentData().toULongLong() == first->getId());
+}
+
 TEST_CASE("Native source replacement refuses a changed or deleted worker input",
           "[gui][dialog][offsetcurve][source][stale][async]") {
     Fixture f;

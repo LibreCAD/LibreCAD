@@ -143,7 +143,6 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
         const auto encoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
         if (!encoding) return;
         const SourceWitness witness{id, *encoding};
-        m_preferredSourceId = source->getId();
         if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(source);
             ellipse && m_entity->hasEditableDefinition()) {
             auto next = proposedDefinition();
@@ -533,6 +532,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
         if (!prepared.generate()) {
             m_lastResult = LC_OffsetWorkerEdit::applyLocal(*target, std::move(prepared));
             if (!alive || generation != m_generation || target != m_entity) return;
+            if (*m_lastResult && source) m_preferredSourceId = source->id;
             published = *m_lastResult && m_lastResult->changed;
             if (*m_lastResult && m_lastResult->changed) ++m_sourceRevision;
             m_proposedDefinition.reset(); m_inputSnapshot.reset(); refresh();
@@ -581,6 +581,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
                     }
                     self->m_lastResult = outcome.completed->apply(*target);
                     if (!alive || generation != alive->m_generation || target != alive->m_entity) return;
+                    if (*self->m_lastResult && source) self->m_preferredSourceId = source->id;
                     published = *self->m_lastResult && self->m_lastResult->changed;
                     if (*self->m_lastResult && self->m_lastResult->changed) ++self->m_sourceRevision;
                     self->m_proposedDefinition.reset(); self->m_inputSnapshot.reset(); self->refresh();
@@ -681,6 +682,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
                     }
                     self->m_lastResult = outcome.completed->apply(*target);
                     if (!alive || generation != alive->m_generation || target != alive->m_entity) return;
+                    if (*self->m_lastResult && source) self->m_preferredSourceId = source->id;
                     if (*self->m_lastResult && self->m_lastResult->changed &&
                         self->m_sourceRevision < std::numeric_limits<qint64>::max()) ++self->m_sourceRevision;
                     self->m_inputSnapshot.reset();

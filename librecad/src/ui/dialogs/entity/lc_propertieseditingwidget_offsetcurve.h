@@ -66,7 +66,7 @@ private:
     void selectCurrentSource() const;
     Ui::LC_OffsetCurvePropertiesEditingWidget* ui;
     LC_OffsetCurve* m_entity = nullptr;
-    qulonglong m_preferredSourceId = 0;
+    mutable qulonglong m_preferredSourceId = 0;
     LC_OffsetRunLimits m_limits;
     mutable bool m_refreshing = false;
     mutable std::optional<LC_OffsetCurveEditResult> m_lastResult;
