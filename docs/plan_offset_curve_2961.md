@@ -34601,3 +34601,29 @@ ellipse/intersection/trim experiment still reported 10 failing assertions
 The experimental changes and temporary diagnostics remain uncommitted. Clean
 committed-path, worker/file, visible and cross-platform validation remain open
 until separately recorded.
+
+At clean commit `4a66b2f24`, the CMake Release materialized selector passed
+2,777 assertions in 10 cases and the normal ellipse/intersection/trim matrix
+passed 1,361,893 assertions in 102 cases. The real-worker typed-source/cache
+matrix passed 1,554,969 assertions in one case, covering its five recorded
+DXF/DWG lanes. These tests do not enable the strict experiment or replace the
+full qmake, visible, independent-CAD, and other-platform gates.
+
+## 851. Bound Cusp Directions Locally (2026-11-11)
+
+Commit `6d1a4cfe0` augments the repeated-control cusp proof with an
+outward-rounded bound of each factored direction on the requested parameter
+box. It excludes the box only when the resulting cross-product interval
+excludes zero; uncertain boxes still use the existing whole-piece proof or
+remain unresolved. Tests cover the captured rotated thin-ellipse cusp in both
+orders, a broad box that must stay unresolved, and an exact interior crossing
+that must never be certified away.
+
+With the uncommitted strict experiment, the focused materialized and
+precision/proof-domain suites passed 3,079 assertions in 17 cases, and the
+previously failing rotated thin-ellipse test passed 28,936 assertions. The
+strict ellipse/intersection/trim matrix still reported 6 failing assertions,
+down from 10 in section 850. The qmake6 application object compiled, not the
+full application. The solver experiment and temporary diagnostics remain
+uncommitted; strict activation is not complete. Clean production-path,
+worker/file, visible and cross-platform validation are still to be recorded.
