@@ -2935,6 +2935,51 @@ TEST_CASE("Multi-span rational degree-four through degree-six splines follow exa
     }
 }
 
+TEST_CASE("Degree-multiplicity rational spline joins remain bounded on both offset sides",
+          "[curve-offset][direct][spline][high-degree][corner][oracle]") {
+    for (const std::size_t degree : {4U, 5U, 6U}) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            data.controlPoints.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
+            data.weights.push_back(0.75 + 0.25 * t);
+        }
+        for (std::size_t i = 1; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            data.controlPoints.emplace_back(4.0 + 4.0 * t, 2.0 * std::sin(M_PI * t));
+            data.weights.push_back(1.0 + 0.25 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), degree, 0.5);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        const RS_Spline source{nullptr, data};
+        CAPTURE(degree);
+        REQUIRE(source.validate());
+        LC_CurveJet leftJoin;
+        LC_CurveJet rightJoin;
+        REQUIRE(source.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Left, leftJoin));
+        REQUIRE(source.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Right, rightJoin));
+        CHECK(leftJoin.point.distanceTo(rightJoin.point) <= 1e-12);
+        CHECK(leftJoin.first.normalized().distanceTo(rightJoin.first.normalized()) > 0.1);
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                               LC_CurveOffsetSide::Right}) {
+            const double distance = 0.1;
+            CAPTURE(side, distance);
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            CHECK(maxDeviation(result, evaluator(source)) <=
+                  options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("Closed periodic cubic splines follow exact offset normals at their seam",
           "[curve-offset][direct][spline][periodic][oracle]") {
     RS_Spline source{nullptr, RS_SplineData{3, false}};
