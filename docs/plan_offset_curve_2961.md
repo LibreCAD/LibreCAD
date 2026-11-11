@@ -34887,3 +34887,10 @@ The full qmake6 application, worker, libraries, plugins and tools build and
 its final incremental pass exited successfully on macOS. This build used the
 working tree with the uncommitted strict-geometry experiment, so it is not
 an exact clean-commit build; the clean CMake test target is checked separately.
+
+A separate full qmake6 build from clean commit `b0c90898f` also exited
+successfully on macOS ARM64 with Qt 6.12, including the application, worker,
+libraries, plugins and tools. The linker warned that Homebrew Qt/Freetype
+libraries were built for macOS 27.0 while the target is macOS 14.4; the build
+does not establish runtime compatibility with that older deployment target.
+Later commits through `9e52e0e77` change tests and documentation only.
