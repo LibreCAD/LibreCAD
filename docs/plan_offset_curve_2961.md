@@ -36492,6 +36492,22 @@ round-trip for the reversed trimmed results, additional affine transforms,
 other parabola constructions/domains, editable-cache admission for these
 Produce outcomes, visible GUI behavior, or external-CAD acceptance.
 
+## 928. Round-trip Trimmed Typed-parabola Geometry Across Five File Lanes (2026-11-11)
+
+Test commit `13d2ea28b` adds native write/reopen comparisons for the forward
+and reversed typed-parabola profiles used in section 927. Both offset sides
+and distances `0.25` and `2.75` are materialized in trimmed mode and saved as
+R2004 DXF/DWG, R2013 DXF, and R2018 DXF/DWG. Each reopened spline is sampled
+against its pre-export spline at 33 normalized parameters. The focused test
+passes 4,114 assertions across 40 version/geometry combinations with DWG
+support enabled; `git diff --check` passes.
+
+This verifies internal writer/reader preservation of the recorded trimmed
+parabola output geometry. It does not assert typed source metadata on these
+ordinary materialized splines, independent-reader or ODA/AutoCAD acceptance,
+visible GUI commit/undo, or other parabola shapes/transforms/domains. Those
+gates remain open.
+
 ## 926. Exercise Typed-parabola Produce Through the Worker Client (2026-11-11)
 
 Test commit `b2da768ea` expands the real-helper `Produce` regression for the
