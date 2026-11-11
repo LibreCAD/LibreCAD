@@ -36474,6 +36474,24 @@ through the isolated worker, Modify Offset GUI commit/undo, DXF/DWG round-trip,
 other parabola constructions or transforms, or visible/external-CAD
 acceptance. Those remain open in the family/variant and delivery matrices.
 
+## 927. Qualify Reversed Typed-parabola Trimming Through Direct and Worker Paths (2026-11-11)
+
+Test commit `ec06d74e3` extends the direct trimmed-offset oracle and real
+worker-client `Produce` case to include the reversed control traversal
+`(10,0), (5,10), (0,0)`, alongside the forward profile. Direct checks cover
+both offset sides at `0.25` and `2.75`, comparing kept geometry with exact
+source-normal offsets; the focused oracle passes 34 assertions and the full
+`[curve-offset][trim]` selection passes 55,411 assertions across 32 cases.
+The real helper-process worker covers both source traversals, side picks, and
+distances `0.5` and `2.75`; the focused case passes 1,444 assertions, and the
+registered full `offset_worker_client` CTest passes in 272.92 seconds.
+
+This qualifies only these forward/reversed profiles, two direct offsets, and
+two worker `Produce` distances/pick locations. It does not establish file
+round-trip for the reversed trimmed results, additional affine transforms,
+other parabola constructions/domains, editable-cache admission for these
+Produce outcomes, visible GUI behavior, or external-CAD acceptance.
+
 ## 926. Exercise Typed-parabola Produce Through the Worker Client (2026-11-11)
 
 Test commit `b2da768ea` expands the real-helper `Produce` regression for the
