@@ -1944,8 +1944,8 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
 #endif
 }
 
-TEST_CASE("trimmed tangent-constrained fit-point geometry round-trips through native file lanes",
-          "[lc-offsetcurve][persistence][trim][fit-points][tangents][file]") {
+TEST_CASE("trimmed spline-points geometry round-trips through native file lanes",
+          "[lc-offsetcurve][persistence][trim][spline-points][fit-points][tangents][stationary][file]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-trimmed-fit-point-tangent-roundtrip");
     LC_SplinePointsData sourceData{false, false};
@@ -1961,7 +1961,7 @@ TEST_CASE("trimmed tangent-constrained fit-point geometry round-trips through na
     source.getData().fitStartTangent = start.first;
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
-    std::array<LC_SplinePointsData, 3> profiles;
+    std::array<LC_SplinePointsData, 4> profiles;
     profiles[0] = source.getData();
     LC_SplinePoints reversed{nullptr, profiles[0]};
     reversed.revertDirection();
@@ -1971,6 +1971,9 @@ TEST_CASE("trimmed tangent-constrained fit-point geometry round-trips through na
     affine.scale({0, 0}, {1.5, 0.75});
     REQUIRE(affine.fitTangentsMatchCurve());
     profiles[2] = affine.getData();
+    profiles[3] = LC_SplinePointsData{false, false};
+    profiles[3].useControlPoints = true;
+    profiles[3].controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
 
     struct FileLane {
         RS2::FormatType format;
@@ -2090,7 +2093,7 @@ TEST_CASE("trimmed tangent-constrained fit-point geometry round-trips through na
         }
     }
 #ifdef DWGSUPPORT
-    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 12);
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 16);
 #endif
 }
 
