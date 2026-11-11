@@ -36732,3 +36732,21 @@ persistence independently qualifies only the canonical profile in section
 938; reversed/affine persistence, other fit-point interpolation policies,
 editable-cache admission for these trimmed outcomes, GUI and external-CAD
 acceptance remain open.
+
+## 941. Persist Reversed and Affine Fit-point Trim Profiles (2026-11-11)
+
+Test commit `a10e68044` extends section 938's five-lane write/reopen matrix to
+the reversed and nonuniformly scaled profiles from section 939. All three
+profiles, both sides, distances `0.2`/`0.5`, and R2004 DXF/DWG, R2013 DXF,
+and R2018 DXF/DWG are compared at 33 normalized samples per reopened SPLINE.
+The focused test passes 8,214 assertions across 60 version/profile/side/
+distance combinations. LibreDWG 0.14 independently reads all 12 R2018 DWGs
+and matches SPLINE degree/control points. The combined
+`[lc-offsetcurve][persistence][trim]` selection passes 21,661 assertions
+across three cases. `git diff --check` passes.
+
+This qualifies only the three profiles and recorded grid; it preserves the
+materialized ordinary SPLINE geometry, not typed offset-source metadata.
+Other fit interpolation/tangent policies, other DWG releases, editable-cache
+admission for trimmed results, visible GUI, and ODA/AutoCAD acceptance remain
+open.
