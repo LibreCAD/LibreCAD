@@ -424,6 +424,11 @@ TEST_CASE("Ellipse offsets are trimmed past b^2/a and vanish from b", "[curve-of
             {4.0 * std::cos(rotation), 4.0 * std::sin(rotation)}, 1.5, 0.2, 1.4, false}};
         for (const auto side : {kLeft, kRight})
             checkOffset(offsetOf(translatedArc, side, 0.1), curveOf(translatedArc), 0.1, {false});
+
+        const RS_Ellipse translatedReversedArc{nullptr, RS_EllipseData{{1.0e4, -2.0e4},
+            {4.0 * std::cos(rotation), 4.0 * std::sin(rotation)}, 1.5, 1.4, 0.2, true}};
+        for (const auto side : {kLeft, kRight})
+            checkOffset(offsetOf(translatedReversedArc, side, 0.1), curveOf(translatedReversedArc), 0.1, {false});
     }
     SECTION("a 100:1 ellipse just inside b is not silently reported empty") {
         // a = 100, b = 1: shrinksAway() judged the whole ellipse shrunk away
