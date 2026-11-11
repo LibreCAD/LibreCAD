@@ -1961,7 +1961,7 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
     source.getData().fitStartTangent = start.first;
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
-    std::array<LC_SplinePointsData, 4> profiles;
+    std::array<LC_SplinePointsData, 8> profiles;
     profiles[0] = source.getData();
     LC_SplinePoints reversed{nullptr, profiles[0]};
     reversed.revertDirection();
@@ -1974,6 +1974,20 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
     profiles[3] = LC_SplinePointsData{false, false};
     profiles[3].useControlPoints = true;
     profiles[3].controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
+    profiles[4] = LC_SplinePointsData{false, false};
+    profiles[4].useControlPoints = true;
+    profiles[4].controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0},
+                                 {3, 1}, {3, 1}, {3, 1}, {4, 0}};
+    profiles[5] = LC_SplinePointsData{false, false};
+    profiles[5].useControlPoints = true;
+    profiles[5].controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                                 {2, 0}, {3, 1}, {3, 1}, {3, 1}, {4, 0}};
+    profiles[6] = LC_SplinePointsData{false, false};
+    profiles[6].useControlPoints = true;
+    profiles[6].controlPoints = {{0, 0}, {0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[7] = LC_SplinePointsData{false, false};
+    profiles[7].useControlPoints = true;
+    profiles[7].controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {3, 1}};
 
     struct FileLane {
         RS2::FormatType format;
@@ -2093,7 +2107,7 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
         }
     }
 #ifdef DWGSUPPORT
-    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 16);
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 32);
 #endif
 }
 
