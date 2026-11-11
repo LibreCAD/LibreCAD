@@ -118,8 +118,9 @@ Execute and record these slices in order:
    non-corner near-node corruption cases recorded in section 857 and direct
    corner-arc occurrence identity are rejected by the source/piece provenance
    checks recorded in section 896; do not add a parameter-distance heuristic.
-   Trimmed-mode identity after branch rewriting remains open and must stay
-   separately qualified.
+   Trimmed-mode materialization now refuses missing occurrence parameters
+   (section 899), but identity after branch rewriting remains open and must
+   stay separately qualified.
 4. **Large-drawing responsiveness.** Implement incremental live-highlight
    resolution. This slice is implemented: each event-loop slice visits at most
    64 entries and targets approximately 4 ms; it retains indices/IDs and
@@ -35873,14 +35874,16 @@ round join materializes, while a forged source-corner parameter is refused
 without publishing entities. The focused
 `[curve-offset][topology][materialized]` selector passes 2,915 assertions / 15
 cases. After commit, the complete `[curve-offset]` selector passes 1,925,451
-assertions / 314 cases on the current CMake Release/macOS build.
+assertions / 314 cases on the CMake Release/macOS build. Section 899 adds a
+trimmed-mode regression for unavailable occurrence parameters.
 
 This evidence closes Direct-mode materialized-node identity for the exercised
 regular and circular-corner cases; it is not a universal proof for every
-source variant or topology. Trimmed mode retains its previous source-distance
-check because trimming can rewrite or remove branch identities; its occurrence
-identity remains open and must be proved with an explicit post-trim mapping or
-fail closed. Also open: broader materialized-curve fault cases,
+source variant or topology. Trimmed mode now fails closed when occurrence
+parameters are unavailable. Its source-distance check still does not prove
+that a materialized post-trim occurrence maps to the original noded branch
+pair; that identity remains open and requires explicit post-trim mapping.
+Also open: broader materialized-curve fault cases,
 cross-platform runs, external CAD comparison, visible GUI acceptance, and PR CI
 for the exact head. The clean qmake6 gate is closed by section 897; clean CMake
 and the full tagged offset plus worker-wire test lanes are closed by section
@@ -35925,3 +35928,21 @@ The clean test binary passed the complete `[curve-offset]` selector:
 current source head. It does not establish visible-GUI acceptance, runtime
 compatibility with the macOS 14.4 deployment target, another platform,
 external-CAD interoperability, PR CI, or trimmed-mode provenance identity.
+
+## 899. Reject Missing Trimmed Node Occurrence Parameters (2026-11-11)
+
+Commit `0561da7bd` removes the Trimmed materializer's special case that treated
+NaN node parameters as consistent. It now refuses unavailable or non-finite
+source occurrences rather than allowing an unproved trimmed crossing to pass.
+The regression uses a known noded spline crossing, confirms normal
+materialization succeeds, then removes all source occurrence parameters and
+requires `AmbiguousTopology` with no entities published. It isolates the
+Trimmed-mode occurrence gate; it does not establish branch identity mapping
+across an actual trim rewrite.
+
+On the CMake Release tree, the focused
+`[curve-offset][topology][materialized][trimmed]` case passes 7 assertions.
+The full `[curve-offset]` suite passes 1,925,458 assertions in 315 cases.
+This closes the missing-parameter fail-open case only; exact post-trim
+occurrence mapping and visible-GUI, cross-platform, external-CAD, and PR CI
+gates remain open.
