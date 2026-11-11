@@ -1964,6 +1964,62 @@ TEST_CASE("offset worker generates degree-four and degree-six splines with a rep
     }
 }
 
+TEST_CASE("offset worker oracle-checks multi-span rational degrees four through six with a repeated knot",
+          "[lc-offsetcurve][worker-kernel][source-generation][spline][high-degree][repeated-knot][oracle]") {
+    for (const std::size_t degree : {4u, 5u, 6u}) {
+        CAPTURE(degree);
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        const std::size_t count = degree + 4;
+        for (std::size_t i = 0; i < count; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(count - 1);
+            data.controlPoints.emplace_back(8.0 * t,
+                2.5 * t * (1.0 - t) * (1.0 + 0.15 * (2.0 * t - 1.0)));
+            data.weights.push_back(0.6 + 0.9 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), {0.35, 0.65, 0.65});
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{data}, .15, 2e-3, false};
+        REQUIRE(definition.isWellFormed());
+        const RS_Spline source{nullptr, data};
+        REQUIRE(source.validate());
+
+        const req::Request generation{token,
+            req::GenerateSource{definition, {}}};
+        const auto generatedReply = LC_OffsetWorkerKernel::run(generation);
+        const auto& generated = native(generatedReply, 7);
+        INFO("engine=" << (generated.engineStatus ? int(*generated.engineStatus) : -1)
+             << " ordinary=" << int(generated.ordinaryStatus)
+             << " refusal=" << int(generated.refusal));
+        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+        REQUIRE(generated.ordinary.size() == 1);
+        REQUIRE(std::holds_alternative<RS_SplineData>(generated.ordinary.front()));
+        const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+        CHECK((cache.degree == 1 || cache.degree == 3));
+
+        const auto oracleDistance = maximumOracleOffsetDistance(
+            data, cache, definition.signedDistance);
+        REQUIRE(oracleDistance);
+        const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
+        REQUIRE(tolerance);
+        CAPTURE(*oracleDistance, tolerance->tolerance.requestedGeometry);
+        CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
+
+        const req::Request validation{token,
+            req::ValidateSourceCache{cache, definition, {}}};
+        const auto validationReply = LC_OffsetWorkerKernel::run(validation);
+        const auto& validated = native(validationReply, 8);
+        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+        CHECK(validated.changed);
+        CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+    }
+}
+
 TEST_CASE("offset worker generates asymmetric rational degree-four and degree-six sources",
           "[lc-offsetcurve][worker-kernel][source-generation][spline][high-degree][asymmetric]") {
     constexpr std::array<double, 8> yValues{0.0, 1.5, -.4, 2.2, .3, 1.1, -1.0, .5};
