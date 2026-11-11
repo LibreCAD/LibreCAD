@@ -33944,3 +33944,32 @@ The immediate plan item is to restore and verify the conservative baseline, then
 design a topology oracle that uses pair-local parameter/geometry precision and
 has an explicit regression for the known crossing before revisiting product
 bounds.
+
+## 836. Reconcile the Editable Source-type and Parabola Request (2026-11-10)
+
+The latest request again requires that the Properties source widget allow
+changing the requested source-curve type while replacement selection is active,
+that every supported source type be selectable, and that parabola be supported.
+Section 834 and the current contract already capture the UI behavior: the
+selector remains enabled during picking, is driven by
+`LC_OffsetSourceGeometry::SupportedKinds`, and contains the distinct parabola
+kind. The existing all-family picker regressions cover filtering without
+mutating the current source/cache/highlight, actual-type replacement, and
+parabola identity. Therefore this request does not call for another widget,
+selector inventory, or parabola-only UI branch.
+
+Keep UI acceptance separate from full curve support. “All supported types” is
+not complete merely because a type appears in the picker. For each eligible
+source family and parameterization, record separate evidence for direct
+geometry, worker generation and cache admission, replacement, and each
+applicable DXF/DWG round-trip. Include parabola as its own family and expand its
+matrix beyond the parameterizations already evidenced; retain fail-closed
+behavior for unqualified variants. Do not broaden eligibility based on picker
+coverage alone.
+
+The immediate unrelated geometry gate remains the conservative cusp baseline
+from section 835: restore/verify exact and over-cusp refusal, below-cusp
+success, and the independent materialized-output crossing regression before
+accepting any topology change. Then continue the source-family qualification
+matrix one bounded slice at a time, recording actual test commands and results
+in the corresponding roadmap entry.
