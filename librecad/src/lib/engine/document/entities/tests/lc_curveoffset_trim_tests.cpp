@@ -345,9 +345,15 @@ TEST_CASE("Trimmed control-point spline-points skip a stationary span",
 
 TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
           "[curve-offset][trim][spline-points][fit-points][stationary][oracle]") {
-    LC_SplinePointsData data{false, false};
-    data.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
-    LC_SplinePoints source{nullptr, data};
+    const auto makeProfile = [](std::vector<RS_Vector> fitPoints) {
+        LC_SplinePointsData data{false, false};
+        data.splinePoints = std::move(fitPoints);
+        return data;
+    };
+    const LC_SplinePointsData profile =
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}});
+
+    LC_SplinePoints source{nullptr, profile};
     REQUIRE_FALSE(source.getData().controlPoints.empty());
     REQUIRE(LC_OffsetSourceGeometry::capture(source));
     const double endParameter = static_cast<double>(source.getSegmentCount());
@@ -364,6 +370,32 @@ TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
             CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
             CHECK(checked.worstMissing <= 2.0 * tolerance);
         }
+    }
+}
+
+TEST_CASE("Singular repeated fit points fail closed for trimming",
+          "[curve-offset][trim][spline-points][fit-points][stationary][refusal]") {
+    const RS_Spline validReference = unitParabola();
+    const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(validReference, 0.2);
+    const std::array<LC_SplinePointsData, 3> invalidProfiles{{
+        LC_SplinePointsData{false, false},
+        LC_SplinePointsData{false, false},
+        LC_SplinePointsData{false, false}
+    }};
+    auto profiles = invalidProfiles;
+    profiles[0].splinePoints = {{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[1].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}};
+    profiles[2].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        CHECK(source.getData().controlPoints.empty());
+        REQUIRE(LC_OffsetSourceGeometry::capture(source));
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.2), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        CHECK(result.status == LC_CurveOffsetStatus::InvalidSource);
+        CHECK(result.branches.empty());
     }
 }
 
