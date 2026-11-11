@@ -34168,6 +34168,28 @@ materialization query used its unchanged default mode.
 This radial condition is not an occurrence-identity proof: distinct source
 parameters can be at the same radius, and unavailable jets and corner
 parameters remain unchecked. The near-node conflation issue from section 840,
-including circular corners and branch/piece provenance, remains open. Also
-audit the existing point-to-node comparison loop's work accounting; the added
-jet calls are budgeted but the pre-existing candidate scan is separate.
+including circular corners and branch/piece provenance, remains open. The
+point-to-node comparison scan is bounded as recorded in section 843.
+
+## 843. Bound Materialized Node Matching (2026-11-10)
+
+Commit `997044e16` charges each materialized crossing-to-node comparison
+against the remaining `maxIntersectionPairs` allowance after the intersection
+query's box work. Exhaustion returns `LimitExceeded` with no partial entities;
+`nodeMatchComparisons` records the separately counted work in the intersection
+diagnostics. The field is appended to preserve the ordering of existing
+aggregate members. Source-jet evaluations remain charged to `maxSamples`.
+
+The focused test inserts twelve unrelated nodes before a valid node, verifies
+exhaustion at the exact shared cap and success with one additional comparison,
+checks diagnostics and empty output on refusal, and covers a no-node case. It
+passes 27 assertions on the final field layout. Before the layout-only move,
+the combined geometry/topology selection passed 1,366,585 assertions across
+150 cases and the full worker-kernel suite passed 1,838,496 across 99 cases.
+The worker/cache/replacement/five-lane matrix passed 1,604,009 assertions on
+the final layout using the bounded test-only timeout override. CMake rebuilt
+the test, worker-client, and worker-kernel targets; qmake6 compiled the
+changed translation unit, not the full application. The local strict solver
+remained uncommitted during validation and materialization used its unchanged
+default mode. This budget fix does not solve the occurrence-identity issue or
+justify the separate strict-activation heuristic.
