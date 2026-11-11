@@ -34087,9 +34087,9 @@ Keep the experimental code uncommitted until these acceptance gates pass.
 `PieceCurves` supplied every Bezier piece in a branch with the same `[0, 1]`
 parameter interval, despite the `LC_ParametricCurves` contract requiring
 segments to be in branch parameter order. Path-based bridge pruning can then
-bound the wrong portions of intermediate pieces. The current uncommitted
-experiment assigns successive intervals `[i, i+1]` per branch and translates
-evaluation and interval bounds back to the piece-local coordinate. A synthetic
+bound the wrong portions of intermediate pieces. Commit `de59a02d3` assigns
+successive intervals `[i, i+1]` per branch and translates evaluation and
+interval bounds back to the piece-local coordinate. A synthetic
 three-piece ordered-parameter case exercises a crossing across separated
 pieces; the older repeated-range probe failed closed and did not independently
 demonstrate a missed crossing. Do not claim that probe proves the old code
@@ -34104,10 +34104,8 @@ ellipse/intersection/trim/precision selection passes 1,361,924 assertions in
 passes 4,635 assertions in 46 cases. Worker/cache/file validation is a separate
 gate, as are provider continuity and cross-platform validation. The rebuilt
 worker/cache/replacement/five-lane matrix passed 1,598,773 assertions with the
-bounded test-only timeout override. Add a direct integration regression for
-the materialization adapter's ordered branch intervals before committing; the
-synthetic ordered-parameter case by itself exercises the solver, not the
-private adapter.
+bounded test-only timeout override. Section 841 records direct adapter
+coverage and validation of the committed ordered-parameter slice.
 
 Materialized intersections are also matched to existing nodes using only
 point proximity within the requested geometry tolerance. Distinct parameter
@@ -34117,3 +34115,24 @@ independent witness, preserve branch/piece provenance through materialization,
 and match both occurrences rather than point proximity alone. Handle circular
 corner provenance and piece-boundary identities explicitly; do not infer a
 proof from spatial closeness.
+
+## 841. Commit Ordered Materialized Piece Parameters (2026-11-10)
+
+Commit `de59a02d3` isolates the ordered-piece adapter fix from the uncommitted
+strict-topology trigger. An internal factory is used by materialization and by
+the direct adapter regression. The regression verifies per-branch interval
+ordering and reset, `next()` relationships, translated evaluation and interval
+bounds, and a three-piece crossing with distinct parameters `0.5` and `2.5`.
+With repeated `[0, 1]` ranges restored temporarily, five assertions failed;
+the corrected adapter passes all 30 assertions.
+
+The default-path topology and cusp selection passed 21,201 assertions across
+48 cases; ellipse/intersection/trim passed 1,361,893 across 102 cases. The
+worker/cache/replacement/five-lane matrix passed 1,597,761 assertions using the
+bounded test-only timeout override. CMake built the test and worker-client
+targets. qmake6 generated all project makefiles and compiled
+`lc_curveoffset.o`; this is not a full qmake application build. The experimental
+strict solver was present locally during these runs, but materialization used
+its unchanged default mode. The strict trigger and solver changes remain
+uncommitted, and the evidence does not close their activation, node-identity,
+or platform gates.
