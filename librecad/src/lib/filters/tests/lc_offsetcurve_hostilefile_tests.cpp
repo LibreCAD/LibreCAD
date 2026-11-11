@@ -1961,7 +1961,7 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
     source.getData().fitStartTangent = start.first;
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
-    std::array<LC_SplinePointsData, 8> profiles;
+    std::array<LC_SplinePointsData, 9> profiles;
     profiles[0] = source.getData();
     LC_SplinePoints reversed{nullptr, profiles[0]};
     reversed.revertDirection();
@@ -1988,6 +1988,8 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
     profiles[7] = LC_SplinePointsData{false, false};
     profiles[7].useControlPoints = true;
     profiles[7].controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {3, 1}};
+    profiles[8] = LC_SplinePointsData{false, false};
+    profiles[8].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
 
     struct FileLane {
         RS2::FormatType format;
@@ -2107,7 +2109,7 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
         }
     }
 #ifdef DWGSUPPORT
-    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 32);
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 36);
 #endif
 }
 
