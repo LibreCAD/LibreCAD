@@ -34909,3 +34909,8 @@ target. Oversized fields and polylines plus exact-limit spline controls passed
 the bounded-source selection (21 assertions in 5 cases); the combined source
 and Properties picker selection passed 12,675 assertions in 37 cases. Clean
 CMake and incremental qmake6 validation of this commit remain open.
+
+Commit `b592af002` extends the exact-limit control to include spline weights,
+fit points and saved knots, as well as both spline-point arrays at their
+limits. The bounded-source selector still passes 21 assertions in 5 cases
+with the uncommitted geometry experiment present.
