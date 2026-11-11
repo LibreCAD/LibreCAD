@@ -129,8 +129,9 @@ Execute and record these slices in order:
    payload; a maximum spline-points capture+encode measured 2.91 ms on the
    current Release/macOS build. This is measured evidence, not a
    hardware-independent latency guarantee. The source-choice list rebuild
-   remains a separate synchronous path: the 1,024-candidate benchmark measured
-   about 2.23 ms, and its larger-document/event-loop behavior remains open.
+   remains a separate synchronous path: after avoiding duplicate capture and
+   skipping unrelated kinds, the 1,024-candidate benchmark measured 1.61 ms;
+   larger-document/event-loop behavior remains open.
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
@@ -35462,3 +35463,21 @@ cases. This is headless widget coverage, not visible-GUI acceptance or proof
 that every family variant can generate and persist an offset. The synchronous
 large-source chooser refresh, geometry/file qualification, and visible-GUI
 workflow remain open.
+
+## 876. Reduce Repeated Work in Source-choice Refresh (2026-11-11)
+
+Commit `8c67b7278` avoids capturing entities that cannot match the requested
+family and reuses the already captured geometry for encodability and variant
+eligibility checks. This removes a second full capture of each same-kind
+candidate during the synchronous chooser rebuild without changing candidate
+admission or the distinct parabola classification.
+
+The hidden large-source benchmark passes 24 assertions / 1 case and measured a
+1.60575 ms synchronous family-filter refresh for 1,024 spline-points candidates
+with 256 controls each on the current CMake Release/macOS build. The full
+source-picker suite passes 13,958 assertions / 38 cases. The previously
+recorded sample was 2.7125 ms; these are diagnostic single-run timings, not a
+controlled comparative benchmark or a hard responsiveness bound. The chooser
+still traverses the full document synchronously, so larger drawings, mutation
+during refresh, and visible event-loop latency remain open and must be addressed
+before closing the large-drawing phase.
