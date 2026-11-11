@@ -6995,7 +6995,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             result.sampleUnits = samples;
             LC_CurveJet jet;
             if (!adapter->jet(parameter, LC_CurveEvaluationSide::Interior, jet) || !isFinite(jet.point)) {
-                return true; // An unavailable jet cannot establish inconsistency.
+                return false; // An unavailable source point cannot certify this occurrence.
             }
             const double distance = jet.point.distanceTo(point);
             const double slack = options.tolerance.requestedGeometry + options.tolerance.nodeMerge + scale.numericFloor;
