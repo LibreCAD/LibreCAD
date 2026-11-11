@@ -792,6 +792,41 @@ TEST_CASE("Native source picker retains the picked identity for duplicate geomet
     CHECK(second->getFlag(RS2::FlagSelected));
 }
 
+TEST_CASE("Native source picker does not guess between identical embedded sources",
+          "[gui][dialog][offsetcurve][source][identity]") {
+    Fixture f;
+    auto* first = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    auto* second = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(first);
+    f.graphic.addEntity(second);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* selectSource = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(sourceBox); REQUIRE(selectSource);
+    CHECK(sourceBox->currentText().contains("ambiguous"));
+    CHECK_FALSE(sourceBox->currentData().isValid());
+    CHECK_FALSE(selectSource->isEnabled());
+    CHECK_FALSE(first->getFlag(RS2::FlagSelected));
+    CHECK_FALSE(second->getFlag(RS2::FlagSelected));
+
+    int secondIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i)
+        if (sourceBox->itemData(i).toULongLong() == second->getId()) secondIndex = i;
+    REQUIRE(secondIndex >= 0);
+    sourceBox->setCurrentIndex(secondIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    CHECK(sourceBox->currentData().toULongLong() == second->getId());
+    REQUIRE(selectSource->isEnabled());
+    click(*selectSource);
+    CHECK_FALSE(first->getFlag(RS2::FlagSelected));
+    CHECK(second->getFlag(RS2::FlagSelected));
+}
+
 TEST_CASE("Native source picker offers supported spline and polyline variants",
           "[gui][dialog][offsetcurve][source][eligibility][variants]") {
     Fixture f;

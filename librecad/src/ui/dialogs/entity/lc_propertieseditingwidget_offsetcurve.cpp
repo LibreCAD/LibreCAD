@@ -365,7 +365,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
 
     ui->cbSource->clear();
     int matchedIndex = -1;
-    bool hasMatchingSource = false;
+    int matchingSources = 0;
+    int preferredIndex = -1;
     bool embeddedSourceUnsupported = false;
     std::optional<QCborArray> embeddedEncoding;
     if (embedded) embeddedEncoding =
@@ -379,6 +380,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
             candidateEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
         const bool matchesEmbedded = embeddedEncoding && candidateEncoding &&
             *embeddedEncoding == *candidateEncoding;
+        if (matchesEmbedded) ++matchingSources;
         if (!sourceVariantSelectable(*entity)) {
             embeddedSourceUnsupported |= matchesEmbedded;
             continue;
@@ -386,16 +388,19 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
         const auto id = static_cast<qulonglong>(entity->getId());
         const auto label = tr("%1 %2").arg(sourceKindName(geometry->kind())).arg(id);
         ui->cbSource->addItem(label, QVariant::fromValue<qulonglong>(id));
-        if (matchesEmbedded &&
-            (id == m_preferredSourceId || !hasMatchingSource)) {
+        if (matchesEmbedded) {
             matchedIndex = ui->cbSource->count() - 1;
-            hasMatchingSource = true;
+            if (id == m_preferredSourceId) preferredIndex = matchedIndex;
         }
     }
+    if (preferredIndex >= 0) matchedIndex = preferredIndex;
+    else if (matchingSources != 1) matchedIndex = -1;
+    const bool hasMatchingSource = matchedIndex >= 0;
     if (!hasMatchingSource) {
         const QString placeholder = embedded && selectedKind == wantedKind
-            ? embeddedSourceUnsupported ? tr("Embedded source (unsupported)")
-                                        : tr("Embedded source (not found)")
+            ? matchingSources > 1 ? tr("Embedded source (ambiguous)")
+              : embeddedSourceUnsupported ? tr("Embedded source (unsupported)")
+                                          : tr("Embedded source (not found)")
             : ui->cbSource->count() == 0 ? tr("No supported source entities") : tr("Choose a source");
         ui->cbSource->insertItem(0, placeholder);
         matchedIndex = 0;
