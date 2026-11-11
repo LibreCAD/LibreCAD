@@ -1661,6 +1661,27 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
         click(*reopenedSelectSource);
         CHECK(sourceEntities[i]->getFlag(RS2::FlagSelected));
 
+        sourceEntities[i]->setFlag(RS2::FlagDeleted);
+        NativeWidget lateWidget;
+        lateWidget.setGraphicViewport(f.view.getViewPort());
+        lateWidget.setEntity(clone.get());
+        lateWidget.show();
+        QApplication::processEvents();
+        auto* lateTimer = lateWidget.findChild<QTimer*>("offsetSourceHighlightTimer");
+        auto* lateSourceBox = lateWidget.findChild<QComboBox*>("cbSource");
+        auto* lateSelectSource = lateWidget.findChild<QToolButton*>("tbSelectSource");
+        REQUIRE(lateTimer); REQUIRE(lateSourceBox); REQUIRE(lateSelectSource);
+        REQUIRE(lateTimer->isActive());
+        CHECK_FALSE(lateSourceBox->currentData().isValid());
+        CHECK_FALSE(lateSelectSource->isEnabled());
+        sourceEntities[i]->delFlag(RS2::FlagDeleted);
+        REQUIRE(QMetaObject::invokeMethod(lateTimer, "timeout", Qt::DirectConnection));
+        CHECK(lateSourceBox->currentData().toULongLong() == sourceIds[i]);
+        CHECK(lateSelectSource->isEnabled());
+        lateWidget.hide();
+        widget.activateWindow();
+        QApplication::processEvents();
+
         auto* distance = widget.findChild<QLineEdit*>("leDistance");
         REQUIRE(distance);
         CHECK(distance->isEnabled());
