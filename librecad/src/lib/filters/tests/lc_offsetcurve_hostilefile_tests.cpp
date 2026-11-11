@@ -1690,9 +1690,11 @@ TEST_CASE("trimmed typed-parabola geometry round-trips through native DXF and DW
           "[lc-offsetcurve][persistence][trim][parabola][file]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-trimmed-typed-parabola-roundtrip");
-    const std::array<LC_ParabolaData, 2> sources{{
+    const std::array<LC_ParabolaData, 4> sources{{
         LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}},
-        LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}
+        LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}},
+        LC_ParabolaData{{RS_Vector{4, -3}, RS_Vector{15, 3}, RS_Vector{19, -5}}},
+        LC_ParabolaData{{RS_Vector{7, -2}, RS_Vector{5, 7.25}, RS_Vector{-5, 0.5}}}
     }};
     struct FileLane {
         RS2::FormatType format;
@@ -1813,7 +1815,7 @@ TEST_CASE("trimmed typed-parabola geometry round-trips through native DXF and DW
         }
     }
 #ifdef DWGSUPPORT
-    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 8);
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 16);
 #endif
 }
 
