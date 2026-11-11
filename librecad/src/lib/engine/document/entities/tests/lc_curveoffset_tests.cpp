@@ -49,6 +49,28 @@
 
 using Catch::Approx;
 
+TEST_CASE("Materialized join uses a correlated separating projection",
+          "[curve-offset][topology][materialized]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const RS_Vector join{101.07246693651793, -99.38081092550442};
+    const LC_CurveOffsetInternal::BezierBranches pieces{{
+        {{{101.07426619905667, -99.385411481408013},
+          {101.07270850964295, -99.38074823276672},
+          {101.07246693651794, -99.380810925504434}, join}},
+        {{join, {101.07246693651788, -99.380810925504406},
+          {101.0726420165839, -99.380633063410102},
+          {101.06938236950323, -99.376952440485965}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(pieces, {-1});
+    REQUIRE(curves);
+    const LC_IntersectionDomain local{0, 1, LC_Interval::hull(.9999999962747097, 1),
+                                      LC_Interval::hull(1, 1.0000009536743164)};
+    const LC_IntersectionDomain reverse{1, 0, local.parameterB, local.parameterA};
+    CHECK(curves->certifyIntersection(local).outcome == Outcome::Excluded);
+    CHECK(curves->certifyIntersection(reverse).outcome == Outcome::Excluded);
+    const LC_IntersectionDomain whole{0, 1, LC_Interval::hull(0, 1), LC_Interval::hull(1, 2)};
+    CHECK(curves->certifyIntersection(whole).outcome == Outcome::Unavailable);
+}
+
 TEST_CASE("Materialized non-cusp join preserves correlated direction bounds",
           "[curve-offset][topology][materialized]") {
     using Outcome = LC_AnalyticIntersectionCertificate::Outcome;

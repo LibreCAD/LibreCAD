@@ -3699,6 +3699,25 @@ public:
                     rows[i] = evaluate(values, afterCount, s);
                 }
                 if (evaluate(rows, beforeCount, h).excludesZero()) return true;
+                // Any fixed separating direction is valid; the interval projections
+                // prove separation even when the chosen direction was rounded.
+                const std::array<RS_Vector, 6> directions{{p[2] - p[3], p[1] - p[3], p[0] - p[3],
+                                                           q[1] - q[0], q[2] - q[0], q[3] - q[0]}};
+                for (const RS_Vector& direction : directions) {
+                    const double scale = std::max(std::abs(direction.x), std::abs(direction.y));
+                    if (!std::isfinite(scale) || scale == 0.0) continue;
+                    const LC_Interval nx = LC_Interval::point(direction.x / scale);
+                    const LC_Interval ny = LC_Interval::point(direction.y / scale);
+                    std::array<LC_Interval, 3> beforeProjection, afterProjection;
+                    for (std::size_t i = 0; i < beforeCount; ++i) {
+                        beforeProjection[i] = nx * beforeVectors[i].x + ny * beforeVectors[i].y;
+                    }
+                    for (std::size_t i = 0; i < afterCount; ++i) {
+                        afterProjection[i] = nx * afterVectors[i].x + ny * afterVectors[i].y;
+                    }
+                    if (separated(evaluate(beforeProjection, beforeCount, h),
+                                  evaluate(afterProjection, afterCount, s))) return true;
+                }
             }
             if (!beforeCusp || !afterCusp) return false;
             // After factoring the squared distance from the join, each cubic is a
