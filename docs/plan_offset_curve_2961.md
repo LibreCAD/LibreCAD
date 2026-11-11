@@ -36795,3 +36795,19 @@ assertions across three cases. `git diff --check` passes.
 This closes persistence for the four recorded profiles only. It does not
 cover additional stationary layouts, fit-point stationarity, other releases,
 ODA/AutoCAD acceptance, or visible GUI behavior.
+
+## 945. Qualify Leading, Trailing, Multiple, and Plateau Stationary Trims (2026-11-11)
+
+Test commit `b7e741953` expands the direct exact-normal oracle from section
+942 to five bounded control-point layouts: one stationary span, two separated
+spans, an adjacent plateau plus a separated span, a leading stationary span,
+and a trailing stationary span. Each profile is checked on both sides at
+distances `0.2` and `0.5` for kept-distance safety and coverage of visible
+exact-normal points. The focused matrix passes 87 assertions; the full
+`[curve-offset][trim]` selection passes 55,604 assertions across 35 cases.
+`git diff --check` passes.
+
+This is direct geometry evidence for those five layouts only. Worker and
+five-lane persistence currently cover only the single-span profile from
+section 942; additional layout delivery, fit-point stationary spans, GUI, and
+external-CAD acceptance remain open.
