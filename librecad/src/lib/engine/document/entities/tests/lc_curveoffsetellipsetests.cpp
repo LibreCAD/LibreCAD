@@ -419,6 +419,7 @@ TEST_CASE("Ellipse offsets are trimmed past b^2/a and vanish from b", "[curve-of
             {4.0 * std::cos(rotation), 4.0 * std::sin(rotation)}, 1.5, 0.0, 0.0, false}};
         for (const auto side : {kLeft, kRight})
             checkOffset(offsetOf(translated, side, 0.25), curveOf(translated), 0.25, {true});
+        checkOffset(offsetOf(translated, kLeft, 2.4), curveOf(translated), 2.4, {true});
 
         const RS_Ellipse translatedArc{nullptr, RS_EllipseData{{1.0e4, -2.0e4},
             {4.0 * std::cos(rotation), 4.0 * std::sin(rotation)}, 1.5, 0.2, 1.4, false}};
