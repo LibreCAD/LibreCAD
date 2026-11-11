@@ -33913,3 +33913,34 @@ without the offscreen platform this headless host has no display and Qt aborts
 before the affected UI case. These runs revalidate the picker and recorded
 parabola geometry coverage, but do not close the remaining variant-by-variant
 worker/persistence or visible-GUI gates.
+
+## 835. Reject the Large-origin Ellipse Bound Experiment (2026-11-10)
+
+Tested a proposed interval-bound tightening for the reversed 10000-to-1 ellipse
+at center `(1e6, -1e6)`, where the exact inward cusp must remain fail-closed.
+Using the product-aware ellipse derivative bound changed the exact-cusp result
+from `AmbiguousTopology` to successful materialization. The attempted follow-up
+check normalized temporary Bezier control points before the materialized-output
+self-intersection query, but the focused regression still returned success with
+nonempty output and no intersection failure domain. This is unsafe: an earlier
+independent dense `checkOffset` oracle found a self-crossing near the cusp in
+such a materialized result. Both production experiments were removed; no
+geometry relaxation is accepted from this investigation.
+
+The fresh Release build completed successfully. The exact-cusp regression was
+run against the experimental binary and failed four expected fail-closed
+assertions, confirming that this approach cannot be merged. Rebuild the reverted
+source and require `Large-origin reversed 10000-to-1 elliptic arc endpoint
+retains cusp-threshold geometry` to pass before the next implementation slice.
+Any future bound improvement must satisfy all of these gates before it can
+replace the conservative behavior: exact and over-cusp return
+`AmbiguousTopology` with empty entities/chains; below-cusp remains successful;
+independent materialized-output intersection checking catches the known nearby
+self-crossing; and the typed-source worker/client plus file-format matrix stays
+green. Do not treat coordinate normalization alone as a proof of topology.
+
+No implementation or budget change is authorized by this failed experiment.
+The immediate plan item is to restore and verify the conservative baseline, then
+design a topology oracle that uses pair-local parameter/geometry precision and
+has an explicit regression for the known crossing before revisiting product
+bounds.
