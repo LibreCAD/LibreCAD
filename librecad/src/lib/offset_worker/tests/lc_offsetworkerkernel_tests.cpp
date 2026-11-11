@@ -2178,6 +2178,90 @@ TEST_CASE("offset worker oracle-checks acute and obtuse rational spline corners 
     }
 }
 
+TEST_CASE("offset worker oracle-checks degree-minus-one repeated knots on both sides",
+          "[lc-offsetcurve][worker-kernel][source-generation][spline][high-degree][c1][oracle]") {
+    constexpr double interiorKnot = 0.37;
+    for (const std::size_t degree : {4u, 5u, 6u}) {
+        for (const double signedDistance : {-0.1, 0.1}) {
+            CAPTURE(degree, signedDistance, interiorKnot);
+            RS_SplineData data;
+            data.degree = degree;
+            data.type = RS_SplineData::SplineType::ClampedOpen;
+            data.savedOpenType = data.type;
+            std::vector<RS_Vector> firstSpan;
+            for (std::size_t i = 0; i <= degree; ++i) {
+                const double t = static_cast<double>(i) / static_cast<double>(degree);
+                firstSpan.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
+            }
+            data.controlPoints = firstSpan;
+            const RS_Vector joint = firstSpan.back();
+            const RS_Vector derivativeControl = joint - firstSpan[firstSpan.size() - 2];
+            const RS_Vector secondHandle = joint + derivativeControl * ((1.0 - interiorKnot) / interiorKnot);
+            const RS_Vector endpoint{8.0, 1.0};
+            for (std::size_t i = 2; i <= degree; ++i) {
+                const double t = static_cast<double>(i - 1) / static_cast<double>(degree - 1);
+                data.controlPoints.push_back(secondHandle + (endpoint - secondHandle) * t);
+            }
+            data.weights.assign(data.controlPoints.size(), 1.0);
+            data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+            data.knotslist.insert(data.knotslist.end(), degree - 1, interiorKnot);
+            data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+            const LC_OffsetSourceDefinition definition{
+                LC_OffsetSourceGeometry{data}, signedDistance, 2e-3, false};
+            REQUIRE(definition.isWellFormed());
+            const RS_Spline source{nullptr, data};
+            REQUIRE(source.validate());
+
+            LC_CurveJet leftJet;
+            LC_CurveJet rightJet;
+            REQUIRE(source.tryEvaluateJet(interiorKnot, LC_CurveEvaluationSide::Left, leftJet));
+            REQUIRE(source.tryEvaluateJet(interiorKnot, LC_CurveEvaluationSide::Right, rightJet));
+            CHECK(leftJet.point.distanceTo(rightJet.point) < 1e-10);
+            CHECK(leftJet.first.normalized().distanceTo(rightJet.first.normalized()) < 1e-10);
+
+            const req::Request generation{token,
+                req::GenerateSource{definition, {}}};
+            const auto generatedReply = LC_OffsetWorkerKernel::run(generation);
+            const auto& generated = native(generatedReply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+            std::vector<RS_SplineData> outputSplines;
+            for (const auto& output : generated.ordinary) {
+                if (const auto* spline = std::get_if<RS_SplineData>(&output)) {
+                    outputSplines.push_back(*spline);
+                } else if (const auto* segment = std::get_if<req::Segment>(&output)) {
+                    RS_SplineData lineCache;
+                    lineCache.degree = 1;
+                    lineCache.controlPoints = {segment->start, segment->end};
+                    lineCache.knotslist = {0.0, 0.0, 1.0, 1.0};
+                    lineCache.weights = {1.0, 1.0};
+                    outputSplines.push_back(std::move(lineCache));
+                } else {
+                    FAIL("unsupported ordinary output for a C1 spline join");
+                }
+            }
+            const auto oracleDistance = maximumOracleOffsetDistance(
+                data, outputSplines, signedDistance);
+            REQUIRE(oracleDistance);
+            const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
+            REQUIRE(tolerance);
+            CAPTURE(*oracleDistance, tolerance->tolerance.requestedGeometry);
+            CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
+
+            RS_SplineData cache;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+            const req::Request validation{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validation);
+            const auto& validated = native(validationReply, 8);
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validated.changed);
+            CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+        }
+    }
+}
+
 TEST_CASE("offset worker generates asymmetric rational degree-four and degree-six sources",
           "[lc-offsetcurve][worker-kernel][source-generation][spline][high-degree][asymmetric]") {
     constexpr std::array<double, 8> yValues{0.0, 1.5, -.4, 2.2, .3, 1.1, -1.0, .5};

@@ -845,6 +845,45 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             }
         }
     }
+    const auto degreeMinusOneMultiplicitySpline = [](const std::size_t degree) {
+        constexpr double interiorKnot = 0.37;
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        std::vector<RS_Vector> firstSpan;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            firstSpan.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
+        }
+        data.controlPoints = firstSpan;
+        const RS_Vector joint = firstSpan.back();
+        const RS_Vector derivativeControl = joint - firstSpan[firstSpan.size() - 2];
+        const RS_Vector secondHandle = joint + derivativeControl * ((1.0 - interiorKnot) / interiorKnot);
+        const RS_Vector endpoint{8.0, 1.0};
+        for (std::size_t i = 2; i <= degree; ++i) {
+            const double t = static_cast<double>(i - 1) / static_cast<double>(degree - 1);
+            data.controlPoints.push_back(secondHandle + (endpoint - secondHandle) * t);
+        }
+        data.weights.assign(data.controlPoints.size(), 1.0);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), degree - 1, interiorKnot);
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
+    struct DegreeMinusOneMultiplicityFixture {
+        std::size_t index;
+        std::size_t degree;
+        double signedDistance;
+    };
+    std::vector<DegreeMinusOneMultiplicityFixture> degreeMinusOneMultiplicityFixtures;
+    for (const std::size_t degree : {4U, 5U, 6U}) {
+        for (const double signedDistance : {-0.1, 0.1}) {
+            degreeMinusOneMultiplicityFixtures.push_back(
+                {sources.size(), degree, signedDistance});
+            sources.emplace_back(LC_OffsetSourceGeometry{degreeMinusOneMultiplicitySpline(degree)});
+        }
+    }
     const std::size_t rotatedWideAxisEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
         {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.0, 0.0, false}});
@@ -1678,9 +1717,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const auto degreeMultiplicityCorner = std::find_if(
             degreeMultiplicityCornerFixtures.begin(), degreeMultiplicityCornerFixtures.end(),
             [i](const DegreeMultiplicityCornerFixture& fixture) { return fixture.index == i; });
+        const auto degreeMinusOneMultiplicity = std::find_if(
+            degreeMinusOneMultiplicityFixtures.begin(), degreeMinusOneMultiplicityFixtures.end(),
+            [i](const DegreeMinusOneMultiplicityFixture& fixture) { return fixture.index == i; });
         const double sourceDistance = negativeSplinePoints                                                      ? -.25
             : i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
             ? scaledLineDistances[i - scaledLineFixtureStart]
+            : degreeMinusOneMultiplicity != degreeMinusOneMultiplicityFixtures.end()        ? degreeMinusOneMultiplicity->signedDistance
             : degreeMultiplicityCorner != degreeMultiplicityCornerFixtures.end()             ? degreeMultiplicityCorner->signedDistance
             : multiSpanRational != multiSpanRationalFixtures.end()                           ? .15
             : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->scale
@@ -2233,6 +2276,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const auto degreeMultiplicityCorner = std::find_if(
             degreeMultiplicityCornerFixtures.begin(), degreeMultiplicityCornerFixtures.end(),
             [i](const DegreeMultiplicityCornerFixture& fixture) { return fixture.index == i; });
+        const auto degreeMinusOneMultiplicity = std::find_if(
+            degreeMinusOneMultiplicityFixtures.begin(), degreeMinusOneMultiplicityFixtures.end(),
+            [i](const DegreeMinusOneMultiplicityFixture& fixture) { return fixture.index == i; });
         if (multiSpanRational != multiSpanRationalFixtures.end()) {
             auto source = sources[i].makeEntity();
             auto* spline = dynamic_cast<RS_Spline*>(source.get());
@@ -2255,6 +2301,19 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const RS_Vector leftNormal{-tangent.y, tangent.x};
             offset.distance = std::abs(degreeMultiplicityCorner->signedDistance);
             const double side = degreeMultiplicityCorner->signedDistance > 0.0 ? 1.0 : -1.0;
+            offset.coord = jet.point + leftNormal * (side * 0.2);
+            offset.sideFallback = offset.coord;
+        }
+        if (degreeMinusOneMultiplicity != degreeMinusOneMultiplicityFixtures.end()) {
+            auto source = sources[i].makeEntity();
+            auto* spline = dynamic_cast<RS_Spline*>(source.get());
+            REQUIRE(spline);
+            LC_CurveJet jet;
+            REQUIRE(spline->tryEvaluateJet(0.2, LC_CurveEvaluationSide::Interior, jet));
+            const RS_Vector tangent = jet.first.normalized();
+            const RS_Vector leftNormal{-tangent.y, tangent.x};
+            offset.distance = std::abs(degreeMinusOneMultiplicity->signedDistance);
+            const double side = degreeMinusOneMultiplicity->signedDistance > 0.0 ? 1.0 : -1.0;
             offset.coord = jet.point + leftNormal * (side * 0.2);
             offset.sideFallback = offset.coord;
         }
