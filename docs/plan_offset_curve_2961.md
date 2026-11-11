@@ -115,10 +115,11 @@ Execute and record these slices in order:
    parabola constructions, traversal and conditioning, and trimming. Record
    exact fixtures, versions and limits in the existing capability matrix;
    refuse unsupported or unproved cases without partial publication. The
-   non-corner near-node corruption cases recorded in section 857 are rejected
-   by the branch-provenance and source-evaluation guards in sections 859 and
-   861; do not add a parameter-distance heuristic. Broader corner-arc and
-   ambiguous piece-identity proofs remain open and fail closed.
+   non-corner near-node corruption cases recorded in section 857 and direct
+   corner-arc occurrence identity are rejected by the source/piece provenance
+   checks recorded in section 896; do not add a parameter-distance heuristic.
+   Trimmed-mode identity after branch rewriting remains open and must stay
+   separately qualified.
 4. **Large-drawing responsiveness.** Implement incremental live-highlight
    resolution. This slice is implemented: each event-loop slice visits at most
    64 entries and targets approximately 4 ms; it retains indices/IDs and
@@ -35849,3 +35850,36 @@ closes the requested picker/type-filter behavior; it is not evidence that every
 variant of every kind has qualified offset generation, worker/cache, trimming,
 DXF/DWG persistence, external-reader, or visible-GUI support. Continue those
 as separate plan gates and keep unsupported geometry fail-closed.
+
+## 896. Validate Direct Materialized-node Occurrence Provenance (2026-11-11)
+
+Commit `cecdafd8b` replaces the Direct-mode radius-only source-occurrence
+check with a bounded branch/piece provenance check. Materialized intersection
+parameters identify the validated Bezier piece on each branch; regular offset
+pieces must own the stored source parameter and reevaluate to the reported
+node within the existing geometric slack. Piece endpoints use the traversal's
+correct one-sided source evaluation. Corner-arc occurrences must map to the
+corresponding round-join piece, lie on its bounded angular interval at its
+recorded radius, and, when a finite source parameter is available, match the
+adjacent source corner. Missing parameters no longer certify regular pieces.
+The check consumes the existing bounded source-sample budget and refuses when
+it cannot establish provenance; it introduces no parameter-distance cutoff.
+
+Regression coverage extends the existing adjacent/equal-parameter controls by
+rejecting two unavailable parameters on a regular crossing. A deterministic
+polyline fixture proves the positive corner-arc case: the real crossing on the
+round join materializes, while a forged source-corner parameter is refused
+without publishing entities. The focused
+`[curve-offset][topology][materialized]` selector passes 2,915 assertions / 15
+cases. After commit, the complete `[curve-offset]` selector passes 1,925,451
+assertions / 314 cases on the current CMake Release/macOS build.
+
+This evidence closes Direct-mode materialized-node identity for the exercised
+regular and circular-corner cases; it is not a universal proof for every
+source variant or topology. Trimmed mode retains its previous source-distance
+check because trimming can rewrite or remove branch identities; its occurrence
+identity remains open and must be proved with an explicit post-trim mapping or
+fail closed. Also open: broader materialized-curve fault cases, clean qmake6 and
+cross-platform runs, external CAD comparison, visible GUI acceptance, and PR
+CI for the exact head. Continue with the trimmed-identity design and remaining
+family/variant gates; do not infer completion of the roadmap from this slice.
