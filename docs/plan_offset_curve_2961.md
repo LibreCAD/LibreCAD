@@ -101,19 +101,22 @@ Execute and record these slices in order:
    refuse unsupported or unproved cases without partial publication. The
    unresolved near-node occurrence-identity issue in section 857 remains open
    and must not be papered over by a parameter-distance heuristic.
-4. **Large-drawing responsiveness.** Measure matching with many same-kind,
-   large-payload candidates and define bounded work and latency goals. If an
-   incremental scan is needed, use a mutation-aware generation that covers
-   in-place edits, undo/redo, layers and document changes; hold no borrowed
-   entity pointer across event turns and never claim uniqueness from a partial
-   scan. Commit `a12651ad6` removes one redundant full source scan from the
-   worker-wait presentation refresh; this does not bound source-list scans or
-   the periodic live-highlight scan. The benchmark committed in `b8f82b752`
-   measures one type-filter refresh with 1,024 same-kind spline-points
-   candidates carrying 256 control points each at about 2.74 ms on the current
-   CMake Release/macOS build. This is a baseline for that operation and host,
-   not an end-to-end latency target. Test invalidation, cancellation, recovery
-   and all source families.
+4. **Large-drawing responsiveness.** Implement incremental live-highlight
+   resolution. The benchmark records 40.99 ms for a 1,024-candidate,
+   256-control-point same-kind validation, so one synchronous scan exceeds a
+   16 ms frame. Target at most 64 entity entries and approximately 4 ms of
+   scan work per event-loop slice; this is a design target, not yet a hard
+   latency guarantee. Process the live entity list only within one slice and
+   retain indices/IDs and value-owned geometry across turns, never entity
+   pointers. A scan generation must be invalidated by document replacement or
+   destruction, entity-list structural changes, graphic/entity edits, undo or
+   redo, and layer visibility/lock changes. Discard partial results on any
+   invalidation, cancellation or supersession; only a complete scan can
+   establish uniqueness or publish a highlight. Verify per-entity encoding
+   bounds so one unusually large entity cannot defeat the time target. The
+   source-choice refresh measured about 2.71 ms for the same fixture and is a
+   separate synchronous path. Test invalidation, cancellation, recovery and
+   every source family.
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
@@ -35215,14 +35218,36 @@ measurement only.
 Commit `b8f82b752` adds a repeatable source-picker benchmark fixture with
 1,024 `LC_SplinePoints` candidates, each carrying 256 control points. It times
 the synchronous family-filter change and checks that every supported
-candidate remains in the chooser. On the current CMake Release/macOS build,
-the measured refresh is 2.73575 ms; the complete source selector suite passes
-12,536 assertions / 29 cases. The timing is diagnostic only and has no
-hardware-dependent threshold.
+candidate remains in the chooser. Commit `39a6d9645` extends the fixture to
+replace the source with a small same-kind spline-points candidate and time one
+live-highlight timer validation across the 1,024 large candidates. On the
+current CMake Release/macOS build, the latest run measures 2.7125 ms for the
+filter refresh and 40.9947 ms for live-highlight validation; the complete
+source selector suite passes 12,550 assertions / 29 cases. These timings are
+diagnostic samples only and have no hardware-dependent threshold.
 
-This is not a bound for source selection under other loads, periodic highlight
-validation, document mutation during a scan, visible event-loop latency on
-other machines, or the full source replacement workflow. The active large-
-drawing slice still needs mutation-sensitive tests and measurements for the
-live-highlight scan, plus a decision on whether those results justify bounded
-incremental scanning. No partial scan may be treated as proof of uniqueness.
+This is not a bound for source selection under other loads, document mutation
+during a scan, visible event-loop latency on other machines, or the full source
+replacement workflow. The 40.99 ms live-highlight result exceeds a 16 ms frame;
+incremental live-highlight scanning is therefore required by the active plan.
+No partial scan may be treated as proof of uniqueness.
+
+## 866. Require Bounded Live-highlight Scanning (2026-11-11)
+
+The benchmark in section 865 shows that the periodic live-highlight validation
+blocks for about 41 ms on 1,024 same-kind spline-points entities with 256
+control points each. The family filter completes in about 2.7 ms on the same
+build, so the measured bottleneck is specifically the live-highlight scan.
+The plan now requires incremental validation with a target of at most 64
+entity entries and approximately 4 ms per event-loop slice. Do not present
+this as a hard bound until the worst-case single-entity encoding cost has been
+bounded.
+
+Implementation must carry no entity pointer between slices. Track a scan
+generation over document lifetime/identity, structural entity-list revision,
+document or entity modification, undo/redo and layer visibility/lock changes.
+If any generation changes, discard all partial counts and matches and restart;
+do not infer uniqueness or retain a highlight from incomplete traversal. Add
+tests for same-count removal/addition, geometry mutation, layer changes,
+document replacement/destruction, cancellation, and stale completion, as well
+as successful unique/ambiguous results across all modeled families.
