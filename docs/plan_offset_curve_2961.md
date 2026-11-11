@@ -30226,7 +30226,7 @@ these rows do not imply every parameter/domain is supported):
 
 | Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
 | --- | --- | --- | --- |
-| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; both signed sides of horizontal, diagonal, and reversed lines at scales `1e-8/1/1e8` and translation ratios `0/1e6` pass worker generation, analytic segment comparison, and op-8 cache admission; the same signed profiles also pass Produce, all five internal DXF/DWG save-reopen lanes, and independent LibreDWG LINE-coordinate checks in both DWG lanes | Other sub-ULP/coordinate-conditioning boundaries, broader non-finite payload refusal, scales/origins outside the tested grid, external CAD and visible GUI |
+| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; both signed sides of horizontal, diagonal, and reversed lines at scales `1e-6/1e-8/1/1e8/1e10` and translation ratios `0/1e6` pass independent direct-normal checks, worker generation, Produce, op-8 cache admission, all five internal DXF/DWG save-reopen lanes, and LibreDWG LINE-coordinate checks in both DWG lanes | Other sub-ULP/coordinate-conditioning boundaries, broader non-finite payload refusal, scales/origins outside the tested grid, external CAD and visible GUI |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at gaps 1e-4..1e-8 radians, both orientations and both offset sides; counterclockwise near-full profiles at 1e-4 and 1e-8, reversed near-full at 1e-8, and short counterclockwise seam-crossing at 1e-4 pass required worker/cache admission, replacement, Produce, and five-file-lane reopen; short arcs in both orientations at 1e-8 pass the same path at distance 1e-6; the counterclockwise profile at distance .25 cleanly refuses with UndefinedTangent and no output; below-validity arc refused at typed capture | Additional source radius/offset/tolerance combinations, sweep-limit behavior, and broader boundary matrix |
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at `1e-6/1e-4/1/1e4/1e8`, centered at zero and translated by `1e6 * scale`, both signed sides; worker/client covers radii `2e-6`, `2e-4`, `2`, `2e4`, and `2e8`, centered at zero and translated by `1e6 * scale`, both inward and outward picks through cache admission, Produce, and all five file lanes; LibreDWG checks the resulting circle geometry in both DWG lanes for every scaled fixture | Scales beyond the tested range, further conditioning, arbitrary-circle independent comparisons, ODA/AutoCAD, and visible GUI |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; translated, rotated ratio-1.5 whole ellipse and forward/reversed bounded arcs plus a near-cusp inward profile now have exact-normal checks and complete worker/cache, Produce, and all five R14/R2000/R2018 DXF/DWG lanes | Full axis-ratio, sweep, cusp-threshold, side/distance and precision matrix |
@@ -36091,3 +36091,23 @@ cases, including the all-family replacement matrix and parabola selection.
 This confirms the automated widget contract; visible interaction, selection
 cancel behavior outside the tested workflows, external CAD acceptance,
 cross-platform execution, and exact-head PR CI remain separate gates.
+
+## 905. Extend the Signed Line Matrix to Wider Scales (2026-11-11)
+
+Test commit `4b539e542` adds the `1e-6` and `1e10` endpoint scales to the
+line-normal oracle and to the signed worker/Produce/file matrix, retaining
+`1e-8`, `1`, and `1e8`. Each of the five scales is tested for horizontal,
+diagonal, and reversed traversal at origin and `1e6 * scale` translations.
+Produce uses a scale-relative distance of `0.02 * scale` and an explicit
+four-scale-unit pick on the requested normal side, so side selection does not
+depend on a fixed world-space test coordinate. The worker output is compared
+to exact translated segment endpoints. All five internal DXF/DWG save-reopen
+lanes pass, and LibreDWG independently verifies the LINE endpoints in R2000
+and R2018 DWG.
+
+On the CMake Release build, the focused direct oracle passes 2,891 assertions
+in one case; the full worker source-family persistence case passes 1,658,130
+assertions in one case. This extends only the recorded scale/profile grid;
+smaller or larger scales, arbitrary origins and orientations, sub-ULP
+conditioning, non-finite protocol payloads, ODA/AutoCAD, visible GUI,
+cross-platform qualification and exact-head CI remain open.
