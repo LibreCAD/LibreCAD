@@ -194,6 +194,8 @@ struct LC_IntersectionOptions {
     std::size_t maxOrderingComparisons{std::size_t{1} << 20};
     /** Strict proof-domain padding per side, clipped to the segment; not a distance tolerance. */
     double strictProofDomainPadding{0.001};
+    /** Permit same-branch excursions smaller than tolerance to be treated as unresolved-but-acceptable. */
+    bool allowSubToleranceSelfLoops{true};
 };
 
 enum class LC_IntersectionStatus {
@@ -209,7 +211,7 @@ struct LC_IntersectionWorkStats {
     std::size_t candidateBoxPairs{0};
     /** Refinement boxes examined, including exclusions and terminal boxes. */
     std::size_t refinementBoxPairs{0};
-    /** Strict certificate callbacks and explicit contraction/order-attempt units; zero in ordinary mode. */
+    /** Certificate callbacks and explicit strict contraction/order-attempt units. */
     std::size_t certificateBoxPairs{0};
     /** Sum of all three pair counts; a refused next examination is not consumed. */
     std::size_t totalBoxPairs{0};

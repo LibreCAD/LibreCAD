@@ -637,7 +637,10 @@ LC_IntersectionResult intersect(std::vector<const RS_Spline*> splines, const dou
 void checkWork(const LC_IntersectionResult& result, const LC_IntersectionOptions& options) {
     REQUIRE(result.work.candidateBoxPairs <= options.maxBoxPairs);
     REQUIRE(result.work.refinementBoxPairs <= options.maxBoxPairs - result.work.candidateBoxPairs);
-    CHECK(result.work.totalBoxPairs == result.work.candidateBoxPairs + result.work.refinementBoxPairs);
+    REQUIRE(result.work.certificateBoxPairs <=
+            options.maxBoxPairs - result.work.candidateBoxPairs - result.work.refinementBoxPairs);
+    CHECK(result.work.totalBoxPairs == result.work.candidateBoxPairs + result.work.refinementBoxPairs +
+                                           result.work.certificateBoxPairs);
     CHECK(result.work.totalBoxPairs <= options.maxBoxPairs);
     CHECK(result.work.generatedLeaves <= options.maxLeaves);
 }
@@ -2677,6 +2680,164 @@ TEST_CASE("A branch that turns back along itself at a corner does not cross itse
     CHECK(open.intersections.empty());
 }
 
+TEST_CASE("Strict output topology does not prune sub-tolerance self-crossings",
+          "[curve-offset][topology][precision]") {
+    constexpr double origin = 1e6;
+    constexpr double extent = 1e-7;
+    const std::array<RS_Vector, 5> points{{{origin, origin},
+                                           {origin + extent, origin + extent},
+                                           {origin, origin + extent},
+                                           {origin + extent, origin},
+                                           {origin, origin}}};
+    std::vector<PolynomialPiece> pieces;
+    pieces.reserve(points.size() - 1);
+    for (std::size_t i = 0; i + 1 < points.size(); ++i) {
+        const RS_Vector direction = points[i + 1] - points[i];
+        const double t0 = static_cast<double>(i);
+        const RS_Vector intercept = points[i] - direction * t0;
+        pieces.push_back(polynomialLine(0, intercept, direction, t0, t0 + 1.0));
+    }
+    CertifiedPolynomials curves{std::move(pieces), 1};
+    curves.closed = true;
+
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-6;
+    const LC_IntersectionResult approximate = findIntersections(curves, options);
+    REQUIRE(approximate.status == LC_IntersectionStatus::Ok);
+    CHECK(approximate.intersections.empty());
+
+    options.allowSubToleranceSelfLoops = false;
+    const LC_IntersectionResult strict = findIntersections(curves, options);
+    CAPTURE(strict.status, strict.intersections.size(), strict.work.totalBoxPairs,
+            strict.work.deepestPairRefinement, strict.work.bvhLeafCandidates,
+            strict.work.bvhMonotonePathPrunes, strict.work.bvhDisjointPairs);
+    const bool crossingWasNotSilentlyPruned =
+        strict.status != LC_IntersectionStatus::Ok || !strict.intersections.empty();
+    CHECK(crossingWasNotSilentlyPruned);
+}
+
+TEST_CASE("Strict topology detects a sub-tolerance crossing on one segment",
+          "[curve-offset][topology][precision]") {
+    constexpr double origin = 1e6;
+    constexpr double scale = 1e-7;
+    // x(t) = (t - 1/4)(t - 3/4), y(t) = (t - 1/2)x(t).
+    // The distinct parameters 1/4 and 3/4 meet with different tangents.
+    CertifiedPolynomials curves{{{{0, 0, 1},
+                                   {origin + .1875 * scale, -scale, scale, 0},
+                                   {origin - .09375 * scale, .6875 * scale, -1.5 * scale, scale}}}};
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-6;
+    options.allowSubToleranceSelfLoops = false;
+    const LC_IntersectionResult result = findIntersections(curves, options);
+    CAPTURE(result.status, result.intersections.size(), result.work.totalBoxPairs);
+    CHECK((result.status != LC_IntersectionStatus::Ok || !result.intersections.empty()));
+
+    CertifiedPolynomials monotone{{polynomialLine(0, {origin, origin}, {scale, scale})}};
+    const LC_IntersectionResult control = findIntersections(monotone, options);
+    CHECK(control.status == LC_IntersectionStatus::Ok);
+    CHECK(control.intersections.empty());
+}
+
+TEST_CASE("Strict topology checks crossings across ordered piece ranges",
+          "[curve-offset][topology][precision]") {
+    // The first and third pieces cross at parameters .2 and 2.21. The middle
+    // piece turns back outside the corresponding local-parameter interval.
+    CertifiedPolynomials curves{{
+        {{0, 0, 1}, {0, 1, 0, 0}, {0, 0, 0, 0}},
+        {{0, 1, 2}, {-2.22, 5.44, -2.22, 0}, {.21, -.21, 0, 0}},
+        {{0, 2, 3}, {-4.22, 2, 0, 0}, {-2.21, 1, 0, 0}}}};
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-6;
+    options.allowSubToleranceSelfLoops = false;
+    const LC_IntersectionResult result = findIntersections(curves, options);
+    CAPTURE(result.status, result.intersections.size(), result.work.totalBoxPairs);
+    CHECK(result.status != LC_IntersectionStatus::InvalidInput);
+    CHECK((result.status != LC_IntersectionStatus::Ok || !result.intersections.empty()));
+}
+
+TEST_CASE("Strict topology does not hide a crossing near a join",
+          "[curve-offset][topology][precision]") {
+    constexpr double origin = 1e6;
+    constexpr double scale = 0x1p-33; // One double ULP at origin.
+    // The two quadratic arcs share their endpoint and cross again at t=.2, u=.8.
+    CertifiedPolynomials curves{{
+        {{0, 0, 1}, {origin + 12 * scale, -22 * scale, 0, 0},
+         {origin - 2 * scale, 12 * scale, -10 * scale, 0}},
+        {{0, 1, 2}, {origin - 32 * scale, 22 * scale, 0, 0},
+         {origin + 18 * scale, -28 * scale, 10 * scale, 0}}}};
+    RS_Vector end, endDerivative, start, startDerivative;
+    REQUIRE(curves.evaluate(0, 1, end, endDerivative));
+    REQUIRE(curves.evaluate(1, 1, start, startDerivative));
+    REQUIRE(end.x == start.x);
+    REQUIRE(end.y == start.y);
+    // Compare y at equal x using the stored double coefficients, in wide arithmetic.
+    const auto difference = [&](const long double t) {
+        const long double x0 = static_cast<double>(origin + 12 * scale);
+        const long double x1 = static_cast<double>(origin - 32 * scale);
+        const long double y0 = static_cast<double>(origin - 2 * scale);
+        const long double y1 = static_cast<double>(origin + 18 * scale);
+        const long double s = scale;
+        const long double u = (x0 - x1 - 22 * s * t) / (22 * s);
+        return (y0 - y1) + 12 * s * t - 10 * s * t * t + 28 * s * u - 10 * s * u * u;
+    };
+    CHECK(difference(.1L) < 0);
+    CHECK(difference(.3L) > 0);
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-6;
+    options.allowSubToleranceSelfLoops = false;
+    const LC_IntersectionResult result = findIntersections(curves, options);
+    CAPTURE(result.status, result.intersections.size(), result.work.totalBoxPairs);
+    CHECK(result.status != LC_IntersectionStatus::InvalidInput);
+    checkWork(result, options);
+    const bool crossingReported = std::any_of(result.intersections.begin(), result.intersections.end(),
+        [](const auto& crossing) { return crossing.point.x > origin + 4 * scale; });
+    CHECK((result.status != LC_IntersectionStatus::Ok || crossingReported));
+
+    CertifiedPolynomials corner{{polynomialLine(0, {origin, origin}, {1, 0}, 0, 1),
+                                  polynomialLine(0, {origin + 1, origin - 1}, {0, 1}, 1, 2)}};
+    const LC_IntersectionResult control = findIntersections(corner, options);
+    CHECK(control.status == LC_IntersectionStatus::Ok);
+    CHECK(control.intersections.empty());
+
+    // At equal x the first arc is above the second by 8 * scale * (1 - t^2),
+    // so they meet only at the common endpoint.
+    CertifiedPolynomials separated{{
+        {{0, 0, 1}, {origin + 12 * scale, -22 * scale, 0, 0},
+         {origin - 2 * scale, 12 * scale, -10 * scale, 0}},
+        {{0, 1, 2}, {origin - 32 * scale, 22 * scale, 0, 0},
+         {origin + 6 * scale, -4 * scale, -2 * scale, 0}}}};
+    const LC_IntersectionResult separatedResult = findIntersections(separated, options);
+    CAPTURE(separatedResult.status, separatedResult.work.totalBoxPairs);
+    CHECK(separatedResult.status == LC_IntersectionStatus::Ok);
+    CHECK(separatedResult.intersections.empty());
+}
+
+TEST_CASE("Strict topology checks connected branch tails for another crossing",
+          "[curve-offset][topology][precision]") {
+    constexpr double origin = 1e6;
+    constexpr double scale = 0x1p-33;
+    CertifiedPolynomials curves{{
+        {{0, 0, 1}, {origin + 12 * scale, -22 * scale, 0, 0},
+         {origin - 2 * scale, 12 * scale, -10 * scale, 0}},
+        {{1, 0, 1}, {origin - 10 * scale, 22 * scale, 0, 0},
+         {origin, -8 * scale, 10 * scale, 0}}}, 2};
+    curves.successor = [](std::size_t branch) -> std::ptrdiff_t { return branch == 0 ? 1 : -1; };
+    RS_Vector end, endDerivative, start, startDerivative;
+    REQUIRE(curves.evaluate(0, 1, end, endDerivative));
+    REQUIRE(curves.evaluate(1, 0, start, startDerivative));
+    REQUIRE(end.x == start.x);
+    REQUIRE(end.y == start.y);
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-6;
+    options.allowSubToleranceSelfLoops = false;
+    const LC_IntersectionResult result = findIntersections(curves, options);
+    CAPTURE(result.status, result.intersections.size(), result.work.totalBoxPairs);
+    const bool crossingReported = std::any_of(result.intersections.begin(), result.intersections.end(),
+        [](const auto& crossing) { return crossing.point.x > origin + 4 * scale; });
+    CHECK(result.status != LC_IntersectionStatus::InvalidInput);
+    CHECK((result.status != LC_IntersectionStatus::Ok || crossingReported));
+}
+
 TEST_CASE("A corner exclusion does not hide later crossings on its branch", "[curve-offset][topology]") {
     const RS_Spline branch = makeSpline(2,
         {{8, 1}, {1, 0}, {0, 0}, {1, 0}, {8, -1}, {8, -2}, {4, -2}, {4, 0}, {4, 2}},
@@ -2788,8 +2949,23 @@ TEST_CASE("A noded offset ends pieces at its crossing", "[curve-offset][topology
     // The entities pass the check that their fits add no crossing: four piece ends meet at the node.
     const LC_CurveOffsetMaterializationResult entities = LC_CurveOffset::materializeBranches(
         parabola, noded, options, LC_CurveOffset::makeDirectSourceBudget());
+    CAPTURE(entities.intersectionDiagnostics.stage, entities.intersectionDiagnostics.status,
+            entities.intersectionDiagnostics.work.totalBoxPairs, entities.intersectionDiagnostics.hasFailureDomain,
+            entities.intersectionDiagnostics.failureDepth, entities.intersectionDiagnostics.failureDomain.segmentA,
+            entities.intersectionDiagnostics.failureDomain.parameterA.lo(), entities.intersectionDiagnostics.failureDomain.parameterA.hi(),
+            entities.intersectionDiagnostics.failureDomain.segmentB, entities.intersectionDiagnostics.failureDomain.parameterB.lo(),
+            entities.intersectionDiagnostics.failureDomain.parameterB.hi());
     REQUIRE(entities.status == LC_CurveOffsetStatus::Ok);
     CHECK(endsAt(entities.entities, x.point) == 4);
+
+    LC_CurveOffsetGeometryResult corrupted = noded;
+    corrupted.intersections.front().parameterA =
+        std::nextafter(corrupted.intersections.front().parameterB,
+                       std::numeric_limits<double>::infinity());
+    const LC_CurveOffsetMaterializationResult ambiguous = LC_CurveOffset::materializeBranches(
+        parabola, corrupted, options, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(ambiguous.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(ambiguous.entities.empty());
 }
 
 TEST_CASE("A noded offset of a crossing source keeps every crossing", "[curve-offset][topology]") {

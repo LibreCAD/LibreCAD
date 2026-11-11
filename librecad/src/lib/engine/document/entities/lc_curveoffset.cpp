@@ -6926,6 +6926,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         LC_IntersectionOptions query;
         query.tolerance = options.tolerance.nodeMerge;
         query.maxBoxPairs = options.maxIntersectionPairs;
+        query.allowSubToleranceSelfLoops = false;
         const LC_IntersectionResult found = findIntersections(*curves, query);
         result.intersectionDiagnostics.stage = LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput;
         result.intersectionDiagnostics.status = found.status;
@@ -6966,6 +6967,18 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             return adapter->jet(node.parameterA, LC_CurveEvaluationSide::Interior, jet) &&
                    isFinite(jet.first) && std::hypot(jet.first.x, jet.first.y) > scale.numericFloor / domain;
         };
+        const auto branchOwnsSourceParameter = [&](const std::size_t branch, const double parameter) {
+            if (std::isnan(parameter)) return true; // Corner arcs use angle parameters, not source parameters.
+            if (!std::isfinite(parameter) || branch >= geometry.branches.size()) return false;
+            for (const LC_OffsetCubicPiece& piece : geometry.branches[branch].cubicPieces) {
+                if (piece.provenance.arcCentre.valid) continue;
+                if (parameter >= std::min(piece.provenance.sourceT0, piece.provenance.sourceT1) &&
+                    parameter <= std::max(piece.provenance.sourceT0, piece.provenance.sourceT1)) {
+                    return true;
+                }
+            }
+            return false;
+        };
         const auto sourceOccurrenceConsistent = [&](const double parameter, const RS_Vector& point) {
             if (std::isnan(parameter)) {
                 return true; // Some corner occurrences have no source parameter.
@@ -7005,6 +7018,11 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                 if (sampleLimitReached) {
                     result.status = LC_CurveOffsetStatus::LimitExceeded;
                     return result;
+                }
+                if (options.mode != LC_CurveOffsetMode::Trimmed &&
+                    (!branchOwnsSourceParameter(node.branchA, node.parameterA) ||
+                     !branchOwnsSourceParameter(node.branchB, node.parameterB))) {
+                    continue;
                 }
                 if (sourceOccurrenceConsistent(node.parameterA, node.point) &&
                     sourceOccurrenceConsistent(node.parameterB, node.point)) {

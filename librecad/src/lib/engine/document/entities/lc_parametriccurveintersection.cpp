@@ -249,9 +249,25 @@ private:
                 m_work.deepestPreparation = std::max(m_work.deepestPreparation, box.depth);
                 Bounds bounds;
                 const bool bounded = bound(s, box.a, box.b, bounds);
-                const bool monotone = bounded && isMonotone(bounds.dx, bounds.dy);
+                bool monotone = bounded && isMonotone(bounds.dx, bounds.dy);
+                if (bounded && !monotone && !m_options.allowSubToleranceSelfLoops) {
+                    if (!consumePair(m_work.certificateBoxPairs)) {
+                        return LC_IntersectionStatus::LimitExceeded;
+                    }
+                    const LC_Interval requested = LC_Interval::hull(box.a, box.b);
+                    const auto certificate = m_curves.certifyInjective(s, requested);
+                    if (certificate.available) {
+                        if (certificate.segment != s || !certificate.parameter.isValid() ||
+                            certificate.parameter.lo() > box.a || certificate.parameter.hi() < box.b ||
+                            certificate.parameter.lo() < m_segments[s].t0 ||
+                            certificate.parameter.hi() > m_segments[s].t1) {
+                            return LC_IntersectionStatus::InvalidInput;
+                        }
+                        monotone = true;
+                    }
+                }
                 const bool small = bounded && std::hypot(bounds.x.width(), bounds.y.width()) <= m_options.tolerance;
-                if (monotone || small) {
+                if (monotone || (small && m_options.allowSubToleranceSelfLoops)) {
                     if (m_leaves.size() >= m_options.maxLeaves) {
                         return LC_IntersectionStatus::LimitExceeded;
                     }
@@ -329,16 +345,18 @@ private:
         return first.cornerNext;
     }
 
-    /** Smooth neighbours, or leaves across a cusp join, share only an end. */
+    /** Skip neighbours in strict mode only when their combined path is monotone. */
     bool adjacent(const Leaf& p, const Leaf& q) const {
+        const bool safeToSkip = m_options.allowSubToleranceSelfLoops ||
+                                jointlyMonotone(p.dx, p.dy, q.dx, q.dy);
         if (p.branch == q.branch && (p.order + 1 == q.order || q.order + 1 == p.order)) {
-            return !atCorner(p, q);
+            return !atCorner(p, q) && safeToSkip;
         }
         for (const Join& j : m_joins) {
             const std::size_t lastOfFrom = m_branchLeaves[j.from] - 1;
             if ((p.branch == j.from && p.order == lastOfFrom && q.branch == j.to && q.order == 0) ||
                 (q.branch == j.from && q.order == lastOfFrom && p.branch == j.to && p.order == 0)) {
-                return true;
+                return safeToSkip;
             }
         }
         return false;
@@ -424,7 +442,8 @@ private:
                 right /= 2;
             }
             return isMonotone(all.dx, all.dy) ||
-                   std::hypot(all.x.width(), all.y.width()) <= m_options.tolerance;
+                   (m_options.allowSubToleranceSelfLoops &&
+                    std::hypot(all.x.width(), all.y.width()) <= m_options.tolerance);
         };
         const auto build = [&](auto&& self, const std::size_t first, const std::size_t last) -> std::size_t {
             const Leaf& leaf = m_leaves[order[first]];
@@ -534,8 +553,11 @@ private:
         return LC_IntersectionStatus::Ok;
     }
 
-    /** Exclude only the joined segments' shared endpoint, within twice the tolerance. */
+    /** Approximate mode may absorb a join neighborhood; strict mode cannot assume uniqueness there. */
     bool insideJoin(const Leaf& p, const Bounds& bp, const Leaf& q, const Bounds& bq) const {
+        if (!m_options.allowSubToleranceSelfLoops) {
+            return false;
+        }
         const double radius = 2.0 * m_options.tolerance;
         for (const Corner& c : m_corners) {
             const bool between = (p.segment == c.before && q.segment == c.after) ||
@@ -569,6 +591,56 @@ private:
             m_failureDomain = {p.segment, q.segment, LC_Interval::hull(box.a0, box.a1), LC_Interval::hull(box.b0, box.b1)};
             m_failureDepth = box.depth;
         };
+        const bool neighbours = (p.branch == q.branch &&
+                                 (p.order + 1 == q.order || q.order + 1 == p.order)) ||
+                                std::any_of(m_joins.begin(), m_joins.end(), [&](const Join& join) {
+                                    const std::size_t last = m_branchLeaves[join.from] - 1;
+                                    return (p.branch == join.from && p.order == last &&
+                                            q.branch == join.to && q.order == 0) ||
+                                           (q.branch == join.from && q.order == last &&
+                                            p.branch == join.to && p.order == 0);
+                                });
+        const auto analyticExclusion = [&](const Pair& box, bool& excluded) {
+            excluded = false;
+            if (!consumePair(m_work.certificateBoxPairs)) {
+                recordFailure(box);
+                return LC_IntersectionStatus::LimitExceeded;
+            }
+            const LC_IntersectionDomain domain{p.segment, q.segment, LC_Interval::hull(box.a0, box.a1),
+                                               LC_Interval::hull(box.b0, box.b1)};
+            const auto certificate = m_curves.certifyIntersection(domain);
+            if (certificate.outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded) {
+                const auto& proof = certificate.proofDomain;
+                if (certificate.proof != LC_IntersectionProof::AnalyticExclusion ||
+                    proof.segmentA != domain.segmentA || proof.segmentB != domain.segmentB ||
+                    !proof.parameterA.isValid() || !proof.parameterB.isValid() ||
+                    proof.parameterA.lo() > box.a0 || proof.parameterA.hi() < box.a1 ||
+                    proof.parameterB.lo() > box.b0 || proof.parameterB.hi() < box.b1 ||
+                    proof.parameterA.lo() < m_segments[p.segment].t0 ||
+                    proof.parameterA.hi() > m_segments[p.segment].t1 ||
+                    proof.parameterB.lo() < m_segments[q.segment].t0 ||
+                    proof.parameterB.hi() > m_segments[q.segment].t1) {
+                    return LC_IntersectionStatus::InvalidInput;
+                }
+                excluded = true;
+            }
+            return LC_IntersectionStatus::Ok;
+        };
+        const auto joinedSegments = [&](std::size_t a, std::size_t b) {
+            const auto& first = m_segments[a];
+            const auto& second = m_segments[b];
+            if (first.branch == second.branch && a + 1 == b) return true;
+            const bool last = a + 1 == m_segments.size() || m_segments[a + 1].branch != first.branch;
+            const bool firstOfBranch = b == 0 || m_segments[b - 1].branch != second.branch;
+            return last && firstOfBranch && m_curves.next(first.branch) == static_cast<std::ptrdiff_t>(second.branch);
+        };
+        const bool linkedSegments = p.segment != q.segment &&
+            (joinedSegments(p.segment, q.segment) || joinedSegments(q.segment, p.segment));
+        if (!m_options.allowSubToleranceSelfLoops && neighbours) {
+            bool excluded = false;
+            const auto status = analyticExclusion({p.a, p.b, q.a, q.b, 0}, excluded);
+            if (status != LC_IntersectionStatus::Ok || excluded) return status;
+        }
         while (!stack.empty()) {
             if (!consumePair(m_work.refinementBoxPairs)) {
                 recordFailure(stack.back());
@@ -584,6 +656,12 @@ private:
             }
             if (gap(bp.x, bp.y, bq.x, bq.y) > 0.0 || insideJoin(p, bp, q, bq) || bridged(p, q, box)) {
                 continue;
+            }
+            if (!m_options.allowSubToleranceSelfLoops && linkedSegments && box.depth > 0 && box.depth % 4 == 0) {
+                bool excluded = false;
+                const auto status = analyticExclusion(box, excluded);
+                if (status != LC_IntersectionStatus::Ok) return status;
+                if (excluded) continue;
             }
             RS_Vector pointP;
             RS_Vector derivativeP;
@@ -628,6 +706,12 @@ private:
                 }
             }
             if (box.depth >= m_options.maxDepth) {
+                if (!m_options.allowSubToleranceSelfLoops && linkedSegments) {
+                    bool excluded = false;
+                    const auto status = analyticExclusion(box, excluded);
+                    if (status != LC_IntersectionStatus::Ok) return status;
+                    if (excluded) continue;
+                }
                 recordFailure(box);
                 if (corner) {
                     return LC_IntersectionStatus::LimitExceeded;
@@ -638,8 +722,11 @@ private:
                 }
                 continue;
             }
-            // split the side whose image is larger
-            if (sizeP >= sizeQ) {
+            // Periodically balance parameter progress when image bounds hit the numeric floor.
+            const bool splitP = box.depth % 4 == 3
+                ? (box.a1 - box.a0) / (p.b - p.a) >= (box.b1 - box.b0) / (q.b - q.a)
+                : sizeP >= sizeQ;
+            if (splitP) {
                 const double h = box.a0 + 0.5 * (box.a1 - box.a0);
                 stack.push_back({box.a0, h, box.b0, box.b1, box.depth + 1});
                 stack.push_back({h, box.a1, box.b0, box.b1, box.depth + 1});
@@ -689,7 +776,9 @@ private:
             all.dy = LC_Interval::hull(all.dy, b.dy);
         }
         return any &&
-               (isMonotone(all.dx, all.dy) || std::hypot(all.x.width(), all.y.width()) <= m_options.tolerance);
+               (isMonotone(all.dx, all.dy) ||
+                (m_options.allowSubToleranceSelfLoops &&
+                 std::hypot(all.x.width(), all.y.width()) <= m_options.tolerance));
     }
 
     enum class Krawczyk {

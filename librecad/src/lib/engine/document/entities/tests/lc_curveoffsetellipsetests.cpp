@@ -245,13 +245,10 @@ void checkOffset(const Offset& offset, const Curve& source, const double d, cons
     INFO("intersection stage=" << static_cast<int>(offset.intersectionDiagnostics.stage)
                                 << " status=" << static_cast<int>(offset.intersectionDiagnostics.status)
                                 << " pairs=" << offset.intersectionDiagnostics.work.totalBoxPairs);
-    if (offset.intersectionDiagnostics.hasFailureDomain) {
-        const auto& failure = offset.intersectionDiagnostics.failureDomain;
-        INFO("failure segments=" << failure.segmentA << ',' << failure.segmentB
-                                 << " parameters=" << failure.parameterA.lo() << ':' << failure.parameterA.hi()
-                                 << " / " << failure.parameterB.lo() << ':' << failure.parameterB.hi()
-                                 << " depth=" << offset.intersectionDiagnostics.failureDepth);
-    }
+    CAPTURE(offset.intersectionDiagnostics.hasFailureDomain, offset.intersectionDiagnostics.failureDepth,
+            offset.intersectionDiagnostics.failureDomain.segmentA, offset.intersectionDiagnostics.failureDomain.parameterA.lo(),
+            offset.intersectionDiagnostics.failureDomain.parameterA.hi(), offset.intersectionDiagnostics.failureDomain.segmentB,
+            offset.intersectionDiagnostics.failureDomain.parameterB.lo(), offset.intersectionDiagnostics.failureDomain.parameterB.hi());
     REQUIRE(offset.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(offset.chains.size() == closed.size());
     for (std::size_t c = 0; c < offset.chains.size(); ++c) {
