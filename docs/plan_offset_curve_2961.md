@@ -35614,3 +35614,23 @@ geometry variant. Continue the separate per-variant direct-geometry,
 worker/cache and applicable DXF/DWG qualification in slice 4; keep unqualified
 variants fail-closed and do not treat picker availability as proof of
 generation or persistence. Visible-GUI acceptance remains open.
+
+## 883. Qualify the Wide-axis Ellipse Cusp Boundary (2026-11-11)
+
+Commit `72c181c4c` adds equality and 10%-over-threshold cases for the translated
+and rotated ratio-1.5 whole ellipse from sections 878 and 881. The analytic
+major-vertex cusp radius is `b^2/a = 16/6`. The direct geometry returns `Ok`
+with complete chains at both distances; the independent offset-distance oracle
+passes at and beyond the cusp. The full `[curve-offset][ellipse]` selector
+passes 1,338,903 assertions / 57 cases, including the new direct boundary
+case.
+
+The worker/client family matrix passes 1,562,704 assertions / 1 case. Both
+boundary fixtures pass worker generation, cache admission and the internal
+R14 DXF, R2000 DXF/DWG and R2018 DXF/DWG round-trip lanes. Produce at exact
+cusp distance is refused with `LimitExceeded` and publishes no entities; the
+10%-over case completes Produce successfully. The observed equality refusal is
+recorded as a bounded worker limitation, not generalized to other ellipse
+profiles. This closes these two distances for this exact source profile only;
+other ratios, origins, orientations, signed sides, trimming states and visible
+GUI/external-reader acceptance remain open.
