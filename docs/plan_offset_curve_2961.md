@@ -36826,3 +36826,19 @@ This closes worker preparation only for these five layouts. The five-lane
 file test still covers the single-span profile only; that is the next
 stationary-layout delivery gap. Fit-point stationary behavior, visible GUI,
 and external-CAD acceptance remain open. `git diff --check` passes.
+
+## 947. Persist All Five Stationary-span Trim Layouts (2026-11-11)
+
+Test commit `bdb4ac56c` extends the trim file matrix to all five stationary
+control-point profiles qualified by sections 945-946, in addition to the
+three tangent-constrained fit-point profiles. Both sides, distances
+`0.2`/`0.5`, and R2004 DXF/DWG, R2013 DXF, and R2018 DXF/DWG are checked at 33
+normalized parameters per reopened SPLINE. The focused test passes 22,736
+assertions across 160 combinations; LibreDWG 0.14 independently reads all 32
+R2018 DWGs and matches SPLINE degree/control points. The combined
+`[lc-offsetcurve][persistence][trim]` selection passes 36,183 assertions
+across three cases. `git diff --check` passes.
+
+This qualifies the five recorded stationary layouts, not arbitrary repeated
+control patterns or fit-point stationarity. ODA/AutoCAD and visible-GUI
+acceptance remain open.
