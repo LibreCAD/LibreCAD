@@ -34480,5 +34480,13 @@ selector passed 2,317 assertions in 7 cases, the precision/proof-domain
 selector passed 291 assertions in 6 cases, and the rotated 3-to-1 and 10-to-1
 fixtures passed 21,720 assertions in 2 cases. CMake rebuilt the test target and
 qmake6 compiled the changed application object, not the full application.
-Clean default-path and worker/file matrices for this commit remain open, as do
-strict activation, visible acceptance, and cross-platform checks.
+Strict activation, visible acceptance, and cross-platform checks remain open.
+
+Clean-checkout validation at `7f17a962b` (including `30bdaf148`): CMake
+Release test and worker-client targets rebuilt with no source changes. The
+materialized selector passed 2,317 assertions in 7 cases, the normal
+ellipse/intersection/trim selector passed 1,361,893 assertions in 102 cases,
+and the real-worker typed-source/cache/five-lane file matrix passed 1,552,195
+assertions in one case with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`. The
+checkout remained clean. This does not close the strict experiment, full qmake
+build, visible or independent-CAD visual checks, or other platforms.
