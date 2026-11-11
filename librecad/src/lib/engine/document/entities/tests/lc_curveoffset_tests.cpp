@@ -2992,6 +2992,8 @@ TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrence
         LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(geometry.intersections.size() == 1);
+    REQUIRE(geometry.intersections.front().kind == LC_ParametricIntersection::Kind::Transverse);
+    REQUIRE(geometry.intersections.front().parameterA != geometry.intersections.front().parameterB);
     const auto materialize = [&](const LC_CurveOffsetGeometryResult& value) {
         return LC_CurveOffset::materializeBranches(parabola, value, options,
                                                    LC_CurveOffset::makeDirectSourceBudget());
@@ -3056,6 +3058,24 @@ TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrence
     auto outsideDomain = geometry;
     outsideDomain.intersections.front().parameterA = 2.0;
     CHECK(materialize(outsideDomain).status == LC_CurveOffsetStatus::AmbiguousTopology);
+
+    auto duplicatedOccurrence = geometry;
+    duplicatedOccurrence.intersections.front().parameterA = duplicatedOccurrence.intersections.front().parameterB;
+    const auto duplicateResult = materialize(duplicatedOccurrence);
+    CHECK(duplicateResult.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(duplicateResult.entities.empty());
+    auto reverseDuplicate = geometry;
+    reverseDuplicate.intersections.front().parameterB = reverseDuplicate.intersections.front().parameterA;
+    const auto reverseDuplicateResult = materialize(reverseDuplicate);
+    CHECK(reverseDuplicateResult.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(reverseDuplicateResult.entities.empty());
+    auto duplicateLimited = options;
+    duplicateLimited.maxSamples = beforeNodeCheck.sampleUnits;
+    const auto duplicateRefused = LC_CurveOffset::materializeBranches(
+        parabola, duplicatedOccurrence, duplicateLimited, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(duplicateRefused.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(duplicateRefused.entities.empty());
+    CHECK(duplicateRefused.sampleUnits <= duplicateLimited.maxSamples);
 }
 
 TEST_CASE("The sample limit counts every branch of a cusped offset", "[curve-offset][direct][cusp]") {

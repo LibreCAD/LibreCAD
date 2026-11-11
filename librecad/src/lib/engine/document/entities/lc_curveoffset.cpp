@@ -6941,6 +6941,31 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         // A radius check is necessary for both normal offsets and corner arcs,
         // but it does not prove that two nearby intersections are the same node.
         bool sampleLimitReached = false;
+        const bool regularUniformProvenance = std::all_of(validated.begin(), validated.end(),
+            [&](const auto& pieces) {
+                return std::all_of(pieces.begin(), pieces.end(), [&](const LC_OffsetCubicPiece& piece) {
+                    return !piece.provenance.arcCentre.valid &&
+                           piece.provenance.signedDistance == geometry.signedDistance;
+                });
+            });
+        // A regular source parameter at one signed distance gives only one offset occurrence.
+        const auto duplicatedRegularOccurrence = [&](const LC_ParametricIntersection& node) {
+            if (!regularUniformProvenance || node.kind != LC_ParametricIntersection::Kind::Transverse ||
+                !std::isfinite(node.parameterA) || node.parameterA != node.parameterB ||
+                node.parameterA <= adapter->breaks().front() || node.parameterA >= adapter->breaks().back() ||
+                std::binary_search(adapter->breaks().begin(), adapter->breaks().end(), node.parameterA)) {
+                return false;
+            }
+            if (samples >= options.maxSamples) {
+                sampleLimitReached = true;
+                return false;
+            }
+            ++samples;
+            result.sampleUnits = samples;
+            LC_CurveJet jet;
+            return adapter->jet(node.parameterA, LC_CurveEvaluationSide::Interior, jet) &&
+                   isFinite(jet.first) && std::hypot(jet.first.x, jet.first.y) > scale.numericFloor / domain;
+        };
         const auto sourceOccurrenceConsistent = [&](const double parameter, const RS_Vector& point) {
             if (std::isnan(parameter)) {
                 return true; // Some corner occurrences have no source parameter.
@@ -6975,8 +7000,13 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                     return result;
                 }
                 ++result.intersectionDiagnostics.nodeMatchComparisons;
-                if (node.point.distanceTo(x.point) <= options.tolerance.requestedGeometry &&
-                    sourceOccurrenceConsistent(node.parameterA, node.point) &&
+                if (!(node.point.distanceTo(x.point) <= options.tolerance.requestedGeometry)) continue;
+                if (duplicatedRegularOccurrence(node)) continue;
+                if (sampleLimitReached) {
+                    result.status = LC_CurveOffsetStatus::LimitExceeded;
+                    return result;
+                }
+                if (sourceOccurrenceConsistent(node.parameterA, node.point) &&
                     sourceOccurrenceConsistent(node.parameterB, node.point)) {
                     atNode = true;
                     break;
