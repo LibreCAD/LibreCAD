@@ -804,6 +804,28 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         multiSpanRationalFixtures.push_back({sources.size(), degree});
         sources.emplace_back(LC_OffsetSourceGeometry{multiSpanRationalSpline(degree)});
     }
+    std::vector<MultiSpanRationalFixture> degreeMultiplicityCornerFixtures;
+    for (const std::size_t degree : {4U, 5U, 6U}) {
+        RS_SplineData corner;
+        corner.degree = degree;
+        corner.type = RS_SplineData::SplineType::ClampedOpen;
+        corner.savedOpenType = corner.type;
+        for (std::size_t i = 0; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            corner.controlPoints.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
+            corner.weights.push_back(0.75 + 0.25 * t);
+        }
+        for (std::size_t i = 1; i <= degree; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(degree);
+            corner.controlPoints.emplace_back(4.0 + 4.0 * t, 2.0 * std::sin(M_PI * t));
+            corner.weights.push_back(1.0 + 0.25 * t);
+        }
+        corner.knotslist.insert(corner.knotslist.end(), degree + 1, 0.0);
+        corner.knotslist.insert(corner.knotslist.end(), degree, 0.5);
+        corner.knotslist.insert(corner.knotslist.end(), degree + 1, 1.0);
+        degreeMultiplicityCornerFixtures.push_back({sources.size(), degree});
+        sources.emplace_back(LC_OffsetSourceGeometry{corner});
+    }
     const std::size_t rotatedWideAxisEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
         {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.0, 0.0, false}});
@@ -1634,9 +1656,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             multiSpanRationalFixtures.end(), [i](const MultiSpanRationalFixture& fixture) {
                 return fixture.index == i;
             });
+        const auto degreeMultiplicityCorner = std::find_if(
+            degreeMultiplicityCornerFixtures.begin(), degreeMultiplicityCornerFixtures.end(),
+            [i](const MultiSpanRationalFixture& fixture) { return fixture.index == i; });
         const double sourceDistance = negativeSplinePoints                                                      ? -.25
             : i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
             ? scaledLineDistances[i - scaledLineFixtureStart]
+            : degreeMultiplicityCorner != degreeMultiplicityCornerFixtures.end()             ? .1
             : multiSpanRational != multiSpanRationalFixtures.end()                           ? .15
             : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->scale
             : thinEllipseCusp != thinEllipseCuspFixtures.end()                           ? thinEllipseCusp->second
@@ -2185,6 +2211,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             multiSpanRationalFixtures.end(), [i](const MultiSpanRationalFixture& fixture) {
                 return fixture.index == i;
             });
+        const auto degreeMultiplicityCorner = std::find_if(
+            degreeMultiplicityCornerFixtures.begin(), degreeMultiplicityCornerFixtures.end(),
+            [i](const MultiSpanRationalFixture& fixture) { return fixture.index == i; });
         if (multiSpanRational != multiSpanRationalFixtures.end()) {
             auto source = sources[i].makeEntity();
             auto* spline = dynamic_cast<RS_Spline*>(source.get());
@@ -2195,6 +2224,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const RS_Vector leftNormal{-tangent.y, tangent.x};
             offset.distance = 0.15;
             offset.coord = jet.point + leftNormal;
+            offset.sideFallback = offset.coord;
+        }
+        if (degreeMultiplicityCorner != degreeMultiplicityCornerFixtures.end()) {
+            auto source = sources[i].makeEntity();
+            auto* spline = dynamic_cast<RS_Spline*>(source.get());
+            REQUIRE(spline);
+            LC_CurveJet jet;
+            REQUIRE(spline->tryEvaluateJet(0.25, LC_CurveEvaluationSide::Interior, jet));
+            const RS_Vector tangent = jet.first.normalized();
+            const RS_Vector leftNormal{-tangent.y, tangent.x};
+            offset.distance = 0.1;
+            offset.coord = jet.point + leftNormal * 0.2;
             offset.sideFallback = offset.coord;
         }
         if (i == rotatedWideAxisEllipseFixture) {
