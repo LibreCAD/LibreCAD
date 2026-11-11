@@ -20373,6 +20373,13 @@ topology outcomes per scale where generated. Keep this worker evidence
 separate from file import; add a later staged-file slice only if the combined
 matrix passes.
 
+The first clean build of `d06eade92` exposed that the regression referenced
+an option present only in the uncommitted solver experiment. Commit
+`ae5404935` removes that test-only dependency. With that correction applied,
+the clean CMake Release test and worker-client targets build, and the
+materialized selector passes 2,879 assertions in 13 cases. Remaining matrix
+results must be checked against the corrected commit.
+
 ### Completion receipt
 
 All eight bounded interval/branch layouts now run centered and translated
