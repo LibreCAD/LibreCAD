@@ -20,6 +20,7 @@
 
 #include "lc_offsetcurve_persistence_fixture.h"
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
 #include "../../offset_worker/lc_offsetworkertolerance.h"
 #include "../../offset_worker/lc_offsetworkerclient.h"
 #include "../../offset_worker/lc_offsetworkersourcecache.h"
@@ -1816,6 +1817,130 @@ TEST_CASE("trimmed typed-parabola geometry round-trips through native DXF and DW
     }
 #ifdef DWGSUPPORT
     if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 16);
+#endif
+}
+
+TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file lanes",
+          "[lc-offsetcurve][persistence][trim][hyperbola][file]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-trimmed-bounded-hyperbola-roundtrip");
+    LC_Hyperbola source{nullptr,
+        LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}};
+    REQUIRE(source.isValid());
+    struct FileLane {
+        RS2::FormatType format;
+        const char* suffix;
+        bool dwg;
+    };
+    const std::array<FileLane, 5> formats{{
+        {RS2::FormatDXFRW2004, "r2004.dxf", false},
+        {RS2::FormatDWG2004, "r2004.dwg", true},
+        {RS2::FormatDXFRW2013, "r2013.dxf", false},
+        {RS2::FormatDXFRW2018, "r2018.dxf", false},
+        {RS2::FormatDWG2018, "r2018.dwg", true}
+    }};
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+        libreDwgReader = QStandardPaths::findExecutable("dwgread");
+    std::size_t independentlyReadFiles = 0;
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        for (const double distance : {1.0, 4.0}) {
+            CAPTURE(side, distance);
+            auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
+            const auto generated = LC_CurveOffset::createEntities(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(generated.entities.empty());
+
+            RS_Graphic drawing;
+            drawing.initForNewDocument();
+            drawing.onLoadingCompleted();
+            std::vector<const RS_Spline*> expected;
+            for (const auto& entity : generated.entities) {
+                const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+                REQUIRE(spline);
+                expected.push_back(spline);
+                auto* copy = entity->clone();
+                REQUIRE(copy);
+                copy->setLayer(drawing.getActiveLayer());
+                drawing.addEntity(copy);
+            }
+
+            for (const auto& lane : formats) {
+#ifndef DWGSUPPORT
+                if (lane.dwg) continue;
+#endif
+                CAPTURE(lane.suffix);
+                const QString path = QString::fromStdString(directory.file(
+                    std::to_string(static_cast<int>(side)) + "-" +
+                    std::to_string(distance) + "-" + lane.suffix).string());
+                RS_FilterDXFRW writer;
+                REQUIRE(writer.fileExport(drawing, path, lane.format));
+
+                RS_Graphic reopened;
+                RS_FilterDXFRW reader;
+                REQUIRE(reader.fileImport(reopened, path, lane.format));
+                std::vector<const RS_Spline*> actual;
+                for (const RS_Entity* entity : reopened)
+                    if (const auto* spline = dynamic_cast<const RS_Spline*>(entity))
+                        actual.push_back(spline);
+                REQUIRE(actual.size() == expected.size());
+                for (std::size_t splineIndex = 0; splineIndex < expected.size(); ++splineIndex) {
+                    for (int sample = 0; sample <= 32; ++sample) {
+                        const double t = static_cast<double>(sample) / 32.0;
+                        const RS_Vector before = expected[splineIndex]->getPointAt(t);
+                        const RS_Vector after = actual[splineIndex]->getPointAt(t);
+                        REQUIRE(before.valid);
+                        REQUIRE(after.valid);
+                        CHECK(before.distanceTo(after) < 1e-8);
+                    }
+                }
+#ifdef DWGSUPPORT
+                if (lane.format == RS2::FormatDWG2018 && !libreDwgReader.isEmpty()) {
+                    QProcess process;
+                    process.start(libreDwgReader, {"-O", "minJSON", path});
+                    REQUIRE(process.waitForStarted());
+                    REQUIRE(process.waitForFinished(30000));
+                    INFO(process.readAllStandardError().toStdString());
+                    REQUIRE(process.exitStatus() == QProcess::NormalExit);
+                    REQUIRE(process.exitCode() == 0);
+                    QJsonParseError parseError;
+                    const QJsonDocument document = QJsonDocument::fromJson(
+                        process.readAllStandardOutput(), &parseError);
+                    REQUIRE(parseError.error == QJsonParseError::NoError);
+                    REQUIRE(document.isObject());
+                    std::vector<QJsonObject> externalSplines;
+                    for (const QJsonValue& value : document.object()
+                             .value("OBJECTS").toArray()) {
+                        const QJsonObject object = value.toObject();
+                        if (object.value("entity").toString() == "SPLINE")
+                            externalSplines.push_back(object);
+                    }
+                    REQUIRE(externalSplines.size() == expected.size());
+                    for (std::size_t splineIndex = 0;
+                         splineIndex < expected.size(); ++splineIndex) {
+                        const auto& data = expected[splineIndex]->getData();
+                        const QJsonObject& external = externalSplines[splineIndex];
+                        CHECK(external.value("degree").toInt() == data.degree);
+                        const QJsonArray controls = external.value("ctrl_pts").toArray();
+                        REQUIRE(controls.size() == static_cast<qsizetype>(data.controlPoints.size()));
+                        for (qsizetype controlIndex = 0; controlIndex < controls.size(); ++controlIndex) {
+                            const RS_Vector& point = data.controlPoints[static_cast<std::size_t>(controlIndex)];
+                            const QJsonObject parsed = controls[controlIndex].toObject();
+                            CHECK(parsed.value("x").toDouble() == Catch::Approx(point.x).margin(1e-10));
+                            CHECK(parsed.value("y").toDouble() == Catch::Approx(point.y).margin(1e-10));
+                        }
+                    }
+                    ++independentlyReadFiles;
+                }
+#endif
+            }
+        }
+    }
+#ifdef DWGSUPPORT
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 4);
 #endif
 }
 
