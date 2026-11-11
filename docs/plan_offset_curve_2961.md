@@ -23296,33 +23296,6 @@ five listed formats; unsupported tangent forms remain refused, and exhaustive
 other spline, spline-points, polyline, visible-GUI, CI, and independent-CAD
 gates remain open.
 
-## 900. Preserve Trimmed Noding-branch Identity (2026-11-11)
-
-Trimmed materialization now retains the pre-trim noding-branch index on every
-source piece. A materialized crossing is considered an already-known node only
-when both output occurrences map to the node's original branch pair (in either
-order). Regular pieces reevaluate the exact offset at the node parameter
-clamped to that piece's actual trimmed source interval, and require spatial
-agreement within the existing requested-geometry, node-merge and numeric
-tolerances. This handles a trim endpoint immediately adjacent to a near-tangent
-node without relying on parameter-distance heuristics. Rounded-join pieces
-retain their source-corner parameter and must match that corner and their
-bounded circular arc. Missing or inconsistent identity still fails closed.
-
-The regression extends the known noded-spline materialization case: normal
-Trimmed materialization succeeds, corrupted branch identity is rejected with
-no entities published, and missing occurrence parameters remain rejected. The
-elliptic-arc case that previously failed has post-trim output pieces from
-original noding branches 0 and 1, crossing 5.4e-5 from their exact node; it now
-passes by matching the correct branches and exact trimmed endpoints. The
-focused `[curve-offset][topology][materialized]` selector passes 2,924
-assertions / 16 cases; the full `[curve-offset]` selector passes 1,925,460
-assertions / 315 cases on the CMake Release/macOS build. The qmake6 recursive
-Release build passes with exit 0. These results qualify the tested near-node
-trim rewrite, not every source family or trim topology. Visible GUI,
-cross-platform runtime, external-CAD comparison, and exact-head PR CI remain
-open.
-
 #### W563z. Qualify Both Signed Sides for Tangent-spline File Promotion (2026-11-07)
 
 Extended W563y's five-format tangent import matrix to run both left and right
@@ -35980,3 +35953,34 @@ The full `[curve-offset]` suite passes 1,925,458 assertions in 315 cases.
 This closes the missing-parameter fail-open case only; exact post-trim
 occurrence mapping and visible-GUI, cross-platform, external-CAD, and PR CI
 gates remain open.
+
+## 900. Preserve Trimmed Noding-branch Identity (2026-11-11)
+
+Trimmed materialization now retains the pre-trim noding-branch index on every
+source piece. A materialized crossing is considered an already-known node only
+when both output occurrences map to the node's original branch pair (in either
+order). Regular pieces reevaluate the exact offset at the node parameter
+clamped to that piece's actual trimmed source interval, and require spatial
+agreement within the existing requested-geometry, node-merge and numeric
+tolerances. This handles a trim endpoint immediately adjacent to a near-tangent
+node without relying on parameter-distance heuristics. Rounded-join pieces
+retain their source-corner parameter and must match that corner and their
+bounded circular arc. Missing or inconsistent identity still fails closed.
+
+The regression extends the known noded-spline materialization case: normal
+Trimmed materialization succeeds, corrupted branch identity is rejected with
+no entities published, and missing occurrence parameters remain rejected.
+The round-join fixture now also passes Trimmed materialization; corrupting only
+its recorded corner identity (without changing geometry or trim parameters)
+returns `AmbiguousTopology` and publishes no entities. The elliptic-arc case
+that previously failed has post-trim output pieces from original noding
+branches 0 and 1, crossing 5.4e-5 from their exact node; it now passes by
+matching the correct branches and exact trimmed endpoints. The focused
+`[curve-offset][topology][materialized]` selector passes 2,929 assertions / 16
+cases, including 13 assertions for the corner-arc case; the full
+`[curve-offset]` selector passes 1,925,465 assertions / 315 cases on the CMake
+Release/macOS build. The qmake6 recursive Release build passes with exit 0.
+These results qualify the tested near-node and round-join trim rewrites, not
+every source family or trim topology. Visible GUI, cross-platform runtime,
+external-CAD comparison, and exact-head PR CI remain open. Test commit
+`1224a3762` records the rounded-corner validation.
