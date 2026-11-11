@@ -154,7 +154,7 @@ following slices in order, preserving the detailed safety requirements below:
 | Slice | Remaining work | Acceptance evidence |
 | --- | --- | --- |
 | 1. Inventory and selector | Compare the canonical kind list, capture/reconstruction, candidate filter, and worker encoding for all nine families. Fix any mismatches; preserve the separate parabola tag and the existing family selector. | Table-driven tests exercise each family as a destination from a different family, switching filters without mutation, empty/unsupported buckets, and parabola versus spline-points identity. |
-| 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection; the hidden/locked selection change is currently uncommitted. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Revalidate initially missing or ambiguous matches and record large-drawing limits until addressed. |
+| 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection; the hidden/locked guard is committed in `92f3c2097`, with remaining lifecycle and scale coverage still open. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Revalidate initially missing or ambiguous matches and record large-drawing limits until addressed. |
 | 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests, plus move/delete/document-change and late-reply tests; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
 | 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then a visible LibreCAD workflow with cross-family replacement, parabola, source indication, cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
@@ -35137,3 +35137,21 @@ cases; the complete `[curve-offset]` suite passes 1,884,531 assertions / 312
 cases. This covers the existing valid materialized-node cases and the full
 offset regression set, but does not directly synthesize an adapter evaluation
 failure or close all corner-arc identity cases. `git diff --check` passed.
+
+## 862. Reuse the Resolved Source During Highlight Refresh (2026-11-11)
+
+The chooser refresh already scans candidates of the requested source kind and
+resolves the unique or preferred embedded source. When that requested kind is
+also the embedded kind, commit `6566e35b5` reuses that verified entity for the
+highlight instead of traversing and encoding the same document candidates a
+second time. A kind change still performs the separate embedded-source scan;
+the periodic live watch still performs a full scan. This removes duplicate
+work in the common same-kind refresh but does not bound either full scan or
+establish large-drawing responsiveness. Mutation-aware incremental scanning,
+hard per-turn work limits, and its latency acceptance remain open.
+
+On the current CMake Release build, `[gui][dialog][offsetcurve][source]
+ [highlight]` passes 265 assertions / 14 cases, and the complete
+`[gui][dialog][offsetcurve][source]` selector passes 12,529 assertions / 28
+cases. These are headless behavior regressions, not a scan-time benchmark or
+visible GUI acceptance.
