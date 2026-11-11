@@ -35683,3 +35683,20 @@ resolution, Produce and all five internal R14/R2000/R2018 DXF/DWG round-trip
 lanes. This is evidence for one reversed short arc and one distance only;
 other reversed intervals, endpoint contacts, cusp equality/overrun, signed
 sides, profiles, external-reader and visible-GUI acceptance remain open.
+
+## 887. Qualify Exact and Over-cusp Worker Paths for a Wide-axis Arc (2026-11-11)
+
+Commit `6a735dacc` adds the translated, rotated, non-reversed ratio-1.5 arc
+from section 885 at the exact `16/6` cusp distance and at 110% of that
+distance. Both fixtures pass typed worker generation, cache admission, Produce
+and the five internal R14/R2000/R2018 DXF/DWG round-trip lanes. The worker
+client matrix passes 1,624,083 assertions / 1 case with the existing bounded
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=300000` override. Its default 150-second
+watchdog expired just before completion on the first run; the extended run
+passed with no functional assertion failures. In contrast to the whole ellipse
+at exact cusp in section 883, both bounded-arc Produce cases complete.
+
+This closes exact/over-cusp worker paths only for this short sweep, ratio,
+origin, orientation and inward side. It does not qualify reversed arcs at those
+distances, arcs ending at a cusp, wider sweeps, other ellipse profiles, external
+readers or visible GUI behavior.
