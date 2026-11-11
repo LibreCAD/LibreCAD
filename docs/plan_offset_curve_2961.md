@@ -35829,3 +35829,23 @@ late-reply test passes 228 assertions / 1 case, and the complete
 cases. This covers the target-rebind race, not every cancellation or process
 termination schedule. Visible GUI, cross-platform execution, external readers,
 and remaining family/variant geometry and persistence gates stay open.
+
+## 895. Revalidate Type-changing Source Picker for All Modeled Kinds (2026-11-11)
+
+The current request reiterates that source type must be changeable while
+replacing the source and that the picker must expose all supported source
+types, including parabola. The current widget already has an independent
+`Source type` selector and filters drawing candidates by the selected kind;
+the explicit supported-kind inventory contains ellipse, spline, spline-points,
+parabola, bounded hyperbola, line, arc, circle, and polyline. The type selector
+remains available while idle, and changing it does not rewrite the embedded
+source definition or cache. Candidate selection still applies per-variant
+representability checks and rejects unsupported variants without mutation.
+
+Re-ran `[gui][dialog][offsetcurve][source]` on the current CMake Release/macOS
+build; it passes 14,827 assertions / 43 test cases. The selector's family
+transition matrix and replacement flow cover all nine modeled kinds. This
+closes the requested picker/type-filter behavior; it is not evidence that every
+variant of every kind has qualified offset generation, worker/cache, trimming,
+DXF/DWG persistence, external-reader, or visible-GUI support. Continue those
+as separate plan gates and keep unsupported geometry fail-closed.
