@@ -266,17 +266,28 @@ TEST_CASE("Trimmed tangent-constrained fit-point spline-points retain exact norm
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
 
-    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-        for (const double distance : {0.2, 0.5}) {
-            CAPTURE(side, distance);
-            const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE_FALSE(result.branches.empty());
-            const double tolerance =
-                LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
-            const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance);
-            CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
-            CHECK(checked.worstMissing <= 2.0 * tolerance);
+    for (int profileIndex = 0; profileIndex < 3; ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints profile{nullptr, source.getData()};
+        if (profileIndex == 1)
+            profile.revertDirection();
+        else if (profileIndex == 2)
+            profile.scale({0, 0}, {1.5, 0.75});
+        REQUIRE(profile.fitTangentsMatchCurve());
+        const double profileEnd = static_cast<double>(profile.getSegmentCount());
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.2, 0.5}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(profile, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(profile, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(profile), 0.0, profileEnd, distance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
         }
     }
 }
