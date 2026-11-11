@@ -35317,3 +35317,23 @@ multi-slice scan, document replacement and destruction while a slice is
 pending, cancellation/stale completion, a unique and ambiguous result across
 every modeled family, and bounding worst-case single-entity encoding. Keep
 these as required gates; the current test result does not close them.
+
+## 869. Verify Layer and Document-lifetime Rebinding (2026-11-11)
+
+Commit `84752b106` fixes a pending-slice edge case: a viewport document swap
+also invalidates its offset-highlight lifetime token, so the slice must
+reacquire the token and observer against the new document rather than attempt
+to continue with the old witness. The periodic validation path now likewise
+rebinds when the document identity changes; it still stops when the viewport
+or document is actually gone.
+
+New regressions cover an active multi-slice scan invalidated by unlocking the
+source layer, a document swap while a slice is pending (which resolves the
+replacement document's source), and document destruction while scanning. The
+existing viewport/document stop tests now distinguish replacement from
+destruction. The current CMake `librecad_tests` target builds, and the full
+`[gui][dialog][offsetcurve][source]` selector passes 12,611 assertions / 33
+cases. This closes layer-lock and document-lifetime invalidation for the
+tested flows. Stale/cancelled completion, source-layer visibility specifically,
+cross-family incremental uniqueness/ambiguity, and worst-case per-entity
+encoding remain open validation items.
