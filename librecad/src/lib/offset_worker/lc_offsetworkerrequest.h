@@ -15,6 +15,7 @@
 #include "lc_offsetpreviewsnapshot.h"
 
 #include <QCborArray>
+#include <cstddef>
 #include <optional>
 #include <variant>
 
@@ -99,6 +100,10 @@ struct Request {
  * fields. No geometry is normalized or repaired; refusals have no partial value.
  */
 namespace Values {
+inline constexpr std::size_t MaximumSourceControlPoints = 16384;
+inline constexpr std::size_t MaximumSourceKnots = 32768;
+inline constexpr std::size_t MaximumSourceFitPoints = 4096;
+
 std::optional<QCborArray> encodeCache(const RS_SplineData&);
 std::optional<RS_SplineData> decodeCache(const QCborArray&);
 std::optional<QCborArray> encodeDefinition(const LC_EllipseOffsetDefinition&);

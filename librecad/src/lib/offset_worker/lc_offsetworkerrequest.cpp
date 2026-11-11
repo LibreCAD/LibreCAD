@@ -13,9 +13,9 @@
 
 namespace LC_OffsetWorkerRequest {
 namespace {
-constexpr std::size_t ControlCap = 16384;
-constexpr std::size_t KnotCap = 32768;
-constexpr std::size_t FitCap = 4096;
+constexpr std::size_t ControlCap = Values::MaximumSourceControlPoints;
+constexpr std::size_t KnotCap = Values::MaximumSourceKnots;
+constexpr std::size_t FitCap = Values::MaximumSourceFitPoints;
 constexpr std::size_t HintCap = 4095;
 
 bool array(const QCborValue& value, qsizetype count, QCborArray& out) {

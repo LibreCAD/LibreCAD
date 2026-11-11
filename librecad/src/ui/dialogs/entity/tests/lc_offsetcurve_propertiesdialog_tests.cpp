@@ -771,6 +771,41 @@ TEST_CASE("Source picker scan baseline with large same-kind payloads",
     CHECK(overlay->getEntityList().size() == 1);
 }
 
+TEST_CASE("Source matching maximum encodable single-entity benchmark",
+          "[gui][dialog][offsetcurve][source][offset-picker-entity-bound][.slow]") {
+    constexpr std::size_t controlCap = LC_OffsetWorkerRequest::Values::MaximumSourceControlPoints;
+    constexpr std::size_t fitCap = LC_OffsetWorkerRequest::Values::MaximumSourceFitPoints;
+    LC_SplinePointsData data{false, false};
+    data.useControlPoints = true;
+    data.controlPoints.reserve(controlCap);
+    data.splinePoints.reserve(fitCap);
+    for (std::size_t i = 0; i < controlCap; ++i) {
+        const double x = static_cast<double>(i) * .01;
+        const double y = std::sin(static_cast<double>(i) * .013);
+        data.controlPoints.emplace_back(x, y);
+    }
+    for (std::size_t i = 0; i < fitCap; ++i) {
+        const double x = static_cast<double>(i) * .04;
+        data.splinePoints.emplace_back(x, std::sin(static_cast<double>(i) * .052) + .5);
+    }
+    LC_SplinePoints entity(nullptr, std::move(data));
+    QElapsedTimer elapsed;
+    elapsed.start();
+    const auto captured = LC_OffsetSourceGeometry::capture(entity);
+    const auto encoded = captured
+        ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*captured) : std::nullopt;
+    const qint64 elapsedNanoseconds = elapsed.nsecsElapsed();
+    REQUIRE(captured);
+    REQUIRE(captured->isWellFormed());
+    REQUIRE(encoded);
+    INFO("Maximum encodable spline-points capture plus CBOR encoding (" << controlCap
+         << " control and " << fitCap << " fit points): "
+         << elapsedNanoseconds / 1.0e6 << " ms");
+    CHECK(captured->kind() == LC_OffsetSourceGeometry::Kind::SplinePoints);
+    CHECK(std::get<LC_SplinePointsData>(captured->value).controlPoints.size() == controlCap);
+    CHECK(std::get<LC_SplinePointsData>(captured->value).splinePoints.size() == fitCap);
+}
+
 TEST_CASE("Native source picker preserves highlighted source across family filters",
           "[gui][dialog][offsetcurve][source][highlight][filter]") {
     Fixture f;
