@@ -25,6 +25,94 @@ USA.
 
 Updated: 2026-11-11. Project: **LibreCAD**, not LibreCAD_3.
 
+### Source Replacement: Current Execution Checklist
+
+This checklist is the current authority for the latest source-widget request;
+the numbered sections below are historical evidence, not additional completed
+work. The Properties widget must let a user choose a replacement of a different
+type, including a parabola, and visibly indicate the existing source when it
+can be identified. This is limited to the supported **offset source** families,
+not every entity LibreCAD can draw. Do not infer support for every geometry
+variant from the presence of a family in a combo box.
+
+**Baseline.** The committed widget already has a type selector populated from
+`LC_OffsetSourceGeometry::SupportedKinds`, a filtered entity chooser, a
+temporary current-source highlight, and an explicit select-in-drawing button.
+The nine modeled kinds are line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola and polyline. `LC_Parabola` must be classified
+before its spline-points base and retain its distinct typed representation.
+Existing table-driven, worker and file-lane tests cover particular fixtures;
+they do not establish universal geometry, platform, or visible-GUI support.
+Do not introduce a second type selector or a parabola-only picker.
+
+**Work in progress, not yet accepted.** The working tree contains an
+uncommitted change and tests for disabling explicit selection of hidden or
+locked sources. Review its lifetime and busy-state transitions, complete its
+tests, and validate it independently before treating it as delivered. Separate
+uncommitted intersection/materialization experiments are not evidence for the
+committed source-widget baseline; preserve and assess them separately.
+
+The hidden/locked explicit-selection slice is now committed as `92f3c2097`
+(`fix(offset): block selecting hidden or locked sources`). It disables the
+command when the resolved source is hidden or locked, rechecks eligibility at
+activation, and updates availability when the live highlight monitor observes
+visibility or lock changes. On the current CMake build,
+`Source selection respects live visibility and layer locking` and
+`Source selection starts disabled for hidden or locked sources` passed 39
+assertions / 2 cases; `[gui][dialog][offsetcurve][source],[gui][pen],
+[navigation][viewport-range]` passed 15,088 assertions / 72 cases. These are
+headless results on the working tree, not visible GUI, clean-build, or
+cross-platform acceptance. The source-widget modifications from that slice
+are committed; unrelated geometry experiments remain uncommitted.
+
+Execute and record these slices in order:
+
+1. **Selection state and lifetime.** Finish the hidden/locked selection work.
+   Test initially hidden or locked entities, live visibility and layer freeze
+   and lock changes, direct invocation while disabled, recovery, and state
+   changes while preparation is busy. Re-resolve and recheck the entity at the
+   actual selection action; a stale cached button state must not select an
+   ineligible entity. Cover document/viewport destruction and replacement,
+   preserve unrelated selection and overlay layers, and distinguish automatic
+   highlight from persistent selection. Test ambiguous and absent matches
+   without inventing an association, including their later resolution.
+2. **Cross-family replacement.** Verify that switching the family filter is
+   non-mutating and that an eligible candidate from every modeled family can
+   replace a source of a different kind. Test the complete family-to-family
+   selector matrix, including an empty family, unsupported candidates,
+   duplicate geometry and distinct parabola versus spline-points identity.
+   On a successful asynchronous replacement publish the typed source and its
+   validated cache together; on cancellation, failed preparation, stale or
+   deleted candidates, document change, and late worker replies preserve the
+   previous source, cache and committed identity. Keep both selectors disabled
+   while busy unless safe supersession is explicitly implemented and tested.
+3. **Family and parabola qualification.** Compare the canonical inventory with
+   capture, reconstruction, candidate filtering, worker protocol and cache
+   validation. For each eligible representative variant, test independent
+   geometry, both signed sides where meaningful, worker and cache operation,
+   and applicable DXF/DWG save, reopen and second-save lanes. Include distinct
+   parabola constructions, traversal and conditioning, and trimming. Record
+   exact fixtures, versions and limits in the existing capability matrix;
+   refuse unsupported or unproved cases without partial publication. The
+   unresolved near-node occurrence-identity issue in section 857 remains open
+   and must not be papered over by a parameter-distance heuristic.
+4. **Large-drawing responsiveness.** Measure matching with many same-kind,
+   large-payload candidates and define bounded work and latency goals. If an
+   incremental scan is needed, use a mutation-aware generation that covers
+   in-place edits, undo/redo, layers and document changes; hold no borrowed
+   entity pointer across event turns and never claim uniqueness from a partial
+   scan. Test invalidation, cancellation, recovery and all source families.
+5. **Delivery and acceptance.** For each implementation slice, run focused
+   tests and relevant regression suites, review the diff, commit the slice,
+   then update and commit this plan with the exact revision and actual results.
+   Validate CMake and qmake6 on clean committed sources; record platform and
+   deployment-target warnings. Run a visible LibreCAD workflow covering
+   cross-type selection, parabola, highlight/selection, cancel, undo/redo and
+   save/reopen. Report headless focus failures, unavailable desktop access,
+   untested platforms and failing external readers as open gates, not passes.
+   Push tested commits to PR #3193. Completion requires every applicable gate
+   above, not merely a successful build or a populated type selector.
+
 ### Current source-widget implementation plan
 
 This section takes precedence over older source-picker completion claims below.
@@ -67,7 +155,7 @@ following slices in order, preserving the detailed safety requirements below:
 | Slice | Remaining work | Acceptance evidence |
 | --- | --- | --- |
 | 1. Inventory and selector | Compare the canonical kind list, capture/reconstruction, candidate filter, and worker encoding for all nine families. Fix any mismatches; preserve the separate parabola tag and the existing family selector. | Table-driven tests exercise each family as a destination from a different family, switching filters without mutation, empty/unsupported buckets, and parabola versus spline-points identity. |
-| 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Record limits for initially missing or ambiguous matches and large drawings until addressed. |
+| 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection; the hidden/locked selection change is currently uncommitted. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Revalidate initially missing or ambiguous matches and record large-drawing limits until addressed. |
 | 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests, plus move/delete/document-change and late-reply tests; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
 | 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then a visible LibreCAD workflow with cross-family replacement, parabola, source indication, cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
