@@ -3914,48 +3914,64 @@ TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker 
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
 
-    LC_CurveJet midpoint;
-    REQUIRE(source.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, midpoint));
-    RS_Vector normal{-midpoint.first.y, midpoint.first.x};
-    REQUIRE(normal.magnitude() > 0.0);
-    normal = normal / normal.magnitude() * 8.0;
-    const std::array<RS_Vector, 2> sidePicks{{midpoint.point + normal, midpoint.point - normal}};
+    std::array<LC_SplinePointsData, 3> profiles;
+    profiles[0] = source.getData();
+    LC_SplinePoints reversed{nullptr, profiles[0]};
+    reversed.revertDirection();
+    REQUIRE(reversed.fitTangentsMatchCurve());
+    profiles[1] = reversed.getData();
+    LC_SplinePoints affine{nullptr, profiles[0]};
+    affine.scale({0, 0}, {1.5, 0.75});
+    REQUIRE(affine.fitTangentsMatchCurve());
+    profiles[2] = affine.getData();
+
     const std::array<double, 2> distances{{0.2, 0.5}};
 
-    for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
-        for (std::size_t side = 0; side < sidePicks.size(); ++side) {
-            CAPTURE(distanceIndex, side);
-            const std::size_t requestId = 1 + distanceIndex * 2 + side;
-            Receipts receipts;
-            RS_OffsetData data;
-            data.coord = sidePicks[side]; data.distance = distances[distanceIndex]; data.number = 1;
-            data.multipleCopies = true; data.keepOriginals = true;
-            LC_OffsetBatchPreparation prepared{data, {&source}, false, {}};
-            LC_DocumentModificationBatch batch;
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints profile{nullptr, profiles[profileIndex]};
+        LC_CurveJet midpoint;
+        REQUIRE(profile.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, midpoint));
+        RS_Vector normal{-midpoint.first.y, midpoint.first.x};
+        REQUIRE(normal.magnitude() > 0.0);
+        normal = normal / normal.magnitude() * 8.0;
+        const std::array<RS_Vector, 2> sidePicks{{midpoint.point + normal, midpoint.point - normal}};
 
-            REQUIRE_FALSE(prepared.advance(batch));
-            CHECK(prepared.pendingSource() == &source);
-            auto request = prepared.request(token(requestId));
-            REQUIRE(request);
-            REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
-            const auto& operation = std::get<Req::Produce>(request->operation);
-            REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
-            CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
-                  LC_OffsetSourceGeometry::Kind::SplinePoints);
-            REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
-            rt.until([&] { return receipts.calls[0] != 0; });
-            const auto& completion = completed(receipts.at(0), requestId, 5);
-            REQUIRE(prepared.accept(completion));
-            REQUIRE(prepared.advance(batch));
+        for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
+            for (std::size_t side = 0; side < sidePicks.size(); ++side) {
+                CAPTURE(distanceIndex, side);
+                const std::size_t requestId = 1 + profileIndex * 4 + distanceIndex * 2 + side;
+                Receipts receipts;
+                RS_OffsetData data;
+                data.coord = sidePicks[side]; data.distance = distances[distanceIndex]; data.number = 1;
+                data.multipleCopies = true; data.keepOriginals = true;
+                LC_OffsetBatchPreparation prepared{data, {&profile}, false, {}};
+                LC_DocumentModificationBatch batch;
 
-            REQUIRE(prepared.outcome().sources.size() == 1);
-            CHECK(prepared.outcome().sources.front().source == &source);
-            CHECK(prepared.outcome().sources.front().complete());
-            REQUIRE_FALSE(batch.entitiesToAdd.empty());
-            CHECK_FALSE(source.isDeleted());
-            prepared.release();
-            qDeleteAll(batch.entitiesToAdd);
-            batch.entitiesToAdd.clear();
+                REQUIRE_FALSE(prepared.advance(batch));
+                CHECK(prepared.pendingSource() == &profile);
+                auto request = prepared.request(token(requestId));
+                REQUIRE(request);
+                REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
+                const auto& operation = std::get<Req::Produce>(request->operation);
+                REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
+                CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
+                      LC_OffsetSourceGeometry::Kind::SplinePoints);
+                REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+                rt.until([&] { return receipts.calls[0] != 0; });
+                const auto& completion = completed(receipts.at(0), requestId, 5);
+                REQUIRE(prepared.accept(completion));
+                REQUIRE(prepared.advance(batch));
+
+                REQUIRE(prepared.outcome().sources.size() == 1);
+                CHECK(prepared.outcome().sources.front().source == &profile);
+                CHECK(prepared.outcome().sources.front().complete());
+                REQUIRE_FALSE(batch.entitiesToAdd.empty());
+                CHECK_FALSE(profile.isDeleted());
+                prepared.release();
+                qDeleteAll(batch.entitiesToAdd);
+                batch.entitiesToAdd.clear();
+            }
         }
     }
 }
