@@ -855,7 +855,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             }
         }
     }
-    const auto degreeMinusOneMultiplicitySpline = [](const std::size_t degree, const double interiorKnot) {
+    constexpr std::array<double, 7> broadWeights{0.45, 2.1, 0.6, 1.8, 0.8, 1.4, 2.4};
+    const auto degreeMinusOneMultiplicitySpline = [&broadWeights](const std::size_t degree, const double interiorKnot, const std::size_t weightProfile) {
         RS_SplineData data;
         data.degree = degree;
         data.type = RS_SplineData::SplineType::ClampedOpen;
@@ -875,8 +876,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             data.controlPoints.push_back(secondHandle + (endpoint - secondHandle) * t);
         }
         data.weights.resize(data.controlPoints.size());
-        for (std::size_t i = 0; i < data.weights.size(); ++i)
-            data.weights[i] = 0.65 + 0.17 * static_cast<double>(i % 5);
+        for (std::size_t i = 0; i < data.weights.size(); ++i) {
+            data.weights[i] = weightProfile == 0 ? 0.65 + 0.17 * static_cast<double>(i % 5) : broadWeights[i % broadWeights.size()];
+        }
         data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
         data.knotslist.insert(data.knotslist.end(), degree - 1, interiorKnot);
         data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
@@ -891,18 +893,20 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     };
     std::vector<DegreeMinusOneMultiplicityFixture> degreeMinusOneMultiplicityFixtures;
     for (const std::size_t degree : {4U, 5U, 6U}) {
-        for (const double interiorKnot : {0.37, 0.63}) {
-            for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
-                for (const double rotation : {0.0, M_PI / 180.0 * 37.0}) {
-                    for (const double signedDistance : {-0.1, 0.1}) {
-                        RS_SplineData spline = degreeMinusOneMultiplicitySpline(degree, interiorKnot);
-                        const double cosine = std::cos(rotation);
-                        const double sine = std::sin(rotation);
-                        for (RS_Vector& point : spline.controlPoints) {
-                            point = {cosine * point.x - sine * point.y + translation.x, sine * point.x + cosine * point.y + translation.y};
+        for (const std::size_t weightProfile : {0U, 1U}) {
+            for (const double interiorKnot : {0.37, 0.63}) {
+                for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
+                    for (const double rotation : {0.0, M_PI / 180.0 * 37.0}) {
+                        for (const double signedDistance : {-0.1, 0.1}) {
+                            RS_SplineData spline = degreeMinusOneMultiplicitySpline(degree, interiorKnot, weightProfile);
+                            const double cosine = std::cos(rotation);
+                            const double sine = std::sin(rotation);
+                            for (RS_Vector& point : spline.controlPoints) {
+                                point = {cosine * point.x - sine * point.y + translation.x, sine * point.x + cosine * point.y + translation.y};
+                            }
+                            degreeMinusOneMultiplicityFixtures.push_back({sources.size(), degree, signedDistance, translation, rotation});
+                            sources.emplace_back(LC_OffsetSourceGeometry{spline});
                         }
-                        degreeMinusOneMultiplicityFixtures.push_back({sources.size(), degree, signedDistance, translation, rotation});
-                        sources.emplace_back(LC_OffsetSourceGeometry{spline});
                     }
                 }
             }
