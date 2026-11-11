@@ -35261,3 +35261,38 @@ passes 5 assertions / 1 case, and `[container]` passes 2,956 assertions / 14
 cases. This is only the structural invalidation primitive: the incremental
 scanner does not consume it yet, and geometry/layer/document mutation tests
 remain open.
+
+## 867. Implement Mutation-aware Incremental Highlight Validation (2026-11-11)
+
+The Properties widget now validates its source highlight in bounded slices.
+Each slice examines at most 64 entities and targets approximately 4 ms; it
+retains only value-owned geometry, entity IDs, and list indices between event
+turns, never an `RS_Entity*`. Completion revalidates the document identity,
+list revision, entity count, undo epoch, mutation generation, and selected
+candidate before publishing a highlight or treating a match as unique.
+Document modification/undo and layer-list notifications invalidate the active
+scan; stale partial matches are discarded and a fresh scan is queued. The new
+document lifetime witness allows the observer to unregister without touching
+a destroyed document.
+
+The first bounded slice runs immediately so small drawings preserve the
+existing synchronous source-choice and selection behavior; any remaining
+entries continue through the single-shot event-loop timer. A benchmark with
+1,024 same-kind spline-points candidates of 256 controls each measured 84.88
+ms total for the full incremental highlight validation (the earlier
+synchronous validation measured about 41 ms). The total is not a frame-time
+claim; the implementation bounds entries/time target per slice, while a single
+large entity's encoding cost remains unbounded. Type-filter refresh measured
+2.23 ms.
+
+On the current CMake Release/macOS build, the complete
+`[gui][dialog][offsetcurve][source]` selector passes 12,553 assertions / 29
+cases, including source-family changes, live visibility/locking, later
+resolution, and the large-drawing benchmark. The benchmark passes 24
+assertions / 1 case. `git diff --check` passes. Remaining acceptance work is to
+add explicit scan-invalidation regressions for same-count structural changes,
+geometry mutation, undo/redo, layer visibility/lock, document replacement and
+destruction, cancellation, and stale completion; bound the worst-case single
+entity encoding; then run visible GUI validation. This completes the first
+incremental-scanner implementation slice, not the remaining source-filter or
+geometry-family qualification work.
