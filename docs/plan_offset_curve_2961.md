@@ -34517,3 +34517,31 @@ and the real-worker typed-source/cache/five-lane file matrix passed 1,552,511
 assertions in one case with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`. Strict,
 full qmake, visible, independent-CAD visual, and other-platform gates remain
 open.
+
+## 849. Certify Same-Cubic Injectivity (2026-11-11)
+
+Commit `d104f0cb6` adds a conservative injectivity certificate for a single
+cubic when its coordinate controls are not globally monotone. For two distinct
+parameters, the cubic's power coefficients constrain their sum and product.
+Outward interval arithmetic proves injectivity only when those constraints
+cannot hold inside the requested parameter interval, or when the discriminant
+is strictly negative. Both parameter orientations are tried to avoid unstable
+cancellation at the far endpoint; uncertain or degenerate systems remain
+uncertified. Invalid control points are rejected before either proof path.
+
+An independent exact-rational oracle confirms a negative parameter product for
+each of the two captured half-ellipse endpoint pieces. The regression also
+checks 72 independently scaled, reflected, swapped, and reversed variants of
+an exactly self-crossing cubic: the full interval is never certified, while
+the tested noncrossing subintervals are. With the uncommitted strict
+experiment present, the materialized selector passed 2,765 assertions in 9
+cases, the precision/proof-domain selector passed 291 assertions in 6 cases,
+and the previously failing half-ellipse fixture passed 10,071 assertions.
+The qmake6 application object compiled; this is not a full qmake build.
+
+Before the final invalid-control guard, the broader local strict experiment
+reported 11 failed assertions, down from 16; it still failed on extreme
+ellipses and trimming. The experimental solver, strict trigger, and debug
+prints remain uncommitted. Clean normal-path and worker/file matrices for this
+certificate, strict activation, visible checks, and cross-platform validation
+remain open.
