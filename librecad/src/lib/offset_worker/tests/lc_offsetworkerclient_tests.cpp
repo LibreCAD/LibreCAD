@@ -805,6 +805,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     const std::size_t rotatedWideAxisNearCuspEllipseArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
         {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, -0.2, 0.2, false}});
+    const std::size_t rotatedWideAxisReversedNearCuspEllipseArcFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
+        {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.2, -0.2, true}});
     const std::size_t tangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{tangentFitPoints});
     const std::size_t reversedTangentFitPointFixture = sources.size();
@@ -1604,6 +1607,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == rotatedWideAxisOverCuspEllipseFixture                                 ? 1.1 * (16.0 / 6.0)
             : i == rotatedWideAxisOutwardNearCuspEllipseFixture                          ? 2.4
             : i == rotatedWideAxisNearCuspEllipseArcFixture                              ? 2.4
+            : i == rotatedWideAxisReversedNearCuspEllipseArcFixture                      ? 2.4
             : i == largeOriginParabolaFixture                                            ? 2500.0
             : i == translatedSmallParabolaFixture                                        ? 0.00025
             : i == smallLargeOriginParabolaFixture                                       ? 0.0005
@@ -1730,7 +1734,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == rotatedWideAxisAtCuspEllipseFixture ||
             i == rotatedWideAxisOverCuspEllipseFixture ||
             i == rotatedWideAxisOutwardNearCuspEllipseFixture ||
-            i == rotatedWideAxisNearCuspEllipseArcFixture)
+            i == rotatedWideAxisNearCuspEllipseArcFixture ||
+            i == rotatedWideAxisReversedNearCuspEllipseArcFixture)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -1838,7 +1843,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                          i == rotatedWideAxisAtCuspEllipseFixture ||
                          i == rotatedWideAxisOverCuspEllipseFixture ||
                          i == rotatedWideAxisOutwardNearCuspEllipseFixture ||
-                         i == rotatedWideAxisNearCuspEllipseArcFixture) {
+                         i == rotatedWideAxisNearCuspEllipseArcFixture ||
+                         i == rotatedWideAxisReversedNearCuspEllipseArcFixture) {
                     const auto* actual = std::get_if<RS_EllipseData>(
                         &editable->sourceDefinition()->source.value);
                     const auto* expected = std::get_if<RS_EllipseData>(
@@ -2116,7 +2122,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == rotatedWideAxisAtCuspEllipseFixture ||
             i == rotatedWideAxisOverCuspEllipseFixture ||
             i == rotatedWideAxisOutwardNearCuspEllipseFixture ||
-            i == rotatedWideAxisNearCuspEllipseArcFixture) {
+            i == rotatedWideAxisNearCuspEllipseArcFixture ||
+            i == rotatedWideAxisReversedNearCuspEllipseArcFixture) {
             const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
             offset.distance = i == rotatedWideAxisNearCuspEllipseFixture ? 2.4
                 : i == rotatedWideAxisAtCuspEllipseFixture ? 16.0 / 6.0
