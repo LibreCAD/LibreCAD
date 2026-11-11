@@ -946,7 +946,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         {{0.0, 0.0}, {6.0, 8.0}},
         {{6.0, 8.0}, {0.0, 0.0}},
     }};
-    for (const double scale : {1e-8, 1.0, 1e8}) {
+    for (const double scale : {1e-6, 1e-8, 1.0, 1e8, 1e10}) {
         for (const double translationRatio : {0.0, 1e6}) {
             const RS_Vector translation{translationRatio * scale, -translationRatio * scale};
             for (const auto& [start, end] : lineProfiles) {
@@ -2138,16 +2138,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             offset.coord = circle.center + RS_Vector{pickRadius, 0.0};
             offset.sideFallback = offset.coord;
         }
+        const auto lineProfile = scaledLineProfile(i);
         const auto oppositeLine = std::find_if(oppositeLineFixtures.begin(), oppositeLineFixtures.end(),
             [i](const OppositeLineFixture& fixture) { return fixture.fixture == i; });
-        if (oppositeLine != oppositeLineFixtures.end()) {
+        if (lineProfile) {
             const auto& line = std::get<RS_LineData>(sources[i].value);
-            const double scale = scaledLineScales[oppositeLine->profile];
+            const double scale = scaledLineScales[*lineProfile];
             const RS_Vector tangent = (line.endpoint - line.startpoint).normalized();
             const RS_Vector leftNormal{-tangent.y, tangent.x};
             const RS_Vector midpoint = (line.startpoint + line.endpoint) * 0.5;
-            offset.distance = scaledLineDistances[oppositeLine->profile];
-            offset.coord = midpoint - leftNormal * (4.0 * scale);
+            const double side = oppositeLine == oppositeLineFixtures.end() ? 1.0 : -1.0;
+            offset.distance = scaledLineDistances[*lineProfile];
+            offset.coord = midpoint + leftNormal * (side * 4.0 * scale);
             offset.sideFallback = offset.coord;
         }
         if (i == rotatedWideAxisEllipseFixture) {
@@ -2527,12 +2529,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Line) {
                 REQUIRE(producedValue->outputs.size() == 1);
                 CHECK(std::holds_alternative<Req::Segment>(producedValue->outputs.front()));
-                if (oppositeLine != oppositeLineFixtures.end()) {
+                if (lineProfile) {
                     const auto& line = std::get<RS_LineData>(sources[i].value);
-                    const double scale = scaledLineScales[oppositeLine->profile];
+                    const double scale = scaledLineScales[*lineProfile];
                     const RS_Vector tangent = (line.endpoint - line.startpoint).normalized();
                     const RS_Vector leftNormal{-tangent.y, tangent.x};
-                    const RS_Vector displacement = leftNormal * (-scaledLineDistances[oppositeLine->profile]);
+                    const double side = oppositeLine == oppositeLineFixtures.end() ? 1.0 : -1.0;
+                    const RS_Vector displacement = leftNormal * (side * scaledLineDistances[*lineProfile]);
                     const auto* segment = std::get_if<Req::Segment>(&producedValue->outputs.front());
                     REQUIRE(segment);
                     const auto exactOffsetPoint = [scale](const RS_Vector& actual, const RS_Vector& expected) {

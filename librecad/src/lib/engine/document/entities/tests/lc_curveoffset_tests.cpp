@@ -2174,7 +2174,7 @@ TEST_CASE("Line offsets retain exact normals across orientation and scale bounda
         {{6.0, 8.0}, {0.0, 0.0}},
     }};
 
-    for (const double scale : {1e-8, 1.0, 1e8}) {
+    for (const double scale : {1e-6, 1e-8, 1.0, 1e8, 1e10}) {
         for (const double translationRatio : {0.0, 1e6}) {
             const RS_Vector translation{translationRatio * scale, -translationRatio * scale};
             for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
