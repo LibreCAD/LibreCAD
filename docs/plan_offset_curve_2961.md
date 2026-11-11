@@ -34846,6 +34846,25 @@ candidate followed by the valid node must still materialize successfully,
 charge both node comparisons and one additional source sample. With the
 uncommitted strict experiment, the focused regression passed 39 assertions.
 
+An additional adversarial probe confirms the remaining distinct-parameter
+gap. For the quadratic source `P(t) = (4t - 2, (4t - 2)^2)`, its noded
+left offset at distance 1 has a crossing near `(0, 1.25)` with distinct
+source occurrences near `0.2834936490538903` and `0.7165063509461097`.
+Replacing the first stored occurrence with `nextafter(parameterB, +infinity)`
+still returns `Ok` and publishes entities, although both stored occurrences
+now describe the same local source neighborhood. The temporary failing probe
+was removed after recording the result. Do not close this by imposing an
+arbitrary parameter-distance cutoff: implement a bounded provenance and
+occurrence-identity proof, including corner arcs and uncertainty/refusal,
+then reinstate the probe alongside genuine close-crossing controls.
+
+At clean commit `b0c90898f`, CMake Release rebuilt the test and worker-client
+targets; the duplicate-occurrence regression passed 36 assertions, the
+geometry/intersection/trim/topology matrix passed 1,369,389 assertions, and
+the real-worker typed-source/cache and five-lane file matrix passed
+1,626,579 assertions in one case. These results do not close the adjacent
+occurrence counterexample above.
+
 Desktop control was checked again on 2026-11-11 and reports the Mac locked;
 visible GUI acceptance remains blocked rather than inferred from headless
 tests. The full qmake6 pass and clean rebuild are being verified separately.
