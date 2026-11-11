@@ -799,6 +799,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     const std::size_t rotatedWideAxisOverCuspEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
         {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.0, 0.0, false}});
+    const std::size_t rotatedWideAxisOutwardNearCuspEllipseFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
+        {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.0, 0.0, false}});
     const std::size_t tangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{tangentFitPoints});
     const std::size_t reversedTangentFitPointFixture = sources.size();
@@ -1596,6 +1599,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == rotatedWideAxisNearCuspEllipseFixture                                 ? 2.4
             : i == rotatedWideAxisAtCuspEllipseFixture                                   ? 16.0 / 6.0
             : i == rotatedWideAxisOverCuspEllipseFixture                                 ? 1.1 * (16.0 / 6.0)
+            : i == rotatedWideAxisOutwardNearCuspEllipseFixture                          ? 2.4
             : i == largeOriginParabolaFixture                                            ? 2500.0
             : i == translatedSmallParabolaFixture                                        ? 0.00025
             : i == smallLargeOriginParabolaFixture                                       ? 0.0005
@@ -1720,7 +1724,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == rotatedWideAxisReversedEllipseArcFixture ||
             i == rotatedWideAxisNearCuspEllipseFixture ||
             i == rotatedWideAxisAtCuspEllipseFixture ||
-            i == rotatedWideAxisOverCuspEllipseFixture)
+            i == rotatedWideAxisOverCuspEllipseFixture ||
+            i == rotatedWideAxisOutwardNearCuspEllipseFixture)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -1826,7 +1831,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                          i == rotatedWideAxisReversedEllipseArcFixture ||
                          i == rotatedWideAxisNearCuspEllipseFixture ||
                          i == rotatedWideAxisAtCuspEllipseFixture ||
-                         i == rotatedWideAxisOverCuspEllipseFixture) {
+                         i == rotatedWideAxisOverCuspEllipseFixture ||
+                         i == rotatedWideAxisOutwardNearCuspEllipseFixture) {
                     const auto* actual = std::get_if<RS_EllipseData>(
                         &editable->sourceDefinition()->source.value);
                     const auto* expected = std::get_if<RS_EllipseData>(
@@ -2102,12 +2108,16 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
         if (i == rotatedWideAxisNearCuspEllipseFixture ||
             i == rotatedWideAxisAtCuspEllipseFixture ||
-            i == rotatedWideAxisOverCuspEllipseFixture) {
+            i == rotatedWideAxisOverCuspEllipseFixture ||
+            i == rotatedWideAxisOutwardNearCuspEllipseFixture) {
             const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
             offset.distance = i == rotatedWideAxisNearCuspEllipseFixture ? 2.4
                 : i == rotatedWideAxisAtCuspEllipseFixture ? 16.0 / 6.0
-                : 1.1 * (16.0 / 6.0);
-            offset.coord = ellipse.center;
+                : i == rotatedWideAxisOverCuspEllipseFixture ? 1.1 * (16.0 / 6.0)
+                : 2.4;
+            offset.coord = i == rotatedWideAxisOutwardNearCuspEllipseFixture
+                ? ellipse.center + ellipse.majorP.normalized() * (ellipse.majorP.magnitude() + offset.distance)
+                : ellipse.center;
             offset.sideFallback = offset.coord;
         }
         if (thinEllipse != thinEllipseFixtures.end()) {

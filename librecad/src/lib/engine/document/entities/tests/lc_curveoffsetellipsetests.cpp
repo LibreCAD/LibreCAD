@@ -1336,6 +1336,14 @@ TEST_CASE("Translated rotated wide-axis ellipse reports the cusp boundary and ov
         CHECK_FALSE(inward.chains.empty());
         checkOffset(inward, curveOf(source), distance, {true});
     }
+
+    constexpr double outwardDistance = 2.4;
+    const Offset outward = offsetOf(source, kRight, outwardDistance, 0.1 * outwardDistance);
+    CHECK(outward.status == LC_CurveOffsetStatus::Ok);
+    CHECK(outward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+    CHECK_FALSE(outward.entities.empty());
+    CHECK_FALSE(outward.chains.empty());
+    checkOffset(outward, curveOf(source), outwardDistance, {true});
 }
 
 TEST_CASE("Large-origin near-contact is not an exact sampled crossing", "[curve-offset][ellipse][precision]") {
