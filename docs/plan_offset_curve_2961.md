@@ -34922,3 +34922,16 @@ worker, library, plugin and tool build exited successfully. At the later
 test-only commit `b592af002`, the clean bounded-source and picker selection
 passed 12,511 assertions in 31 cases. The macOS deployment-target warning and
 the large-drawing scan, visible-GUI and occurrence-identity gaps remain open.
+
+For the large-drawing follow-up, first measure the live-watch scan with many
+same-kind, maximum-size candidates and establish explicit work and latency
+budgets. Then design a mutation-aware, incrementally bounded scan: keep no
+borrowed entity pointer across event turns; invalidate or restart on every
+relevant structural or geometry change and document/viewport replacement;
+and show a pending or unresolved state rather than asserting uniqueness from
+a partial scan. A document mutation generation or equivalent must cover
+in-place edits, undo/redo, deletion, layers and plugin changes before it can
+justify reusing a partial result. Test mutations during every scan phase,
+identity preference, cancellation, budget exhaustion and recovery across all
+source families. Do not claim large-drawing responsiveness from the per-item
+size cap alone.
