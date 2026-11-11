@@ -1315,6 +1315,29 @@ TEST_CASE("Large-origin reversed 10000-to-1 ellipse direct branches materialize 
     }
 }
 
+TEST_CASE("Translated rotated wide-axis ellipse reports the cusp boundary and over-cusp topology",
+          "[curve-offset][ellipse][direct][cusp]") {
+    constexpr double majorRadius = 6.0;
+    constexpr double ratio = 2.0 / 3.0;
+    constexpr double cuspRadius = majorRadius * ratio * ratio;
+    const double angle = M_PI / 7.0;
+    const RS_Vector majorP{majorRadius * std::cos(angle), majorRadius * std::sin(angle)};
+    const RS_Ellipse source{nullptr, RS_EllipseData{{1e4, -2e4}, majorP, ratio, 0.0, 0.0, false}};
+
+    for (const double distance : {cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const Offset inward = offsetOf(source, kLeft, distance, 0.1 * distance);
+        INFO("status=" << static_cast<int>(inward.status) << ", entities=" << inward.entities.size()
+                        << ", chains=" << inward.chains.size() << ", topology status="
+                        << static_cast<int>(inward.intersectionDiagnostics.status));
+        CHECK(inward.status == LC_CurveOffsetStatus::Ok);
+        CHECK(inward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        CHECK_FALSE(inward.entities.empty());
+        CHECK_FALSE(inward.chains.empty());
+        checkOffset(inward, curveOf(source), distance, {true});
+    }
+}
+
 TEST_CASE("Large-origin near-contact is not an exact sampled crossing", "[curve-offset][ellipse][precision]") {
     // Samples and consecutive Bezier controls from the rejected exact-cusp bound experiment.
     const LC_OffsetSegment first{false, {1000086.6025390244, -999950.00000031327},
