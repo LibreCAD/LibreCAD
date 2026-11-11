@@ -698,6 +698,48 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse);
 }
 
+TEST_CASE("Source picker scan baseline with large same-kind payloads",
+          "[gui][dialog][offsetcurve][source][offset-picker-benchmark][.slow]") {
+    Fixture f;
+    constexpr int candidateCount = 1024;
+    constexpr int controlsPerCandidate = 256;
+    f.graphic.setAutoUpdateBorders(false);
+    for (int candidate = 0; candidate < candidateCount; ++candidate) {
+        LC_SplinePointsData data{false, false};
+        data.useControlPoints = true;
+        data.controlPoints.reserve(controlsPerCandidate);
+        for (int control = 0; control < controlsPerCandidate; ++control) {
+            const double x = static_cast<double>(control) / controlsPerCandidate + candidate * 2.0;
+            const double y = std::sin(static_cast<double>(control) * 0.1) + candidate;
+            data.controlPoints.emplace_back(x, y);
+        }
+        f.graphic.addEntity(new LC_SplinePoints(nullptr, std::move(data)));
+    }
+    f.graphic.setAutoUpdateBorders(true);
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox);
+    REQUIRE(sourceBox);
+    const int splinePointsKind = typeBox->findData(
+        static_cast<int>(LC_OffsetSourceGeometry::Kind::SplinePoints));
+    REQUIRE(splinePointsKind >= 0);
+
+    QElapsedTimer elapsed;
+    elapsed.start();
+    typeBox->setCurrentIndex(splinePointsKind);
+    const qint64 elapsedNanoseconds = elapsed.nsecsElapsed();
+    INFO("Synchronous type-filter refresh for " << candidateCount << " candidates x "
+         << controlsPerCandidate << " control points: " << elapsedNanoseconds / 1.0e6 << " ms");
+    CHECK(sourceBox->count() == candidateCount + 1);
+}
+
 TEST_CASE("Native source picker preserves highlighted source across family filters",
           "[gui][dialog][offsetcurve][source][highlight][filter]") {
     Fixture f;
