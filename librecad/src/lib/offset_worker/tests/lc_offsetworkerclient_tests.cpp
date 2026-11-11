@@ -865,7 +865,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const double t = static_cast<double>(i - 1) / static_cast<double>(degree - 1);
             data.controlPoints.push_back(secondHandle + (endpoint - secondHandle) * t);
         }
-        data.weights.assign(data.controlPoints.size(), 1.0);
+        data.weights.resize(data.controlPoints.size());
+        for (std::size_t i = 0; i < data.weights.size(); ++i)
+            data.weights[i] = 0.65 + 0.17 * static_cast<double>(i % 5);
         data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
         data.knotslist.insert(data.knotslist.end(), degree - 1, interiorKnot);
         data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
