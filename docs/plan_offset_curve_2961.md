@@ -35296,3 +35296,24 @@ destruction, cancellation, and stale completion; bound the worst-case single
 entity encoding; then run visible GUI validation. This completes the first
 incremental-scanner implementation slice, not the remaining source-filter or
 geometry-family qualification work.
+
+## 868. Verify Structural, Geometry and Undo Invalidation (2026-11-11)
+
+Commit `b5bb617cb` adds two incremental-scan regressions. The first begins
+with an ambiguous scan over more than one slice, removes one matching entity
+and adds an equivalent entity at the same list size, verifies that the
+structural revision changed, and confirms the restarted scan still reports
+ambiguity without publishing a partial highlight. The second moves one of two
+matching source ellipses through `undoableModify`; the scan resolves the
+remaining source, then undo restores ambiguity and removes the highlight. This
+exercises entity modification notification and undo-epoch invalidation as well
+as the final candidate revalidation.
+
+The CMake `librecad_tests` target builds and the complete
+`[gui][dialog][offsetcurve][source]` selector passes 12,584 assertions / 31
+cases. The specific `[incremental]` cases pass 31 assertions / 2 cases.
+Still-open scanner validation: layer visibility/lock mutation during a
+multi-slice scan, document replacement and destruction while a slice is
+pending, cancellation/stale completion, a unique and ambiguous result across
+every modeled family, and bounding worst-case single-entity encoding. Keep
+these as required gates; the current test result does not close them.
