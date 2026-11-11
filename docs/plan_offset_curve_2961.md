@@ -36842,3 +36842,17 @@ across three cases. `git diff --check` passes.
 This qualifies the five recorded stationary layouts, not arbitrary repeated
 control patterns or fit-point stationarity. ODA/AutoCAD and visible-GUI
 acceptance remain open.
+
+## 948. Qualify Trimming for Repeated-neighbor Fit Points (2026-11-11)
+
+Test commit `8a102112f` adds an exact-normal oracle for an interpolated
+`LC_SplinePoints` fit-point source whose consecutive input points coincide.
+The fitter produces a capturable source; trimmed geometry is checked on both
+sides at distances `0.2` and `0.5` for minimum kept distance and coverage of
+visible exact-normal points. The focused fit-point oracle passes 73 assertions
+across its two cases; the full `[curve-offset][trim]` selection passes 55,622
+assertions across 36 cases. `git diff --check` passes.
+
+This qualifies this repeated-neighbor fit-point profile only. It does not
+establish other coincident-point patterns, worker preparation, five-lane
+persistence, or visible/external-CAD acceptance.
