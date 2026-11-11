@@ -74,12 +74,30 @@ static_assert(std::is_nothrow_move_assignable_v<Completion>);
 static_assert(!std::is_constructible_v<Completion, Req::Request&&, Reply::Reply&&>);
 
 constexpr int SuiteTimeoutMs = 150000;
+constexpr int MaxSuiteTimeoutMs = 900000;
 constexpr int WaitTimeoutMs = 6000;
 constexpr const char* Tags = "[lc-offsetcurve][worker-client]";
 
+int boundedSuiteTimeout(const int requested, const bool valid) {
+    return valid ? std::clamp(requested, SuiteTimeoutMs, MaxSuiteTimeoutMs) : SuiteTimeoutMs;
+}
+
+int suiteTimeoutFromEnvironment() {
+    bool valid = false;
+    const int requested = qEnvironmentVariableIntValue("LC_OFFSET_CLIENT_TEST_TIMEOUT_MS", &valid);
+    return boundedSuiteTimeout(requested, valid);
+}
+
+TEST_CASE("Worker client suite timeout override remains bounded", Tags) {
+    CHECK(boundedSuiteTimeout(0, false) == SuiteTimeoutMs);
+    CHECK(boundedSuiteTimeout(-1, true) == SuiteTimeoutMs);
+    CHECK(boundedSuiteTimeout(300000, true) == 300000);
+    CHECK(boundedSuiteTimeout(1000000, true) == MaxSuiteTimeoutMs);
+}
+
 class Runtime {
 public:
-    Runtime() {
+    Runtime() : suiteTimeout{suiteTimeoutFromEnvironment()} {
         // The target's existing settings-isolation listener owns QSettings setup.
         if (!QCoreApplication::instance()) application = std::make_unique<QCoreApplication>(argc, argv);
         elapsed.start();
@@ -87,7 +105,7 @@ public:
 
     void check() const {
         INFO("client suite watchdog elapsed=" << elapsed.elapsed() << "ms");
-        REQUIRE(elapsed.elapsed() < SuiteTimeoutMs);
+        REQUIRE(elapsed.elapsed() < suiteTimeout);
     }
 
     void helperAvailable() const {
@@ -133,6 +151,7 @@ private:
     char* argv[2] = {name, nullptr};
     std::unique_ptr<QCoreApplication> application;
     QElapsedTimer elapsed;
+    const int suiteTimeout;
 };
 
 Runtime& runtime() {
