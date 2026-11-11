@@ -36508,6 +36508,21 @@ ordinary materialized splines, independent-reader or ODA/AutoCAD acceptance,
 visible GUI commit/undo, or other parabola shapes/transforms/domains. Those
 gates remain open.
 
+## 929. Independently Read Trimmed-parabola R2018 DWGs (2026-11-11)
+
+Test commit `b6cfdc56f` extends section 928's trimmed-output persistence test
+with a conditional LibreDWG `dwgread -O minJSON` check for each R2018 DWG.
+When `dwgread` is available, all eight forward/reversed, two-sided,
+two-distance files must parse successfully; the external SPLINE count, degree,
+and control-point coordinates are checked against the pre-export output.
+With LibreDWG 0.14 installed, the focused test passes 5,451 assertions,
+including all eight independent reads. Without `dwgread`, the independent
+checks are omitted and are not counted as passed.
+
+This is independent parser evidence, not ODA/AutoCAD visual acceptance. It
+does not cover other DWG releases, parabola variants, GUI commit/undo, or
+visible CAD rendering. `git diff --check` passes.
+
 ## 926. Exercise Typed-parabola Produce Through the Worker Client (2026-11-11)
 
 Test commit `b2da768ea` expands the real-helper `Produce` regression for the
