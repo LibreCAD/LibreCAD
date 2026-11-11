@@ -128,16 +128,23 @@ Execute and record these slices in order:
    regressions. Worker admission caps bound the encodable per-entity source
    payload; a maximum spline-points capture+encode measured 2.91 ms on the
    current Release/macOS build. This is measured evidence, not a
-   hardware-independent latency guarantee. The source-choice list rebuild
-   remains a separate synchronous path: after avoiding duplicate capture and
-   skipping unrelated kinds, the 1,024-candidate benchmark measured 1.61 ms;
-   larger-document/event-loop behavior remains open.
+   hardware-independent latency guarantee. The source-choice list now uses
+   incremental scanning and row publication for documents above 256 entities:
+   each timer slice visits at most 64 entries and targets approximately 4 ms;
+   candidates are retained as IDs/indices, and partial results are not exposed.
+   Document identity, structural and mutation revisions, undo epoch, count,
+   cancellation, visibility, and current candidate identity are revalidated
+   before publication. A 1,024-candidate benchmark measured 2.15 ms for the
+   incremental family-filter refresh and 77.55 ms for total highlight
+   validation across 256-control spline-points candidates. This is diagnostic
+   timing, not a hard event-loop guarantee. Smaller lists remain immediate;
+   visible-GUI latency and target-hardware acceptance remain open.
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
-   The latest source-picker suite passes 13,958 assertions / 38 cases and
+   The latest source-picker suite passes 14,097 assertions / 39 cases and
    worker-request microtests pass 603,526 assertions / 18 cases; exact results
-   and revisions are in sections 867–873. Validate CMake and qmake6 on clean
+   and revisions are in sections 867–877. Validate CMake and qmake6 on clean
    committed sources; record platform and deployment-target warnings. Run a
    visible LibreCAD workflow covering
    cross-type selection, parabola, highlight/selection, cancel, undo/redo and
@@ -35481,3 +35488,39 @@ controlled comparative benchmark or a hard responsiveness bound. The chooser
 still traverses the full document synchronously, so larger drawings, mutation
 during refresh, and visible event-loop latency remain open and must be addressed
 before closing the large-drawing phase.
+
+## 877. Incrementally Populate Large Source Choosers (2026-11-11)
+
+Commit `b2dd54cd1` replaces the synchronous source-choice scan for documents
+above 256 entities with a bounded event-loop scanner and incremental combo-row
+publication. Each scan slice visits at most 64 entities and targets
+approximately 4 ms. Candidate snapshots retain IDs and indices rather than
+entity pointers; no partial list is exposed before scanning and row
+publication finish. Changing source family restarts the scan. Cancellation,
+hide/show, entity replacement, and document destruction stop or restart the
+work as appropriate. The scanner revalidates document/viewport identity,
+document mutation and entity-list revisions, undo epoch, and entity count
+before publishing; highlight monitoring also detects structural changes that
+arrive without a direct notification.
+
+The new large-list regression covers a structural addition during scanning,
+an addition after completion, and hide/add/reopen before choosing a distinct
+parabola candidate. It passes 137 assertions / 1 case. The hidden large-list
+benchmark passes 26 assertions / 1 case; on the current CMake Release/macOS
+build, incremental family-filter refresh for 1,024 spline-points candidates
+with 256 controls each measured 2.14617 ms, while total incremental highlight
+validation measured 77.551 ms. The full source-picker selector passes 14,097
+assertions / 39 cases. These are diagnostic timings, not controlled
+comparative benchmarks or hard per-frame guarantees. The worker-request
+microtest result remains 603,526 assertions / 18 cases.
+
+This closes the large synchronous candidate-enumeration gap for the tested
+large-list workflow, but does not close visible-GUI responsiveness,
+target-hardware worst-case latency, or family/variant geometry and persistence
+qualification. Fresh qmake6 generation succeeded with Qt 6.12.0 and the
+project's C++17 configuration. A clean full build compiled the libraries and
+began the main application, but was stopped before completion because a full
+from-scratch build is substantially broader than this picker slice. No compile
+error was observed before interruption; this is not a full qmake build pass.
+The qmake6 full-build gate remains open and must be completed in the broader
+delivery validation before claiming plan completion.
