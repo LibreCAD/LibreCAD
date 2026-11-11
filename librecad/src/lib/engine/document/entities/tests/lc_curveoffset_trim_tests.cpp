@@ -180,22 +180,28 @@ Curve curveOf(const LC_SplinePoints& s) {
 
 TEST_CASE("Trimmed typed parabola offsets retain exact normals on both sides",
           "[curve-offset][trim][parabola][oracle]") {
-    const LC_Parabola source{nullptr, LC_ParabolaData{{
-        RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}};
-    REQUIRE(source.getData().isValid());
+    const std::array<LC_Parabola, 2> sources{{
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}},
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}}
+    }};
 
-    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-        for (const double distance : {0.25, 2.75}) {
-            CAPTURE(side, distance);
-            const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE_FALSE(result.branches.empty());
+    for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
+        const LC_Parabola& source = sources[sourceIndex];
+        CAPTURE(sourceIndex);
+        REQUIRE(source.getData().isValid());
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.25, 2.75}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
 
-            const double tolerance =
-                LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
-            const Checked checked = check(result, curveOf(source), 0.0, 1.0, distance);
-            CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
-            CHECK(checked.worstMissing <= 2.0 * tolerance);
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(source), 0.0, 1.0, distance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
         }
     }
 }
