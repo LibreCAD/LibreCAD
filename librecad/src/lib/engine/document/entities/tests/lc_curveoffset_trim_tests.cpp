@@ -248,6 +248,39 @@ TEST_CASE("Trimmed bounded hyperbola offsets retain exact normals past the verte
     }
 }
 
+TEST_CASE("Trimmed tangent-constrained fit-point spline-points retain exact normals",
+          "[curve-offset][trim][spline-points][fit-points][tangents][oracle]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0, 0}, {1, 2}, {3, 1.5}, {4, 0}};
+    data.fitTangentsConstrained = true;
+    data.fitTolerance = 1e-10;
+    LC_SplinePoints source{nullptr, data};
+    REQUIRE(source.getData().splinePoints.size() == 4);
+    LC_CurveJet start;
+    LC_CurveJet end;
+    REQUIRE(source.tryEvaluateJet(0.0, LC_CurveEvaluationSide::Right, start));
+    const double endParameter = static_cast<double>(source.getSegmentCount());
+    REQUIRE(source.tryEvaluateJet(endParameter, LC_CurveEvaluationSide::Left, end));
+    source.getData().fitTangentsConstrained = true;
+    source.getData().fitStartTangent = start.first;
+    source.getData().fitEndTangent = end.first;
+    REQUIRE(source.fitTangentsMatchCurve());
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        for (const double distance : {0.2, 0.5}) {
+            CAPTURE(side, distance);
+            const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const double tolerance =
+                LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+            const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance);
+            CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+            CHECK(checked.worstMissing <= 2.0 * tolerance);
+        }
+    }
+}
+
 TEST_CASE("Trimming removes a local loop and keeps the offset around it", "[curve-offset][trim]") {
     // Inside y = x^2 at distance 1: the swallowtail between the cusps, and the
     // two stretches from the cusps to the crossing at (0, 1.25), are nearer
