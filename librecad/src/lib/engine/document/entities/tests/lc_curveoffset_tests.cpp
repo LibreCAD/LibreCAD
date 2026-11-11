@@ -96,6 +96,85 @@ TEST_CASE("Materialized Bezier adapter orders branch parameters", "[curve-offset
     CHECK(result.intersections[0].point.distanceTo({1, 1}) < 1e-6);
 }
 
+TEST_CASE("Materialized cusp exclusion requires separated Bezier directions", "[curve-offset][topology][materialized]") {
+    const RS_Vector join{0.22509823218728275, 0.94055078897614952};
+    const LC_CurveOffsetInternal::BezierBranches branches{
+        {{{{0.22486931160331847, 0.94073008928991197},
+           {0.22502119615931856, 0.94060984482750365}, join, join}}},
+        {{{join, join, {0.22502898764663537, 0.94060387027748715},
+           {0.22488868693287323, 0.94070803938803738}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(branches, {1, -1});
+    const LC_IntersectionDomain domain{0, 1, LC_Interval::hull(0, 1), LC_Interval::hull(0, 1)};
+    const auto leaf = curves->certifyInjective(0, domain.parameterA);
+    CHECK(leaf.available);
+    RS_Vector endpoint, endpointDerivative;
+    REQUIRE(curves->evaluate(0, 1, endpoint, endpointDerivative));
+    CHECK(endpointDerivative.x == 0);
+    CHECK(endpointDerivative.y == 0);
+    const LC_CurveOffsetInternal::BezierBranches degenerate{{{{{0, 0}, {0, 0}, {0, 0}, {0, 0}}}},
+                                                             {{{{0, 0}, {1, 0}, {-1, 0}, {0, 0}}}}};
+    const auto noninjective = LC_CurveOffsetInternal::makePieceCurves(degenerate, {-1, -1});
+    CHECK_FALSE(noninjective->certifyInjective(0, LC_Interval::hull(0, 1)).available);
+    CHECK_FALSE(noninjective->certifyInjective(1, LC_Interval::hull(0, 1)).available);
+    const auto certificate = curves->certifyIntersection(domain);
+    CHECK(certificate.outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+    CHECK(certificate.proof == LC_IntersectionProof::AnalyticExclusion);
+    for (const double sign : {-1.0, 1.0}) {
+        auto transformed = branches;
+        for (auto& branch : transformed) {
+            for (auto& piece : branch) {
+                for (auto& point : piece) {
+                    point = {sign * 2.0 * point.x + 4.0, 3.0 * point.y - 5.0};
+                }
+            }
+        }
+        const auto reflected = LC_CurveOffsetInternal::makePieceCurves(transformed, {1, -1});
+        CHECK(reflected->certifyInjective(0, domain.parameterA).available);
+        CHECK(reflected->certifyIntersection(domain).outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+    }
+    const LC_IntersectionDomain reversed{1, 0, LC_Interval::hull(0, 1), LC_Interval::hull(0, 1)};
+    CHECK(curves->certifyIntersection(reversed).outcome == LC_AnalyticIntersectionCertificate::Outcome::Excluded);
+    const LC_IntersectionDomain outside{0, 1, LC_Interval::hull(-.1, 1), LC_Interval::hull(0, 1)};
+    CHECK(curves->certifyIntersection(outside).outcome == LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+    const auto unjoined = LC_CurveOffsetInternal::makePieceCurves(branches, {-1, -1});
+    CHECK(unjoined->certifyIntersection(domain).outcome == LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-8;
+    options.strict = true;
+    const auto cusp = findIntersections(*curves, options);
+    CHECK(cusp.status == LC_IntersectionStatus::Ok);
+    CHECK(cusp.intersections.empty());
+    CHECK(cusp.work.certificateBoxPairs > 0);
+    CHECK(cusp.work.totalBoxPairs <= options.maxBoxPairs);
+    CHECK(cusp.work.totalBoxPairs == cusp.work.candidateBoxPairs + cusp.work.refinementBoxPairs +
+                                        cusp.work.certificateBoxPairs);
+    REQUIRE(cusp.work.totalBoxPairs > 0);
+    auto limited = options;
+    limited.maxBoxPairs = cusp.work.totalBoxPairs - 1;
+    const auto refused = findIntersections(*curves, limited);
+    CHECK(refused.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(refused.work.totalBoxPairs <= limited.maxBoxPairs);
+
+    const RS_Vector origin{0, 0};
+    const LC_CurveOffsetInternal::BezierBranches crossing{
+        {{{{2, 0}, {1, 0}, origin, origin}}},
+        {{{origin, origin, {1, 1}, {1, -2}}}}};
+    const LC_CurveOffsetInternal::BezierBranches collinear{
+        {{{{2, 0}, {1, 0}, origin, origin}}},
+        {{{origin, origin, {-1, 0}, {-2, 0}}}}};
+    const auto collinearCurves = LC_CurveOffsetInternal::makePieceCurves(collinear, {1, -1});
+    CHECK(collinearCurves->certifyIntersection(domain).outcome == LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+    const auto crossingCurves = LC_CurveOffsetInternal::makePieceCurves(crossing, {1, -1});
+    // The second piece crosses y=0 again at u=.6 and x=.648, within the first piece's range.
+    RS_Vector point, derivative;
+    REQUIRE(crossingCurves->evaluate(1, .6, point, derivative));
+    CHECK(point.y == Approx(0).margin(1e-14));
+    CHECK(point.x == Approx(.648));
+    CHECK(crossingCurves->certifyIntersection(domain).outcome == LC_AnalyticIntersectionCertificate::Outcome::Unavailable);
+    const auto crossingResult = findIntersections(*crossingCurves, options);
+    CHECK((crossingResult.status != LC_IntersectionStatus::Ok || !crossingResult.intersections.empty()));
+}
+
 TEST_CASE("Offset source snapshots own every supported source type") {
     RS_EllipseData ellipseData;
     ellipseData.center = {1.0, 2.0};

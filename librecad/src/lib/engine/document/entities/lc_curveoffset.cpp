@@ -3487,7 +3487,7 @@ LC_CurveOffsetStatus fromIntersectionStatus(const LC_IntersectionStatus status) 
     return LC_CurveOffsetStatus::FitFailed;
 }
 
-/** Cubic Bezier pieces as parametric curves, each piece one segment on [0, 1]. */
+/** Cubic Bezier pieces as consecutively parameterized segments of each branch. */
 class PieceCurves final : public LC_ParametricCurves {
 public:
     PieceCurves(const std::vector<std::vector<std::array<RS_Vector, 4>>>& branches, std::vector<std::ptrdiff_t> next)
@@ -3511,6 +3511,105 @@ public:
 
     std::ptrdiff_t next(const std::size_t branch) const override {
         return m_next[branch];
+    }
+
+    LC_AnalyticLeafCertificate certifyInjective(const std::size_t segment,
+                                               const LC_Interval& parameter) const override {
+        if (segment >= m_pieces.size() || !parameter.isValid() ||
+            parameter.lo() < m_segments[segment].t0 || parameter.hi() > m_segments[segment].t1) {
+            return {};
+        }
+        const auto monotone = [&](const bool useX) {
+            bool nondecreasing = true;
+            bool nonincreasing = true;
+            bool changes = false;
+            for (std::size_t i = 1; i < m_pieces[segment].size(); ++i) {
+                const double a = useX ? m_pieces[segment][i - 1].x : m_pieces[segment][i - 1].y;
+                const double b = useX ? m_pieces[segment][i].x : m_pieces[segment][i].y;
+                if (!std::isfinite(a) || !std::isfinite(b)) {
+                    return false;
+                }
+                nondecreasing = nondecreasing && a <= b;
+                nonincreasing = nonincreasing && a >= b;
+                changes = changes || a != b;
+            }
+            return changes && (nondecreasing || nonincreasing);
+        };
+        return (monotone(true) || monotone(false)) ? LC_AnalyticLeafCertificate{true, segment, parameter}
+                                                    : LC_AnalyticLeafCertificate{};
+    }
+
+    LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& domain) const override {
+        if (domain.segmentA >= m_segments.size() || domain.segmentB >= m_segments.size() ||
+            domain.segmentA == domain.segmentB || !domain.parameterA.isValid() || !domain.parameterB.isValid()) {
+            return {};
+        }
+        const auto& sa = m_segments[domain.segmentA];
+        const auto& sb = m_segments[domain.segmentB];
+        if (domain.parameterA.lo() < sa.t0 || domain.parameterA.hi() > sa.t1 ||
+            domain.parameterB.lo() < sb.t0 || domain.parameterB.hi() > sb.t1) {
+            return {};
+        }
+        const auto joined = [&](const std::size_t a, const std::size_t b) {
+            const auto& first = m_segments[a];
+            const auto& second = m_segments[b];
+            if (first.branch == second.branch && a + 1 == b) {
+                return true;
+            }
+            const bool last = a + 1 == m_segments.size() || m_segments[a + 1].branch != first.branch;
+            const bool firstOfBranch = b == 0 || m_segments[b - 1].branch != second.branch;
+            return last && firstOfBranch && first.branch < m_next.size() &&
+                   m_next[first.branch] == static_cast<std::ptrdiff_t>(second.branch);
+        };
+        std::size_t before = domain.segmentA;
+        std::size_t after = domain.segmentB;
+        if (!joined(before, after)) {
+            std::swap(before, after);
+            if (!joined(before, after)) {
+                return {};
+            }
+        }
+        const auto& p = m_pieces[before];
+        const auto& q = m_pieces[after];
+        const auto same = [](const RS_Vector& a, const RS_Vector& b) {
+            return isFinite(a) && isFinite(b) && a.x == b.x && a.y == b.y;
+        };
+        if (!same(p[2], p[3]) || !same(p[3], q[0]) || !same(q[0], q[1]) ||
+            !isFinite(p[0]) || !isFinite(p[1]) || !isFinite(q[2]) || !isFinite(q[3])) {
+            return {};
+        }
+        struct IntervalVector { LC_Interval x, y; };
+        const auto difference = [](const RS_Vector& a, const RS_Vector& b) {
+            return IntervalVector{LC_Interval::point(a.x) - LC_Interval::point(b.x),
+                                  LC_Interval::point(a.y) - LC_Interval::point(b.y)};
+        };
+        const auto triple = [](const IntervalVector& v) {
+            return IntervalVector{LC_Interval::point(3.0) * v.x, LC_Interval::point(3.0) * v.y};
+        };
+        const auto crossProduct = [](const IntervalVector& a, const IntervalVector& b) {
+            return a.x * b.y - a.y * b.x;
+        };
+        // After factoring the squared distance from the join, each cubic is a
+        // linear blend of these two endpoint-relative vectors.
+        const std::array<IntervalVector, 2> a{{triple(difference(p[1], p[3])), difference(p[0], p[3])}};
+        const std::array<IntervalVector, 2> b{{triple(difference(q[2], q[0])), difference(q[3], q[0])}};
+        bool positive = true;
+        bool negative = true;
+        for (const auto& u : a) {
+            for (const auto& v : b) {
+                const LC_Interval cross = crossProduct(u, v);
+                positive = positive && cross.isPositive();
+                negative = negative && cross.isValid() && cross.hi() < 0.0;
+            }
+        }
+        if (!positive && !negative) {
+            return {};
+        }
+        LC_AnalyticIntersectionCertificate certificate;
+        certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
+        certificate.proof = LC_IntersectionProof::AnalyticExclusion;
+        certificate.proofDomain = domain;
+        return certificate;
     }
 
     bool evaluate(const std::size_t segment, const double s, RS_Vector& point, RS_Vector& derivative) const override {
