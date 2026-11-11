@@ -45,30 +45,26 @@ Existing table-driven, worker and file-lane tests cover particular fixtures;
 they do not establish universal geometry, platform, or visible-GUI support.
 Do not introduce a second type selector or a parabola-only picker.
 
-**Work in progress, not yet accepted.** The working tree contains an
-uncommitted change and tests for disabling explicit selection of hidden or
-locked sources. Review its lifetime and busy-state transitions, complete its
-tests, and validate it independently before treating it as delivered. Separate
-uncommitted intersection/materialization experiments are not evidence for the
-committed source-widget baseline; preserve and assess them separately.
-
-The hidden/locked explicit-selection slice is now committed as `92f3c2097`
-(`fix(offset): block selecting hidden or locked sources`). It disables the
-command when the resolved source is hidden or locked, rechecks eligibility at
-activation, and updates availability when the live highlight monitor observes
-visibility or lock changes. On the current CMake build,
+**Committed source-selection baseline.** The hidden/locked explicit-selection
+slice is committed as `92f3c2097` (`fix(offset): block selecting hidden or
+locked sources`). It disables the command when the resolved source is hidden
+or locked, rechecks eligibility at activation, and updates availability when
+the live highlight monitor observes visibility or lock changes. On the CMake
+build used for that slice,
 `Source selection respects live visibility and layer locking` and
 `Source selection starts disabled for hidden or locked sources` passed 39
 assertions / 2 cases; `[gui][dialog][offsetcurve][source],[gui][pen],
 [navigation][viewport-range]` passed 15,088 assertions / 72 cases. These are
-headless results on the working tree, not visible GUI, clean-build, or
-cross-platform acceptance. The source-widget modifications from that slice
-are committed; unrelated geometry experiments remain uncommitted.
+headless results, not visible GUI, clean-build, or cross-platform acceptance.
+Later source-widget code and test changes must preserve this behavior. Any
+uncommitted geometry work is assessed independently and is not evidence for
+the source-widget acceptance gates.
 
 Execute and record these slices in order:
 
-1. **Selection state and lifetime.** Finish the hidden/locked selection work.
-   Test initially hidden or locked entities, live visibility and layer freeze
+1. **Selection state and lifetime.** Preserve the committed hidden/locked
+   selection guard while completing the remaining lifecycle coverage. Test
+   initially hidden or locked entities, live visibility and layer freeze
    and lock changes, direct invocation while disabled, recovery, and state
    changes while preparation is busy. Re-resolve and recheck the entity at the
    actual selection action; a stale cached button state must not select an
@@ -135,16 +131,19 @@ preparation is busy. Candidate
 filtering checks capture, worker encoding, and constrained spline tangents; it
 does not by itself prove that the offset can be generated successfully.
 
-**Requested outcome and execution order (2026-11-11):** This is a Properties
-workflow for replacing the source of an editable offset, not a request to
-replace the existing chooser with a canvas-picking tool. A user can change
-the family before selecting a replacement; the family list must not be limited
-to the current source's family. When the current source can be resolved
-uniquely, show it in the chooser and visibly indicate it in the drawing without
-silently changing unrelated selection. A missing or ambiguous source must be
-identified as such. Parabola is a first-class family, including during
-capture, reconstruction, and replacement, even though its implementation
-inherits from spline-points.
+**Requested outcome and execution order (2026-11-11, reconfirmed):** This is a
+Properties workflow for replacing the source of an editable offset, not a
+request to replace the existing chooser with a canvas-picking tool. While
+choosing a replacement, the user can change the requested source type first;
+the chooser then offers eligible entities of that type, not only the current
+source's type. The control covers every currently modeled offset source family:
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline. Parabola is a first-class, distinct type despite inheriting from
+spline-points. When the current source can be resolved uniquely, show it in the
+chooser and visibly indicate it in the drawing without silently changing
+unrelated selection. A missing or ambiguous source must be identified as such.
+This picker contract is distinct from proving that every geometry variant in
+each family can be offset, run through the worker/cache, or persisted.
 
 The nine `SupportedKinds` entries are the present source inventory, not proof
 that every possible entity or geometry variant works. Do not drop an eligible
@@ -35107,3 +35106,18 @@ Homebrew Qt/Freetype/HarfBuzz dylibs built for macOS 27.x while targeting
 macOS 14.4 with SDK 27.0. The later `8add08fc9` change only records CMake test
 results, so implementation sources are identical. Runtime compatibility on
 macOS 14.4, PR CI, GUI and other-platform gates remain unverified.
+
+## 860. Round-trip Noded Parabola Materialization (2026-11-11)
+
+Commit `9336b2b8e` adds a native-file regression for the actual three-branch
+noded parabola offset, rather than only round-tripping its editable source
+carrier. It generates the left offset of the quadratic `y=x^2` fixture at
+distance 1, confirms the crossing node at `(0, 1.25)` remains incident to four
+piece ends after save/reopen, and exercises DXF R2004, DWG R2004, DXF R2013,
+DXF R2018 and DWG R2018. On the current CMake Release build,
+`QT_QPA_PLATFORM=offscreen /private/tmp/offset2961-build-new/librecad_tests
+'[noded-materialization]' --reporter compact` passes 22 assertions in 1 case.
+The DWG lanes ran with DWG support enabled. This closes that exact noded
+materialization persistence fixture only; other source families/topologies,
+independent CAD readers, clean qmake6 after this test-only change, PR CI,
+visible GUI, runtime compatibility and cross-platform acceptance remain open.
