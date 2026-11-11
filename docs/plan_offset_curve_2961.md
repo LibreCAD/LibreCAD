@@ -34490,3 +34490,21 @@ and the real-worker typed-source/cache/five-lane file matrix passed 1,552,195
 assertions in one case with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`. The
 checkout remained clean. This does not close the strict experiment, full qmake
 build, visible or independent-CAD visual checks, or other platforms.
+
+## 848. Reject Invalid Materialized Bounds (2026-11-11)
+
+Commit `92bbd036a` makes the materialized Bezier adapter reject an invalid
+segment or parameter range and non-finite control points. It also returns
+failure as soon as any blossomed position or derivative interval is invalid,
+instead of letting a later valid interval replace an invalid accumulator.
+Callers must treat a failed bound as inconclusive, not as an empty range.
+
+With the uncommitted strict experiment present, the materialized selector
+passed 2,395 assertions in 8 cases, including NaN and infinity in every
+control position and axis, invalid segment/range checks, and the high-precision
+derivative oracle. The precision/proof-domain selector passed 291 assertions
+in 6 cases; the rotated 3-to-1 and 10-to-1 fixtures passed 21,720 assertions in
+2 cases. CMake rebuilt the test target and qmake6 compiled the changed
+application object, not the full application. A clean normal-path and
+worker/file matrix for this commit, strict activation, visible checks, and
+cross-platform acceptance remain open.
