@@ -36474,6 +36474,22 @@ through the isolated worker, Modify Offset GUI commit/undo, DXF/DWG round-trip,
 other parabola constructions or transforms, or visible/external-CAD
 acceptance. Those remain open in the family/variant and delivery matrices.
 
+## 926. Exercise Typed-parabola Produce Through the Worker Client (2026-11-11)
+
+Test commit `b2da768ea` expands the real-helper `Produce` regression for the
+typed parabola `(0,0), (5,10), (10,0)`. It submits both side-pick locations
+for distances `0.5` and `2.75`, verifies the request retains the distinct
+parabola source kind, and requires complete worker preparation with ordinary
+output and no source mutation. The focused worker-client case passes 736
+assertions across the four pick/distance combinations. The registered full
+`offset_worker_client` CTest passes in 271.55 seconds; `git diff --check`
+passes.
+
+This is worker-client Produce evidence for the recorded parabola and pick/
+distance grid. It does not establish operation-8 editable-cache admission for
+these four Produce outcomes, DXF/DWG persistence for this exact grid, GUI
+commit/undo, other parabola variants, or visible/external-CAD acceptance.
+
 ## 922. Keep the Expanded Worker-client Matrix Within Bounded CI Limits (2026-11-11)
 
 CI commit `177d4438a` aligns the worker-client's bounded internal watchdog and
