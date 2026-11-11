@@ -3141,6 +3141,12 @@ TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrence
     const auto adjacentResult = materialize(adjacentOccurrence);
     CHECK(adjacentResult.status == LC_CurveOffsetStatus::AmbiguousTopology);
     CHECK(adjacentResult.entities.empty());
+    auto unavailableOccurrence = geometry;
+    unavailableOccurrence.intersections.front().parameterA = std::numeric_limits<double>::quiet_NaN();
+    unavailableOccurrence.intersections.front().parameterB = std::numeric_limits<double>::quiet_NaN();
+    const auto unavailableResult = materialize(unavailableOccurrence);
+    CHECK(unavailableResult.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(unavailableResult.entities.empty());
 
     const double compressedDomain = 1e-6;
     const RS_Spline compressedParabola = makeSpline(
@@ -3186,6 +3192,68 @@ TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrence
     CHECK(duplicateRefused.status == LC_CurveOffsetStatus::LimitExceeded);
     CHECK(duplicateRefused.entities.empty());
     CHECK(duplicateRefused.sampleUnits <= duplicateLimited.maxSamples);
+}
+
+TEST_CASE("Materialized corner-arc nodes require matching arc provenance",
+          "[curve-offset][topology][materialized][corner-arc]") {
+    const LC_OffsetPolylineData data{{-5, 0}, {2.5, -3}, false,
+        {RS_LineData{{-5, 0}, {0, 0}}, RS_LineData{{0, 0}, {0, 5}},
+         RS_LineData{{0, 5}, {2.5, -3}}}};
+    const LC_OffsetSourceGeometry sourceGeometry{data};
+    auto source = sourceGeometry.makeEntity();
+    REQUIRE(source);
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(*source, 1.0);
+    options.nodeIntersections = true;
+    const LC_CurveOffsetGeometryResult geometry = LC_CurveOffset::buildDirectBranches(
+        *source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, 1.0), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(geometry.intersections.empty());
+    const auto occurrenceOnCornerArc = [&](const std::size_t branch, const RS_Vector& point) {
+        if (branch >= geometry.branches.size()) return false;
+        for (const LC_OffsetCubicPiece& piece : geometry.branches[branch].cubicPieces) {
+            const LC_OffsetBranchProvenance& provenance = piece.provenance;
+            if (!provenance.arcCentre.valid) continue;
+            const double radius = std::abs(provenance.signedDistance);
+            const double dx = point.x - provenance.arcCentre.x;
+            const double dy = point.y - provenance.arcCentre.y;
+            if (!(radius > 0.0) || std::abs(std::hypot(dx, dy) - radius) > options.tolerance.nodeMerge) continue;
+            const double middle = 0.5 * (provenance.sourceT0 + provenance.sourceT1);
+            const double angle = std::atan2(dy, dx);
+            const double unwrapped = angle + 2.0 * M_PI * std::round((middle - angle) / (2.0 * M_PI));
+            if (unwrapped >= std::min(provenance.sourceT0, provenance.sourceT1) - 1e-8 &&
+                unwrapped <= std::max(provenance.sourceT0, provenance.sourceT1) + 1e-8) return true;
+        }
+        return false;
+    };
+    auto arcNode = geometry.intersections.end();
+    bool arcIsFirstOccurrence = false;
+    for (auto it = geometry.intersections.begin(); it != geometry.intersections.end(); ++it) {
+        if (occurrenceOnCornerArc(it->branchA, it->point)) {
+            arcNode = it;
+            arcIsFirstOccurrence = true;
+            break;
+        }
+        if (occurrenceOnCornerArc(it->branchB, it->point)) {
+            arcNode = it;
+            break;
+        }
+    }
+    REQUIRE(arcNode != geometry.intersections.end());
+    const auto valid = LC_CurveOffset::materializeBranches(
+        *source, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(valid.status == LC_CurveOffsetStatus::Ok);
+    CHECK_FALSE(valid.entities.empty());
+
+    auto invalidArcOccurrence = geometry;
+    const std::size_t arcNodeIndex = static_cast<std::size_t>(std::distance(geometry.intersections.begin(), arcNode));
+    double& sourceParameter = arcIsFirstOccurrence ? invalidArcOccurrence.intersections[arcNodeIndex].parameterA
+                                                   : invalidArcOccurrence.intersections[arcNodeIndex].parameterB;
+    sourceParameter = 123456.0;
+    const auto refused = LC_CurveOffset::materializeBranches(
+        *source, invalidArcOccurrence, options, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(refused.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(refused.entities.empty());
 }
 
 TEST_CASE("The sample limit counts every branch of a cusped offset", "[curve-offset][direct][cusp]") {
