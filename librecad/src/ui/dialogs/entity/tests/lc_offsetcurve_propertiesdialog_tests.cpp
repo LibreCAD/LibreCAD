@@ -1036,6 +1036,28 @@ TEST_CASE("Missing source watch stops when viewport or document changes",
     }
 }
 
+TEST_CASE("Missing source watch stops when its document is destroyed",
+          "[gui][dialog][offsetcurve][source][highlight][overlay][lifetime]") {
+    Fixture f;
+    auto document = std::make_unique<Graphic>();
+    document->initForNewDocument(); document->onLoadingCompleted();
+    auto viewport = std::make_unique<LC_GraphicViewport>();
+    viewport->setDocument(document.get());
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport.get());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+    REQUIRE(timer);
+    REQUIRE(timer->isActive());
+    document.reset();
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK_FALSE(timer->isActive());
+    viewport.reset();
+}
+
 TEST_CASE("Source highlight monitoring stops after viewport invalidation",
           "[gui][dialog][offsetcurve][source][highlight][overlay]") {
     Fixture f;
