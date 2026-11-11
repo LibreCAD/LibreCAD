@@ -36699,3 +36699,19 @@ fit-point profile and grid only. It does not establish editable source
 metadata preservation on the materialized ordinary SPLINEs, other fit
 interpolation/tangent policies, other DWG versions, ODA/AutoCAD acceptance,
 or visible GUI behavior.
+
+## 939. Extend Fit-point Trim Oracles to Reversed and Affine Profiles (2026-11-11)
+
+Test commit `cafa7b215` extends the direct exact-normal trim oracle from
+section 936 to reversed traversal and a nonuniformly scaled version of the
+same tangent-constrained fit-point spline. Each of the three profiles is
+checked on both sides at distances `0.2` and `0.5`, including tangent/curve
+consistency, nearest-kept distance, and visible-offset coverage. The focused
+case passes 55 assertions; the complete `[curve-offset][trim]` selection
+passes 55,517 assertions across 34 cases. `git diff --check` passes.
+
+This qualifies only the three recorded profiles and distance/side grid. The
+worker and five-lane persistence tests in sections 937-938 still cover only
+the canonical profile; reversed/affine worker delivery and file round-trip,
+other fit-point shapes, broader conditioning, GUI, and external-CAD gates
+remain open.
