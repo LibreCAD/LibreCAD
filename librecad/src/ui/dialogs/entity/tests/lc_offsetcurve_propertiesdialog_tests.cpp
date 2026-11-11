@@ -2126,6 +2126,46 @@ TEST_CASE("Native source picker refuses a viewport or document swap during worke
     }
 }
 
+TEST_CASE("Native source picker ignores a late reply after the edited target changes",
+          "[gui][dialog][offsetcurve][source][stale][async][cancel]") {
+    Fixture f;
+    requireNativeHelper();
+    auto* line = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    f.graphic.addEntity(line);
+    auto originalTarget = std::unique_ptr<LC_OffsetCurve>(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    auto replacementTarget = std::unique_ptr<LC_OffsetCurve>(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    REQUIRE(originalTarget); REQUIRE(replacementTarget);
+    const Snapshot originalBefore(*originalTarget);
+    const Snapshot replacementBefore(*replacementTarget);
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(originalTarget.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(lineType >= 0);
+    typeBox->setCurrentIndex(lineType);
+    int lineIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i) {
+        if (sourceBox->itemData(i).toULongLong() == static_cast<qulonglong>(line->getId())) lineIndex = i;
+    }
+    REQUIRE(lineIndex >= 0);
+    sourceBox->setCurrentIndex(lineIndex);
+    REQUIRE(widget.isPreparing());
+    widget.setEntity(replacementTarget.get());
+    CHECK_FALSE(widget.isPreparing());
+    observeCancelledReplies();
+
+    originalBefore.exact(*originalTarget);
+    replacementBefore.exact(*replacementTarget);
+    CHECK_FALSE(originalTarget->sourceDefinition());
+    CHECK_FALSE(replacementTarget->sourceDefinition());
+    CHECK_FALSE(widget.lastEditResult());
+}
+
 TEST_CASE("Native source picker replaces every modeled source family without filter side effects",
           "[gui][dialog][offsetcurve][source][typed][matrix]") {
     Fixture f;
