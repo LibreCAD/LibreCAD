@@ -78,6 +78,11 @@ does not by itself prove that the offset can be generated successfully.
    cancellation, invalid input, worker failure, or a stale response must leave
    the committed source and cache unchanged. Preserve the selected identity
    during the editor session, including duplicate-geometry candidates.
+   Commit `5fa8c7328` adds a bounded encoded source witness to ellipse and
+   generalized replacement requests and rechecks the live entity before
+   publication. The focused regression covers movement and deletion during
+   worker execution for both paths. Other families, source-lifetime events,
+   and visible workflows still require the coverage described here.
 4. **Parabola and other variants.** Exercise parabola independently from
    spline-points through capture, replacement, worker/cache and applicable
    DXF/DWG persistence. Extend the family-by-variant matrix for the other eight
@@ -106,6 +111,15 @@ other uncommitted worktree changes present, the focused ambiguity regression
 passed 20 assertions and the full `[gui][dialog][offsetcurve][source]` suite
 passed 11,950 assertions in 13 cases. This is headless widget coverage, not
 visible GUI acceptance. `git diff --check` passed.
+
+With `5fa8c7328` and the other uncommitted worktree changes present, the CMake
+test target rebuilt successfully and `[gui][dialog][offsetcurve][source]`
+passed 12,106 assertions in 14 cases. The broader
+`[gui][dialog][offsetcurve][async]` run passed 13 of 15 cases; two cases failed
+at `editor.hasFocus()` under Qt offscreen before their behavioral assertions.
+One focus failure also reproduced when run alone. These failures remain open;
+they are not evidence that the broader async gate passed. `git diff --check`
+passed.
 
 ### Source-picker status
 
