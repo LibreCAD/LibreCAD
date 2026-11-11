@@ -106,7 +106,11 @@ Execute and record these slices in order:
    incremental scan is needed, use a mutation-aware generation that covers
    in-place edits, undo/redo, layers and document changes; hold no borrowed
    entity pointer across event turns and never claim uniqueness from a partial
-   scan. Test invalidation, cancellation, recovery and all source families.
+   scan. Commit `a12651ad6` removes one redundant full source scan from the
+   worker-wait presentation refresh; this does not bound source-list scans or
+   the periodic live-highlight scan. No large-drawing benchmark or latency
+   target is established yet. Test invalidation, cancellation, recovery and all
+   source families.
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
@@ -35182,3 +35186,21 @@ geometry support. Preserve the cross-family and non-mutation tests, and
 continue the separate per-family/per-variant geometry, worker/cache and
 DXF/DWG qualification matrix. Visible GUI and large-drawing responsiveness
 remain open acceptance gates as recorded above.
+
+## 864. Avoid the Redundant Scan While Worker Preparation Is Pending (2026-11-11)
+
+Commit `a12651ad6` adds an opt-out to the Properties widget's routine refresh
+and uses it only for the intermediate “Calculating offset/replacement” state.
+That state does not publish a new source, so it now leaves the current source
+indication and chooser intact instead of synchronously rebuilding the full
+candidate list. Completion, refusal, cancellation, source replacement, family
+changes and normal refreshes retain their existing source re-resolution.
+
+On the current CMake build, the complete
+`[gui][dialog][offsetcurve][source]` selector passes 12,529 assertions / 28
+cases, including highlight, ambiguity and replacement cases. This removes one
+redundant scan per accepted preparation only. It is not a measured latency
+improvement, a per-event work bound, or a solution to synchronous full scans in
+source-choice refresh and periodic highlight validation. Establish a
+same-kind/large-payload benchmark and bounded latency target before deciding
+whether to implement mutation-aware incremental scanning.
