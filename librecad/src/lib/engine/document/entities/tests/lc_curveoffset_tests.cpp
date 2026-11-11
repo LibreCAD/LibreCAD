@@ -3134,6 +3134,13 @@ TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrence
     const auto duplicateResult = materialize(duplicatedOccurrence);
     CHECK(duplicateResult.status == LC_CurveOffsetStatus::AmbiguousTopology);
     CHECK(duplicateResult.entities.empty());
+    auto adjacentOccurrence = geometry;
+    adjacentOccurrence.intersections.front().parameterA =
+        std::nextafter(adjacentOccurrence.intersections.front().parameterB,
+                       std::numeric_limits<double>::infinity());
+    const auto adjacentResult = materialize(adjacentOccurrence);
+    CHECK(adjacentResult.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(adjacentResult.entities.empty());
     auto reverseDuplicate = geometry;
     reverseDuplicate.intersections.front().parameterB = reverseDuplicate.intersections.front().parameterA;
     const auto reverseDuplicateResult = materialize(reverseDuplicate);
