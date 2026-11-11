@@ -76,6 +76,15 @@ claim every geometry variant is supported based on picker visibility; variant
 generation and persistence remain governed by slice 4 and the capability
 matrix.
 
+**Current disposition (2026-11-11):** The reiterated request adds no new
+picker phase: the source-type selector remains available while browsing
+replacement candidates; switching it filters the list only; and the existing
+source remains indicated until a replacement is validated and published. The
+nine-kind transition tests and distinct parabola identity test are the
+automated acceptance criteria. Visible-GUI confirmation remains open. Missing
+geometry variants stay in slice 4 rather than being implied by selector
+availability.
+
 **Interaction-state rule:** keep the type selector and candidate chooser
 available while the editor is idle and throughout the replacement-selection
 workflow, so the user may switch family without exiting that workflow and then
