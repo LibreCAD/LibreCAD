@@ -56,7 +56,7 @@
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
         <source> is not divided as it is part of another entity.</source>
-        <translation type="unfinished"></translation>
+        <translation>未分割，因其為其他物件的一部分。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/lc_abstractactionwithpreview.cpp" line="652"/>
@@ -79,9 +79,8 @@
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="97"/>
-        <source>
-This block cannot be inserted.</source>
-        <translation type="unfinished"></translation>
+        <source>This block cannot be inserted.</source>
+        <translation>無法插入此圖塊。</translation>
     </message>
     <message>
         <location filename="../src/actions/dock_widgets/block/lc_action_block_insert.cpp" line="226"/>
@@ -1168,25 +1167,25 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="350"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="510"/>
         <source>Cannot open: draw at least one wall segment first.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法開啟：請先繪製至少一個牆面線段。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="371"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="551"/>
         <source>Cannot place window: draw at least one wall segment first.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法放置窗戶：請先繪製至少一個牆面線段。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="390"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="716"/>
         <source>Cannot place door: draw at least one wall segment first.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法放置門：請先繪製至少一個牆面線段。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="412"/>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="422"/>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished">無法復原：已達歷史紀錄開頭</translation>
+        <translation>無法復原：已達歷史紀錄開頭</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="782"/>
@@ -1196,42 +1195,42 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="789"/>
         <source>Specify next point or type distance</source>
-        <translation type="unfinished"></translation>
+        <translation>指定下一點或輸入距離</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="797"/>
         <source>Type opening width</source>
-        <translation type="unfinished"></translation>
+        <translation>輸入開口寬度</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="800"/>
         <source>Click to choose marker side</source>
-        <translation type="unfinished"></translation>
+        <translation>點擊以選擇標記側</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="803"/>
         <source>Type window width</source>
-        <translation type="unfinished"></translation>
+        <translation>輸入窗戶寬度</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="806"/>
         <source>Click to choose window direction</source>
-        <translation type="unfinished"></translation>
+        <translation>點擊以選擇窗戶方向</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="809"/>
         <source>Type door width</source>
-        <translation type="unfinished"></translation>
+        <translation>輸入門寬</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="812"/>
         <source>Move to the swing side and desired hinge, then click</source>
-        <translation type="unfinished"></translation>
+        <translation>移動至開啟側與所需的鉸鏈處，然後點擊</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/line/lc_actiondrawlinedirect.cpp" line="815"/>
         <source>Click near hinge end</source>
-        <translation type="unfinished"></translation>
+        <translation>點擊靠近鉸鏈端</translation>
     </message>
 </context>
 <context>
@@ -1716,14 +1715,14 @@ or [x|y|p|number|edges|distance]</source>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="599"/>
         <source>Specify fixed distance between points
 or [x|y|p|number|edges]</source>
-        <translation type="unfinished"></translation>
+       <translation>指定點之間的固定距離\n或 [x|y|p|數量|邊界]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="610"/>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="614"/>
         <source>Specify distance (%1)
 or [%2]</source>
-        <translation>Specify distance (%1)
+        <translation>指定距離 (%1)
 or [%2]</translation>
     </message>
     <message>
@@ -1747,7 +1746,8 @@ or [%2]</translation>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="620"/>
         <source>Specify distance (angle %1 deg)
 or [%2]</source>
-        <translation type="unfinished"></translation>
+        <translation>指定距離 (角度為 %1 度)
+或 [%2]</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/point/lc_action_draw_points_line.cpp" line="625"/>
@@ -1908,7 +1908,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="396"/>
         <source>Specify size (width, height)</source>
-        <translation type="unfinished">指定尺寸 (寬度, 高度)</translation>
+        <translation>指定尺寸 (寬度, 高度)</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_1point.cpp" line="399"/>
@@ -1980,7 +1980,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="622"/>
         <source>Specify start point</source>
-        <translation type="unfinished">指定起點</translation>
+        <translation>指定起點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/rect/lc_action_draw_rectangle_3points.cpp" line="625"/>
@@ -2118,7 +2118,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="150"/>
         <source>Cannot finalize spline: at least %1 control points required.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法完成雲形線：至少需要 %1 個控制點。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="240"/>
@@ -2138,7 +2138,7 @@ or [%2]</source>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="273"/>
         <source>Cannot close spline: at least %1 control points required.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法閉合雲形線：至少需要 %1 個控制點。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/draw/spline/lc_action_draw_spline.cpp" line="309"/>
@@ -3009,7 +3009,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="568"/>
         <source>Polar Snap</source>
-        <translation type="unfinished"></translation>
+        <translation>極座標捕捉</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="583"/>
@@ -3034,7 +3034,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="683"/>
         <source>Open Legacy LibreCAD DXF (UTF-8)...</source>
-        <translation type="unfinished"></translation>
+        <translation>開啟舊版 LibreCAD DXF (UTF-8)...</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="693"/>
@@ -3486,7 +3486,7 @@ or [%2]</source>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="222"/>
         <source>Draw Fast</source>
-        <translation type="unfinished"></translation>
+        <translation>快速繪圖</translation>
     </message>
     <message>
         <location filename="../src/ui/main/init/lc_actionfactory.cpp" line="229"/>
@@ -4227,7 +4227,9 @@ or [%2]</source>
         <source>Cannot write the file
 %1
 Please check the filename and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法寫入檔案
+%1
+請檢查檔名與權限。</translation>
     </message>
 </context>
 <context>
@@ -5092,7 +5094,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="181"/>
         <source>The selected segment is the whole entity - with &quot;Remove selected&quot; off there is nothing to remove.</source>
-        <translation type="unfinished"></translation>
+        <translation>所選線段即為完整物件 - 若未勾選 &quot;移除所選&quot; 則沒有可移除的內容。</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_break_divide.cpp" line="151"/>
@@ -5483,7 +5485,7 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="218"/>
         <source>Finish</source>
-        <translation type="unfinished">完成</translation>
+        <translation>完成</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_move.cpp" line="216"/>
@@ -5573,131 +5575,131 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="109"/>
         <source>hidden or locked</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏或鎖定</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="111"/>
         <source>the current layer is missing, frozen or locked</source>
-        <translation type="unfinished"></translation>
+        <translation>目前圖層遺失、凍結或鎖定</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="113"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="128"/>
         <source>nothing is left at this distance</source>
-        <translation type="unfinished"></translation>
+        <translation>在此距離處沒有剩餘項目</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="115"/>
         <source>too complex to preview; a click offsets it in full</source>
-        <translation type="unfinished"></translation>
+        <translation>過於複雜而無法預覽；點擊即可完整偏移</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="115"/>
         <source>the offset is too complex</source>
-        <translation type="unfinished"></translation>
+        <translation>偏移過於複雜</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="117"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="152"/>
         <source>it cannot be offset</source>
-        <translation type="unfinished"></translation>
+        <translation>無法進行偏移</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="136"/>
         <source>it has no length</source>
-        <translation type="unfinished"></translation>
+        <translation>它沒有長度</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="138"/>
         <source>it is unbounded</source>
-        <translation type="unfinished"></translation>
+        <translation>它是無界的</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="140"/>
         <source>it has elliptic segments</source>
-        <translation type="unfinished"></translation>
+        <translation>它包含橢圓線段</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="142"/>
         <source>its offset would cross itself, which polylines do not support yet</source>
-        <translation type="unfinished"></translation>
+        <translation>其偏移會與自身相交，聚合線尚不支援此操作</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
         <source>it runs over itself</source>
-        <translation type="unfinished"></translation>
+        <translation>它與自身重疊交錯</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="146"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="171"/>
         <source>the distance is not valid</source>
-        <translation type="unfinished"></translation>
+        <translation>距離無效</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="148"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="157"/>
         <source>the point does not show which side to offset to</source>
-        <translation type="unfinished"></translation>
+        <translation>該點未指出要向哪一側偏移</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="154"/>
         <source>it does not lie in the drawing plane</source>
-        <translation type="unfinished"></translation>
+        <translation>它不在繪圖平面上</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="159"/>
         <source>the curve does not move, or has a point where its direction cannot be found</source>
-        <translation type="unfinished"></translation>
+        <translation>曲線未移動，或存在無法確定方向的點</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="161"/>
         <source>the curve has a gap or a corner the offset cannot join</source>
-        <translation type="unfinished"></translation>
+        <translation>曲線有偏移無法連接的間隙或轉角</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="164"/>
         <source>the distance meets the curve&apos;s radius of curvature where that cannot be resolved</source>
-        <translation type="unfinished"></translation>
+        <translation>距離達到曲線無法解析的曲率半徑處</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="166"/>
         <source>the offset touches itself where it cannot be trimmed reliably</source>
-        <translation type="unfinished"></translation>
+        <translation>偏移與自身接觸，無法可靠地進行修剪</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="169"/>
         <source>the offset cannot be fitted within the tolerance</source>
-        <translation type="unfinished"></translation>
+        <translation>偏移無法在公差範圍內擬合</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="174"/>
         <source>the offset could not be made</source>
-        <translation type="unfinished"></translation>
+        <translation>無法建立偏移</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="258"/>
         <source>%1 of %2 selected entities could not be offset: %3</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 個（共 %2 個）選取的物件無法偏移：%3</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="264"/>
         <source>Only %1 of %2 copies fit, since nothing is left at a larger distance; the original was kept</source>
-        <translation type="unfinished"></translation>
+        <translation>由於在較大距離處無剩餘項目，僅符合 %1 個（共 %2 個）複本；已保留原始物件</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="269"/>
         <source>%1 selected entities got fewer than %2 copies, since nothing is left at a larger distance; their originals were kept</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 個選取的物件得到的複本少於 %2 個，因為在較大距離處無剩餘項目；已保留其原始物件</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="275"/>
         <source>Only %1 of %2 copies were made: %3; the original was kept</source>
-        <translation type="unfinished"></translation>
+        <translation>僅製作了 %1 個（共 %2 個）複本：%3；已保留原始物件</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="281"/>
         <source>%1 selected entities got fewer than %2 copies: %3; their originals were kept</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 個選取的物件得到的複本少於 %2 個：%3；已保留其原始物件</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="144"/>
@@ -5712,23 +5714,23 @@ Point: (%8 , %9)</source>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="436"/>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>無效的算式</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="523"/>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="531"/>
         <source>Specify direction of offset, or enter distance &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>指定偏移方向，或輸入距離 &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="527"/>
         <source>Specify reference point for direction of offset, or enter distance &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>指定偏移方向的參考點，或輸入距離 &lt;%1&gt;</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="540"/>
         <source>Select entities to offset</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇要偏移的物件</translation>
     </message>
     <message>
         <location filename="../src/actions/drawing/modify/lc_action_modify_offset.cpp" line="254"/>
@@ -48670,7 +48672,9 @@ Do you want to replace it?</source>
         <source>Cannot write the file
 %1
 Please check the filename and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法寫入檔案
+%1
+請檢查檔名與權限。</translation>
     </message>
     <message>
         <location filename="../src/lib/printing/lc_printing.cpp" line="379"/>
