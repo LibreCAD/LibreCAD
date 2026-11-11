@@ -238,6 +238,9 @@ public:
         }
     }
 
+    /** Lifetime witness for observers that must unregister before dereferencing a retained document. */
+    std::weak_ptr<void> watchLifetime() const { return m_lifetimeToken; }
+
 
 protected:
     void invalidateLifetime() noexcept { m_lifetimeToken.reset(); }

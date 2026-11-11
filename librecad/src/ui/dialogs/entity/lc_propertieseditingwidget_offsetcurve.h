@@ -8,6 +8,7 @@
 
 #include <functional>
 #include <array>
+#include <cstdint>
 #include <memory>
 #include <optional>
 #include <QCborArray>
@@ -17,8 +18,10 @@
 namespace Ui { class LC_OffsetCurvePropertiesEditingWidget; }
 class LC_OffsetWorkerClient;
 class LC_OffsetCurveEditSnapshot;
+class LC_OffsetSourceMutationWatch;
 class RS_Ellipse;
 class RS_Entity;
+class RS_Document;
 class QHideEvent;
 class QShowEvent;
 class QTimer;
@@ -68,10 +71,17 @@ private:
     void refresh(QLineEdit* completed = nullptr, bool force = false,
                  bool refreshSources = true) const;
     void inputRefused(QLineEdit* editor, const QString& reason) const;
-    void refreshSourceChoices(bool preserveWatch = false) const;
-    void refreshSourceHighlight(bool preserveWatch = false, const RS_Entity* knownMatch = nullptr) const;
+    void refreshSourceChoices(bool preserveWatch = false,
+                              const RS_Entity* knownMatch = nullptr,
+                              bool highlightAlreadyResolved = false) const;
+    void refreshSourceHighlight(bool preserveWatch = false, const RS_Entity* knownMatch = nullptr,
+                                bool highlightAlreadyResolved = false) const;
     void checkSourceHighlight() const;
+    void beginSourceHighlightScan(bool clearExisting);
+    void processSourceHighlightScanSlice();
+    void invalidateSourceHighlightScan();
     void clearSourceWatch() const;
+    void completeSourceHighlightScan();
     RS_Entity* findSourceEntity(qulonglong id) const;
     bool sourceMatches(const SourceWitness& source) const;
     void selectCurrentSource() const;
@@ -86,6 +96,29 @@ private:
     mutable QCborArray m_highlightGeometry;
     mutable bool m_sourceCanSelect = false;
     QTimer* m_highlightTimer = nullptr;
+    QTimer* m_highlightSliceTimer = nullptr;
+    std::unique_ptr<LC_OffsetSourceMutationWatch> m_sourceMutationWatch;
+    mutable std::uint64_t m_watchMutationRevision = 0;
+    std::uint64_t m_scanMutationRevision = 0;
+    std::uint64_t m_scanEntityListRevision = 0;
+    std::uint64_t m_scanUndoEpoch = 0;
+    std::size_t m_scanEntityCount = 0;
+    std::size_t m_scanIndex = 0;
+    std::size_t m_scanMatchCount = 0;
+    std::size_t m_scanCandidateIndex = 0;
+    std::size_t m_scanPreferredIndex = 0;
+    qulonglong m_scanCandidateId = 0;
+    qulonglong m_scanPreferredId = 0;
+    qulonglong m_scanPreviousSourceId = 0;
+    bool m_scanHasCandidate = false;
+    bool m_scanHasPreferred = false;
+    bool m_scanPreviousHighlightVisible = false;
+    mutable RS_Document* m_scanDocument = nullptr;
+    mutable LC_GraphicViewport* m_scanViewport = nullptr;
+    LC_OffsetSourceGeometry::Kind m_scanKind = LC_OffsetSourceGeometry::Kind::Invalid;
+    QCborArray m_scanGeometry;
+    mutable bool m_highlightScanActive = false;
+    bool m_scanRestartQueued = false;
     bool m_sourceHighlightVisible = false;
     LC_OffsetRunLimits m_limits;
     mutable bool m_refreshing = false;

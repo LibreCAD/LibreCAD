@@ -10,6 +10,7 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QLineEdit>
+#include <QElapsedTimer>
 #include <QPointer>
 #include <QScopedValueRollback>
 #include <QSignalBlocker>
@@ -28,6 +29,8 @@
 #include "lc_pointpickbutton.h"
 #include "rs_document.h"
 #include "rs_ellipse.h"
+#include "rs_layerlist.h"
+#include "rs_layerlistlistener.h"
 #include "rs_math.h"
 #include "rs_spline.h"
 #include "lc_splinepoints.h"
@@ -116,6 +119,53 @@ struct OffsetDialogContext {
 };
 }
 
+class LC_OffsetSourceMutationWatch final : public LC_DocumentModificationListener,
+                                           public RS_LayerListListener {
+public:
+    ~LC_OffsetSourceMutationWatch() override { detach(); }
+
+    void attach(RS_Document* document, std::function<void()> changed) {
+        if (document == m_document && !m_lifetime.expired()) {
+            m_changed = std::move(changed);
+            return;
+        }
+        detach();
+        if (!document) return;
+        m_document = document;
+        m_lifetime = document->watchLifetime();
+        m_changed = std::move(changed);
+        document->setModificationListener(this, true);
+        m_layers = document->getLayerList();
+        if (m_layers) m_layers->addListener(this);
+    }
+
+    void detach() {
+        if (m_document && !m_lifetime.expired()) {
+            m_document->setModificationListener(this, false);
+            if (m_layers) m_layers->removeListener(this);
+        }
+        m_document = nullptr;
+        m_layers = nullptr;
+        m_lifetime.reset();
+        m_changed = {};
+    }
+
+    void graphicModified(const RS_Graphic*, bool) override { notify(); }
+    void undoStateChanged(const RS_Document*, bool, bool) override { notify(); }
+    void layerListModified(bool) override { notify(); }
+    void layerListDestroyed() override { m_layers = nullptr; notify(); }
+
+private:
+    void notify() {
+        if (m_changed) m_changed();
+    }
+
+    RS_Document* m_document = nullptr;
+    RS_LayerList* m_layers = nullptr;
+    std::weak_ptr<void> m_lifetime;
+    std::function<void()> m_changed;
+};
+
 LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWidget* parent)
     : LC_EntityPropertiesEditorWidget(parent), ui(new Ui::LC_OffsetCurvePropertiesEditingWidget),
       m_limits(LC_OffsetCurveUI::sheetLimits()), m_worker(std::make_unique<LC_OffsetWorkerClient>(this)) {
@@ -124,6 +174,12 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
     m_highlightTimer->setObjectName("offsetSourceHighlightTimer");
     m_highlightTimer->setInterval(1000);
     connect(m_highlightTimer, &QTimer::timeout, this, [this] { checkSourceHighlight(); });
+    m_highlightSliceTimer = new QTimer(this);
+    m_highlightSliceTimer->setObjectName("offsetSourceHighlightSliceTimer");
+    m_highlightSliceTimer->setSingleShot(true);
+    connect(m_highlightSliceTimer, &QTimer::timeout, this,
+            [this] { processSourceHighlightScanSlice(); });
+    m_sourceMutationWatch = std::make_unique<LC_OffsetSourceMutationWatch>();
     const auto bind = [this](QLineEdit* editor, Field field) {
         connect(editor, &QLineEdit::editingFinished, this,
             [this, editor, field] { finishField(editor, field); });
@@ -368,7 +424,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     }
 }
 
-void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(bool preserveWatch) const {
+void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
+    bool preserveWatch, const RS_Entity* knownMatch, bool highlightAlreadyResolved) const {
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
     if (document == nullptr || m_entity == nullptr) {
         ui->cbSourceType->clear();
@@ -452,11 +509,18 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(bool preserveWa
     const auto* selected = hasMatchingSource ? findSourceEntity(ui->cbSource->currentData().toULongLong()) : nullptr;
     m_sourceCanSelect = selected && selected->isVisible() && !selected->isLocked();
     ui->tbSelectSource->setEnabled(m_sourceCanSelect && !m_busy);
-    refreshSourceHighlight(preserveWatch, selectedKind == actualKind ? selected : nullptr);
+    const auto* highlightMatch = knownMatch ? knownMatch :
+        selectedKind == actualKind ? selected : nullptr;
+    refreshSourceHighlight(preserveWatch, highlightMatch, highlightAlreadyResolved);
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::clearSourceWatch() const {
     m_highlightTimer->stop();
+    m_highlightSliceTimer->stop();
+    m_highlightScanActive = false;
+    m_scanDocument = nullptr;
+    m_scanViewport = nullptr;
+    if (m_sourceMutationWatch) m_sourceMutationWatch->detach();
     m_sourceHighlight.reset();
     m_highlightLifetime.reset();
     m_highlightViewport = nullptr;
@@ -466,10 +530,14 @@ void LC_PropertiesEditingWidgetOffsetCurve::clearSourceWatch() const {
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight(bool preserveWatch,
-                                                                   const RS_Entity* knownMatch) const {
-    const QPointer<const LC_PropertiesEditingWidgetOffsetCurve> alive(this);
+                                                                   const RS_Entity* knownMatch,
+                                                                   bool highlightAlreadyResolved) const {
+    const QPointer<LC_PropertiesEditingWidgetOffsetCurve> alive(
+        const_cast<LC_PropertiesEditingWidgetOffsetCurve*>(this));
     auto previous = std::move(m_sourceHighlight);
     previous.reset();
+    m_highlightSliceTimer->stop();
+    m_highlightScanActive = false;
     if (!preserveWatch) clearSourceWatch();
     if (!alive || !m_sourceHighlightVisible || !m_entity || !m_viewport) return;
     auto* document = m_viewport->getDocument();
@@ -485,51 +553,206 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight(bool preserve
         if (!alive || lifetime.expired()) return;
         m_highlightViewport = m_viewport;
         m_highlightLifetime = lifetime;
-        m_highlightGeometry = *encoding;
-        m_highlightKind = embedded->kind();
         m_highlightTimer->start();
     }
-    const RS_Entity* match = nullptr;
-    const RS_Entity* preferred = nullptr;
-    int count = 0;
+    m_highlightViewport = m_viewport;
+    m_highlightGeometry = *encoding;
+    m_highlightKind = embedded->kind();
+    m_sourceMutationWatch->attach(document, [alive] {
+        if (alive) alive->invalidateSourceHighlightScan();
+    });
+
     if (knownMatch && !knownMatch->isDeleted() && sourceVariantSelectable(*knownMatch)) {
         const auto geometry = LC_OffsetSourceGeometry::capture(*knownMatch);
         const auto candidate = geometry
             ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
         if (geometry && geometry->kind() == embedded->kind() && candidate && *candidate == *encoding) {
-            match = knownMatch;
+            m_highlightSourceId = knownMatch->getId();
+            auto highlight = m_viewport->highlightOffsetSource(*knownMatch);
+            if (alive && highlight) m_sourceHighlight = std::move(highlight);
+            return;
         }
     }
-    if (!match) {
-        for (auto* entity : document->getEntityList()) {
-            if (!entity || entity->isDeleted()) continue;
-            const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
-            if (!geometry || geometry->kind() != embedded->kind()) continue;
-            const auto candidate = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
-            if (!candidate || *candidate != *encoding) continue;
-            ++count;
-            if (sourceVariantSelectable(*entity)) {
-                match = entity;
-                if (entity->getId() == m_preferredSourceId) preferred = entity;
-            }
-        }
-        if (preferred) match = preferred;
-        else if (count != 1) match = nullptr;
-    }
-    if (!match) {
-        if (preserveWatch) m_highlightSourceId = 0;
+    if (highlightAlreadyResolved) {
+        m_highlightSourceId = 0;
         return;
     }
-    m_highlightSourceId = match->getId();
-    auto highlight = m_viewport->highlightOffsetSource(*match);
-    if (alive && highlight) {
-        m_sourceHighlight = std::move(highlight);
-        m_highlightViewport = m_viewport;
-        m_highlightLifetime = m_viewport->offsetSourceHighlightLifetime();
-        m_highlightSourceId = match->getId();
-        m_highlightKind = embedded->kind();
-        m_highlightGeometry = *encoding;
-        m_highlightTimer->start();
+    const_cast<LC_PropertiesEditingWidgetOffsetCurve*>(this)->beginSourceHighlightScan(true);
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::beginSourceHighlightScan(bool clearExisting) {
+    if (!m_sourceHighlightVisible || !m_viewport || m_highlightLifetime.expired()) {
+        clearSourceWatch();
+        return;
+    }
+    auto* document = m_viewport->getDocument();
+    if (!document) {
+        clearSourceWatch();
+        return;
+    }
+    if (clearExisting) {
+        m_scanPreviousSourceId = m_highlightSourceId;
+        m_scanPreviousHighlightVisible = static_cast<bool>(m_sourceHighlight);
+        m_sourceHighlight.reset();
+        m_highlightSourceId = 0;
+    } else {
+        m_scanPreviousSourceId = m_highlightSourceId;
+        m_scanPreviousHighlightVisible = static_cast<bool>(m_sourceHighlight);
+    }
+    m_sourceMutationWatch->attach(document, [alive = QPointer<LC_PropertiesEditingWidgetOffsetCurve>(this)] {
+        if (alive) alive->invalidateSourceHighlightScan();
+    });
+    m_scanDocument = document;
+    m_scanViewport = m_viewport;
+    m_scanMutationRevision = m_watchMutationRevision;
+    m_scanEntityListRevision = document->entityListRevision();
+    m_scanUndoEpoch = document->undoStateEpoch();
+    m_scanEntityCount = document->getEntityList().size();
+    m_scanIndex = 0;
+    m_scanMatchCount = 0;
+    m_scanCandidateId = 0;
+    m_scanPreferredId = 0;
+    m_scanHasCandidate = false;
+    m_scanHasPreferred = false;
+    m_scanKind = m_highlightKind;
+    m_scanGeometry = m_highlightGeometry;
+    m_highlightScanActive = true;
+    processSourceHighlightScanSlice();
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::invalidateSourceHighlightScan() {
+    ++m_watchMutationRevision;
+    m_highlightScanActive = false;
+    m_highlightSliceTimer->stop();
+    if (!m_sourceHighlightVisible || m_scanRestartQueued) return;
+    m_scanRestartQueued = true;
+    QTimer::singleShot(0, this, [this] {
+        m_scanRestartQueued = false;
+        checkSourceHighlight();
+    });
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::processSourceHighlightScanSlice() {
+    if (!m_highlightScanActive) return;
+    if (!m_sourceHighlightVisible || !m_highlightViewport || m_viewport != m_highlightViewport ||
+        m_highlightLifetime.expired()) {
+        clearSourceWatch();
+        return;
+    }
+    auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
+    const auto snapshotMatches = [this, document] {
+        return document && document == m_scanDocument && m_viewport == m_scanViewport &&
+            m_sourceHighlightVisible && !m_highlightLifetime.expired() &&
+            m_watchMutationRevision == m_scanMutationRevision &&
+            document->entityListRevision() == m_scanEntityListRevision &&
+            document->undoStateEpoch() == m_scanUndoEpoch &&
+            document->getEntityList().size() == m_scanEntityCount;
+    };
+    if (!snapshotMatches()) {
+        if (!document || !m_sourceHighlightVisible) clearSourceWatch();
+        else beginSourceHighlightScan(true);
+        return;
+    }
+
+    QElapsedTimer budget;
+    budget.start();
+    std::size_t processed = 0;
+    const auto& entities = document->getEntityList();
+    try {
+        while (m_scanIndex < m_scanEntityCount && processed < 64 && budget.nsecsElapsed() < 4'000'000) {
+            const std::size_t index = m_scanIndex++;
+            ++processed;
+            auto* entity = entities.at(static_cast<int>(index));
+            if (!entity || entity->isDeleted() || !mayMatchSourceKind(*entity, m_scanKind)) continue;
+            const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
+            const auto encoding = geometry
+                ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
+            if (!encoding || *encoding != m_scanGeometry) continue;
+            ++m_scanMatchCount;
+            if (!sourceVariantSelectable(*entity)) continue;
+            const auto id = static_cast<qulonglong>(entity->getId());
+            if (!m_scanHasCandidate) {
+                m_scanHasCandidate = true;
+                m_scanCandidateId = id;
+                m_scanCandidateIndex = index;
+            }
+            if (id == m_preferredSourceId) {
+                m_scanHasPreferred = true;
+                m_scanPreferredId = id;
+                m_scanPreferredIndex = index;
+            }
+        }
+    } catch (const std::bad_alloc&) {
+        clearSourceWatch();
+        return;
+    }
+
+    if (!snapshotMatches()) {
+        if (!document || !m_sourceHighlightVisible) clearSourceWatch();
+        else beginSourceHighlightScan(true);
+        return;
+    }
+    if (m_scanIndex < m_scanEntityCount) {
+        m_highlightSliceTimer->start(0);
+        return;
+    }
+    completeSourceHighlightScan();
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::completeSourceHighlightScan() {
+    if (!m_highlightScanActive) return;
+    m_highlightScanActive = false;
+    m_highlightSliceTimer->stop();
+    if (!m_sourceHighlightVisible || !m_highlightViewport || m_viewport != m_highlightViewport ||
+        m_highlightLifetime.expired()) {
+        clearSourceWatch();
+        return;
+    }
+    auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
+    if (!document || document != m_scanDocument || m_viewport != m_scanViewport ||
+        m_watchMutationRevision != m_scanMutationRevision ||
+        document->entityListRevision() != m_scanEntityListRevision ||
+        document->undoStateEpoch() != m_scanUndoEpoch ||
+        document->getEntityList().size() != m_scanEntityCount) {
+        if (!document || !m_sourceHighlightVisible) clearSourceWatch();
+        else beginSourceHighlightScan(true);
+        return;
+    }
+
+    const bool usePreferred = m_scanHasPreferred;
+    const bool unique = m_scanMatchCount == 1 && m_scanHasCandidate;
+    const auto candidateIndex = usePreferred ? m_scanPreferredIndex : m_scanCandidateIndex;
+    const auto candidateId = usePreferred ? m_scanPreferredId : m_scanCandidateId;
+    RS_Entity* match = nullptr;
+    if (usePreferred || unique) {
+        const auto& entities = document->getEntityList();
+        if (candidateIndex < static_cast<std::size_t>(entities.size())) {
+            auto* candidate = entities.at(static_cast<int>(candidateIndex));
+            if (candidate && static_cast<qulonglong>(candidate->getId()) == candidateId &&
+                !candidate->isDeleted() && sourceVariantSelectable(*candidate)) {
+                const auto geometry = LC_OffsetSourceGeometry::capture(*candidate);
+                const auto encoding = geometry
+                    ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
+                if (geometry && geometry->kind() == m_scanKind && encoding && *encoding == m_scanGeometry)
+                    match = candidate;
+            }
+        }
+    }
+
+    const auto oldId = m_scanPreviousSourceId;
+    const bool oldHighlight = m_scanPreviousHighlightVisible;
+    m_highlightSourceId = match ? candidateId : 0;
+    m_sourceHighlight.reset();
+    const bool visible = match && match->isVisible();
+    if (visible) m_sourceHighlight = m_viewport->highlightOffsetSource(*match);
+    const bool hasHighlight = static_cast<bool>(m_sourceHighlight);
+    if (m_highlightSourceId != oldId || hasHighlight != oldHighlight) {
+        refreshSourceChoices(true, match, true);
+    } else {
+        bool validId = false;
+        const auto selectedId = ui->cbSource->currentData().toULongLong(&validId);
+        m_sourceCanSelect = validId && match && selectedId == candidateId && visible && !match->isLocked();
+        ui->tbSelectSource->setEnabled(!m_busy && m_sourceCanSelect);
     }
 }
 
@@ -539,42 +762,20 @@ void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
         clearSourceWatch();
         return;
     }
-    try {
-        const auto* document = m_highlightViewport->getDocument();
-        if (!document) {
-            clearSourceWatch();
-            return;
-        }
-        const RS_Entity* match = nullptr;
-        const RS_Entity* preferred = nullptr;
-        std::size_t matches = 0;
-        for (auto* entity : document->getEntityList()) {
-            if (!entity || entity->isDeleted() || !mayMatchSourceKind(*entity, m_highlightKind)) continue;
-            const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
-            const auto encoding = geometry
-                ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
-            if (!encoding || *encoding != m_highlightGeometry) continue;
-            ++matches;
-            if (sourceVariantSelectable(*entity)) {
-                match = entity;
-                if (entity->getId() == m_preferredSourceId) preferred = entity;
-            }
-        }
-        if (preferred) match = preferred;
-        else if (matches != 1) match = nullptr;
-        const qulonglong id = match ? match->getId() : 0;
-        const bool visible = match && match->isVisible();
-        if (id != m_highlightSourceId || visible != static_cast<bool>(m_sourceHighlight)) {
-            refreshSourceChoices(true);
-        } else {
-            bool validId = false;
-            const auto selectedId = ui->cbSource->currentData().toULongLong(&validId);
-            m_sourceCanSelect = validId && match && selectedId == id && visible && !match->isLocked();
-            ui->tbSelectSource->setEnabled(!m_busy && m_sourceCanSelect);
-        }
-    } catch (const std::bad_alloc&) {
+    if (m_highlightScanActive) return;
+    auto* document = m_highlightViewport->getDocument();
+    if (!document) {
         clearSourceWatch();
+        return;
     }
+    if (document != m_scanDocument) {
+        refreshSourceHighlight(false);
+        return;
+    }
+    const_cast<LC_PropertiesEditingWidgetOffsetCurve*>(this)->beginSourceHighlightScan(
+        m_watchMutationRevision != m_scanMutationRevision ||
+        document->entityListRevision() != m_scanEntityListRevision ||
+        document->undoStateEpoch() != m_scanUndoEpoch);
 }
 
 RS_Entity* LC_PropertiesEditingWidgetOffsetCurve::findSourceEntity(qulonglong id) const {

@@ -755,11 +755,15 @@ TEST_CASE("Source picker scan baseline with large same-kind payloads",
 
     auto* highlightTimer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
     REQUIRE(highlightTimer);
+    auto* highlightSliceTimer = widget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+    REQUIRE(highlightSliceTimer);
     QElapsedTimer highlightElapsed;
     highlightElapsed.start();
     REQUIRE(QMetaObject::invokeMethod(highlightTimer, "timeout", Qt::DirectConnection));
+    CHECK(highlightSliceTimer->isActive());
+    REQUIRE(pollEventsUntil([&] { return !highlightSliceTimer->isActive(); }));
     const qint64 highlightNanoseconds = highlightElapsed.nsecsElapsed();
-    INFO("Live-highlight validation for " << candidateCount << " same-kind candidates x "
+    INFO("Incremental live-highlight validation for " << candidateCount << " same-kind candidates x "
          << controlsPerCandidate << " control points: " << highlightNanoseconds / 1.0e6 << " ms");
     auto* overlay = f.view.getViewPort()->getOverlayEntitiesContainer(
         RS2::OverlayGraphics::OffsetSourceHighlights);
