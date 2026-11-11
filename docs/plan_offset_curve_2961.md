@@ -35121,3 +35121,19 @@ The DWG lanes ran with DWG support enabled. This closes that exact noded
 materialization persistence fixture only; other source families/topologies,
 independent CAD readers, clean qmake6 after this test-only change, PR CI,
 visible GUI, runtime compatibility and cross-platform acceptance remain open.
+
+## 861. Refuse Unverifiable Source-node Occurrences (2026-11-11)
+
+Commit `9174365d7` changes materialized-node validation to refuse when the
+source adapter cannot evaluate a finite source point for a recorded node
+parameter. Previously that unavailable evaluation was treated as consistent,
+which allowed an unverified occurrence to justify publication. No distance
+heuristic or tolerance was added, and broader corner-arc/piece-identity proofs
+remain open.
+
+On the current CMake Release build, the focused
+`[curve-offset][topology][materialized]` suite passes 2,895 assertions / 14
+cases; the complete `[curve-offset]` suite passes 1,884,531 assertions / 312
+cases. This covers the existing valid materialized-node cases and the full
+offset regression set, but does not directly synthesize an adapter evaluation
+failure or close all corner-arc identity cases. `git diff --check` passed.
