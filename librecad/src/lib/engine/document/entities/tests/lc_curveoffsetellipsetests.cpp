@@ -29,6 +29,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <iomanip>
 #include <limits>
@@ -241,6 +242,16 @@ RS_Vector inwardOffset(const RS_Ellipse& e, double eta, double d);
 void checkOffset(const Offset& offset, const Curve& source, const double d, const std::vector<bool>& closed,
                  const std::vector<RS_Vector>& knownFeatures = {}) {
     INFO("offset status=" << static_cast<int>(offset.status));
+    INFO("intersection stage=" << static_cast<int>(offset.intersectionDiagnostics.stage)
+                                << " status=" << static_cast<int>(offset.intersectionDiagnostics.status)
+                                << " pairs=" << offset.intersectionDiagnostics.work.totalBoxPairs);
+    if (offset.intersectionDiagnostics.hasFailureDomain) {
+        const auto& failure = offset.intersectionDiagnostics.failureDomain;
+        INFO("failure segments=" << failure.segmentA << ',' << failure.segmentB
+                                 << " parameters=" << failure.parameterA.lo() << ':' << failure.parameterA.hi()
+                                 << " / " << failure.parameterB.lo() << ':' << failure.parameterB.hi()
+                                 << " depth=" << offset.intersectionDiagnostics.failureDepth);
+    }
     REQUIRE(offset.status == LC_CurveOffsetStatus::Ok);
     REQUIRE(offset.chains.size() == closed.size());
     for (std::size_t c = 0; c < offset.chains.size(); ++c) {
@@ -1287,6 +1298,24 @@ TEST_CASE("Large-origin reversed 10000-to-1 ellipse direct branches materialize 
         REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
         CHECK(materialized.maxObservedError <= tolerance);
         CHECK(materialized.validationLevel == LC_OffsetValidationLevel::SampledBidirectional);
+    }
+}
+
+TEST_CASE("Large-origin near-contact is not an exact sampled crossing", "[curve-offset][ellipse][precision]") {
+    // Samples and consecutive Bezier controls from the rejected exact-cusp bound experiment.
+    const LC_OffsetSegment first{false, {1000086.6025390244, -999950.00000031327},
+                                 {1000086.6025390258, -999950.00000031362}};
+    const LC_OffsetSegment second{false, {1000086.6025390271, -999950.00000031386},
+                                  {1000086.6025390285, -999950.00000031409}};
+    REQUIRE(first.b.x < second.a.x);
+    CHECK(segmentsIntersect(first, second, 0.0)); // Conservative coordinate-scale slack.
+
+    const std::array<double, 7> controls{{1000086.6025390003, 1000086.6025390106,
+                                          1000086.6025390205, 1000086.6025390304,
+                                          1000086.6025390341, 1000086.6025390377,
+                                          1000086.6025390414}};
+    for (std::size_t i = 1; i < controls.size(); ++i) {
+        CHECK(controls[i - 1] < controls[i]);
     }
 }
 
