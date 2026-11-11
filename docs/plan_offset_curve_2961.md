@@ -34081,3 +34081,39 @@ argument for conforming providers; `validSegments()` does not itself validate
 that geometric contract. Audit provider construction and malformed-provider
 handling before relying on it as a checked guarantee.
 Keep the experimental code uncommitted until these acceptance gates pass.
+
+## 840. Materialized Piece Parameterization (2026-11-10)
+
+`PieceCurves` supplied every Bezier piece in a branch with the same `[0, 1]`
+parameter interval, despite the `LC_ParametricCurves` contract requiring
+segments to be in branch parameter order. Path-based bridge pruning can then
+bound the wrong portions of intermediate pieces. The current uncommitted
+experiment assigns successive intervals `[i, i+1]` per branch and translates
+evaluation and interval bounds back to the piece-local coordinate. A synthetic
+three-piece ordered-parameter case exercises a crossing across separated
+pieces; the older repeated-range probe failed closed and did not independently
+demonstrate a missed crossing. Do not claim that probe proves the old code
+missed one.
+
+The same experiment replaces the ellipse-only precision trigger with a
+source-independent fitted-piece/coordinate-floor trigger. This is still only a
+heuristic: a sub-tolerance loop can occur in pieces larger than that floor, so
+it is not a general topology guarantee. The combined
+ellipse/intersection/trim/precision selection passes 1,361,924 assertions in
+107 cases; the separate topology selection, including noded-offset controls,
+passes 4,635 assertions in 46 cases. Worker/cache/file validation is a separate
+gate, as are provider continuity and cross-platform validation. The rebuilt
+worker/cache/replacement/five-lane matrix passed 1,598,773 assertions with the
+bounded test-only timeout override. Add a direct integration regression for
+the materialization adapter's ordered branch intervals before committing; the
+synthetic ordered-parameter case by itself exercises the solver, not the
+private adapter.
+
+Materialized intersections are also matched to existing nodes using only
+point proximity within the requested geometry tolerance. Distinct parameter
+occurrences near one node can therefore be conflated. Investigate this as a
+separate correctness issue: add a two-nearby-crossing regression with an
+independent witness, preserve branch/piece provenance through materialization,
+and match both occurrences rather than point proximity alone. Handle circular
+corner provenance and piece-boundary identities explicitly; do not infer a
+proof from spatial closeness.
