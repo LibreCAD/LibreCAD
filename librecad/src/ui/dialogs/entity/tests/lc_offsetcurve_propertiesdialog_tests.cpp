@@ -704,6 +704,11 @@ TEST_CASE("Source picker scan baseline with large same-kind payloads",
     constexpr int candidateCount = 1024;
     constexpr int controlsPerCandidate = 256;
     f.graphic.setAutoUpdateBorders(false);
+    LC_SplinePointsData sourceData{false, false};
+    sourceData.useControlPoints = true;
+    sourceData.controlPoints = {{0, 0}, {1, 2}, {2, 0}};
+    auto* source = new LC_SplinePoints(nullptr, std::move(sourceData));
+    f.graphic.addEntity(source);
     for (int candidate = 0; candidate < candidateCount; ++candidate) {
         LC_SplinePointsData data{false, false};
         data.useControlPoints = true;
@@ -737,7 +742,29 @@ TEST_CASE("Source picker scan baseline with large same-kind payloads",
     const qint64 elapsedNanoseconds = elapsed.nsecsElapsed();
     INFO("Synchronous type-filter refresh for " << candidateCount << " candidates x "
          << controlsPerCandidate << " control points: " << elapsedNanoseconds / 1.0e6 << " ms");
-    CHECK(sourceBox->count() == candidateCount + 1);
+    CHECK(sourceBox->count() == candidateCount + 2);
+    const int sourceIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(source->getId()));
+    REQUIRE(sourceIndex >= 0);
+    sourceBox->setCurrentIndex(sourceIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() ==
+          LC_OffsetSourceGeometry::Kind::SplinePoints);
+
+    auto* highlightTimer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+    REQUIRE(highlightTimer);
+    QElapsedTimer highlightElapsed;
+    highlightElapsed.start();
+    REQUIRE(QMetaObject::invokeMethod(highlightTimer, "timeout", Qt::DirectConnection));
+    const qint64 highlightNanoseconds = highlightElapsed.nsecsElapsed();
+    INFO("Live-highlight validation for " << candidateCount << " same-kind candidates x "
+         << controlsPerCandidate << " control points: " << highlightNanoseconds / 1.0e6 << " ms");
+    auto* overlay = f.view.getViewPort()->getOverlayEntitiesContainer(
+        RS2::OverlayGraphics::OffsetSourceHighlights);
+    REQUIRE(overlay);
+    CHECK(overlay->getEntityList().size() == 1);
 }
 
 TEST_CASE("Native source picker preserves highlighted source across family filters",
