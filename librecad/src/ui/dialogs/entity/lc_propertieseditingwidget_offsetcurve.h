@@ -68,7 +68,7 @@ private:
     void refresh(QLineEdit* completed = nullptr, bool force = false) const;
     void inputRefused(QLineEdit* editor, const QString& reason) const;
     void refreshSourceChoices(bool preserveWatch = false) const;
-    void refreshSourceHighlight(bool preserveWatch = false) const;
+    void refreshSourceHighlight(bool preserveWatch = false, const RS_Entity* knownMatch = nullptr) const;
     void checkSourceHighlight() const;
     void clearSourceWatch() const;
     RS_Entity* findSourceEntity(qulonglong id) const;
