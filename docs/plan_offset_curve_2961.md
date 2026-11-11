@@ -34655,3 +34655,26 @@ This result does not validate or enable the experimental solver: broader
 strict adversarial, worker/file, resource-budget, clean-build, visible and
 cross-platform gates remain open. Its worktree edits and temporary diagnostics
 are still uncommitted.
+
+Clean CMake Release validation at `0b9a52176`: the materialized and available
+proof-domain selectors passed 3,129 assertions in 13 cases, the normal
+ellipse/intersection/trim matrix passed 1,361,893 assertions in 102 cases,
+and the real-worker typed-source/cache matrix passed 1,556,565 assertions in
+one case with its five recorded DXF/DWG lanes. Separately, the worktree with
+the experimental strict solver passed the topology/strict-budget selector
+(8,449 assertions in 62 cases) and the broader `[curve-offset]` selector
+(1,884,504 assertions; 367 JUnit testcase entries). Neither result alone
+establishes all remaining release gates.
+
+The same real-worker typed-source/cache matrix with the uncommitted strict
+experiment did **not** pass: fixture 134 (ellipse) returned engine status 14
+during materialized-output intersection checking, with two failed assertions
+after 374,666 passed. Adjacent captured pieces have endpoint-adjacent controls
+that are close but not exactly repeated; the exact-cusp certificates cannot
+assume those differences are zero. Next, reproduce this fixture outside the
+worker with its failure domain, use exact or outward-rounded analysis to
+determine whether the fitted cubics have a real additional intersection, and
+either prove exclusion or repair/refuse the fit without publishing unproved
+geometry. Re-run the entire worker/file matrix and the broad strict suites
+before considering activation. Do not relax the exact join/cusp checks or
+discard near-join intersections merely to make this fixture pass.
