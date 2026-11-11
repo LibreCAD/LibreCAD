@@ -34914,3 +34914,11 @@ Commit `b592af002` extends the exact-limit control to include spline weights,
 fit points and saved knots, as well as both spline-point arrays at their
 limits. The bounded-source selector still passes 21 assertions in 5 cases
 with the uncommitted geometry experiment present.
+
+At clean commit `44e8327ae`, the CMake source/picker selection passed 12,675
+assertions in 37 cases, the real-worker typed-source/cache and five-lane file
+matrix passed 1,622,283 assertions, and the incremental qmake6 application,
+worker, library, plugin and tool build exited successfully. At the later
+test-only commit `b592af002`, the clean bounded-source and picker selection
+passed 12,511 assertions in 31 cases. The macOS deployment-target warning and
+the large-drawing scan, visible-GUI and occurrence-identity gaps remain open.
