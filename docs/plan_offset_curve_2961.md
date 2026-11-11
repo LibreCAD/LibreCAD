@@ -73,8 +73,14 @@ does not by itself prove that the offset can be generated successfully.
    chosen identity for the editor session. Commit `3c6b36c91` adds temporary
    highlight overlays for unambiguous live sources, preserves document selection
    and other overlay layers, and removes them on widget hide, viewport document
-   change, or viewport destruction. The remaining lifecycle cases, live source
-   changes without a widget refresh, and visible acceptance remain open.
+   change, or viewport destruction. Commit `330d7f1f4` watches an already
+   resolved source while the editor is visible, removing a stale highlight
+   after movement, deletion, or hiding and restoring it when that same source
+   becomes valid again. The one-second check scans the document for the tracked
+   ID and compares bounded encoded geometry; it stops when the viewport or
+   document lifetime changes. Initially missing or ambiguous sources are not
+   monitored for newly available matches; other lifecycle cases, large-drawing
+   responsiveness, and visible acceptance remain open.
 3. **Atomic replacement.** For every modeled family, choose an eligible source
    of a different family, capture its actual typed geometry, generate and
    validate the cache through the worker, and publish source and cache
@@ -143,6 +149,21 @@ the renderer `[gui][pen]` selector passed 2,553 assertions in 42 cases. The
 four changed application objects also compiled using the existing qmake6
 build; this is not a full qmake build. `git diff --check` passed. These are
 headless tests, not a visible LibreCAD workflow or cross-platform acceptance.
+
+With `330d7f1f4` and the unrelated uncommitted geometry experiment present,
+the CMake test target rebuilt and the source-highlight selector passed 118
+assertions in 7 cases, including an actual timer tick and viewport/document
+invalidation. The full source-picker selector passed 12,217 assertions in 20
+cases; the two changed application objects compiled in the existing qmake6
+build. This is not a full qmake build. `git diff --check` passed.
+
+Before `330d7f1f4`, the CMake LibreCAD app target built with the unrelated
+geometry experiment present. The desktop service timed out attaching to its
+window, and a separate Cocoa test reported `Cannot create window: no screens
+available`; no visible workflow was verified. The broader async selector under
+Qt minimal passed 14 of 16 cases; two failed at `editor.hasFocus()` before
+behavioral assertions, matching the recorded offscreen limitation. Keep those
+gates open.
 
 ### Source-picker status
 
