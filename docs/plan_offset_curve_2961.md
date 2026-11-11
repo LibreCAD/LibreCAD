@@ -34841,6 +34841,11 @@ one case. This is not a general occurrence-identity proof: distinct but
 nearby parameters, circular-corner provenance, and other ambiguous matches
 remain open. Clean committed-path validation is pending.
 
+Commit `bde44f685` adds the complementary recovery case: an invalid duplicate
+candidate followed by the valid node must still materialize successfully,
+charge both node comparisons and one additional source sample. With the
+uncommitted strict experiment, the focused regression passed 39 assertions.
+
 Desktop control was checked again on 2026-11-11 and reports the Mac locked;
 visible GUI acceptance remains blocked rather than inferred from headless
 tests. The full qmake6 pass and clean rebuild are being verified separately.
