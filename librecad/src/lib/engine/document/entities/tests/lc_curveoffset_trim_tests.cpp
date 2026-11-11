@@ -294,27 +294,50 @@ TEST_CASE("Trimmed tangent-constrained fit-point spline-points retain exact norm
 
 TEST_CASE("Trimmed control-point spline-points skip a stationary span",
           "[curve-offset][trim][spline-points][stationary][oracle]") {
-    LC_SplinePointsData data{false, false};
-    data.useControlPoints = true;
-    data.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
-    LC_SplinePoints source{nullptr, data};
-    REQUIRE(source.getSegmentCount() == 3);
-    LC_CurveJet stationary;
-    REQUIRE(source.tryEvaluateJet(1.5, LC_CurveEvaluationSide::Interior, stationary));
-    CHECK(stationary.first.magnitude() == 0.0);
-    const double endParameter = static_cast<double>(source.getSegmentCount());
+    LC_SplinePointsData singleSpan{false, false};
+    singleSpan.useControlPoints = true;
+    singleSpan.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
+    LC_SplinePointsData multipleSpans{false, false};
+    multipleSpans.useControlPoints = true;
+    multipleSpans.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0},
+                                   {3, 1}, {3, 1}, {3, 1}, {4, 0}};
+    LC_SplinePointsData plateau{false, false};
+    plateau.useControlPoints = true;
+    plateau.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                             {2, 0}, {3, 1}, {3, 1}, {3, 1}, {4, 0}};
+    LC_SplinePointsData leading{false, false};
+    leading.useControlPoints = true;
+    leading.controlPoints = {{0, 0}, {0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
+    LC_SplinePointsData trailing{false, false};
+    trailing.useControlPoints = true;
+    trailing.controlPoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {3, 1}};
+    const std::array<LC_SplinePointsData, 5> profiles{{
+        singleSpan, multipleSpans, plateau, leading, trailing
+    }};
 
-    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-        for (const double distance : {0.2, 0.5}) {
-            CAPTURE(side, distance);
-            const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
-            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE_FALSE(result.branches.empty());
-            const double tolerance =
-                LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
-            const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance);
-            CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
-            CHECK(checked.worstMissing <= 2.0 * tolerance);
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        REQUIRE(source.getSegmentCount() > 0);
+        if (profileIndex == 0) {
+            LC_CurveJet stationary;
+            REQUIRE(source.tryEvaluateJet(1.5, LC_CurveEvaluationSide::Interior, stationary));
+            CHECK(stationary.first.magnitude() == 0.0);
+        }
+        const double endParameter = static_cast<double>(source.getSegmentCount());
+
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.2, 0.5}) {
+                CAPTURE(side, distance);
+                const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(result.branches.empty());
+                const double tolerance =
+                    LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+                const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance);
+                CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+                CHECK(checked.worstMissing <= 2.0 * tolerance);
+            }
         }
     }
 }
