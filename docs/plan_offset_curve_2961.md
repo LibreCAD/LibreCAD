@@ -35077,7 +35077,12 @@ occurrence, valid noded-parabola, crossing-source and duplicate-accounting
 cases pass 103 assertions / 8 cases. The trimmed-ellipse selector passes
 1,306,451 assertions / 56 cases. The full `[curve-offset]` selector passes
 1,884,531 assertions / 312 cases. `git diff --check` passed before commit.
-The current-source clean CMake/qmake rebuilds, worker/file persistence lanes
-for this exact geometry change, and PR CI remain to be run. The distinct
-nearby-occurrence probe is now a permanent regression; broader corner-arc
-identity proofs and visible/cross-platform acceptance remain open.
+After rebuilding the worker-kernel target against this source, its
+`[lc-offsetcurve]` suite passes 1,838,496 assertions / 99 cases, and
+`[lc-offsetcurve][worker-kernel][source-generation]` passes 1,693 assertions /
+16 cases. The real typed-source DXF/DWG save/reopen/second-save case passes
+7,980 assertions. These are current-source incremental CMake results; a clean
+build and a persistence fixture that specifically exercises noded materialized
+output remain open. PR CI, broader corner-arc identity proofs, visible and
+cross-platform acceptance also remain open. The distinct nearby-occurrence
+probe is now a permanent regression.
