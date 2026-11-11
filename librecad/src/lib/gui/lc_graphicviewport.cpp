@@ -133,12 +133,20 @@ std::weak_ptr<void> LC_GraphicViewport::offsetSourceHighlightLifetime() const {
     return m_offsetSourceHighlights ? m_offsetSourceHighlights->lifetime() : std::weak_ptr<void>{};
 }
 
+std::weak_ptr<void> LC_GraphicViewport::watchOffsetSourceHighlightLifetime() {
+    if (!m_offsetSourceHighlights) {
+        auto* container = getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+        if (container->isOwner()) return {};
+        m_offsetSourceHighlights = std::make_shared<LC_OffsetSourceHighlightState>(this, container);
+    }
+    return m_offsetSourceHighlights->lifetime();
+}
+
 std::shared_ptr<void> LC_GraphicViewport::highlightOffsetSource(const RS_Entity& entity) {
     if (entity.isDeleted() || !entity.isVisible()) return {};
+    if (watchOffsetSourceHighlightLifetime().expired()) return {};
     auto* container = getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
     if (container->isOwner()) return {};
-    if (!m_offsetSourceHighlights)
-        m_offsetSourceHighlights = std::make_shared<LC_OffsetSourceHighlightState>(this, container);
     auto state = m_offsetSourceHighlights;
     std::unique_ptr<RS_Entity> clone(entity.clone());
     if (!clone) return {};

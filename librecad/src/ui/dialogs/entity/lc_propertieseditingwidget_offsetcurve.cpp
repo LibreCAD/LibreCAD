@@ -473,6 +473,15 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight(bool preserve
     if (!embedded) return;
     const auto encoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*embedded);
     if (!encoding) return;
+    if (!preserveWatch) {
+        const auto lifetime = m_viewport->watchOffsetSourceHighlightLifetime();
+        if (!alive || lifetime.expired()) return;
+        m_highlightViewport = m_viewport;
+        m_highlightLifetime = lifetime;
+        m_highlightGeometry = *encoding;
+        m_highlightKind = embedded->kind();
+        m_highlightTimer->start();
+    }
     RS_Entity* match = nullptr;
     RS_Entity* preferred = nullptr;
     int count = 0;
@@ -494,7 +503,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight(bool preserve
         if (preserveWatch) m_highlightSourceId = 0;
         return;
     }
-    if (preserveWatch) m_highlightSourceId = match->getId();
+    m_highlightSourceId = match->getId();
     auto highlight = m_viewport->highlightOffsetSource(*match);
     if (alive && highlight) {
         m_sourceHighlight = std::move(highlight);
