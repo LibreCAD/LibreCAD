@@ -34627,3 +34627,31 @@ down from 10 in section 850. The qmake6 application object compiled, not the
 full application. The solver experiment and temporary diagnostics remain
 uncommitted; strict activation is not complete. Clean production-path,
 worker/file, visible and cross-platform validation are still to be recorded.
+
+Clean CMake Release validation at `6d1a4cfe0`: the committed materialized and
+available proof-domain suites passed 3,047 assertions in 12 cases; the normal
+ellipse/intersection/trim matrix passed 1,361,893 assertions in 102 cases;
+and the real-worker typed-source/cache matrix passed 1,555,557 assertions in
+one case, including its five recorded DXF/DWG lanes. The experimental strict
+solver was not part of this checkout.
+
+## 852. Certify Asymmetric Cusp Directions (2026-11-11)
+
+Commit `0b9a52176` supports a join where either piece, but not necessarily
+both, has an exactly repeated endpoint control. It factors only the exact
+repetitions and bounds the cross product in Bernstein form on the requested
+box, retaining the actual nonzero endpoint displacement. Uncertain ranges
+remain uncertified. Tests cover the captured 1000:1 ellipse in both query
+orders, an unresolved broad range, and a real asymmetric-cusp crossing under
+12 exact scale/reflection/axis transformations.
+
+With the uncommitted strict solver experiment, CMake rebuilt the test target;
+the materialized plus precision/proof-domain suites passed 3,161 assertions
+in 18 cases, and the formerly failing rotated 1000:1 ellipse passed 17,395
+assertions. The strict ellipse/intersection/trim matrix passed 1,361,893
+assertions in 102 cases, improving from six failing assertions in section
+851. The qmake6 application object compiled; this is not a full qmake build.
+This result does not validate or enable the experimental solver: broader
+strict adversarial, worker/file, resource-budget, clean-build, visible and
+cross-platform gates remain open. Its worktree edits and temporary diagnostics
+are still uncommitted.
