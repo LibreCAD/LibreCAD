@@ -36681,3 +36681,21 @@ the exact-normal geometric oracle remains the direct test in section 936.
 Editable-cache admission, GUI commit/undo, file persistence, other fit-point
 profiles/tangent constraints, and visible/external-CAD acceptance remain
 unverified. `git diff --check` passes.
+
+## 938. Persist Trimmed Tangent-constrained Fit-point Output (2026-11-11)
+
+Test commit `6d1058127` adds internal write/reopen checks for the fit-point
+profile from sections 936-937. Both offset sides and distances `0.2`/`0.5`
+round-trip through R2004 DXF/DWG, R2013 DXF, and R2018 DXF/DWG; each reopened
+SPLINE is sampled at 33 normalized parameters against its pre-export geometry.
+The focused test passes 2,836 assertions across 20 version/side/distance
+combinations. With LibreDWG 0.14 installed, all four R2018 DWGs parse
+independently and their SPLINE degree and control points match. The combined
+`[lc-offsetcurve][persistence][trim]` selection passes 16,283 assertions
+across three cases. `git diff --check` passes.
+
+This qualifies internal persistence and independent parsing for this one
+fit-point profile and grid only. It does not establish editable source
+metadata preservation on the materialized ordinary SPLINEs, other fit
+interpolation/tangent policies, other DWG versions, ODA/AutoCAD acceptance,
+or visible GUI behavior.
