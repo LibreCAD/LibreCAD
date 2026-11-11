@@ -35593,3 +35593,24 @@ case. This is evidence for one inward distance below one cusp threshold, not
 for equality, the beyond-cusp topology, or other axis ratios/scales. Remaining
 ellipse boundaries, external CAD and visible GUI acceptance, and the broader
 family/variant matrix stay open.
+
+## 882. Reconcile Source-type Switching and Full-family Picker Scope (2026-11-11)
+
+The latest source-widget request is already represented by the active contract:
+while choosing a replacement candidate, the user can change the source-family
+filter; all nine currently modeled offset-source kinds are available, with
+`LC_Parabola` distinct from spline-points. The type change only filters the
+candidate list and does not mutate the committed source or cache. Both controls
+are disabled only after a candidate starts asynchronous preparation and remain
+so until it resolves, avoiding unhandled worker supersession.
+
+Current code matches this interaction in
+`LC_PropertiesEditingWidgetOffsetCurve::setBusy` and its type-change handler.
+Sections 874-875 record the directed cross-family replacement matrix and the
+idle/busy selector-state tests. No additional picker implementation slice is
+needed for the reiterated request. “All supported types” means the canonical
+nine-kind offset-source inventory, not every LibreCAD entity or every possible
+geometry variant. Continue the separate per-variant direct-geometry,
+worker/cache and applicable DXF/DWG qualification in slice 4; keep unqualified
+variants fail-closed and do not treat picker availability as proof of
+generation or persistence. Visible-GUI acceptance remains open.
