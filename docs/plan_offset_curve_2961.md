@@ -41,8 +41,9 @@ spline, spline-points, parabola, bounded hyperbola, and polyline. The source
 choice is currently a document-entity combo box, not a canvas-picking action.
 Selecting an entry starts asynchronous preparation; publication follows
 successful validation. The explicit `tbSelectSource` button selects a resolved
-entity in the drawing; opening the widget does not itself select or highlight
-that entity. Both selectors are disabled while preparation is busy. Candidate
+entity in the drawing; the shown widget also highlights an unambiguous current
+source without changing document selection. Both selectors are disabled while
+preparation is busy. Candidate
 filtering checks capture, worker encoding, and constrained spline tangents; it
 does not by itself prove that the offset can be generated successfully.
 
@@ -69,8 +70,11 @@ does not by itself prove that the offset can be generated successfully.
    or ambiguous matches clearly and leave document selection unchanged.
    Commit `885b34acb` handles the ambiguous embedded-geometry case: it offers
    the eligible entities without guessing, while retaining an explicitly
-   chosen identity for the editor session. Automatic indication and the
-   remaining lifecycle cases in this slice are still open.
+   chosen identity for the editor session. Commit `3c6b36c91` adds temporary
+   highlight overlays for unambiguous live sources, preserves document selection
+   and other overlay layers, and removes them on widget hide, viewport document
+   change, or viewport destruction. The remaining lifecycle cases, live source
+   changes without a widget refresh, and visible acceptance remain open.
 3. **Atomic replacement.** For every modeled family, choose an eligible source
    of a different family, capture its actual typed geometry, generate and
    validate the cache through the worker, and publish source and cache
@@ -130,6 +134,16 @@ passed 24 assertions, including observation of late replies. The full
 `[gui][dialog][offsetcurve][source]` selector passed 12,130 assertions in 15
 cases. This does not close the offscreen focus failures or visible GUI gates.
 
+With `3c6b36c91` and the unrelated uncommitted worktree changes present, the
+CMake `librecad_tests` target rebuilt. The highlight selector passed 91
+assertions in 6 cases, including a pixel-level renderer check, viewport lease
+lifetime, ambiguity, selection preservation, and ellipse-to-parabola
+replacement. The full source selector passed 12,190 assertions in 19 cases;
+the renderer `[gui][pen]` selector passed 2,553 assertions in 42 cases. The
+four changed application objects also compiled using the existing qmake6
+build; this is not a full qmake build. `git diff --check` passed. These are
+headless tests, not a visible LibreCAD workflow or cross-platform acceptance.
+
 ### Source-picker status
 
 The editable type-changing picker is implemented for the canonical
@@ -151,15 +165,17 @@ type selector can be changed before selecting a replacement, each modeled kind
 can be selected as the requested family and installed as its actual typed
 source for the tested fixtures, parabola is distinct from spline-points, and
 filtering preserves the current source and any existing drawing selection.
-These tests do not establish automatic highlighting or visible GUI acceptance.
+The additional overlay and renderer tests above cover automatic highlighting
+headlessly; none of these tests establishes visible GUI acceptance.
 Re-run these when
 changing the picker or adding a modeled family; do not treat their pass as
 evidence that every geometry variant can be offset or round-tripped.
 
 The 2026-11-10 clarification reconfirms the requirement to change source type
 when choosing a replacement and to include parabola as a distinct type. The
-existing list-based control covers idle family switching; automatic indication
-of a resolvable current source and visible workflow acceptance remain open.
+existing list-based control covers idle family switching, and the resolved
+source is temporarily highlighted while the widget is shown. Visible workflow
+and remaining source-lifetime acceptance remain open.
 “All supported types” remains open beyond the picker: qualify eligible variants through direct
 geometry, worker/cache, replacement, and applicable DXF/DWG paths. Keep
 unqualified variants filtered or fail-closed without changing source/cache.
@@ -192,7 +208,8 @@ This closes only the picker-level requirement.
 
 The existing `cbSourceType`/`cbSource` implementation and Properties
 regressions cover idle family switching for all nine modeled kinds, including
-parabola identity. Automatic source indication, visible interaction, and the
+parabola identity. Temporary source indication is implemented for resolved
+entities; visible interaction, additional source-lifetime cases, and the
 end-to-end geometry/worker/cache/persistence matrix remain open as specified
 in the current source-widget implementation plan above.
 
