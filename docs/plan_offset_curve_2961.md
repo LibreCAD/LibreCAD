@@ -35021,6 +35021,16 @@ runtime, qmake6, visible GUI, or cross-platform gates. The initial combined
 selector included a nonexistent bounded-source tag; bounded tests were rerun
 separately with their actual registered tags and passed.
 
+At clean PR source head `239c1bf30514d0f767df0cc66a34bd8e51b20d05`, a fresh
+recursive qmake6 Release build was generated from the clean source snapshot
+with Qt 6.12 and completed successfully using `make -j6`. It linked
+`LibreCAD.app/Contents/MacOS/LibreCAD`, the offset worker and `ttf2lff`, and
+rebuilt the bundled plugins. The build used macOS ARM64, SDK 27.0, and a 14.4
+deployment target; Homebrew HarfBuzz, FreeType and Qt dylibs emitted existing
+minimum-OS-version warnings because they were built for macOS 27.x. This
+proves qmake6 compile/link integration, not runtime compatibility on macOS
+14.4, visible GUI acceptance, or another platform.
+
 For the large-drawing follow-up, first measure the live-watch scan with many
 same-kind, maximum-size candidates and establish explicit work and latency
 budgets. Then design a mutation-aware, incrementally bounded scan: keep no
