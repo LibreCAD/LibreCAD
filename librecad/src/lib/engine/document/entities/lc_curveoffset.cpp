@@ -1500,6 +1500,7 @@ struct SourceJoin {
     };
     Kind kind{Kind::Smooth};
     RS_Vector point{false};
+    double sourceParameter{std::numeric_limits<double>::quiet_NaN()};
     /** Unit tangents before and after it. */
     RS_Vector before{false};
     RS_Vector after{false};
@@ -1553,6 +1554,7 @@ bool cornerArc(const SourceJoin& join, const RS_Vector& end, const RS_Vector& st
         LC_OffsetCubicPiece piece;
         piece.provenance = {0, from, to, d, true};
         piece.provenance.arcCentre = join.point;
+        piece.provenance.sourceCornerParameter = join.sourceParameter;
         piece.bezier = arcPiece(join.point, std::abs(d), from, to);
         if (!arc.empty()) {
             piece.bezier[0] = arc.back().bezier[3];
@@ -3029,6 +3031,7 @@ LC_CurveOffsetStatus checkJoins(const OffsetSource& source, const double d, cons
             }
             SourceJoin& join = joins[index];
             join.point = r.point;
+            join.sourceParameter = breaks[index];
             join.before = l.first / l.first.magnitude();
             join.after = r.first / r.first.magnitude();
             // the two offsets' ends, d N apart on either side, 2 |d| sin(angle / 2) apart
@@ -6819,6 +6822,11 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
             return result;
         }
     }
+    for (std::size_t branch = 0; branch < branches.size(); ++branch) {
+        for (LC_OffsetCubicPiece& piece : branches[branch].cubicPieces) {
+            piece.provenance.nodingBranch = branch;
+        }
+    }
     if (status == LC_CurveOffsetStatus::Ok && (options.nodeIntersections || trimmed) && !branches.front().straight) {
         status = nodeBranches(curve, d, speedFloor, options, branches, result);
     }
@@ -7055,20 +7063,69 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             }
             return provenanceMatches(validated[branch][static_cast<std::size_t>(pieceParameter)].provenance);
         };
-        const auto trimmedOccurrenceConsistent = [&](const double parameter, const RS_Vector& point) {
-            if (!std::isfinite(parameter) || parameter < adapter->breaks().front() ||
+        const auto trimmedOccurrenceConsistent = [&](const std::size_t outputBranch, const double pieceParameter,
+                                                     const std::size_t nodingBranch, const double parameter,
+                                                     const RS_Vector& point) {
+            if (outputBranch >= validated.size() || !std::isfinite(pieceParameter) ||
+                pieceParameter < 0.0 || pieceParameter > static_cast<double>(validated[outputBranch].size()) ||
+                !std::isfinite(parameter) || parameter < adapter->breaks().front() ||
                 parameter > adapter->breaks().back()) return false;
-            if (samples >= options.maxSamples) {
-                sampleLimitReached = true;
+            const std::size_t pieceCount = validated[outputBranch].size();
+            if (pieceCount == 0) return false;
+            const double slack = options.tolerance.requestedGeometry + options.tolerance.nodeMerge +
+                                 scale.numericFloor;
+            if (!std::isfinite(slack) || !isFinite(point)) return false;
+            const auto matchesPiece = [&](const LC_OffsetBranchProvenance& provenance) {
+                if (provenance.nodingBranch != nodingBranch || !std::isfinite(provenance.sourceT0) ||
+                    !std::isfinite(provenance.sourceT1) || !std::isfinite(provenance.signedDistance)) {
+                    return false;
+                }
+                if (provenance.arcCentre.valid) {
+                    if (!std::isfinite(provenance.sourceCornerParameter) ||
+                        parameter != provenance.sourceCornerParameter || !isFinite(provenance.arcCentre)) {
+                        return false;
+                    }
+                    const double radius = std::abs(provenance.signedDistance);
+                    const double dx = point.x - provenance.arcCentre.x;
+                    const double dy = point.y - provenance.arcCentre.y;
+                    if (!(radius > 0.0) || std::abs(std::hypot(dx, dy) - radius) > slack) return false;
+                    const double middle = 0.5 * (provenance.sourceT0 + provenance.sourceT1);
+                    const double angle = std::atan2(dy, dx);
+                    const double unwrapped = angle + 2.0 * M_PI * std::round((middle - angle) / (2.0 * M_PI));
+                    const double angleSlack = slack / radius + 32.0 * g_eps;
+                    return unwrapped >= std::min(provenance.sourceT0, provenance.sourceT1) - angleSlack &&
+                           unwrapped <= std::max(provenance.sourceT0, provenance.sourceT1) + angleSlack;
+                }
+                const double lo = std::min(provenance.sourceT0, provenance.sourceT1);
+                const double hi = std::max(provenance.sourceT0, provenance.sourceT1);
+                const double evaluationParameter = std::clamp(parameter, lo, hi);
+                if (samples >= options.maxSamples) {
+                    sampleLimitReached = true;
+                    return false;
+                }
+                ++samples;
+                result.sampleUnits = samples;
+                LC_CurveEvaluationSide side = LC_CurveEvaluationSide::Interior;
+                if (evaluationParameter == provenance.sourceT0) {
+                    side = provenance.forward ? LC_CurveEvaluationSide::Right : LC_CurveEvaluationSide::Left;
+                } else if (evaluationParameter == provenance.sourceT1) {
+                    side = provenance.forward ? LC_CurveEvaluationSide::Left : LC_CurveEvaluationSide::Right;
+                }
+                OffsetJet exact;
+                const LC_CurveOffsetStatus status = computeOffsetJet(
+                    *adapter, provenance.signedDistance, scale.numericFloor / domain, evaluationParameter, side, exact);
+                return status == LC_CurveOffsetStatus::Ok && isFinite(exact.point) &&
+                       exact.point.distanceTo(point) <= slack;
+            };
+            const double nearest = std::round(pieceParameter);
+            if (std::abs(pieceParameter - nearest) <=
+                16.0 * g_eps * std::max(1.0, std::abs(pieceParameter))) {
+                const std::size_t boundary = static_cast<std::size_t>(nearest);
+                if (boundary < pieceCount && matchesPiece(validated[outputBranch][boundary].provenance)) return true;
+                if (boundary > 0 && matchesPiece(validated[outputBranch][boundary - 1].provenance)) return true;
                 return false;
             }
-            ++samples;
-            result.sampleUnits = samples;
-            LC_CurveJet jet;
-            if (!adapter->jet(parameter, LC_CurveEvaluationSide::Interior, jet) || !isFinite(jet.point)) return false;
-            const double distance = jet.point.distanceTo(point);
-            return std::isfinite(distance) && std::abs(distance - std::abs(geometry.signedDistance)) <=
-                   options.tolerance.requestedGeometry + options.tolerance.nodeMerge + scale.numericFloor;
+            return matchesPiece(validated[outputBranch][static_cast<std::size_t>(pieceParameter)].provenance);
         };
         for (const LC_ParametricIntersection& x : found.intersections) {
             bool atNode = false;
@@ -7087,11 +7144,20 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                     result.status = LC_CurveOffsetStatus::LimitExceeded;
                     return result;
                 }
-                if (options.mode == LC_CurveOffsetMode::Trimmed &&
-                    trimmedOccurrenceConsistent(node.parameterA, node.point) &&
-                    trimmedOccurrenceConsistent(node.parameterB, node.point)) {
-                    atNode = true;
-                    break;
+                if (options.mode == LC_CurveOffsetMode::Trimmed) {
+                    const bool trimmedPairConsistent =
+                        (trimmedOccurrenceConsistent(x.branchA, x.parameterA, node.branchA, node.parameterA,
+                                                     node.point) &&
+                         trimmedOccurrenceConsistent(x.branchB, x.parameterB, node.branchB, node.parameterB,
+                                                     node.point)) ||
+                        (trimmedOccurrenceConsistent(x.branchB, x.parameterB, node.branchA, node.parameterA,
+                                                     node.point) &&
+                         trimmedOccurrenceConsistent(x.branchA, x.parameterA, node.branchB, node.parameterB,
+                                                     node.point));
+                    if (trimmedPairConsistent) {
+                        atNode = true;
+                        break;
+                    }
                 }
                 if (sampleLimitReached) {
                     result.status = LC_CurveOffsetStatus::LimitExceeded;

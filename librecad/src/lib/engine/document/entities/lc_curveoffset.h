@@ -195,6 +195,10 @@ struct LC_OffsetBranchProvenance {
      * down), instead of the offset of a source interval.
      */
     RS_Vector arcCentre{false};
+    /** Original noded offset branch, retained when Trimmed mode splits or joins branches. */
+    std::size_t nodingBranch{std::numeric_limits<std::size_t>::max()};
+    /** Source corner parameter for a rounded join arc; NaN for other pieces. */
+    double sourceCornerParameter{std::numeric_limits<double>::quiet_NaN()};
 };
 
 /**

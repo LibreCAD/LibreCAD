@@ -3267,13 +3267,23 @@ TEST_CASE("Trimmed materialized nodes reject unavailable source occurrences",
     REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
     REQUIRE_FALSE(geometry.branches.empty());
     REQUIRE_FALSE(geometry.intersections.empty());
-    // Isolate the Trimmed-mode occurrence gate on a known noded crossing;
-    // mapping identities across actual trim rewrites remains a separate case.
+    // Exercise provenance through a real Trimmed-mode noding and trim pass.
     options.mode = LC_CurveOffsetMode::Trimmed;
     const auto valid = LC_CurveOffset::materializeBranches(
         parabola, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
     REQUIRE(valid.status == LC_CurveOffsetStatus::Ok);
     REQUIRE_FALSE(valid.entities.empty());
+
+    auto wrongBranch = geometry;
+    for (LC_OffsetBranch& branch : wrongBranch.branches) {
+        for (LC_OffsetCubicPiece& piece : branch.cubicPieces) {
+            piece.provenance.nodingBranch = std::numeric_limits<std::size_t>::max();
+        }
+    }
+    const auto wrongBranchResult = LC_CurveOffset::materializeBranches(
+        parabola, wrongBranch, options, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(wrongBranchResult.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(wrongBranchResult.entities.empty());
 
     auto unavailable = geometry;
     for (auto& node : unavailable.intersections) {
