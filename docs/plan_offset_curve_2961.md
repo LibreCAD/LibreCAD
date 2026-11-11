@@ -34193,3 +34193,38 @@ changed translation unit, not the full application. The local strict solver
 remained uncommitted during validation and materialization used its unchanged
 default mode. This budget fix does not solve the occurrence-identity issue or
 justify the separate strict-activation heuristic.
+
+## 844. Certify a Narrow Stationary Cusp (2026-11-10)
+
+Commit `5c2cb9a9e` adds proof-provider capabilities to the materialized
+Bezier adapter without changing ordinary materialization mode. A piece with
+nondecreasing or nonincreasing finite control coordinates and at least one
+strict change is injective even when its endpoint derivative vanishes. For
+two connected cubics with exactly shared repeated endpoint controls, the
+adapter can also exclude another intersection when outward interval arithmetic
+proves that all four cross products of their endpoint-relative factor vectors
+have the same strict sign. A zero or uncertain sign yields no certificate.
+
+The direct proof-mode regression covers the recorded noded-parabola cusp,
+stationary endpoint, reflection and scaling, reversed query order, invalid
+domain, unjoined and collinear controls, constant/noninjective pieces, and an
+adversarial pair with a second real crossing. It passed 29 assertions; the
+strict-budget/topology selection passed 5,664 assertions across 53 cases
+before the final additional collinear control. The default-mode
+ellipse/intersection/trim selection passed 1,361,893 assertions across 102
+cases, and the worker/cache/replacement/five-lane matrix passed 1,603,071
+assertions using the bounded test-only timeout override. CMake built the test
+and worker-client targets; qmake6 compiled the changed translation unit, not
+the full application. The local ordinary-solver experiment was present during
+these runs, but materialization used its unchanged default mode; proof-mode
+queries use the separate existing strict solver.
+
+Unconditional strict materialized checking is still an uncommitted
+experiment. With a local integration of these certificates, it preserved the
+noded-parabola control but failed 18 of 102 broad geometry cases, including
+valid elliptic cusp and trimming fixtures. The local ordinary-solver changes
+and activation heuristic remain uncommitted. Continue with independently
+validated join/near-node classification, proof-budget and platform coverage,
+and the occurrence-identity issue from section 842 before enabling strict
+checking generally. A spatially close result or an unavailable certificate is
+not proof of identity or separation.
