@@ -20380,6 +20380,36 @@ the clean CMake Release test and worker-client targets build, and the
 materialized selector passes 2,879 assertions in 13 cases. Remaining matrix
 results must be checked against the corrected commit.
 
+With the general join certificate and uncommitted strict experiment, the
+ellipse/intersection/trim matrix passed 1,361,893 assertions in 102 cases. The
+real-worker matrix progressed past the previously captured pair but failed on
+a later near-join pair (378,883 assertions passed, 2 failed). Thus the
+section-852 worker gate is still open; capture and analyze the later pair as
+well as rerunning the complete matrix, without relaxing exactness.
+
+Clean CMake Release validation at `ae5404935` passed the normal
+ellipse/intersection/trim matrix (1,361,893 assertions in 102 cases) and the
+real-worker typed-source/cache matrix (1,581,137 assertions in one case with
+its five recorded DXF/DWG lanes). The experimental strict-worker failure is
+fixture 155, not fixture 134. Its captured adjacent Bezier controls are:
+
+```text
+(101.07426619905667, -99.385411481408013)
+(101.07270850964295, -99.38074823276672)
+(101.07246693651794, -99.380810925504434)
+(101.07246693651793, -99.38081092550442)  shared endpoint
+(101.07246693651788, -99.380810925504406)
+(101.0726420165839, -99.380633063410102)
+(101.06938236950323, -99.376952440485965)
+```
+
+A standalone strict query over these pieces at tolerance `1e-8` reaches
+depth 48 with segment 0 in `[0.9999999962747097, 1]` and segment 1 in
+`[1, 1.0000009536743164]`. An exploratory high-precision numerical root
+search is not a proof of exclusion. The next slice must establish a bounded,
+outward-rounded certificate or expose an actual crossing, account for any
+additional proof work, and retain conservative refusal when unresolved.
+
 ### Completion receipt
 
 All eight bounded interval/branch layouts now run centered and translated
