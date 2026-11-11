@@ -20410,6 +20410,25 @@ search is not a proof of exclusion. The next slice must establish a bounded,
 outward-rounded certificate or expose an actual crossing, account for any
 additional proof work, and retain conservative refusal when unresolved.
 
+## 854. Correlated Join Projection Proof (2026-11-11)
+
+Commit `ab8640ed2` adds a whole-box exclusion when the endpoint-relative
+Bezier direction polynomials have strictly opposite projections onto a fixed
+direction. Projection is applied to the outward-rounded Bernstein control
+vectors before evaluating their parameter intervals, retaining coordinate
+correlation. Up to six finite, normalized control-derived directions are
+tested; the rounded direction is merely a fixed candidate and all projection
+bounds remain outward-rounded. The work is a fixed constant per already
+debited certificate call; uncertainty still returns no certificate.
+
+The captured fixture-155 box is certified in both query orders, while its
+whole-piece box remains unresolved. With the uncommitted strict experiment,
+the topology/strict-budget selector passed 8,462 assertions in 64 cases;
+existing exact-crossing controls remain part of that run. The qmake6
+application object compiled, not the full application. The broad strict
+geometry and worker/file reruns, plus clean committed-path validation, remain
+in progress. The strict solver and diagnostics are still uncommitted.
+
 ### Completion receipt
 
 All eight bounded interval/branch layouts now run centered and translated
