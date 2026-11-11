@@ -877,13 +877,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         std::size_t index;
         std::size_t degree;
         double signedDistance;
+        RS_Vector translation;
     };
     std::vector<DegreeMinusOneMultiplicityFixture> degreeMinusOneMultiplicityFixtures;
     for (const std::size_t degree : {4U, 5U, 6U}) {
-        for (const double signedDistance : {-0.1, 0.1}) {
-            degreeMinusOneMultiplicityFixtures.push_back(
-                {sources.size(), degree, signedDistance});
-            sources.emplace_back(LC_OffsetSourceGeometry{degreeMinusOneMultiplicitySpline(degree)});
+        for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
+            for (const double signedDistance : {-0.1, 0.1}) {
+                RS_SplineData spline = degreeMinusOneMultiplicitySpline(degree);
+                for (RS_Vector& point : spline.controlPoints) point += translation;
+                degreeMinusOneMultiplicityFixtures.push_back(
+                    {sources.size(), degree, signedDistance, translation});
+                sources.emplace_back(LC_OffsetSourceGeometry{spline});
+            }
         }
     }
     const std::size_t rotatedWideAxisEllipseFixture = sources.size();
