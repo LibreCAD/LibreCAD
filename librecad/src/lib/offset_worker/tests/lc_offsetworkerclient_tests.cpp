@@ -894,11 +894,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     std::vector<DegreeMinusOneMultiplicityFixture> degreeMinusOneMultiplicityFixtures;
     for (const std::size_t degree : {4U, 5U, 6U}) {
         for (const std::size_t weightProfile : {0U, 1U}) {
-            for (const double interiorKnot : {0.15, 0.37, 0.63, 0.85}) {
+            for (const double interiorKnot : {0.05, 0.15, 0.37, 0.63, 0.85, 0.95}) {
                 for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
                     for (const double rotation : {0.0, M_PI / 180.0 * 37.0}) {
                         for (const double signedDistance : {-0.1, 0.1}) {
-                                const bool nearEndKnot = interiorKnot == 0.15 || interiorKnot == 0.85;
+                                const bool nearEndKnot = interiorKnot == 0.05 || interiorKnot == 0.15 ||
+                                    interiorKnot == 0.85 || interiorKnot == 0.95;
                                 if (nearEndKnot &&
                                     (weightProfile != 0 || translation.x != 0.0 || translation.y != 0.0 || rotation != 0.0))
                                     continue;
