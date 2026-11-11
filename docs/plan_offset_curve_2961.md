@@ -36065,3 +36065,29 @@ qualified through Produce or DXF/DWG persistence; the separate positive-side
 file-lane evidence remains unchanged. Other scales, arbitrary origins,
 coordinate-conditioning boundaries, external CAD and visible-GUI acceptance
 remain open.
+
+## 904. Verify Signed Line Produce and Source-type Selection (2026-11-11)
+
+Test commit `b757a989f` extends the scaled-line worker matrix to the opposite
+signed side through operation 7 Produce and the existing five internal
+R14/R2000/R2018 DXF/DWG save/reopen lanes. It covers horizontal, diagonal, and
+reversed profiles at scales `1e-8`, `1`, and `1e8`, at zero and `1e6 * scale`
+translations. The worker-generated segment is checked against the analytic
+opposite-normal endpoints; the two DWG lanes are independently read with
+LibreDWG and compared with the expected persisted LINE coordinates. On the
+CMake Release tree, the focused worker case passes 1,624,967 assertions in one
+case. The tiny-scale pick is deliberately placed four scale units off the
+source so it is outside the product's on-entity ambiguity tolerance; the
+requested offset remains `0.02 * scale`.
+
+The latest source-widget requirement is already represented by the existing
+two-control implementation: the source-type filter lists every
+`LC_OffsetSourceGeometry::SupportedKinds` value, including Parabola as a
+distinct kind, and changing it filters the entity selector without changing
+the embedded definition. Selecting a candidate then replaces the stored
+typed source snapshot. The focused GUI selector
+`[gui][dialog][offsetcurve][source][typed]` passes 9,683 assertions in four
+cases, including the all-family replacement matrix and parabola selection.
+This confirms the automated widget contract; visible interaction, selection
+cancel behavior outside the tested workflows, external CAD acceptance,
+cross-platform execution, and exact-head PR CI remain separate gates.
