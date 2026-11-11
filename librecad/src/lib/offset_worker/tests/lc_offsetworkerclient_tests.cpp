@@ -809,39 +809,41 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         std::size_t degree;
         double joinAngle;
         double signedDistance;
+        RS_Vector translation;
     };
     std::vector<DegreeMultiplicityCornerFixture> degreeMultiplicityCornerFixtures;
     for (const std::size_t degree : {4U, 5U, 6U}) {
-        const double alpha = std::atan2(2.0 * std::sin(M_PI / static_cast<double>(degree)),
-                                        4.0 / static_cast<double>(degree));
+        const double alpha = std::atan2(2.0 * std::sin(M_PI / static_cast<double>(degree)), 4.0 / static_cast<double>(degree));
         for (const double joinAngle : {M_PI / 6.0, 5.0 * M_PI / 6.0}) {
-            for (const double signedDistance : {-0.1, 0.1}) {
-                RS_SplineData corner;
-                corner.degree = degree;
-                corner.type = RS_SplineData::SplineType::ClampedOpen;
-                corner.savedOpenType = corner.type;
-                for (std::size_t i = 0; i <= degree; ++i) {
-                    const double t = static_cast<double>(i) / static_cast<double>(degree);
-                    corner.controlPoints.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
-                    corner.weights.push_back(0.75 + 0.25 * t);
+            for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
+                for (const double signedDistance : {-0.1, 0.1}) {
+                    RS_SplineData corner;
+                    corner.degree = degree;
+                    corner.type = RS_SplineData::SplineType::ClampedOpen;
+                    corner.savedOpenType = corner.type;
+                    for (std::size_t i = 0; i <= degree; ++i) {
+                        const double t = static_cast<double>(i) / static_cast<double>(degree);
+                        corner.controlPoints.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
+                        corner.weights.push_back(0.75 + 0.25 * t);
+                    }
+                    const double rotation = joinAngle - 2.0 * alpha;
+                    const double cosine = std::cos(rotation);
+                    const double sine = std::sin(rotation);
+                    for (std::size_t i = 1; i <= degree; ++i) {
+                        const double t = static_cast<double>(i) / static_cast<double>(degree);
+                        const double x = 4.0 * t;
+                        const double y = 2.0 * std::sin(M_PI * t);
+                        corner.controlPoints.emplace_back(4.0 + cosine * x - sine * y, sine * x + cosine * y);
+                        corner.weights.push_back(1.0 + 0.25 * t);
+                    }
+                    corner.knotslist.insert(corner.knotslist.end(), degree + 1, 0.0);
+                    corner.knotslist.insert(corner.knotslist.end(), degree, 0.5);
+                    corner.knotslist.insert(corner.knotslist.end(), degree + 1, 1.0);
+                    for (RS_Vector& point : corner.controlPoints)
+                        point += translation;
+                    degreeMultiplicityCornerFixtures.push_back({sources.size(), degree, joinAngle, signedDistance, translation});
+                    sources.emplace_back(LC_OffsetSourceGeometry{corner});
                 }
-                const double rotation = joinAngle - 2.0 * alpha;
-                const double cosine = std::cos(rotation);
-                const double sine = std::sin(rotation);
-                for (std::size_t i = 1; i <= degree; ++i) {
-                    const double t = static_cast<double>(i) / static_cast<double>(degree);
-                    const double x = 4.0 * t;
-                    const double y = 2.0 * std::sin(M_PI * t);
-                    corner.controlPoints.emplace_back(4.0 + cosine * x - sine * y,
-                                                      sine * x + cosine * y);
-                    corner.weights.push_back(1.0 + 0.25 * t);
-                }
-                corner.knotslist.insert(corner.knotslist.end(), degree + 1, 0.0);
-                corner.knotslist.insert(corner.knotslist.end(), degree, 0.5);
-                corner.knotslist.insert(corner.knotslist.end(), degree + 1, 1.0);
-                degreeMultiplicityCornerFixtures.push_back(
-                    {sources.size(), degree, joinAngle, signedDistance});
-                sources.emplace_back(LC_OffsetSourceGeometry{corner});
             }
         }
     }
