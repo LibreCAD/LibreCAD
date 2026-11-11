@@ -57,6 +57,23 @@ std::optional<LC_OffsetSourceGeometry::Kind> sourceKind(const RS_Entity& entity)
     return geometry->kind();
 }
 
+bool mayMatchSourceKind(const RS_Entity& entity, LC_OffsetSourceGeometry::Kind kind) {
+    using Kind = LC_OffsetSourceGeometry::Kind;
+    switch (kind) {
+    case Kind::Ellipse: return dynamic_cast<const RS_Ellipse*>(&entity) != nullptr;
+    case Kind::Spline: return dynamic_cast<const RS_Spline*>(&entity) != nullptr;
+    case Kind::SplinePoints: return dynamic_cast<const LC_SplinePoints*>(&entity) != nullptr;
+    case Kind::Parabola: return dynamic_cast<const LC_Parabola*>(&entity) != nullptr;
+    case Kind::BoundedHyperbola: return dynamic_cast<const LC_Hyperbola*>(&entity) != nullptr;
+    case Kind::Line: return dynamic_cast<const RS_Line*>(&entity) != nullptr;
+    case Kind::Arc: return dynamic_cast<const RS_Arc*>(&entity) != nullptr;
+    case Kind::Circle: return dynamic_cast<const RS_Circle*>(&entity) != nullptr;
+    case Kind::Polyline: return dynamic_cast<const RS_Polyline*>(&entity) != nullptr;
+    case Kind::Invalid: return false;
+    }
+    return false;
+}
+
 bool sourceVariantSelectable(const RS_Entity& entity) {
     const auto geometry = LC_OffsetSourceGeometry::capture(entity);
     if (!geometry || !LC_OffsetWorkerRequest::Values::isSourceGeometryEncodable(*geometry))
@@ -348,7 +365,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     }
 }
 
-void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
+void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(bool preserveWatch) const {
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
     if (document == nullptr || m_entity == nullptr) {
         ui->cbSourceType->clear();
@@ -429,7 +446,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
     }
     ui->cbSource->setCurrentIndex(matchedIndex);
     ui->tbSelectSource->setEnabled(hasMatchingSource && !m_busy);
-    refreshSourceHighlight();
+    refreshSourceHighlight(preserveWatch);
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::clearSourceWatch() const {
@@ -438,6 +455,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::clearSourceWatch() const {
     m_highlightLifetime.reset();
     m_highlightViewport = nullptr;
     m_highlightSourceId = 0;
+    m_highlightKind = LC_OffsetSourceGeometry::Kind::Invalid;
     m_highlightGeometry = {};
 }
 
@@ -472,13 +490,18 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight(bool preserve
     }
     if (preferred) match = preferred;
     else if (count != 1) match = nullptr;
-    if (!match) return;
+    if (!match) {
+        if (preserveWatch) m_highlightSourceId = 0;
+        return;
+    }
+    if (preserveWatch) m_highlightSourceId = match->getId();
     auto highlight = m_viewport->highlightOffsetSource(*match);
     if (alive && highlight) {
         m_sourceHighlight = std::move(highlight);
         m_highlightViewport = m_viewport;
         m_highlightLifetime = m_viewport->offsetSourceHighlightLifetime();
         m_highlightSourceId = match->getId();
+        m_highlightKind = embedded->kind();
         m_highlightGeometry = *encoding;
         m_highlightTimer->start();
     }
@@ -496,21 +519,28 @@ void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
             clearSourceWatch();
             return;
         }
-        const RS_Entity* source = nullptr;
+        const RS_Entity* match = nullptr;
+        const RS_Entity* preferred = nullptr;
+        std::size_t matches = 0;
         for (auto* entity : document->getEntityList()) {
-            if (entity && entity->getId() == m_highlightSourceId) {
-                source = entity;
-                break;
-            }
-        }
-        bool current = false;
-        if (source && !source->isDeleted() && source->isVisible()) {
-            const auto geometry = LC_OffsetSourceGeometry::capture(*source);
+            if (!entity || entity->isDeleted() || !mayMatchSourceKind(*entity, m_highlightKind)) continue;
+            const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
             const auto encoding = geometry
                 ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
-            current = encoding && *encoding == m_highlightGeometry;
+            if (!encoding || *encoding != m_highlightGeometry) continue;
+            ++matches;
+            if (sourceVariantSelectable(*entity)) {
+                match = entity;
+                if (entity->getId() == m_preferredSourceId) preferred = entity;
+            }
         }
-        if (current != static_cast<bool>(m_sourceHighlight)) refreshSourceHighlight(true);
+        if (preferred) match = preferred;
+        else if (matches != 1) match = nullptr;
+        const qulonglong id = match ? match->getId() : 0;
+        const bool visible = match && match->isVisible();
+        if (id != m_highlightSourceId || visible != static_cast<bool>(m_sourceHighlight)) {
+            refreshSourceChoices(true);
+        }
     } catch (const std::bad_alloc&) {
         clearSourceWatch();
     }

@@ -896,6 +896,65 @@ TEST_CASE("Native source indication is temporary and preserves drawing selection
     other->removeEntity(otherHighlight);
 }
 
+TEST_CASE("Source highlighting follows newly ambiguous and unique matches",
+          "[gui][dialog][offsetcurve][source][highlight][overlay]") {
+    Fixture f;
+    auto* source = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    auto* selected = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    f.graphic.addEntity(source);
+    f.graphic.addEntity(selected);
+    f.graphic.select(QList<RS_Entity*>{selected}, true);
+    auto* viewport = f.view.getViewPort();
+    auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport);
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(timer);
+    REQUIRE(sourceBox);
+    REQUIRE(timer->isActive());
+    REQUIRE(overlay->getEntityList().size() == 1);
+
+    auto* duplicate = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(duplicate);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK(overlay->getEntityList().isEmpty());
+    CHECK(sourceBox->currentText().contains("ambiguous", Qt::CaseInsensitive));
+    CHECK(timer->isActive());
+    CHECK(selected->getFlag(RS2::FlagSelected));
+
+    duplicate->setFlag(RS2::FlagDeleted);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK(overlay->getEntityList().size() == 1);
+    CHECK(sourceBox->currentData().toULongLong() == source->getId());
+    CHECK(selected->getFlag(RS2::FlagSelected));
+
+    duplicate->delFlag(RS2::FlagDeleted);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    REQUIRE(overlay->getEntityList().isEmpty());
+    int duplicateIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i) {
+        if (sourceBox->itemData(i).toULongLong() == duplicate->getId()) duplicateIndex = i;
+    }
+    REQUIRE(duplicateIndex >= 0);
+    sourceBox->setCurrentIndex(duplicateIndex);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult());
+    REQUIRE(*widget.lastEditResult());
+    REQUIRE(timer->isActive());
+    REQUIRE(overlay->getEntityList().size() == 1);
+    auto* third = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(third);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK(overlay->getEntityList().size() == 1);
+    CHECK(sourceBox->currentData().toULongLong() == duplicate->getId());
+    CHECK(selected->getFlag(RS2::FlagSelected));
+}
+
 TEST_CASE("Source highlight monitoring stops after viewport invalidation",
           "[gui][dialog][offsetcurve][source][highlight][overlay]") {
     Fixture f;

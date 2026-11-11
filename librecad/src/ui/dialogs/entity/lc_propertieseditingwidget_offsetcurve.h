@@ -67,7 +67,7 @@ private:
     void restoreCommittedText() const;
     void refresh(QLineEdit* completed = nullptr, bool force = false) const;
     void inputRefused(QLineEdit* editor, const QString& reason) const;
-    void refreshSourceChoices() const;
+    void refreshSourceChoices(bool preserveWatch = false) const;
     void refreshSourceHighlight(bool preserveWatch = false) const;
     void checkSourceHighlight() const;
     void clearSourceWatch() const;
@@ -81,6 +81,7 @@ private:
     mutable std::weak_ptr<void> m_highlightLifetime;
     mutable LC_GraphicViewport* m_highlightViewport = nullptr;
     mutable qulonglong m_highlightSourceId = 0;
+    mutable LC_OffsetSourceGeometry::Kind m_highlightKind = LC_OffsetSourceGeometry::Kind::Invalid;
     mutable QCborArray m_highlightGeometry;
     QTimer* m_highlightTimer = nullptr;
     bool m_sourceHighlightVisible = false;
