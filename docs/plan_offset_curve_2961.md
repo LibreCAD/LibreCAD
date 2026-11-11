@@ -46,14 +46,17 @@ they do not establish universal geometry, platform, or visible-GUI support.
 Do not introduce a second type selector or a parabola-only picker.
 
 **Latest clarification (2026-11-11):** The source-type control must remain
-usable while the user is in the replacement-selection workflow, not just
-before entering it. The acceptance sequence and mutation boundary are stated
-in the interaction-state rule below: changing type filters candidates only;
-choosing a candidate starts preparation; successful validation publishes the
-replacement. This applies to all nine modeled kinds, including the distinct
-parabola kind. A family appearing in the selector is UI coverage only, not
-proof that all of its geometry variants pass generation, worker/cache
-validation, or persistence.
+usable while the user is browsing for a replacement in the Properties source
+widget. The user can switch family, inspect the refreshed candidates, and
+switch again without leaving that workflow. This is not a request for a
+separate canvas-picking mode or a second selector. The acceptance sequence and
+mutation boundary are stated in the interaction-state rule below: changing
+type filters candidates only; choosing a candidate starts preparation; both
+controls are disabled during preparation; successful validation publishes
+the replacement. This applies to all nine modeled kinds, including the
+distinct parabola kind. A family appearing in the selector is UI coverage
+only, not proof that all of its geometry variants pass generation,
+worker/cache validation, or persistence.
 
 **Interaction-state rule:** keep the type selector and candidate chooser
 available while the editor is idle and throughout the replacement-selection
@@ -190,16 +193,21 @@ does not by itself prove that the offset can be generated successfully.
 **Requested outcome and execution order (2026-11-11, reconfirmed):** This is a
 Properties workflow for replacing the source of an editable offset, not a
 request to replace the existing chooser with a canvas-picking tool. While
-choosing a replacement, the user can change the requested source type first;
-the chooser then offers eligible entities of that type, not only the current
-source's type. The control covers every currently modeled offset source family:
-line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
-and polyline. Parabola is a first-class, distinct type despite inheriting from
-spline-points. When the current source can be resolved uniquely, show it in the
-chooser and visibly indicate it in the drawing without silently changing
-unrelated selection. A missing or ambiguous source must be identified as such.
-This picker contract is distinct from proving that every geometry variant in
-each family can be offset, run through the worker/cache, or persisted.
+choosing a replacement in the Properties widget, the user can change the
+requested source type at any point before choosing a candidate; the chooser
+then offers eligible entities of that type, not only the current source's
+type. Switching type refreshes candidates without leaving the replacement
+workflow or changing the committed source/cache. Choosing a candidate starts
+asynchronous preparation, during which both controls are disabled; successful
+validation alone publishes the replacement. The control covers every
+currently modeled offset source family: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
+first-class, distinct type despite inheriting from spline-points. When the
+current source can be resolved uniquely, show it in the chooser and visibly
+indicate it in the drawing without silently changing unrelated selection. A
+missing or ambiguous source must be identified as such. This picker contract
+is distinct from proving that every geometry variant in each family can be
+offset, run through the worker/cache, or persisted.
 
 The nine `SupportedKinds` entries are the present source inventory, not proof
 that every possible entity or geometry variant works. Do not drop an eligible
@@ -209,7 +217,7 @@ following slices in order, preserving the detailed safety requirements below:
 
 | Slice | Remaining work | Acceptance evidence |
 | --- | --- | --- |
-| 1. Inventory and selector | The UI contract and representative directed family transitions are implemented: the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Keep the controls editable while idle and disabled during worker preparation. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 894's latest focused source-picker suite passes 14,827 assertions / 43 cases. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
+| 1. Inventory and selector | The UI contract and directed family transitions are implemented: while browsing replacements, the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Switching family does not mutate the committed source/cache; both controls become disabled only after choosing a candidate and while its worker preparation is active. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 894's latest focused source-picker suite passes 14,827 assertions / 43 cases. The typed source-picker regression changes family before each candidate and verifies controls lock during preparation. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection; the hidden/locked guard is committed in `92f3c2097`, with remaining lifecycle and scale coverage still open. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Revalidate initially missing or ambiguous matches and record large-drawing limits until addressed. |
 | 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests; sections 891-894 verify that moving/deleting the chosen source or swapping viewport/document during worker preparation refuses publication, and that a late reply after target rebinding cannot mutate either target. Other cancellation/lifecycle races remain separately tracked; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
 | 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
@@ -35848,17 +35856,22 @@ types, including parabola. The current widget already has an independent
 `Source type` selector and filters drawing candidates by the selected kind;
 the explicit supported-kind inventory contains ellipse, spline, spline-points,
 parabola, bounded hyperbola, line, arc, circle, and polyline. The type selector
-remains available while idle, and changing it does not rewrite the embedded
-source definition or cache. Candidate selection still applies per-variant
-representability checks and rejects unsupported variants without mutation.
+remains available throughout candidate browsing in the replacement workflow;
+changing it refreshes the candidates without rewriting the embedded source
+definition or cache. Once a candidate is chosen and asynchronous preparation
+starts, both controls are disabled until completion. Candidate selection still
+applies per-variant representability checks and rejects unsupported variants
+without mutation.
 
 Re-ran `[gui][dialog][offsetcurve][source]` on the current CMake Release/macOS
 build; it passes 14,827 assertions / 43 test cases. The selector's family
-transition matrix and replacement flow cover all nine modeled kinds. This
-closes the requested picker/type-filter behavior; it is not evidence that every
-variant of every kind has qualified offset generation, worker/cache, trimming,
-DXF/DWG persistence, external-reader, or visible-GUI support. Continue those
-as separate plan gates and keep unsupported geometry fail-closed.
+transition matrix and typed replacement flow cover all nine modeled kinds;
+controls are verified editable before candidate selection and disabled during
+worker preparation. This closes the requested picker/type-filter behavior; it
+is not evidence that every variant of every kind has qualified offset
+generation, worker/cache, trimming, DXF/DWG persistence, external-reader, or
+visible-GUI support. Continue those as separate plan gates and keep unsupported
+geometry fail-closed.
 
 ## 896. Validate Direct Materialized-node Occurrence Provenance (2026-11-11)
 
