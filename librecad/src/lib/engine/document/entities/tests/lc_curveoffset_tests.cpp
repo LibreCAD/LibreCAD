@@ -49,6 +49,46 @@
 
 using Catch::Approx;
 
+TEST_CASE("Materialized non-cusp join preserves correlated direction bounds",
+          "[curve-offset][topology][materialized]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const RS_Vector join{164.95190528383293, -62.500000000000007};
+    const LC_CurveOffsetInternal::BezierBranches pieces{{
+        {{{164.95245224688207, -62.501035107738197},
+          {164.95191858049108, -62.499993889016636},
+          {164.95190528383307, -62.500000000000242}, join}},
+        {{join, {164.95190528383279, -62.499999999999766},
+          {164.95191722442883, -62.499991540247926},
+          {164.95128233576057, -62.499008762235405}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(pieces, {-1});
+    REQUIRE(curves);
+    const LC_IntersectionDomain restricted{0, 1,
+        LC_Interval::hull(.99999995902180672, .99999996088445187),
+        LC_Interval::hull(1, 1.0000019073486328)};
+    const LC_IntersectionDomain reverse{1, 0, restricted.parameterB, restricted.parameterA};
+    CHECK(curves->certifyIntersection(restricted).outcome == Outcome::Excluded);
+    CHECK(curves->certifyIntersection(reverse).outcome == Outcome::Excluded);
+    LC_IntersectionOptions options;
+    options.allowSubToleranceSelfLoops = false;
+    options.tolerance = 1e-8;
+    const auto result = findIntersections(*curves, options);
+    CHECK(result.status == LC_IntersectionStatus::Ok);
+
+    const LC_CurveOffsetInternal::BezierBranches crossingPieces{{
+        {{{0, 0}, {.25, 0}, {.75, 0}, {1, 0}}},
+        {{{1, 0}, {.75, 1}, {.25, -1}, {0, 0}}}}};
+    const auto crossing = LC_CurveOffsetInternal::makePieceCurves(crossingPieces, {-1});
+    REQUIRE(crossing);
+    RS_Vector a, b, derivative;
+    REQUIRE(crossing->evaluate(0, .5, a, derivative));
+    REQUIRE(crossing->evaluate(1, 1.5, b, derivative));
+    CHECK(a.x == b.x);
+    CHECK(a.y == b.y);
+    const LC_IntersectionDomain box{0, 1, LC_Interval::hull(.49, .51),
+                                    LC_Interval::hull(1.49, 1.51)};
+    CHECK(crossing->certifyIntersection(box).outcome == Outcome::Unavailable);
+}
+
 TEST_CASE("Materialized asymmetric cusp retains the actual endpoint direction",
           "[curve-offset][topology][materialized]") {
     using Outcome = LC_AnalyticIntersectionCertificate::Outcome;

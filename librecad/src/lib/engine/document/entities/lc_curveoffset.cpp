@@ -3665,7 +3665,7 @@ public:
             };
             const bool beforeCusp = same(p[2], p[3]);
             const bool afterCusp = same(q[0], q[1]);
-            if ((beforeCusp || afterCusp) && h.isValid() && s.isValid()) {
+            if (h.isValid() && s.isValid()) {
                 // Factor each endpoint distance once, or twice at an exact cusp.
                 // Bound the cross product in Bernstein form to retain correlation.
                 std::array<IntervalVector, 3> beforeVectors{{triple(difference(p[2], p[3])),
