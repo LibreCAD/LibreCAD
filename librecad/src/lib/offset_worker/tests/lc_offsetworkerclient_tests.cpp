@@ -2845,6 +2845,65 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     CHECK(owned.get().healthyAndIdle());
     }
 
+TEST_CASE("Worker preserves signed line offsets across scale and translation", Tags) {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    const std::array<std::pair<RS_Vector, RS_Vector>, 3> profiles{{
+        {{0, 0}, {10, 0}},
+        {{0, 0}, {6, 8}},
+        {{6, 8}, {0, 0}},
+    }};
+    qint64 requestId = 1;
+    for (const double scale : {1e-8, 1.0, 1e8}) {
+        for (const double translationRatio : {0.0, 1e6}) {
+            const RS_Vector translation{translationRatio * scale, -translationRatio * scale};
+            for (const auto& [rawStart, rawEnd] : profiles) {
+                const RS_Vector start = rawStart * scale + translation;
+                const RS_Vector end = rawEnd * scale + translation;
+                const RS_Vector direction = (end - start).normalized();
+                const RS_Vector leftNormal{-direction.y, direction.x};
+                const LC_OffsetSourceGeometry source{RS_LineData{start, end}};
+                for (const double sign : {1.0, -1.0}) {
+                    const double signedDistance = sign * 0.02 * scale;
+                    CAPTURE(scale, translationRatio, rawStart, rawEnd, signedDistance);
+                    const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+                    Receipts receipts;
+                    REQUIRE(owned.get().submit(
+                        {token(requestId), Req::GenerateSource{definition, {}}},
+                        Client::Mode::Commit, receipts.into(0)));
+                    rt.until([&] { return receipts.calls[0] != 0; });
+                    const auto& completion = completed(receipts.at(0), requestId, 7);
+                    const auto& result = std::get<Reply::Native>(completion.reply().result);
+                    REQUIRE(result.engineStatus);
+                    CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+                    REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+                    REQUIRE(result.ordinary.size() == 1);
+                    const auto* segment = std::get_if<Req::Segment>(&result.ordinary.front());
+                    REQUIRE(segment);
+                    const RS_Vector expectedStart = start + leftNormal * signedDistance;
+                    const RS_Vector expectedEnd = end + leftNormal * signedDistance;
+                    const auto withinRounding = [scale](const RS_Vector& actual, const RS_Vector& expected) {
+                        const double tolerance = std::max({1e-12 * scale,
+                            64.0 * std::numeric_limits<double>::epsilon() * std::max(1.0, std::abs(expected.x)),
+                            64.0 * std::numeric_limits<double>::epsilon() * std::max(1.0, std::abs(expected.y))});
+                        return std::hypot(actual.x - expected.x, actual.y - expected.y) <= tolerance;
+                    };
+                    CHECK(withinRounding(segment->start, expectedStart));
+                    CHECK(withinRounding(segment->end, expectedEnd));
+                    const auto editable = completion.nativeSource(attributes);
+                    REQUIRE(editable);
+                    REQUIRE(editable->sourceDefinition());
+                    CHECK(editable->sourceDefinition()->signedDistance == signedDistance);
+                    CHECK(owned.get().healthyAndIdle());
+                    ++requestId;
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("Worker joined op8 validates a typed native source cache before materialization", Tags) {
     auto& rt = runtime();
     OwnedClient owned{rt};
