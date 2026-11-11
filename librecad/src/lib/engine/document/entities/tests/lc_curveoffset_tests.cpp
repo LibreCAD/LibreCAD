@@ -2900,6 +2900,41 @@ TEST_CASE("Clamped rational degree-four through degree-six splines follow exact 
     }
 }
 
+TEST_CASE("Multi-span rational degree-four through degree-six splines follow exact offset normals",
+          "[curve-offset][direct][spline][high-degree][repeated-knot][oracle]") {
+    for (const std::size_t degree : {4U, 5U, 6U}) {
+        const std::size_t count = degree + 4;
+        std::vector<RS_Vector> controls;
+        std::vector<double> weights;
+        for (std::size_t i = 0; i < count; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(count - 1);
+            controls.emplace_back(8.0 * t,
+                2.5 * t * (1.0 - t) * (1.0 + 0.15 * (2.0 * t - 1.0)));
+            weights.push_back(0.6 + 0.9 * t);
+        }
+        std::vector<double> knots(degree + 1, 0.0);
+        knots.insert(knots.end(), {0.35, 0.65, 0.65});
+        knots.insert(knots.end(), degree + 1, 1.0);
+        const RS_Spline source = makeSpline(degree, controls, knots, weights);
+        CAPTURE(degree);
+        REQUIRE(source.validate());
+
+        for (const double distance : {0.05, 0.15}) {
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left,
+                                                   LC_CurveOffsetSide::Right}) {
+                CAPTURE(distance, side);
+                const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+                CHECK(maxDeviation(result, evaluator(source)) <=
+                      options.tolerance.requestedGeometry);
+            }
+        }
+    }
+}
+
 TEST_CASE("Closed periodic cubic splines follow exact offset normals at their seam",
           "[curve-offset][direct][spline][periodic][oracle]") {
     RS_Spline source{nullptr, RS_SplineData{3, false}};

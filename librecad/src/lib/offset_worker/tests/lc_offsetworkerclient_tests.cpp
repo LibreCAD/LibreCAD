@@ -698,6 +698,23 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
         return data;
     };
+    const auto multiSpanRationalSpline = [](const std::size_t degree) {
+        RS_SplineData data;
+        data.degree = degree;
+        data.type = RS_SplineData::SplineType::ClampedOpen;
+        data.savedOpenType = data.type;
+        const std::size_t count = degree + 4;
+        for (std::size_t i = 0; i < count; ++i) {
+            const double t = static_cast<double>(i) / static_cast<double>(count - 1);
+            data.controlPoints.emplace_back(8.0 * t,
+                2.5 * t * (1.0 - t) * (1.0 + 0.15 * (2.0 * t - 1.0)));
+            data.weights.push_back(0.6 + 0.9 * t);
+        }
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+        data.knotslist.insert(data.knotslist.end(), {0.35, 0.65, 0.65});
+        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+        return data;
+    };
     RS_Spline tangentConstrainedSpline{nullptr, RS_SplineData{3, false}};
     REQUIRE(tangentConstrainedSpline.setFitPointsWithTangents(
         {{0, 0}, {2, 3}, {6, 4}, {9, 0}}, {2, 1}, {1, -3}));
@@ -781,6 +798,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         *mixedBulgeSource,
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0.0, 0.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true}},
         LC_OffsetSourceGeometry{*secondParabola}};
+    struct MultiSpanRationalFixture { std::size_t index; std::size_t degree; };
+    std::vector<MultiSpanRationalFixture> multiSpanRationalFixtures;
+    for (const std::size_t degree : {4U, 5U, 6U}) {
+        multiSpanRationalFixtures.push_back({sources.size(), degree});
+        sources.emplace_back(LC_OffsetSourceGeometry{multiSpanRationalSpline(degree)});
+    }
     const std::size_t rotatedWideAxisEllipseFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
         {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.0, 0.0, false}});
@@ -1607,9 +1630,14 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const bool negativeSplinePoints = std::find(negativeSplinePointsFixtures.begin(),
                                                     negativeSplinePointsFixtures.end(), i) !=
             negativeSplinePointsFixtures.end();
+        const auto multiSpanRational = std::find_if(multiSpanRationalFixtures.begin(),
+            multiSpanRationalFixtures.end(), [i](const MultiSpanRationalFixture& fixture) {
+                return fixture.index == i;
+            });
         const double sourceDistance = negativeSplinePoints                                                      ? -.25
             : i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
             ? scaledLineDistances[i - scaledLineFixtureStart]
+            : multiSpanRational != multiSpanRationalFixtures.end()                           ? .15
             : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->scale
             : thinEllipseCusp != thinEllipseCuspFixtures.end()                           ? thinEllipseCusp->second
             : thinEllipse != thinEllipseFixtures.end()                                   ? thinEllipse->second
@@ -1749,6 +1777,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == smallLargeOriginParabolaFixture || i == rotatedSmallLargeOriginParabolaFixture ||
             i == reversedTraversalParabolaFixture ||
             i + 3 >= sources.size() || (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) ||
+            multiSpanRational != multiSpanRationalFixtures.end() ||
             scaledCircle != scaledCircleFixtures.end() || thinEllipse != thinEllipseFixtures.end() ||
             thinEllipseCusp != thinEllipseCuspFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end() ||
             i == rotatedWideAxisEllipseFixture || i == rotatedWideAxisEllipseArcFixture ||
@@ -2150,6 +2179,22 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const double side = oppositeLine == oppositeLineFixtures.end() ? 1.0 : -1.0;
             offset.distance = scaledLineDistances[*lineProfile];
             offset.coord = midpoint + leftNormal * (side * 4.0 * scale);
+            offset.sideFallback = offset.coord;
+        }
+        const auto multiSpanRational = std::find_if(multiSpanRationalFixtures.begin(),
+            multiSpanRationalFixtures.end(), [i](const MultiSpanRationalFixture& fixture) {
+                return fixture.index == i;
+            });
+        if (multiSpanRational != multiSpanRationalFixtures.end()) {
+            auto source = sources[i].makeEntity();
+            auto* spline = dynamic_cast<RS_Spline*>(source.get());
+            REQUIRE(spline);
+            LC_CurveJet jet;
+            REQUIRE(spline->tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, jet));
+            const RS_Vector tangent = jet.first.normalized();
+            const RS_Vector leftNormal{-tangent.y, tangent.x};
+            offset.distance = 0.15;
+            offset.coord = jet.point + leftNormal;
             offset.sideFallback = offset.coord;
         }
         if (i == rotatedWideAxisEllipseFixture) {
