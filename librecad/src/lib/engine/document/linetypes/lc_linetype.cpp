@@ -22,7 +22,18 @@
 
 #include "lc_linetype.h"
 
+#include <QChar>
+
 #include "lc_linetypenames.h"
+
+namespace {
+// The characters a line type name may not hold: a name rides in a file line,
+// a DXF record and a dialog alike.
+const QString& reservedCharacters() {
+    static const QString reserved = QStringLiteral("<>/\\\":;?*|,=`");
+    return reserved;
+}
+}
 
 LC_LineType::LC_LineType(const QString& name) : name{name} {
 }
@@ -30,4 +41,12 @@ LC_LineType::LC_LineType(const QString& name) : name{name} {
 // The pen trims before it folds (RS_Pen::setLineTypeName); libdxfrw does not.
 QString LC_LineType::key() const {
     return LC_LineTypeNames::foldName(name.trimmed());
+}
+
+LC_LineType::NameCheck LC_LineType::checkName(const QString&) {
+    return NameCheck::Ok;
+}
+
+bool LC_LineType::isValidName(const QString&) {
+    return true;
 }
