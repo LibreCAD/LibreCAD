@@ -34389,3 +34389,32 @@ validated join/near-node classification, proof-budget and platform coverage,
 and the occurrence-identity issue from section 842 before enabling strict
 checking generally. A spatially close result or an unavailable certificate is
 not proof of identity or separation.
+
+## 845. Certify Restricted Cubic Join Boxes (2026-11-11)
+
+Commit `1ad3ae1b2` adds a conservative proof for exactly connected cubic
+pieces. After factoring each piece's nonnegative distance from its shared
+endpoint, outward interval bounds over the requested parameter box prove
+exclusion only when one coordinate has strictly opposite signs or the factor
+vectors have a nonzero cross product throughout. The earlier repeated-control
+certificate remains available when the new test is inconclusive. An unavailable
+certificate is not permission to discard a contact.
+
+The focused materialized selector passed 684 assertions in 5 cases. It includes
+two captured boxes from the rotated 10-to-1 ellipse, original segment indices,
+reversed query order, coordinate reflections/swaps, and 144 constructed
+second-crossing variants. The precision/strict-proof-domain selector passed
+291 assertions in 6 cases; the separate intersection selector passed 65
+assertions in 15 cases. CMake rebuilt the test target and qmake6 compiled the
+changed application object, not the full application. All these runs included
+the uncommitted strict-solver experiment; a clean default-path matrix
+has not been rerun for this commit.
+
+An uncommitted experiment asks for this proof on selected refined boxes and
+periodically balances parameter splits. It makes the previously failing
+rotated 10-to-1 ellipse fixture pass 10,863 assertions, but the broader
+ellipse/intersection/trim run still reports 22 failed assertions in its JUnit
+output. The solver changes, unconditional strict activation, and diagnostic
+prints remain uncommitted. Do not activate them generally: investigate the
+remaining extreme ellipses and trim failures, prove budget/accounting and node
+identity behavior, and rerun the complete clean and cross-platform matrices.
