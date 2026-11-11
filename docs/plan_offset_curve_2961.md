@@ -36458,6 +36458,22 @@ meaning those high-count geometry-generation and performance boundaries;
 the wire-format count cap itself is now covered. External CAD, visible GUI,
 hosted cross-platform execution, and exact-head PR CI remain separate gates.
 
+## 925. Qualify Direct Trimming for the Typed Parabola Source (2026-11-11)
+
+Test commit `a2ea911e4` adds an explicit `LC_Parabola` regression to the
+trimmed-offset oracle suite. For the control net `(0,0), (5,10), (10,0)`,
+both left and right offsets are checked at distances `0.25` and `2.75`,
+covering a regular profile and a cusp-producing profile. Kept geometry is
+compared in both directions with exact source-normal offsets; the focused case
+passes 17 assertions. The full `[curve-offset][trim]` selection passes 55,394
+assertions across 32 cases, and `git diff --check` passes.
+
+This qualifies only direct trimmed geometry for this typed parabola profile,
+the two distances, and both sides. It does not establish typed-parabola trim
+through the isolated worker, Modify Offset GUI commit/undo, DXF/DWG round-trip,
+other parabola constructions or transforms, or visible/external-CAD
+acceptance. Those remain open in the family/variant and delivery matrices.
+
 ## 922. Keep the Expanded Worker-client Matrix Within Bounded CI Limits (2026-11-11)
 
 CI commit `177d4438a` aligns the worker-client's bounded internal watchdog and
