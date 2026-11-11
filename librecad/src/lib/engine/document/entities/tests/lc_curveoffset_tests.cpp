@@ -2439,12 +2439,14 @@ TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrence
     const auto original = materialize(geometry);
     REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
     REQUIRE_FALSE(original.entities.empty());
+    REQUIRE(original.intersectionDiagnostics.nodeMatchComparisons == 1);
     REQUIRE(original.sampleUnits > geometry.exactSamples);
     auto withoutNodes = geometry;
     withoutNodes.intersections.clear();
     const auto beforeNodeCheck = materialize(withoutNodes);
     REQUIRE(beforeNodeCheck.status == LC_CurveOffsetStatus::AmbiguousTopology);
     REQUIRE(beforeNodeCheck.sampleUnits < original.sampleUnits);
+    CHECK(beforeNodeCheck.intersectionDiagnostics.nodeMatchComparisons == 0);
     auto limited = options;
     limited.maxSamples = original.sampleUnits - 1;
     REQUIRE(limited.maxSamples >= beforeNodeCheck.sampleUnits);
@@ -2454,6 +2456,27 @@ TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrence
     CHECK(refused.entities.empty());
     CHECK(refused.sampleUnits <= limited.maxSamples);
     CHECK(materialize(geometry).status == LC_CurveOffsetStatus::Ok);
+
+    constexpr std::size_t extraNodes = 12;
+    auto crowded = geometry;
+    auto unrelated = crowded.intersections.front();
+    unrelated.point += RS_Vector{1000, 1000};
+    crowded.intersections.insert(crowded.intersections.begin(), extraNodes, unrelated);
+    auto matchLimited = options;
+    matchLimited.maxIntersectionPairs = original.intersectionDiagnostics.work.totalBoxPairs + extraNodes;
+    const auto matchRefused = LC_CurveOffset::materializeBranches(
+        parabola, crowded, matchLimited, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(matchRefused.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(matchRefused.entities.empty());
+    CHECK(matchRefused.intersectionDiagnostics.status == LC_IntersectionStatus::LimitExceeded);
+    CHECK(matchRefused.intersectionDiagnostics.nodeMatchComparisons == extraNodes);
+    CHECK(matchRefused.intersectionDiagnostics.work.totalBoxPairs +
+              matchRefused.intersectionDiagnostics.nodeMatchComparisons <= matchLimited.maxIntersectionPairs);
+    ++matchLimited.maxIntersectionPairs;
+    const auto matchRecovered = LC_CurveOffset::materializeBranches(
+        parabola, crowded, matchLimited, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(matchRecovered.status == LC_CurveOffsetStatus::Ok);
+    CHECK(matchRecovered.intersectionDiagnostics.nodeMatchComparisons == extraNodes + 1);
 
     auto swapped = geometry;
     std::swap(swapped.intersections.front().parameterA, swapped.intersections.front().parameterB);

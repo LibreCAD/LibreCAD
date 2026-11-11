@@ -6680,6 +6680,7 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         result.intersectionDiagnostics.stage = LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput;
         result.intersectionDiagnostics.status = found.status;
         result.intersectionDiagnostics.work = found.work;
+        result.intersectionDiagnostics.nodeMatchComparisons = 0;
         result.intersectionDiagnostics.hasFailureDomain = found.hasFailureDomain;
         result.intersectionDiagnostics.failureDomain = found.failureDomain;
         result.intersectionDiagnostics.failureDepth = found.failureDepth;
@@ -6716,6 +6717,14 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
         for (const LC_ParametricIntersection& x : found.intersections) {
             bool atNode = false;
             for (const LC_ParametricIntersection& node : geometry.intersections) {
+                if (found.work.totalBoxPairs >= options.maxIntersectionPairs ||
+                    result.intersectionDiagnostics.nodeMatchComparisons >=
+                        options.maxIntersectionPairs - found.work.totalBoxPairs) {
+                    result.intersectionDiagnostics.status = LC_IntersectionStatus::LimitExceeded;
+                    result.status = LC_CurveOffsetStatus::LimitExceeded;
+                    return result;
+                }
+                ++result.intersectionDiagnostics.nodeMatchComparisons;
                 if (node.point.distanceTo(x.point) <= options.tolerance.requestedGeometry &&
                     sourceOccurrenceConsistent(node.parameterA, node.point) &&
                     sourceOccurrenceConsistent(node.parameterB, node.point)) {

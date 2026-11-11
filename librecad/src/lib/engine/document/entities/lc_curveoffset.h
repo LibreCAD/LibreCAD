@@ -262,6 +262,8 @@ struct LC_CurveOffsetGeometryResult {
         bool hasFailureDomain{false};
         LC_IntersectionDomain failureDomain{};
         unsigned failureDepth{0};
+        /** Materialized crossing-to-node comparisons, sharing maxIntersectionPairs with work.totalBoxPairs. */
+        std::size_t nodeMatchComparisons{0};
     } intersectionDiagnostics;
     /**
      * With nodeIntersections: where the exact offset meets itself, by branch and
