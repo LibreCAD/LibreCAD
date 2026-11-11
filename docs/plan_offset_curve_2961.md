@@ -36811,3 +36811,18 @@ This is direct geometry evidence for those five layouts only. Worker and
 five-lane persistence currently cover only the single-span profile from
 section 942; additional layout delivery, fit-point stationary spans, GUI, and
 external-CAD acceptance remain open.
+
+## 946. Run Stationary-span Trim Layouts Through the Worker (2026-11-11)
+
+Test commit `b859bb137` expands section 943's real-helper `Produce` test to
+all five stationary control-point layouts qualified by section 945: single,
+separated multiple, plateau plus separated, leading, and trailing. It finds a
+regular source point for side selection, submits both sides at distances
+`0.2`/`0.5`, and verifies typed source transport, accepted worker completion,
+ordinary output, and unchanged source controls. The focused case passes 3,687
+assertions; full `offset_worker_client` CTest passes in 272.88 seconds.
+
+This closes worker preparation only for these five layouts. The five-lane
+file test still covers the single-span profile only; that is the next
+stationary-layout delivery gap. Fit-point stationary behavior, visible GUI,
+and external-CAD acceptance remain open. `git diff --check` passes.
