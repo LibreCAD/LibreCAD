@@ -36665,3 +36665,19 @@ This establishes direct trimmed geometry only for this profile and grid. It
 does not establish worker execution, editable-cache admission, GUI behavior,
 DXF/DWG persistence, other fit-point shapes or tangent constraints, nor
 visible/external-CAD acceptance; those remain open validation lanes.
+
+## 937. Exercise Tangent-constrained Fit-point Trimming Through the Worker (2026-11-11)
+
+Test commit `cc507ab28` adds a real helper-process `Produce` regression for
+the fit-point spline-points profile from section 936. Both side picks and
+distances `0.2`/`0.5` are submitted through `LC_OffsetBatchPreparation`; the
+test verifies the request retains the `SplinePoints` source kind, worker
+completion is accepted, preparation produces ordinary entities, and the
+source remains unchanged. The focused case passes 735 assertions, and the
+registered full `offset_worker_client` CTest passes in 266.57 seconds.
+
+This confirms worker protocol/preparation for that specific profile and grid;
+the exact-normal geometric oracle remains the direct test in section 936.
+Editable-cache admission, GUI commit/undo, file persistence, other fit-point
+profiles/tangent constraints, and visible/external-CAD acceptance remain
+unverified. `git diff --check` passes.
