@@ -5774,21 +5774,6 @@ Windows/Linux runtime qualification. Remaining GUI/import caller audit,
 broader source/budget audit, installed-helper portability, and final W0-W2
 acceptance remain open.
 
-## 933. Exercise Bounded-hyperbola Trimming Through Worker Produce (2026-11-11)
-
-Test commit `6bc0f476c` adds a real helper-process `Produce` regression for
-the bounded hyperbola from section 932. It derives side picks from the source
-tangent at parameter zero and tests both sides at distances `1` and `4`,
-including the beyond-vertex-curvature case. The request retains the typed
-`BoundedHyperbola` source, worker preparation completes with ordinary output,
-and the source entity remains unchanged. The focused case passes 722
-assertions; full `offset_worker_client` CTest passes in 268.41 seconds.
-
-This is worker Produce coverage for the recorded profile and picks; it does
-not establish operation-8 editable-cache admission or DXF/DWG persistence for
-this exact trimmed result, other hyperbola parameters/transforms, visible GUI,
-or external-CAD acceptance. `git diff --check` passes.
-
 ## 56. W94 Current-Source Cache and Creation/Repeat Qualification
 
 Rebuilt the Release process-cache, worker-client, creation-action and shared
@@ -36615,3 +36600,34 @@ macOS arm64 CMake Release build, the registered full `offset_worker_client`
 CTest passes in 269.55 seconds. This validates CTest environment/timeout
 registration and the full local client suite; the Linux/Windows hosted runs
 remain pending PR CI and are not inferred from this local result.
+
+## 933. Exercise Bounded-hyperbola Trimming Through Worker Produce (2026-11-11)
+
+Test commit `6bc0f476c` adds a real helper-process `Produce` regression for
+the bounded hyperbola from section 932. It derives side picks from the source
+tangent at parameter zero and tests both sides at distances `1` and `4`,
+including the beyond-vertex-curvature case. The request retains the typed
+`BoundedHyperbola` source, worker preparation completes with ordinary output,
+and the source entity remains unchanged. The focused case passes 722
+assertions; full `offset_worker_client` CTest passes in 268.41 seconds.
+
+This is worker Produce coverage for the recorded profile and picks; it does
+not establish operation-8 editable-cache admission or DXF/DWG persistence for
+this exact trimmed result, other hyperbola parameters/transforms, visible GUI,
+or external-CAD acceptance. `git diff --check` passes.
+
+## 934. Persist Trimmed Bounded-hyperbola Output Across File Lanes (2026-11-11)
+
+Test commit `fbce562ff` adds internal write/reopen checks for the bounded
+hyperbola from sections 932-933. Both offset sides and distances `1` and `4`
+are materialized in trimmed mode and round-trip through R2004 DXF/DWG, R2013
+DXF, and R2018 DXF/DWG; reopened SPLINE geometry is compared at 33 normalized
+parameters. The focused test passes 2,846 assertions across 20
+version/geometry combinations. With LibreDWG 0.14, all four R2018 DWGs parse
+independently and their SPLINE count, degree, and control points match. `git
+diff --check` passes.
+
+This qualifies internal persistence and independent parsing only for this
+single circular-hyperbola profile, interval, sides, and distances. It does
+not establish ODA/AutoCAD acceptance, visible GUI behavior, or arbitrary
+hyperbola intervals, eccentricities, transforms, and curvature neighborhoods.
