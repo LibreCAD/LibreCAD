@@ -113,8 +113,9 @@ capture/reconstruction, worker encoding, and this acceptance matrix together.
    document lifetime changes. Commit `39060e650` also rechecks live matches
    while that watch exists, clears a newly ambiguous highlight and updates
    the chooser, and restores a unique match or an explicitly chosen session
-   identity. Initially missing or ambiguous sources are not
-   monitored for newly available matches; other lifecycle cases, large-drawing
+   identity. Commit `61b5e6bdc` also establishes the watch when the source is
+   initially missing or ambiguous, using a viewport-scoped lifetime even
+   before a highlight exists. Other lifecycle cases, large-drawing
    responsiveness, and visible acceptance remain open.
    Commit `6a29d6738` also invalidates the viewport's borrowed document on
    graphic/block teardown, stops the highlight monitor when that happens, and
@@ -34780,8 +34781,8 @@ selected session identity remains preferred even if further identical sources
 appear. The scan first filters by compatible entity class, then compares
 bounded typed encodings, and does not change document selection or unrelated
 overlay layers. It runs once per second while the existing watch is active;
-large-drawing responsiveness and initially missing/ambiguous watches remain
-open.
+large-drawing responsiveness remains open. Initially missing/ambiguous watches
+were still open at this checkpoint; see section 856.
 
 With the uncommitted geometry experiment present, CMake rebuilt the test
 target. The new transition/selection regression passed 30 assertions, and
@@ -34794,3 +34795,22 @@ open, as does a full qmake6 build currently in progress.
 The clean CMake Release checkout at `39060e650` rebuilt the test target and
 passed the complete source-picker selector with 12,269 assertions in 23
 cases. This is headless coverage, not visible GUI acceptance.
+
+## 856. Watch Initially Unresolved Sources (2026-11-11)
+
+Commit `61b5e6bdc` starts the existing source watch when an embedded source is
+initially missing or ambiguous. The viewport can issue the same scoped
+highlight-lifetime token before any highlight exists, invalidating it on
+viewport destruction or document rebinding. Once a unique live match appears,
+the chooser and temporary highlight update without altering document
+selection. Actual owned-source deletion and later replacement are also
+covered. The per-second scan and its large-drawing performance remain an open
+validation item; no persistent associative source link is implied.
+
+With the uncommitted geometry experiment present, the CMake test target
+rebuilt. The new unresolved-watch and lifetime tests passed 52 assertions in
+two cases; the combined source-picker and renderer selector passed 14,874
+assertions in 67 cases; the viewport-range, close and source-highlight
+selection passed 639 assertions in 14 cases. These are headless results;
+clean committed-path and visible GUI checks remain open. Full qmake6
+application and worker compilation is still in progress.
