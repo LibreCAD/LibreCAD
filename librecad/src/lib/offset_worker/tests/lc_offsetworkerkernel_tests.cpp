@@ -2102,76 +2102,82 @@ TEST_CASE("offset worker oracle-checks acute and obtuse rational spline corners 
         const double alpha = std::atan2(2.0 * std::sin(M_PI / static_cast<double>(degree)), 4.0 / static_cast<double>(degree));
         for (const double joinAngle : {M_PI / 6.0, 5.0 * M_PI / 6.0}) {
             for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
-                for (const double signedDistance : {-0.1, 0.1}) {
-                    CAPTURE(degree, joinAngle, signedDistance, translation);
-                    RS_SplineData data;
-                    data.degree = degree;
-                    data.type = RS_SplineData::SplineType::ClampedOpen;
-                    data.savedOpenType = data.type;
-                    for (std::size_t i = 0; i <= degree; ++i) {
-                        const double t = static_cast<double>(i) / static_cast<double>(degree);
-                        data.controlPoints.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
-                        data.weights.push_back(0.75 + 0.25 * t);
-                    }
-                    const double rotation = joinAngle - 2.0 * alpha;
-                    const double cosine = std::cos(rotation);
-                    const double sine = std::sin(rotation);
-                    for (std::size_t i = 1; i <= degree; ++i) {
-                        const double t = static_cast<double>(i) / static_cast<double>(degree);
-                        const double x = 4.0 * t;
-                        const double y = 2.0 * std::sin(M_PI * t);
-                        data.controlPoints.emplace_back(4.0 + cosine * x - sine * y, sine * x + cosine * y);
-                        data.weights.push_back(1.0 + 0.25 * t);
-                    }
-                    data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
-                    data.knotslist.insert(data.knotslist.end(), degree, 0.5);
-                    data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
-                    for (RS_Vector& point : data.controlPoints)
-                        point += translation;
-                    const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data}, signedDistance, 2e-3, false};
-                    REQUIRE(definition.isWellFormed());
-                    const RS_Spline source{nullptr, data};
-                    REQUIRE(source.validate());
+                for (const double rotation : {0.0, M_PI / 180.0 * 37.0}) {
+                    for (const double signedDistance : {-0.1, 0.1}) {
+                        CAPTURE(degree, joinAngle, signedDistance, translation, rotation);
+                        RS_SplineData data;
+                        data.degree = degree;
+                        data.type = RS_SplineData::SplineType::ClampedOpen;
+                        data.savedOpenType = data.type;
+                        for (std::size_t i = 0; i <= degree; ++i) {
+                            const double t = static_cast<double>(i) / static_cast<double>(degree);
+                            data.controlPoints.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
+                            data.weights.push_back(0.75 + 0.25 * t);
+                        }
+                        const double rotation = joinAngle - 2.0 * alpha;
+                        const double cosine = std::cos(rotation);
+                        const double sine = std::sin(rotation);
+                        for (std::size_t i = 1; i <= degree; ++i) {
+                            const double t = static_cast<double>(i) / static_cast<double>(degree);
+                            const double x = 4.0 * t;
+                            const double y = 2.0 * std::sin(M_PI * t);
+                            data.controlPoints.emplace_back(4.0 + cosine * x - sine * y, sine * x + cosine * y);
+                            data.weights.push_back(1.0 + 0.25 * t);
+                        }
+                        data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+                        data.knotslist.insert(data.knotslist.end(), degree, 0.5);
+                        data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+                        const double cosineRotation = std::cos(rotation);
+                        const double sineRotation = std::sin(rotation);
+                        for (RS_Vector& point : data.controlPoints) {
+                            point = {cosineRotation * point.x - sineRotation * point.y + translation.x,
+                                     sineRotation * point.x + cosineRotation * point.y + translation.y};
+                        }
+                        const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data}, signedDistance, 2e-3, false};
+                        REQUIRE(definition.isWellFormed());
+                        const RS_Spline source{nullptr, data};
+                        REQUIRE(source.validate());
 
-                    const req::Request generation{token, req::GenerateSource{definition, {}}};
-                    const auto generatedReply = LC_OffsetWorkerKernel::run(generation);
-                    const auto& generated = native(generatedReply, 7);
-                    REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
-                    REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
-                    REQUIRE(generated.ordinary.size() >= 1);
-                    REQUIRE(generated.ordinary.size() <= 2);
-                    std::vector<RS_SplineData> outputSplines;
-                    for (const auto& output : generated.ordinary) {
-                        if (const auto* spline = std::get_if<RS_SplineData>(&output)) {
-                            outputSplines.push_back(*spline);
+                        const req::Request generation{token, req::GenerateSource{definition, {}}};
+                        const auto generatedReply = LC_OffsetWorkerKernel::run(generation);
+                        const auto& generated = native(generatedReply, 7);
+                        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+                        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+                        REQUIRE(generated.ordinary.size() >= 1);
+                        REQUIRE(generated.ordinary.size() <= 2);
+                        std::vector<RS_SplineData> outputSplines;
+                        for (const auto& output : generated.ordinary) {
+                            if (const auto* spline = std::get_if<RS_SplineData>(&output)) {
+                                outputSplines.push_back(*spline);
+                            }
+                            else if (const auto* segment = std::get_if<req::Segment>(&output)) {
+                                RS_SplineData lineCache;
+                                lineCache.degree = 1;
+                                lineCache.controlPoints = {segment->start, segment->end};
+                                lineCache.knotslist = {0.0, 0.0, 1.0, 1.0};
+                                lineCache.weights = {1.0, 1.0};
+                                outputSplines.push_back(std::move(lineCache));
+                            }
+                            else {
+                                FAIL("unsupported ordinary output for a rational spline corner");
+                            }
                         }
-                        else if (const auto* segment = std::get_if<req::Segment>(&output)) {
-                            RS_SplineData lineCache;
-                            lineCache.degree = 1;
-                            lineCache.controlPoints = {segment->start, segment->end};
-                            lineCache.knotslist = {0.0, 0.0, 1.0, 1.0};
-                            lineCache.weights = {1.0, 1.0};
-                            outputSplines.push_back(std::move(lineCache));
-                        }
-                        else {
-                            FAIL("unsupported ordinary output for a rational spline corner");
-                        }
-                    }
-                    const auto oracleDistance = maximumOracleOffsetDistance(data, outputSplines, signedDistance);
-                    REQUIRE(oracleDistance);
-                    const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
-                    REQUIRE(tolerance);
-                    CAPTURE(*oracleDistance, tolerance->tolerance.requestedGeometry);
-                    CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
+                        const auto oracleDistance = maximumOracleOffsetDistance(data, outputSplines, signedDistance);
+                        REQUIRE(oracleDistance);
+                        const auto tolerance = LC_OffsetWorkerTolerance::directOptions(definition, source);
+                        REQUIRE(tolerance);
+                        CAPTURE(*oracleDistance, tolerance->tolerance.requestedGeometry);
+                        CHECK(*oracleDistance <= 2.0 * tolerance->tolerance.requestedGeometry);
 
-                    RS_SplineData cache;
-                    REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
-                    const req::Request validation{token, req::ValidateSourceCache{cache, definition, {}}};
-                    const auto validationReply = LC_OffsetWorkerKernel::run(validation);
-                    const auto& validated = native(validationReply, 8);
-                    CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
-                    CHECK(validated.changed);
-                    CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+                        RS_SplineData cache;
+                        REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+                        const req::Request validation{token, req::ValidateSourceCache{cache, definition, {}}};
+                        const auto validationReply = LC_OffsetWorkerKernel::run(validation);
+                        const auto& validated = native(validationReply, 8);
+                        CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                        CHECK(validated.changed);
+                        CHECK(validated.engineStatus == LC_CurveOffsetStatus::Ok);
+                    }
                 }
             }
         }
