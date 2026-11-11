@@ -35337,3 +35337,19 @@ cases. This closes layer-lock and document-lifetime invalidation for the
 tested flows. Stale/cancelled completion, source-layer visibility specifically,
 cross-family incremental uniqueness/ambiguity, and worst-case per-entity
 encoding remain open validation items.
+
+## 870. Verify Cancellation and Stale Slice Callbacks (2026-11-11)
+
+Commit `65b840984` adds a multi-slice cancellation test. Hiding the Properties
+widget stops both highlight timers and clears the overlay; explicitly invoking
+the stopped slice timer cannot publish the partial match. Reopening starts a
+fresh scan and ends in the expected ambiguous state. This covers cancellation
+and stale timeout delivery, but is not a substitute for an asynchronous worker
+generation test elsewhere in the offset workflow.
+
+The CMake `librecad_tests` target builds; `[incremental]` passes, and the full
+`[gui][dialog][offsetcurve][source]` selector passes 12,627 assertions / 34
+cases. Remaining scanner gates are source-layer visibility mutation during a
+scan, a family-by-family uniqueness/ambiguity matrix through the incremental
+path, and a bound on worst-case single-entity capture/encoding latency. Keep
+these open before declaring picker responsiveness fully validated.
