@@ -35741,19 +35741,23 @@ slices, and keep unsupported variants fail-closed.
 
 ## 890. Revalidate Adjacent-parameter Materialized-node Rejection (2026-11-11)
 
-Commit `0be84dcfd` extends `Materialized nodes reject demonstrably inconsistent
-source occurrences` by changing one occurrence to `nextafter(parameterB,
-+infinity)`, adjacent to the other recorded parameter.
-The current branch-provenance validation rejects the modified node as
-`AmbiguousTopology` and publishes no entities; no parameter-distance cutoff or
-kernel change is required. This confirms the specific non-corner corruption
-case recorded in sections 857 and 859 against the current implementation.
+Commit `0be84dcfd` adds the adjacent-parameter corruption case to
+`Materialized nodes reject demonstrably inconsistent source occurrences`:
+one occurrence is changed to `nextafter(parameterB, +infinity)`. Commit
+`aedf461a4` adds the complementary valid control using the same quadratic
+parabola with its knot domain compressed to `1e-6`; its crossing parameters are
+less than `1e-6` apart, while the corresponding source points remain more than
+one unit apart. The current branch-provenance validation rejects the corrupted
+node as `AmbiguousTopology` without publishing entities and accepts the valid
+compressed-parameter crossing. No parameter-distance cutoff or kernel change
+is required. Together these cases verify that the guard distinguishes branch
+identity from mere parameter proximity for this profile.
 
-On the current CMake Release build at commit `0be84dcfd`, the focused regression
-passes 41 assertions / 1 case, `[curve-offset][topology][materialized]` passes
-2,897 assertions / 14 cases, and the complete `[curve-offset]` selector passes
-1,925,433 assertions / 313 cases. The extra nearby-parameter mutation is
-covered alongside the existing duplicate and valid noded-parabola controls.
+On the current CMake Release build at commit `aedf461a4`, the focused regression
+passes 49 assertions / 1 case, `[curve-offset][topology][materialized]` passes
+2,905 assertions / 14 cases, and the complete `[curve-offset]` selector passes
+1,925,441 assertions / 313 cases. These run alongside the existing exact
+duplicate and valid noded-parabola controls.
 Broader corner-arc/piece identity proofs, direct fault injection for
 unavailable source evaluation, independent CAD readers, PR CI, visible GUI,
 and cross-platform acceptance remain open; do not infer them from this run.
