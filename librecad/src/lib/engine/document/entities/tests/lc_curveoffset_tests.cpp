@@ -3141,6 +3141,32 @@ TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrence
     const auto adjacentResult = materialize(adjacentOccurrence);
     CHECK(adjacentResult.status == LC_CurveOffsetStatus::AmbiguousTopology);
     CHECK(adjacentResult.entities.empty());
+
+    const double compressedDomain = 1e-6;
+    const RS_Spline compressedParabola = makeSpline(
+        2, {{-2, 4}, {0, -4}, {2, 4}},
+        {0, 0, 0, compressedDomain, compressedDomain, compressedDomain});
+    LC_CurveOffsetOptions compressedOptions = LC_CurveOffset::makeDirectOptions(compressedParabola, 1.0);
+    compressedOptions.nodeIntersections = true;
+    const LC_CurveOffsetGeometryResult compressedGeometry = LC_CurveOffset::buildDirectBranches(
+        compressedParabola, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0), compressedOptions,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(compressedGeometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(compressedGeometry.intersections.size() == 1);
+    CHECK(std::abs(compressedGeometry.intersections.front().parameterA -
+                   compressedGeometry.intersections.front().parameterB) < 1e-6);
+    LC_CurveJet compressedA;
+    LC_CurveJet compressedB;
+    REQUIRE(compressedParabola.tryEvaluateJet(compressedGeometry.intersections.front().parameterA,
+                                              LC_CurveEvaluationSide::Interior, compressedA));
+    REQUIRE(compressedParabola.tryEvaluateJet(compressedGeometry.intersections.front().parameterB,
+                                              LC_CurveEvaluationSide::Interior, compressedB));
+    CHECK(compressedA.point.distanceTo(compressedB.point) > 1.0);
+    const LC_CurveOffsetMaterializationResult compressedResult = LC_CurveOffset::materializeBranches(
+        compressedParabola, compressedGeometry, compressedOptions, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(compressedResult.status == LC_CurveOffsetStatus::Ok);
+    CHECK_FALSE(compressedResult.entities.empty());
+
     auto reverseDuplicate = geometry;
     reverseDuplicate.intersections.front().parameterB = reverseDuplicate.intersections.front().parameterA;
     const auto reverseDuplicateResult = materialize(reverseDuplicate);
