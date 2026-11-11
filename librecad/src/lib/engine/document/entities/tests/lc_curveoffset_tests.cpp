@@ -281,6 +281,42 @@ TEST_CASE("Restricted join proofs retain constructed second crossings", "[curve-
     }
 }
 
+TEST_CASE("Materialized join proof separates tiny relative displacement", "[curve-offset][topology][materialized]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const RS_Vector join{176.98003589195014, -55.555555555555564};
+    const LC_CurveOffsetInternal::BezierBranches branches{
+        {{{{176.98003790227219, -55.555559094779625},
+           {176.98003590054191, -55.555555551367611},
+           {176.98003589195017, -55.555555555555614}, join}}},
+        {{{join, {176.98003589195011, -55.555555555555507},
+           {176.98003589987286, -55.555555550208801},
+           {176.98003383205318, -55.555552044953522}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(branches, {1, -1});
+    const LC_IntersectionDomain box{0, 1,
+        LC_Interval::hull(15.99931323528289795 - 15.0, 15.99931324273347855 - 15.0),
+        LC_Interval::hull(0, 16.000030517578125 - 16.0)};
+    const auto proof = curves->certifyIntersection(box);
+    CHECK(proof.outcome == Outcome::Excluded);
+    CHECK(proof.proof == LC_IntersectionProof::AnalyticExclusion);
+    const LC_IntersectionDomain reversed{1, 0, box.parameterB, box.parameterA};
+    CHECK(curves->certifyIntersection(reversed).outcome == Outcome::Excluded);
+    for (const int transform : {0, 1, 2, 3}) {
+        auto transformed = branches;
+        for (auto& branch : transformed) {
+            for (auto& piece : branch) {
+                for (auto& point : piece) {
+                    if (transform & 1) std::swap(point.x, point.y);
+                    if (transform & 2) point.x = -point.x;
+                    point.x *= 0x1p-20;
+                    point.y *= 0x1p-20;
+                }
+            }
+        }
+        const auto mapped = LC_CurveOffsetInternal::makePieceCurves(transformed, {1, -1});
+        CHECK(mapped->certifyIntersection(box).outcome == Outcome::Excluded);
+    }
+}
+
 TEST_CASE("Offset source snapshots own every supported source type") {
     RS_EllipseData ellipseData;
     ellipseData.center = {1.0, 2.0};

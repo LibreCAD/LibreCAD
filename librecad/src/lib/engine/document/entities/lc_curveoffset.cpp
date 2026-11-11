@@ -3602,13 +3602,17 @@ public:
             return (a.isPositive() && b.isNegative()) || (a.isNegative() && b.isPositive());
         };
         // The factors multiply nonnegative distances from the shared endpoint.
-        // Opposite coordinate signs or a nonzero cross product exclude every other contact.
+        // Opposite signs, a nonzero cross product, or a nonzero relative displacement
+        // on either axis exclude every other contact.
         const LC_Interval ax = factor(p[2].x, p[1].x, p[0].x, p[3].x, h);
         const LC_Interval ay = factor(p[2].y, p[1].y, p[0].y, p[3].y, h);
         const LC_Interval bx = factor(q[1].x, q[2].x, q[3].x, q[0].x, s);
         const LC_Interval by = factor(q[1].y, q[2].y, q[3].y, q[0].y, s);
         const LC_Interval cross = ax * by - ay * bx;
-        if (separated(ax, bx) || separated(ay, by) || cross.excludesZero()) {
+        const LC_Interval differenceX = h * ax - s * bx;
+        const LC_Interval differenceY = h * ay - s * by;
+        if (separated(ax, bx) || separated(ay, by) || cross.excludesZero() ||
+            differenceX.excludesZero() || differenceY.excludesZero()) {
             LC_AnalyticIntersectionCertificate certificate;
             certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
             certificate.proof = LC_IntersectionProof::AnalyticExclusion;
