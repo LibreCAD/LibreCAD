@@ -34450,9 +34450,9 @@ In the local uncommitted strict experiment, the rotated 3-to-1 fixture now
 passes 10,857 assertions. The broader ellipse/intersection/trim run reports 16
 failed assertions, down from the earlier 22, but still fails on extreme
 ellipses and trimming. Its fair-split and refined-box proof changes, strict
-trigger, and diagnostic prints remain uncommitted. A clean default-path matrix,
-worker/file matrix, visible checks, and cross-platform validation for this
-new certificate remain open.
+trigger, and diagnostic prints remain uncommitted. Visible checks and
+cross-platform validation for this certificate remain open; clean normal-path
+and worker results are recorded below.
 
 Clean-checkout validation at `d2ea710da` (including `940dcd970`): the CMake
 Release test and worker-client targets rebuilt with no source changes. The
@@ -34462,3 +34462,23 @@ and the real-worker typed-source/cache/five-lane file matrix passed 1,552,135
 assertions in one case using `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`. The
 checkout remained clean. These results do not close the strict experiment,
 full qmake build, visible or independent-CAD visual checks, or other platforms.
+
+## 847. Enclose Derivative Control Differences (2026-11-11)
+
+Commit `30bdaf148` forms the materialized Bezier derivative control
+differences with outward interval subtraction before evaluating their
+quadratic blossom. Previously, ordinary floating-point subtraction was
+wrapped as an exact point, which did not establish the conservative-bound
+contract when the subtraction rounded. This change does not claim that a
+particular previously published drawing was misclassified.
+
+An independent 256-digit binary-float oracle checks sampled derivatives
+inside five parameter intervals across 25 pairs of control-coordinate sets,
+including an explicitly inexact double subtraction and widely separated
+scales. With the uncommitted strict experiment present, the materialized
+selector passed 2,317 assertions in 7 cases, the precision/proof-domain
+selector passed 291 assertions in 6 cases, and the rotated 3-to-1 and 10-to-1
+fixtures passed 21,720 assertions in 2 cases. CMake rebuilt the test target and
+qmake6 compiled the changed application object, not the full application.
+Clean default-path and worker/file matrices for this commit remain open, as do
+strict activation, visible acceptance, and cross-platform checks.
