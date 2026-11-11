@@ -35031,6 +35031,14 @@ minimum-OS-version warnings because they were built for macOS 27.x. This
 proves qmake6 compile/link integration, not runtime compatibility on macOS
 14.4, visible GUI acceptance, or another platform.
 
+The clean CMake Release test binary from source commit
+`5ed4627fcc3ed22416e6e5abb6f6c0b2602a6273` also passes the complete
+`[curve-offset]` selector: 1,884,452 assertions in 307 cases. Subsequent PR
+commits `239c1bf30` and `e39921c38` only update this roadmap, so the tested
+implementation sources are unchanged at current head. This broad local
+geometry result does not close the separately documented nearby-occurrence
+identity counterexample or visible/cross-platform gates.
+
 For the large-drawing follow-up, first measure the live-watch scan with many
 same-kind, maximum-size candidates and establish explicit work and latency
 budgets. Then design a mutation-aware, incrementally bounded scan: keep no
