@@ -646,8 +646,15 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
     for (int i = 0; i < sourceBox->count(); ++i)
         if (sourceBox->itemData(i).toULongLong() == line->getId()) lineIndex = i;
     REQUIRE(lineIndex >= 0);
+    CHECK(typeBox->isEnabled());
+    CHECK(sourceBox->isEnabled());
     sourceBox->setCurrentIndex(lineIndex);
+    REQUIRE(widget.isPreparing());
+    CHECK_FALSE(typeBox->isEnabled());
+    CHECK_FALSE(sourceBox->isEnabled());
     awaitPreparation(widget);
+    CHECK(typeBox->isEnabled());
+    CHECK(sourceBox->isEnabled());
     REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
     REQUIRE(clone->sourceDefinition());
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Line);
@@ -675,7 +682,12 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
         if (sourceBox->itemData(i).toULongLong() == parabola->getId()) parabolaIndex = i;
     REQUIRE(parabolaIndex >= 0);
     sourceBox->setCurrentIndex(parabolaIndex);
+    REQUIRE(widget.isPreparing());
+    CHECK_FALSE(typeBox->isEnabled());
+    CHECK_FALSE(sourceBox->isEnabled());
     awaitPreparation(widget);
+    CHECK(typeBox->isEnabled());
+    CHECK(sourceBox->isEnabled());
     REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
     REQUIRE(clone->sourceDefinition());
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
@@ -692,7 +704,12 @@ TEST_CASE("Native source picker changes family and replaces the source with a ty
         if (sourceBox->itemData(i).toULongLong() == ellipse->getId()) ellipseIndex = i;
     REQUIRE(ellipseIndex >= 0);
     sourceBox->setCurrentIndex(ellipseIndex);
+    REQUIRE(widget.isPreparing());
+    CHECK_FALSE(typeBox->isEnabled());
+    CHECK_FALSE(sourceBox->isEnabled());
     awaitPreparation(widget);
+    CHECK(typeBox->isEnabled());
+    CHECK(sourceBox->isEnabled());
     REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
     REQUIRE(clone->sourceDefinition());
     CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Ellipse);
