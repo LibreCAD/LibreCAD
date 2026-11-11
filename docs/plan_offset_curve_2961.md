@@ -35353,3 +35353,18 @@ cases. Remaining scanner gates are source-layer visibility mutation during a
 scan, a family-by-family uniqueness/ambiguity matrix through the incremental
 path, and a bound on worst-case single-entity capture/encoding latency. Keep
 these open before declaring picker responsiveness fully validated.
+
+## 871. Verify Source-layer Visibility Invalidation (2026-11-11)
+
+Commit `4861fda07` adds the visibility half of layer-state invalidation. A
+source on a frozen layer is not selectable while an incremental scan is in
+progress; unfreezing the layer invalidates and restarts the scan, after which
+the source is highlighted and the selection command is enabled. This
+complements the lock-change regression in section 869.
+
+The incremental-scanner cases pass 83 assertions / 6 cases, and the full
+source-picker selector passes 12,636 assertions / 35 cases on the current CMake
+Release build. The remaining scanner gates are the per-family incremental
+uniqueness/ambiguity matrix and a defensible worst-case per-entity
+capture/encoding latency bound. The existing total-time benchmark is
+diagnostic only and cannot establish a hard event-loop budget.
