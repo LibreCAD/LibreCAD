@@ -3602,90 +3602,82 @@ public:
             return last && firstOfBranch && first.branch < m_next.size() &&
                    m_next[first.branch] == static_cast<std::ptrdiff_t>(second.branch);
         };
-        std::size_t before = domain.segmentA;
-        std::size_t after = domain.segmentB;
-        if (!joined(before, after)) {
-            std::swap(before, after);
-            if (!joined(before, after)) {
-                return {};
+        const auto proveOrdered = [&](const std::size_t before, const std::size_t after) {
+            const auto& p = m_pieces[before];
+            const auto& q = m_pieces[after];
+            const auto same = [](const RS_Vector& a, const RS_Vector& b) {
+                return isFinite(a) && isFinite(b) && a.x == b.x && a.y == b.y;
+            };
+            if (!same(p[3], q[0]) || !isFinite(p[0]) || !isFinite(p[1]) || !isFinite(p[2]) ||
+                !isFinite(q[1]) || !isFinite(q[2]) || !isFinite(q[3])) {
+                return false;
             }
-        }
-        const auto& p = m_pieces[before];
-        const auto& q = m_pieces[after];
-        const auto same = [](const RS_Vector& a, const RS_Vector& b) {
-            return isFinite(a) && isFinite(b) && a.x == b.x && a.y == b.y;
-        };
-        if (!same(p[3], q[0]) || !isFinite(p[0]) || !isFinite(p[1]) || !isFinite(p[2]) ||
-            !isFinite(q[1]) || !isFinite(q[2]) || !isFinite(q[3])) {
-            return {};
-        }
-        const auto local = [](const LC_Interval& parameter, const LC_ParametricSegment& segment, bool reverse) {
-            LC_Interval value = parameter - LC_Interval::point(segment.t0);
-            if (reverse) value = LC_Interval::point(1.0) - value;
-            const double lo = std::max(0.0, value.lo());
-            const double hi = std::min(1.0, value.hi());
-            return value.isValid() && lo <= hi ? LC_Interval::hull(lo, hi) : LC_Interval{};
-        };
-        const LC_Interval beforeParameter = before == domain.segmentA ? domain.parameterA : domain.parameterB;
-        const LC_Interval afterParameter = after == domain.segmentA ? domain.parameterA : domain.parameterB;
-        const LC_Interval h = local(beforeParameter, m_segments[before], true);
-        const LC_Interval s = local(afterParameter, m_segments[after], false);
-        const auto factor = [](double first, double second, double third, double origin, const LC_Interval& t) {
-            if (!t.isValid()) return LC_Interval{};
-            const LC_Interval one = LC_Interval::point(1.0);
-            const LC_Interval three = LC_Interval::point(3.0);
-            const LC_Interval rest = one - t;
-            return three * (LC_Interval::point(first) - LC_Interval::point(origin)) * sqr(rest) +
-                   three * (LC_Interval::point(second) - LC_Interval::point(origin)) * t * rest +
-                   (LC_Interval::point(third) - LC_Interval::point(origin)) * sqr(t);
-        };
-        const auto separated = [](const LC_Interval& a, const LC_Interval& b) {
-            return (a.isPositive() && b.isNegative()) || (a.isNegative() && b.isPositive());
-        };
-        // The factors multiply nonnegative distances from the shared endpoint.
-        // Opposite signs, a nonzero cross product, or a nonzero relative displacement
-        // on either axis exclude every other contact.
-        const LC_Interval ax = factor(p[2].x, p[1].x, p[0].x, p[3].x, h);
-        const LC_Interval ay = factor(p[2].y, p[1].y, p[0].y, p[3].y, h);
-        const LC_Interval bx = factor(q[1].x, q[2].x, q[3].x, q[0].x, s);
-        const LC_Interval by = factor(q[1].y, q[2].y, q[3].y, q[0].y, s);
-        const LC_Interval cross = ax * by - ay * bx;
-        const LC_Interval differenceX = h * ax - s * bx;
-        const LC_Interval differenceY = h * ay - s * by;
-        if (separated(ax, bx) || separated(ay, by) || cross.excludesZero() ||
-            differenceX.excludesZero() || differenceY.excludesZero()) {
-            LC_AnalyticIntersectionCertificate certificate;
-            certificate.outcome = LC_AnalyticIntersectionCertificate::Outcome::Excluded;
-            certificate.proof = LC_IntersectionProof::AnalyticExclusion;
-            certificate.proofDomain = domain;
-            return certificate;
-        }
-        if (!same(p[2], p[3]) || !same(q[0], q[1])) return {};
-        struct IntervalVector { LC_Interval x, y; };
-        const auto difference = [](const RS_Vector& a, const RS_Vector& b) {
-            return IntervalVector{LC_Interval::point(a.x) - LC_Interval::point(b.x),
-                                  LC_Interval::point(a.y) - LC_Interval::point(b.y)};
-        };
-        const auto triple = [](const IntervalVector& v) {
-            return IntervalVector{LC_Interval::point(3.0) * v.x, LC_Interval::point(3.0) * v.y};
-        };
-        const auto crossProduct = [](const IntervalVector& a, const IntervalVector& b) {
-            return a.x * b.y - a.y * b.x;
-        };
-        // After factoring the squared distance from the join, each cubic is a
-        // linear blend of these two endpoint-relative vectors.
-        const std::array<IntervalVector, 2> a{{triple(difference(p[1], p[3])), difference(p[0], p[3])}};
-        const std::array<IntervalVector, 2> b{{triple(difference(q[2], q[0])), difference(q[3], q[0])}};
-        bool positive = true;
-        bool negative = true;
-        for (const auto& u : a) {
-            for (const auto& v : b) {
-                const LC_Interval cross = crossProduct(u, v);
-                positive = positive && cross.isPositive();
-                negative = negative && cross.isValid() && cross.hi() < 0.0;
+            const auto local = [](const LC_Interval& parameter, const LC_ParametricSegment& segment, bool reverse) {
+                LC_Interval value = parameter - LC_Interval::point(segment.t0);
+                if (reverse) value = LC_Interval::point(1.0) - value;
+                const double lo = std::max(0.0, value.lo());
+                const double hi = std::min(1.0, value.hi());
+                return value.isValid() && lo <= hi ? LC_Interval::hull(lo, hi) : LC_Interval{};
+            };
+            const LC_Interval beforeParameter = before == domain.segmentA ? domain.parameterA : domain.parameterB;
+            const LC_Interval afterParameter = after == domain.segmentA ? domain.parameterA : domain.parameterB;
+            const LC_Interval h = local(beforeParameter, m_segments[before], true);
+            const LC_Interval s = local(afterParameter, m_segments[after], false);
+            const auto factor = [](double first, double second, double third, double origin, const LC_Interval& t) {
+                if (!t.isValid()) return LC_Interval{};
+                const LC_Interval one = LC_Interval::point(1.0);
+                const LC_Interval three = LC_Interval::point(3.0);
+                const LC_Interval rest = one - t;
+                return three * (LC_Interval::point(first) - LC_Interval::point(origin)) * sqr(rest) +
+                       three * (LC_Interval::point(second) - LC_Interval::point(origin)) * t * rest +
+                       (LC_Interval::point(third) - LC_Interval::point(origin)) * sqr(t);
+            };
+            const auto separated = [](const LC_Interval& a, const LC_Interval& b) {
+                return (a.isPositive() && b.isNegative()) || (a.isNegative() && b.isPositive());
+            };
+            // The factors multiply nonnegative distances from the shared endpoint.
+            // Opposite signs, a nonzero cross product, or a nonzero relative displacement
+            // on either axis exclude every other contact.
+            const LC_Interval ax = factor(p[2].x, p[1].x, p[0].x, p[3].x, h);
+            const LC_Interval ay = factor(p[2].y, p[1].y, p[0].y, p[3].y, h);
+            const LC_Interval bx = factor(q[1].x, q[2].x, q[3].x, q[0].x, s);
+            const LC_Interval by = factor(q[1].y, q[2].y, q[3].y, q[0].y, s);
+            const LC_Interval cross = ax * by - ay * bx;
+            const LC_Interval differenceX = h * ax - s * bx;
+            const LC_Interval differenceY = h * ay - s * by;
+            if (separated(ax, bx) || separated(ay, by) || cross.excludesZero() ||
+                differenceX.excludesZero() || differenceY.excludesZero()) {
+                return true;
             }
-        }
-        if (!positive && !negative) {
+            if (!same(p[2], p[3]) || !same(q[0], q[1])) return false;
+            struct IntervalVector { LC_Interval x, y; };
+            const auto difference = [](const RS_Vector& a, const RS_Vector& b) {
+                return IntervalVector{LC_Interval::point(a.x) - LC_Interval::point(b.x),
+                                      LC_Interval::point(a.y) - LC_Interval::point(b.y)};
+            };
+            const auto triple = [](const IntervalVector& v) {
+                return IntervalVector{LC_Interval::point(3.0) * v.x, LC_Interval::point(3.0) * v.y};
+            };
+            const auto crossProduct = [](const IntervalVector& a, const IntervalVector& b) {
+                return a.x * b.y - a.y * b.x;
+            };
+            // After factoring the squared distance from the join, each cubic is a
+            // linear blend of these two endpoint-relative vectors.
+            const std::array<IntervalVector, 2> a{{triple(difference(p[1], p[3])), difference(p[0], p[3])}};
+            const std::array<IntervalVector, 2> b{{triple(difference(q[2], q[0])), difference(q[3], q[0])}};
+            bool positive = true;
+            bool negative = true;
+            for (const auto& u : a) {
+                for (const auto& v : b) {
+                    const LC_Interval cross = crossProduct(u, v);
+                    positive = positive && cross.isPositive();
+                    negative = negative && cross.isValid() && cross.hi() < 0.0;
+                }
+            }
+            return positive || negative;
+        };
+        if (!(joined(domain.segmentA, domain.segmentB) && proveOrdered(domain.segmentA, domain.segmentB)) &&
+            !(joined(domain.segmentB, domain.segmentA) && proveOrdered(domain.segmentB, domain.segmentA))) {
             return {};
         }
         LC_AnalyticIntersectionCertificate certificate;

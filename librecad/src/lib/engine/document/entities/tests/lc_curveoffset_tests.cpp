@@ -49,6 +49,42 @@
 
 using Catch::Approx;
 
+TEST_CASE("Materialized closed pair considers both joins without hiding crossings",
+          "[curve-offset][topology][materialized]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const LC_CurveOffsetInternal::BezierBranches closed{{
+        {{{0.84850692395510485, 0}, {0.28314153378821894, 0.010663327812672721},
+          {-0.28314153378782358, 0.010663327812667853}, {-0.84850692395470984, 0}}},
+        {{{-0.84850692395470984, 0}, {-0.28314153378782103, -0.010663327812667815},
+          {0.28314153378821649, -0.010663327812672865}, {0.84850692395510485, 0}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(closed, {0});
+    REQUIRE(curves);
+    const LC_IntersectionDomain closing{0, 1, LC_Interval::hull(0, 0.00000005960464478),
+                                        LC_Interval::hull(1.99999994039535522, 2)};
+    const LC_IntersectionDomain closingReversed{1, 0, closing.parameterB, closing.parameterA};
+    CHECK(curves->certifyIntersection(closing).outcome == Outcome::Excluded);
+    CHECK(curves->certifyIntersection(closingReversed).outcome == Outcome::Excluded);
+    const LC_IntersectionDomain whole{0, 1, LC_Interval::hull(0, 1), LC_Interval::hull(1, 2)};
+    CHECK(curves->certifyIntersection(whole).outcome == Outcome::Unavailable);
+
+    const LC_CurveOffsetInternal::BezierBranches crossed{{
+        {{{0, 0}, {0, 0}, {1, 0}, {1, 0}}},
+        {{{1, 0}, {1, 1}, {0, -1}, {0, 0}}}}};
+    const auto crossing = LC_CurveOffsetInternal::makePieceCurves(crossed, {0});
+    REQUIRE(crossing);
+    RS_Vector a, b, derivative;
+    REQUIRE(crossing->evaluate(0, .5, a, derivative));
+    REQUIRE(crossing->evaluate(1, 1.5, b, derivative));
+    CHECK(a.x == b.x);
+    CHECK(a.y == b.y);
+    const LC_IntersectionDomain crossingBox{0, 1, LC_Interval::hull(.499999, .500001),
+                                            LC_Interval::hull(1.499999, 1.500001)};
+    const LC_IntersectionDomain crossingReversed{1, 0, crossingBox.parameterB, crossingBox.parameterA};
+    CHECK(crossing->certifyIntersection(whole).outcome == Outcome::Unavailable);
+    CHECK(crossing->certifyIntersection(crossingBox).outcome == Outcome::Unavailable);
+    CHECK(crossing->certifyIntersection(crossingReversed).outcome == Outcome::Unavailable);
+}
+
 TEST_CASE("Materialized Bezier adapter orders branch parameters", "[curve-offset][topology][materialized]") {
     const LC_CurveOffsetInternal::BezierBranches branches{
         {{{{0, 0}, {1, 0}, {2, 0}, {3, 0}}}, {{{3, 0}, {3, 1}, {3, 2}, {3, 3}}}},
