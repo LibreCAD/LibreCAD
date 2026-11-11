@@ -77,10 +77,9 @@ bool mayMatchSourceKind(const RS_Entity& entity, LC_OffsetSourceGeometry::Kind k
     return false;
 }
 
-bool sourceVariantSelectable(const RS_Entity& entity) {
-    const auto geometry = LC_OffsetSourceGeometry::capture(entity);
-    if (!geometry || !LC_OffsetWorkerRequest::Values::isSourceGeometryEncodable(*geometry))
-        return false;
+bool sourceVariantSelectable(const RS_Entity& entity,
+                             const LC_OffsetSourceGeometry& geometry) {
+    if (!LC_OffsetWorkerRequest::Values::isSourceGeometryEncodable(geometry)) return false;
     if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&entity))
         return !points->getData().fitTangentsConstrained ||
                points->fitTangentsMatchCurve();
@@ -88,6 +87,11 @@ bool sourceVariantSelectable(const RS_Entity& entity) {
         return !spline->getData().fitTangentsConstrained ||
                spline->fitTangentsMatchCurve();
     return true;
+}
+
+bool sourceVariantSelectable(const RS_Entity& entity) {
+    const auto geometry = LC_OffsetSourceGeometry::capture(entity);
+    return geometry && sourceVariantSelectable(entity, *geometry);
 }
 
 struct OffsetDialogContext {
@@ -472,7 +476,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
     if (embedded) embeddedEncoding =
         LC_OffsetWorkerRequest::Values::encodeSourceGeometry(embedded->source);
     for (auto* entity : document->getEntityList()) {
-        if (entity == nullptr || entity->getFlag(RS2::FlagDeleted)) continue;
+        if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
+            !mayMatchSourceKind(*entity, wantedKind)) continue;
         const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
         if (!geometry || geometry->kind() != wantedKind) continue;
         std::optional<QCborArray> candidateEncoding;
@@ -481,7 +486,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
         const bool matchesEmbedded = embeddedEncoding && candidateEncoding &&
             *embeddedEncoding == *candidateEncoding;
         if (matchesEmbedded) ++matchingSources;
-        if (!sourceVariantSelectable(*entity)) {
+        if (!sourceVariantSelectable(*entity, *geometry)) {
             embeddedSourceUnsupported |= matchesEmbedded;
             continue;
         }
