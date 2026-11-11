@@ -35667,3 +35667,19 @@ one corresponding transformed worker/file profile. Reversed traversal,
 different intervals, endpoint-at-cusp cases, exact/over-threshold worker
 Produce, other origins/rotations/ratios and external-reader/visible-GUI
 acceptance remain separate open rows.
+
+## 886. Qualify Reversed Near-cusp Elliptic Arc Traversal (2026-11-11)
+
+Commit `0a6a730d1` adds the reversed form of the translated ratio-1.5 arc from
+section 885, with parameter interval `[0.2, -0.2]`, reversed traversal, and an
+inward distance of 2.4 (90% of the `16/6` cusp radius). The direct regression
+resolves inward using the traversal-aware right side and verifies the closed
+trimmed chain against the independent distance, direction and topology oracle.
+The focused direct cusp case passes 13,164 assertions / 1 case.
+
+The full typed-source worker/client matrix passes 1,588,671 assertions / 1
+case for this reversed fixture, including cache admission, center-pick side
+resolution, Produce and all five internal R14/R2000/R2018 DXF/DWG round-trip
+lanes. This is evidence for one reversed short arc and one distance only;
+other reversed intervals, endpoint contacts, cusp equality/overrun, signed
+sides, profiles, external-reader and visible-GUI acceptance remain open.
