@@ -85,6 +85,18 @@ automated acceptance criteria. Visible-GUI confirmation remains open. Missing
 geometry variants stay in slice 4 rather than being implied by selector
 availability.
 
+**Scope reconfirmed (2026-11-11):** “Expand source curve support to all
+supported types” means keep replacement available across the complete current
+`SupportedKinds` inventory, not add a parabola-only path, freeze the selector
+to the existing source family, or promise support for every drawable LibreCAD
+entity. Before choosing a replacement, users must be able to switch among
+line, arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola,
+and polyline and see the candidate list refresh. The current typed source and
+its indication remain intact until a candidate has passed worker validation.
+This reiteration does not reopen the already-tested picker implementation;
+per-variant geometry, worker/cache, and persistence gaps remain explicit Slice
+4 work, and visible-GUI confirmation remains a Slice 5 gate.
+
 **Interaction-state rule:** keep the type selector and candidate chooser
 available while the editor is idle and throughout the replacement-selection
 workflow, so the user may switch family without exiting that workflow and then
@@ -35641,7 +35653,7 @@ for equality, the beyond-cusp topology, or other axis ratios/scales. Remaining
 ellipse boundaries, external CAD and visible GUI acceptance, and the broader
 family/variant matrix stay open.
 
-## 882. Reconcile Source-type Switching and Full-family Picker Scope (2026-11-11)
+## 882. Reconfirm Type-switching Picker Across All Supported Source Families (2026-11-11)
 
 The latest source-widget request is already represented by the active contract:
 while choosing a replacement candidate, the user can change the source-family
@@ -35655,12 +35667,13 @@ Current code matches this interaction in
 `LC_PropertiesEditingWidgetOffsetCurve::setBusy` and its type-change handler.
 Sections 874-875 record the directed cross-family replacement matrix and the
 idle/busy selector-state tests. No additional picker implementation slice is
-needed for the reiterated request. “All supported types” means the canonical
-nine-kind offset-source inventory, not every LibreCAD entity or every possible
-geometry variant. Continue the separate per-variant direct-geometry,
-worker/cache and applicable DXF/DWG qualification in slice 4; keep unqualified
-variants fail-closed and do not treat picker availability as proof of
-generation or persistence. Visible-GUI acceptance remains open.
+needed for the reiterated request. The picker inventory is line, arc, circle,
+ellipse, spline, spline-points, distinct parabola, bounded hyperbola, and
+polyline; it is not every LibreCAD entity or every possible geometry variant.
+Continue the separate per-variant direct-geometry, worker/cache and applicable
+DXF/DWG qualification in slice 4; keep unqualified variants fail-closed and do
+not treat picker availability as proof of generation or persistence.
+Visible-GUI acceptance remains open.
 
 ## 883. Qualify the Wide-axis Ellipse Cusp Boundary (2026-11-11)
 
@@ -36888,3 +36901,19 @@ This completes file-lane evidence for this repeated-neighbor profile only;
 it preserves materialized SPLINE geometry, not editable typed-source
 metadata. Other coincident fit-point patterns, ODA/AutoCAD acceptance, and
 visible-GUI behavior remain open.
+
+## 951. Refuse Singular Repeated Fit-point Trims (2026-11-11)
+
+Test commit `51b5f88c1` keeps the interior coincident-neighbor profile from
+section 948 as the sole positive fit-point case in this exact-normal oracle
+and adds fail-closed coverage for leading duplicates, trailing duplicates,
+and a triple repeated point. These invalid layouts can be raw-captured, but
+their interpolated control geometry is empty and direct trim returns
+`InvalidSource` with no branches. The focused fit-point trim selection passes
+85 assertions across three cases; the full `[curve-offset][trim]` selection
+passes 55,634 assertions across 37 cases. `git diff --check` passes.
+
+A separate profile with interior and trailing repeated neighbors does produce
+controls, but its trim misses the exact-normal coverage tolerance and is not
+included as positive support. That pattern and broader coincident fit-point
+handling remain open; do not infer support from successful raw source capture.
