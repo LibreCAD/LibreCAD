@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-10. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-11. Project: **LibreCAD**, not LibreCAD_3.
 
 ### Current source-widget implementation plan
 
@@ -46,6 +46,38 @@ source without changing document selection. Both selectors are disabled while
 preparation is busy. Candidate
 filtering checks capture, worker encoding, and constrained spline tangents; it
 does not by itself prove that the offset can be generated successfully.
+
+**Requested outcome and execution order (2026-11-11):** This is a Properties
+workflow for replacing the source of an editable offset, not a request to
+replace the existing chooser with a canvas-picking tool. A user can change
+the family before selecting a replacement; the family list must not be limited
+to the current source's family. When the current source can be resolved
+uniquely, show it in the chooser and visibly indicate it in the drawing without
+silently changing unrelated selection. A missing or ambiguous source must be
+identified as such. Parabola is a first-class family, including during
+capture, reconstruction, and replacement, even though its implementation
+inherits from spline-points.
+
+The nine `SupportedKinds` entries are the present source inventory, not proof
+that every possible entity or geometry variant works. Do not drop an eligible
+member of these families merely because the previous source has another kind;
+do not advertise malformed or unsupported variants as working. Complete the
+following slices in order, preserving the detailed safety requirements below:
+
+| Slice | Remaining work | Acceptance evidence |
+| --- | --- | --- |
+| 1. Inventory and selector | Compare the canonical kind list, capture/reconstruction, candidate filter, and worker encoding for all nine families. Fix any mismatches; preserve the separate parabola tag and the existing family selector. | Table-driven tests exercise each family as a destination from a different family, switching filters without mutation, empty/unsupported buckets, and parabola versus spline-points identity. |
+| 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Record limits for initially missing or ambiguous matches and large drawings until addressed. |
+| 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests, plus move/delete/document-change and late-reply tests; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
+| 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
+| 5. Delivery | Run affected CMake and qmake6 builds and tests, then a visible LibreCAD workflow with cross-family replacement, parabola, source indication, cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
+
+Existing picker and parabola tests are useful regression evidence, not a
+substitute for the remaining matrix or visible acceptance. The chooser has a
+separate explicit "Select in drawing" command; automatic indication must not
+be confused with a persistent associative link to a source entity. If future
+work adds a new supported source kind, update the inventory, both selectors,
+capture/reconstruction, worker encoding, and this acceptance matrix together.
 
 **Implementation slices:**
 
@@ -34545,3 +34577,27 @@ ellipses and trimming. The experimental solver, strict trigger, and debug
 prints remain uncommitted. Clean normal-path and worker/file matrices for this
 certificate, strict activation, visible checks, and cross-platform validation
 remain open.
+
+The clean CMake Release checkout at `13abc7bb1` passed the materialized
+selector (2,765 assertions in 9 cases) and the normal
+ellipse/intersection/trim selector (1,361,893 assertions in 102 cases). This
+does not establish the strict experiment's correctness.
+
+## 850. Check Both Joins of a Closed Bezier Pair (2026-11-11)
+
+Commit `4a66b2f24` tries each valid directed join when two materialized cubic
+pieces share both an internal and closing endpoint. Each candidate must still
+prove exclusion over the complete requested parameter box. The regression
+covers the captured closing-end domain in both query orders, an unresolved
+whole-pair domain, and an exact interior crossing that must never be excluded.
+
+With the uncommitted strict experiment present, CMake rebuilt the test target;
+the materialized selector passed 2,777 assertions in 10 cases, the
+precision/proof-domain selector passed 291 assertions in 6 cases, and the
+previously failing wings-past fixture passed 7,386 assertions. The qmake6
+application object compiled; this is not a full qmake build. The broad strict
+ellipse/intersection/trim experiment still reported 10 failing assertions
+(102 cases), so neither that solver nor its strict trigger is ready to ship.
+The experimental changes and temporary diagnostics remain uncommitted. Clean
+committed-path, worker/file, visible and cross-platform validation remain open
+until separately recorded.
