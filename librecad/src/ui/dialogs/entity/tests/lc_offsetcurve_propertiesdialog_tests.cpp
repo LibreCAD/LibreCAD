@@ -1215,16 +1215,121 @@ TEST_CASE("Incremental source scan invalidates for geometry edits and undo",
         batch.replace(duplicate, movedDuplicate);
         return true;
     }));
-    REQUIRE(pollEventsUntil([&] { return sliceTimer->isActive(); }));
-    REQUIRE(pollEventsUntil([&] { return !sliceTimer->isActive(); }));
-    REQUIRE(overlay->getEntityList().size() == 1);
+    REQUIRE(pollEventsUntil([&] {
+        return overlay->getEntityList().size() == 1 &&
+            sourceBox->currentData().toULongLong() == first->getId();
+    }));
     CHECK(sourceBox->currentData().toULongLong() == first->getId());
 
     REQUIRE(f.graphic.undo());
-    REQUIRE(pollEventsUntil([&] { return sliceTimer->isActive(); }));
-    REQUIRE(pollEventsUntil([&] { return !sliceTimer->isActive(); }));
+    REQUIRE(pollEventsUntil([&] {
+        return overlay->getEntityList().isEmpty() &&
+            sourceBox->currentText().contains("ambiguous", Qt::CaseInsensitive);
+    }));
     CHECK(overlay->getEntityList().isEmpty());
     CHECK(sourceBox->currentText().contains("ambiguous", Qt::CaseInsensitive));
+}
+
+TEST_CASE("Incremental source scan restarts after a layer lock change",
+          "[gui][dialog][offsetcurve][source][highlight][incremental][layer]") {
+    Fixture f;
+    auto* source = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    source->setLayer(f.graphic.getActiveLayer());
+    f.graphic.addEntity(source);
+    for (int i = 0; i < 100; ++i) {
+        f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 40}, {double(i + 1), 40}}));
+    }
+    auto* layer = f.graphic.getActiveLayer();
+    layer->lock(true);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    auto* viewport = f.view.getViewPort();
+    auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport);
+    widget.setEntity(clone.get());
+    widget.show();
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* select = widget.findChild<QToolButton*>("tbSelectSource");
+    auto* sliceTimer = widget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+    REQUIRE(sourceBox);
+    REQUIRE(select);
+    REQUIRE(sliceTimer);
+    REQUIRE(sliceTimer->isActive());
+    CHECK_FALSE(select->isEnabled());
+
+    layer->lock(false);
+    REQUIRE(pollEventsUntil([&] {
+        return overlay->getEntityList().size() == 1 && select->isEnabled();
+    }));
+    CHECK(sourceBox->currentData().toULongLong() == source->getId());
+    CHECK(select->isEnabled());
+}
+
+TEST_CASE("Incremental source scan does not publish across document lifetime changes",
+          "[gui][dialog][offsetcurve][source][highlight][incremental][lifetime]") {
+    Fixture f;
+    SECTION("document replaced") {
+        auto initial = std::make_unique<Graphic>();
+        initial->initForNewDocument();
+        initial->onLoadingCompleted();
+        for (int i = 0; i < 100; ++i) {
+            initial->addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 50}, {double(i + 1), 50}}));
+        }
+        auto replacementDocument = std::make_unique<Graphic>();
+        replacementDocument->initForNewDocument();
+        replacementDocument->onLoadingCompleted();
+        auto* replacement = new RS_Ellipse(nullptr, f.curve->definition().basis);
+        replacementDocument->addEntity(replacement);
+        auto viewport = std::make_unique<LC_GraphicViewport>();
+        viewport->setDocument(initial.get());
+        std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+        NativeWidget widget;
+        widget.setGraphicViewport(viewport.get());
+        widget.setEntity(clone.get());
+        widget.show();
+        auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+        auto* sliceTimer = widget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+        auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+        auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+        REQUIRE(timer);
+        REQUIRE(sliceTimer);
+        REQUIRE(sourceBox);
+        REQUIRE(sliceTimer->isActive());
+
+        viewport->setDocument(replacementDocument.get());
+        REQUIRE(QMetaObject::invokeMethod(sliceTimer, "timeout", Qt::DirectConnection));
+        overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+        CHECK(overlay->getEntityList().size() == 1);
+        CHECK(sourceBox->currentData().toULongLong() == replacement->getId());
+        viewport.reset();
+    }
+    SECTION("document destroyed") {
+        auto document = std::make_unique<Graphic>();
+        document->initForNewDocument();
+        document->onLoadingCompleted();
+        for (int i = 0; i < 100; ++i) {
+            document->addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 60}, {double(i + 1), 60}}));
+        }
+        auto viewport = std::make_unique<LC_GraphicViewport>();
+        viewport->setDocument(document.get());
+        std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+        NativeWidget widget;
+        widget.setGraphicViewport(viewport.get());
+        widget.setEntity(clone.get());
+        widget.show();
+        auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+        auto* sliceTimer = widget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+        REQUIRE(timer);
+        REQUIRE(sliceTimer);
+        REQUIRE(sliceTimer->isActive());
+
+        document.reset();
+        QCoreApplication::processEvents();
+        CHECK_FALSE(timer->isActive());
+        CHECK_FALSE(sliceTimer->isActive());
+        CHECK(viewport->getDocument() == nullptr);
+        viewport.reset();
+    }
 }
 
 TEST_CASE("Missing source watch stops when viewport or document changes",
@@ -1251,7 +1356,7 @@ TEST_CASE("Missing source watch stops when viewport or document changes",
         other.initForNewDocument(); other.onLoadingCompleted();
         viewport->setDocument(&other);
         REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
-        CHECK_FALSE(timer->isActive());
+        CHECK(timer->isActive());
         viewport.reset();
     }
 }
@@ -1303,7 +1408,7 @@ TEST_CASE("Source highlight monitoring stops after viewport invalidation",
         other.initForNewDocument(); other.onLoadingCompleted();
         viewport->setDocument(&other);
         REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
-        CHECK_FALSE(timer->isActive());
+        CHECK(timer->isActive());
         viewport.reset();
     }
 }

@@ -635,11 +635,19 @@ void LC_PropertiesEditingWidgetOffsetCurve::invalidateSourceHighlightScan() {
 void LC_PropertiesEditingWidgetOffsetCurve::processSourceHighlightScanSlice() {
     if (!m_highlightScanActive) return;
     if (!m_sourceHighlightVisible || !m_highlightViewport || m_viewport != m_highlightViewport ||
-        m_highlightLifetime.expired()) {
+        !m_viewport) {
         clearSourceWatch();
         return;
     }
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
+    if (!document) {
+        clearSourceWatch();
+        return;
+    }
+    if (document != m_scanDocument || m_highlightLifetime.expired()) {
+        refreshSourceHighlight(false);
+        return;
+    }
     const auto snapshotMatches = [this, document] {
         return document && document == m_scanDocument && m_viewport == m_scanViewport &&
             m_sourceHighlightVisible && !m_highlightLifetime.expired() &&
@@ -650,6 +658,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceHighlightScanSlice() {
     };
     if (!snapshotMatches()) {
         if (!document || !m_sourceHighlightVisible) clearSourceWatch();
+        else if (document != m_scanDocument) refreshSourceHighlight(false);
         else beginSourceHighlightScan(true);
         return;
     }
@@ -689,6 +698,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::processSourceHighlightScanSlice() {
 
     if (!snapshotMatches()) {
         if (!document || !m_sourceHighlightVisible) clearSourceWatch();
+        else if (document != m_scanDocument) refreshSourceHighlight(false);
         else beginSourceHighlightScan(true);
         return;
     }
@@ -704,17 +714,26 @@ void LC_PropertiesEditingWidgetOffsetCurve::completeSourceHighlightScan() {
     m_highlightScanActive = false;
     m_highlightSliceTimer->stop();
     if (!m_sourceHighlightVisible || !m_highlightViewport || m_viewport != m_highlightViewport ||
-        m_highlightLifetime.expired()) {
+        !m_viewport) {
         clearSourceWatch();
         return;
     }
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
+    if (!document) {
+        clearSourceWatch();
+        return;
+    }
+    if (document != m_scanDocument || m_highlightLifetime.expired()) {
+        refreshSourceHighlight(false);
+        return;
+    }
     if (!document || document != m_scanDocument || m_viewport != m_scanViewport ||
         m_watchMutationRevision != m_scanMutationRevision ||
         document->entityListRevision() != m_scanEntityListRevision ||
         document->undoStateEpoch() != m_scanUndoEpoch ||
         document->getEntityList().size() != m_scanEntityCount) {
         if (!document || !m_sourceHighlightVisible) clearSourceWatch();
+        else if (document != m_scanDocument) refreshSourceHighlight(false);
         else beginSourceHighlightScan(true);
         return;
     }
@@ -758,20 +777,20 @@ void LC_PropertiesEditingWidgetOffsetCurve::completeSourceHighlightScan() {
 
 void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
     if (!m_sourceHighlightVisible || !m_highlightViewport ||
-        m_viewport != m_highlightViewport || m_highlightLifetime.expired()) {
+        m_viewport != m_highlightViewport || !m_viewport) {
         clearSourceWatch();
         return;
     }
-    if (m_highlightScanActive) return;
     auto* document = m_highlightViewport->getDocument();
     if (!document) {
         clearSourceWatch();
         return;
     }
-    if (document != m_scanDocument) {
+    if (document != m_scanDocument || m_highlightLifetime.expired()) {
         refreshSourceHighlight(false);
         return;
     }
+    if (m_highlightScanActive) return;
     const_cast<LC_PropertiesEditingWidgetOffsetCurve*>(this)->beginSourceHighlightScan(
         m_watchMutationRevision != m_scanMutationRevision ||
         document->entityListRevision() != m_scanEntityListRevision ||
