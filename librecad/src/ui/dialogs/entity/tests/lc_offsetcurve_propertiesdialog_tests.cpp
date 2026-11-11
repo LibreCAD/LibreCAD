@@ -2119,6 +2119,80 @@ TEST_CASE("Native source picker replaces every modeled source family without fil
     }
 }
 
+TEST_CASE("Incremental source matching preserves uniqueness across all modeled families",
+          "[gui][dialog][offsetcurve][source][typed][incremental][matrix]") {
+    RS_SplineData spline{2, false};
+    spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    spline.knotslist = {0, 0, 0, 1, 1, 1};
+    spline.weights = {1, .7, 1};
+    LC_SplinePointsData splinePoints{false, false};
+    splinePoints.useControlPoints = true;
+    splinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 9> geometries{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
+        LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{splinePoints},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, .25, 1.5, false}},
+        LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}}
+    };
+
+    for (const auto& geometry : geometries) {
+        CAPTURE(geometry.kind());
+        Fixture f;
+        auto candidate = geometry.makeEntity();
+        REQUIRE(candidate);
+        auto* candidateEntity = candidate.get();
+        f.graphic.addEntity(candidateEntity);
+        candidate.release();
+        for (int i = 0; i < 70; ++i) {
+            f.graphic.addEntity(new RS_Point(nullptr, RS_Vector{double(i), 1000}));
+        }
+
+        std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+        NativeWidget editWidget;
+        editWidget.setGraphicViewport(f.view.getViewPort());
+        editWidget.setEntity(clone.get());
+        auto* typeBox = editWidget.findChild<QComboBox*>("cbSourceType");
+        auto* sourceBox = editWidget.findChild<QComboBox*>("cbSource");
+        REQUIRE(typeBox);
+        REQUIRE(sourceBox);
+        typeBox->setCurrentIndex(typeBox->findData(static_cast<int>(geometry.kind())));
+        const int sourceIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(candidateEntity->getId()));
+        REQUIRE(sourceIndex >= 0);
+        sourceBox->setCurrentIndex(sourceIndex);
+        awaitPreparation(editWidget);
+        REQUIRE(editWidget.lastEditResult());
+        REQUIRE(*editWidget.lastEditResult());
+        editWidget.hide();
+
+        auto duplicate = geometry.makeEntity();
+        REQUIRE(duplicate);
+        f.graphic.addEntity(duplicate.get());
+        duplicate.release();
+        NativeWidget scanWidget;
+        scanWidget.setGraphicViewport(f.view.getViewPort());
+        scanWidget.setEntity(clone.get());
+        scanWidget.show();
+        auto* scanSourceBox = scanWidget.findChild<QComboBox*>("cbSource");
+        auto* sliceTimer = scanWidget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+        auto* overlay = f.view.getViewPort()->getOverlayEntitiesContainer(
+            RS2::OverlayGraphics::OffsetSourceHighlights);
+        REQUIRE(scanSourceBox);
+        REQUIRE(sliceTimer);
+        REQUIRE(overlay);
+        REQUIRE(sliceTimer->isActive());
+        CHECK(scanSourceBox->currentText().contains("ambiguous", Qt::CaseInsensitive));
+        REQUIRE(pollEventsUntil([&] { return !sliceTimer->isActive(); }));
+        CHECK(overlay->getEntityList().isEmpty());
+        scanWidget.hide();
+    }
+}
+
 TEST_CASE("Native source picker explains empty buckets for unsupported curve variants",
           "[gui][dialog][offsetcurve][source][eligibility]") {
     Fixture f;
