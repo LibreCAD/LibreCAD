@@ -2189,7 +2189,7 @@ TEST_CASE("offset worker oracle-checks degree-minus-one repeated knots on both s
     constexpr std::array<double, 7> broadWeights{0.45, 2.1, 0.6, 1.8, 0.8, 1.4, 2.4};
     for (const std::size_t degree : {4u, 5u, 6u}) {
         for (const std::size_t weightProfile : {0u, 1u}) {
-            for (const double interiorKnot : {0.15, 0.37, 0.63, 0.85}) {
+            for (const double interiorKnot : {0.05, 0.15, 0.37, 0.63, 0.85, 0.95}) {
                 for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
                     for (const double rotation : {0.0, M_PI / 180.0 * 37.0}) {
                         for (const double signedDistance : {-0.1, 0.1}) {
