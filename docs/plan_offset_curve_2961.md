@@ -36540,6 +36540,22 @@ and grids. The affine profiles have not yet been added to the five-lane file
 round-trip/LibreDWG matrix; additional affine conditioning, GUI behavior, and
 external CAD remain open. `git diff --check` passes.
 
+## 931. Persist Affine Trimmed-parabola Profiles Across DXF/DWG Lanes (2026-11-11)
+
+Test commit `bb41df687` adds the two affine typed-parabola profiles from
+section 930 to the trimmed geometry file matrix. Forward/reversed traversal,
+both sides, distances `0.25`/`2.75`, and R2004 DXF/DWG, R2013 DXF, and R2018
+DXF/DWG round-trip are checked by sampled geometry comparison. The focused
+test passes 10,601 assertions across 80 version/geometry combinations. With
+LibreDWG 0.14 installed, all 16 R2018 affine-profile DWGs are independently
+parsed and their SPLINE degrees/control points checked. `git diff --check`
+passes.
+
+This closes internal five-lane and LibreDWG parsing for the four recorded
+profiles and trim matrix. It is not ODA/AutoCAD acceptance, visible CAD
+rendering, general affine conditioning, or support for other parabola shapes,
+domains, and distances.
+
 ## 926. Exercise Typed-parabola Produce Through the Worker Client (2026-11-11)
 
 Test commit `b2da768ea` expands the real-helper `Produce` regression for the
