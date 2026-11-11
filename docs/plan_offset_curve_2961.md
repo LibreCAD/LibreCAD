@@ -147,9 +147,9 @@ Execute and record these slices in order:
    then update and commit this plan with the exact revision and actual results.
    The latest source-picker suite passes 14,097 assertions / 39 cases and
    worker-request microtests pass 603,526 assertions / 18 cases; exact results
-   and revisions are in sections 867–881. Validate CMake and qmake6 on clean
-   committed sources; record platform and deployment-target warnings. Run a
-   visible LibreCAD workflow covering
+   and revisions are in sections 867–881. The recursive clean qmake6 Release
+   build is verified in section 897; a fresh clean CMake build remains open.
+   Record platform and deployment-target warnings. Run a visible LibreCAD workflow covering
    cross-type selection, parabola, highlight/selection, cancel, undo/redo and
    save/reopen. Report headless focus failures, unavailable desktop access,
    untested platforms and failing external readers as open gates, not passes.
@@ -35879,7 +35879,27 @@ regular and circular-corner cases; it is not a universal proof for every
 source variant or topology. Trimmed mode retains its previous source-distance
 check because trimming can rewrite or remove branch identities; its occurrence
 identity remains open and must be proved with an explicit post-trim mapping or
-fail closed. Also open: broader materialized-curve fault cases, clean qmake6 and
-cross-platform runs, external CAD comparison, visible GUI acceptance, and PR
-CI for the exact head. Continue with the trimmed-identity design and remaining
-family/variant gates; do not infer completion of the roadmap from this slice.
+fail closed. Also open: broader materialized-curve fault cases, clean CMake and
+cross-platform runs, external CAD comparison, visible GUI acceptance, and PR CI
+for the exact head. The clean qmake6 gate is closed by section 897. Continue
+with the trimmed-identity design and remaining family/variant gates; do not
+infer completion of the roadmap from this slice.
+
+## 897. Validate Clean qmake6 Build for the Provenance Fix (2026-11-11)
+
+At source implementation commit `cecdafd8b` (plan-only descendant
+`a580c0b42`), a fresh recursive qmake6 Release build was generated in
+`/private/tmp/offset-2961-qmake-cecd` with qmake6/Qt 6.12.0 on macOS ARM64,
+Xcode SDK 27.0, and a macOS 14.4 deployment target. The initial full build
+produced the LibreCAD app, offset worker, bundled plugins, and tools; the final
+incremental `make -j6` pass reported `QMAKE6_FINAL_EXIT=0`. The app and worker
+executables were verified at their expected bundle paths.
+
+The linker warns that Homebrew QtSvg and FreeType libraries were built for
+macOS 27.0 while this build targets 14.4; `-single_module` is also reported as
+obsolete. These are environment/dependency warnings, not build failures. The
+login shell additionally prints a stale `/private/tmp/libdxfrw-cargo/env`
+missing-file message, which did not prevent qmake generation or compilation.
+This closes qmake6 build integration for the implementation sources in
+`cecdafd8b`; it does not prove runtime compatibility on macOS 14.4, a clean
+CMake build, application-level GUI behavior, another platform, or PR CI.
