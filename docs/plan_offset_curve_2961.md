@@ -144,7 +144,7 @@ Execute and record these slices in order:
    then update and commit this plan with the exact revision and actual results.
    The latest source-picker suite passes 14,097 assertions / 39 cases and
    worker-request microtests pass 603,526 assertions / 18 cases; exact results
-   and revisions are in sections 867–880. Validate CMake and qmake6 on clean
+   and revisions are in sections 867–881. Validate CMake and qmake6 on clean
    committed sources; record platform and deployment-target warnings. Run a
    visible LibreCAD workflow covering
    cross-type selection, parabola, highlight/selection, cancel, undo/redo and
@@ -30209,7 +30209,7 @@ these rows do not imply every parameter/domain is supported):
 | Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Other sub-ULP/coordinate-conditioning boundaries and broad non-finite payload refusal |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at gaps 1e-4..1e-8 radians, both orientations and both offset sides; counterclockwise near-full profiles at 1e-4 and 1e-8, reversed near-full at 1e-8, and short counterclockwise seam-crossing at 1e-4 pass required worker/cache admission, replacement, Produce, and five-file-lane reopen; short arcs in both orientations at 1e-8 pass the same path at distance 1e-6; the counterclockwise profile at distance .25 cleanly refuses with UndefinedTangent and no output; below-validity arc refused at typed capture | Additional source radius/offset/tolerance combinations, sweep-limit behavior, and broader boundary matrix |
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
-| Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; translated, rotated ratio-1.5 whole ellipse and forward/reversed bounded arcs now have exact-normal checks on both sides and complete worker/cache, Produce, and all five R14/R2000/R2018 DXF/DWG lanes | Full axis-ratio, sweep, cusp, side/distance and precision matrix |
+| Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; translated, rotated ratio-1.5 whole ellipse and forward/reversed bounded arcs plus a near-cusp inward profile now have exact-normal checks and complete worker/cache, Produce, and all five R14/R2000/R2018 DXF/DWG lanes | Full axis-ratio, sweep, cusp-threshold, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; one open four-fit-point source with endpoint tangent constraints matches an exact-normal oracle on both signed sides and passes worker/cache/replacement/Produce, five DXF/DWG lanes, and LibreDWG parsing; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; isolated, separated, plateau-plus-separated, leading-endpoint, and trailing-endpoint stationary profiles omit stationary source intervals, preserve exact-normal tolerance on moving spans, and pass both signed worker/cache/Produce paths, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing; a closed interior-stationary profile and a simple convex periodic-seam-stationary profile pass exact-normal checks on both sides plus worker/cache/replacement/Produce, five DXF/DWG lanes, and LibreDWG parsing | Other fit-point counts/placements and tangent combinations, repeated-point/stationary-span patterns and joins, self-intersecting or ambiguous closed stationary profiles, and broader seam/refusal matrix |
 | Parabola | Three-control typed `LC_ParabolaData`, including `From4Points` and endpoint/tangent construction | Distinct typed identity; direct exact-normal checks cover valid candidates from two four-point samples, endpoint tangent slopes +/-1e-4..1e-8, a scale-`1e4` source translated to `(1e6,-2e6)` at both signs and normalized distances `.05/.25`, and a scale-`1e-3` source translated to `(10,-20)` at both signs and normalized distances `.05/.25`; both translated profiles at both signs and both distances pass worker/cache, replacement, and five file lanes; a scale-`1e-2` source at `(1e6,-2e6)` and its 37-degree rotated counterpart pass direct checks at normalized distances `.05/.25` and worker/cache, replacement, Produce, and all five file lanes on both sides at distance `.0005`; reversed control-point traversal passes direct exact-normal checks at `.05` and `.25` and worker/cache, replacement, Produce, and all five lanes on both sides at `.25`; two four-point candidates and the 1e-8 near-parallel profile also pass those lanes; parallel/zero/non-finite tangent refusals | Other source scales/translations, other four-point samples, more extreme endpoint conditioning, broader transforms, distance/domain boundaries and visible GUI |
@@ -35577,3 +35577,19 @@ focused worker-client family/persistence test passes 1,545,802 assertions / 1
 case. This covers this reversed profile only; additional sweeps, ratios,
 cusp-distance thresholds, translated precision limits, GUI and external-reader
 acceptance, and remaining family/variant qualification are still open.
+
+## 881. Qualify a Wide-axis Ellipse Just Below its Cusp Radius (2026-11-11)
+
+Commit `f095503ec` adds an inward offset of 2.4 for the translated, rotated
+ratio-1.5 whole ellipse. Its semiaxes are 6 and 4, so the analytic major-vertex
+cusp radius is `b^2/a = 16/6`; the tested distance is 90% of that threshold.
+The direct result is checked against the exact ellipse normals, and the real
+worker matrix requires cache admission followed by Produce and the five
+internal R14/R2000/R2018 DXF/DWG round-trip lanes.
+
+The complete direct ellipse suite passes 1,331,763 assertions / 56 cases. The
+focused worker-client family/persistence test passes 1,553,025 assertions / 1
+case. This is evidence for one inward distance below one cusp threshold, not
+for equality, the beyond-cusp topology, or other axis ratios/scales. Remaining
+ellipse boundaries, external CAD and visible GUI acceptance, and the broader
+family/variant matrix stay open.
