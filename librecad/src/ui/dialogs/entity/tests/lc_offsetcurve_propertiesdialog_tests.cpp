@@ -827,6 +827,59 @@ TEST_CASE("Native source picker does not guess between identical embedded source
     CHECK(second->getFlag(RS2::FlagSelected));
 }
 
+TEST_CASE("Native source replacement refuses a changed or deleted worker input",
+          "[gui][dialog][offsetcurve][source][stale][async]") {
+    Fixture f;
+    RS_Entity* candidate = nullptr;
+    LC_OffsetSourceGeometry::Kind kind;
+    bool deleted = false;
+    SECTION("generalized line moves") {
+        candidate = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+        kind = LC_OffsetSourceGeometry::Kind::Line;
+    }
+    SECTION("ellipse is deleted") {
+        candidate = new RS_Ellipse(nullptr, RS_EllipseData{{8, 2}, {2, 0}, .8, 0, 0, false});
+        kind = LC_OffsetSourceGeometry::Kind::Ellipse;
+        deleted = true;
+    }
+    SECTION("generalized line is deleted") {
+        candidate = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+        kind = LC_OffsetSourceGeometry::Kind::Line;
+        deleted = true;
+    }
+    SECTION("ellipse moves") {
+        candidate = new RS_Ellipse(nullptr, RS_EllipseData{{8, 2}, {2, 0}, .8, 0, 0, false});
+        kind = LC_OffsetSourceGeometry::Kind::Ellipse;
+    }
+    REQUIRE(candidate);
+    f.graphic.addEntity(candidate);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    const auto before = clone->definition();
+    const auto cacheBefore = RS_Spline::geometryFingerprint(clone->getData());
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    const int typeIndex = typeBox->findData(static_cast<int>(kind));
+    REQUIRE(typeIndex >= 0);
+    typeBox->setCurrentIndex(typeIndex);
+    const int sourceIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(candidate->getId()));
+    REQUIRE(sourceIndex >= 0);
+    sourceBox->setCurrentIndex(sourceIndex);
+    REQUIRE(widget.isPreparing());
+    if (deleted) candidate->setFlag(RS2::FlagDeleted);
+    else candidate->move({1, 0});
+    awaitPreparation(widget);
+    CHECK(clone->hasEditableDefinition());
+    definitionEqual(clone->definition(), before);
+    CHECK(RS_Spline::geometryFingerprint(clone->getData()) == cacheBefore);
+    auto* refusal = widget.findChild<QLabel*>("lRefusal");
+    REQUIRE(refusal);
+    CHECK_FALSE(refusal->text().isEmpty());
+}
+
 TEST_CASE("Native source picker offers supported spline and polyline variants",
           "[gui][dialog][offsetcurve][source][eligibility][variants]") {
     Fixture f;

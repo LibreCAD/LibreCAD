@@ -10,6 +10,7 @@
 #include <array>
 #include <memory>
 #include <optional>
+#include <QCborArray>
 #include "lc_entitypropertieseditorwidget.h"
 #include "lc_offsetcurve.h"
 
@@ -46,10 +47,13 @@ private:
     friend class LC_DlgEntityProperties;
     void detachPreparation();
     enum class Field { Distance, CenterX, CenterY, Major, Minor, Rotation, Start, End };
+    struct SourceWitness { qulonglong id; QCborArray geometry; };
     void finishField(QLineEdit* editor, Field field) const;
     void applyValue(Field field, double value) const;
-    void apply(const LC_EllipseOffsetDefinition& definition) const;
-    void applySourceDefinition(const LC_OffsetSourceDefinition& definition) const;
+    void apply(const LC_EllipseOffsetDefinition& definition,
+               std::optional<SourceWitness> source = std::nullopt) const;
+    void applySourceDefinition(const LC_OffsetSourceDefinition& definition,
+                               std::optional<SourceWitness> source = std::nullopt) const;
     LC_EllipseOffsetDefinition proposedDefinition() const;
     void setBusy(bool busy) const;
     std::array<QLineEdit*, 8> definitionEditors() const;
@@ -58,6 +62,7 @@ private:
     void inputRefused(QLineEdit* editor, const QString& reason) const;
     void refreshSourceChoices() const;
     RS_Entity* findSourceEntity(qulonglong id) const;
+    bool sourceMatches(const SourceWitness& source) const;
     void selectCurrentSource() const;
     Ui::LC_OffsetCurvePropertiesEditingWidget* ui;
     LC_OffsetCurve* m_entity = nullptr;

@@ -140,12 +140,15 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
         const auto geometry = LC_OffsetSourceGeometry::capture(*source);
         if (!geometry || !sourceVariantSelectable(*source) ||
             static_cast<int>(geometry->kind()) != ui->cbSourceType->currentData().toInt()) return;
+        const auto encoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
+        if (!encoding) return;
+        const SourceWitness witness{id, *encoding};
         m_preferredSourceId = source->getId();
         if (const auto* ellipse = dynamic_cast<const RS_Ellipse*>(source);
             ellipse && m_entity->hasEditableDefinition()) {
             auto next = proposedDefinition();
             next.basis = ellipse->getData();
-            apply(next);
+            apply(next, witness);
             return;
         }
         LC_OffsetSourceDefinition next;
@@ -157,7 +160,7 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
             next.cacheReversed = current.cacheReversed;
         }
         next.source = *geometry;
-        applySourceDefinition(next);
+        applySourceDefinition(next, witness);
     });
     connect(ui->cbSourceType, qOverload<int>(&QComboBox::currentIndexChanged), this,
         [this](int) { if (!m_refreshing) refreshSourceChoices(); });
@@ -421,6 +424,15 @@ RS_Entity* LC_PropertiesEditingWidgetOffsetCurve::findSourceEntity(qulonglong id
     return nullptr;
 }
 
+bool LC_PropertiesEditingWidgetOffsetCurve::sourceMatches(const SourceWitness& source) const {
+    const auto* entity = findSourceEntity(source.id);
+    if (!entity) return false;
+    const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
+    if (!geometry) return false;
+    const auto encoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
+    return encoding && *encoding == source.geometry;
+}
+
 void LC_PropertiesEditingWidgetOffsetCurve::selectCurrentSource() const {
     if (m_entity == nullptr || m_viewport == nullptr) return;
     bool validId = false;
@@ -465,7 +477,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::finishField(QLineEdit* editor, Field
     applyValue(field, angle ? RS_Math::deg2rad(value) : value);
 }
 
-void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefinition& definition) const {
+void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefinition& definition,
+                                                   std::optional<SourceWitness> source) const {
     if (m_entity == nullptr) return;
     const QPointer<const LC_PropertiesEditingWidgetOffsetCurve> alive(this);
     bool published = false;
@@ -514,7 +527,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
         if (!alive || generation != m_generation || target != m_entity) return;
         const bool matches = snapshot->matches(*target);
         if (!alive || generation != m_generation || target != m_entity) return;
-        if (!matches || !context.matches(m_viewport)) {
+        if (!matches || !context.matches(m_viewport) || (source && !sourceMatches(*source))) {
             failure(tr("The offset editing input changed; the value was not changed.")); return;
         }
         if (!prepared.generate()) {
@@ -532,7 +545,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
         m_lastResult.reset();
         LC_OffsetWorkerRequest::Request request{{generation, generation, revision, 0}, *prepared.generate()};
         const bool accepted = m_worker->submit(request, LC_OffsetWorkerClient::Mode::Commit,
-            [alive, generation, revision, target, context](LC_OffsetWorkerClient::Outcome outcome) {
+            [alive, generation, revision, target, context, source](LC_OffsetWorkerClient::Outcome outcome) {
                 if (!alive || generation != alive->m_generation || revision != alive->m_sourceRevision ||
                     target != alive->m_entity || !alive->m_busy) return;
                 const auto* self = alive.data();
@@ -562,7 +575,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
                     const auto snapshot = self->m_inputSnapshot; // Retain across reentrant getters/cancellation.
                     const bool matches = current && context.matches(self->m_viewport) && snapshot && snapshot->matches(*target);
                     if (!alive || generation != alive->m_generation || target != alive->m_entity) return;
-                    if (!matches || !context.matches(self->m_viewport)) {
+                    if (!matches || !context.matches(self->m_viewport) ||
+                        (source && !self->sourceMatches(*source))) {
                         refuse(self->tr("The offset editing input changed; the value was not changed.")); return;
                     }
                     self->m_lastResult = outcome.completed->apply(*target);
@@ -588,7 +602,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
     }
 }
 
-void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_OffsetSourceDefinition& definition) const {
+void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_OffsetSourceDefinition& definition,
+                                                                   std::optional<SourceWitness> source) const {
     if (m_entity == nullptr || m_viewport == nullptr || !m_worker) return;
     const QPointer<const LC_PropertiesEditingWidgetOffsetCurve> alive(this);
     if (m_generation == std::numeric_limits<qint64>::max() ||
@@ -620,6 +635,11 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
             return;
         }
         auto prepared = LC_OffsetWorkerEdit::prepareSourceDefinition(*target, definition, m_limits);
+        if (source && !sourceMatches(*source)) {
+            refresh(nullptr, true);
+            ui->lRefusal->setText(tr("The offset editing input changed; the source was not changed."));
+            return;
+        }
         if (!prepared.generateSource()) {
             m_lastResult = prepared.result();
             refresh(nullptr, true);
@@ -629,7 +649,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
         m_inputSnapshot = std::move(snapshot);
         LC_OffsetWorkerRequest::Request request{{generation, generation, revision, 0}, *prepared.generateSource()};
         const bool accepted = m_worker->submit(request, LC_OffsetWorkerClient::Mode::Commit,
-            [alive, generation, revision, target, context](LC_OffsetWorkerClient::Outcome outcome) mutable {
+            [alive, generation, revision, target, context, source](LC_OffsetWorkerClient::Outcome outcome) mutable {
                 if (!alive || generation != alive->m_generation || revision != alive->m_sourceRevision ||
                     target != alive->m_entity || !alive->m_busy) return;
                 const auto* self = alive.data();
@@ -654,7 +674,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
                     const auto snapshot = self->m_inputSnapshot;
                     const bool matches = current && context.matches(self->m_viewport) && snapshot && snapshot->matches(*target);
                     if (!alive || generation != alive->m_generation || target != alive->m_entity) return;
-                    if (!matches || !context.matches(self->m_viewport)) {
+                    if (!matches || !context.matches(self->m_viewport) ||
+                        (source && !self->sourceMatches(*source))) {
                         refuse(self->tr("The offset editing input changed; the source was not changed."));
                         return;
                     }
