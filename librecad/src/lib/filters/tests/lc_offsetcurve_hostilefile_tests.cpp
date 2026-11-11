@@ -19,6 +19,7 @@
 #include <vector>
 
 #include "lc_offsetcurve_persistence_fixture.h"
+#include "lc_curveoffset.h"
 #include "../../offset_worker/lc_offsetworkertolerance.h"
 #include "../../offset_worker/lc_offsetworkerclient.h"
 #include "../../offset_worker/lc_offsetworkersourcecache.h"
@@ -1613,6 +1614,75 @@ TEST_CASE("typed offset source survives real DXF and DWG file save reopen and se
 #endif
             verify(path, fileFormat, true);
         }
+    }
+}
+
+TEST_CASE("noded parabola materialization preserves crossing through native DXF and DWG lanes",
+          "[lc-offsetcurve][persistence][noded-materialization][file]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-noded-parabola-materialized-roundtrip");
+
+    RS_Spline source{nullptr, RS_SplineData{2, false}};
+    source.getData().controlPoints = {{-2, 4}, {0, -4}, {2, 4}};
+    source.getData().weights = {1.0, 1.0, 1.0};
+    source.getData().knotslist = {0, 0, 0, 1, 1, 1};
+    auto options = LC_CurveOffset::makeDirectOptions(source, 1.0);
+    options.nodeIntersections = true;
+    const RS_Vector node{0, 1.25};
+    auto output = LC_CurveOffset::createEntities(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(output.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(output.entities.size() == 3);
+
+    RS_Graphic drawing;
+    drawing.initForNewDocument();
+    drawing.onLoadingCompleted();
+    for (auto& entity : output.entities) {
+        entity->setLayer(drawing.getActiveLayer());
+        drawing.addEntity(entity.release());
+    }
+
+    struct FileLane {
+        RS2::FormatType format;
+        const char* suffix;
+        bool dwg;
+    };
+    const std::array<FileLane, 5> formats{{
+        {RS2::FormatDXFRW2004, "r2004.dxf", false},
+        {RS2::FormatDWG2004, "r2004.dwg", true},
+        {RS2::FormatDXFRW2013, "r2013.dxf", false},
+        {RS2::FormatDXFRW2018, "r2018.dxf", false},
+        {RS2::FormatDWG2018, "r2018.dwg", true}
+    }};
+    for (const auto& lane : formats) {
+#ifndef DWGSUPPORT
+        if (lane.dwg) continue;
+#endif
+        CAPTURE(lane.suffix);
+        const QString path = QString::fromStdString(directory.file(lane.suffix).string());
+        RS_FilterDXFRW writer;
+        REQUIRE(writer.fileExport(drawing, path, lane.format));
+
+        RS_Graphic reopened;
+        RS_FilterDXFRW reader;
+        REQUIRE(reader.fileImport(reopened, path, lane.format));
+        std::vector<const RS_Spline*> splines;
+        for (const RS_Entity* entity : reopened)
+            if (const auto* spline = dynamic_cast<const RS_Spline*>(entity)) splines.push_back(spline);
+        REQUIRE(splines.size() == 3);
+
+        std::size_t crossingEnds = 0;
+        const auto nearNode = [&](const RS_Vector& point) { return point.distanceTo(node) < 1e-8; };
+        for (const RS_Spline* spline : splines) {
+            crossingEnds += nearNode(spline->getStartpoint()) ? 1u : 0u;
+            crossingEnds += nearNode(spline->getEndpoint()) ? 1u : 0u;
+            const auto& controls = spline->getData().controlPoints;
+            const std::size_t degree = static_cast<std::size_t>(spline->getDegree());
+            for (std::size_t k = degree; k + degree < controls.size(); k += degree)
+                crossingEnds += nearNode(controls[k]) ? 2u : 0u;
+        }
+        CHECK(crossingEnds == 4);
     }
 }
 
