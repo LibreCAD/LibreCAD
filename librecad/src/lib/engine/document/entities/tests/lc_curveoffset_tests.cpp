@@ -1354,7 +1354,9 @@ TEST_CASE("Offset source capture keeps bounded spline size boundaries",
     data.knotslist[0] = data.knotslist[1] = 0;
     for (std::size_t i = 2; i < limit; ++i) data.knotslist[i] = static_cast<double>(i - 1);
     data.knotslist[limit] = data.knotslist[limit + 1] = static_cast<double>(limit - 1);
-    data.weights.clear();
+    data.weights.assign(limit, 1.0);
+    data.fitPoints.assign(limit, RS_Vector{0, 0});
+    data.savedOpenKnots.assign(2 * limit, 0.0);
     REQUIRE(LC_OffsetSourceDetail::boundedSourceSize(data));
     CHECK(LC_OffsetSourceGeometry::capture(spline));
 
@@ -1363,6 +1365,7 @@ TEST_CASE("Offset source capture keeps bounded spline size boundaries",
     pointData.controlPoints = {{0, 0}, {1, 1}};
     LC_SplinePoints points{nullptr, pointData};
     points.getData().controlPoints.resize(limit, RS_Vector{1, 1});
+    points.getData().splinePoints.resize(limit, RS_Vector{0, 0});
     REQUIRE(LC_OffsetSourceDetail::boundedSourceSize(points.getData()));
     CHECK(LC_OffsetSourceGeometry::capture(points));
 }
