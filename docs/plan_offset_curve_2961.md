@@ -36441,6 +36441,23 @@ and transforms at `.05/.95`, arbitrary knot vectors/multiplicities,
 continuous error proof, external CAD, visible GUI, hosted cross-platform
 execution, and exact-head PR CI remain open.
 
+## 924. Qualify Spline Source-Count Admission Boundaries (2026-11-11)
+
+Test commit `d2e01aeb1` adds a source-codec matrix for every supported spline
+degree (1-6). For each degree it checks the minimum control count and the exact
+`MaximumSourceControlPoints` cap (16,384), including matching clamped knots
+and unit weights; one additional control point is rejected by protocol
+encoding. The focused request test passes 102 assertions, and the registered
+`offset_worker_request` CTest passes in 0.17 seconds.
+
+This closes the source admission/encoding boundary only. It does not run
+offset generation on maximum-size splines or establish their runtime, memory
+use, numerical behavior, cache admission, or file persistence. Interpret the
+capability matrix's “full high-degree source-count boundaries” residual as
+meaning those high-count geometry-generation and performance boundaries;
+the wire-format count cap itself is now covered. External CAD, visible GUI,
+hosted cross-platform execution, and exact-head PR CI remain separate gates.
+
 ## 922. Keep the Expanded Worker-client Matrix Within Bounded CI Limits (2026-11-11)
 
 CI commit `177d4438a` aligns the worker-client's bounded internal watchdog and
