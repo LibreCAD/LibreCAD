@@ -645,6 +645,55 @@ TEST_CASE("offset worker request bounds every owned spline array at the exact in
     }
 }
 
+TEST_CASE("source codec accepts exact spline control cap for every supported degree",
+          "[lc-offsetcurve][worker-protocol][request][source-definition][limits][spline]") {
+    namespace values = request::Values;
+    constexpr std::size_t controlCap = values::MaximumSourceControlPoints;
+    for (std::size_t degree = 1; degree <= RS_Spline::MaxSupportedDegree; ++degree) {
+        CAPTURE(degree);
+        for (const std::size_t controlCount : {degree + 1, controlCap}) {
+            CAPTURE(controlCount);
+            RS_SplineData data;
+            data.degree = degree;
+            data.type = RS_SplineData::SplineType::ClampedOpen;
+            data.savedOpenType = data.type;
+            data.controlPoints.reserve(controlCount);
+            data.weights.assign(controlCount, 1.0);
+            for (std::size_t i = 0; i < controlCount; ++i) {
+                const double t = static_cast<double>(i) / static_cast<double>(controlCount - 1);
+                data.controlPoints.emplace_back(t, t * t);
+            }
+            data.knotslist.insert(data.knotslist.end(), degree + 1, 0.0);
+            const std::size_t interiorCount = controlCount - degree - 1;
+            for (std::size_t i = 1; i <= interiorCount; ++i)
+                data.knotslist.push_back(static_cast<double>(i) / static_cast<double>(interiorCount + 1));
+            data.knotslist.insert(data.knotslist.end(), degree + 1, 1.0);
+
+            LC_OffsetSourceGeometry source{data};
+            REQUIRE(source.isWellFormed());
+            const auto encodedSource = values::encodeSourceGeometry(source);
+            REQUIRE(encodedSource);
+            const auto decodedSource = values::decodeSourceGeometry(*encodedSource);
+            REQUIRE(decodedSource);
+            const auto& decoded = std::get<RS_SplineData>(decodedSource->value);
+            CHECK(decoded.degree == degree);
+            CHECK(decoded.controlPoints.size() == controlCount);
+            CHECK(decoded.weights.size() == controlCount);
+            CHECK(decoded.knotslist.size() == controlCount + degree + 1);
+
+            if (controlCount == controlCap) {
+                data.controlPoints.push_back(data.controlPoints.back());
+                data.weights.push_back(1.0);
+                data.knotslist.push_back(1.0);
+                LC_OffsetSourceGeometry overCap{std::move(data)};
+                REQUIRE(overCap.isWellFormed());
+                CHECK_FALSE(values::isSourceGeometryEncodable(overCap));
+                CHECK_FALSE(values::encodeSourceGeometry(overCap));
+            }
+        }
+    }
+}
+
 TEST_CASE("offset worker request checks latent caller fields and never drops malformed data",
           "[lc-offsetcurve][worker-protocol][request]") {
     const auto inf = std::numeric_limits<double>::infinity();
