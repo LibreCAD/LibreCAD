@@ -110,13 +110,14 @@ Execute and record these slices in order:
    retain indices/IDs and value-owned geometry across turns, never entity
    pointers. A scan generation must be invalidated by document replacement or
    destruction, entity-list structural changes, graphic/entity edits, undo or
-   redo, and layer visibility/lock changes. Discard partial results on any
-   invalidation, cancellation or supersession; only a complete scan can
-   establish uniqueness or publish a highlight. Verify per-entity encoding
-   bounds so one unusually large entity cannot defeat the time target. The
-   source-choice refresh measured about 2.71 ms for the same fixture and is a
-   separate synchronous path. Test invalidation, cancellation, recovery and
-   every source family.
+   redo, and layer visibility/lock changes. The structural revision accessor
+   landed in `757b4af55`; document/entity and layer invalidation are still to
+   be connected to the scan. Discard partial results on any invalidation,
+   cancellation or supersession; only a complete scan can establish uniqueness
+   or publish a highlight. Verify per-entity encoding bounds so one unusually
+   large entity cannot defeat the time target. The source-choice refresh
+   measured about 2.71 ms for the same fixture and is a separate synchronous
+   path. Test invalidation, cancellation, recovery and every source family.
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
@@ -35251,3 +35252,12 @@ do not infer uniqueness or retain a highlight from incomplete traversal. Add
 tests for same-count removal/addition, geometry mutation, layer changes,
 document replacement/destruction, cancellation, and stale completion, as well
 as successful unique/ambiguous results across all modeled families.
+
+Commit `757b4af55` adds `RS_EntityContainer::entityListRevision()` and bumps
+it on direct-list insertion, removal, replacement, clearing, transfer and
+reordering. A regression verifies remove-plus-add at the same list size still
+changes the revision. The full CMake test target builds; `[container][revision]`
+passes 5 assertions / 1 case, and `[container]` passes 2,956 assertions / 14
+cases. This is only the structural invalidation primitive: the incremental
+scanner does not consume it yet, and geometry/layer/document mutation tests
+remain open.
