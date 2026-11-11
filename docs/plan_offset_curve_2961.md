@@ -36715,3 +36715,20 @@ worker and five-lane persistence tests in sections 937-938 still cover only
 the canonical profile; reversed/affine worker delivery and file round-trip,
 other fit-point shapes, broader conditioning, GUI, and external-CAD gates
 remain open.
+
+## 940. Exercise Reversed and Affine Fit-point Trim Profiles in Worker (2026-11-11)
+
+Test commit `5eaacd23e` extends the worker `Produce` case from section 937 to
+the reversed and nonuniformly scaled profiles qualified by section 939. The
+real helper now receives all three profiles, both side picks, and distances
+`0.2`/`0.5`; each request must preserve the spline-points source kind, finish
+preparation, produce ordinary entities, and leave its source unchanged. The
+focused case passes 2,173 assertions, and the registered full
+`offset_worker_client` CTest passes in 270.83 seconds. `git diff --check`
+passes.
+
+This closes worker preparation for those three profiles only. Five-lane file
+persistence independently qualifies only the canonical profile in section
+938; reversed/affine persistence, other fit-point interpolation policies,
+editable-cache admission for these trimmed outcomes, GUI and external-CAD
+acceptance remain open.
