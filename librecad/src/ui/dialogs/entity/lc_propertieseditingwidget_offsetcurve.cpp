@@ -263,7 +263,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::cancelPreparation() const {
     m_worker->cancel();
     m_proposedDefinition.reset(); m_inputSnapshot.reset();
     if (wasBusy) {
-        if (m_entity && m_entity->hasGeneralizedSourceDefinition()) refresh(nullptr, true);
+        if (m_entity && m_entity->hasGeneralizedSourceDefinition()) {
+            refresh(nullptr, true);
+        }
         else restoreCommittedText();
         ui->lRefusal->setText(tr("Offset computation was cancelled; the value was not changed."));
     }
@@ -301,7 +303,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::setEntity(RS_Entity* entity) {
     refresh(nullptr, true);
 }
 
-void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool force) const {
+void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool force,
+                                                     bool refreshSources) const {
     const QScopedValueRollback<bool> refreshing(m_refreshing, true);
     const bool available = m_entity != nullptr && (m_entity->hasEditableDefinition() || m_entity->hasGeneralizedSourceDefinition()) && m_viewport != nullptr;
     const bool ellipseDefinition = available && m_entity->hasEditableDefinition();
@@ -322,7 +325,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
     ui->cbSource->setEnabled(!m_busy && m_entity && m_viewport);
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!m_busy);
-    refreshSourceChoices();
+    if (refreshSources) refreshSourceChoices();
     if (m_entity == nullptr || m_viewport == nullptr) return;
     for (auto* editor : definitionEditors()) editor->setEnabled(ellipseDefinition);
     ui->leDistance->setEnabled(!m_busy && available);
@@ -758,7 +761,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::apply(const LC_EllipseOffsetDefiniti
         if (!accepted) { failure(tr("The offset worker could not start the request; the value was not changed.")); return; }
         const bool wasBusy = m_busy;
         m_busy = true;
-        refresh(); ui->lRefusal->setText(tr("Calculating offset..."));
+        refresh(nullptr, false, false); ui->lRefusal->setText(tr("Calculating offset..."));
         if (!wasBusy) emit preparationBusyChanged(true);
     } catch (const std::bad_alloc&) {
         if (alive) failure(published ? tr("Offset prepared, but the editor could not be refreshed.") :
@@ -865,7 +868,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::applySourceDefinition(const LC_Offse
         }
         const bool wasBusy = m_busy;
         m_busy = true;
-        refresh();
+        refresh(nullptr, false, false);
         ui->lRefusal->setText(tr("Calculating replacement source..."));
         if (!wasBusy) emit preparationBusyChanged(true);
     } catch (const std::bad_alloc&) {

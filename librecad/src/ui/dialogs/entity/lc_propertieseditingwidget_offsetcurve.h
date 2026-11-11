@@ -65,7 +65,8 @@ private:
     void setBusy(bool busy) const;
     std::array<QLineEdit*, 8> definitionEditors() const;
     void restoreCommittedText() const;
-    void refresh(QLineEdit* completed = nullptr, bool force = false) const;
+    void refresh(QLineEdit* completed = nullptr, bool force = false,
+                 bool refreshSources = true) const;
     void inputRefused(QLineEdit* editor, const QString& reason) const;
     void refreshSourceChoices(bool preserveWatch = false) const;
     void refreshSourceHighlight(bool preserveWatch = false, const RS_Entity* knownMatch = nullptr) const;
