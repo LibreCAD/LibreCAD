@@ -36523,6 +36523,23 @@ This is independent parser evidence, not ODA/AutoCAD visual acceptance. It
 does not cover other DWG releases, parabola variants, GUI commit/undo, or
 visible CAD rendering. `git diff --check` passes.
 
+## 930. Trim Affinely Transformed Typed-parabola Sources (2026-11-11)
+
+Test commit `9f0bd05b6` extends the direct oracle and worker-client `Produce`
+matrix with the already-used positive-determinant affine profile
+`(4,-3), (15,3), (19,-5)` and the negative-determinant profile
+`(7,-2), (5,7.25), (-5,0.5)`, retaining forward and reversed canonical
+profiles. The exact-normal direct checks pass for all four profiles, both
+sides, and distances `0.25`/`2.75` (68 assertions). Real helper-process
+`Produce` passes for both side picks and distances `0.5`/`2.75` on all four
+profiles (2,924 assertions). The full trim selection passes 55,445 assertions
+across 32 cases; full `offset_worker_client` CTest passes in 274.67 seconds.
+
+This qualifies direct and worker behavior only for the four listed profiles
+and grids. The affine profiles have not yet been added to the five-lane file
+round-trip/LibreDWG matrix; additional affine conditioning, GUI behavior, and
+external CAD remain open. `git diff --check` passes.
+
 ## 926. Exercise Typed-parabola Produce Through the Worker Client (2026-11-11)
 
 Test commit `b2da768ea` expands the real-helper `Produce` regression for the
