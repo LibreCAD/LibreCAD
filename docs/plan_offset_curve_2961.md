@@ -25,14 +25,97 @@ USA.
 
 Updated: 2026-11-10. Project: **LibreCAD**, not LibreCAD_3.
 
+### Current source-widget implementation plan
+
+This section takes precedence over older source-picker completion claims below.
+The request covers the Properties source widget for editable offset curves:
+users must be able to change the source family when choosing a replacement,
+choose any supported source family including a distinct parabola, and see the
+existing source highlighted or selected when it can be resolved. Family
+availability is not a promise that every geometry variant can be generated.
+
+**Current code:** `LC_PropertiesEditingWidgetOffsetCurve` fills `cbSourceType`
+from `LC_OffsetSourceGeometry::SupportedKinds` and filters `cbSource` against
+the selected family. The nine modeled kinds are line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. The source
+choice is currently a document-entity combo box, not a canvas-picking action.
+Selecting an entry starts asynchronous preparation; publication follows
+successful validation. The explicit `tbSelectSource` button selects a resolved
+entity in the drawing; opening the widget does not itself select or highlight
+that entity. Both selectors are disabled while preparation is busy. Candidate
+filtering checks capture, worker encoding, and constrained spline tangents; it
+does not by itself prove that the offset can be generated successfully.
+
+**Implementation slices:**
+
+1. **Inventory and family switching.** Audit `SupportedKinds`, capture and
+   reconstruction dispatch, and the Properties candidate filter together.
+   Retain one canonical list and distinct `LC_Parabola` identity before its
+   spline-points base. Verify switching between every pair of families while
+   the editor is idle, including empty families, and choosing an eligible
+   entity from each. Do not claim that controls remain enabled during an
+   in-flight worker request unless cancellation and stale-result handling are
+   explicitly implemented and tested. If in-flight switching is added, cancel
+   or supersede the request without publishing its old result.
+2. **Source identification.** When an existing source resolves unambiguously,
+   display it in the widget and highlight or select it in the drawing as
+   requested. Define and implement the selection lifetime so opening,
+   filtering, accepting, cancelling, closing, and undo/redo do not unexpectedly
+   destroy the user's prior selection; cover deleted, hidden, locked, missing,
+   and replaced entities. Preserve the explicit selection action where useful.
+   A source is embedded geometry, not necessarily a persistent entity link:
+   retain a session identity when known, and do not silently claim a unique
+   match when multiple live entities have identical geometry. Represent missing
+   or ambiguous matches clearly and leave document selection unchanged.
+   Commit `885b34acb` handles the ambiguous embedded-geometry case: it offers
+   the eligible entities without guessing, while retaining an explicitly
+   chosen identity for the editor session. Automatic indication and the
+   remaining lifecycle cases in this slice are still open.
+3. **Atomic replacement.** For every modeled family, choose an eligible source
+   of a different family, capture its actual typed geometry, generate and
+   validate the cache through the worker, and publish source and cache
+   together. Recheck entity/document lifetime and geometry at publication;
+   cancellation, invalid input, worker failure, or a stale response must leave
+   the committed source and cache unchanged. Preserve the selected identity
+   during the editor session, including duplicate-geometry candidates.
+4. **Parabola and other variants.** Exercise parabola independently from
+   spline-points through capture, replacement, worker/cache and applicable
+   DXF/DWG persistence. Extend the family-by-variant matrix for the other eight
+   families as well; document validity, geometry, conditioning, and file-lane
+   limits. Unsupported or unproved variants must be excluded or refused without
+   partial publication, rather than advertised as universally supported.
+5. **Acceptance and delivery.** Add or extend table-driven widget tests for
+   family changes, typed replacement, explicit and automatic source indication,
+   ambiguity, current-selection restoration, deleted/stale candidates, worker
+   failures and cancellation. Cover every family and a distinct parabola, then
+   run the geometry and worker/file tests affected by any changes. Perform a
+   visible LibreCAD Properties workflow with a real drawing, including
+   cross-family replacement, parabola, indication, cancel, undo/redo and
+   save/reopen; record platform and outcome separately from headless tests.
+   Commit each tested implementation slice, update this roadmap with its
+   actual evidence after the commit, and push the resulting commits to PR #3193.
+
+**Reconciliation check:** the existing `/private/tmp/offset2961-build-new/`
+`librecad_tests` executable passes `[gui][dialog][offsetcurve][source]` with
+11,930 assertions in 12 cases. This is an existing build, not a fresh build
+or a visible GUI acceptance; it does not close the open indication, ambiguity,
+or per-variant work above.
+
+After rebuilding that CMake `librecad_tests` target with `885b34acb` and the
+other uncommitted worktree changes present, the focused ambiguity regression
+passed 20 assertions and the full `[gui][dialog][offsetcurve][source]` suite
+passed 11,950 assertions in 13 cases. This is headless widget coverage, not
+visible GUI acceptance. `git diff --check` passed.
+
 ### Source-picker status
 
 The editable type-changing picker is implemented for the canonical
 `LC_OffsetSourceGeometry::SupportedKinds` inventory: line, arc, circle, ellipse,
 spline, spline-points, distinct parabola, bounded hyperbola, and polyline. The
-selector stays enabled during the replacement-pick flow, including after it
-starts; changing type filters candidates without converting the current
-source or changing its generated cache or highlight. A successful pick
+selector remains enabled while the editor is idle; changing type filters
+candidates without converting the current source or changing its generated
+cache or existing drawing selection. It is disabled during worker preparation.
+A successful source-list choice
 atomically installs the candidate's actual typed source. Parabola is a
 first-class, distinct picker entry, not a generic spline-points alias.
 
@@ -41,25 +124,27 @@ The acceptance gates are
 curve`, `Native source picker replaces every modeled source family without
 filter side effects`, and the `SupportedKinds` selector-inventory assertion in
 `lc_offsetcurve_propertiesdialog_tests.cpp`. Together they verify that the
-type selector remains available during source replacement, each modeled kind
+type selector can be changed before selecting a replacement, each modeled kind
 can be selected as the requested family and installed as its actual typed
-source, parabola is distinct from spline-points, and filtering leaves the
-current source and highlight intact until acceptance. Re-run these when
+source for the tested fixtures, parabola is distinct from spline-points, and
+filtering preserves the current source and any existing drawing selection.
+These tests do not establish automatic highlighting or visible GUI acceptance.
+Re-run these when
 changing the picker or adding a modeled family; do not treat their pass as
 evidence that every geometry variant can be offset or round-tripped.
 
 The 2026-11-10 clarification reconfirms the requirement to change source type
-while replacement picking is active and to include parabola as a distinct
-type. The contract and acceptance gates above already satisfy this; no
-additional widget or type-specific control is needed. “All supported types”
-remains open beyond the picker: qualify eligible variants through direct
+when choosing a replacement and to include parabola as a distinct type. The
+existing list-based control covers idle family switching; automatic indication
+of a resolvable current source and visible workflow acceptance remain open.
+“All supported types” remains open beyond the picker: qualify eligible variants through direct
 geometry, worker/cache, replacement, and applicable DXF/DWG paths. Keep
 unqualified variants filtered or fail-closed without changing source/cache.
 
 ## Current Contract
 
-The latest source-widget request is captured as this testable contract: during
-the replacement flow, the Properties family control remains enabled, and
+The latest source-widget request is captured as this testable contract: while
+the Properties editor is idle, the family control remains enabled, and
 changing it before accepting a drawing pick filters candidates to that
 requested family. The selector is populated from
 `LC_OffsetSourceGeometry::SupportedKinds`, not a
@@ -82,13 +167,11 @@ source and cache unchanged. Existing Properties-widget regressions cover this
 picker contract; do not add another selector or a parabola-only UI branch.
 This closes only the picker-level requirement.
 
-The latest clarification explicitly includes changing the source type during
-the replacement flow and first-class parabola support. The existing
-`cbSourceType`/`cbSource` implementation and Properties regressions already
-cover that UI contract, including all nine modeled kinds and parabola identity;
-do not add another widget or duplicate parabola-specific control. The picker
-slice is closed. Remaining parabola work is only the unclosed end-to-end
-geometry/worker/cache/persistence matrix described below.
+The existing `cbSourceType`/`cbSource` implementation and Properties
+regressions cover idle family switching for all nine modeled kinds, including
+parabola identity. Automatic source indication, visible interaction, and the
+end-to-end geometry/worker/cache/persistence matrix remain open as specified
+in the current source-widget implementation plan above.
 
 “Support all types” is a separate end-to-end requirement: qualify each
 production-supported family and eligible variant through direct geometry,
@@ -206,7 +289,8 @@ Current implementation order for the remaining “all supported types” work:
    full-multiplicity layout, and staged import promotes only after operation-8
    validates the exact source/cache pair. Other layouts remain fail-closed;
    never flatten them lossily.
-4. **Properties interaction:** the existing family selector is complete.
+4. **Properties interaction:** retain the existing family selector and complete
+   the source-indication and visible-workflow slices above.
    Verify family change refreshes candidates before picking, current-source
    highlighting survives a family-filter change even when the current source
    is not a candidate in that family, and highlighting survives an
