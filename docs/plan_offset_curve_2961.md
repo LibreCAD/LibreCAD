@@ -45,6 +45,15 @@ Existing table-driven, worker and file-lane tests cover particular fixtures;
 they do not establish universal geometry, platform, or visible-GUI support.
 Do not introduce a second type selector or a parabola-only picker.
 
+**Latest clarification (2026-11-11):** The source-type control must remain
+usable while the user is in the replacement-selection workflow, not just
+before entering it. Changing the type filters the replacement candidates and
+must not itself mutate the current source, cache, or committed identity. The
+user can then choose an eligible candidate of that family; this applies to all
+nine modeled kinds, including the distinct parabola kind. A family appearing
+in the selector is UI coverage only, not proof that all of its geometry
+variants pass generation, worker/cache validation, or persistence.
+
 **Committed source-selection baseline.** The hidden/locked explicit-selection
 slice is committed as `92f3c2097` (`fix(offset): block selecting hidden or
 locked sources`). It disables the command when the resolved source is hidden
@@ -35155,3 +35164,21 @@ On the current CMake Release build, `[gui][dialog][offsetcurve][source]
 `[gui][dialog][offsetcurve][source]` selector passes 12,529 assertions / 28
 cases. These are headless behavior regressions, not a scan-time benchmark or
 visible GUI acceptance.
+
+## 863. Keep Source-type Switching Available During Replacement (2026-11-11)
+
+The latest request reconfirms that the Properties source widget must let the
+user change the requested source-curve type while choosing a replacement, and
+must expose all currently modeled source families, including parabola. The
+active contract above now states the interaction explicitly: changing the
+family is a non-mutating filter operation; only a valid, successfully prepared
+candidate of the selected family can replace the current typed source and
+cache. Parabola remains distinct from spline-points during filtering,
+classification and publication. No second selector or parabola-only picker
+path is planned.
+
+This is a clarification of the existing UI contract, not evidence of broader
+geometry support. Preserve the cross-family and non-mutation tests, and
+continue the separate per-family/per-variant geometry, worker/cache and
+DXF/DWG qualification matrix. Visible GUI and large-drawing responsiveness
+remain open acceptance gates as recorded above.
