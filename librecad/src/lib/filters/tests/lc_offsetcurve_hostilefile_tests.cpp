@@ -1686,6 +1686,90 @@ TEST_CASE("noded parabola materialization preserves crossing through native DXF 
     }
 }
 
+TEST_CASE("trimmed typed-parabola geometry round-trips through native DXF and DWG lanes",
+          "[lc-offsetcurve][persistence][trim][parabola][file]") {
+    Setup setup;
+    lc::test::OutputDirectory directory("offset-trimmed-typed-parabola-roundtrip");
+    const std::array<LC_ParabolaData, 2> sources{{
+        LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}},
+        LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}
+    }};
+    struct FileLane {
+        RS2::FormatType format;
+        const char* suffix;
+        bool dwg;
+    };
+    const std::array<FileLane, 5> formats{{
+        {RS2::FormatDXFRW2004, "r2004.dxf", false},
+        {RS2::FormatDWG2004, "r2004.dwg", true},
+        {RS2::FormatDXFRW2013, "r2013.dxf", false},
+        {RS2::FormatDXFRW2018, "r2018.dxf", false},
+        {RS2::FormatDWG2018, "r2018.dwg", true}
+    }};
+
+    for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
+        LC_Parabola source{nullptr, sources[sourceIndex]};
+        REQUIRE(source.getData().isValid());
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.25, 2.75}) {
+                CAPTURE(sourceIndex, side, distance);
+                auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
+                const auto generated = LC_CurveOffset::createEntities(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(generated.entities.empty());
+
+                RS_Graphic drawing;
+                drawing.initForNewDocument();
+                drawing.onLoadingCompleted();
+                std::vector<const RS_Spline*> expected;
+                for (const auto& entity : generated.entities) {
+                    const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+                    REQUIRE(spline);
+                    expected.push_back(spline);
+                    auto* copy = dynamic_cast<RS_Entity*>(entity->clone());
+                    REQUIRE(copy);
+                    copy->setLayer(drawing.getActiveLayer());
+                    drawing.addEntity(copy);
+                }
+
+                for (const auto& lane : formats) {
+#ifndef DWGSUPPORT
+                    if (lane.dwg) continue;
+#endif
+                    CAPTURE(lane.suffix);
+                    const QString path = QString::fromStdString(
+                        directory.file(std::to_string(sourceIndex) + "-" +
+                            std::to_string(static_cast<int>(side)) + "-" +
+                            std::to_string(distance) + "-" + lane.suffix).string());
+                    RS_FilterDXFRW writer;
+                    REQUIRE(writer.fileExport(drawing, path, lane.format));
+
+                    RS_Graphic reopened;
+                    RS_FilterDXFRW reader;
+                    REQUIRE(reader.fileImport(reopened, path, lane.format));
+                    std::vector<const RS_Spline*> actual;
+                    for (const RS_Entity* entity : reopened)
+                        if (const auto* spline = dynamic_cast<const RS_Spline*>(entity))
+                            actual.push_back(spline);
+                    REQUIRE(actual.size() == expected.size());
+                    for (std::size_t splineIndex = 0; splineIndex < expected.size(); ++splineIndex) {
+                        for (int sample = 0; sample <= 32; ++sample) {
+                            const double t = static_cast<double>(sample) / 32.0;
+                            const RS_Vector before = expected[splineIndex]->getPointAt(t);
+                            const RS_Vector after = actual[splineIndex]->getPointAt(t);
+                            REQUIRE(before.valid);
+                            REQUIRE(after.valid);
+                            CHECK(before.distanceTo(after) < 1e-8);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("ODA-round-tripped typed-source DWGs retain all modeled source families",
           "[lc-offsetcurve][persistence][typed-source][external][oda]") {
     Setup setup;
