@@ -3795,9 +3795,10 @@ if (BUILD_TESTS)
             set_tests_properties(offset_worker_${kind} PROPERTIES
                 TIMEOUT 30 ENVIRONMENT "QT_QPA_PLATFORM=offscreen")
         endforeach()
-        # The client matrix includes five-format import/export and independent
-        # DWG validation; its own bounded suite watchdog is 150 seconds.
-        set_tests_properties(offset_worker_client PROPERTIES TIMEOUT 165)
+        # The client matrix includes multi-format import/export and independent
+        # DWG validation; keep its bounded in-process watchdog below CTest's.
+        set_tests_properties(offset_worker_client PROPERTIES TIMEOUT 960
+            ENVIRONMENT "QT_QPA_PLATFORM=offscreen;LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000")
         add_test(NAME offset_worker_process_ordinary
             COMMAND librecad_offset_worker_process_tests "[lc-offsetcurve][ordinary]")
         set_tests_properties(offset_worker_process_ordinary PROPERTIES

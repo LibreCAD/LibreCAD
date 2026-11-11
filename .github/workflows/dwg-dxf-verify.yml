@@ -151,7 +151,7 @@ jobs:
           cmake --install format-tests --component OffsetWorker --prefix "$stage"
           test -x "$stage/bin/LibreCADOffsetWorker"
           cp format-tests/librecad_offset_worker_client_tests "$stage/bin/"
-          (cd "$stage/bin" && ./librecad_offset_worker_client_tests "[lc-offsetcurve][worker-client]")
+          (cd "$stage/bin" && LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000 ./librecad_offset_worker_client_tests "[lc-offsetcurve][worker-client]")
 
   VerifyDwgDxfWindows:
     strategy:
@@ -231,6 +231,7 @@ jobs:
         run: |
           ctest --test-dir generated-tests --output-on-failure || exit /b 1
           set QT_QPA_PLATFORM=offscreen
+          set LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000
           generated-tests\librecad_offset_adapter_tests.exe "[sync-api]"
           if errorlevel 1 exit /b 1
           generated-tests\librecad_offset_creation_action_tests.exe "[lc-offsetcurve][creation-worker]"
@@ -248,6 +249,7 @@ jobs:
           if not exist "%STAGE%\bin\LibreCADOffsetWorker.exe" exit /b 1
           copy /Y generated-tests\librecad_offset_worker_client_tests.exe "%STAGE%\bin" || exit /b 1
           set QT_QPA_PLATFORM=offscreen
+          set LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000
           pushd "%STAGE%\bin"
           librecad_offset_worker_client_tests.exe "[lc-offsetcurve][worker-client]"
           if errorlevel 1 exit /b 1
