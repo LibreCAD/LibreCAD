@@ -52,8 +52,8 @@ LC_LineType::NameCheck LC_LineType::checkName(const QString& name) {
         return NameCheck::TooLong;
     }
     for (const QChar c : trimmed) {
-        const char16_t value = c.unicode();
-        if (value <= 0x1Fu || value == 0x7Fu) {
+        // Every C0, DEL and C1 character is control, not only ASCII.
+        if (c.category() == QChar::Other_Control) {
             return NameCheck::ControlCharacter;
         }
         if (reservedCharacters().contains(c)) {

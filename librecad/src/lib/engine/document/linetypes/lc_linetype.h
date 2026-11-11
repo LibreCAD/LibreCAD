@@ -50,9 +50,9 @@ struct LC_LineType {
         ReservedCharacter,
     };
     /// Checks a name a dialog or a line type file gives a line type: something
-    /// left after trimming, at most 255 characters, no control character and
-    /// none of < > / \ " : ; ? * | , = `. A name read from a drawing is not
-    /// checked: there the file is the authority.
+    /// left after trimming, at most 255 characters, no control character
+    /// (QChar::Other_Control: C0, DEL and C1) and none of < > / \ " : ; ? * | , = `.
+    /// A name read from a drawing is not checked: there the file is the authority.
     static NameCheck checkName(const QString& name);
     static bool isValidName(const QString& name);
 

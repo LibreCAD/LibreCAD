@@ -28,6 +28,7 @@
 #include <utility>
 
 #include <QChar>
+#include <QLocale>
 #include <QStringConverter>
 #include <QStringList>
 
@@ -56,9 +57,30 @@ QString decode(const QByteArray& data) {
     return text;
 }
 
-bool isPatternLine(const QStringList& fields) {
-    return !fields.isEmpty() &&
-           fields.first().trimmed().compare(QStringLiteral("A"), Qt::CaseInsensitive) == 0;
+// An old file may end a line with a lone CR; both ends become LF.
+QString normalizeLineEnds(QString text) {
+    text.replace(QStringLiteral("\r\n"), QStringLiteral("\n"));
+    text.replace(QLatin1Char('\r'), QLatin1Char('\n'));
+    return text;
+}
+
+// The first field is read without splitting the line, so a runaway pattern
+// line is refused before it allocates a field list.
+bool isPatternLine(const QString& line) {
+    const qsizetype comma = line.indexOf(QLatin1Char(','));
+    const QString first = (comma < 0 ? line : line.left(comma)).trimmed();
+    return first.compare(QStringLiteral("A"), Qt::CaseInsensitive) == 0;
+}
+
+// The field that holds '['; the reader names it without splitting the line.
+QString bracketedField(const QString& line) {
+    const qsizetype bracket = line.indexOf(QLatin1Char('['));
+    const qsizetype start = line.lastIndexOf(QLatin1Char(','), bracket) + 1;
+    qsizetype end = line.indexOf(QLatin1Char(','), bracket);
+    if (end < 0) {
+        end = line.size();
+    }
+    return line.mid(start, end - start).trimmed();
 }
 
 // The canonical spelling of a built-in row is LibreCAD's own, and a file does
@@ -86,19 +108,13 @@ void appendIssue(LC_LinFile::ReadResult& result, LC_LinFile::Issue::Kind kind,
     result.issues.push_back(issue);
 }
 
-// The shortest of 15 or 17 significant digits that reads back to the same
-// double: a drawing's own values survive a round trip, 0.1 stays 0.1.
+// The shortest text that reads back to the same double: a drawing's own values
+// survive a round trip, 0.1 stays 0.1.
 QString formatNumber(double value) {
     if (value == 0.0) {
         return QStringLiteral("0"); // -0 has no other meaning here
     }
-    QString text = QString::number(value, 'g', 15);
-    bool ok = false;
-    const double back = text.toDouble(&ok);
-    if (!ok || back != value) {
-        text = QString::number(value, 'g', 17);
-    }
-    return text;
+    return QString::number(value, 'g', QLocale::FloatingPointShortest);
 }
 
 // canonicalDashes() reports run lengths; a line type file carries the sign.
@@ -111,12 +127,12 @@ std::vector<double> signedRuns(const std::vector<double>& runs) {
     return pattern;
 }
 
-// A control character would end the line early or split the record.
+// A control character would end the line early or split the record; the
+// reader and the writer replace it alike.
 QString cleanDescription(const QString& description) {
     QString clean = description;
     for (QChar& c : clean) {
-        const char16_t value = c.unicode();
-        if (value <= 0x1Fu || value == 0x7Fu) {
+        if (c.category() == QChar::Other_Control) {
             c = QLatin1Char(' ');
         }
     }
@@ -129,7 +145,8 @@ LC_LinFile::ReadResult LC_LinFile::read(const QByteArray& data, double scale) {
     ReadResult result;
     // A scale that is not a positive finite number carries no unit conversion.
     const double factor = (std::isfinite(scale) && scale > 0.0) ? scale : 1.0;
-    const QStringList lines = decode(data).split(QLatin1Char('\n'));
+    const QStringList lines =
+        normalizeLineEnds(decode(data)).split(QLatin1Char('\n'));
 
     struct Pending {
         bool valid = false;
@@ -149,20 +166,21 @@ LC_LinFile::ReadResult LC_LinFile::read(const QByteArray& data, double scale) {
 
     std::set<QString> keys;
 
-    for (int i = 0; i < lines.size(); ++i) {
+    for (qsizetype i = 0; i < lines.size(); ++i) {
         QString line = lines.at(i);
-        if (line.endsWith(QLatin1Char('\r'))) {
-            line.chop(1);
+        // A file concatenated from two files carries a second mark.
+        if (line.startsWith(QChar(u'\uFEFF'))) {
+            line.remove(0, 1);
         }
         line = line.trimmed();
-        const int lineNumber = i + 1;
+        const int lineNumber = static_cast<int>(i) + 1;
         if (line.isEmpty() || line.startsWith(QLatin1Char(';'))) {
             continue;
         }
         if (line.startsWith(QLatin1Char('*'))) {
             reportMissing();
             const QString rest = line.mid(1);
-            const int comma = rest.indexOf(QLatin1Char(','));
+            const qsizetype comma = rest.indexOf(QLatin1Char(','));
             pending.valid = true;
             pending.line = lineNumber;
             if (comma < 0) {
@@ -170,12 +188,12 @@ LC_LinFile::ReadResult LC_LinFile::read(const QByteArray& data, double scale) {
                 pending.description.clear();
             } else {
                 pending.name = rest.left(comma).trimmed();
-                pending.description = rest.mid(comma + 1).trimmed();
+                pending.description =
+                    cleanDescription(rest.mid(comma + 1)).trimmed();
             }
             continue;
         }
-        const QStringList fields = line.split(QLatin1Char(','), Qt::KeepEmptyParts);
-        if (!isPatternLine(fields)) {
+        if (!isPatternLine(line)) {
             appendIssue(result, Issue::Kind::UnknownLine, lineNumber, line);
             continue;
         }
@@ -206,32 +224,36 @@ LC_LinFile::ReadResult LC_LinFile::read(const QByteArray& data, double scale) {
         // A bracketed element is a text or a shape this engine cannot draw,
         // and it is not a number whatever the rest of the line holds.
         if (line.contains(QLatin1Char('['))) {
-            QString element = line;
-            for (const QString& field : fields) {
-                if (field.contains(QLatin1Char('['))) {
-                    element = field.trimmed();
-                    break;
-                }
-            }
-            appendIssue(result, Issue::Kind::ComplexElement, lineNumber, element);
+            appendIssue(result, Issue::Kind::ComplexElement, lineNumber,
+                        bracketedField(line));
             continue;
         }
-        const int elementCount = static_cast<int>(fields.size()) - 1;
+        // The comma count is the element count, and a runaway line stops here
+        // before it allocates a field list.
+        const qsizetype elementCount = line.count(QLatin1Char(','));
         if (elementCount > kMaxElements) {
             appendIssue(result, Issue::Kind::TooManyElements, record.line, record.name);
             continue;
         }
+        const QStringList fields = line.split(QLatin1Char(','), Qt::KeepEmptyParts);
 
         std::vector<double> pattern;
         pattern.reserve(static_cast<std::size_t>(elementCount > 0 ? elementCount : 0));
         bool badNumber = false;
         QString badText;
-        for (int j = 1; j < fields.size(); ++j) {
+        for (qsizetype j = 1; j < fields.size(); ++j) {
             const QString element = fields.at(j).trimmed();
             bool ok = false;
             // QString::toDouble() reads the C locale whatever the application's.
-            const double value = element.toDouble(&ok);
+            double value = element.toDouble(&ok);
             if (!ok || !std::isfinite(value)) {
+                badNumber = true;
+                badText = element;
+                break;
+            }
+            value *= factor;
+            // The scale may push a finite element out of range.
+            if (!std::isfinite(value)) {
                 badNumber = true;
                 badText = element;
                 break;
@@ -246,9 +268,6 @@ LC_LinFile::ReadResult LC_LinFile::read(const QByteArray& data, double scale) {
             appendIssue(result, Issue::Kind::FirstElementNotDash, lineNumber,
                         fields.at(1).trimmed());
             continue;
-        }
-        for (double& value : pattern) {
-            value *= factor;
         }
         if (LC_LineTypeNames::canonicalDashes(pattern).empty()) {
             appendIssue(result, Issue::Kind::CannotDraw, record.line, record.name);
@@ -271,6 +290,8 @@ LC_LinFile::ReadResult LC_LinFile::read(const QByteArray& data, double scale) {
 QByteArray LC_LinFile::write(const std::vector<LC_LineType>& entries,
                              std::vector<Issue>* issues) {
     QByteArray out;
+    // One record per key, or the reader would keep only the first.
+    std::set<QString> keys;
     for (std::size_t i = 0; i < entries.size(); ++i) {
         const LC_LineType& entry = entries[i];
         const auto report = [issues, i](Issue::Kind kind, const QString& text) {
@@ -286,6 +307,11 @@ QByteArray LC_LinFile::write(const std::vector<LC_LineType>& entries,
         const QString name = entry.name.trimmed();
         if (LC_LineType::checkName(entry.name) != LC_LineType::NameCheck::Ok) {
             report(Issue::Kind::InvalidName, name);
+            continue;
+        }
+        const QString key = LC_LineTypeNames::foldName(name);
+        if (keys.find(key) != keys.end()) {
+            report(Issue::Kind::DuplicateName, name);
             continue;
         }
         // A drawing can hold an element that is not a finite number; a file
@@ -308,10 +334,6 @@ QByteArray LC_LinFile::write(const std::vector<LC_LineType>& entries,
             report(Issue::Kind::CannotDraw, name);
             continue;
         }
-        if (entry.pattern.size() > static_cast<std::size_t>(kMaxElements)) {
-            report(Issue::Kind::TooManyElements, name);
-            continue;
-        }
         // The format wants a dash or a dot first and no non-finite number. A
         // drawing may hold either; such a list is written as the same line
         // type started at its first dash. Any other list is written as it is.
@@ -323,6 +345,12 @@ QByteArray LC_LinFile::write(const std::vector<LC_LineType>& entries,
         } else {
             elements = entry.pattern;
         }
+        // The limit is on the list that reaches the file, not the drawing's.
+        if (elements.size() > static_cast<std::size_t>(kMaxElements)) {
+            report(Issue::Kind::TooManyElements, name);
+            continue;
+        }
+        keys.insert(key);
 
         QString header = QStringLiteral("*") + name;
         // A description of blanks is no description, and the reader trims.

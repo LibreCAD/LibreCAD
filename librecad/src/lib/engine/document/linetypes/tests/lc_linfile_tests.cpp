@@ -25,11 +25,10 @@
 // "*NAME,description" / "A,d1,d2,..." format, the name a dialog may give a line
 // type, and the reason a record is left out. A later dialog words the issues.
 
-#include <clocale>
 #include <cmath>
 #include <cstddef>
+#include <cstring>
 #include <limits>
-#include <string>
 #include <utility>
 #include <vector>
 
@@ -57,6 +56,10 @@ QByteArray textFile(const QStringList& lines) {
     return lines.join(QLatin1Char('\n')).toUtf8() + '\n';
 }
 
+bool sameBits(double a, double b) {
+    return std::memcmp(&a, &b, sizeof(double)) == 0;
+}
+
 // Restores the default locale however the test leaves it.
 class DefaultLocaleGuard {
 public:
@@ -65,29 +68,6 @@ public:
 
 private:
     QLocale m_previous;
-};
-
-// Restores LC_NUMERIC when the platform has the requested locale; unchanged
-// otherwise. The numeric category is the one a C library number parser reads.
-class NumericLocaleGuard {
-public:
-    explicit NumericLocaleGuard(const char* name) {
-        const char* current = std::setlocale(LC_NUMERIC, nullptr);
-        if (current != nullptr) {
-            m_previous = current;
-        }
-        m_changed = std::setlocale(LC_NUMERIC, name) != nullptr;
-    }
-    ~NumericLocaleGuard() {
-        if (!m_previous.empty()) {
-            std::setlocale(LC_NUMERIC, m_previous.c_str());
-        }
-    }
-    bool changed() const { return m_changed; }
-
-private:
-    std::string m_previous;
-    bool m_changed = false;
 };
 
 } // namespace
@@ -99,7 +79,6 @@ TEST_CASE("LC_LineType::checkName accepts a plain name", "[linetype][linfile][na
 }
 
 TEST_CASE("LC_LineType::checkName refuses a blank name", "[linetype][linfile][name]") {
-    CHECK(LC_LineType::checkName(QString()) == LC_LineType::NameCheck::Empty);
     CHECK(LC_LineType::checkName(QString()) == LC_LineType::NameCheck::Empty);
     CHECK(LC_LineType::checkName(QStringLiteral("    ")) == LC_LineType::NameCheck::Empty);
     CHECK(LC_LineType::checkName(QStringLiteral("\t\n")) == LC_LineType::NameCheck::Empty);
@@ -143,6 +122,9 @@ TEST_CASE("LC_LineType::checkName refuses a control character inside a name",
                                  QStringLiteral("DOR")) ==
           LC_LineType::NameCheck::ControlCharacter);
     CHECK(LC_LineType::checkName(QStringLiteral("VEN") + QChar(u'\x7F') +
+                                 QStringLiteral("DOR")) ==
+          LC_LineType::NameCheck::ControlCharacter);
+    CHECK(LC_LineType::checkName(QStringLiteral("VEN") + QChar(u'\x85') +
                                  QStringLiteral("DOR")) ==
           LC_LineType::NameCheck::ControlCharacter);
 }
@@ -192,6 +174,16 @@ TEST_CASE("LC_LinFile::read keeps a description that holds commas whole",
     CHECK(result.entries[0].pattern == std::vector<double>{1.0, -1.0});
 }
 
+TEST_CASE("LC_LinFile::read turns a control character in a description into a space",
+          "[linetype][linfile][read]") {
+    const LC_LinFile::ReadResult result = LC_LinFile::read(textFile(
+        {QStringLiteral("*VENDOR_TAB,a") + QChar(u'\x01') + QStringLiteral("b"),
+         QStringLiteral("A,1,-1")}));
+    REQUIRE(result.issues.empty());
+    REQUIRE(result.entries.size() == 1);
+    CHECK(result.entries[0].description == QStringLiteral("a b"));
+}
+
 TEST_CASE("LC_LinFile::read reads CRLF and a UTF-8 byte order mark alike",
           "[linetype][linfile][read]") {
     const QString plain = QStringList{
@@ -207,10 +199,14 @@ TEST_CASE("LC_LinFile::read reads CRLF and a UTF-8 byte order mark alike",
     crlf.replace('\n', "\r\n");
     crlf += "\r\n";
     const LC_LinFile::ReadResult windows = LC_LinFile::read(crlf);
+    QByteArray crOnly = plain.toUtf8();
+    crOnly.replace('\n', '\r');
+    crOnly += '\r';
+    const LC_LinFile::ReadResult classicMac = LC_LinFile::read(crOnly);
     const LC_LinFile::ReadResult bom =
         LC_LinFile::read(QByteArray::fromHex("EFBBBF") + plain.toUtf8() + '\n');
 
-    for (const LC_LinFile::ReadResult* result : {&lf, &windows, &bom}) {
+    for (const LC_LinFile::ReadResult* result : {&lf, &windows, &classicMac, &bom}) {
         REQUIRE(result->issues.empty());
         REQUIRE(result->entries.size() == 2);
         CHECK(result->entries[0].name == QStringLiteral("VENDOR_TAB"));
@@ -219,6 +215,22 @@ TEST_CASE("LC_LinFile::read reads CRLF and a UTF-8 byte order mark alike",
         CHECK(result->entries[1].name == QStringLiteral("VENDOR_DOT"));
         CHECK(result->entries[1].pattern == std::vector<double>{0.0, -3.0});
     }
+}
+
+TEST_CASE("LC_LinFile::read drops a byte order mark at the start of any line",
+          "[linetype][linfile][read]") {
+    QByteArray file = "*VENDOR_TAB,tab\nA,1,-1\n";
+    // A file concatenated from two files carries a second mark.
+    file += QByteArray::fromHex("EFBBBF");
+    file += "*VENDOR_DOT,dot\nA,0,-3\n";
+
+    const LC_LinFile::ReadResult result = LC_LinFile::read(file);
+    REQUIRE(result.issues.empty());
+    REQUIRE(result.entries.size() == 2);
+    CHECK(result.entries[0].name == QStringLiteral("VENDOR_TAB"));
+    CHECK(result.entries[0].pattern == std::vector<double>{1.0, -1.0});
+    CHECK(result.entries[1].name == QStringLiteral("VENDOR_DOT"));
+    CHECK(result.entries[1].pattern == std::vector<double>{0.0, -3.0});
 }
 
 TEST_CASE("LC_LinFile::read scales every length", "[linetype][linfile][read]") {
@@ -232,6 +244,19 @@ TEST_CASE("LC_LinFile::read scales every length", "[linetype][linfile][read]") {
     CHECK(pattern[0] == 2.5 * 25.4);
     CHECK(pattern[1] == -1.25 * 25.4);
     CHECK(pattern[2] == 0.0 * 25.4);
+}
+
+TEST_CASE("LC_LinFile::read reports an element the scale makes non-finite",
+          "[linetype][linfile][read]") {
+    const LC_LinFile::ReadResult result = LC_LinFile::read(
+        textFile({QStringLiteral("*VENDOR_SCALE,scaled"),
+                  QStringLiteral("A,1e308,-1e308")}),
+        25.4);
+    CHECK(result.entries.empty());
+    REQUIRE(result.issues.size() == 1);
+    CHECK(result.issues[0].kind == LC_LinFile::Issue::Kind::BadNumber);
+    CHECK(result.issues[0].line == 2);
+    CHECK(result.issues[0].text == QStringLiteral("1e308"));
 }
 
 TEST_CASE("LC_LinFile::read treats an unusable scale as 1",
@@ -432,11 +457,8 @@ TEST_CASE("LC_LinFile::read refuses a name with a colon",
 TEST_CASE("LC_LinFile reads and writes numbers in the C locale",
           "[linetype][linfile][locale]") {
     DefaultLocaleGuard restoreDefault;
+    // A German default writes a decimal comma; the file format does not.
     QLocale::setDefault(QLocale(QLocale::German));
-    // The C locale's numeric category is what a C library parser reads; a
-    // platform without the German locale keeps its own.
-    NumericLocaleGuard restoreNumeric("de_DE.UTF-8");
-    INFO("C numeric locale changed: " << restoreNumeric.changed());
 
     const LC_LinFile::ReadResult result = LC_LinFile::read(textFile({
         QStringLiteral("*VENDOR_LOCALE,comma is a separator"),
@@ -497,6 +519,22 @@ TEST_CASE("LC_LinFile honors the element limit", "[linetype][linfile][limits]") 
     CHECK(refused.issues[0].text == QStringLiteral("VENDOR_MANY"));
 }
 
+TEST_CASE("LC_LinFile::read guards a pattern line before splitting it",
+          "[linetype][linfile][limits]") {
+    QByteArray file = "*VENDOR_MANY,many\nA";
+    file += QByteArray(5000000, ',');
+    file += "\n*VENDOR_AFTER,ok\nA,1,-1\n";
+
+    const LC_LinFile::ReadResult result = LC_LinFile::read(file);
+    REQUIRE(result.issues.size() == 1);
+    CHECK(result.issues[0].kind == LC_LinFile::Issue::Kind::TooManyElements);
+    CHECK(result.issues[0].line == 1);
+    CHECK(result.issues[0].text == QStringLiteral("VENDOR_MANY"));
+    REQUIRE(result.entries.size() == 1);
+    CHECK(result.entries[0].name == QStringLiteral("VENDOR_AFTER"));
+    CHECK(result.entries[0].pattern == std::vector<double>{1.0, -1.0});
+}
+
 TEST_CASE("LC_LinFile::read survives a huge line of garbage",
           "[linetype][linfile][limits]") {
     QByteArray file(2 * 1024 * 1024, 'x');
@@ -531,6 +569,88 @@ TEST_CASE("LC_LinFile::write formats doubles shortest round trip",
     CHECK(out ==
           QByteArray("*VENDOR_NUMBERS\n"
                      "A,0.1,-1e-07,123456.789,0,0.30000000000000004,-0.30000000000000004\n"));
+}
+
+TEST_CASE("LC_LinFile::write writes the shortest text that reads back",
+          "[linetype][linfile][write]") {
+    SECTION("a third needs sixteen digits") {
+        const double third = 1.0 / 3.0;
+        const QByteArray out = LC_LinFile::write(
+            {makeEntry(QStringLiteral("VENDOR_THIRD"), {third, -third})});
+        CHECK(out == QByteArray("*VENDOR_THIRD\n"
+                                "A,0.3333333333333333,-0.3333333333333333\n"));
+        const LC_LinFile::ReadResult back = LC_LinFile::read(out);
+        REQUIRE(back.issues.empty());
+        REQUIRE(back.entries.size() == 1);
+        CHECK(sameBits(back.entries[0].pattern[0], third));
+        CHECK(sameBits(back.entries[0].pattern[1], -third));
+    }
+
+    SECTION("the extremes survive") {
+        const double denorm = std::numeric_limits<double>::denorm_min();
+        const double maximum = std::numeric_limits<double>::max();
+        const double tiny = (2.0 / 3.0) * 1e-5;
+        const std::vector<double> pattern{denorm, -1.0, maximum, -1.0, tiny, -1.0};
+        const QByteArray out = LC_LinFile::write(
+            {makeEntry(QStringLiteral("VENDOR_EXTREMES"), pattern)});
+        const LC_LinFile::ReadResult back = LC_LinFile::read(out);
+        REQUIRE(back.issues.empty());
+        REQUIRE(back.entries.size() == 1);
+        REQUIRE(back.entries[0].pattern.size() == pattern.size());
+        for (std::size_t i = 0; i < pattern.size(); ++i) {
+            INFO("element " << i);
+            CHECK(sameBits(back.entries[0].pattern[i], pattern[i]));
+        }
+    }
+}
+
+TEST_CASE("LC_LinFile::write keeps one record per key",
+          "[linetype][linfile][write]") {
+    std::vector<LC_LinFile::Issue> issues;
+    const QByteArray out = LC_LinFile::write(
+        {makeEntry(QStringLiteral("VENDOR_TAB"), {1.0, -1.0}),
+         makeEntry(QStringLiteral("vendor_tab"), {2.0, -2.0})},
+        &issues);
+    CHECK(out == QByteArray("*VENDOR_TAB\nA,1,-1\n"));
+    REQUIRE(issues.size() == 1);
+    CHECK(issues[0].kind == LC_LinFile::Issue::Kind::DuplicateName);
+    CHECK(issues[0].line == 2);
+    CHECK(issues[0].text == QStringLiteral("vendor_tab"));
+
+    const LC_LinFile::ReadResult back = LC_LinFile::read(out);
+    REQUIRE(back.issues.empty());
+    REQUIRE(back.entries.size() == 1);
+    CHECK(back.entries[0].name == QStringLiteral("VENDOR_TAB"));
+}
+
+TEST_CASE("LC_LinFile::write decides the element limit on the written list",
+          "[linetype][linfile][write]") {
+    const double nan = std::numeric_limits<double>::quiet_NaN();
+    std::vector<double> filled;
+    for (int i = 0; i < 150; ++i) {
+        filled.push_back(i % 2 == 0 ? 1.0 : -1.0);
+        filled.push_back(nan);
+    }
+    std::vector<double> longPattern;
+    for (int i = 0; i < LC_LinFile::kMaxElements + 44; ++i) {
+        longPattern.push_back(i % 2 == 0 ? 1.0 : -1.0);
+    }
+    std::vector<LC_LinFile::Issue> issues;
+    const QByteArray out = LC_LinFile::write(
+        {makeEntry(QStringLiteral("VENDOR_FILLED"), filled),
+         makeEntry(QStringLiteral("VENDOR_LONG"), longPattern)},
+        &issues);
+    CHECK(out.startsWith(QByteArray("*VENDOR_FILLED\n")));
+    REQUIRE(issues.size() == 1);
+    CHECK(issues[0].kind == LC_LinFile::Issue::Kind::TooManyElements);
+    CHECK(issues[0].line == 2);
+    CHECK(issues[0].text == QStringLiteral("VENDOR_LONG"));
+
+    const LC_LinFile::ReadResult back = LC_LinFile::read(out);
+    REQUIRE(back.issues.empty());
+    REQUIRE(back.entries.size() == 1);
+    CHECK(back.entries[0].name == QStringLiteral("VENDOR_FILLED"));
+    CHECK(back.entries[0].pattern.size() == 150);
 }
 
 TEST_CASE("LC_LinFile::write leaves out and reports what it cannot hold",

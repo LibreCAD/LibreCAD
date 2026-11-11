@@ -49,11 +49,14 @@ struct Issue {
         ComplexElement,       // a "[...]" element
         InvalidName,          // LC_LineType::checkName() refuses the name
         BuiltInName,          // the canonical name of a line type LibreCAD has built in, or By Layer / By Block
-        DuplicateName,        // an earlier record has the same key()
+        DuplicateName,        // an earlier record the reader took has the same key(); for the writer, an earlier entry
     };
     Kind kind = Kind::UnknownLine;
-    int line = 0;             // 1-based line of the file; the entry's index + 1 for the writer
-    QString text;             // the name or the element the issue is about
+    int line = 0;             // 1-based: the record's "*" line for a name, a
+                              // missing pattern, a list that draws nothing or
+                              // too many elements; the offending line
+                              // otherwise; the entry's index + 1 for the writer
+    QString text;             // the name, the element or the line the issue is about
 };
 
 struct ReadResult {
@@ -69,7 +72,9 @@ constexpr int kMaxElements = 256;
 ReadResult read(const QByteArray& data, double scale = 1.0);
 
 /// The text of a line type file holding these entries, two lines each. An
-/// entry the format cannot hold is left out and reported.
+/// entry the format cannot hold, or whose key an earlier entry has, is left
+/// out and reported. Names and descriptions are written without the blanks
+/// around them.
 QByteArray write(const std::vector<LC_LineType>& entries, std::vector<Issue>* issues = nullptr);
 
 }
