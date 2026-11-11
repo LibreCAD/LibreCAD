@@ -36389,3 +36389,23 @@ assertions in one case. This qualifies two specific positive weight sequences
 only; other weight ratios/distributions and control layouts, arbitrary knot
 vectors, continuous error proof, external CAD, visible GUI, cross-platform
 execution, and exact-head PR CI remain open.
+
+## 920. Qualify Near-end Rational C1 Knot Placements (2026-11-11)
+
+Test commit `cd3797dec` adds interior knots `0.15` and `0.85` to the existing
+degree-4/5/6 rational C1 spline matrix with multiplicity `degree - 1`. The
+independent worker-kernel oracle exercises both weight profiles, both signed
+offsets, both existing translations and rotations, verifies C1 continuity and
+offset deviation, and admits the combined cache through operation 8; the
+focused test passes 6,720 assertions. The worker-client persistence matrix
+adds both near-end knots at each degree on both signed sides with the first
+weight profile at the origin and zero rotation, while retaining the broader
+existing `.37`/`.63` client matrix. Produce and all five internal
+R14/R2000/R2018 DXF/DWG save/reopen lanes pass, for 2,799,430 assertions in
+the focused client case.
+
+This qualifies only the recorded near-end knot fixtures and specified client
+transform/profile subset. It does not establish arbitrary knot vectors,
+continuity classes, broader client weight/transform combinations, continuous
+error proof, external CAD, visible GUI, cross-platform execution, or
+exact-head PR CI.
