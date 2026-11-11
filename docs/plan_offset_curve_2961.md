@@ -35368,3 +35368,21 @@ Release build. The remaining scanner gates are the per-family incremental
 uniqueness/ambiguity matrix and a defensible worst-case per-entity
 capture/encoding latency bound. The existing total-time benchmark is
 diagnostic only and cannot establish a hard event-loop budget.
+
+## 872. Verify Incremental Matching for Every Source Kind (2026-11-11)
+
+Commit `166308b1f` adds a dedicated fresh-document scenario for each of the
+nine modeled source kinds: ellipse, spline, spline-points, parabola, bounded
+hyperbola, line, arc, circle, and polyline. Each case prepares a typed offset
+from one real candidate, opens a fresh Properties widget with no remembered
+source preference, scans through more than one slice, and verifies that an
+identical second candidate leaves the source ambiguous and unhighlighted.
+This keeps parabola distinct from spline-points and tests the actual typed
+capture/encoding path used by incremental matching.
+
+The targeted `[typed][incremental][matrix]` test passes 198 assertions / 1
+case. The full source-picker selector passes 12,834 assertions / 36 cases on
+the current CMake Release build. This closes the scanner's family-specific
+uniqueness/ambiguity gate for the tested duplicates. Still open: measure and
+bound worst-case single-entity capture/encoding latency, plus visible macOS GUI
+acceptance and the broader offset-plan requirements outside this scanner work.
