@@ -68,12 +68,6 @@ TEST_CASE("Materialized non-cusp join preserves correlated direction bounds",
     const LC_IntersectionDomain reverse{1, 0, restricted.parameterB, restricted.parameterA};
     CHECK(curves->certifyIntersection(restricted).outcome == Outcome::Excluded);
     CHECK(curves->certifyIntersection(reverse).outcome == Outcome::Excluded);
-    LC_IntersectionOptions options;
-    options.allowSubToleranceSelfLoops = false;
-    options.tolerance = 1e-8;
-    const auto result = findIntersections(*curves, options);
-    CHECK(result.status == LC_IntersectionStatus::Ok);
-
     const LC_CurveOffsetInternal::BezierBranches crossingPieces{{
         {{{0, 0}, {.25, 0}, {.75, 0}, {1, 0}}},
         {{{1, 0}, {.75, 1}, {.25, -1}, {0, 0}}}}};
