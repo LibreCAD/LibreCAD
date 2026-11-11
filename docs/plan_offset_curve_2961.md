@@ -34004,6 +34004,14 @@ refactoring it to read the setting once, the rebuilt boundary and focused worker
 tests passed 207 assertions across two cases. This does not compare runtime
 against an equivalent clean baseline or qualify the geometry experiment.
 
+Enabling materialized-output noding on the existing over-cusp Direct fixture
+returned `Ok` after 63 box pairs. This probe did not independently establish
+that its fitted output crosses, so it is not a substitute for the crossing
+fixture from the rejected bound experiment. Capture that experiment's actual
+materialized control nets and a reproducible independent crossing witness before
+using them as a regression; do not require all over-cusp Direct outputs to be
+rejected merely because their exact source has a cusp.
+
 Before committing this experiment: reproduce and independently check the
 actual materialized ellipse crossing; justify or replace the activation
 heuristic across source types and coordinate scales; compare matrix runtime
