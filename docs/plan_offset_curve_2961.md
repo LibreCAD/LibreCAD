@@ -34453,3 +34453,12 @@ ellipses and trimming. Its fair-split and refined-box proof changes, strict
 trigger, and diagnostic prints remain uncommitted. A clean default-path matrix,
 worker/file matrix, visible checks, and cross-platform validation for this
 new certificate remain open.
+
+Clean-checkout validation at `d2ea710da` (including `940dcd970`): the CMake
+Release test and worker-client targets rebuilt with no source changes. The
+materialized-proof selector passed 691 assertions in 6 cases, the normal
+ellipse/intersection/trim selector passed 1,361,893 assertions in 102 cases,
+and the real-worker typed-source/cache/five-lane file matrix passed 1,552,135
+assertions in one case using `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`. The
+checkout remained clean. These results do not close the strict experiment,
+full qmake build, visible or independent-CAD visual checks, or other platforms.
