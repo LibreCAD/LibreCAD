@@ -35518,9 +35518,11 @@ This closes the large synchronous candidate-enumeration gap for the tested
 large-list workflow, but does not close visible-GUI responsiveness,
 target-hardware worst-case latency, or family/variant geometry and persistence
 qualification. Fresh qmake6 generation succeeded with Qt 6.12.0 and the
-project's C++17 configuration. A clean full build compiled the libraries and
-began the main application, but was stopped before completion because a full
-from-scratch build is substantially broader than this picker slice. No compile
-error was observed before interruption; this is not a full qmake build pass.
-The qmake6 full-build gate remains open and must be completed in the broader
-delivery validation before claiming plan completion.
+project's C++17 configuration. The clean full build completed successfully
+with exit 0 in `/private/tmp/offset2961-qmake6-current`. It emitted existing
+macOS deployment-target warnings because the build targets macOS 14.4 while
+the Homebrew QtSvg and Freetype libraries are built for macOS 27.0; repeated
+missing-field-initializer warnings also appear in DWG metadata code. This is a
+build pass, not a test or GUI pass. Visible-GUI responsiveness,
+target-hardware worst-case latency, and family/variant geometry and persistence
+qualification remain open.
