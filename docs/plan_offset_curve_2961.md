@@ -115,8 +115,10 @@ Execute and record these slices in order:
    parabola constructions, traversal and conditioning, and trimming. Record
    exact fixtures, versions and limits in the existing capability matrix;
    refuse unsupported or unproved cases without partial publication. The
-   unresolved near-node occurrence-identity issue in section 857 remains open
-   and must not be papered over by a parameter-distance heuristic.
+   non-corner near-node corruption cases recorded in section 857 are rejected
+   by the branch-provenance and source-evaluation guards in sections 859 and
+   861; do not add a parameter-distance heuristic. Broader corner-arc and
+   ambiguous piece-identity proofs remain open and fail closed.
 4. **Large-drawing responsiveness.** Implement incremental live-highlight
    resolution. This slice is implemented: each event-loop slice visits at most
    64 entries and targets approximately 4 ms; it retains indices/IDs and
@@ -197,7 +199,7 @@ following slices in order, preserving the detailed safety requirements below:
 
 | Slice | Remaining work | Acceptance evidence |
 | --- | --- | --- |
-| 1. Inventory and selector | The UI contract and representative directed family transitions are implemented: the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Keep the controls editable while idle and disabled during worker preparation. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; latest focused source-picker suite passes 13,958 assertions / 38 cases. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
+| 1. Inventory and selector | The UI contract and representative directed family transitions are implemented: the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Keep the controls editable while idle and disabled during worker preparation. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 877's latest focused source-picker suite passes 14,097 assertions / 39 cases. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection; the hidden/locked guard is committed in `92f3c2097`, with remaining lifecycle and scale coverage still open. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Revalidate initially missing or ambiguous matches and record large-drawing limits until addressed. |
 | 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests, plus move/delete/document-change and late-reply tests; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
 | 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
@@ -35717,3 +35719,41 @@ Produce, and all five internal R14/R2000/R2018 DXF/DWG round-trip lanes. This
 closes the exact/over-cusp worker row only for this short reversed sweep and
 profile. Other reversed intervals, cusp-endpoint sweeps, wider arcs, origins,
 ratios, signed-side combinations, and external/visible acceptance remain open.
+
+## 889. Reconfirm Type-changing Source Replacement Scope (2026-11-11)
+
+The latest request again requires the source-type control to remain usable while
+choosing a replacement, and asks that the chooser include every supported
+offset-source type, including parabola. This is already the implemented
+Properties-widget contract: the selector is derived from the nine
+`LC_OffsetSourceGeometry::SupportedKinds`, filters replacement candidates, and
+keeps `LC_Parabola` distinct from spline-points. A type change does not mutate
+the current source or cache; both selectors remain available while idle and
+are disabled during asynchronous preparation.
+
+No additional widget, selector, or parabola-only implementation slice is
+needed. Use section 877's 14,097 assertions / 39 source-picker cases and
+section 874's directed 9-by-8 family-transition test as the picker-level
+acceptance evidence. This does not close per-variant offset generation,
+worker/cache, trimming, DXF/DWG persistence, or visible-GUI qualification;
+continue those independently under the geometry/persistence and delivery
+slices, and keep unsupported variants fail-closed.
+
+## 890. Revalidate Adjacent-parameter Materialized-node Rejection (2026-11-11)
+
+Commit `0be84dcfd` extends `Materialized nodes reject demonstrably inconsistent
+source occurrences` by changing one occurrence to `nextafter(parameterB,
++infinity)`, adjacent to the other recorded parameter.
+The current branch-provenance validation rejects the modified node as
+`AmbiguousTopology` and publishes no entities; no parameter-distance cutoff or
+kernel change is required. This confirms the specific non-corner corruption
+case recorded in sections 857 and 859 against the current implementation.
+
+On the current CMake Release build at commit `0be84dcfd`, the focused regression
+passes 41 assertions / 1 case, `[curve-offset][topology][materialized]` passes
+2,897 assertions / 14 cases, and the complete `[curve-offset]` selector passes
+1,925,433 assertions / 313 cases. The extra nearby-parameter mutation is
+covered alongside the existing duplicate and valid noded-parabola controls.
+Broader corner-arc/piece identity proofs, direct fault injection for
+unavailable source evaluation, independent CAD readers, PR CI, visible GUI,
+and cross-platform acceptance remain open; do not infer them from this run.
