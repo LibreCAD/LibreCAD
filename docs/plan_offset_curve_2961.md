@@ -34790,3 +34790,7 @@ assertions in 23 cases. The async selector passed 14 of 16 cases; the other
 two failed at the known `editor.hasFocus()` precondition under Qt offscreen,
 before their behavioral checks. Clean-build and visible GUI validation remain
 open, as does a full qmake6 build currently in progress.
+
+The clean CMake Release checkout at `39060e650` rebuilt the test target and
+passed the complete source-picker selector with 12,269 assertions in 23
+cases. This is headless coverage, not visible GUI acceptance.
