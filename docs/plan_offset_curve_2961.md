@@ -58,6 +58,24 @@ distinct parabola kind. A family appearing in the selector is UI coverage
 only, not proof that all of its geometry variants pass generation,
 worker/cache validation, or persistence.
 
+**Plan update for the repeated source-widget request (2026-11-11):** Treat
+“change source curve type when selecting a new one” as repeated, in-workflow
+family switching before candidate acceptance, not as changing the stored
+source's type in place. On every type change, refresh the candidate list from
+the canonical `SupportedKinds` inventory; keep the prior typed source, cache,
+identity and current-source indication unchanged until a candidate passes
+asynchronous validation. The source-picker acceptance gate combines `Native
+source picker changes family and replaces the source with a typed curve`,
+`Native source picker preserves highlighted source across family filters`,
+`Native source picker replaces every modeled source family without filter
+side effects`, and the inventory assertion. These cover all nine kinds,
+including parabola as distinct from spline-points. Current focused-suite
+evidence is section 894 (14,827 assertions / 43 cases); rerun that suite for UI
+changes. Do not expand the UI inventory beyond modeled offset-source kinds or
+claim every geometry variant is supported based on picker visibility; variant
+generation and persistence remain governed by slice 4 and the capability
+matrix.
+
 **Interaction-state rule:** keep the type selector and candidate chooser
 available while the editor is idle and throughout the replacement-selection
 workflow, so the user may switch family without exiting that workflow and then
@@ -36172,3 +36190,23 @@ Produce, all five file lanes, and an independent worker-output oracle for this
 corner profile remain the next spline slice; other knot multiplicities and
 join angles, external CAD, visible GUI, cross-platform execution, and
 exact-head PR CI remain open.
+
+## 909. Qualify Degree-multiplicity Rational Corners Through Worker and Files (2026-11-11)
+
+Test commit `a05511301` extends the degree-4/5/6 rational C0 corner fixtures
+from section 908 through the worker client. The worker-kernel test independently
+compares the two ordinary output pieces to the 256-bit source-normal oracle,
+then combines and validates the editable cache through operation 8; it passes
+96 assertions. The generation result deliberately reports
+`NotCacheRepresentable` while returning ordinary-complete pieces, so the test
+also verifies that the completion/cache path can form and validate the joined
+cache instead of treating that marker as an ordinary-output failure.
+
+The source-family worker-client matrix now also runs each corner through
+operation 7 Produce and the five internal R14/R2000/R2018 DXF/DWG
+save/reopen lanes. The focused client case passes 1,685,144 assertions in one
+case. This qualifies only the constructed degrees 4, 5, and 6, rational weight
+profiles, degree-multiplicity join, distance 0.1, and these internal file
+lanes. Other join angles, weights and knot configurations, continuous error
+proof, ODA/AutoCAD, visible GUI, cross-platform execution, and exact-head PR CI
+remain open.
