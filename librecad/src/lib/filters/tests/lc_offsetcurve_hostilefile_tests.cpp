@@ -1961,6 +1961,16 @@ TEST_CASE("trimmed tangent-constrained fit-point geometry round-trips through na
     source.getData().fitStartTangent = start.first;
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
+    std::array<LC_SplinePointsData, 3> profiles;
+    profiles[0] = source.getData();
+    LC_SplinePoints reversed{nullptr, profiles[0]};
+    reversed.revertDirection();
+    REQUIRE(reversed.fitTangentsMatchCurve());
+    profiles[1] = reversed.getData();
+    LC_SplinePoints affine{nullptr, profiles[0]};
+    affine.scale({0, 0}, {1.5, 0.75});
+    REQUIRE(affine.fitTangentsMatchCurve());
+    profiles[2] = affine.getData();
 
     struct FileLane {
         RS2::FormatType format;
@@ -1979,29 +1989,32 @@ TEST_CASE("trimmed tangent-constrained fit-point geometry round-trips through na
         libreDwgReader = QStandardPaths::findExecutable("dwgread");
     std::size_t independentlyReadFiles = 0;
 
-    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-        for (const double distance : {0.2, 0.5}) {
-            CAPTURE(side, distance);
-            const auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
-            const auto generated = LC_CurveOffset::createEntities(
-                source, LC_CurveOffset::makeSideRequest(side, distance), options,
-                LC_CurveOffset::makeDirectSourceBudget());
-            REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
-            REQUIRE_FALSE(generated.entities.empty());
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints profile{nullptr, profiles[profileIndex]};
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            for (const double distance : {0.2, 0.5}) {
+                CAPTURE(side, distance);
+                const auto options = LC_CurveOffset::makeOffsetOptions(profile, distance);
+                const auto generated = LC_CurveOffset::createEntities(
+                    profile, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                REQUIRE(generated.status == LC_CurveOffsetStatus::Ok);
+                REQUIRE_FALSE(generated.entities.empty());
 
-            RS_Graphic drawing;
-            drawing.initForNewDocument();
-            drawing.onLoadingCompleted();
-            std::vector<const RS_Spline*> expected;
-            for (const auto& entity : generated.entities) {
-                const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
-                REQUIRE(spline);
-                expected.push_back(spline);
-                auto* copy = entity->clone();
-                REQUIRE(copy);
-                copy->setLayer(drawing.getActiveLayer());
-                drawing.addEntity(copy);
-            }
+                RS_Graphic drawing;
+                drawing.initForNewDocument();
+                drawing.onLoadingCompleted();
+                std::vector<const RS_Spline*> expected;
+                for (const auto& entity : generated.entities) {
+                    const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+                    REQUIRE(spline);
+                    expected.push_back(spline);
+                    auto* copy = entity->clone();
+                    REQUIRE(copy);
+                    copy->setLayer(drawing.getActiveLayer());
+                    drawing.addEntity(copy);
+                }
 
             for (const auto& lane : formats) {
 #ifndef DWGSUPPORT
@@ -2009,6 +2022,7 @@ TEST_CASE("trimmed tangent-constrained fit-point geometry round-trips through na
 #endif
                 CAPTURE(lane.suffix);
                 const QString path = QString::fromStdString(directory.file(
+                    std::to_string(profileIndex) + "-" +
                     std::to_string(static_cast<int>(side)) + "-" +
                     std::to_string(distance) + "-" + lane.suffix).string());
                 RS_FilterDXFRW writer;
@@ -2071,11 +2085,12 @@ TEST_CASE("trimmed tangent-constrained fit-point geometry round-trips through na
                     ++independentlyReadFiles;
                 }
 #endif
+                }
             }
         }
     }
 #ifdef DWGSUPPORT
-    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 4);
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 12);
 #endif
 }
 
