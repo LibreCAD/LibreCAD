@@ -34824,6 +34824,15 @@ the document itself is destroyed before any highlight is created. The watch
 stops without dereferencing the expired document; the focused headless test
 passed 7 assertions with the uncommitted geometry experiment present.
 
+Commit `8c63a4b4f` extends the existing 18-variant Properties matrix to open
+each typed source while its entity is absent, restore it, and verify that the
+watch resolves the chooser and enables source selection. This covers all nine
+modeled families, including distinct parabola and the matrix's spline
+variants. With the uncommitted geometry experiment, the focused matrix passed
+8,318 assertions and the complete source-picker selector passed 12,490
+assertions in 26 cases. This is headless evidence for those fixtures, not a
+claim that every geometry variant or visible workflow is complete.
+
 ## 857. Reject Duplicated Regular Node Occurrences (2026-11-11)
 
 Commit `b0c90898f` adds a necessary, deliberately narrow node check: for a
