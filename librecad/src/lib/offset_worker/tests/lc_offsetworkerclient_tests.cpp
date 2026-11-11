@@ -3980,54 +3980,76 @@ TEST_CASE("Stationary control-point spline-points trim runs through worker prepa
           "[lc-offsetcurve][worker-client][ordered-preparation][spline-points][stationary][trim]") {
     auto& rt = runtime();
     OwnedClient client{rt};
-    LC_SplinePointsData sourceData{false, false};
-    sourceData.useControlPoints = true;
-    sourceData.controlPoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}};
-    LC_SplinePoints source{nullptr, sourceData};
-    const std::vector<RS_Vector> originalControls = source.getData().controlPoints;
-    LC_CurveJet midpoint;
-    REQUIRE(source.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, midpoint));
-    RS_Vector normal{-midpoint.first.y, midpoint.first.x};
-    REQUIRE(normal.magnitude() > 0.0);
-    normal = normal / normal.magnitude() * 8.0;
-    const std::array<RS_Vector, 2> sidePicks{{midpoint.point + normal, midpoint.point - normal}};
+    const auto makeProfile = [](std::vector<RS_Vector> controls) {
+        LC_SplinePointsData data{false, false};
+        data.useControlPoints = true;
+        data.controlPoints = std::move(controls);
+        return data;
+    };
+    const std::array<LC_SplinePointsData, 5> profiles{{
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}}),
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0},
+                     {3, 1}, {3, 1}, {3, 1}, {4, 0}}),
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1},
+                     {2, 0}, {3, 1}, {3, 1}, {3, 1}, {4, 0}}),
+        makeProfile({{0, 0}, {0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}}),
+        makeProfile({{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {3, 1}})
+    }};
     const std::array<double, 2> distances{{0.2, 0.5}};
 
-    for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
-        for (std::size_t side = 0; side < sidePicks.size(); ++side) {
-            CAPTURE(distanceIndex, side);
-            const std::size_t requestId = 1 + distanceIndex * 2 + side;
-            Receipts receipts;
-            RS_OffsetData data;
-            data.coord = sidePicks[side]; data.distance = distances[distanceIndex]; data.number = 1;
-            data.multipleCopies = true; data.keepOriginals = true;
-            LC_OffsetBatchPreparation prepared{data, {&source}, false, {}};
-            LC_DocumentModificationBatch batch;
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        const std::vector<RS_Vector> originalControls = source.getData().controlPoints;
+        LC_CurveJet midpoint;
+        const double endParameter = static_cast<double>(source.getSegmentCount());
+        for (double parameter = 0.1; parameter < endParameter; parameter += 0.1) {
+            if (source.tryEvaluateJet(parameter, LC_CurveEvaluationSide::Interior, midpoint) &&
+                midpoint.first.magnitude() > 0.0) {
+                break;
+            }
+        }
+        REQUIRE(midpoint.first.magnitude() > 0.0);
+        RS_Vector normal{-midpoint.first.y, midpoint.first.x};
+        normal = normal / normal.magnitude() * 8.0;
+        const std::array<RS_Vector, 2> sidePicks{{midpoint.point + normal, midpoint.point - normal}};
 
-            REQUIRE_FALSE(prepared.advance(batch));
-            CHECK(prepared.pendingSource() == &source);
-            auto request = prepared.request(token(requestId));
-            REQUIRE(request);
-            REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
-            const auto& operation = std::get<Req::Produce>(request->operation);
-            REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
-            CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
-                  LC_OffsetSourceGeometry::Kind::SplinePoints);
-            REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
-            rt.until([&] { return receipts.calls[0] != 0; });
-            const auto& completion = completed(receipts.at(0), requestId, 5);
-            REQUIRE(prepared.accept(completion));
-            REQUIRE(prepared.advance(batch));
+        for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
+            for (std::size_t side = 0; side < sidePicks.size(); ++side) {
+                CAPTURE(distanceIndex, side);
+                const std::size_t requestId = 1 + profileIndex * 4 + distanceIndex * 2 + side;
+                Receipts receipts;
+                RS_OffsetData data;
+                data.coord = sidePicks[side]; data.distance = distances[distanceIndex]; data.number = 1;
+                data.multipleCopies = true; data.keepOriginals = true;
+                LC_OffsetBatchPreparation prepared{data, {&source}, false, {}};
+                LC_DocumentModificationBatch batch;
 
-            REQUIRE(prepared.outcome().sources.size() == 1);
-            CHECK(prepared.outcome().sources.front().source == &source);
-            CHECK(prepared.outcome().sources.front().complete());
-            REQUIRE_FALSE(batch.entitiesToAdd.empty());
-            CHECK(source.getData().controlPoints == originalControls);
-            CHECK_FALSE(source.isDeleted());
-            prepared.release();
-            qDeleteAll(batch.entitiesToAdd);
-            batch.entitiesToAdd.clear();
+                REQUIRE_FALSE(prepared.advance(batch));
+                CHECK(prepared.pendingSource() == &source);
+                auto request = prepared.request(token(requestId));
+                REQUIRE(request);
+                REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
+                const auto& operation = std::get<Req::Produce>(request->operation);
+                REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
+                CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
+                      LC_OffsetSourceGeometry::Kind::SplinePoints);
+                REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+                rt.until([&] { return receipts.calls[0] != 0; });
+                const auto& completion = completed(receipts.at(0), requestId, 5);
+                REQUIRE(prepared.accept(completion));
+                REQUIRE(prepared.advance(batch));
+
+                REQUIRE(prepared.outcome().sources.size() == 1);
+                CHECK(prepared.outcome().sources.front().source == &source);
+                CHECK(prepared.outcome().sources.front().complete());
+                REQUIRE_FALSE(batch.entitiesToAdd.empty());
+                CHECK(source.getData().controlPoints == originalControls);
+                CHECK_FALSE(source.isDeleted());
+                prepared.release();
+                qDeleteAll(batch.entitiesToAdd);
+                batch.entitiesToAdd.clear();
+            }
         }
     }
 }
