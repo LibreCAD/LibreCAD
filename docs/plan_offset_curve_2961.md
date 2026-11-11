@@ -47,25 +47,31 @@ Do not introduce a second type selector or a parabola-only picker.
 
 **Latest clarification (2026-11-11):** The source-type control must remain
 usable while the user is in the replacement-selection workflow, not just
-before entering it. Changing the type filters the replacement candidates and
-must not itself mutate the current source, cache, or committed identity. The
-user can then choose an eligible candidate of that family; this applies to all
-nine modeled kinds, including the distinct parabola kind. A family appearing
-in the selector is UI coverage only, not proof that all of its geometry
-variants pass generation, worker/cache validation, or persistence.
+before entering it. The acceptance sequence and mutation boundary are stated
+in the interaction-state rule below: changing type filters candidates only;
+choosing a candidate starts preparation; successful validation publishes the
+replacement. This applies to all nine modeled kinds, including the distinct
+parabola kind. A family appearing in the selector is UI coverage only, not
+proof that all of its geometry variants pass generation, worker/cache
+validation, or persistence.
 
 **Interaction-state rule:** keep the type selector and candidate chooser
-available while the editor is idle, so the user may switch family and then
-choose a replacement. A type change only refreshes the eligible-candidate
-list; it does not start preparation or alter the committed source. Once a
-candidate is chosen and asynchronous preparation starts, keep both controls
-disabled until that request succeeds or fails. Enabling another type change
-while the worker is busy is a separate supersession feature and must not be
-implied by this requirement; implement it only with cancellation/stale-reply
-handling and explicit tests. The nine-family directed replacement matrix in
-section 874 verifies typed transitions, including parabola, but closes only
-the representative picker transition gate, not per-variant geometry or file
-support.
+available while the editor is idle and throughout the replacement-selection
+workflow, so the user may switch family without exiting that workflow and then
+choose a replacement. Changing the selected type refreshes the candidate list
+to eligible entities of that family; it does not start preparation or alter
+the committed source, cache, or source identity. The acceptance sequence is:
+open source replacement, change type in that workflow, verify the list
+refreshes, choose an eligible candidate, then publish only after successful
+asynchronous validation. Cover all nine modeled kinds, including parabola as
+distinct from spline-points. Once a candidate is chosen and asynchronous
+preparation starts, keep both controls disabled until that request succeeds or
+fails. Enabling another type change while the worker is busy is a separate
+supersession feature and must not be implied by this requirement; implement it
+only with cancellation/stale-reply handling and explicit tests. The nine-family
+directed replacement matrix in section 874 verifies typed transitions,
+including parabola, but closes only the representative picker transition
+gate, not per-variant geometry or file support.
 
 **Committed source-selection baseline.** The hidden/locked explicit-selection
 slice is committed as `92f3c2097` (`fix(offset): block selecting hidden or
@@ -118,9 +124,10 @@ Execute and record these slices in order:
    non-corner near-node corruption cases recorded in section 857 and direct
    corner-arc occurrence identity are rejected by the source/piece provenance
    checks recorded in section 896; do not add a parameter-distance heuristic.
-   Trimmed-mode materialization now refuses missing occurrence parameters
-   (section 899), but identity after branch rewriting remains open and must
-   stay separately qualified.
+   Trimmed-mode materialization refuses missing occurrence parameters
+   (section 899) and now maps reported crossings to their original noding
+   branches through trim rewrites using provenance and bounded exact evaluation
+   (section 900). Broader source-family/topology qualification remains open.
 4. **Large-drawing responsiveness.** Implement incremental live-highlight
    resolution. This slice is implemented: each event-loop slice visits at most
    64 entries and targets approximately 4 ms; it retains indices/IDs and
@@ -23288,6 +23295,33 @@ spline import lanes`). This closes only these five tangent variants in the
 five listed formats; unsupported tangent forms remain refused, and exhaustive
 other spline, spline-points, polyline, visible-GUI, CI, and independent-CAD
 gates remain open.
+
+## 900. Preserve Trimmed Noding-branch Identity (2026-11-11)
+
+Trimmed materialization now retains the pre-trim noding-branch index on every
+source piece. A materialized crossing is considered an already-known node only
+when both output occurrences map to the node's original branch pair (in either
+order). Regular pieces reevaluate the exact offset at the node parameter
+clamped to that piece's actual trimmed source interval, and require spatial
+agreement within the existing requested-geometry, node-merge and numeric
+tolerances. This handles a trim endpoint immediately adjacent to a near-tangent
+node without relying on parameter-distance heuristics. Rounded-join pieces
+retain their source-corner parameter and must match that corner and their
+bounded circular arc. Missing or inconsistent identity still fails closed.
+
+The regression extends the known noded-spline materialization case: normal
+Trimmed materialization succeeds, corrupted branch identity is rejected with
+no entities published, and missing occurrence parameters remain rejected. The
+elliptic-arc case that previously failed has post-trim output pieces from
+original noding branches 0 and 1, crossing 5.4e-5 from their exact node; it now
+passes by matching the correct branches and exact trimmed endpoints. The
+focused `[curve-offset][topology][materialized]` selector passes 2,924
+assertions / 16 cases; the full `[curve-offset]` selector passes 1,925,460
+assertions / 315 cases on the CMake Release/macOS build. The qmake6 recursive
+Release build passes with exit 0. These results qualify the tested near-node
+trim rewrite, not every source family or trim topology. Visible GUI,
+cross-platform runtime, external-CAD comparison, and exact-head PR CI remain
+open.
 
 #### W563z. Qualify Both Signed Sides for Tangent-spline File Promotion (2026-11-07)
 
