@@ -36765,3 +36765,17 @@ This qualifies one open stationary-span profile only. It does not cover
 leading/trailing or multiple stationary spans in trimmed mode, fit-point
 stationarity, worker execution, five-lane persistence, or GUI/external-CAD
 acceptance; those remain separate matrix rows.
+
+## 943. Exercise Stationary-span Fit Geometry Through Worker Preparation (2026-11-11)
+
+Test commit `3d6a464b0` adds a real helper-process `Produce` regression for
+the explicit-control spline-points profile from section 942. Both offset-side
+picks at distances `0.2` and `0.5` must retain the typed `SplinePoints` source,
+complete preparation, produce ordinary entities, and leave the original
+control points/entity unchanged. The focused case passes 734 assertions; the
+registered full `offset_worker_client` CTest passes in 269.80 seconds.
+
+This establishes worker preparation only for this one stationary profile.
+It does not establish five-lane file persistence, additional stationary
+layouts, fit-point stationarity, or visible/external-CAD acceptance.
+`git diff --check` passes.
