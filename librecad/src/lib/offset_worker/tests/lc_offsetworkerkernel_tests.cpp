@@ -2100,7 +2100,7 @@ TEST_CASE("offset worker oracle-checks acute and obtuse rational spline corners 
           "[lc-offsetcurve][worker-kernel][source-generation][spline][high-degree][corner][signed][oracle]") {
     for (const std::size_t degree : {4u, 5u, 6u}) {
         const double alpha = std::atan2(2.0 * std::sin(M_PI / static_cast<double>(degree)), 4.0 / static_cast<double>(degree));
-        for (const double joinAngle : {M_PI / 6.0, 5.0 * M_PI / 6.0}) {
+        for (const double joinAngle : {M_PI / 6.0, M_PI / 2.0, 5.0 * M_PI / 6.0}) {
             for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
                 for (const double rotation : {0.0, M_PI / 180.0 * 37.0}) {
                     for (const double signedDistance : {-0.1, 0.1}) {
