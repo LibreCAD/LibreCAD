@@ -7056,7 +7056,6 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             return provenanceMatches(validated[branch][static_cast<std::size_t>(pieceParameter)].provenance);
         };
         const auto trimmedOccurrenceConsistent = [&](const double parameter, const RS_Vector& point) {
-            if (std::isnan(parameter)) return true;
             if (!std::isfinite(parameter) || parameter < adapter->breaks().front() ||
                 parameter > adapter->breaks().back()) return false;
             if (samples >= options.maxSamples) {

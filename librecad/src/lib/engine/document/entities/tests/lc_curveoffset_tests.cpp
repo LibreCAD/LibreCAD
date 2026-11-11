@@ -3256,6 +3256,36 @@ TEST_CASE("Materialized corner-arc nodes require matching arc provenance",
     CHECK(refused.entities.empty());
 }
 
+TEST_CASE("Trimmed materialized nodes reject unavailable source occurrences",
+          "[curve-offset][topology][materialized][trimmed]") {
+    const RS_Spline parabola = makeSpline(2, {{-2, 4}, {0, -4}, {2, 4}}, {0, 0, 0, 1, 1, 1});
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, 1.0);
+    options.nodeIntersections = true;
+    const LC_CurveOffsetRequest request = LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0);
+    const auto geometry = LC_CurveOffset::buildDirectBranches(
+        parabola, request, options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(geometry.branches.empty());
+    REQUIRE_FALSE(geometry.intersections.empty());
+    // Isolate the Trimmed-mode occurrence gate on a known noded crossing;
+    // mapping identities across actual trim rewrites remains a separate case.
+    options.mode = LC_CurveOffsetMode::Trimmed;
+    const auto valid = LC_CurveOffset::materializeBranches(
+        parabola, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(valid.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(valid.entities.empty());
+
+    auto unavailable = geometry;
+    for (auto& node : unavailable.intersections) {
+        node.parameterA = std::numeric_limits<double>::quiet_NaN();
+        node.parameterB = std::numeric_limits<double>::quiet_NaN();
+    }
+    const auto refused = LC_CurveOffset::materializeBranches(
+        parabola, unavailable, options, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(refused.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(refused.entities.empty());
+}
+
 TEST_CASE("The sample limit counts every branch of a cusped offset", "[curve-offset][direct][cusp]") {
     const RS_Spline parabola = makeSpline(2, {{-2, 4}, {0, -4}, {2, 4}}, {0, 0, 0, 1, 1, 1});
     const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, 1.0);
