@@ -3914,7 +3914,7 @@ TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker 
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
 
-    std::array<LC_SplinePointsData, 3> profiles;
+    std::array<LC_SplinePointsData, 4> profiles;
     profiles[0] = source.getData();
     LC_SplinePoints reversed{nullptr, profiles[0]};
     reversed.revertDirection();
@@ -3924,6 +3924,9 @@ TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker 
     affine.scale({0, 0}, {1.5, 0.75});
     REQUIRE(affine.fitTangentsMatchCurve());
     profiles[2] = affine.getData();
+    LC_SplinePointsData repeatedFitPoints{false, false};
+    repeatedFitPoints.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[3] = repeatedFitPoints;
 
     const std::array<double, 2> distances{{0.2, 0.5}};
 
@@ -3931,7 +3934,13 @@ TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker 
         CAPTURE(profileIndex);
         LC_SplinePoints profile{nullptr, profiles[profileIndex]};
         LC_CurveJet midpoint;
-        REQUIRE(profile.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, midpoint));
+        for (double parameter = 0.1; parameter < static_cast<double>(profile.getSegmentCount()); parameter += 0.1) {
+            if (profile.tryEvaluateJet(parameter, LC_CurveEvaluationSide::Interior, midpoint) &&
+                midpoint.first.magnitude() > 0.0) {
+                break;
+            }
+        }
+        REQUIRE(midpoint.first.magnitude() > 0.0);
         RS_Vector normal{-midpoint.first.y, midpoint.first.x};
         REQUIRE(normal.magnitude() > 0.0);
         normal = normal / normal.magnitude() * 8.0;
