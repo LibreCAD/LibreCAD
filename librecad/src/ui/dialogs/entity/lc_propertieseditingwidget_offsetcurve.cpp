@@ -37,6 +37,8 @@
 #include "ui_lc_propertieseditingwidget_offsetcurve.h"
 
 namespace {
+constexpr std::size_t SourceChoiceSynchronousLimit = 256;
+
 QString sourceKindName(LC_OffsetSourceGeometry::Kind kind) {
     using Kind = LC_OffsetSourceGeometry::Kind;
     switch (kind) {
@@ -183,6 +185,11 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
     m_highlightSliceTimer->setSingleShot(true);
     connect(m_highlightSliceTimer, &QTimer::timeout, this,
             [this] { processSourceHighlightScanSlice(); });
+    m_sourceChoiceSliceTimer = new QTimer(this);
+    m_sourceChoiceSliceTimer->setObjectName("offsetSourceChoiceSliceTimer");
+    m_sourceChoiceSliceTimer->setSingleShot(true);
+    connect(m_sourceChoiceSliceTimer, &QTimer::timeout, this,
+            [this] { processSourceChoiceScanSlice(); });
     m_sourceMutationWatch = std::make_unique<LC_OffsetSourceMutationWatch>();
     const auto bind = [this](QLineEdit* editor, Field field) {
         connect(editor, &QLineEdit::editingFinished, this,
@@ -255,6 +262,7 @@ LC_PropertiesEditingWidgetOffsetCurve::~LC_PropertiesEditingWidgetOffsetCurve() 
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::detachPreparation() {
+    cancelSourceChoiceScan();
     clearSourceWatch();
     m_entity = nullptr;
     m_busy = false; m_proposedDefinition.reset(); m_inputSnapshot.reset();
@@ -264,11 +272,18 @@ void LC_PropertiesEditingWidgetOffsetCurve::detachPreparation() {
 void LC_PropertiesEditingWidgetOffsetCurve::showEvent(QShowEvent* event) {
     LC_EntityPropertiesEditorWidget::showEvent(event);
     m_sourceHighlightVisible = true;
-    refreshSourceHighlight();
+    if (m_sourceChoicesNeedRefreshOnShow) {
+        m_sourceChoicesNeedRefreshOnShow = false;
+        refreshSourceChoices();
+    } else {
+        refreshSourceHighlight();
+    }
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::hideEvent(QHideEvent* event) {
     m_sourceHighlightVisible = false;
+    m_sourceChoicesNeedRefreshOnShow = true;
+    cancelSourceChoiceScan();
     clearSourceWatch();
     LC_EntityPropertiesEditorWidget::hideEvent(event);
 }
@@ -309,7 +324,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::setBusy(bool busy) const {
     ui->cbReversed->setEnabled(!busy && m_entity && m_entity->hasEditableDefinition());
     ui->wPickPointCenter->setEnabled(!busy);
     ui->cbSourceType->setEnabled(!busy && m_entity && m_viewport);
-    ui->cbSource->setEnabled(!busy && m_entity && m_viewport);
+    ui->cbSource->setEnabled(!busy && !m_sourceChoiceScanActive && m_entity && m_viewport);
     ui->tbSelectSource->setEnabled(!busy && m_sourceCanSelect);
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!busy);
@@ -352,6 +367,8 @@ void LC_PropertiesEditingWidgetOffsetCurve::setEntity(RS_Entity* entity) {
     if (!alive || !m_worker || revision != m_sourceRevision || cancelledGeneration != m_generation) return;
     m_entity = entity != nullptr && entity->rtti() == RS2::EntityOffsetCurve
         ? static_cast<LC_OffsetCurve*>(entity) : nullptr;
+    m_sourceChoicesNeedRefreshOnShow = false;
+    cancelSourceChoiceScan();
     clearSourceWatch();
     m_preferredSourceId = 0;
     {
@@ -382,7 +399,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
         m_sourceRevision < std::numeric_limits<qint64>::max());
     ui->wPickPointCenter->setEnabled(!m_busy);
     ui->cbSourceType->setEnabled(!m_busy && m_entity && m_viewport);
-    ui->cbSource->setEnabled(!m_busy && m_entity && m_viewport);
+    ui->cbSource->setEnabled(!m_busy && !m_sourceChoiceScanActive && m_entity && m_viewport);
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!m_busy);
     if (refreshSources) refreshSourceChoices();
@@ -430,8 +447,11 @@ void LC_PropertiesEditingWidgetOffsetCurve::refresh(QLineEdit* completed, bool f
 
 void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
     bool preserveWatch, const RS_Entity* knownMatch, bool highlightAlreadyResolved) const {
+    cancelSourceChoiceScan();
     auto* document = m_viewport ? m_viewport->getDocument() : nullptr;
     if (document == nullptr || m_entity == nullptr) {
+        m_sourceChoiceListDocument = nullptr;
+        m_sourceChoiceListLifetime.reset();
         ui->cbSourceType->clear();
         ui->cbSourceType->addItem(tr("Source type unavailable"));
         ui->cbSource->clear();
@@ -467,14 +487,27 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
     ui->cbSourceType->setCurrentIndex(typeIndex);
     const auto actualKind = static_cast<LC_OffsetSourceGeometry::Kind>(ui->cbSourceType->currentData().toInt());
 
+    std::optional<QCborArray> embeddedEncoding;
+    if (embedded)
+        embeddedEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(embedded->source);
+    if (document->getEntityList().size() > static_cast<int>(SourceChoiceSynchronousLimit)) {
+        const auto knownMatchId = knownMatch ? static_cast<qulonglong>(knownMatch->getId()) : 0;
+        const bool highlightSourceChanged = !m_highlightViewport || m_highlightViewport != m_viewport ||
+            m_highlightLifetime.expired() || m_highlightKind != selectedKind ||
+            !embeddedEncoding || m_highlightGeometry != *embeddedEncoding;
+        const_cast<LC_PropertiesEditingWidgetOffsetCurve*>(this)->beginSourceChoiceScan(
+            document, actualKind, selectedKind, std::move(embeddedEncoding), knownMatchId,
+            preserveWatch, highlightAlreadyResolved);
+        if (highlightSourceChanged)
+            refreshSourceHighlight(preserveWatch, knownMatch, highlightAlreadyResolved);
+        return;
+    }
+
     ui->cbSource->clear();
     int matchedIndex = -1;
     int matchingSources = 0;
     int preferredIndex = -1;
     bool embeddedSourceUnsupported = false;
-    std::optional<QCborArray> embeddedEncoding;
-    if (embedded) embeddedEncoding =
-        LC_OffsetWorkerRequest::Values::encodeSourceGeometry(embedded->source);
     for (auto* entity : document->getEntityList()) {
         if (entity == nullptr || entity->getFlag(RS2::FlagDeleted) ||
             !mayMatchSourceKind(*entity, wantedKind)) continue;
@@ -514,9 +547,260 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(
     const auto* selected = hasMatchingSource ? findSourceEntity(ui->cbSource->currentData().toULongLong()) : nullptr;
     m_sourceCanSelect = selected && selected->isVisible() && !selected->isLocked();
     ui->tbSelectSource->setEnabled(m_sourceCanSelect && !m_busy);
+    rememberSourceChoiceSnapshot(document);
     const auto* highlightMatch = knownMatch ? knownMatch :
         selectedKind == actualKind ? selected : nullptr;
     refreshSourceHighlight(preserveWatch, highlightMatch, highlightAlreadyResolved);
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::beginSourceChoiceScan(
+    RS_Document* document, LC_OffsetSourceGeometry::Kind wantedKind,
+    LC_OffsetSourceGeometry::Kind embeddedKind, std::optional<QCborArray> embeddedEncoding,
+    qulonglong knownMatchId, bool preserveWatch, bool highlightAlreadyResolved) const {
+    if (!document || !m_viewport) return;
+    auto* self = const_cast<LC_PropertiesEditingWidgetOffsetCurve*>(this);
+    m_sourceChoiceSliceTimer->stop();
+    m_sourceChoiceScanActive = true;
+    m_choiceScanDocument = document;
+    m_choiceScanViewport = m_viewport;
+    m_choiceScanLifetime = document->watchLifetime();
+    m_choiceScanMutationRevision = m_watchMutationRevision;
+    m_choiceScanEntityListRevision = document->entityListRevision();
+    m_choiceScanUndoEpoch = document->undoStateEpoch();
+    m_choiceScanEntityCount = document->getEntityList().size();
+    m_choiceScanIndex = 0;
+    m_choiceScanPopulationIndex = 0;
+    m_choiceScanMatchCount = 0;
+    m_choiceScanPopulating = false;
+    m_choiceScanCandidateIds.clear();
+    m_choiceScanUniqueMatchId = 0;
+    m_choiceScanPreferredMatchId = 0;
+    m_choiceScanKnownMatchId = knownMatchId;
+    m_choiceScanWantedKind = wantedKind;
+    m_choiceScanEmbeddedKind = embeddedKind;
+    m_choiceScanEmbeddedEncoding = embeddedEncoding ? std::move(*embeddedEncoding) : QCborArray{};
+    m_choiceScanEmbeddedSourceUnsupported = false;
+    m_choiceScanPreserveWatch = preserveWatch;
+    m_choiceScanHighlightAlreadyResolved = highlightAlreadyResolved;
+    m_sourceChoiceListDocument = nullptr;
+    m_sourceChoiceListLifetime.reset();
+
+    {
+        const QSignalBlocker blocked(ui->cbSource);
+        ui->cbSource->clear();
+        ui->cbSource->addItem(tr("Scanning source entities..."));
+        ui->cbSource->setCurrentIndex(0);
+    }
+    m_sourceCanSelect = false;
+    ui->cbSource->setEnabled(false);
+    ui->tbSelectSource->setEnabled(false);
+    self->processSourceChoiceScanSlice();
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::cancelSourceChoiceScan() const {
+    if (m_sourceChoiceSliceTimer) m_sourceChoiceSliceTimer->stop();
+    m_sourceChoiceScanActive = false;
+    m_choiceScanDocument = nullptr;
+    m_choiceScanViewport = nullptr;
+    m_choiceScanLifetime.reset();
+    m_choiceScanCandidateIds.clear();
+    m_choiceScanPopulating = false;
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::rememberSourceChoiceSnapshot(RS_Document* document) const {
+    if (!document) {
+        m_sourceChoiceListDocument = nullptr;
+        m_sourceChoiceListLifetime.reset();
+        return;
+    }
+    m_sourceChoiceListDocument = document;
+    m_sourceChoiceListLifetime = document->watchLifetime();
+    m_sourceChoiceListMutationRevision = m_watchMutationRevision;
+    m_sourceChoiceListEntityListRevision = document->entityListRevision();
+    m_sourceChoiceListUndoEpoch = document->undoStateEpoch();
+    m_sourceChoiceListEntityCount = document->getEntityList().size();
+}
+
+bool LC_PropertiesEditingWidgetOffsetCurve::sourceChoiceSnapshotMatches(RS_Document* document) const {
+    return document && m_sourceChoiceListDocument == document && !m_sourceChoiceListLifetime.expired() &&
+        m_sourceChoiceListMutationRevision == m_watchMutationRevision &&
+        m_sourceChoiceListEntityListRevision == document->entityListRevision() &&
+        m_sourceChoiceListUndoEpoch == document->undoStateEpoch() &&
+        m_sourceChoiceListEntityCount == static_cast<std::size_t>(document->getEntityList().size());
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::restartSourceChoiceScan() const {
+    cancelSourceChoiceScan();
+    m_sourceChoiceListDocument = nullptr;
+    m_sourceChoiceListLifetime.reset();
+    if (m_sourceChoiceRestartQueued || !m_entity || !m_viewport || m_busy) return;
+    {
+        const QSignalBlocker blocked(ui->cbSource);
+        ui->cbSource->clear();
+        ui->cbSource->addItem(tr("Refreshing source entities..."));
+        ui->cbSource->setCurrentIndex(0);
+    }
+    ui->cbSource->setEnabled(false);
+    m_sourceCanSelect = false;
+    ui->tbSelectSource->setEnabled(false);
+    m_sourceChoiceRestartQueued = true;
+    QTimer::singleShot(0, const_cast<LC_PropertiesEditingWidgetOffsetCurve*>(this), [this] {
+        m_sourceChoiceRestartQueued = false;
+        if (m_entity && m_viewport && m_viewport->getDocument() && !m_busy)
+            refreshSourceChoices(true);
+    });
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::processSourceChoiceScanSlice() const {
+    if (!m_sourceChoiceScanActive) return;
+    if (m_choiceScanLifetime.expired() || !m_viewport || m_viewport != m_choiceScanViewport ||
+        m_viewport->getDocument() != m_choiceScanDocument) {
+        restartSourceChoiceScan();
+        return;
+    }
+    auto* document = m_choiceScanDocument;
+    const auto snapshotMatches = [this, document] {
+        return document && !m_choiceScanLifetime.expired() && m_viewport == m_choiceScanViewport &&
+            m_viewport && m_viewport->getDocument() == document &&
+            m_watchMutationRevision == m_choiceScanMutationRevision &&
+            document->entityListRevision() == m_choiceScanEntityListRevision &&
+            document->undoStateEpoch() == m_choiceScanUndoEpoch &&
+            document->getEntityList().size() == static_cast<int>(m_choiceScanEntityCount);
+    };
+    if (!snapshotMatches()) {
+        restartSourceChoiceScan();
+        return;
+    }
+
+    const auto& entities = document->getEntityList();
+    QElapsedTimer budget;
+    budget.start();
+    std::size_t processed = 0;
+    try {
+        if (!m_choiceScanPopulating) {
+            while (m_choiceScanIndex < m_choiceScanEntityCount && processed < 64 &&
+                   budget.nsecsElapsed() < 4'000'000) {
+                const auto index = m_choiceScanIndex++;
+                auto* entity = entities.at(static_cast<int>(index));
+                ++processed;
+                if (!entity || entity->isDeleted() ||
+                    !mayMatchSourceKind(*entity, m_choiceScanWantedKind)) continue;
+                const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
+                if (!geometry || geometry->kind() != m_choiceScanWantedKind) continue;
+                std::optional<QCborArray> encoding;
+                if (m_choiceScanEmbeddedKind == m_choiceScanWantedKind &&
+                    !m_choiceScanEmbeddedEncoding.isEmpty())
+                    encoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
+                const bool matchesEmbedded = encoding && *encoding == m_choiceScanEmbeddedEncoding;
+                if (matchesEmbedded) {
+                    ++m_choiceScanMatchCount;
+                    m_choiceScanUniqueMatchId = static_cast<qulonglong>(entity->getId());
+                }
+                if (!sourceVariantSelectable(*entity, *geometry)) {
+                    m_choiceScanEmbeddedSourceUnsupported |= matchesEmbedded;
+                    continue;
+                }
+                const auto id = static_cast<qulonglong>(entity->getId());
+                m_choiceScanCandidateIds.push_back({id, index});
+                if (matchesEmbedded && id == m_preferredSourceId)
+                    m_choiceScanPreferredMatchId = id;
+            }
+            if (m_choiceScanIndex < m_choiceScanEntityCount) {
+                m_sourceChoiceSliceTimer->start(0);
+                return;
+            }
+            m_choiceScanPopulating = true;
+            m_choiceScanPopulationIndex = 0;
+            const QSignalBlocker blocked(ui->cbSource);
+            ui->cbSource->clear();
+            ui->cbSource->addItem(tr("Preparing source list..."));
+        }
+
+        while (m_choiceScanPopulationIndex < m_choiceScanCandidateIds.size() && processed < 64 &&
+               budget.nsecsElapsed() < 4'000'000) {
+            const auto candidate = m_choiceScanCandidateIds[m_choiceScanPopulationIndex++];
+            ++processed;
+            if (candidate.index >= m_choiceScanEntityCount) continue;
+            auto* entity = entities.at(static_cast<int>(candidate.index));
+            if (!entity || entity->isDeleted() ||
+                static_cast<qulonglong>(entity->getId()) != candidate.id) continue;
+            const auto label = tr("%1 %2").arg(sourceKindName(m_choiceScanWantedKind)).arg(candidate.id);
+            const QSignalBlocker blocked(ui->cbSource);
+            ui->cbSource->addItem(label, QVariant::fromValue<qulonglong>(candidate.id));
+        }
+    } catch (const std::bad_alloc&) {
+        cancelSourceChoiceScan();
+        {
+            const QSignalBlocker blocked(ui->cbSource);
+            ui->cbSource->clear();
+            ui->cbSource->addItem(tr("Source list unavailable"));
+        }
+        ui->cbSource->setEnabled(false);
+        return;
+    }
+
+    if (!snapshotMatches()) {
+        restartSourceChoiceScan();
+        return;
+    }
+    if (m_choiceScanIndex < m_choiceScanEntityCount ||
+        m_choiceScanPopulationIndex < m_choiceScanCandidateIds.size()) {
+        m_sourceChoiceSliceTimer->start(0);
+        return;
+    }
+
+    const auto wantedKind = m_choiceScanWantedKind;
+    const auto embeddedKind = m_choiceScanEmbeddedKind;
+    const auto matchCount = m_choiceScanMatchCount;
+    const auto uniqueMatchId = m_choiceScanUniqueMatchId;
+    const auto preferredMatchId = m_choiceScanPreferredMatchId;
+    const auto knownMatchId = m_choiceScanKnownMatchId;
+    const auto embeddedUnsupported = m_choiceScanEmbeddedSourceUnsupported;
+    const auto preserveWatch = m_choiceScanPreserveWatch;
+    const auto highlightAlreadyResolved = m_choiceScanHighlightAlreadyResolved;
+
+    if (!snapshotMatches()) {
+        restartSourceChoiceScan();
+        return;
+    }
+    m_sourceChoiceScanActive = false;
+    m_sourceChoiceSliceTimer->stop();
+    const QSignalBlocker blocked(ui->cbSource);
+    if (ui->cbSource->count() > 0 && ui->cbSource->itemData(0).isValid() == false)
+        ui->cbSource->removeItem(0);
+    int matchedIndex = -1;
+    const auto desiredId = preferredMatchId != 0 ? preferredMatchId
+        : matchCount == 1 ? uniqueMatchId : 0;
+    if (desiredId != 0)
+        matchedIndex = ui->cbSource->findData(QVariant::fromValue<qulonglong>(desiredId));
+    if (matchedIndex < 0) {
+        const QString placeholder = embeddedKind == wantedKind
+            ? matchCount > 1 ? tr("Embedded source (ambiguous)")
+              : embeddedUnsupported ? tr("Embedded source (unsupported)")
+                                     : tr("Embedded source (not found)")
+            : ui->cbSource->count() == 0 ? tr("No supported source entities")
+                                         : tr("Choose a source");
+        ui->cbSource->insertItem(0, placeholder);
+        matchedIndex = 0;
+    }
+    ui->cbSource->setCurrentIndex(matchedIndex);
+    const auto selectedId = ui->cbSource->currentData().toULongLong();
+    auto* selected = ui->cbSource->currentData().isValid() ? findSourceEntity(selectedId) : nullptr;
+    m_sourceCanSelect = selected && selected->isVisible() && !selected->isLocked();
+    ui->cbSource->setEnabled(!m_busy && m_entity && m_viewport);
+    ui->tbSelectSource->setEnabled(m_sourceCanSelect && !m_busy);
+    rememberSourceChoiceSnapshot(document);
+    m_choiceScanCandidateIds.clear();
+    m_choiceScanLifetime.reset();
+    m_choiceScanDocument = nullptr;
+    m_choiceScanViewport = nullptr;
+
+    RS_Entity* highlightMatch = nullptr;
+    const auto highlightId = knownMatchId != 0 ? knownMatchId
+        : embeddedKind == wantedKind && desiredId != 0 ? desiredId : 0;
+    if (highlightId != 0) highlightMatch = findSourceEntity(highlightId);
+    refreshSourceHighlight(preserveWatch, highlightMatch,
+                           highlightAlreadyResolved || (embeddedKind == wantedKind && desiredId == 0));
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::clearSourceWatch() const {
@@ -627,6 +911,10 @@ void LC_PropertiesEditingWidgetOffsetCurve::beginSourceHighlightScan(bool clearE
 
 void LC_PropertiesEditingWidgetOffsetCurve::invalidateSourceHighlightScan() {
     ++m_watchMutationRevision;
+    if (m_viewport && m_viewport->getDocument() &&
+        (m_sourceChoiceScanActive || m_viewport->getDocument()->getEntityList().size() >
+                                     static_cast<int>(SourceChoiceSynchronousLimit)))
+        restartSourceChoiceScan();
     m_highlightScanActive = false;
     m_highlightSliceTimer->stop();
     if (!m_sourceHighlightVisible || m_scanRestartQueued) return;
@@ -789,6 +1077,11 @@ void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
     auto* document = m_highlightViewport->getDocument();
     if (!document) {
         clearSourceWatch();
+        return;
+    }
+    if (!m_sourceChoiceScanActive && !m_sourceChoiceRestartQueued &&
+        !sourceChoiceSnapshotMatches(document)) {
+        refreshSourceChoices(false);
         return;
     }
     if (document != m_scanDocument || m_highlightLifetime.expired()) {

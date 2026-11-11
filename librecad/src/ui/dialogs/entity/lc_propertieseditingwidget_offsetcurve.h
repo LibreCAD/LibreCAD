@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <memory>
 #include <optional>
+#include <vector>
 #include <QCborArray>
 #include "lc_entitypropertieseditorwidget.h"
 #include "lc_offsetcurve.h"
@@ -55,6 +56,7 @@ protected:
 
 private:
     friend class LC_DlgEntityProperties;
+    struct SourceChoiceCandidate { qulonglong id; std::size_t index; };
     void detachPreparation();
     enum class Field { Distance, CenterX, CenterY, Major, Minor, Rotation, Start, End };
     struct SourceWitness { qulonglong id; QCborArray geometry; };
@@ -74,6 +76,18 @@ private:
     void refreshSourceChoices(bool preserveWatch = false,
                               const RS_Entity* knownMatch = nullptr,
                               bool highlightAlreadyResolved = false) const;
+    void beginSourceChoiceScan(RS_Document* document,
+                               LC_OffsetSourceGeometry::Kind wantedKind,
+                               LC_OffsetSourceGeometry::Kind embeddedKind,
+                               std::optional<QCborArray> embeddedEncoding,
+                               qulonglong knownMatchId,
+                               bool preserveWatch,
+                               bool highlightAlreadyResolved) const;
+    void processSourceChoiceScanSlice() const;
+    void restartSourceChoiceScan() const;
+    void cancelSourceChoiceScan() const;
+    void rememberSourceChoiceSnapshot(RS_Document* document) const;
+    bool sourceChoiceSnapshotMatches(RS_Document* document) const;
     void refreshSourceHighlight(bool preserveWatch = false, const RS_Entity* knownMatch = nullptr,
                                 bool highlightAlreadyResolved = false) const;
     void checkSourceHighlight() const;
@@ -97,6 +111,7 @@ private:
     mutable bool m_sourceCanSelect = false;
     QTimer* m_highlightTimer = nullptr;
     QTimer* m_highlightSliceTimer = nullptr;
+    QTimer* m_sourceChoiceSliceTimer = nullptr;
     std::unique_ptr<LC_OffsetSourceMutationWatch> m_sourceMutationWatch;
     mutable std::uint64_t m_watchMutationRevision = 0;
     std::uint64_t m_scanMutationRevision = 0;
@@ -119,6 +134,36 @@ private:
     QCborArray m_scanGeometry;
     mutable bool m_highlightScanActive = false;
     bool m_scanRestartQueued = false;
+    bool m_sourceChoicesNeedRefreshOnShow = false;
+    mutable bool m_sourceChoiceScanActive = false;
+    mutable bool m_sourceChoiceRestartQueued = false;
+    mutable RS_Document* m_choiceScanDocument = nullptr;
+    mutable LC_GraphicViewport* m_choiceScanViewport = nullptr;
+    mutable std::weak_ptr<void> m_choiceScanLifetime;
+    mutable std::uint64_t m_choiceScanMutationRevision = 0;
+    mutable std::uint64_t m_choiceScanEntityListRevision = 0;
+    mutable std::uint64_t m_choiceScanUndoEpoch = 0;
+    mutable std::size_t m_choiceScanEntityCount = 0;
+    mutable std::size_t m_choiceScanIndex = 0;
+    mutable std::size_t m_choiceScanMatchCount = 0;
+    mutable std::vector<SourceChoiceCandidate> m_choiceScanCandidateIds;
+    mutable std::size_t m_choiceScanPopulationIndex = 0;
+    mutable qulonglong m_choiceScanUniqueMatchId = 0;
+    mutable qulonglong m_choiceScanPreferredMatchId = 0;
+    mutable qulonglong m_choiceScanKnownMatchId = 0;
+    mutable LC_OffsetSourceGeometry::Kind m_choiceScanWantedKind = LC_OffsetSourceGeometry::Kind::Invalid;
+    mutable LC_OffsetSourceGeometry::Kind m_choiceScanEmbeddedKind = LC_OffsetSourceGeometry::Kind::Invalid;
+    mutable QCborArray m_choiceScanEmbeddedEncoding;
+    mutable bool m_choiceScanEmbeddedSourceUnsupported = false;
+    mutable bool m_choiceScanPopulating = false;
+    mutable bool m_choiceScanPreserveWatch = false;
+    mutable bool m_choiceScanHighlightAlreadyResolved = false;
+    mutable RS_Document* m_sourceChoiceListDocument = nullptr;
+    mutable std::weak_ptr<void> m_sourceChoiceListLifetime;
+    mutable std::uint64_t m_sourceChoiceListMutationRevision = 0;
+    mutable std::uint64_t m_sourceChoiceListEntityListRevision = 0;
+    mutable std::uint64_t m_sourceChoiceListUndoEpoch = 0;
+    mutable std::size_t m_sourceChoiceListEntityCount = 0;
     bool m_sourceHighlightVisible = false;
     LC_OffsetRunLimits m_limits;
     mutable bool m_refreshing = false;

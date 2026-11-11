@@ -756,8 +756,10 @@ TEST_CASE("Source picker scan baseline with large same-kind payloads",
     QElapsedTimer elapsed;
     elapsed.start();
     typeBox->setCurrentIndex(splinePointsKind);
+    CHECK_FALSE(sourceBox->isEnabled());
+    REQUIRE(pollEventsUntil([&] { return sourceBox->isEnabled(); }));
     const qint64 elapsedNanoseconds = elapsed.nsecsElapsed();
-    INFO("Synchronous type-filter refresh for " << candidateCount << " candidates x "
+    INFO("Incremental type-filter refresh for " << candidateCount << " candidates x "
          << controlsPerCandidate << " control points: " << elapsedNanoseconds / 1.0e6 << " ms");
     CHECK(sourceBox->count() == candidateCount + 2);
     const int sourceIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(source->getId()));
@@ -786,6 +788,92 @@ TEST_CASE("Source picker scan baseline with large same-kind payloads",
         RS2::OverlayGraphics::OffsetSourceHighlights);
     REQUIRE(overlay);
     CHECK(overlay->getEntityList().size() == 1);
+}
+
+TEST_CASE("Large source chooser scans incrementally and discards superseded family results",
+          "[gui][dialog][offsetcurve][source][incremental][large-list]") {
+    Fixture f;
+    auto* parabola = new LC_Parabola(nullptr,
+        LC_ParabolaData{{RS_Vector{0, 2}, RS_Vector{1, 0}, RS_Vector{2, 2}}});
+    REQUIRE(parabola->getData().isValid());
+    f.graphic.addEntity(parabola);
+    for (int i = 0; i < 300; ++i)
+        f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 40}, {double(i + 1), 40}}));
+
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    widget.show();
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* sliceTimer = widget.findChild<QTimer*>("offsetSourceChoiceSliceTimer");
+    REQUIRE(typeBox);
+    REQUIRE(sourceBox);
+    REQUIRE(sliceTimer);
+
+    const Snapshot before(*clone);
+    const int lineKind = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+    const int parabolaKind = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Parabola));
+    REQUIRE(lineKind >= 0);
+    REQUIRE(parabolaKind >= 0);
+    typeBox->setCurrentIndex(lineKind);
+    CHECK(typeBox->isEnabled());
+    CHECK_FALSE(sourceBox->isEnabled());
+    CHECK(sourceBox->count() == 1);
+    CHECK(sourceBox->currentText().contains("Scanning"));
+    REQUIRE(sliceTimer->isActive());
+    REQUIRE(QMetaObject::invokeMethod(sliceTimer, "timeout", Qt::DirectConnection));
+    CHECK_FALSE(sourceBox->isEnabled());
+    CHECK(sourceBox->count() == 1);
+
+    typeBox->setCurrentIndex(parabolaKind);
+    CHECK_FALSE(sourceBox->isEnabled());
+    CHECK(sourceBox->currentText().contains("Scanning"));
+    auto* secondParabola = new LC_Parabola(nullptr,
+        LC_ParabolaData{{RS_Vector{10, 2}, RS_Vector{11, 0}, RS_Vector{12, 2}}});
+    f.graphic.addEntity(secondParabola);
+    CHECK_FALSE(sourceBox->isEnabled());
+    REQUIRE(pollEventsUntil([&] {
+        return sourceBox->isEnabled() && sourceBox->findData(
+            QVariant::fromValue<qulonglong>(parabola->getId())) >= 0 && sourceBox->findData(
+            QVariant::fromValue<qulonglong>(secondParabola->getId())) >= 0;
+    }));
+    CHECK(sourceBox->count() == 3);
+    auto* thirdParabola = new LC_Parabola(nullptr,
+        LC_ParabolaData{{RS_Vector{20, 2}, RS_Vector{21, 0}, RS_Vector{22, 2}}});
+    f.graphic.addEntity(thirdParabola);
+    auto* highlightTimer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+    REQUIRE(highlightTimer);
+    REQUIRE(QMetaObject::invokeMethod(highlightTimer, "timeout", Qt::DirectConnection));
+    CHECK_FALSE(sourceBox->isEnabled());
+    REQUIRE(pollEventsUntil([&] {
+        return sourceBox->isEnabled() && sourceBox->findData(
+            QVariant::fromValue<qulonglong>(thirdParabola->getId())) >= 0;
+    }));
+    CHECK(sourceBox->count() == 4);
+    widget.hide();
+    auto* fourthParabola = new LC_Parabola(nullptr,
+        LC_ParabolaData{{RS_Vector{30, 2}, RS_Vector{31, 0}, RS_Vector{32, 2}}});
+    f.graphic.addEntity(fourthParabola);
+    widget.show();
+    CHECK_FALSE(sourceBox->isEnabled());
+    REQUIRE(pollEventsUntil([&] {
+        return sourceBox->isEnabled() && sourceBox->findData(
+            QVariant::fromValue<qulonglong>(fourthParabola->getId())) >= 0;
+    }));
+    CHECK(sourceBox->count() == 5);
+    const int parabolaIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(parabola->getId()));
+    REQUIRE(parabolaIndex > 0);
+    before.geometry(*clone);
+
+    sourceBox->setCurrentIndex(parabolaIndex);
+    REQUIRE(widget.isPreparing());
+    CHECK_FALSE(typeBox->isEnabled());
+    CHECK_FALSE(sourceBox->isEnabled());
+    awaitPreparation(widget);
+    REQUIRE(clone->sourceDefinition());
+    CHECK(clone->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
 }
 
 TEST_CASE("Source matching maximum encodable single-entity benchmark",
