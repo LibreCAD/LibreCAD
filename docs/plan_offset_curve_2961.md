@@ -34815,6 +34815,10 @@ selection passed 639 assertions in 14 cases. These are headless results;
 clean committed-path and visible GUI checks remain open. Full qmake6
 application and worker compilation is still in progress.
 
+At clean commit `61b5e6bdc`, the CMake Release source-picker, renderer and
+viewport-range selection passed 14,880 assertions in 69 cases. Desktop
+control remains locked, so this is not visible GUI acceptance.
+
 ## 857. Reject Duplicated Regular Node Occurrences (2026-11-11)
 
 Commit `b0c90898f` adds a necessary, deliberately narrow node check: for a
@@ -34840,3 +34844,8 @@ remain open. Clean committed-path validation is pending.
 Desktop control was checked again on 2026-11-11 and reports the Mac locked;
 visible GUI acceptance remains blocked rather than inferred from headless
 tests. The full qmake6 pass and clean rebuild are being verified separately.
+
+The full qmake6 application, worker, libraries, plugins and tools build and
+its final incremental pass exited successfully on macOS. This build used the
+working tree with the uncommitted strict-geometry experiment, so it is not
+an exact clean-commit build; the clean CMake test target is checked separately.
