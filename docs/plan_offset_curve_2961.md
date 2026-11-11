@@ -36300,14 +36300,17 @@ cross-platform execution, and exact-head PR CI remain open.
 
 ## 915. Rotate the Translated C0 Corner Matrix (2026-11-11)
 
-Test commit `6d93a169d` adds a global 37-degree rotation (and retains the
-unrotated control) to the degree-4/5/6, 30-degree/150-degree rational C0
-corner fixtures at origins `(0,0)` and `(1e6,-2e6)`, on both signed sides.
-The independent 256-bit worker oracle checks all materialized pieces and
-operation-8 cache admission; the focused test passes 1,536 assertions.
+The original fixture change in `6d93a169d` accidentally shadowed the global
+rotation value with the corner's local heading. Follow-up test commit
+`ee59ff139` gives those values distinct names, so the tested control points
+now apply both the 30-degree/150-degree corner geometry and the actual global
+0/37-degree rotation. The degree-4/5/6 rational C0 fixtures cover origins
+`(0,0)` and `(1e6,-2e6)` on both signed sides. The independent 256-bit worker
+oracle checks materialized pieces and operation-8 cache admission; the focused
+test passes 1,536 assertions.
 
-The same matrix passes worker-client Produce and all five internal
-R14/R2000/R2018 DXF/DWG save/reopen lanes, for 1,969,090 assertions in one
+The corrected matrix passes worker-client Produce and all five internal
+R14/R2000/R2018 DXF/DWG save/reopen lanes, for 1,952,226 assertions in one
 case. This covers only 0/37-degree global orientation, the listed translations,
 angles, weights and distances; other orientations, origins/scales, knot and
 weight layouts, continuous error proof, external CAD, visible GUI,
