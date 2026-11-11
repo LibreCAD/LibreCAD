@@ -81,6 +81,13 @@ does not by itself prove that the offset can be generated successfully.
    document lifetime changes. Initially missing or ambiguous sources are not
    monitored for newly available matches; other lifecycle cases, large-drawing
    responsiveness, and visible acceptance remain open.
+   Commit `6a29d6738` also invalidates the viewport's borrowed document on
+   graphic/block teardown, stops the highlight monitor when that happens, and
+   avoids its deferred redraw against the dead document. Rebinding a new
+   document at the same address revokes the old overlay. This protects the
+   monitored path and `getDocument()`; it is not a general audit of all direct
+   viewport document or graphic pointers, concurrent destruction, or arbitrary
+   subclasses that reenter before their concrete base destructor begins.
 3. **Atomic replacement.** For every modeled family, choose an eligible source
    of a different family, capture its actual typed geometry, generate and
    validate the cache through the worker, and publish source and cache
@@ -156,6 +163,15 @@ assertions in 7 cases, including an actual timer tick and viewport/document
 invalidation. The full source-picker selector passed 12,217 assertions in 20
 cases; the two changed application objects compiled in the existing qmake6
 build. This is not a full qmake build. `git diff --check` passed.
+
+With `6a29d6738` and the unrelated uncommitted geometry experiment present,
+the CMake test target rebuilt. The highlight selector passed 140 assertions in
+9 cases, including a layer-destruction callback, deferred-redraw suppression,
+and same-address block replacement. The full source-picker selector passed
+12,239 assertions in 22 cases; the combined close, tracked-listener, and
+viewport-range selection passed 639 assertions in 46 cases. Five changed
+application objects compiled using the existing qmake6 build, not a full qmake
+build. `git diff --check` passed; visible and cross-platform gates remain open.
 
 Before `330d7f1f4`, the CMake LibreCAD app target built with the unrelated
 geometry experiment present. The desktop service timed out attaching to its
