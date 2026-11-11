@@ -2033,6 +2033,42 @@ TEST_CASE("Native source picker refuses a candidate changed during worker prepar
     CHECK_FALSE(clone->sourceDefinition());
 }
 
+TEST_CASE("Native source picker refuses a deleted candidate during worker preparation",
+          "[gui][dialog][offsetcurve][source][stale][async]") {
+    Fixture f;
+    requireNativeHelper();
+    auto* line = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    f.graphic.addEntity(line);
+    auto clone = std::unique_ptr<LC_OffsetCurve>(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    REQUIRE(clone);
+    const Snapshot before(*clone);
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+    REQUIRE(lineType >= 0);
+    typeBox->setCurrentIndex(lineType);
+    int lineIndex = -1;
+    for (int i = 0; i < sourceBox->count(); ++i) {
+        if (sourceBox->itemData(i).toULongLong() == static_cast<qulonglong>(line->getId())) lineIndex = i;
+    }
+    REQUIRE(lineIndex >= 0);
+    sourceBox->setCurrentIndex(lineIndex);
+    REQUIRE(widget.isPreparing());
+    line->setFlag(RS2::FlagDeleted);
+    awaitPreparation(widget);
+
+    CHECK_FALSE(widget.lastEditResult());
+    CHECK(widget.findChild<QLabel*>("lRefusal")->text().contains(QStringLiteral("input changed")));
+    before.exact(*clone);
+    CHECK_FALSE(clone->sourceDefinition());
+}
+
 TEST_CASE("Native source picker replaces every modeled source family without filter side effects",
           "[gui][dialog][offsetcurve][source][typed][matrix]") {
     Fixture f;
