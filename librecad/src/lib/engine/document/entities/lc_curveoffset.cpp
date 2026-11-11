@@ -3665,6 +3665,14 @@ public:
             // linear blend of these two endpoint-relative vectors.
             const std::array<IntervalVector, 2> a{{triple(difference(p[1], p[3])), difference(p[0], p[3])}};
             const std::array<IntervalVector, 2> b{{triple(difference(q[2], q[0])), difference(q[3], q[0])}};
+            const auto blend = [](const std::array<IntervalVector, 2>& vectors, const LC_Interval& t) {
+                const LC_Interval rest = LC_Interval::point(1.0) - t;
+                return IntervalVector{rest * vectors[0].x + t * vectors[1].x,
+                                      rest * vectors[0].y + t * vectors[1].y};
+            };
+            if (h.isValid() && s.isValid() && crossProduct(blend(a, h), blend(b, s)).excludesZero()) {
+                return true;
+            }
             bool positive = true;
             bool negative = true;
             for (const auto& u : a) {

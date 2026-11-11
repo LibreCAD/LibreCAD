@@ -49,6 +49,42 @@
 
 using Catch::Approx;
 
+TEST_CASE("Materialized cusp exclusion narrows directions to the requested box",
+          "[curve-offset][topology][materialized]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const RS_Vector join{-86.602539512418474, -49.999999499999994};
+    const LC_CurveOffsetInternal::BezierBranches pieces{{
+        {{{-86.602539514696417, -49.999999493691895},
+          {-86.602539512818566, -49.999999500022831}, join, join}},
+        {{join, join, {-86.602539512638288, -49.999999500335065},
+          {-86.602539508094466, -49.999999505126802}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(pieces, {-1});
+    REQUIRE(curves);
+    const LC_IntersectionDomain local{0, 1, LC_Interval::hull(.99999999976716936, 1),
+                                      LC_Interval::hull(1, 1.0000152587890625)};
+    const LC_IntersectionDomain reverse{1, 0, local.parameterB, local.parameterA};
+    CHECK(curves->certifyIntersection(local).outcome == Outcome::Excluded);
+    CHECK(curves->certifyIntersection(reverse).outcome == Outcome::Excluded);
+    const LC_IntersectionDomain whole{0, 1, LC_Interval::hull(0, 1), LC_Interval::hull(1, 2)};
+    CHECK(curves->certifyIntersection(whole).outcome == Outcome::Unavailable);
+
+    const LC_CurveOffsetInternal::BezierBranches crossingPieces{{
+        {{{0, -3}, {1, 1}, {0, 0}, {0, 0}}},
+        {{{0, 0}, {0, 0}, {1, -1}, {0, 3}}}}};
+    const auto crossing = LC_CurveOffsetInternal::makePieceCurves(crossingPieces, {-1});
+    REQUIRE(crossing);
+    RS_Vector a, b, derivative;
+    REQUIRE(crossing->evaluate(0, .5, a, derivative));
+    REQUIRE(crossing->evaluate(1, 1.5, b, derivative));
+    CHECK(a.x == b.x);
+    CHECK(a.y == b.y);
+    const LC_IntersectionDomain crossingBox{0, 1, LC_Interval::hull(.49, .51),
+                                            LC_Interval::hull(1.49, 1.51)};
+    const LC_IntersectionDomain crossingReverse{1, 0, crossingBox.parameterB, crossingBox.parameterA};
+    CHECK(crossing->certifyIntersection(crossingBox).outcome == Outcome::Unavailable);
+    CHECK(crossing->certifyIntersection(crossingReverse).outcome == Outcome::Unavailable);
+}
+
 TEST_CASE("Materialized closed pair considers both joins without hiding crossings",
           "[curve-offset][topology][materialized]") {
     using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
