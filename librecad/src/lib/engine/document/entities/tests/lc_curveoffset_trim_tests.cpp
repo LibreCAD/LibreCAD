@@ -36,6 +36,7 @@
 #include <vector>
 
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
@@ -176,6 +177,23 @@ Curve curveOf(const LC_SplinePoints& s) {
     return [&s](const double t, LC_CurveJet& j) { return s.tryEvaluateJet(t, LC_CurveEvaluationSide::Interior, j); };
 }
 
+Curve curveOf(const LC_Hyperbola& hyperbola) {
+    const LC_HyperbolaData data = hyperbola.getData();
+    return [data](const double t, LC_CurveJet& jet) {
+        const double a = data.majorP.magnitude();
+        const double b = a * data.ratio;
+        const double branch = data.reversed ? -1.0 : 1.0;
+        const double angle = data.majorP.angle();
+        const auto rotate = [angle](const RS_Vector& point) { return point.rotated(angle); };
+        jet.point = data.center + rotate({branch * a * std::cosh(t), b * std::sinh(t)});
+        jet.first = rotate({branch * a * std::sinh(t), b * std::cosh(t)});
+        jet.second = rotate({branch * a * std::cosh(t), b * std::sinh(t)});
+        return std::isfinite(jet.point.x) && std::isfinite(jet.point.y) &&
+               std::isfinite(jet.first.x) && std::isfinite(jet.first.y) &&
+               std::isfinite(jet.second.x) && std::isfinite(jet.second.y);
+    };
+}
+
 } // namespace
 
 TEST_CASE("Trimmed typed parabola offsets retain exact normals on both sides",
@@ -204,6 +222,28 @@ TEST_CASE("Trimmed typed parabola offsets retain exact normals on both sides",
                 CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
                 CHECK(checked.worstMissing <= 2.0 * tolerance);
             }
+        }
+    }
+}
+
+TEST_CASE("Trimmed bounded hyperbola offsets retain exact normals past the vertex cusp",
+          "[curve-offset][trim][hyperbola][oracle]") {
+    const LC_Hyperbola source{nullptr,
+        LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}};
+    REQUIRE(source.isValid());
+    const Curve evaluator = curveOf(source);
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        for (const double distance : {1.0, 4.0}) {
+            CAPTURE(side, distance);
+            const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const double tolerance =
+                LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+            const Checked checked = check(result, evaluator, -1.5, 1.5, distance);
+            CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+            CHECK(checked.worstMissing <= 2.0 * tolerance);
         }
     }
 }
