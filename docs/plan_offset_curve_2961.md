@@ -72,20 +72,23 @@ the source-widget acceptance gates.
 Execute and record these slices in order:
 
 1. **Selection state and lifetime.** Preserve the committed hidden/locked
-   selection guard while completing the remaining lifecycle coverage. Test
-   initially hidden or locked entities, live visibility and layer freeze
-   and lock changes, direct invocation while disabled, recovery, and state
-   changes while preparation is busy. Re-resolve and recheck the entity at the
-   actual selection action; a stale cached button state must not select an
-   ineligible entity. Cover document/viewport destruction and replacement,
-   preserve unrelated selection and overlay layers, and distinguish automatic
-   highlight from persistent selection. Test ambiguous and absent matches
-   without inventing an association, including their later resolution.
+   selection guard while completing the remaining lifecycle coverage. The
+   live highlight watch and incremental scanner now observe document edits,
+   undo/redo, structural list revisions, and layer visibility/lock changes;
+   they restart after same-count replacement and document rebinding, and stop
+   on destruction or cancellation. Tests also cover initially hidden/locked
+   sources, disabled direct invocation, recovery, unrelated selection/overlay
+   preservation, and absent/ambiguous matches. Still audit state changes while
+   worker preparation is busy and perform visible-GUI acceptance. Re-resolve
+   and recheck the entity at the actual selection action; automatic highlight
+   must remain distinct from persistent selection.
 2. **Cross-family replacement.** Verify that switching the family filter is
    non-mutating and that an eligible candidate from every modeled family can
-   replace a source of a different kind. Test the complete family-to-family
-   selector matrix, including an empty family, unsupported candidates,
-   duplicate geometry and distinct parabola versus spline-points identity.
+   replace a source of a different kind. Tests cover each destination family
+   from an ellipse source and sequential typed replacements, including empty
+   buckets, unsupported candidates, duplicate geometry, and distinct parabola
+   versus spline-points identity. The full origin-by-destination family-pair
+   matrix is still open.
    On a successful asynchronous replacement publish the typed source and its
    validated cache together; on cancellation, failed preparation, stale or
    deleted candidates, document change, and late worker replies preserve the
@@ -102,27 +105,27 @@ Execute and record these slices in order:
    unresolved near-node occurrence-identity issue in section 857 remains open
    and must not be papered over by a parameter-distance heuristic.
 4. **Large-drawing responsiveness.** Implement incremental live-highlight
-   resolution. The benchmark records 40.99 ms for a 1,024-candidate,
-   256-control-point same-kind validation, so one synchronous scan exceeds a
-   16 ms frame. Target at most 64 entity entries and approximately 4 ms of
-   scan work per event-loop slice; this is a design target, not yet a hard
-   latency guarantee. Process the live entity list only within one slice and
-   retain indices/IDs and value-owned geometry across turns, never entity
-   pointers. A scan generation must be invalidated by document replacement or
-   destruction, entity-list structural changes, graphic/entity edits, undo or
-   redo, and layer visibility/lock changes. The structural revision accessor
-   landed in `757b4af55`; document/entity and layer invalidation are still to
-   be connected to the scan. Discard partial results on any invalidation,
-   cancellation or supersession; only a complete scan can establish uniqueness
-   or publish a highlight. Verify per-entity encoding bounds so one unusually
-   large entity cannot defeat the time target. The source-choice refresh
-   measured about 2.71 ms for the same fixture and is a separate synchronous
-   path. Test invalidation, cancellation, recovery and every source family.
+   resolution. This slice is implemented: each event-loop slice visits at most
+   64 entries and targets approximately 4 ms; it retains indices/IDs and
+   value-owned state, never entity pointers. It revalidates document identity,
+   structural revision, document mutation/undo epoch, layer state, and the
+   candidate before publishing. Same-count replacement, geometry edits, undo,
+   lock/freeze changes, document replacement/destruction, cancellation, stale
+   timer delivery, and ambiguous matching across all nine source kinds have
+   regressions. Worker admission caps bound the encodable per-entity source
+   payload; a maximum spline-points capture+encode measured 2.91 ms on the
+   current Release/macOS build. This is measured evidence, not a
+   hardware-independent latency guarantee. The source-choice list rebuild
+   remains a separate synchronous path: the 1,024-candidate benchmark measured
+   about 2.23 ms, and its larger-document/event-loop behavior remains open.
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
-   Validate CMake and qmake6 on clean committed sources; record platform and
-   deployment-target warnings. Run a visible LibreCAD workflow covering
+   The source-picker suite currently passes 12,840 assertions / 37 cases and
+   worker-request microtests pass 603,526 assertions / 18 cases; exact results
+   and revisions are in sections 867–873. Validate CMake and qmake6 on clean
+   committed sources; record platform and deployment-target warnings. Run a
+   visible LibreCAD workflow covering
    cross-type selection, parabola, highlight/selection, cancel, undo/redo and
    save/reopen. Report headless focus failures, unavailable desktop access,
    untested platforms and failing external readers as open gates, not passes.
