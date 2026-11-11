@@ -35650,3 +35650,20 @@ qualifies below-cusp inward, exact/over-cusp inward, and near-cusp outward
 behavior for this one ellipse profile. Other signed distances, ratios,
 origins, orientations, ellipse-arc traversal and external/visible acceptance
 remain open; do not infer universal ellipse signed-side support from this row.
+
+## 885. Qualify a Translated Wide-axis Elliptic Arc Near its Cusp (2026-11-11)
+
+Commit `c49ec2f31` adds the inward bounded arc with center `(1e4, -2e4)`,
+major-vector length 4, rotation `pi/7`, ratio 1.5, and parameter interval
+`[-0.2, 0.2]`. Its inward distance is 2.4, or 90% of the major-vertex cusp
+radius `16/6`. The existing direct 1.5-to-1 arc cusp test exercises below,
+equal, and above threshold; it passes 7,245 assertions / 1 case. The worker
+client matrix passes 1,568,336 assertions / 1 case for this translated/scaled
+arc, including cache admission, Produce and the five internal R14/R2000/R2018
+DXF/DWG round-trip lanes.
+
+This qualifies one inward non-reversed short arc below its cusp threshold and
+one corresponding transformed worker/file profile. Reversed traversal,
+different intervals, endpoint-at-cusp cases, exact/over-threshold worker
+Produce, other origins/rotations/ratios and external-reader/visible-GUI
+acceptance remain separate open rows.
