@@ -2064,6 +2064,30 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             result.splineData = spline->getData();
         return result;
     };
+    struct OppositeLineFixture {
+        std::size_t fixture;
+        std::size_t profile;
+    };
+    std::vector<OppositeLineFixture> oppositeLineFixtures;
+    for (std::size_t profile = 0; profile < scaledLineFixtureEnd - scaledLineFixtureStart; ++profile) {
+        const std::size_t fixture = sources.size();
+        sources.push_back(sources[scaledLineFixtureStart + profile]);
+        oppositeLineFixtures.push_back({fixture, profile});
+    }
+    const auto scaledLineProfile = [&](const std::size_t fixture) -> std::optional<std::size_t> {
+        if (fixture >= scaledLineFixtureStart && fixture < scaledLineFixtureEnd)
+            return fixture - scaledLineFixtureStart;
+        const auto found = std::find_if(oppositeLineFixtures.begin(), oppositeLineFixtures.end(),
+            [fixture](const OppositeLineFixture& candidate) { return candidate.fixture == fixture; });
+        if (found == oppositeLineFixtures.end()) return std::nullopt;
+        return found->profile;
+    };
+    std::vector<std::size_t> allScaledLineFixtures;
+    allScaledLineFixtures.reserve((scaledLineFixtureEnd - scaledLineFixtureStart) + oppositeLineFixtures.size());
+    for (std::size_t fixture = scaledLineFixtureStart; fixture < scaledLineFixtureEnd; ++fixture)
+        allScaledLineFixtures.push_back(fixture);
+    for (const OppositeLineFixture& fixture : oppositeLineFixtures)
+        allScaledLineFixtures.push_back(fixture.fixture);
 #ifdef DWGSUPPORT
     QString libreDwgReader = qEnvironmentVariable("DWGREAD");
     if (libreDwgReader.isEmpty())
@@ -2112,6 +2136,18 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             offset.distance = 0.2 * scaledCircle->scale;
             const double pickRadius = (scaledCircle->inward ? 1.5 : 2.5) * scaledCircle->scale;
             offset.coord = circle.center + RS_Vector{pickRadius, 0.0};
+            offset.sideFallback = offset.coord;
+        }
+        const auto oppositeLine = std::find_if(oppositeLineFixtures.begin(), oppositeLineFixtures.end(),
+            [i](const OppositeLineFixture& fixture) { return fixture.fixture == i; });
+        if (oppositeLine != oppositeLineFixtures.end()) {
+            const auto& line = std::get<RS_LineData>(sources[i].value);
+            const double scale = scaledLineScales[oppositeLine->profile];
+            const RS_Vector tangent = (line.endpoint - line.startpoint).normalized();
+            const RS_Vector leftNormal{-tangent.y, tangent.x};
+            const RS_Vector midpoint = (line.startpoint + line.endpoint) * 0.5;
+            offset.distance = scaledLineDistances[oppositeLine->profile];
+            offset.coord = midpoint - leftNormal * (4.0 * scale);
             offset.sideFallback = offset.coord;
         }
         if (i == rotatedWideAxisEllipseFixture) {
@@ -2491,6 +2527,23 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Line) {
                 REQUIRE(producedValue->outputs.size() == 1);
                 CHECK(std::holds_alternative<Req::Segment>(producedValue->outputs.front()));
+                if (oppositeLine != oppositeLineFixtures.end()) {
+                    const auto& line = std::get<RS_LineData>(sources[i].value);
+                    const double scale = scaledLineScales[oppositeLine->profile];
+                    const RS_Vector tangent = (line.endpoint - line.startpoint).normalized();
+                    const RS_Vector leftNormal{-tangent.y, tangent.x};
+                    const RS_Vector displacement = leftNormal * (-scaledLineDistances[oppositeLine->profile]);
+                    const auto* segment = std::get_if<Req::Segment>(&producedValue->outputs.front());
+                    REQUIRE(segment);
+                    const auto exactOffsetPoint = [scale](const RS_Vector& actual, const RS_Vector& expected) {
+                        const double coordinateScale = std::max({1.0, std::abs(expected.x), std::abs(expected.y)});
+                        const double tolerance = std::max(1e-12 * scale,
+                            64.0 * std::numeric_limits<double>::epsilon() * coordinateScale);
+                        CHECK(std::hypot(actual.x - expected.x, actual.y - expected.y) <= tolerance);
+                    };
+                    exactOffsetPoint(segment->start, line.startpoint + displacement);
+                    exactOffsetPoint(segment->end, line.endpoint + displacement);
+                }
             }
             else if (sources[i].kind() == LC_OffsetSourceGeometry::Kind::Arc ||
                      sources[i].kind() == LC_OffsetSourceGeometry::Kind::Circle ||
@@ -2605,7 +2658,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const auto ulp = [](const double value) {
                 return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) - std::abs(value);
             };
-            for (std::size_t fixture = scaledLineFixtureStart; fixture < scaledLineFixtureEnd; ++fixture) {
+            for (const std::size_t fixture : allScaledLineFixtures) {
+                const auto profile = scaledLineProfile(fixture);
+                REQUIRE(profile);
                 const PersistedGeometry* expected = nullptr;
                 for (const PersistedGeometry& candidate : persistedGeometry) {
                     if (candidate.sourceFixture != fixture)
@@ -2615,7 +2670,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                     expected = &candidate;
                 }
                 REQUIRE(expected);
-                const double scale = scaledLineScales[fixture - scaledLineFixtureStart];
+                const double scale = scaledLineScales[*profile];
                 const auto matchesPoint = [&](const QJsonArray& actual, const RS_Vector& point) {
                     if (actual.size() != 3)
                         return false;
@@ -2798,9 +2853,10 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                         checkLocalPoint(actual.fitPoints[point], expected.fitPoints[point]);
                 }
             }
-            if (persistedGeometry[i].sourceFixture >= scaledLineFixtureStart && persistedGeometry[i].sourceFixture < scaledLineFixtureEnd) {
+            const auto lineProfile = scaledLineProfile(persistedGeometry[i].sourceFixture);
+            if (lineProfile) {
                 REQUIRE(persistedGeometry[i].type == RS2::EntityLine);
-                const double scale = scaledLineScales[persistedGeometry[i].sourceFixture - scaledLineFixtureStart];
+                const double scale = scaledLineScales[*lineProfile];
                 const auto ulp = [](const double value) {
                     return std::nextafter(std::abs(value), std::numeric_limits<double>::infinity()) - std::abs(value);
                 };
