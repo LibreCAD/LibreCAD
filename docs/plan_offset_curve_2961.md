@@ -34073,8 +34073,8 @@ The combined ellipse/intersection/trim selection passed 1,361,893 assertions
 across 102 cases both before and after the additional adjacency change. The
 worker/cache/replacement/five-lane matrix then passed 1,603,681 assertions on
 the rebuilt adjacency change with the bounded test-only timeout override.
-Before committing, justify or replace the
-ellipse-only activation heuristic, and confirm bounded behavior and platform
+Before committing, justify or replace the current fitted-piece precision
+heuristic, and confirm bounded behavior and platform
 coverage. `LC_ParametricCurves` explicitly requires consecutive segments and
 `next()` branches to meet end-to-start, supporting the common-projection
 argument for conforming providers; `validSegments()` does not itself validate
@@ -34107,9 +34107,9 @@ worker/cache/replacement/five-lane matrix passed 1,598,773 assertions with the
 bounded test-only timeout override. Section 841 records direct adapter
 coverage and validation of the committed ordered-parameter slice.
 
-Materialized intersections are also matched to existing nodes using only
-point proximity within the requested geometry tolerance. Distinct parameter
-occurrences near one node can therefore be conflated. Investigate this as a
+Materialized intersections are matched to existing nodes by point proximity,
+with the necessary source-distance check described in section 842. Distinct
+parameter occurrences near one node can still be conflated. Investigate this as a
 separate correctness issue: add a two-nearby-crossing regression with an
 independent witness, preserve branch/piece provenance through materialization,
 and match both occurrences rather than point proximity alone. Handle circular
@@ -34136,3 +34136,38 @@ strict solver was present locally during these runs, but materialization used
 its unchanged default mode. The strict trigger and solver changes remain
 uncommitted, and the evidence does not close their activation, node-identity,
 or platform gates.
+
+## 842. Check Evaluable Node-source Distances (2026-11-10)
+
+A real noded-parabola fixture demonstrated that changing one recorded source
+occurrence while retaining the node point was accepted by the point-only
+matching rule. An attempted exact fitted-piece endpoint match rejected a valid
+trimmed ellipse: its fitted crossing lies within node-merge tolerance, while
+the corresponding source parameters lie inside or just beyond the retained
+pieces. That endpoint-only experiment was removed; tolerance-based merging is
+part of the current contract and must not be replaced by exact equality.
+
+Commit `905942c09` adds a narrower necessary-condition check. For each
+evaluable finite source occurrence of a candidate node, the node point must be
+at the offset radius within the geometric, merge, and numeric tolerances;
+finite out-of-domain parameters are rejected. Corner occurrences without an
+evaluable source parameter retain the previous behavior. Each added source-jet
+evaluation consumes the existing sample budget and exhaustion returns
+`LimitExceeded` without partial output. The regression covers the genuine and
+swapped nodes, either altered occurrence, an out-of-domain parameter, and
+budget exhaustion after fitting followed by recovery.
+
+The focused regression passed 18 assertions; the geometry/intersection/trim/
+topology selection passed 1,366,573 assertions across 150 cases; and the
+worker/cache/replacement/five-lane matrix passed 1,577,535 assertions using
+the bounded test-only timeout override. CMake built the test and worker-client
+targets; qmake6 compiled the changed translation unit, not the full app. The
+uncommitted strict solver was present locally during these runs, but the
+materialization query used its unchanged default mode.
+
+This radial condition is not an occurrence-identity proof: distinct source
+parameters can be at the same radius, and unavailable jets and corner
+parameters remain unchecked. The near-node conflation issue from section 840,
+including circular corners and branch/piece provenance, remains open. Also
+audit the existing point-to-node comparison loop's work accounting; the added
+jet calls are budgeted but the pre-existing candidate scan is separate.
