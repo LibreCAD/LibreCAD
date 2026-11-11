@@ -199,9 +199,9 @@ following slices in order, preserving the detailed safety requirements below:
 
 | Slice | Remaining work | Acceptance evidence |
 | --- | --- | --- |
-| 1. Inventory and selector | The UI contract and representative directed family transitions are implemented: the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Keep the controls editable while idle and disabled during worker preparation. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 893's latest focused source-picker suite passes 14,599 assertions / 42 cases. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
+| 1. Inventory and selector | The UI contract and representative directed family transitions are implemented: the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Keep the controls editable while idle and disabled during worker preparation. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 894's latest focused source-picker suite passes 14,827 assertions / 43 cases. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection; the hidden/locked guard is committed in `92f3c2097`, with remaining lifecycle and scale coverage still open. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Revalidate initially missing or ambiguous matches and record large-drawing limits until addressed. |
-| 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests; sections 891-893 verify that moving/deleting the chosen source or swapping viewport/document during worker preparation refuses publication without changing the prior definition/cache. Late replies, cancellation, and other lifecycle races remain separately tracked; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
+| 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests; sections 891-894 verify that moving/deleting the chosen source or swapping viewport/document during worker preparation refuses publication, and that a late reply after target rebinding cannot mutate either target. Other cancellation/lifecycle races remain separately tracked; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
 | 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then a visible LibreCAD workflow with cross-family replacement, parabola, source indication, cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
@@ -35812,3 +35812,20 @@ two-mode test passes 252 assertions / 1 case, and the complete
 cases. These are offscreen Qt tests with the real helper. Visible GUI, late
 reply/cancellation timing, external readers, cross-platform execution, and
 other family/variant acceptance remain open.
+
+## 894. Ignore a Late Source-replacement Reply After Target Rebinding (2026-11-11)
+
+Commit `0f8d93870` starts a real-helper replacement on one editable offset,
+then rebinds the Properties widget to a second offset while preparation is
+active. The widget cancels and invalidates the first generation. After the
+worker termination/reap window, snapshots confirm that neither the original
+target nor the newly bound target changed and neither acquired a typed
+replacement definition. This specifically checks that a late reply from the
+old target cannot publish through the rebound widget.
+
+On the current CMake Release/macOS build at commit `0f8d93870`, the focused
+late-reply test passes 228 assertions / 1 case, and the complete
+`[gui][dialog][offsetcurve][source]` selector passes 14,827 assertions / 43
+cases. This covers the target-rebind race, not every cancellation or process
+termination schedule. Visible GUI, cross-platform execution, external readers,
+and remaining family/variant geometry and persistence gates stay open.
