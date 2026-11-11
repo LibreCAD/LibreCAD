@@ -201,7 +201,7 @@ following slices in order, preserving the detailed safety requirements below:
 | --- | --- | --- |
 | 1. Inventory and selector | The UI contract and representative directed family transitions are implemented: the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Keep the controls editable while idle and disabled during worker preparation. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 877's latest focused source-picker suite passes 14,097 assertions / 39 cases. Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Complete lifecycle and identity handling for resolved, absent, duplicated, hidden, locked, moved, deleted, and replaced sources. Keep temporary highlighting separate from persistent document selection; the hidden/locked guard is committed in `92f3c2097`, with remaining lifecycle and scale coverage still open. | Tests cover opening, filtering, hiding/closing, accept/cancel, undo/redo, document/viewport teardown and reappearance, with unrelated selection and overlays preserved. Revalidate initially missing or ambiguous matches and record large-drawing limits until addressed. |
-| 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests; section 891 verifies that moving the chosen source during worker preparation refuses publication without changing the prior definition/cache. Deletion, document change, late replies, and other lifecycle races remain separately tracked; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
+| 3. Atomic replacement | Exercise every destination family through capture, asynchronous worker preparation and publication. Revalidate the chosen entity and its geometry at publication; failures, cancellation, and stale results leave the prior source and cache intact. | Per-family success and refusal tests; sections 891-892 verify that moving or deleting the chosen source during worker preparation refuses publication without changing the prior definition/cache. Document change, late replies, cancellation, and other lifecycle races remain separately tracked; distinguish actual failures from headless focus-test limitations. Keep controls disabled during an in-flight request unless safe supersession is implemented. |
 | 4. Geometry and persistence | Qualify representative valid variants of each family through the offset engine, worker and cache; independently qualify parabola construction, direction, conditioning and trimming. Preserve the typed definition and resulting geometry through applicable DXF and DWG lanes. | A per-family/variant matrix records fixtures, signed distances, mode, results and exact file version/lane; test independent geometry oracles and explicit refusal without partial publication. Uncovered variants remain open, not implicitly supported. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then a visible LibreCAD workflow with cross-family replacement, parabola, source indication, cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
@@ -35776,6 +35776,22 @@ On the current CMake Release/macOS build at commit `e2ddf0969`, the focused
 race test passes 125 assertions / 1 case, and the complete
 `[gui][dialog][offsetcurve][source]` selector passes 14,222 assertions / 40
 cases. This is headless Qt coverage using the real helper, not visible-GUI
-acceptance. Source deletion while busy, source/document replacement, late
-worker replies, cancellation, cross-platform behavior, and the full plan's
-remaining geometry/persistence and delivery gates remain open.
+acceptance. Source/document replacement, late worker replies, cancellation,
+cross-platform behavior, and the full plan's remaining geometry/persistence
+and delivery gates remain open.
+
+## 892. Refuse a Deleted Source During Async Replacement (2026-11-11)
+
+Commit `88ce3b64d` adds the corresponding real-helper race for deletion. After
+the line candidate is selected and worker preparation begins, the test marks
+that same entity deleted before the worker reply is processed. Callback-time
+source resolution rejects the stale candidate, leaves the original editable
+definition and cache unchanged, and reports the stale-input refusal. This
+verifies that matching an old combo-box ID is insufficient after deletion.
+
+On the current CMake Release/macOS build at commit `88ce3b64d`, the focused
+deleted-candidate race passes 125 assertions / 1 case, and the complete
+`[gui][dialog][offsetcurve][source]` selector passes 14,347 assertions / 41
+cases. This headless run does not close document/viewport replacement,
+cancellation, late worker replies, visible-GUI, cross-platform, or geometry
+and persistence acceptance.
