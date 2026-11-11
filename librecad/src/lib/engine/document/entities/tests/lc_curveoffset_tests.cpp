@@ -175,6 +175,112 @@ TEST_CASE("Materialized cusp exclusion requires separated Bezier directions", "[
     CHECK((crossingResult.status != LC_IntersectionStatus::Ok || !crossingResult.intersections.empty()));
 }
 
+TEST_CASE("Materialized join exclusion proves separated restricted factors", "[curve-offset][topology][materialized]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const RS_Vector join{185.73651497465946, -50.500000000000007};
+    const LC_CurveOffsetInternal::BezierBranches ellipse{
+        {{{{185.73651590013253, -50.500001647256774},
+           {185.73651498138889, -50.49999999691267},
+           {185.73651497465951, -50.500000000000107}, join}}},
+        {{{join, {185.7365149746594, -50.499999999999908},
+           {185.73651498069788, -50.499999995715804},
+           {185.73651401082978, -50.499998374888435}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(ellipse, {1, -1});
+    const LC_IntersectionDomain restricted{0, 1,
+        LC_Interval::hull(16.99998382048215717 - 16.0, 16.99998382049670909 - 16.0),
+        LC_Interval::hull(17.0029296875 - 17.0, 17.003173828125 - 17.0)};
+    const auto proof = curves->certifyIntersection(restricted);
+    CHECK(proof.outcome == Outcome::Excluded);
+    CHECK(proof.proof == LC_IntersectionProof::AnalyticExclusion);
+    const LC_IntersectionDomain angular{0, 1,
+        LC_Interval::hull(16.99996759361238219 - 16.0, 16.9999675936269341 - 16.0),
+        restricted.parameterB};
+    CHECK(curves->certifyIntersection(angular).outcome == Outcome::Excluded);
+    const LC_IntersectionDomain reversed{1, 0, restricted.parameterB, restricted.parameterA};
+    CHECK(curves->certifyIntersection(reversed).outcome == Outcome::Excluded);
+    LC_CurveOffsetInternal::BezierBranches ordered(1);
+    for (int i = 0; i < 16; ++i) ordered[0].push_back(ellipse[0][0]);
+    ordered[0].push_back(ellipse[0][0]);
+    ordered[0].push_back(ellipse[1][0]);
+    const auto indexed = LC_CurveOffsetInternal::makePieceCurves(ordered, {-1});
+    const LC_IntersectionDomain originalParameters{16, 17,
+        LC_Interval::hull(16.99998382048215717, 16.99998382049670909),
+        LC_Interval::hull(17.0029296875, 17.003173828125)};
+    CHECK(indexed->certifyIntersection(originalParameters).outcome == Outcome::Excluded);
+    for (const int transform : {0, 1, 2, 3}) {
+        auto transformed = ellipse;
+        for (auto& branch : transformed) {
+            for (auto& piece : branch) {
+                for (auto& point : piece) {
+                    if (transform & 1) std::swap(point.x, point.y);
+                    if (transform & 2) point.x = -point.x;
+                }
+            }
+        }
+        const auto mapped = LC_CurveOffsetInternal::makePieceCurves(transformed, {1, -1});
+        CHECK(mapped->certifyIntersection(restricted).outcome == Outcome::Excluded);
+        CHECK(mapped->certifyIntersection(angular).outcome == Outcome::Excluded);
+    }
+    const LC_IntersectionDomain whole{0, 1, LC_Interval::hull(0, 1), LC_Interval::hull(0, 1)};
+    CHECK(curves->certifyIntersection(whole).outcome == Outcome::Unavailable);
+
+    const RS_Vector origin{0, 0};
+    const LC_CurveOffsetInternal::BezierBranches crossing{
+        {{{{-1, 0}, {-2.0 / 3.0, 0}, {-1.0 / 3.0, 0}, origin}}},
+        {{{origin, {1, 1}, {-1, -1}, {-1, 0}}}}};
+    const auto intersecting = LC_CurveOffsetInternal::makePieceCurves(crossing, {1, -1});
+    RS_Vector a, da, b, db;
+    REQUIRE(intersecting->evaluate(0, .875, a, da));
+    REQUIRE(intersecting->evaluate(1, .5, b, db));
+    CHECK(a.distanceTo(b) < 1e-14);
+    CHECK(intersecting->certifyIntersection(whole).outcome == Outcome::Unavailable);
+    const LC_IntersectionDomain crossingBox{0, 1, LC_Interval::hull(.8, .95), LC_Interval::hull(.4, .6)};
+    CHECK(intersecting->certifyIntersection(crossingBox).outcome == Outcome::Unavailable);
+    const LC_IntersectionDomain tightCrossing{0, 1, LC_Interval::hull(.874999, .875001),
+                                               LC_Interval::hull(.499999, .500001)};
+    CHECK(intersecting->certifyIntersection(tightCrossing).outcome == Outcome::Unavailable);
+    const LC_IntersectionDomain separatedBox{0, 1, LC_Interval::hull(.5, 1), LC_Interval::hull(0, .1)};
+    CHECK(intersecting->certifyIntersection(separatedBox).outcome == Outcome::Excluded);
+    const auto unjoined = LC_CurveOffsetInternal::makePieceCurves(crossing, {-1, -1});
+    CHECK(unjoined->certifyIntersection(separatedBox).outcome == Outcome::Unavailable);
+}
+
+TEST_CASE("Restricted join proofs retain constructed second crossings", "[curve-offset][topology][materialized]") {
+    using Outcome = LC_AnalyticIntersectionCertificate::Outcome;
+    const RS_Vector origin{0, 0};
+    for (const double x : {.125, 1.0, 16.0}) {
+        for (const double y : {.125, 1.0, 128.0}) {
+            for (const double end : {.125, 1.0, 4.0, 7.0}) {
+                for (const int transform : {0, 1, 2, 3}) {
+                    CAPTURE(x, y, end, transform);
+                    LC_CurveOffsetInternal::BezierBranches branches{
+                        {{{{-1, 0}, {-2.0 / 3.0, 0}, {-1.0 / 3.0, 0}, origin}}},
+                        {{{origin, {x, y}, {-x, -y}, {-end, 0}}}}};
+                    for (auto& branch : branches) {
+                        for (auto& piece : branch) {
+                            for (auto& point : piece) {
+                                if (transform & 1) std::swap(point.x, point.y);
+                                if (transform & 2) point.x = -point.x;
+                            }
+                        }
+                    }
+                    const auto curves = LC_CurveOffsetInternal::makePieceCurves(branches, {1, -1});
+                    // At t=.5 the second curve is (-end/8, 0); the first spans [-1, 0].
+                    const double firstParameter = 1.0 - end / 8.0;
+                    RS_Vector a, da, b, db;
+                    REQUIRE(curves->evaluate(0, firstParameter, a, da));
+                    REQUIRE(curves->evaluate(1, .5, b, db));
+                    CHECK(a.distanceTo(b) < 1e-12);
+                    const LC_IntersectionDomain box{0, 1,
+                        LC_Interval::hull(firstParameter - 1e-9, firstParameter + 1e-9),
+                        LC_Interval::hull(.5 - 1e-9, .5 + 1e-9)};
+                    CHECK(curves->certifyIntersection(box).outcome == Outcome::Unavailable);
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("Offset source snapshots own every supported source type") {
     RS_EllipseData ellipseData;
     ellipseData.center = {1.0, 2.0};
