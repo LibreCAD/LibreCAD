@@ -865,14 +865,62 @@ TEST_CASE("Native source indication is temporary and preserves drawing selection
         widget.show();
         QApplication::processEvents();
         CHECK(overlay->getEntityList().size() == 1);
-        source->setFlag(RS2::FlagDeleted);
-        typeBox->setCurrentIndex(0);
+        auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+        REQUIRE(timer);
+        CHECK(timer->isActive());
+        source->move({1, 0});
+        REQUIRE(pollEventsUntil([&] { return overlay->getEntityList().isEmpty(); }));
         CHECK(overlay->getEntityList().isEmpty());
+        source->move({-1, 0});
+        REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+        CHECK(overlay->getEntityList().size() == 1);
+        source->setFlag(RS2::FlagDeleted);
+        REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+        CHECK(overlay->getEntityList().isEmpty());
+        source->delFlag(RS2::FlagDeleted);
+        REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+        CHECK(overlay->getEntityList().size() == 1);
+        source->setVisible(false);
+        REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+        CHECK(overlay->getEntityList().isEmpty());
+        source->setVisible(true);
+        REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+        CHECK(overlay->getEntityList().size() == 1);
     }
     CHECK(overlay->getEntityList().isEmpty());
     CHECK(other->getEntityList().contains(otherHighlight));
     CHECK(selected->getFlag(RS2::FlagSelected));
     other->removeEntity(otherHighlight);
+}
+
+TEST_CASE("Source highlight monitoring stops after viewport invalidation",
+          "[gui][dialog][offsetcurve][source][highlight][overlay]") {
+    Fixture f;
+    auto* source = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(source);
+    auto viewport = std::make_unique<LC_GraphicViewport>();
+    viewport->setDocument(&f.graphic);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport.get());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+    REQUIRE(timer); REQUIRE(timer->isActive());
+    SECTION("viewport destroyed") {
+        viewport.reset();
+        REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+        CHECK_FALSE(timer->isActive());
+    }
+    SECTION("document replaced") {
+        Graphic other;
+        other.initForNewDocument(); other.onLoadingCompleted();
+        viewport->setDocument(&other);
+        REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+        CHECK_FALSE(timer->isActive());
+        viewport.reset();
+    }
 }
 
 TEST_CASE("Offset source highlight leases survive viewport document changes and destruction",

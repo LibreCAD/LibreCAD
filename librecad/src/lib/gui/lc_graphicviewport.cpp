@@ -72,6 +72,7 @@ public:
 
     void shutdown() {
         if (!m_container) return;
+        m_lifetime.reset();
         for (const auto& item : m_entities) m_container->removeEntity(item.first);
         m_entities.clear();
         m_container = nullptr;
@@ -107,10 +108,13 @@ public:
         });
     }
 
+    std::weak_ptr<void> lifetime() const { return m_lifetime; }
+
 private:
     LC_GraphicViewport* m_viewport;
     RS_EntityContainer* m_container;
     std::map<RS_Entity*, std::unique_ptr<RS_Entity>> m_entities;
+    std::shared_ptr<void> m_lifetime = std::make_shared<int>(0);
 };
 
 LC_GraphicViewport::LC_GraphicViewport():
@@ -123,6 +127,10 @@ LC_GraphicViewport::LC_GraphicViewport():
 LC_GraphicViewport::~LC_GraphicViewport() {
     if (m_offsetSourceHighlights) m_offsetSourceHighlights->shutdown();
     m_offsetSourceHighlights.reset();
+}
+
+std::weak_ptr<void> LC_GraphicViewport::offsetSourceHighlightLifetime() const {
+    return m_offsetSourceHighlights ? m_offsetSourceHighlights->lifetime() : std::weak_ptr<void>{};
 }
 
 std::shared_ptr<void> LC_GraphicViewport::highlightOffsetSource(const RS_Entity& entity) {

@@ -21,6 +21,7 @@ class RS_Ellipse;
 class RS_Entity;
 class QHideEvent;
 class QShowEvent;
+class QTimer;
 
 /** Edits only the caller-owned dialog clone, never the document entity. */
 class LC_PropertiesEditingWidgetOffsetCurve final : public LC_EntityPropertiesEditorWidget {
@@ -67,7 +68,9 @@ private:
     void refresh(QLineEdit* completed = nullptr, bool force = false) const;
     void inputRefused(QLineEdit* editor, const QString& reason) const;
     void refreshSourceChoices() const;
-    void refreshSourceHighlight() const;
+    void refreshSourceHighlight(bool preserveWatch = false) const;
+    void checkSourceHighlight() const;
+    void clearSourceWatch() const;
     RS_Entity* findSourceEntity(qulonglong id) const;
     bool sourceMatches(const SourceWitness& source) const;
     void selectCurrentSource() const;
@@ -75,6 +78,11 @@ private:
     LC_OffsetCurve* m_entity = nullptr;
     mutable qulonglong m_preferredSourceId = 0;
     mutable std::shared_ptr<void> m_sourceHighlight;
+    mutable std::weak_ptr<void> m_highlightLifetime;
+    mutable LC_GraphicViewport* m_highlightViewport = nullptr;
+    mutable qulonglong m_highlightSourceId = 0;
+    mutable QCborArray m_highlightGeometry;
+    QTimer* m_highlightTimer = nullptr;
     bool m_sourceHighlightVisible = false;
     LC_OffsetRunLimits m_limits;
     mutable bool m_refreshing = false;

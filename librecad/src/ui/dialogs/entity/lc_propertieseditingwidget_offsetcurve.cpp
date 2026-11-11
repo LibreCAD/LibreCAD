@@ -13,6 +13,7 @@
 #include <QPointer>
 #include <QScopedValueRollback>
 #include <QSignalBlocker>
+#include <QTimer>
 #include <algorithm>
 #include <cmath>
 #include <limits>
@@ -102,6 +103,10 @@ LC_PropertiesEditingWidgetOffsetCurve::LC_PropertiesEditingWidgetOffsetCurve(QWi
     : LC_EntityPropertiesEditorWidget(parent), ui(new Ui::LC_OffsetCurvePropertiesEditingWidget),
       m_limits(LC_OffsetCurveUI::sheetLimits()), m_worker(std::make_unique<LC_OffsetWorkerClient>(this)) {
     ui->setupUi(this);
+    m_highlightTimer = new QTimer(this);
+    m_highlightTimer->setObjectName("offsetSourceHighlightTimer");
+    m_highlightTimer->setInterval(1000);
+    connect(m_highlightTimer, &QTimer::timeout, this, [this] { checkSourceHighlight(); });
     const auto bind = [this](QLineEdit* editor, Field field) {
         connect(editor, &QLineEdit::editingFinished, this,
             [this, editor, field] { finishField(editor, field); });
@@ -173,7 +178,7 @@ LC_PropertiesEditingWidgetOffsetCurve::~LC_PropertiesEditingWidgetOffsetCurve() 
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::detachPreparation() {
-    m_sourceHighlight.reset();
+    clearSourceWatch();
     m_entity = nullptr;
     m_busy = false; m_proposedDefinition.reset(); m_inputSnapshot.reset();
     m_worker.reset(); // Disconnect/reap before releasing the widget or caller's clone owner.
@@ -187,7 +192,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::showEvent(QShowEvent* event) {
 
 void LC_PropertiesEditingWidgetOffsetCurve::hideEvent(QHideEvent* event) {
     m_sourceHighlightVisible = false;
-    m_sourceHighlight.reset();
+    clearSourceWatch();
     LC_EntityPropertiesEditorWidget::hideEvent(event);
 }
 
@@ -268,6 +273,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::setEntity(RS_Entity* entity) {
     if (!alive || !m_worker || revision != m_sourceRevision || cancelledGeneration != m_generation) return;
     m_entity = entity != nullptr && entity->rtti() == RS2::EntityOffsetCurve
         ? static_cast<LC_OffsetCurve*>(entity) : nullptr;
+    clearSourceWatch();
     m_preferredSourceId = 0;
     {
         const QSignalBlocker blocked(ui->cbSourceType);
@@ -350,7 +356,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
         ui->cbSource->clear();
         ui->cbSource->addItem(tr("Source not available"));
         ui->tbSelectSource->setEnabled(false);
-        m_sourceHighlight.reset();
+        clearSourceWatch();
         return;
     }
 
@@ -426,10 +432,20 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
     refreshSourceHighlight();
 }
 
-void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight() const {
+void LC_PropertiesEditingWidgetOffsetCurve::clearSourceWatch() const {
+    m_highlightTimer->stop();
+    m_sourceHighlight.reset();
+    m_highlightLifetime.reset();
+    m_highlightViewport = nullptr;
+    m_highlightSourceId = 0;
+    m_highlightGeometry = {};
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight(bool preserveWatch) const {
     const QPointer<const LC_PropertiesEditingWidgetOffsetCurve> alive(this);
     auto previous = std::move(m_sourceHighlight);
     previous.reset();
+    if (!preserveWatch) clearSourceWatch();
     if (!alive || !m_sourceHighlightVisible || !m_entity || !m_viewport) return;
     auto* document = m_viewport->getDocument();
     if (!document) return;
@@ -458,7 +474,44 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight() const {
     else if (count != 1) match = nullptr;
     if (!match) return;
     auto highlight = m_viewport->highlightOffsetSource(*match);
-    if (alive) m_sourceHighlight = std::move(highlight);
+    if (alive && highlight) {
+        m_sourceHighlight = std::move(highlight);
+        m_highlightViewport = m_viewport;
+        m_highlightLifetime = m_viewport->offsetSourceHighlightLifetime();
+        m_highlightSourceId = match->getId();
+        m_highlightGeometry = *encoding;
+        m_highlightTimer->start();
+    }
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
+    if (!m_sourceHighlightVisible || !m_highlightViewport ||
+        m_viewport != m_highlightViewport || m_highlightLifetime.expired()) {
+        clearSourceWatch();
+        return;
+    }
+    try {
+        const auto* document = m_highlightViewport->getDocument();
+        const RS_Entity* source = nullptr;
+        if (document) {
+            for (auto* entity : document->getEntityList()) {
+                if (entity && entity->getId() == m_highlightSourceId) {
+                    source = entity;
+                    break;
+                }
+            }
+        }
+        bool current = false;
+        if (source && !source->isDeleted() && source->isVisible()) {
+            const auto geometry = LC_OffsetSourceGeometry::capture(*source);
+            const auto encoding = geometry
+                ? LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry) : std::nullopt;
+            current = encoding && *encoding == m_highlightGeometry;
+        }
+        if (current != static_cast<bool>(m_sourceHighlight)) refreshSourceHighlight(true);
+    } catch (const std::bad_alloc&) {
+        clearSourceWatch();
+    }
 }
 
 RS_Entity* LC_PropertiesEditingWidgetOffsetCurve::findSourceEntity(qulonglong id) const {

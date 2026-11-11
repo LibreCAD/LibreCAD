@@ -180,6 +180,7 @@ public:
     RS_Grid *getGrid() const;
     LC_OverlaysManager* getOverlaysManager() { return &m_overlaysManager;}
     std::shared_ptr<void> highlightOffsetSource(const RS_Entity& entity);
+    std::weak_ptr<void> offsetSourceHighlightLifetime() const;
     bool isPanning() const {return m_panning;}
     void setPanning(const bool state) {  m_panning = state;}
     RS_Graphic* getGraphic() const {return m_graphic;}
