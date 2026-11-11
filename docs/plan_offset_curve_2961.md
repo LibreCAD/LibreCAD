@@ -34819,6 +34819,11 @@ At clean commit `61b5e6bdc`, the CMake Release source-picker, renderer and
 viewport-range selection passed 14,880 assertions in 69 cases. Desktop
 control remains locked, so this is not visible GUI acceptance.
 
+Commit `fc2f2ba3e` adds the complementary initially-missing-source case where
+the document itself is destroyed before any highlight is created. The watch
+stops without dereferencing the expired document; the focused headless test
+passed 7 assertions with the uncommitted geometry experiment present.
+
 ## 857. Reject Duplicated Regular Node Occurrences (2026-11-11)
 
 Commit `b0c90898f` adds a necessary, deliberately narrow node check: for a
