@@ -108,9 +108,12 @@ Execute and record these slices in order:
    entity pointer across event turns and never claim uniqueness from a partial
    scan. Commit `a12651ad6` removes one redundant full source scan from the
    worker-wait presentation refresh; this does not bound source-list scans or
-   the periodic live-highlight scan. No large-drawing benchmark or latency
-   target is established yet. Test invalidation, cancellation, recovery and all
-   source families.
+   the periodic live-highlight scan. The benchmark committed in `b8f82b752`
+   measures one type-filter refresh with 1,024 same-kind spline-points
+   candidates carrying 256 control points each at about 2.74 ms on the current
+   CMake Release/macOS build. This is a baseline for that operation and host,
+   not an end-to-end latency target. Test invalidation, cancellation, recovery
+   and all source families.
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
@@ -35202,5 +35205,24 @@ cases, including highlight, ambiguity and replacement cases. This removes one
 redundant scan per accepted preparation only. It is not a measured latency
 improvement, a per-event work bound, or a solution to synchronous full scans in
 source-choice refresh and periodic highlight validation. Establish a
-same-kind/large-payload benchmark and bounded latency target before deciding
-whether to implement mutation-aware incremental scanning.
+same-kind/large-payload benchmark for the remaining scan paths and define
+latency targets before deciding whether to implement mutation-aware
+incremental scanning. Section 865 below records an initial filter-refresh
+measurement only.
+
+## 865. Measure a Large Same-kind Source Filter Refresh (2026-11-11)
+
+Commit `b8f82b752` adds a repeatable source-picker benchmark fixture with
+1,024 `LC_SplinePoints` candidates, each carrying 256 control points. It times
+the synchronous family-filter change and checks that every supported
+candidate remains in the chooser. On the current CMake Release/macOS build,
+the measured refresh is 2.73575 ms; the complete source selector suite passes
+12,536 assertions / 29 cases. The timing is diagnostic only and has no
+hardware-dependent threshold.
+
+This is not a bound for source selection under other loads, periodic highlight
+validation, document mutation during a scan, visible event-loop latency on
+other machines, or the full source replacement workflow. The active large-
+drawing slice still needs mutation-sensitive tests and measurements for the
+live-highlight scan, plus a decision on whether those results justify bounded
+incremental scanning. No partial scan may be treated as proof of uniqueness.
