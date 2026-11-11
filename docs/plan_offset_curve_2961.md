@@ -30226,7 +30226,7 @@ these rows do not imply every parameter/domain is supported):
 
 | Source family | Typed capture / filter contract | Current positive evidence | Still requires qualification |
 | --- | --- | --- | --- |
-| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Other sub-ULP/coordinate-conditioning boundaries and broad non-finite payload refusal |
+| Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; positive-side scaled profiles pass real worker/cache, Produce, strict five-format reopen, and LibreDWG checks; both signed sides of horizontal, diagonal, and reversed lines at scales `1e-8/1/1e8` and translation ratios `0/1e6` pass worker generation, analytic segment comparison, and op-8 cache admission | Other sub-ULP/coordinate-conditioning boundaries, negative-side persistence for the new worker scale matrix, and broad non-finite payload refusal |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at gaps 1e-4..1e-8 radians, both orientations and both offset sides; counterclockwise near-full profiles at 1e-4 and 1e-8, reversed near-full at 1e-8, and short counterclockwise seam-crossing at 1e-4 pass required worker/cache admission, replacement, Produce, and five-file-lane reopen; short arcs in both orientations at 1e-8 pass the same path at distance 1e-6; the counterclockwise profile at distance .25 cleanly refuses with UndefinedTangent and no output; below-validity arc refused at typed capture | Additional source radius/offset/tolerance combinations, sweep-limit behavior, and broader boundary matrix |
 | Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at `1e-6/1e-4/1/1e4/1e8`, centered at zero and translated by `1e6 * scale`, both signed sides; worker/client covers radii `2e-6`, `2e-4`, `2`, `2e4`, and `2e8`, centered at zero and translated by `1e6 * scale`, both inward and outward picks through cache admission, Produce, and all five file lanes; LibreDWG checks the resulting circle geometry in both DWG lanes for every scaled fixture | Scales beyond the tested range, further conditioning, arbitrary-circle independent comparisons, ODA/AutoCAD, and visible GUI |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; translated, rotated ratio-1.5 whole ellipse and forward/reversed bounded arcs plus a near-cusp inward profile now have exact-normal checks and complete worker/cache, Produce, and all five R14/R2000/R2018 DXF/DWG lanes | Full axis-ratio, sweep, cusp-threshold, side/distance and precision matrix |
@@ -36043,3 +36043,25 @@ remains green at 52,570 assertions in one case. `git diff --check` passes.
 This closes the full tested scale/translation worker matrix on both sides; it
 does not qualify scales outside that grid, all circle conditioning boundaries,
 visible GUI, ODA/AutoCAD, or cross-platform execution.
+
+## 903. Verify Signed Line Sources Through the Worker (2026-11-11)
+
+Test commit `682385e19` adds a separate focused worker case without changing
+indices in the large source-family persistence fixture. It submits positive
+and negative signed distances for horizontal, diagonal, and reversed line
+profiles at scales `1e-8`, `1`, and `1e8`, with centers at the origin and at
+`1e6 * scale` translations. For every request, the generated worker segment is
+compared with the analytic left-normal translation, and `nativeSource()` must
+admit the matching cache through operation 8 and preserve the exact signed
+distance.
+
+In the CMake Release build, the worker client test target rebuilds cleanly and
+`QT_QPA_PLATFORM=offscreen LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=300000
+./LibreCAD.app/Contents/MacOS/librecad_offset_worker_client_tests 'Worker
+preserves signed line offsets across scale and translation'` passes 6,166
+assertions in one case. This validates both-side worker generation and cache
+admission for these 36 requests. The new negative-side profiles are not yet
+qualified through Produce or DXF/DWG persistence; the separate positive-side
+file-lane evidence remains unchanged. Other scales, arbitrary origins,
+coordinate-conditioning boundaries, external CAD and visible-GUI acceptance
+remain open.
