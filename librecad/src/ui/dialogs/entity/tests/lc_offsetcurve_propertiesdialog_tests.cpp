@@ -2228,6 +2228,80 @@ TEST_CASE("Incremental source matching preserves uniqueness across all modeled f
     }
 }
 
+TEST_CASE("Native source replacement covers every ordered family pair",
+          "[gui][dialog][offsetcurve][source][typed][family-pairs]") {
+    requireNativeHelper();
+    RS_SplineData spline{2, false};
+    spline.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    spline.knotslist = {0, 0, 0, 1, 1, 1};
+    spline.weights = {1, .7, 1};
+    LC_SplinePointsData splinePoints{false, false};
+    splinePoints.useControlPoints = true;
+    splinePoints.controlPoints = {{0, 0}, {1, 1}, {2, 0}};
+    const std::array<LC_OffsetSourceGeometry, 9> geometries{
+        LC_OffsetSourceGeometry{RS_EllipseData{{0, 0}, {5, 0}, .5, 0, 1.5, false}},
+        LC_OffsetSourceGeometry{spline},
+        LC_OffsetSourceGeometry{splinePoints},
+        LC_OffsetSourceGeometry{LC_ParabolaData{{RS_Vector{0, 1}, RS_Vector{1, 0}, RS_Vector{2, 1}}}},
+        LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {2, 0}, .5, -.5, .5}},
+        LC_OffsetSourceGeometry{RS_LineData{{0, 0}, {2, 0}}},
+        LC_OffsetSourceGeometry{RS_ArcData{{0, 0}, 2, .25, 1.5, false}},
+        LC_OffsetSourceGeometry{RS_CircleData{{0, 0}, 2}},
+        LC_OffsetSourceGeometry{LC_OffsetPolylineData{{0, 0}, {2, 2}, false,
+            {RS_ArcData{{1, 0}, 1, M_PI, 0, false}, RS_LineData{{2, 0}, {2, 2}}}}}
+    };
+
+    for (std::size_t origin = 0; origin < geometries.size(); ++origin) {
+        CAPTURE(origin);
+        Fixture f;
+        std::array<qulonglong, geometries.size()> sourceIds{};
+        for (std::size_t i = 0; i < geometries.size(); ++i) {
+            auto entity = geometries[i].makeEntity();
+            REQUIRE(entity);
+            auto* raw = entity.get();
+            f.graphic.addEntity(raw);
+            sourceIds[i] = static_cast<qulonglong>(raw->getId());
+            entity.release();
+        }
+        std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+        NativeWidget widget;
+        widget.setGraphicViewport(f.view.getViewPort());
+        widget.setEntity(clone.get());
+        auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+        auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+        REQUIRE(typeBox);
+        REQUIRE(sourceBox);
+
+        const auto chooseSource = [&](const std::size_t family) {
+            const auto kind = geometries[family].kind();
+            const int typeIndex = typeBox->findData(static_cast<int>(kind));
+            REQUIRE(typeIndex >= 0);
+            typeBox->setCurrentIndex(typeIndex);
+            const int sourceIndex = sourceBox->findData(QVariant::fromValue<qulonglong>(sourceIds[family]));
+            REQUIRE(sourceIndex >= 0);
+            sourceBox->setCurrentIndex(sourceIndex);
+            awaitPreparation(widget);
+            REQUIRE(widget.lastEditResult());
+            REQUIRE(*widget.lastEditResult());
+            CHECK(typeBox->currentData().toInt() == static_cast<int>(kind));
+            CHECK(sourceBox->currentData().toULongLong() == sourceIds[family]);
+            if (clone->sourceDefinition()) {
+                CHECK(clone->sourceDefinition()->source.kind() == kind);
+            } else {
+                CHECK(kind == LC_OffsetSourceGeometry::Kind::Ellipse);
+                CHECK(clone->hasEditableDefinition());
+            }
+        };
+
+        chooseSource(origin);
+        for (std::size_t destination = 0; destination < geometries.size(); ++destination) {
+            if (destination == origin) continue;
+            CAPTURE(destination);
+            chooseSource(destination);
+        }
+    }
+}
+
 TEST_CASE("Native source picker explains empty buckets for unsupported curve variants",
           "[gui][dialog][offsetcurve][source][eligibility]") {
     Fixture f;
