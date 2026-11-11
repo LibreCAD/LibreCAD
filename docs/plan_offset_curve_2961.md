@@ -20438,6 +20438,14 @@ release gates. A clean CMake Release build at `ab8640ed2` passed the
 materialized selector (2,883 assertions in 14 cases); its broader clean
 matrices and a full qmake6 build are running separately.
 
+The clean `ab8640ed2` CMake Release ellipse/intersection/trim matrix passed
+1,361,893 assertions in 102 cases, and its real-worker typed-source/cache
+matrix passed 1,606,255 assertions in one case across the five recorded file
+lanes. With the uncommitted strict experiment, the broader `[curve-offset]`
+suite passed 1,884,517 assertions. These results do not resolve the distinct
+near-node occurrence identity issue in section 840 or establish visible and
+cross-platform acceptance.
+
 ### Completion receipt
 
 All eight bounded interval/branch layouts now run centered and translated
