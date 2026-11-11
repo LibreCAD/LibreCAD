@@ -34045,3 +34045,39 @@ requirement for a sound topology proof: retain exact/over-cusp refusal until
 the unresolved pair is classified, add independently proven crossing and
 near-contact controls, and continue validating the activation rule and worker
 matrix before accepting the uncommitted strict-mode experiment.
+
+## 839. Strict Near-join Crossing Regression (2026-11-10)
+
+The experimental strict mode's numeric-radius join exclusion can hide a real
+crossing. A new test constructs two quadratic arcs with an exactly shared
+endpoint at `(1e6, 1e6)` scale and coefficients quantized to one double ULP.
+An independent equal-x sign bracket proves that they cross again near the
+join. With the prior numeric-radius exclusion the query returned `Ok` with no
+intersections; with strict join-box exclusion disabled it returns
+`LimitExceeded` after 240 pair examinations. This is bounded fail-closed
+behavior, not a certified intersection or a complete solution for ordinary
+non-monotone joins. A monotone corner control succeeds, and work accounting is
+checked.
+
+The worker/cache/replacement/five-lane matrix passed 1,611,847 assertions with
+the strict join-box change. A second test then placed the same proven crossing
+across two connected branches: the original adjacency pruning returned `Ok`
+without reporting it. The further experimental change allows strict-mode
+adjacency pruning only when the two leaf derivative boxes have a common
+strictly monotone projection. The two-branch query now fails closed as
+`AmbiguousTopology` after 255 pair examinations; a noncrossing curved pair at
+the same scale succeeds, as does the monotone corner. The four precision tests
+pass 29 assertions. These are bounded refusals, not intersection certificates.
+
+The combined ellipse/intersection/trim selection passed 1,361,893 assertions
+across 102 cases both before and after the additional adjacency change. The
+worker/cache/replacement/five-lane matrix then passed 1,603,681 assertions on
+the rebuilt adjacency change with the bounded test-only timeout override.
+Before committing, justify or replace the
+ellipse-only activation heuristic, and confirm bounded behavior and platform
+coverage. `LC_ParametricCurves` explicitly requires consecutive segments and
+`next()` branches to meet end-to-start, supporting the common-projection
+argument for conforming providers; `validSegments()` does not itself validate
+that geometric contract. Audit provider construction and malformed-provider
+handling before relying on it as a checked guarantee.
+Keep the experimental code uncommitted until these acceptance gates pass.
