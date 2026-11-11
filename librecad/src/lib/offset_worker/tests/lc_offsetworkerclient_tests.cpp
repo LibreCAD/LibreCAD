@@ -888,16 +888,22 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         std::size_t degree;
         double signedDistance;
         RS_Vector translation;
+        double rotation;
     };
     std::vector<DegreeMinusOneMultiplicityFixture> degreeMinusOneMultiplicityFixtures;
     for (const std::size_t degree : {4U, 5U, 6U}) {
         for (const RS_Vector translation : {RS_Vector{0.0, 0.0}, RS_Vector{1.0e6, -2.0e6}}) {
-            for (const double signedDistance : {-0.1, 0.1}) {
-                RS_SplineData spline = degreeMinusOneMultiplicitySpline(degree);
-                for (RS_Vector& point : spline.controlPoints) point += translation;
-                degreeMinusOneMultiplicityFixtures.push_back(
-                    {sources.size(), degree, signedDistance, translation});
-                sources.emplace_back(LC_OffsetSourceGeometry{spline});
+            for (const double rotation : {0.0, M_PI / 180.0 * 37.0}) {
+                for (const double signedDistance : {-0.1, 0.1}) {
+                    RS_SplineData spline = degreeMinusOneMultiplicitySpline(degree);
+                    const double cosine = std::cos(rotation);
+                    const double sine = std::sin(rotation);
+                    for (RS_Vector& point : spline.controlPoints) {
+                        point = {cosine * point.x - sine * point.y + translation.x, sine * point.x + cosine * point.y + translation.y};
+                    }
+                    degreeMinusOneMultiplicityFixtures.push_back({sources.size(), degree, signedDistance, translation, rotation});
+                    sources.emplace_back(LC_OffsetSourceGeometry{spline});
+                }
             }
         }
     }
