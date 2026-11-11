@@ -36856,3 +36856,18 @@ assertions across 36 cases. `git diff --check` passes.
 This qualifies this repeated-neighbor fit-point profile only. It does not
 establish other coincident-point patterns, worker preparation, five-lane
 persistence, or visible/external-CAD acceptance.
+
+## 949. Run Repeated-neighbor Fit-point Trimming Through the Worker (2026-11-11)
+
+Test commit `8e8a40c57` adds the repeated-neighbor fit-point source from
+section 948 to the real-helper `Produce` matrix alongside the forward,
+reversed, and affine tangent-constrained profiles. It finds a regular source
+point for side selection and checks both sides at distances `0.2` and `0.5`;
+the worker retains the typed spline-points source, completion is accepted,
+ordinary output is produced, and the source remains unchanged. The focused
+case passes 2,911 assertions; the complete `offset_worker_client` CTest passes
+in 273.16 seconds. `git diff --check` passes.
+
+This verifies worker preparation for this repeated-neighbor profile only.
+Five-lane persistence for it and other coincident fit-point patterns remains
+open, along with visible and external-CAD acceptance.
