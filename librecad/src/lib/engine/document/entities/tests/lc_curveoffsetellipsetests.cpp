@@ -1350,6 +1350,25 @@ TEST_CASE("Translated rotated wide-axis ellipse reports the cusp boundary and ov
     CHECK(reversedInward.status == LC_CurveOffsetStatus::Ok);
     CHECK(reversedInward.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
     checkOffset(reversedInward, curveOf(reversedArc), 0.9 * cuspRadius, {true});
+    for (const double distance : {cuspRadius, 1.1 * cuspRadius}) {
+        CAPTURE(distance, cuspRadius);
+        const auto options = LC_CurveOffset::makeDirectOptions(reversedArc, distance, 0.1 * distance);
+        const auto branches = LC_CurveOffset::buildDirectBranches(
+            reversedArc, LC_CurveOffset::makeSideRequest(kRight, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        const Offset result = offsetOf(reversedArc, kRight, distance, 0.1 * distance);
+        CHECK(branches.status == LC_CurveOffsetStatus::Ok);
+        CHECK(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(result.intersectionDiagnostics.status == LC_IntersectionStatus::Ok);
+        if (distance > cuspRadius) {
+            REQUIRE_FALSE(branches.branches.empty());
+            CHECK(result.entities.empty());
+            CHECK(result.chains.empty());
+            continue;
+        }
+        CHECK_FALSE(result.entities.empty());
+        checkOffset(result, curveOf(reversedArc), distance, {true});
+    }
 }
 
 TEST_CASE("Large-origin near-contact is not an exact sampled crossing", "[curve-offset][ellipse][precision]") {

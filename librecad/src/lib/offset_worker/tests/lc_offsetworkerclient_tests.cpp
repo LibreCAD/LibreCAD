@@ -814,6 +814,12 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
     const std::size_t rotatedWideAxisOverCuspEllipseArcFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
         {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, -0.2, 0.2, false}});
+    const std::size_t rotatedWideAxisAtCuspReversedEllipseArcFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
+        {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.2, -0.2, true}});
+    const std::size_t rotatedWideAxisOverCuspReversedEllipseArcFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
+        {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.2, -0.2, true}});
     const std::size_t tangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{tangentFitPoints});
     const std::size_t reversedTangentFitPointFixture = sources.size();
@@ -1616,6 +1622,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             : i == rotatedWideAxisReversedNearCuspEllipseArcFixture                      ? 2.4
             : i == rotatedWideAxisAtCuspEllipseArcFixture                                ? 16.0 / 6.0
             : i == rotatedWideAxisOverCuspEllipseArcFixture                              ? 1.1 * (16.0 / 6.0)
+            : i == rotatedWideAxisAtCuspReversedEllipseArcFixture                        ? 16.0 / 6.0
+            : i == rotatedWideAxisOverCuspReversedEllipseArcFixture                      ? 1.1 * (16.0 / 6.0)
             : i == largeOriginParabolaFixture                                            ? 2500.0
             : i == translatedSmallParabolaFixture                                        ? 0.00025
             : i == smallLargeOriginParabolaFixture                                       ? 0.0005
@@ -1745,7 +1753,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == rotatedWideAxisNearCuspEllipseArcFixture ||
             i == rotatedWideAxisReversedNearCuspEllipseArcFixture ||
             i == rotatedWideAxisAtCuspEllipseArcFixture ||
-            i == rotatedWideAxisOverCuspEllipseArcFixture)
+            i == rotatedWideAxisOverCuspEllipseArcFixture ||
+            i == rotatedWideAxisAtCuspReversedEllipseArcFixture ||
+            i == rotatedWideAxisOverCuspReversedEllipseArcFixture)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -1856,7 +1866,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                          i == rotatedWideAxisNearCuspEllipseArcFixture ||
                          i == rotatedWideAxisReversedNearCuspEllipseArcFixture ||
                          i == rotatedWideAxisAtCuspEllipseArcFixture ||
-                         i == rotatedWideAxisOverCuspEllipseArcFixture) {
+                         i == rotatedWideAxisOverCuspEllipseArcFixture ||
+                         i == rotatedWideAxisAtCuspReversedEllipseArcFixture ||
+                         i == rotatedWideAxisOverCuspReversedEllipseArcFixture) {
                     const auto* actual = std::get_if<RS_EllipseData>(
                         &editable->sourceDefinition()->source.value);
                     const auto* expected = std::get_if<RS_EllipseData>(
@@ -2137,7 +2149,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == rotatedWideAxisNearCuspEllipseArcFixture ||
             i == rotatedWideAxisReversedNearCuspEllipseArcFixture ||
             i == rotatedWideAxisAtCuspEllipseArcFixture ||
-            i == rotatedWideAxisOverCuspEllipseArcFixture) {
+            i == rotatedWideAxisOverCuspEllipseArcFixture ||
+            i == rotatedWideAxisAtCuspReversedEllipseArcFixture ||
+            i == rotatedWideAxisOverCuspReversedEllipseArcFixture) {
             const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
             offset.distance = i == rotatedWideAxisNearCuspEllipseFixture ? 2.4
                 : i == rotatedWideAxisAtCuspEllipseFixture ? 16.0 / 6.0
