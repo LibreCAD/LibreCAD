@@ -36631,3 +36631,37 @@ This qualifies internal persistence and independent parsing only for this
 single circular-hyperbola profile, interval, sides, and distances. It does
 not establish ODA/AutoCAD acceptance, visible GUI behavior, or arbitrary
 hyperbola intervals, eccentricities, transforms, and curvature neighborhoods.
+
+## 935. Reaffirm Source-family Selection While Replacing the Source (2026-11-11)
+
+The source-picker requirement is to keep the `Source type` control available
+while choosing a replacement, allow the user to change that type before
+selecting a candidate, and filter the candidate list to that family. The
+supported-family set is the nine currently modeled kinds: line, arc, circle,
+ellipse, polyline, spline, spline-points, parabola, and bounded hyperbola.
+Parabola remains its own typed family rather than being presented as
+spline-points. Existing headless widget coverage already exercises changing
+the family during replacement, filtering candidates, and selecting each
+family; this request therefore requires no additional implementation slice
+unless that coverage or behavior regresses.
+
+The automated selector coverage does not establish visible macOS interaction,
+selection/highlight behavior under all document states, or support for curve
+types not currently represented by the offset-source model. Keep those
+acceptance and capability boundaries explicit rather than treating the
+selector as evidence that every entity in LibreCAD is offset-compatible.
+
+## 936. Qualify Trimmed Fit-point Spline-points with Tangent Constraints (2026-11-11)
+
+Test commit `204a7915c` adds an exact-normal trimming regression for a
+tangent-constrained fit-point `LC_SplinePoints` profile. The test derives
+endpoint tangent vectors from the evaluated curve and first verifies
+`fitTangentsMatchCurve()`, then checks both offset sides at distances `0.2`
+and `0.5` against source-normal distance and visible-offset coverage. The
+focused test passes 20 assertions; the full `[curve-offset][trim]` selection
+passes 55,482 assertions across 34 cases. `git diff --check` passes.
+
+This establishes direct trimmed geometry only for this profile and grid. It
+does not establish worker execution, editable-cache admission, GUI behavior,
+DXF/DWG persistence, other fit-point shapes or tangent constraints, nor
+visible/external-CAD acceptance; those remain open validation lanes.
