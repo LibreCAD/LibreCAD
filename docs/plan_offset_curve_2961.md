@@ -20429,6 +20429,15 @@ application object compiled, not the full application. The broad strict
 geometry and worker/file reruns, plus clean committed-path validation, remain
 in progress. The strict solver and diagnostics are still uncommitted.
 
+With the experimental strict solver and this proof, the
+ellipse/intersection/trim matrix passed 1,361,893 assertions in 102 cases;
+the real-worker typed-source/cache and five-lane DXF/DWG matrix passed
+1,580,337 assertions in one case, including fixtures 134 and 155. This closes
+those fixture-specific failures, not the remaining strict activation and
+release gates. A clean CMake Release build at `ab8640ed2` passed the
+materialized selector (2,883 assertions in 14 cases); its broader clean
+matrices and a full qmake6 build are running separately.
+
 ### Completion receipt
 
 All eight bounded interval/branch layouts now run centered and translated
