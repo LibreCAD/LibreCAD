@@ -180,9 +180,11 @@ Curve curveOf(const LC_SplinePoints& s) {
 
 TEST_CASE("Trimmed typed parabola offsets retain exact normals on both sides",
           "[curve-offset][trim][parabola][oracle]") {
-    const std::array<LC_Parabola, 2> sources{{
+    const std::array<LC_Parabola, 4> sources{{
         LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10}, RS_Vector{10, 0}}}},
-        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}}
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{10, 0}, RS_Vector{5, 10}, RS_Vector{0, 0}}}},
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{4, -3}, RS_Vector{15, 3}, RS_Vector{19, -5}}}},
+        LC_Parabola{nullptr, LC_ParabolaData{{RS_Vector{7, -2}, RS_Vector{5, 7.25}, RS_Vector{-5, 0.5}}}}
     }};
 
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
