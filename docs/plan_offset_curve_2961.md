@@ -36556,6 +36556,24 @@ profiles and trim matrix. It is not ODA/AutoCAD acceptance, visible CAD
 rendering, general affine conditioning, or support for other parabola shapes,
 domains, and distances.
 
+## 932. Add an Exact-normal Oracle for Trimmed Bounded Hyperbola Offsets (2026-11-11)
+
+Test commit `0d124ddde` adds a typed bounded-hyperbola case to the trimmed
+geometry oracle suite. The circular hyperbola centered at `(0,0)`, major point
+`(3,0)`, ratio `1`, and parameter interval `[-1.5,1.5]` is checked on both
+offset sides at distances `1` and `4`; the latter exceeds the vertex radius
+of curvature and trims the fold. The test uses an independently evaluated
+hyperbolic point/first/second derivative curve and checks both nearest-kept
+distance and coverage of visible exact-normal offset points. It passes 17
+focused assertions; the full `[curve-offset][trim]` selection passes 55,462
+assertions across 33 cases. `git diff --check` passes.
+
+This closes direct trimmed-geometry evidence only for this bounded profile,
+interval, sides, and distances. The existing worker-family matrix does not
+specifically certify this trimmed case; worker Produce, file persistence,
+other hyperbola parameters/transforms, and visible/external-CAD acceptance
+remain open.
+
 ## 926. Exercise Typed-parabola Produce Through the Worker Client (2026-11-11)
 
 Test commit `b2da768ea` expands the real-helper `Produce` regression for the
