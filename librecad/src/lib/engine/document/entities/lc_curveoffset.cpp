@@ -3666,7 +3666,12 @@ public:
     /** From the piece's Bezier nets over [a, b], by blossoming, and those of its derivative. */
     bool bound(const std::size_t segment, const double a, const double b, LC_Interval& x, LC_Interval& y,
                LC_Interval& dx, LC_Interval& dy) const override {
+        if (segment >= m_pieces.size() || !std::isfinite(a) || !std::isfinite(b) || a > b ||
+            a < m_segments[segment].t0 || b > m_segments[segment].t1) {
+            return false;
+        }
         const std::array<RS_Vector, 4>& p = m_pieces[segment];
+        if (!std::all_of(p.begin(), p.end(), [](const RS_Vector& point) { return isFinite(point); })) return false;
         const auto pt = [](const double v) { return LC_Interval::point(v); };
         const LC_Interval one = pt(1.0);
         const LC_Interval ua = pt(a) - pt(m_segments[segment].t0);
@@ -3700,6 +3705,7 @@ public:
         for (const auto& u : args) {
             const LC_Interval vx = cubic(*u[0], *u[1], *u[2], p[0].x, p[1].x, p[2].x, p[3].x);
             const LC_Interval vy = cubic(*u[0], *u[1], *u[2], p[0].y, p[1].y, p[2].y, p[3].y);
+            if (!vx.isValid() || !vy.isValid()) return false;
             x = x.isValid() ? LC_Interval::hull(x, vx) : vx;
             y = y.isValid() ? LC_Interval::hull(y, vy) : vy;
         }
@@ -3711,6 +3717,7 @@ public:
                                                        pt(p[2].x) - pt(p[1].x), pt(p[3].x) - pt(p[2].x));
             const LC_Interval vy = pt(3.0) * quadratic(*u[0], *u[1], pt(p[1].y) - pt(p[0].y),
                                                        pt(p[2].y) - pt(p[1].y), pt(p[3].y) - pt(p[2].y));
+            if (!vx.isValid() || !vy.isValid()) return false;
             dx = dx.isValid() ? LC_Interval::hull(dx, vx) : vx;
             dy = dy.isValid() ? LC_Interval::hull(dy, vy) : vy;
         }

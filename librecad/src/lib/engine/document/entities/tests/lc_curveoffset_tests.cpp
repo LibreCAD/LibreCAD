@@ -364,6 +364,36 @@ TEST_CASE("Materialized Bezier derivative bounds enclose high-precision values",
     }
 }
 
+TEST_CASE("Materialized Bezier bounds reject invalid inputs",
+          "[curve-offset][topology][materialized][bounds]") {
+    LC_Interval x, y, dx, dy;
+    const std::array<RS_Vector, 4> valid{{{0, 0}, {1, 2}, {2, 1}, {3, 0}}};
+    LC_CurveOffsetInternal::BezierBranches branches{{valid}};
+    const auto ordinary = LC_CurveOffsetInternal::makePieceCurves(branches, {-1});
+    REQUIRE(ordinary->bound(0, 0, 1, x, y, dx, dy));
+    CHECK_FALSE(ordinary->bound(1, 0, 1, x, y, dx, dy));
+    CHECK_FALSE(ordinary->bound(0, .8, .2, x, y, dx, dy));
+    CHECK_FALSE(ordinary->bound(0, -.1, .5, x, y, dx, dy));
+    CHECK_FALSE(ordinary->bound(0, .5, 1.1, x, y, dx, dy));
+    CHECK_FALSE(ordinary->bound(0, std::numeric_limits<double>::quiet_NaN(), 1, x, y, dx, dy));
+    for (const double invalid : {std::numeric_limits<double>::quiet_NaN(),
+                                 std::numeric_limits<double>::infinity(),
+                                 -std::numeric_limits<double>::infinity()}) {
+        for (std::size_t index = 0; index < valid.size(); ++index) {
+            for (const bool useX : {false, true}) {
+                CAPTURE(invalid, index, useX);
+                auto damaged = valid;
+                if (useX) damaged[index].x = invalid;
+                else damaged[index].y = invalid;
+                LC_CurveOffsetInternal::BezierBranches input{{damaged}};
+                const auto curves = LC_CurveOffsetInternal::makePieceCurves(input, {-1});
+                for (const auto& range : {std::pair{0.0, 0.0}, std::pair{0.0, 1.0}, std::pair{1.0, 1.0}})
+                    CHECK_FALSE(curves->bound(0, range.first, range.second, x, y, dx, dy));
+            }
+        }
+    }
+}
+
 TEST_CASE("Offset source snapshots own every supported source type") {
     RS_EllipseData ellipseData;
     ellipseData.center = {1.0, 2.0};
