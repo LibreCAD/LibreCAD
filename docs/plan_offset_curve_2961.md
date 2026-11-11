@@ -35011,6 +35011,16 @@ test-only commit `b592af002`, the clean bounded-source and picker selection
 passed 12,511 assertions in 31 cases. The macOS deployment-target warning and
 the large-drawing scan, visible-GUI and occurrence-identity gaps remain open.
 
+At pushed PR head `5ed4627fcc3ed22416e6e5abb6f6c0b2602a6273`, a fresh source
+snapshot was configured and fully built with CMake Release/Ninja on macOS ARM64
+using Qt 6.12, `BUILD_TESTS=ON`, and the offset-worker test configuration. The
+clean-source/picker/renderer/viewport selection passed 15,088 assertions in 72
+cases; `[lc-offsetcurve][source][bounded]` passed 21 assertions in 5 cases.
+These prove the tested headless cases and clean compile, not the full application
+runtime, qmake6, visible GUI, or cross-platform gates. The initial combined
+selector included a nonexistent bounded-source tag; bounded tests were rerun
+separately with their actual registered tags and passed.
+
 For the large-drawing follow-up, first measure the live-watch scan with many
 same-kind, maximum-size candidates and establish explicit work and latency
 budgets. Then design a mutation-aware, incrementally bounded scan: keep no
