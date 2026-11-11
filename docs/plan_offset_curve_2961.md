@@ -36779,3 +36779,19 @@ This establishes worker preparation only for this one stationary profile.
 It does not establish five-lane file persistence, additional stationary
 layouts, fit-point stationarity, or visible/external-CAD acceptance.
 `git diff --check` passes.
+
+## 944. Persist the Stationary-span Trim Profile Through File Lanes (2026-11-11)
+
+Test commit `46d856912` extends the fit-point trim persistence matrix to include
+the stationary control-point profile from sections 942-943. Four source
+profiles (three tangent-constrained fit-point traversals/transforms and one
+stationary control-point layout), both sides, distances `0.2`/`0.5`, and all
+five R2004/R2013/R2018 DXF/DWG lanes are checked by 33-point reopened-geometry
+sampling. The focused test passes 10,460 assertions across 80 combinations;
+LibreDWG 0.14 independently reads all 16 R2018 DWGs and matches SPLINE degree
+and controls. Combined `[lc-offsetcurve][persistence][trim]` passes 23,907
+assertions across three cases. `git diff --check` passes.
+
+This closes persistence for the four recorded profiles only. It does not
+cover additional stationary layouts, fit-point stationarity, other releases,
+ODA/AutoCAD acceptance, or visible GUI behavior.
