@@ -34814,3 +34814,29 @@ assertions in 67 cases; the viewport-range, close and source-highlight
 selection passed 639 assertions in 14 cases. These are headless results;
 clean committed-path and visible GUI checks remain open. Full qmake6
 application and worker compilation is still in progress.
+
+## 857. Reject Duplicated Regular Node Occurrences (2026-11-11)
+
+Commit `b0c90898f` adds a necessary, deliberately narrow node check: for a
+transverse node whose two finite source parameters are exactly equal, a
+single smooth interior source span with a regular tangent and uniform
+non-corner signed-distance provenance cannot supply two distinct offset
+occurrences. Such a candidate is rejected rather than accepted solely by
+point proximity. Source breaks, corner-arc provenance, mixed distances,
+unavailable jets and other uncertain cases are not classified by this guard.
+Its jet evaluation is charged to the existing sample allowance; exhaustion
+returns `LimitExceeded` without publishing entities.
+
+An adversarial noded-parabola regression reproduces the old acceptance when
+either occurrence is duplicated and now checks rejection, no partial output,
+and sample-budget exhaustion. With the uncommitted geometry experiment,
+the focused case passed 36 assertions; the combined geometry/intersection/
+trim/topology matrix passed 1,369,462 assertions; and the real-worker
+typed-source/cache and five-lane file matrix passed 1,657,329 assertions in
+one case. This is not a general occurrence-identity proof: distinct but
+nearby parameters, circular-corner provenance, and other ambiguous matches
+remain open. Clean committed-path validation is pending.
+
+Desktop control was checked again on 2026-11-11 and reports the Mac locked;
+visible GUI acceptance remains blocked rather than inferred from headless
+tests. The full qmake6 pass and clean rebuild are being verified separately.
