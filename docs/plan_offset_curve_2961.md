@@ -36421,3 +36421,14 @@ operation-8 cache admission. The focused oracle passes 10,080 assertions.
 The worker-client and five-file-lane matrix does not yet include `.05/.95`;
 external readers, continuous error proof, visible GUI, cross-platform
 execution, and exact-head PR CI also remain open.
+
+## 922. Keep the Expanded Worker-client Matrix Within Bounded CI Limits (2026-11-11)
+
+CI commit `177d4438a` aligns the worker-client's bounded internal watchdog and
+CTest timeout with the expanded multi-format matrix: CTest allows 960 seconds,
+and sets `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000` (the test's hard maximum).
+Linux and Windows relocated-helper runs receive the same override. On the
+macOS arm64 CMake Release build, the registered full `offset_worker_client`
+CTest passes in 269.55 seconds. This validates CTest environment/timeout
+registration and the full local client suite; the Linux/Windows hosted runs
+remain pending PR CI and are not inferred from this local result.
