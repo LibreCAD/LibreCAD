@@ -34935,3 +34935,10 @@ justify reusing a partial result. Test mutations during every scan phase,
 identity preference, cancellation, budget exhaustion and recovery across all
 source families. Do not claim large-drawing responsiveness from the per-item
 size cap alone.
+
+An exploratory offscreen CMake Release measurement on macOS ARM64 created
+10,000 simple nonmatching ellipses plus the matching source, showed the
+Properties editor, and timed one direct watch-timer invocation at 6 ms. The
+temporary measurement test was removed. This single observation excludes
+large spline/polyline payloads, mutation during scanning, slower machines and
+visible event-loop latency; it is not a performance bound or acceptance gate.
