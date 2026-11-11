@@ -33973,3 +33973,42 @@ success, and the independent materialized-output crossing regression before
 accepting any topology change. Then continue the source-family qualification
 matrix one bounded slice at a time, recording actual test commands and results
 in the corresponding roadmap entry.
+
+## 837. Strict Topology Oracle Investigation (2026-11-10)
+
+An uncommitted experiment adds a strict self-loop mode and applies it to a
+narrow large-origin ellipse precision-risk case. A synthetic sub-tolerance
+crossing contained in one cubic segment revealed that disabling bridge pruning
+alone is insufficient: accepting a small, non-monotone segment as one leaf
+silently misses its self-crossing. Requiring monotonicity in strict leaf
+preparation makes that case fail closed; a small monotone line remains
+accepted. A separate four-segment crossing is also rejected or reported. These
+synthetic checks do not reproduce the actual materialized ellipse crossing and
+do not establish that the ellipse-specific activation heuristic is complete.
+
+The strict precision tests pass 6 assertions across 2 cases. The combined
+ellipse/intersection/trim selection passes 1,361,885 assertions across 101
+cases. The clean rebuilt typed-source worker-client matrix hit its 150-second
+suite-wide watchdog at fixture index 223 after 413,019 passing assertions; it
+did not complete. A prior run overlapped a worker rebuild and is not a valid
+comparison. The watchdog result alone does not identify a per-request timeout
+or prove a regression.
+
+Commit `562a92ca2` adds an opt-in, bounded test-only suite timeout via
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS` (150,000 to 900,000 ms); the default and
+the six-second per-callback deadline are unchanged. With a 900,000 ms limit,
+the complete typed-source matrix passed 1,570,133 assertions, including all
+five listed DXF/DWG lanes, with the experimental geometry changes present.
+That run used the first equivalent version of the timeout helper; after
+refactoring it to read the setting once, the rebuilt boundary and focused worker
+tests passed 207 assertions across two cases. This does not compare runtime
+against an equivalent clean baseline or qualify the geometry experiment.
+
+Before committing this experiment: reproduce and independently check the
+actual materialized ellipse crossing; justify or replace the activation
+heuristic across source types and coordinate scales; compare matrix runtime
+against the same baseline under the same conditions, splitting the matrix into
+bounded cases if necessary without weakening its coverage; and rerun the
+complete worker/cache/replacement/file-format gates. Exact and over-cusp
+trimmed results must remain fail-closed, with below-cusp success. Keep the
+experiment uncommitted until those gates pass.
