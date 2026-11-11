@@ -781,6 +781,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         *mixedBulgeSource,
         LC_OffsetSourceGeometry{LC_HyperbolaData{{0.0, 0.0}, {17.32050807568877, 10.0}, 0.2, -1.4, 1.8, true}},
         LC_OffsetSourceGeometry{*secondParabola}};
+    const std::size_t rotatedWideAxisEllipseFixture = sources.size();
+    sources.emplace_back(LC_OffsetSourceGeometry{RS_EllipseData{
+        {1.0e4, -2.0e4}, {4.0 * std::cos(M_PI / 7.0), 4.0 * std::sin(M_PI / 7.0)}, 1.5, 0.0, 0.0, false}});
     const std::size_t tangentFitPointFixture = sources.size();
     sources.emplace_back(LC_OffsetSourceGeometry{tangentFitPoints});
     const std::size_t reversedTangentFitPointFixture = sources.size();
@@ -1691,7 +1694,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             i == reversedTraversalParabolaFixture ||
             i + 3 >= sources.size() || (i >= scaledLineFixtureStart && i < scaledLineFixtureEnd) ||
             scaledCircle != scaledCircleFixtures.end() || thinEllipse != thinEllipseFixtures.end() ||
-            thinEllipseCusp != thinEllipseCuspFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end())
+            thinEllipseCusp != thinEllipseCuspFixtures.end() || thinEllipseArc != thinEllipseArcFixtures.end() ||
+            i == rotatedWideAxisEllipseFixture)
             REQUIRE(cacheRepresentable);
         CHECK(static_cast<bool>(editable) == cacheRepresentable);
         if (cacheRepresentable) {
@@ -1792,6 +1796,22 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                           tangentTolerance);
                     CHECK(actual->fitEndTangent.distanceTo(expected->fitEndTangent) <=
                           tangentTolerance);
+                }
+                else if (i == rotatedWideAxisEllipseFixture) {
+                    const auto* actual = std::get_if<RS_EllipseData>(
+                        &editable->sourceDefinition()->source.value);
+                    const auto* expected = std::get_if<RS_EllipseData>(
+                        &expectedSource->value);
+                    REQUIRE(actual);
+                    REQUIRE(expected);
+                    auto actualCanonical = *actual;
+                    auto expectedCanonical = *expected;
+                    REQUIRE(Geo::normaliseBasis(actualCanonical));
+                    REQUIRE(Geo::normaliseBasis(expectedCanonical));
+                    CHECK(Req::Values::encodeSourceGeometry(
+                              LC_OffsetSourceGeometry{actualCanonical}) ==
+                          Req::Values::encodeSourceGeometry(
+                              LC_OffsetSourceGeometry{expectedCanonical}));
                 }
                 else {
                     CHECK(Req::Values::encodeSourceGeometry(editable->sourceDefinition()->source) ==
@@ -2012,6 +2032,13 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
             const auto& circle = std::get<RS_CircleData>(sources[i].value);
             offset.distance = 0.2 * scaledCircle->second;
             offset.coord = circle.center + RS_Vector{2.5 * scaledCircle->second, 0.0};
+            offset.sideFallback = offset.coord;
+        }
+        if (i == rotatedWideAxisEllipseFixture) {
+            const auto& ellipse = std::get<RS_EllipseData>(sources[i].value);
+            const RS_Vector majorDirection = ellipse.majorP.normalized();
+            offset.distance = 0.25;
+            offset.coord = ellipse.center + ellipse.majorP + majorDirection * offset.distance;
             offset.sideFallback = offset.coord;
         }
         if (thinEllipse != thinEllipseFixtures.end()) {
