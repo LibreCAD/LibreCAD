@@ -36409,3 +36409,15 @@ transform/profile subset. It does not establish arbitrary knot vectors,
 continuity classes, broader client weight/transform combinations, continuous
 error proof, external CAD, visible GUI, cross-platform execution, or
 exact-head PR CI.
+
+## 921. Exercise Extreme Rational C1 Knot Placements in the Kernel Oracle (2026-11-11)
+
+Test commit `94de29517` adds interior knots `0.05` and `0.95` to the
+degree-4/5/6 rational C1 worker-kernel matrix, alongside `.15`, `.37`, `.63`,
+and `.85`. The added placements run across both positive weight profiles,
+both signed offsets, both existing rotations and translations, and retain
+left/right continuity, independent 256-bit offset-deviation checks, and
+operation-8 cache admission. The focused oracle passes 10,080 assertions.
+The worker-client and five-file-lane matrix does not yet include `.05/.95`;
+external readers, continuous error proof, visible GUI, cross-platform
+execution, and exact-head PR CI also remain open.
