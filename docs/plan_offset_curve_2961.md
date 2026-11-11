@@ -33922,10 +33922,12 @@ Using the product-aware ellipse derivative bound changed the exact-cusp result
 from `AmbiguousTopology` to successful materialization. The attempted follow-up
 check normalized temporary Bezier control points before the materialized-output
 self-intersection query, but the focused regression still returned success with
-nonempty output and no intersection failure domain. This is unsafe: an earlier
-independent dense `checkOffset` oracle found a self-crossing near the cusp in
-such a materialized result. Both production experiments were removed; no
-geometry relaxation is accepted from this investigation.
+nonempty output and no intersection failure domain. An earlier dense
+`checkOffset` oracle reported a crossing near the cusp in such a materialized
+result. Section 838 corrects that report: its sampled segments are disjoint
+and the check used coordinate-scale slack, so it indicates a near-contact,
+not a proven crossing. Both production experiments were removed; no geometry
+relaxation is accepted without a sound topology proof.
 
 The fresh Release build completed successfully. The exact-cusp regression was
 run against the experimental binary and failed four expected fail-closed
@@ -33935,14 +33937,15 @@ retains cusp-threshold geometry` to pass before the next implementation slice.
 Any future bound improvement must satisfy all of these gates before it can
 replace the conservative behavior: exact and over-cusp return
 `AmbiguousTopology` with empty entities/chains; below-cusp remains successful;
-independent materialized-output intersection checking catches the known nearby
-self-crossing; and the typed-source worker/client plus file-format matrix stays
-green. Do not treat coordinate normalization alone as a proof of topology.
+independent materialized-output intersection checking catches proven
+crossings and handles unresolved near-contacts conservatively; and the
+typed-source worker/client plus file-format matrix stays green. Do not treat
+coordinate normalization alone as a proof of topology.
 
 No implementation or budget change is authorized by this failed experiment.
 The immediate plan item is to restore and verify the conservative baseline, then
 design a topology oracle that uses pair-local parameter/geometry precision and
-has an explicit regression for the known crossing before revisiting product
+has explicit crossing and near-contact regressions before revisiting product
 bounds.
 
 ## 836. Reconcile the Editable Source-type and Parabola Request (2026-11-10)
@@ -33969,7 +33972,7 @@ coverage alone.
 
 The immediate unrelated geometry gate remains the conservative cusp baseline
 from section 835: restore/verify exact and over-cusp refusal, below-cusp
-success, and the independent materialized-output crossing regression before
+success, and an independent materialized-output topology regression before
 accepting any topology change. Then continue the source-family qualification
 matrix one bounded slice at a time, recording actual test commands and results
 in the corresponding roadmap entry.
@@ -33983,8 +33986,8 @@ alone is insufficient: accepting a small, non-monotone segment as one leaf
 silently misses its self-crossing. Requiring monotonicity in strict leaf
 preparation makes that case fail closed; a small monotone line remains
 accepted. A separate four-segment crossing is also rejected or reported. These
-synthetic checks do not reproduce the actual materialized ellipse crossing and
-do not establish that the ellipse-specific activation heuristic is complete.
+synthetic checks do not reproduce the materialized ellipse near-contact and do
+not establish that the ellipse-specific activation heuristic is complete.
 
 The strict precision tests pass 6 assertions across 2 cases. The combined
 ellipse/intersection/trim selection passes 1,361,885 assertions across 101
@@ -34006,17 +34009,39 @@ against an equivalent clean baseline or qualify the geometry experiment.
 
 Enabling materialized-output noding on the existing over-cusp Direct fixture
 returned `Ok` after 63 box pairs. This probe did not independently establish
-that its fitted output crosses, so it is not a substitute for the crossing
-fixture from the rejected bound experiment. Capture that experiment's actual
-materialized control nets and a reproducible independent crossing witness before
-using them as a regression; do not require all over-cusp Direct outputs to be
-rejected merely because their exact source has a cusp.
+that its fitted output crosses. Section 838 investigates the previously
+reported crossing from the rejected bound experiment; do not require all
+over-cusp Direct outputs to be rejected merely because their source has a cusp.
 
-Before committing this experiment: reproduce and independently check the
-actual materialized ellipse crossing; justify or replace the activation
+Before committing this experiment: independently check materialized ellipse
+near-contacts and any proven crossings; justify or replace the activation
 heuristic across source types and coordinate scales; compare matrix runtime
 against the same baseline under the same conditions, splitting the matrix into
 bounded cases if necessary without weakening its coverage; and rerun the
 complete worker/cache/replacement/file-format gates. Exact and over-cusp
 trimmed results must remain fail-closed, with below-cusp success. Keep the
 experiment uncommitted until those gates pass.
+
+## 838. Correct the Reported Ellipse Crossing (2026-11-10)
+
+Recreated the rejected product-aware bound experiment temporarily and captured
+the exact-cusp materialized spline. The `checkOffset` report identified sampled
+segments 404 and 406, but their x intervals are disjoint by approximately
+`1.28e-9`; line parameters for the intersection of their supporting lines are
+approximately `1.17` and `-0.75`, outside both segments. The seven consecutive
+Bezier control x coordinates spanning the reported area are strictly
+increasing. The oracle's `segmentsIntersect(..., 0)` uses a nonzero
+coordinate-scale slack, so this is a conservative near-contact report, not a
+demonstrated self-crossing. The over-cusp trial remained fail-closed. The
+temporary product bound and capture instrumentation were removed.
+
+Commit `0f3d0fe7e` records the disjoint sampled segments, the conservative
+checker result at an explicit near-contact tolerance, and the monotone control
+coordinates. The zero-tolerance result is platform-dependent because the
+checker uses coordinate-scale slack and `long double` precision varies. The
+focused near-contact, strict synthetic topology, and conservative cusp tests passed 16,550
+assertions across four cases. This corrects the earlier evidence, not the
+requirement for a sound topology proof: retain exact/over-cusp refusal until
+the unresolved pair is classified, add independently proven crossing and
+near-contact controls, and continue validating the activation rule and worker
+matrix before accepting the uncommitted strict-mode experiment.

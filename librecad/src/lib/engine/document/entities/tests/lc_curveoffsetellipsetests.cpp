@@ -1308,7 +1308,7 @@ TEST_CASE("Large-origin near-contact is not an exact sampled crossing", "[curve-
     const LC_OffsetSegment second{false, {1000086.6025390271, -999950.00000031386},
                                   {1000086.6025390285, -999950.00000031409}};
     REQUIRE(first.b.x < second.a.x);
-    CHECK(segmentsIntersect(first, second, 0.0)); // Conservative coordinate-scale slack.
+    CHECK(segmentsIntersect(first, second, 2e-9)); // An explicit near-contact tolerance is conservative.
 
     const std::array<double, 7> controls{{1000086.6025390003, 1000086.6025390106,
                                           1000086.6025390205, 1000086.6025390304,
