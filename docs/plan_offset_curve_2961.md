@@ -34678,3 +34678,18 @@ either prove exclusion or repair/refuse the fit without publishing unproved
 geometry. Re-run the entire worker/file matrix and the broad strict suites
 before considering activation. Do not relax the exact join/cusp checks or
 discard near-join intersections merely to make this fixture pass.
+
+## 853. Certify General Joined Bezier Directions (2026-11-11)
+
+Commit `d06eade92` extends the section-852 Bernstein direction proof to
+joined pieces without an exact repeated endpoint control. It factors each
+endpoint displacement once and keeps both endpoint derivatives intact; no
+near-equality assumption is introduced. The captured worker pair is isolated
+in a regression using the unresolved parameter box in both query orders, and
+an exactly crossing non-cusp pair must remain uncertified. With the
+experimental strict solver, the focused case passed 10 assertions, and the
+topology/strict-budget selector passed 8,459 assertions in 63 cases. The
+qmake6 application object compiled, not the full application. The broader
+strict matrix, worker/file rerun, and clean committed-path validation are in
+progress; the earlier worker failure is not considered closed until the full
+matrix passes.
