@@ -37,6 +37,7 @@
 
 #include "lc_curveoffset.h"
 #include "lc_hyperbola.h"
+#include "lc_offsetsource.h"
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "rs_spline.h"
@@ -338,6 +339,30 @@ TEST_CASE("Trimmed control-point spline-points skip a stationary span",
                 CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
                 CHECK(checked.worstMissing <= 2.0 * tolerance);
             }
+        }
+    }
+}
+
+TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
+          "[curve-offset][trim][spline-points][fit-points][stationary][oracle]") {
+    LC_SplinePointsData data{false, false};
+    data.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    LC_SplinePoints source{nullptr, data};
+    REQUIRE_FALSE(source.getData().controlPoints.empty());
+    REQUIRE(LC_OffsetSourceGeometry::capture(source));
+    const double endParameter = static_cast<double>(source.getSegmentCount());
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        for (const double distance : {0.2, 0.5}) {
+            CAPTURE(side, distance);
+            const LC_CurveOffsetGeometryResult result = trim(source, side, distance);
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const double tolerance =
+                LC_CurveOffset::makeDirectOptions(source, distance).tolerance.requestedGeometry;
+            const Checked checked = check(result, curveOf(source), 0.0, endParameter, distance);
+            CHECK(checked.nearestKept >= distance - 2.0 * tolerance);
+            CHECK(checked.worstMissing <= 2.0 * tolerance);
         }
     }
 }
