@@ -36750,3 +36750,18 @@ materialized ordinary SPLINE geometry, not typed offset-source metadata.
 Other fit interpolation/tangent policies, other DWG releases, editable-cache
 admission for trimmed results, visible GUI, and ODA/AutoCAD acceptance remain
 open.
+
+## 942. Qualify Trimming Across a Stationary Control-point Span (2026-11-11)
+
+Test commit `2b1fc6e63` adds a direct exact-normal trim oracle for an
+`LC_SplinePoints` source with explicit quadratic control points and a
+stationary span. It verifies a zero derivative inside that span, then checks
+both offset sides at distances `0.2` and `0.5` for minimum kept distance and
+coverage of every visible exact-normal offset point. The focused case passes
+19 assertions; the full `[curve-offset][trim]` selection passes 55,536
+assertions across 35 cases. `git diff --check` passes.
+
+This qualifies one open stationary-span profile only. It does not cover
+leading/trailing or multiple stationary spans in trimmed mode, fit-point
+stationarity, worker execution, five-lane persistence, or GUI/external-CAD
+acceptance; those remain separate matrix rows.
