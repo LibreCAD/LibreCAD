@@ -83,6 +83,7 @@ private:
     mutable qulonglong m_highlightSourceId = 0;
     mutable LC_OffsetSourceGeometry::Kind m_highlightKind = LC_OffsetSourceGeometry::Kind::Invalid;
     mutable QCborArray m_highlightGeometry;
+    mutable bool m_sourceCanSelect = false;
     QTimer* m_highlightTimer = nullptr;
     bool m_sourceHighlightVisible = false;
     LC_OffsetRunLimits m_limits;

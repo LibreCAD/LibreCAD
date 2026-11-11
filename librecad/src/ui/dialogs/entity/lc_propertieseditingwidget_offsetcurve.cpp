@@ -250,7 +250,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::setBusy(bool busy) const {
     ui->wPickPointCenter->setEnabled(!busy);
     ui->cbSourceType->setEnabled(!busy && m_entity && m_viewport);
     ui->cbSource->setEnabled(!busy && m_entity && m_viewport);
-    ui->tbSelectSource->setEnabled(!busy && ui->cbSource->currentData().isValid());
+    ui->tbSelectSource->setEnabled(!busy && m_sourceCanSelect);
     for (auto* picker : {ui->tbPickDistance, ui->tbPickMajor, ui->tbPickMinor, ui->tbPickRotation})
         picker->setEnabled(!busy);
     if (changed) emit preparationBusyChanged(busy); // No member access after user slots.
@@ -372,6 +372,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(bool preserveWa
         ui->cbSourceType->addItem(tr("Source type unavailable"));
         ui->cbSource->clear();
         ui->cbSource->addItem(tr("Source not available"));
+        m_sourceCanSelect = false;
         ui->tbSelectSource->setEnabled(false);
         clearSourceWatch();
         return;
@@ -445,7 +446,9 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices(bool preserveWa
         matchedIndex = 0;
     }
     ui->cbSource->setCurrentIndex(matchedIndex);
-    ui->tbSelectSource->setEnabled(hasMatchingSource && !m_busy);
+    const auto* selected = hasMatchingSource ? findSourceEntity(ui->cbSource->currentData().toULongLong()) : nullptr;
+    m_sourceCanSelect = selected && selected->isVisible() && !selected->isLocked();
+    ui->tbSelectSource->setEnabled(m_sourceCanSelect && !m_busy);
     refreshSourceHighlight(preserveWatch);
 }
 
@@ -549,6 +552,11 @@ void LC_PropertiesEditingWidgetOffsetCurve::checkSourceHighlight() const {
         const bool visible = match && match->isVisible();
         if (id != m_highlightSourceId || visible != static_cast<bool>(m_sourceHighlight)) {
             refreshSourceChoices(true);
+        } else {
+            bool validId = false;
+            const auto selectedId = ui->cbSource->currentData().toULongLong(&validId);
+            m_sourceCanSelect = validId && match && selectedId == id && visible && !match->isLocked();
+            ui->tbSelectSource->setEnabled(!m_busy && m_sourceCanSelect);
         }
     } catch (const std::bad_alloc&) {
         clearSourceWatch();
@@ -582,7 +590,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::selectCurrentSource() const {
     const auto id = ui->cbSource->currentData().toULongLong(&validId);
     auto* source = validId ? findSourceEntity(id) : nullptr;
     auto* document = m_viewport->getDocument();
-    if (source == nullptr || document == nullptr) return;
+    if (source == nullptr || document == nullptr || !source->isVisible() || source->isLocked()) return;
     document->select(QList<RS_Entity*>{source}, true);
     m_viewport->notifyChanged(RS2::RedrawDrawing);
 }

@@ -955,6 +955,72 @@ TEST_CASE("Source highlighting follows newly ambiguous and unique matches",
     CHECK(selected->getFlag(RS2::FlagSelected));
 }
 
+TEST_CASE("Source selection respects live visibility and layer locking",
+          "[gui][dialog][offsetcurve][source][highlight][selection]") {
+    Fixture f;
+    auto* source = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    source->setLayer(f.graphic.getActiveLayer());
+    f.graphic.addEntity(source);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+    auto* select = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(timer); REQUIRE(select);
+    REQUIRE(timer->isActive());
+    REQUIRE(select->isEnabled());
+
+    source->setVisible(false);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK_FALSE(select->isEnabled());
+    REQUIRE(QMetaObject::invokeMethod(select, "clicked", Qt::DirectConnection));
+    CHECK_FALSE(source->getFlag(RS2::FlagSelected));
+
+    source->setVisible(true);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK(select->isEnabled());
+    f.graphic.getActiveLayer()->lock(true);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK_FALSE(select->isEnabled());
+    REQUIRE(QMetaObject::invokeMethod(select, "clicked", Qt::DirectConnection));
+    CHECK_FALSE(source->getFlag(RS2::FlagSelected));
+    f.graphic.getActiveLayer()->lock(false);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK(select->isEnabled());
+    f.graphic.getActiveLayer()->freeze(true);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK_FALSE(select->isEnabled());
+    REQUIRE(QMetaObject::invokeMethod(select, "clicked", Qt::DirectConnection));
+    CHECK_FALSE(source->getFlag(RS2::FlagSelected));
+    f.graphic.getActiveLayer()->freeze(false);
+    REQUIRE(QMetaObject::invokeMethod(timer, "timeout", Qt::DirectConnection));
+    CHECK(select->isEnabled());
+}
+
+TEST_CASE("Source selection starts disabled for hidden or locked sources",
+          "[gui][dialog][offsetcurve][source][highlight][selection]") {
+    Fixture f;
+    auto* source = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    source->setLayer(f.graphic.getActiveLayer());
+    f.graphic.addEntity(source);
+    SECTION("hidden") { source->setVisible(false); }
+    SECTION("locked") { f.graphic.getActiveLayer()->lock(true); }
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* select = widget.findChild<QToolButton*>("tbSelectSource");
+    REQUIRE(select);
+    CHECK_FALSE(select->isEnabled());
+    REQUIRE(QMetaObject::invokeMethod(select, "clicked", Qt::DirectConnection));
+    CHECK_FALSE(source->getFlag(RS2::FlagSelected));
+}
+
 TEST_CASE("Source watch resolves matches that become available later",
           "[gui][dialog][offsetcurve][source][highlight][overlay]") {
     Fixture f;
