@@ -35098,3 +35098,12 @@ for the geometry change. Clean qmake6 after this geometry change, a persistence
 fixture specifically exercising noded materialized output, PR CI, corner-arc
 identity proofs, visible GUI, and cross-platform/runtime acceptance remain
 open.
+
+Clean qmake6 validation for the same committed geometry source also completed
+successfully. A recursive Release build from the refreshed clean snapshot at
+`1082a0a14c5087aa1dcabceaf1e02c38b7d9d202` linked LibreCAD, the offset worker,
+bundled plugins and `ttf2lff`. The only reported link warnings were existing
+Homebrew Qt/Freetype/HarfBuzz dylibs built for macOS 27.x while targeting
+macOS 14.4 with SDK 27.0. The later `8add08fc9` change only records CMake test
+results, so implementation sources are identical. Runtime compatibility on
+macOS 14.4, PR CI, GUI and other-platform gates remain unverified.
