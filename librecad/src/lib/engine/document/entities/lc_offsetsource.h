@@ -109,6 +109,16 @@ inline bool finitePoints(const std::vector<RS_Vector>& points) noexcept {
            std::all_of(points.begin(), points.end(), LC_OffsetSourceDetail::finite);
 }
 
+inline bool boundedSourceSize(const RS_SplineData& data) noexcept {
+    return data.controlPoints.size() <= MaximumSourceItems && data.weights.size() <= MaximumSourceItems &&
+           data.fitPoints.size() <= MaximumSourceItems && data.knotslist.size() <= 2 * MaximumSourceItems &&
+           data.savedOpenKnots.size() <= 2 * MaximumSourceItems;
+}
+
+inline bool boundedSourceSize(const LC_SplinePointsData& data) noexcept {
+    return data.splinePoints.size() <= MaximumSourceItems && data.controlPoints.size() <= MaximumSourceItems;
+}
+
 inline bool sameEndpoint(const RS_Vector& lhs, const RS_Vector& rhs,
                          const double geometricScale = 1.0) noexcept {
     const double scale = std::max({1.0, std::abs(lhs.x), std::abs(lhs.y),
@@ -218,7 +228,9 @@ inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(c
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* spline = dynamic_cast<const RS_Spline*>(&entity)) {
-        LC_OffsetSourceGeometry result{spline->getData()};
+        const auto& data = spline->getData();
+        if (!LC_OffsetSourceDetail::boundedSourceSize(data)) return std::nullopt;
+        LC_OffsetSourceGeometry result{data};
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
     }
     // LC_Parabola derives from LC_SplinePoints, so preserve its exact identity first.
@@ -227,7 +239,9 @@ inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(c
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&entity)) {
-        LC_OffsetSourceGeometry result{points->getData()};
+        const auto& data = points->getData();
+        if (!LC_OffsetSourceDetail::boundedSourceSize(data)) return std::nullopt;
+        LC_OffsetSourceGeometry result{data};
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* hyperbola = dynamic_cast<const LC_Hyperbola*>(&entity)) {
@@ -250,6 +264,7 @@ inline std::optional<LC_OffsetSourceGeometry> LC_OffsetSourceGeometry::capture(c
         return result.isWellFormed() ? std::optional{std::move(result)} : std::nullopt;
     }
     if (const auto* polyline = dynamic_cast<const RS_Polyline*>(&entity)) {
+        if (polyline->size() > LC_OffsetSourceDetail::MaximumSourceItems) return std::nullopt;
         if (LC_OffsetSourceDetail::hasUnsupportedPolylineProjectionProvenance(*polyline))
             return std::nullopt;
         LC_OffsetPolylineData data;
@@ -327,12 +342,9 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
                        std::is_sorted(knots.begin(), knots.end());
             };
             return degree >= 1 && degree <= RS_Spline::MaxSupportedDegree &&
-                   data.controlPoints.size() >= degree + 1 &&
-                   data.controlPoints.size() <= MaximumSourceItems &&
+                   boundedSourceSize(data) && data.controlPoints.size() >= degree + 1 &&
                    data.knotslist.size() == data.controlPoints.size() + degree + 1 &&
-                   data.knotslist.size() <= 2 * MaximumSourceItems &&
-                   data.weights.size() <= MaximumSourceItems && data.fitPoints.size() <= MaximumSourceItems &&
-                   data.savedOpenKnots.size() <= 2 * MaximumSourceItems && finitePoints(data.controlPoints) &&
+                   finitePoints(data.controlPoints) &&
                    finitePoints(data.fitPoints) &&
                    (data.weights.empty() || data.weights.size() == data.controlPoints.size()) &&
                    validSplineType(data.type) && validSplineType(data.savedOpenType) &&
@@ -340,8 +352,7 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
                    std::all_of(data.weights.begin(), data.weights.end(), [](double value) { return std::isfinite(value) && value > 0.0; });
         } else if constexpr (std::is_same_v<T, LC_SplinePointsData>) {
             const auto& activePoints = data.useControlPoints ? data.controlPoints : data.splinePoints;
-            return activePoints.size() >= 2 && data.splinePoints.size() <= MaximumSourceItems &&
-                   data.controlPoints.size() <= MaximumSourceItems &&
+            return activePoints.size() >= 2 && boundedSourceSize(data) &&
                    std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0 &&
                    finitePoints(data.splinePoints) && finitePoints(data.controlPoints);
         } else if constexpr (std::is_same_v<T, LC_ParabolaData>) {

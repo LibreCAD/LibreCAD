@@ -1310,6 +1310,73 @@ TEST_CASE("Polyline source topology validation accepts its maximum bounded segme
     CHECK(LC_OffsetSourceGeometry{std::move(data)}.isWellFormed());
 }
 
+TEST_CASE("Offset source capture rejects oversized spline payloads",
+          "[lc-offsetcurve][source][bounded]") {
+    const std::size_t limit = LC_OffsetSourceDetail::MaximumSourceItems;
+    RS_SplineData initial{2, false};
+    initial.controlPoints = {{0, 0}, {1, 2}, {3, 0}};
+    initial.knotslist = {0, 0, 0, 1, 1, 1};
+    RS_Spline spline{nullptr, initial};
+    auto& data = spline.getData();
+    SECTION("control points") { data.controlPoints.resize(limit + 1); }
+    SECTION("weights") { data.weights.resize(limit + 1); }
+    SECTION("fit points") { data.fitPoints.resize(limit + 1); }
+    SECTION("knots") { data.knotslist.resize(2 * limit + 1); }
+    SECTION("saved open knots") { data.savedOpenKnots.resize(2 * limit + 1); }
+    CHECK_FALSE(LC_OffsetSourceDetail::boundedSourceSize(data));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(spline));
+}
+
+TEST_CASE("Offset source capture rejects oversized spline-point payloads",
+          "[lc-offsetcurve][source][bounded]") {
+    LC_SplinePointsData data{false, false};
+    data.useControlPoints = true;
+    data.controlPoints = {{0, 0}, {1, 1}};
+    LC_SplinePoints points{nullptr, data};
+    auto& stored = points.getData();
+    SECTION("control points") { stored.controlPoints.resize(LC_OffsetSourceDetail::MaximumSourceItems + 1); }
+    SECTION("fit points") { stored.splinePoints.resize(LC_OffsetSourceDetail::MaximumSourceItems + 1); }
+    CHECK_FALSE(LC_OffsetSourceDetail::boundedSourceSize(stored));
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(points));
+}
+
+TEST_CASE("Offset source capture keeps bounded spline size boundaries",
+          "[lc-offsetcurve][source][bounded]") {
+    const std::size_t limit = LC_OffsetSourceDetail::MaximumSourceItems;
+    RS_SplineData initial{1, false};
+    initial.controlPoints = {{0, 0}, {1, 0}};
+    initial.knotslist = {0, 0, 1, 1};
+    RS_Spline spline{nullptr, initial};
+    auto& data = spline.getData();
+    data.controlPoints.resize(limit);
+    for (std::size_t i = 0; i < limit; ++i) data.controlPoints[i] = {static_cast<double>(i), 0};
+    data.knotslist.resize(limit + 2);
+    data.knotslist[0] = data.knotslist[1] = 0;
+    for (std::size_t i = 2; i < limit; ++i) data.knotslist[i] = static_cast<double>(i - 1);
+    data.knotslist[limit] = data.knotslist[limit + 1] = static_cast<double>(limit - 1);
+    data.weights.clear();
+    REQUIRE(LC_OffsetSourceDetail::boundedSourceSize(data));
+    CHECK(LC_OffsetSourceGeometry::capture(spline));
+
+    LC_SplinePointsData pointData{false, false};
+    pointData.useControlPoints = true;
+    pointData.controlPoints = {{0, 0}, {1, 1}};
+    LC_SplinePoints points{nullptr, pointData};
+    points.getData().controlPoints.resize(limit, RS_Vector{1, 1});
+    REQUIRE(LC_OffsetSourceDetail::boundedSourceSize(points.getData()));
+    CHECK(LC_OffsetSourceGeometry::capture(points));
+}
+
+TEST_CASE("Offset source capture rejects an oversized polyline",
+          "[lc-offsetcurve][source][bounded]") {
+    RS_Polyline polyline;
+    for (std::size_t i = 0; i <= LC_OffsetSourceDetail::MaximumSourceItems; ++i) {
+        polyline.push_back(new RS_Line(&polyline, RS_LineData{{0, 0}, {1, 0}}));
+    }
+    REQUIRE(polyline.size() == LC_OffsetSourceDetail::MaximumSourceItems + 1);
+    CHECK_FALSE(LC_OffsetSourceGeometry::capture(polyline));
+}
+
 TEST_CASE("Polyline source topology validation rejects segment self-intersections",
           "[lc-offsetcurve][source][polyline][topology]") {
     const LC_OffsetPolylineData bowTie{{0, 0}, {2, 0}, false,
