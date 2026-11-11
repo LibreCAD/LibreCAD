@@ -35086,3 +35086,15 @@ build and a persistence fixture that specifically exercises noded materialized
 output remain open. PR CI, broader corner-arc identity proofs, visible and
 cross-platform acceptance also remain open. The distinct nearby-occurrence
 probe is now a permanent regression.
+
+Clean committed-source validation now passes at PR head
+`1082a0a14c5087aa1dcabceaf1e02c38b7d9d202`: a refreshed source snapshot and
+full CMake Release/Ninja rebuild completed on macOS ARM64 with Qt 6.12. From
+that build, `[curve-offset]` passes 1,884,531 assertions / 312 cases, the full
+worker-kernel `[lc-offsetcurve]` selector passes 1,838,496 assertions / 99
+cases, and the real typed-source DXF/DWG save/reopen/second-save fixture passes
+7,980 assertions. This closes clean CMake compile and those exact test lanes
+for the geometry change. Clean qmake6 after this geometry change, a persistence
+fixture specifically exercising noded materialized output, PR CI, corner-arc
+identity proofs, visible GUI, and cross-platform/runtime acceptance remain
+open.
