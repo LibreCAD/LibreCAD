@@ -110,7 +110,10 @@ capture/reconstruction, worker encoding, and this acceptance matrix together.
    after movement, deletion, or hiding and restoring it when that same source
    becomes valid again. The one-second check scans the document for the tracked
    ID and compares bounded encoded geometry; it stops when the viewport or
-   document lifetime changes. Initially missing or ambiguous sources are not
+   document lifetime changes. Commit `39060e650` also rechecks live matches
+   while that watch exists, clears a newly ambiguous highlight and updates
+   the chooser, and restores a unique match or an explicitly chosen session
+   identity. Initially missing or ambiguous sources are not
    monitored for newly available matches; other lifecycle cases, large-drawing
    responsiveness, and visible acceptance remain open.
    Commit `6a29d6738` also invalidates the viewport's borrowed document on
@@ -20373,79 +20376,6 @@ topology outcomes per scale where generated. Keep this worker evidence
 separate from file import; add a later staged-file slice only if the combined
 matrix passes.
 
-The first clean build of `d06eade92` exposed that the regression referenced
-an option present only in the uncommitted solver experiment. Commit
-`ae5404935` removes that test-only dependency. With that correction applied,
-the clean CMake Release test and worker-client targets build, and the
-materialized selector passes 2,879 assertions in 13 cases. Remaining matrix
-results must be checked against the corrected commit.
-
-With the general join certificate and uncommitted strict experiment, the
-ellipse/intersection/trim matrix passed 1,361,893 assertions in 102 cases. The
-real-worker matrix progressed past the previously captured pair but failed on
-a later near-join pair (378,883 assertions passed, 2 failed). Thus the
-section-852 worker gate is still open; capture and analyze the later pair as
-well as rerunning the complete matrix, without relaxing exactness.
-
-Clean CMake Release validation at `ae5404935` passed the normal
-ellipse/intersection/trim matrix (1,361,893 assertions in 102 cases) and the
-real-worker typed-source/cache matrix (1,581,137 assertions in one case with
-its five recorded DXF/DWG lanes). The experimental strict-worker failure is
-fixture 155, not fixture 134. Its captured adjacent Bezier controls are:
-
-```text
-(101.07426619905667, -99.385411481408013)
-(101.07270850964295, -99.38074823276672)
-(101.07246693651794, -99.380810925504434)
-(101.07246693651793, -99.38081092550442)  shared endpoint
-(101.07246693651788, -99.380810925504406)
-(101.0726420165839, -99.380633063410102)
-(101.06938236950323, -99.376952440485965)
-```
-
-A standalone strict query over these pieces at tolerance `1e-8` reaches
-depth 48 with segment 0 in `[0.9999999962747097, 1]` and segment 1 in
-`[1, 1.0000009536743164]`. An exploratory high-precision numerical root
-search is not a proof of exclusion. The next slice must establish a bounded,
-outward-rounded certificate or expose an actual crossing, account for any
-additional proof work, and retain conservative refusal when unresolved.
-
-## 854. Correlated Join Projection Proof (2026-11-11)
-
-Commit `ab8640ed2` adds a whole-box exclusion when the endpoint-relative
-Bezier direction polynomials have strictly opposite projections onto a fixed
-direction. Projection is applied to the outward-rounded Bernstein control
-vectors before evaluating their parameter intervals, retaining coordinate
-correlation. Up to six finite, normalized control-derived directions are
-tested; the rounded direction is merely a fixed candidate and all projection
-bounds remain outward-rounded. The work is a fixed constant per already
-debited certificate call; uncertainty still returns no certificate.
-
-The captured fixture-155 box is certified in both query orders, while its
-whole-piece box remains unresolved. With the uncommitted strict experiment,
-the topology/strict-budget selector passed 8,462 assertions in 64 cases;
-existing exact-crossing controls remain part of that run. The qmake6
-application object compiled, not the full application. The broad strict
-geometry and worker/file reruns, plus clean committed-path validation, remain
-in progress. The strict solver and diagnostics are still uncommitted.
-
-With the experimental strict solver and this proof, the
-ellipse/intersection/trim matrix passed 1,361,893 assertions in 102 cases;
-the real-worker typed-source/cache and five-lane DXF/DWG matrix passed
-1,580,337 assertions in one case, including fixtures 134 and 155. This closes
-those fixture-specific failures, not the remaining strict activation and
-release gates. A clean CMake Release build at `ab8640ed2` passed the
-materialized selector (2,883 assertions in 14 cases); its broader clean
-matrices and a full qmake6 build are running separately.
-
-The clean `ab8640ed2` CMake Release ellipse/intersection/trim matrix passed
-1,361,893 assertions in 102 cases, and its real-worker typed-source/cache
-matrix passed 1,606,255 assertions in one case across the five recorded file
-lanes. With the uncommitted strict experiment, the broader `[curve-offset]`
-suite passed 1,884,517 assertions. These results do not resolve the distinct
-near-node occurrence identity issue in section 840 or establish visible and
-cross-platform acceptance.
-
 ### Completion receipt
 
 All eight bounded interval/branch layouts now run centered and translated
@@ -34766,3 +34696,97 @@ qmake6 application object compiled, not the full application. The broader
 strict matrix, worker/file rerun, and clean committed-path validation are in
 progress; the earlier worker failure is not considered closed until the full
 matrix passes.
+
+The first clean build of `d06eade92` exposed that the regression referenced
+an option present only in the uncommitted solver experiment. Commit
+`ae5404935` removes that test-only dependency. With that correction applied,
+the clean CMake Release test and worker-client targets build, and the
+materialized selector passes 2,879 assertions in 13 cases. Remaining matrix
+results must be checked against the corrected commit.
+
+With the general join certificate and uncommitted strict experiment, the
+ellipse/intersection/trim matrix passed 1,361,893 assertions in 102 cases. The
+real-worker matrix progressed past the previously captured pair but failed on
+a later near-join pair (378,883 assertions passed, 2 failed). Thus the
+section-852 worker gate is still open; capture and analyze the later pair as
+well as rerunning the complete matrix, without relaxing exactness.
+
+Clean CMake Release validation at `ae5404935` passed the normal
+ellipse/intersection/trim matrix (1,361,893 assertions in 102 cases) and the
+real-worker typed-source/cache matrix (1,581,137 assertions in one case with
+its five recorded DXF/DWG lanes). The experimental strict-worker failure is
+fixture 155, not fixture 134. Its captured adjacent Bezier controls are:
+
+```text
+(101.07426619905667, -99.385411481408013)
+(101.07270850964295, -99.38074823276672)
+(101.07246693651794, -99.380810925504434)
+(101.07246693651793, -99.38081092550442)  shared endpoint
+(101.07246693651788, -99.380810925504406)
+(101.0726420165839, -99.380633063410102)
+(101.06938236950323, -99.376952440485965)
+```
+
+A standalone strict query over these pieces at tolerance `1e-8` reaches
+depth 48 with segment 0 in `[0.9999999962747097, 1]` and segment 1 in
+`[1, 1.0000009536743164]`. An exploratory high-precision numerical root
+search is not a proof of exclusion. The next slice must establish a bounded,
+outward-rounded certificate or expose an actual crossing, account for any
+additional proof work, and retain conservative refusal when unresolved.
+
+## 854. Correlated Join Projection Proof (2026-11-11)
+
+Commit `ab8640ed2` adds a whole-box exclusion when the endpoint-relative
+Bezier direction polynomials have strictly opposite projections onto a fixed
+direction. Projection is applied to the outward-rounded Bernstein control
+vectors before evaluating their parameter intervals, retaining coordinate
+correlation. Up to six finite, normalized control-derived directions are
+tested; the rounded direction is merely a fixed candidate and all projection
+bounds remain outward-rounded. The work is a fixed constant per already
+debited certificate call; uncertainty still returns no certificate.
+
+The captured fixture-155 box is certified in both query orders, while its
+whole-piece box remains unresolved. With the uncommitted strict experiment,
+the topology/strict-budget selector passed 8,462 assertions in 64 cases;
+existing exact-crossing controls remain part of that run. The qmake6
+application object compiled, not the full application. The broad strict
+geometry and worker/file reruns, plus clean committed-path validation, remain
+in progress. The strict solver and diagnostics are still uncommitted.
+
+With the experimental strict solver and this proof, the
+ellipse/intersection/trim matrix passed 1,361,893 assertions in 102 cases;
+the real-worker typed-source/cache and five-lane DXF/DWG matrix passed
+1,580,337 assertions in one case, including fixtures 134 and 155. This closes
+those fixture-specific failures, not the remaining strict activation and
+release gates. A clean CMake Release build at `ab8640ed2` passed the
+materialized selector (2,883 assertions in 14 cases); its broader clean
+matrices and a full qmake6 build are running separately.
+
+The clean `ab8640ed2` CMake Release ellipse/intersection/trim matrix passed
+1,361,893 assertions in 102 cases, and its real-worker typed-source/cache
+matrix passed 1,606,255 assertions in one case across the five recorded file
+lanes. With the uncommitted strict experiment, the broader `[curve-offset]`
+suite passed 1,884,517 assertions. These results do not resolve the distinct
+near-node occurrence identity issue in section 840 or establish visible and
+cross-platform acceptance.
+
+## 855. Refresh Live Source Ambiguity (2026-11-11)
+
+Commit `39060e650` updates an existing source-highlight watch when matching
+entities are added, removed, hidden or changed. A newly ambiguous embedded
+source is no longer silently highlighted; the chooser reports ambiguity and
+the watch stays active so a unique match can be restored. A successfully
+selected session identity remains preferred even if further identical sources
+appear. The scan first filters by compatible entity class, then compares
+bounded typed encodings, and does not change document selection or unrelated
+overlay layers. It runs once per second while the existing watch is active;
+large-drawing responsiveness and initially missing/ambiguous watches remain
+open.
+
+With the uncommitted geometry experiment present, CMake rebuilt the test
+target. The new transition/selection regression passed 30 assertions, and
+the complete `[gui][dialog][offsetcurve][source]` selector passed 12,269
+assertions in 23 cases. The async selector passed 14 of 16 cases; the other
+two failed at the known `editor.hasFocus()` precondition under Qt offscreen,
+before their behavioral checks. Clean-build and visible GUI validation remain
+open, as does a full qmake6 build currently in progress.
