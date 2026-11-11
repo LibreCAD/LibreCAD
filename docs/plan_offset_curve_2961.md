@@ -83,6 +83,9 @@ does not by itself prove that the offset can be generated successfully.
    publication. The focused regression covers movement and deletion during
    worker execution for both paths. Other families, source-lifetime events,
    and visible workflows still require the coverage described here.
+   Commit `0a0585069` defers updating the session's preferred identity until
+   replacement succeeds; a cancelled request for an identical source no longer
+   changes the previously committed identity.
 4. **Parabola and other variants.** Exercise parabola independently from
    spline-points through capture, replacement, worker/cache and applicable
    DXF/DWG persistence. Extend the family-by-variant matrix for the other eight
@@ -120,6 +123,12 @@ at `editor.hasFocus()` under Qt offscreen before their behavioral assertions.
 One focus failure also reproduced when run alone. These failures remain open;
 they are not evidence that the broader async gate passed. `git diff --check`
 passed.
+
+After rebuilding the CMake test target with `0a0585069` and the other
+uncommitted worktree changes present, the duplicate-source cancellation test
+passed 24 assertions, including observation of late replies. The full
+`[gui][dialog][offsetcurve][source]` selector passed 12,130 assertions in 15
+cases. This does not close the offscreen focus failures or visible GUI gates.
 
 ### Source-picker status
 
