@@ -34407,8 +34407,8 @@ second-crossing variants. The precision/strict-proof-domain selector passed
 291 assertions in 6 cases; the separate intersection selector passed 65
 assertions in 15 cases. CMake rebuilt the test target and qmake6 compiled the
 changed application object, not the full application. All these runs included
-the uncommitted strict-solver experiment; a clean default-path matrix
-has not been rerun for this commit.
+the uncommitted strict-solver experiment. The separate clean-checkout results
+below validate the committed default path without that experiment.
 
 An uncommitted experiment asks for this proof on selected refined boxes and
 periodically balances parameter splits. It makes the previously failing
@@ -34418,3 +34418,15 @@ output. The solver changes, unconditional strict activation, and diagnostic
 prints remain uncommitted. Do not activate them generally: investigate the
 remaining extreme ellipses and trim failures, prove budget/accounting and node
 identity behavior, and rerun the complete clean and cross-platform matrices.
+
+Clean-checkout validation at `a7e11a6c7` (including `1ad3ae1b2`): configured
+and built the CMake Release test and worker-client targets in a detached
+worktree with no source changes. The normal ellipse/intersection/trim selector
+passed 1,361,893 assertions in 102 cases; the materialized proof selector
+passed 684 assertions in 5 cases. The real-worker typed-source, cache, and
+recorded five-lane DXF/DWG matrix passed 1,551,943 assertions in one case with
+`LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=900000`. The combined source-picker, close,
+tracked-listener, and viewport-range selectors passed 12,878 assertions in 68
+cases. The checkout remained clean. These macOS headless results do not close
+the uncommitted strict experiment, full qmake build, visible GUI, independent
+CAD visual, or other-platform gates.
