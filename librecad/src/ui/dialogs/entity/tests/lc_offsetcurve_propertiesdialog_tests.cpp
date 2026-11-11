@@ -1146,6 +1146,87 @@ TEST_CASE("Source watch resolves matches that become available later",
     CHECK(selected->getFlag(RS2::FlagSelected));
 }
 
+TEST_CASE("Incremental source scan restarts after same-count replacement",
+          "[gui][dialog][offsetcurve][source][highlight][incremental][revision]") {
+    Fixture f;
+    auto* first = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    auto* removed = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(first);
+    f.graphic.addEntity(removed);
+    for (int i = 0; i < 100; ++i) {
+        f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 20}, {double(i + 1), 20}}));
+    }
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    auto* viewport = f.view.getViewPort();
+    auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport);
+    widget.setEntity(clone.get());
+    widget.show();
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* sliceTimer = widget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+    REQUIRE(sourceBox);
+    REQUIRE(sliceTimer);
+    REQUIRE(sliceTimer->isActive());
+    CHECK(overlay->getEntityList().isEmpty());
+
+    const auto oldSize = f.graphic.getEntityList().size();
+    const auto oldRevision = f.graphic.entityListRevision();
+    REQUIRE(f.graphic.removeEntity(removed));
+    auto* replacement = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(replacement);
+    CHECK(f.graphic.getEntityList().size() == oldSize);
+    CHECK(f.graphic.entityListRevision() > oldRevision);
+
+    REQUIRE(pollEventsUntil([&] { return sliceTimer->isActive(); }));
+    INFO("The restarted scan must finish before ambiguity is asserted");
+    REQUIRE(pollEventsUntil([&] { return !sliceTimer->isActive(); }));
+    CHECK(overlay->getEntityList().isEmpty());
+    CHECK(sourceBox->currentText().contains("ambiguous", Qt::CaseInsensitive));
+}
+
+TEST_CASE("Incremental source scan invalidates for geometry edits and undo",
+          "[gui][dialog][offsetcurve][source][highlight][incremental][undo]") {
+    Fixture f;
+    auto* first = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    auto* duplicate = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(first);
+    f.graphic.addEntity(duplicate);
+    for (int i = 0; i < 100; ++i) {
+        f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 30}, {double(i + 1), 30}}));
+    }
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    auto* viewport = f.view.getViewPort();
+    auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport);
+    widget.setEntity(clone.get());
+    widget.show();
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    auto* sliceTimer = widget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+    REQUIRE(sourceBox);
+    REQUIRE(sliceTimer);
+    REQUIRE(sliceTimer->isActive());
+    CHECK(overlay->getEntityList().isEmpty());
+
+    auto* movedDuplicate = static_cast<RS_Ellipse*>(duplicate->clone());
+    movedDuplicate->move(RS_Vector{1000, 0});
+    REQUIRE(f.graphic.undoableModify(viewport, [&](LC_DocumentModificationBatch& batch) {
+        batch.replace(duplicate, movedDuplicate);
+        return true;
+    }));
+    REQUIRE(pollEventsUntil([&] { return sliceTimer->isActive(); }));
+    REQUIRE(pollEventsUntil([&] { return !sliceTimer->isActive(); }));
+    REQUIRE(overlay->getEntityList().size() == 1);
+    CHECK(sourceBox->currentData().toULongLong() == first->getId());
+
+    REQUIRE(f.graphic.undo());
+    REQUIRE(pollEventsUntil([&] { return sliceTimer->isActive(); }));
+    REQUIRE(pollEventsUntil([&] { return !sliceTimer->isActive(); }));
+    CHECK(overlay->getEntityList().isEmpty());
+    CHECK(sourceBox->currentText().contains("ambiguous", Qt::CaseInsensitive));
+}
+
 TEST_CASE("Missing source watch stops when viewport or document changes",
           "[gui][dialog][offsetcurve][source][highlight][overlay][lifetime]") {
     Fixture f;
