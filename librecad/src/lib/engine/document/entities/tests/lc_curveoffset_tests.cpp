@@ -2423,6 +2423,58 @@ TEST_CASE("A click outside a sharp turn at a closed curve's seam still has a sid
     }
 }
 
+TEST_CASE("Materialized nodes reject demonstrably inconsistent source occurrences", "[curve-offset][topology][materialized]") {
+    const RS_Spline parabola = makeSpline(2, {{-2, 4}, {0, -4}, {2, 4}}, {0, 0, 0, 1, 1, 1});
+    LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, 1.0);
+    options.nodeIntersections = true;
+    const auto geometry = LC_CurveOffset::buildDirectBranches(
+        parabola, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 1.0), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(geometry.intersections.size() == 1);
+    const auto materialize = [&](const LC_CurveOffsetGeometryResult& value) {
+        return LC_CurveOffset::materializeBranches(parabola, value, options,
+                                                   LC_CurveOffset::makeDirectSourceBudget());
+    };
+    const auto original = materialize(geometry);
+    REQUIRE(original.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(original.entities.empty());
+    REQUIRE(original.sampleUnits > geometry.exactSamples);
+    auto withoutNodes = geometry;
+    withoutNodes.intersections.clear();
+    const auto beforeNodeCheck = materialize(withoutNodes);
+    REQUIRE(beforeNodeCheck.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    REQUIRE(beforeNodeCheck.sampleUnits < original.sampleUnits);
+    auto limited = options;
+    limited.maxSamples = original.sampleUnits - 1;
+    REQUIRE(limited.maxSamples >= beforeNodeCheck.sampleUnits);
+    const auto refused = LC_CurveOffset::materializeBranches(
+        parabola, geometry, limited, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(refused.status == LC_CurveOffsetStatus::LimitExceeded);
+    CHECK(refused.entities.empty());
+    CHECK(refused.sampleUnits <= limited.maxSamples);
+    CHECK(materialize(geometry).status == LC_CurveOffsetStatus::Ok);
+
+    auto swapped = geometry;
+    std::swap(swapped.intersections.front().parameterA, swapped.intersections.front().parameterB);
+    std::swap(swapped.intersections.front().branchA, swapped.intersections.front().branchB);
+    CHECK(materialize(swapped).status == LC_CurveOffsetStatus::Ok);
+
+    for (const bool changeFirst : {true, false}) {
+        auto mismatched = geometry;
+        double& parameter = changeFirst ? mismatched.intersections.front().parameterA
+                                        : mismatched.intersections.front().parameterB;
+        parameter += changeFirst ? .1 : -.1;
+        const auto result = materialize(mismatched);
+        CAPTURE(changeFirst);
+        CHECK(result.status == LC_CurveOffsetStatus::AmbiguousTopology);
+        CHECK(result.entities.empty());
+    }
+    auto outsideDomain = geometry;
+    outsideDomain.intersections.front().parameterA = 2.0;
+    CHECK(materialize(outsideDomain).status == LC_CurveOffsetStatus::AmbiguousTopology);
+}
+
 TEST_CASE("The sample limit counts every branch of a cusped offset", "[curve-offset][direct][cusp]") {
     const RS_Spline parabola = makeSpline(2, {{-2, 4}, {0, -4}, {2, 4}}, {0, 0, 0, 1, 1, 1});
     const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(parabola, 1.0);

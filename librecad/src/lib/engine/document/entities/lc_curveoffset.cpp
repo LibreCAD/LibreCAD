@@ -6687,12 +6687,46 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
             result.status = fromIntersectionStatus(found.status);
             return result;
         }
+        // A radius check is necessary for both normal offsets and corner arcs,
+        // but it does not prove that two nearby intersections are the same node.
+        bool sampleLimitReached = false;
+        const auto sourceOccurrenceConsistent = [&](const double parameter, const RS_Vector& point) {
+            if (std::isnan(parameter)) {
+                return true; // Some corner occurrences have no source parameter.
+            }
+            if (!std::isfinite(parameter) || parameter < adapter->breaks().front() ||
+                parameter > adapter->breaks().back()) {
+                return false;
+            }
+            if (samples >= options.maxSamples) {
+                sampleLimitReached = true;
+                return false;
+            }
+            ++samples;
+            result.sampleUnits = samples;
+            LC_CurveJet jet;
+            if (!adapter->jet(parameter, LC_CurveEvaluationSide::Interior, jet) || !isFinite(jet.point)) {
+                return true; // An unavailable jet cannot establish inconsistency.
+            }
+            const double distance = jet.point.distanceTo(point);
+            const double slack = options.tolerance.requestedGeometry + options.tolerance.nodeMerge + scale.numericFloor;
+            return std::isfinite(distance) && std::isfinite(slack) &&
+                   std::abs(distance - std::abs(geometry.signedDistance)) <= slack;
+        };
         for (const LC_ParametricIntersection& x : found.intersections) {
-            const bool atNode = std::any_of(
-                geometry.intersections.begin(), geometry.intersections.end(),
-                [&](const LC_ParametricIntersection& node) {
-                    return node.point.distanceTo(x.point) <= options.tolerance.requestedGeometry;
-                });
+            bool atNode = false;
+            for (const LC_ParametricIntersection& node : geometry.intersections) {
+                if (node.point.distanceTo(x.point) <= options.tolerance.requestedGeometry &&
+                    sourceOccurrenceConsistent(node.parameterA, node.point) &&
+                    sourceOccurrenceConsistent(node.parameterB, node.point)) {
+                    atNode = true;
+                    break;
+                }
+                if (sampleLimitReached) {
+                    result.status = LC_CurveOffsetStatus::LimitExceeded;
+                    return result;
+                }
+            }
             if (!atNode) {
                 result.status = LC_CurveOffsetStatus::AmbiguousTopology;
                 return result;
