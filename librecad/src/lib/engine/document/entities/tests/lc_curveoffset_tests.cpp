@@ -31,6 +31,7 @@
 #include <limits>
 #include <vector>
 #include <boost/multiprecision/cpp_bin_float.hpp>
+#include <boost/multiprecision/cpp_int.hpp>
 
 #include "lc_curveoffset.h"
 #include "lc_curveoffsetinternal.h"
@@ -392,6 +393,85 @@ TEST_CASE("Materialized Bezier bounds reject invalid inputs",
             }
         }
     }
+}
+
+TEST_CASE("Materialized cubic injectivity uses exact root constraints",
+          "[curve-offset][topology][materialized][injectivity]") {
+    using Rational = boost::multiprecision::cpp_rational;
+    const std::array<RS_Vector, 4> cusp{{
+        {4.1999999992000001, 0},
+        {4.1999999991999992, -1.5028605106349777e-14},
+        {4.2000011797215677, 1.7333987927651054e-07},
+        {4.1999964308989668, 7.7517159554625625e-05}
+    }};
+    const auto exactCoefficients = [](const std::array<RS_Vector, 4>& piece, bool useX) {
+        const auto value = [&](std::size_t i) { return Rational(useX ? piece[i].x : piece[i].y); };
+        const Rational d0 = value(1) - value(0);
+        const Rational d1 = value(2) - value(1);
+        const Rational d2 = value(3) - value(2);
+        return std::array<Rational, 3>{{3 * d0, 3 * (d1 - d0), d2 - 2 * d1 + d0}};
+    };
+    const auto x = exactCoefficients(cusp, true), y = exactCoefficients(cusp, false);
+    const Rational denominator = x[1] * y[2] - y[1] * x[2];
+    REQUIRE(denominator != 0);
+    REQUIRE(x[2] != 0);
+    const Rational sum = -(x[0] * y[2] - y[0] * x[2]) / denominator;
+    const Rational product = sum * sum + (x[0] + x[1] * sum) / x[2];
+    CHECK(product < 0); // Two parameters in [0, 1] cannot have this product.
+    const auto cuspCurves = LC_CurveOffsetInternal::makePieceCurves({{cusp}}, {-1});
+    CHECK(cuspCurves->certifyInjective(0, LC_Interval::hull(0, 1)).available);
+    const std::array<RS_Vector, 4> otherEndpoint{{
+        {-4.1999964308989668, 7.7517159554618686e-05},
+        {-4.2000011797215677, 1.7333987926992402e-07},
+        {-4.1999999991999992, -1.5024968573994213e-14},
+        {-4.1999999992000001, -2.449293795499327e-25}
+    }};
+    auto reversedOther = otherEndpoint;
+    std::reverse(reversedOther.begin(), reversedOther.end());
+    const auto rx = exactCoefficients(reversedOther, true), ry = exactCoefficients(reversedOther, false);
+    const Rational reversedDenominator = rx[1] * ry[2] - ry[1] * rx[2];
+    REQUIRE(reversedDenominator != 0);
+    REQUIRE(rx[2] != 0);
+    const Rational reversedSum = -(rx[0] * ry[2] - ry[0] * rx[2]) / reversedDenominator;
+    CHECK(reversedSum * reversedSum + (rx[0] + rx[1] * reversedSum) / rx[2] < 0);
+    const auto otherCurves = LC_CurveOffsetInternal::makePieceCurves({{otherEndpoint}}, {-1});
+    CHECK(otherCurves->certifyInjective(0, LC_Interval::hull(0, 1)).available);
+
+    const std::array<RS_Vector, 4> crossing{{{0, 0}, {-13, -16}, {-26, -16}, {9, 0}}};
+    constexpr std::array<double, 3> scales{{0x1p-12, 1.0, 0x1p12}};
+    for (int scenario = 0; scenario < 72; ++scenario) {
+        const int transform = scenario / 9;
+        const double sx = scales[(scenario / 3) % 3], sy = scales[scenario % 3];
+        CAPTURE(transform, sx, sy);
+        auto piece = crossing;
+        if (transform & 4) std::reverse(piece.begin(), piece.end());
+        for (auto& point : piece) {
+            if (transform & 1) std::swap(point.x, point.y);
+            if (transform & 2) point.x = -point.x;
+            point.x = point.x * sx + 0x1p20;
+            point.y = point.y * sy - 0x1p20;
+        }
+        const auto curves = LC_CurveOffsetInternal::makePieceCurves({{piece}}, {-1});
+        const auto exactPoint = [&](bool useX, const Rational& t) {
+            const Rational u = 1 - t;
+            const auto coordinate = [&](std::size_t i) { return Rational(useX ? piece[i].x : piece[i].y); };
+            return Rational(coordinate(0) * u * u * u + 3 * coordinate(1) * u * u * t +
+                            3 * coordinate(2) * u * t * t + coordinate(3) * t * t * t);
+        };
+        CHECK(exactPoint(true, Rational(1) / 4) == exactPoint(true, Rational(3) / 4));
+        CHECK(exactPoint(false, Rational(1) / 4) == exactPoint(false, Rational(3) / 4));
+        CHECK_FALSE(curves->certifyInjective(0, LC_Interval::hull(0, 1)).available);
+        CHECK(curves->certifyInjective(0, LC_Interval::hull(0, .4)).available);
+        CHECK(curves->certifyInjective(0, LC_Interval::hull(.6, 1)).available);
+    }
+    std::array<RS_Vector, 4> invalid{{{0, 0}, {1, 0}, {2, 0}, {3, 0}}};
+    invalid[1].z = std::numeric_limits<double>::quiet_NaN();
+    auto invalidCurves = LC_CurveOffsetInternal::makePieceCurves({{invalid}}, {-1});
+    CHECK_FALSE(invalidCurves->certifyInjective(0, LC_Interval::hull(0, 1)).available);
+    invalid[1].z = 0;
+    invalid[1].valid = false;
+    invalidCurves = LC_CurveOffsetInternal::makePieceCurves({{invalid}}, {-1});
+    CHECK_FALSE(invalidCurves->certifyInjective(0, LC_Interval::hull(0, 1)).available);
 }
 
 TEST_CASE("Offset source snapshots own every supported source type") {

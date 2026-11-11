@@ -3519,6 +3519,8 @@ public:
             parameter.lo() < m_segments[segment].t0 || parameter.hi() > m_segments[segment].t1) {
             return {};
         }
+        const auto& p = m_pieces[segment];
+        if (!std::all_of(p.begin(), p.end(), [](const RS_Vector& point) { return isFinite(point); })) return {};
         const auto monotone = [&](const bool useX) {
             bool nondecreasing = true;
             bool nonincreasing = true;
@@ -3535,8 +3537,47 @@ public:
             }
             return changes && (nondecreasing || nonincreasing);
         };
-        return (monotone(true) || monotone(false)) ? LC_AnalyticLeafCertificate{true, segment, parameter}
-                                                    : LC_AnalyticLeafCertificate{};
+        if (monotone(true) || monotone(false)) return {true, segment, parameter};
+        const auto pt = [](double value) { return LC_Interval::point(value); };
+        const auto prove = [&](bool reverse) {
+            const auto coefficients = [&](bool x) {
+                const auto value = [&](std::size_t i) {
+                    const auto& point = p[reverse ? 3 - i : i];
+                    return pt(x ? point.x : point.y);
+                };
+                const LC_Interval d0 = value(1) - value(0);
+                const LC_Interval d1 = value(2) - value(1);
+                const LC_Interval d2 = value(3) - value(2);
+                return std::array<LC_Interval, 3>{{pt(3.0) * d0, pt(3.0) * (d1 - d0), d2 - pt(2.0) * d1 + d0}};
+            };
+            const auto x = coefficients(true);
+            const auto y = coefficients(false);
+            const LC_Interval denominator = x[1] * y[2] - y[1] * x[2];
+            if (!denominator.excludesZero()) return false;
+            // For distinct t,u on a cubic, A + B(t+u) + C((t+u)^2-tu) = 0.
+            const LC_Interval sum = -(x[0] * y[2] - y[0] * x[2]) / denominator;
+            LC_Interval local = parameter - pt(m_segments[segment].t0);
+            if (reverse) local = pt(1.0) - local;
+            if (!local.isValid()) return false;
+            const double lo = std::max(0.0, local.lo());
+            const double hi = std::min(1.0, local.hi());
+            if (lo > hi) return false;
+            local = LC_Interval::hull(lo, hi);
+            const LC_Interval possibleSums = local + local;
+            if (sum.isValid() && (sum.hi() < possibleSums.lo() || sum.lo() > possibleSums.hi())) return true;
+            const auto rulesOut = [&](const auto& axis) {
+                if (!axis[2].excludesZero()) return false;
+                const LC_Interval product = sqr(sum) + (axis[0] + axis[1] * sum) / axis[2];
+                const LC_Interval possibleProducts = sqr(local);
+                const LC_Interval discriminant = sqr(sum) - pt(4.0) * product;
+                return product.isValid() &&
+                    (product.hi() < possibleProducts.lo() || product.lo() > possibleProducts.hi() ||
+                     discriminant.isNegative());
+            };
+            return rulesOut(x) || rulesOut(y);
+        };
+        return (prove(false) || prove(true)) ? LC_AnalyticLeafCertificate{true, segment, parameter}
+                                             : LC_AnalyticLeafCertificate{};
     }
 
     LC_AnalyticIntersectionCertificate certifyIntersection(const LC_IntersectionDomain& domain) const override {
