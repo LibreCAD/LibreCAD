@@ -85,10 +85,10 @@ Execute and record these slices in order:
 2. **Cross-family replacement.** Verify that switching the family filter is
    non-mutating and that an eligible candidate from every modeled family can
    replace a source of a different kind. Tests cover each destination family
-   from an ellipse source and sequential typed replacements, including empty
-   buckets, unsupported candidates, duplicate geometry, and distinct parabola
-   versus spline-points identity. The full origin-by-destination family-pair
-   matrix is still open.
+   from an ellipse source, sequential typed replacements, and the full 9-by-8
+   directed cross-family matrix, including distinct parabola versus
+   spline-points identity. Empty buckets, unsupported candidates, duplicate
+   geometry, and non-mutation while filtering remain covered by focused tests.
    On a successful asynchronous replacement publish the typed source and its
    validated cache together; on cancellation, failed preparation, stale or
    deleted candidates, document change, and late worker replies preserve the
@@ -121,7 +121,7 @@ Execute and record these slices in order:
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
-   The source-picker suite currently passes 12,840 assertions / 37 cases and
+   The source-picker suite currently passes 13,941 assertions / 38 cases and
    worker-request microtests pass 603,526 assertions / 18 cases; exact results
    and revisions are in sections 867–873. Validate CMake and qmake6 on clean
    committed sources; record platform and deployment-target warnings. Run a
@@ -35412,3 +35412,22 @@ The scanner's required invalidation, cancellation, family-ambiguity, and
 bounded-input gates are now covered. Remaining acceptance is visible GUI
 validation and continued monitoring of event-loop behavior on target hardware;
 the broader offset roadmap remains active beyond source-highlight scanning.
+
+## 874. Verify Every Directed Source-family Transition (2026-11-11)
+
+Commit `f25a77ec8` adds the complete 9-by-8 origin-to-destination replacement
+matrix for the currently modeled source kinds. Each row starts with a real
+source of the origin family, then performs successful typed replacements to
+every different destination family using the real worker, including ellipse
+and distinct parabola transitions. The test checks the chooser type and
+selected entity ID after every accepted replacement, and verifies the
+resulting source-definition family where applicable. It accepts the existing
+native-ellipse or typed-ellipse representation instead of imposing a storage
+conversion policy.
+
+The targeted `[family-pairs]` test passes 1,101 assertions / 1 case. The full
+source-picker selector passes 13,941 assertions / 38 cases on the current
+CMake Release/macOS build. This closes the cross-family replacement matrix for
+these representative valid geometries; the separate family/variant geometry,
+parabola-conditioning, trimming, DXF/DWG persistence, synchronous large-source
+list performance, and visible-GUI gates remain open.
