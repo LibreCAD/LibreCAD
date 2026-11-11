@@ -2114,9 +2114,9 @@ TEST_CASE("offset worker oracle-checks acute and obtuse rational spline corners 
                             data.controlPoints.emplace_back(4.0 * t, 2.0 * std::sin(M_PI * t));
                             data.weights.push_back(0.75 + 0.25 * t);
                         }
-                        const double rotation = joinAngle - 2.0 * alpha;
-                        const double cosine = std::cos(rotation);
-                        const double sine = std::sin(rotation);
+                        const double cornerHeading = joinAngle - 2.0 * alpha;
+                        const double cosine = std::cos(cornerHeading);
+                        const double sine = std::sin(cornerHeading);
                         for (std::size_t i = 1; i <= degree; ++i) {
                             const double t = static_cast<double>(i) / static_cast<double>(degree);
                             const double x = 4.0 * t;
