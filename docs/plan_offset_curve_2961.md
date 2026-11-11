@@ -145,11 +145,12 @@ Execute and record these slices in order:
 5. **Delivery and acceptance.** For each implementation slice, run focused
    tests and relevant regression suites, review the diff, commit the slice,
    then update and commit this plan with the exact revision and actual results.
-   The latest source-picker suite passes 14,097 assertions / 39 cases and
+   The source-picker suite passes 14,827 assertions / 43 cases and
    worker-request microtests pass 603,526 assertions / 18 cases; exact results
    and revisions are in sections 867–881. The recursive clean qmake6 Release
-   build is verified in section 897; a fresh clean CMake build remains open.
-   Record platform and deployment-target warnings. Run a visible LibreCAD workflow covering
+   build is verified in section 897; clean CMake and tagged offset/worker-wire
+   test lanes are verified in section 898. Record platform and
+   deployment-target warnings. Run a visible LibreCAD workflow covering
    cross-type selection, parabola, highlight/selection, cancel, undo/redo and
    save/reopen. Report headless focus failures, unavailable desktop access,
    untested platforms and failing external readers as open gates, not passes.
@@ -35879,10 +35880,12 @@ regular and circular-corner cases; it is not a universal proof for every
 source variant or topology. Trimmed mode retains its previous source-distance
 check because trimming can rewrite or remove branch identities; its occurrence
 identity remains open and must be proved with an explicit post-trim mapping or
-fail closed. Also open: broader materialized-curve fault cases, clean CMake and
+fail closed. Also open: broader materialized-curve fault cases,
 cross-platform runs, external CAD comparison, visible GUI acceptance, and PR CI
-for the exact head. The clean qmake6 gate is closed by section 897. Continue
-with the trimmed-identity design and remaining family/variant gates; do not
+for the exact head. The clean qmake6 gate is closed by section 897; clean CMake
+and the full tagged offset plus worker-wire test lanes are closed by section
+898. Continue with the trimmed-identity design and remaining family/variant
+gates; do not
 infer completion of the roadmap from this slice.
 
 ## 897. Validate Clean qmake6 Build for the Provenance Fix (2026-11-11)
@@ -35903,3 +35906,22 @@ missing-file message, which did not prevent qmake generation or compilation.
 This closes qmake6 build integration for the implementation sources in
 `cecdafd8b`; it does not prove runtime compatibility on macOS 14.4, a clean
 CMake build, application-level GUI behavior, another platform, or PR CI.
+
+## 898. Validate Clean CMake Build and Offset Suites (2026-11-11)
+
+At source commit `c68d42b2f`, a fresh CMake Release tree was configured in
+`/private/tmp/offset-2961-cmake-clean` with tests and offset-worker wire tests
+enabled. The recursive Ninja build completed all 1,470 steps with exit 0,
+including the LibreCAD app, offset worker, full test binary, worker-wire test
+binary, and `ttf2lff`. The app and test executables were verified in the clean
+build tree. CMake configuration reported existing Qt Linguist warnings for
+unresolved translation language codes; compilation emitted compiler warnings,
+but no build errors.
+
+The clean test binary passed the complete `[curve-offset]` selector:
+1,925,451 assertions in 314 cases. The separate
+`[lc-offsetcurve][worker-protocol][wire]` selector passed 1,025 assertions in
+7 cases. This closes clean CMake compile and these exact test lanes for the
+current source head. It does not establish visible-GUI acceptance, runtime
+compatibility with the macOS 14.4 deployment target, another platform,
+external-CAD interoperability, PR CI, or trimmed-mode provenance identity.
