@@ -30228,7 +30228,7 @@ these rows do not imply every parameter/domain is supported):
 | --- | --- | --- | --- |
 | Line | Finite non-degenerate line; family filter and type retained | Direct exact-line offset; forward, diagonal, reversed, scaled and translated oracle matrix; collapsed/non-finite capture refusal; one-ULP source accepted by capture but explicitly refused by direct generation when world-coordinate precision prevents the requested tolerance; real worker/cache, Produce, strict five-format reopen, and LibreDWG checks for the added profiles | Other sub-ULP/coordinate-conditioning boundaries and broad non-finite payload refusal |
 | Arc | Finite circular arc represented as typed arc source | Direct conic/arc geometry; four seam-crossing and near-full sweep profiles at gaps 1e-4..1e-8 radians, both orientations and both offset sides; counterclockwise near-full profiles at 1e-4 and 1e-8, reversed near-full at 1e-8, and short counterclockwise seam-crossing at 1e-4 pass required worker/cache admission, replacement, Produce, and five-file-lane reopen; short arcs in both orientations at 1e-8 pass the same path at distance 1e-6; the counterclockwise profile at distance .25 cleanly refuses with UndefinedTangent and no output; below-validity arc refused at typed capture | Additional source radius/offset/tolerance combinations, sweep-limit behavior, and broader boundary matrix |
-| Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale; worker/cache, Produce, and five-format reopen for radius 2e-4 and radius 2e4 centered at (1e10,-1e10); LibreDWG independently matches center/radius for both DWG lanes | Other scale/origin profiles through worker and persistence, further conditioning, and arbitrary-circle independent comparisons |
+| Circle | Finite nonzero-radius closed circle | Zero-radius source refused at native validity, typed capture, and direct generation with no branches; direct near-collapse and exact-collapse semantics; exact-normal scale matrix at 1e-6/1e-4/1/1e4/1e8, centered at zero and translated by 1e6 times scale, both signed sides; the worker/client matrix additionally covers radii `2e-6`, `2e-4`, `2`, `2e4`, and `2e8`, centered at zero and translated by `1e6 * scale`, through cache admission, Produce, and all five file lanes on its outward-picked side; LibreDWG checks the resulting circle geometry in both DWG lanes for every scaled fixture | Opposite signed worker/persistence paths for the full scale/translation matrix, scales beyond the tested range, further conditioning, arbitrary-circle independent comparisons, ODA/AutoCAD, and visible GUI |
 | Ellipse | Finite planar whole ellipse or bounded elliptic arc | Direct ellipse/arc trimming suite; translated, rotated ratio-1.5 whole ellipse and forward/reversed bounded arcs plus a near-cusp inward profile now have exact-normal checks and complete worker/cache, Produce, and all five R14/R2000/R2018 DXF/DWG lanes | Full axis-ratio, sweep, cusp-threshold, side/distance and precision matrix |
 | Spline | Well-formed rational/non-rational supported knot/control layouts; constrained tangent cubic now included | Degree 1-6 inputs in worker tests, tangent-constrained replacement, validated degree 1/3 output SPLINEs, five file lanes | Broader knot multiplicities, periodic/rational/tangent combinations and independent geometric oracles |
 | Spline-points | Valid control-point or fit-point `LC_SplinePointsData` | Direct quadratic/cubic and tangent cases; one open four-fit-point source with endpoint tangent constraints matches an exact-normal oracle on both signed sides and passes worker/cache/replacement/Produce, five DXF/DWG lanes, and LibreDWG parsing; zero-length two-control source explicitly refuses with `UndefinedTangent`, empty output, and unchanged source snapshot; isolated, separated, plateau-plus-separated, leading-endpoint, and trailing-endpoint stationary profiles omit stationary source intervals, preserve exact-normal tolerance on moving spans, and pass both signed worker/cache/Produce paths, five file lanes, and LibreDWG parsing; closed fit-point and closed control-point sources pass seam-spanning exact-normal checks and real worker/cache/Produce, five file lanes, and LibreDWG parsing; a closed interior-stationary profile and a simple convex periodic-seam-stationary profile pass exact-normal checks on both sides plus worker/cache/replacement/Produce, five DXF/DWG lanes, and LibreDWG parsing | Other fit-point counts/placements and tangent combinations, repeated-point/stationary-span patterns and joins, self-intersecting or ambiguous closed stationary profiles, and broader seam/refusal matrix |
@@ -35997,3 +35997,29 @@ These results qualify the tested near-node and round-join trim rewrites, not
 every source family or trim topology. Visible GUI, cross-platform runtime,
 external-CAD comparison, and exact-head PR CI remain open. Test commit
 `1224a3762` records the rounded-corner validation.
+
+## 901. Reconcile the Native-circle Scale Matrix (2026-11-11)
+
+Audited the current circle capability row against the actual direct and worker
+test fixtures; the old summary understated the worker/persistence matrix. On
+the current product tree (`5a91c46fd`),
+`QT_QPA_PLATFORM=offscreen ./librecad_tests
+'[curve-offset][direct][circle][oracle][scale]'` passes 52,570 assertions in
+one case. It compares against analytic circle normals for radii scaled by
+`1e-6`, `1e-4`, `1`, `1e4`, and `1e8`, at zero and `1e6 * scale` center
+translations and on both signed sides.
+
+Built `librecad_offset_worker_client_tests` in the existing CMake Release tree
+and ran its focused case, `Worker client joins typed source generation for
+every modeled source family`; it passes 1,573,389 assertions in one case. The
+case includes circle radii `2e-6`, `2e-4`, `2`, `2e4`, and `2e8`, with zero
+and `1e6 * scale` translations. For the outward-picked side it exercises
+worker generation, exact cache admission, typed replacement, Produce, and all
+five internal R14/R2000/R2018 DXF/DWG save/reopen lanes. LibreDWG's JSON output
+is compared to each expected circle center and radius for both DWG lanes.
+
+This closes the previously listed worker/persistence scale and translation
+profiles for the tested outward side and exact fixtures. It does not qualify
+the opposite signed worker/file paths across the full matrix, scales outside
+the tested range, every circle conditioning boundary, visible GUI, ODA/AutoCAD,
+or cross-platform execution. No product code changed in this reconciliation.
