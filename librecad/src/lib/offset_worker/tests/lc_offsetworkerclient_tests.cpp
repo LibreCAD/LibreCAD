@@ -3842,3 +3842,56 @@ TEST_CASE("Typed parabola sources use bounded worker preparation",
         }
     }
 }
+
+TEST_CASE("Bounded hyperbola trim runs through worker preparation on both sides",
+          "[lc-offsetcurve][worker-client][ordered-preparation][hyperbola][trim]") {
+    auto& rt = runtime();
+    OwnedClient client{rt};
+    LC_Hyperbola source{nullptr,
+        LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}};
+    REQUIRE(source.isValid());
+    RS_Vector tangent = source.getTangentDirectionParam(0.0);
+    REQUIRE(tangent.magnitude() > 0.0);
+    RS_Vector normal{-tangent.y, tangent.x};
+    normal = normal / normal.magnitude() * 8.0;
+    const RS_Vector midpoint = source.getPoint(0.0, false);
+    const std::array<RS_Vector, 2> sidePicks{{midpoint + normal, midpoint - normal}};
+    const std::array<double, 2> distances{{1.0, 4.0}};
+
+    for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
+        for (std::size_t side = 0; side < sidePicks.size(); ++side) {
+            CAPTURE(distanceIndex, side);
+            const std::size_t requestId = 1 + distanceIndex * 2 + side;
+            Receipts receipts;
+            RS_OffsetData data;
+            data.coord = sidePicks[side]; data.distance = distances[distanceIndex]; data.number = 1;
+            data.multipleCopies = true; data.keepOriginals = true;
+            LC_OffsetBatchPreparation prepared{data, {&source}, false, {}};
+            LC_DocumentModificationBatch batch;
+
+            REQUIRE_FALSE(prepared.advance(batch));
+            CHECK(prepared.pendingSource() == &source);
+            auto request = prepared.request(token(requestId));
+            REQUIRE(request);
+            REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
+            const auto& operation = std::get<Req::Produce>(request->operation);
+            REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
+            CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
+                  LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+            REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+            rt.until([&] { return receipts.calls[0] != 0; });
+            const auto& completion = completed(receipts.at(0), requestId, 5);
+            REQUIRE(prepared.accept(completion));
+            REQUIRE(prepared.advance(batch));
+
+            REQUIRE(prepared.outcome().sources.size() == 1);
+            CHECK(prepared.outcome().sources.front().source == &source);
+            CHECK(prepared.outcome().sources.front().complete());
+            REQUIRE_FALSE(batch.entitiesToAdd.empty());
+            CHECK_FALSE(source.isDeleted());
+            prepared.release();
+            qDeleteAll(batch.entitiesToAdd);
+            batch.entitiesToAdd.clear();
+        }
+    }
+}
