@@ -1332,6 +1332,43 @@ TEST_CASE("Incremental source scan does not publish across document lifetime cha
     }
 }
 
+TEST_CASE("Cancelled incremental source scan cannot publish a stale highlight",
+          "[gui][dialog][offsetcurve][source][highlight][incremental][cancel]") {
+    Fixture f;
+    f.graphic.addEntity(new RS_Ellipse(nullptr, f.curve->definition().basis));
+    f.graphic.addEntity(new RS_Ellipse(nullptr, f.curve->definition().basis));
+    for (int i = 0; i < 100; ++i) {
+        f.graphic.addEntity(new RS_Line(nullptr, RS_LineData{{double(i), 70}, {double(i + 1), 70}}));
+    }
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    auto* viewport = f.view.getViewPort();
+    auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    NativeWidget widget;
+    widget.setGraphicViewport(viewport);
+    widget.setEntity(clone.get());
+    widget.show();
+    auto* timer = widget.findChild<QTimer*>("offsetSourceHighlightTimer");
+    auto* sliceTimer = widget.findChild<QTimer*>("offsetSourceHighlightSliceTimer");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(timer);
+    REQUIRE(sliceTimer);
+    REQUIRE(sourceBox);
+    REQUIRE(sliceTimer->isActive());
+
+    widget.hide();
+    CHECK_FALSE(timer->isActive());
+    CHECK_FALSE(sliceTimer->isActive());
+    CHECK(overlay->getEntityList().isEmpty());
+    REQUIRE(QMetaObject::invokeMethod(sliceTimer, "timeout", Qt::DirectConnection));
+    CHECK(overlay->getEntityList().isEmpty());
+
+    widget.show();
+    REQUIRE(sliceTimer->isActive());
+    REQUIRE(pollEventsUntil([&] { return !sliceTimer->isActive(); }));
+    CHECK(overlay->getEntityList().isEmpty());
+    CHECK(sourceBox->currentText().contains("ambiguous", Qt::CaseInsensitive));
+}
+
 TEST_CASE("Missing source watch stops when viewport or document changes",
           "[gui][dialog][offsetcurve][source][highlight][overlay][lifetime]") {
     Fixture f;
