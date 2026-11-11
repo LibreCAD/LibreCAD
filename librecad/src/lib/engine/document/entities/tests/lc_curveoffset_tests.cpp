@@ -3254,6 +3254,28 @@ TEST_CASE("Materialized corner-arc nodes require matching arc provenance",
         *source, invalidArcOccurrence, options, LC_CurveOffset::makeDirectSourceBudget());
     CHECK(refused.status == LC_CurveOffsetStatus::AmbiguousTopology);
     CHECK(refused.entities.empty());
+
+    options.mode = LC_CurveOffsetMode::Trimmed;
+    const auto trimmed = LC_CurveOffset::materializeBranches(
+        *source, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(trimmed.status == LC_CurveOffsetStatus::Ok);
+    CHECK_FALSE(trimmed.entities.empty());
+
+    auto invalidTrimmedArc = geometry;
+    const std::size_t arcBranch = arcIsFirstOccurrence ? arcNode->branchA : arcNode->branchB;
+    const double arcParameter = arcIsFirstOccurrence ? arcNode->parameterA : arcNode->parameterB;
+    bool changedCornerIdentity = false;
+    for (LC_OffsetCubicPiece& piece : invalidTrimmedArc.branches[arcBranch].cubicPieces) {
+        if (piece.provenance.arcCentre.valid && piece.provenance.sourceCornerParameter == arcParameter) {
+            piece.provenance.sourceCornerParameter += 0.125;
+            changedCornerIdentity = true;
+        }
+    }
+    REQUIRE(changedCornerIdentity);
+    const auto refusedTrimmedArc = LC_CurveOffset::materializeBranches(
+        *source, invalidTrimmedArc, options, LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(refusedTrimmedArc.status == LC_CurveOffsetStatus::AmbiguousTopology);
+    CHECK(refusedTrimmedArc.entities.empty());
 }
 
 TEST_CASE("Trimmed materialized nodes reject unavailable source occurrences",
