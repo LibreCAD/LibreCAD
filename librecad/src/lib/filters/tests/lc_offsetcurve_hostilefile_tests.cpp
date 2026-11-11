@@ -1706,6 +1706,10 @@ TEST_CASE("trimmed typed-parabola geometry round-trips through native DXF and DW
         {RS2::FormatDXFRW2018, "r2018.dxf", false},
         {RS2::FormatDWG2018, "r2018.dwg", true}
     }};
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+        libreDwgReader = QStandardPaths::findExecutable("dwgread");
+    std::size_t independentlyReadFiles = 0;
 
     for (std::size_t sourceIndex = 0; sourceIndex < sources.size(); ++sourceIndex) {
         LC_Parabola source{nullptr, sources[sourceIndex]};
@@ -1764,10 +1768,53 @@ TEST_CASE("trimmed typed-parabola geometry round-trips through native DXF and DW
                             CHECK(before.distanceTo(after) < 1e-8);
                         }
                     }
+#ifdef DWGSUPPORT
+                    if (lane.format == RS2::FormatDWG2018 && !libreDwgReader.isEmpty()) {
+                        QProcess reader;
+                        reader.start(libreDwgReader,
+                            {"-O", "minJSON", path});
+                        REQUIRE(reader.waitForStarted());
+                        REQUIRE(reader.waitForFinished(30000));
+                        INFO(reader.readAllStandardError().toStdString());
+                        REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                        REQUIRE(reader.exitCode() == 0);
+                        QJsonParseError parseError;
+                        const QJsonDocument document = QJsonDocument::fromJson(
+                            reader.readAllStandardOutput(), &parseError);
+                        REQUIRE(parseError.error == QJsonParseError::NoError);
+                        REQUIRE(document.isObject());
+                        std::vector<QJsonObject> externalSplines;
+                        for (const QJsonValue& value : document.object()
+                                 .value("OBJECTS").toArray()) {
+                            const QJsonObject object = value.toObject();
+                            if (object.value("entity").toString() == "SPLINE")
+                                externalSplines.push_back(object);
+                        }
+                        REQUIRE(externalSplines.size() == expected.size());
+                        for (std::size_t splineIndex = 0;
+                             splineIndex < expected.size(); ++splineIndex) {
+                            const auto& data = expected[splineIndex]->getData();
+                            const QJsonObject& external = externalSplines[splineIndex];
+                            CHECK(external.value("degree").toInt() == data.degree);
+                            const QJsonArray controls = external.value("ctrl_pts").toArray();
+                            REQUIRE(controls.size() == static_cast<qsizetype>(data.controlPoints.size()));
+                            for (qsizetype controlIndex = 0; controlIndex < controls.size(); ++controlIndex) {
+                                const RS_Vector& point = data.controlPoints[static_cast<std::size_t>(controlIndex)];
+                                const QJsonObject parsed = controls[controlIndex].toObject();
+                                CHECK(parsed.value("x").toDouble() == Catch::Approx(point.x).margin(1e-10));
+                                CHECK(parsed.value("y").toDouble() == Catch::Approx(point.y).margin(1e-10));
+                            }
+                        }
+                        ++independentlyReadFiles;
+                    }
+#endif
                 }
             }
         }
     }
+#ifdef DWGSUPPORT
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 8);
+#endif
 }
 
 TEST_CASE("ODA-round-tripped typed-source DWGs retain all modeled source families",
