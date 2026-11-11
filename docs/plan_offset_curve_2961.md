@@ -35700,3 +35700,20 @@ This closes exact/over-cusp worker paths only for this short sweep, ratio,
 origin, orientation and inward side. It does not qualify reversed arcs at those
 distances, arcs ending at a cusp, wider sweeps, other ellipse profiles, external
 readers or visible GUI behavior.
+
+## 888. Qualify Exact and Over-cusp Reversed Elliptic Arcs (2026-11-11)
+
+Commit `5e58b897a` adds the translated, rotated reversed ratio-1.5 short arc
+from section 886 at the exact `16/6` cusp distance and at 110% of it. The
+direct kernel returns complete checked geometry at equality; beyond the cusp,
+it reports successful branch construction and a successful empty trimmed
+result. The independent direct regression passes 15,588 assertions / 1 case,
+including near-cusp reversed traversal and the outward whole-ellipse control.
+
+The typed-source worker/client matrix passes 1,625,413 assertions / 1 case
+with `LC_OFFSET_CLIENT_TEST_TIMEOUT_MS=300000`. Both reversed boundary cases
+pass worker generation, cache admission, center-pick inward side resolution,
+Produce, and all five internal R14/R2000/R2018 DXF/DWG round-trip lanes. This
+closes the exact/over-cusp worker row only for this short reversed sweep and
+profile. Other reversed intervals, cusp-endpoint sweeps, wider arcs, origins,
+ratios, signed-side combinations, and external/visible acceptance remain open.
