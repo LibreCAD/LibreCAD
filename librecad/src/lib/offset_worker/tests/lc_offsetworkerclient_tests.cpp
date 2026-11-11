@@ -958,13 +958,20 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         }
     }
     const std::size_t scaledLineFixtureEnd = sources.size();
-    std::vector<std::pair<std::size_t, double>> scaledCircleFixtures;
+    struct ScaledCircleFixture {
+        std::size_t fixture;
+        double scale;
+        bool inward;
+    };
+    std::vector<ScaledCircleFixture> scaledCircleFixtures;
     for (const double scale : {1e-6, 1e-4, 1.0, 1e4, 1e8}) {
         for (const double translationRatio : {0.0, 1e6}) {
             const RS_Vector center{translationRatio * scale, -translationRatio * scale};
-            const std::size_t fixture = sources.size();
-            sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{center, 2.0 * scale}});
-            scaledCircleFixtures.emplace_back(fixture, scale);
+            for (const bool inward : {false, true}) {
+                const std::size_t fixture = sources.size();
+                sources.emplace_back(LC_OffsetSourceGeometry{RS_CircleData{center, 2.0 * scale}});
+                scaledCircleFixtures.push_back({fixture, scale, inward});
+            }
         }
     }
     std::vector<std::pair<std::size_t, double>> thinEllipseFixtures;
@@ -1590,7 +1597,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         CAPTURE(i);
         const qint64 requestId = static_cast<qint64>(i + 1);
         const auto scaledCircle = std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(),
-            [i](const auto& fixture) { return fixture.first == i; });
+            [i](const auto& fixture) { return fixture.fixture == i; });
         const auto thinEllipse =
             std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipseCusp = std::find_if(thinEllipseCuspFixtures.begin(), thinEllipseCuspFixtures.end(),
@@ -1603,7 +1610,7 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const double sourceDistance = negativeSplinePoints                                                      ? -.25
             : i >= scaledLineFixtureStart && i < scaledLineFixtureEnd
             ? scaledLineDistances[i - scaledLineFixtureStart]
-            : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->second
+            : scaledCircle != scaledCircleFixtures.end()                                 ? 0.2 * scaledCircle->scale
             : thinEllipseCusp != thinEllipseCuspFixtures.end()                           ? thinEllipseCusp->second
             : thinEllipse != thinEllipseFixtures.end()                                   ? thinEllipse->second
             : thinEllipseArc != thinEllipseArcFixtures.end()                             ? thinEllipseArc->second
@@ -2078,7 +2085,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         const bool translatedThinHyperbolaOpposite =
             i == translatedThinHyperbolaNearOppositeFixture || i == translatedThinHyperbolaFarOppositeFixture;
         const auto scaledCircle =
-            std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
+            std::find_if(scaledCircleFixtures.begin(), scaledCircleFixtures.end(),
+                         [i](const auto& fixture) { return fixture.fixture == i; });
         const auto thinEllipse =
             std::find_if(thinEllipseFixtures.begin(), thinEllipseFixtures.end(), [i](const auto& fixture) { return fixture.first == i; });
         const auto thinEllipseCusp = std::find_if(thinEllipseCuspFixtures.begin(), thinEllipseCuspFixtures.end(),
@@ -2101,8 +2109,9 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
         offset.distance = .25;
         if (scaledCircle != scaledCircleFixtures.end()) {
             const auto& circle = std::get<RS_CircleData>(sources[i].value);
-            offset.distance = 0.2 * scaledCircle->second;
-            offset.coord = circle.center + RS_Vector{2.5 * scaledCircle->second, 0.0};
+            offset.distance = 0.2 * scaledCircle->scale;
+            const double pickRadius = (scaledCircle->inward ? 1.5 : 2.5) * scaledCircle->scale;
+            offset.coord = circle.center + RS_Vector{pickRadius, 0.0};
             offset.sideFallback = offset.coord;
         }
         if (i == rotatedWideAxisEllipseFixture) {
@@ -2644,9 +2653,8 @@ TEST_CASE("Worker client joins typed source generation for every modeled source 
                 }
             }
             std::vector<std::size_t> circleFixtures(initialCircleFixtures.begin(), initialCircleFixtures.end());
-            for (const auto& [fixture, scale] : scaledCircleFixtures) {
-                static_cast<void>(scale);
-                circleFixtures.push_back(fixture);
+            for (const auto& fixture : scaledCircleFixtures) {
+                circleFixtures.push_back(fixture.fixture);
             }
             for (const std::size_t fixture : circleFixtures) {
                 const PersistedGeometry* expected = nullptr;
