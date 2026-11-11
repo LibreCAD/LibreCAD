@@ -34894,3 +34894,18 @@ libraries, plugins and tools. The linker warned that Homebrew Qt/Freetype
 libraries were built for macOS 27.0 while the target is macOS 14.4; the build
 does not establish runtime compatibility with that older deployment target.
 Later commits through `9e52e0e77` change tests and documentation only.
+
+## 858. Bound Source Capture Before Copying (2026-11-11)
+
+Commit `44e8327ae` checks spline control, weight, fit, knot and saved-knot
+counts, spline-point counts, and polyline segment count before copying or
+reserving the source payload. Spline validation and capture share the same
+size policy, preserving the existing accepted boundaries. This bounds an
+individual source snapshot; it does not by itself bound the total cost of a
+large drawing's periodic match scan, which remains open.
+
+With the uncommitted geometry experiment, CMake rebuilt the affected test
+target. Oversized fields and polylines plus exact-limit spline controls passed
+the bounded-source selection (21 assertions in 5 cases); the combined source
+and Properties picker selection passed 12,675 assertions in 37 cases. Clean
+CMake and incremental qmake6 validation of this commit remain open.
