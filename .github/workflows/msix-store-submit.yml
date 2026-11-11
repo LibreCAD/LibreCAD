@@ -70,6 +70,39 @@ jobs:
     env:
       MICROSOFT_STORE_PRODUCT_ID: ${{ vars.MICROSOFT_STORE_BETA_PRODUCT_ID }}
     steps:
+      - name: Check the Store configuration
+        # First, so that a missing secret fails in seconds and by name.  An
+        # unset secret reaches the script as an empty string, and msstore
+        # parses the tenant and client IDs as GUIDs, so it would reject an
+        # empty one with a message about its option, not about the secret.
+        # The values themselves are never printed.
+        run: |
+          $problems = @()
+          foreach ($name in 'AZURE_AD_TENANT_ID', 'AZURE_AD_APPLICATION_CLIENT_ID', 'AZURE_AD_APPLICATION_SECRET', 'SELLER_ID') {
+            $value = [Environment]::GetEnvironmentVariable($name)
+            if ([string]::IsNullOrWhiteSpace($value)) {
+              $problems += "The secret $name is empty or missing in the microsoft-store environment."
+            } elseif ($name -in 'AZURE_AD_TENANT_ID', 'AZURE_AD_APPLICATION_CLIENT_ID') {
+              $guid = [guid]::Empty
+              if (-not [guid]::TryParse($value.Trim(), [ref]$guid)) {
+                $problems += "The secret $name is not a GUID."
+              }
+            }
+          }
+          if ($env:MICROSOFT_STORE_PRODUCT_ID -notmatch '^[0-9A-Za-z]{12}$') {
+            $problems += 'The variable MICROSOFT_STORE_BETA_PRODUCT_ID must be the 12-character Store ID of the product, not its GUID.'
+          }
+          foreach ($problem in $problems) { Write-Host "::error::$problem" }
+          if ($problems.Count -gt 0) {
+            throw 'The Store configuration is incomplete; docs/development/msix-store.md describes the one-time setup.'
+          }
+        shell: pwsh
+        env:
+          AZURE_AD_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+          AZURE_AD_APPLICATION_CLIENT_ID: ${{ secrets.AZURE_AD_APPLICATION_CLIENT_ID }}
+          AZURE_AD_APPLICATION_SECRET: ${{ secrets.AZURE_AD_APPLICATION_SECRET }}
+          SELLER_ID: ${{ secrets.SELLER_ID }}
+
       - name: Download the bundle
         run: |
           # The input reaches the script through the environment, never as
@@ -85,7 +118,7 @@ jobs:
           }
           gh run download $env:RUN_ID --repo "$env:GITHUB_REPOSITORY" --name winMsixBundle --dir msix-bundle
           if ($LASTEXITCODE -ne 0) {
-            throw "Run $env:RUN_ID has no winMsixBundle artifact: its PackageWindowsMsix job failed, or the artifact expired after 30 days."
+            throw "Run $env:RUN_ID has no winMsixBundle artifact. Its PackageWindowsMsix job failed or never ran (a newer push cancels a run that is still going), or the artifact expired after 30 days. Pick a run whose PackageWindowsMsix job succeeded."
           }
           # Absent when the runner had no App Certification Kit.
           gh run download $env:RUN_ID --repo "$env:GITHUB_REPOSITORY" --name winMsixWackReport --dir wack
@@ -157,9 +190,6 @@ jobs:
           }
           if ($identity.Publisher -notmatch '(^|,)\s*CN=') {
             throw "Publisher must contain a CN component: $($identity.Publisher)"
-          }
-          if ($env:MICROSOFT_STORE_PRODUCT_ID -notmatch '^[0-9A-Za-z]{12}$') {
-            throw 'MICROSOFT_STORE_BETA_PRODUCT_ID must be the 12-character Store product ID.'
           }
           "upload_path=$($upload.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
           "package_version=$($identity.Version)" | Out-File -FilePath $env:GITHUB_ENV -Append

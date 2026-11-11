@@ -169,6 +169,11 @@ write access could publish from any branch.
    | `AZURE_AD_APPLICATION_SECRET` | Client secret value; it expires, so plan its rotation |
    | `SELLER_ID` | Partner Center seller ID, from Account settings > Identifiers |
 
+The first step of the submit job checks that all four secrets are set, that
+the tenant and client IDs are GUIDs and that `MICROSOFT_STORE_BETA_PRODUCT_ID`
+is a Store ID. It lists everything that is wrong and stops, before it
+downloads the bundle or installs the CLI.
+
 The credentials only work once the account side is wired up as well:
 
 - The Entra tenant must be associated with the Partner Center account.
