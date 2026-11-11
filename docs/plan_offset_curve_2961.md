@@ -5774,6 +5774,21 @@ Windows/Linux runtime qualification. Remaining GUI/import caller audit,
 broader source/budget audit, installed-helper portability, and final W0-W2
 acceptance remain open.
 
+## 933. Exercise Bounded-hyperbola Trimming Through Worker Produce (2026-11-11)
+
+Test commit `6bc0f476c` adds a real helper-process `Produce` regression for
+the bounded hyperbola from section 932. It derives side picks from the source
+tangent at parameter zero and tests both sides at distances `1` and `4`,
+including the beyond-vertex-curvature case. The request retains the typed
+`BoundedHyperbola` source, worker preparation completes with ordinary output,
+and the source entity remains unchanged. The focused case passes 722
+assertions; full `offset_worker_client` CTest passes in 268.41 seconds.
+
+This is worker Produce coverage for the recorded profile and picks; it does
+not establish operation-8 editable-cache admission or DXF/DWG persistence for
+this exact trimmed result, other hyperbola parameters/transforms, visible GUI,
+or external-CAD acceptance. `git diff --check` passes.
+
 ## 56. W94 Current-Source Cache and Creation/Repeat Qualification
 
 Rebuilt the Release process-cache, worker-client, creation-action and shared
