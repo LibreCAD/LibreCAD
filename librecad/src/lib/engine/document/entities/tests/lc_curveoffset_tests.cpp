@@ -32,6 +32,7 @@
 #include <vector>
 
 #include "lc_curveoffset.h"
+#include "lc_curveoffsetinternal.h"
 #include "lc_hyperbola.h"
 #include "lc_offsetresultcheck.h"
 #include "lc_offsetsource.h"
@@ -45,6 +46,55 @@
 #include "rs_spline.h"
 
 using Catch::Approx;
+
+TEST_CASE("Materialized Bezier adapter orders branch parameters", "[curve-offset][topology][materialized]") {
+    const LC_CurveOffsetInternal::BezierBranches branches{
+        {{{{0, 0}, {1, 0}, {2, 0}, {3, 0}}}, {{{3, 0}, {3, 1}, {3, 2}, {3, 3}}}},
+        {{{{3, 3}, {4, 3}, {5, 3}, {6, 3}}}}};
+    const auto curves = LC_CurveOffsetInternal::makePieceCurves(branches, {1, -1});
+    REQUIRE(curves);
+    REQUIRE(curves->branchCount() == 2);
+    REQUIRE(curves->segments().size() == 3);
+    CHECK(curves->segments()[0].branch == 0);
+    CHECK(curves->segments()[0].t0 == 0);
+    CHECK(curves->segments()[0].t1 == 1);
+    CHECK(curves->segments()[1].branch == 0);
+    CHECK(curves->segments()[1].t0 == 1);
+    CHECK(curves->segments()[1].t1 == 2);
+    CHECK(curves->segments()[2].branch == 1);
+    CHECK(curves->segments()[2].t0 == 0);
+    CHECK(curves->segments()[2].t1 == 1);
+    CHECK(curves->next(0) == 1);
+    CHECK(curves->next(1) == -1);
+
+    RS_Vector point, derivative;
+    REQUIRE(curves->evaluate(1, 1.25, point, derivative));
+    CHECK(point.x == Approx(3));
+    CHECK(point.y == Approx(.75));
+    CHECK(derivative.x == Approx(0));
+    CHECK(derivative.y == Approx(3));
+    LC_Interval x, y, dx, dy;
+    REQUIRE(curves->bound(1, 1.25, 1.75, x, y, dx, dy));
+    CHECK(x.contains(3));
+    CHECK(y.contains(.75));
+    CHECK(y.contains(2.25));
+    CHECK(dx.contains(0));
+    CHECK(dy.contains(3));
+
+    const auto straight = [](const RS_Vector& a, const RS_Vector& b) {
+        return std::array<RS_Vector, 4>{{a, a + (b - a) / 3.0, a + (b - a) * (2.0 / 3.0), b}};
+    };
+    const auto crossing = LC_CurveOffsetInternal::makePieceCurves(
+        {{straight({0, 0}, {2, 2}), straight({2, 2}, {0, 2}), straight({0, 2}, {2, 0})}}, {-1});
+    LC_IntersectionOptions options;
+    options.tolerance = 1e-8;
+    const LC_IntersectionResult result = findIntersections(*crossing, options);
+    REQUIRE(result.status == LC_IntersectionStatus::Ok);
+    REQUIRE(result.intersections.size() == 1);
+    CHECK(result.intersections[0].parameterA == Approx(.5).margin(1e-6));
+    CHECK(result.intersections[0].parameterB == Approx(2.5).margin(1e-6));
+    CHECK(result.intersections[0].point.distanceTo({1, 1}) < 1e-6);
+}
 
 TEST_CASE("Offset source snapshots own every supported source type") {
     RS_EllipseData ellipseData;

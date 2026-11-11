@@ -20,6 +20,7 @@
  ******************************************************************************/
 
 #include "lc_curveoffset.h"
+#include "lc_curveoffsetinternal.h"
 
 #include <algorithm>
 #include <array>
@@ -3492,8 +3493,9 @@ public:
     PieceCurves(const std::vector<std::vector<std::array<RS_Vector, 4>>>& branches, std::vector<std::ptrdiff_t> next)
         : m_next{std::move(next)} {
         for (size_t b = 0; b < branches.size(); ++b) {
-            for (const std::array<RS_Vector, 4>& piece : branches[b]) {
-                m_segments.push_back(LC_ParametricSegment{b, 0.0, 1.0});
+            for (size_t i = 0; i < branches[b].size(); ++i) {
+                const std::array<RS_Vector, 4>& piece = branches[b][i];
+                m_segments.push_back(LC_ParametricSegment{b, static_cast<double>(i), static_cast<double>(i + 1)});
                 m_pieces.push_back(piece);
             }
         }
@@ -3513,9 +3515,10 @@ public:
 
     bool evaluate(const std::size_t segment, const double s, RS_Vector& point, RS_Vector& derivative) const override {
         const std::array<RS_Vector, 4>& b = m_pieces[segment];
-        const double r = 1.0 - s;
-        point = b[0] * (r * r * r) + b[1] * (3.0 * r * r * s) + b[2] * (3.0 * r * s * s) + b[3] * (s * s * s);
-        derivative = ((b[1] - b[0]) * (r * r) + (b[2] - b[1]) * (2.0 * r * s) + (b[3] - b[2]) * (s * s)) * 3.0;
+        const double u = s - m_segments[segment].t0;
+        const double r = 1.0 - u;
+        point = b[0] * (r * r * r) + b[1] * (3.0 * r * r * u) + b[2] * (3.0 * r * u * u) + b[3] * (u * u * u);
+        derivative = ((b[1] - b[0]) * (r * r) + (b[2] - b[1]) * (2.0 * r * u) + (b[3] - b[2]) * (u * u)) * 3.0;
         return isFinite(point) && isFinite(derivative);
     }
 
@@ -3525,8 +3528,8 @@ public:
         const std::array<RS_Vector, 4>& p = m_pieces[segment];
         const auto pt = [](const double v) { return LC_Interval::point(v); };
         const LC_Interval one = pt(1.0);
-        const LC_Interval ua = pt(a);
-        const LC_Interval ub = pt(b);
+        const LC_Interval ua = pt(a) - pt(m_segments[segment].t0);
+        const LC_Interval ub = pt(b) - pt(m_segments[segment].t0);
         // blossom of the cubic, of its quadratic derivative (without the factor 3)
         const auto cubic = [&](const LC_Interval& u1, const LC_Interval& u2, const LC_Interval& u3, const double c0,
                                const double c1, const double c2, const double c3) {
@@ -6253,6 +6256,15 @@ LC_CurveOffsetStatus regionBoundary(const OffsetSource& source, const SourceScal
 
 } // namespace
 
+namespace LC_CurveOffsetInternal {
+
+std::unique_ptr<LC_ParametricCurves> makePieceCurves(const BezierBranches& branches,
+                                                     std::vector<std::ptrdiff_t> next) {
+    return std::make_unique<PieceCurves>(branches, std::move(next));
+}
+
+} // namespace LC_CurveOffsetInternal
+
 namespace {
 
 /**
@@ -6660,11 +6672,11 @@ LC_CurveOffsetMaterializationResult materializeBranches(const RS_Entity& source,
                 nets[b].push_back(piece.bezier);
             }
         }
-        const PieceCurves curves{nets, branchSuccessors(geometry.branches)};
+        const auto curves = LC_CurveOffsetInternal::makePieceCurves(nets, branchSuccessors(geometry.branches));
         LC_IntersectionOptions query;
         query.tolerance = options.tolerance.nodeMerge;
         query.maxBoxPairs = options.maxIntersectionPairs;
-        const LC_IntersectionResult found = findIntersections(curves, query);
+        const LC_IntersectionResult found = findIntersections(*curves, query);
         result.intersectionDiagnostics.stage = LC_CurveOffsetGeometryResult::IntersectionDiagnostics::Stage::MaterializedOutput;
         result.intersectionDiagnostics.status = found.status;
         result.intersectionDiagnostics.work = found.work;

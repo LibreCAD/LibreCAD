@@ -901,6 +901,7 @@ set (SHARED_SOURCES
      librecad/src/lib/engine/document/entities/lc_curvejet.h
      librecad/src/lib/engine/document/entities/lc_curveoffset.cpp
      librecad/src/lib/engine/document/entities/lc_curveoffset.h
+     librecad/src/lib/engine/document/entities/lc_curveoffsetinternal.h
      librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.cpp
      librecad/src/lib/engine/document/entities/lc_ellipseoffsetgeometry.h
      librecad/src/lib/engine/document/entities/lc_offsetcurve.cpp

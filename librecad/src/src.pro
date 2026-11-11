@@ -461,6 +461,7 @@ HEADERS += \
     lib/engine/document/entities/lc_mleader.h \
     lib/engine/document/entities/lc_curvejet.h \
     lib/engine/document/entities/lc_curveoffset.h \
+    lib/engine/document/entities/lc_curveoffsetinternal.h \
     lib/engine/document/entities/lc_ellipseoffsetgeometry.h \
     lib/engine/document/entities/lc_offsetcurve.h \
     lib/engine/document/entities/lc_offsetsource.h \
