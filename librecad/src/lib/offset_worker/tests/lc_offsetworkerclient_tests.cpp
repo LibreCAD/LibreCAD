@@ -3786,38 +3786,45 @@ TEST_CASE("Typed parabola sources use bounded worker preparation",
           "[lc-offsetcurve][worker-client][ordered-preparation][parabola]") {
     auto& rt = runtime();
     OwnedClient client{rt};
-    Receipts receipts;
     LC_Parabola source{nullptr, LC_ParabolaData{{RS_Vector{0, 0}, RS_Vector{5, 10},
                                                  RS_Vector{10, 0}}}};
-    RS_OffsetData data;
-    data.coord = {5, 8}; data.distance = .5; data.number = 1;
-    data.multipleCopies = true; data.keepOriginals = true;
-    LC_OffsetBatchPreparation prepared{data, {&source}, false, {}};
-    LC_DocumentModificationBatch batch;
+    const std::array<RS_Vector, 2> sidePicks{{{5, 8}, {5, -2}}};
+    for (const double distance : {.5, 2.75}) {
+        for (std::size_t side = 0; side < sidePicks.size(); ++side) {
+            CAPTURE(distance, side);
+            const std::size_t requestId = 1 + static_cast<std::size_t>(distance > 1.0) * 2 + side;
+            Receipts receipts;
+            RS_OffsetData data;
+            data.coord = sidePicks[side]; data.distance = distance; data.number = 1;
+            data.multipleCopies = true; data.keepOriginals = true;
+            LC_OffsetBatchPreparation prepared{data, {&source}, false, {}};
+            LC_DocumentModificationBatch batch;
 
-    REQUIRE_FALSE(prepared.advance(batch));
-    CHECK(prepared.pendingSource() == &source);
-    auto request = prepared.request(token(1));
-    REQUIRE(request);
-    REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
-    const auto& operation = std::get<Req::Produce>(request->operation);
-    REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
-    CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
-          LC_OffsetSourceGeometry::Kind::Parabola);
-    REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
-    rt.until([&] { return receipts.calls[0] != 0; });
-    const auto& completion = completed(receipts.at(0), 1, 5);
-    REQUIRE(prepared.accept(completion));
-    REQUIRE(prepared.advance(batch));
+            REQUIRE_FALSE(prepared.advance(batch));
+            CHECK(prepared.pendingSource() == &source);
+            auto request = prepared.request(token(requestId));
+            REQUIRE(request);
+            REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
+            const auto& operation = std::get<Req::Produce>(request->operation);
+            REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
+            CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
+                  LC_OffsetSourceGeometry::Kind::Parabola);
+            REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+            rt.until([&] { return receipts.calls[0] != 0; });
+            const auto& completion = completed(receipts.at(0), requestId, 5);
+            REQUIRE(prepared.accept(completion));
+            REQUIRE(prepared.advance(batch));
 
-    REQUIRE(prepared.outcome().sources.size() == 1);
-    CHECK(prepared.outcome().sources.front().source == &source);
-    CHECK(prepared.outcome().sources.front().complete());
-    REQUIRE_FALSE(batch.entitiesToAdd.empty());
-    for (const RS_Entity* entity : batch.entitiesToAdd)
-        CHECK_FALSE(dynamic_cast<const LC_OffsetCurve*>(entity));
-    CHECK_FALSE(source.isDeleted());
-    prepared.release();
-    qDeleteAll(batch.entitiesToAdd);
-    batch.entitiesToAdd.clear();
+            REQUIRE(prepared.outcome().sources.size() == 1);
+            CHECK(prepared.outcome().sources.front().source == &source);
+            CHECK(prepared.outcome().sources.front().complete());
+            REQUIRE_FALSE(batch.entitiesToAdd.empty());
+            for (const RS_Entity* entity : batch.entitiesToAdd)
+                CHECK_FALSE(dynamic_cast<const LC_OffsetCurve*>(entity));
+            CHECK_FALSE(source.isDeleted());
+            prepared.release();
+            qDeleteAll(batch.entitiesToAdd);
+            batch.entitiesToAdd.clear();
+        }
+    }
 }
