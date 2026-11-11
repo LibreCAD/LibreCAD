@@ -60,11 +60,17 @@ public:
     }
 
     using LC_GraphicViewRenderer::drawOverlayEntitiesInOverlay;
+    using LC_GraphicViewRenderer::drawOverlay;
     using LC_GraphicViewRenderer::setPenForDraftEntity;
     using LC_GraphicViewRenderer::setPenForEntity;
     using LC_GraphicViewRenderer::setPenForOverlayEntity;
     using LC_GraphicViewRenderer::setupPainter;
     void beginPass() { doSetupBeforeContainerDraw(); }
+    void setHighlightColor(const RS_Color& color) {
+        m_colorVisualSnapDocumentEntities = color;
+        m_colorHighlightedEntity = color;
+        m_colorSelectedEntity = color;
+    }
 };
 
 class TestPrintRenderer final : public LC_PrintViewportRenderer {
@@ -93,6 +99,40 @@ void installMarker(RS_Painter& painter, const RS2::LineType lineType) {
 }
 
 } // namespace
+
+TEST_CASE("Offset source highlight is rendered and removed with its lease",
+          "[gui][offsetcurve][source][highlight][render]") {
+    (void)lc::test::application();
+    LC_GraphicViewport viewport;
+    viewport.setSize(100, 80);
+    viewport.setOffsetAndFactor(10, 40, 1.0);
+    RS_Line source{RS_Vector{0, 0}, RS_Vector{40, 0}};
+    source.setPen(testPen(RS2::SolidLine));
+    auto lease = viewport.highlightOffsetSource(source);
+    REQUIRE(lease);
+    const auto render = [&] {
+        QImage image(100, 80, QImage::Format_RGB32);
+        image.fill(Qt::black);
+        RS_Painter painter(&image);
+        TestViewRenderer renderer(&viewport, &image);
+        renderer.setHighlightColor(RS_Color(Qt::red));
+        renderer.setupPainter(&painter);
+        renderer.beginPass();
+        renderer.drawOverlay(&painter);
+        UNSCOPED_INFO("overlay pen: " << painter.pen().color().name().toStdString()
+                      << " style " << static_cast<int>(painter.pen().style())
+                      << " origin " << viewport.toGuiX(0) << "," << viewport.toGuiY(0));
+        painter.end();
+        int colored = 0;
+        for (int y = 0; y < image.height(); ++y)
+            for (int x = 0; x < image.width(); ++x)
+                if (image.pixelColor(x, y) != QColor(Qt::black)) ++colored;
+        return colored;
+    };
+    CHECK(render() > 0);
+    lease.reset();
+    CHECK(render() == 0);
+}
 
 TEST_CASE("drawing, draft, preview and print keep the same model-space dash lengths",
           "[gui][pen][linetype]") {

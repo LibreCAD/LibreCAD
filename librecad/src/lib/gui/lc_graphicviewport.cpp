@@ -26,9 +26,11 @@
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
+#include <map>
 #include <vector>
 
 #include <QDateTime>
+#include <QTimer>
 
 #include "lc_containertraverser.h"
 #include "lc_defaults.h"
@@ -40,6 +42,7 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_dialogfactoryinterface.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphic.h"
 #include "rs_grid.h"
 #include "rs_line.h"
@@ -48,7 +51,67 @@
 
 namespace {
 
+void detachHighlightLayers(RS_Entity& entity) {
+    if (auto* container = dynamic_cast<RS_EntityContainer*>(&entity)) {
+        for (auto* child : container->getEntityList())
+            if (child) detachHighlightLayers(*child);
+    }
+    entity.setPen(entity.getPen(true));
+    entity.setLayer(static_cast<RS_Layer*>(nullptr));
+    entity.setSelectionFlag(false);
+}
+
 } // namespace
+
+class LC_OffsetSourceHighlightState : public std::enable_shared_from_this<LC_OffsetSourceHighlightState> {
+public:
+    LC_OffsetSourceHighlightState(LC_GraphicViewport* viewport, RS_EntityContainer* container)
+        : m_viewport(viewport), m_container(container) {}
+
+    ~LC_OffsetSourceHighlightState() { shutdown(); }
+
+    void shutdown() {
+        if (!m_container) return;
+        for (const auto& item : m_entities) m_container->removeEntity(item.first);
+        m_entities.clear();
+        m_container = nullptr;
+        m_viewport = nullptr;
+    }
+
+    RS_Entity* add(std::unique_ptr<RS_Entity> entity) {
+        auto* raw = entity.get();
+        m_entities.emplace(raw, std::move(entity));
+        try {
+            m_container->addEntity(raw);
+        } catch (...) {
+            m_entities.erase(raw);
+            throw;
+        }
+        return raw;
+    }
+
+    void remove(RS_Entity* entity) noexcept {
+        if (!m_container) return;
+        const auto it = m_entities.find(entity);
+        if (it == m_entities.end()) return;
+        m_container->removeEntity(entity);
+        m_entities.erase(it);
+        try { requestRedraw(); } catch (...) {}
+    }
+
+    void requestRedraw() {
+        std::weak_ptr<LC_OffsetSourceHighlightState> weak = shared_from_this();
+        QTimer::singleShot(0, [weak] {
+            if (const auto state = weak.lock(); state && state->m_viewport)
+                state->m_viewport->notifyChanged(RS2::RedrawOverlay);
+        });
+    }
+
+private:
+    LC_GraphicViewport* m_viewport;
+    RS_EntityContainer* m_container;
+    std::map<RS_Entity*, std::unique_ptr<RS_Entity>> m_entities;
+};
 
 LC_GraphicViewport::LC_GraphicViewport():
     m_grid{std::make_unique<RS_Grid>(this)},
@@ -57,9 +120,37 @@ LC_GraphicViewport::LC_GraphicViewport():
     m_formatter{std::make_unique<LC_Formatter>(this)} {
 }
 
-LC_GraphicViewport::~LC_GraphicViewport() = default;
+LC_GraphicViewport::~LC_GraphicViewport() {
+    if (m_offsetSourceHighlights) m_offsetSourceHighlights->shutdown();
+    m_offsetSourceHighlights.reset();
+}
+
+std::shared_ptr<void> LC_GraphicViewport::highlightOffsetSource(const RS_Entity& entity) {
+    if (entity.isDeleted() || !entity.isVisible()) return {};
+    auto* container = getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    if (container->isOwner()) return {};
+    if (!m_offsetSourceHighlights)
+        m_offsetSourceHighlights = std::make_shared<LC_OffsetSourceHighlightState>(this, container);
+    auto state = m_offsetSourceHighlights;
+    std::unique_ptr<RS_Entity> clone(entity.clone());
+    if (!clone) return {};
+    detachHighlightLayers(*clone);
+    clone->reparent(container);
+    clone->setHighlighted(true);
+    auto* raw = state->add(std::move(clone));
+    std::weak_ptr<LC_OffsetSourceHighlightState> weak = state;
+    std::shared_ptr<void> lease(raw, [weak](void* value) {
+        if (auto owner = weak.lock()) owner->remove(static_cast<RS_Entity*>(value));
+    });
+    state->requestRedraw();
+    return lease;
+}
 
 void LC_GraphicViewport::setDocument(RS_Document *c) {
+    if (m_document != c && m_offsetSourceHighlights) {
+        m_offsetSourceHighlights->shutdown();
+        m_offsetSourceHighlights.reset();
+    }
     m_document = c;
     RS_Graphic* g = nullptr;
     if (m_document->rtti() == RS2::EntityGraphic){

@@ -1033,7 +1033,8 @@ namespace RS2 {
         Snapper             = 2, // Snapper
         InfoCursor          = 3, // Info Cursor
         PermanentHighlights = 4,
-        LAST                = 5
+        OffsetSourceHighlights = 5,
+        LAST                = 6
     };
 
     //Different re-draw methods to speed up rendering of the screen

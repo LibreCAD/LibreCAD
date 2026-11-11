@@ -173,9 +173,22 @@ LC_PropertiesEditingWidgetOffsetCurve::~LC_PropertiesEditingWidgetOffsetCurve() 
 }
 
 void LC_PropertiesEditingWidgetOffsetCurve::detachPreparation() {
+    m_sourceHighlight.reset();
     m_entity = nullptr;
     m_busy = false; m_proposedDefinition.reset(); m_inputSnapshot.reset();
     m_worker.reset(); // Disconnect/reap before releasing the widget or caller's clone owner.
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::showEvent(QShowEvent* event) {
+    LC_EntityPropertiesEditorWidget::showEvent(event);
+    m_sourceHighlightVisible = true;
+    refreshSourceHighlight();
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::hideEvent(QHideEvent* event) {
+    m_sourceHighlightVisible = false;
+    m_sourceHighlight.reset();
+    LC_EntityPropertiesEditorWidget::hideEvent(event);
 }
 
 LC_EllipseOffsetDefinition LC_PropertiesEditingWidgetOffsetCurve::proposedDefinition() const {
@@ -337,6 +350,7 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
         ui->cbSource->clear();
         ui->cbSource->addItem(tr("Source not available"));
         ui->tbSelectSource->setEnabled(false);
+        m_sourceHighlight.reset();
         return;
     }
 
@@ -409,6 +423,42 @@ void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceChoices() const {
     }
     ui->cbSource->setCurrentIndex(matchedIndex);
     ui->tbSelectSource->setEnabled(hasMatchingSource && !m_busy);
+    refreshSourceHighlight();
+}
+
+void LC_PropertiesEditingWidgetOffsetCurve::refreshSourceHighlight() const {
+    const QPointer<const LC_PropertiesEditingWidgetOffsetCurve> alive(this);
+    auto previous = std::move(m_sourceHighlight);
+    previous.reset();
+    if (!alive || !m_sourceHighlightVisible || !m_entity || !m_viewport) return;
+    auto* document = m_viewport->getDocument();
+    if (!document) return;
+    std::optional<LC_OffsetSourceGeometry> embedded;
+    if (m_entity->sourceDefinition()) embedded = m_entity->sourceDefinition()->source;
+    else if (m_entity->hasEditableDefinition()) embedded = LC_OffsetSourceGeometry{m_entity->definition().basis};
+    if (!embedded) return;
+    const auto encoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*embedded);
+    if (!encoding) return;
+    RS_Entity* match = nullptr;
+    RS_Entity* preferred = nullptr;
+    int count = 0;
+    for (auto* entity : document->getEntityList()) {
+        if (!entity || entity->isDeleted()) continue;
+        const auto geometry = LC_OffsetSourceGeometry::capture(*entity);
+        if (!geometry || geometry->kind() != embedded->kind()) continue;
+        const auto candidate = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*geometry);
+        if (!candidate || *candidate != *encoding) continue;
+        ++count;
+        if (sourceVariantSelectable(*entity)) {
+            match = entity;
+            if (entity->getId() == m_preferredSourceId) preferred = entity;
+        }
+    }
+    if (preferred) match = preferred;
+    else if (count != 1) match = nullptr;
+    if (!match) return;
+    auto highlight = m_viewport->highlightOffsetSource(*match);
+    if (alive) m_sourceHighlight = std::move(highlight);
 }
 
 RS_Entity* LC_PropertiesEditingWidgetOffsetCurve::findSourceEntity(qulonglong id) const {

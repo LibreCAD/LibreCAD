@@ -19,6 +19,8 @@ class LC_OffsetWorkerClient;
 class LC_OffsetCurveEditSnapshot;
 class RS_Ellipse;
 class RS_Entity;
+class QHideEvent;
+class QShowEvent;
 
 /** Edits only the caller-owned dialog clone, never the document entity. */
 class LC_PropertiesEditingWidgetOffsetCurve final : public LC_EntityPropertiesEditorWidget {
@@ -43,6 +45,10 @@ public:
 signals:
     void preparationBusyChanged(bool busy) const;
 
+protected:
+    void showEvent(QShowEvent* event) override;
+    void hideEvent(QHideEvent* event) override;
+
 private:
     friend class LC_DlgEntityProperties;
     void detachPreparation();
@@ -61,12 +67,15 @@ private:
     void refresh(QLineEdit* completed = nullptr, bool force = false) const;
     void inputRefused(QLineEdit* editor, const QString& reason) const;
     void refreshSourceChoices() const;
+    void refreshSourceHighlight() const;
     RS_Entity* findSourceEntity(qulonglong id) const;
     bool sourceMatches(const SourceWitness& source) const;
     void selectCurrentSource() const;
     Ui::LC_OffsetCurvePropertiesEditingWidget* ui;
     LC_OffsetCurve* m_entity = nullptr;
     mutable qulonglong m_preferredSourceId = 0;
+    mutable std::shared_ptr<void> m_sourceHighlight;
+    bool m_sourceHighlightVisible = false;
     LC_OffsetRunLimits m_limits;
     mutable bool m_refreshing = false;
     mutable std::optional<LC_OffsetCurveEditResult> m_lastResult;

@@ -43,6 +43,7 @@ class LC_View;
 class QDateTime;
 class RS_Undoable;
 class LC_GraphicViewPortListener;
+class LC_OffsetSourceHighlightState;
 
 class LC_GraphicViewport: public LC_CoordinatesMapper{
 public:
@@ -178,6 +179,7 @@ public:
     void clearOverlayDrawablesContainer(RS2::OverlayGraphics overlayType) const;
     RS_Grid *getGrid() const;
     LC_OverlaysManager* getOverlaysManager() { return &m_overlaysManager;}
+    std::shared_ptr<void> highlightOffsetSource(const RS_Entity& entity);
     bool isPanning() const {return m_panning;}
     void setPanning(const bool state) {  m_panning = state;}
     RS_Graphic* getGraphic() const {return m_graphic;}
@@ -233,6 +235,7 @@ protected:
     bool m_relativeZeroLocked = false;
 
     LC_OverlaysManager m_overlaysManager;
+    std::shared_ptr<LC_OffsetSourceHighlightState> m_offsetSourceHighlights;
 
     bool m_panning = false;
     bool m_hideRelativeZero = false; // fixme - should be dispatched from action

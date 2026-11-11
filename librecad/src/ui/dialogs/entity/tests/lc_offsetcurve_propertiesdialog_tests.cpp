@@ -827,6 +827,143 @@ TEST_CASE("Native source picker does not guess between identical embedded source
     CHECK(second->getFlag(RS2::FlagSelected));
 }
 
+TEST_CASE("Native source indication is temporary and preserves drawing selection",
+          "[gui][dialog][offsetcurve][source][highlight][overlay]") {
+    Fixture f;
+    auto* source = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    auto* selected = new RS_Line(nullptr, RS_LineData{{0, 4}, {5, 4}});
+    source->setLayer(f.graphic.getActiveLayer());
+    f.graphic.addEntity(source);
+    f.graphic.addEntity(selected);
+    f.graphic.select(QList<RS_Entity*>{selected}, true);
+    auto* viewport = f.view.getViewPort();
+    auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    auto* other = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::PermanentHighlights);
+    auto* otherHighlight = new RS_Line(nullptr, RS_LineData{{0, 0}, {1, 0}});
+    other->addEntity(otherHighlight);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    {
+        NativeWidget widget;
+        widget.setGraphicViewport(viewport);
+        widget.setEntity(clone.get());
+        widget.show();
+        QApplication::processEvents();
+        REQUIRE(overlay->getEntityList().size() == 1);
+        CHECK(overlay->getEntityList().front()->isHighlighted());
+        CHECK(overlay->getEntityList().front()->getLayer(false) == nullptr);
+        CHECK_FALSE(source->getFlag(RS2::FlagSelected));
+        CHECK(selected->getFlag(RS2::FlagSelected));
+        auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+        REQUIRE(typeBox);
+        const int lineType = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Line));
+        REQUIRE(lineType >= 0);
+        typeBox->setCurrentIndex(lineType);
+        CHECK(overlay->getEntityList().size() == 1);
+        CHECK(selected->getFlag(RS2::FlagSelected));
+        widget.hide();
+        CHECK(overlay->getEntityList().isEmpty());
+        widget.show();
+        QApplication::processEvents();
+        CHECK(overlay->getEntityList().size() == 1);
+        source->setFlag(RS2::FlagDeleted);
+        typeBox->setCurrentIndex(0);
+        CHECK(overlay->getEntityList().isEmpty());
+    }
+    CHECK(overlay->getEntityList().isEmpty());
+    CHECK(other->getEntityList().contains(otherHighlight));
+    CHECK(selected->getFlag(RS2::FlagSelected));
+    other->removeEntity(otherHighlight);
+}
+
+TEST_CASE("Offset source highlight leases survive viewport document changes and destruction",
+          "[gui][dialog][offsetcurve][source][highlight][overlay]") {
+    REQUIRE(lc::test::application());
+    Graphic first, second;
+    first.initForNewDocument(); first.onLoadingCompleted();
+    second.initForNewDocument(); second.onLoadingCompleted();
+    RS_Line source(nullptr, RS_LineData{{0, 0}, {1, 0}});
+    std::shared_ptr<void> lease;
+    {
+        auto viewport = std::make_unique<LC_GraphicViewport>();
+        viewport->setDocument(&first);
+        auto* overlay = viewport->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+        lease = viewport->highlightOffsetSource(source);
+        REQUIRE(lease);
+        CHECK(overlay->getEntityList().size() == 1);
+        viewport->setDocument(&second);
+        CHECK(overlay->getEntityList().isEmpty());
+        lease.reset();
+        lease = viewport->highlightOffsetSource(source);
+        REQUIRE(lease);
+        CHECK(overlay->getEntityList().size() == 1);
+    }
+    lease.reset();
+    QApplication::processEvents();
+}
+
+TEST_CASE("Ambiguous embedded sources are not automatically highlighted",
+          "[gui][dialog][offsetcurve][source][highlight][overlay]") {
+    Fixture f;
+    auto* first = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    auto* second = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    f.graphic.addEntity(first);
+    f.graphic.addEntity(second);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* overlay = f.view.getViewPort()->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    CHECK(overlay->getEntityList().isEmpty());
+    CHECK_FALSE(first->getFlag(RS2::FlagSelected));
+    CHECK_FALSE(second->getFlag(RS2::FlagSelected));
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(sourceBox);
+    const int index = sourceBox->findData(QVariant::fromValue<qulonglong>(second->getId()));
+    REQUIRE(index >= 0);
+    sourceBox->setCurrentIndex(index);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    CHECK(overlay->getEntityList().size() == 1);
+}
+
+TEST_CASE("Source indication follows successful cross-family replacement",
+          "[gui][dialog][offsetcurve][source][highlight][overlay]") {
+    Fixture f;
+    auto* original = new RS_Ellipse(nullptr, f.curve->definition().basis);
+    auto* parabola = new LC_Parabola(
+        nullptr, LC_ParabolaData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}});
+    f.graphic.addEntity(original);
+    f.graphic.addEntity(parabola);
+    std::unique_ptr<LC_OffsetCurve> clone(static_cast<LC_OffsetCurve*>(f.curve->clone()));
+    NativeWidget widget;
+    widget.setGraphicViewport(f.view.getViewPort());
+    widget.setEntity(clone.get());
+    widget.show();
+    QApplication::processEvents();
+    auto* overlay = f.view.getViewPort()->getOverlayEntitiesContainer(RS2::OverlayGraphics::OffsetSourceHighlights);
+    REQUIRE(overlay->getEntityList().size() == 1);
+    CHECK(dynamic_cast<RS_Ellipse*>(overlay->getEntityList().front()) != nullptr);
+    auto* typeBox = widget.findChild<QComboBox*>("cbSourceType");
+    auto* sourceBox = widget.findChild<QComboBox*>("cbSource");
+    REQUIRE(typeBox); REQUIRE(sourceBox);
+    const int typeIndex = typeBox->findData(static_cast<int>(LC_OffsetSourceGeometry::Kind::Parabola));
+    REQUIRE(typeIndex >= 0);
+    typeBox->setCurrentIndex(typeIndex);
+    REQUIRE(overlay->getEntityList().size() == 1);
+    CHECK(dynamic_cast<RS_Ellipse*>(overlay->getEntityList().front()) != nullptr);
+    const int index = sourceBox->findData(QVariant::fromValue<qulonglong>(parabola->getId()));
+    REQUIRE(index >= 0);
+    sourceBox->setCurrentIndex(index);
+    awaitPreparation(widget);
+    REQUIRE(widget.lastEditResult()); REQUIRE(*widget.lastEditResult());
+    REQUIRE(overlay->getEntityList().size() == 1);
+    CHECK(dynamic_cast<LC_Parabola*>(overlay->getEntityList().front()) != nullptr);
+    CHECK_FALSE(original->getFlag(RS2::FlagSelected));
+    CHECK_FALSE(parabola->getFlag(RS2::FlagSelected));
+}
+
 TEST_CASE("Cancelling a duplicate source replacement retains the committed identity",
           "[gui][dialog][offsetcurve][source][identity][async]") {
     Fixture f;
