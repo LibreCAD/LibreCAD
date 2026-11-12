@@ -38787,3 +38787,24 @@ Two action output had not yet been round-tripped. The evidence covers only
 this bounded-hyperbola profile and transverse circle fixture; other profiles,
 source families, visible GUI, cross-platform, and external-CAD acceptance
 remain open.
+
+## 1042. Independently Decode Trim Two DWGs with LibreDWG (2026-11-12)
+
+Test commit `062f23248` extends the five-lane Trim Two round-trip regression
+from section 1041. When LibreDWG's `dwgread` is available (or supplied through
+`DWGREAD`), both R2000 and R2018 DWG files are decoded as minJSON; the test
+requires valid JSON and at least one SPLINE and one ARC in each output. This
+is an independent-reader decode and entity-presence check, in addition to
+LibreCAD's own import and geometry comparison. The external check is
+environment-conditional so builds without LibreDWG retain the product
+round-trip coverage.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused Trim
+Two test passes 589 assertions across both pick orders and all five file
+lanes; `[trim-action]` passes 22,793 assertions / 74 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; the CMake test target builds; and
+`git diff --check` passes. This strengthens structural decodability evidence
+for the same single bounded-hyperbola profile and transverse-circle fixture;
+it does not establish external geometry equivalence, ODA/AutoCAD acceptance,
+other profiles or source kinds, visible GUI behavior, or cross-platform
+validation.
