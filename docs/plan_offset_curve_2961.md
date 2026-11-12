@@ -36920,7 +36920,21 @@ segment for a requested distance of `0.2`. `LC_SplinePoints::getDistanceToPoint`
 therefore confirms that the point is correctly hidden; the helper's sampled
 projection plus local Newton refinement missed the alternate nearest segment.
 Do not treat this exploratory result as a product defect or positive coverage.
-If this profile is revisited, use a global nearest-distance oracle across every
-quadratic span before adding it to the trim matrix. Broader coincident fit-point
-handling remains open; successful raw source capture alone is not evidence of
-trim support.
+Section 952 replaces this probe with a global entity-distance check across the
+profile's quadratic spans. Broader coincident fit-point handling remains open;
+successful raw source capture alone is not evidence of trim support.
+
+## 952. Qualify Separated Repeated Fit-point Trims with Global Distance (2026-11-11)
+
+Test commit `f525b4fcd` lets the direct trim oracle accept an entity-wide
+nearest-distance callback and uses `LC_SplinePoints::getDistanceToPoint` for
+fit-point splines. This avoids the prior helper's single sampled-start Newton
+search missing a nearer quadratic span. Alongside the interior duplicate from
+section 948, it qualifies a profile with separated repeated neighbors on both
+sides at distances `0.2` and `0.5`. The focused fit-point selection passes 103
+assertions across three cases; the full `[curve-offset][trim]` selection passes
+55,652 assertions across 37 cases. `git diff --check` passes.
+
+This is direct-geometry evidence only. The separated-repeat profile still
+needs worker preparation and file-lane coverage; other repeated-point layouts,
+visible GUI behavior, and external-CAD acceptance remain open.
