@@ -30,8 +30,11 @@
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "lc_offsetcurvexdata.h"
+#include "lc_action_offsetcurve_updatesource.h"
 #include "lc_curveoffset.h"
+#include "lc_hyperbola.h"
 #include "lc_splinepoints.h"
+#include "lc_offsetcurveactiontestsupport.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
@@ -113,6 +116,11 @@ protected:
         if (onOptionsRead) { auto callback = std::move(onOptionsRead); callback(); }
         return value;
     }
+};
+class UpdateSourceProbe final : public LC_ActionOffsetCurveUpdateSource {
+public:
+    using LC_ActionOffsetCurveUpdateSource::LC_ActionOffsetCurveUpdateSource;
+    void use(RS_Entity* source) { useSource(source); }
 };
 template<bool Both> struct Drawing {
     const bool ready = lc::test::application() != nullptr;
@@ -661,6 +669,86 @@ TEST_CASE("T native pairing explicitly refuses disabled through points spline tr
     CHECK(batch.entitiesToAdd.empty()); CHECK(batch.entitiesToDelete.empty());
     CHECK_FALSE(native->isDeleted()); CHECK_FALSE(points->isDeleted()); CHECK(native->hasEditableDefinition());
     CHECK(points->getData().controlPoints.data() == controls); CHECK_FALSE(canUndo(f.graphic));
+}
+
+TEST_CASE("T native Trim action previews commits and undoes a worker-created typed hyperbola offset",
+          "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola]") {
+    Drawing<false> f;
+    auto* previous = addNative(f.graphic);
+    LC_HyperbolaData hyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false};
+    auto* hyperbola = new LC_Hyperbola(&f.graphic, hyperbolaData);
+    f.graphic.addEntity(hyperbola);
+    f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+    UpdateSourceProbe update(&f.context);
+    update.init(0);
+    update.setSourceKind(LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+    update.use(hyperbola);
+    lc::test::awaitUpdate(update);
+    REQUIRE(update.lastReport().updated == 1);
+    REQUIRE(previous->isDeleted());
+    LC_OffsetCurve* native = nullptr;
+    for (auto* entity : live(f.graphic)) {
+        if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+        REQUIRE(native == nullptr);
+        native = dynamic_cast<LC_OffsetCurve*>(entity);
+    }
+    REQUIRE(native);
+    REQUIRE(native->hasGeneralizedSourceDefinition());
+    REQUIRE(native->sourceDefinition());
+    CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+    const auto original = trimGeometry(*native);
+
+    double first = 0, last = 0;
+    REQUIRE(native->getParameterDomain(first, last));
+    const auto breaks = native->getBreakParameters();
+    REQUIRE(breaks.size() >= 2);
+    const double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
+    const RS_Vector limitPick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
+    const RS_Vector point = native->getPointAt(parameter);
+    const double step = std::max(1e-7, (last - first) * 1e-5);
+    const RS_Vector before = native->getPointAt(parameter - step);
+    const RS_Vector after = native->getPointAt(parameter + step);
+    RS_Vector normal{-(after.y - before.y), after.x - before.x};
+    REQUIRE(normal.magnitude() > RS_TOLERANCE);
+    normal /= normal.magnitude();
+    auto* cutter = line(f.graphic, point - normal * 20.0, point + normal * 20.0);
+
+    const RS_Vector trimPick = point + normal * 10.0;
+    f.action->contextTarget(native, limitPick);
+    const auto previewUndoEpoch = f.graphic.undoStateEpoch();
+    f.action->hoverAsync(trimPick);
+    REQUIRE(f.action->pending());
+    f.action->waitForTrim();
+    const auto preview = trimPreview(*f.action->m_preview);
+    REQUIRE_FALSE(preview.empty());
+    CHECK_FALSE(native->isDeleted());
+    CHECK(trimGeometry(*native) == original);
+    CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+    f.action->click(trimPick);
+    REQUIRE(native->isDeleted());
+    const auto outputs = live(f.graphic);
+    std::vector<RS_Entity*> fragments;
+    std::vector<std::string> committed;
+    for (auto* output : outputs) {
+        if (output == cutter || output == hyperbola) continue;
+        REQUIRE(output->rtti() != RS2::EntityOffsetCurve);
+        fragments.push_back(output);
+        committed.push_back(trimGeometry(*output));
+    }
+    REQUIRE_FALSE(fragments.empty());
+    CHECK(committed == preview);
+    REQUIRE(f.graphic.undo());
+    CHECK_FALSE(native->isDeleted());
+    CHECK_FALSE(cutter->isDeleted());
+    CHECK_FALSE(hyperbola->isDeleted());
+    REQUIRE(native->hasGeneralizedSourceDefinition());
+    CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+    CHECK(trimGeometry(*native) == original);
+    for (const auto* output : fragments) CHECK(output->isDeleted());
+    REQUIRE(f.graphic.redo());
+    CHECK(native->isDeleted());
+    for (const auto* output : fragments) CHECK_FALSE(output->isDeleted());
 }
 
 TEST_CASE("T plain cache target availability never enables one sided ordinary only Trim Two publication",
