@@ -38061,3 +38061,23 @@ it does not establish Properties source-action replacement, trimming,
 independent DWG-reader interoperability, visible GUI acceptance, or arbitrary
 hyperbola ratios, parameter intervals, translations, and scales. Those remain
 open in the geometry-variant and final acceptance gates.
+
+## 1009. Persist Thin Hyperbola Properties Source Updates (2026-11-12)
+
+Test commit `b868cfdaf` exercises the Properties “Update from Source” workflow
+for thin bounded hyperbolas at ratios `0.05` and `0.2`. The matrix covers both
+branches, forward and reversed angle bounds, inward and outward signed offsets,
+and `0.5`, `1.0`, and `1.5` vertex-curvature-radius distances. Each case
+replaces an existing native offset with a typed hyperbola source, verifies the
+source encoding, signed distance, cache consistency, pen, and cache fingerprint
+after reopen in R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG. LibreDWG independently
+reads generated R2000 and R2018 DWGs when `dwgread` is available; it was present
+at `/opt/homebrew/bin/dwgread` for this run.
+
+Validation: the focused Release CMake source-action persistence selector
+passes 121,020 assertions across 2 Catch test cases; the test target rebuilds
+and `git diff --check` passes. This closes the native editable-source update
+and listed file lanes for the tested bounded profiles. It does not close
+offset trimming, arbitrary intervals/ratios, translated and broad-scale
+source-action variants, visible interactive GUI, or ODA/AutoCAD acceptance.
+Those remain open.
