@@ -3073,7 +3073,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     constexpr double rotation = .41;
     constexpr double fullRotation = .67;
     constexpr double inwardRotation = .93;
-    for (const unsigned profile : {0u, 1u, 2u, 3u})
+    constexpr double reversedArcRotation = -.38;
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
@@ -3093,9 +3094,13 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                     ? RS_EllipseData{{8, -6}, {2.5 * std::cos(fullRotation),
                                                2.5 * std::sin(fullRotation)},
                                      .9, 0, 0, false}
-                    : RS_EllipseData{{-6, 8}, {2.5 * std::cos(inwardRotation),
-                                               2.5 * std::sin(inwardRotation)},
-                                     .9, 0, 0, false};
+                    : profile == 3
+                        ? RS_EllipseData{{-6, 8}, {2.5 * std::cos(inwardRotation),
+                                                   2.5 * std::sin(inwardRotation)},
+                                         .9, 0, 0, false}
+                        : RS_EllipseData{{-4, 6}, {3 * std::cos(reversedArcRotation),
+                                                   3 * std::sin(reversedArcRotation)},
+                                         .6, .25, 1.6, true, true};
         auto* source = new RS_Ellipse(&f.graphic, sourceData);
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
@@ -3170,7 +3175,6 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         }));
         CHECK(native->hasEditableDefinition());
         CHECK_FALSE(native->sourceDefinition());
-        const RS_EllipseData sourceBefore = source->getData();
         QTemporaryDir directory;
         REQUIRE(directory.isValid());
         const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
@@ -3216,6 +3220,18 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                 if (!b) return false;
                 const auto& x = a->getData();
                 const auto& y = b->getData();
+                if (x.isArc || y.isArc) {
+                    if (!x.isArc || !y.isArc) return false;
+                    const RS_Vector aStart = a->getStartpoint();
+                    const RS_Vector aEnd = a->getEndpoint();
+                    const RS_Vector bStart = b->getStartpoint();
+                    const RS_Vector bEnd = b->getEndpoint();
+                    const bool sameEndpoints = closeVector(aStart, bStart) && closeVector(aEnd, bEnd);
+                    const bool reversedEndpoints = closeVector(aStart, bEnd) && closeVector(aEnd, bStart);
+                    return closeVector(x.center, y.center) && close(x.majorP.magnitude(), y.majorP.magnitude()) &&
+                        close(x.ratio, y.ratio) && close(a->getLength(), b->getLength()) &&
+                        closeVector(a->getMiddlePoint(), b->getMiddlePoint()) && (sameEndpoints || reversedEndpoints);
+                }
                 return closeVector(x.center, y.center) && closeVector(x.majorP, y.majorP) &&
                     close(x.ratio, y.ratio) && close(x.angle1, y.angle1) && close(x.angle2, y.angle2) &&
                     x.reversed == y.reversed && x.isArc == y.isArc;
@@ -3276,13 +3292,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                 ++reopenedEllipses;
                 const auto* loadedEllipse = dynamic_cast<const RS_Ellipse*>(entity);
                 REQUIRE(loadedEllipse);
-                CHECK(closeVector(loadedEllipse->getData().center, sourceBefore.center));
-                CHECK(closeVector(loadedEllipse->getData().majorP, sourceBefore.majorP));
-                CHECK(close(loadedEllipse->getData().ratio, sourceBefore.ratio));
-                CHECK(close(loadedEllipse->getData().angle1, sourceBefore.angle1));
-                CHECK(close(loadedEllipse->getData().angle2, sourceBefore.angle2));
-                CHECK(loadedEllipse->getData().reversed == sourceBefore.reversed);
-                CHECK(loadedEllipse->getData().isArc == sourceBefore.isArc);
+                CHECK(sameGeometry(*source, *loadedEllipse));
             }
             CAPTURE(formats[i]);
             CHECK(reopenedEllipses == 1);
