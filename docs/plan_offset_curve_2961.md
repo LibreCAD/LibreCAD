@@ -37716,3 +37716,21 @@ algorithm change was needed for this fixture. It does not establish a minimum
 safe chord ratio, arbitrary near-duplicate conditioning, all transforms or
 scales, other fit-point topologies, visible-GUI behavior, or ODA/AutoCAD
 acceptance; those remain open in the family/variant matrix and delivery gates.
+
+## 992. Qualify Closed Fit-point Repeated Interior Neighbors (2026-11-11)
+
+Test commit `b996fc0ff` adds a closed fit-point loop with an exact repeated
+interior neighbor, distinct from the already-covered repeated closing seam.
+The direct geometry test verifies that the stored fit-point list is retained,
+the derived control net matches the equivalent unique list, and both offset
+sides remain within the direct geometry oracle. The profile is also admitted
+through worker source generation and exact-cache validation and exercised by
+worker trim/save/reopen through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+LibreDWG independently parses the generated DWGs.
+
+Validation passes: direct closed-source case, 6,583 assertions; worker/cache
+admission, 34,762 assertions; fit-point trim persistence, 62,749 assertions
+across 120 save/reopens and 48 LibreDWG reads. `git diff --check` passes. This
+closes only the tested closed interior-repeat profile, sides, distances, and
+file lanes; other closed repeated layouts, near-coincident closed points,
+transforms/scales, visible GUI, and ODA/AutoCAD acceptance remain open.
