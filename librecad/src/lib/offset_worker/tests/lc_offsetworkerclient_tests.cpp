@@ -3303,6 +3303,74 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     }
 }
 
+TEST_CASE("Fit-point conditioning survives worker generation and cache admission under similarities",
+          "[lc-offsetcurve][worker-client][fit-points][conditioning][cache-admission]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    RS_EntityContainer owner;
+    RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
+    const std::array<double, 3> scales{{1e-4, 1.0, 1e4}};
+    const std::array<RS_Vector, 3> origins{{{0, 0}, {1e3, -2e3}, {-1e7, 2e7}}};
+    qint64 requestId = 1;
+
+    for (const bool closed : {false, true}) {
+        for (std::size_t transformIndex = 0; transformIndex < scales.size(); ++transformIndex) {
+            const double scale = scales[transformIndex];
+            const double gap = closed ? 5.1e-4 : 5.1e-5;
+            const bool reflected = transformIndex == 2;
+            LC_SplinePointsData data{closed, false};
+            data.fitTolerance = 1e-8 * scale;
+            if (closed)
+                data.splinePoints = {{0, 0}, {10, 0}, {10 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+            else
+                data.splinePoints = {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}};
+            const RS_Vector origin = origins[transformIndex] * scale;
+            for (RS_Vector& point : data.splinePoints) {
+                point.x = origin.x + scale * point.x;
+                point.y = origin.y + scale * (reflected ? -point.y : point.y);
+            }
+
+            CAPTURE(closed, scale, origin.x, origin.y, reflected);
+            const LC_OffsetSourceGeometry source{data};
+            REQUIRE(source.isWellFormed());
+            const double distance = (closed ? 0.2 : 0.02) * scale;
+            for (const double signedDistance : {distance, -distance}) {
+                CAPTURE(signedDistance);
+                const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4 * scale, false};
+                Receipts generatedReceipts;
+                REQUIRE(owned.get().submit(
+                    {token(requestId), Req::GenerateSource{definition, {}}}, Client::Mode::Commit,
+                    generatedReceipts.into(0)));
+                rt.until([&] { return generatedReceipts.calls[0] != 0; });
+                const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
+                const auto& result = std::get<Reply::Native>(generated.reply().result);
+                REQUIRE(result.engineStatus);
+                CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+                REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+                REQUIRE_FALSE(result.ordinary.empty());
+
+                RS_SplineData cache;
+                REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+                const Req::ValidateSourceCache validation{cache, definition, {}};
+                Receipts validatedReceipts;
+                REQUIRE(owned.get().submit(
+                    {token(requestId + 1), validation}, Client::Mode::Commit,
+                    validatedReceipts.into(0)));
+                rt.until([&] { return validatedReceipts.calls[0] != 0; });
+                const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
+                auto admitted = validated.nativeValidatedSource(attributes);
+                REQUIRE(admitted);
+                REQUIRE(admitted->sourceDefinition());
+                CHECK(Req::Values::encodeSourceDefinition(*admitted->sourceDefinition()) ==
+                      Req::Values::encodeSourceDefinition(definition));
+                exactCache(admitted->getData(), cache);
+                CHECK(owned.get().healthyAndIdle());
+                requestId += 2;
+            }
+        }
+    }
+}
+
 TEST_CASE("Endpoint repeated fit-point sources fail worker generation closed",
           "[lc-offsetcurve][worker-client][fit-points][refusal]") {
     auto& rt = runtime();
