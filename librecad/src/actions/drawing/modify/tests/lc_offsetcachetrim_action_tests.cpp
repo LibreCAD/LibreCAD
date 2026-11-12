@@ -1855,13 +1855,15 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
     };
     std::size_t fileIndex = 0;
     for (const unsigned profileKind : {0u, 1u})
+    for (const bool reflected : {false, true})
     for (const double scale : {.1, 1.0, 10.0})
     for (const unsigned cutterKind : {0u, 1u, 2u})
     for (const bool parabolaFirst : {false, true}) {
-        CAPTURE(profileKind, scale, cutterKind, parabolaFirst);
-        const double distance = (profileKind == 0 ? .51 : -2.295) * scale;
+        CAPTURE(profileKind, reflected, scale, cutterKind, parabolaFirst);
+        const double distance = (profileKind == 0 ? .51 : -2.295) * scale * (reflected ? -1 : 1);
         const RS_Vector translation{2 * scale, -scale};
         const auto mapPoint = [&](RS_Vector point) {
+            if (reflected) point.x = -point.x;
             point *= scale;
             return RS_Vector{cosine * point.x - sine * point.y,
                              sine * point.x + cosine * point.y} + translation;
@@ -1971,8 +1973,8 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         for (const auto format : formats) {
             const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("transformed-cusp-trim-%1-%2-%3-%4-%5")
-                    .arg(profileKind).arg(scale).arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
+                QStringLiteral("transformed-cusp-trim-%1-%2-%3-%4-%5-%6")
+                    .arg(profileKind).arg(reflected).arg(scale).arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
 #ifdef DWGSUPPORT
@@ -1999,7 +2001,7 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
             for (const auto* entity : reopenedEntities)
                 if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
                     actual.push_back(entity);
-            CAPTURE(profileKind, scale, cutterKind, parabolaFirst, format);
+            CAPTURE(profileKind, reflected, scale, cutterKind, parabolaFirst, format);
             REQUIRE(actual.size() == expected.size());
             std::vector<bool> consumed(actual.size(), false);
             for (const auto* sourceEntity : expected) {
