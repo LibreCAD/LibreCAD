@@ -37880,3 +37880,24 @@ CMake worker-request test target rebuilds successfully and
 worker runtime response for malformed requests (they are intentionally
 unencodable), nor proof for arbitrary fit-point layouts/transforms. Other
 family variants, visible-GUI acceptance, and external-CAD checks remain open.
+
+## 1000. Persist a Transformed Fit-point Source and Editable Cache (2026-11-12)
+
+Test commit `b8a73c7e5` adds a Properties “Update from Source” workflow for an
+admitted near-boundary fit-point spline translated and reflected from its
+origin-centered profile. It creates the source through the canonical typed
+capture path, updates the selected native offset asynchronously, and requires
+the resulting object to retain its `SplinePoints` source tag, signed offset,
+pen, source encoding, and certified cache. The native editable object is then
+saved and reopened in R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG; DWG output is
+also checked with LibreDWG when available. Reopened source encoding and cache
+fingerprint must match the committed object.
+
+Validation: `[fit-points][conditioning]` passes 989 assertions across 3
+selected cases and all five persistence lanes; the established
+`[typed][matrix]` nine-family source-action matrix passes 13,620 assertions
+across 4 cases. CMake rebuilds `librecad_tests` successfully and
+`git diff --check` passes. This closes native source/cache persistence for
+this one translated/reflected near-boundary profile only; the other scales,
+origins, closed profiles, other fit-point layouts, visible GUI, and external
+ODA/AutoCAD acceptance remain open.
