@@ -38165,3 +38165,23 @@ not all hyperbola parameters, other generalized source families, visible GUI,
 or external ODA/AutoCAD validation. Continue Slice 4's family/variant matrix
 and Slice 5 acceptance gates; do not treat the widget's complete type list as
 proof that every family can yet be trimmed or round-tripped.
+
+## 1014. Qualify Smooth Parabola Properties Trimming (2026-11-12)
+
+Test commit `6a5b5eefe` extends section 1013's real Properties-to-Trim
+regression to a typed parabola as well as a bounded hyperbola. The parabola is
+kept distinct from spline-points, updated through the source action, detached
+from its original drawing entity, trimmed through the asynchronous Trim
+action, demoted to an ordinary spline fragment, checked through undo/redo, and
+persisted through R2018 DXF save/reopen. The profile uses a `0.05` offset; an
+initial `0.25` profile matched the parabola's vertex curvature radius and
+created a cusp, for which the bounded trim operation refused the ambiguous or
+over-budget cut. That refusal is not counted as successful cusp trimming.
+
+Validation: the focused generated parabola/hyperbola test passes 80 assertions;
+the full `[lc-offsetcurve][trim-action]` suite passes 17,445 assertions across
+69 cases. The CMake test target builds and `git diff --check` passes. This
+qualifies one smooth parabola profile and one thin hyperbola profile only. The
+picker's nine supported kinds remain broader than the verified trim matrix;
+other source families, cusp-boundary parabola cases, other variants, visible
+GUI behavior, and external ODA/AutoCAD acceptance remain open.
