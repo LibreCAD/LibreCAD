@@ -58,14 +58,23 @@ disabled during preparation; successful validation publishes the replacement.
 A family appearing in the selector is UI coverage only, not proof that all of
 its geometry variants pass generation, worker/cache validation, or persistence.
 
+**Latest user restatement (2026-11-12):** When specifying a new source curve,
+the same widget must let the user change the requested source type before
+selecting the replacement entity. Changing type must immediately refresh the
+candidate choices and must not silently replace or mutate the current source.
+The supported-type inventory is the complete current `SupportedKinds` list,
+with parabola separately selectable; do not interpret this as support for
+unrelated drawable entities or as proof that every parameterization of each
+family works end to end.
+
 **Current disposition (reconfirmed 2026-11-12):** The request to change source
-type while choosing a replacement and expose all supported types is complete
-at the picker-contract level; it does not require another UI implementation
-slice. “All supported types” is exactly the nine current
-`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
-spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
-distinct typed choice, not a spline-points alias. The selector stays active
-while browsing candidates, each family change refreshes the candidate list,
+type while specifying a replacement and expose all supported source types is
+complete at the picker-contract level; it does not require another selector or
+parabola-only UI implementation slice. “All supported types” means the nine
+current `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola
+remains a distinct typed choice, not a spline-points alias. The selector stays
+active while browsing candidates, each family change refreshes the candidate list,
 and the existing source/cache/identity/highlight remains unchanged until a
 candidate passes asynchronous preparation. Do not add another selector or
 extend the list to unrelated drawable entities.
@@ -38520,3 +38529,24 @@ assertions and the scale sweep passes 220; the full Trim kernel suite passes
 and the worker Trim selector passes 332 assertions / 2 cases. More extreme
 scales, arbitrary rotations, persistence, visible GUI, and external ODA/AutoCAD
 remain open.
+
+## 1032. Cross-check Mixed Contacts Across Four Disconnected Spans (2026-11-12)
+
+Commit `0fafd64a1` adds a direct-kernel counterpart for the four-component
+conic Trim worker fixture. Its disconnected degree-1 spans include a horizontal
+crossing, a vertical crossing, and two components that miss the circle. The
+test requires exactly two certified contacts on each crossing span, no roots
+on either non-contact span, one retained conic complement, and unchanged
+source and cutter data. This extends direct coverage of component accounting
+beyond the existing two-branch fixtures; it does not qualify more complex
+component geometry, cache admission, action publication, persistence, or
+visible GUI behavior.
+
+Validation on the active macOS arm64 CMake Release worktree: the complete
+`librecad_tests` target rebuilt successfully, and
+`librecad_tests '[lc-offsetcurve][trim-kernel]' --reporter compact` passes
+40,989 assertions / 69 cases. The corresponding worker-kernel source contains
+a four-component transport fixture, but that test is not registered in this
+build's `librecad_tests` target; no new worker or codec pass is claimed here.
+The code commit is pushed to PR #3193. Remaining broad family/variant,
+persistence, visible-GUI, cross-platform, and external-CAD gates remain open.
