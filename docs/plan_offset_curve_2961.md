@@ -36913,7 +36913,14 @@ their interpolated control geometry is empty and direct trim returns
 85 assertions across three cases; the full `[curve-offset][trim]` selection
 passes 55,634 assertions across 37 cases. `git diff --check` passes.
 
-A separate profile with interior and trailing repeated neighbors does produce
-controls, but its trim misses the exact-normal coverage tolerance and is not
-included as positive support. That pattern and broader coincident fit-point
-handling remain open; do not infer support from successful raw source capture.
+A separate profile with interior and trailing repeated neighbors produced an
+apparent exact-normal trim gap in the test helper, but the reported point at
+source parameter `1.95` is only `0.19744349847035089` from another source
+segment for a requested distance of `0.2`. `LC_SplinePoints::getDistanceToPoint`
+therefore confirms that the point is correctly hidden; the helper's sampled
+projection plus local Newton refinement missed the alternate nearest segment.
+Do not treat this exploratory result as a product defect or positive coverage.
+If this profile is revisited, use a global nearest-distance oracle across every
+quadratic span before adding it to the trim matrix. Broader coincident fit-point
+handling remains open; successful raw source capture alone is not evidence of
+trim support.
