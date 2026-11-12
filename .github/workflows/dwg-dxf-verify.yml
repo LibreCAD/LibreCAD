@@ -73,6 +73,8 @@ on:
       - 'librecad/src/lib/gui/render/lc_graphicviewportrenderer.h'
       - 'librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp'
       - 'librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp'
+      - 'librecad/src/ui/components/comboboxes/**'
+      - 'librecad/src/lib/engine/document/linetypes/**'
       - 'scripts/dwg-fast-check.sh'
   pull_request:
     branches: [master]
@@ -123,6 +125,8 @@ on:
       - 'librecad/src/lib/gui/render/lc_graphicviewportrenderer.h'
       - 'librecad/src/lib/gui/tests/lc_linetype_render_tests.cpp'
       - 'librecad/src/lib/gui/tests/lc_graphicviewrenderer_tests.cpp'
+      - 'librecad/src/ui/components/comboboxes/**'
+      - 'librecad/src/lib/engine/document/linetypes/**'
       - 'scripts/dwg-fast-check.sh'
   workflow_dispatch:
 
@@ -165,7 +169,7 @@ jobs:
           cmake --build format-tests \
             --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_lc_consolesvgexporttests librecad_painter_tests \
               libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests \
-              librecad_dimension_clipboard_tests librecad_hatch_tests \
+              librecad_dimension_clipboard_tests librecad_hatch_tests librecad_linetype_ui_tests \
             -j"$(nproc)"
 
       - name: Run bounded DWG/DXF test lanes
@@ -242,7 +246,7 @@ jobs:
           set "PATH=%VSPATH%\Common7\IDE\CommonExtensions\Microsoft\CMake\Ninja;%PATH%"
           ninja --version || exit /b 1
           cmake.exe -S . -B generated-tests -G Ninja -DCMAKE_BUILD_TYPE=Release -DBOOST_ROOT="%CD%\boost" -DCMAKE_CXX_FLAGS="/EHsc" -DBUILD_TESTS=ON -DLIBRECAD_ENABLE_OPENTYPE=OFF -DLIBRECAD_REGISTER_INTEGRATION_TESTS=ON -DLIBRECAD_REGISTER_FULL_TESTS=OFF -DLIBRECAD_REGISTER_FORMAT_TESTS=OFF -DLIBRECAD_REGISTER_CROSS_READ_SMOKE=OFF || exit /b 1
-          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests librecad_dimension_clipboard_tests librecad_hatch_tests || exit /b 1
+          cmake --build generated-tests --parallel --target librecad_dwg_fast_tests librecad_dxf_fast_tests librecad_lc_consolesvgexporttests librecad_painter_tests libdxfrw_dxf_embedded_scope_tests libdxfrw_verified_write_tests librecad_text_native_tests librecad_dimension_clipboard_tests librecad_hatch_tests librecad_linetype_ui_tests || exit /b 1
         shell: cmd
 
       - name: Run bounded DWG/DXF test lanes

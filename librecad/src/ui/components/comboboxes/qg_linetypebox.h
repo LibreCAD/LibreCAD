@@ -30,6 +30,9 @@
 #include <QComboBox>
 
 #include "rs.h"
+#include "rs_pen.h"
+
+class LC_LineTypeList;
 
 /**
  * A combobox for choosing a line type.
@@ -49,6 +52,17 @@ public:
     void setLayerLineType(RS2::LineType t);
 
     void init(bool showByLayer, bool showUnchanged, bool showNoPen = false);
+    /// Rows for a drawing: the built-in rows, then the line types its table adds.
+    /// A null list gives the built-in combo.
+    void init(const LC_LineTypeList* list, bool showByLayer, bool showUnchanged, bool showNoPen = false);
+    /// Refills the rows for another drawing (null: built-ins only), keeps the
+    /// selection, emits nothing.
+    void rebuild(const LC_LineTypeList* list);
+    /// Selects the row of a pen's line type; a name without a row gets a
+    /// temporary one.
+    void setLineTypeOf(const RS_Pen& pen);
+    /// Writes the selected row's line type into a pen.
+    void applyLineTypeTo(RS_Pen& pen) const;
 
     bool isUnchanged() const {
         return m_unchanged;
@@ -61,10 +75,41 @@ private
     void lineTypeChanged(RS2::LineType);
 
 private:
+    /// Per-row data: the enum, the spelling the row writes, and the row kind.
+    enum ItemRole {
+        LineTypeRole = Qt::UserRole,
+        LineTypeNameRole = Qt::UserRole + 1,
+        LineTypeRowKindRole = Qt::UserRole + 2,
+    };
+    /// The kinds start at 1: a row without one (the separator) reads as 0.
+    enum RowKind {
+        SpecialRow = 1,
+        BuiltInRow,
+        TableRow,
+        TemporaryRow,
+    };
+
+    void fillRows(const LC_LineTypeList* list);
+    void readRow(int index);
+    int indexForName(const QString& name) const;
+    int indexForEnum(RS2::LineType type) const;
+    int indexForRowOfName(const QString& name, RS2::LineType type) const;
+    bool isCanonicalName(const QString& name, RS2::LineType type) const;
+    void removeTemporaryRow();
+    int appendTemporaryRow(const QString& name, RS2::LineType type);
+    void ensureSeparator();
+
     RS2::LineType m_currentLineType = RS2::SolidLine;
     bool m_showByLayer = false;
     bool m_showUnchanged = false;
+    bool m_showNoPen = false;
     bool m_unchanged = false;
+    bool m_hasList = false;
+    bool m_initialized = false;
+    bool m_hasSeparator = false;
+    RS_Pen m_sourcePen;
+    bool m_hasSource = false;
+    int m_sourceRowIndex = -1;
 };
 
 #endif

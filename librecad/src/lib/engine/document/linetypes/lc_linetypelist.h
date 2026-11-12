@@ -62,6 +62,9 @@ public:
     /// decides the seed, so an alias compares with its enum's row; reads the
     /// built-in table only.
     static bool patternMatchesSeed(const LC_LineType& entry);
+    /// Whether the entry redraws a built-in that has dashes of its own with other
+    /// dashes, so the drawing paints that built-in from this entry.
+    static bool redefinesBuiltIn(const LC_LineType& entry);
 
     bool isModified() const {
         return m_modified;
