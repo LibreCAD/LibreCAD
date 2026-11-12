@@ -39317,14 +39317,20 @@ array. This is not a certified-root/component failure, and the refusal leaves
 the operation unpublished. Do not weaken intersection proof or bypass the
 combined-output cap in a test.
 
-Remaining implementation slice: decide and implement an explicitly bounded
-multi-output limit for paired Trim, then propagate that same admitted ceiling
-through request/result validation, `LC_StoredCacheTrimOptions`, batch staging,
-native preview ownership, commit/undo publication, and failure cleanup. Keep
-all outputs owned until both sides and every output/display admission pass;
-test five outputs and the exact ceiling, both pick orders, preview immutability,
-commit/undo/redo, and refusal one above the ceiling with no partial entities or
-metadata mutation. Preserve worker payload and display-entity caps separately
-from the number of top-level result entities. Closed and other multi-component
-layouts, broader bulge profiles, visible GUI, cross-platform and external-CAD
-acceptance remain open.
+Implementation commits `20b958247` and `a4bc6b2c9` raise the bounded
+top-level Trim batch ceiling from four to sixteen entities, retain the
+caller-configurable lower cap, and use RAII ownership in native preview and
+commit staging. Worker geometry payload/display caps remain independent. The
+non-semicircular `0.5` three-span source now succeeds with five outputs in both
+pick orders through preview, commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG save/reopen; LibreDWG parses the DWG lanes. A four-output cap on
+the same fixture is separately verified to refuse preview and commit without
+changing entity count or undo epoch.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+three-span polyline action case passes 7,229 assertions; `[trim-action]` passes
+35,235 assertions across 79 cases; the test target builds; and
+`git diff --check` passes. The five-output profile is below the hard ceiling;
+an exactly-sixteen-output case and an attempted seventeenth-output refusal are
+not yet covered. Closed and other multi-component layouts, broader bulge
+profiles, visible GUI, cross-platform and external-CAD acceptance remain open.
