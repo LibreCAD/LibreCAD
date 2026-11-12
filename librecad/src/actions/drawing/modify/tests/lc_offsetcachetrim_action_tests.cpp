@@ -1483,6 +1483,79 @@ TEST_CASE("T Source update preserves parabola cusp topology under similarity tra
     }
 }
 
+TEST_CASE("T Source update preserves opposite-side cusp topology for an asymmetric parabola",
+          "[gui][lc-offsetcurve][source-update][typed-source][parabola][cusp][asymmetric]") {
+    for (const double scale : {0.1, 1.0, 10.0})
+    for (const bool transformed : {false, true})
+    for (const double ratio : {1.0, 1.02}) {
+        CAPTURE(scale, transformed, ratio);
+        const double distance = -2.25 * scale * ratio;
+        const double angle = transformed ? .37 : 0.0;
+        const double cosine = std::cos(angle), sine = std::sin(angle);
+        const RS_Vector translation = transformed ? RS_Vector{2 * scale, -scale} : RS_Vector{};
+        const auto mapPoint = [&](RS_Vector point) {
+            point *= scale;
+            return RS_Vector{cosine * point.x - sine * point.y,
+                             sine * point.x + cosine * point.y} + translation;
+        };
+        const LC_ParabolaData sourceData{{mapPoint({-1, 0}), mapPoint({0, 1}), mapPoint({2, 0})}};
+        Drawing<false> f;
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {10 * scale, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, std::abs(distance), true);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+        auto* parabola = new LC_Parabola(&f.graphic, sourceData);
+        f.graphic.addEntity(parabola);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+        const auto direct = LC_CurveOffset::buildDirectBranches(*parabola,
+            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Right, std::abs(distance)),
+            LC_CurveOffset::makeDirectOptions(*parabola, std::abs(distance), 1e-4),
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+        const std::size_t expectedBranches = 2u;
+        REQUIRE(direct.branches.size() == expectedBranches);
+
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Parabola);
+        update.use(parabola);
+        lc::test::awaitUpdate(update);
+        REQUIRE(update.lastReport().updated == 1);
+        CHECK(update.lastReport().refused == 0);
+        CHECK(previous->isDeleted());
+        LC_OffsetCurve* replacement = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(replacement == nullptr);
+            replacement = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(replacement);
+        REQUIRE(replacement->sourceDefinition());
+        CHECK(replacement->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+        CHECK(replacement->sourceDefinition()->signedDistance == distance);
+        std::size_t separators = 0;
+        const auto& knots = replacement->getData().knotslist;
+        for (std::size_t i = 0; i < knots.size();) {
+            std::size_t next = i + 1;
+            while (next < knots.size() && knots[next] == knots[i]) ++next;
+            if (i > 0 && next < knots.size() && next - i == replacement->getData().degree + 1)
+                ++separators;
+            i = next;
+        }
+        CHECK(separators == expectedBranches - 1);
+        const auto replacementGeometry = trimGeometry(*replacement);
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(previous->isDeleted());
+        CHECK(replacement->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(previous->isDeleted());
+        CHECK_FALSE(replacement->isDeleted());
+        CHECK(trimGeometry(*replacement) == replacementGeometry);
+    }
+}
+
 TEST_CASE("T Trim Two trims exact-stall and safely refuses unresolved multi-branch cusp caches",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][trim-two]") {
     for (const double distance : {0.5, 0.51})
