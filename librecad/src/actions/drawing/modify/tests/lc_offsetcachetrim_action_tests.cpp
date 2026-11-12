@@ -1021,15 +1021,25 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
 
 TEST_CASE("T Trim Two action trims a worker-created typed parabola against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
-    for (const double scale : {0.1, 1.0, 10.0}) for (const bool parabolaFirst : {false, true}) {
-        CAPTURE(scale, parabolaFirst);
+    for (const double scale : {0.1, 1.0, 10.0})
+    for (const bool transformed : {false, true})
+    for (const bool parabolaFirst : {false, true}) {
+        CAPTURE(scale, transformed, parabolaFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .05 * scale, false);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        const LC_ParabolaData sourceData{{RS_Vector{-scale, scale}, RS_Vector{0, -scale}, RS_Vector{scale, scale}}};
+        const double angle = transformed ? .37 : 0.0;
+        const double cosine = std::cos(angle), sine = std::sin(angle);
+        const RS_Vector translation = transformed ? RS_Vector{2 * scale, -scale} : RS_Vector{};
+        const auto mapPoint = [&](RS_Vector point) {
+            point *= scale;
+            return RS_Vector{cosine * point.x - sine * point.y,
+                             sine * point.x + cosine * point.y} + translation;
+        };
+        const LC_ParabolaData sourceData{{mapPoint({-1, 1}), mapPoint({0, -1}), mapPoint({1, 1})}};
         auto* parabola = new LC_Parabola(&f.graphic, sourceData);
         f.graphic.addEntity(parabola);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
