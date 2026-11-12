@@ -5824,6 +5824,24 @@ Windows/Linux runtime qualification. Remaining GUI/import caller audit,
 broader source/budget audit, installed-helper portability, and final W0-W2
 acceptance remain open.
 
+## 1007. Qualify Thin Hyperbola Offsets at the Vertex-curvature Boundary (2026-11-12)
+
+Test commit `e88461107` adds an independent direct-geometry matrix for bounded
+hyperbolas at ratios `0.05` and `0.2`. It covers both branches, forward and
+reversed parameter bounds, both signed sides, and offsets at 50%, 100%, and
+150% of the vertex curvature radius. All generated branches are compared with
+the analytic hyperbola evaluator and requested signed normal distance. At the
+exact cusp threshold only, joins may use the engine's node-merge tolerance;
+the curve-to-offset deviation remains bounded by the requested geometry
+tolerance.
+
+Validation: the focused Release CMake test passes 77,540 assertions in one
+case; `librecad_tests` rebuilds and `git diff --check` passes. This closes only
+direct geometry for these two ratios, intervals, orientations, branches,
+distances, and sides. Worker/cache and replacement behavior, trimming, all
+five DXF/DWG lanes, independent DWG-reader checks, and broader hyperbola
+interval/scale qualification remain open.
+
 ## 56. W94 Current-Source Cache and Creation/Repeat Qualification
 
 Rebuilt the Release process-cache, worker-client, creation-action and shared
