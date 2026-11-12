@@ -38737,3 +38737,53 @@ bounded-hyperbola profile, one transverse circle, and two operand pick orders.
 Trim Two output has not yet been round-tripped through DXF/DWG; other
 hyperbola profiles, visible GUI, cross-platform, and external-CAD acceptance
 remain open.
+
+## 1040. Make Source Replacement Type Switching Explicit (2026-11-12)
+
+The source-curve widget requirement is interpreted as two linked behaviors:
+the user can change the source-family filter while choosing a replacement,
+and after selecting a candidate the replacement is represented using that
+entity's actual supported family, rather than retaining the previous source's
+type. The candidate inventory is the complete nine-kind
+`LC_OffsetSourceGeometry::SupportedKinds` set: line, arc, circle, ellipse,
+spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
+distinct selectable family, not an alias for spline-points.
+
+The existing picker and tests already implement this UI-level contract, as
+recorded in sections 984, 990, 1036, and 1038. Do not add a second selector or
+a parabola-only picker path. Keep the following regression gates when this
+workflow is changed: assert the nine-kind inventory; switch the family filter
+repeatedly and verify candidate refresh; select a candidate from a different
+family and verify the displayed/current source family follows that candidate;
+verify the previous source, cache, entity identity, and current-source
+highlight remain unchanged until worker preparation succeeds; and reject a
+stale preparation without replacing the current source. Include parabola in
+the transition matrix.
+
+This item is complete at the headless picker/state-transition level; it is not
+a claim of end-to-end geometry support for every concrete variant. Continue
+the separate family-by-variant generation, worker/cache, Trim, and DXF/DWG
+round-trip matrix. Visible replacement-flow confirmation remains open and
+must verify that the current source is visibly highlighted and that selecting
+a replacement updates the source-family control/state without premature
+mutation. Cross-platform and external-CAD acceptance remain independent gates.
+
+## 1041. Round-trip Typed Hyperbola Trim Two Output (2026-11-12)
+
+Test commit `64a66ce23` extends the Trim Two action fixture from section 1039. Both
+operand pick orders now export and reopen the committed drawing through R14
+DXF, R2000 DXF/DWG, and R2018 DXF/DWG. The regression verifies that the
+reopened drawing contains no editable-offset entity, retains exactly one
+typed hyperbola with its source definition, and has the same complete entity
+geometry inventory as the committed drawing. Geometry matching is
+structure-aware and tolerant of serialization roundoff for spline control
+points, knots, weights, arc parameters, and hyperbola parameters.
+
+Validation on macOS arm64 CMake Release: `librecad_tests` rebuilds; the
+focused Trim Two case passes 564 assertions across both pick orders and all
+five file lanes; `[trim-action]` passes 22,357 assertions / 74 cases; and
+`git diff --check` passes. This supersedes section 1039's statement that Trim
+Two action output had not yet been round-tripped. The evidence covers only
+this bounded-hyperbola profile and transverse circle fixture; other profiles,
+source families, visible GUI, cross-platform, and external-CAD acceptance
+remain open.
