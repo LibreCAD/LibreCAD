@@ -3292,6 +3292,83 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     }
 }
 
+TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and DWG",
+          "[lc-offsetcurve][worker-client][fit-points][persistence]") {
+    REQUIRE(lc::test::ensureSettings());
+    lc::test::QuietLog quiet;
+    lc::test::OutputDirectory directory("offset-worker-repeated-fit-points");
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    LC_SplinePointsData sourceData{false, false};
+    sourceData.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    const LC_OffsetSourceDefinition definition{
+        LC_OffsetSourceGeometry{sourceData}, 0.2, 1e-4, false};
+    Receipts receipts;
+    REQUIRE(owned.get().submit(
+        {token(1), Req::GenerateSource{definition, {}}},
+        Client::Mode::Commit, receipts.into(0)));
+    rt.until([&] { return receipts.calls[0] != 0; });
+    const auto& generated = completed(receipts.at(0), 1, 7);
+    const auto& result = std::get<Reply::Native>(generated.reply().result);
+    REQUIRE(result.engineStatus);
+    CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+    REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+    RS_SplineData expected;
+    REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, expected));
+
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    auto* sourceLayer = new RS_Layer("Fit source");
+    auto* offsetLayer = new RS_Layer("Offset");
+    graphic.addLayer(sourceLayer);
+    graphic.addLayer(offsetLayer);
+    auto* sourceEntity = new LC_SplinePoints(&graphic, sourceData);
+    graphic.addEntity(sourceEntity);
+    sourceEntity->setLayer(sourceLayer);
+    auto* offsetEntity = new RS_Spline(&graphic, expected);
+    graphic.addEntity(offsetEntity);
+    offsetEntity->setLayer(offsetLayer);
+
+    struct Lane {
+        RS2::FormatType format;
+        const char* extension;
+    };
+    const std::array<Lane, 5> lanes{{
+        {RS2::FormatDXFRW14, "r14.dxf"},
+        {RS2::FormatDXFRW2000, "r2000.dxf"},
+        {RS2::FormatDWG, "r2000.dwg"},
+        {RS2::FormatDWG2007, "r2007.dwg"},
+        {RS2::FormatDWG2018, "r2018.dwg"}
+    }};
+    for (const Lane& lane : lanes) {
+#ifndef DWGSUPPORT
+        if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2007 ||
+            lane.format == RS2::FormatDWG2018) continue;
+#endif
+        CAPTURE(lane.extension);
+        const auto path = directory.file(lane.extension);
+        REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+        RS_Graphic reloaded;
+        REQUIRE(lc::test::importDrawing(reloaded, path, lane.format));
+        std::vector<RS_Spline*> offsets;
+        for (RS_Entity* entity : reloaded) {
+            if (!entity->getLayer() || entity->getLayer()->getName() != "Offset") continue;
+            auto* spline = dynamic_cast<RS_Spline*>(entity);
+            REQUIRE(spline);
+            offsets.push_back(spline);
+        }
+        REQUIRE(offsets.size() == 1);
+        const RS_SplineData& actual = offsets.front()->getData();
+        CHECK(actual.degree == expected.degree);
+        CHECK(actual.knotslist == expected.knotslist);
+        CHECK(actual.weights == expected.weights);
+        REQUIRE(actual.controlPoints.size() == expected.controlPoints.size());
+        for (std::size_t i = 0; i < expected.controlPoints.size(); ++i)
+            CHECK(actual.controlPoints[i].distanceTo(expected.controlPoints[i]) < 1e-10);
+        CHECK(actual.fitPoints.empty());
+    }
+}
+
 TEST_CASE("Worker typed-source edit replaces cache and definition atomically",
           "[lc-offsetcurve][worker-client][typed-source-edit]") {
     auto& rt = runtime();
