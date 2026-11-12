@@ -1856,14 +1856,15 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
     std::size_t fileIndex = 0;
     for (const unsigned profileKind : {0u, 1u})
     for (const bool reflected : {false, true})
+    for (const bool affineFrame : {false, true})
     for (const double scale : {.1, 1.0, 10.0})
     for (const unsigned cutterKind : {0u, 1u, 2u})
     for (const bool parabolaFirst : {false, true}) {
-        CAPTURE(profileKind, reflected, scale, cutterKind, parabolaFirst);
-        const double distance = (profileKind == 0 ? .51 : -2.295) * scale * (reflected ? -1 : 1);
+        CAPTURE(profileKind, reflected, affineFrame, scale, cutterKind, parabolaFirst);
         const RS_Vector translation{2 * scale, -scale};
         const auto mapPoint = [&](RS_Vector point) {
             if (reflected) point.x = -point.x;
+            if (affineFrame) point = {2 * point.x + .35 * point.y, .6 * point.y};
             point *= scale;
             return RS_Vector{cosine * point.x - sine * point.y,
                              sine * point.x + cosine * point.y} + translation;
@@ -1871,8 +1872,17 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
         const LC_ParabolaData sourceData = profileKind == 0
             ? LC_ParabolaData{{mapPoint({-1, 1}), mapPoint({0, -1}), mapPoint({1, 1})}}
             : LC_ParabolaData{{mapPoint({-1, 0}), mapPoint({0, 1}), mapPoint({2, 0})}};
+        const RS_Vector controlTangent = sourceData.m_controlPoints[2] - sourceData.m_controlPoints[0];
+        const RS_Vector acceleration = (sourceData.m_controlPoints[0] - sourceData.m_controlPoints[1] * 2.0 +
+                                        sourceData.m_controlPoints[2]) * 2.0;
+        const double tangentSpeed = controlTangent.magnitude();
+        const double curvatureCross = controlTangent.x * acceleration.y - controlTangent.y * acceleration.x;
+        REQUIRE(tangentSpeed > RS_TOLERANCE);
+        REQUIRE(std::abs(curvatureCross) > RS_TOLERANCE);
+        const double cuspRadius = tangentSpeed * tangentSpeed * tangentSpeed / std::abs(curvatureCross);
+        const double distance = (profileKind == 0 ? 1.02 : -1.02) * cuspRadius * (reflected ? -1 : 1);
         Drawing<true> f;
-        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {100, 0}, 1, 0, 1, false});
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1000, 0}, 1, 0, 1, false});
         auto initial = LC_OffsetCurve::create(seed, std::abs(distance), distance < 0);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
@@ -1887,7 +1897,9 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
             LC_CurveOffset::makeDirectOptions(*parabola, std::abs(distance)),
             LC_CurveOffset::makeDirectSourceBudget());
         REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
-        REQUIRE(direct.branches.size() == (profileKind == 0 ? 3u : 2u));
+        REQUIRE(direct.branches.size() >= 2);
+        if (!affineFrame)
+            REQUIRE(direct.branches.size() == (profileKind == 0 ? 3u : 2u));
 
         UpdateSourceProbe update(&f.context);
         update.init(0);
@@ -1970,11 +1982,12 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
             if (fragment->rtti() == RS2::EntityLine || fragment->rtti() == RS2::EntitySpline)
                 expected.push_back(fragment);
         REQUIRE_FALSE(expected.empty());
-        for (const auto format : formats) {
+        if (!affineFrame || scale == 1.0) for (const auto format : formats) {
             const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("transformed-cusp-trim-%1-%2-%3-%4-%5-%6")
-                    .arg(profileKind).arg(reflected).arg(scale).arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
+                QStringLiteral("transformed-cusp-trim-%1-%2-%3-%4-%5-%6-%7")
+                    .arg(profileKind).arg(reflected).arg(affineFrame).arg(scale)
+                    .arg(cutterKind).arg(parabolaFirst).arg(fileIndex++) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
 #ifdef DWGSUPPORT
@@ -2001,7 +2014,7 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
             for (const auto* entity : reopenedEntities)
                 if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
                     actual.push_back(entity);
-            CAPTURE(profileKind, reflected, scale, cutterKind, parabolaFirst, format);
+            CAPTURE(profileKind, reflected, affineFrame, scale, cutterKind, parabolaFirst, format);
             REQUIRE(actual.size() == expected.size());
             std::vector<bool> consumed(actual.size(), false);
             for (const auto* sourceEntity : expected) {
