@@ -37490,3 +37490,24 @@ DWGs. `git diff --check` passes.
 This qualifies only both traversal directions of this one repeated-location
 profile. Arbitrary self-intersections and repeated-point layouts, continuous
 Hausdorff proof, visible GUI, and ODA/AutoCAD acceptance remain open.
+
+## 981. Condition Revisited-location Profiles at a Large Origin (2026-11-11)
+
+Test commit `a5c0928c0` adds both traversal directions of the section 979
+non-adjacent repeated-location profile after a 37-degree rotation, uniform
+`1e-3` scaling, and translation to `(1e6,-2e6)`. The independent oracle
+localizes expected geometry using the transformed first fit point and verifies
+analytic normals, bounded circular corners, and the actual worker splines at
+the four proportionally scaled signed distances.
+
+The focused exact-normal case passes 93,727 assertions; the complete fit-point
+kernel selection passes 93,984 assertions across seven cases. The
+process-backed fit-point client selection passes 135,992 assertions across
+five cases. The twelve-profile persistence case passes 89,611 assertions and
+covers 240 DXF/DWG save-reopens across five format lanes and four signed
+distances. LibreDWG 0.14 independently parses and geometry-checks all 144
+generated DWGs. `git diff --check` passes.
+
+This qualifies the recorded transforms and scales only. Other conditioning,
+topology and parameter combinations, continuous Hausdorff proof, visible GUI,
+and ODA/AutoCAD acceptance remain open.
