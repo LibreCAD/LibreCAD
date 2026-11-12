@@ -39598,3 +39598,23 @@ within bounded work; do not raise proof limits or weaken certificates merely
 to turn this case into a pass. Other cusp distances, transformed sources,
 other parabola control nets, visible GUI, cross-platform behavior, and external
 CAD acceptance remain open.
+
+## 1081. Qualify Parabola Cusp Topology Under Similarity Transforms (2026-11-12)
+
+Test commit `547ba5532` extends the exact-stall/three-branch source-update
+matrix for the symmetric `y = x^2` parabola. It exercises scales `0.1`, `1`,
+and `10`, each in identity and rotated/translated placement, at the scaled
+exact cusp distance (`0.5 * scale`) and 2% beyond it (`0.51 * scale`). Direct
+generation must report one and three branches respectively; worker-backed
+Update-from-Source must publish a typed parabola with the exact signed distance
+and matching full-multiplicity cache separators. Undo/redo restores and reapplies
+the same replacement geometry for all 12 cases.
+
+Validation on macOS arm64 CMake Release: the focused transform case passes 276
+assertions / 1 case; `[source-update]` passes 441 assertions across 2 cases;
+the target builds; and `git diff --check` passes. This qualifies similarity
+transforms and these two normalized distances for one symmetric control net.
+It does not close the beyond-cusp Trim proof limit in section 1080, test other
+parabola control nets or a continuous distance interval, or establish file-lane
+persistence for transformed cusp caches. Broader geometry, visible-GUI,
+cross-platform, and external-CAD gates remain open.
