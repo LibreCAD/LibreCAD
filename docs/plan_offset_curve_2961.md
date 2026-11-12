@@ -39432,3 +39432,23 @@ clamped knot count. The test proves the bounded top-level action's exact
 admission boundary and atomic refusal for this disconnected spline-cutter
 layout only. Other cutter families/topologies, broader geometry variants,
 visible GUI, cross-platform, and external-CAD gates remain open.
+
+## 1073. Qualify Typed-parabola Trim Two Across Uniform Scales (2026-11-12)
+
+The worker-created typed-parabola Trim Two action fixture now runs at uniform
+scales `0.1`, `1`, and `10`, with the parabola control points, inherited
+offset distance, circle cutter radius, and interaction points scaled together.
+Each scale exercises both operand pick orders, source update, preview
+immutability, commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG
+save/reopen. Reopened geometry is matched against the committed fragments;
+LibreDWG independently reads both DWG lanes when available.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+parabola Trim Two case passes 1,596 assertions / 1 case across six
+scale/order combinations and all five file lanes; `[trim-action]` passes
+34,781 assertions across 81 cases; the test target builds; and `git diff
+--check` passes. This qualifies uniform scales for one symmetric typed
+parabola profile and one circle-cutter construction. It does not qualify
+translated/rotated parabola frames, different focus/vertex layouts, inward or
+near-singular offset distances, broader cutter types, visible GUI,
+cross-platform behavior, or external CAD acceptance; those remain open.

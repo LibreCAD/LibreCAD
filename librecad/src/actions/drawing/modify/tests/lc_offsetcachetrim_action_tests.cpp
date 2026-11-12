@@ -1021,15 +1021,15 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
 
 TEST_CASE("T Trim Two action trims a worker-created typed parabola against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][trim-two]") {
-    for (const bool parabolaFirst : {false, true}) {
-        CAPTURE(parabolaFirst);
+    for (const double scale : {0.1, 1.0, 10.0}) for (const bool parabolaFirst : {false, true}) {
+        CAPTURE(scale, parabolaFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, .05, false);
+        auto initial = LC_OffsetCurve::create(seed, .05 * scale, false);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        const LC_ParabolaData sourceData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}};
+        const LC_ParabolaData sourceData{{RS_Vector{-scale, scale}, RS_Vector{0, -scale}, RS_Vector{scale, scale}}};
         auto* parabola = new LC_Parabola(&f.graphic, sourceData);
         f.graphic.addEntity(parabola);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
@@ -1065,7 +1065,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
         REQUIRE(tangent.magnitude() > RS_TOLERANCE);
         tangent /= tangent.magnitude();
         const RS_Vector normal{-tangent.y, tangent.x};
-        constexpr double circleRadius = .1;
+        const double circleRadius = .1 * scale;
         const RS_Vector circleCenter = intersection + tangent * circleRadius;
         auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, circleRadius});
         f.graphic.addEntity(circle);
