@@ -40314,3 +40314,22 @@ passes 106,102 assertions / 87 cases; and `git diff --check` passes. This
 qualifies this inward rotated ratio-`0.9` profile, not the eccentricity,
 near-cusp, offset, or precision matrix. Visible Properties interaction,
 cross-platform behavior, and ODA/AutoCAD acceptance remain open.
+
+## 1115. Qualify a Reversed Bounded Elliptic Arc Through Trim Two (2026-11-12)
+
+Test commit `d3bd97b17` adds a translated, rotated, reversed bounded elliptic
+arc to the worker-created typed-ellipse Trim Two matrix: center `(-4, 6)`,
+major length `3`, rotation `-0.38`, ratio `0.6`, and parameters `[0.25, 1.6]`.
+It runs in both operand-pick orders and retains preview/commit, undo/redo,
+five DXF/DWG save/reopen lanes, and LibreDWG parsing.
+
+The file writers/readers may canonicalize elliptic-arc axis direction, angles,
+and reversal flags. The round-trip oracle therefore compares the bounded locus
+(center, major-axis length, ratio, unordered endpoints, midpoint, and length)
+rather than requiring identical raw parameterization. Validation on macOS arm64
+CMake Release with LibreDWG 0.14: the focused ellipse Trim Two case passes
+4,011 assertions / 1 case across five profiles and both pick orders; full
+`[trim-action]` passes 106,668 assertions / 87 cases; and `git diff --check`
+passes. This qualifies one reversed elliptic-arc profile, not general sweep,
+ratio, side, or precision boundaries. Visible Properties interaction,
+cross-platform behavior, and ODA/AutoCAD acceptance remain open.
