@@ -967,6 +967,15 @@ TEST_CASE("offset worker source codecs preserve all typed source families",
     std::get<LC_SplinePointsData>(invalidTangent.value).fitEndTangent.x =
         std::numeric_limits<double>::infinity();
     CHECK_FALSE(values::encodeSourceGeometry(invalidTangent));
+    LC_SplinePointsData conditionedFitPoints{false, false};
+    conditionedFitPoints.splinePoints = {{0, 0}, {1, 1}, {1.000051, 1.000051}, {2, 0}, {3, 1}};
+    const LC_OffsetSourceGeometry boundaryFitSource{conditionedFitPoints};
+    CHECK(boundaryFitSource.isWellFormed());
+    CHECK(values::encodeSourceGeometry(boundaryFitSource));
+    conditionedFitPoints.splinePoints[2] = {1.00001, 1.00001};
+    const LC_OffsetSourceGeometry illConditionedFitSource{conditionedFitPoints};
+    CHECK_FALSE(illConditionedFitSource.isWellFormed());
+    CHECK_FALSE(values::encodeSourceGeometry(illConditionedFitSource));
     const auto validFitSource = values::encodeSourceGeometry(sources[2]);
     REQUIRE(validFitSource);
     CHECK_FALSE(values::decodeSourceGeometry(changed(*validFitSource, {1, 6}, -1.0)));

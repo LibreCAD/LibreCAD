@@ -32,6 +32,7 @@
 
 #include "lc_curvejet.h"
 #include "lc_hyperbola.h"
+#include "lc_offsetsource.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -6704,6 +6705,11 @@ LC_CurveOffsetGeometryResult buildDirectBranches(const RS_Entity& source, const 
     if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&source);
         points && points->getData().fitTangentsConstrained &&
         !points->fitTangentsMatchCurve()) {
+        result.status = LC_CurveOffsetStatus::InvalidSource;
+        return result;
+    }
+    if (const auto* points = dynamic_cast<const LC_SplinePoints*>(&source);
+        points && !LC_OffsetSourceDetail::fitPointChordsWellConditioned(points->getData())) {
         result.status = LC_CurveOffsetStatus::InvalidSource;
         return result;
     }

@@ -109,6 +109,53 @@ inline bool finitePoints(const std::vector<RS_Vector>& points) noexcept {
            std::all_of(points.begin(), points.end(), LC_OffsetSourceDetail::finite);
 }
 
+inline constexpr double MinimumAdjacentFitPointChordRatio = 5.0e-5;
+
+inline bool fitPointChordsWellConditioned(const LC_SplinePointsData& data) noexcept {
+    if (data.useControlPoints) return true;
+    // Near-singular chord ratios make the interpolated offset report false precision.
+    const auto samePoint = [](const RS_Vector& lhs, const RS_Vector& rhs) {
+        return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
+    };
+    const auto acceptablePair = [](const double lhs, const double rhs) {
+        if (lhs == 0.0 || rhs == 0.0) return true;
+        return std::min(lhs, rhs) >= MinimumAdjacentFitPointChordRatio * std::max(lhs, rhs);
+    };
+
+    const RS_Vector* first = nullptr;
+    const RS_Vector* previous = nullptr;
+    double firstChord = 0.0;
+    double previousChord = 0.0;
+    for (const RS_Vector& point : data.splinePoints) {
+        if (previous != nullptr && samePoint(point, *previous)) continue;
+        if (first == nullptr) {
+            first = &point;
+            previous = &point;
+            continue;
+        }
+        const double chord = std::hypot(point.x - previous->x, point.y - previous->y);
+        if (!std::isfinite(chord)) return false;
+        if (chord > 0.0) {
+            if (firstChord == 0.0) firstChord = chord;
+            if (!acceptablePair(previousChord, chord)) return false;
+            previousChord = chord;
+        }
+        previous = &point;
+    }
+
+    if (data.closed && first != nullptr && previous != nullptr && firstChord > 0.0 && previousChord > 0.0) {
+        if (samePoint(*first, *previous)) {
+            if (!acceptablePair(previousChord, firstChord)) return false;
+        }
+        else {
+            const double closingChord = std::hypot(first->x - previous->x, first->y - previous->y);
+            if (!std::isfinite(closingChord) || !acceptablePair(previousChord, closingChord) ||
+                !acceptablePair(closingChord, firstChord)) return false;
+        }
+    }
+    return true;
+}
+
 inline bool boundedSourceSize(const RS_SplineData& data) noexcept {
     return data.controlPoints.size() <= MaximumSourceItems && data.weights.size() <= MaximumSourceItems &&
            data.fitPoints.size() <= MaximumSourceItems && data.knotslist.size() <= 2 * MaximumSourceItems &&
@@ -354,7 +401,8 @@ inline bool LC_OffsetSourceGeometry::isWellFormed() const noexcept {
             const auto& activePoints = data.useControlPoints ? data.controlPoints : data.splinePoints;
             return activePoints.size() >= 2 && boundedSourceSize(data) &&
                    std::isfinite(data.fitTolerance) && data.fitTolerance > 0.0 &&
-                   finitePoints(data.splinePoints) && finitePoints(data.controlPoints);
+                   finitePoints(data.splinePoints) && finitePoints(data.controlPoints) &&
+                   fitPointChordsWellConditioned(data);
         } else if constexpr (std::is_same_v<T, LC_ParabolaData>) {
             return data.isValid() &&
                    std::all_of(data.m_controlPoints.begin(), data.m_controlPoints.end(),

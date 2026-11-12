@@ -458,6 +458,52 @@ TEST_CASE("Near-coincident distinct fit points remain distinct through trimming"
     }
 }
 
+TEST_CASE("Ill-conditioned near-coincident fit points succeed accurately or refuse atomically",
+          "[curve-offset][trim][spline-points][fit-points][near-coincident][conditioning]") {
+    const std::array<double, 9> gaps{{1e-3, 5.1e-4, 1e-4, 5.1e-5, 1e-5, 1e-6, 1e-8, 1e-10, 1e-12}};
+    for (const bool closed : {false, true}) {
+        for (const double gap : gaps) {
+            CAPTURE(closed, gap);
+            LC_SplinePointsData data{closed, false};
+            if (closed) {
+                data.splinePoints = {{0, 0}, {10, 0}, {10 + gap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+            }
+            else {
+                data.splinePoints = {{0, 0}, {1, 1}, {1 + gap, 1 + gap}, {2, 0}, {3, 1}};
+            }
+            LC_SplinePoints source{nullptr, data};
+            REQUIRE(source.getData().splinePoints.size() == data.splinePoints.size());
+            REQUIRE(source.getData().splinePoints[1].distanceTo(source.getData().splinePoints[2]) > 0.0);
+            const auto captured = LC_OffsetSourceGeometry::capture(source);
+            const bool expectedCapture = closed ? gap >= 5.1e-4 : gap >= 5.1e-5;
+            CHECK(captured.has_value() == expectedCapture);
+            const double distance = std::max(gap * 10.0, 1e-8);
+            for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+                CAPTURE(side, distance);
+                const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+                const auto result = LC_CurveOffset::buildDirectBranches(
+                    source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                    LC_CurveOffset::makeDirectSourceBudget());
+                if (result.status == LC_CurveOffsetStatus::Ok) {
+                    REQUIRE(captured);
+                    REQUIRE_FALSE(result.branches.empty());
+                    const Checked checked = check(result, curveOf(source), 0.0,
+                                                  static_cast<double>(source.getSegmentCount()), distance,
+                                                  -1.0, [&source](const RS_Vector& point) {
+                                                      return source.getDistanceToPoint(point);
+                                                  });
+                    CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+                    CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+                }
+                else {
+                    CHECK_FALSE(captured.has_value());
+                    CHECK(result.branches.empty());
+                }
+            }
+        }
+    }
+}
+
 TEST_CASE("All-coincident fit points fail closed for trimming",
           "[curve-offset][trim][spline-points][fit-points][stationary][refusal]") {
     const RS_Spline validReference = unitParabola();
