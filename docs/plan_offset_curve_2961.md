@@ -38900,3 +38900,21 @@ lanes; `[trim-action]` passes 23,663 assertions / 76 cases with
 decoding for one short typed-line profile only. Other line variants, remaining
 Trim Two families, visible GUI, cross-platform, and external-CAD acceptance
 remain open.
+
+## 1048. Exercise Typed Arc Trim Two Through the Worker and Action (2026-11-12)
+
+Test commit `64144c299` adds worker-created typed circular-arc Trim Two action
+coverage in both operand pick orders. Update-from-Source replaces an editable
+offset with an offset generated from a bounded arc. The real asynchronous
+Trim Two action cuts its generated cache with a transverse finite line,
+verifies a nonempty preview without mutating either operand or the undo epoch,
+commits ordinary spline/line fragments, and restores the typed arc source and
+editable offset on undo before redo republishes those fragments.
+
+Validation on macOS arm64 CMake Release: the focused arc Trim Two case passes
+614 assertions across both pick orders; `[trim-action]` passes 24,388
+assertions / 77 cases with LibreDWG available through `DWGREAD`; the test
+target rebuilds; and `git diff --check` passes. This qualifies one bounded
+circular-arc profile at action level only. Five-lane persistence, other arc
+domains/directions, other Trim Two source families, visible GUI,
+cross-platform, and external-CAD acceptance remain open.
