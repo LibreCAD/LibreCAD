@@ -4341,6 +4341,79 @@ TEST_CASE("Bounded hyperbola trim runs through worker preparation on both sides"
     }
 }
 
+TEST_CASE("Thin bounded hyperbola cusp-boundary profiles cross the worker protocol",
+          "[lc-offsetcurve][worker-client][hyperbola][cusp][variants]") {
+    auto& rt = runtime();
+    OwnedClient client{rt};
+    std::size_t requestId = 1;
+    std::size_t cacheAdmissions = 0;
+    std::size_t multiBranchRefusals = 0;
+
+    for (const double ratio : {0.05, 0.2}) {
+        constexpr double semiMajor = 10.0;
+        const double vertexRadius = semiMajor * ratio * ratio;
+        for (const bool oppositeBranch : {false, true}) {
+            for (const bool reverseBounds : {false, true}) {
+                const LC_HyperbolaData data{
+                    RS_Vector{23.0, -17.0},
+                    RS_Vector{semiMajor * std::cos(0.37), semiMajor * std::sin(0.37)},
+                    ratio,
+                    reverseBounds ? 0.4 : -0.4,
+                    reverseBounds ? -0.4 : 0.4,
+                    oppositeBranch};
+                for (const double fraction : {0.5, 1.0, 1.5}) {
+                    for (const double sign : {-1.0, 1.0}) {
+                        CAPTURE(ratio, oppositeBranch, reverseBounds, fraction, sign);
+                        const LC_OffsetSourceDefinition definition{
+                            LC_OffsetSourceGeometry{data},
+                            sign * fraction * vertexRadius, 1e-4, false};
+                        const qint64 generationId = static_cast<qint64>(requestId++);
+                        Receipts generationReceipts;
+                        REQUIRE(client.get().submit(
+                            {token(generationId), Req::GenerateSource{definition, {}}},
+                            Client::Mode::Commit, generationReceipts.into(0)));
+                        rt.until([&] { return generationReceipts.calls[0] != 0; });
+                        const auto& generatedCompletion = completed(
+                            generationReceipts.at(0), generationId, 7);
+                        const auto& generated = std::get<Reply::Native>(
+                            generatedCompletion.reply().result);
+                        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+                        REQUIRE(generated.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+                        REQUIRE_FALSE(generated.ordinary.empty());
+                        for (const auto& output : generated.ordinary)
+                            CHECK(std::holds_alternative<RS_SplineData>(output));
+                        const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+
+                        const qint64 validationId = static_cast<qint64>(requestId++);
+                        Receipts validationReceipts;
+                        REQUIRE(client.get().submit(
+                            {token(validationId),
+                             Req::ValidateSourceCache{cache, definition, {}}},
+                            Client::Mode::Commit, validationReceipts.into(0)));
+                        rt.until([&] { return validationReceipts.calls[0] != 0; });
+                        const auto& validationCompletion = completed(
+                            validationReceipts.at(0), validationId, 8);
+                        const auto& validated = std::get<Reply::Native>(
+                            validationCompletion.reply().result);
+                        if (generated.ordinary.size() == 1) {
+                            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                            CHECK(validated.changed);
+                            ++cacheAdmissions;
+                        } else {
+                            CHECK(validated.refusal ==
+                                  LC_OffsetCurveRefusal::NotCacheRepresentable);
+                            CHECK_FALSE(validated.changed);
+                            ++multiBranchRefusals;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    CHECK(cacheAdmissions + multiBranchRefusals == 2 * 2 * 2 * 3 * 2);
+    CHECK(cacheAdmissions > 0);
+}
+
 TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker preparation",
           "[lc-offsetcurve][worker-client][ordered-preparation][fit-points][tangents][trim]") {
     auto& rt = runtime();

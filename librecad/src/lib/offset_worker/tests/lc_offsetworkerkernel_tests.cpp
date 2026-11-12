@@ -8074,6 +8074,61 @@ TEST_CASE("bounded hyperbola cache promotion preserves bounds and branch across 
     CHECK(refusedCaches > 0);
 }
 
+TEST_CASE("thin bounded hyperbola cusp-boundary variants generate and validate worker caches",
+          "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][cusp][variants]") {
+    std::size_t admittedCaches = 0;
+    std::size_t refusedMultiBranchCaches = 0;
+    for (const double ratio : {0.05, 0.2}) {
+        const double semiMajor = 10.0;
+        const double vertexRadius = semiMajor * ratio * ratio;
+        for (const bool oppositeBranch : {false, true}) {
+            for (const bool reverseBounds : {false, true}) {
+                const LC_HyperbolaData data{
+                    RS_Vector{23.0, -17.0},
+                    RS_Vector{semiMajor * std::cos(0.37), semiMajor * std::sin(0.37)},
+                    ratio,
+                    reverseBounds ? 0.4 : -0.4,
+                    reverseBounds ? -0.4 : 0.4,
+                    oppositeBranch};
+                for (const double fraction : {0.5, 1.0, 1.5}) {
+                    for (const double sign : {-1.0, 1.0}) {
+                        const double distance = sign * fraction * vertexRadius;
+                        CAPTURE(ratio, oppositeBranch, reverseBounds, fraction,
+                                sign, distance);
+                        const LC_OffsetSourceDefinition definition{
+                            LC_OffsetSourceGeometry{data}, distance, 1e-4, false};
+                        const auto generatedReply = LC_OffsetWorkerKernel::run(
+                            {token, req::GenerateSource{definition, {}}});
+                        const auto& generated = native(generatedReply, 7);
+                        REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+                        REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+                        REQUIRE_FALSE(generated.ordinary.empty());
+
+                        for (const auto& output : generated.ordinary)
+                            CHECK(std::holds_alternative<RS_SplineData>(output));
+                        const auto& cache = std::get<RS_SplineData>(generated.ordinary.front());
+                        const auto validationReply = LC_OffsetWorkerKernel::run(
+                            {token, req::ValidateSourceCache{cache, definition, {}}});
+                        const auto& validated = native(validationReply, 8);
+                        if (generated.ordinary.size() == 1) {
+                            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+                            CHECK(validated.changed);
+                            ++admittedCaches;
+                        } else {
+                            CHECK(validated.refusal == LC_OffsetCurveRefusal::NotCacheRepresentable);
+                            CHECK_FALSE(validated.changed);
+                            ++refusedMultiBranchCaches;
+                        }
+                        CHECK(validated.engineRuns == 1);
+                    }
+                }
+            }
+        }
+    }
+    CHECK(admittedCaches + refusedMultiBranchCaches == 2 * 2 * 2 * 3 * 2);
+    CHECK(admittedCaches > 0);
+}
+
 TEST_CASE("bounded hyperbola worker cache validation scales across curvature neighborhoods",
           "[lc-offsetcurve][worker-kernel][source-cache][hyperbola][scale]") {
     const std::array<LC_HyperbolaData, 8> variants{
