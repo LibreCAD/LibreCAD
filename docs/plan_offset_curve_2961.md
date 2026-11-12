@@ -58,6 +58,18 @@ distinct parabola kind. A family appearing in the selector is UI coverage
 only, not proof that all of its geometry variants pass generation,
 worker/cache validation, or persistence.
 
+**Parabola/source-type clarification (2026-11-11):** When selecting a new
+source, the user must be able to change the source-family filter in the same
+Properties-widget workflow; the supported choices include a first-class
+parabola entry. The type control filters eligible drawing entities and does
+not convert the existing source or commit a replacement. Keep the current
+source and its indication until the selected candidate has passed preparation.
+This behavior is covered by the existing nine-kind picker contract, so no
+additional picker or parabola-only implementation slice is needed. Continue
+tracking parabola generation, trimming, worker/cache behavior, and DXF/DWG
+round-trip by geometry variant in Slice 4; keep visible interaction in Slice
+5. Do not mark those broader gates complete from picker tests.
+
 **Plan update for the repeated source-widget request (2026-11-11):** Treat
 “change source curve type when selecting a new one” as repeated, in-workflow
 family switching before candidate acceptance, not as changing the stored
@@ -37553,3 +37565,45 @@ passes.
 This closes only the recorded separated-repeat source, sides, distances, and
 five internal format lanes. It is not ODA/AutoCAD acceptance, visible-GUI
 evidence, or proof for other fit-point trim layouts and output topology.
+
+## 984. Reconcile Parabola and In-workflow Source-family Switching (2026-11-11)
+
+The latest request reiterates that the source Properties widget must permit
+changing the candidate family while choosing a replacement, and that parabola
+is among the supported offset-source types. The current contract already
+requires this: its canonical nine-kind inventory contains a distinct parabola
+kind, and family changes refresh candidates without changing the committed
+source, cache, or current-source indication. The existing picker transition,
+inventory, and stale-preparation tests are the implementation acceptance
+criteria; this clarification adds no duplicate control or new UI phase.
+
+Implementation status remains split by evidence level. The headless picker
+contract is covered by sections 958, 960, and 982. The independently tracked
+geometry matrix must still establish parabola variants through generation,
+trimming, worker/cache, and applicable DXF/DWG lanes; visible-GUI confirmation
+must also be run before claiming end-to-end completion. Picker presence alone
+is not geometry support.
+
+## 985. Normalize Consecutive Repeated Fit Points Before Geometry Solve (2026-11-11)
+
+Implementation commit `6eaaa2c4f` normalizes exact consecutive duplicate fit
+points, plus a repeated closing fit point for closed splines, only in the
+derived control-point solve. The original `splinePoints` metadata remains
+unchanged. This removes zero-length fit intervals from chord-ratio
+interpolation, making the tested repeated-neighbor profile's control polygon
+and curve invariant under reversing the fit-point traversal; it also prevents
+trim-boundary intersection from reaching an undecidable near-tangent for the
+reversed profile. All-coincident fit points remain rejected with no output.
+
+Validation passes: direct `[fit-points][trim]` covers 30,415 assertions across
+four cases; process-backed worker `[fit-points][trim]` covers 30,230 assertions
+across three cases. The repeated-fit-point persistence case covers both
+traversals, four side/distance combinations, and five DXF/DWG lanes: 26,079
+assertions across 40 save/reopens, with eight independent LibreDWG 0.14 DWG
+reads. The broader `[spline-points]` selection passes 467,929 assertions in
+26 cases (23 passed, 3 skipped). `git diff --check` passes.
+
+This fixes exact consecutive duplicates for the covered open and closed
+normalization paths; it does not qualify near-duplicate points, arbitrary
+repeated-point arrangements, every closed-spline topology, or ODA/AutoCAD and
+visible-GUI acceptance. Those matrix and delivery gates remain open.
