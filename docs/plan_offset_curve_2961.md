@@ -39941,3 +39941,24 @@ Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
 non-reflected-only matrices. Other reflections/rotations, general affine
 transforms, additional cusp control nets, visible-GUI, cross-platform, and
 external-CAD acceptance remain open.
+
+## 1096. Exercise Non-uniform Scale and Shear in Cusp Trim (2026-11-12)
+
+Test commit `975fab43b` adds a general affine frame to the symmetric/asymmetric
+reflected matrix. Before the shared rotation/translation and uniform scale, it
+applies non-uniform scale `(2, 0.6)` and x-shear `0.35`; reflection is varied
+independently. For each transformed quadratic control net, the test computes
+the vertex curvature radius from its first and second derivatives and offsets
+2% beyond the cusp with the orientation-correct sign. Both profiles run at
+uniform scales `0.1`, `1`, and `10`, with line, circle, and bounded-arc cutters
+in both pick orders. The affine unit-scale outputs round-trip through all five
+DXF/DWG lanes; all similarity and reflected-similarity cases retain their
+full-scale round trips, for 480 files total. Every DWG is parsed by LibreDWG.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+`[transform]` run passes 44,770 assertions across two cases; the complete
+`[trim-action]` suite passes 105,714 assertions across 84 cases; and
+`git diff --check` passes. Affine frames at scales `0.1` and `10` are validated
+through worker/action/Trim but are not individually round-tripped; affine
+output persistence is verified at scale `1`. Other affine matrices, cusp
+profiles, visible-GUI, cross-platform, and external-CAD acceptance remain open.
