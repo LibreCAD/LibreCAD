@@ -37752,3 +37752,17 @@ qualifies the recorded closed near-coincident fixture and distances only. It
 does not establish the safe conditioning boundary for shorter chords, other
 closed topologies, transforms/scales, visible-GUI behavior, or ODA/AutoCAD
 acceptance.
+
+## 994. Round-trip Open Near-coincident Fit-point Trims (2026-11-11)
+
+Test commit `170824194` adds the open near-coincident profile from section 991
+to the real worker trim and file-persistence matrix. It uses both side picks
+and proportionally matched distances `0.02` and `0.05` through R14 DXF, R2000
+DXF/DWG, and R2018 DXF/DWG. This closes the worker-trim lane for that exact
+open profile; it does not define a global safe chord threshold or extend its
+result to other parameterizations.
+
+The expanded fit-point trim persistence selection passes 79,403 assertions
+across 160 save/reopens and 64 independent LibreDWG reads. `git diff --check`
+passes. Conditioning limits, other open/closed near-coincident profiles,
+transforms/scales, visible GUI, and ODA/AutoCAD acceptance remain open.
