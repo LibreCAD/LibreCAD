@@ -39980,3 +39980,21 @@ Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
 limitation. The affine family is still one specific scale/shear matrix and
 only the two existing cusp control nets; other matrices/profiles, visible-GUI,
 cross-platform, and external-CAD acceptance remain open.
+
+## 1098. Exercise Repeated Source-type Switching Across All Families (2026-11-12)
+
+Test commit `31e8955ae` expands the source-update picker regression from Line
+and Ellipse to every `LC_OffsetSourceGeometry::SupportedKinds` entry: line,
+arc, circle, ellipse, spline, spline-points, parabola, bounded hyperbola, and
+polyline. The test repeatedly changes the live selector, confirms only the
+matching family is returned at its candidate pick point, and checks that the
+selected offset target's identity/state and geometry remain unchanged while
+browsing. Existing family-matrix replacement tests separately cover applying
+each supported family.
+
+Validation on macOS arm64 CMake Release: the focused `[picker]` test passes
+148 assertions / 1 case; the full `librecad_offset_update_source_tests`
+executable passes 3,452 assertions across 36 cases; and `git diff --check`
+passes. This is headless widget/action validation, not visible GUI evidence.
+Manual desktop confirmation, cross-platform behavior, and external-CAD
+acceptance remain open.
