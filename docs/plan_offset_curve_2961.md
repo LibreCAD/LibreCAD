@@ -40046,7 +40046,8 @@ This exposed and fixed a related product defect: descending bounded parameter
 intervals returned a negative `getLength()`, making the otherwise valid
 round-tripped left-branch hyperbola report an invalid middle point. Hyperbola
 length is now nonnegative; nearest-distance lookup uses a bounded, traversal-
-aware arc-length bisection and rejects invalid query coordinates/distances.
+aware Newton solve with a bounded bisection fallback and rejects invalid query
+coordinates/distances.
 Unit regressions verify positive length, valid arc-length midpoint, and
 distance lookup from both endpoints for a descending interval.
 
@@ -40059,3 +40060,23 @@ cases. The qmake6 recursive Release build and immediate incremental rebuild
 both succeed; `git diff --check` passes. Other hyperbola interval/scale
 combinations, visible GUI, cross-platform behavior, and ODA/AutoCAD acceptance
 remain open.
+
+## 1102. Bound the Descending-hyperbola Distance-search Cost (2026-11-12)
+
+Performance follow-up commit `9dbe4fbb8` keeps the descending-interval fix
+bounded without forcing 80 quadrature evaluations on every nearest-distance
+query. The common path starts from a proportional parameter estimate and uses
+a traversal-aware Newton step constrained to the valid interval; non-finite,
+out-of-bracket, or nonconverging steps fall back to 56 bounded bisections.
+Invalid coordinates and non-finite/negative distances are refused before
+search. The distance result remains measured positively from the nearest
+endpoint, while directed `getArcLength()` retains its signed semantics.
+
+Post-refinement validation on macOS arm64 CMake Release: the focused
+`[hyperbola][length]` and `[hyperbola][nearestdist]` suites pass 41 assertions
+/ 2 cases; the both-branch worker-backed Trim Two round trip passes 1,240
+assertions / 1 case, including five DXF/DWG lanes and LibreDWG reads. The
+qmake6 recursive Release build succeeds and `git diff --check` passes. The
+111,465-assertion full `[trim-action]` result in section 1101 was run before
+this search-cost refinement; only the focused action and hyperbola unit tests
+were rerun afterward. A post-refinement full action-suite run remains open.
