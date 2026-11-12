@@ -599,3 +599,108 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) ==
           RS_Spline::geometryFingerprint(updated->getData()));
 }
+
+TEST_CASE("I thin hyperbola cusp-boundary source persists as an editable offset",
+          "[lc-offsetcurve][i-ui][persistence][dxf][dwg][typed][hyperbola][cusp]") {
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    const double ratio = GENERATE(.05, .2);
+    const bool oppositeBranch = GENERATE(false, true);
+    const bool reverseBounds = GENERATE(false, true);
+    const bool towardCentre = GENERATE(false, true);
+    const double fraction = GENERATE(.5, 1.0, 1.5);
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+        RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(200, 200, 30.);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    constexpr double semiMajor = 10.0;
+    constexpr double axisAngle = .37;
+    const double vertexRadius = semiMajor * ratio * ratio;
+    const double distance = fraction * vertexRadius;
+    const LC_HyperbolaData data{{13, -7}, {semiMajor * std::cos(axisAngle), semiMajor * std::sin(axisAngle)},
+        ratio, reverseBounds ? .4 : -.4, reverseBounds ? -.4 : .4, oppositeBranch};
+    LC_Hyperbola hyperbola(nullptr, data);
+    REQUIRE(hyperbola.isValid());
+    const auto expectedSource = LC_OffsetSourceGeometry::capture(hyperbola);
+    REQUIRE(expectedSource);
+    const auto expectedEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expectedSource);
+    REQUIRE(expectedEncoding);
+
+    auto* target = native(graphic, distance, towardCentre);
+    target->setLayer(graphic.findLayer("0"));
+    const RS_Pen pen(RS_Color(255, 0, 0), RS2::WidthDefault, RS2::SolidLine);
+    target->setPen(pen);
+    const double expectedDistance = towardCentre ? -distance : distance;
+
+    auto sourceOwner = expectedSource->makeEntity();
+    REQUIRE(sourceOwner);
+    auto* source = sourceOwner.get();
+    source->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(source);
+    sourceOwner.release();
+    const auto picked = dynamic_cast<const LC_Hyperbola*>(source);
+    REQUIRE(picked);
+    const RS_Vector pick = picked->getPrimaryVertex();
+    REQUIRE(pick.valid);
+
+    graphic.select(QList<RS_Entity*>{target}, true);
+    auto update = LC_ActionsHandlerFactory::createActionInstance(RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(SourceKind::BoundedHyperbola);
+    CAPTURE(ratio, oppositeBranch, reverseBounds, towardCentre, fraction, format, vertexRadius, distance, pick.x, pick.y);
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, pick, false);
+    mouse(*update, view, pick, true);
+    lc::test::awaitUpdate(*updateAction);
+    CHECK(updateAction->lastReport().updated == 1);
+    CHECK(updateAction->lastReport().refused == 0);
+    REQUIRE(target->isDeleted());
+
+    auto* updated = onlyNative(graphic);
+    certified(*updated);
+    REQUIRE(updated->hasGeneralizedSourceDefinition());
+    REQUIRE(updated->sourceDefinition());
+    CHECK(updated->sourceDefinition()->source.kind() == SourceKind::BoundedHyperbola);
+    CHECK(updated->sourceDefinition()->signedDistance == expectedDistance);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(updated->sourceDefinition()->source) ==
+          expectedEncoding);
+    CHECK(updated->getPen(true) == pen);
+
+    const QString file = directory.filePath(QStringLiteral("hyperbola-%1").arg(static_cast<int>(format)) +
+                                             (dwg ? ".dwg" : ".dxf"));
+    const auto path = std::filesystem::path(file.toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, path, format));
+#ifdef DWGSUPPORT
+    if (dwg && !libreDwgReader.isEmpty())
+        checkLibreDwgSpline(libreDwgReader, path, updated->getData());
+#endif
+    RS_Graphic reopenedGraphic;
+    REQUIRE(lc::test::importDrawing(reopenedGraphic, path, format));
+    auto* reopenedCurve = onlyNative(reopenedGraphic);
+    certified(*reopenedCurve);
+    REQUIRE(reopenedCurve->hasGeneralizedSourceDefinition());
+    REQUIRE(reopenedCurve->sourceDefinition());
+    CHECK(reopenedCurve->sourceDefinition()->source.kind() == SourceKind::BoundedHyperbola);
+    CHECK(reopenedCurve->sourceDefinition()->signedDistance == expectedDistance);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(reopenedCurve->sourceDefinition()->source) ==
+          expectedEncoding);
+    CHECK(reopenedCurve->getPen(true) == pen);
+    CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) ==
+          RS_Spline::geometryFingerprint(updated->getData()));
+}
