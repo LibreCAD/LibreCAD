@@ -3332,9 +3332,14 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
         const LC_SplinePointsData& sourceData = profiles[profileIndex];
+        const std::array<double, 4> distances{-.5, -.2, .2, .5};
+        for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
+        const double signedDistance = distances[distanceIndex];
+        CAPTURE(distanceIndex, signedDistance);
         const LC_OffsetSourceDefinition definition{
-            LC_OffsetSourceGeometry{sourceData}, 0.2, 1e-4, false};
-        const qint64 requestId = static_cast<qint64>(profileIndex + 1);
+            LC_OffsetSourceGeometry{sourceData}, signedDistance, 1e-4, false};
+        const qint64 requestId = static_cast<qint64>(
+            profileIndex * distances.size() + distanceIndex + 1);
         Receipts receipts;
         REQUIRE(owned.get().submit(
             {token(requestId), Req::GenerateSource{definition, {}}},
@@ -3367,7 +3372,8 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
             lane.format == RS2::FormatDWG2018) continue;
 #endif
         CAPTURE(lane.extension);
-        const auto path = directory.file(std::to_string(profileIndex) + "-" + lane.extension);
+        const auto path = directory.file(std::to_string(profileIndex) + "-" +
+            std::to_string(distanceIndex) + "-" + lane.extension);
         REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
 #ifdef DWGSUPPORT
         if (!libreDwgReader.isEmpty() &&
@@ -3435,6 +3441,7 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
         for (std::size_t i = 0; i < expected.controlPoints.size(); ++i)
             CHECK(actual.controlPoints[i].distanceTo(expected.controlPoints[i]) < 1e-10);
         CHECK(actual.fitPoints.empty());
+    }
     }
     }
 }
