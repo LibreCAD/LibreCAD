@@ -3914,7 +3914,7 @@ TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker 
     source.getData().fitEndTangent = end.first;
     REQUIRE(source.fitTangentsMatchCurve());
 
-    std::array<LC_SplinePointsData, 4> profiles;
+    std::array<LC_SplinePointsData, 5> profiles;
     profiles[0] = source.getData();
     LC_SplinePoints reversed{nullptr, profiles[0]};
     reversed.revertDirection();
@@ -3927,6 +3927,10 @@ TEST_CASE("Tangent-constrained fit-point spline-points trim runs through worker 
     LC_SplinePointsData repeatedFitPoints{false, false};
     repeatedFitPoints.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[3] = repeatedFitPoints;
+    LC_SplinePointsData separatedRepeatedFitPoints{false, false};
+    separatedRepeatedFitPoints.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0},
+                                                {3, 1}, {3, 1}, {4, 0}};
+    profiles[4] = separatedRepeatedFitPoints;
 
     const std::array<double, 2> distances{{0.2, 0.5}};
 
