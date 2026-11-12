@@ -38957,3 +38957,44 @@ evidence for one circular profile and interior cut only. Five-lane
 persistence, exact-knot closed-circle contacts, other circle scales/directions,
 remaining Trim Two families, visible GUI, cross-platform, and external-CAD
 acceptance remain open.
+
+## 1051. Reconfirm Source Type Follows the Chosen Replacement (2026-11-12)
+
+The source-curve widget must let the user change the candidate-family filter
+while choosing a replacement, and selecting a candidate must make the widget's
+source type reflect that candidate's actual family. This applies to the full
+supported inventory: line, arc, circle, ellipse, spline, spline-points,
+parabola, bounded hyperbola, and polyline. Parabola is a distinct supported
+type, not a spline-points alias. The current source remains visibly highlighted
+and its identity/cache/definition remain unchanged until worker preparation
+succeeds; stale preparation must leave it untouched.
+
+This restates and makes explicit the picker-level contract in sections 1036
+and 1040; it does not open a second widget or duplicate picker implementation.
+Headless picker/state-transition coverage is recorded as implemented there.
+Visible GUI validation remains open: change the family filter, choose a
+candidate from a different family (including parabola), confirm the displayed
+type follows the candidate, and verify the old source stays highlighted until
+the prepared replacement is accepted. This UI gate is separate from concrete
+geometry generation, worker/cache, Trim, and DXF/DWG persistence coverage for
+each source variant, which remains tracked independently.
+
+## 1052. Persist Typed Circle Trim Two Output Across Five File Lanes (2026-11-12)
+
+Test commit `3e2224492` extends section 1050's worker-created closed-circle
+Trim Two result through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, in both
+operand pick orders. LibreCAD reopens each file and checks the complete entity
+inventory, spline controls/knots/weights, line geometry (allowing reversed
+endpoints), the original circle center/radius, and absence of editable-offset
+residue. When LibreDWG is available, both DWG files must parse as minJSON and
+contain CIRCLE, LINE, and SPLINE entities.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused circle
+Trim Two case passes 786 assertions across both pick orders and all five
+lanes; `[trim-action]` passes 25,369 assertions / 78 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; the test target rebuilds; and
+`git diff --check` passes. This closes persistence and independent structural
+decoding for one circular profile and interior cut only. Exact-knot contacts,
+other circle scales/directions, remaining Trim Two source families, visible
+GUI, cross-platform, and external-CAD acceptance remain open. This supersedes
+section 1050's five-lane-persistence-open status for this fixture only.
