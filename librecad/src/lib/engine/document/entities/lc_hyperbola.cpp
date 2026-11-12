@@ -1021,84 +1021,43 @@ RS_Vector LC_Hyperbola::doGetNearestDist(double distance,
                                        const RS_Vector& coord,
                                        double* dist) const
 {
-  if (!m_valid || isInfinite())
+  if (!m_valid || isInfinite() || !coord.valid || !std::isfinite(distance))
     return RS_Vector(false);
 
   double totalLength = getLength();
-  if (totalLength <= std::abs(distance))
+  if (!std::isfinite(totalLength) || distance < 0.0 || totalLength <= distance)
     return RS_Vector(false);
 
   double phi0 = getParamFromPoint(coord, m_data.reversed);
+  if (!std::isfinite(phi0))
+    return RS_Vector(false);
   const bool fromStart =
       std::abs(phi0 - m_data.angle1) <= std::abs(phi0 - m_data.angle2);
 
   double targetArcFromStart = fromStart ? distance : totalLength - distance;
-
-  if (distance < 0.0 || targetArcFromStart < 0.0 || targetArcFromStart > totalLength + RS_TOLERANCE)
+  if (targetArcFromStart < 0.0 || targetArcFromStart > totalLength)
     return RS_Vector(false);
 
   if (dist)
     *dist = targetArcFromStart;
 
-  double a = getMajorRadius();
-  double ecc2 = getEccentricity() * getEccentricity();
-
-         // Initial guess from nearest point on curve
-
-  using std::asinh, std::cosh, std::sinh;
-  double phi = asinh(sinh(m_data.angle1) +
-                     targetArcFromStart / totalLength *
-                         (sinh(m_data.angle2) - sinh(m_data.angle1)));
-  if (std::isnan(phi))
-    phi = m_data.angle1;
-
-  constexpr int maxIter = 30;
-  constexpr double tol = 1e-12;
-
-  bool converged = false;
-  for (int i = 0; i < maxIter; ++i) {
-    double s = getArcLength(m_data.angle1, phi);
-    double ds_dphi_current = a * std::sqrt(ecc2 * cosh(phi) * cosh(phi) - 1.0);
-    if (ds_dphi_current < RS_TOLERANCE) break;
-
-    double residual = targetArcFromStart - s;
-    double delta = residual / ds_dphi_current;
-    phi += delta;
-
-    // LC_LOG<<__func__<<"(): "<<i<<": phi="<<phi<<", "<<s<<"("<<targetArcFromStart<<"): "<<residual;
-    if (std::abs(delta) < tol) {
-      converged = true;
-      break;
+  double parameterLow = std::min(m_data.angle1, m_data.angle2);
+  double parameterHigh = std::max(m_data.angle1, m_data.angle2);
+  const bool increasing = m_data.angle2 > m_data.angle1;
+  for (int i = 0; i < 80; ++i) {
+    const double parameter = parameterLow + (parameterHigh - parameterLow) * 0.5;
+    const double arcFromStart = std::abs(getArcLength(m_data.angle1, parameter));
+    if (!std::isfinite(arcFromStart))
+      return RS_Vector(false);
+    if (arcFromStart < targetArcFromStart) {
+      if (increasing) parameterLow = parameter;
+      else parameterHigh = parameter;
+    } else {
+      if (increasing) parameterHigh = parameter;
+      else parameterLow = parameter;
     }
   }
-
-         // Bisection fallback if Newton fails
-  if (!converged) {
-    double phiLow = std::min(m_data.angle1, m_data.angle2) - 30.0;
-    double phiHigh = std::max(m_data.angle1, m_data.angle2) + 30.0;
-
-    double sLow = getArcLength(m_data.angle1, phiLow);
-    double sHigh = getArcLength(m_data.angle1, phiHigh);
-
-    while (sLow > targetArcFromStart) {
-      phiLow -= 30.0;
-      sLow = getArcLength(m_data.angle1, phiLow);
-    }
-    while (sHigh < targetArcFromStart) {
-      phiHigh += 30.0;
-      sHigh = getArcLength(m_data.angle1, phiHigh);
-    }
-
-    for (int i = 0; i < 80; ++i) {
-      phi = 0.5 * (phiLow + phiHigh);
-      double s = getArcLength(m_data.angle1, phi);
-      if (std::abs(s - targetArcFromStart) < 1e-9) break;
-
-      if (s < targetArcFromStart) phiLow = phi;
-      else phiHigh = phi;
-    }
-  }
-
+  const double phi = parameterLow + (parameterHigh - parameterLow) * 0.5;
   return getPoint(phi, m_data.reversed);
 }
 
@@ -1518,7 +1477,7 @@ double LC_Hyperbola::getLength() const {
   if (!m_valid)
     return 0.0;
 
-  return getArcLength(m_data.angle1, m_data.angle2);
+  return std::abs(getArcLength(m_data.angle1, m_data.angle2));
 }
 
 void LC_Hyperbola::updateLength() {

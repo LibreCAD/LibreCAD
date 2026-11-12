@@ -803,12 +803,13 @@ TEST_CASE("T native Trim action previews commits and undoes a worker-created typ
 
 TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][trim-two]") {
+    for (const bool leftBranch : {false, true})
     for (const bool hyperbolaFirst : {false, true}) {
-        CAPTURE(hyperbolaFirst);
+        CAPTURE(leftBranch, hyperbolaFirst);
         Drawing<true> f;
         auto* previous = addNative(f.graphic);
         auto* hyperbola = new LC_Hyperbola(&f.graphic,
-            LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false});
+            LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, leftBranch});
         f.graphic.addEntity(hyperbola);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
@@ -852,8 +853,6 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         const RS_Vector circlePick = circleCenter + normal * circleRadius;
         const auto nativeBefore = trimGeometry(*native);
         const auto circleBefore = trimGeometry(*circle);
-        const LC_HyperbolaData sourceBefore = hyperbola->getData();
-
         const RS_Vector firstPick = hyperbolaFirst ? nativePick : circlePick;
         const RS_Vector secondPick = hyperbolaFirst ? circlePick : nativePick;
         f.action->click(firstPick);
@@ -931,16 +930,32 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
                 if (!b) return false;
                 const auto& x = a->getData();
                 const auto& y = b->getData();
-                return closeVector(x.center, y.center) && closeVector(x.majorP, y.majorP) &&
-                    close(x.ratio, y.ratio) && close(x.angle1, y.angle1) &&
-                    close(x.angle2, y.angle2) && x.reversed == y.reversed;
+                const double xAxisLength = x.majorP.magnitude();
+                const double yAxisLength = y.majorP.magnitude();
+                if (!closeVector(x.center, y.center) || !close(xAxisLength, yAxisLength) ||
+                    !close(x.ratio, y.ratio) || xAxisLength == 0.0 || yAxisLength == 0.0)
+                    return false;
+                const double axisAlignment = std::abs(
+                    (x.majorP.x * y.majorP.x + x.majorP.y * y.majorP.y) /
+                    (xAxisLength * yAxisLength));
+                if (!close(axisAlignment, 1.0)) return false;
+                const RS_Vector aStart = a->getStartpoint();
+                const RS_Vector aEnd = a->getEndpoint();
+                const RS_Vector bStart = b->getStartpoint();
+                const RS_Vector bEnd = b->getEndpoint();
+                const bool matchingEnds =
+                    (closeVector(aStart, bStart) && closeVector(aEnd, bEnd)) ||
+                    (closeVector(aStart, bEnd) && closeVector(aEnd, bStart));
+                return matchingEnds && closeVector(a->getMiddlePoint(), b->getMiddlePoint());
             }
             return false;
         };
         for (std::size_t i = 0; i < formats.size(); ++i) {
             const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("typed-hyperbola-trim-two-%1").arg(i) + (dwg ? ".dwg" : ".dxf")).toStdString());
+                QStringLiteral("typed-hyperbola-trim-two-%1-%2")
+                    .arg(leftBranch ? QStringLiteral("left") : QStringLiteral("right")).arg(i) +
+                (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
 #ifdef DWGSUPPORT
             if (dwg && !libreDwgReader.isEmpty()) {
@@ -978,13 +993,11 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
                 ++reopenedHyperbolas;
                 const auto* reopenedHyperbola = dynamic_cast<const LC_Hyperbola*>(entity);
                 REQUIRE(reopenedHyperbola);
-                const auto& data = reopenedHyperbola->getData();
-                CHECK(data.center == sourceBefore.center);
-                CHECK(data.majorP == sourceBefore.majorP);
-                CHECK(data.ratio == sourceBefore.ratio);
-                CHECK(data.angle1 == sourceBefore.angle1);
-                CHECK(data.angle2 == sourceBefore.angle2);
-                CHECK(data.reversed == sourceBefore.reversed);
+                CAPTURE(hyperbola->getData(), reopenedHyperbola->getData());
+                CAPTURE(hyperbola->getStartpoint(), hyperbola->getEndpoint(), hyperbola->getMiddlePoint(),
+                        reopenedHyperbola->getStartpoint(), reopenedHyperbola->getEndpoint(),
+                        reopenedHyperbola->getMiddlePoint());
+                CHECK(sameGeometry(*hyperbola, *reopenedHyperbola));
             }
             CAPTURE(formats[i]);
             CHECK(reopenedHyperbolas == 1);
