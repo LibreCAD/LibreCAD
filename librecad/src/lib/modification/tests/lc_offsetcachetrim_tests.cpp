@@ -1599,7 +1599,7 @@ TEST_CASE("Conic-only trim preserves curved contacts in a translated rotated fra
 
 TEST_CASE("Conic-only trim scales curved disconnected geometry across magnitudes", tags) {
     const double rotation = .37, cosine = std::cos(rotation), sine = std::sin(rotation);
-    for (const double scale : {1e-6, 1e6}) {
+    for (const double scale : {1e-12, 1e-6, 1e6, 1e12}) {
         CAPTURE(scale);
         const auto transform = [&](RS_Vector p) {
             return RS_Vector{scale * (cosine * p.x - sine * p.y),

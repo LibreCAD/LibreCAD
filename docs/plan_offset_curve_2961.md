@@ -266,8 +266,9 @@ capture/reconstruction, worker encoding, and this acceptance matrix together.
 Slice 4's transformed conic-frame cross-check is recorded in section 1031:
 genuinely curved disconnected cache branches and the eccentric ellipse are
 translated and rotated together, then exercised through direct and worker
-paths. It qualifies one rigid transform only, not arbitrary transforms or the
-full source-family matrix.
+paths. The same geometry is also tested at scales from `1e-12` through `1e12`.
+This qualifies these rigid transforms, not arbitrary transforms or the full
+source-family matrix.
 
 **Implementation slices:**
 
@@ -38506,15 +38507,16 @@ translated to `(1e9,-2e9)` and rotated by 0.37 radians as one rigid frame. The
 pick is transformed with the geometry. Direct conic-boundary Trim still finds
 four contacts, two per original disconnected span, retains the expected lower
 elliptic arc, and leaves both inputs unchanged. An origin-centered counterpart
-tests the same rotated geometry at uniform scales `1e-6` and `1e6`. Worker
-computation and result-codec round-trip preserve contact counts and span
-identities for the translated and both scaled requests. This exercises frame
-normalization and world-coordinate transport at large coordinates and six
-orders below/above unit scale, beyond origin-aligned unit-scale fixtures.
+tests the same rotated geometry at uniform scales `1e-12`, `1e-6`, `1e6`, and
+`1e12`. Worker computation and result-codec round-trip preserve contact counts
+and span identities for the translated and all scaled requests. This exercises
+frame normalization and world-coordinate transport at large coordinates and
+twelve orders below/above unit scale, beyond origin-aligned unit-scale
+fixtures.
 
 Validation on macOS arm64 CMake Release: the transformed direct case passes 57
-assertions and the scale sweep passes 110; the full Trim kernel suite passes
-40,813 assertions / 68 cases; the worker transport case passes 242 assertions
-and the worker Trim selector passes 296 assertions / 2 cases. More extreme
+assertions and the scale sweep passes 220; the full Trim kernel suite passes
+40,923 assertions / 68 cases; the worker transport case passes 278 assertions
+and the worker Trim selector passes 332 assertions / 2 cases. More extreme
 scales, arbitrary rotations, persistence, visible GUI, and external ODA/AutoCAD
 remain open.

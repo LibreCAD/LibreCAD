@@ -10224,7 +10224,7 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(transformedRoundTripped.roots[2].target.rawSpan == 1);
     CHECK(transformedRoundTripped.roots[3].target.rawSpan == 1);
 
-    for (const double scale : {1e-6, 1e6}) {
+    for (const double scale : {1e-12, 1e-6, 1e6, 1e12}) {
         const auto scalePoint = [&](RS_Vector p) {
             return RS_Vector{scale * (cosine * p.x - sine * p.y),
                              scale * (sine * p.x + cosine * p.y)};
