@@ -3214,7 +3214,7 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     OwnedClient owned{rt};
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
-    std::array<LC_SplinePointsData, 7> profiles;
+    std::array<LC_SplinePointsData, 8> profiles;
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
@@ -3235,6 +3235,8 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     profiles[5].splinePoints = {{0, 0}, {1, 1}, {1.0001, 1.0001}, {2, 0}, {3, 1}};
     profiles[6] = LC_SplinePointsData{true, false};
     profiles[6].splinePoints = {{0, 0}, {10, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    profiles[7] = LC_SplinePointsData{true, false};
+    profiles[7].splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
     for (auto& profile : profiles) profile.fitTolerance = 1e-8;
     qint64 requestId = 1;
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
@@ -4313,9 +4315,12 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     closedRepeated.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, 0}};
     LC_SplinePointsData closedInteriorRepeated{true, false};
     closedInteriorRepeated.splinePoints = {{0, 0}, {10, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
-    std::array<LC_SplinePointsData, 6> sourceProfiles{{sourceData, sourceData,
+    LC_SplinePointsData closedNearCoincident{true, false};
+    closedNearCoincident.splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    std::array<LC_SplinePointsData, 7> sourceProfiles{{sourceData, sourceData,
                                                       leadingRepeated, trailingRepeated,
-                                                      closedRepeated, closedInteriorRepeated}};
+                                                      closedRepeated, closedInteriorRepeated,
+                                                      closedNearCoincident}};
     std::reverse(sourceProfiles[1].splinePoints.begin(), sourceProfiles[1].splinePoints.end());
     const std::array<double, 2> distances{{0.2, 0.5}};
     const std::array<double, 2> sides{{1.0, -1.0}};

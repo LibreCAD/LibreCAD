@@ -2007,6 +2007,31 @@ TEST_CASE("Closed fit-point spline ignores repeated interior neighbors",
     }
 }
 
+TEST_CASE("Closed fit-point spline preserves a near-coincident distinct chord",
+          "[curve-offset][direct][spline-points][closed][fit-points][near-coincident][oracle]") {
+    LC_SplinePointsData data{true, false};
+    data.splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    LC_SplinePoints source{nullptr, data};
+    REQUIRE(source.getData().splinePoints.size() == data.splinePoints.size());
+    REQUIRE(source.getData().splinePoints[1].distanceTo(source.getData().splinePoints[2]) > 0.0);
+    REQUIRE(source.getData().controlPoints.size() == data.splinePoints.size());
+    CHECK(std::all_of(source.getData().controlPoints.begin(), source.getData().controlPoints.end(),
+                      [](const RS_Vector& point) {
+                          return point.valid && std::isfinite(point.x) && std::isfinite(point.y);
+                      }));
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        constexpr double distance = 0.25;
+        const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+        const auto result = LC_CurveOffset::buildDirectBranches(
+            source, LC_CurveOffset::makeSideRequest(side, distance), options,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+        CHECK(maxDeviation(result, evaluator(source)) <= options.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("Closed control-point spline-points follow exact offset normals across the seam",
           "[curve-offset][direct][spline-points][closed][control-points][oracle]") {
     const LC_SplinePoints source = fromControlPoints({{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}}, true);
