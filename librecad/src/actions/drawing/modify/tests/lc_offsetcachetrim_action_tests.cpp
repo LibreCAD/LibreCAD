@@ -1644,8 +1644,9 @@ TEST_CASE("T Trim Two trims exact-stall and multi-branch cusp caches",
         return false;
     };
     for (const double distance : {0.5, 0.51})
+    for (const bool circularCutter : {false, true})
     for (const bool parabolaFirst : {false, true}) {
-        CAPTURE(distance, parabolaFirst);
+        CAPTURE(distance, circularCutter, parabolaFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, distance, false);
@@ -1697,12 +1698,17 @@ TEST_CASE("T Trim Two trims exact-stall and multi-branch cusp caches",
         const RS_Vector cutterStart = intersection - normal * cutterHalfLength;
         const RS_Vector cutterEnd = intersection + normal * cutterHalfLength;
         const RS_Vector nativePick = native->getPointAt(parameter + spanWidth * .1);
-        auto* cutter = new RS_Line(&f.graphic, RS_LineData{cutterStart, cutterEnd});
+        RS_Entity* cutter = circularCutter
+            ? static_cast<RS_Entity*>(new RS_Circle(&f.graphic, RS_CircleData{intersection, cutterHalfLength}))
+            : static_cast<RS_Entity*>(new RS_Line(&f.graphic, RS_LineData{cutterStart, cutterEnd}));
         f.graphic.addEntity(cutter);
-        const RS_Vector cutterPick = intersection + (cutterEnd - cutterStart) * .25;
+        const auto cutterPick = circularCutter
+            ? intersection + RS_Vector{cutterHalfLength, 0}
+            : intersection + (cutterEnd - cutterStart) * .25;
         const auto kernelTrim = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
             LC_OffsetCacheTrim::Pick{nativePick});
         REQUIRE(kernelTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
+        if (circularCutter) CHECK(kernelTrim.rootCount == 2);
         const auto nativeBefore = trimGeometry(*native);
         const auto cutterBefore = trimGeometry(*cutter);
         f.action->click(parabolaFirst ? nativePick : cutterPick);
@@ -1746,7 +1752,7 @@ TEST_CASE("T Trim Two trims exact-stall and multi-branch cusp caches",
         for (const auto format : formats) {
             const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
-                QStringLiteral("symmetric-cusp-trim-%1").arg(fileIndex++) +
+                QStringLiteral("symmetric-cusp-trim-%1-%2").arg(circularCutter).arg(fileIndex++) +
                 (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, format));
 #ifdef DWGSUPPORT
