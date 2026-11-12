@@ -37734,3 +37734,21 @@ across 120 save/reopens and 48 LibreDWG reads. `git diff --check` passes. This
 closes only the tested closed interior-repeat profile, sides, distances, and
 file lanes; other closed repeated layouts, near-coincident closed points,
 transforms/scales, visible GUI, and ODA/AutoCAD acceptance remain open.
+
+## 993. Qualify a Near-coincident Chord in a Closed Fit-point Spline (2026-11-11)
+
+Test commit `be0a57ba9` adds a closed fit-point loop with a distinct `0.001`
+chord adjacent to a length-10 segment. The test preserves the original point
+list, requires a finite control net, and checks both direct offset sides
+against the independent geometry oracle. Worker source generation and exact
+cache admission cover all four signed distances; the real worker trim path
+round-trips through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, with LibreDWG
+0.14 independently reading generated DWGs.
+
+Validation passes: direct geometry, 3,784 assertions; worker/cache admission,
+38,890 assertions; trim persistence, 72,881 assertions across 140
+save/reopens and 56 independent DWG reads. `git diff --check` passes. This
+qualifies the recorded closed near-coincident fixture and distances only. It
+does not establish the safe conditioning boundary for shorter chords, other
+closed topologies, transforms/scales, visible-GUI behavior, or ODA/AutoCAD
+acceptance.
