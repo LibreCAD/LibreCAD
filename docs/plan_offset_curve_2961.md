@@ -37131,3 +37131,48 @@ This closes sampled direct-piece normal error and typed cache admission for
 these two repeated-neighbor layouts and four distances. It is not a continuous
 error proof, does not cover other repeated-point arrangements, and does not
 close visible-GUI or external-CAD acceptance.
+
+## 963. Reconcile the Source-type Picker Requirement (2026-11-11)
+
+The latest requirement reiterates two related behaviors: while choosing a new
+source curve, the user can change the source-family filter; and the chooser
+contains every currently modeled source family. The existing implementation
+and headless tests already meet this picker contract. The selector is available
+during replacement and covers line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola remains a
+distinct family, not an alias for spline-points. See sections 954, 958, and
+960 for implementation and regression evidence. No duplicate selector or
+parabola-only picker branch is needed.
+
+Keep the broader “support all types” requirement open at the geometry level:
+for each family, enumerate eligible variants and qualify construction,
+offsetting, trimming, worker/cache behavior, and applicable DXF/DWG read/write
+paths independently. A selectable family is not evidence that all its
+variants are supported. The visible replacement workflow and source
+highlighting also remain separate GUI acceptance gates; offscreen picker tests
+do not close them.
+
+## 964. Stabilize Repeated Fit-point Worker Coordinates (2026-11-11)
+
+Implementation commit `56cf5d0bb` localizes fit-point source and control-point
+coordinates before constructing and offsetting the source, then restores the
+worker output to world coordinates through the existing translation path. This
+addresses a conditioning failure reproduced by adjacent/separated repeated
+fit-point layouts after a 37-degree rotation and translation to `(1e6, -2e6)`;
+the corresponding untranslated profiles remain covered.
+
+The exact-normal kernel oracle now covers both repeated layouts in both
+coordinate frames, at signed distances `-0.5`, `-0.2`, `+0.2`, and `+0.5`.
+It requires sampled cubic-piece deviation to stay within the requested direct
+geometry tolerance, and separately verifies operation-7 ordinary output plus
+operation-8 typed-cache admission. The complete worker-kernel binary passes
+1,867,369 assertions in 104 cases. The process-backed worker-client cache test
+passes 38,086 assertions in one case across all four profiles and distances,
+checking source-definition identity, exact restored cache coordinates,
+operation-8 admission, and rejection after cache alteration. `git diff
+--check` passes.
+
+This is bounded sampled evidence for these two profiles and four distances,
+not a continuous-error proof or support for all repeated-point arrangements.
+Other fit-point variants, broader persistence, visible GUI behavior, and
+external-CAD acceptance remain open.
