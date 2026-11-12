@@ -1982,7 +1982,7 @@ TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
             if (fragment->rtti() == RS2::EntityLine || fragment->rtti() == RS2::EntitySpline)
                 expected.push_back(fragment);
         REQUIRE_FALSE(expected.empty());
-        if (!affineFrame || scale == 1.0) for (const auto format : formats) {
+        for (const auto format : formats) {
             const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
             const auto file = std::filesystem::path(directory.filePath(
                 QStringLiteral("transformed-cusp-trim-%1-%2-%3-%4-%5-%6-%7")
