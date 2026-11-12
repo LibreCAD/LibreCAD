@@ -1859,6 +1859,8 @@ TEST_CASE("T Trim kernel certifies exact internal knots on a worker-created clos
     INFO("line refusal=" << int(lineResult.refusal) << ", roots=" << lineResult.rootCount);
     REQUIRE(lineResult.refusal == LC_OffsetCacheTrim::Refusal::None);
     REQUIRE(lineResult.rootCount == 2);
+    REQUIRE(result.fragments.size() == 1);
+    REQUIRE(lineResult.fragments.size() == 1);
 
     const auto nativePick = native->getPointAt((breaks[2] + breaks[3]) * .5);
     f.action->click(nativePick);
@@ -1882,6 +1884,112 @@ TEST_CASE("T Trim kernel certifies exact internal knots on a worker-created clos
     REQUIRE(f.graphic.redo());
     CHECK(native->isDeleted());
     CHECK(cutter->isDeleted());
+
+    const auto expected = live(f.graphic);
+    REQUIRE(expected.size() == 3);
+    CHECK(std::count_if(expected.begin(), expected.end(), [](const RS_Entity* entity) {
+        return entity->rtti() == RS2::EntitySpline;
+    }) == 1);
+    CHECK(std::count_if(expected.begin(), expected.end(), [](const RS_Entity* entity) {
+        return entity->rtti() == RS2::EntityLine;
+    }) == 1);
+    CHECK(std::count_if(expected.begin(), expected.end(), [](const RS_Entity* entity) {
+        return entity->rtti() == RS2::EntityCircle;
+    }) == 1);
+    const auto close = [](double a, double b) {
+        return std::abs(a - b) <= 2e-10 * std::max({1.0, std::abs(a), std::abs(b)});
+    };
+    const auto closeVector = [&](const RS_Vector& a, const RS_Vector& b) {
+        return close(a.x, b.x) && close(a.y, b.y) && close(a.z, b.z);
+    };
+    const auto sameGeometry = [&](const RS_Entity& a, const RS_Entity& b) {
+        if (a.rtti() != b.rtti()) return false;
+        if (const auto* x = dynamic_cast<const RS_Spline*>(&a)) {
+            const auto* y = dynamic_cast<const RS_Spline*>(&b);
+            if (!y) return false;
+            const auto& xd = x->getData();
+            const auto& yd = y->getData();
+            if (xd.degree != yd.degree || xd.m_closedFlag != yd.m_closedFlag ||
+                xd.m_periodicFlag != yd.m_periodicFlag || xd.controlPoints.size() != yd.controlPoints.size() ||
+                xd.knotslist.size() != yd.knotslist.size() || xd.weights.size() != yd.weights.size()) return false;
+            for (std::size_t i = 0; i < xd.controlPoints.size(); ++i)
+                if (!closeVector(xd.controlPoints[i], yd.controlPoints[i])) return false;
+            for (std::size_t i = 0; i < xd.knotslist.size(); ++i)
+                if (!close(xd.knotslist[i], yd.knotslist[i])) return false;
+            for (std::size_t i = 0; i < xd.weights.size(); ++i)
+                if (!close(xd.weights[i], yd.weights[i])) return false;
+            return true;
+        }
+        if (const auto* x = dynamic_cast<const RS_Line*>(&a)) {
+            const auto* y = dynamic_cast<const RS_Line*>(&b);
+            if (!y) return false;
+            const auto& xd = x->getData();
+            const auto& yd = y->getData();
+            return (closeVector(xd.startpoint, yd.startpoint) && closeVector(xd.endpoint, yd.endpoint)) ||
+                   (closeVector(xd.startpoint, yd.endpoint) && closeVector(xd.endpoint, yd.startpoint));
+        }
+        const auto* x = dynamic_cast<const RS_Circle*>(&a);
+        const auto* y = dynamic_cast<const RS_Circle*>(&b);
+        return x && y && closeVector(x->getData().center, y->getData().center) &&
+               close(x->getData().radius, y->getData().radius);
+    };
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+    for (std::size_t i = 0; i < formats.size(); ++i) {
+        const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
+        const auto file = std::filesystem::path(directory.filePath(
+            QStringLiteral("typed-circle-exact-knot-trim-two-%1").arg(i) +
+            (dwg ? ".dwg" : ".dxf")).toStdString());
+        REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+#ifdef DWGSUPPORT
+        if (dwg && !libreDwgReader.isEmpty()) {
+            QProcess reader;
+            reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
+            REQUIRE(reader.waitForStarted());
+            REQUIRE(reader.waitForFinished(30000));
+            INFO(reader.readAllStandardError().toStdString());
+            REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+            REQUIRE(reader.exitCode() == 0);
+            const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+            REQUIRE(document.isObject());
+            unsigned splines = 0, lines = 0, circles = 0;
+            for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
+                const QString entity = value.toObject().value("entity").toString();
+                splines += entity == QLatin1String("SPLINE");
+                lines += entity == QLatin1String("LINE");
+                circles += entity == QLatin1String("CIRCLE");
+            }
+            CHECK(splines == 1);
+            CHECK(lines == 1);
+            CHECK(circles == 1);
+        }
+#endif
+        RS_Graphic reopened;
+        REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
+        const auto actual = live(reopened);
+        REQUIRE(actual.size() == expected.size());
+        CHECK(std::none_of(actual.begin(), actual.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntityOffsetCurve;
+        }));
+        std::array<bool, 3> consumed{};
+        for (const auto* expectedEntity : expected) {
+            bool found = false;
+            for (std::size_t j = 0; j < actual.size(); ++j) {
+                if (consumed[j] || !sameGeometry(*expectedEntity, *actual[j])) continue;
+                consumed[j] = true;
+                found = true;
+                break;
+            }
+            CAPTURE(formats[i], expectedEntity->rtti());
+            CHECK(found);
+        }
+    }
 }
 
 TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against a line in both pick orders",
