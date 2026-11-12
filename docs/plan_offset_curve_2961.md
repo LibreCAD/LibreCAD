@@ -36993,3 +36993,18 @@ profile and the existing repeated-neighbor variants in this matrix. It does
 not preserve editable typed-source metadata, validate line geometry with the
 external reader, qualify other repeated-point layouts, or close visible-GUI
 and ODA/AutoCAD acceptance.
+
+## 956. Verify Trimmed Lines with the Independent DWG Reader (2026-11-11)
+
+Test commit `b353efe59` strengthens section 955's LibreDWG 0.14 validation for
+the five-lane repeated-fit-point persistence matrix. Across all 40 R2018 DWGs,
+the test checks external SPLINE, LINE, and polyline entity counts against the
+materialized output; it also compares every external LINE start/end XYZ
+coordinate against the native output and continues comparing SPLINE degree
+and control points. The focused selection passes 33,277 assertions in one
+case; `git diff --check` passes.
+
+This closes the external-reader line-geometry gap for the recorded repeated
+fit-point profiles and distances. It remains parser/geometry-data validation,
+not ODA/AutoCAD acceptance or a visual rendering check; other source families
+and variants still require their own end-to-end evidence.
