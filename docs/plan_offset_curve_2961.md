@@ -39334,3 +39334,19 @@ three-span polyline action case passes 7,229 assertions; `[trim-action]` passes
 an exactly-sixteen-output case and an attempted seventeenth-output refusal are
 not yet covered. Closed and other multi-component layouts, broader bulge
 profiles, visible GUI, cross-platform and external-CAD acceptance remain open.
+
+## 1068. Revalidate Recursive qmake6 Delivery After Multi-output Trim (2026-11-12)
+
+At implementation head `a4bc6b2c9`, the recursive qmake6 Release tree in
+`/private/tmp/offset-2961-qmake-current` completed `make -j6` successfully
+after rebuilding dependents of `LC_StoredCacheTrimOptions` and the Trim action.
+Verified the linked app, `LibreCADOffsetWorker`, and `ttf2lff` executables in
+the app bundle. The qmake build does not build or run the CMake test target;
+the CMake action suite evidence is recorded in section 1067.
+
+The build retained existing warnings: shell startup could not source the
+missing `/private/tmp/libdxfrw-cargo/env`; Homebrew Qt/font dependencies were
+built for newer macOS versions than the 14.4 deployment target; and existing
+deprecated-macro and aggregate-initializer warnings appeared. No warning
+prevented linking. This is an incremental recursive qmake6 validation for the
+current code, not a clean-tree qmake build or visible GUI run.
