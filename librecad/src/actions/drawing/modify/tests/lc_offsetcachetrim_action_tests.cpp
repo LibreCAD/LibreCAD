@@ -1794,6 +1794,100 @@ TEST_CASE("T Trim Two action trims a worker-created typed circle offset against 
     }
 }
 
+TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against a line in both pick orders",
+          "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]") {
+    for (const bool ellipseFirst : {false, true}) {
+        CAPTURE(ellipseFirst);
+        Drawing<true> f;
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, .25, false);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+        auto* source = new RS_Ellipse(&f.graphic, RS_EllipseData{{0, 0}, {3, 0}, .7, 0, 0, false});
+        f.graphic.addEntity(source);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Ellipse);
+        update.use(source);
+        lc::test::awaitUpdate(update);
+        REQUIRE(update.lastReport().updated == 1);
+        REQUIRE(previous->isDeleted());
+        LC_OffsetCurve* native = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(native == nullptr);
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(native);
+        CHECK(native->hasEditableDefinition());
+        CHECK_FALSE(native->sourceDefinition());
+
+        double first = 0, last = 0;
+        REQUIRE(native->getParameterDomain(first, last));
+        REQUIRE(native->getBreakParameters().size() >= 2);
+        const double parameter = first + (last - first) * .487;
+        const RS_Vector intersection = native->getPointAt(parameter);
+        const double step = std::max(1e-7, (last - first) * 1e-5);
+        const RS_Vector before = native->getPointAt(parameter - step);
+        const RS_Vector after = native->getPointAt(parameter + step);
+        RS_Vector tangent{after.x - before.x, after.y - before.y};
+        REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+        tangent /= tangent.magnitude();
+        RS_Vector cutterDirection{-tangent.y, tangent.x};
+        REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
+        cutterDirection /= cutterDirection.magnitude();
+        cutterDirection += tangent;
+        REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
+        cutterDirection = cutterDirection / cutterDirection.magnitude() * 18.0;
+        auto* cutter = new RS_Line(&f.graphic,
+            RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
+        f.graphic.addEntity(cutter);
+
+        const RS_Vector nativePick = native->getPointAt(first + (last - first) * .1);
+        const RS_Vector cutterPick = intersection + cutterDirection * .75;
+        f.action->click(ellipseFirst ? nativePick : cutterPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        const auto previewUndoEpoch = f.graphic.undoStateEpoch();
+        f.action->hover(ellipseFirst ? cutterPick : nativePick);
+        CHECK_FALSE(f.action->m_preview->isEmpty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+
+        f.action->click(ellipseFirst ? cutterPick : nativePick);
+        REQUIRE(native->isDeleted());
+        REQUIRE(cutter->isDeleted());
+        std::vector<RS_Entity*> fragments;
+        for (auto* entity : live(f.graphic)) {
+            if (entity == source) continue;
+            REQUIRE(entity->rtti() != RS2::EntityOffsetCurve);
+            fragments.push_back(entity);
+        }
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntitySpline;
+        }));
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntityLine;
+        }));
+        CHECK(native->hasEditableDefinition());
+        CHECK_FALSE(native->sourceDefinition());
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK_FALSE(source->isDeleted());
+        CHECK(native->hasEditableDefinition());
+        CHECK_FALSE(native->sourceDefinition());
+        for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(cutter->isDeleted());
+        for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    }
+}
+
 TEST_CASE("T plain cache target availability never enables one sided ordinary only Trim Two publication",
           "[lc-offsetcurve][trim-action][ordinary-spline]") {
     Drawing<true> f; auto* unrelatedNative = addNative(f.graphic, 10);
