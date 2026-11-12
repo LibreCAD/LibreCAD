@@ -39571,3 +39571,30 @@ cache-persistence question for the two tested distances on the symmetric
 `y = x^2` source. It does not establish a continuous cusp-distance range,
 rotated/translated cusp caches, other parabola control nets at cusp distances,
 GUI visibility, cross-platform behavior, or external CAD acceptance.
+
+## 1080. Exercise Trim Two at and Beyond a Parabola Offset Cusp (2026-11-12)
+
+Test commit `b71eeb34e` takes the `y = x^2` cache from section 1078 through
+the native Trim Two action with a transverse line cutter. At the exact stall
+distance `0.5`, direct branch construction yields one branch and the action
+produces a nonempty preview, commits the same supported geometry, and restores
+the inputs/fragments through undo/redo in both operand pick orders. At `0.51`,
+direct construction yields three branches, but the selected first-span trim
+query reaches the strict intersection kernel's fixed pair-refinement depth
+(`maxDepth = 48`) and returns `LimitExceeded`. The native action displays no
+preview; attempting commit preserves the offset and cutter, entity count, and
+undo epoch in both pick orders.
+
+Validation on macOS arm64 CMake Release: the focused regression passes 1,225
+assertions / 1 case; `[trim-action]` passes 48,523 assertions across 82 cases;
+the test target builds; and `git diff --check` passes. A temporary increase of
+the proof-depth ceiling to 56 did not produce a certifiable candidate during
+an exploratory scan of the cache's knot spans and was discarded; it is not
+acceptance evidence and the production bound remains 48. This establishes a
+deliberate safe refusal for one beyond-cusp cache/cutter construction, not
+general Trim Two support for three-branch parabola caches. Further work must
+identify whether branch-aware intersection isolation can prove real contacts
+within bounded work; do not raise proof limits or weaken certificates merely
+to turn this case into a pass. Other cusp distances, transformed sources,
+other parabola control nets, visible GUI, cross-platform behavior, and external
+CAD acceptance remain open.
