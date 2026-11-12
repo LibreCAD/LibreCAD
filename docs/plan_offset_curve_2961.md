@@ -37921,3 +37921,21 @@ passes 13,620 assertions across 4 cases; the CMake test target and
 six exact profiles and five file lanes, not arbitrary point layouts,
 nonuniform transformations, all distances, visible GUI, or ODA/AutoCAD
 acceptance; those remain open.
+
+## 1002. Persist Both Signed Directions for the Transformed Fit-point Grid (2026-11-12)
+
+Test commit `868f1f305` extends section 1001's six-profile native editable
+source/cache matrix to both signed offset directions. The initial native
+ellipse is sized relative to the requested distance for inward cases, then
+the source-update action validates the fit-point source and regenerates its
+cache. Each direction is saved and reopened across R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG; the reopened typed source encoding, signed distance, cache
+fingerprint, pen, and consistency are checked, and LibreDWG independently
+parses DWG output.
+
+Validation: `[fit-points][conditioning]` passes 9,114 assertions across 60
+profile/direction/file-lane combinations; CMake rebuilds `librecad_tests` and
+`git diff --check` passes. This qualifies both directions only for the six
+recorded boundary profiles and scales. Other point distributions, distances,
+nonuniform transforms, visible-GUI acceptance, and ODA/AutoCAD verification
+remain open.
