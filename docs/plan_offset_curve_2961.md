@@ -39057,3 +39057,25 @@ action-level evidence for these two source layouts and one transverse line
 fixture only. Five-lane persistence, other spline knot/weight and fit-point
 layouts, polyline Trim Two, visible GUI, cross-platform, and external-CAD
 acceptance remain open.
+
+## 1056. Persist Spline-family Trim Two Output Across Five File Lanes (2026-11-12)
+
+Test commit `b77be281a` extends section 1055's rational-spline and
+spline-points Trim Two cases through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG,
+for both source kinds and both pick orders. LibreCAD reopens every output and
+checks the complete entity inventory, all spline degrees/flags/controls/knots/
+weights, line geometry independent of endpoint order, and absence of editable
+offset residue. A spline-points source may reopen as either its native entity
+or the standard SPLINE representation; in the latter case, the test compares
+the degree-2 control net and clamped uniform knot vector. When LibreDWG is
+available, both DWG files must parse as minJSON and contain SPLINE and LINE
+entities.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+spline/spline-points Trim Two test passes 1,480 assertions across both source
+kinds, both pick orders, and all five lanes; `[trim-action]` passes 27,591
+assertions / 80 cases with `DWGREAD=/opt/homebrew/bin/dwgread`; the test
+target rebuilds; and `git diff --check` passes. This qualifies one positive-
+rational quadratic and one control-point spline-points source only. Other
+spline/fit layouts, polyline Trim Two, visible GUI, cross-platform, and
+external-CAD acceptance remain open.
