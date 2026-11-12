@@ -300,7 +300,7 @@ following slices in order, preserving the detailed safety requirements below:
 | 1. Inventory and selector | The UI contract and directed family transitions are implemented: while browsing replacements, the type selector filters candidates across all nine `SupportedKinds`, with parabola distinct from spline-points. Switching family does not mutate the committed source/cache; both controls become disabled only after choosing a candidate and while its worker preparation is active. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 958's latest focused headless source-picker suite passes 14,827 assertions / 43 cases, and section 960 records the action-level contract. Section 982 explicitly asserts both selectors disable during preparation and re-enable after stale-input refusal (915 assertions / 6 stale-source cases). Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Automated lifecycle and identity handling is qualified for resolved, initially missing/ambiguous, duplicate, hidden, locked, moved, deleted, and replaced sources. Temporary highlighting remains separate from persistent selection. Physical stale-peer UI and scale limits beyond the recorded stress case are Delivery/acceptance work, not an unimplemented code path. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][highlight]` passes 348 assertions / 20 cases; the incremental subset passes 83 / 6; the 1,024-candidate x 256-control-point benchmark passes 26 / 1, with reported type-filter refresh 2.89521 ms and highlight validation 81.4885 ms. The tests preserve unrelated selection and overlays and cover lifecycle/revision changes. Broader workload sizes and physical stale-peer interaction remain open under Slice 5. |
 | 3. Atomic replacement | The automated ordered-family-pair and stale-publication contract is qualified: every modeled source kind can be replaced by every destination kind through worker preparation; chosen entities are revalidated at publication, and stale/deleted/changed inputs or context swaps do not mutate the prior curve/cache. Family geometry variants remain Slice 4. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][typed]` passes 9,683 assertions / 4 cases, including all ordered family pairs; `[gui][dialog][offsetcurve][source][stale][async]` passes 886 / 5. The tests cover changed/deleted candidates, viewport/document swaps, late replies after target rebinding, and preservation on refusal. Visible physical interaction and cross-platform delivery remain Slice 5. |
-| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify its eligible geometry variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming while retaining its distinct type. A representative Properties-to-Trim path now passes for each of the nine kinds (section 1015), but this does not close the family-by-variant requirement. For unsupported or malformed variants, require an explicit atomic refusal rather than silent candidate loss or partial replacement. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Include cross-family replacement into each family and verify that the prior source/cache survives refusal. Uncovered variants remain open; picker visibility is not acceptance evidence. |
+| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify its eligible geometry variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming while retaining its distinct type. A representative Properties-to-Trim path passes for each of the nine kinds, including a mixed arc/line polyline (sections 1015-1016), but this does not close the family-by-variant requirement. For unsupported or malformed variants, require an explicit atomic refusal rather than silent candidate loss or partial replacement. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Include cross-family replacement into each family and verify that the prior source/cache survives refusal. Uncovered variants remain open; picker visibility is not acceptance evidence. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then a visible LibreCAD workflow with cross-family replacement, parabola, source indication, cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
 Existing picker and parabola tests are useful regression evidence, not a
@@ -38202,10 +38202,30 @@ oblique cutter long enough to cross both sides of the closed cache.
 
 Validation: commit `dd911ad94` extends the focused case to all 45 source-kind /
 file-lane combinations; it passes 2,921 assertions, with LibreDWG reading each
-generated DWG. The complete `[lc-offsetcurve][trim-action]` suite passes
-20,717 assertions across 69 cases. Separately, the all-nine-kind Update from
-Source persistence matrix passes 4,683 assertions across the same five
+generated DWG. The complete `[lc-offsetcurve][trim-action]` suite passed
+20,717 assertions at that checkpoint. Separately, the all-nine-kind Update
+from Source persistence matrix passed 4,683 assertions across the same five
 formats. The CMake test target builds and `git diff --check` passes. These are
 representative geometries and trim configurations, not complete variant,
 conditioning, direction, distance, or transformation coverage. Visible GUI
 acceptance and ODA/AutoCAD validation remain open.
+
+## 1016. Exercise Mixed-Bulge Polyline Replacement and Trimming (2026-11-12)
+
+Test commit `1716f73e0` replaces the line-only polyline fixture with a
+two-segment, open arc-plus-line chain. The same typed polyline is selected and
+replaced through Update from Source, encoded and reopened in R14 DXF, R2000
+DXF/DWG and R2018 DXF/DWG, and trimmed through the Properties-generated native
+cache. The trim pick is kept in the straight segment's interior rather than
+near the chain endpoint; endpoint-near cuts are still outside this qualified
+case.
+
+Validation: the focused all-family Trim/file matrix passes 3,041 assertions
+across 45 combinations; the all-family Update from Source/file matrix passes
+4,953 assertions; and the full Trim action selector passes 20,307 assertions
+across 69 cases. `dwgread` is available and independently parses the generated
+DWG spline output. The CMake test target builds and `git diff --check` passes.
+This adds one mixed-bulge polyline variant only; closed and longer polyline
+chains, other bulges/arc arrangements, transformations, and endpoint/cusp
+conditioning remain in Slice 4. Visible GUI and ODA/AutoCAD acceptance remain
+open.
