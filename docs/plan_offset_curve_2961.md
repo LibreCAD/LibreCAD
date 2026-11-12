@@ -39108,3 +39108,19 @@ five lanes; `[trim-action]` passes 28,195 assertions / 81 cases with
 `git diff --check` passes. This qualifies one open semicircular-arc-plus-line
 source only. Other polyline layouts, closed/multi-component cases, visible
 GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1059. Trim Both Mixed-bulge Polyline Spans in Trim Two (2026-11-12)
+
+Test commit `1bf9c9d4b` extends the worker-created mixed-bulge polyline Trim
+Two case to cut once inside the generated arc span and once inside its
+following straight span. Both operand pick orders run through preview, commit,
+undo/redo, five DXF/DWG save/reopen lanes, geometry inventory comparison, and
+LibreDWG minJSON parsing where available. This checks both source primitives
+of the existing open arc-plus-line profile, not other vertex/bulge layouts.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+polyline Trim Two case passes 1,828 assertions across both spans, both pick
+orders, and all five lanes; `[trim-action]` passes 34,011 assertions / 81
+cases; `librecad_tests` rebuilds; and `git diff --check` passes. Closed and
+multi-component polyline layouts, other bulge arrangements, visible GUI,
+cross-platform, and external-CAD acceptance remain open.
