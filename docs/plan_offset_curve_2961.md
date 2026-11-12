@@ -37214,3 +37214,20 @@ asserts exact persisted representation. The file test exercises the direct
 offset/materialization path, not process-isolated worker execution. Translated
 file fixtures, other repeated-point arrangements, worker-generated output
 file lanes, visible GUI behavior, and external-CAD acceptance remain open.
+
+## 967. Persist the Process-backed Repeated Fit-point Cache (2026-11-11)
+
+Test commit `4e7ff74f7` closes the worker-output persistence gap from section
+966 for the adjacent-repeat profile. The test generates and admits an ordinary
+cache through the real worker process, writes the typed fit-point source and
+that returned cache on separate layers, then reopens and checks the output
+spline in R14 DXF, R2000 DXF, R2000 DWG, R2007 DWG, and R2018 DWG. Degree, knot
+vector, weights, control-point count/coordinates, branch shape, and the absence
+of stale fit points must remain intact. The focused test passes 1,076
+assertions across the five lanes; `git diff --check` passes.
+
+This establishes process-backed cache persistence only for this one
+adjacent-repeat profile at distance `+0.2`; section 964's worker tests cover
+the two profiles at four distances but not their file lanes. Translated file
+round-trips, the separated-repeat profile's file lanes, other repeated-point
+arrangements, visible GUI behavior, and external-CAD acceptance remain open.
