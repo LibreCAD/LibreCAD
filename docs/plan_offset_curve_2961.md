@@ -39181,3 +39181,19 @@ still exhausts the certified refinement depth and remains a conservative
 refusal; do not snap it, merge by proximity, or widen the proof tolerance.
 Other knot multiplicities, multiple exact-knot contacts, visible GUI,
 cross-platform, and external-CAD acceptance remain open.
+
+## 1062. Persist Exact-knot Circle Trim Two Across Five File Lanes (2026-11-12)
+
+Test commit `72dcd06a9` extends section 1061's exact-knot action fixture through
+R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. The reopened drawing
+must match the committed entity inventory and full spline degree/flags/
+controls/knots/weights, line endpoints, and original source-circle geometry;
+editable-offset residue is forbidden. When LibreDWG is available, both DWG
+files must parse as minJSON with exactly one SPLINE, one LINE, and one CIRCLE.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+exact-knot case passes 372 assertions across the five lanes; `[trim-action]`
+passes 31,724 assertions across 82 cases; `librecad_tests` rebuilds; and
+`git diff --check` passes. This completes persistence for the single
+exact-knot-plus-interior-crossing fixture only. Other exact-knot arrangements,
+visible GUI, cross-platform, and external-CAD acceptance remain open.
