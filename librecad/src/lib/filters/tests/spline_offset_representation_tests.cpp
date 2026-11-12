@@ -807,6 +807,100 @@ TEST_CASE("The offset engine's spline comes back from DXF and DWG as the curve i
     }
 }
 
+TEST_CASE("Repeated fit-point offsets retain their validated spline through DXF and DWG",
+          "[curve-offset][d1][fit-points][persistence]") {
+    ensureSettings();
+    struct Format {
+        RS2::FormatType type;
+        const char* file;
+    };
+    const std::array<Format, 5> formats{{
+        {RS2::FormatDXFRW, "fit_repeat_r14.dxf"},
+        {RS2::FormatDXFRW2000, "fit_repeat_r2000.dxf"},
+        {RS2::FormatDWG, "fit_repeat_r2000.dwg"},
+        {RS2::FormatDWG2007, "fit_repeat_r2007.dwg"},
+        {RS2::FormatDWG2018, "fit_repeat_r2018.dwg"}
+    }};
+    LC_SplinePointsData sourceData{false, false};
+    sourceData.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    LC_SplinePoints source{nullptr, sourceData};
+    constexpr double distance = 0.2;
+    const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+    const auto geometry = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance),
+        options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+    const auto materialized = LC_CurveOffset::materializeBranches(
+        source, geometry, options, LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(materialized.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE_FALSE(materialized.entities.empty());
+    std::vector<RS_SplineData> expected;
+    expected.reserve(materialized.entities.size());
+    for (const auto& entity : materialized.entities) {
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+        REQUIRE(spline);
+        expected.push_back(spline->getData());
+    }
+
+    for (const Format& format : formats) {
+#ifndef DWGSUPPORT
+        if (format.type == RS2::FormatDWG || format.type == RS2::FormatDWG2007 ||
+            format.type == RS2::FormatDWG2018) continue;
+#endif
+        DYNAMIC_SECTION(format.file) {
+            const std::string path = tempPath(format.file);
+            bool exported = false;
+            {
+                RS_Graphic graphic;
+                auto* sourceLayer = new RS_Layer("Fit source");
+                auto* offsetLayer = new RS_Layer("Offset");
+                graphic.addLayer(sourceLayer);
+                graphic.addLayer(offsetLayer);
+                auto* sourceEntity = new LC_SplinePoints(&graphic, sourceData);
+                graphic.addEntity(sourceEntity);
+                sourceEntity->setLayer(sourceLayer);
+                for (const RS_SplineData& data : expected) {
+                    auto* offsetEntity = new RS_Spline(&graphic, data);
+                    graphic.addEntity(offsetEntity);
+                    offsetEntity->setLayer(offsetLayer);
+                }
+                RS_FilterDXFRW filter;
+                exported = filter.fileExport(graphic, QString::fromStdString(path), format.type);
+            }
+            if (!exported) std::filesystem::remove(path);
+            REQUIRE(exported);
+
+            RS_Graphic reloaded;
+            {
+                RS_FilterDXFRW filter;
+                REQUIRE(filter.fileImport(reloaded, QString::fromStdString(path),
+                                          readerFormat(format.type)));
+            }
+            std::filesystem::remove(path);
+            std::vector<RS_Spline*> reloadedOffsets;
+            for (RS_Entity* entity : reloaded) {
+                if (entity->getLayer() && entity->getLayer()->getName() == "Offset") {
+                    auto* spline = dynamic_cast<RS_Spline*>(entity);
+                    REQUIRE(spline);
+                    reloadedOffsets.push_back(spline);
+                }
+            }
+            REQUIRE(reloadedOffsets.size() == expected.size());
+            for (std::size_t branch = 0; branch < expected.size(); ++branch) {
+                const RS_SplineData& actual = reloadedOffsets[branch]->getData();
+                CHECK(actual.degree == expected[branch].degree);
+                CHECK(actual.knotslist == expected[branch].knotslist);
+                CHECK(actual.weights == expected[branch].weights);
+                REQUIRE(actual.controlPoints.size() == expected[branch].controlPoints.size());
+                for (std::size_t i = 0; i < expected[branch].controlPoints.size(); ++i) {
+                    CHECK(actual.controlPoints[i].distanceTo(expected[branch].controlPoints[i]) < 1e-10);
+                }
+                CHECK(actual.fitPoints.empty());
+            }
+        }
+    }
+}
+
 TEST_CASE("A closed source's offset comes back as an open spline that closes", "[curve-offset][d1][persistence]") {
     RS_Spline source(nullptr, RS_SplineData(3, false));
     for (const RS_Vector& p : {RS_Vector{0, 0}, RS_Vector{40, -10}, RS_Vector{60, 30}, RS_Vector{20, 50},
