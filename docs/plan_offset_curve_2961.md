@@ -39368,3 +39368,19 @@ passes 6,282 assertions / 1 case; `[trim-action]` passes 32,735 assertions /
 test verifies cap arithmetic, not actual production of exactly sixteen output
 entities. End-to-end exact-16 and attempted-17 output geometry remain open,
 along with the visible GUI, cross-platform, and external-CAD gates.
+
+## 1070. Revalidate qmake6 With Shared Trim Cap Admission (2026-11-12)
+
+At code head `64ab0e2ea`, the recursive qmake6 Release build in
+`/private/tmp/offset-2961-qmake-current` rebuilt the application and worker
+after the shared `admittedOutputEntities()` header change and completed
+successfully. The app and `LibreCADOffsetWorker` binaries were present after
+linking; a subsequent recursive incremental `make -j6` exited 0. This
+validates qmake6 compile/link integration only, not qmake-built tests or a
+visible GUI session.
+
+Existing build warnings remain: shell startup references the absent
+`/private/tmp/libdxfrw-cargo/env`, and the build emits the recorded newer-OS
+dependency, deprecated-macro, and aggregate-initializer warnings. No warning
+prevented linking. The hard-ceiling end-to-end geometry boundary remains open
+as recorded in section 1069.
