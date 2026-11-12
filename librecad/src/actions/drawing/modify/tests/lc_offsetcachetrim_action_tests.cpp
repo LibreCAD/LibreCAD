@@ -2448,15 +2448,22 @@ TEST_CASE("T Trim Two action trims a worker-created typed line offset against a 
 
 TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][arc][trim-two]") {
+    for (const unsigned profile : {0u, 1u, 2u})
     for (const bool arcFirst : {false, true}) {
-        CAPTURE(arcFirst);
+        CAPTURE(profile, arcFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .25, false);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        auto* source = new RS_Arc(&f.graphic, RS_ArcData{{0, 0}, 2, .1, 1.4, false});
+        const RS_ArcData sourceData = profile == 0
+            ? RS_ArcData{{0, 0}, 2, .1, 1.4, false}
+            : profile == 1
+                ? RS_ArcData{{3, -4}, 3.2, 2.0 * M_PI - .55, .55, false}
+                : RS_ArcData{{-5, 3}, 2.8, .4, 2.0 * M_PI - .4, true};
+        REQUIRE(sourceData.isValid());
+        auto* source = new RS_Arc(&f.graphic, sourceData);
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
@@ -2520,7 +2527,6 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
         CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
             return entity->rtti() == RS2::EntityLine;
         }));
-        const RS_ArcData sourceBefore = source->getData();
         QTemporaryDir directory;
         REQUIRE(directory.isValid());
         const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
@@ -2564,10 +2570,15 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
             if (const auto* a = dynamic_cast<const RS_Arc*>(&expected)) {
                 const auto* b = dynamic_cast<const RS_Arc*>(&actual);
                 if (!b) return false;
-                const auto& x = a->getData();
-                const auto& y = b->getData();
-                return closeVector(x.center, y.center) && close(x.radius, y.radius) &&
-                    close(x.angle1, y.angle1) && close(x.angle2, y.angle2) && x.reversed == y.reversed;
+                const RS_Vector aStart = a->getStartpoint();
+                const RS_Vector aEnd = a->getEndpoint();
+                const RS_Vector bStart = b->getStartpoint();
+                const RS_Vector bEnd = b->getEndpoint();
+                const bool sameEndpoints = closeVector(aStart, bStart) && closeVector(aEnd, bEnd);
+                const bool reversedEndpoints = closeVector(aStart, bEnd) && closeVector(aEnd, bStart);
+                return closeVector(a->getCenter(), b->getCenter()) && close(a->getRadius(), b->getRadius()) &&
+                    closeVector(a->getMiddlePoint(), b->getMiddlePoint()) &&
+                    close(a->getLength(), b->getLength()) && (sameEndpoints || reversedEndpoints);
             }
             return false;
         };
@@ -2624,11 +2635,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
                 ++reopenedArcs;
                 const auto* loadedArc = dynamic_cast<const RS_Arc*>(entity);
                 REQUIRE(loadedArc);
-                CHECK(closeVector(loadedArc->getData().center, sourceBefore.center));
-                CHECK(close(loadedArc->getData().radius, sourceBefore.radius));
-                CHECK(close(loadedArc->getData().angle1, sourceBefore.angle1));
-                CHECK(close(loadedArc->getData().angle2, sourceBefore.angle2));
-                CHECK(loadedArc->getData().reversed == sourceBefore.reversed);
+                CHECK(sameGeometry(*source, *loadedArc));
             }
             CAPTURE(formats[i]);
             CHECK(reopenedArcs == 1);
