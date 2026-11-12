@@ -38937,3 +38937,23 @@ lanes; `[trim-action]` passes 24,464 assertions / 77 cases with
 parsing for one bounded-arc fixture only. Other arc domains/directions,
 remaining Trim Two families, visible GUI, cross-platform, and external-CAD
 acceptance remain open.
+
+## 1050. Exercise Closed Typed Circle Trim Two Through the Worker and Action (2026-11-12)
+
+Test commit `acfc56c67` adds a worker-created typed-circle Trim Two case using
+a finite transverse line cutter. Both operand pick orders exercise asynchronous
+preview, commit, undo, and redo while preserving the original source circle
+and typed generalized definition. The cut parameter is deliberately interior
+to a cache span: an initial half-domain placement landed exactly on a knot and
+produced ambiguous adjacent-span root certificates, so the test uses a
+non-knot fraction rather than claiming exact-knot closed-circle Trim Two is
+resolved.
+
+Validation on macOS arm64 CMake Release: the focused closed-circle Trim Two
+case passes 627 assertions across both pick orders; `[trim-action]` passes
+25,121 assertions / 78 cases with LibreDWG available through `DWGREAD`; the
+test target rebuilds; and `git diff --check` passes. This is action-level
+evidence for one circular profile and interior cut only. Five-lane
+persistence, exact-knot closed-circle contacts, other circle scales/directions,
+remaining Trim Two families, visible GUI, cross-platform, and external-CAD
+acceptance remain open.
