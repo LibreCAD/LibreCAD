@@ -39654,7 +39654,26 @@ Validation on macOS arm64 CMake Release: the focused asymmetric cusp matrix
 passes 276 assertions / 1 case; `[source-update]` passes 1,342 assertions
 across 3 cases; the target builds; and `git diff --check` passes. This adds
 one asymmetric profile and its opposite signed side; its observed two-branch
-topology differs from the symmetric profile in sections 1078 and 1081. File
-lane persistence for this profile, Trim Two behavior, other asymmetric control
-nets, continuous distance ranges, visible-GUI, cross-platform, and external-CAD
-acceptance remain open.
+topology differs from the symmetric profile in sections 1078 and 1081. Section
+1084 adds five-lane persistence for these fixtures. Trim Two behavior, other
+asymmetric control nets, continuous distance ranges, visible-GUI,
+cross-platform, and external-CAD acceptance remain open.
+
+## 1084. Persist Asymmetric Parabola Cusp Caches Through Five File Lanes (2026-11-12)
+
+Test commit `afb94cf9a` extends section 1083's 12-case matrix through R12 DXF,
+R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Every reopened drawing must
+contain one generalized typed-parabola offset with the original negative
+signed distance and a cache fingerprint identical to the worker-published
+two-branch cache. LibreDWG independently parses both DWG versions when
+available. Cases cover the exact and 2%-beyond cusp distances, scales `0.1`,
+`1`, and `10`, and identity/rotated-translated placements.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+asymmetric persistence case passes 901 assertions / 1 case; `[source-update]`
+passes 1,967 assertions across 3 cases; both DWG versions parse for all 12
+fixtures; the test target builds; and `git diff --check` passes. This closes
+five-lane persistence for the tested asymmetric control net and similarity
+matrix. It does not qualify Trim Two on this cusp profile, other asymmetric
+parabolas, continuous cusp-distance ranges, visible-GUI, cross-platform, or
+external-CAD acceptance.
