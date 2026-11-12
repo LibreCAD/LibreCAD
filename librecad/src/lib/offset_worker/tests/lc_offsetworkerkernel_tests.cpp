@@ -10097,6 +10097,32 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(reversedArcRoundTripped.roots[0].target.rawSpan == 0);
     CHECK(reversedArcRoundTripped.roots[1].target.rawSpan == 0);
     CHECK(reversedArcRoundTripped.roots[2].target.rawSpan == 1);
+
+    for (const bool reverse : {false, true}) {
+        const double start = reverse ? 3.14159265358979323846 : 0;
+        const double finish = reverse ? 0 : 3.14159265358979323846;
+        const req::Request ellipseArcInput{token,
+            req::TrimConic{ellipseCache,
+                RS_EllipseData{{0, 0}, {2, 0}, .5, start, finish, reverse}, {{.1, .9}}, {}, {}}};
+        const auto ellipseArcReply = LC_OffsetWorkerKernel::run(ellipseArcInput);
+        const auto& ellipseArcOutput = trimmed(ellipseArcReply, 3);
+        REQUIRE(ellipseArcOutput.refusal == trim::Refusal::None);
+        REQUIRE(ellipseArcOutput.conicFragments.size() == 2);
+        REQUIRE(ellipseArcOutput.roots.size() == 3);
+        CHECK(ellipseArcOutput.roots[0].target.rawSpan == 0);
+        CHECK(ellipseArcOutput.roots[1].target.rawSpan == 0);
+        CHECK(ellipseArcOutput.roots[2].target.rawSpan == 1);
+        const auto ellipseArcEncoded = result::encode(ellipseArcReply, ellipseArcInput);
+        REQUIRE(ellipseArcEncoded);
+        const auto ellipseArcDecoded = result::decode(*ellipseArcEncoded, ellipseArcInput);
+        REQUIRE(ellipseArcDecoded);
+        const auto& ellipseArcRoundTripped = std::get<trim::Result>(ellipseArcDecoded->result);
+        REQUIRE(ellipseArcRoundTripped.conicFragments.size() == 2);
+        REQUIRE(ellipseArcRoundTripped.roots.size() == 3);
+        CHECK(ellipseArcRoundTripped.roots[0].target.rawSpan == 0);
+        CHECK(ellipseArcRoundTripped.roots[1].target.rawSpan == 0);
+        CHECK(ellipseArcRoundTripped.roots[2].target.rawSpan == 1);
+    }
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",
