@@ -9993,10 +9993,19 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(cubicRoundTripped.fragments.front().sourceSections.front().rawSpan == 1);
     CHECK(cubicRoundTripped.fragments.back().sourceSections.front().rawSpan == 0);
 
-    RS_SplineData conicCache{1, false};
-    conicCache.controlPoints = {{-3, .5}, {3, .5}, {0, -1}, {0, 1}, {-3, 1}, {3, 1}, {-3, 5}, {3, 5}};
-    conicCache.weights = {1, 1, 1, 1, 1, 1, 1, 1};
-    conicCache.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
+    RS_SplineData conicCache{3, false};
+    conicCache.controlPoints = {
+        {-3, .5}, {-1, .5}, {1, .5}, {3, .5},
+        {1, -3}, {1, -1}, {1, 1}, {1, 3},
+        {-3, 5}, {-1, 5}, {1, 5}, {3, 5},
+        {0, 4}, {0, 14.0 / 3.0}, {0, 16.0 / 3.0}, {0, 6}
+    };
+    conicCache.weights.assign(conicCache.controlPoints.size(), 1.0);
+    for (unsigned component = 0; component <= 4; ++component) {
+        for (unsigned multiplicity = 0; multiplicity < 4; ++multiplicity) {
+            conicCache.knotslist.push_back(component);
+        }
+    }
     const req::Request conicInput{token,
         req::TrimConic{conicCache, RS_CircleData{{0, 0}, 2}, {{0, 2}}, {}, {}}};
     const auto conicReply = LC_OffsetWorkerKernel::run(conicInput);
@@ -10006,8 +10015,8 @@ TEST_CASE("offset worker transports component-aware trim results",
     REQUIRE(conicOutput.roots.size() == 4);
     CHECK(conicOutput.roots[0].target.rawSpan == 0);
     CHECK(conicOutput.roots[1].target.rawSpan == 0);
-    CHECK(conicOutput.roots[2].target.rawSpan == 2);
-    CHECK(conicOutput.roots[3].target.rawSpan == 2);
+    CHECK(conicOutput.roots[2].target.rawSpan == 1);
+    CHECK(conicOutput.roots[3].target.rawSpan == 1);
     const auto conicEncoded = result::encode(conicReply, conicInput);
     REQUIRE(conicEncoded);
     const auto conicDecoded = result::decode(*conicEncoded, conicInput);
@@ -10016,6 +10025,10 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(conicRoundTripped.fragments.empty());
     REQUIRE(conicRoundTripped.conicFragments.size() == 1);
     REQUIRE(conicRoundTripped.roots.size() == 4);
+    CHECK(conicRoundTripped.roots[0].target.rawSpan == 0);
+    CHECK(conicRoundTripped.roots[1].target.rawSpan == 0);
+    CHECK(conicRoundTripped.roots[2].target.rawSpan == 1);
+    CHECK(conicRoundTripped.roots[3].target.rawSpan == 1);
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",

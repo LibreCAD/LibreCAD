@@ -1401,6 +1401,45 @@ TEST_CASE("Conic-only trim combines contacts from disconnected cache components"
     CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 2);
 }
 
+TEST_CASE("Conic-only trim isolates disconnected cubic cache branches", tags) {
+    RS_SplineData source{3, false};
+    source.controlPoints = {
+        {-3, .5}, {-1, .5}, {1, .5}, {3, .5},
+        {1, -3}, {1, -1}, {1, 1}, {1, 3},
+        {-3, 5}, {-1, 5}, {1, 5}, {3, 5},
+        {0, 4}, {0, 14.0 / 3.0}, {0, 16.0 / 3.0}, {0, 6}
+    };
+    source.weights.assign(source.controlPoints.size(), 1);
+    for (unsigned component = 0; component <= 4; ++component) {
+        for (unsigned multiplicity = 0; multiplicity < 4; ++multiplicity) {
+            source.knotslist.push_back(component);
+        }
+    }
+    const auto before = source;
+    RS_Circle cutter{nullptr, {{0, 0}, 2}};
+
+    const auto result = Trim::prepareConic(source, cutter, {{0, 2}});
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    CHECK(result.fragments.empty()); CHECK(result.fragmentCount == 0); CHECK_FALSE(result.removed);
+    REQUIRE(result.roots.size() == 4);
+    std::array<unsigned, 2> rootsBySpan{};
+    for (const auto& root : result.roots) {
+        REQUIRE(root.target.rawSpan < rootsBySpan.size());
+        ++rootsBySpan[root.target.rawSpan];
+        if (root.target.rawSpan == 0) {
+            CHECK(root.worldY.lo() <= .5); CHECK(root.worldY.hi() >= .5);
+        } else {
+            CHECK(root.worldX.lo() <= 1); CHECK(root.worldX.hi() >= 1);
+        }
+    }
+    CHECK(rootsBySpan == std::array<unsigned, 2>{2, 2});
+    REQUIRE(result.conicFragments.size() == 1);
+    CHECK(angularMember(result.conicFragments.front().data, 3 * pi / 2));
+    CHECK_FALSE(angularMember(result.conicFragments.front().data, pi / 2));
+    equalData(source, before);
+    CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 2);
+}
+
 TEST_CASE("Conic endpoint certificates use the actual whole frame chart and refuse symmetric closest ties", tags) {
     const auto source = cache({{-6, .5}, {6, .5}}); const auto before = source;
     for (bool reverse : {false, true}) {

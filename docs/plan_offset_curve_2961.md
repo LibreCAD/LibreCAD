@@ -45,18 +45,18 @@ Existing table-driven, worker and file-lane tests cover particular fixtures;
 they do not establish universal geometry, platform, or visible-GUI support.
 Do not introduce a second type selector or a parabola-only picker.
 
-**Latest clarification (2026-11-11):** The source-type control must remain
+**Latest clarification (2026-11-12):** The source-type control must remain
 usable while the user is browsing for a replacement in the Properties source
 widget. The user can switch family, inspect the refreshed candidates, and
-switch again without leaving that workflow. This is not a request for a
-separate canvas-picking mode or a second selector. The acceptance sequence and
-mutation boundary are stated in the interaction-state rule below: changing
-type filters candidates only; choosing a candidate starts preparation; both
-controls are disabled during preparation; successful validation publishes
-the replacement. This applies to all nine modeled kinds, including the
-distinct parabola kind. A family appearing in the selector is UI coverage
-only, not proof that all of its geometry variants pass generation,
-worker/cache validation, or persistence.
+switch again without leaving that workflow. The family filter and candidate
+chooser must cover every kind in the current offset-source model, including
+parabola as a distinct kind. This is not a request for a separate
+canvas-picking mode or a second selector. The acceptance sequence and mutation
+boundary are stated in the interaction-state rule below: changing type filters
+candidates only; choosing a candidate starts preparation; both controls are
+disabled during preparation; successful validation publishes the replacement.
+A family appearing in the selector is UI coverage only, not proof that all of
+its geometry variants pass generation, worker/cache validation, or persistence.
 
 **Current disposition (reconfirmed 2026-11-12):** The request to change source
 type while choosing a replacement and expose all supported types is complete
@@ -253,7 +253,7 @@ following slices in order, preserving the detailed safety requirements below:
 | 1. Inventory and selector | The UI contract and directed family transitions are implemented: while browsing replacements, the type selector remains usable for repeated family changes before choosing a candidate and filters across all nine `SupportedKinds`, with parabola distinct from spline-points. Switching family does not mutate the committed source/cache; both controls become disabled only after choosing a candidate and while its worker preparation is active. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 1013's latest focused headless source-picker suite passes 14,831 assertions / 43 cases, and section 960 records the action-level contract. Section 982 explicitly asserts both selectors disable during preparation and re-enable after stale-input refusal (915 assertions / 6 stale-source cases). Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Automated lifecycle and identity handling is qualified for resolved, initially missing/ambiguous, duplicate, hidden, locked, moved, deleted, and replaced sources. Temporary highlighting remains separate from persistent selection. Physical stale-peer UI and scale limits beyond the recorded stress case are Delivery/acceptance work, not an unimplemented code path. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][highlight]` passes 348 assertions / 20 cases; the incremental subset passes 83 / 6; the 1,024-candidate x 256-control-point benchmark passes 26 / 1, with reported type-filter refresh 2.89521 ms and highlight validation 81.4885 ms. The tests preserve unrelated selection and overlays and cover lifecycle/revision changes. Broader workload sizes and physical stale-peer interaction remain open under Slice 5. |
 | 3. Atomic replacement | The automated ordered-family-pair and stale-publication contract is qualified: every modeled source kind can be replaced by every destination kind through worker preparation; chosen entities are revalidated at publication, and stale/deleted/changed inputs or context swaps do not mutate the prior curve/cache. Family geometry variants remain Slice 4. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][typed]` passes 9,683 assertions / 4 cases, including all ordered family pairs; `[gui][dialog][offsetcurve][source][stale][async]` passes 886 / 5. The tests cover changed/deleted candidates, viewport/document swaps, late replies after target rebinding, and preservation on refusal. Visible physical interaction and cross-platform delivery remain Slice 5. |
-| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify eligible variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming. Representative open-source Trim passes for all nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and convex polyline Trim now partitions disconnected caches: cache-picked Trim cuts the picked component and preserves the others (sections 1020-1021); conic-boundary-only Trim now intersects each component independently and trims the conic from the union of certified contacts (section 1022). These qualify specific layouts, not arbitrary NURBS topology or the family-by-variant matrix. Unsupported or malformed variants must refuse atomically. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates closed convex and mixed-bulge polylines through asynchronous Trim, undo/redo and five file lanes. Section 1021 verifies a cubic full-multiplicity two-branch cache through direct and worker paths. Section 1022 verifies conic-boundary Trim over intersecting, crossing, and nonintersecting disconnected components through direct and worker result transport. Continue with other disconnected cache origins/topologies, broader family/variant coverage, cross-family replacement and persistence; visible GUI and independent CAD gates remain separate. |
+| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify eligible variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming. Representative open-source Trim passes for all nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and convex polyline Trim now partitions disconnected caches: cache-picked Trim cuts the picked component and preserves the others (sections 1020-1021); conic-boundary-only Trim now intersects each component independently and trims the conic from the union of certified contacts (sections 1022-1023). These qualify specific layouts, not arbitrary NURBS topology or the family-by-variant matrix. Unsupported or malformed variants must refuse atomically. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Section 1020 validates closed convex and mixed-bulge polylines through asynchronous Trim, undo/redo and five file lanes. Section 1021 verifies a cubic full-multiplicity two-branch cache through direct and worker paths. Section 1022 verifies linear conic-boundary Trim across disconnected components. Section 1023 verifies disconnected cubic branches, isolated contacts and worker result round-trip. Continue with other disconnected cache origins/topologies, broader family/variant coverage, cross-family replacement and persistence; visible GUI and independent CAD gates remain separate. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then visibly exercise the Properties replacement workflow: switch the type filter repeatedly before candidate selection; verify list refresh and unchanged current source/cache/indication; replace with candidates from every modeled family, including parabola distinct from spline-points; verify the prior source stays indicated until asynchronous validation publishes; then cover cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
 Existing picker and parabola tests are useful regression evidence, not a
@@ -38329,3 +38329,25 @@ worker-kernel run is not green: its repeated fit-point cache-admission test has
 disconnected components for conic-boundary Trim, not arbitrary discontinuous
 rational layouts, duplicate-root families, every cache origin, or
 visible/external-CAD acceptance.
+
+## 1023. Isolate Cubic Branches During Conic-boundary Trim (2026-11-12)
+
+Section 1022's direct and worker tests now use four disconnected cubic Bezier
+branches instead of four lines. Two cubic branches cross the circle; they also
+cross each other inside the circle. A separate pair crosses outside the circle
+without touching it. Conic-boundary Trim reports only the four certified
+circle contacts from the first two raw spans, orders them into the expected
+retained conic arc, and does not let cache/cache intersections alter the conic
+query. The direct test verifies span provenance, contact bounds, output
+membership, and unchanged cache/conic inputs. The worker test carries the same
+cubic topology through request admission, trim execution, result encoding, and
+decoding, preserving the original raw-span mapping.
+
+Validation on macOS arm64 CMake Release: the focused direct cubic case passes
+97 assertions; the full Trim kernel suite passes 40,075 assertions / 59 cases;
+the worker multi-component transport test passes 46 assertions; and the worker
+Trim selector passes 100 assertions / 2 cases. This qualifies a degree-3
+full-multiplicity disconnected layout only. Rational branches, repeated-knot
+layouts, other cache origins/topologies, broad family-by-variant geometry and
+persistence coverage, visible GUI interaction, qmake6 delivery, and external
+ODA/AutoCAD acceptance remain open.
