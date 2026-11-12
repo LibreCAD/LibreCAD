@@ -3072,12 +3072,15 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
           "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]") {
     constexpr double rotation = .41;
     constexpr double fullRotation = .67;
-    for (const unsigned profile : {0u, 1u, 2u})
+    constexpr double inwardRotation = .93;
+    for (const unsigned profile : {0u, 1u, 2u, 3u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, .25, false);
+        const double offsetDistance = .25;
+        const bool towardCentre = profile == 3;
+        auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
@@ -3086,9 +3089,13 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
             : profile == 1
                 ? RS_EllipseData{{5, -4}, {3 * std::cos(rotation), 3 * std::sin(rotation)},
                                  .5, -.8, 1.1, false, true}
-                : RS_EllipseData{{8, -6}, {2.5 * std::cos(fullRotation),
-                                           2.5 * std::sin(fullRotation)},
-                                 .9, 0, 0, false};
+                : profile == 2
+                    ? RS_EllipseData{{8, -6}, {2.5 * std::cos(fullRotation),
+                                               2.5 * std::sin(fullRotation)},
+                                     .9, 0, 0, false}
+                    : RS_EllipseData{{-6, 8}, {2.5 * std::cos(inwardRotation),
+                                               2.5 * std::sin(inwardRotation)},
+                                     .9, 0, 0, false};
         auto* source = new RS_Ellipse(&f.graphic, sourceData);
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
@@ -3109,6 +3116,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         REQUIRE(native);
         CHECK(native->hasEditableDefinition());
         CHECK_FALSE(native->sourceDefinition());
+        CHECK(native->definition().distance == offsetDistance);
+        CHECK(native->definition().towardCentre == towardCentre);
 
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
@@ -3124,7 +3133,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         RS_Vector cutterDirection{-tangent.y, tangent.x};
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection /= cutterDirection.magnitude();
-        cutterDirection += tangent;
+        if (profile != 3) cutterDirection += tangent;
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection = cutterDirection / cutterDirection.magnitude() * 18.0;
         auto* cutter = new RS_Line(&f.graphic,
@@ -3137,12 +3146,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(ellipseFirst ? cutterPick : nativePick);
+        f.action->waitForTrim();
         CHECK_FALSE(f.action->m_preview->isEmpty());
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(cutter->isDeleted());
         CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
 
         f.action->click(ellipseFirst ? cutterPick : nativePick);
+        INFO(f.context.messages.join('\n').toStdString());
         REQUIRE(native->isDeleted());
         REQUIRE(cutter->isDeleted());
         std::vector<RS_Entity*> fragments;
