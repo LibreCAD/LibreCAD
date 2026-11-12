@@ -3299,35 +3299,19 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     lc::test::OutputDirectory directory("offset-worker-repeated-fit-points");
     auto& rt = runtime();
     OwnedClient owned{rt};
-    LC_SplinePointsData sourceData{false, false};
-    sourceData.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
-    const LC_OffsetSourceDefinition definition{
-        LC_OffsetSourceGeometry{sourceData}, 0.2, 1e-4, false};
-    Receipts receipts;
-    REQUIRE(owned.get().submit(
-        {token(1), Req::GenerateSource{definition, {}}},
-        Client::Mode::Commit, receipts.into(0)));
-    rt.until([&] { return receipts.calls[0] != 0; });
-    const auto& generated = completed(receipts.at(0), 1, 7);
-    const auto& result = std::get<Reply::Native>(generated.reply().result);
-    REQUIRE(result.engineStatus);
-    CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
-    REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-    RS_SplineData expected;
-    REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, expected));
-
-    RS_Graphic graphic;
-    graphic.initForNewDocument();
-    auto* sourceLayer = new RS_Layer("Fit source");
-    auto* offsetLayer = new RS_Layer("Offset");
-    graphic.addLayer(sourceLayer);
-    graphic.addLayer(offsetLayer);
-    auto* sourceEntity = new LC_SplinePoints(&graphic, sourceData);
-    graphic.addEntity(sourceEntity);
-    sourceEntity->setLayer(sourceLayer);
-    auto* offsetEntity = new RS_Spline(&graphic, expected);
-    graphic.addEntity(offsetEntity);
-    offsetEntity->setLayer(offsetLayer);
+    std::array<LC_SplinePointsData, 3> profiles;
+    profiles[0] = LC_SplinePointsData{false, false};
+    profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[1] = LC_SplinePointsData{false, false};
+    profiles[1].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}};
+    profiles[2] = profiles[0];
+    const double angle = 37.0 * std::acos(-1.0) / 180.0;
+    const double cosine = std::cos(angle);
+    const double sine = std::sin(angle);
+    for (RS_Vector& point : profiles[2].splinePoints) {
+        point = {1e6 + point.x * cosine - point.y * sine,
+                 -2e6 + point.x * sine + point.y * cosine};
+    }
 
     struct Lane {
         RS2::FormatType format;
@@ -3345,13 +3329,45 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     if (libreDwgReader.isEmpty())
         libreDwgReader = QStandardPaths::findExecutable("dwgread");
 #endif
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        const LC_SplinePointsData& sourceData = profiles[profileIndex];
+        const LC_OffsetSourceDefinition definition{
+            LC_OffsetSourceGeometry{sourceData}, 0.2, 1e-4, false};
+        const qint64 requestId = static_cast<qint64>(profileIndex + 1);
+        Receipts receipts;
+        REQUIRE(owned.get().submit(
+            {token(requestId), Req::GenerateSource{definition, {}}},
+            Client::Mode::Commit, receipts.into(0)));
+        rt.until([&] { return receipts.calls[0] != 0; });
+        const auto& generated = completed(receipts.at(0), requestId, 7);
+        const auto& result = std::get<Reply::Native>(generated.reply().result);
+        REQUIRE(result.engineStatus);
+        CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+        RS_SplineData expected;
+        REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, expected));
+
+        RS_Graphic graphic;
+        graphic.initForNewDocument();
+        auto* sourceLayer = new RS_Layer("Fit source");
+        auto* offsetLayer = new RS_Layer("Offset");
+        graphic.addLayer(sourceLayer);
+        graphic.addLayer(offsetLayer);
+        auto* sourceEntity = new LC_SplinePoints(&graphic, sourceData);
+        graphic.addEntity(sourceEntity);
+        sourceEntity->setLayer(sourceLayer);
+        auto* offsetEntity = new RS_Spline(&graphic, expected);
+        graphic.addEntity(offsetEntity);
+        offsetEntity->setLayer(offsetLayer);
+
     for (const Lane& lane : lanes) {
 #ifndef DWGSUPPORT
         if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2007 ||
             lane.format == RS2::FormatDWG2018) continue;
 #endif
         CAPTURE(lane.extension);
-        const auto path = directory.file(lane.extension);
+        const auto path = directory.file(std::to_string(profileIndex) + "-" + lane.extension);
         REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
 #ifdef DWGSUPPORT
         if (!libreDwgReader.isEmpty() &&
@@ -3419,6 +3435,7 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
         for (std::size_t i = 0; i < expected.controlPoints.size(); ++i)
             CHECK(actual.controlPoints[i].distanceTo(expected.controlPoints[i]) < 1e-10);
         CHECK(actual.fitPoints.empty());
+    }
     }
 }
 
