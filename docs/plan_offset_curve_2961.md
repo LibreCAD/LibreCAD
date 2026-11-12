@@ -39998,3 +39998,16 @@ executable passes 3,452 assertions across 36 cases; and `git diff --check`
 passes. This is headless widget/action validation, not visible GUI evidence.
 Manual desktop confirmation, cross-platform behavior, and external-CAD
 acceptance remain open.
+
+## 1099. Revalidate qmake6 at the Current PR Head (2026-11-12)
+
+At PR worktree HEAD `170fc02b1`, the existing macOS arm64 qmake6 Release
+build in `/private/tmp/offset2961-qmake6-current` completed `make -j6`
+successfully, followed by a successful immediate incremental `make -j6`. The
+build links LibreCAD and `LibreCADOffsetWorker`; this is an incremental build
+directory originally configured on 2026-11-11, not a clean qmake regeneration
+or another-platform result. Shell startup still warns that
+`/private/tmp/libdxfrw-cargo/env` is missing; the warning did not fail the
+build. CMake action and source-picker suites are recorded in sections 1097
+and 1098. Clean/reproducible qmake setup, visible desktop acceptance,
+cross-platform delivery, and external-CAD validation remain open.
