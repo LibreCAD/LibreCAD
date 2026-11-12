@@ -2226,6 +2226,104 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
     }
 }
 
+TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source in both pick orders",
+          "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
+    for (const bool polylineFirst : {false, true}) {
+        CAPTURE(polylineFirst);
+        Drawing<true> f;
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, .15, false);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+        auto* source = new RS_Polyline(&f.graphic);
+        source->addVertex({0, 0}, 1.0);
+        source->addVertex({2, 0});
+        source->addVertex({2, 2});
+        source->endPolyline();
+        f.graphic.addEntity(source);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Polyline);
+        update.use(source);
+        lc::test::awaitUpdate(update);
+        REQUIRE(update.lastReport().updated == 1);
+        REQUIRE(previous->isDeleted());
+        LC_OffsetCurve* native = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(native == nullptr);
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(native);
+        REQUIRE(native->hasGeneralizedSourceDefinition());
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+
+        double first = 0, last = 0;
+        REQUIRE(native->getParameterDomain(first, last));
+        const auto breaks = native->getBreakParameters();
+        REQUIRE(breaks.size() >= 2);
+        const double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
+        const RS_Vector intersection = native->getPointAt(parameter);
+        const double step = std::max(1e-7, (last - first) * 1e-5);
+        const RS_Vector before = native->getPointAt(parameter - step);
+        const RS_Vector after = native->getPointAt(parameter + step);
+        RS_Vector tangent{after.x - before.x, after.y - before.y};
+        REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+        tangent /= tangent.magnitude();
+        RS_Vector cutterDirection{-tangent.y, tangent.x};
+        REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
+        cutterDirection /= cutterDirection.magnitude();
+        cutterDirection += tangent;
+        REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
+        cutterDirection = cutterDirection / cutterDirection.magnitude() * 16.0;
+        auto* cutter = new RS_Line(&f.graphic,
+            RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
+        f.graphic.addEntity(cutter);
+        const RS_Vector nativePick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
+        const RS_Vector cutterPick = intersection + cutterDirection * .75;
+
+        f.action->click(polylineFirst ? nativePick : cutterPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        const auto previewUndoEpoch = f.graphic.undoStateEpoch();
+        f.action->hover(polylineFirst ? cutterPick : nativePick);
+        CHECK_FALSE(f.action->m_preview->isEmpty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+
+        f.action->click(polylineFirst ? cutterPick : nativePick);
+        REQUIRE(native->isDeleted());
+        REQUIRE(cutter->isDeleted());
+        std::vector<RS_Entity*> fragments;
+        for (auto* entity : live(f.graphic)) {
+            if (entity == source) continue;
+            REQUIRE(entity->rtti() != RS2::EntityOffsetCurve);
+            fragments.push_back(entity);
+        }
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntitySpline;
+        }));
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntityLine;
+        }));
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK_FALSE(source->isDeleted());
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Polyline);
+        for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(cutter->isDeleted());
+        for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    }
+}
+
 TEST_CASE("T plain cache target availability never enables one sided ordinary only Trim Two publication",
           "[lc-offsetcurve][trim-action][ordinary-spline]") {
     Drawing<true> f; auto* unrelatedNative = addNative(f.graphic, 10);
