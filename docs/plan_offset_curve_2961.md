@@ -144,9 +144,13 @@ Execute and record these slices in order:
    on destruction or cancellation. Tests also cover initially hidden/locked
    sources, disabled direct invocation, recovery, unrelated selection/overlay
    preservation, and absent/ambiguous matches. Still audit state changes while
-   worker preparation is busy and perform visible-GUI acceptance. Re-resolve
-   and recheck the entity at the actual selection action; automatic highlight
-   must remain distinct from persistent selection.
+   worker preparation is busy: candidate mutation/deletion, viewport/document
+   swaps, late replies, and selector disable/re-enable are covered by the
+   source-picker async tests (section 982). This does not yet prove the live
+   canvas highlighter remains correct through every worker-busy state. Perform
+   visible-GUI acceptance, and re-resolve/recheck the entity at the actual
+   selection action; automatic highlight must remain distinct from persistent
+   selection.
 2. **Cross-family replacement.** Verify that switching the family filter is
    non-mutating and that an eligible candidate from every modeled family can
    replace a source of a different kind. Tests cover each destination family
@@ -37511,3 +37515,19 @@ generated DWGs. `git diff --check` passes.
 This qualifies the recorded transforms and scales only. Other conditioning,
 topology and parameter combinations, continuous Hausdorff proof, visible GUI,
 and ODA/AutoCAD acceptance remain open.
+
+## 982. Verify Source Selectors During Async Preparation (2026-11-11)
+
+UI test commit `1ee357e2e` strengthens the stale-candidate source-picker test:
+after choosing a source starts worker preparation, both the source-family and
+candidate selectors must be disabled. When the candidate is mutated and the
+preparation is refused as stale, both controls must be enabled again. The
+existing focused suite also covers candidate deletion, viewport/document
+swaps, and late replies after the target changes.
+
+The focused
+`[gui][dialog][offsetcurve][source][stale]` selection passes 915 assertions
+across six cases in the CMake Release offscreen run. `git diff --check` passes.
+This verifies the headless selector and stale-publication transitions only;
+live canvas highlight behavior during worker preparation and visible-GUI
+acceptance remain open.
