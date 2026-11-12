@@ -2129,6 +2129,7 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
                     REQUIRE(document.isObject());
                     std::vector<QJsonObject> externalSplines;
                     std::vector<QJsonObject> externalLines;
+                    std::vector<QJsonObject> externalPolylines;
                     for (const QJsonValue& value : document.object()
                              .value("OBJECTS").toArray()) {
                         const QJsonObject object = value.toObject();
@@ -2136,6 +2137,9 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
                             externalSplines.push_back(object);
                         else if (object.value("entity").toString() == "LINE")
                             externalLines.push_back(object);
+                        else if (object.value("entity").toString() == "LWPOLYLINE" ||
+                                 object.value("entity").toString() == "POLYLINE")
+                            externalPolylines.push_back(object);
                     }
                     const std::size_t expectedSplineCount = static_cast<std::size_t>(std::count_if(
                         expected.begin(), expected.end(), [](const auto* entity) {
@@ -2145,22 +2149,40 @@ TEST_CASE("trimmed spline-points geometry round-trips through native file lanes"
                         expected.begin(), expected.end(), [](const auto* entity) {
                             return dynamic_cast<const RS_Line*>(entity) != nullptr;
                         }));
+                    const std::size_t expectedPolylineCount = expected.size() - expectedSplineCount - expectedLineCount;
                     REQUIRE(externalSplines.size() == expectedSplineCount);
                     REQUIRE(externalLines.size() == expectedLineCount);
+                    REQUIRE(externalPolylines.size() == expectedPolylineCount);
                     std::size_t externalSplineIndex = 0;
+                    std::size_t externalLineIndex = 0;
                     for (const auto* expectedEntity : expected) {
                         const auto* expectedSpline = dynamic_cast<const RS_Spline*>(expectedEntity);
-                        if (expectedSpline == nullptr) continue;
-                        const auto& data = expectedSpline->getData();
-                        const QJsonObject& external = externalSplines[externalSplineIndex++];
-                        CHECK(external.value("degree").toInt() == data.degree);
-                        const QJsonArray controls = external.value("ctrl_pts").toArray();
-                        REQUIRE(controls.size() == static_cast<qsizetype>(data.controlPoints.size()));
-                        for (qsizetype controlIndex = 0; controlIndex < controls.size(); ++controlIndex) {
-                            const RS_Vector& point = data.controlPoints[static_cast<std::size_t>(controlIndex)];
-                            const QJsonObject parsed = controls[controlIndex].toObject();
-                            CHECK(parsed.value("x").toDouble() == Catch::Approx(point.x).margin(1e-10));
-                            CHECK(parsed.value("y").toDouble() == Catch::Approx(point.y).margin(1e-10));
+                        if (expectedSpline != nullptr) {
+                            const auto& data = expectedSpline->getData();
+                            const QJsonObject& external = externalSplines[externalSplineIndex++];
+                            CHECK(external.value("degree").toInt() == data.degree);
+                            const QJsonArray controls = external.value("ctrl_pts").toArray();
+                            REQUIRE(controls.size() == static_cast<qsizetype>(data.controlPoints.size()));
+                            for (qsizetype controlIndex = 0; controlIndex < controls.size(); ++controlIndex) {
+                                const RS_Vector& point = data.controlPoints[static_cast<std::size_t>(controlIndex)];
+                                const QJsonObject parsed = controls[controlIndex].toObject();
+                                CHECK(parsed.value("x").toDouble() == Catch::Approx(point.x).margin(1e-10));
+                                CHECK(parsed.value("y").toDouble() == Catch::Approx(point.y).margin(1e-10));
+                            }
+                        } else if (const auto* expectedLine = dynamic_cast<const RS_Line*>(expectedEntity)) {
+                            const QJsonObject& external = externalLines[externalLineIndex++];
+                            const QJsonArray start = external.value("start").toArray();
+                            const QJsonArray end = external.value("end").toArray();
+                            REQUIRE(start.size() == 3);
+                            REQUIRE(end.size() == 3);
+                            const RS_Vector expectedStart = expectedLine->getStartpoint();
+                            const RS_Vector expectedEnd = expectedLine->getEndpoint();
+                            CHECK(start[0].toDouble() == Catch::Approx(expectedStart.x).margin(1e-10));
+                            CHECK(start[1].toDouble() == Catch::Approx(expectedStart.y).margin(1e-10));
+                            CHECK(start[2].toDouble() == Catch::Approx(expectedStart.z).margin(1e-10));
+                            CHECK(end[0].toDouble() == Catch::Approx(expectedEnd.x).margin(1e-10));
+                            CHECK(end[1].toDouble() == Catch::Approx(expectedEnd.y).margin(1e-10));
+                            CHECK(end[2].toDouble() == Catch::Approx(expectedEnd.z).margin(1e-10));
                         }
                     }
                     ++independentlyReadFiles;
