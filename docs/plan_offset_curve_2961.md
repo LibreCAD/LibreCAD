@@ -23,7 +23,7 @@ USA.
 -->
 # Editable Offset Curves: Current Implementation Roadmap (#2961)
 
-Updated: 2026-11-11. Project: **LibreCAD**, not LibreCAD_3.
+Updated: 2026-11-12. Project: **LibreCAD**, not LibreCAD_3.
 
 ### Source Replacement: Current Execution Checklist
 
@@ -100,6 +100,19 @@ published. The nine-kind transition tests and distinct parabola identity test
 are the automated picker acceptance criteria. Visible-GUI confirmation remains
 open. Missing geometry variants stay in slice 4 rather than being implied by
 selector availability.
+
+**Current disposition (2026-11-12):** The repeated request to change the source
+curve type during replacement and expand the choices to all supported types is
+already satisfied at the Properties-widget contract level. Keep the selector
+usable before candidate selection, refresh the eligible-entity list on each
+family change, and preserve the current source/cache/highlight until the new
+candidate passes asynchronous preparation. The inventory is the nine kinds
+listed above, with parabola distinct from spline-points; do not add a duplicate
+selector or promise support for unrelated drawable entities. No new UI
+implementation slice is opened by this clarification. Continue Slice 4 for
+unqualified family variants through generation, worker/cache, trimming and
+applicable DXF/DWG persistence, and Slice 5 for visible interaction and
+delivery acceptance. Picker availability alone does not close those gates.
 
 **Scope reconfirmed (2026-11-11):** “Expand source curve support to all
 supported types” means keep replacement available across the complete current
