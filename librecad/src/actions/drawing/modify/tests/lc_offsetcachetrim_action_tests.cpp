@@ -1251,6 +1251,75 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
     }
 }
 
+TEST_CASE("T Update from Source preserves exact and multi-branch parabola cusp offsets",
+          "[gui][lc-offsetcurve][source-update][typed-source][parabola][cusp]") {
+    for (const double distance : {0.5, 0.51}) {
+        CAPTURE(distance);
+        Drawing<false> f;
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, distance, false);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+        const std::string previousGeometry = trimGeometry(*previous);
+
+        const LC_ParabolaData sourceData{{RS_Vector{-1, 1}, RS_Vector{0, -1}, RS_Vector{1, 1}}};
+        auto* parabola = new LC_Parabola(&f.graphic, sourceData);
+        f.graphic.addEntity(parabola);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+        const auto undoEpoch = f.graphic.undoStateEpoch();
+
+        const LC_CurveOffsetGeometryResult direct = LC_CurveOffset::buildDirectBranches(*parabola,
+            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance),
+            LC_CurveOffset::makeDirectOptions(*parabola, distance, 1e-4),
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(direct.branches.size() == (distance == .5 ? 1u : 3u));
+
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Parabola);
+        update.use(parabola);
+        lc::test::awaitUpdate(update);
+        const auto& report = update.lastReport();
+        REQUIRE(report.updated == 1);
+        CHECK(report.refused == 0);
+        CHECK(previous->isDeleted());
+        LC_OffsetCurve* replacement = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(replacement == nullptr);
+            replacement = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(replacement);
+        CHECK(replacement != previous);
+        REQUIRE(replacement->hasGeneralizedSourceDefinition());
+        REQUIRE(replacement->sourceDefinition());
+        CHECK(replacement->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+        CHECK(replacement->sourceDefinition()->signedDistance == distance);
+        const auto& knots = replacement->getData().knotslist;
+        std::size_t disconnectedBranchSeparators = 0;
+        for (std::size_t i = 0; i < knots.size();) {
+            std::size_t next = i + 1;
+            while (next < knots.size() && knots[next] == knots[i]) ++next;
+            if (i > 0 && next < knots.size() && next - i == replacement->getData().degree + 1)
+                ++disconnectedBranchSeparators;
+            i = next;
+        }
+        CHECK(disconnectedBranchSeparators == direct.branches.size() - 1);
+        CHECK(live(f.graphic).size() == 2);
+        CHECK(f.graphic.undoStateEpoch() > undoEpoch);
+
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(previous->isDeleted());
+        CHECK(trimGeometry(*previous) == previousGeometry);
+        CHECK(replacement->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(previous->isDeleted());
+        CHECK_FALSE(replacement->isDeleted());
+    }
+}
+
 TEST_CASE("T Trim Two action trims a worker-created typed line offset against a circle in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][line][trim-two]") {
     for (const bool lineFirst : {false, true}) {
