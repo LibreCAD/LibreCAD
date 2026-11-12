@@ -39384,3 +39384,51 @@ Existing build warnings remain: shell startup references the absent
 dependency, deprecated-macro, and aggregate-initializer warnings. No warning
 prevented linking. The hard-ceiling end-to-end geometry boundary remains open
 as recorded in section 1069.
+
+## 1071. Keep Replacement-family Switching as a Release Acceptance Gate (2026-11-12)
+
+The requested source-widget behavior is a replacement-flow requirement, not a
+request for a second source editor: while choosing a replacement, the user can
+switch the candidate family among every supported kind, then select a matching
+entity. The source-family control must reflect the selected entity's actual
+kind, including the distinct parabola kind; it must not coerce parabola into
+spline-points. The supported inventory is line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline.
+
+The implementation and headless state-transition coverage are already present
+as recorded in sections 1040, 1051, and 1063. Do not add another selector or a
+parabola-only UI branch. Keep the original source identity, definition, cache,
+and visible highlight unchanged until replacement preparation succeeds. A
+rejected or stale candidate must leave them unchanged; accepting a prepared
+candidate must atomically replace the source and update the displayed family.
+
+Remaining acceptance work is a visible GUI pass that changes candidate family
+repeatedly, selects candidates of families different from the current source,
+and checks source highlighting and displayed-family updates across the full
+nine-kind inventory. Also retain cross-platform and external-CAD validation as
+separate open gates. This picker gate does not close the independent geometry,
+variant, Trim, or persistence matrix. Status: implementation and headless
+coverage complete; visible GUI, cross-platform, and external-CAD acceptance
+remain open.
+
+## 1072. Exercise Exact Trim Output Ceiling and Atomic Over-limit Refusal (2026-11-12)
+
+The action regression constructs a valid degree-1 NURBS cutter with clamped,
+full-multiplicity knots and 14 disconnected vertical components crossing the
+native source. It appends one or two nonintersecting components to produce
+observed Trim Two previews of exactly 16 and 17 output entities, respectively.
+Both entity pick orders are covered. At 16, preview preserves the two inputs
+and undo epoch, commit replaces both inputs with all 16 outputs, and undo/redo
+restores/reapplies the replacement. At 17, preview remains empty and both
+inputs, entity count, and undo epoch remain unchanged after the attempted
+commit.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+hard-boundary case passes 1,242 assertions / 1 case; `[trim-action]` passes
+33,752 assertions across 81 cases; the test target builds; and `git diff
+--check` passes. The first exploratory fixture used an invalid degree-1 knot
+vector and was discarded; the passing regression uses the correct `2N+2`
+clamped knot count. The test proves the bounded top-level action's exact
+admission boundary and atomic refusal for this disconnected spline-cutter
+layout only. Other cutter families/topologies, broader geometry variants,
+visible GUI, cross-platform, and external-CAD gates remain open.

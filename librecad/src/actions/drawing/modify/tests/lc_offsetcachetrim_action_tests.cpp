@@ -2663,6 +2663,61 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
     }
 }
 
+TEST_CASE("T Trim Two admits exactly sixteen outputs and refuses seventeen atomically",
+          "[gui][lc-offsetcurve][trim-action][trim-output-limit][typed-source]") {
+    for (const std::size_t farComponents : {1u, 2u}) for (const bool nativeFirst : {false, true}) {
+        CAPTURE(farComponents, nativeFirst);
+        Drawing<true> f;
+        auto* native = addNative(f.graphic);
+
+        RS_SplineData cutterData{1, false};
+        std::vector<double> xValues;
+        for (std::size_t i = 0; i < 14; ++i) xValues.push_back(-1.8 + 3.6 * double(i) / 13.0);
+        for (std::size_t i = 0; i < farComponents; ++i) xValues.push_back(4.0 + double(i));
+        cutterData.knotslist = {0, 0};
+        for (std::size_t i = 0; i < xValues.size(); ++i) {
+            const double x = xValues[i];
+            cutterData.controlPoints.push_back({x, -3});
+            cutterData.controlPoints.push_back({x, 3});
+            cutterData.weights.push_back(1);
+            cutterData.weights.push_back(1);
+            const double nextKnot = double(i + 1);
+            cutterData.knotslist.insert(cutterData.knotslist.end(), {nextKnot, nextKnot});
+        }
+        RS_Spline* cutter = new RS_Spline(&f.graphic, cutterData);
+        f.graphic.addEntity(cutter);
+        const RS_Vector nativePick{2, 0};
+        const RS_Vector cutterPick{-1.5, -2};
+        f.action->click(nativeFirst ? nativePick : cutterPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        const auto previewEpoch = f.graphic.undoStateEpoch();
+        f.action->hover(nativeFirst ? cutterPick : nativePick);
+        const std::size_t expectedOutputs = farComponents == 1 ? 16 : 17;
+        INFO("preview output count=" << f.action->m_preview->count());
+        if (expectedOutputs == 16) {
+            REQUIRE(f.action->m_preview->count() == 16);
+            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
+            CHECK(f.graphic.undoStateEpoch() == previewEpoch);
+            f.action->click(nativeFirst ? cutterPick : nativePick);
+            CHECK(native->isDeleted()); CHECK(cutter->isDeleted());
+            CHECK(live(f.graphic).size() == 16);
+            REQUIRE(f.graphic.undo()); CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
+            REQUIRE(f.graphic.redo()); CHECK(native->isDeleted()); CHECK(cutter->isDeleted());
+        } else {
+            CHECK(f.action->m_preview->isEmpty());
+            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
+            CHECK(f.graphic.undoStateEpoch() == previewEpoch);
+            const auto count = f.graphic.count();
+            f.action->click(nativeFirst ? cutterPick : nativePick);
+            CHECK_FALSE(native->isDeleted()); CHECK_FALSE(cutter->isDeleted());
+            CHECK(f.graphic.count() == count);
+            CHECK(f.graphic.undoStateEpoch() == previewEpoch);
+            REQUIRE_FALSE(f.context.messages.isEmpty());
+            CHECK(f.context.messages.back().contains("nothing changed"));
+        }
+    }
+}
+
 TEST_CASE("T plain cache target availability never enables one sided ordinary only Trim Two publication",
           "[lc-offsetcurve][trim-action][ordinary-spline]") {
     Drawing<true> f; auto* unrelatedNative = addNative(f.graphic, 10);
