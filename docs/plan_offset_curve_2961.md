@@ -37106,3 +37106,28 @@ profiles at both signed distances. Keep the independent direct-trim oracle and
 the worker/cache admission test as separate evidence; do not use display
 polylines, a relaxed threshold, or implementation-produced geometry as its own
 oracle. This remains an open validation task, not a product bug finding.
+
+## 962. Oracle-check Repeated Fit-point Worker Geometry (2026-11-11)
+
+Test commit `9366884af` closes the repeated-neighbor exact-normal gap from
+section 959 for the two recorded profiles: one interior adjacent repeat and
+the separated interior/trailing repeats from sections 952-955. At signed
+distances `-0.5`, `-0.2`, `+0.2`, and `+0.5`, the test evaluates every
+materialized cubic piece at mapped source parameters and compares it to an
+independent analytic normal computed from that source segment's explicit
+quadratic/line control points and derivative. Maximum error must not exceed
+the requested geometry tolerance. In the same cases, real kernel operation 7
+returns ordinary output, that output combines into a cache, and operation 8
+admits the cache for the typed definition.
+
+The focused oracle passes 6,326 assertions in one case; `[fit-points]` passes
+6,583 assertions across seven cases. The complete `[lc-offsetcurve]` worker-
+kernel binary passes 1,857,353 assertions across 104 cases. Its registered
+CTest wrapper terminates at the existing 30-second timeout; the full selection
+was therefore run directly from the same test binary without that wrapper
+limit. `git diff --check` passes.
+
+This closes sampled direct-piece normal error and typed cache admission for
+these two repeated-neighbor layouts and four distances. It is not a continuous
+error proof, does not cover other repeated-point arrangements, and does not
+close visible-GUI or external-CAD acceptance.
