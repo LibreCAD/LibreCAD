@@ -1827,9 +1827,24 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
           "[lc-offsetcurve][persistence][trim][hyperbola][file]") {
     Setup setup;
     lc::test::OutputDirectory directory("offset-trimmed-bounded-hyperbola-roundtrip");
-    LC_Hyperbola source{nullptr,
-        LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}};
-    REQUIRE(source.isValid());
+    struct Profile {
+        LC_HyperbolaData data;
+        double distance;
+    };
+    std::vector<Profile> profiles{{LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}, 1.0},
+                                  {LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false}, 4.0}};
+    for (const double ratio : {.05, .2}) {
+        constexpr double semiMajor = 10.0;
+        const double vertexRadius = semiMajor * ratio * ratio;
+        for (const bool oppositeBranch : {false, true}) {
+            for (const bool reverseBounds : {false, true}) {
+                const LC_HyperbolaData data{{23, -17}, {semiMajor * std::cos(.37), semiMajor * std::sin(.37)},
+                    ratio, reverseBounds ? .4 : -.4, reverseBounds ? -.4 : .4, oppositeBranch};
+                for (const double fraction : {.5, 1.0, 1.5})
+                    profiles.push_back({data, fraction * vertexRadius});
+            }
+        }
+    }
     struct FileLane {
         RS2::FormatType format;
         const char* suffix;
@@ -1847,9 +1862,14 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
         libreDwgReader = QStandardPaths::findExecutable("dwgread");
     std::size_t independentlyReadFiles = 0;
 
-    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
-        for (const double distance : {1.0, 4.0}) {
-            CAPTURE(side, distance);
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        const auto& profile = profiles[profileIndex];
+        LC_Hyperbola source{nullptr, profile.data};
+        REQUIRE(source.isValid());
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            const double distance = profile.distance;
+            CAPTURE(profileIndex, profile.data.ratio, profile.data.reversed,
+                    profile.data.angle1, profile.data.angle2, side, distance);
             auto options = LC_CurveOffset::makeOffsetOptions(source, distance);
             const auto generated = LC_CurveOffset::createEntities(
                 source, LC_CurveOffset::makeSideRequest(side, distance), options,
@@ -1877,8 +1897,8 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
 #endif
                 CAPTURE(lane.suffix);
                 const QString path = QString::fromStdString(directory.file(
-                    std::to_string(static_cast<int>(side)) + "-" +
-                    std::to_string(distance) + "-" + lane.suffix).string());
+                    std::to_string(profileIndex) + "-" + std::to_string(static_cast<int>(side)) + "-" +
+                    lane.suffix).string());
                 RS_FilterDXFRW writer;
                 REQUIRE(writer.fileExport(drawing, path, lane.format));
 
@@ -1943,7 +1963,7 @@ TEST_CASE("trimmed bounded-hyperbola geometry round-trips through native file la
         }
     }
 #ifdef DWGSUPPORT
-    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == 4);
+    if (!libreDwgReader.isEmpty()) CHECK(independentlyReadFiles == profiles.size() * 2);
 #endif
 }
 
