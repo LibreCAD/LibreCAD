@@ -38081,3 +38081,19 @@ and listed file lanes for the tested bounded profiles. It does not close
 offset trimming, arbitrary intervals/ratios, translated and broad-scale
 source-action variants, visible interactive GUI, or ODA/AutoCAD acceptance.
 Those remain open.
+
+## 1010. Qualify Thin Hyperbola Trimming Through Worker and File Lanes (2026-11-12)
+
+Test commit `2873a4080` extends bounded-hyperbola worker trimming to ratios
+`0.05` and `0.2`, both branches, forward/reversed bounds, both trim-pick sides,
+and offsets at `0.5`, `1.0`, and `1.5` vertex-curvature radii. It also carries
+the resulting direct trimmed splines through R2004 DXF/DWG, R2013 DXF, and
+R2018 DXF/DWG save/reopen checks, comparing branch count and sampled geometry.
+LibreDWG independently reads every generated R2018 DWG in the matrix.
+
+Validation: the worker-client trimming case passes 9,442 assertions; the
+Release CMake native file-lane case passes 38,079 assertions. Both targets
+build, and `git diff --check` passes. This closes the specified worker trim and
+trimmed-geometry persistence cases only. Properties trim interaction,
+translated and broad-scale trimming, other interval/ratio families, visible
+GUI acceptance, and ODA/AutoCAD verification remain open.
