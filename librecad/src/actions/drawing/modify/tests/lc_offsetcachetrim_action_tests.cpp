@@ -3048,7 +3048,8 @@ TEST_CASE("T Trim kernel certifies exact internal knots on a worker-created clos
 TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][ellipse][trim-two]") {
     constexpr double rotation = .41;
-    for (const unsigned profile : {0u, 1u})
+    constexpr double fullRotation = .67;
+    for (const unsigned profile : {0u, 1u, 2u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
@@ -3059,8 +3060,12 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         f.graphic.addEntity(previous);
         const RS_EllipseData sourceData = profile == 0
             ? RS_EllipseData{{0, 0}, {3, 0}, .7, 0, 0, false}
-            : RS_EllipseData{{5, -4}, {3 * std::cos(rotation), 3 * std::sin(rotation)},
-                             .5, -.8, 1.1, false, true};
+            : profile == 1
+                ? RS_EllipseData{{5, -4}, {3 * std::cos(rotation), 3 * std::sin(rotation)},
+                                 .5, -.8, 1.1, false, true}
+                : RS_EllipseData{{8, -6}, {2.5 * std::cos(fullRotation),
+                                           2.5 * std::sin(fullRotation)},
+                                 .9, 0, 0, false};
         auto* source = new RS_Ellipse(&f.graphic, sourceData);
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
