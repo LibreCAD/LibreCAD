@@ -39883,3 +39883,22 @@ currently qualified only at unit scale for this symmetric parabola profile;
 the `0.1` and `10` transformed action cases are not yet round-tripped.
 Additional transforms, cusp profiles, cutter families, visible-GUI,
 cross-platform, and external-CAD acceptance remain open.
+
+## 1093. Persist Transformed Cusp Trims Across the Full Scale Matrix (2026-11-12)
+
+Test commit `efdffe745` removes the unit-scale-only restriction from section
+1092. At uniform scales `0.1`, `1`, and `10`, the rotated/translated
+beyond-cusp parabola Trim Two output is saved and reopened for line, circle,
+and bounded-arc cutters in both operand pick orders through all five DXF/DWG
+lanes. This covers 90 files. Reopened line/spline geometry is compared with
+the committed fragments, editable offset entities are forbidden, and
+`dwgread -O minJSON` independently parses each DWG output.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+`[transform]` run passes 6,777 assertions across two cases; the full
+`[trim-action]` suite passes 66,441 assertions across 84 cases; and
+`git diff --check` passes. This supersedes section 1092's unit-scale-only
+persistence scope. The evidence remains limited to the tested symmetric
+parabola, one rotation/translation, three uniform scales, and three cutter
+families. Other cusp profiles/transforms, visible-GUI, cross-platform, and
+external-CAD acceptance remain open.
