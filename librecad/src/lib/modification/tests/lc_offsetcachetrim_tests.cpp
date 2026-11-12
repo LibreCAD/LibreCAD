@@ -1459,6 +1459,37 @@ TEST_CASE("Conic-only trim refuses overlapping duplicate contacts without single
     CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 5);
 }
 
+TEST_CASE("Conic-only trim combines disconnected contacts on an ellipse", tags) {
+    RS_SplineData source{1, false};
+    source.controlPoints = {{-3, .25}, {3, .25}, {.5, -2}, {.5, 2},
+                            {-3, 5}, {3, 5}, {0, 4}, {0, 6}};
+    source.weights.assign(source.controlPoints.size(), 1);
+    source.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
+    const auto before = source;
+    RS_Ellipse ellipse{nullptr, {{0, 0}, {2, 0}, .5, 0, 0, false}};
+    const auto ellipseBefore = ellipse.getData();
+
+    const auto result = Trim::prepareConic(source, ellipse, {{.1, .9}});
+    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+        result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
+        result.work.intersections.generatedItems);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    CHECK(result.fragments.empty()); CHECK(result.fragmentCount == 0); CHECK_FALSE(result.removed);
+    REQUIRE(result.roots.size() == 4);
+    CHECK(result.roots[0].target.rawSpan == 0); CHECK(result.roots[1].target.rawSpan == 0);
+    CHECK(result.roots[2].target.rawSpan == 1); CHECK(result.roots[3].target.rawSpan == 1);
+    REQUIRE(result.conicFragments.size() == 1);
+    CHECK_FALSE(angularMember(result.conicFragments.front().data, pi / 2));
+    CHECK(angularMember(result.conicFragments.front().data, pi));
+    CHECK(angularMember(result.conicFragments.front().data, 3 * pi / 2));
+    equalData(source, before);
+    CHECK(ellipse.getData().center == ellipseBefore.center);
+    CHECK(ellipse.getData().majorP == ellipseBefore.majorP);
+    CHECK(ellipse.getData().ratio == ellipseBefore.ratio);
+    CHECK(ellipse.getData().angle1 == ellipseBefore.angle1);
+    CHECK(ellipse.getData().angle2 == ellipseBefore.angle2);
+}
+
 TEST_CASE("Conic endpoint certificates use the actual whole frame chart and refuse symmetric closest ties", tags) {
     const auto source = cache({{-6, .5}, {6, .5}}); const auto before = source;
     for (bool reverse : {false, true}) {

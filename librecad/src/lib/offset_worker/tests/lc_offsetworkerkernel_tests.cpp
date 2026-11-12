@@ -10029,6 +10029,33 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(conicRoundTripped.roots[1].target.rawSpan == 0);
     CHECK(conicRoundTripped.roots[2].target.rawSpan == 1);
     CHECK(conicRoundTripped.roots[3].target.rawSpan == 1);
+
+    RS_SplineData ellipseCache{1, false};
+    ellipseCache.controlPoints = {{-3, .25}, {3, .25}, {.5, -2}, {.5, 2},
+                                  {-3, 5}, {3, 5}, {0, 4}, {0, 6}};
+    ellipseCache.weights.assign(ellipseCache.controlPoints.size(), 1.0);
+    ellipseCache.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
+    const req::Request ellipseInput{token,
+        req::TrimConic{ellipseCache, RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 0, false}, {{.1, .9}}, {}, {}}};
+    const auto ellipseReply = LC_OffsetWorkerKernel::run(ellipseInput);
+    const auto& ellipseOutput = trimmed(ellipseReply, 3);
+    REQUIRE(ellipseOutput.refusal == trim::Refusal::None);
+    REQUIRE(ellipseOutput.roots.size() == 4);
+    CHECK(ellipseOutput.roots[0].target.rawSpan == 0);
+    CHECK(ellipseOutput.roots[1].target.rawSpan == 0);
+    CHECK(ellipseOutput.roots[2].target.rawSpan == 1);
+    CHECK(ellipseOutput.roots[3].target.rawSpan == 1);
+    const auto ellipseEncoded = result::encode(ellipseReply, ellipseInput);
+    REQUIRE(ellipseEncoded);
+    const auto ellipseDecoded = result::decode(*ellipseEncoded, ellipseInput);
+    REQUIRE(ellipseDecoded);
+    const auto& ellipseRoundTripped = std::get<trim::Result>(ellipseDecoded->result);
+    REQUIRE(ellipseRoundTripped.conicFragments.size() == 1);
+    REQUIRE(ellipseRoundTripped.roots.size() == 4);
+    CHECK(ellipseRoundTripped.roots[0].target.rawSpan == 0);
+    CHECK(ellipseRoundTripped.roots[1].target.rawSpan == 0);
+    CHECK(ellipseRoundTripped.roots[2].target.rawSpan == 1);
+    CHECK(ellipseRoundTripped.roots[3].target.rawSpan == 1);
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",
