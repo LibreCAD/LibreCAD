@@ -39693,6 +39693,26 @@ Validation on macOS arm64 CMake Release: the focused action case passes 1,152
 assertions / 1 case; `[trim-action]` passes 49,490 assertions across 83 cases;
 the target builds; and `git diff --check` passes. This qualifies one exact-
 cusp asymmetric construction; the beyond-cusp status is a verified safe
-refusal, not successful trimming. Trim-output persistence, other asymmetric
-control nets and distances, visible-GUI, cross-platform, and external-CAD
-acceptance remain open.
+refusal, not successful trimming. Section 1086 adds five-lane persistence for
+the exact-cusp Trim Two output. Other asymmetric control nets and distances,
+visible-GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1086. Persist Exact-cusp Asymmetric Trim Two Output (2026-11-12)
+
+Test commits `4b8757b90` and `f3d0b0d00` extend the exact-cusp (`-2.25`)
+asymmetric Trim Two action from section 1085 through R12 DXF, R2000 DXF, R2000
+DWG, R2018 DXF, and R2018 DWG, in both pick orders. Reopened line and spline
+output inventories must match the committed geometry within bounded numeric
+tolerances, and reopened drawings must contain no native offset entity.
+LibreDWG independently parses both DWG versions where available. Beyond-cusp
+(`-2.295`) output remains a verified atomic `LimitExceeded` refusal and is not
+exported as a successful trim.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+round-trip action case passes 1,217 assertions / 1 case; `[trim-action]` passes
+53,530 assertions across 83 cases; all ten exact-cusp DXF/DWG round trips
+preserve geometry in LibreCAD; LibreDWG parses both DWG versions in both pick
+orders; the test target builds; and `git diff --check` passes. This closes
+exact-cusp output persistence for one asymmetric profile and transverse line
+cutter. Other cutters, beyond-cusp successful trimming, other asymmetric
+profiles, visible-GUI, cross-platform, and external-CAD acceptance remain open.
