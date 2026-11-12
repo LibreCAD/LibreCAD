@@ -1253,6 +1253,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed parabola against a cir
 
 TEST_CASE("T Update from Source preserves exact and multi-branch parabola cusp offsets",
           "[gui][lc-offsetcurve][source-update][typed-source][parabola][cusp]") {
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
     for (const double distance : {0.5, 0.51}) {
         CAPTURE(distance);
         Drawing<false> f;
@@ -1309,6 +1317,43 @@ TEST_CASE("T Update from Source preserves exact and multi-branch parabola cusp o
         CHECK(disconnectedBranchSeparators == direct.branches.size() - 1);
         CHECK(live(f.graphic).size() == 2);
         CHECK(f.graphic.undoStateEpoch() > undoEpoch);
+
+        const auto cacheFingerprint = RS_Spline::geometryFingerprint(replacement->getData());
+        for (std::size_t i = 0; i < formats.size(); ++i) {
+            const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
+            const auto file = std::filesystem::path(directory.filePath(
+                QStringLiteral("parabola-cusp-cache-%1-%2").arg(distance).arg(i) +
+                (dwg ? ".dwg" : ".dxf")).toStdString());
+            REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+#ifdef DWGSUPPORT
+            if (dwg && !libreDwgReader.isEmpty()) {
+                QProcess reader;
+                reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                REQUIRE(document.isObject());
+            }
+#endif
+            RS_Graphic reopened;
+            REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
+            LC_OffsetCurve* loaded = nullptr;
+            for (auto* entity : live(reopened)) {
+                if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+                REQUIRE(loaded == nullptr);
+                loaded = dynamic_cast<LC_OffsetCurve*>(entity);
+            }
+            CAPTURE(distance, formats[i]);
+            REQUIRE(loaded);
+            REQUIRE(loaded->hasGeneralizedSourceDefinition());
+            REQUIRE(loaded->sourceDefinition());
+            CHECK(loaded->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::Parabola);
+            CHECK(loaded->sourceDefinition()->signedDistance == distance);
+            CHECK(RS_Spline::geometryFingerprint(loaded->getData()) == cacheFingerprint);
+        }
 
         REQUIRE(f.graphic.undo());
         CHECK_FALSE(previous->isDeleted());
