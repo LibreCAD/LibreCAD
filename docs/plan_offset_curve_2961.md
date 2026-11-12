@@ -38502,17 +38502,16 @@ acceptance remain open.
 ## 1031. Trim Curved Components in a Translated Rotated Conic Frame (2026-11-12)
 
 The genuinely curved upper/lower cubic cache and half-ratio ellipse are now
-translated to `(100,-200)` and rotated by 0.37 radians as one rigid frame. The
+translated to `(1e9,-2e9)` and rotated by 0.37 radians as one rigid frame. The
 pick is transformed with the geometry. Direct conic-boundary Trim still finds
 four contacts, two per original disconnected span, retains the expected lower
 elliptic arc, and leaves both inputs unchanged. Worker computation and
 result-codec round-trip preserve the same contact count and source-span
 identities. This exercises the frame normalization and world-coordinate
-transport that origin-aligned fixtures do not cover.
+transport at large coordinates, beyond the origin-aligned fixtures.
 
 Validation on macOS arm64 CMake Release: the focused direct case passes 57
 assertions; the full Trim kernel suite passes 40,703 assertions / 67 cases;
 the worker transport case passes 206 assertions and the worker Trim selector
-passes 260 assertions / 2 cases. Larger translations, tiny/huge scales,
-arbitrary rotations, persistence, visible GUI, and external ODA/AutoCAD remain
-open.
+passes 260 assertions / 2 cases. Tiny/huge scales, arbitrary rotations,
+persistence, visible GUI, and external ODA/AutoCAD remain open.

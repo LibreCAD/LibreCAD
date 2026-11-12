@@ -10186,7 +10186,7 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(curvedEllipseRoundTripped.roots[3].target.rawSpan == 1);
 
     const double rotation = .37, cosine = std::cos(rotation), sine = std::sin(rotation);
-    const RS_Vector center{100, -200};
+    const RS_Vector center{1e9, -2e9};
     const auto transform = [&](RS_Vector p) {
         return RS_Vector{center.x + cosine * p.x - sine * p.y,
                          center.y + sine * p.x + cosine * p.y};

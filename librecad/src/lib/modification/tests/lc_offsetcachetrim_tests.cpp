@@ -1556,7 +1556,7 @@ TEST_CASE("Conic-only trim clips curved cubic contacts to an elliptic arc", tags
 
 TEST_CASE("Conic-only trim preserves curved contacts in a translated rotated frame", tags) {
     const double rotation = .37, cosine = std::cos(rotation), sine = std::sin(rotation);
-    const RS_Vector center{100, -200};
+    const RS_Vector center{1e9, -2e9};
     const auto transform = [&](RS_Vector p) {
         return RS_Vector{center.x + cosine * p.x - sine * p.y,
                          center.y + sine * p.x + cosine * p.y};
