@@ -9351,7 +9351,7 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         }
         return data;
     };
-    const std::array<std::pair<LC_SplinePointsData, double>, 14> profiles{{
+    const std::array<std::pair<LC_SplinePointsData, double>, 16> profiles{{
         {adjacentRepeat, 1.0}, {separatedRepeats, 1.0},
         {twoInteriorRepeats, 1.0}, {spacedInteriorRepeats, 1.0},
         {reversedSpacedRepeats, 1.0},
@@ -9361,7 +9361,9 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         {rotatedTranslated(spacedInteriorRepeats, 1e-3), 1e-3},
         {rotatedTranslated(reversedSpacedRepeats, 1e-3), 1e-3},
         {nonAdjacentRepeatedLocation, 1.0},
-        {reversedNonAdjacentRepeatedLocation, 1.0}
+        {reversedNonAdjacentRepeatedLocation, 1.0},
+        {rotatedTranslated(nonAdjacentRepeatedLocation, 1e-3), 1e-3},
+        {rotatedTranslated(reversedNonAdjacentRepeatedLocation, 1e-3), 1e-3}
     }};
     const auto nearestDistance = [](const RS_Spline& spline, const RS_Vector& point) {
         double start = 0.0;

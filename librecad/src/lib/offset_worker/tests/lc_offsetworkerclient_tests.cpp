@@ -3336,7 +3336,7 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     lc::test::OutputDirectory directory("offset-worker-repeated-fit-points");
     auto& rt = runtime();
     OwnedClient owned{rt};
-    std::vector<LC_SplinePointsData> profiles(10);
+    std::vector<LC_SplinePointsData> profiles(12);
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
@@ -3354,6 +3354,8 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     profiles[8].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {1, 1}, {3, 2}, {4, 0}};
     profiles[9] = profiles[8];
     std::reverse(profiles[9].splinePoints.begin(), profiles[9].splinePoints.end());
+    profiles[10] = profiles[8];
+    profiles[11] = profiles[9];
     const double angle = 37.0 * std::acos(-1.0) / 180.0;
     const double cosine = std::cos(angle);
     const double sine = std::sin(angle);
@@ -3367,6 +3369,12 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     for (RS_Vector& point : profiles[7].splinePoints) {
         point = {1e6 + 1e-3 * (point.x * cosine - point.y * sine),
                  -2e6 + 1e-3 * (point.x * sine + point.y * cosine)};
+    }
+    for (std::size_t profileIndex : {10U, 11U}) {
+        for (RS_Vector& point : profiles[profileIndex].splinePoints) {
+            point = {1e6 + 1e-3 * (point.x * cosine - point.y * sine),
+                     -2e6 + 1e-3 * (point.x * sine + point.y * cosine)};
+        }
     }
 
     struct Lane {
@@ -3387,7 +3395,9 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
         CAPTURE(profileIndex);
         const LC_SplinePointsData& sourceData = profiles[profileIndex];
         const std::array<double, 4> distances{-.5, -.2, .2, .5};
-        const double distanceScale = profileIndex == 6 || profileIndex == 7 ? 1e-3 : 1.0;
+        const double distanceScale = profileIndex == 6 || profileIndex == 7 ||
+                                     profileIndex == 10 || profileIndex == 11
+                                         ? 1e-3 : 1.0;
         for (std::size_t distanceIndex = 0; distanceIndex < distances.size(); ++distanceIndex) {
             const double signedDistance = distances[distanceIndex] * distanceScale;
             CAPTURE(distanceIndex, signedDistance);
