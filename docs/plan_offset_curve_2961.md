@@ -37939,3 +37939,19 @@ profile/direction/file-lane combinations; CMake rebuilds `librecad_tests` and
 recorded boundary profiles and scales. Other point distributions, distances,
 nonuniform transforms, visible-GUI acceptance, and ODA/AutoCAD verification
 remain open.
+
+## 1003. Qualify Near-coincident Chords at Different Fit-point Positions (2026-11-12)
+
+Test commit `d57737475` checks whether the conditioning guard and offset
+accuracy depend on where a short distinct chord occurs. Eight open/closed
+profiles place the short chord at a leading endpoint, an interior interval,
+the trailing endpoint, reversed traversal, and the closed seam. Every case is
+admitted, generates nonempty direct offsets on both sides, and is compared
+against the independent requested-distance oracle.
+
+Validation: `[conditioning][placement]` passes 72 assertions in 1 case;
+`[fit-points][trim]` passes 31,243 assertions across 8 cases. The CMake
+`librecad_tests` target and `git diff --check` pass. This closes direct
+geometry for these eight layouts and distances only; worker/cache execution,
+file persistence, other chord ratios and point arrangements, GUI, and
+ODA/AutoCAD acceptance remain open.
