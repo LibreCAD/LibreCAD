@@ -37827,3 +37827,21 @@ not prove arbitrary point distributions, nonuniform transforms, all
 world-origin/scale combinations, worker/file persistence at these transforms,
 visible GUI, or external-CAD acceptance. Those remain open in the family and
 delivery matrices.
+
+## 997. Validate Transformed Fit-point Sources Through the Worker (2026-11-12)
+
+Test commit `893ba5481` carries the admitted boundary profiles from section
+996 through real worker operation 7 and operation 8. The six source cases
+cover open and closed fit-point splines at three uniform scales with translated
+origins and one reflected large-origin placement. Each case runs both signed
+offset distances, requires complete ordinary geometry, combines the canonical
+cache, and admits only the exact source/cache pair through operation 8. The
+worker must remain healthy and idle after each validation.
+
+Validation: `[conditioning][cache-admission]` passes 10,030 assertions in 1
+case; the CMake worker-client test target rebuilds successfully and
+`git diff --check` passes. This proves worker generation/cache admission only
+for the recorded six admitted profiles and distances. Refused transformed
+profiles are still covered only at source/direct admission, not as serialized
+worker requests; file persistence, replacement GUI, other transformations and
+point distributions, visible GUI, and external-CAD acceptance remain open.
