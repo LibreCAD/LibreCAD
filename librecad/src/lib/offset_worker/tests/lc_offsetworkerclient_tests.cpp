@@ -3336,7 +3336,7 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     lc::test::OutputDirectory directory("offset-worker-repeated-fit-points");
     auto& rt = runtime();
     OwnedClient owned{rt};
-    std::vector<LC_SplinePointsData> profiles(9);
+    std::vector<LC_SplinePointsData> profiles(10);
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
@@ -3352,6 +3352,8 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
     profiles[7] = profiles[4];
     profiles[8] = LC_SplinePointsData{false, false};
     profiles[8].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {1, 1}, {3, 2}, {4, 0}};
+    profiles[9] = profiles[8];
+    std::reverse(profiles[9].splinePoints.begin(), profiles[9].splinePoints.end());
     const double angle = 37.0 * std::acos(-1.0) / 180.0;
     const double cosine = std::cos(angle);
     const double sine = std::sin(angle);

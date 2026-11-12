@@ -9327,6 +9327,11 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 2}, {4, 0}, {4, 0}, {5, 1}});
     const LC_SplinePointsData nonAdjacentRepeatedLocation =
         profile({{0, 0}, {1, 1}, {2, 0}, {1, 1}, {3, 2}, {4, 0}});
+    std::vector<RS_Vector> reversedRepeatedLocationPoints =
+        nonAdjacentRepeatedLocation.splinePoints;
+    std::reverse(reversedRepeatedLocationPoints.begin(), reversedRepeatedLocationPoints.end());
+    const LC_SplinePointsData reversedNonAdjacentRepeatedLocation =
+        profile(std::move(reversedRepeatedLocationPoints));
     std::vector<RS_Vector> reversedSpacedPoints = spacedInteriorRepeats.splinePoints;
     std::reverse(reversedSpacedPoints.begin(), reversedSpacedPoints.end());
     const LC_SplinePointsData reversedSpacedRepeats = profile(std::move(reversedSpacedPoints));
@@ -9346,7 +9351,7 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         }
         return data;
     };
-    const std::array<std::pair<LC_SplinePointsData, double>, 13> profiles{{
+    const std::array<std::pair<LC_SplinePointsData, double>, 14> profiles{{
         {adjacentRepeat, 1.0}, {separatedRepeats, 1.0},
         {twoInteriorRepeats, 1.0}, {spacedInteriorRepeats, 1.0},
         {reversedSpacedRepeats, 1.0},
@@ -9355,7 +9360,8 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         {rotatedTranslated(separatedRepeats), 1.0},
         {rotatedTranslated(spacedInteriorRepeats, 1e-3), 1e-3},
         {rotatedTranslated(reversedSpacedRepeats, 1e-3), 1e-3},
-        {nonAdjacentRepeatedLocation, 1.0}
+        {nonAdjacentRepeatedLocation, 1.0},
+        {reversedNonAdjacentRepeatedLocation, 1.0}
     }};
     const auto nearestDistance = [](const RS_Spline& spline, const RS_Vector& point) {
         double start = 0.0;
