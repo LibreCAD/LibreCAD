@@ -95,9 +95,10 @@ public:
     QStringList messages;
     void commandMessage(const QString& message) override { messages.append(message); }
 };
-LC_OffsetCurve* native(RS_Graphic& graphic, double distance = .25) {
-    RS_Ellipse source(nullptr, {{0, 0}, {1, 0}, 1., 0., .1, false});
-    auto prepared = LC_OffsetCurve::create(source, distance, false);
+LC_OffsetCurve* native(RS_Graphic& graphic, double distance = .25, bool towardCentre = false) {
+    const double radius = towardCentre ? distance * 2.0 : 1.0;
+    RS_Ellipse source(nullptr, {{0, 0}, {radius, 0}, 1., 0., .1, false});
+    auto prepared = LC_OffsetCurve::create(source, distance, towardCentre);
     CAPTURE(prepared.refusal);
     REQUIRE(prepared);
     prepared.entity->setLayer(graphic.findLayer("0"));
@@ -471,6 +472,7 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
         RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const std::size_t transformIndex = GENERATE(std::size_t{0}, std::size_t{1}, std::size_t{2});
     const bool closed = GENERATE(false, true);
+    const bool towardCentre = GENERATE(false, true);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
 #ifdef DWGSUPPORT
     QString libreDwgReader = qEnvironmentVariable("DWGREAD");
@@ -494,7 +496,7 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     context.setDocumentAndView(&graphic, &view);
 
     const double distance = (closed ? .2 : .02) * scale;
-    auto* target = native(graphic, distance);
+    auto* target = native(graphic, distance, towardCentre);
     target->setLayer(graphic.findLayer("0"));
     const RS_Pen pen(RS_Color(255, 0, 0), RS2::WidthDefault, RS2::SolidLine);
     target->setPen(pen);
@@ -534,7 +536,7 @@ TEST_CASE("I transformed near-boundary fit-point source persists as an editable 
     REQUIRE(updateAction);
     updateAction->setSourceKind(SourceKind::SplinePoints);
     const RS_Vector pick = data.splinePoints[2];
-    CAPTURE(format, closed, scale, origin.x, origin.y, reflected, distance, pick.x, pick.y);
+    CAPTURE(format, closed, towardCentre, scale, origin.x, origin.y, reflected, distance, pick.x, pick.y);
     for (unsigned i = 0; i < 2; ++i) mouse(*update, view, pick, false);
     mouse(*update, view, pick, true);
     lc::test::awaitUpdate(*updateAction);
