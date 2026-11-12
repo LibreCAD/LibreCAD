@@ -40257,3 +40257,22 @@ combinations; full `[trim-action]` passes 102,281 assertions / 87 cases; and
 4.3; other radii, smaller seam gaps, precision limits, and distance boundaries
 remain open. Visible Properties interaction, cross-platform behavior, and
 ODA/AutoCAD acceptance remain open.
+
+## 1112. Qualify Tight-gap Near-full Arcs Through Trim Two (2026-11-12)
+
+Test commit `88edb090c` adds both forward and reversed typed-arc Trim Two
+profiles with a `1e-8`-radian gap from a full revolution. The forward profile
+uses center `(3, -4)`, radius `4`, bounds `[1e-8, 2*pi - 1e-8]`; the reversed
+profile uses center `(-3, 4)`, radius `4.3`, reversed bounds
+`[2*pi - 1e-8, 1e-8]`. Both run in both operand-pick orders with the prior
+ordinary, seam-crossing, and `1e-4` near-full controls. Preview/commit,
+undo/redo, five DXF/DWG save/reopen lanes, LibreDWG parsing, and geometric arc
+comparison are retained.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused arc
+Trim Two case passes 5,427 assertions / 1 case across fourteen profile/pick-
+order combinations; full `[trim-action]` passes 102,859 assertions / 87 cases;
+and `git diff --check` passes. This covers the tested radii and `1e-8` gap,
+not smaller representable gaps, other radii, or a continuous sweep/precision
+boundary. Visible Properties interaction, cross-platform behavior, and
+ODA/AutoCAD acceptance remain open.
