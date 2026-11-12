@@ -38842,3 +38842,22 @@ integration evidence for one typed parabola profile only. Five-lane Trim Two
 save/reopen, independent LibreDWG parsing of this parabola result, other
 parabola profiles, other Trim Two source families, visible desktop
 interaction, cross-platform, and ODA/AutoCAD acceptance remain open.
+
+## 1045. Persist Typed Parabola Trim Two Output Across Five File Lanes (2026-11-12)
+
+Test commit `5f9021d46` extends section 1044's worker-created typed-parabola
+Trim Two action result through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, in
+both operand pick orders. Each lane is reopened by LibreCAD and checked for
+the complete entity inventory, no editable-offset residue, tolerant spline
+and arc geometry equality, and preservation of the original typed parabola
+control points. When LibreDWG is available, both DWGs must decode as minJSON
+and contain SPLINE and ARC fragments.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+parabola Trim Two test passes 521 assertions across both pick orders and all
+five lanes; `[trim-action]` passes 22,872 assertions / 75 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; the test target rebuilds; and
+`git diff --check` passes. This closes persistence and independent structural parsing
+for one smooth typed-parabola fixture only. Other parabola profiles, other
+Trim Two families, visible desktop interaction, cross-platform runs, and
+ODA/AutoCAD acceptance remain open.
