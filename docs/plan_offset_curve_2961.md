@@ -69,21 +69,25 @@ source picker changes family and replaces the source with a typed curve`,
 `Native source picker preserves highlighted source across family filters`,
 `Native source picker replaces every modeled source family without filter
 side effects`, and the inventory assertion. These cover all nine kinds,
-including parabola as distinct from spline-points. Current focused-suite
-evidence is section 894 (14,827 assertions / 43 cases); rerun that suite for UI
+including parabola as distinct from spline-points. The explicit parabola
+replacement request is covered by the existing nine-kind matrix; there is no
+separate parabola-only UI path to add. The latest focused headless picker
+validation is section 958 (14,827 assertions / 43 cases), with action-level
+selector/replacement checks in section 960. Rerun those suites for picker
 changes. Do not expand the UI inventory beyond modeled offset-source kinds or
 claim every geometry variant is supported based on picker visibility; variant
 generation and persistence remain governed by slice 4 and the capability
 matrix.
 
-**Current disposition (2026-11-11):** The reiterated request adds no new
-picker phase: the source-type selector remains available while browsing
-replacement candidates; switching it filters the list only; and the existing
-source remains indicated until a replacement is validated and published. The
-nine-kind transition tests and distinct parabola identity test are the
-automated acceptance criteria. Visible-GUI confirmation remains open. Missing
-geometry variants stay in slice 4 rather than being implied by selector
-availability.
+**Current disposition (2026-11-11):** The reiterated request to switch source
+family while replacing a curve, cover every supported kind, and include
+parabola adds no new picker phase. The source-type selector remains usable
+while browsing replacement candidates; switching filters the list only; and
+the existing source remains indicated until a replacement is validated and
+published. The nine-kind transition tests and distinct parabola identity test
+are the automated picker acceptance criteria. Visible-GUI confirmation remains
+open. Missing geometry variants stay in slice 4 rather than being implied by
+selector availability.
 
 **Scope reconfirmed (2026-11-11):** “Expand source curve support to all
 supported types” means keep replacement available across the complete current
@@ -37445,3 +37449,24 @@ independently parses and geometry-checks all 96 DWGs.
 This qualifies the recorded reversed profile and transform only. Other
 conditioning combinations, repeated-point arrangements, continuous Hausdorff
 proof, visible GUI behavior, and ODA/AutoCAD acceptance remain open.
+
+## 979. Qualify Non-adjacent Fit-point Location Revisits (2026-11-11)
+
+Test commit `924fc9f7f` adds the fit-point profile
+`(0,0),(1,1),(2,0),(1,1),(3,2),(4,0)`, which revisits an earlier location at
+a distinct parameter without an adjacent duplicate. The independent kernel
+oracle checks analytic source normals, rounded-corner arcs, and the worker
+splines for signed distances `-0.5`, `-0.2`, `+0.2`, and `+0.5`. The profile
+passes within the existing requested-geometry tolerance.
+
+The focused oracle passes 75,978 assertions; the full fit-point kernel
+selection passes 76,235 assertions across seven cases. The process-backed
+fit-point client selection passes 112,558 assertions across five cases. The
+nine-profile persistence matrix covers 180 DXF/DWG save-reopens across R14
+DXF, R2000 DXF/DWG, R2007 DWG, and R2018 DWG, for the four distances. With
+LibreDWG 0.14 available, all 108 generated DWGs are independently parsed and
+geometry-checked. `git diff --check` passes.
+
+This qualifies only the recorded revisit profile and distances. It is not a
+continuous Hausdorff certificate, a general self-intersection/topology proof,
+or visible-GUI and ODA/AutoCAD acceptance; those gates remain open.
