@@ -3214,66 +3214,71 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     OwnedClient owned{rt};
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
-    LC_SplinePointsData fitPoints{false, false};
-    fitPoints.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
-    fitPoints.fitTolerance = 1e-8;
-    const LC_OffsetSourceGeometry source{fitPoints};
-
+    std::array<LC_SplinePointsData, 2> profiles;
+    profiles[0] = LC_SplinePointsData{false, false};
+    profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[1] = LC_SplinePointsData{false, false};
+    profiles[1].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}};
+    for (auto& profile : profiles) profile.fitTolerance = 1e-8;
     qint64 requestId = 1;
-    for (const double signedDistance : {0.2, -0.2, 0.5, -0.5}) {
-        CAPTURE(signedDistance);
-        const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
-        Receipts generatedReceipts;
-        REQUIRE(owned.get().submit(
-            {token(requestId), Req::GenerateSource{definition, {}}},
-            Client::Mode::Commit, generatedReceipts.into(0)));
-        rt.until([&] { return generatedReceipts.calls[0] != 0; });
-        const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
-        const auto& result = std::get<Reply::Native>(generated.reply().result);
-        REQUIRE(result.engineStatus);
-        CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
-        REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
-        REQUIRE_FALSE(result.ordinary.empty());
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        const LC_OffsetSourceGeometry source{profiles[profileIndex]};
+        for (const double signedDistance : {0.2, -0.2, 0.5, -0.5}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            Receipts generatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId), Req::GenerateSource{definition, {}}},
+                Client::Mode::Commit, generatedReceipts.into(0)));
+            rt.until([&] { return generatedReceipts.calls[0] != 0; });
+            const auto& generated = completed(generatedReceipts.at(0), requestId, 7);
+            const auto& result = std::get<Reply::Native>(generated.reply().result);
+            REQUIRE(result.engineStatus);
+            CHECK(*result.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(result.ordinaryStatus == Reply::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(result.ordinary.empty());
 
-        RS_SplineData cache;
-        REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
-        auto native = generated.nativeSource(attributes);
-        REQUIRE(native);
-        REQUIRE(native->hasGeneralizedSourceDefinition());
-        REQUIRE_FALSE(native->hasEditableDefinition());
-        REQUIRE(native->sourceDefinition());
-        CHECK(Req::Values::encodeSourceDefinition(*native->sourceDefinition()) ==
-              Req::Values::encodeSourceDefinition(definition));
-        exactCache(native->getData(), cache);
+            RS_SplineData cache;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+            auto native = generated.nativeSource(attributes);
+            REQUIRE(native);
+            REQUIRE(native->hasGeneralizedSourceDefinition());
+            REQUIRE_FALSE(native->hasEditableDefinition());
+            REQUIRE(native->sourceDefinition());
+            CHECK(Req::Values::encodeSourceDefinition(*native->sourceDefinition()) ==
+                  Req::Values::encodeSourceDefinition(definition));
+            exactCache(native->getData(), cache);
 
-        const Req::ValidateSourceCache validation{cache, definition, {}};
-        Receipts validatedReceipts;
-        REQUIRE(owned.get().submit(
-            {token(requestId + 1), validation}, Client::Mode::Commit,
-            validatedReceipts.into(0)));
-        rt.until([&] { return validatedReceipts.calls[0] != 0; });
-        const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
-        auto admitted = validated.nativeValidatedSource(attributes);
-        REQUIRE(admitted);
-        REQUIRE(admitted->hasGeneralizedSourceDefinition());
-        REQUIRE(admitted->sourceDefinition());
-        CHECK(Req::Values::encodeSourceDefinition(*admitted->sourceDefinition()) ==
-              Req::Values::encodeSourceDefinition(definition));
-        exactCache(admitted->getData(), cache);
+            const Req::ValidateSourceCache validation{cache, definition, {}};
+            Receipts validatedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId + 1), validation}, Client::Mode::Commit,
+                validatedReceipts.into(0)));
+            rt.until([&] { return validatedReceipts.calls[0] != 0; });
+            const auto& validated = completed(validatedReceipts.at(0), requestId + 1, 8);
+            auto admitted = validated.nativeValidatedSource(attributes);
+            REQUIRE(admitted);
+            REQUIRE(admitted->hasGeneralizedSourceDefinition());
+            REQUIRE(admitted->sourceDefinition());
+            CHECK(Req::Values::encodeSourceDefinition(*admitted->sourceDefinition()) ==
+                  Req::Values::encodeSourceDefinition(definition));
+            exactCache(admitted->getData(), cache);
 
-        auto altered = validation;
-        altered.cache.controlPoints.back().y += 1.0;
-        Receipts rejectedReceipts;
-        REQUIRE(owned.get().submit(
-            {token(requestId + 2), altered}, Client::Mode::Commit,
-            rejectedReceipts.into(0)));
-        rt.until([&] { return rejectedReceipts.calls[0] != 0; });
-        const auto& rejected = completed(rejectedReceipts.at(0), requestId + 2, 8);
-        CHECK_FALSE(rejected.nativeValidatedSource(attributes));
-        CHECK(std::get<Reply::Native>(rejected.reply().result).refusal ==
-              LC_OffsetCurveRefusal::NotCacheRepresentable);
-        CHECK(owned.get().healthyAndIdle());
-        requestId += 3;
+            auto altered = validation;
+            altered.cache.controlPoints.back().y += 1.0;
+            Receipts rejectedReceipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId + 2), altered}, Client::Mode::Commit,
+                rejectedReceipts.into(0)));
+            rt.until([&] { return rejectedReceipts.calls[0] != 0; });
+            const auto& rejected = completed(rejectedReceipts.at(0), requestId + 2, 8);
+            CHECK_FALSE(rejected.nativeValidatedSource(attributes));
+            CHECK(std::get<Reply::Native>(rejected.reply().result).refusal ==
+                  LC_OffsetCurveRefusal::NotCacheRepresentable);
+            CHECK(owned.get().healthyAndIdle());
+            requestId += 3;
+        }
     }
 }
 
