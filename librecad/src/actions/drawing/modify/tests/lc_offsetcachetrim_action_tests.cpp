@@ -3074,13 +3074,14 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
     constexpr double fullRotation = .67;
     constexpr double inwardRotation = .93;
     constexpr double reversedArcRotation = -.38;
-    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u})
+    constexpr double nearCuspRotation = 1.17;
+    for (const unsigned profile : {0u, 1u, 2u, 3u, 4u, 5u})
     for (const bool ellipseFirst : {false, true}) {
         CAPTURE(profile, ellipseFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        const double offsetDistance = .25;
-        const bool towardCentre = profile == 3;
+        const double offsetDistance = profile == 5 ? .0135 : .25;
+        const bool towardCentre = profile == 3 || profile == 5;
         auto initial = LC_OffsetCurve::create(seed, offsetDistance, towardCentre);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
@@ -3098,9 +3099,13 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
                         ? RS_EllipseData{{-6, 8}, {2.5 * std::cos(inwardRotation),
                                                    2.5 * std::sin(inwardRotation)},
                                          .9, 0, 0, false}
-                        : RS_EllipseData{{-4, 6}, {3 * std::cos(reversedArcRotation),
+                    : profile == 4
+                        ? RS_EllipseData{{-4, 6}, {3 * std::cos(reversedArcRotation),
                                                    3 * std::sin(reversedArcRotation)},
-                                         .6, .25, 1.6, true, true};
+                                         .6, .25, 1.6, true, true}
+                        : RS_EllipseData{{-6, 8}, {3 * std::cos(nearCuspRotation),
+                                                   3 * std::sin(nearCuspRotation)},
+                                         .1, 0, 0, false};
         auto* source = new RS_Ellipse(&f.graphic, sourceData);
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
@@ -3138,7 +3143,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
         RS_Vector cutterDirection{-tangent.y, tangent.x};
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection /= cutterDirection.magnitude();
-        if (profile != 3) cutterDirection += tangent;
+        if (profile != 3 && profile != 5) cutterDirection += tangent;
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
         cutterDirection = cutterDirection / cutterDirection.magnitude() * 18.0;
         auto* cutter = new RS_Line(&f.graphic,
@@ -3147,18 +3152,28 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
 
         const RS_Vector nativePick = native->getPointAt(first + (last - first) * .1);
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
+        const auto cacheFingerprint = RS_Spline::geometryFingerprint(native->getData());
         f.action->click(ellipseFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
         f.action->hover(ellipseFirst ? cutterPick : nativePick);
         f.action->waitForTrim();
-        CHECK_FALSE(f.action->m_preview->isEmpty());
+        if (profile != 5) CHECK_FALSE(f.action->m_preview->isEmpty());
         CHECK_FALSE(native->isDeleted());
         CHECK_FALSE(cutter->isDeleted());
         CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
 
         f.action->click(ellipseFirst ? cutterPick : nativePick);
         INFO(f.context.messages.join('\n').toStdString());
+        if (profile == 5 && !native->isDeleted()) {
+            CHECK_FALSE(cutter->isDeleted());
+            CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+            CHECK(native->hasEditableDefinition());
+            CHECK_FALSE(native->sourceDefinition());
+            CHECK(RS_Spline::geometryFingerprint(native->getData()) == cacheFingerprint);
+            CHECK(f.context.messages.join('\n').contains(QStringLiteral("nothing changed")));
+            continue;
+        }
         REQUIRE(native->isDeleted());
         REQUIRE(cutter->isDeleted());
         std::vector<RS_Entity*> fragments;
