@@ -37769,3 +37769,41 @@ The expanded fit-point trim persistence selection passes 79,403 assertions
 across 160 save/reopens and 64 independent LibreDWG reads. `git diff --check`
 passes. Conditioning limits, other open/closed near-coincident profiles,
 transforms/scales, visible GUI, and ODA/AutoCAD acceptance remain open.
+
+## 995. Refuse Ill-conditioned Fit-point Chords (2026-11-12)
+
+Implementation commit `ac9803610` addresses a correctness failure found while
+extending section 994: some highly uneven fit-point layouts returned `Ok` even
+though the generated offset exceeded the requested-distance tolerance. The
+source validator and direct branch builder now reject fit-point splines whose
+adjacent positive chord-length ratio is below `5e-5`. Exact consecutive
+duplicates remain in the original fit-point data and are ignored only when
+measuring the conditioning ratio. Control-point-defined spline-points and
+parabola sources are not subject to this fit-point-specific gate. Rejection is
+atomic: it produces no partial offset branches or worker cache admission.
+
+The focused conditioning test exercises open and closed layouts with gaps from
+`1e-3` through `1e-12`; the selected tested admission boundary is `5.1e-5` for
+the open profile and `5.1e-4` for the closed profile, while smaller tested
+layouts are refused. This is a conservative empirical guard, not a proof that
+every layout above the ratio is accurate or every layout below it is unusable.
+Keep the independent offset-distance oracle as the acceptance criterion and
+extend the matrix across topology, scale, transforms, and point distributions
+before treating the threshold as broadly qualified.
+
+Validation on this source: the focused conditioning case passes 150
+assertions; worker cache admission passes 36,464 assertions; worker trim and
+persistence pass 79,331 assertions across 160 save/reopens and 64 independent
+LibreDWG reads; request source-definition tests pass 959 assertions across 4
+cases; parabola tests pass 59,896 assertions across 13 cases. The focused
+fit-point trim selection passes 31,047 assertions across 6 cases. A broader
+parabola-tag selection was interrupted during a long scaled-DWG persistence
+case and is not counted as passing validation. The clean qmake6 Qt 6.12.0
+arm64 application build and a subsequent incremental `make -j6` both complete
+with exit status 0; `git diff --check` passes.
+
+The implementation closes only fail-closed handling for the tested
+ill-conditioned cases. It does not finish the broader spline family matrix,
+prove the ratio boundary for arbitrary geometry, validate all unit/scale
+combinations, or close visible-GUI and ODA/AutoCAD acceptance. Those remain
+open under the existing family/variant and delivery slices.
