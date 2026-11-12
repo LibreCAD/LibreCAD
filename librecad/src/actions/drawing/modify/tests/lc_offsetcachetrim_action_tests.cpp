@@ -1633,7 +1633,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed circle offset against 
         REQUIRE(breaks.size() >= 2);
         const double parameter = first + (last - first) * .487;
         const RS_Vector intersection = native->getPointAt(parameter);
-        const double step = std::max(1e-7 * scale, (last - first) * 1e-5);
+        const double step = std::max(1e-7, (last - first) * 1e-5);
         const RS_Vector before = native->getPointAt(parameter - step);
         const RS_Vector after = native->getPointAt(parameter + step);
         RS_Vector tangent{after.x - before.x, after.y - before.y};
