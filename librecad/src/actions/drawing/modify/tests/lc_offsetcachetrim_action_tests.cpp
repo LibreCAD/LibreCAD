@@ -1807,6 +1807,109 @@ TEST_CASE("T Trim Two trims exact-stall and multi-branch cusp caches",
     }
 }
 
+TEST_CASE("T Trim Two preserves transformed beyond-cusp parabola branches",
+          "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][transform]") {
+    constexpr double angle = .37;
+    const double cosine = std::cos(angle), sine = std::sin(angle);
+    for (const double scale : {.1, 1.0, 10.0})
+    for (const bool circularCutter : {false, true})
+    for (const bool parabolaFirst : {false, true}) {
+        CAPTURE(scale, circularCutter, parabolaFirst);
+        const double distance = .51 * scale;
+        const RS_Vector translation{2 * scale, -scale};
+        const auto mapPoint = [&](RS_Vector point) {
+            point *= scale;
+            return RS_Vector{cosine * point.x - sine * point.y,
+                             sine * point.x + cosine * point.y} + translation;
+        };
+        const LC_ParabolaData sourceData{{mapPoint({-1, 1}), mapPoint({0, -1}), mapPoint({1, 1})}};
+        Drawing<true> f;
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, distance, false);
+        REQUIRE(initial);
+        auto* previous = initial.entity.release();
+        f.graphic.addEntity(previous);
+        auto* parabola = new LC_Parabola(&f.graphic, sourceData);
+        f.graphic.addEntity(parabola);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+        const auto direct = LC_CurveOffset::buildDirectBranches(*parabola,
+            LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, distance),
+            LC_CurveOffset::makeDirectOptions(*parabola, distance, 1e-4),
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(direct.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(direct.branches.size() == 3);
+
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::Parabola);
+        update.use(parabola);
+        lc::test::awaitUpdate(update);
+        REQUIRE(update.lastReport().updated == 1);
+        LC_OffsetCurve* native = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(native == nullptr);
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(native);
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->signedDistance == distance);
+
+        const auto breaks = native->getBreakParameters();
+        REQUIRE(breaks.size() >= 2);
+        const double spanWidth = breaks[1] - breaks[0];
+        REQUIRE(spanWidth > 0);
+        const double parameter = breaks[0] + spanWidth * .5;
+        const double step = std::max(1e-8, spanWidth * 1e-4);
+        RS_Vector tangent = native->getPointAt(parameter + step) - native->getPointAt(parameter - step);
+        REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+        tangent /= tangent.magnitude();
+        const RS_Vector normal{-tangent.y, tangent.x};
+        const RS_Vector intersection = native->getPointAt(parameter);
+        const double cutterRadius = .01 * scale;
+        const RS_Vector cutterStart = intersection - normal * cutterRadius;
+        const RS_Vector cutterEnd = intersection + normal * cutterRadius;
+        const auto nativePick = native->getPointAt(parameter + spanWidth * .1);
+        RS_Entity* cutter = circularCutter
+            ? static_cast<RS_Entity*>(new RS_Circle(&f.graphic, RS_CircleData{intersection, cutterRadius}))
+            : static_cast<RS_Entity*>(new RS_Line(&f.graphic, RS_LineData{cutterStart, cutterEnd}));
+        f.graphic.addEntity(cutter);
+        const auto cutterPick = circularCutter
+            ? intersection + RS_Vector{cutterRadius, 0}
+            : intersection + (cutterEnd - cutterStart) * .25;
+        const auto prepared = LC_OffsetCacheTrim::prepare(native->getData(), *cutter,
+            LC_OffsetCacheTrim::Pick{nativePick});
+        REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
+        if (circularCutter) CHECK(prepared.rootCount == 2);
+
+        const auto nativeBefore = trimGeometry(*native);
+        const auto cutterBefore = trimGeometry(*cutter);
+        f.action->click(parabolaFirst ? nativePick : cutterPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        f.action->hover(parabolaFirst ? cutterPick : nativePick);
+        f.action->waitForTrim();
+        REQUIRE_FALSE(trimPreview(*f.action->m_preview).empty());
+        f.action->click(parabolaFirst ? cutterPick : nativePick);
+        REQUIRE(native->isDeleted());
+        REQUIRE(cutter->isDeleted());
+        std::vector<RS_Entity*> fragments;
+        for (auto* entity : live(f.graphic)) if (entity != parabola) fragments.push_back(entity);
+        CHECK(fragments.size() >= direct.branches.size());
+
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(cutter->isDeleted());
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*cutter) == cutterBefore);
+        for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(cutter->isDeleted());
+        for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    }
+}
+
 TEST_CASE("T Trim Two trims exact and beyond-cusp asymmetric branches",
           "[gui][lc-offsetcurve][trim-action][typed-source][parabola][cusp][asymmetric][trim-two]") {
     QTemporaryDir directory;
