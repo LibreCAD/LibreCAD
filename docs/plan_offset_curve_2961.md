@@ -38078,9 +38078,9 @@ Validation: the focused Release CMake source-action persistence selector
 passes 121,020 assertions across 2 Catch test cases; the test target rebuilds
 and `git diff --check` passes. This closes the native editable-source update
 and listed file lanes for the tested bounded profiles. It does not close
-offset trimming, arbitrary intervals/ratios, translated and broad-scale
-source-action variants, visible interactive GUI, or ODA/AutoCAD acceptance.
-Those remain open.
+offset trimming, arbitrary intervals/ratios beyond the recorded cases, visible
+interactive GUI, or ODA/AutoCAD acceptance. The transformed source-action
+matrix is recorded in section 1011.
 
 ## 1010. Qualify Thin Hyperbola Trimming Through Worker and File Lanes (2026-11-12)
 
@@ -38097,3 +38097,20 @@ build, and `git diff --check` passes. This closes the specified worker trim and
 trimmed-geometry persistence cases only. Properties trim interaction,
 translated and broad-scale trimming, other interval/ratio families, visible
 GUI acceptance, and ODA/AutoCAD verification remain open.
+
+## 1011. Persist Transformed Thin Hyperbola Source Updates (2026-11-12)
+
+Test commit `63682e676` extends section 1009's Properties source-update matrix
+through three similarity transforms: scales `1e-3`, `1`, and `1e4`, with
+origins `(0,0)`, `(1e3,-2e3)`, and `(-1e7,2e7)` multiplied by each scale. Both
+thin ratios, branches, angle-bound orders, signed directions, and curvature
+fractions remain covered across all five DXF/DWG lanes. The reopened native
+offset must retain the translated/scaled hyperbola source encoding, signed
+distance, cache fingerprint, pen, and consistency; R2000 and R2018 DWG files
+are checked with LibreDWG.
+
+Validation: the focused Release CMake source-action case passes 130,440
+assertions; `librecad_tests` builds and `git diff --check` passes. This
+qualifies only the listed similarity transforms and parameter variants. It
+does not establish nonuniform transforms, arbitrary origins/scales, visible
+GUI interaction, or external ODA/AutoCAD acceptance.
