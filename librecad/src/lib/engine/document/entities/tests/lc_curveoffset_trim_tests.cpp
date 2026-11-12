@@ -354,18 +354,23 @@ TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
         data.splinePoints = std::move(fitPoints);
         return data;
     };
-    std::array<LC_SplinePointsData, 4> profiles{{
+    std::array<LC_SplinePointsData, 8> profiles{{
         makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}}),
         makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}}),
         makeProfile({{3, 1}, {2, 0}, {1, 1}, {1, 1}, {0, 0}}),
-        makeProfile({{4, 0}, {3, 1}, {3, 1}, {2, 0}, {1, 1}, {1, 1}, {0, 0}})
+        makeProfile({{4, 0}, {3, 1}, {3, 1}, {2, 0}, {1, 1}, {1, 1}, {0, 0}}),
+        makeProfile({{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}}),
+        makeProfile({{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}}),
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}}),
+        makeProfile({{3, 1}, {2, 0}, {1, 1}, {1, 1}, {1, 1}, {0, 0}})
     }};
 
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
         LC_SplinePoints source{nullptr, profiles[profileIndex]};
-        if (profileIndex == 2) {
-            LC_SplinePoints forward{nullptr, profiles[0]};
+        if (profileIndex == 2 || profileIndex == 3 || profileIndex == 7) {
+            const std::size_t forwardIndex = profileIndex == 2 ? 0 : profileIndex == 3 ? 1 : 6;
+            LC_SplinePoints forward{nullptr, profiles[forwardIndex]};
             double maxReverseError = 0.0;
             const double end = static_cast<double>(forward.getSegmentCount());
             for (int sample = 0; sample <= 100; ++sample) {

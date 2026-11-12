@@ -4294,7 +4294,12 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     LC_SplinePointsData sourceData{false, false};
     sourceData.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0},
                                {3, 1}, {3, 1}, {4, 0}};
-    std::array<LC_SplinePointsData, 2> sourceProfiles{{sourceData, sourceData}};
+    LC_SplinePointsData leadingRepeated = sourceData;
+    leadingRepeated.splinePoints = {{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
+    LC_SplinePointsData trailingRepeated = sourceData;
+    trailingRepeated.splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}};
+    std::array<LC_SplinePointsData, 4> sourceProfiles{{sourceData, sourceData,
+                                                      leadingRepeated, trailingRepeated}};
     std::reverse(sourceProfiles[1].splinePoints.begin(), sourceProfiles[1].splinePoints.end());
     const std::array<double, 2> distances{{0.2, 0.5}};
     const std::array<double, 2> sides{{1.0, -1.0}};
