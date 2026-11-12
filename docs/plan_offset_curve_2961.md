@@ -37301,3 +37301,23 @@ These are explicit unsupported boundaries, not newly supported geometry. They
 do not imply all endpoint or repeated-point layouts are invalid: sections
 964-970 qualify selected interior adjacent/separated repeats, while other
 placements and joins remain open.
+
+## 972. Oracle-check the Actual Repeated Fit-point Worker Splines (2026-11-11)
+
+Test commit `9d55762e0` closes the direct-piece/worker-output evidence gap from
+sections 962 and 965. A test-local bounded closest-point routine traverses
+every nonzero knot span of each returned worker spline, includes span
+endpoints, seeds 17 parameter values per span, and refines each with clamped
+Newton iterations. It is first checked against an analytic cubic line and an
+exact rational quadratic quarter-circle, both with known distance one. For
+the repeated-fit-point profiles, every analytic source-normal sample is then
+compared to the nearest point across the actual worker-returned spline
+branches in world coordinates; maximum deviation must remain within the
+requested geometry tolerance. The focused test passes 21,774 assertions and
+`git diff --check` passes.
+
+This is an independent sampled geometry check for the recorded profiles and
+distances, not a continuous Hausdorff/error proof; the multi-start minimizer
+does not certify that it found every possible stationary-distance root.
+Other fit-point layouts and the remaining visible/external acceptance gates
+are still open.
