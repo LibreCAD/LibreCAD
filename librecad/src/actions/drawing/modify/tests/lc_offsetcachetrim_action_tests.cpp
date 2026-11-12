@@ -2228,8 +2228,9 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
 
 TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
-    for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
-        CAPTURE(trimLineSpan, polylineFirst);
+    for (const double sourceBulge : {1.0, .5})
+        for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
+        CAPTURE(sourceBulge, trimLineSpan, polylineFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -2237,7 +2238,7 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
         auto* source = new RS_Polyline(&f.graphic);
-        source->addVertex({0, 0}, 1.0);
+        source->addVertex({0, 0}, sourceBulge);
         source->addVertex({2, 0});
         source->addVertex({2, 2});
         source->endPolyline();
@@ -2286,7 +2287,6 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         f.graphic.addEntity(cutter);
         const RS_Vector nativePick = native->getPointAt(breaks[span] + (breaks[span + 1] - breaks[span]) * .9);
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
-
         f.action->click(polylineFirst ? nativePick : cutterPick);
         REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
         const auto previewUndoEpoch = f.graphic.undoStateEpoch();
@@ -2414,7 +2414,7 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
                     found = true;
                     break;
                 }
-                CAPTURE(trimLineSpan, polylineFirst, formats[i], expected->rtti());
+                CAPTURE(sourceBulge, trimLineSpan, polylineFirst, formats[i], expected->rtti());
                 CHECK(found);
             }
         }

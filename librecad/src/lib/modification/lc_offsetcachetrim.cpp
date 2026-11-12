@@ -663,13 +663,6 @@ bool closure(const RS_SplineData& data, const Spans& spans) {
     return closed;
 }
 
-bool connected(const Spans& spans) {
-    for (std::size_t i = 1; i < spans.size(); ++i) {
-        if (!same(spans[i - 1].controls[spans[i - 1].degree], spans[i].controls[0])) return false;
-    }
-    return true;
-}
-
 struct Component { std::size_t begin = 0, end = 0; bool closed = false; };
 
 std::vector<Component> components(const Spans& spans) {
@@ -741,7 +734,6 @@ Input admit(Context& c, const RS_SplineData& source, const RS_Entity& entity, co
     std::optional<Conic> conic;
     if (spline) {
         cutterSpans = std::make_shared<const Spans>(inspect(c, spline->getData()));
-        if (!connected(*cutterSpans)) fail(Refusal::UnsupportedCutter);
         cutterClosed = closure(spline->getData(), *cutterSpans);
     } else if (line) {
         const auto data = line->getData();
@@ -1343,19 +1335,63 @@ RS_SplineData componentData(const Spans& spans, const Component& component) {
     data.m_closedFlag = component.closed;
     for (std::size_t k = component.begin; k < component.end; ++k) {
         const auto& span = spans[k];
-        const std::size_t first = k == component.begin ? 0 : 1;
+        const std::size_t multiplicity = k == component.begin ? span.degree + 1 :
+            span.controlOffset - spans[k - 1].controlOffset;
+        if (multiplicity != span.degree && multiplicity != span.degree + 1)
+            fail(Refusal::UnsupportedLayout);
+        const std::size_t first = k == component.begin || multiplicity == span.degree + 1 ? 0 : 1;
         for (std::size_t i = first; i <= span.degree; ++i) {
             data.controlPoints.push_back(span.controls[i]);
             data.weights.push_back(1.0);
         }
         const std::size_t local = k - component.begin;
-        const std::size_t multiplicity = k == component.begin || k + 1 == component.end
-            ? span.degree + 1 : span.degree;
         for (std::size_t i = 0; i < multiplicity; ++i) data.knotslist.push_back(double(local));
     }
     for (std::size_t i = 0; i <= data.degree; ++i)
         data.knotslist.push_back(double(component.end - component.begin));
     return data;
+}
+
+std::vector<Root> rootsAcrossCutterComponents(Context& c, const Input& input,
+                                               const std::vector<Component>& parts) {
+    std::vector<Root> combined;
+    for (const auto& part : parts) {
+        c.check();
+        Input local = input;
+        const auto data = componentData(*input.cutter, part);
+        local.cutter = std::make_shared<const Spans>(inspect(c, data));
+        local.cutterClosed = part.closed;
+        c.items(1);
+        auto provider = std::make_unique<Curves>(local.frame, local.source, local.cutter,
+            local.conic, local.closed, local.cutterClosed, c.cancellation);
+        const auto* view = provider.get();
+        auto session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
+        auto partRoots = roots(c, local, *view, *session);
+        if (!session->hasValidProofs()) fail(Refusal::AmbiguousRoots);
+        c.items(partRoots.size());
+        for (auto& root : partRoots) {
+            const auto shiftCutter = [&](LC_IntersectionDomain& domain) {
+                domain.segmentB += part.begin;
+                domain.parameterB = domain.parameterB + I::point(double(part.begin));
+            };
+            shiftCutter(root.snapshot.event.isolation);
+            shiftCutter(root.snapshot.event.proofDomain);
+            root.snapshot.event.parameterB += double(part.begin);
+            combined.push_back(std::move(root));
+        }
+    }
+    for (std::size_t i = 1; i < combined.size(); ++i) {
+        std::size_t j = i;
+        while (j) {
+            c.compare();
+            if (combined[j - 1].parameter.hi() < combined[j].parameter.lo()) break;
+            if (!(combined[j].parameter.hi() < combined[j - 1].parameter.lo()))
+                fail(Refusal::AmbiguousRoots);
+            std::swap(combined[j], combined[j - 1]);
+            --j;
+        }
+    }
+    return combined;
 }
 
 Limits remainingLimits(const Context& c) {
@@ -1513,6 +1549,8 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
         std::vector<Fragment> fragments;
         std::vector<Result::ConicFragment> conics;
         std::vector<RootProvenance> provenance;
+        const auto cutterParts = input.conic ? std::vector<Component>{} : components(*input.cutter);
+        c.items(cutterParts.size());
         if (conicPick && !emitCache && parts.size() > 1) {
             std::vector<Root> ordered;
             for (const auto& part : parts) {
@@ -1580,12 +1618,18 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
             const auto ranges = retain(c, input.conic->unit.parameterEnd(), input.cutterClosed, ordered, projected, conicRemoved);
             conics = assembleConic(c, input, ordered, ranges);
         } else {
-            c.items(1);
-            auto provider = std::make_unique<Curves>(input.frame, input.source, input.cutter, input.conic,
-                input.closed, input.cutterClosed, c.cancellation);
-            const auto* view = provider.get(); // Owned by the session throughout root preparation.
-            auto session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
-            auto contacts = roots(c, input, *view, *session);
+            std::vector<Root> contacts;
+            std::unique_ptr<LC_CertifiedIntersectionSession> session;
+            if (!conicPick && cutterParts.size() > 1) {
+                contacts = rootsAcrossCutterComponents(c, input, cutterParts);
+            } else {
+                c.items(1);
+                auto provider = std::make_unique<Curves>(input.frame, input.source, input.cutter, input.conic,
+                    input.closed, input.cutterClosed, c.cancellation);
+                const auto* view = provider.get(); // Owned by the session throughout root preparation.
+                session = query(c, std::move(provider), Refusal::TangencyOrOverlap);
+                contacts = roots(c, input, *view, *session);
+            }
             for (std::size_t k = 0; k < contacts.size(); ++k) contacts[k].provenanceId = k;
             result.rootCount = contacts.size();
             if (contacts.empty()) { fail(Refusal::NoUsableRoots); }
@@ -1613,7 +1657,7 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
                     root.snapshot.event.isolation, root.snapshot.event.proofDomain,
                     root.snapshot.event.proof, x, y});
             }
-            if (!session->hasValidProofs()) { fail(Refusal::AmbiguousRoots); }
+            if (session && !session->hasValidProofs()) { fail(Refusal::AmbiguousRoots); }
         }
         c.check();
         if (emitCache) result.removed = RemovedInterval{location(removed.from.parameter, input.source->size()),
