@@ -9371,6 +9371,29 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
             REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
             REQUIRE_FALSE(generated.ordinary.empty());
+            const auto centeredReply = LC_OffsetWorkerKernel::run(
+                {token, req::GenerateSource{oracleDefinition, {}}});
+            const auto& centered = native(centeredReply, 7);
+            REQUIRE(centered.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(centered.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE(centered.ordinary.size() == generated.ordinary.size());
+            const RS_Vector expectedTranslation = profileIndex >= 2
+                ? RS_Vector{1e6, -2e6} : RS_Vector{0, 0};
+            for (std::size_t branchIndex = 0; branchIndex < generated.ordinary.size(); ++branchIndex) {
+                const auto* worldSpline = std::get_if<RS_SplineData>(
+                    &generated.ordinary[branchIndex]);
+                const auto* centeredSpline = std::get_if<RS_SplineData>(
+                    &centered.ordinary[branchIndex]);
+                REQUIRE(worldSpline);
+                REQUIRE(centeredSpline);
+                REQUIRE(worldSpline->controlPoints.size() == centeredSpline->controlPoints.size());
+                REQUIRE(worldSpline->knotslist == centeredSpline->knotslist);
+                REQUIRE(worldSpline->weights == centeredSpline->weights);
+                for (std::size_t pointIndex = 0; pointIndex < worldSpline->controlPoints.size(); ++pointIndex) {
+                    CHECK(worldSpline->controlPoints[pointIndex].distanceTo(
+                              centeredSpline->controlPoints[pointIndex] + expectedTranslation) < 1e-7);
+                }
+            }
 
             const auto geometry = LC_CurveOffset::buildDirectBranches(
                 *fitPointSource,
