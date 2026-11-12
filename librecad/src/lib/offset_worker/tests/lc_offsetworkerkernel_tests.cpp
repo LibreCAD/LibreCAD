@@ -9310,6 +9310,116 @@ TEST_CASE("spline and fit-point caches promote on both signed offset sides",
     }
 }
 
+TEST_CASE("repeated fit-point worker caches follow independent exact normals",
+          "[lc-offsetcurve][worker-kernel][source-cache][fit-points][repeated][oracle]") {
+    const auto profile = [](std::vector<RS_Vector> points) {
+        LC_SplinePointsData data{false, false};
+        data.splinePoints = std::move(points);
+        return data;
+    };
+    const std::array<LC_SplinePointsData, 2> profiles{{
+        profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}}),
+        profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}})
+    }};
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        const LC_OffsetSourceGeometry source{profiles[profileIndex]};
+        auto sourceEntity = source.makeEntity();
+        REQUIRE(sourceEntity);
+        const auto* fitPointSource = dynamic_cast<const LC_SplinePoints*>(sourceEntity.get());
+        REQUIRE(fitPointSource);
+        for (const double signedDistance : {-.5, -.2, .2, .5}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{source, signedDistance, 1e-4, false};
+            const auto options = LC_OffsetWorkerTolerance::directOptions(
+                definition, *fitPointSource);
+            REQUIRE(options);
+            const auto geometry = LC_CurveOffset::buildDirectBranches(
+                *fitPointSource,
+                LC_CurveOffset::makeSideRequest(
+                    signedDistance > 0.0 ? LC_CurveOffsetSide::Left
+                                         : LC_CurveOffsetSide::Right,
+                    std::abs(signedDistance)),
+                *options, LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+
+            const req::Request generation{token,
+                req::GenerateSource{definition, {}}};
+            const auto reply = LC_OffsetWorkerKernel::run(generation);
+            const auto& generated = native(reply, 7);
+            REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinaryStatus == result::OrdinaryStatus::Complete);
+            REQUIRE_FALSE(generated.ordinary.empty());
+
+            RS_SplineData cache;
+            REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
+            const auto cubicPoint = [](const std::array<RS_Vector, 4>& bezier,
+                                       const double parameter) {
+                const double inverse = 1.0 - parameter;
+                return bezier[0] * (inverse * inverse * inverse) +
+                       bezier[1] * (3.0 * inverse * inverse * parameter) +
+                       bezier[2] * (3.0 * inverse * parameter * parameter) +
+                       bezier[3] * (parameter * parameter * parameter);
+            };
+            double maximumDeviation = 0.0;
+            std::size_t samples = 0;
+            for (const auto& branch : geometry.branches) {
+                for (const auto& piece : branch.cubicPieces) {
+                    const double localWidth = piece.localU1 - piece.localU0;
+                    REQUIRE(localWidth > 0.0);
+                    for (const double fraction : {.2, .5, .8}) {
+                        const double parameter = piece.provenance.sourceT0 +
+                            (piece.provenance.sourceT1 - piece.provenance.sourceT0) * fraction;
+                        const double localParameter = piece.localU0 + localWidth * fraction;
+                        const std::size_t sourceSpan = piece.provenance.sourceSpan;
+                        REQUIRE(sourceSpan < fitPointSource->getSegmentCount());
+                        LC_SplinePointsSegment sourceSegment;
+                        REQUIRE(fitPointSource->tryGetSegment(sourceSpan, sourceSegment));
+                        const double sourceLocal = parameter - static_cast<double>(sourceSpan);
+                        RS_Vector sourcePoint;
+                        RS_Vector sourceTangent;
+                        if (sourceSegment.kind == LC_SplinePointsSegment::Kind::Quadratic) {
+                            const double inverse = 1.0 - sourceLocal;
+                            sourcePoint = sourceSegment.start * (inverse * inverse) +
+                                          sourceSegment.control * (2.0 * inverse * sourceLocal) +
+                                          sourceSegment.end * (sourceLocal * sourceLocal);
+                            sourceTangent =
+                                (sourceSegment.control - sourceSegment.start) * (2.0 * inverse) +
+                                (sourceSegment.end - sourceSegment.control) * (2.0 * sourceLocal);
+                        } else if (sourceSegment.kind == LC_SplinePointsSegment::Kind::Line) {
+                            sourcePoint = sourceSegment.start * (1.0 - sourceLocal) +
+                                          sourceSegment.end * sourceLocal;
+                            sourceTangent = sourceSegment.end - sourceSegment.start;
+                        } else {
+                            FAIL("A repeated fit-point source unexpectedly contains a point segment");
+                        }
+                        const double speed = sourceTangent.magnitude();
+                        REQUIRE(speed > 0.0);
+                        const RS_Vector normal{-sourceTangent.y / speed, sourceTangent.x / speed};
+                        const RS_Vector exactOffset = sourcePoint + normal * signedDistance;
+                        const double deviation = cubicPoint(piece.bezier, localParameter)
+                                                     .distanceTo(exactOffset);
+                        maximumDeviation = std::max(maximumDeviation, deviation);
+                        ++samples;
+                    }
+                }
+            }
+            CAPTURE(maximumDeviation, samples, geometry.branches.size(),
+                    generated.ordinary.size(), cache.controlPoints.size(),
+                    options->tolerance.requestedGeometry);
+            REQUIRE(samples > 0);
+            CHECK(maximumDeviation <= options->tolerance.requestedGeometry);
+
+            const req::Request validation{token,
+                req::ValidateSourceCache{cache, definition, {}}};
+            const auto validationReply = LC_OffsetWorkerKernel::run(validation);
+            const auto& validated = native(validationReply, 8);
+            CHECK(validated.refusal == LC_OffsetCurveRefusal::None);
+            CHECK(validated.changed);
+        }
+    }
+}
+
 TEST_CASE("nonuniform rational spline knot layouts preserve exact cache validation",
           "[lc-offsetcurve][worker-kernel][source-cache][spline-variant]") {
     RS_SplineData quadratic{2, false};
