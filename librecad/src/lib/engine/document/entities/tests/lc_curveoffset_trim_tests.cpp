@@ -563,6 +563,56 @@ TEST_CASE("Fit-point conditioning admission is stable under scale and placement"
     }
 }
 
+TEST_CASE("Fit-point conditioning is independent of short-chord placement",
+          "[curve-offset][trim][spline-points][fit-points][conditioning][placement]") {
+    const double openGap = 2e-4;
+    const double closedGap = 2e-3;
+    std::array<LC_SplinePointsData, 8> profiles;
+    profiles[0] = LC_SplinePointsData{false, false};
+    profiles[0].splinePoints = {{0, 0}, {openGap, 0}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[1] = LC_SplinePointsData{false, false};
+    profiles[1].splinePoints = {{0, 0}, {1, 1}, {1 + openGap, 1 + openGap}, {2, 0}, {3, 1}};
+    profiles[2] = LC_SplinePointsData{false, false};
+    profiles[2].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3 + openGap, 1}};
+    profiles[3] = profiles[1];
+    profiles[4] = LC_SplinePointsData{true, false};
+    profiles[4].splinePoints = {{0, 0}, {closedGap, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    profiles[5] = LC_SplinePointsData{true, false};
+    profiles[5].splinePoints = {{0, 0}, {10, 0}, {10 + closedGap, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    profiles[6] = LC_SplinePointsData{true, false};
+    profiles[6].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {13 + closedGap, 8}, {4, 13}, {-3, 8}};
+    profiles[7] = LC_SplinePointsData{true, false};
+    profiles[7].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, closedGap}};
+    for (std::size_t i = 0; i < 4; ++i) profiles[i].fitTolerance = 1e-8;
+    for (std::size_t i = 4; i < profiles.size(); ++i) profiles[i].fitTolerance = 1e-8;
+    std::reverse(profiles[3].splinePoints.begin(), profiles[3].splinePoints.end());
+
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        CAPTURE(profileIndex);
+        REQUIRE(LC_OffsetSourceGeometry::capture(source));
+        const double gap = profileIndex < 4 ? openGap : closedGap;
+        const double distance = 10.0 * gap;
+        const auto sourceDistance = [&source](const RS_Vector& point) {
+            return source.getDistanceToPoint(point);
+        };
+        for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+            CAPTURE(side, distance);
+            const auto options = LC_CurveOffset::makeDirectOptions(source, distance);
+            const auto result = LC_CurveOffset::buildDirectBranches(
+                source, LC_CurveOffset::makeSideRequest(side, distance), options,
+                LC_CurveOffset::makeDirectSourceBudget());
+            REQUIRE(result.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE_FALSE(result.branches.empty());
+            const Checked checked = check(result, curveOf(source), 0.0,
+                                          static_cast<double>(source.getSegmentCount()), distance,
+                                          -1.0, sourceDistance);
+            CHECK(checked.nearestKept >= distance - 2.0 * options.tolerance.requestedGeometry);
+            CHECK(checked.worstMissing <= 2.0 * options.tolerance.requestedGeometry);
+        }
+    }
+}
+
 TEST_CASE("All-coincident fit points fail closed for trimming",
           "[curve-offset][trim][spline-points][fit-points][stationary][refusal]") {
     const RS_Spline validReference = unitParabola();
