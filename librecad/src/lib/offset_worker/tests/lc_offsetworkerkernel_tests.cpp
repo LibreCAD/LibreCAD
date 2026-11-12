@@ -9344,14 +9344,15 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         }
         return data;
     };
-    const std::array<std::pair<LC_SplinePointsData, double>, 11> profiles{{
+    const std::array<std::pair<LC_SplinePointsData, double>, 12> profiles{{
         {adjacentRepeat, 1.0}, {separatedRepeats, 1.0},
         {twoInteriorRepeats, 1.0}, {spacedInteriorRepeats, 1.0},
         {reversedSpacedRepeats, 1.0},
         {leadingRepeat, 1.0}, {trailingRepeat, 1.0}, {tripleInteriorRepeat, 1.0},
         {rotatedTranslated(adjacentRepeat), 1.0},
         {rotatedTranslated(separatedRepeats), 1.0},
-        {rotatedTranslated(spacedInteriorRepeats, 1e-3), 1e-3}
+        {rotatedTranslated(spacedInteriorRepeats, 1e-3), 1e-3},
+        {rotatedTranslated(reversedSpacedRepeats, 1e-3), 1e-3}
     }};
     const auto nearestDistance = [](const RS_Spline& spline, const RS_Vector& point) {
         double start = 0.0;
@@ -9418,10 +9419,10 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                 point.y -= expectedTranslation.y;
             }
         } else if (profileIndex >= 8) {
-            expectedTranslation = {1e6, -2e6};
+            expectedTranslation = oracleProfile.splinePoints.front();
             for (RS_Vector& point : oracleProfile.splinePoints) {
-                point.x -= 1e6;
-                point.y += 2e6;
+                point.x -= expectedTranslation.x;
+                point.y -= expectedTranslation.y;
             }
             for (RS_Vector& point : oracleProfile.controlPoints) {
                 point.x -= 1e6;
