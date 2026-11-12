@@ -38678,3 +38678,24 @@ remain Slice 4's per-family variant matrix. Visible replacement-flow
 confirmation remains a separate Slice 5 gate, as do deployed-package and
 external-CAD checks. Picker availability must not be reported as complete
 geometry or end-to-end support.
+
+## 1037. Trim a Worker-created Typed Hyperbola Through the Native Action (2026-11-12)
+
+Test commit `5666c27d4` closes one action-integration gap for the bounded
+hyperbola profile already qualified in sections 932-934. The test first uses
+the real Update-from-Source worker path to replace an editable offset's source
+with the typed hyperbola, then creates a transverse line cutter at an interior
+point of one cache span. Native Trim produces an asynchronous nonempty preview
+without mutating the stored offset or advancing the document undo epoch;
+commit output matches the preview exactly. Undo restores the generalized
+typed-source offset and its hyperbola definition, and redo restores the
+committed fragments. The cutter and independent source entity remain intact.
+
+Validation on macOS arm64 CMake Release: `librecad_tests` rebuilds; the focused
+`"T native Trim action previews commits and undoes a worker-created typed
+hyperbola offset"` case passes 175 assertions; `[trim-action]` passes 22,002
+assertions / 73 cases; and `git diff --check` passes. This qualifies one
+bounded-hyperbola definition, cache topology, cutter placement, and Trim mode
+through the GUI action/worker path. Other hyperbola profiles, both Trim modes,
+file round-trip of the action-produced fragments, visible application
+interaction, cross-platform runs, and external-CAD acceptance remain open.
