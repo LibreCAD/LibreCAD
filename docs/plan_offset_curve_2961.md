@@ -37061,3 +37061,24 @@ the listed signed distances. It does not add an independent exact-normal
 oracle for these direct-generation outputs, cover other repeated fit-point
 layouts, or close visible-GUI and external-CAD acceptance for the generated
 editable source.
+
+## 960. Make Replacement Type Switching an Explicit Picker Gate (2026-11-11)
+
+Clarification of the requested source-widget behavior: changing the source
+curve type must be possible during the replacement workflow itself, not only
+when initially opening Properties or through an implicit type inferred from
+the current source. The family selector must remain usable while replacement
+is active; changing it filters the candidate list, and choosing a candidate
+replaces the source with that candidate's actual typed geometry. The current
+implementation already meets this UI contract across all nine
+`LC_OffsetSourceGeometry::SupportedKinds`, including parabola, and preserves
+the existing source indication while filters change. Sections 954 and 958
+record the implementation and headless regression evidence; action-level
+coverage also checks selector values and replacement in
+`lc_action_offsetcurve_source_tests.cpp`.
+
+Treat this as complete at the headless picker/selector level, not as proof that
+every curve variant is eligible for every offset operation. Keep the separate
+family-by-variant geometry, trim, worker/cache, DXF/DWG, and visible-GUI gates
+open until each has direct evidence. Visible interaction remains unverified in
+the current SSH session; do not infer it from offscreen Qt tests.
