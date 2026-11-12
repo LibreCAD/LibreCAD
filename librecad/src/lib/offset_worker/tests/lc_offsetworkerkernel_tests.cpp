@@ -10185,6 +10185,45 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(curvedEllipseRoundTripped.roots[2].target.rawSpan == 1);
     CHECK(curvedEllipseRoundTripped.roots[3].target.rawSpan == 1);
 
+    const double rotation = .37, cosine = std::cos(rotation), sine = std::sin(rotation);
+    const RS_Vector center{100, -200};
+    const auto transform = [&](RS_Vector p) {
+        return RS_Vector{center.x + cosine * p.x - sine * p.y,
+                         center.y + sine * p.x + cosine * p.y};
+    };
+    RS_SplineData transformedCache{3, false};
+    for (const RS_Vector point : std::array<RS_Vector, 8>{
+            RS_Vector{-3, 0}, {-1, 1.0}, {1, 1.0}, {3, 0},
+            {-3, 0}, {-1, -1.0}, {1, -1.0}, {3, 0}}) {
+        transformedCache.controlPoints.push_back(transform(point));
+    }
+    transformedCache.weights.assign(transformedCache.controlPoints.size(), 1.0);
+    transformedCache.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    const RS_EllipseData transformedEllipse{center, {2 * cosine, 2 * sine}, .5, 0, 0, false};
+    const RS_Vector transformedPick{center.x - .5 * sine, center.y + .5 * cosine};
+    const req::Request transformedInput{token,
+        req::TrimConic{transformedCache, transformedEllipse, {transformedPick}, {}, {}}};
+    const auto transformedReply = LC_OffsetWorkerKernel::run(transformedInput);
+    const auto& transformedOutput = trimmed(transformedReply, 3);
+    REQUIRE(transformedOutput.refusal == trim::Refusal::None);
+    REQUIRE(transformedOutput.conicFragments.size() == 1);
+    REQUIRE(transformedOutput.roots.size() == 4);
+    CHECK(transformedOutput.roots[0].target.rawSpan == 0);
+    CHECK(transformedOutput.roots[1].target.rawSpan == 0);
+    CHECK(transformedOutput.roots[2].target.rawSpan == 1);
+    CHECK(transformedOutput.roots[3].target.rawSpan == 1);
+    const auto transformedEncoded = result::encode(transformedReply, transformedInput);
+    REQUIRE(transformedEncoded);
+    const auto transformedDecoded = result::decode(*transformedEncoded, transformedInput);
+    REQUIRE(transformedDecoded);
+    const auto& transformedRoundTripped = std::get<trim::Result>(transformedDecoded->result);
+    REQUIRE(transformedRoundTripped.conicFragments.size() == 1);
+    REQUIRE(transformedRoundTripped.roots.size() == 4);
+    CHECK(transformedRoundTripped.roots[0].target.rawSpan == 0);
+    CHECK(transformedRoundTripped.roots[1].target.rawSpan == 0);
+    CHECK(transformedRoundTripped.roots[2].target.rawSpan == 1);
+    CHECK(transformedRoundTripped.roots[3].target.rawSpan == 1);
+
     for (const bool reverse : {false, true}) {
         const double start = reverse ? 3.14159265358979323846 : 0;
         const double finish = reverse ? 0 : 3.14159265358979323846;

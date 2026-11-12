@@ -1554,6 +1554,49 @@ TEST_CASE("Conic-only trim clips curved cubic contacts to an elliptic arc", tags
     }
 }
 
+TEST_CASE("Conic-only trim preserves curved contacts in a translated rotated frame", tags) {
+    const double rotation = .37, cosine = std::cos(rotation), sine = std::sin(rotation);
+    const RS_Vector center{100, -200};
+    const auto transform = [&](RS_Vector p) {
+        return RS_Vector{center.x + cosine * p.x - sine * p.y,
+                         center.y + sine * p.x + cosine * p.y};
+    };
+    RS_SplineData source{3, false};
+    for (const RS_Vector point : std::array<RS_Vector, 8>{
+            RS_Vector{-3, 0}, {-1, 1.0}, {1, 1.0}, {3, 0},
+            {-3, 0}, {-1, -1.0}, {1, -1.0}, {3, 0}}) {
+        source.controlPoints.push_back(transform(point));
+    }
+    source.weights.assign(source.controlPoints.size(), 1);
+    source.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    const auto before = source;
+    RS_Ellipse ellipse{nullptr, {center, {2 * cosine, 2 * sine}, .5, 0, 0, false}};
+    const auto ellipseBefore = ellipse.getData();
+    const RS_Vector pick{center.x - .5 * sine, center.y + .5 * cosine};
+
+    const auto result = Trim::prepareConic(source, ellipse, {pick});
+    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+        result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
+        result.work.intersections.generatedItems);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.roots.size() == 4);
+    std::array<unsigned, 2> rootsBySpan{};
+    for (const auto& root : result.roots) {
+        REQUIRE(root.target.rawSpan < rootsBySpan.size());
+        ++rootsBySpan[root.target.rawSpan];
+    }
+    CHECK(rootsBySpan == std::array<unsigned, 2>{2, 2});
+    REQUIRE(result.conicFragments.size() == 1);
+    CHECK(angularMember(result.conicFragments.front().data, 3 * pi / 2));
+    CHECK_FALSE(angularMember(result.conicFragments.front().data, pi / 2));
+    equalData(source, before);
+    CHECK(ellipse.getData().center == ellipseBefore.center);
+    CHECK(ellipse.getData().majorP == ellipseBefore.majorP);
+    CHECK(ellipse.getData().ratio == ellipseBefore.ratio);
+    CHECK(ellipse.getData().angle1 == ellipseBefore.angle1);
+    CHECK(ellipse.getData().angle2 == ellipseBefore.angle2);
+}
+
 TEST_CASE("Conic-only trim refuses overlapping duplicate contacts without singleton proofs", tags) {
     RS_SplineData source{1, false};
     source.controlPoints = {{-6, 4}, {6, 4}, {4, 7}, {-1, -8}};

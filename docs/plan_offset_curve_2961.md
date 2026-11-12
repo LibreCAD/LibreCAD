@@ -263,6 +263,12 @@ be confused with a persistent associative link to a source entity. If future
 work adds a new supported source kind, update the inventory, both selectors,
 capture/reconstruction, worker encoding, and this acceptance matrix together.
 
+Slice 4's transformed conic-frame cross-check is recorded in section 1031:
+genuinely curved disconnected cache branches and the eccentric ellipse are
+translated and rotated together, then exercised through direct and worker
+paths. It qualifies one rigid transform only, not arbitrary transforms or the
+full source-family matrix.
+
 **Implementation slices:**
 
 1. **Inventory and family switching.** Audit `SupportedKinds`, capture and
@@ -38492,3 +38498,21 @@ the worker transport case passes 188 assertions and the worker Trim selector
 passes 242 assertions / 2 cases. The remaining family/variant matrix,
 persistence lanes, visible GUI, qmake6 test coverage, and external ODA/AutoCAD
 acceptance remain open.
+
+## 1031. Trim Curved Components in a Translated Rotated Conic Frame (2026-11-12)
+
+The genuinely curved upper/lower cubic cache and half-ratio ellipse are now
+translated to `(100,-200)` and rotated by 0.37 radians as one rigid frame. The
+pick is transformed with the geometry. Direct conic-boundary Trim still finds
+four contacts, two per original disconnected span, retains the expected lower
+elliptic arc, and leaves both inputs unchanged. Worker computation and
+result-codec round-trip preserve the same contact count and source-span
+identities. This exercises the frame normalization and world-coordinate
+transport that origin-aligned fixtures do not cover.
+
+Validation on macOS arm64 CMake Release: the focused direct case passes 57
+assertions; the full Trim kernel suite passes 40,703 assertions / 67 cases;
+the worker transport case passes 206 assertions and the worker Trim selector
+passes 260 assertions / 2 cases. Larger translations, tiny/huge scales,
+arbitrary rotations, persistence, visible GUI, and external ODA/AutoCAD remain
+open.
