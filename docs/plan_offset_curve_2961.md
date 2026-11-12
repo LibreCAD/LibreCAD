@@ -39962,3 +39962,21 @@ Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
 through worker/action/Trim but are not individually round-tripped; affine
 output persistence is verified at scale `1`. Other affine matrices, cusp
 profiles, visible-GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1097. Persist Affine Cusp Trims Across All Scale Factors (2026-11-12)
+
+Test commit `9ecb31b34` removes the unit-scale-only persistence restriction
+from section 1096. The full matrix now round-trips symmetric and asymmetric
+cusp profiles under reflected/non-reflected similarity and non-uniform-scale
+plus-shear frames at scales `0.1`, `1`, and `10`. It covers line, circle, and
+bounded-arc cutters in both operand orders through all five DXF/DWG lanes:
+720 files. Reopened line/spline fragments are compared to committed geometry,
+editable-offset residue is rejected, and LibreDWG parses every generated DWG.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+`[transform]` run passes 47,907 assertions across two cases; the complete
+`[trim-action]` suite passes 99,583 assertions across 84 cases; and
+`git diff --check` passes. This supersedes section 1096's affine unit-scale
+limitation. The affine family is still one specific scale/shear matrix and
+only the two existing cusp control nets; other matrices/profiles, visible-GUI,
+cross-platform, and external-CAD acceptance remain open.
