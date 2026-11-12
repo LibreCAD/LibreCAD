@@ -37302,6 +37302,20 @@ do not imply all endpoint or repeated-point layouts are invalid: sections
 964-970 qualify selected interior adjacent/separated repeats, while other
 placements and joins remain open.
 
+## 973. Refuse Triple-interior Fit-point Repeats Atomically (2026-11-11)
+
+Test commit `45953be9d` adds a triple-interior repeated fit-point list to the
+explicitly unsupported layouts. The exact-normal kernel test confirms the
+layout has no eligible direct options and operation 7 refuses without ordinary
+output. The process-backed client likewise requires refusal, `changed ==
+false`, no ordinary branches, and no representable cache for distances `-0.5`,
+`-0.2`, `+0.2`, and `+0.5`. The expanded refusal test passes 2,004 assertions;
+the focused mixed positive/refusal worker oracle passes 21,820 assertions.
+
+This adds one explicit refusal boundary; it does not imply triple repeats are
+the only unsupported interior pattern or expand the accepted repeated-point
+matrix.
+
 ## 972. Oracle-check the Actual Repeated Fit-point Worker Splines (2026-11-11)
 
 Test commit `9d55762e0` closes the direct-piece/worker-output evidence gap from
