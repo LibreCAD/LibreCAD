@@ -9321,6 +9321,10 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}});
     const LC_SplinePointsData separatedRepeats =
         profile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}});
+    const LC_SplinePointsData leadingRepeat =
+        profile({{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}});
+    const LC_SplinePointsData trailingRepeat =
+        profile({{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}});
     const auto rotatedTranslated = [](LC_SplinePointsData data) {
         const double angle = 37.0 * std::acos(-1.0) / 180.0;
         const double cosine = std::cos(angle);
@@ -9331,15 +9335,16 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         }
         return data;
     };
-    const std::array<std::pair<LC_SplinePointsData, double>, 4> profiles{{
+    const std::array<std::pair<LC_SplinePointsData, double>, 6> profiles{{
         {adjacentRepeat, 1.0}, {separatedRepeats, 1.0},
+        {leadingRepeat, 1.0}, {trailingRepeat, 1.0},
         {rotatedTranslated(adjacentRepeat), 1.0},
         {rotatedTranslated(separatedRepeats), 1.0}
     }};
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
         LC_SplinePointsData oracleProfile = profiles[profileIndex].first;
-        if (profileIndex >= 2) {
+        if (profileIndex >= 4) {
             for (RS_Vector& point : oracleProfile.splinePoints) {
                 point.x -= 1e6;
                 point.y += 2e6;
@@ -9363,9 +9368,17 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                 oracleSource, signedDistance, 1e-4, false};
             const auto options = LC_OffsetWorkerTolerance::directOptions(
                 oracleDefinition, *fitPointSource);
-            REQUIRE(options);
+            if (profileIndex == 2 || profileIndex == 3) CHECK_FALSE(options);
             const req::Request generation{token,
                 req::GenerateSource{definition, {}}};
+            if (!options) {
+                const auto rejectedReply = LC_OffsetWorkerKernel::run(generation);
+                const auto& rejected = native(rejectedReply, 7);
+                CHECK(rejected.engineStatus != LC_CurveOffsetStatus::Ok);
+                CHECK(rejected.ordinaryStatus != result::OrdinaryStatus::Complete);
+                CHECK(rejected.ordinary.empty());
+                continue;
+            }
             const auto reply = LC_OffsetWorkerKernel::run(generation);
             const auto& generated = native(reply, 7);
             REQUIRE(generated.engineStatus == LC_CurveOffsetStatus::Ok);
@@ -9377,7 +9390,7 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
             REQUIRE(centered.engineStatus == LC_CurveOffsetStatus::Ok);
             REQUIRE(centered.ordinaryStatus == result::OrdinaryStatus::Complete);
             REQUIRE(centered.ordinary.size() == generated.ordinary.size());
-            const RS_Vector expectedTranslation = profileIndex >= 2
+            const RS_Vector expectedTranslation = profileIndex >= 4
                 ? RS_Vector{1e6, -2e6} : RS_Vector{0, 0};
             for (std::size_t branchIndex = 0; branchIndex < generated.ordinary.size(); ++branchIndex) {
                 const auto* worldSpline = std::get_if<RS_SplineData>(

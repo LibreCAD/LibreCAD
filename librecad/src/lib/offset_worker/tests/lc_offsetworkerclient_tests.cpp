@@ -3292,6 +3292,41 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     }
 }
 
+TEST_CASE("Endpoint repeated fit-point sources fail worker generation closed",
+          "[lc-offsetcurve][worker-client][fit-points][refusal]") {
+    auto& rt = runtime();
+    OwnedClient owned{rt};
+    std::array<LC_SplinePointsData, 2> profiles;
+    profiles[0] = LC_SplinePointsData{false, false};
+    profiles[0].splinePoints = {{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[1] = LC_SplinePointsData{false, false};
+    profiles[1].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}};
+    qint64 requestId = 1;
+    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        for (const double signedDistance : {-.5, -.2, .2, .5}) {
+            CAPTURE(signedDistance);
+            const LC_OffsetSourceDefinition definition{
+                LC_OffsetSourceGeometry{profiles[profileIndex]}, signedDistance, 1e-4, false};
+            Receipts receipts;
+            REQUIRE(owned.get().submit(
+                {token(requestId), Req::GenerateSource{definition, {}}},
+                Client::Mode::Commit, receipts.into(0)));
+            rt.until([&] { return receipts.calls[0] != 0; });
+            const auto& completion = completed(receipts.at(0), requestId, 7);
+            const auto& result = std::get<Reply::Native>(completion.reply().result);
+            CHECK(result.refusal != LC_OffsetCurveRefusal::None);
+            CHECK_FALSE(result.changed);
+            CHECK(result.engineStatus != LC_CurveOffsetStatus::Ok);
+            CHECK(result.ordinaryStatus != Reply::OrdinaryStatus::Complete);
+            CHECK(result.ordinary.empty());
+            RS_SplineData cache;
+            CHECK_FALSE(LC_OffsetWorkerSourceCache::combine(result.ordinary, cache));
+            ++requestId;
+        }
+    }
+}
+
 TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and DWG",
           "[lc-offsetcurve][worker-client][fit-points][persistence]") {
     REQUIRE(lc::test::ensureSettings());
