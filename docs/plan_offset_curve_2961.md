@@ -40077,6 +40077,7 @@ Post-refinement validation on macOS arm64 CMake Release: the focused
 / 2 cases; the both-branch worker-backed Trim Two round trip passes 1,240
 assertions / 1 case, including five DXF/DWG lanes and LibreDWG reads. The
 qmake6 recursive Release build succeeds and `git diff --check` passes. The
-111,465-assertion full `[trim-action]` result in section 1101 was run before
-this search-cost refinement; only the focused action and hyperbola unit tests
-were rerun afterward. A post-refinement full action-suite run remains open.
+full `[trim-action]` selector was rerun after this search-cost refinement and
+passes 109,513 assertions / 87 cases. This supersedes section 1101's
+pre-refinement full-suite receipt and closes the post-refinement Trim action
+regression gate for this code slice.
