@@ -37176,3 +37176,20 @@ This is bounded sampled evidence for these two profiles and four distances,
 not a continuous-error proof or support for all repeated-point arrangements.
 Other fit-point variants, broader persistence, visible GUI behavior, and
 external-CAD acceptance remain open.
+
+## 965. Compare Translated Worker Output to the Centered Oracle Run (2026-11-11)
+
+Test commit `fb30766d8` tightens section 964's evidence by generating each
+repeated-fit-point case twice: once from its world-coordinate definition and
+once from the equivalent centered definition used by the independent direct
+normal oracle. For each ordinary output branch, the regression requires the
+same spline type, control count, knot vector, and weights, with every world
+control point equal to the centered control point plus the exact source
+translation within `1e-7`. This directly checks that localization improves
+conditioning without dropping or misapplying output translation.
+
+The focused exact-normal and restoration case passes 21,602 assertions in one
+test case; `git diff --check` passes. The result strengthens translated output
+correctness for the two repeated-neighbor profiles and four signed distances.
+It does not expand the profile matrix, establish a continuous error bound, or
+close file round-trip, visible-GUI, and external-CAD gates.
