@@ -36938,3 +36938,16 @@ assertions across three cases; the full `[curve-offset][trim]` selection passes
 This is direct-geometry evidence only. The separated-repeat profile still
 needs worker preparation and file-lane coverage; other repeated-point layouts,
 visible GUI behavior, and external-CAD acceptance remain open.
+
+## 953. Run Separated Repeated Fit Points Through the Worker (2026-11-11)
+
+Test commit `b72f2158d` adds the separated repeated-neighbor profile from
+section 952 to the real worker-client trim matrix. Both sides at distances
+`0.2` and `0.5` complete typed-source preparation, worker Produce, completion
+acceptance, and publication while preserving the input source. The focused
+case passes 4,051 assertions; full `offset_worker_client` CTest passes in
+273.56 seconds. `git diff --check` passes.
+
+This closes worker preparation for this profile only. Its five-lane trimmed
+output persistence remains open, as do other repeated-point layouts, visible
+GUI behavior, and external-CAD acceptance.
