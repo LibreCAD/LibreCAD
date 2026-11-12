@@ -780,6 +780,106 @@ TEST_CASE("T native Trim action previews commits and undoes a worker-created typ
     for (const auto* output : fragments) CHECK_FALSE(output->isDeleted());
 }
 
+TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a circle in both pick orders",
+          "[gui][lc-offsetcurve][trim-action][typed-source][hyperbola][trim-two]") {
+    for (const bool hyperbolaFirst : {false, true}) {
+        CAPTURE(hyperbolaFirst);
+        Drawing<true> f;
+        auto* previous = addNative(f.graphic);
+        auto* hyperbola = new LC_Hyperbola(&f.graphic,
+            LC_HyperbolaData{{0, 0}, {3, 0}, 1.0, -1.5, 1.5, false});
+        f.graphic.addEntity(hyperbola);
+        f.graphic.select(QList<RS_Entity*>{previous}, true);
+
+        UpdateSourceProbe update(&f.context);
+        update.init(0);
+        update.setSourceKind(LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+        update.use(hyperbola);
+        lc::test::awaitUpdate(update);
+        REQUIRE(update.lastReport().updated == 1);
+        REQUIRE(previous->isDeleted());
+        LC_OffsetCurve* native = nullptr;
+        for (auto* entity : live(f.graphic)) {
+            if (entity->rtti() != RS2::EntityOffsetCurve) continue;
+            REQUIRE(native == nullptr);
+            native = dynamic_cast<LC_OffsetCurve*>(entity);
+        }
+        REQUIRE(native);
+        REQUIRE(native->hasGeneralizedSourceDefinition());
+        REQUIRE(native->sourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+
+        double first = 0, last = 0;
+        REQUIRE(native->getParameterDomain(first, last));
+        const auto breaks = native->getBreakParameters();
+        REQUIRE(breaks.size() >= 2);
+        const double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
+        const RS_Vector intersection = native->getPointAt(parameter);
+        const double step = std::max(1e-7, (last - first) * 1e-5);
+        const RS_Vector before = native->getPointAt(parameter - step);
+        const RS_Vector after = native->getPointAt(parameter + step);
+        RS_Vector tangent{after.x - before.x, after.y - before.y};
+        REQUIRE(tangent.magnitude() > RS_TOLERANCE);
+        tangent /= tangent.magnitude();
+        RS_Vector normal{-tangent.y, tangent.x};
+        constexpr double circleRadius = 1.0;
+        const RS_Vector circleCenter = intersection + tangent * circleRadius;
+        auto* circle = new RS_Circle(&f.graphic, RS_CircleData{circleCenter, circleRadius});
+        f.graphic.addEntity(circle);
+        const RS_Vector nativePick = native->getPointAt(
+            breaks.front() + (breaks[1] - breaks.front()) * .9);
+        const RS_Vector circlePick = circleCenter + normal * circleRadius;
+        const auto nativeBefore = trimGeometry(*native);
+        const auto circleBefore = trimGeometry(*circle);
+
+        const RS_Vector firstPick = hyperbolaFirst ? nativePick : circlePick;
+        const RS_Vector secondPick = hyperbolaFirst ? circlePick : nativePick;
+        f.action->click(firstPick);
+        REQUIRE(f.action->getStatus() == CacheTrim<true>::ChooseTrimEntity);
+        const auto previewUndoEpoch = f.graphic.undoStateEpoch();
+        f.action->hover(secondPick);
+        const auto preview = trimPreview(*f.action->m_preview);
+        REQUIRE_FALSE(preview.empty());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*circle) == circleBefore);
+        CHECK(f.graphic.undoStateEpoch() == previewUndoEpoch);
+
+        f.action->click(secondPick);
+        REQUIRE(native->isDeleted());
+        REQUIRE(circle->isDeleted());
+        std::vector<std::string> committed;
+        std::vector<RS_Entity*> fragments;
+        for (auto* entity : live(f.graphic)) {
+            if (entity == hyperbola) continue;
+            fragments.push_back(entity);
+            committed.push_back(trimGeometry(*entity));
+        }
+        CHECK(committed == preview);
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntitySpline;
+        }));
+        CHECK(std::any_of(fragments.begin(), fragments.end(), [](const RS_Entity* entity) {
+            return entity->rtti() == RS2::EntityArc;
+        }));
+
+        REQUIRE(f.graphic.undo());
+        CHECK_FALSE(native->isDeleted());
+        CHECK_FALSE(circle->isDeleted());
+        CHECK_FALSE(hyperbola->isDeleted());
+        REQUIRE(native->hasGeneralizedSourceDefinition());
+        CHECK(native->sourceDefinition()->source.kind() == LC_OffsetSourceGeometry::Kind::BoundedHyperbola);
+        CHECK(trimGeometry(*native) == nativeBefore);
+        CHECK(trimGeometry(*circle) == circleBefore);
+        for (const auto* fragment : fragments) CHECK(fragment->isDeleted());
+        REQUIRE(f.graphic.redo());
+        CHECK(native->isDeleted());
+        CHECK(circle->isDeleted());
+        for (const auto* fragment : fragments) CHECK_FALSE(fragment->isDeleted());
+    }
+}
+
 TEST_CASE("T plain cache target availability never enables one sided ordinary only Trim Two publication",
           "[lc-offsetcurve][trim-action][ordinary-spline]") {
     Drawing<true> f; auto* unrelatedNative = addNative(f.graphic, 10);
