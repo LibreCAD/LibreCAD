@@ -383,7 +383,7 @@ TEST_CASE("LC_LineTypeList::patternMatchesSeed compares the canonical dashes wit
         CHECK(LC_LineTypeList::patternMatchesSeed(entry));
     }
     SECTION("a vendor name has no seed") {
-        LC_LineType entry(QStringLiteral("DASHEDM"));
+        LC_LineType entry(QStringLiteral("VENDOR_TAB"));
         entry.pattern = {10.0, -5.0};
         CHECK_FALSE(LC_LineTypeList::patternMatchesSeed(entry));
     }
