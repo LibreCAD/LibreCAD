@@ -2428,8 +2428,10 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
 TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
     for (const double sourceBulge : {1.0, .5})
+        for (const bool addThirdSpan : {false, true})
         for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
-        CAPTURE(sourceBulge, trimLineSpan, polylineFirst);
+        if (addThirdSpan && sourceBulge != 1.0) continue;
+        CAPTURE(sourceBulge, addThirdSpan, trimLineSpan, polylineFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -2440,6 +2442,7 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         source->addVertex({0, 0}, sourceBulge);
         source->addVertex({2, 0});
         source->addVertex({2, 2});
+        if (addThirdSpan) source->addVertex({0, 2});
         source->endPolyline();
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
@@ -2466,6 +2469,7 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         REQUIRE(native->getParameterDomain(first, last));
         const auto breaks = native->getBreakParameters();
         REQUIRE(breaks.size() >= (trimLineSpan ? 3u : 2u));
+        if (addThirdSpan) REQUIRE(breaks.size() >= 4);
         const std::size_t span = trimLineSpan ? breaks.size() - 2 : 0;
         const double parameter = breaks[span] + (breaks[span + 1] - breaks[span]) * .43;
         const RS_Vector intersection = native->getPointAt(parameter);
