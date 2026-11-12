@@ -37283,3 +37283,19 @@ This closes worker/cache/file/LibreDWG coverage for these three profiles and
 four signed distances only. It does not cover all repeated-point layouts,
 arbitrary rotations/scales, source replacement or visible GUI behavior, or
 ODA/AutoCAD acceptance.
+
+## 971. Qualify Leading and Trailing Repeated Fit-point Refusals (2026-11-11)
+
+Test commit `0b5d12df9` covers fit-point lists with a duplicate at the leading
+or trailing endpoint. Both layouts fail direct option eligibility and worker
+operation 7 returns a refusal with no ordinary output; the process-backed
+client verifies the same atomic refusal for both profiles at `-0.5`, `-0.2`,
+`+0.2`, and `+0.5`, with `changed == false` and no representable cache. The
+focused client refusal test passes 1,362 assertions. The full fit-point kernel
+selection passes 21,935 assertions across seven cases; `git diff --check`
+passes.
+
+These are explicit unsupported boundaries, not newly supported geometry. They
+do not imply all endpoint or repeated-point layouts are invalid: sections
+964-970 qualify selected interior adjacent/separated repeats, while other
+placements and joins remain open.
