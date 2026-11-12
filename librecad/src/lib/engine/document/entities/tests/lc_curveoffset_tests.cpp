@@ -1974,6 +1974,39 @@ TEST_CASE("Closed fit-point spline ignores a repeated closing fit point",
     }
 }
 
+TEST_CASE("Closed fit-point spline ignores repeated interior neighbors",
+          "[curve-offset][direct][spline-points][closed][fit-points][repeated][oracle]") {
+    LC_SplinePointsData uniqueData{true, false};
+    uniqueData.splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
+    LC_SplinePointsData repeatedData = uniqueData;
+    repeatedData.splinePoints.insert(repeatedData.splinePoints.begin() + 2,
+                                     repeatedData.splinePoints[1]);
+    LC_SplinePoints unique{nullptr, uniqueData};
+    LC_SplinePoints repeated{nullptr, repeatedData};
+    REQUIRE(repeated.getData().splinePoints.size() == uniqueData.splinePoints.size() + 1);
+    REQUIRE(repeated.getData().controlPoints.size() == unique.getData().controlPoints.size());
+    for (std::size_t i = 0; i < unique.getData().controlPoints.size(); ++i) {
+        CHECK(repeated.getData().controlPoints[i].distanceTo(unique.getData().controlPoints[i]) <= 1e-12);
+    }
+
+    for (const LC_CurveOffsetSide side : {LC_CurveOffsetSide::Left, LC_CurveOffsetSide::Right}) {
+        CAPTURE(side);
+        constexpr double distance = 0.25;
+        const auto uniqueOptions = LC_CurveOffset::makeDirectOptions(unique, distance);
+        const auto repeatedOptions = LC_CurveOffset::makeDirectOptions(repeated, distance);
+        const auto uniqueResult = LC_CurveOffset::buildDirectBranches(
+            unique, LC_CurveOffset::makeSideRequest(side, distance), uniqueOptions,
+            LC_CurveOffset::makeDirectSourceBudget());
+        const auto repeatedResult = LC_CurveOffset::buildDirectBranches(
+            repeated, LC_CurveOffset::makeSideRequest(side, distance), repeatedOptions,
+            LC_CurveOffset::makeDirectSourceBudget());
+        REQUIRE(uniqueResult.status == LC_CurveOffsetStatus::Ok);
+        REQUIRE(repeatedResult.status == LC_CurveOffsetStatus::Ok);
+        CHECK(maxDeviation(uniqueResult, evaluator(unique)) <= uniqueOptions.tolerance.requestedGeometry);
+        CHECK(maxDeviation(repeatedResult, evaluator(repeated)) <= repeatedOptions.tolerance.requestedGeometry);
+    }
+}
+
 TEST_CASE("Closed control-point spline-points follow exact offset normals across the seam",
           "[curve-offset][direct][spline-points][closed][control-points][oracle]") {
     const LC_SplinePoints source = fromControlPoints({{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}}, true);
