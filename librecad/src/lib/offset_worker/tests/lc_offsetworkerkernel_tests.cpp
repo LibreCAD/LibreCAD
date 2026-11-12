@@ -10078,6 +10078,25 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(arcRoundTripped.roots[0].target.rawSpan == 0);
     CHECK(arcRoundTripped.roots[1].target.rawSpan == 0);
     CHECK(arcRoundTripped.roots[2].target.rawSpan == 1);
+
+    const req::Request reversedArcInput{token,
+        req::TrimConic{ellipseCache,
+            RS_ArcData{{0, 0}, 2, 3.14159265358979323846, 0, true}, {{.1, .9}}, {}, {}}};
+    const auto reversedArcReply = LC_OffsetWorkerKernel::run(reversedArcInput);
+    const auto& reversedArcOutput = trimmed(reversedArcReply, 3);
+    REQUIRE(reversedArcOutput.refusal == trim::Refusal::None);
+    REQUIRE(reversedArcOutput.conicFragments.size() == 2);
+    REQUIRE(reversedArcOutput.roots.size() == 3);
+    const auto reversedArcEncoded = result::encode(reversedArcReply, reversedArcInput);
+    REQUIRE(reversedArcEncoded);
+    const auto reversedArcDecoded = result::decode(*reversedArcEncoded, reversedArcInput);
+    REQUIRE(reversedArcDecoded);
+    const auto& reversedArcRoundTripped = std::get<trim::Result>(reversedArcDecoded->result);
+    REQUIRE(reversedArcRoundTripped.conicFragments.size() == 2);
+    REQUIRE(reversedArcRoundTripped.roots.size() == 3);
+    CHECK(reversedArcRoundTripped.roots[0].target.rawSpan == 0);
+    CHECK(reversedArcRoundTripped.roots[1].target.rawSpan == 0);
+    CHECK(reversedArcRoundTripped.roots[2].target.rawSpan == 1);
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",

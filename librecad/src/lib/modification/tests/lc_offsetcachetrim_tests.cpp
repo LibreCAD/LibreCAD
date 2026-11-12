@@ -1497,35 +1497,40 @@ TEST_CASE("Conic-only trim preserves an arc domain across disconnected component
     source.weights.assign(source.controlPoints.size(), 1);
     source.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
     const auto before = source;
-    RS_Arc arc{nullptr, {{0, 0}, 2, 0, pi, false}};
-    const auto arcBefore = arc.getData();
+    for (const bool reverse : {false, true}) {
+        CAPTURE(reverse);
+        const double start = reverse ? pi : 0;
+        const double finish = reverse ? 0 : pi;
+        RS_Arc arc{nullptr, {{0, 0}, 2, start, finish, reverse}};
+        const auto arcBefore = arc.getData();
 
-    const auto result = Trim::prepareConic(source, arc, {{.1, .9}});
-    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
-        result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
-        result.work.intersections.generatedItems);
-    REQUIRE(result.refusal == Trim::Refusal::None);
-    CHECK(result.fragments.empty()); CHECK(result.fragmentCount == 0); CHECK_FALSE(result.removed);
-    REQUIRE(result.roots.size() == 3);
-    CHECK(result.roots[0].target.rawSpan == 0); CHECK(result.roots[1].target.rawSpan == 0);
-    CHECK(result.roots[2].target.rawSpan == 1);
-    REQUIRE(result.conicFragments.size() == 2);
-    const auto retained = [&](double angle) {
-        unsigned count = 0;
-        for (const auto& fragment : result.conicFragments)
-            count += unsigned(angularMember(fragment.data, angle));
-        return count;
-    };
-    CHECK(retained(.1) == 1);
-    CHECK(retained(.9) == 1);
-    CHECK(retained(1.5) == 0);
-    CHECK(retained(3.1) == 1);
-    equalData(source, before);
-    CHECK(arc.getData().center == arcBefore.center);
-    CHECK(arc.getData().radius == arcBefore.radius);
-    CHECK(arc.getData().angle1 == arcBefore.angle1);
-    CHECK(arc.getData().angle2 == arcBefore.angle2);
-    CHECK(arc.getData().reversed == arcBefore.reversed);
+        const auto result = Trim::prepareConic(source, arc, {{.1, .9}});
+        CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+            result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
+            result.work.intersections.generatedItems);
+        REQUIRE(result.refusal == Trim::Refusal::None);
+        CHECK(result.fragments.empty()); CHECK(result.fragmentCount == 0); CHECK_FALSE(result.removed);
+        REQUIRE(result.roots.size() == 3);
+        CHECK(result.roots[0].target.rawSpan == 0); CHECK(result.roots[1].target.rawSpan == 0);
+        CHECK(result.roots[2].target.rawSpan == 1);
+        REQUIRE(result.conicFragments.size() == 2);
+        const auto retained = [&](double angle) {
+            unsigned count = 0;
+            for (const auto& fragment : result.conicFragments)
+                count += unsigned(angularMember(fragment.data, angle));
+            return count;
+        };
+        CHECK(retained(.1) == 1);
+        CHECK(retained(.9) == 1);
+        CHECK(retained(1.5) == 0);
+        CHECK(retained(3.1) == 1);
+        equalData(source, before);
+        CHECK(arc.getData().center == arcBefore.center);
+        CHECK(arc.getData().radius == arcBefore.radius);
+        CHECK(arc.getData().angle1 == arcBefore.angle1);
+        CHECK(arc.getData().angle2 == arcBefore.angle2);
+        CHECK(arc.getData().reversed == arcBefore.reversed);
+    }
 }
 
 TEST_CASE("Conic endpoint certificates use the actual whole frame chart and refuse symmetric closest ties", tags) {
