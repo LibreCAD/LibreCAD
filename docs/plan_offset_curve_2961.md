@@ -40239,3 +40239,21 @@ combinations; full `[trim-action]` passes 101,220 assertions / 87 cases; and
 4, not near-full reversed arcs, other radii/parameter tolerances, or the
 broader arc distance/precision matrix. Visible Properties interaction,
 cross-platform behavior, and ODA/AutoCAD acceptance remain open.
+
+## 1111. Qualify a Reversed Near-full Arc Through Trim Two (2026-11-12)
+
+Test commit `5190f80c8` adds a reversed near-full typed-arc Trim Two profile:
+center `(-3, 4)`, radius `4.3`, and reversed parameter bounds from
+`2*pi - 1e-4` to `1e-4`, which represent the long clockwise sweep under
+`RS_ArcData` angle-length semantics. It runs in both operand-pick orders with
+the ordinary, seam-crossing, and forward near-full controls. Each case retains
+preview/commit, undo/redo, five DXF/DWG save/reopen lanes, LibreDWG parsing,
+and parameterization-independent arc-locus comparison.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused arc
+Trim Two case passes 3,918 assertions / 1 case across ten profile/pick-order
+combinations; full `[trim-action]` passes 102,281 assertions / 87 cases; and
+`git diff --check` passes. This qualifies one reversed near-full arc at radius
+4.3; other radii, smaller seam gaps, precision limits, and distance boundaries
+remain open. Visible Properties interaction, cross-platform behavior, and
+ODA/AutoCAD acceptance remain open.
