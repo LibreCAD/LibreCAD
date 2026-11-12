@@ -65,14 +65,43 @@ worker/cache validation, trimming, or persistence. Do not extend the picker to
 unrelated drawable entities.
 
 **Acceptance sequence:** in the Properties source widget, start replacement,
-change the family at least twice before choosing, verify each change refreshes
-eligible candidates, then choose an entity of the final family. Verify the
-displayed type follows that candidate only after successful preparation and
-publication. Exercise all nine families and verify parabola remains distinct
-from spline-points. Existing headless tests satisfy this widget-level
-sequence; visible interaction remains in Slice 5, and per-variant
-generation/worker/cache/Trim/DXF/DWG coverage remains in Slice 4. Do not reopen
-picker implementation solely to repeat this request.
+keep the type selector and candidate chooser in the active replacement
+workflow, change the family at least twice before choosing, and verify each
+change refreshes candidates to the newly selected family. Choose an entity of
+the final family and verify that the committed source, cache, identity, and
+current-source indication remain unchanged until asynchronous validation
+succeeds. After publication, verify the displayed source type and indication
+follow the replacement; on cancellation, refusal, stale input, or worker
+failure, verify they remain with the prior source. Exercise every member of
+the nine-kind `SupportedKinds` inventory and verify parabola remains distinct
+from spline-points. Existing headless tests satisfy the selector/filter and
+typed replacement contracts; visible interaction remains in Slice 5, and
+per-variant generation/worker/cache/Trim/DXF/DWG coverage remains in Slice 4.
+Do not reopen picker implementation solely to repeat the already-covered
+selector request.
+
+**Step-by-step verification for future changes:**
+
+1. Derive the selector entries and candidate matching from the canonical
+   `LC_OffsetSourceGeometry::SupportedKinds`; avoid a parallel UI inventory.
+2. In a single replacement workflow, change the selector repeatedly before
+   picking. Assert that candidate results change immediately and contain only
+   eligible entities of the chosen kind, including a distinct parabola choice.
+3. Snapshot the target's source definition, geometry/cache fingerprint,
+   identity, selection, and temporary indication. Assert that type changes and
+   candidate browsing do not mutate that snapshot.
+4. Select candidates from all nine kinds. Assert that replacement publication
+   is asynchronous and atomic: success updates the source type and indication;
+   cancellation, invalid/stale candidates, and worker refusal preserve the
+   prior target and indication.
+5. Keep geometry-variant support separate from selector coverage. For each
+   eligible source variant, use Slice 4's generation, worker/cache, trimming,
+   and applicable DXF/DWG matrix; do not treat a selectable type as proof of
+   end-to-end geometry support.
+6. Run the focused headless source-picker/action suite, then the visible
+   Properties workflow and delivery checks in Slice 5. Record platform,
+   revision, exact command, and result; headless coverage does not close the
+   visible-GUI gate.
 
 Automated picker evidence: the focused headless source-picker suite passes
 14,831 assertions / 43 cases (`librecad_tests
