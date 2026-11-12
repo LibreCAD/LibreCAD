@@ -9969,6 +9969,29 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(roundTripped.fragmentCount == output.fragmentCount);
     REQUIRE(roundTripped.fragments.size() == output.fragments.size());
     CHECK(roundTripped.fragments.back().sourceSections.front().rawSpan == 0);
+
+    RS_SplineData cubic{3, false};
+    cubic.controlPoints = {{0, 0}, {2, 2}, {8, 2}, {10, 0},
+                           {0, 8}, {2, 10}, {8, 10}, {10, 8}};
+    cubic.weights.assign(cubic.controlPoints.size(), 1.0);
+    cubic.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    const req::Request cubicInput{token,
+        req::TrimCache{cubic, req::Segment{{5, -1}, {5, 11}}, {{8, 9}}, {}}};
+    const auto cubicReply = LC_OffsetWorkerKernel::run(cubicInput);
+    const auto& cubicOutput = trimmed(cubicReply, 2);
+    CAPTURE(static_cast<int>(cubicOutput.refusal));
+    REQUIRE(cubicOutput.refusal == trim::Refusal::None);
+    REQUIRE(cubicOutput.fragments.size() == 2);
+    REQUIRE(cubicOutput.roots.size() == 1);
+    CHECK(cubicOutput.roots.front().target.rawSpan == 1);
+    const auto cubicEncoded = result::encode(cubicReply, cubicInput);
+    REQUIRE(cubicEncoded);
+    const auto cubicDecoded = result::decode(*cubicEncoded, cubicInput);
+    REQUIRE(cubicDecoded);
+    const auto& cubicRoundTripped = std::get<trim::Result>(cubicDecoded->result);
+    REQUIRE(cubicRoundTripped.fragments.size() == 2);
+    CHECK(cubicRoundTripped.fragments.front().sourceSections.front().rawSpan == 1);
+    CHECK(cubicRoundTripped.fragments.back().sourceSections.front().rawSpan == 0);
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",

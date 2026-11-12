@@ -612,21 +612,34 @@ private:
 
 std::size_t preflight(Context& c, const RS_SplineData& data) {
     c.check();
-    const auto counts = Geo::cacheLayoutCountsFromControls(data.degree, data.controlPoints.size());
-    if (!counts) { fail(Refusal::UnsupportedLayout); }
-    if (counts->spans > c.limits.maxSpansPerCurve || counts->spans > c.limits.maxInputSpans - c.work.inputSpans) {
-        fail(Refusal::LimitExceeded);
-    }
-    // Include every input array (even forbidden payload) BEFORE inspecting elements.
+    const auto degree = std::size_t(data.degree);
+    if ((degree != 1 && degree != 3) || data.controlPoints.size() < degree + 1 ||
+        data.knotslist.size() != data.controlPoints.size() + degree + 1 ||
+        data.weights.size() != data.controlPoints.size()) fail(Refusal::UnsupportedLayout);
+    // Charge every input array, including forbidden payload, before scanning knots.
     std::size_t n = 0;
     const auto add = [&](std::size_t count) {
         if (count > c.limits.maxInputRecords - c.work.inputRecords - n) { fail(Refusal::LimitExceeded); }
         n += count;
     };
     add(data.controlPoints.size()); add(data.weights.size()); add(data.knotslist.size());
-    add(data.fitPoints.size()); add(data.savedOpenKnots.size()); add(counts->spans); add(counts->spans);
-    c.work.inputSpans += counts->spans; c.work.inputRecords += n;
-    return counts->spans;
+    add(data.fitPoints.size()); add(data.savedOpenKnots.size());
+    std::size_t spans = 0;
+    for (std::size_t i = 0; i < data.knotslist.size();) {
+        if (!std::isfinite(data.knotslist[i]) || (i && !(data.knotslist[i - 1] <= data.knotslist[i])))
+            fail(Refusal::UnsupportedLayout);
+        const double value = data.knotslist[i];
+        do { ++i; } while (i < data.knotslist.size() && data.knotslist[i] == value);
+        ++spans;
+    }
+    if (spans < 2) fail(Refusal::UnsupportedLayout);
+    --spans;
+    if (spans > c.limits.maxSpansPerCurve || spans > c.limits.maxInputSpans - c.work.inputSpans) {
+        fail(Refusal::LimitExceeded);
+    }
+    add(spans); add(spans);
+    c.work.inputSpans += spans; c.work.inputRecords += n;
+    return spans;
 }
 
 Spans inspect(Context& c, const RS_SplineData& data) {

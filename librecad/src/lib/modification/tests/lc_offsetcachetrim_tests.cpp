@@ -421,6 +421,60 @@ TEST_CASE("Cache trim edits the picked disconnected component and retains every 
     }
 }
 
+TEST_CASE("Cache trim preserves an unpicked cubic branch across a full-multiplicity knot break", tags) {
+    RS_SplineData data{3, false};
+    data.controlPoints = {{0, 0}, {2, 2}, {8, 2}, {10, 0},
+                          {0, 8}, {2, 10}, {8, 10}, {10, 8}};
+    data.weights.assign(data.controlPoints.size(), 1.0);
+    data.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    RS_Line cutter{nullptr, {5, -1}, {5, 11}};
+    const auto expectedPoint = [&](std::size_t span, long double t) {
+        const std::size_t base = span * 4;
+        const auto& p0 = data.controlPoints[base]; const auto& p1 = data.controlPoints[base + 1];
+        const auto& p2 = data.controlPoints[base + 2]; const auto& p3 = data.controlPoints[base + 3];
+        const auto u = 1 - t;
+        return RS_Vector{double(u * u * u * p0.x + 3 * u * u * t * p1.x +
+                                 3 * u * t * t * p2.x + t * t * t * p3.x),
+                         double(u * u * u * p0.y + 3 * u * u * t * p1.y +
+                                 3 * u * t * t * p2.y + t * t * t * p3.y)};
+    };
+
+    for (const auto& [pick, selectedSpan] : std::array<std::pair<RS_Vector, std::size_t>, 2>{{
+             {{2, 1}, 0}, {{8, 9}, 1}}}) {
+        const auto result = Trim::prepare(data, cutter, {pick});
+        CAPTURE(pick.x, pick.y, selectedSpan, static_cast<int>(result.refusal));
+        REQUIRE(result.refusal == Trim::Refusal::None);
+        REQUIRE(result.fragments.size() == 2);
+        REQUIRE(result.roots.size() == 1);
+        CHECK(result.roots.front().target.rawSpan == selectedSpan);
+        REQUIRE(result.removed);
+        CHECK(result.removed->from.rawSpan == selectedSpan);
+        CHECK(result.removed->to.rawSpan == selectedSpan);
+        CHECK(result.fragmentCount == 2);
+        std::array<bool, 2> seen{};
+        bool keptUntouchedSpan = false;
+        for (const auto& fragment : result.fragments) {
+            REQUIRE_FALSE(fragment.sourceSections.empty());
+            for (std::size_t sectionIndex = 0; sectionIndex < fragment.sourceSections.size(); ++sectionIndex) {
+                const auto& section = fragment.sourceSections[sectionIndex];
+                REQUIRE(section.rawSpan < seen.size());
+                seen[section.rawSpan] = true;
+                if (section.rawSpan != selectedSpan && section.from == 0 && section.to == 1) {
+                    keptUntouchedSpan = true;
+                }
+                REQUIRE(section.from < section.to);
+                for (int i = 0; i <= 16; ++i) {
+                    const long double t = i / 16.L;
+                    near(evaluate(fragment.data, sectionIndex, t),
+                         expectedPoint(section.rawSpan,
+                             section.from + t * (static_cast<long double>(section.to) - section.from)));
+                }
+            }
+        }
+        CHECK(seen[0]); CHECK(seen[1]); CHECK(keptUntouchedSpan);
+    }
+}
+
 TEST_CASE("Cache trim reads an actually adopted native cutter without editing its cache or children", tags) {
     for (bool reverse : {false, true}) {
         const auto native = nativeRing(reverse); const auto before = native->getData();
