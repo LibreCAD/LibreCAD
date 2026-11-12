@@ -4317,10 +4317,12 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     closedInteriorRepeated.splinePoints = {{0, 0}, {10, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}};
     LC_SplinePointsData closedNearCoincident{true, false};
     closedNearCoincident.splinePoints = {{0, 0}, {10, 0}, {10.001, 0}, {13, 8}, {4, 13}, {-3, 8}};
-    std::array<LC_SplinePointsData, 7> sourceProfiles{{sourceData, sourceData,
+    LC_SplinePointsData openNearCoincident{false, false};
+    openNearCoincident.splinePoints = {{0, 0}, {1, 1}, {1.0001, 1.0001}, {2, 0}, {3, 1}};
+    std::array<LC_SplinePointsData, 8> sourceProfiles{{sourceData, sourceData,
                                                       leadingRepeated, trailingRepeated,
                                                       closedRepeated, closedInteriorRepeated,
-                                                      closedNearCoincident}};
+                                                      closedNearCoincident, openNearCoincident}};
     std::reverse(sourceProfiles[1].splinePoints.begin(), sourceProfiles[1].splinePoints.end());
     const std::array<double, 2> distances{{0.2, 0.5}};
     const std::array<double, 2> sides{{1.0, -1.0}};
@@ -4347,12 +4349,14 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
         REQUIRE(source.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, sourceJet));
         REQUIRE(sourceJet.first.magnitude() > 0.0);
         const RS_Vector leftNormal{-sourceJet.first.y / sourceJet.first.magnitude(), sourceJet.first.x / sourceJet.first.magnitude()};
+        const double distanceScale = profileIndex == 7 ? 0.1 : 1.0;
         for (const double distance : distances) {
             for (const double side : sides) {
-                CAPTURE(distance, side);
+                const double actualDistance = distance * distanceScale;
+                CAPTURE(distance, actualDistance, side);
                 RS_OffsetData offset;
                 offset.coord = sourceJet.point + leftNormal * (side * 8.0);
-                offset.distance = distance;
+                offset.distance = actualDistance;
                 offset.number = 1;
                 offset.multipleCopies = true;
                 offset.keepOriginals = true;
