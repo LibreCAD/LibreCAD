@@ -95,9 +95,9 @@ public:
     QStringList messages;
     void commandMessage(const QString& message) override { messages.append(message); }
 };
-LC_OffsetCurve* native(RS_Graphic& graphic) {
+LC_OffsetCurve* native(RS_Graphic& graphic, double distance = .25) {
     RS_Ellipse source(nullptr, {{0, 0}, {1, 0}, 1., 0., .1, false});
-    auto prepared = LC_OffsetCurve::create(source, .25, false);
+    auto prepared = LC_OffsetCurve::create(source, distance, false);
     CAPTURE(prepared.refusal);
     REQUIRE(prepared);
     prepared.entity->setLayer(graphic.findLayer("0"));
@@ -461,4 +461,98 @@ TEST_CASE("I Update from Source preserves every typed source through five DXF an
         CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(reopenedDefinition->source) ==
               LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*expectedSource));
     }
+}
+
+TEST_CASE("I transformed near-boundary fit-point source persists as an editable offset",
+          "[lc-offsetcurve][i-ui][persistence][dxf][dwg][typed][fit-points][conditioning]") {
+    REQUIRE(lc::test::application());
+    lc::test::QuietLog quiet;
+    const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000, RS2::FormatDWG,
+        RS2::FormatDXFRW2018, RS2::FormatDWG2018);
+    const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    RS_Graphic graphic;
+    graphic.initForNewDocument();
+    lc::test::TestGraphicView view;
+    view.setDocument(&graphic);
+    view.getViewPort()->setOffsetAndFactor(20, 20, 30.);
+    Context context;
+    context.setDocumentAndView(&graphic, &view);
+
+    auto* target = native(graphic, .02);
+    target->setLayer(graphic.findLayer("0"));
+    const RS_Pen pen(RS_Color(255, 0, 0), RS2::WidthDefault, RS2::SolidLine);
+    target->setPen(pen);
+    const auto expectedDistance = target->definition().towardCentre
+        ? -target->definition().distance : target->definition().distance;
+
+    LC_SplinePointsData data{false, false};
+    data.fitTolerance = 1e-8;
+    data.splinePoints = {{10, -20}, {11, -21}, {11.000051, -21.000051},
+                         {12, -20}, {13, -21}};
+    const LC_OffsetSourceGeometry expectedSource{data};
+    REQUIRE(expectedSource.isWellFormed());
+    auto sourceOwner = expectedSource.makeEntity();
+    REQUIRE(sourceOwner);
+    auto* source = sourceOwner.get();
+    source->setLayer(graphic.findLayer("0"));
+    graphic.addEntity(source);
+    sourceOwner.release();
+    const auto capturedSource = LC_OffsetSourceGeometry::capture(*source);
+    REQUIRE(capturedSource);
+    const auto expectedEncoding = LC_OffsetWorkerRequest::Values::encodeSourceGeometry(*capturedSource);
+    REQUIRE(expectedEncoding);
+
+    graphic.select(QList<RS_Entity*>{target}, true);
+    auto update = LC_ActionsHandlerFactory::createActionInstance(RS2::ActionOffsetCurveUpdateSource, &context);
+    REQUIRE(update);
+    update->init(0);
+    update->setSnapMode(RS_SnapMode{});
+    auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
+    REQUIRE(updateAction);
+    updateAction->setSourceKind(SourceKind::SplinePoints);
+    const RS_Vector pick = data.splinePoints[2];
+    for (unsigned i = 0; i < 2; ++i) mouse(*update, view, pick, false);
+    mouse(*update, view, pick, true);
+    lc::test::awaitUpdate(*updateAction);
+    CHECK(updateAction->lastReport().updated == 1);
+    CHECK(updateAction->lastReport().refused == 0);
+    REQUIRE(target->isDeleted());
+
+    auto* updated = onlyNative(graphic);
+    certified(*updated);
+    REQUIRE(updated->hasGeneralizedSourceDefinition());
+    REQUIRE(updated->sourceDefinition());
+    CHECK(updated->sourceDefinition()->source.kind() == SourceKind::SplinePoints);
+    CHECK(updated->sourceDefinition()->signedDistance == expectedDistance);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(updated->sourceDefinition()->source) ==
+          expectedEncoding);
+    CHECK(updated->getPen(true) == pen);
+
+    const QString file = directory.filePath(QStringLiteral("fit-point-%1").arg(static_cast<int>(format)) +
+                                             (dwg ? ".dwg" : ".dxf"));
+    const auto path = std::filesystem::path(file.toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, path, format));
+#ifdef DWGSUPPORT
+    if (dwg && !libreDwgReader.isEmpty())
+        checkLibreDwgSpline(libreDwgReader, path, updated->getData());
+#endif
+    RS_Graphic reopenedGraphic;
+    REQUIRE(lc::test::importDrawing(reopenedGraphic, path, format));
+    auto* reopenedCurve = onlyNative(reopenedGraphic);
+    certified(*reopenedCurve);
+    REQUIRE(reopenedCurve->hasGeneralizedSourceDefinition());
+    REQUIRE(reopenedCurve->sourceDefinition());
+    CHECK(reopenedCurve->sourceDefinition()->source.kind() == SourceKind::SplinePoints);
+    CHECK(reopenedCurve->sourceDefinition()->signedDistance == expectedDistance);
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceGeometry(reopenedCurve->sourceDefinition()->source) ==
+          expectedEncoding);
+    CHECK(reopenedCurve->getPen(true) == pen);
+    CHECK(RS_Spline::geometryFingerprint(reopenedCurve->getData()) ==
+          RS_Spline::geometryFingerprint(updated->getData()));
 }
