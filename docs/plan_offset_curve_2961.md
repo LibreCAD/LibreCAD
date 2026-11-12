@@ -38881,3 +38881,22 @@ target rebuilds; and `git diff --check` passes. This is action integration
 evidence for one finite typed-line profile. Five-lane persistence, other line
 variants, other Trim Two source families, visible GUI, cross-platform, and
 external-CAD acceptance remain open.
+
+## 1047. Persist Typed Line Trim Two Output Across Five File Lanes (2026-11-12)
+
+Test commit `bc9add13c` extends section 1046's worker-created typed-line Trim
+Two result through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, in both operand
+pick orders. LibreCAD reopens each output and checks the full line/spline
+entity inventory, tolerant control-point/knot/weight equality, endpoint-
+order-independent line geometry, and absence of editable-offset residue.
+When LibreDWG is available, both DWG files must parse as minJSON and contain
+LINE and SPLINE entities.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused line
+Trim Two case passes 715 assertions across both pick orders and all five
+lanes; `[trim-action]` passes 23,663 assertions / 76 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; the test target rebuilds; and
+`git diff --check` passes. This closes persistence and independent structural
+decoding for one short typed-line profile only. Other line variants, remaining
+Trim Two families, visible GUI, cross-platform, and external-CAD acceptance
+remain open.
