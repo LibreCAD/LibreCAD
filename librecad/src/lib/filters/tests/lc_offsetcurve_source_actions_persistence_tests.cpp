@@ -33,6 +33,7 @@
 #include "lc_filtertestsupport.h"
 #include "../../offset_worker/lc_offsetworkerrequest.h"
 #include "lc_offsetcurve.h"
+#include "lc_offsetcachetrim.h"
 #include "lc_splinepoints.h"
 #include "lc_parabola.h"
 #include "lc_hyperbola.h"
@@ -1051,6 +1052,9 @@ TEST_CASE("I refuse closed convex polyline trims atomically when intersections a
     auto* cutter = new RS_Line(&graphic, {5, -20}, {5, 20});
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
+    const auto kernel = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
+    CAPTURE(static_cast<int>(kernel.refusal), kernel.rootCount);
+    CHECK(kernel.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
     const auto cacheBefore = RS_Spline::geometryFingerprint(replacement->getData());
     const auto sourceBefore = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
         *replacement->sourceDefinition());
