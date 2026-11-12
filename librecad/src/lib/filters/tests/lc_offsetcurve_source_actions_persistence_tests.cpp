@@ -100,6 +100,11 @@ public:
     QStringList messages;
     void commandMessage(const QString& message) override { messages.append(message); }
 };
+class TrimActionProbe final : public LC_ActionModifyTrim {
+public:
+    using LC_ActionModifyTrim::LC_ActionModifyTrim;
+    bool pending() const noexcept { return hasPendingNativeTrim(); }
+};
 LC_OffsetCurve* native(RS_Graphic& graphic, double distance = .25, bool towardCentre = false) {
     const double radius = towardCentre ? distance * 2.0 : 1.0;
     RS_Ellipse source(nullptr, {{0, 0}, {radius, 0}, 1., 0., .1, false});
@@ -719,8 +724,9 @@ TEST_CASE("I thin hyperbola cusp-boundary source persists as an editable offset"
           RS_Spline::geometryFingerprint(updated->getData()));
 }
 
-TEST_CASE("I trimmed typed-hyperbola offsets demote atomically to plain fragments",
-          "[lc-offsetcurve][trim-action][typed-source][hyperbola][cusp]") {
+TEST_CASE("I trimmed typed parabola and hyperbola offsets demote atomically to plain fragments",
+          "[lc-offsetcurve][trim-action][typed-source][parabola][hyperbola][cusp]") {
+    const auto kind = GENERATE(SourceKind::Parabola, SourceKind::BoundedHyperbola);
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     QTemporaryDir directory;
@@ -736,11 +742,13 @@ TEST_CASE("I trimmed typed-hyperbola offsets demote atomically to plain fragment
     constexpr double semiMajor = 10.0;
     constexpr double ratio = .2;
     constexpr double vertexRadius = semiMajor * ratio * ratio;
-    const double distance = .5 * vertexRadius;
+    const double distance = kind == SourceKind::BoundedHyperbola ? .5 * vertexRadius : .05;
     auto* target = native(graphic, distance);
-    const LC_HyperbolaData sourceData{{0, 0}, {semiMajor, 0}, ratio, -.4, .4, false};
-    auto sourceOwner = std::make_unique<LC_Hyperbola>(nullptr, sourceData);
-    REQUIRE(sourceOwner->isValid());
+    const LC_OffsetSourceGeometry sourceData = kind == SourceKind::BoundedHyperbola
+        ? LC_OffsetSourceGeometry{LC_HyperbolaData{{0, 0}, {semiMajor, 0}, ratio, -.4, .4, false}}
+        : sourceGeometry(kind);
+    auto sourceOwner = sourceData.makeEntity();
+    REQUIRE(sourceOwner);
     auto* source = sourceOwner.get();
     source->setLayer(graphic.findLayer("0"));
     graphic.addEntity(source);
@@ -753,8 +761,9 @@ TEST_CASE("I trimmed typed-hyperbola offsets demote atomically to plain fragment
     update->setSnapMode(RS_SnapMode{});
     auto* updateAction = dynamic_cast<LC_ActionOffsetCurveUpdateSource*>(update.get());
     REQUIRE(updateAction);
-    updateAction->setSourceKind(SourceKind::BoundedHyperbola);
-    const RS_Vector sourcePick = source->getPrimaryVertex();
+    updateAction->setSourceKind(kind);
+    const RS_Vector sourcePick = kind == SourceKind::BoundedHyperbola
+        ? RS_Vector{semiMajor, 0} : sourcePickPoint(kind);
     for (unsigned i = 0; i < 2; ++i) mouse(*update, view, sourcePick, false);
     mouse(*update, view, sourcePick, true);
     lc::test::awaitUpdate(*updateAction);
@@ -762,14 +771,16 @@ TEST_CASE("I trimmed typed-hyperbola offsets demote atomically to plain fragment
     auto* nativeCurve = onlyNative(graphic);
     REQUIRE(nativeCurve->hasGeneralizedSourceDefinition());
     REQUIRE(nativeCurve->sourceDefinition());
-    CHECK(nativeCurve->sourceDefinition()->source.kind() == SourceKind::BoundedHyperbola);
+    CHECK(nativeCurve->sourceDefinition()->source.kind() == kind);
     REQUIRE(graphic.removeEntity(source));
 
     double parameterStart = 0.0;
     double parameterEnd = 0.0;
     REQUIRE(nativeCurve->getParameterDomain(parameterStart, parameterEnd));
     LC_CurveJet jet;
-    const double cutParameter = parameterStart + .75 * (parameterEnd - parameterStart);
+    const double cutFraction = kind == SourceKind::Parabola ? .5 : .75;
+    const double targetFraction = kind == SourceKind::Parabola ? .9 : .1;
+    const double cutParameter = parameterStart + cutFraction * (parameterEnd - parameterStart);
     REQUIRE(nativeCurve->tryEvaluateJet(cutParameter, LC_CurveEvaluationSide::Interior, jet));
     RS_Vector cutterDirection{-jet.first.y, jet.first.x};
     REQUIRE(cutterDirection.magnitude() > 0.0);
@@ -778,18 +789,21 @@ TEST_CASE("I trimmed typed-hyperbola offsets demote atomically to plain fragment
     cutter->setLayer(graphic.findLayer("0"));
     graphic.addEntity(cutter);
     const RS_Vector targetPick = nativeCurve->getPointAt(
-        parameterStart + .1 * (parameterEnd - parameterStart));
+        parameterStart + targetFraction * (parameterEnd - parameterStart));
     REQUIRE(targetPick.valid);
-    LC_ActionModifyTrim trim(&context);
+    TrimActionProbe trim(&context);
     trim.init(0);
     mouse(trim, view, jet.point + cutterDirection * .75, true);
     mouse(trim, view, targetPick, true);
     QElapsedTimer trimWait;
     trimWait.start();
-    while (!nativeCurve->isDeleted() && trimWait.elapsed() < 35000) {
+    while (trim.pending() && trimWait.elapsed() < 35000) {
         QCoreApplication::processEvents(QEventLoop::AllEvents);
         QThread::msleep(1);
     }
+    CAPTURE(kind);
+    CAPTURE(nativeCurve->size());
+    for (const auto& message : context.messages) UNSCOPED_INFO(message.toStdString());
     REQUIRE(nativeCurve->isDeleted());
     CHECK(nativeCurve->isDeleted());
     CHECK_FALSE(cutter->isDeleted());
