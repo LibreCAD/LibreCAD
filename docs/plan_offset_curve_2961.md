@@ -37264,3 +37264,18 @@ exact-normal kernel oracle separately covers the two untranslated profiles
 and their translated variants at four distances. Other fit-point layouts,
 negative-distance file lanes, visible GUI behavior, and ODA/AutoCAD remain
 open.
+
+## 970. Qualify Signed Worker Persistence for Repeated Fit-point Profiles (2026-11-11)
+
+Test commit `8ea2f4bd5` expands section 969's three profiles across the full
+signed-distance set `-0.5`, `-0.2`, `+0.2`, and `+0.5`: adjacent repeats,
+separated interior/trailing repeats, and rotated/translated adjacent repeats.
+Each of the 12 worker-generated caches is round-tripped through R14 DXF,
+R2000 DXF/DWG, R2007 DWG, and R2018 DWG, for 60 application save/reopens. The
+available LibreDWG reader independently parses and geometry-checks all 36 DWG
+files. The focused test passes 17,881 assertions; `git diff --check` passes.
+
+This closes worker/cache/file/LibreDWG coverage for these three profiles and
+four signed distances only. It does not cover all repeated-point layouts,
+arbitrary rotations/scales, source replacement or visible GUI behavior, or
+ODA/AutoCAD acceptance.
