@@ -39552,3 +39552,22 @@ not establish exact cusp-cache behavior for rotated/translated sources, other
 control nets, a continuous range of distances, five-format persistence of
 these specific cusp caches, GUI visibility, cross-platform, or external CAD
 acceptance.
+
+## 1079. Round-trip Exact-stall and Multi-branch Parabola Caches (2026-11-12)
+
+Test commit `6fffc3945` extends section 1078's exact-cusp (`0.5`) and beyond-
+cusp (`0.51`) Update-from-Source fixtures through all five supported DXF/DWG
+lanes: R12 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Reopened files
+must contain one generalized typed-parabola offset entity with the original
+signed distance and an identical cached-geometry fingerprint. When LibreDWG's
+`dwgread` is available, both DWG outputs must also parse successfully.
+
+Validation on macOS arm64 CMake Release: the focused persistence case passes
+165 assertions / 1 case; the test target builds; LibreDWG 0.14 parses both DWG
+lanes for each distance; and `git diff --check` passes. The full `[trim-action]`
+suite last passed 47,243 assertions across 81 cases before this persistence-only
+extension; it has not been rerun after this slice. This closes the five-format
+cache-persistence question for the two tested distances on the symmetric
+`y = x^2` source. It does not establish a continuous cusp-distance range,
+rotated/translated cusp caches, other parabola control nets at cusp distances,
+GUI visibility, cross-platform behavior, or external CAD acceptance.
