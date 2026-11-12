@@ -30,6 +30,7 @@
 #include "lc_offsetcurve.h"
 #include "lc_offsetcurveeditsnapshot.h"
 #include "lc_offsetcurvexdata.h"
+#include "lc_curveoffset.h"
 #include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
@@ -143,6 +144,71 @@ LC_OffsetCurve* addNative(RS_Graphic& graphic, double dx = 0) {
     native->setDrwExtData({std::make_shared<DRW_Variant>(1001, std::string("TRIM_FOREIGN")),
         std::make_shared<DRW_Variant>(1000, std::string("keep exactly"))});
     auto* out = native.release(); graphic.addEntity(out); return out;
+}
+std::array<LC_OffsetCurve*, 2> addTrimmedProducerNatives(RS_Graphic& graphic, bool reverse) {
+    const double pi = std::acos(-1.0);
+    const RS_EllipseData basis{{0, 0}, {100, 0}, .05, pi / 12, 7 * pi / 4, false};
+    const RS_Ellipse source{nullptr, basis};
+    auto options = LC_CurveOffset::makeDirectOptions(source, 4, 1e-4);
+    options.mode = LC_CurveOffsetMode::Trimmed;
+    auto made = LC_CurveOffset::createEntities(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 4), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok);
+    REQUIRE(made.entities.size() == 2);
+    std::array<LC_OffsetCurve*, 2> result{};
+    for (const auto& entity : made.entities) {
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+        REQUIRE(spline != nullptr);
+        auto data = spline->getData();
+        REQUIRE_FALSE(data.controlPoints.empty());
+        const bool closed = data.controlPoints.front().x == data.controlPoints.back().x &&
+                            data.controlPoints.front().y == data.controlPoints.back().y;
+        const std::size_t component = closed ? 1 : 0;
+        REQUIRE(result[component] == nullptr);
+        if (reverse) std::reverse(data.controlPoints.begin(), data.controlPoints.end());
+        LC_EllipseOffsetDefinition definition;
+        definition.basis = basis; definition.distance = 4; definition.towardCentre = true;
+        definition.relTolerance = .01; definition.cacheReversed = reverse;
+        RS_Spline candidate{nullptr, data};
+        LC_OffsetCheckResult check;
+        auto native = LC_OffsetCurve::adopt(candidate, definition, .001, &check);
+        CAPTURE(component, reverse, check.reason);
+        REQUIRE(check); REQUIRE(native); REQUIRE(native->hasEditableDefinition());
+        native->setLayer(graphic.getActiveLayer());
+        result[component] = native.release();
+        graphic.addEntity(result[component]);
+    }
+    REQUIRE(result[0] != nullptr); REQUIRE(result[1] != nullptr);
+    return result;
+}
+RS_Vector pickBetweenVerticalContacts(const RS_Spline& spline, double x) {
+    double t0 = 0, t1 = 0;
+    REQUIRE(spline.getParameterDomain(t0, t1));
+    std::vector<double> breaks{t0};
+    for (const double knot : spline.getData().knotslist) {
+        if (knot > t0 && knot < t1 && knot > breaks.back()) breaks.push_back(knot);
+    }
+    breaks.push_back(t1);
+    std::vector<double> roots;
+    for (std::size_t i = 1; i < breaks.size(); ++i) {
+        double lo = breaks[i - 1], hi = breaks[i];
+        const double xLo = spline.getPointAt(lo).x, xHi = spline.getPointAt(hi).x;
+        if ((xLo < x && xHi < x) || (xLo > x && xHi > x) || xLo == x || xHi == x) continue;
+        const bool increasing = xLo < xHi;
+        for (unsigned step = 0; step < 64; ++step) {
+            const double mid = lo + (hi - lo) / 2;
+            const double xMid = spline.getPointAt(mid).x;
+            if ((xMid < x) == increasing) lo = mid; else hi = mid;
+        }
+        const double root = lo + (hi - lo) / 2;
+        if (roots.empty() || root - roots.back() > 1e-10) roots.push_back(root);
+    }
+    REQUIRE_FALSE(roots.empty());
+    const double pickParameter = roots.size() > 1 ? (roots[0] + roots[1]) / 2 : (t0 + roots[0]) / 2;
+    const RS_Vector pick = spline.getPointAt(pickParameter);
+    REQUIRE(pick.valid);
+    return pick;
 }
 RS_Line* line(RS_Graphic& g, RS_Vector a = {-3, .3}, RS_Vector b = {3, .3}) {
     auto* e = new RS_Line(&g, a, b); g.addEntity(e); return e;
@@ -411,6 +477,55 @@ TEST_CASE("T actions must retain a native limit while replacing an ordinary circ
     for (const auto* output : outputs) if (output != limit) REQUIRE(output->rtti() == RS2::EntityArc);
     CHECK(f.context.messages.isEmpty()); REQUIRE(f.graphic.undo()); CHECK_FALSE(circle->isDeleted());
     CHECK_FALSE(limit->isDeleted()); CHECK_FALSE(f.graphic.undo()); REQUIRE(f.graphic.redo()); CHECK(circle->isDeleted());
+}
+
+TEST_CASE("Native Trim action publishes each admitted open and closed producer component",
+          "[gui][lc-offsetcurve][trim-action][producer-components][trim-worker-preview]") {
+    for (bool reverse : {false, true}) for (std::size_t component : {0u, 1u}) {
+        CAPTURE(reverse, component);
+        Drawing<false> f;
+        auto natives = addTrimmedProducerNatives(f.graphic, reverse);
+        auto* native = natives[component];
+        auto* peer = natives[1u - component];
+        const auto original = trimGeometry(*native);
+
+        double minX = native->getData().controlPoints.front().x;
+        double maxX = minX;
+        double minY = native->getData().controlPoints.front().y;
+        double maxY = minY;
+        for (const auto& point : native->getData().controlPoints) {
+            minX = std::min(minX, point.x); maxX = std::max(maxX, point.x);
+            minY = std::min(minY, point.y); maxY = std::max(maxY, point.y);
+        }
+        REQUIRE(minX < maxX); REQUIRE(minY < maxY);
+        const double cutX = minX + (maxX - minX) * (95.0 / 256.0);
+        const double margin = std::max(1.0, maxY - minY);
+        auto* cutter = line(f.graphic, {cutX, minY - margin}, {cutX, maxY + margin});
+        const RS_Vector cutPick{cutX, (minY + maxY) / 2};
+        const RS_Vector trimPick = pickBetweenVerticalContacts(*native, cutX);
+
+        f.action->contextTarget(native, trimPick);
+        f.action->hoverAsync(cutPick);
+        REQUIRE(f.action->pending());
+        f.action->waitForTrim();
+        const auto preview = trimPreview(*f.action->m_preview);
+        REQUIRE_FALSE(preview.empty());
+        CHECK_FALSE(native->isDeleted()); CHECK_FALSE(peer->isDeleted());
+        CHECK(trimGeometry(*native) == original); CHECK(peer->hasEditableDefinition());
+
+        f.action->click(cutPick);
+        REQUIRE(native->isDeleted()); CHECK_FALSE(peer->isDeleted());
+        std::vector<std::string> committed;
+        for (const auto* entity : live(f.graphic)) {
+            if (entity == peer || entity == cutter) continue;
+            CHECK(dynamic_cast<const LC_OffsetCurve*>(entity) == nullptr);
+            committed.push_back(trimGeometry(*entity));
+        }
+        CHECK(committed == preview);
+        REQUIRE(f.graphic.undo()); CHECK_FALSE(native->isDeleted()); CHECK_FALSE(peer->isDeleted());
+        CHECK(trimGeometry(*native) == original); CHECK_FALSE(f.graphic.undo());
+        REQUIRE(f.graphic.redo()); CHECK(native->isDeleted()); CHECK_FALSE(peer->isDeleted());
+    }
 }
 
 TEST_CASE("T actions trim normalized ordinary spline targets with a native in both pick orders",
