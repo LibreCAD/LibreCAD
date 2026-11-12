@@ -39638,3 +39638,23 @@ the transformed-cache file-lane gap for this symmetric control net and these
 similarity transforms. It does not close the beyond-cusp Trim proof limit in
 section 1080, cover other parabola constructions or continuous cusp distances,
 or establish visible-GUI, cross-platform, or external-CAD acceptance.
+
+## 1083. Qualify the Opposite-side Cusp of an Asymmetric Parabola (2026-11-12)
+
+Test commit `7a081ed96` adds the second parabola control net from section 1075,
+`(-1, 0), (0, 1), (2, 0)`. Its vertex curvature radius is `2.25`; the tested
+cusp is therefore on the negative signed-distance/right-normal side at
+`-2.25 * scale`, with a beyond-cusp sample at `-2.295 * scale`. Across scales
+`0.1`, `1`, and `10`, and identity/rotated-translated placements, direct
+generation returns two branches at both distances. Worker-backed source update
+preserves the negative signed distance and the one internal full-multiplicity
+separator, and undo/redo preserves the replacement.
+
+Validation on macOS arm64 CMake Release: the focused asymmetric cusp matrix
+passes 276 assertions / 1 case; `[source-update]` passes 1,342 assertions
+across 3 cases; the target builds; and `git diff --check` passes. This adds
+one asymmetric profile and its opposite signed side; its observed two-branch
+topology differs from the symmetric profile in sections 1078 and 1081. File
+lane persistence for this profile, Trim Two behavior, other asymmetric control
+nets, continuous distance ranges, visible-GUI, cross-platform, and external-CAD
+acceptance remain open.
