@@ -39268,19 +39268,24 @@ another platform, or external CAD readers; those gates remain open.
 
 ## 1066. Qualify Circle Trim Two Across Uniform Scales (2026-11-12)
 
-Test commit `54c6aee6a` parameterizes the worker-created typed-circle Trim Two
-action fixture at uniform scales `0.1`, `1`, and `10`. For each scale, both
-operand pick orders exercise source update, preview immutability, commit,
-undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. Reopened
-geometry is compared with the committed result, and LibreDWG independently
-parses both DWG outputs when available.
+Test commit `54c6aee6a`, corrected by `fdae4c72c`, parameterizes the
+worker-created typed-circle Trim Two action fixture at uniform scales `0.1`,
+`1`, and `10`. For each scale, both operand pick orders exercise source update,
+preview immutability, commit, undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG save/reopen. Reopened geometry is compared with the committed result,
+and LibreDWG independently parses both DWG outputs when available. The tangent
+probe step is parameter-domain based and intentionally does not scale with
+drawing size.
 
 Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused scaled
-circle test passes 2,815 assertions across six scale/order combinations and
-all five file lanes; `[trim-action]` passes 32,716 assertions across 79 cases;
+circle test passes 2,488 assertions across six scale/order combinations and
+all five file lanes; `[trim-action]` passes 30,293 assertions across 79 cases;
 the test target builds; and `git diff --check` passes.
 
 This qualifies three uniform scales for one circular source and finite-line
-cutter layout. Other scales, non-origin centers, rotated cutters, inward
-directions, and external ODA/AutoCAD validation remain open; no broad numerical
-scale guarantee is implied.
+cutter layout. A non-origin-center action fixture was attempted, but the
+synthetic headless view did not reliably hit the translated entity; that
+exploratory fixture was removed rather than counted as a product failure or
+passing result. Non-origin-center interaction, other scales, rotated global
+frames, inward directions, and external ODA/AutoCAD validation remain open; no
+broad numerical scale guarantee is implied.
