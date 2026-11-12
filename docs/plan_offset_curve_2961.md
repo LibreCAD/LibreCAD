@@ -38821,3 +38821,24 @@ section 1040, not a new widget implementation. The test binary uses the
 offscreen Qt platform, so real desktop highlight visibility and interactive
 replacement confirmation remain open; geometry generation, Trim, and file
 round-trip evidence remain governed by their separate family/variant gates.
+
+## 1044. Exercise Typed Parabola Trim Two Through the Worker and Action (2026-11-12)
+
+Test commit `a5d170e40` adds a typed-parabola counterpart to the bounded-
+hyperbola Trim Two action coverage in sections 1039-1042. A real Update-from-
+Source worker replaces an editable offset's source with the visible typed
+parabola; both operand pick orders then trim its generated cache against a
+circle. The test requires a nonempty asynchronous preview without source,
+peer, or undo-epoch mutation; commit output contains ordinary spline and arc
+geometry and agrees with the preview; undo restores the editable offset,
+circle, and parabola; redo restores the committed fragments. The fixture uses
+a smooth 0.05 offset so the cache stays within the bounded Trim solver budget.
+
+Validation on macOS arm64 CMake Release: the focused parabola Trim Two case
+passes 380 assertions across both pick orders; `[trim-action]` passes 22,754
+assertions / 75 cases with LibreDWG 0.14 available through `DWGREAD`; the
+`librecad_tests` target rebuilds; and `git diff --check` passes. This is action
+integration evidence for one typed parabola profile only. Five-lane Trim Two
+save/reopen, independent LibreDWG parsing of this parabola result, other
+parabola profiles, other Trim Two source families, visible desktop
+interaction, cross-platform, and ODA/AutoCAD acceptance remain open.
