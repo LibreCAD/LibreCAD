@@ -39097,3 +39097,21 @@ assertions / 81 cases with LibreDWG available; the test target rebuilds; and
 arc-plus-line profile only. Five-lane persistence, other polyline layouts,
 closed/multi-component cases, visible GUI, cross-platform, and external-CAD
 acceptance remain open.
+
+## 1058. Persist Mixed-bulge Polyline Trim Two Across Five File Lanes (2026-11-12)
+
+Test commit `a77a7d609` extends section 1057's typed polyline Trim Two action
+case through R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG, in both operand pick
+orders. LibreCAD reopens each drawing and checks the complete entity
+inventory, the source polyline's arc/line segment geometry, all output spline
+controls/knots/weights, line geometry independent of endpoint order, and
+absence of editable-offset residue. Both DWGs are also parsed as minJSON by
+LibreDWG and must contain SPLINE and LINE entities.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+polyline Trim Two case passes 746 assertions across both pick orders and all
+five lanes; `[trim-action]` passes 28,195 assertions / 81 cases with
+`DWGREAD=/opt/homebrew/bin/dwgread`; the test target rebuilds; and
+`git diff --check` passes. This qualifies one open semicircular-arc-plus-line
+source only. Other polyline layouts, closed/multi-component cases, visible
+GUI, cross-platform, and external-CAD acceptance remain open.
