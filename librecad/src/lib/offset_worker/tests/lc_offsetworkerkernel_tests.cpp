@@ -10153,6 +10153,37 @@ TEST_CASE("offset worker transports component-aware trim results",
     CHECK(curvedRoundTripped.roots[1].target.rawSpan == 0);
     CHECK(curvedRoundTripped.roots[2].target.rawSpan == 1);
     CHECK(curvedRoundTripped.roots[3].target.rawSpan == 1);
+
+    RS_SplineData curvedEllipseCache{3, false};
+    curvedEllipseCache.controlPoints = {
+        {-3, 0}, {-1, 1.0}, {1, 1.0}, {3, 0},
+        {-3, 0}, {-1, -1.0}, {1, -1.0}, {3, 0}
+    };
+    curvedEllipseCache.weights.assign(curvedEllipseCache.controlPoints.size(), 1.0);
+    curvedEllipseCache.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    const req::Request curvedEllipseInput{token,
+        req::TrimConic{curvedEllipseCache,
+            RS_EllipseData{{0, 0}, {2, 0}, .5, 0, 0, false}, {{0, 1}}, {}, {}}};
+    const auto curvedEllipseReply = LC_OffsetWorkerKernel::run(curvedEllipseInput);
+    const auto& curvedEllipseOutput = trimmed(curvedEllipseReply, 3);
+    REQUIRE(curvedEllipseOutput.refusal == trim::Refusal::None);
+    REQUIRE(curvedEllipseOutput.conicFragments.size() == 1);
+    REQUIRE(curvedEllipseOutput.roots.size() == 4);
+    CHECK(curvedEllipseOutput.roots[0].target.rawSpan == 0);
+    CHECK(curvedEllipseOutput.roots[1].target.rawSpan == 0);
+    CHECK(curvedEllipseOutput.roots[2].target.rawSpan == 1);
+    CHECK(curvedEllipseOutput.roots[3].target.rawSpan == 1);
+    const auto curvedEllipseEncoded = result::encode(curvedEllipseReply, curvedEllipseInput);
+    REQUIRE(curvedEllipseEncoded);
+    const auto curvedEllipseDecoded = result::decode(*curvedEllipseEncoded, curvedEllipseInput);
+    REQUIRE(curvedEllipseDecoded);
+    const auto& curvedEllipseRoundTripped = std::get<trim::Result>(curvedEllipseDecoded->result);
+    REQUIRE(curvedEllipseRoundTripped.conicFragments.size() == 1);
+    REQUIRE(curvedEllipseRoundTripped.roots.size() == 4);
+    CHECK(curvedEllipseRoundTripped.roots[0].target.rawSpan == 0);
+    CHECK(curvedEllipseRoundTripped.roots[1].target.rawSpan == 0);
+    CHECK(curvedEllipseRoundTripped.roots[2].target.rawSpan == 1);
+    CHECK(curvedEllipseRoundTripped.roots[3].target.rawSpan == 1);
 }
 
 TEST_CASE("offset child rejects unadmitted values before entering computation",

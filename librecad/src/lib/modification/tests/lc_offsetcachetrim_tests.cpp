@@ -1473,6 +1473,43 @@ TEST_CASE("Conic-only trim isolates curved cubic branches with outside cache cro
     CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 2);
 }
 
+TEST_CASE("Conic-only trim isolates curved cubic branches against an ellipse", tags) {
+    RS_SplineData source{3, false};
+    source.controlPoints = {
+        {-3, 0}, {-1, 1.0}, {1, 1.0}, {3, 0},
+        {-3, 0}, {-1, -1.0}, {1, -1.0}, {3, 0}
+    };
+    source.weights.assign(source.controlPoints.size(), 1);
+    source.knotslist = {0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2};
+    const auto before = source;
+    RS_Ellipse cutter{nullptr, {{0, 0}, {2, 0}, .5, 0, 0, false}};
+    const auto cutterBefore = cutter.getData();
+
+    const auto result = Trim::prepareConic(source, cutter, {{0, 1}});
+    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+        result.work.intersections.totalBoxPairs, result.work.intersections.generatedLeaves,
+        result.work.intersections.generatedItems);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.roots.size() == 4);
+    std::array<unsigned, 2> rootsBySpan{};
+    for (const auto& root : result.roots) {
+        REQUIRE(root.target.rawSpan < rootsBySpan.size());
+        ++rootsBySpan[root.target.rawSpan];
+        if (root.target.rawSpan == 0) CHECK(root.worldY.lo() > 0);
+        else CHECK(root.worldY.hi() < 0);
+    }
+    CHECK(rootsBySpan == std::array<unsigned, 2>{2, 2});
+    REQUIRE(result.conicFragments.size() == 1);
+    CHECK(angularMember(result.conicFragments.front().data, 3 * pi / 2));
+    CHECK_FALSE(angularMember(result.conicFragments.front().data, pi / 2));
+    equalData(source, before);
+    CHECK(cutter.getData().center == cutterBefore.center);
+    CHECK(cutter.getData().majorP == cutterBefore.majorP);
+    CHECK(cutter.getData().ratio == cutterBefore.ratio);
+    CHECK(cutter.getData().angle1 == cutterBefore.angle1);
+    CHECK(cutter.getData().angle2 == cutterBefore.angle2);
+}
+
 TEST_CASE("Conic-only trim refuses overlapping duplicate contacts without singleton proofs", tags) {
     RS_SplineData source{1, false};
     source.controlPoints = {{-6, 4}, {6, 4}, {4, 7}, {-1, -8}};
