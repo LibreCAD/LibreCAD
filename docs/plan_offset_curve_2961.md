@@ -38998,3 +38998,22 @@ decoding for one circular profile and interior cut only. Exact-knot contacts,
 other circle scales/directions, remaining Trim Two source families, visible
 GUI, cross-platform, and external-CAD acceptance remain open. This supersedes
 section 1050's five-lane-persistence-open status for this fixture only.
+
+## 1053. Exercise Ellipse Trim Two Through Update-from-Source and the Action (2026-11-12)
+
+Test commit `f274a582a` adds an ellipse-source Trim Two action case in both
+operand pick orders. Update-from-Source replaces the initial editable offset
+using an ellipse candidate, then the asynchronous Trim Two action cuts the
+result with a finite transverse line. The test checks preview without source,
+cutter, or undo-epoch mutation; committed spline/line fragments; and
+undo/redo. Ellipse sources intentionally use LibreCAD's legacy editable ellipse
+definition rather than the generalized `sourceDefinition()` representation;
+the regression verifies that this definition remains editable after undo.
+
+Validation on macOS arm64 CMake Release: the focused ellipse Trim Two case
+passes 638 assertions across both pick orders; `[trim-action]` passes 26,047
+assertions / 79 cases with LibreDWG available; the test target rebuilds; and
+`git diff --check` passes. This is action-level evidence for one full-ellipse
+profile and finite line cutter only. Five-lane persistence, other ellipse
+profiles/domains, remaining Trim Two source families, visible GUI,
+cross-platform, and external-CAD acceptance remain open.
