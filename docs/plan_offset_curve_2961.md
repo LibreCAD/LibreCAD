@@ -5835,12 +5835,15 @@ exact cusp threshold only, joins may use the engine's node-merge tolerance;
 the curve-to-offset deviation remains bounded by the requested geometry
 tolerance.
 
-Validation: the focused Release CMake test passes 77,540 assertions in one
-case; `librecad_tests` rebuilds and `git diff --check` passes. This closes only
-direct geometry for these two ratios, intervals, orientations, branches,
-distances, and sides. Worker/cache and replacement behavior, trimming, all
-five DXF/DWG lanes, independent DWG-reader checks, and broader hyperbola
-interval/scale qualification remain open.
+Validation: the focused Release CMake direct test passes 77,540 assertions in
+one case. The worker-kernel GenerateSource/ValidateSourceCache matrix passes
+1,266 assertions, and the process-backed worker-client matrix passes 16,260
+assertions for the same 48 profile/branch/bounds/side/distance combinations.
+All three targets build and `git diff --check` passes. This closes direct
+geometry, worker generation, and cache-admission/refusal policy only for these
+two ratios, intervals, orientations, branches, distances, and sides. Native
+source replacement, trimming, all five DXF/DWG lanes, independent DWG-reader
+checks, and broader hyperbola interval/scale qualification remain open.
 
 ## 56. W94 Current-Source Cache and Creation/Repeat Qualification
 
