@@ -15,6 +15,7 @@
 #include <boost/multiprecision/cpp_int.hpp>
 #include "lc_offsetcurve_persistence_fixture.h"
 #include "lc_offsetcurvexdata.h"
+#include "lc_curveoffset.h"
 #include "rs_layer.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
@@ -487,6 +488,42 @@ void prepareInput(RS_Graphic& g, const Path& input, int degree) {
     // Literal mathematical fixture, not the feature's writer or producer.
     f::put(input, f::ascii(f::raw(degree))); load(g, input, dxf.back());
     auto* native = dynamic_cast<LC_OffsetCurve*>(f::sole(g)); REQUIRE(native); REQUIRE(native->hasEditableDefinition());
+}
+std::unique_ptr<LC_OffsetCurve> trimmedProducerNative(std::size_t component, bool reverse) {
+    REQUIRE(component < 2);
+    const double pi = std::acos(-1.0);
+    const RS_EllipseData basis{{0, 0}, {100, 0}, .05, pi / 12, 7 * pi / 4, false};
+    const RS_Ellipse source{nullptr, basis};
+    auto options = LC_CurveOffset::makeDirectOptions(source, 4, 1e-4);
+    options.mode = LC_CurveOffsetMode::Trimmed;
+    auto made = LC_CurveOffset::createEntities(source,
+        LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 4), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    REQUIRE(made.status == LC_CurveOffsetStatus::Ok); REQUIRE(made.entities.size() == 2);
+    for (const auto& entity : made.entities) {
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity.get());
+        REQUIRE(spline != nullptr);
+        auto data = spline->getData(); REQUIRE_FALSE(data.controlPoints.empty());
+        const bool closed = data.controlPoints.front().x == data.controlPoints.back().x &&
+                            data.controlPoints.front().y == data.controlPoints.back().y;
+        const std::size_t found = closed ? 1 : 0;
+        if (found != component) continue;
+        if (reverse) std::reverse(data.controlPoints.begin(), data.controlPoints.end());
+        LC_EllipseOffsetDefinition definition;
+        definition.basis = basis; definition.distance = 4; definition.towardCentre = true;
+        definition.relTolerance = LC_CurveOffset::kEllipseRelativeOffsetTolerance;
+        definition.cacheReversed = reverse;
+        RS_Spline candidate{nullptr, data};
+        LC_OffsetCheckResult check;
+        auto native = LC_OffsetCurve::adopt(candidate, definition, .001, &check);
+        CAPTURE(component, reverse, check.reason);
+        REQUIRE(check); REQUIRE(native); REQUIRE(native->setOwnedExtensions(0x10,
+            {{1000, QStringLiteral("producer persistence tail")}}));
+        native->setDrwExtData(f::metadata(f::Tags{}));
+        return native;
+    }
+    FAIL("Trimmed ellipse producer did not return the requested component");
+    return {};
 }
 struct Prepared {
     LC_OffsetCurve* original = nullptr; // document retains this for undo
@@ -977,6 +1014,23 @@ void closedRow(const Format& format, int degree, bool reverse, std::size_t segme
     plainTwice(source, out, format, expected, "trimmed-plain");
     undoRedoFiles(source, out, format, expected, before);
 }
+void trimmedProducerPersistenceRow(const Format& format, std::size_t component, bool reverse) {
+    CAPTURE(format.name, format.dwg, component, reverse);
+    lc::test::OutputDirectory out("T-files-producer-component-" + std::string(format.dwg ? "dwg-" : "dxf-") +
+        std::to_string(component) + (reverse ? "-reverse" : "-forward"));
+    RS_Graphic source; source.initForNewDocument(); source.onLoadingCompleted();
+    auto native = trimmedProducerNative(component, reverse);
+    native->setLayer(source.getActiveLayer());
+    auto* inserted = native.get(); source.addEntity(native.release());
+    const NativeBefore expected(*inserted);
+    const std::string extension = format.dwg ? ".dwg" : ".dxf";
+    const auto first = out.file("producer-first" + extension);
+    REQUIRE(lc::test::exportDrawing(source, first, format.app)); inspectNative(first, format, expected);
+    RS_Graphic reopened; load(reopened, first, format); restoredNative(reopened, expected, &format);
+    const auto second = out.file("producer-second" + extension);
+    REQUIRE(lc::test::exportDrawing(reopened, second, format.app)); inspectNative(second, format, expected);
+    RS_Graphic again; load(again, second, format); restoredNative(again, expected, &format);
+}
 }
 
 TEST_CASE("T files remain ordinary across every DXF version and a second save", "[lc-offsetcurve][trim-files][dxf]") {
@@ -1230,6 +1284,13 @@ TEST_CASE("T files closed C-admitted native trim stays ordinary across DXF R2018
     }
 }
 
+TEST_CASE("T files preserve actual trimmed-ellipse producer components through DXF R2018 second saves",
+          "[lc-offsetcurve][trim-files][producer-components][dxf]") {
+    Setup setup;
+    for (std::size_t component : {0u, 1u}) for (bool reverse : {false, true})
+        trimmedProducerPersistenceRow(dxf.back(), component, reverse);
+}
+
 #ifdef DWGSUPPORT
 TEST_CASE("T files closed C-admitted native trim stays ordinary across DWG R2018 saves and undo redo", "[lc-offsetcurve][trim-files][closed][dwg][undo]") {
     Setup setup;
@@ -1238,6 +1299,13 @@ TEST_CASE("T files closed C-admitted native trim stays ordinary across DWG R2018
             DYNAMIC_SECTION("degree " << degree << " segments " << segments << " reverse " << reverse)
                 closedRow(dwg.back(), degree, reverse, segments);
     }
+}
+
+TEST_CASE("T files preserve actual trimmed-ellipse producer components through DWG R2018 second saves",
+          "[lc-offsetcurve][trim-files][producer-components][dwg]") {
+    Setup setup;
+    for (std::size_t component : {0u, 1u}) for (bool reverse : {false, true})
+        trimmedProducerPersistenceRow(dwg.back(), component, reverse);
 }
 
 TEST_CASE("T files DWG undo before save restores both native degrees and redo stays ordinary after second reopen", "[lc-offsetcurve][trim-files][undo][dwg]") {
