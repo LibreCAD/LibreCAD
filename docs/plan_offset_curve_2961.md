@@ -39826,3 +39826,22 @@ across 83 cases; all 80 file round trips pass; and `git diff --check` passes.
 This supersedes section 1087's earlier counts and 60-round-trip snapshot.
 Other cutter families, additional cusp roots/control nets and distances,
 visible-GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1090. Exercise Beyond-cusp Trim Under Similarity Transforms (2026-11-12)
+
+Test commit `ee7e45765` adds an action-level beyond-cusp Trim Two matrix for
+the symmetric parabola at uniform scales `0.1`, `1`, and `10`, with a shared
+rotation and scale-relative translation. At each scale, both transverse line
+and small-circle cutters are tested in both operand pick orders. Direct offset
+construction must retain three branches; worker-backed source replacement
+must preserve the scaled signed distance; strict cache preparation must
+succeed (the circle case requires two roots); and action preview, commit, and
+undo/redo must preserve the expected operands and fragments.
+
+Validation on macOS arm64 CMake Release: the focused transformed action case
+passes 3,587 assertions / 1 case; the complete `[trim-action]` suite passes
+63,222 assertions across 84 cases; the standalone `[trim-kernel]` suite passes
+41,281 assertions across 71 cases; and `git diff --check` passes. This adds
+transformed action coverage only; it does not add persistence round trips for
+the transformed Trim outputs. Other transforms, scales, cusp profiles,
+cutters, visible GUI, cross-platform, and external-CAD acceptance remain open.
