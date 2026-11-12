@@ -37231,3 +37231,18 @@ adjacent-repeat profile at distance `+0.2`; section 964's worker tests cover
 the two profiles at four distances but not their file lanes. Translated file
 round-trips, the separated-repeat profile's file lanes, other repeated-point
 arrangements, visible GUI behavior, and external-CAD acceptance remain open.
+
+## 968. Independently Read Worker-generated Repeated Fit-point DWGs (2026-11-11)
+
+Test commit `a2ac28720` extends section 967's worker-client persistence case
+with an optional independent LibreDWG `dwgread -O minJSON` check for the R2000,
+R2007, and R2018 outputs. The reader must exit successfully and expose a
+SPLINE whose degree, knot vector, control-point coordinates, and weights match
+the generated cache within the stated numeric bounds. LibreDWG was available
+on this machine; all three versions passed. The focused test passes 1,112
+assertions, including these independent-reader checks, and `git diff --check`
+passes.
+
+Independent reader evidence remains for the one adjacent-repeat profile at
+distance `+0.2`; it does not qualify the separated-repeat fixture, translated
+files, other fit-point layouts, ODA/AutoCAD, or visible GUI behavior.
