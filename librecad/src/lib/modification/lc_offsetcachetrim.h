@@ -127,6 +127,8 @@ struct Result {
 /** Caller limits can only LOWER the fixed Limits{} ceilings; zero is exhausted.
  * Supported cutters: finite line, arc/circle/ellipse, normalized unit-weight
  * degree-1/3 Bezier-chain spline (including a native entity's displayed cache).
+ * Spline input must be one connected chain; discontinuous multi-branch caches
+ * are refused until interval surgery can preserve their component topology.
  * Exact endpoint closure determines clamped-cache topology, including a closed
  * producer cache with its DXF closed flag unset. Closed/periodic flags cannot
  * claim an open chain; arbitrary rational/wrapped splines refuse.

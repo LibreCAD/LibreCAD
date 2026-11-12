@@ -650,6 +650,13 @@ bool closure(const RS_SplineData& data, const Spans& spans) {
     return closed;
 }
 
+bool connected(const Spans& spans) {
+    for (std::size_t i = 1; i < spans.size(); ++i) {
+        if (!same(spans[i - 1].controls[spans[i - 1].degree], spans[i].controls[0])) return false;
+    }
+    return true;
+}
+
 struct Input {
     std::shared_ptr<const Spans> source, cutter;
     std::optional<Conic> conic;
@@ -696,12 +703,14 @@ Input admit(Context& c, const RS_SplineData& source, const RS_Entity& entity, co
     // All aggregate counts precede the first copied span, adapter or callback.
     c.items(4 + sourceCount + (spline ? c.work.inputSpans - sourceCount : line ? 1 : 8));
     auto sourceSpans = std::make_shared<const Spans>(inspect(c, source));
+    if (!connected(*sourceSpans)) fail(Refusal::UnsupportedLayout);
     const bool closed = closure(source, *sourceSpans);
     std::shared_ptr<const Spans> cutterSpans;
     bool cutterClosed = false;
     std::optional<Conic> conic;
     if (spline) {
         cutterSpans = std::make_shared<const Spans>(inspect(c, spline->getData()));
+        if (!connected(*cutterSpans)) fail(Refusal::UnsupportedCutter);
         cutterClosed = closure(spline->getData(), *cutterSpans);
     } else if (line) {
         const auto data = line->getData();

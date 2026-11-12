@@ -1054,7 +1054,7 @@ TEST_CASE("I refuse closed convex polyline trims atomically when intersections a
     graphic.addEntity(cutter);
     const auto kernel = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
     CAPTURE(static_cast<int>(kernel.refusal), kernel.rootCount);
-    CHECK(kernel.refusal == LC_OffsetCacheTrim::Refusal::AmbiguousRoots);
+    CHECK(kernel.refusal == LC_OffsetCacheTrim::Refusal::UnsupportedLayout);
     const auto cacheBefore = RS_Spline::geometryFingerprint(replacement->getData());
     const auto sourceBefore = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
         *replacement->sourceDefinition());
