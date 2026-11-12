@@ -39246,3 +39246,22 @@ layout only. It does not establish native Trim-action behavior, more complex
 component curves, closed disconnected cutters, component-boundary variants,
 five-lane persistence, visible GUI, cross-platform behavior, or external-CAD
 acceptance; those remain open.
+
+## 1065. Revalidate Clean qmake6 Delivery for the Current Roadmap Head (2026-11-12)
+
+At test/plan head `4583ad146`, generated a fresh recursive qmake6 Release tree
+in `/private/tmp/offset-2961-qmake-current` with Qt 6.12.0, macOS ARM64,
+Xcode SDK 27.0, macOS 14.4 deployment target, OpenType enabled, and
+PostScript disabled. The initial full `make -j6` completed; an immediate
+incremental recursive `make -j6` exited 0. Verified executable outputs at
+`LibreCAD.app/Contents/MacOS/LibreCAD`,
+`LibreCAD.app/Contents/MacOS/LibreCADOffsetWorker`, and
+`LibreCAD.app/Contents/MacOS/ttf2lff`.
+
+The build emitted existing warning classes including newer-minimum-OS
+Homebrew dependencies, deprecated linker flags, missing aggregate-field
+initializers in DWG metadata, Boost warnings, and an existing stale shell
+message for `/private/tmp/libdxfrw-cargo/env`; none prevented the successful
+build. This validates recursive qmake6 compile/link delivery for the current
+head only. It does not run the qmake-built app, test suite, visible GUI,
+another platform, or external CAD readers; those gates remain open.
