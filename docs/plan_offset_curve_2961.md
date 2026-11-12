@@ -37008,3 +37008,22 @@ This closes the external-reader line-geometry gap for the recorded repeated
 fit-point profiles and distances. It remains parser/geometry-data validation,
 not ODA/AutoCAD acceptance or a visual rendering check; other source families
 and variants still require their own end-to-end evidence.
+
+## 957. Refuse Singular Fit-point Trims in the Worker (2026-11-11)
+
+Test commit `95b278a8b` carries the leading duplicate, trailing duplicate, and
+triple repeated-point fit-point profiles from section 951 through real worker
+preparation. All three worker replies fail closed with `InvalidRequest`
+(`OffsetFailed` at the source-outcome layer), no ordinary output, and zero
+copies; accepting the replies leaves both publication lists empty and the
+source fit points/control points unchanged. The focused refusal case passes
+564 assertions; `[fit-points][trim]` passes 4,193 assertions in two cases; the
+full `offset_worker_client` CTest passes in 272.94 seconds. `git diff --check`
+passes.
+
+Direct trimming reports `InvalidSource` for these profiles, while the worker
+protocol currently reports `InvalidRequest`; both paths reject without
+publication. This status distinction is recorded rather than hidden and
+remains a possible contract-normalization follow-up. This closes worker
+refusal/publication evidence only: no new valid geometry is added, and the
+other fit-point layouts, visible GUI, and external CAD remain open.
