@@ -38195,15 +38195,17 @@ hyperbola, and polyline. Each fixture replaces an existing native offset from
 the Properties action, removes the original source entity, crosses the
 generated native cache with a cutter through the real asynchronous Trim
 action, verifies atomic demotion to plain spline geometry and undo/redo, and
-compares R2018 DXF save/reopen geometry. Ellipse follows the legacy editable
-definition path; the other eight assert their typed generalized source kind.
-Closed circle/ellipse fixtures use an oblique cutter long enough to cross both
-sides of the closed cache.
+compares save/reopen geometry across R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG.
+Ellipse follows the legacy editable definition path; the other eight assert
+their typed generalized source kind. Closed circle/ellipse fixtures use an
+oblique cutter long enough to cross both sides of the closed cache.
 
-Validation: the focused nine-kind generated case passes 361 assertions; the
-full `[lc-offsetcurve][trim-action]` suite passes 17,517 assertions across 69
-cases. The CMake test target builds and `git diff --check` passes. This is one
-representative source geometry and trim configuration per kind, not complete
-variant, conditioning, direction, distance, or transformation coverage. File
-validation here is R2018 DXF only; other DXF/DWG versions, independent-reader
-checks, visible GUI acceptance, and ODA/AutoCAD validation remain open.
+Validation: commit `dd911ad94` extends the focused case to all 45 source-kind /
+file-lane combinations; it passes 2,921 assertions, with LibreDWG reading each
+generated DWG. The complete `[lc-offsetcurve][trim-action]` suite passes
+20,717 assertions across 69 cases. Separately, the all-nine-kind Update from
+Source persistence matrix passes 4,683 assertions across the same five
+formats. The CMake test target builds and `git diff --check` passes. These are
+representative geometries and trim configurations, not complete variant,
+conditioning, direction, distance, or transformation coverage. Visible GUI
+acceptance and ODA/AutoCAD validation remain open.
