@@ -3150,7 +3150,8 @@ TEST_CASE("T Trim Two action trims a worker-created typed ellipse offset against
             RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
         f.graphic.addEntity(cutter);
 
-        const RS_Vector nativePick = native->getPointAt(first + (last - first) * .1);
+        const RS_Vector nativePick = native->getPointAt(
+            first + (last - first) * (profile == 5 ? .25 : .1));
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
         const auto cacheFingerprint = RS_Spline::geometryFingerprint(native->getData());
         f.action->click(ellipseFirst ? nativePick : cutterPick);
