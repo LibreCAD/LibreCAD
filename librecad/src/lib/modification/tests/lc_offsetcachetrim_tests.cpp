@@ -1440,6 +1440,25 @@ TEST_CASE("Conic-only trim isolates disconnected cubic cache branches", tags) {
     CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 2);
 }
 
+TEST_CASE("Conic-only trim refuses overlapping duplicate contacts without singleton proofs", tags) {
+    RS_SplineData source{1, false};
+    source.controlPoints = {{-6, 4}, {6, 4}, {4, 7}, {-1, -8}};
+    source.weights.assign(source.controlPoints.size(), 1);
+    source.knotslist = {0, 0, 1, 1, 2, 2};
+    const auto before = source;
+    RS_Circle cutter{nullptr, {{0, 0}, 5}};
+
+    const auto result = Trim::prepareConic(source, cutter, {{0, 5}});
+    CAPTURE(static_cast<int>(result.refusal), result.rootCount, result.work.kernelItems,
+        result.work.kernelComparisons, result.work.intersections.totalBoxPairs,
+        result.work.intersections.generatedLeaves, result.work.intersections.generatedItems);
+    CHECK(result.refusal == Trim::Refusal::AmbiguousRoots);
+    refused(result);
+    CHECK(result.rootCount == 4);
+    equalData(source, before);
+    CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 5);
+}
+
 TEST_CASE("Conic endpoint certificates use the actual whole frame chart and refuse symmetric closest ties", tags) {
     const auto source = cache({{-6, .5}, {6, .5}}); const auto before = source;
     for (bool reverse : {false, true}) {
