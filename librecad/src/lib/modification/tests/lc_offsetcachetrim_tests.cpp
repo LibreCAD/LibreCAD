@@ -1401,6 +1401,42 @@ TEST_CASE("Conic-only trim combines contacts from disconnected cache components"
     CHECK(cutter.getCenter() == RS_Vector(0, 0)); CHECK(cutter.getRadius() == 2);
 }
 
+TEST_CASE("Conic-only trim accounts for crossings and misses across four disconnected spans", tags) {
+    RS_SplineData source{1, false};
+    source.controlPoints = {
+        {-3, .25}, {3, .25}, {.5, -2}, {.5, 2},
+        {-3, 5}, {3, 5}, {0, 4}, {0, 6}
+    };
+    source.weights.assign(source.controlPoints.size(), 1.0);
+    source.knotslist = {0, 0, 1, 1, 2, 2, 3, 3, 4, 4};
+    const auto before = source;
+    RS_Circle cutter{nullptr, {{0, 0}, 2}};
+    const auto cutterBefore = cutter.getData();
+
+    const auto result = Trim::prepareConic(source, cutter, {{0, 2}});
+    CAPTURE(static_cast<int>(result.refusal), result.rootCount,
+        result.work.intersections.totalBoxPairs,
+        result.work.intersections.generatedLeaves,
+        result.work.intersections.generatedItems);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.roots.size() == 4);
+    std::array<unsigned, 4> rootsBySpan{};
+    for (const auto& root : result.roots) {
+        REQUIRE(root.target.rawSpan < rootsBySpan.size());
+        ++rootsBySpan[root.target.rawSpan];
+        CHECK(root.proof != LC_IntersectionProof::Uncertified);
+        CHECK(root.worldX.lo() <= root.worldX.hi());
+        CHECK(root.worldY.lo() <= root.worldY.hi());
+    }
+    CHECK(rootsBySpan == std::array<unsigned, 4>{2, 2, 0, 0});
+    REQUIRE(result.conicFragments.size() == 1);
+    CHECK(angularMember(result.conicFragments.front().data, 3 * pi / 2));
+    CHECK_FALSE(angularMember(result.conicFragments.front().data, pi / 2));
+    equalData(source, before);
+    CHECK(cutter.getData().center == cutterBefore.center);
+    CHECK(cutter.getData().radius == cutterBefore.radius);
+}
+
 TEST_CASE("Conic-only trim isolates disconnected cubic cache branches", tags) {
     RS_SplineData source{3, false};
     source.controlPoints = {
