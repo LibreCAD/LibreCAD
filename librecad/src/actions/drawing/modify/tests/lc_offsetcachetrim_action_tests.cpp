@@ -2228,8 +2228,8 @@ TEST_CASE("T Trim Two action trims worker-created typed spline and spline-points
 
 TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][polyline][trim-two]") {
-    for (const bool polylineFirst : {false, true}) {
-        CAPTURE(polylineFirst);
+    for (const bool trimLineSpan : {false, true}) for (const bool polylineFirst : {false, true}) {
+        CAPTURE(trimLineSpan, polylineFirst);
         Drawing<true> f;
         RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
         auto initial = LC_OffsetCurve::create(seed, .15, false);
@@ -2265,8 +2265,9 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         double first = 0, last = 0;
         REQUIRE(native->getParameterDomain(first, last));
         const auto breaks = native->getBreakParameters();
-        REQUIRE(breaks.size() >= 2);
-        const double parameter = breaks.front() + (breaks[1] - breaks.front()) * .43;
+        REQUIRE(breaks.size() >= (trimLineSpan ? 3u : 2u));
+        const std::size_t span = trimLineSpan ? breaks.size() - 2 : 0;
+        const double parameter = breaks[span] + (breaks[span + 1] - breaks[span]) * .43;
         const RS_Vector intersection = native->getPointAt(parameter);
         const double step = std::max(1e-7, (last - first) * 1e-5);
         const RS_Vector before = native->getPointAt(parameter - step);
@@ -2283,7 +2284,7 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
         auto* cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
         f.graphic.addEntity(cutter);
-        const RS_Vector nativePick = native->getPointAt(breaks.front() + (breaks[1] - breaks.front()) * .9);
+        const RS_Vector nativePick = native->getPointAt(breaks[span] + (breaks[span + 1] - breaks[span]) * .9);
         const RS_Vector cutterPick = intersection + cutterDirection * .75;
 
         f.action->click(polylineFirst ? nativePick : cutterPick);
@@ -2413,7 +2414,7 @@ TEST_CASE("T Trim Two action trims a worker-created mixed-bulge polyline source 
                     found = true;
                     break;
                 }
-                CAPTURE(polylineFirst, formats[i], expected->rtti());
+                CAPTURE(trimLineSpan, polylineFirst, formats[i], expected->rtti());
                 CHECK(found);
             }
         }
