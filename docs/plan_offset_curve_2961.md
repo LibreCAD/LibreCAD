@@ -38641,3 +38641,18 @@ that some advanced metadata is replayed or omitted; the scoped native entity
 and XDATA checks pass and do not certify complete advanced-metadata replay or
 external interoperability. `git diff --check` passes. The code commit is
 `23eff2d6f`; its roadmap follow-up is a separate slice.
+
+## 1035. Cross-check Typed DWG Persistence with LibreDWG (2026-11-12)
+
+The installed LibreDWG 0.14 `dwgread -O minJSON` independently parses each
+of the eight preserved R2018 files from section 1034 (first and second saves
+for both producer components and both cache directions) and reports exactly
+one SPLINE in each. In addition, the existing Update-from-Source typed-family
+persistence matrix was rerun with `/opt/homebrew/bin/dwgread` discoverable on
+PATH: `[i-ui][persistence][typed][matrix]` passes 4,953 assertions in one Catch
+test case across all nine current source kinds and the five existing R14,
+R2000, and R2018 DXF/DWG lanes; the test's LibreDWG minJSON geometry check ran
+for both DWG targets. This is independent LibreDWG structural/geometry evidence
+for these scopes, not ODA/AutoCAD or visible-GUI acceptance. The broader source
+variant, app-version, deployed-package, and family-by-variant gates remain
+open.
