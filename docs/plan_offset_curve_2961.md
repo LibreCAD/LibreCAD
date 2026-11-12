@@ -40294,3 +40294,23 @@ assertions / 87 cases; and `git diff --check` passes. This adds inward
 Trim Two evidence for the two tested tight-gap profiles only, not all arc
 radii, sweeps, distances, or tolerance boundaries. Visible Properties
 interaction, cross-platform behavior, and ODA/AutoCAD acceptance remain open.
+
+## 1114. Qualify Inward Rotated Ellipse Trim Two (2026-11-12)
+
+Test commit `692638297` adds a translated, rotated full-ellipse profile to the
+worker-created typed-ellipse Trim Two action matrix: center `(-6, 8)`, major
+length `2.5`, rotation `0.93`, ratio `0.9`, and inward offset distance `0.25`.
+The test checks that source replacement preserves the editable distance and
+`towardCentre` flag, exercises both pick orders, waits for async preview
+completion, and carries commit/undo/redo through R14 DXF, R2000 DXF/DWG, and
+R2018 DXF/DWG with LibreDWG reads.
+
+The cutter is normal-aligned for this profile to avoid an ambiguous-root
+certificate observed with the previous oblique construction; this does not
+relax the kernel's ambiguity refusal. Validation on macOS arm64 CMake Release
+with LibreDWG 0.14: the focused ellipse Trim Two case passes 3,417 assertions
+/ 1 case across four profile/pick-order combinations; full `[trim-action]`
+passes 106,102 assertions / 87 cases; and `git diff --check` passes. This
+qualifies this inward rotated ratio-`0.9` profile, not the eccentricity,
+near-cusp, offset, or precision matrix. Visible Properties interaction,
+cross-platform behavior, and ODA/AutoCAD acceptance remain open.
