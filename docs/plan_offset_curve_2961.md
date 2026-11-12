@@ -40159,3 +40159,20 @@ another platform. The build reported pre-existing DWG metadata aggregate
 initializer warnings and macOS deployment-target warnings for installed Qt
 libraries; no build failure occurred. Visible Properties acceptance,
 cross-platform builds, and external ODA/AutoCAD validation remain open.
+
+## 1107. Qualify a Rotated Full Ellipse Through Trim Two (2026-11-12)
+
+Test commit `aafae3b6c` adds a third worker-created typed-ellipse Trim Two
+profile: center `(8, -6)`, major-axis length `2.5` rotated by `0.67` radians,
+ratio `0.9`, and a full-ellipse domain. The centered ratio-`0.7` ellipse and
+the ratio-`0.5` rotated/reversed partial arc remain controls. All three run in
+both operand-pick orders through worker replacement, preview/commit, undo/redo,
+five DXF/DWG save/reopen lanes, and LibreDWG checks.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused ellipse
+Trim Two case passes 2,521 assertions / 1 case across the six
+profile/pick-order combinations; full `[trim-action]` passes 98,999 assertions
+/ 87 cases; and `git diff --check` passes. This qualifies one rotated full
+ellipse at ratio `0.9`, not the full axis-ratio, sweep, cusp-threshold,
+precision, or inward-side matrix. Visible Properties interaction,
+cross-platform behavior, and ODA/AutoCAD acceptance remain open.
