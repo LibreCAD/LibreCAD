@@ -59,13 +59,14 @@ A family appearing in the selector is UI coverage only, not proof that all of
 its geometry variants pass generation, worker/cache validation, or persistence.
 
 **Latest user restatement (2026-11-12):** When specifying a new source curve,
-the same widget must let the user change the requested source type before
-selecting the replacement entity. Changing type must immediately refresh the
-candidate choices and must not silently replace or mutate the current source.
-The supported-type inventory is the complete current `SupportedKinds` list,
-with parabola separately selectable; do not interpret this as support for
-unrelated drawable entities or as proof that every parameterization of each
-family works end to end.
+the same Properties source widget must let the user change the requested
+source type before selecting a replacement entity. The selector changes the
+candidate-family filter in place, and the candidate list refreshes immediately;
+the current source, cache, identity, and highlight remain untouched until a
+candidate of the requested family is chosen and asynchronous preparation
+succeeds. The inventory is the complete current `SupportedKinds` list, with
+parabola separately selectable. This is not support for unrelated drawable
+entities or proof that every parameterization of each family works end to end.
 
 **Current disposition (reconfirmed 2026-11-12):** The request to change source
 type while specifying a replacement and expose all supported source types is
@@ -78,6 +79,15 @@ active while browsing candidates, each family change refreshes the candidate lis
 and the existing source/cache/identity/highlight remains unchanged until a
 candidate passes asynchronous preparation. Do not add another selector or
 extend the list to unrelated drawable entities.
+
+**Acceptance sequence:** in the Properties source widget, start replacement,
+change the family at least twice before choosing, verify each change refreshes
+eligible candidates, then choose an entity of the final family and verify the
+replacement is published only after successful preparation. Exercise all nine
+families and verify parabola remains distinct from spline-points. Existing
+headless tests satisfy this widget-level sequence; visible interaction remains
+in Slice 5, and per-variant generation/worker/cache/Trim/DXF/DWG coverage remains
+in Slice 4. Do not reopen picker implementation solely to repeat this request.
 
 Automated picker evidence: the focused headless source-picker suite passes
 14,831 assertions / 43 cases (`librecad_tests
