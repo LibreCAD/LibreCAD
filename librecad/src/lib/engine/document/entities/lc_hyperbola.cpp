@@ -1044,11 +1044,23 @@ RS_Vector LC_Hyperbola::doGetNearestDist(double distance,
   double parameterLow = std::min(m_data.angle1, m_data.angle2);
   double parameterHigh = std::max(m_data.angle1, m_data.angle2);
   const bool increasing = m_data.angle2 > m_data.angle1;
-  for (int i = 0; i < 80; ++i) {
-    const double parameter = parameterLow + (parameterHigh - parameterLow) * 0.5;
+  const double direction = increasing ? 1.0 : -1.0;
+  const double arcTolerance = std::max(
+      1e-12 * totalLength,
+      32.0 * std::numeric_limits<double>::epsilon() * std::max(1.0, totalLength));
+  double parameter = m_data.angle1 +
+      (m_data.angle2 - m_data.angle1) * (targetArcFromStart / totalLength);
+  const double eccentricitySquared = getEccentricity() * getEccentricity();
+  bool converged = false;
+  for (int i = 0; i < 24; ++i) {
     const double arcFromStart = std::abs(getArcLength(m_data.angle1, parameter));
     if (!std::isfinite(arcFromStart))
       return RS_Vector(false);
+    const double residual = targetArcFromStart - arcFromStart;
+    if (std::abs(residual) <= arcTolerance) {
+      converged = true;
+      break;
+    }
     if (arcFromStart < targetArcFromStart) {
       if (increasing) parameterLow = parameter;
       else parameterHigh = parameter;
@@ -1056,9 +1068,36 @@ RS_Vector LC_Hyperbola::doGetNearestDist(double distance,
       if (increasing) parameterHigh = parameter;
       else parameterLow = parameter;
     }
+
+    const double hyperbolicCosine = std::cosh(parameter);
+    const double speed = getMajorRadius() * std::sqrt(
+        std::max(0.0, eccentricitySquared * hyperbolicCosine * hyperbolicCosine - 1.0));
+    double candidate = std::numeric_limits<double>::quiet_NaN();
+    if (std::isfinite(speed) && speed > 0.0)
+      candidate = parameter + direction * residual / speed;
+    if (!std::isfinite(candidate) || candidate <= parameterLow || candidate >= parameterHigh)
+      candidate = parameterLow + (parameterHigh - parameterLow) * 0.5;
+    parameter = candidate;
   }
-  const double phi = parameterLow + (parameterHigh - parameterLow) * 0.5;
-  return getPoint(phi, m_data.reversed);
+  if (!converged) {
+    for (int i = 0; i < 56; ++i) {
+      parameter = parameterLow + (parameterHigh - parameterLow) * 0.5;
+      const double arcFromStart = std::abs(getArcLength(m_data.angle1, parameter));
+      if (!std::isfinite(arcFromStart))
+        return RS_Vector(false);
+      const double residual = targetArcFromStart - arcFromStart;
+      if (std::abs(residual) <= arcTolerance) break;
+      if (arcFromStart < targetArcFromStart) {
+        if (increasing) parameterLow = parameter;
+        else parameterHigh = parameter;
+      } else {
+        if (increasing) parameterHigh = parameter;
+        else parameterLow = parameter;
+      }
+    }
+    parameter = parameterLow + (parameterHigh - parameterLow) * 0.5;
+  }
+  return getPoint(parameter, m_data.reversed);
 }
 
 //=====================================================================
