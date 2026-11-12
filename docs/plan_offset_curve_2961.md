@@ -38718,3 +38718,22 @@ broader `[trim-action]` suite passed 22,002 assertions / 73 cases before this
 file-lane extension. This remains one bounded-hyperbola profile and one Trim
 mode; other profiles, Trim Two, visible application interaction, independent
 ODA/AutoCAD acceptance, and cross-platform runs remain open.
+
+## 1039. Exercise Typed Hyperbola Trim Two in Both Pick Orders (2026-11-12)
+
+Test commit `6de06d7da` extends the worker-created bounded-hyperbola fixture
+from section 1037 to Trim Two against an ordinary circle crossing the cache
+transversely. It exercises both operand pick orders. In each order, the
+asynchronous preview leaves both originals and the undo epoch unchanged;
+commit matches the preview and replaces both operands with ordinary spline
+and arc fragments. Undo restores the generalized hyperbola offset, circle,
+and source; redo restores the committed fragments.
+
+Validation on macOS arm64 CMake Release: `librecad_tests` rebuilds; the focused
+`"T Trim Two action trims a worker-created typed hyperbola against a circle in
+both pick orders"` case passes 370 assertions; `[trim-action]` passes 22,139
+assertions / 74 cases; and `git diff --check` passes. This qualifies one
+bounded-hyperbola profile, one transverse circle, and two operand pick orders.
+Trim Two output has not yet been round-tripped through DXF/DWG; other
+hyperbola profiles, visible GUI, cross-platform, and external-CAD acceptance
+remain open.
