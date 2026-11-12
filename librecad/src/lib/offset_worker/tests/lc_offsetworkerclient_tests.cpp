@@ -3214,7 +3214,7 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
     OwnedClient owned{rt};
     RS_EntityContainer owner;
     RS_Line attributes{&owner, RS_LineData{{0, 0}, {1, 0}}};
-    std::array<LC_SplinePointsData, 4> profiles;
+    std::array<LC_SplinePointsData, 5> profiles;
     profiles[0] = LC_SplinePointsData{false, false};
     profiles[0].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
     profiles[1] = LC_SplinePointsData{false, false};
@@ -3229,6 +3229,8 @@ TEST_CASE("Repeated fit-point sources generate and admit typed worker caches",
                      -2e6 + point.x * sine + point.y * cosine};
         }
     }
+    profiles[4] = LC_SplinePointsData{true, false};
+    profiles[4].splinePoints = {{0, 0}, {10, 0}, {13, 8}, {4, 13}, {-3, 8}, {0, 0}};
     for (auto& profile : profiles) profile.fitTolerance = 1e-8;
     qint64 requestId = 1;
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
