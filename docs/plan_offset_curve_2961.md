@@ -39079,3 +39079,21 @@ target rebuilds; and `git diff --check` passes. This qualifies one positive-
 rational quadratic and one control-point spline-points source only. Other
 spline/fit layouts, polyline Trim Two, visible GUI, cross-platform, and
 external-CAD acceptance remain open.
+
+## 1057. Exercise Mixed-bulge Polyline Trim Two Through the Action (2026-11-12)
+
+Test commit `9951c5bc1` adds a worker-created open mixed-bulge polyline source
+to Trim Two action coverage. The source consists of a semicircular arc followed
+by a line. Update-from-Source must create a generalized polyline definition;
+the asynchronous action then trims its cache against a finite transverse line
+in both operand pick orders. The regression checks nonempty preview without
+operand or undo-epoch mutation, ordinary spline/line fragments after commit,
+typed polyline identity restoration on undo, and redo.
+
+Validation on macOS arm64 CMake Release: the focused polyline Trim Two case
+passes 638 assertions across both pick orders; `[trim-action]` passes 28,204
+assertions / 81 cases with LibreDWG available; the test target rebuilds; and
+`git diff --check` passes. This is action-level evidence for this open
+arc-plus-line profile only. Five-lane persistence, other polyline layouts,
+closed/multi-component cases, visible GUI, cross-platform, and external-CAD
+acceptance remain open.
