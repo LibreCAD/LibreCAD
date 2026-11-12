@@ -40143,3 +40143,19 @@ build. The focused ellipse Trim Two and full `[trim-action]` CMake Release
 receipts are in section 1104. Visible Properties interaction, clean/reproducible
 qmake setup, cross-platform delivery, and external ODA/AutoCAD acceptance
 remain open.
+
+## 1106. Clean-regenerate and Build qmake6 at the Current PR Head (2026-11-12)
+
+At PR worktree HEAD `8f21d7efdee693f93864f38514db310f0944c679`, qmake6
+recursively regenerated the top-level `librecad.pro` build in the fresh
+out-of-tree directory `/private/tmp/offset2961-qmake6-clean-current` using
+`/opt/homebrew/bin/qmake6 -recursive
+/Users/dli/.codex/worktrees/offset-2961-runtime/LibreCAD/librecad.pro`.
+The full recursive `make -j6` built LibreCAD, `LibreCADOffsetWorker`, plugins,
+and tools; an immediate second `make -j6` exited 0 with all targets up to date.
+This closes the clean qmake6 application-build gate on macOS arm64 for this
+revision, but does not build or run a qmake test target and does not qualify
+another platform. The build reported pre-existing DWG metadata aggregate
+initializer warnings and macOS deployment-target warnings for installed Qt
+libraries; no build failure occurred. Visible Properties acceptance,
+cross-platform builds, and external ODA/AutoCAD validation remain open.
