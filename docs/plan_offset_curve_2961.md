@@ -38094,9 +38094,10 @@ LibreDWG independently reads every generated R2018 DWG in the matrix.
 Validation: the worker-client trimming case passes 9,442 assertions; the
 Release CMake native file-lane case passes 38,079 assertions. Both targets
 build, and `git diff --check` passes. This closes the specified worker trim and
-trimmed-geometry persistence cases only. Properties trim interaction,
-translated and broad-scale trimming, other interval/ratio families, visible
-GUI acceptance, and ODA/AutoCAD verification remain open.
+trimmed-geometry persistence cases only. Properties trim interaction, other
+interval/ratio families, visible GUI acceptance, and ODA/AutoCAD verification
+remain open. The tested similarity-transform extension is recorded in section
+1012.
 
 ## 1011. Persist Transformed Thin Hyperbola Source Updates (2026-11-12)
 
@@ -38114,3 +38115,21 @@ assertions; `librecad_tests` builds and `git diff --check` passes. This
 qualifies only the listed similarity transforms and parameter variants. It
 does not establish nonuniform transforms, arbitrary origins/scales, visible
 GUI interaction, or external ODA/AutoCAD acceptance.
+
+## 1012. Persist Transformed Thin Hyperbola Trims (2026-11-12)
+
+Test commit `c5e96d683` extends the thin-hyperbola trimmed-output file matrix to
+similarity scales `1e-3`, `1`, and `1e4` at origins `(0,0)`, `(1e3,-2e3)`, and
+`(-1e7,2e7)` multiplied by each scale. Both ratios, both signed sides, and all
+three vertex-curvature fractions are generated for the transformed profiles;
+the baseline matrix still covers both branches and angle-bound orders. Reopened
+splines are sampled against the generated trims with a comparison tolerance
+bounded by the scaled geometry tolerance and world-coordinate ULPs. Every
+R2018 DWG is independently parsed by LibreDWG.
+
+Validation: the focused Release CMake native file-lane case passes 64,587
+assertions across 440 save/reopens, including 88 independent R2018 DWG reads.
+The `librecad_tests` target builds and `git diff --check` passes. This closes
+only the stated similarity transforms, ratios and intervals. Nonuniform or
+arbitrary transformations, additional parameter bounds, visible trim
+interaction, and ODA/AutoCAD acceptance remain open.
