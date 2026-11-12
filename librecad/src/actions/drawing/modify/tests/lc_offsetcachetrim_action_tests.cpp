@@ -8,6 +8,7 @@
 #include <memory>
 #include <sstream>
 #include <functional>
+#include <filesystem>
 #include <utility>
 #include <QPointer>
 #include <QScopeGuard>
@@ -18,6 +19,7 @@
 #include <QElapsedTimer>
 #include <QEventLoop>
 #include <QFileInfo>
+#include <QTemporaryDir>
 #include <QThread>
 #include <QProcess>
 #ifdef Q_OS_UNIX
@@ -35,6 +37,7 @@
 #include "lc_hyperbola.h"
 #include "lc_splinepoints.h"
 #include "lc_offsetcurveactiontestsupport.h"
+#include "lc_filtertestsupport.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
@@ -738,6 +741,32 @@ TEST_CASE("T native Trim action previews commits and undoes a worker-created typ
     }
     REQUIRE_FALSE(fragments.empty());
     CHECK(committed == preview);
+
+    QTemporaryDir directory;
+    REQUIRE(directory.isValid());
+    const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
+        RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+    auto expectedFileGeometry = committed;
+    expectedFileGeometry.push_back(trimGeometry(*cutter));
+    expectedFileGeometry.push_back(trimGeometry(*hyperbola));
+    std::sort(expectedFileGeometry.begin(), expectedFileGeometry.end());
+    for (std::size_t i = 0; i < formats.size(); ++i) {
+        const bool dwg = formats[i] == RS2::FormatDWG || formats[i] == RS2::FormatDWG2018;
+        const auto file = std::filesystem::path(directory.filePath(
+            QStringLiteral("typed-hyperbola-trim-%1").arg(i) + (dwg ? ".dwg" : ".dxf")).toStdString());
+        REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+        RS_Graphic reopened;
+        REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
+        std::vector<std::string> reopenedGeometry;
+        for (auto* entity : live(reopened)) {
+            CHECK(entity->rtti() != RS2::EntityOffsetCurve);
+            reopenedGeometry.push_back(trimGeometry(*entity));
+        }
+        std::sort(reopenedGeometry.begin(), reopenedGeometry.end());
+        CAPTURE(formats[i]);
+        CHECK(reopenedGeometry == expectedFileGeometry);
+    }
+
     REQUIRE(f.graphic.undo());
     CHECK_FALSE(native->isDeleted());
     CHECK_FALSE(cutter->isDeleted());
