@@ -39922,3 +39922,22 @@ Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
 sections 1090 and 1093 and extends section 1093's full-scale persistence matrix
 to one asymmetric profile. Other cusp control nets, transformed frames,
 visible-GUI, cross-platform, and external-CAD acceptance remain open.
+
+## 1095. Persist Cusp Trims Under Reflected Similarity Frames (2026-11-12)
+
+Test commit `0bb7e48a5` adds an X reflection before the rotation/translation
+in section 1094's transform matrix. Reflection reverses curve orientation, so
+the signed distance is reversed as well to keep the same physical offset side.
+Both symmetric and asymmetric profiles now run in reflected and non-reflected
+frames at scales `0.1`, `1`, and `10`, against line, circle, and bounded-arc
+cutters in both pick orders. All committed fragments round-trip through the
+five DXF/DWG lanes: 360 files. Reopened geometry is compared, editable offset
+residue is rejected, and LibreDWG independently parses each DWG.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+`[transform]` run passes 24,133 assertions across two cases; the full
+`[trim-action]` suite passes 79,812 assertions across 84 cases; and
+`git diff --check` passes. This supersedes sections 1093-1094's
+non-reflected-only matrices. Other reflections/rotations, general affine
+transforms, additional cusp control nets, visible-GUI, cross-platform, and
+external-CAD acceptance remain open.
