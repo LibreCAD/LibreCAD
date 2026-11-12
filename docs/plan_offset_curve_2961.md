@@ -37807,3 +37807,23 @@ ill-conditioned cases. It does not finish the broader spline family matrix,
 prove the ratio boundary for arbitrary geometry, validate all unit/scale
 combinations, or close visible-GUI and ODA/AutoCAD acceptance. Those remain
 open under the existing family/variant and delivery slices.
+
+## 996. Qualify Fit-point Conditioning Under Similarity Transforms (2026-11-12)
+
+Test commit `ba44c2382` extends the fit-point conditioning regression to open
+and closed profiles under uniform scales `1e-4`, `1`, and `1e4`, at the
+recorded origin and translated origins, including a reflected profile at a
+large world origin. Each profile exercises a tested admitted boundary and a
+refused gap. Admitted cases must produce a successful direct offset on both
+sides and satisfy the independent requested-distance oracle; refused cases
+must return `InvalidSource` with empty output. Capture admission must remain
+consistent under these similarities.
+
+Validation: `[conditioning][transform]` passes 84 assertions in 1 case;
+`[fit-points][trim]` passes 31,171 assertions across 7 cases. CMake rebuilds
+`librecad_tests` successfully, including the library and offset worker; the
+new test is headless and `git diff --check` passes. This test-only slice does
+not prove arbitrary point distributions, nonuniform transforms, all
+world-origin/scale combinations, worker/file persistence at these transforms,
+visible GUI, or external-CAD acceptance. Those remain open in the family and
+delivery matrices.
