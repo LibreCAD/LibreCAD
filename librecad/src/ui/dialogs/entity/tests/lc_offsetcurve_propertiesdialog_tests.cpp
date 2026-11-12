@@ -2024,9 +2024,13 @@ TEST_CASE("Native source picker refuses a candidate changed during worker prepar
     REQUIRE(lineIndex >= 0);
     sourceBox->setCurrentIndex(lineIndex);
     REQUIRE(widget.isPreparing());
+    CHECK_FALSE(typeBox->isEnabled());
+    CHECK_FALSE(sourceBox->isEnabled());
     line->move(RS_Vector{0, 3});
     awaitPreparation(widget);
 
+    CHECK(typeBox->isEnabled());
+    CHECK(sourceBox->isEnabled());
     CHECK_FALSE(widget.lastEditResult());
     CHECK(widget.findChild<QLabel*>("lRefusal")->text().contains(QStringLiteral("input changed")));
     before.exact(*clone);
