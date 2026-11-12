@@ -300,7 +300,7 @@ following slices in order, preserving the detailed safety requirements below:
 | 1. Inventory and selector | The UI contract and directed family transitions are implemented: while browsing replacements, the type selector remains usable for repeated family changes before choosing a candidate and filters across all nine `SupportedKinds`, with parabola distinct from spline-points. Switching family does not mutate the committed source/cache; both controls become disabled only after choosing a candidate and while its worker preparation is active. Reopen this slice only if inventory, capture/reconstruction, filtering, or worker encoding diverges. | Section 874's 9-by-8 matrix passes 1,101 assertions / 1 case; section 1013's latest focused headless source-picker suite passes 14,831 assertions / 43 cases, and section 960 records the action-level contract. Section 982 explicitly asserts both selectors disable during preparation and re-enable after stale-input refusal (915 assertions / 6 stale-source cases). Remaining family/variant qualification is tracked in slice 4, not inferred from picker coverage. |
 | 2. Current-source indication | Automated lifecycle and identity handling is qualified for resolved, initially missing/ambiguous, duplicate, hidden, locked, moved, deleted, and replaced sources. Temporary highlighting remains separate from persistent selection. Physical stale-peer UI and scale limits beyond the recorded stress case are Delivery/acceptance work, not an unimplemented code path. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][highlight]` passes 348 assertions / 20 cases; the incremental subset passes 83 / 6; the 1,024-candidate x 256-control-point benchmark passes 26 / 1, with reported type-filter refresh 2.89521 ms and highlight validation 81.4885 ms. The tests preserve unrelated selection and overlays and cover lifecycle/revision changes. Broader workload sizes and physical stale-peer interaction remain open under Slice 5. |
 | 3. Atomic replacement | The automated ordered-family-pair and stale-publication contract is qualified: every modeled source kind can be replaced by every destination kind through worker preparation; chosen entities are revalidated at publication, and stale/deleted/changed inputs or context swaps do not mutate the prior curve/cache. Family geometry variants remain Slice 4. | On macOS arm64 CMake Release, `[gui][dialog][offsetcurve][source][typed]` passes 9,683 assertions / 4 cases, including all ordered family pairs; `[gui][dialog][offsetcurve][source][stale][async]` passes 886 / 5. The tests cover changed/deleted candidates, viewport/document swaps, late replies after target rebinding, and preservation on refusal. Visible physical interaction and cross-platform delivery remain Slice 5. |
-| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify its eligible geometry variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming while retaining its distinct type. Representative open-source Trim passes for each of the nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and simple convex square polylines round-trip or preserve state on refusal, but Properties Trim is currently and atomically refused for both profiles (sections 1017-1018); the direct kernel reports `AmbiguousRoots` with no certified roots for the square profile. Successful closed-polyline trimming remains unimplemented. This does not close the family-by-variant requirement. For unsupported or malformed variants, require an explicit atomic refusal rather than silent candidate loss or partial replacement. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Include cross-family replacement into each family and verify that the prior source/cache survives refusal. Uncovered variants remain open; picker visibility is not acceptance evidence. |
+| 4. Geometry and persistence | Treat all nine selectable families as end-to-end obligations, not just picker entries. For each supported family, qualify its eligible geometry variants through the offset engine, process worker, cache admission/reconstruction, and applicable DXF/DWG persistence. Independently qualify parabola construction, direction, conditioning, and trimming while retaining its distinct type. Representative open-source Trim passes for each of the nine kinds, including a mixed arc/line polyline. Closed mixed-bulge and simple convex square sources preserve state on refusal (sections 1017-1019). Their generated source caches are discontinuous multi-component splines; Trim now rejects these explicitly as `UnsupportedLayout` before root search (commit `1d841c34a`). Successful per-component or full multi-branch trimming remains unimplemented. This does not close the family-by-variant requirement. For unsupported or malformed variants, require an explicit atomic refusal rather than silent candidate loss or partial replacement. | Maintain a family-by-variant matrix recording candidate eligibility, source capture/reconstruction, signed distances, mode, direct/worker/cache results, independent geometry oracle, and exact file version/lane. Include cross-family replacement into each family and verify that the prior source/cache survives refusal. Uncovered variants remain open; picker visibility is not acceptance evidence. |
 | 5. Delivery | Run affected CMake and qmake6 builds and tests, then a visible LibreCAD workflow with cross-family replacement, parabola, source indication, cancellation, undo/redo and save/reopen. | Record commands, platform, revisions and actual pass/fail/blocked results. Test and commit each implementation slice, update this plan after each commit, and push the commits to PR #3193. Visible and cross-platform gates remain open until actually exercised. |
 
 Existing picker and parabola tests are useful regression evidence, not a
@@ -38255,17 +38255,37 @@ Visible GUI and ODA/AutoCAD acceptance remain open.
 Test commit `099bbe048` adds an action-level regression for a closed, convex,
 four-line polyline source selected through Properties Update from Source. After
 removing the original source, a vertical cutter crosses the generated cache
-transversely. Direct `LC_OffsetCacheTrim::prepare` confirms that the certified
-intersection query refuses with `AmbiguousRoots` before producing any roots;
-the UI reports the uncertainty refusal. The test proves the native target,
-cutter, exact cache fingerprint, typed source definition and undo epoch remain
-unchanged. This shows the closed-polyline Trim gap is not limited to the earlier
-mixed-bulge profile and localizes the square failure before fragment assembly.
+transversely. At that checkpoint the kernel refused with `AmbiguousRoots`;
+follow-up code commit `1d841c34a` identifies the topology before intersection
+search and returns `UnsupportedLayout` for the discontinuous multi-component
+cache. The test proves the native target, cutter, exact cache fingerprint,
+typed source definition and undo epoch remain unchanged. The trim gap is not
+limited to the earlier mixed-bulge profile.
 
-Validation: after test commit `d0dbd4e9a`, the focused
+Validation: after code commit `1d841c34a`, the focused
 `[lc-offsetcurve][polyline][closed][trim-action][trim-refusal]` selector passes
-635 assertions across two cases, including direct-kernel and action-level
-checks for the convex square. The CMake `librecad_tests` target builds and
-`git diff --check` passes. This is regression evidence for safe refusal only;
-it does not implement successful closed-polyline trimming, which remains open
+635 assertions across two cases; the complete `[lc-offsetcurve][trim-kernel]`
+suite passes 39,616 assertions / 55 cases; and `[lc-offsetcurve][trim-action]`
+passes 21,017 assertions / 71 cases. The CMake `librecad_tests` target builds
+and `git diff --check` passes. This is regression evidence for explicit safe
+refusal only; per-component and successful multi-branch trimming remain open
 in Slice 4. Visible GUI and external ODA/AutoCAD acceptance remain open.
+
+## 1019. Reject Discontinuous Native Trim Caches Before Intersection Search (2026-11-12)
+
+Code commit `1d841c34a` enforces the `LC_ParametricCurves` contract that
+consecutive segments in a branch meet end-to-start. `LC_OffsetCacheTrim`
+inspects source and spline-cutter span endpoints and refuses a discontinuous
+source as `UnsupportedLayout` (or a discontinuous cutter as
+`UnsupportedCutter`) before constructing the intersection provider. Previously
+those multiple branches were presented as one branch, which made the core
+report `AmbiguousRoots`; it was not a root-isolation failure on a continuous
+curve. This removes the misleading classification and keeps publication
+atomic, but does not yet trim one component while preserving the others.
+
+Validation: CMake `librecad_tests` builds; the closed-polyline refusal selector
+passes 635 assertions / 2 cases, `[lc-offsetcurve][trim-kernel]` passes 39,616 /
+55, and `[lc-offsetcurve][trim-action]` passes 21,017 / 71. `git diff --check`
+passes. Connected open and closed cache behavior remains covered by the full
+kernel/action suites. Multi-component Trim, visible GUI acceptance, and
+external ODA/AutoCAD validation remain open.
