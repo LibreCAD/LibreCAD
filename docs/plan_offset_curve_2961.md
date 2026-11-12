@@ -37246,3 +37246,21 @@ passes.
 Independent reader evidence remains for the one adjacent-repeat profile at
 distance `+0.2`; it does not qualify the separated-repeat fixture, translated
 files, other fit-point layouts, ODA/AutoCAD, or visible GUI behavior.
+
+## 969. Extend Repeated Fit-point Persistence to Separated and Translated Profiles (2026-11-11)
+
+Test commit `778636834` expands the real-worker persistence case to three
+profiles at signed distance `+0.2`: the interior adjacent repeat, the
+interior/trailing separated repeats, and the adjacent-repeat profile rotated
+37 degrees and translated to `(1e6, -2e6)`. Each profile round-trips through
+R14 DXF, R2000 DXF/DWG, R2007 DWG, and R2018 DWG; when LibreDWG is available,
+its JSON geometry is checked for each generated DWG. All 15 application
+round-trips and nine independent DWG reads pass. The focused test passes 3,949
+assertions; `git diff --check` passes.
+
+This closes file/reader evidence for these three profiles at `+0.2`, not all
+four signed distances or every repeated-point arrangement. The independent
+exact-normal kernel oracle separately covers the two untranslated profiles
+and their translated variants at four distances. Other fit-point layouts,
+negative-distance file lanes, visible GUI behavior, and ODA/AutoCAD remain
+open.
