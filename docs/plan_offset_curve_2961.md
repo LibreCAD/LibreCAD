@@ -39265,3 +39265,22 @@ message for `/private/tmp/libdxfrw-cargo/env`; none prevented the successful
 build. This validates recursive qmake6 compile/link delivery for the current
 head only. It does not run the qmake-built app, test suite, visible GUI,
 another platform, or external CAD readers; those gates remain open.
+
+## 1066. Qualify Circle Trim Two Across Uniform Scales (2026-11-12)
+
+Test commit `54c6aee6a` parameterizes the worker-created typed-circle Trim Two
+action fixture at uniform scales `0.1`, `1`, and `10`. For each scale, both
+operand pick orders exercise source update, preview immutability, commit,
+undo/redo, and R14 DXF, R2000 DXF/DWG, and R2018 DXF/DWG save/reopen. Reopened
+geometry is compared with the committed result, and LibreDWG independently
+parses both DWG outputs when available.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused scaled
+circle test passes 2,815 assertions across six scale/order combinations and
+all five file lanes; `[trim-action]` passes 32,716 assertions across 79 cases;
+the test target builds; and `git diff --check` passes.
+
+This qualifies three uniform scales for one circular source and finite-line
+cutter layout. Other scales, non-origin centers, rotated cutters, inward
+directions, and external ODA/AutoCAD validation remain open; no broad numerical
+scale guarantee is implied.
