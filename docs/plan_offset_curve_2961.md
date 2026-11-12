@@ -45,40 +45,21 @@ Existing table-driven, worker and file-lane tests cover particular fixtures;
 they do not establish universal geometry, platform, or visible-GUI support.
 Do not introduce a second type selector or a parabola-only picker.
 
-**Latest clarification (2026-11-12):** The source-type control must remain
-usable while the user is browsing for a replacement in the Properties source
-widget. The user can switch family, inspect the refreshed candidates, and
-switch again without leaving that workflow. The family filter and candidate
-chooser must cover every kind in the current offset-source model, including
-parabola as a distinct kind. This is not a request for a separate
-canvas-picking mode or a second selector. The acceptance sequence and mutation
-boundary are stated in the interaction-state rule below: changing type filters
-candidates only; choosing a candidate starts preparation; both controls are
-disabled during preparation; successful validation publishes the replacement.
-A family appearing in the selector is UI coverage only, not proof that all of
-its geometry variants pass generation, worker/cache validation, or persistence.
-
-**Latest user restatement (2026-11-12):** When specifying a new source curve,
-the same Properties source widget must let the user change the requested
-source type before selecting a replacement entity. The selector changes the
-candidate-family filter in place, and the candidate list refreshes immediately;
-the current source, cache, identity, and highlight remain untouched until a
-candidate of the requested family is chosen and asynchronous preparation
-succeeds. The inventory is the complete current `SupportedKinds` list, with
-parabola separately selectable. This is not support for unrelated drawable
-entities or proof that every parameterization of each family works end to end.
-
-**Current disposition (reconfirmed 2026-11-12):** The request to change source
-type while specifying a replacement and expose all supported source types is
-complete at the picker-contract level; it does not require another selector or
-parabola-only UI implementation slice. “All supported types” means the nine
-current `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse,
-spline, spline-points, parabola, bounded hyperbola, and polyline. Parabola
-remains a distinct typed choice, not a spline-points alias. The selector stays
-active while browsing candidates, each family change refreshes the candidate list,
-and the existing source/cache/identity/highlight remains unchanged until a
-candidate passes asynchronous preparation. Do not add another selector or
-extend the list to unrelated drawable entities.
+**Latest user clarification and disposition (2026-11-12):** While specifying a
+replacement source in the existing Properties source widget, the user can
+change the requested source type in place, inspect the immediately refreshed
+candidate list, and change type again without leaving the workflow. “All
+supported types” means the nine current
+`LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle, ellipse, spline,
+spline-points, parabola, bounded hyperbola, and polyline. Parabola is a
+distinct typed choice, not a spline-points alias. Changing the filter must not
+mutate the committed source, cache, identity, or highlight; choosing a
+candidate starts asynchronous preparation, and only successful validation
+publishes the replacement. This picker contract is implemented and covered by
+headless tests; no second selector, canvas-picking mode, or parabola-only UI
+slice is required. A family appearing in the selector does not prove all its
+geometry variants pass generation, worker/cache validation, trimming, or
+persistence. Do not extend the picker to unrelated drawable entities.
 
 **Acceptance sequence:** in the Properties source widget, start replacement,
 change the family at least twice before choosing, verify each change refreshes
@@ -91,13 +72,14 @@ in Slice 4. Do not reopen picker implementation solely to repeat this request.
 
 Automated picker evidence: the focused headless source-picker suite passes
 14,831 assertions / 43 cases (`librecad_tests
-'[gui][dialog][offsetcurve][source]'`), including the all-family transition
-contract. This is not visible-GUI acceptance and does not establish that every
-geometry variant of those families works. Slice 4 remains responsible for
-variant-level generation, worker/cache, trimming and applicable DXF/DWG
-persistence; Slice 5 remains responsible for visible interaction and delivery
-validation. Picker availability alone closes neither gate. The prior audit's
-typed-source Trim admission correction is recorded in section 1013.
+'[gui][dialog][offsetcurve][source]'`), including repeated type changes and
+candidate refresh across all nine kinds. This is not visible-GUI acceptance
+and does not establish that every geometry variant of those families works.
+Slice 4 remains responsible for variant-level generation, worker/cache,
+trimming and applicable DXF/DWG persistence; Slice 5 remains responsible for
+visible interaction and delivery validation. Picker availability alone closes
+neither gate. The prior audit's typed-source Trim admission correction is
+recorded in section 1013.
 
 **Interaction-state rule:** keep the type selector and candidate chooser
 available while the editor is idle and throughout the replacement-selection
