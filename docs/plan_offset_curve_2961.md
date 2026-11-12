@@ -39801,3 +39801,28 @@ Existing warnings include the absent
 field initializers in trim and DWG metadata code. They did not prevent the
 application/worker link. This is current-head qmake6 integration evidence, not
 a clean-tree build, visible GUI, another-platform, or external-CAD acceptance.
+
+## 1089. Qualify Circle-cut Trim on Symmetric and Asymmetric Cusp Branches (2026-11-12)
+
+Commit `f1ca22633` extends the symmetric three-branch `y = x^2` Trim Two
+matrix to a small circle centered on the selected branch, in addition to the
+existing transverse line cutter. Both exact-stall (`0.5`) and 2%-beyond
+(`0.51`) distances are exercised in both operand pick orders. Circle cases
+require exactly two certified contacts, then cover preview, commit, undo/redo,
+and R12 DXF, R2000 DXF/DWG, and R2018 DXF/DWG reopen with geometry comparison
+and no editable-offset residue.
+
+Together with section 1087's asymmetric profile, both symmetric and asymmetric
+parabolas now cover line and circle cutters at exact and beyond-cusp distances,
+both operand orders, and all five file lanes. This gives 80 cusp-trim output
+round trips. The asymmetric case also verifies all unpicked post-cusp spans
+remain whole. LibreDWG 0.14 parses the emitted DWGs for all profile/distance/
+cutter/order combinations.
+
+Validation on macOS arm64 CMake Release: the symmetric line/circle focused
+case passes 2,498 assertions / 1 case; the asymmetric line/circle focused case
+passes 2,580 / 1; the complete `[trim-action]` suite passes 52,473 assertions
+across 83 cases; all 80 file round trips pass; and `git diff --check` passes.
+This supersedes section 1087's earlier counts and 60-round-trip snapshot.
+Other cutter families, additional cusp roots/control nets and distances,
+visible-GUI, cross-platform, and external-CAD acceptance remain open.
