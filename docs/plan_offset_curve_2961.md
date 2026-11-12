@@ -39452,3 +39452,22 @@ parabola profile and one circle-cutter construction. It does not qualify
 translated/rotated parabola frames, different focus/vertex layouts, inward or
 near-singular offset distances, broader cutter types, visible GUI,
 cross-platform behavior, or external CAD acceptance; those remain open.
+
+## 1074. Qualify Rotated and Translated Typed-parabola Trim Two (2026-11-12)
+
+Follow-up commit `a5ee282a6` extends the scale matrix in section 1073 with a
+translated and rotated control net. The translation scales with the profile;
+the source, inherited offset, cutter, and picks remain a similarity transform
+of the same construction. The identity and transformed profiles each run at
+scales `0.1`, `1`, and `10`, in both operand pick orders, through source update,
+preview immutability, commit, undo/redo, and the five DXF/DWG lanes. LibreDWG
+independently parses both DWGs for each profile where available.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused
+parabola Trim Two case passes 3,207 assertions / 1 case across 12
+transform/scale/order combinations; `[trim-action]` passes 36,486 assertions
+across 81 cases; the test target builds; and `git diff --check` passes. This
+adds one rotated/translated symmetric parabola construction at three uniform
+scales. General affine transforms, other focus/vertex layouts, inward or
+near-singular offsets, other cutter constructions, visible GUI,
+cross-platform behavior, and external CAD acceptance remain open.
