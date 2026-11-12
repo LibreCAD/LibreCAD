@@ -9341,6 +9341,60 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
         {rotatedTranslated(adjacentRepeat), 1.0},
         {rotatedTranslated(separatedRepeats), 1.0}
     }};
+    const auto nearestDistance = [](const RS_Spline& spline, const RS_Vector& point) {
+        double start = 0.0;
+        double end = 0.0;
+        if (!spline.getParameterDomain(start, end)) return RS_MAXDOUBLE;
+        const auto at = [&](const double parameter, LC_CurveJet& jet) {
+            return spline.tryEvaluateJet(parameter, LC_CurveEvaluationSide::Interior, jet);
+        };
+        double best = RS_MAXDOUBLE;
+        const auto consider = [&](const double parameter) {
+            LC_CurveJet jet;
+            if (at(parameter, jet)) best = std::min(best, jet.point.distanceTo(point));
+        };
+        const auto& knots = spline.getData().knotslist;
+        for (std::size_t knot = 0; knot + 1 < knots.size(); ++knot) {
+            const double low = std::max(start, knots[knot]);
+            const double high = std::min(end, knots[knot + 1]);
+            if (!(low < high)) continue;
+            consider(low);
+            consider(high);
+            for (int seed = 0; seed <= 16; ++seed) {
+                double parameter = low + (high - low) * static_cast<double>(seed) / 16.0;
+                for (int iteration = 0; iteration < 20; ++iteration) {
+                    LC_CurveJet jet;
+                    if (!at(parameter, jet)) break;
+                    const RS_Vector residual = jet.point - point;
+                    const double first = RS_Vector::dotP(residual, jet.first);
+                    const double second = jet.first.squared() +
+                        RS_Vector::dotP(residual, jet.second);
+                    if (!std::isfinite(first) || !std::isfinite(second) ||
+                        std::abs(second) <= std::numeric_limits<double>::epsilon()) break;
+                    const double next = std::clamp(parameter - first / second, low, high);
+                    if (std::abs(next - parameter) <= 1e-14 * std::max(1.0, std::abs(parameter))) {
+                        parameter = next;
+                        break;
+                    }
+                    parameter = next;
+                }
+                consider(parameter);
+            }
+        }
+        return best;
+    };
+    RS_SplineData lineData{3, false};
+    lineData.controlPoints = {{0, 0}, {1.0 / 3.0, 0}, {2.0 / 3.0, 0}, {1, 0}};
+    lineData.knotslist = {0, 0, 0, 0, 1, 1, 1, 1};
+    lineData.weights.assign(4, 1.0);
+    RS_Spline lineSpline{nullptr, lineData};
+    CHECK(std::abs(nearestDistance(lineSpline, {0.25, 1}) - 1.0) <= 1e-12);
+    RS_SplineData quarterCircle{2, false};
+    quarterCircle.controlPoints = {{1, 0}, {1, 1}, {0, 1}};
+    quarterCircle.knotslist = {0, 0, 0, 1, 1, 1};
+    quarterCircle.weights = {1, std::sqrt(0.5), 1};
+    RS_Spline circleSpline{nullptr, quarterCircle};
+    CHECK(std::abs(nearestDistance(circleSpline, {0, 0}) - 1.0) <= 1e-12);
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
         LC_SplinePointsData oracleProfile = profiles[profileIndex].first;
@@ -9416,6 +9470,14 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                     std::abs(signedDistance)),
                 *options, LC_CurveOffset::makeDirectSourceBudget());
             REQUIRE(geometry.status == LC_CurveOffsetStatus::Ok);
+            REQUIRE(generated.ordinary.size() == geometry.branches.size());
+            std::vector<std::unique_ptr<RS_Spline>> workerSplines;
+            workerSplines.reserve(generated.ordinary.size());
+            for (const auto& ordinary : generated.ordinary) {
+                const auto* data = std::get_if<RS_SplineData>(&ordinary);
+                REQUIRE(data);
+                workerSplines.push_back(std::make_unique<RS_Spline>(nullptr, *data));
+            }
 
             RS_SplineData cache;
             REQUIRE(LC_OffsetWorkerSourceCache::combine(generated.ordinary, cache));
@@ -9428,9 +9490,11 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                        bezier[3] * (parameter * parameter * parameter);
             };
             double maximumDeviation = 0.0;
+            double maximumWorkerDeviation = 0.0;
             std::size_t samples = 0;
             for (const auto& branch : geometry.branches) {
-                for (const auto& piece : branch.cubicPieces) {
+                for (std::size_t pieceIndex = 0; pieceIndex < branch.cubicPieces.size(); ++pieceIndex) {
+                    const auto& piece = branch.cubicPieces[pieceIndex];
                     const double localWidth = piece.localU1 - piece.localU0;
                     REQUIRE(localWidth > 0.0);
                     for (const double fraction : {.2, .5, .8}) {
@@ -9466,15 +9530,23 @@ TEST_CASE("repeated fit-point worker caches follow independent exact normals",
                         const double deviation = cubicPoint(piece.bezier, localParameter)
                                                      .distanceTo(exactOffset);
                         maximumDeviation = std::max(maximumDeviation, deviation);
+                        double workerDeviation = RS_MAXDOUBLE;
+                        for (const auto& workerSpline : workerSplines) {
+                            workerDeviation = std::min(workerDeviation,
+                                nearestDistance(*workerSpline, exactOffset + expectedTranslation));
+                        }
+                        maximumWorkerDeviation = std::max(maximumWorkerDeviation,
+                                                          workerDeviation);
                         ++samples;
                     }
                 }
             }
-            CAPTURE(maximumDeviation, samples, geometry.branches.size(),
+            CAPTURE(maximumDeviation, maximumWorkerDeviation, samples, geometry.branches.size(),
                     generated.ordinary.size(), cache.controlPoints.size(),
                     options->tolerance.requestedGeometry);
             REQUIRE(samples > 0);
             CHECK(maximumDeviation <= options->tolerance.requestedGeometry);
+            CHECK(maximumWorkerDeviation <= options->tolerance.requestedGeometry);
 
             const req::Request validation{token,
                 req::ValidateSourceCache{cache, definition, {}}};
