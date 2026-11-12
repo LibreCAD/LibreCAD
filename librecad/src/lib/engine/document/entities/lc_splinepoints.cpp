@@ -1655,6 +1655,26 @@ bool fitControlPoints(const LC_SplinePointsData& data, std::vector<RS_Vector>& c
 
     const size_t n = data.splinePoints.size();
 
+    std::vector<RS_Vector> uniqueFitPoints;
+    uniqueFitPoints.reserve(n);
+    for (const RS_Vector& point : data.splinePoints) {
+        if (uniqueFitPoints.empty() || point.x != uniqueFitPoints.back().x || point.y != uniqueFitPoints.back().y ||
+            point.z != uniqueFitPoints.back().z) {
+            uniqueFitPoints.push_back(point);
+        }
+    }
+    if (data.closed && uniqueFitPoints.size() > 1 &&
+        uniqueFitPoints.front().x == uniqueFitPoints.back().x &&
+        uniqueFitPoints.front().y == uniqueFitPoints.back().y &&
+        uniqueFitPoints.front().z == uniqueFitPoints.back().z) {
+        uniqueFitPoints.pop_back();
+    }
+    if (uniqueFitPoints.size() != n) {
+        LC_SplinePointsData normalized = data;
+        normalized.splinePoints = std::move(uniqueFitPoints);
+        return fitControlPoints(normalized, controls);
+    }
+
     if (data.closed && n < 3) {
         if (n > 0) {
             controls.push_back(data.splinePoints.at(0));

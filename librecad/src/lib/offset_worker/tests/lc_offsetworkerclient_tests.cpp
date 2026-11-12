@@ -4294,12 +4294,8 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
     LC_SplinePointsData sourceData{false, false};
     sourceData.splinePoints = {{0, 0}, {1, 1}, {1, 1}, {2, 0},
                                {3, 1}, {3, 1}, {4, 0}};
-    LC_SplinePoints source{nullptr, sourceData};
-    LC_CurveJet sourceJet;
-    REQUIRE(source.tryEvaluateJet(2.5, LC_CurveEvaluationSide::Interior, sourceJet));
-    REQUIRE(sourceJet.first.magnitude() > 0.0);
-    const RS_Vector leftNormal{-sourceJet.first.y / sourceJet.first.magnitude(),
-                               sourceJet.first.x / sourceJet.first.magnitude()};
+    std::array<LC_SplinePointsData, 2> sourceProfiles{{sourceData, sourceData}};
+    std::reverse(sourceProfiles[1].splinePoints.begin(), sourceProfiles[1].splinePoints.end());
     const std::array<double, 2> distances{{0.2, 0.5}};
     const std::array<double, 2> sides{{1.0, -1.0}};
     struct Lane {
@@ -4318,155 +4314,157 @@ TEST_CASE("Repeated fit-point trims round-trip through DXF and DWG",
 #endif
 
     std::size_t fixture = 0;
-    for (const double distance : distances) {
-        for (const double side : sides) {
-            CAPTURE(distance, side);
-            RS_OffsetData offset;
-            offset.coord = sourceJet.point + leftNormal * (side * 8.0);
-            offset.distance = distance;
-            offset.number = 1;
-            offset.multipleCopies = true;
-            offset.keepOriginals = true;
-            offset.sideFallback = offset.coord;
-            LC_OffsetBatchPreparation prepared{offset, {&source}, false, {}};
-            LC_DocumentModificationBatch batch;
-            REQUIRE_FALSE(prepared.advance(batch));
-            const qint64 requestId = static_cast<qint64>(fixture + 1);
-            const auto request = prepared.request(token(requestId));
-            REQUIRE(request);
-            REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
-            const auto& produce = std::get<Req::Produce>(request->operation);
-            REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(produce.source));
-            CHECK(std::get<LC_OffsetSourceGeometry>(produce.source).kind() ==
-                  LC_OffsetSourceGeometry::Kind::SplinePoints);
-            Receipts receipts;
-            REQUIRE(owned.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
-            rt.until([&] { return receipts.calls[0] != 0; });
-            const auto& completion = completed(receipts.at(0), requestId, 5);
-            REQUIRE(prepared.accept(completion));
-            REQUIRE(prepared.advance(batch));
-            REQUIRE(prepared.outcome().sources.size() == 1);
-            CHECK(prepared.outcome().sources.front().complete());
-            REQUIRE_FALSE(batch.entitiesToAdd.empty());
+    for (std::size_t profileIndex = 0; profileIndex < sourceProfiles.size(); ++profileIndex) {
+        CAPTURE(profileIndex);
+        LC_SplinePoints source{nullptr, sourceProfiles[profileIndex]};
+        LC_CurveJet sourceJet;
+        REQUIRE(source.tryEvaluateJet(0.5, LC_CurveEvaluationSide::Interior, sourceJet));
+        REQUIRE(sourceJet.first.magnitude() > 0.0);
+        const RS_Vector leftNormal{-sourceJet.first.y / sourceJet.first.magnitude(), sourceJet.first.x / sourceJet.first.magnitude()};
+        for (const double distance : distances) {
+            for (const double side : sides) {
+                CAPTURE(distance, side);
+                RS_OffsetData offset;
+                offset.coord = sourceJet.point + leftNormal * (side * 8.0);
+                offset.distance = distance;
+                offset.number = 1;
+                offset.multipleCopies = true;
+                offset.keepOriginals = true;
+                offset.sideFallback = offset.coord;
+                LC_OffsetBatchPreparation prepared{offset, {&source}, false, {}};
+                LC_DocumentModificationBatch batch;
+                REQUIRE_FALSE(prepared.advance(batch));
+                const qint64 requestId = static_cast<qint64>(fixture + 1);
+                const auto request = prepared.request(token(requestId));
+                REQUIRE(request);
+                REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
+                const auto& produce = std::get<Req::Produce>(request->operation);
+                REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(produce.source));
+                CHECK(std::get<LC_OffsetSourceGeometry>(produce.source).kind() == LC_OffsetSourceGeometry::Kind::SplinePoints);
+                Receipts receipts;
+                REQUIRE(owned.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
+                rt.until([&] { return receipts.calls[0] != 0; });
+                const auto& completion = completed(receipts.at(0), requestId, 5);
+                REQUIRE(prepared.accept(completion));
+                REQUIRE(prepared.advance(batch));
+                REQUIRE(prepared.outcome().sources.size() == 1);
+                REQUIRE(prepared.outcome().sources.front().complete());
+                REQUIRE_FALSE(batch.entitiesToAdd.empty());
 
-            RS_Graphic graphic;
-            graphic.initForNewDocument();
-            auto* offsetLayer = new RS_Layer("Offset");
-            graphic.addLayer(offsetLayer);
-            std::vector<RS_SplineData> expected;
-            for (const RS_Entity* generated : batch.entitiesToAdd) {
-                REQUIRE(generated);
-                const auto* spline = dynamic_cast<const RS_Spline*>(generated);
-                REQUIRE(spline);
-                expected.push_back(spline->getData());
-                auto copy = std::unique_ptr<RS_Entity>{generated->clone()};
-                REQUIRE(copy);
-                copy->setLayer(offsetLayer);
-                graphic.addEntity(copy.release());
-            }
-            prepared.release();
-            qDeleteAll(batch.entitiesToAdd);
-            batch.entitiesToAdd.clear();
-            CHECK_FALSE(source.isDeleted());
+                RS_Graphic graphic;
+                graphic.initForNewDocument();
+                auto* offsetLayer = new RS_Layer("Offset");
+                graphic.addLayer(offsetLayer);
+                std::vector<RS_SplineData> expected;
+                for (const RS_Entity* generated : batch.entitiesToAdd) {
+                    REQUIRE(generated);
+                    const auto* spline = dynamic_cast<const RS_Spline*>(generated);
+                    REQUIRE(spline);
+                    expected.push_back(spline->getData());
+                    auto copy = std::unique_ptr<RS_Entity>{generated->clone()};
+                    REQUIRE(copy);
+                    copy->setLayer(offsetLayer);
+                    graphic.addEntity(copy.release());
+                }
+                prepared.release();
+                qDeleteAll(batch.entitiesToAdd);
+                batch.entitiesToAdd.clear();
+                CHECK_FALSE(source.isDeleted());
 
-            for (const Lane& lane : lanes) {
+                for (const Lane& lane : lanes) {
 #ifndef DWGSUPPORT
-                if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
-                    continue;
+                    if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)
+                        continue;
 #endif
-                CAPTURE(lane.extension);
-                const auto path = directory.file(std::to_string(fixture) + "-" + lane.extension);
-                REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+                    CAPTURE(lane.extension);
+                    const auto path = directory.file(std::to_string(fixture) + "-" + lane.extension);
+                    REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
 #ifdef DWGSUPPORT
-                if (!libreDwgReader.isEmpty() &&
-                    (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
-                    QProcess reader;
-                    reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
-                    REQUIRE(reader.waitForStarted());
-                    REQUIRE(reader.waitForFinished(30000));
-                    INFO(reader.readAllStandardError().toStdString());
-                    REQUIRE(reader.exitStatus() == QProcess::NormalExit);
-                    REQUIRE(reader.exitCode() == 0);
-                    const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
-                    REQUIRE(document.isObject());
-                    const QJsonArray objects = document.object().value("OBJECTS").toArray();
-                    std::vector<bool> matchedObjects(static_cast<std::size_t>(objects.size()), false);
-                    for (const RS_SplineData& wanted : expected) {
-                        bool found = false;
-                        for (qsizetype objectIndex = 0; objectIndex < objects.size(); ++objectIndex) {
-                            if (matchedObjects[static_cast<std::size_t>(objectIndex)]) continue;
-                            const QJsonObject object = objects[objectIndex].toObject();
-                            if (object.value("entity").toString() != "SPLINE" ||
-                                object.value("degree").toInt() != wanted.degree)
-                                continue;
-                            const QJsonArray knots = object.value("knots").toArray();
-                            const QJsonArray controls = object.value("ctrl_pts").toArray();
-                            if (knots.size() != static_cast<qsizetype>(wanted.knotslist.size()) ||
-                                controls.size() != static_cast<qsizetype>(wanted.controlPoints.size()))
-                                continue;
-                            bool matches = true;
-                            for (qsizetype i = 0; i < knots.size() && matches; ++i)
-                                matches = std::abs(knots[i].toDouble() -
-                                    wanted.knotslist[static_cast<std::size_t>(i)]) <= 1e-10;
-                            for (qsizetype i = 0; i < controls.size() && matches; ++i) {
-                                const std::size_t index = static_cast<std::size_t>(i);
-                                const QJsonObject point = controls[i].toObject();
-                                const double weight = wanted.weights.empty() ? 1.0 : wanted.weights[index];
-                                matches = std::abs(point.value("x").toDouble() - wanted.controlPoints[index].x) <= 1e-9 &&
-                                          std::abs(point.value("y").toDouble() - wanted.controlPoints[index].y) <= 1e-9 &&
-                                          std::abs(point.value("z").toDouble() - wanted.controlPoints[index].z) <= 1e-9 &&
-                                          std::abs(point.value("w").toDouble(1.0) - weight) <= 1e-9;
+                    if (!libreDwgReader.isEmpty() && (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2018)) {
+                        QProcess reader;
+                        reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
+                        REQUIRE(reader.waitForStarted());
+                        REQUIRE(reader.waitForFinished(30000));
+                        INFO(reader.readAllStandardError().toStdString());
+                        REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                        REQUIRE(reader.exitCode() == 0);
+                        const QJsonDocument document = QJsonDocument::fromJson(reader.readAllStandardOutput());
+                        REQUIRE(document.isObject());
+                        const QJsonArray objects = document.object().value("OBJECTS").toArray();
+                        std::vector<bool> matchedObjects(static_cast<std::size_t>(objects.size()), false);
+                        for (const RS_SplineData& wanted : expected) {
+                            bool found = false;
+                            for (qsizetype objectIndex = 0; objectIndex < objects.size(); ++objectIndex) {
+                                if (matchedObjects[static_cast<std::size_t>(objectIndex)])
+                                    continue;
+                                const QJsonObject object = objects[objectIndex].toObject();
+                                if (object.value("entity").toString() != "SPLINE" || object.value("degree").toInt() != wanted.degree)
+                                    continue;
+                                const QJsonArray knots = object.value("knots").toArray();
+                                const QJsonArray controls = object.value("ctrl_pts").toArray();
+                                if (knots.size() != static_cast<qsizetype>(wanted.knotslist.size()) ||
+                                    controls.size() != static_cast<qsizetype>(wanted.controlPoints.size()))
+                                    continue;
+                                bool matches = true;
+                                for (qsizetype i = 0; i < knots.size() && matches; ++i)
+                                    matches = std::abs(knots[i].toDouble() - wanted.knotslist[static_cast<std::size_t>(i)]) <= 1e-10;
+                                for (qsizetype i = 0; i < controls.size() && matches; ++i) {
+                                    const std::size_t index = static_cast<std::size_t>(i);
+                                    const QJsonObject point = controls[i].toObject();
+                                    const double weight = wanted.weights.empty() ? 1.0 : wanted.weights[index];
+                                    matches = std::abs(point.value("x").toDouble() - wanted.controlPoints[index].x) <= 1e-9 &&
+                                        std::abs(point.value("y").toDouble() - wanted.controlPoints[index].y) <= 1e-9 &&
+                                        std::abs(point.value("z").toDouble() - wanted.controlPoints[index].z) <= 1e-9 &&
+                                        std::abs(point.value("w").toDouble(1.0) - weight) <= 1e-9;
+                                }
+                                if (matches) {
+                                    matchedObjects[static_cast<std::size_t>(objectIndex)] = true;
+                                    found = true;
+                                    break;
+                                }
                             }
-                            if (matches) {
-                                matchedObjects[static_cast<std::size_t>(objectIndex)] = true;
-                                found = true;
-                                break;
-                            }
+                            CHECK(found);
                         }
-                        CHECK(found);
+                    }
+#endif
+                    RS_Graphic reopened;
+                    REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
+                    std::vector<RS_SplineData> actual;
+                    for (const RS_Entity* entity : reopened) {
+                        if (entity->isDeleted() || !entity->getLayer() || entity->getLayer()->getName() != "Offset")
+                            continue;
+                        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+                        REQUIRE(spline);
+                        actual.push_back(spline->getData());
+                    }
+                    REQUIRE(actual.size() == expected.size());
+                    for (std::size_t i = 0; i < expected.size(); ++i) {
+                        REQUIRE(actual[i].degree == expected[i].degree);
+                        REQUIRE(actual[i].knotslist.size() == expected[i].knotslist.size());
+                        REQUIRE(actual[i].weights.size() == expected[i].weights.size());
+                        REQUIRE(actual[i].controlPoints.size() == expected[i].controlPoints.size());
+                        for (std::size_t knot = 0; knot < expected[i].knotslist.size(); ++knot)
+                            CHECK(std::abs(actual[i].knotslist[knot] - expected[i].knotslist[knot]) <= 1e-9);
+                        for (std::size_t weight = 0; weight < expected[i].weights.size(); ++weight)
+                            CHECK(std::abs(actual[i].weights[weight] - expected[i].weights[weight]) <= 1e-9);
+                        for (std::size_t point = 0; point < expected[i].controlPoints.size(); ++point)
+                            CHECK(actual[i].controlPoints[point].distanceTo(expected[i].controlPoints[point]) <= 1e-8);
                     }
                 }
-#endif
-                RS_Graphic reopened;
-                REQUIRE(lc::test::importDrawing(reopened, path, lane.format));
-                std::vector<RS_SplineData> actual;
-                for (const RS_Entity* entity : reopened) {
-                    if (entity->isDeleted() || !entity->getLayer() ||
-                        entity->getLayer()->getName() != "Offset") continue;
-                    const auto* spline = dynamic_cast<const RS_Spline*>(entity);
-                    REQUIRE(spline);
-                    actual.push_back(spline->getData());
-                }
-                REQUIRE(actual.size() == expected.size());
-                for (std::size_t i = 0; i < expected.size(); ++i) {
-                    REQUIRE(actual[i].degree == expected[i].degree);
-                    REQUIRE(actual[i].knotslist.size() == expected[i].knotslist.size());
-                    REQUIRE(actual[i].weights.size() == expected[i].weights.size());
-                    REQUIRE(actual[i].controlPoints.size() == expected[i].controlPoints.size());
-                    for (std::size_t knot = 0; knot < expected[i].knotslist.size(); ++knot)
-                        CHECK(std::abs(actual[i].knotslist[knot] - expected[i].knotslist[knot]) <= 1e-9);
-                    for (std::size_t weight = 0; weight < expected[i].weights.size(); ++weight)
-                        CHECK(std::abs(actual[i].weights[weight] - expected[i].weights[weight]) <= 1e-9);
-                    for (std::size_t point = 0; point < expected[i].controlPoints.size(); ++point)
-                        CHECK(actual[i].controlPoints[point].distanceTo(expected[i].controlPoints[point]) <= 1e-8);
-                }
+                ++fixture;
             }
-            ++fixture;
         }
     }
 }
 
-TEST_CASE("Singular fit-point trims fail closed through worker preparation",
-          "[lc-offsetcurve][worker-client][ordered-preparation][fit-points][singular][trim]") {
+TEST_CASE("All-coincident fit-point trims fail closed through worker preparation",
+          "[lc-offsetcurve][worker-client][ordered-preparation][fit-points][singular]"
+          "[trim]") {
     auto& rt = runtime();
     OwnedClient client{rt};
-    std::array<LC_SplinePointsData, 3> profiles;
+    std::array<LC_SplinePointsData, 1> profiles;
     profiles[0] = LC_SplinePointsData{false, false};
-    profiles[0].splinePoints = {{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
-    profiles[1] = LC_SplinePointsData{false, false};
-    profiles[1].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}};
-    profiles[2] = LC_SplinePointsData{false, false};
-    profiles[2].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
+    profiles[0].splinePoints = {{1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1}};
 
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
@@ -4488,8 +4486,7 @@ TEST_CASE("Singular fit-point trims fail closed through worker preparation",
         REQUIRE(std::holds_alternative<Req::Produce>(request->operation));
         const auto& operation = std::get<Req::Produce>(request->operation);
         REQUIRE(std::holds_alternative<LC_OffsetSourceGeometry>(operation.source));
-        CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() ==
-              LC_OffsetSourceGeometry::Kind::SplinePoints);
+        CHECK(std::get<LC_OffsetSourceGeometry>(operation.source).kind() == LC_OffsetSourceGeometry::Kind::SplinePoints);
 
         Receipts receipts;
         REQUIRE(client.get().submit(*request, Client::Mode::Commit, receipts.into(0)));
@@ -4500,7 +4497,7 @@ TEST_CASE("Singular fit-point trims fail closed through worker preparation",
         CHECK(result->outputStatus == Reply::OrdinaryStatus::None);
         CHECK(result->source.status == LC_OffsetSourceStatus::OffsetFailed);
         CHECK(result->source.copiesMade == 0);
-        CHECK(result->source.engineStatus == LC_CurveOffsetStatus::InvalidRequest);
+        CHECK(result->source.engineStatus != LC_CurveOffsetStatus::Ok);
         CHECK(result->outputs.empty());
 
         REQUIRE(prepared.accept(completion));

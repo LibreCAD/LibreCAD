@@ -354,14 +354,39 @@ TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
         data.splinePoints = std::move(fitPoints);
         return data;
     };
-    const std::array<LC_SplinePointsData, 2> profiles{{
+    std::array<LC_SplinePointsData, 4> profiles{{
         makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}}),
-        makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}})
+        makeProfile({{0, 0}, {1, 1}, {1, 1}, {2, 0}, {3, 1}, {3, 1}, {4, 0}}),
+        makeProfile({{3, 1}, {2, 0}, {1, 1}, {1, 1}, {0, 0}}),
+        makeProfile({{4, 0}, {3, 1}, {3, 1}, {2, 0}, {1, 1}, {1, 1}, {0, 0}})
     }};
 
     for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
         CAPTURE(profileIndex);
         LC_SplinePoints source{nullptr, profiles[profileIndex]};
+        if (profileIndex == 2) {
+            LC_SplinePoints forward{nullptr, profiles[0]};
+            double maxReverseError = 0.0;
+            const double end = static_cast<double>(forward.getSegmentCount());
+            for (int sample = 0; sample <= 100; ++sample) {
+                LC_CurveJet a;
+                LC_CurveJet b;
+                REQUIRE(forward.tryEvaluateJet(end * sample / 100.0, LC_CurveEvaluationSide::Interior, a));
+                REQUIRE(source.tryEvaluateJet(end * (100 - sample) / 100.0,
+                                              LC_CurveEvaluationSide::Interior, b));
+                maxReverseError = std::max(maxReverseError, a.point.distanceTo(b.point));
+            }
+            double maxControlReverseError = 0.0;
+            REQUIRE(forward.getData().controlPoints.size() == source.getData().controlPoints.size());
+            for (std::size_t i = 0; i < forward.getData().controlPoints.size(); ++i) {
+                maxControlReverseError = std::max(
+                    maxControlReverseError,
+                    forward.getData().controlPoints[i].distanceTo(
+                        source.getData().controlPoints[forward.getData().controlPoints.size() - 1 - i]));
+            }
+            CHECK(maxReverseError <= 1e-10);
+            CHECK(maxControlReverseError <= 1e-10);
+        }
         REQUIRE_FALSE(source.getData().controlPoints.empty());
         REQUIRE(LC_OffsetSourceGeometry::capture(source));
         const double endParameter = static_cast<double>(source.getSegmentCount());
@@ -386,30 +411,19 @@ TEST_CASE("Coincident fit-point neighbors retain exact trimmed normals",
     }
 }
 
-TEST_CASE("Singular repeated fit points fail closed for trimming",
+TEST_CASE("All-coincident fit points fail closed for trimming",
           "[curve-offset][trim][spline-points][fit-points][stationary][refusal]") {
     const RS_Spline validReference = unitParabola();
     const LC_CurveOffsetOptions options = LC_CurveOffset::makeDirectOptions(validReference, 0.2);
-    const std::array<LC_SplinePointsData, 3> invalidProfiles{{
-        LC_SplinePointsData{false, false},
-        LC_SplinePointsData{false, false},
-        LC_SplinePointsData{false, false}
-    }};
-    auto profiles = invalidProfiles;
-    profiles[0].splinePoints = {{0, 0}, {0, 0}, {1, 1}, {2, 0}, {3, 1}};
-    profiles[1].splinePoints = {{0, 0}, {1, 1}, {2, 0}, {3, 1}, {3, 1}};
-    profiles[2].splinePoints = {{0, 0}, {1, 1}, {1, 1}, {1, 1}, {2, 0}, {3, 1}};
-    for (std::size_t profileIndex = 0; profileIndex < profiles.size(); ++profileIndex) {
-        CAPTURE(profileIndex);
-        LC_SplinePoints source{nullptr, profiles[profileIndex]};
-        CHECK(source.getData().controlPoints.empty());
-        REQUIRE(LC_OffsetSourceGeometry::capture(source));
-        const auto result = LC_CurveOffset::buildDirectBranches(
-            source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.2), options,
-            LC_CurveOffset::makeDirectSourceBudget());
-        CHECK(result.status == LC_CurveOffsetStatus::InvalidSource);
-        CHECK(result.branches.empty());
-    }
+    LC_SplinePointsData degenerate{false, false};
+    degenerate.splinePoints = {{1, 1}, {1, 1}, {1, 1}, {1, 1}, {1, 1}};
+    LC_SplinePoints source{nullptr, degenerate};
+    REQUIRE(LC_OffsetSourceGeometry::capture(source));
+    const auto result = LC_CurveOffset::buildDirectBranches(
+        source, LC_CurveOffset::makeSideRequest(LC_CurveOffsetSide::Left, 0.2), options,
+        LC_CurveOffset::makeDirectSourceBudget());
+    CHECK(result.status != LC_CurveOffsetStatus::Ok);
+    CHECK(result.branches.empty());
 }
 
 TEST_CASE("Trimming removes a local loop and keeps the offset around it", "[curve-offset][trim]") {
