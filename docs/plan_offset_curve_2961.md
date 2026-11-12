@@ -39530,3 +39530,25 @@ passes 47,252 assertions across 81 cases; the target builds; and `git diff
 90%-of-vertex-radius distance, not the exact cusp distance, beyond-cusp branch
 topology, refusal policy, other profiles' local curvature limits, or
 cross-platform/visible-GUI/external-CAD behavior.
+
+## 1078. Preserve Exact-stall and Three-branch Parabola Caches (2026-11-12)
+
+Test commit `5256a38d9` connects the direct cusp topology to asynchronous
+Update-from-Source publication. For the `y = x^2` typed parabola at positive
+left-normal distance `0.5`, the direct engine reports one stalled branch and
+the worker publishes a valid editable source cache. At distance `0.51`, the
+direct engine reports three branches and the worker still publishes them as
+one editable offset entity: the composite cubic cache contains exactly two
+internal full-multiplicity separators, preserving all disconnected branches.
+Both cases verify the typed source and signed distance, and undo/redo restores
+and reapplies the source replacement.
+
+Validation on macOS arm64 CMake Release: the focused source-update cusp case
+passes 54 assertions / 1 case; `[trim-action]` passes 47,243 assertions
+across 81 cases; the target builds; and `git diff --check` passes. This
+corrects section 1077's open question about beyond-cusp branch changes for
+these two distances: multi-branch topology is retained, not refused. It does
+not establish exact cusp-cache behavior for rotated/translated sources, other
+control nets, a continuous range of distances, five-format persistence of
+these specific cusp caches, GUI visibility, cross-platform, or external CAD
+acceptance.
