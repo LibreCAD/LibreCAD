@@ -9970,6 +9970,38 @@ TEST_CASE("offset worker transports component-aware trim results",
     REQUIRE(roundTripped.fragments.size() == output.fragments.size());
     CHECK(roundTripped.fragments.back().sourceSections.front().rawSpan == 0);
 
+    RS_SplineData singleSpanCache{1, false};
+    singleSpanCache.controlPoints = {{0, 0}, {10, 0}};
+    singleSpanCache.weights = {1, 1};
+    singleSpanCache.knotslist = {0, 0, 1, 1};
+    RS_SplineData threeComponentCutter{1, false};
+    threeComponentCutter.controlPoints = {
+        {2, -1}, {2, 1}, {5, -2}, {5, 2}, {8, -1}, {8, 1}};
+    threeComponentCutter.weights.assign(threeComponentCutter.controlPoints.size(), 1);
+    threeComponentCutter.knotslist = {0, 0, 1, 1, 2, 2, 3, 3};
+    const req::Request threeComponentInput{token,
+        req::TrimCache{singleSpanCache, threeComponentCutter, {{1, 0}}, {}}};
+    const auto threeComponentReply = LC_OffsetWorkerKernel::run(threeComponentInput);
+    const auto& threeComponentOutput = trimmed(threeComponentReply, 2);
+    CAPTURE(static_cast<int>(threeComponentOutput.refusal));
+    REQUIRE(threeComponentOutput.refusal == trim::Refusal::None);
+    REQUIRE(threeComponentOutput.roots.size() == 3);
+    REQUIRE(threeComponentOutput.fragments.size() == 1);
+    const auto threeComponentEncoded = result::encode(threeComponentReply, threeComponentInput);
+    REQUIRE(threeComponentEncoded);
+    const auto threeComponentDecoded = result::decode(*threeComponentEncoded, threeComponentInput);
+    REQUIRE(threeComponentDecoded);
+    const auto& threeComponentRoundTripped = std::get<trim::Result>(threeComponentDecoded->result);
+    REQUIRE(threeComponentRoundTripped.roots.size() == 3);
+    REQUIRE(threeComponentRoundTripped.fragments.size() == 1);
+    const std::array<double, 3> expectedThreeComponentRoots{{.2, .5, .8}};
+    for (std::size_t i = 0; i < expectedThreeComponentRoots.size(); ++i) {
+        CHECK(std::abs(threeComponentRoundTripped.roots[i].target.localParameter.lo()
+                       - expectedThreeComponentRoots[i]) < 1e-12);
+        CHECK(std::abs(threeComponentRoundTripped.roots[i].target.localParameter.hi()
+                       - expectedThreeComponentRoots[i]) < 1e-12);
+    }
+
     RS_SplineData cubic{3, false};
     cubic.controlPoints = {{0, 0}, {2, 2}, {8, 2}, {10, 0},
                            {0, 8}, {2, 10}, {8, 10}, {10, 8}};

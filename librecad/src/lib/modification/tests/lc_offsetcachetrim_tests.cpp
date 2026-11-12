@@ -990,6 +990,33 @@ TEST_CASE("Cache trim prepares independent connected components separately", tag
     }
 }
 
+TEST_CASE("Cache trim orders roots from three disconnected cutter components", tags) {
+    const auto data = cache({{0, 0}, {10, 0}});
+    RS_SplineData cutterData{1, false};
+    cutterData.controlPoints = {{2, -1}, {2, 1}, {5, -2}, {5, 2}, {8, -1}, {8, 1}};
+    cutterData.weights.assign(cutterData.controlPoints.size(), 1);
+    cutterData.knotslist = {0, 0, 1, 1, 2, 2, 3, 3};
+    RS_Spline cutter{nullptr, cutterData};
+
+    const auto result = Trim::prepare(data, cutter, {{1, 0}});
+    INFO("refusal=" << int(result.refusal) << ", roots=" << result.rootCount);
+    REQUIRE(result.refusal == Trim::Refusal::None);
+    REQUIRE(result.rootCount == 3);
+    REQUIRE(result.roots.size() == 3);
+    REQUIRE(result.fragments.size() == 1);
+    geometry(data, result);
+    const std::array<double, 3> expectedRoots{{.2, .5, .8}};
+    for (std::size_t i = 0; i < expectedRoots.size(); ++i) {
+        CHECK(result.roots[i].target.rawSpan == 0);
+        CHECK(std::abs(result.roots[i].target.localParameter.lo() - expectedRoots[i]) < 1e-12);
+        CHECK(std::abs(result.roots[i].target.localParameter.hi() - expectedRoots[i]) < 1e-12);
+    }
+    REQUIRE(result.fragments.front().sourceSections.size() == 1);
+    const auto& section = result.fragments.front().sourceSections.front();
+    CHECK(std::abs(section.from - .2) < 1e-12);
+    CHECK(section.to == 1);
+}
+
 TEST_CASE("A V-shaped cache corner touching a line is not a crossing", tags) {
     for (bool reverse : {false, true}) {
         auto data = cache({{0, 1}, {1, 0}, {2, 1}}); if (reverse) { reversed(data); }
