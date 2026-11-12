@@ -35,7 +35,7 @@ struct Limits {
     std::size_t maxRoots = 4096;
     unsigned maxDepth = 48;
     unsigned maxLeafDepth = 40;
-    std::size_t maxFragments = 2; // per replaced operand; a paired result may contain four
+    std::size_t maxFragments = 4097; // retained pieces plus untouched cache components
     std::size_t maxOutputSpans = 4097;
     std::size_t maxOutputControls = 16384;
     std::size_t maxOutputKnots = 32768;
@@ -53,7 +53,10 @@ struct Location {
     LC_Interval localParameter;
 };
 
-enum class EndLabel : unsigned { SourceStart = 1, SourceEnd = 2, CutterRoot = 4 };
+/** Provenance for retained fragment endpoints. ComponentBoundary marks an
+ * original endpoint at an internal discontinuity, not a global cache end.
+ */
+enum class EndLabel : unsigned { SourceStart = 1, SourceEnd = 2, CutterRoot = 4, ComponentBoundary = 8 };
 
 struct Endpoint {
     unsigned labels = 0;
@@ -127,8 +130,10 @@ struct Result {
 /** Caller limits can only LOWER the fixed Limits{} ceilings; zero is exhausted.
  * Supported cutters: finite line, arc/circle/ellipse, normalized unit-weight
  * degree-1/3 Bezier-chain spline (including a native entity's displayed cache).
- * Spline input must be one connected chain; discontinuous multi-branch caches
- * are refused until interval surgery can preserve their component topology.
+ * Discontinuous spline caches are split into connected components. The picked
+ * component is trimmed and every other component is retained unchanged as an
+ * ordinary spline fragment. Multi-component caches used only as a conic
+ * boundary (without a cache pick) remain unsupported.
  * Exact endpoint closure determines clamped-cache topology, including a closed
  * producer cache with its DXF closed flag unset. Closed/periodic flags cannot
  * claim an open chain; arbitrary rational/wrapped splines refuse.

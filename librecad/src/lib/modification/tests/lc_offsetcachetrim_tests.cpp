@@ -376,6 +376,51 @@ TEST_CASE("Cache trim supports a normalized cubic spline cutter", tags) {
     }
 }
 
+TEST_CASE("Cache trim edits the picked disconnected component and retains every other component", tags) {
+    RS_SplineData data{1, false};
+    data.controlPoints = {{0, 0}, {10, 0}, {0, 5}, {10, 5}};
+    data.weights = {1, 1, 1, 1};
+    data.knotslist = {0, 0, 1, 1, 2, 2};
+    RS_Line cutter{nullptr, {5, -1}, {5, 6}};
+
+    for (const auto& [pick, selectedSpan] : std::array<std::pair<RS_Vector, std::size_t>, 2>{{
+             {{2, 0}, 0}, {{8, 5}, 1}}}) {
+        const auto result = Trim::prepare(data, cutter, {pick});
+        CAPTURE(pick.x, pick.y, selectedSpan, static_cast<int>(result.refusal));
+        REQUIRE(result.refusal == Trim::Refusal::None);
+        REQUIRE(result.fragments.size() == 2);
+        REQUIRE(result.roots.size() == 1);
+        CHECK(result.fragmentCount == 2);
+        CHECK(result.roots.front().target.rawSpan == selectedSpan);
+        REQUIRE(result.removed);
+        CHECK(result.removed->from.rawSpan == selectedSpan);
+        CHECK(result.removed->to.rawSpan == selectedSpan);
+        std::array<bool, 2> seen{};
+        for (const auto& fragment : result.fragments) {
+            REQUIRE(fragment.sourceSections.size() == 1);
+            const auto span = fragment.sourceSections.front().rawSpan;
+            REQUIRE(span < seen.size());
+            seen[span] = true;
+            REQUIRE(fragment.data.degree == 1);
+            REQUIRE(fragment.data.controlPoints.size() == 2);
+            const double y = span == 0 ? 0 : 5;
+            if (span != selectedSpan) {
+                CHECK(fragment.sourceSections.front().from == 0);
+                CHECK(fragment.sourceSections.front().to == 1);
+                near(fragment.data.controlPoints.front(), {0, y});
+                near(fragment.data.controlPoints.back(), {10, y});
+            } else {
+                const bool retainRight = pick.x < 5;
+                CHECK(std::abs(fragment.sourceSections.front().from - (retainRight ? .5 : 0)) < 1e-12);
+                CHECK(std::abs(fragment.sourceSections.front().to - (retainRight ? 1 : .5)) < 1e-12);
+                near(fragment.data.controlPoints.front(), {retainRight ? 5. : 0., y});
+                near(fragment.data.controlPoints.back(), {retainRight ? 10. : 5., y});
+            }
+        }
+        CHECK(seen[0]); CHECK(seen[1]);
+    }
+}
+
 TEST_CASE("Cache trim reads an actually adopted native cutter without editing its cache or children", tags) {
     for (bool reverse : {false, true}) {
         const auto native = nativeRing(reverse); const auto before = native->getData();

@@ -176,8 +176,51 @@ bool shape(std::size_t degree, std::size_t controls, std::size_t knots,
     return c.spans <= cap && knots == controls + degree + 1 && weights == controls;
 }
 std::size_t sourceSpans(const RS_SplineData& d) {
-    Counts c;
-    return shape(d.degree, d.controlPoints.size(), d.knotslist.size(), d.weights.size(), c, 4096) ? c.spans : 0;
+    if ((d.degree != 1 && d.degree != 3) || d.controlPoints.size() < std::size_t(d.degree + 1) ||
+        d.knotslist.size() != d.controlPoints.size() + std::size_t(d.degree) + 1 ||
+        d.weights.size() != d.controlPoints.size() ||
+        d.type != RS_SplineData::SplineType::ClampedOpen ||
+        d.savedOpenType != RS_SplineData::SplineType::ClampedOpen ||
+        !d.fitPoints.empty() || !d.savedOpenKnots.empty()) return 0;
+    std::size_t groups = 0, firstMultiplicity = 0, previousMultiplicity = 0, internalMultiplicity = 0;
+    for (std::size_t i = 0; i < d.knotslist.size();) {
+        if (!std::isfinite(d.knotslist[i]) || (i && !(d.knotslist[i - 1] < d.knotslist[i]))) return 0;
+        const auto begin = i;
+        const double value = d.knotslist[i];
+        while (i < d.knotslist.size() && d.knotslist[i] == value) ++i;
+        const auto multiplicity = i - begin;
+        if (!groups) firstMultiplicity = multiplicity;
+        else if (groups >= 2) {
+            if (previousMultiplicity != std::size_t(d.degree) &&
+                previousMultiplicity != std::size_t(d.degree + 1)) return 0;
+            internalMultiplicity += previousMultiplicity;
+        }
+        previousMultiplicity = multiplicity;
+        ++groups;
+    }
+    const auto degree = std::size_t(d.degree);
+    return groups >= 2 && groups - 1 <= 4096 && firstMultiplicity == degree + 1 &&
+        previousMultiplicity == degree + 1 && firstMultiplicity + internalMultiplicity + previousMultiplicity ==
+            d.knotslist.size() ? groups - 1 : 0;
+}
+
+std::optional<LC_Interval> sourceDomain(const RS_SplineData& data, std::size_t span) {
+    const auto degree = std::size_t(data.degree);
+    std::size_t current = 0;
+    std::optional<double> previous;
+    for (std::size_t i = 0; i < data.knotslist.size();) {
+        const double value = data.knotslist[i];
+        std::size_t end = i + 1;
+        while (end < data.knotslist.size() && data.knotslist[end] == value) ++end;
+        if (previous) {
+            if (current == span) return LC_Interval::hull(*previous, value);
+            ++current;
+        }
+        if (end - i != degree && end - i != degree + 1) return {};
+        previous = value;
+        i = end;
+    }
+    return {};
 }
 template<class Get> bool knots(std::size_t degree, std::size_t spans, Get get, bool integerBreaks) {
     std::size_t index = 0;
@@ -971,19 +1014,21 @@ bool location(const Trim::Location& d, const TrimContext& c) {
 }
 bool rootId(const std::optional<std::size_t>& id, const TrimContext& c) { return !id || *id < c.rootCount; }
 bool endpoint(const Trim::Endpoint& d, const TrimContext& c) {
-    return admitted(d) && d.labels > 0 && d.labels <= 7 && location(d.source, c) && rootId(d.rootId, c) &&
+    const bool sourceStart = d.source.rawSpan == 0 && d.source.localParameter.lo() == 0 && d.source.localParameter.hi() == 0;
+    const bool sourceEnd = d.source.rawSpan + 1 == c.source &&
+        d.source.localParameter.lo() == 1 && d.source.localParameter.hi() == 1;
+    const bool component = d.labels & unsigned(Trim::EndLabel::ComponentBoundary);
+    return admitted(d) && d.labels > 0 && d.labels <= 15 && location(d.source, c) && rootId(d.rootId, c) &&
         bool(d.labels & unsigned(Trim::EndLabel::CutterRoot)) == bool(d.rootId) &&
-        (!(d.labels & unsigned(Trim::EndLabel::SourceStart)) || (d.source.rawSpan == 0 &&
-            d.source.localParameter.lo() == 0 && d.source.localParameter.hi() == 0)) &&
-        (!(d.labels & unsigned(Trim::EndLabel::SourceEnd)) || (d.source.rawSpan == c.source - 1 &&
-            d.source.localParameter.lo() == 1 && d.source.localParameter.hi() == 1));
+        (!(d.labels & unsigned(Trim::EndLabel::SourceStart)) || sourceStart) &&
+        (!(d.labels & unsigned(Trim::EndLabel::SourceEnd)) || sourceEnd) &&
+        (!component || (!sourceStart && !sourceEnd));
 }
 bool section(const Trim::Section& d, const TrimContext& c) {
     if (!admitted(d) || d.rawSpan >= c.source || d.from < 0 || d.from >= d.to || d.to > 1 ||
         d.originalDomain.lo() >= d.originalDomain.hi()) return false;
-    const auto index = c.sourceData->degree * (d.rawSpan + 1);
-    return d.originalDomain.lo() == c.sourceData->knotslist[index] &&
-        d.originalDomain.hi() == c.sourceData->knotslist[index + 1];
+    const auto domain = sourceDomain(*c.sourceData, d.rawSpan);
+    return domain && d.originalDomain.lo() == domain->lo() && d.originalDomain.hi() == domain->hi();
 }
 bool root(const Trim::RootProvenance& d, std::size_t index, const TrimContext& c) {
     if (!admitted(d) || d.id != index || !location(d.target, c)) return false;
@@ -1308,7 +1353,8 @@ std::optional<QCborArray> encode(const Reply& d, const Req::Request& r) {
             fields(std::get<Native>(d.result)) : fields(std::get<Trim::Result>(d.result));
     }
     const auto& t = d.token;
-    return QCborArray{8, QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
+    return QCborArray{qint64(LC_OffsetWorkerWire::ProtocolVersion),
+        QCborArray{t.requestId, t.generation, t.sourceRevision, t.undoEpoch},
         qint64(d.operation), fields(d.failure), payload};
 }
 
@@ -1317,7 +1363,8 @@ std::optional<Reply> decode(const QCborArray& a, const Req::Request& r) {
     QCborArray t;
     std::size_t version;
     std::size_t items = 0;
-    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) || version != 8 || !array(a.at(1), 4, t) ||
+    if (a.size() != 5 || !wireValue(a, items) || !read(a.at(0), version) ||
+        version != LC_OffsetWorkerWire::ProtocolVersion || !array(a.at(1), 4, t) ||
         !read(t.at(0), d.token.requestId) || !read(t.at(1), d.token.generation) ||
         !read(t.at(2), d.token.sourceRevision) || !read(t.at(3), d.token.undoEpoch) ||
         !read(a.at(2), d.operation) || !read(a.at(3), d.failure) || !envelope(d, r)) return std::nullopt;

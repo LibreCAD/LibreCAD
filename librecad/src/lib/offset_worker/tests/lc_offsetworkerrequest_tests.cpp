@@ -384,7 +384,7 @@ TEST_CASE("offset worker request has exact version two positional shapes",
           "[lc-offsetcurve][worker-protocol][request]") {
     for (const auto& value : fixtures()) {
         const auto root = encoded(value);
-        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 8);
+        REQUIRE(root.size() == 4); CHECK(root.at(0).isInteger()); CHECK(root.at(0).toInteger() == 9);
         CHECK_FALSE(request::decode(changed(root, {0}, 4)));
         const auto t = root.at(1).toArray();
         REQUIRE(t.size() == 4); CHECK(t.at(0).toInteger() == value.token.requestId);
@@ -1207,7 +1207,7 @@ TEST_CASE("Produce requests freeze protocol five raw sources context bounds and 
     op.fallback = point(8, 9); op.distance = -.125; op.copies = 100; op.asOffsetCurve = true;
     const request::Request input{{71, 73, 79, 83}, op};
     const auto wire = request::encode(input); REQUIRE(wire);
-    CHECK(wire->at(0).toInteger() == 8); CHECK(wire->at(2).toInteger() == 5);
+    CHECK(wire->at(0).toInteger() == 9); CHECK(wire->at(2).toInteger() == 5);
     REQUIRE(wire->at(3).toArray().size() == 10);
     const auto decoded = request::decode(*wire); REQUIRE(decoded);
     CHECK(request::encode(*decoded) == wire); same(input, *decoded);
@@ -1265,7 +1265,7 @@ TEST_CASE("Cached Produce appends operation six with owned bounded ordinary prev
     op.cache.entries.push_back(entry);
     const request::Request input{token(), op};
     const auto wire = request::encode(input); REQUIRE(wire);
-    CHECK(wire->at(0).toInteger() == 8); CHECK(wire->at(2).toInteger() == 6);
+    CHECK(wire->at(0).toInteger() == 9); CHECK(wire->at(2).toInteger() == 6);
     REQUIRE(wire->at(3).toArray().size() == 2);
     CHECK(at(*wire, {3, 0}).toArray().size() == 10);
     CHECK(at(*wire, {3, 1}).toArray().size() == 4);

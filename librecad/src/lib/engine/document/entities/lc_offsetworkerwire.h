@@ -12,6 +12,7 @@
 
 /** Offset-helper transport only. A decoded frame is not a geometry certificate. */
 namespace LC_OffsetWorkerWire {
+constexpr std::size_t ProtocolVersion = 9;
 struct Limits {
     qsizetype frameBytes = 16 * 1024 * 1024;
     std::size_t items = 262144;

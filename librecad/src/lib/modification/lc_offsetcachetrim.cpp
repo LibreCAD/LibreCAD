@@ -657,6 +657,21 @@ bool connected(const Spans& spans) {
     return true;
 }
 
+struct Component { std::size_t begin = 0, end = 0; bool closed = false; };
+
+std::vector<Component> components(const Spans& spans) {
+    std::vector<Component> result;
+    if (spans.empty()) return result;
+    std::size_t begin = 0;
+    for (std::size_t i = 1; i <= spans.size(); ++i) {
+        if (i != spans.size() && same(spans[i - 1].controls[spans[i - 1].degree], spans[i].controls[0])) continue;
+        result.push_back({begin, i,
+            same(spans[begin].controls[0], spans[i - 1].controls[spans[i - 1].degree])});
+        begin = i;
+    }
+    return result;
+}
+
 struct Input {
     std::shared_ptr<const Spans> source, cutter;
     std::optional<Conic> conic;
@@ -703,8 +718,11 @@ Input admit(Context& c, const RS_SplineData& source, const RS_Entity& entity, co
     // All aggregate counts precede the first copied span, adapter or callback.
     c.items(4 + sourceCount + (spline ? c.work.inputSpans - sourceCount : line ? 1 : 8));
     auto sourceSpans = std::make_shared<const Spans>(inspect(c, source));
-    if (!connected(*sourceSpans)) fail(Refusal::UnsupportedLayout);
-    const bool closed = closure(source, *sourceSpans);
+    c.items(sourceSpans->size());
+    const auto sourceComponents = components(*sourceSpans);
+    if (sourceComponents.empty() || ((source.m_closedFlag || source.m_periodicFlag) && sourceComponents.size() != 1))
+        fail(Refusal::UnsupportedLayout);
+    const bool closed = sourceComponents.size() == 1 ? closure(source, *sourceSpans) : false;
     std::shared_ptr<const Spans> cutterSpans;
     bool cutterClosed = false;
     std::optional<Conic> conic;
@@ -803,8 +821,15 @@ I distance(const Geo::CacheSpan& span, const Geo::ReferenceFrame& frame, const R
     return result;
 }
 
-I closest(Context& c, const Input& input, const Pick& pick) {
-    struct Candidate { I parameter, distance; std::optional<Q> exactDistance; };
+struct Projection { I parameter; std::size_t span = 0; };
+
+Projection closest(Context& c, const Input& input, const Pick& pick) {
+    struct Candidate {
+        I parameter, distance;
+        std::optional<Q> exactDistance;
+        std::optional<RS_Vector> exactEndpoint;
+        std::size_t span = 0;
+    };
     std::vector<Candidate> candidates;
     const auto& spans = *input.source;
     // Degree five has at most five isolated stationary roots per cubic, plus
@@ -814,12 +839,16 @@ I closest(Context& c, const Input& input, const Pick& pick) {
     const auto add = [&](std::size_t span, I u, I d, std::optional<Q> exact) {
         I t = global(span, u);
         if (input.closed && singleton(t) && t.lo() == double(spans.size())) { t = I::point(0); }
+        std::optional<RS_Vector> endpoint;
+        if (singleton(u) && (u.lo() == 0 || u.lo() == 1))
+            endpoint = spans[span].controls[u.lo() == 0 ? 0 : spans[span].degree];
         for (auto& old : candidates) {
             c.compare();
-            if (singleton(t) && singleton(old.parameter) && t.lo() == old.parameter.lo()) { return; }
+            if (singleton(t) && singleton(old.parameter) && t.lo() == old.parameter.lo() &&
+                endpoint && old.exactEndpoint && same(*endpoint, *old.exactEndpoint)) return;
         }
         if (candidates.size() == capacity) { fail(Refusal::LimitExceeded); }
-        candidates.push_back({t, d, std::move(exact)});
+        candidates.push_back({t, d, std::move(exact), endpoint, span});
     };
     for (std::size_t k = 0; k < spans.size(); ++k) {
         c.check(); const auto& span = spans[k];
@@ -872,7 +901,7 @@ I closest(Context& c, const Input& input, const Pick& pick) {
             fail(Refusal::AmbiguousPick);
         }
     }
-    return candidates[winner].parameter;
+    return {candidates[winner].parameter, candidates[winner].span};
 }
 
 struct Root {
@@ -1294,8 +1323,158 @@ std::vector<Fragment> assemble(Context& c, const Input& input, const std::vector
     return staged;
 }
 
+RS_SplineData componentData(const Spans& spans, const Component& component) {
+    RS_SplineData data;
+    data.degree = spans[component.begin].degree;
+    data.type = data.savedOpenType = RS_SplineData::SplineType::ClampedOpen;
+    data.m_closedFlag = component.closed;
+    for (std::size_t k = component.begin; k < component.end; ++k) {
+        const auto& span = spans[k];
+        const std::size_t first = k == component.begin ? 0 : 1;
+        for (std::size_t i = first; i <= span.degree; ++i) {
+            data.controlPoints.push_back(span.controls[i]);
+            data.weights.push_back(1.0);
+        }
+        const std::size_t local = k - component.begin;
+        const std::size_t multiplicity = k == component.begin || k + 1 == component.end
+            ? span.degree + 1 : span.degree;
+        for (std::size_t i = 0; i < multiplicity; ++i) data.knotslist.push_back(double(local));
+    }
+    for (std::size_t i = 0; i <= data.degree; ++i)
+        data.knotslist.push_back(double(component.end - component.begin));
+    return data;
+}
+
+Limits remainingLimits(const Context& c) {
+    Limits out = c.limits;
+    const auto subtract = [](std::size_t limit, std::size_t used) {
+        return used <= limit ? limit - used : std::size_t{0};
+    };
+    out.maxInputSpans = subtract(out.maxInputSpans, c.work.inputSpans);
+    out.maxInputRecords = subtract(out.maxInputRecords, c.work.inputRecords);
+    out.maxGeneratedItems = subtract(out.maxGeneratedItems,
+        c.work.kernelItems + c.work.intersections.generatedItems);
+    out.maxOrderingComparisons = subtract(out.maxOrderingComparisons,
+        c.work.kernelComparisons + c.work.intersections.orderingComparisons);
+    out.maxRoots = subtract(out.maxRoots, c.work.rootRecords);
+    out.maxBoxPairs = subtract(out.maxBoxPairs, c.work.intersections.totalBoxPairs);
+    out.maxLeaves = subtract(out.maxLeaves, c.work.intersections.generatedLeaves);
+    out.maxOutputSpans = subtract(out.maxOutputSpans, c.work.outputSpans);
+    out.maxOutputControls = subtract(out.maxOutputControls, c.work.outputControls);
+    out.maxOutputKnots = subtract(out.maxOutputKnots, c.work.outputKnots);
+    return out;
+}
+
+void addWork(Work& to, const Work& from) {
+#define LC_TRIM_WORK_ADD(field) to.field += from.field
+    LC_TRIM_WORK_ADD(inputSpans); LC_TRIM_WORK_ADD(inputRecords); LC_TRIM_WORK_ADD(rootRecords);
+    LC_TRIM_WORK_ADD(kernelItems); LC_TRIM_WORK_ADD(kernelComparisons);
+    LC_TRIM_WORK_ADD(outputSpans); LC_TRIM_WORK_ADD(outputControls); LC_TRIM_WORK_ADD(outputKnots);
+#undef LC_TRIM_WORK_ADD
+    auto& a = to.intersections; const auto& b = from.intersections;
+#define LC_TRIM_INTERSECTION_ADD(field) a.field += b.field
+    LC_TRIM_INTERSECTION_ADD(candidateBoxPairs); LC_TRIM_INTERSECTION_ADD(refinementBoxPairs);
+    LC_TRIM_INTERSECTION_ADD(certificateBoxPairs); LC_TRIM_INTERSECTION_ADD(totalBoxPairs);
+    LC_TRIM_INTERSECTION_ADD(generatedLeaves); LC_TRIM_INTERSECTION_ADD(generatedItems);
+    LC_TRIM_INTERSECTION_ADD(orderingComparisons); LC_TRIM_INTERSECTION_ADD(validationSegmentVisits);
+    LC_TRIM_INTERSECTION_ADD(validationNextCalls);
+#undef LC_TRIM_INTERSECTION_ADD
+    a.deepestPreparation = std::max(a.deepestPreparation, b.deepestPreparation);
+    a.deepestPairRefinement = std::max(a.deepestPairRefinement, b.deepestPairRefinement);
+    a.deepestOrderingRefinement = std::max(a.deepestOrderingRefinement, b.deepestOrderingRefinement);
+    a.deepestRootRefinement = std::max(a.deepestRootRefinement, b.deepestRootRefinement);
+}
+
+void shift(Location& location, std::size_t offset) { location.rawSpan += offset; }
+void constrainSourceLabels(Endpoint& endpoint, std::size_t spanCount) {
+    if (endpoint.source.rawSpan != 0 || !exactParameter(endpoint.source.localParameter, 0))
+        endpoint.labels &= ~unsigned(EndLabel::SourceStart);
+    if (endpoint.source.rawSpan + 1 != spanCount || !exactParameter(endpoint.source.localParameter, 1))
+        endpoint.labels &= ~unsigned(EndLabel::SourceEnd);
+    if (!(endpoint.labels & (unsigned(EndLabel::SourceStart) | unsigned(EndLabel::SourceEnd) |
+                             unsigned(EndLabel::CutterRoot))))
+        endpoint.labels |= unsigned(EndLabel::ComponentBoundary);
+}
+void shift(LC_IntersectionDomain& domain, std::size_t sourceOffset, std::size_t cutterOffset) {
+    domain.segmentA += sourceOffset;
+    domain.segmentB += cutterOffset;
+    domain.parameterA = domain.parameterA + I::point(double(sourceOffset));
+}
+
+static Result prepareImpl(const RS_SplineData&, const RS_Entity&, const Pick&,
+    const std::optional<Pick>&, bool, const Limits&, Cancellation, Work*);
+
+Result prepareComponents(Context& c, const Input& input, const std::vector<Component>& parts,
+                         const RS_Entity& cutter, const Pick& pick,
+                         const std::optional<Pick>& conicPick, bool emitCache) {
+    if (!emitCache) fail(Refusal::UnsupportedLayout);
+    const auto picked = closest(c, input, pick);
+    const auto pickedSpan = picked.span;
+    const auto selected = std::find_if(parts.begin(), parts.end(), [pickedSpan](const Component& part) {
+        return part.begin <= pickedSpan && pickedSpan < part.end;
+    });
+    if (selected == parts.end()) fail(Refusal::AmbiguousPick);
+
+    const auto selectedCount = selected->end - selected->begin;
+    const auto cutterOffset = input.source->size() - selectedCount;
+    Pick localPick = pick;
+    if (localPick.rawSpanHint) {
+        if (*localPick.rawSpanHint < selected->begin || *localPick.rawSpanHint >= selected->end)
+            localPick.rawSpanHint.reset();
+        else *localPick.rawSpanHint -= selected->begin;
+    }
+    c.items(selectedCount * (input.source->front().degree + 1) + selectedCount + 2);
+
+    auto prepared = prepareImpl(componentData(*input.source, *selected), cutter, localPick,
+        conicPick, true, remainingLimits(c), c.cancellation, nullptr);
+    addWork(c.work, prepared.work);
+    if (prepared.refusal != Refusal::None) fail(prepared.refusal);
+
+    Result result = std::move(prepared);
+    for (auto& fragment : result.fragments) {
+        for (auto& section : fragment.sourceSections) {
+            section.rawSpan += selected->begin;
+            section.originalDomain = (*input.source)[section.rawSpan].parameter;
+        }
+        shift(fragment.start.source, selected->begin); shift(fragment.end.source, selected->begin);
+        constrainSourceLabels(fragment.start, input.source->size());
+        constrainSourceLabels(fragment.end, input.source->size());
+    }
+    if (result.removed) {
+        shift(result.removed->from, selected->begin);
+        shift(result.removed->to, selected->begin);
+    }
+    for (auto& root : result.roots) {
+        shift(root.target, selected->begin);
+        shift(root.isolation, selected->begin, cutterOffset);
+        shift(root.proofDomain, selected->begin, cutterOffset);
+    }
+    for (const auto& part : parts) {
+        c.check();
+        if (part.begin == selected->begin) continue;
+        Input untouched = input;
+        untouched.source = std::make_shared<const Spans>(input.source->begin() + part.begin,
+                                                          input.source->begin() + part.end);
+        untouched.closed = part.closed;
+        const auto count = part.end - part.begin;
+        const Range all{{I::point(0), 0, {}}, {I::point(double(count)), double(count), {}}, false};
+        auto preserved = assemble(c, untouched, {}, {all});
+        auto& fragment = preserved.front();
+        for (auto& section : fragment.sourceSections) section.rawSpan += part.begin;
+        shift(fragment.start.source, part.begin); shift(fragment.end.source, part.begin);
+        constrainSourceLabels(fragment.start, input.source->size());
+        constrainSourceLabels(fragment.end, input.source->size());
+        result.fragments.push_back(std::move(fragment));
+    }
+    if (result.fragments.size() > c.limits.maxFragments) fail(Refusal::LimitExceeded);
+    result.fragmentCount = result.fragments.size();
+    result.work = c.work;
+    return result;
+}
+
 } // namespace
 
+namespace {
 static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, const Pick& pick,
                const std::optional<Pick>& conicPick, bool emitCache,
                const Limits& limits, Cancellation cancellation, Work* onExit) {
@@ -1309,6 +1488,14 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
         if (conicPick && (!c.limits.maxOutputControls || !c.limits.maxOutputKnots)) fail(Refusal::LimitExceeded);
         const auto input = admit(c, target, cutter, pick);
         if (conicPick && !input.conic) fail(Refusal::UnsupportedCutter);
+        c.items(input.source->size());
+        const auto parts = components(*input.source);
+        if (parts.size() > 1) {
+            result = prepareComponents(c, input, parts, cutter, pick, conicPick, emitCache);
+            result.work = c.work;
+            if (onExit) *onExit = result.work;
+            return result;
+        }
         c.items(1);
         auto provider = std::make_unique<Curves>(input.frame, input.source, input.cutter, input.conic,
                                                input.closed, input.cutterClosed, c.cancellation);
@@ -1322,7 +1509,7 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
         std::vector<Fragment> fragments;
         if (emitCache) {
             const auto projected = closest(c, input, pick);
-            const auto ranges = retain(c, double(input.source->size()), input.closed, contacts, projected, removed);
+            const auto ranges = retain(c, double(input.source->size()), input.closed, contacts, projected.parameter, removed);
             fragments = assemble(c, input, contacts, ranges);
         }
         std::vector<Result::ConicFragment> conics;
@@ -1357,6 +1544,7 @@ static Result prepareImpl(const RS_SplineData& target, const RS_Entity& cutter, 
     if (onExit) { *onExit = c.work; }
     return result;
 }
+} // namespace
 
 Result prepare(const RS_SplineData& target, const RS_Entity& cutter, const Pick& pick,
                const Limits& limits, Cancellation cancellation, Work* onExit) {

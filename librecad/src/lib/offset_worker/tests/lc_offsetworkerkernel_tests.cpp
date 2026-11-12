@@ -9943,6 +9943,34 @@ TEST_CASE("offset child raw trim adapters preserve original polynomial and conic
     CHECK(tinyResult.rootCount < 2);
 }
 
+TEST_CASE("offset worker transports component-aware trim results",
+          "[lc-offsetcurve][worker-kernel][trim][multi-component]") {
+    RS_SplineData data{1, false};
+    data.controlPoints = {{0, 0}, {10, 0}, {0, 5}, {10, 5}};
+    data.weights = {1, 1, 1, 1};
+    data.knotslist = {0, 0, 1, 1, 2, 2};
+    const req::Cutter cutter = req::Segment{{5, -1}, {5, 6}};
+    const req::Request input{token, req::TrimCache{data, cutter, {{8, 5}}, {}}};
+    LC_OffsetWorkerKernel::Trace trace;
+    const auto reply = LC_OffsetWorkerKernel::run(input, &trace);
+    CAPTURE(static_cast<int>(reply.failure));
+    REQUIRE(reply.failure == result::Failure::None);
+    const auto& output = trimmed(reply, 2);
+    REQUIRE(output.refusal == trim::Refusal::None);
+    REQUIRE(output.fragments.size() == 2);
+    CHECK(output.fragmentCount == 2);
+    REQUIRE(output.roots.size() == 1);
+    CHECK(output.roots.front().target.rawSpan == 1);
+    const auto encoded = result::encode(reply, input);
+    REQUIRE(encoded);
+    const auto decoded = result::decode(*encoded, input);
+    REQUIRE(decoded);
+    const auto& roundTripped = std::get<trim::Result>(decoded->result);
+    CHECK(roundTripped.fragmentCount == output.fragmentCount);
+    REQUIRE(roundTripped.fragments.size() == output.fragments.size());
+    CHECK(roundTripped.fragments.back().sourceSections.front().rawSpan == 0);
+}
+
 TEST_CASE("offset child rejects unadmitted values before entering computation",
           "[lc-offsetcurve][worker-kernel]") {
     auto op = req::Generate{definition(), {}, {}};

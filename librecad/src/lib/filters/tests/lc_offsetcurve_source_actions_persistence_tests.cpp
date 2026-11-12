@@ -3,6 +3,7 @@
 #include <catch2/catch_approx.hpp>
 #include <catch2/generators/catch_generators.hpp>
 
+#include <algorithm>
 #include <cmath>
 #include <filesystem>
 #include <memory>
@@ -865,8 +866,8 @@ TEST_CASE("I trimmed every typed source family to plain fragments",
     if (dwg && !libreDwgReader.isEmpty()) checkLibreDwgSpline(libreDwgReader, output, trimmed);
 }
 
-TEST_CASE("I persist closed mixed-bulge polyline source updates and refuse uncertain trims atomically",
-          "[lc-offsetcurve][source-action][polyline][closed][persistence][trim-action][trim-refusal]") {
+TEST_CASE("I persist closed mixed-bulge polyline updates and trim one cache component",
+          "[lc-offsetcurve][source-action][polyline][closed][persistence][trim-action][multi-component]") {
     const auto format = GENERATE(RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
         RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018);
     const bool dwg = format == RS2::FormatDWG || format == RS2::FormatDWG2018;
@@ -974,6 +975,14 @@ TEST_CASE("I persist closed mixed-bulge polyline source updates and refuse uncer
     const RS_Vector trimPick = replacement->getPointAt(
         parameterStart + .7 * (parameterEnd - parameterStart));
     REQUIRE(trimPick.valid);
+    const auto prepared = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {trimPick});
+    CAPTURE(static_cast<int>(prepared.refusal), prepared.rootCount);
+    REQUIRE(prepared.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(prepared.fragments.size() > 1);
+    std::vector<std::uint64_t> expectedTrimmed;
+    for (const auto& fragment : prepared.fragments)
+        expectedTrimmed.push_back(RS_Spline::geometryFingerprint(fragment.data));
+    std::sort(expectedTrimmed.begin(), expectedTrimmed.end());
     TrimActionProbe trim(&context);
     trim.init(0);
     const auto preTrimCache = RS_Spline::geometryFingerprint(replacement->getData());
@@ -990,19 +999,53 @@ TEST_CASE("I persist closed mixed-bulge polyline source updates and refuse uncer
         QThread::msleep(1);
     }
     for (const auto& message : context.messages) UNSCOPED_INFO(message.toStdString());
-    CHECK_FALSE(replacement->isDeleted());
+    CHECK(replacement->isDeleted());
     CHECK_FALSE(cutter->isDeleted());
+    std::vector<std::uint64_t> actualTrimmed;
+    for (const auto* entity : graphic) {
+        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline) continue;
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+        REQUIRE(spline);
+        actualTrimmed.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+    }
+    std::sort(actualTrimmed.begin(), actualTrimmed.end());
+    CHECK(actualTrimmed == expectedTrimmed);
+    CHECK(graphic.undoStateEpoch() > preTrimUndoEpoch);
+    REQUIRE_FALSE(context.messages.isEmpty());
+    CHECK(context.messages.back().contains("Trim converted 1 offset curve(s) to ordinary splines"));
+    REQUIRE(graphic.undo());
+    CHECK_FALSE(replacement->isDeleted());
     CHECK(onlyNative(graphic) == replacement);
     CHECK(RS_Spline::geometryFingerprint(replacement->getData()) == preTrimCache);
     REQUIRE(replacement->sourceDefinition());
-    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*replacement->sourceDefinition()) ==
-          preTrimSource);
-    CHECK(graphic.undoStateEpoch() == preTrimUndoEpoch);
-    REQUIRE_FALSE(context.messages.isEmpty());
-    CHECK(context.messages.back().contains("nothing changed"));
+    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*replacement->sourceDefinition()) == preTrimSource);
+    REQUIRE(graphic.redo());
+    CHECK(replacement->isDeleted());
+    actualTrimmed.clear();
+    for (const auto* entity : graphic) {
+        if (entity->isDeleted() || entity->rtti() != RS2::EntitySpline) continue;
+        const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+        REQUIRE(spline);
+        actualTrimmed.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+    }
+    std::sort(actualTrimmed.begin(), actualTrimmed.end());
+    CHECK(actualTrimmed == expectedTrimmed);
+
+    const auto trimmedOutput = std::filesystem::path(directory.filePath(
+        QStringLiteral("closed-polyline-trim-%1.drawing").arg(static_cast<int>(format))).toStdString());
+    REQUIRE(lc::test::exportDrawing(graphic, trimmedOutput, format));
+    RS_Graphic trimmedReopened;
+    REQUIRE(lc::test::importDrawing(trimmedReopened, trimmedOutput, format));
+    std::vector<std::uint64_t> reopenedTrimmed;
+    for (const auto* entity : trimmedReopened)
+        if (const auto* spline = dynamic_cast<const RS_Spline*>(entity);
+            spline && entity->rtti() == RS2::EntitySpline)
+            reopenedTrimmed.push_back(RS_Spline::geometryFingerprint(spline->getData()));
+    std::sort(reopenedTrimmed.begin(), reopenedTrimmed.end());
+    CHECK(reopenedTrimmed == expectedTrimmed);
 }
-TEST_CASE("I refuse closed convex polyline trims atomically when intersections are uncertain",
-          "[lc-offsetcurve][polyline][closed][trim-action][trim-refusal]") {
+TEST_CASE("I trim one closed convex polyline cache component and retain the rest",
+          "[lc-offsetcurve][polyline][closed][trim-action][multi-component]") {
     REQUIRE(lc::test::application());
     lc::test::QuietLog quiet;
     RS_Graphic graphic;
@@ -1054,11 +1097,9 @@ TEST_CASE("I refuse closed convex polyline trims atomically when intersections a
     graphic.addEntity(cutter);
     const auto kernel = LC_OffsetCacheTrim::prepare(replacement->getData(), *cutter, {targetPick});
     CAPTURE(static_cast<int>(kernel.refusal), kernel.rootCount);
-    CHECK(kernel.refusal == LC_OffsetCacheTrim::Refusal::UnsupportedLayout);
-    const auto cacheBefore = RS_Spline::geometryFingerprint(replacement->getData());
-    const auto sourceBefore = LC_OffsetWorkerRequest::Values::encodeSourceDefinition(
-        *replacement->sourceDefinition());
-    REQUIRE(sourceBefore);
+    REQUIRE(kernel.refusal == LC_OffsetCacheTrim::Refusal::None);
+    REQUIRE(kernel.fragments.size() > 1);
+    const auto expectedOutputCount = kernel.fragments.size();
     const auto undoEpochBefore = graphic.undoStateEpoch();
 
     TrimActionProbe trim(&context);
@@ -1072,14 +1113,16 @@ TEST_CASE("I refuse closed convex polyline trims atomically when intersections a
         QThread::msleep(1);
     }
     for (const auto& message : context.messages) UNSCOPED_INFO(message.toStdString());
-    CHECK_FALSE(replacement->isDeleted());
+    CHECK(replacement->isDeleted());
     CHECK_FALSE(cutter->isDeleted());
-    CHECK(onlyNative(graphic) == replacement);
-    CHECK(RS_Spline::geometryFingerprint(replacement->getData()) == cacheBefore);
-    REQUIRE(replacement->sourceDefinition());
-    CHECK(LC_OffsetWorkerRequest::Values::encodeSourceDefinition(*replacement->sourceDefinition()) ==
-          sourceBefore);
-    CHECK(graphic.undoStateEpoch() == undoEpochBefore);
-    REQUIRE_FALSE(context.messages.isEmpty());
-    CHECK(context.messages.back().contains("nothing changed"));
+    std::size_t nativeCount = 0, splineCount = 0;
+    for (const auto* entity : graphic) {
+        if (entity->isDeleted()) continue;
+        nativeCount += entity->rtti() == RS2::EntityOffsetCurve;
+        splineCount += entity->rtti() == RS2::EntitySpline;
+    }
+    CHECK(nativeCount == 0);
+    CHECK(splineCount == expectedOutputCount);
+    CHECK(graphic.undoStateEpoch() > undoEpochBefore);
+    for (const auto& message : context.messages) CHECK_FALSE(message.contains("nothing changed"));
 }
