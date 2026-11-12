@@ -8224,11 +8224,13 @@ TEST_CASE("hyperbola curvature-neighborhood imports follow topology across scale
     lc::test::OutputDirectory directory("offset-hyperbola-curvature-import");
     namespace xd = LC_OffsetCurveXData;
     namespace values = LC_OffsetWorkerRequest::Values;
-    const std::array<LC_HyperbolaData, 8> variants{
+    const std::array<LC_HyperbolaData, 12> variants{
         LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, false}, LC_HyperbolaData{{0, 0}, {3, 0}, .6, 1.5, -1.2, false},
         LC_HyperbolaData{{0, 0}, {3, 0}, .6, -.4, .4, true},    LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, 1.5, true},
         LC_HyperbolaData{{0, 0}, {3, 0}, .6, .2, 1.2, false},   LC_HyperbolaData{{0, 0}, {3, 0}, .6, -1.2, -.2, false},
-        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false}, LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true}};
+        LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, false}, LC_HyperbolaData{{0, 0}, {3, 0}, .6, -3.0, 3.0, true},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .05, -.4, .4, false},  LC_HyperbolaData{{0, 0}, {3, 0}, .05, .4, -.4, false},
+        LC_HyperbolaData{{0, 0}, {3, 0}, .05, -.4, .4, true},   LC_HyperbolaData{{0, 0}, {3, 0}, .05, .4, -.4, true}};
     struct Format {
         Lane lane;
         bool dwg;
@@ -8257,8 +8259,14 @@ TEST_CASE("hyperbola curvature-neighborhood imports follow topology across scale
                                         base.angle1,
                                         base.angle2,
                                         base.reversed};
-            for (const double normalizedDistance : {-1.05, 1.05, -1.08, 1.08, -1.09, 1.09}) {
-                const double signedDistance = normalizedDistance * scale;
+            constexpr std::array<double, 6> normalizedDistances{-1.05, 1.05, -1.08, 1.08, -1.09, 1.09};
+            constexpr std::array<double, 6> cuspBoundaryFractions{-0.5, 0.5, -1.0, 1.0, -1.5, 1.5};
+            for (std::size_t distanceIndex = 0; distanceIndex < normalizedDistances.size(); ++distanceIndex) {
+                const double normalizedDistance = normalizedDistances[distanceIndex];
+                const double distanceFactor = base.ratio < 0.1
+                    ? cuspBoundaryFractions[distanceIndex] * base.majorP.magnitude() * base.ratio * base.ratio
+                    : normalizedDistance;
+                const double signedDistance = distanceFactor * scale;
                 CAPTURE(variantIndex, normalizedDistance, signedDistance);
                 const LC_OffsetSourceDefinition definition{LC_OffsetSourceGeometry{data}, signedDistance, 1e-4, false};
                 auto source = definition.source.makeEntity();
@@ -8349,7 +8357,8 @@ TEST_CASE("hyperbola curvature-neighborhood imports follow topology across scale
                         REQUIRE(receivedSource);
                         CHECK(QCborValue(*expectedSource).toCbor() == QCborValue(*receivedSource).toCbor());
 
-                        if (scaleIndex == 1 && std::abs(normalizedDistance) == 1.05) {
+                        if (scaleIndex == 1 &&
+                            (base.ratio < 0.1 || std::abs(normalizedDistance) == 1.05)) {
                             const auto nativeOutput = directory.file(
                                 "native-" + std::to_string(scaleIndex) + "-" +
                                 std::to_string(variantIndex) + "-" +
