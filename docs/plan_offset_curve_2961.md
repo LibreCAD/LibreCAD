@@ -37863,3 +37863,20 @@ case across 280 save/reopens; the CMake worker-client target rebuilds and
 profiles, trim picks, scales, and file lanes. It does not qualify arbitrary
 point layouts or transformations, source/cache promotion on every lane,
 visible-GUI interaction, or ODA/AutoCAD acceptance.
+
+## 999. Reject Transformed Ill-conditioned Sources at the Worker Protocol Boundary (2026-11-12)
+
+Test commit `7d70ed7cb` extends source-codec validation to the refused fit-point
+layouts from sections 996-998. Open and closed layouts are checked at scales
+`1e-4`, `1`, and `1e4`, with the recorded translated origins and reflected
+large-origin profile. Each must fail `isWellFormed()` and
+`encodeSourceGeometry()` before a worker request can be submitted. This keeps
+the fail-closed admission contract independent of placement and scale for
+these exact refused fixtures.
+
+Validation: `[source-definition]` passes 971 assertions across 4 cases; the
+CMake worker-request test target rebuilds successfully and
+`git diff --check` passes. This is protocol-boundary refusal coverage, not a
+worker runtime response for malformed requests (they are intentionally
+unencodable), nor proof for arbitrary fit-point layouts/transforms. Other
+family variants, visible-GUI acceptance, and external-CAD checks remain open.
