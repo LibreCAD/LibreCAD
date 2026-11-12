@@ -3340,6 +3340,11 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
         {RS2::FormatDWG2007, "r2007.dwg"},
         {RS2::FormatDWG2018, "r2018.dwg"}
     }};
+#ifdef DWGSUPPORT
+    QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+    if (libreDwgReader.isEmpty())
+        libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
     for (const Lane& lane : lanes) {
 #ifndef DWGSUPPORT
         if (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2007 ||
@@ -3348,6 +3353,54 @@ TEST_CASE("Worker-generated repeated fit-point caches round-trip through DXF and
         CAPTURE(lane.extension);
         const auto path = directory.file(lane.extension);
         REQUIRE(lc::test::exportDrawing(graphic, path, lane.format));
+#ifdef DWGSUPPORT
+        if (!libreDwgReader.isEmpty() &&
+            (lane.format == RS2::FormatDWG || lane.format == RS2::FormatDWG2007 ||
+             lane.format == RS2::FormatDWG2018)) {
+            QProcess reader;
+            reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(path)});
+            REQUIRE(reader.waitForStarted());
+            REQUIRE(reader.waitForFinished(30000));
+            INFO(reader.readAllStandardError().toStdString());
+            REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+            REQUIRE(reader.exitCode() == 0);
+            const QByteArray output = reader.readAllStandardOutput();
+            REQUIRE_FALSE(output.isEmpty());
+            QJsonParseError parseError;
+            const QJsonDocument document = QJsonDocument::fromJson(output, &parseError);
+            REQUIRE(parseError.error == QJsonParseError::NoError);
+            REQUIRE(document.isObject());
+            bool foundExpectedSpline = false;
+            for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
+                const QJsonObject object = value.toObject();
+                if (object.value("entity").toString() != "SPLINE" ||
+                    object.value("degree").toInt() != expected.degree)
+                    continue;
+                const QJsonArray knots = object.value("knots").toArray();
+                const QJsonArray controls = object.value("ctrl_pts").toArray();
+                if (knots.size() != static_cast<qsizetype>(expected.knotslist.size()) ||
+                    controls.size() != static_cast<qsizetype>(expected.controlPoints.size()))
+                    continue;
+                bool sameGeometry = true;
+                for (qsizetype i = 0; i < knots.size() && sameGeometry; ++i) {
+                    sameGeometry = std::abs(knots[i].toDouble() -
+                        expected.knotslist[static_cast<std::size_t>(i)]) <= 1e-11;
+                }
+                for (qsizetype i = 0; i < controls.size() && sameGeometry; ++i) {
+                    const auto index = static_cast<std::size_t>(i);
+                    const QJsonObject point = controls[i].toObject();
+                    const RS_Vector& wanted = expected.controlPoints[index];
+                    const double weight = expected.weights.empty() ? 1.0 : expected.weights[index];
+                    sameGeometry = std::abs(point.value("x").toDouble() - wanted.x) <= 1e-10 &&
+                        std::abs(point.value("y").toDouble() - wanted.y) <= 1e-10 &&
+                        std::abs(point.value("z").toDouble() - wanted.z) <= 1e-10 &&
+                        std::abs(point.value("w").toDouble(1.0) - weight) <= 1e-10;
+                }
+                foundExpectedSpline = foundExpectedSpline || sameGeometry;
+            }
+            CHECK(foundExpectedSpline);
+        }
+#endif
         RS_Graphic reloaded;
         REQUIRE(lc::test::importDrawing(reloaded, path, lane.format));
         std::vector<RS_Spline*> offsets;
