@@ -1597,15 +1597,16 @@ TEST_CASE("T Trim Two action trims a worker-created typed arc offset against a l
 
 TEST_CASE("T Trim Two action trims a worker-created typed circle offset against a line in both pick orders",
           "[gui][lc-offsetcurve][trim-action][typed-source][circle][trim-two]") {
+    for (const double scale : {0.1, 1.0, 10.0})
     for (const bool circleFirst : {false, true}) {
-        CAPTURE(circleFirst);
+        CAPTURE(scale, circleFirst);
         Drawing<true> f;
-        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {1, 0}, 1, 0, .1, false});
-        auto initial = LC_OffsetCurve::create(seed, .25, false);
+        RS_Ellipse seed(nullptr, RS_EllipseData{{0, 0}, {scale, 0}, 1, 0, .1, false});
+        auto initial = LC_OffsetCurve::create(seed, .25 * scale, false);
         REQUIRE(initial);
         auto* previous = initial.entity.release();
         f.graphic.addEntity(previous);
-        auto* source = new RS_Circle(&f.graphic, RS_CircleData{{0, 0}, 2});
+        auto* source = new RS_Circle(&f.graphic, RS_CircleData{{0, 0}, 2 * scale});
         f.graphic.addEntity(source);
         f.graphic.select(QList<RS_Entity*>{previous}, true);
 
@@ -1632,7 +1633,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed circle offset against 
         REQUIRE(breaks.size() >= 2);
         const double parameter = first + (last - first) * .487;
         const RS_Vector intersection = native->getPointAt(parameter);
-        const double step = std::max(1e-7, (last - first) * 1e-5);
+        const double step = std::max(1e-7 * scale, (last - first) * 1e-5);
         const RS_Vector before = native->getPointAt(parameter - step);
         const RS_Vector after = native->getPointAt(parameter + step);
         RS_Vector tangent{after.x - before.x, after.y - before.y};
@@ -1644,7 +1645,7 @@ TEST_CASE("T Trim Two action trims a worker-created typed circle offset against 
         cutterDirection /= cutterDirection.magnitude();
         cutterDirection += tangent;
         REQUIRE(cutterDirection.magnitude() > RS_TOLERANCE);
-        cutterDirection = cutterDirection / cutterDirection.magnitude() * 12.0;
+        cutterDirection = cutterDirection / cutterDirection.magnitude() * (12.0 * scale);
         auto* cutter = new RS_Line(&f.graphic,
             RS_LineData{intersection - cutterDirection, intersection + cutterDirection});
         f.graphic.addEntity(cutter);
