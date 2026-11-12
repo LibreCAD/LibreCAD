@@ -38576,3 +38576,11 @@ a matching four-component transport fixture. Building and running
 for the matching multi-component transport case. The code commit is pushed to
 PR #3193. Remaining broad family/variant, persistence, visible-GUI,
 cross-platform, and external-CAD gates remain open.
+
+Delivery recheck on PR head `0e380b9a5`: the offscreen source-picker union
+passes 14,831 assertions / 43 cases, and the recursive qmake6 application,
+worker, library, plugin, and tool build exits successfully. Exact-head remote
+checks were still in progress at the time of inspection (Pixi platform builds,
+DWG/DXF verification, and headless ON/OFF); no remote pass is claimed. The
+GitHub integration also rejected a PR-description refresh with HTTP 403, so
+the branch and commits are updated but the PR body remains unchanged.
