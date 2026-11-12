@@ -22,6 +22,11 @@
 #include <QTemporaryDir>
 #include <QThread>
 #include <QProcess>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonParseError>
+#include <QStandardPaths>
 #ifdef Q_OS_UNIX
 #include <cerrno>
 #include <csignal>
@@ -869,6 +874,10 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
         REQUIRE(directory.isValid());
         const std::array<RS2::FormatType, 5> formats{{RS2::FormatDXFRW14, RS2::FormatDXFRW2000,
             RS2::FormatDWG, RS2::FormatDXFRW2018, RS2::FormatDWG2018}};
+#ifdef DWGSUPPORT
+        QString libreDwgReader = qEnvironmentVariable("DWGREAD");
+        if (libreDwgReader.isEmpty()) libreDwgReader = QStandardPaths::findExecutable("dwgread");
+#endif
         const auto close = [](double a, double b) {
             return std::abs(a - b) <= 2e-10 * std::max({1.0, std::abs(a), std::abs(b)});
         };
@@ -917,6 +926,32 @@ TEST_CASE("T Trim Two action trims a worker-created typed hyperbola against a ci
             const auto file = std::filesystem::path(directory.filePath(
                 QStringLiteral("typed-hyperbola-trim-two-%1").arg(i) + (dwg ? ".dwg" : ".dxf")).toStdString());
             REQUIRE(lc::test::exportDrawing(f.graphic, file, formats[i]));
+#ifdef DWGSUPPORT
+            if (dwg && !libreDwgReader.isEmpty()) {
+                QProcess reader;
+                reader.start(libreDwgReader, {"-O", "minJSON", lc::test::toQString(file)});
+                REQUIRE(reader.waitForStarted());
+                REQUIRE(reader.waitForFinished(30000));
+                INFO(reader.readAllStandardError().toStdString());
+                REQUIRE(reader.exitStatus() == QProcess::NormalExit);
+                REQUIRE(reader.exitCode() == 0);
+                const QByteArray output = reader.readAllStandardOutput();
+                REQUIRE_FALSE(output.isEmpty());
+                QJsonParseError parseError;
+                const QJsonDocument document = QJsonDocument::fromJson(output, &parseError);
+                REQUIRE(parseError.error == QJsonParseError::NoError);
+                REQUIRE(document.isObject());
+                unsigned externalSplines = 0;
+                unsigned externalArcs = 0;
+                for (const QJsonValue& value : document.object().value("OBJECTS").toArray()) {
+                    const QString entity = value.toObject().value("entity").toString();
+                    externalSplines += entity == QLatin1String("SPLINE");
+                    externalArcs += entity == QLatin1String("ARC");
+                }
+                CHECK(externalSplines > 0);
+                CHECK(externalArcs > 0);
+            }
+#endif
             RS_Graphic reopened;
             REQUIRE(lc::test::importDrawing(reopened, file, formats[i]));
             auto reopenedEntities = live(reopened);
