@@ -1421,14 +1421,38 @@ TEST_CASE("Conic-only trim accounts for crossings and misses across four disconn
     REQUIRE(result.refusal == Trim::Refusal::None);
     REQUIRE(result.roots.size() == 4);
     std::array<unsigned, 4> rootsBySpan{};
+    const double horizontalRoot = std::sqrt(4.0 - .25 * .25);
+    const double verticalRoot = std::sqrt(4.0 - .5 * .5);
+    const std::array<std::array<double, 2>, 2> expectedParameters{{
+        {{(3.0 - horizontalRoot) / 6.0, (3.0 + horizontalRoot) / 6.0}},
+        {{(2.0 - verticalRoot) / 4.0, (2.0 + verticalRoot) / 4.0}}
+    }};
+    const std::array<std::array<RS_Vector, 2>, 2> expectedPoints{{
+        {{{-horizontalRoot, .25}, {horizontalRoot, .25}}},
+        {{{.5, -verticalRoot}, {.5, verticalRoot}}}
+    }};
+    std::array<std::vector<const Trim::RootProvenance*>, 2> rootsByCrossingSpan;
     for (const auto& root : result.roots) {
         REQUIRE(root.target.rawSpan < rootsBySpan.size());
         ++rootsBySpan[root.target.rawSpan];
         CHECK(root.proof != LC_IntersectionProof::Uncertified);
-        CHECK(root.worldX.lo() <= root.worldX.hi());
-        CHECK(root.worldY.lo() <= root.worldY.hi());
+        if (root.target.rawSpan < rootsByCrossingSpan.size()) {
+            rootsByCrossingSpan[root.target.rawSpan].push_back(&root);
+        }
     }
     CHECK(rootsBySpan == std::array<unsigned, 4>{2, 2, 0, 0});
+    for (std::size_t span = 0; span < rootsByCrossingSpan.size(); ++span) {
+        auto& roots = rootsByCrossingSpan[span];
+        std::sort(roots.begin(), roots.end(), [](const auto* lhs, const auto* rhs) {
+            return lhs->target.localParameter.lo() < rhs->target.localParameter.lo();
+        });
+        REQUIRE(roots.size() == 2);
+        for (std::size_t i = 0; i < roots.size(); ++i) {
+            CHECK(roots[i]->target.localParameter.contains(expectedParameters[span][i]));
+            CHECK(roots[i]->worldX.contains(expectedPoints[span][i].x));
+            CHECK(roots[i]->worldY.contains(expectedPoints[span][i].y));
+        }
+    }
     REQUIRE(result.conicFragments.size() == 1);
     CHECK(angularMember(result.conicFragments.front().data, 3 * pi / 2));
     CHECK_FALSE(angularMember(result.conicFragments.front().data, pi / 2));
