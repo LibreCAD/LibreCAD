@@ -40198,3 +40198,44 @@ combinations; full `[trim-action]` passes 100,677 assertions / 87 cases; and
 `git diff --check` passes. These profiles do not close other arc sweep/radius,
 distance, precision, or near-zero-boundary cases. Visible Properties
 interaction, cross-platform behavior, and ODA/AutoCAD acceptance remain open.
+
+## 1109. Reconfirm Source-type Replacement Scope (2026-11-12)
+
+The latest source-widget request does not add a new geometry family or require
+a second selector. The existing Properties replacement workflow remains the
+target: while choosing a replacement, the user can change the candidate-family
+filter repeatedly, and the candidate list follows that choice. The inventory
+is exactly `LC_OffsetSourceGeometry::SupportedKinds`: line, arc, circle,
+ellipse, spline, spline-points, parabola, bounded hyperbola, and polyline.
+Parabola must stay a distinct typed kind, not be presented or reconstructed as
+spline-points. After choosing a valid candidate, the displayed source type and
+source indication change only when asynchronous validation successfully
+publishes the replacement; cancel, refusal, or stale input leaves the prior
+source and indication intact.
+
+Headless picker coverage for repeated type changes and all nine kinds is
+already recorded in the current checklist and section 1098. Do not count that
+as universal geometry support: source variants still require Slice 4's
+generation, worker/cache, trimming, and applicable DXF/DWG qualification. The
+remaining UI acceptance is the visible Properties workflow in Slice 5,
+including repeated family changes, cross-family selection, and retention of
+the old-source highlight until successful publication. No implementation
+status is advanced by this plan clarification.
+
+## 1110. Qualify a Near-full Forward Arc Through Trim Two (2026-11-12)
+
+Test commit `e21649b39` adds a fourth worker-created typed-arc Trim Two
+profile: center `(3, -4)`, radius `4`, and forward bounds from `1e-4` to
+`2*pi - 1e-4`. It exercises the near-full, non-full angular interval in both
+operand-pick orders alongside the ordinary and seam-crossing arc controls.
+Each combination retains preview/commit, undo/redo, five DXF/DWG save/reopen
+lanes, and LibreDWG validation. Reopened arc comparison uses center, radius,
+unordered endpoints, midpoint, and length to tolerate parameter canonicalization.
+
+Validation on macOS arm64 CMake Release with LibreDWG 0.14: the focused arc
+Trim Two case passes 3,139 assertions / 1 case across eight profile/pick-order
+combinations; full `[trim-action]` passes 101,220 assertions / 87 cases; and
+`git diff --check` passes. This qualifies one near-full forward arc at radius
+4, not near-full reversed arcs, other radii/parameter tolerances, or the
+broader arc distance/precision matrix. Visible Properties interaction,
+cross-platform behavior, and ODA/AutoCAD acceptance remain open.
