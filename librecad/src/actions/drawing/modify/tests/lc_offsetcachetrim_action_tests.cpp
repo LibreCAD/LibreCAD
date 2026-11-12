@@ -302,6 +302,20 @@ TEST_CASE("T actions stage two native sources before either is replaced", "[lc-o
     REQUIRE(f.graphic.undo()); CHECK_FALSE(a->isDeleted()); CHECK_FALSE(b->isDeleted()); CHECK_FALSE(f.graphic.undo());
 }
 
+TEST_CASE("Stored cache Trim output admission has one bounded caller-lowerable limit",
+          "[lc-offsetcurve][trim-action][trim-output-limit]") {
+    LC_StoredCacheTrimOptions options;
+    CHECK(options.admittedOutputEntities() == 16);
+    options.maxOutputEntities = 16;
+    CHECK(options.admittedOutputEntities() == 16);
+    options.maxOutputEntities = 17;
+    CHECK(options.admittedOutputEntities() == 16);
+    options.maxOutputEntities = 4;
+    CHECK(options.admittedOutputEntities() == 4);
+    options.maxOutputEntities = 0;
+    CHECK(options.admittedOutputEntities() == 0);
+}
+
 TEST_CASE("T actions preserve both sources and selection on cancellation or exhausted second-side budget", "[lc-offsetcurve][trim-action]") {
     for (bool cancel : {false, true}) {
         Drawing<true> f; auto* a = addNative(f.graphic); auto* b = line(f.graphic);

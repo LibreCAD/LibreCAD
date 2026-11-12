@@ -443,6 +443,10 @@ struct LC_StoredCacheTrimOptions {
     static constexpr std::size_t maxOutputEntitiesLimit = 16;
     std::size_t maxOutputEntities = maxOutputEntitiesLimit;
     std::size_t maxDisplayEntities = kDefaultOffsetDeepEntitiesPerSource;
+
+    constexpr std::size_t admittedOutputEntities() const noexcept {
+        return maxOutputEntities < maxOutputEntitiesLimit ? maxOutputEntities : maxOutputEntitiesLimit;
+    }
 };
 
 /** Synchronous borrow for consuming already joined helper jobs, never stored.
