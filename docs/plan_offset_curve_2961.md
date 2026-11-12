@@ -37638,3 +37638,16 @@ The focused closed-seam oracle passes 6,583 assertions. This is direct
 geometry evidence only; closed repeated-seam worker/cache/persistence lanes,
 other repeated closed layouts, visible GUI, and ODA/AutoCAD acceptance remain
 open.
+
+## 988. Persist Closed Repeated-seam Fit-point Trim (2026-11-11)
+
+Test commit `07217a48f` adds the closed fit-point list with a repeated closing
+point to the real worker trim and five-lane persistence matrix. It uses both
+side picks, distances `0.2` and `0.5`, and R14 DXF, R2000 DXF/DWG, and R2018
+DXF/DWG. Reopened spline defining data is compared with the generated output;
+LibreDWG independently checks the R2000 and R2018 DWGs.
+
+The expanded persistence case passes 53,263 assertions across 100
+save/reopens; LibreDWG 0.14 parses all 20 generated DWGs. This qualifies the
+recorded closed source and trim choices, not editable-source cache admission,
+other closed repeated-point layouts, visible GUI, or ODA/AutoCAD acceptance.
