@@ -39767,17 +39767,21 @@ offset entity. LibreDWG 0.14 parses each emitted DWG.
 The asymmetric `(-1,0),(0,1),(2,0)` cache likewise trims at its exact
 negative-side cusp (`-2.25`) and 2% beyond (`-2.295`). Its regression verifies
 that every span after the full-multiplicity cusp boundary is retained whole
-when the first branch is picked, then round-trips both distances and pick
-orders through R12 DXF, R2000 DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Reopened
-geometry inventories must match committed ordinary geometry and contain no
-native offset; LibreDWG 0.14 parses both DWG versions.
+when the first branch is picked. Commits `5f5fdbf29` and `dad388e64` extend
+the same exact/beyond-cusp and operand-order matrix to both transverse line
+cutters and small circular cutters centered on the target. Circle cases require
+two certified contacts. Both cutter kinds round-trip through R12 DXF, R2000
+DXF, R2000 DWG, R2018 DXF, and R2018 DWG. Reopened geometry inventories must
+match committed ordinary geometry and contain no native offset; LibreDWG 0.14
+parses both DWG versions.
 
 Validation on macOS arm64 CMake Release: the symmetric focused case passes
-1,564 assertions / 1 case, and the asymmetric focused case passes 1,777 / 1;
-the complete `[trim-action]` suite passes 51,528 assertions across 83 cases.
-All 40 symmetric and asymmetric cusp trim round trips pass; LibreDWG parses
-both DWG versions for each profile/distance/pick-order combination; the target
-builds; and `git diff --check` passes. This supersedes the beyond-cusp safe
+1,564 assertions / 1 case; the expanded asymmetric line/circle focused case
+passes 2,580 / 1; the complete
+`[trim-action]` suite passes 51,592 assertions across 83 cases. All 60
+symmetric/asymmetric cusp trim round trips pass; LibreDWG parses both DWG
+versions for every tested profile/distance/cutter/pick-order combination; the
+target builds; and `git diff --check` passes. This supersedes the beyond-cusp safe
 refusals recorded in sections 1080 and 1085-1086 for these exact two parabola
 profiles, distances, and transverse line cutters. Other cusp roots/control
 nets, cutter families, wider distance/transform matrices, visible GUI,
