@@ -1284,11 +1284,13 @@ TEST_CASE("T files closed C-admitted native trim stays ordinary across DXF R2018
     }
 }
 
-TEST_CASE("T files preserve actual trimmed-ellipse producer components through DXF R2018 second saves",
-          "[lc-offsetcurve][trim-files][producer-components][dxf]") {
+TEST_CASE("T files preserve actual trimmed-ellipse producer components through every native DXF second save",
+          "[lc-offsetcurve][trim-files][producer-components][formats][dxf]") {
     Setup setup;
-    for (std::size_t component : {0u, 1u}) for (bool reverse : {false, true})
-        trimmedProducerPersistenceRow(dxf.back(), component, reverse);
+    for (std::size_t format = 1; format < dxf.size(); ++format)
+        for (std::size_t component : {0u, 1u}) for (bool reverse : {false, true})
+            DYNAMIC_SECTION(dxf[format].name << " component " << component << " reverse " << reverse)
+                trimmedProducerPersistenceRow(dxf[format], component, reverse);
 }
 
 #ifdef DWGSUPPORT
@@ -1301,11 +1303,13 @@ TEST_CASE("T files closed C-admitted native trim stays ordinary across DWG R2018
     }
 }
 
-TEST_CASE("T files preserve actual trimmed-ellipse producer components through DWG R2018 second saves",
-          "[lc-offsetcurve][trim-files][producer-components][dwg]") {
+TEST_CASE("T files preserve actual trimmed-ellipse producer components through every DWG second save",
+          "[lc-offsetcurve][trim-files][producer-components][formats][dwg]") {
     Setup setup;
-    for (std::size_t component : {0u, 1u}) for (bool reverse : {false, true})
-        trimmedProducerPersistenceRow(dwg.back(), component, reverse);
+    for (const auto& format : dwg)
+        for (std::size_t component : {0u, 1u}) for (bool reverse : {false, true})
+            DYNAMIC_SECTION(format.name << " component " << component << " reverse " << reverse)
+                trimmedProducerPersistenceRow(format, component, reverse);
 }
 
 TEST_CASE("T files DWG undo before save restores both native degrees and redo stays ordinary after second reopen", "[lc-offsetcurve][trim-files][undo][dwg]") {
