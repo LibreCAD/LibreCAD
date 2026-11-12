@@ -1914,7 +1914,11 @@ TEST_CASE("T Trim Two trims exact and safely refuses beyond-cusp asymmetric bran
                 RS_Graphic reopened;
                 REQUIRE(lc::test::importDrawing(reopened, file, format));
                 std::vector<const RS_Entity*> actual;
-                for (const auto* entity : live(reopened))
+                const auto reopenedEntities = live(reopened);
+                CHECK(std::count_if(reopenedEntities.begin(), reopenedEntities.end(), [](const RS_Entity* entity) {
+                    return entity->rtti() == RS2::EntityOffsetCurve;
+                }) == 0);
+                for (const auto* entity : reopenedEntities)
                     if (entity->rtti() == RS2::EntityLine || entity->rtti() == RS2::EntitySpline)
                         actual.push_back(entity);
                 CAPTURE(format, parabolaFirst);
