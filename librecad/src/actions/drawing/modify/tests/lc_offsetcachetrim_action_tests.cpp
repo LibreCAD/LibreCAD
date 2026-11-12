@@ -1907,6 +1907,7 @@ TEST_CASE("T Trim Two trims exact and beyond-cusp asymmetric branches",
             LC_OffsetCacheTrim::Pick{nativePick});
         REQUIRE(kernelTrim.refusal == LC_OffsetCacheTrim::Refusal::None);
         CHECK_FALSE(kernelTrim.fragments.empty());
+        if (circularCutter) CHECK(kernelTrim.rootCount == 2);
         const auto& cacheData = native->getData();
         std::size_t spanCount = 0;
         std::size_t cuspSpan = cacheData.controlPoints.size();
