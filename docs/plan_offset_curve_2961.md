@@ -37315,6 +37315,8 @@ compared to the nearest point across the actual worker-returned spline
 branches in world coordinates; maximum deviation must remain within the
 requested geometry tolerance. The focused test passes 21,774 assertions and
 `git diff --check` passes.
+The complete `[lc-offsetcurve][worker-kernel][fit-points]` selection passes
+22,031 assertions across seven cases with the added oracle.
 
 This is an independent sampled geometry check for the recorded profiles and
 distances, not a continuous Hausdorff/error proof; the multi-start minimizer
